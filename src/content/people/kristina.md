@@ -1,20 +1,29 @@
 ---
 name: "Kristina"
 slug: "kristina"
-role: "Add Kristina’s role / specialties"
+role: "K–12 Education • Adult Learning • Instructional Support"
 email: "hello@kandadesigners.com"
 linkedin: "https://www.linkedin.com/"
-location: "Add Kristina’s location"
+website: ""
+location: "Remote / US"
 skills:
-  - "Add a skill"
-  - "Add a skill"
-  - "Add a skill"
+  - "Elementary education"
+  - "K–12 instruction"
+  - "Adult education"
+  - "Curriculum implementation"
+  - "Educational technology onboarding"
+  - "Live training and facilitation"
 experienceHighlights:
-  - "Add an experience highlight"
-  - "Add an experience highlight"
+  - "Over 15 years of K–12 teaching experience"
+  - "Deep background in elementary education"
+  - "Experience training adults and educators"
+  - "Onboarded new technology, textbooks, and instructional tools"
+  - "Led live learning environments and skill-based training"
 featured: true
 ---
 
-Write Kristina’s short bio here. A few sentences is enough.
+Kristina is an experienced educator with over 15 years in K–12 teaching, with a strong focus on elementary education and hands-on instruction.
 
-If you want this to be more detailed later, we can add sections or a dedicated layout.
+In addition to classroom teaching, she has extensive experience supporting adult learners, onboarding new educational technologies, rolling out updated textbooks, and teaching learning strategies in live environments. Her work emphasizes clarity, adaptability, and meeting learners where they are.
+
+Kristina brings a practical, classroom-tested perspective to learning design and instructional support.
