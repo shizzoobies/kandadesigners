@@ -4,7 +4,6 @@ const people = defineCollection({
   type: "content",
   schema: z.object({
     name: z.string(),
-    slug: z.string(),
     role: z.string(),
     email: z.string().optional(),
     linkedin: z.string().url().optional(),
@@ -27,10 +26,14 @@ const projects = defineCollection({
     person: z.enum(["alex", "kristina"]),
     role: z.array(z.string()).default([]),
     tools: z.array(z.string()).default([]),
-    links: z.array(z.object({
-      label: z.string(),
-      url: z.string().url()
-    })).default([]),
+    links: z
+      .array(
+        z.object({
+          label: z.string(),
+          url: z.string().url(),
+        })
+      )
+      .default([]),
     featured: z.boolean().default(false),
   }),
 });
