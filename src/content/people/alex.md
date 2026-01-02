@@ -1,6 +1,5 @@
 ---
 name: "Alex Anderson"
-slug: "alex"
 role: "Instructional Design • Web Design • AI Audio"
 email: "hello@kandadesigners.com"
 linkedin: "https://www.linkedin.com/"
@@ -20,7 +19,5 @@ featured: true
 ---
 
 I design learning that’s clear, practical, and easy to maintain.
-
-My background spans instructional design, web design, and emerging AI audio workflows. I focus on building things that are simple to use, easy to update, and grounded in real constraints.
 
 This site itself is part of my portfolio.
