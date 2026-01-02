@@ -3,7 +3,6 @@ name: "Kristina"
 role: "K–12 Education • Adult Learning • Instructional Support"
 email: "hello@kandadesigners.com"
 linkedin: "https://www.linkedin.com/"
-website: ""
 location: "Remote / US"
 skills:
   - "Elementary education"
