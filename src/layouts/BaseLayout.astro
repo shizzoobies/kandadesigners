@@ -1,0 +1,44 @@
+---
+import Nav from "@/components/Nav.astro";
+const {
+  title = "Kanda Designers",
+  description = "Kanda Designers is a two-person studio. Instructional design, web design, and AI audio.",
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <Nav />
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <div class="grid">
+          <div class="card cardPad" style="grid-column: span 12;">
+            <div class="twoCol">
+              <div>
+                <div style="font-weight:750; margin-bottom:.35rem;">Kanda Designers</div>
+                <div class="muted">A two-person studio: Alex Anderson and Kristina.</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="muted">© {new Date().getFullYear()} Kanda Designers</div>
+                <div class="muted">Made with Astro • Hosted on Cloudflare Pages</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

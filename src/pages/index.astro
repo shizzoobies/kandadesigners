@@ -1,0 +1,97 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PersonCard from "@/components/PersonCard.astro";
+import { getCollection } from "astro:content";
+
+const people = (await getCollection("people"))
+  .filter(p => p.data.featured)
+  .sort((a,b) => a.data.name.localeCompare(b.data.name));
+
+const projects = (await getCollection("projects"))
+  .filter(p => p.data.featured)
+  .sort((a,b) => +b.data.date - +a.data.date)
+  .slice(0, 6);
+---
+<BaseLayout
+  title="Kanda Designers – Alex + Kristina"
+  description="Kanda Designers is a two-person studio. Instructional design, web design, and AI audio. Hire Alex Anderson and Kristina."
+>
+  <section class="hero">
+    <div class="kicker">
+      <span aria-hidden="true">●</span>
+      <span>Two-person studio</span>
+    </div>
+
+    <h1 class="h1">Learning design, web, and audio built with clarity.</h1>
+    <p class="lede">
+      Kanda Designers is a hub for two portfolios: Alex Anderson and Kristina.
+      We build clean, practical work that’s easy to use and easy to maintain.
+    </p>
+
+    <div class="ctaRow">
+      <a class="btn primary" href="/team">Meet the team</a>
+      <a class="btn" href="/portfolio">View portfolio</a>
+      <a class="btn" href="/contact">Hire us</a>
+    </div>
+
+    <div class="split">
+      {people.map((p) => (
+        <PersonCard
+          name={p.data.name}
+          slug={p.data.slug}
+          role={p.data.role}
+          summary={p.body.slice(0, 140) + (p.body.length > 140 ? "…" : "")}
+          skills={p.data.skills}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 1rem;">
+    <h2>Featured work</h2>
+    <p class="muted" style="margin-top:0;">A few highlights across both portfolios.</p>
+
+    <div class="grid">
+      {projects.map((p) => (
+        <a class="card cardPad" style="grid-column: span 4;" href={`/portfolio/${p.slug}`}>
+          <div style="display:flex; justify-content:space-between; gap:.6rem; align-items:flex-start;">
+            <div style="font-weight:750;">{p.data.title}</div>
+            <span class="tag">{p.data.person}</span>
+          </div>
+          <div class="muted" style="margin:.55rem 0 .75rem;">{p.data.description}</div>
+          <div class="tagRow">
+            {p.data.tags.slice(0,5).map((t) => <span class="tag">{t}</span>)}
+          </div>
+        </a>
+      ))}
+      {projects.length === 0 && (
+        <div class="card cardPad" style="grid-column: span 12;">
+          <div style="font-weight:750; margin-bottom:.35rem;">No featured projects yet</div>
+          <div class="muted">Set <code>featured: true</code> on a project to show it here.</div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>What we do</h2>
+    <div class="grid">
+      <div class="card cardPad" style="grid-column: span 12;">
+        <div class="grid">
+          <div style="grid-column: span 4;">
+            <div style="font-weight:750; margin-bottom:.25rem;">Instructional design</div>
+            <div class="muted">Storyboards, modules, microlearning, and clean learning flows.</div>
+          </div>
+          <div style="grid-column: span 4;">
+            <div style="font-weight:750; margin-bottom:.25rem;">Web design</div>
+            <div class="muted">Fast sites, UX writing, content structure, and polished UI.</div>
+          </div>
+          <div style="grid-column: span 4;">
+            <div style="font-weight:750; margin-bottom:.25rem;">AI audio</div>
+            <div class="muted">Narration prototypes, demo reels, and onboarding voice samples.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

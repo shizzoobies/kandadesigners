@@ -1,0 +1,48 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const people = await getCollection("people");
+const alex = people.find(p => p.data.slug === "alex");
+const kristina = people.find(p => p.data.slug === "kristina");
+---
+<BaseLayout title="Contact – Kanda Designers" description="Contact Alex and Kristina at Kanda Designers.">
+  <section class="hero" style="padding-bottom:1.2rem;">
+    <div class="kicker"><span aria-hidden="true">●</span><span>Contact</span></div>
+    <h1 class="h1" style="margin-top:.9rem;">Hire us</h1>
+    <p class="lede">Email is easiest. If you want a form, we can add one later without a backend.</p>
+  </section>
+
+  <section class="section" style="padding-top:1rem;">
+    <div class="split">
+      <div class="card cardPad">
+        <div style="font-weight:750; margin-bottom:.35rem;">Alex</div>
+        <div class="muted">
+          <div>Email: <a href={`mailto:${alex?.data.email ?? "hello@kandadesigners.com"}`}>{alex?.data.email ?? "hello@kandadesigners.com"}</a></div>
+          <div>LinkedIn: <a href={alex?.data.linkedin ?? "https://www.linkedin.com/"} target="_blank" rel="noreferrer">Profile</a></div>
+        </div>
+        <div style="height:1rem;"></div>
+        <a class="btn primary" href="/team/alex">View Alex hub</a>
+      </div>
+
+      <div class="card cardPad">
+        <div style="font-weight:750; margin-bottom:.35rem;">Kristina</div>
+        <div class="muted">
+          <div>Email: <a href={`mailto:${kristina?.data.email ?? "hello@kandadesigners.com"}`}>{kristina?.data.email ?? "hello@kandadesigners.com"}</a></div>
+          <div>LinkedIn: <a href={kristina?.data.linkedin ?? "https://www.linkedin.com/"} target="_blank" rel="noreferrer">Profile</a></div>
+        </div>
+        <div style="height:1rem;"></div>
+        <a class="btn primary" href="/team/kristina">View Kristina hub</a>
+      </div>
+    </div>
+
+    <div style="height:1rem;"></div>
+
+    <div class="grid">
+      <div class="card cardPad" style="grid-column: span 12;">
+        <div style="font-weight:750; margin-bottom:.35rem;">General</div>
+        <div class="muted">Studio email: <a href="mailto:hello@kandadesigners.com">hello@kandadesigners.com</a> (route this to Gmail with Cloudflare Email Routing)</div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

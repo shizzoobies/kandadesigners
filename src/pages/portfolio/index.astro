@@ -1,0 +1,35 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects"))
+  .sort((a,b) => +b.data.date - +a.data.date);
+
+const people = await getCollection("people");
+const bySlug = Object.fromEntries(people.map(p => [p.data.slug, p.data.name]));
+---
+<BaseLayout title="Portfolio – Kanda Designers" description="Projects across Alex and Kristina. Learning design, web design, and AI audio.">
+  <section class="hero" style="padding-bottom:1.2rem;">
+    <div class="kicker"><span aria-hidden="true">●</span><span>Portfolio</span></div>
+    <h1 class="h1" style="margin-top: .9rem;">Work across both portfolios.</h1>
+    <p class="lede">Click a project for details. Use the team pages for person-specific hubs.</p>
+  </section>
+
+  <section class="section" style="padding-top:1rem;">
+    <div class="grid">
+      {projects.map((p) => (
+        <a class="card cardPad" style="grid-column: span 4;" href={`/portfolio/${p.slug}`}>
+          <div style="display:flex; justify-content:space-between; gap:.6rem; align-items:flex-start;">
+            <div style="font-weight:750;">{p.data.title}</div>
+            <span class="tag">{bySlug[p.data.person]}</span>
+          </div>
+          <div class="muted" style="margin:.55rem 0 .75rem;">{p.data.description}</div>
+          <div class="tagRow">
+            <span class="tag">{p.data.status}</span>
+            {p.data.tags.slice(0,4).map((t) => <span class="tag">{t}</span>)}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

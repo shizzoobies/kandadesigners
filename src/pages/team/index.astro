@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PersonCard from "@/components/PersonCard.astro";
+import { getCollection } from "astro:content";
+
+const people = (await getCollection("people"))
+  .sort((a,b) => a.data.name.localeCompare(b.data.name));
+---
+<BaseLayout title="Team – Kanda Designers" description="Meet Alex and Kristina. Hire us for learning design, web design, and AI audio.">
+  <section class="hero" style="padding-bottom: 1.2rem;">
+    <div class="kicker"><span aria-hidden="true">●</span><span>Team</span></div>
+    <h1 class="h1" style="margin-top:.9rem;">Two hubs. Two portfolios.</h1>
+    <p class="lede">Each profile has skills, experience, contact info, and portfolio work.</p>
+  </section>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="split">
+      {people.map((p) => (
+        <PersonCard
+          name={p.data.name}
+          slug={p.data.slug}
+          role={p.data.role}
+          summary={p.body.slice(0, 160) + (p.body.length > 160 ? "…" : "")}
+          skills={p.data.skills}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

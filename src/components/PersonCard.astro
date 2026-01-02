@@ -1,0 +1,18 @@
+---
+const { name, slug, role, summary, skills } = Astro.props;
+---
+<a class="card cardPad" href={`/team/${slug}`} style="display:block;">
+  <div style="display:flex; justify-content:space-between; gap:.8rem; align-items:flex-start;">
+    <div>
+      <div style="font-weight:750; font-size:1.1rem; margin-bottom:.15rem;">{name}</div>
+      <div class="muted" style="margin:0;">{role}</div>
+    </div>
+    <span class="tag">Hire</span>
+  </div>
+
+  <div class="muted" style="margin:.7rem 0 .85rem;">{summary}</div>
+
+  <div class="tagRow">
+    {skills?.slice(0,4)?.map((t) => <span class="tag">{t}</span>)}
+  </div>
+</a>

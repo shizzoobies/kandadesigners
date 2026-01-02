@@ -1,0 +1,27 @@
+---
+const { pathname } = Astro.url;
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/team", label: "Team" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/contact", label: "Contact" },
+];
+---
+<header class="topbar">
+  <div class="container">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="/">
+        <span class="dot" aria-hidden="true"></span>
+        <span>Kanda Designers</span>
+      </a>
+
+      <div class="navlinks">
+        {links.map((l) => (
+          <a href={l.href} aria-current={pathname === l.href ? "page" : undefined}>
+            {l.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>

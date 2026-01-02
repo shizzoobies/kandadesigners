@@ -1,0 +1,90 @@
+# Decap CMS config
+# After you create your GitHub repo, update:
+# - backend.repo
+# - (optional) backend.branch
+# This setup uses a small OAuth helper hosted as Cloudflare Pages Functions at:
+#   /api/auth and /api/callback
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME
+  branch: main
+  base_url: https://kandadesigners.com
+  auth_endpoint: api/auth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "people"
+    label: "People"
+    folder: "src/content/people"
+    create: false
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Role", name: "role", widget: "string" }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
+      - { label: "Website", name: "website", widget: "string", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - label: "Skills"
+        name: "skills"
+        widget: "list"
+        allow_add: true
+      - label: "Experience highlights"
+        name: "experienceHighlights"
+        widget: "list"
+        allow_add: true
+      - { label: "Featured", name: "featured", widget: "boolean", default: true }
+      - { label: "Bio", name: "body", widget: "markdown" }
+
+  - name: "projects"
+    label: "Projects"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    summary: "{{title}} — {{person}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["live", "in-progress", "planned"]
+        default: "in-progress"
+      - label: "Person"
+        name: "person"
+        widget: "select"
+        options: ["alex", "kristina"]
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        allow_add: true
+      - label: "Role bullets"
+        name: "role"
+        widget: "list"
+        allow_add: true
+        required: false
+      - label: "Tools"
+        name: "tools"
+        widget: "list"
+        allow_add: true
+        required: false
+      - label: "Links"
+        name: "links"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "URL", name: "url", widget: "string" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }

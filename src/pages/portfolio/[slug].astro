@@ -1,0 +1,65 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+
+const people = await getCollection("people");
+const nameByKey = Object.fromEntries(people.map(p => [p.data.slug, p.data.name]));
+---
+<BaseLayout title={`${project.data.title} – Kanda Designers`} description={project.data.description}>
+  <section class="hero" style="padding-bottom: 1rem;">
+    <a class="muted" href="/portfolio">← Back to portfolio</a>
+    <h1 class="h1" style="margin-top: .9rem;">{project.data.title}</h1>
+    <p class="lede">{project.data.description}</p>
+
+    <div class="projectMeta">
+      <span>{project.data.date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>
+      <span>•</span>
+      <span class="tag">{project.data.status}</span>
+      <span>•</span>
+      <a class="tag" href={`/team/${project.data.person}`}>{nameByKey[project.data.person]}</a>
+    </div>
+
+    <div class="tagRow" style="margin-top: .9rem;">
+      {project.data.tags.map((t) => <span class="tag">{t}</span>)}
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: .8rem;">
+    <div class="grid">
+      <article class="card cardPad" style="grid-column: span 8;">
+        <Content />
+      </article>
+
+      <aside class="card cardPad" style="grid-column: span 4;">
+        <div style="font-weight:750; margin-bottom:.35rem;">What was done</div>
+        <ul class="muted" style="margin:0 0 1rem; padding-left: 1.1rem;">
+          {project.data.role.length ? project.data.role.map((r) => <li>{r}</li>) : <li>Add role bullets in frontmatter.</li>}
+        </ul>
+
+        <div style="font-weight:750; margin-bottom:.35rem;">Tools</div>
+        <div class="chips" style="margin-bottom: 1rem;">
+          {project.data.tools.length ? project.data.tools.map((t) => <span class="chip">{t}</span>) : <span class="chip">Add tools in frontmatter</span>}
+        </div>
+
+        {project.data.links.length > 0 && (
+          <>
+            <div style="font-weight:750; margin-bottom:.35rem;">Links</div>
+            <ul class="muted" style="margin:0; padding-left: 1.1rem;">
+              {project.data.links.map((l) => (
+                <li><a href={l.url} target="_blank" rel="noreferrer">{l.label}</a></li>
+              ))}
+            </ul>
+          </>
+        )}
+      </aside>
+    </div>
+  </section>
+</BaseLayout>

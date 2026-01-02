@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const people = await getCollection("people");
+  return people.map((p) => ({ params: { slug: p.data.slug }, props: { person: p } }));
+}
+
+const { person } = Astro.props;
+const { Content } = await person.render();
+
+const allProjects = await getCollection("projects");
+const personKey = person.data.slug === "alex" ? "alex" : "kristina";
+const projects = allProjects
+  .filter(p => p.data.person === personKey)
+  .sort((a,b) => +b.data.date - +a.data.date);
+---
+<BaseLayout title={`${person.data.name} – Kanda Designers`} description={`${person.data.name} at Kanda Designers. Skills, experience, and portfolio projects.`}>
+  <section class="hero" style="padding-bottom: 1rem;">
+    <a class="muted" href="/team">← Back to team</a>
+
+    <div class="personHeader" style="margin-top:.9rem;">
+      <div>
+        <h1 class="personName">{person.data.name}</h1>
+        <p class="personRole">{person.data.role}</p>
+      </div>
+
+      <div class="tagRow">
+        <a class="btn" href="/contact">Hire {person.data.name.split(" ")[0]}</a>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="twoCol">
+      <div class="card cardPad">
+        <div style="font-weight:750; margin-bottom:.5rem;">About</div>
+        <Content />
+      </div>
+
+      <div class="card cardPad">
+        <div style="font-weight:750; margin-bottom:.35rem;">Contact</div>
+        <div class="muted">
+          {person.data.email && <div>Email: <a href={`mailto:${person.data.email}`}>{person.data.email}</a></div>}
+          {!person.data.email && <div>Email: <span class="muted">add in frontmatter</span></div>}
+          {person.data.linkedin && <div>LinkedIn: <a href={person.data.linkedin} target="_blank" rel="noreferrer">Profile</a></div>}
+          {!person.data.linkedin && <div>LinkedIn: <span class="muted">add in frontmatter</span></div>}
+          {person.data.website && <div>Website: <a href={person.data.website} target="_blank" rel="noreferrer">Link</a></div>}
+        </div>
+
+        <div style="height:1rem;"></div>
+
+        <div style="font-weight:750; margin-bottom:.35rem;">Core skills</div>
+        <div class="chips">
+          {person.data.skills.map((s) => <span class="chip">{s}</span>)}
+        </div>
+
+        <div style="height:1rem;"></div>
+
+        <div style="font-weight:750; margin-bottom:.35rem;">Experience</div>
+        <ul class="muted" style="margin:0; padding-left: 1.1rem;">
+          {person.data.experienceHighlights.length
+            ? person.data.experienceHighlights.map((x) => <li>{x}</li>)
+            : <li>Add highlights in frontmatter</li>}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: .8rem;">
+    <h2>{person.data.name.split(" ")[0]}'s portfolio</h2>
+    <p class="muted" style="margin-top:0;">Projects tagged to this profile.</p>
+
+    <div class="grid">
+      {projects.map((p) => (
+        <a class="card cardPad" style="grid-column: span 4;" href={`/portfolio/${p.slug}`}>
+          <div style="font-weight:750; margin-bottom:.25rem;">{p.data.title}</div>
+          <div class="muted" style="margin-bottom:.7rem;">{p.data.description}</div>
+          <div class="tagRow">
+            <span class="tag">{p.data.status}</span>
+            {p.data.tags.slice(0,4).map((t) => <span class="tag">{t}</span>)}
+          </div>
+        </a>
+      ))}
+      {projects.length === 0 && (
+        <div class="card cardPad" style="grid-column: span 12;">
+          <div style="font-weight:750; margin-bottom:.35rem;">No projects yet</div>
+          <div class="muted">Add a project with <code>person: {personKey}</code> to show it here.</div>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
