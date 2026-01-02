@@ -4,12 +4,12 @@ import PersonCard from "@/components/PersonCard.astro";
 import { getCollection } from "astro:content";
 
 const people = (await getCollection("people"))
-  .filter(p => p.data.featured)
-  .sort((a,b) => a.data.name.localeCompare(b.data.name));
+  .filter((p) => p.data.featured)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
 
 const projects = (await getCollection("projects"))
-  .filter(p => p.data.featured)
-  .sort((a,b) => +b.data.date - +a.data.date)
+  .filter((p) => p.data.featured)
+  .sort((a, b) => +b.data.date - +a.data.date)
   .slice(0, 6);
 ---
 <BaseLayout
@@ -24,8 +24,8 @@ const projects = (await getCollection("projects"))
 
     <h1 class="h1">Learning design, web, and audio built with clarity.</h1>
     <p class="lede">
-      Kanda Designers is a hub for two portfolios: Alex Anderson and Kristina.
-      We build clean, practical work that’s easy to use and easy to maintain.
+      Kanda Designers is a hub for two portfolios: Alex Anderson and Kristina. We build clean,
+      practical work that’s easy to use and easy to maintain.
     </p>
 
     <div class="ctaRow">
@@ -38,7 +38,7 @@ const projects = (await getCollection("projects"))
       {people.map((p) => (
         <PersonCard
           name={p.data.name}
-          slug={p.data.slug}
+          slug={p.slug}
           role={p.data.role}
           summary={p.body.slice(0, 140) + (p.body.length > 140 ? "…" : "")}
           skills={p.data.skills}
@@ -60,14 +60,17 @@ const projects = (await getCollection("projects"))
           </div>
           <div class="muted" style="margin:.55rem 0 .75rem;">{p.data.description}</div>
           <div class="tagRow">
-            {p.data.tags.slice(0,5).map((t) => <span class="tag">{t}</span>)}
+            {p.data.tags.slice(0, 5).map((t) => <span class="tag">{t}</span>)}
           </div>
         </a>
       ))}
+
       {projects.length === 0 && (
         <div class="card cardPad" style="grid-column: span 12;">
           <div style="font-weight:750; margin-bottom:.35rem;">No featured projects yet</div>
-          <div class="muted">Set <code>featured: true</code> on a project to show it here.</div>
+          <div class="muted">
+            Set <code>featured: true</code> on a project to show it here.
+          </div>
         </div>
       )}
     </div>

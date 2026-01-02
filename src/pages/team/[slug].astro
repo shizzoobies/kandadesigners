@@ -4,19 +4,26 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const people = await getCollection("people");
-  return people.map((p) => ({ params: { slug: p.data.slug }, props: { person: p } }));
+  return people.map((p) => ({
+    params: { slug: p.slug },
+    props: { person: p },
+  }));
 }
 
 const { person } = Astro.props;
 const { Content } = await person.render();
 
 const allProjects = await getCollection("projects");
-const personKey = person.data.slug === "alex" ? "alex" : "kristina";
+const personKey = person.slug === "alex" ? "alex" : "kristina";
+
 const projects = allProjects
-  .filter(p => p.data.person === personKey)
-  .sort((a,b) => +b.data.date - +a.data.date);
+  .filter((p) => p.data.person === personKey)
+  .sort((a, b) => +b.data.date - +a.data.date);
 ---
-<BaseLayout title={`${person.data.name} – Kanda Designers`} description={`${person.data.name} at Kanda Designers. Skills, experience, and portfolio projects.`}>
+<BaseLayout
+  title={`${person.data.name} – Kanda Designers`}
+  description={`${person.data.name} at Kanda Designers. Skills, experience, and portfolio projects.`}
+>
   <section class="hero" style="padding-bottom: 1rem;">
     <a class="muted" href="/team">← Back to team</a>
 
@@ -42,18 +49,40 @@ const projects = allProjects
       <div class="card cardPad">
         <div style="font-weight:750; margin-bottom:.35rem;">Contact</div>
         <div class="muted">
-          {person.data.email && <div>Email: <a href={`mailto:${person.data.email}`}>{person.data.email}</a></div>}
+          {person.data.email && (
+            <div>
+              Email: <a href={`mailto:${person.data.email}`}>{person.data.email}</a>
+            </div>
+          )}
           {!person.data.email && <div>Email: <span class="muted">add in frontmatter</span></div>}
-          {person.data.linkedin && <div>LinkedIn: <a href={person.data.linkedin} target="_blank" rel="noreferrer">Profile</a></div>}
+
+          {person.data.linkedin && (
+            <div>
+              LinkedIn:{" "}
+              <a href={person.data.linkedin} target="_blank" rel="noreferrer">
+                Profile
+              </a>
+            </div>
+          )}
           {!person.data.linkedin && <div>LinkedIn: <span class="muted">add in frontmatter</span></div>}
-          {person.data.website && <div>Website: <a href={person.data.website} target="_blank" rel="noreferrer">Link</a></div>}
+
+          {person.data.website && (
+            <div>
+              Website:{" "}
+              <a href={person.data.website} target="_blank" rel="noreferrer">
+                Link
+              </a>
+            </div>
+          )}
         </div>
 
         <div style="height:1rem;"></div>
 
         <div style="font-weight:750; margin-bottom:.35rem;">Core skills</div>
         <div class="chips">
-          {person.data.skills.map((s) => <span class="chip">{s}</span>)}
+          {person.data.skills.map((s) => (
+            <span class="chip">{s}</span>
+          ))}
         </div>
 
         <div style="height:1rem;"></div>
@@ -79,14 +108,19 @@ const projects = allProjects
           <div class="muted" style="margin-bottom:.7rem;">{p.data.description}</div>
           <div class="tagRow">
             <span class="tag">{p.data.status}</span>
-            {p.data.tags.slice(0,4).map((t) => <span class="tag">{t}</span>)}
+            {p.data.tags.slice(0, 4).map((t) => (
+              <span class="tag">{t}</span>
+            ))}
           </div>
         </a>
       ))}
+
       {projects.length === 0 && (
         <div class="card cardPad" style="grid-column: span 12;">
           <div style="font-weight:750; margin-bottom:.35rem;">No projects yet</div>
-          <div class="muted">Add a project with <code>person: {personKey}</code> to show it here.</div>
+          <div class="muted">
+            Add a project with <code>person: {personKey}</code> to show it here.
+          </div>
         </div>
       )}
     </div>
