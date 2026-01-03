@@ -6,11 +6,14 @@ const {
   summary,
   skills = [],
   image = "/images/people/alex.jpg",
+  accent = "studio",
 } = Astro.props;
+
+const href = `/people/${slug}`;
 ---
 
-<a class="personCard cardLink reveal" href={`/people/${slug}`}>
-  <div class="portrait">
+<a class={`personCard cardLink reveal accent-${accent}`} href={href} aria-label={`View ${name} profile`}>
+  <div class="portrait" aria-hidden="true">
     <img src={image} alt={name} loading="lazy" decoding="async" />
     <div class="portraitOverlay"></div>
     <div class="portraitMeta">

@@ -1,19 +1,25 @@
-Phase Update: Controlled Profile Portrait Frames + Wider Side Gutters
+K & A Designers — Light Studio Update (Reference: elearning.company About)
 
-What changed
-- Enforced consistent portrait frame sizing for profile cards (fixed aspect ratio + object-fit cover)
-- Updated PersonCard component to use controlled portrait wrapper + overlay + "View" tag
-- Increased global container gutters so content isn't tight to the viewport edges
-- Added profile images:
-  - public/images/people/alex.jpg
-  - public/images/people/kristina.jpg
+What changed:
+- Switched global theme to light studio palette (off-white background, dark text, soft borders)
+- Increased global gutters/margins so content doesn't hug the viewport
+- Rebuilt PersonCard portraits with controlled aspect-ratio frames + object-fit cover
+- Wired placeholder photos:
+  - /public/images/people/alex.jpg
+  - /public/images/people/kristina.jpg
+  - plus extras in /public/images/placeholders/
+- Added optional `image` field to people content schema + frontmatter
 
-Files changed
-- src/components/PersonCard.astro
+Files updated:
 - src/styles/global.css
-- public/images/people/alex.jpg
-- public/images/people/kristina.jpg
-- README_UPDATE.txt
+- src/components/PersonCard.astro
+- src/pages/index.astro
+- src/content/config.ts
+- src/content/people/*.md
+- public/images/people/*
+- public/images/placeholders/*
 
-Suggested commit message
-Phase 1: controlled profile portrait frames + wider gutters
+Commit message:
+git add .
+git commit -m "Light studio theme + controlled portrait frames"
+git push
