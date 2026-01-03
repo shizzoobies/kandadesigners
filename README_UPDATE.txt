@@ -1,25 +1,16 @@
-K & A Designers — Light Studio Update (Reference: elearning.company About)
+STOPPING POINT — Deployable Build
 
-What changed:
-- Switched global theme to light studio palette (off-white background, dark text, soft borders)
-- Increased global gutters/margins so content doesn't hug the viewport
-- Rebuilt PersonCard portraits with controlled aspect-ratio frames + object-fit cover
-- Wired placeholder photos:
-  - /public/images/people/alex.jpg
-  - /public/images/people/kristina.jpg
-  - plus extras in /public/images/placeholders/
-- Added optional `image` field to people content schema + frontmatter
+This zip contains:
+- Fixed YAML/frontmatter duplicate keys in src/content/people/alex.md and kristina.md (Cloudflare build blocker)
+- Cache-busted global.css link to force refresh: /styles/global.css?v=LIGHT1
+- Removed local-only folders from zip: .git/, node_modules/, dist/
 
-Files updated:
-- src/styles/global.css
-- src/components/PersonCard.astro
-- src/pages/index.astro
-- src/content/config.ts
-- src/content/people/*.md
-- public/images/people/*
-- public/images/placeholders/*
+Next steps:
+1) Unzip -> kandadesigners/
+2) Copy contents into your real repo folder (overwrite)
+3) In repo:
+   git add .
+   git commit -m "Fix people frontmatter + cache bust css"
+   git push
 
-Commit message:
-git add .
-git commit -m "Light studio theme + controlled portrait frames"
-git push
+Cloudflare should now build and deploy.
