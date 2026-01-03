@@ -25,7 +25,6 @@
   --ease: cubic-bezier(.2,.8,.2,1);
 }
 
-
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
 html{ scroll-behavior:smooth; }
