@@ -1,23 +1,34 @@
 ---
-const { name, slug, role, summary, skills } = Astro.props;
+const { name, slug, role, summary, skills, image } = Astro.props;
 ---
-<a class="card cardPad cardLink" href={`/team/${slug}`} aria-label={`View ${name}'s profile`}>
-  <div style="display:flex; justify-content:space-between; gap:.9rem; align-items:flex-start;">
-    <div style="min-width:0;">
-      <div style="font-weight:800; font-size:1.15rem; letter-spacing:-0.01em; margin-bottom:.15rem;">{name}</div>
-      <div class="muted" style="margin:0;">{role}</div>
+<a class="personCard card cardLink" href={`/team/${slug}`} aria-label={`View ${name}'s profile`}>
+  <div class="personPortrait" aria-hidden="true">
+    {image ? <img src={image} alt="" loading="lazy" decoding="async" /> : null}
+    <div class="portraitOverlay"></div>
+    <div class="portraitStamp">
+      <span aria-hidden="true">✦</span>
+      <span>Portfolio</span>
     </div>
-    <span class="tag strong" style="white-space:nowrap;">View</span>
   </div>
 
-  <div class="muted" style="margin:.75rem 0 .9rem; line-height:1.45;">
-    {summary}
-  </div>
-
-  <div style="display:flex; justify-content:space-between; align-items:flex-end; gap: 12px;">
-    <div class="tagRow">
-      {skills?.slice(0,4)?.map((t) => <span class="tag">{t}</span>)}
+  <div class="personBody">
+    <div class="personTop">
+      <div class="personMeta">
+        <div class="personName">{name}</div>
+        <div class="muted">{role}</div>
+      </div>
+      <span class="tag strong personCta">View</span>
     </div>
-    <span class="muted" style="font-weight:700; letter-spacing:-0.01em;">→</span>
+
+    <div class="muted personSummary">
+      {summary}
+    </div>
+
+    <div class="personBottom">
+      <div class="tagRow">
+        {skills?.slice(0,4)?.map((t) => <span class="tag">{t}</span>)}
+      </div>
+      <span class="muted" style="font-size:.9rem;">/team/{slug}</span>
+    </div>
   </div>
 </a>

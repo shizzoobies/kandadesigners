@@ -12,6 +12,7 @@ const people = defineCollection({
     skills: z.array(z.string()).default([]),
     experienceHighlights: z.array(z.string()).default([]),
     featured: z.boolean().default(true),
+    image: z.string().optional(),
   }),
 });
 
