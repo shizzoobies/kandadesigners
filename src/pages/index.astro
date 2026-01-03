@@ -12,13 +12,15 @@ const projects = (await getCollection("projects"))
   .sort((a, b) => +b.data.date - +a.data.date)
   .slice(0, 6);
 
+// Branding (we'll gradually update this across the site as we touch files)
 const STUDIO_NAME = "K & A Designers";
 const STUDIO_SHORT = "K & A";
 ---
 <BaseLayout
   title={`${STUDIO_NAME} — Alex Anderson + Kristina Anderson`}
-  description={`${STUDIO_NAME} is a two-person studio and portfolio hub for Alex Anderson and Kristina Anderson. Instructional design, web design, and AI audio.`}
+  description={`${STUDIO_NAME} is a two-person studio and portfolio hub for Alex Anderson and Kristina Anderson. Learning design, web design, and AI audio.`}
 >
+  <!-- HERO -->
   <section class="hero">
     <div class="kicker reveal">
       <span aria-hidden="true">●</span>
@@ -42,6 +44,7 @@ const STUDIO_SHORT = "K & A";
       </div>
     </div>
 
+    <!-- Studio split selector -->
     <div class="split reveal" style="margin-top: 2.25rem;">
       {people.map((p) => (
         <PersonCard
@@ -54,16 +57,29 @@ const STUDIO_SHORT = "K & A";
       ))}
     </div>
 
+    <!-- Small studio note -->
     <div class="reveal" style="margin-top: 1.25rem;">
-      <div class="card" style="padding: .95rem 1rem; border-radius: 18px; display:flex; justify-content:space-between; align-items:center; gap: 1rem; flex-wrap: wrap;">
+      <div
+        class="card"
+        style="
+          padding: .95rem 1rem;
+          border-radius: 18px;
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap: 1rem;
+          flex-wrap: wrap;
+        "
+      >
         <div class="muted" style="line-height:1.3;">
-          Start with portfolio highlights, or choose a designer above.
+          Looking for a quick overview? Start with the portfolio highlights, or choose a designer above.
         </div>
         <a class="btn" href="/portfolio" style="white-space:nowrap;">Browse highlights</a>
       </div>
     </div>
   </section>
 
+  <!-- FEATURED WORK -->
   <section class="section">
     <div class="reveal" style="display:flex; justify-content:space-between; gap:1.25rem; align-items:flex-end; flex-wrap:wrap;">
       <div>
@@ -119,6 +135,7 @@ const STUDIO_SHORT = "K & A";
     </div>
   </section>
 
+  <!-- WHAT WE DO -->
   <section class="section">
     <div class="reveal">
       <h2 style="margin-bottom:.25rem;">What we do</h2>

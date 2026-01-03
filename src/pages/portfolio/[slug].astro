@@ -13,7 +13,7 @@ const { Content } = await project.render();
 const people = await getCollection("people");
 const nameByKey = Object.fromEntries(people.map(p => [p.data.slug, p.data.name]));
 ---
-<BaseLayout title={`${project.data.title} – Kanda Designers`} description={project.data.description}>
+<BaseLayout title={`${project.data.title} – K & A Designers`} description={project.data.description}>
   <section class="hero" style="padding-bottom: 1rem;">
     <a class="muted" href="/portfolio">← Back to portfolio</a>
     <h1 class="h1" style="margin-top: .9rem;">{project.data.title}</h1>

@@ -1,18 +1,23 @@
 ---
 const { name, slug, role, summary, skills } = Astro.props;
 ---
-<a class="card cardPad" href={`/team/${slug}`} style="display:block;">
-  <div style="display:flex; justify-content:space-between; gap:.8rem; align-items:flex-start;">
-    <div>
-      <div style="font-weight:750; font-size:1.1rem; margin-bottom:.15rem;">{name}</div>
+<a class="card cardPad cardLink" href={`/team/${slug}`} aria-label={`View ${name}'s profile`}>
+  <div style="display:flex; justify-content:space-between; gap:.9rem; align-items:flex-start;">
+    <div style="min-width:0;">
+      <div style="font-weight:800; font-size:1.15rem; letter-spacing:-0.01em; margin-bottom:.15rem;">{name}</div>
       <div class="muted" style="margin:0;">{role}</div>
     </div>
-    <span class="tag">Hire</span>
+    <span class="tag strong" style="white-space:nowrap;">View</span>
   </div>
 
-  <div class="muted" style="margin:.7rem 0 .85rem;">{summary}</div>
+  <div class="muted" style="margin:.75rem 0 .9rem; line-height:1.45;">
+    {summary}
+  </div>
 
-  <div class="tagRow">
-    {skills?.slice(0,4)?.map((t) => <span class="tag">{t}</span>)}
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; gap: 12px;">
+    <div class="tagRow">
+      {skills?.slice(0,4)?.map((t) => <span class="tag">{t}</span>)}
+    </div>
+    <span class="muted" style="font-weight:700; letter-spacing:-0.01em;">→</span>
   </div>
 </a>
