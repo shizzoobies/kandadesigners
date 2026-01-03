@@ -1,6 +1,7 @@
 ---
 const { name, slug, role, summary, skills, image } = Astro.props;
 ---
+<<<<<<< HEAD
 <a class="personCard card cardLink" href={`/team/${slug}`} aria-label={`View ${name}'s profile`}>
   <div class="personPortrait" aria-hidden="true">
     {image ? <img src={image} alt="" loading="lazy" decoding="async" /> : null}
@@ -9,10 +10,21 @@ const { name, slug, role, summary, skills, image } = Astro.props;
       <span aria-hidden="true">✦</span>
       <span>Portfolio</span>
     </div>
+=======
+<a class="card cardLink personCard" href={`/team/${slug}`}>
+  <div class="portraitFrame" aria-hidden="true">
+    {image ? (
+      <img class="portraitImg" src={image} alt="" loading="lazy" />
+    ) : (
+      <div class="portraitFallback"></div>
+    )}
+    <div class="portraitOverlay"></div>
+>>>>>>> b0f79ce (Phase 1 Push 4b: controlled portraits + wider gutters)
   </div>
 
   <div class="personBody">
     <div class="personTop">
+<<<<<<< HEAD
       <div class="personMeta">
         <div class="personName">{name}</div>
         <div class="muted">{role}</div>
@@ -29,6 +41,19 @@ const { name, slug, role, summary, skills, image } = Astro.props;
         {skills?.slice(0,4)?.map((t) => <span class="tag">{t}</span>)}
       </div>
       <span class="muted" style="font-size:.9rem;">/team/{slug}</span>
+=======
+      <div>
+        <div class="personName">{name}</div>
+        <div class="muted personRole">{role}</div>
+      </div>
+      <span class="tag">View</span>
+    </div>
+
+    <div class="muted personSummary">{summary}</div>
+
+    <div class="tagRow">
+      {skills?.slice(0,4)?.map((t) => <span class="tag">{t}</span>)}
+>>>>>>> b0f79ce (Phase 1 Push 4b: controlled portraits + wider gutters)
     </div>
   </div>
 </a>

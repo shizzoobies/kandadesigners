@@ -1,6 +1,7 @@
 ---
 name: "Kristina"
 role: "K–12 Education • Adult Learning • Instructional Support"
+image: "/images/people/kristina.jpg"
 email: "hello@kandadesigners.com"
 linkedin: "https://www.linkedin.com/"
 location: "Remote / US"

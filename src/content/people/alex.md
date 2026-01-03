@@ -1,6 +1,7 @@
 ---
 name: "Alex Anderson"
 role: "Instructional Design • Web Design • AI Audio"
+image: "/images/people/alex.jpg"
 email: "hello@kandadesigners.com"
 linkedin: "https://www.linkedin.com/"
 location: "Remote / US"
