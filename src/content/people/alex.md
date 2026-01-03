@@ -16,7 +16,6 @@ experienceHighlights:
   - "Ships fast prototypes and polishes them for production"
   - "Owns content, design, and build end to end"
 featured: true
-image: "/images/people/alex.jpg"
 ---
 
 I design learning that’s clear, practical, and easy to maintain.

@@ -19,7 +19,6 @@ experienceHighlights:
   - "Onboarded new technology, textbooks, and instructional tools"
   - "Led live learning environments and skills-based training"
 featured: true
-image: "/images/people/kristina.jpg"
 ---
 
 Kristina is an experienced educator with over 15 years in K–12 teaching, with deep expertise in elementary education and live instruction.
