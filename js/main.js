@@ -206,6 +206,63 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) paused = true;
 })();
 
+// ─── Contact Modal ────────────────────────────────
+(function () {
+  const modal    = document.getElementById('contact-modal');
+  const backdrop = document.getElementById('contact-modal-backdrop');
+  const closeBtn = document.getElementById('contact-modal-close');
+  if (!modal) return;
+
+  function openContactModal(e) {
+    e.preventDefault();
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeContactModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-open-contact]').forEach(el => {
+    el.addEventListener('click', openContactModal);
+  });
+
+  closeBtn?.addEventListener('click', closeContactModal);
+  backdrop?.addEventListener('click', closeContactModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeContactModal(); });
+
+  // Contact modal form submit (Web3Forms)
+  const modalForm    = document.getElementById('contact-modal-form');
+  const modalSuccess = document.getElementById('contact-modal-success');
+  if (modalForm) {
+    modalForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn  = modalForm.querySelector('.form-submit');
+      const orig = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        const res  = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(modalForm)
+        });
+        const json = await res.json();
+        if (json.success) {
+          modalForm.style.display = 'none';
+          if (modalSuccess) modalSuccess.style.display = 'block';
+        } else { throw new Error(); }
+      } catch {
+        btn.textContent = 'Something went wrong — try again';
+        btn.disabled = false;
+        setTimeout(() => { btn.textContent = orig; }, 3500);
+      }
+    });
+  }
+})();
+
 // ─── Contact form (Web3Forms) ─────────────────────
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {

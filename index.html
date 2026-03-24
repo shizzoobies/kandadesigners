@@ -6,7 +6,7 @@
   <title>K &amp; A Designs — Web Design, Video Production &amp; Instructional Design</title>
   <meta name="description" content="A husband and wife creative team delivering web design, video production, photography, and instructional design. Premium work. Real results." />
   <link rel="icon" href="images/favicon.png" sizes="512x512" type="image/png" />
-  <link rel="stylesheet" href="css/style.css?v=7" />
+  <link rel="stylesheet" href="css/style.css?v=9" />
 </head>
 <body>
 
@@ -27,7 +27,7 @@
         </div>
         <a href="projects/" class="nav-link">Projects</a>
         <a href="services/" class="nav-link">Services</a>
-        <a href="contact/" class="nav-cta nav-link">Book a Consultation</a>
+        <a href="contact/" class="nav-cta nav-link" data-open-contact>Book a Consultation</a>
       </div>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -41,13 +41,13 @@
     <a href="portfolio/alex/" style="padding-left: 1rem; font-size: 0.65rem;">Alex's Portfolio</a>
     <a href="portfolio/kristina/" style="padding-left: 1rem; font-size: 0.65rem;">Kristina's Portfolio</a>
     <a href="services/">Services</a>
-    <a href="contact/" class="mobile-cta">Book a Consultation</a>
+    <a href="contact/" class="mobile-cta" data-open-contact>Book a Consultation</a>
   </nav>
 
   <!-- ─── HERO ──────────────────────────────────── -->
   <section class="hero">
     <video class="hero-video" autoplay muted playsinline>
-      <source src="images/Intro%20Video.mp4" type="video/mp4" />
+      <source src="images/Intro%20Video%202.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay"></div>
 
@@ -64,7 +64,7 @@
 
       <div class="hero-actions">
         <a href="portfolio/" class="btn btn-primary">View Our Work</a>
-        <a href="contact/" class="btn btn-outline">Start a Project</a>
+        <a href="contact/" class="btn btn-outline" data-open-contact>Start a Project</a>
       </div>
 
     </div>
@@ -366,31 +366,58 @@
   </div>
 
   <!-- ─── TEAM ──────────────────────────────────── -->
-  <section class="section" style="padding-bottom: 0;">
+  <section class="section team-section">
     <div class="wrap">
       <div class="section-header fade-up">
         <span class="label">The Team</span>
         <h2>Two designers.<br><em>One shared vision.</em></h2>
       </div>
+
+      <div class="team-cards">
+
+        <div class="team-member fade-up">
+          <div class="team-member-photo-wrap">
+            <img class="team-member-photo" src="images/Kristina-Image.jpg" alt="Kristina Anderson" />
+          </div>
+          <div class="team-member-body">
+            <span class="team-member-num">01</span>
+            <div class="team-member-name">Kristina</div>
+            <div class="team-member-role">Instructional Designer &amp; Photographer</div>
+            <p>An educator and Instructional Designer with over 15 years of experience — from K‑12 classrooms to corporate training programs. She brings a deep understanding of how people learn and creates eLearning experiences that reflect that.</p>
+            <div class="team-member-skills">
+              <span class="team-skill-tag">Articulate 360</span>
+              <span class="team-skill-tag">Rise</span>
+              <span class="team-skill-tag">SCORM</span>
+              <span class="team-skill-tag">Curriculum Design</span>
+              <span class="team-skill-tag">Photography</span>
+            </div>
+            <a href="portfolio/kristina/" class="btn btn-ghost">View Her Work <span class="arr">→</span></a>
+          </div>
+        </div>
+
+        <div class="team-member team-member--reverse fade-up">
+          <div class="team-member-photo-wrap">
+            <img class="team-member-photo" src="images/Alex-Image.jpg" alt="Alexander Anderson" />
+          </div>
+          <div class="team-member-body">
+            <span class="team-member-num">02</span>
+            <div class="team-member-name">Alex</div>
+            <div class="team-member-role">Web Designer &amp; Media Producer</div>
+            <p>Designs immersive digital experiences engineered for clarity, accessibility, and measurable performance — from custom HTML interactives and cinematic video production to AI-driven systems built from scratch.</p>
+            <div class="team-member-skills">
+              <span class="team-skill-tag">Web Design</span>
+              <span class="team-skill-tag">Video Production</span>
+              <span class="team-skill-tag">Adobe Suite</span>
+              <span class="team-skill-tag">Canvas API</span>
+              <span class="team-skill-tag">AI Systems</span>
+            </div>
+            <a href="portfolio/alex/" class="btn btn-ghost">View His Work <span class="arr">→</span></a>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
-
-  <div class="team-split fade-up">
-    <div class="team-panel">
-      <img class="team-panel-img" src="images/Kristina-Image.jpg" alt="Kristina Anderson" />
-      <div class="team-panel-name">Kristina</div>
-      <div class="team-panel-role">Instructional Designer &amp; Photographer</div>
-      <p>Kristina is an educator and Instructional Designer with over 15 years of experience. From K-12 classrooms to corporate training programs, she brings a deep understanding of how people learn — and creates experiences that reflect that.</p>
-      <a href="portfolio/kristina/" class="btn btn-ghost">View Her Work <span class="arr">→</span></a>
-    </div>
-    <div class="team-panel">
-      <img class="team-panel-img" src="images/Alex-Image.jpg" alt="Alexander Anderson" />
-      <div class="team-panel-name">Alex</div>
-      <div class="team-panel-role">Web Designer &amp; Media Producer</div>
-      <p>Alex designs immersive digital experiences that feel like real software. Every build is engineered for clarity, accessibility, and measurable performance — from custom HTML interactives to cinematic video production and AI-driven systems.</p>
-      <a href="portfolio/alex/" class="btn btn-ghost">View His Work <span class="arr">→</span></a>
-    </div>
-  </div>
 
   <!-- ─── CTA ───────────────────────────────────── -->
   <section class="cta-strip fade-up">
@@ -398,7 +425,7 @@
       <span class="label" style="display: block; text-align: center; margin-bottom: 1.5rem;">Let's Work Together</span>
       <h2>Ready to build something<br><em>exceptional?</em></h2>
       <p>Tell us about your project — we'll schedule a free consultation and map out exactly how to bring it to life.</p>
-      <a href="contact/" class="btn btn-primary">Book a Free Consultation</a>
+      <a href="contact/" class="btn btn-primary" data-open-contact>Book a Free Consultation</a>
     </div>
   </section>
 
@@ -407,27 +434,28 @@
     <div class="wrap">
       <div class="footer-top">
         <div class="footer-brand">
-          <img src="images/approved-logo-transparent.png" alt="K &amp; A Designs" />
+          <img src="images/approved-logo-transparent.png" alt="K &amp; A Designs" class="footer-logo" />
           <p>Elevated design for brands that want to be noticed. Based in the US, working with clients nationwide.</p>
         </div>
         <div class="footer-col">
           <h4>Navigate</h4>
           <a href="/">Home</a>
-          <a href="portfolio/">Portfolio</a>
-          <a href="services/">Services</a>
-          <a href="contact/">Contact</a>
+          <a href="/portfolio/">Portfolio</a>
+          <a href="/projects/">Projects</a>
+          <a href="/services/">Services</a>
+          <a href="/contact/">Contact</a>
         </div>
         <div class="footer-col">
           <h4>Portfolio</h4>
-          <a href="portfolio/alex/">Alex's Work</a>
-          <a href="portfolio/kristina/">Kristina's Work</a>
+          <a href="/portfolio/alex/">Alex's Work</a>
+          <a href="/portfolio/kristina/">Kristina's Work</a>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
-          <a href="services/">Instructional Design</a>
-          <a href="services/">Video &amp; Audio</a>
-          <a href="services/">Social Media</a>
-          <a href="services/">Web Design</a>
+          <a href="/services/">Instructional Design</a>
+          <a href="/services/">Video &amp; Audio</a>
+          <a href="/services/">Social Media</a>
+          <a href="/services/">Web Design</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -436,6 +464,77 @@
       </div>
     </div>
   </footer>
+
+  <!-- Contact Modal -->
+  <div class="contact-modal" id="contact-modal" aria-hidden="true">
+    <div class="contact-modal-backdrop" id="contact-modal-backdrop"></div>
+    <div class="contact-modal-panel" role="dialog" aria-label="Book a Consultation">
+      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">✕</button>
+      <div class="contact-modal-head">
+        <span class="label">Get In Touch</span>
+        <h2>Let's build something<br><em>exceptional.</em></h2>
+        <p>Tell us about your project — we'll get back to you within 24 hours.</p>
+      </div>
+      <form id="contact-modal-form">
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY" />
+        <input type="hidden" name="subject" value="New Consultation Request — K &amp; A Designs" />
+        <input type="hidden" name="from_name" value="K &amp; A Designs Website" />
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" />
+        <div class="form-row">
+          <div class="field">
+            <label for="modal-name">Full Name *</label>
+            <input type="text" id="modal-name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="modal-email">Email *</label>
+            <input type="email" id="modal-email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="modal-company">Company (Optional)</label>
+          <input type="text" id="modal-company" name="company" placeholder="Your company or organization" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="modal-service">Project Type</label>
+            <select id="modal-service" name="service">
+              <option value="" disabled selected>Select a service...</option>
+              <option>Instructional Design / eLearning</option>
+              <option>Web &amp; Digital Design</option>
+              <option>Video &amp; Audio Production</option>
+              <option>Social Media &amp; Branding</option>
+              <option>AI Voice &amp; Audio</option>
+              <option>Photography</option>
+              <option>Multiple Services</option>
+              <option>Not Sure Yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="modal-budget">Estimated Budget</label>
+            <select id="modal-budget" name="budget">
+              <option value="" disabled selected>Select a range...</option>
+              <option>Under $500</option>
+              <option>$500 – $1,500</option>
+              <option>$1,500 – $5,000</option>
+              <option>$5,000 – $10,000</option>
+              <option>$10,000+</option>
+              <option>Let's discuss</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="modal-message">Tell Us About Your Project *</label>
+          <textarea id="modal-message" name="message" placeholder="Describe your project, goals, and timeline..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+        <p class="form-note">We'll get back to you within 24 hours.</p>
+      </form>
+      <div class="form-success" id="contact-modal-success" style="display:none;">
+        <h3>Message Received</h3>
+        <p>Thanks for reaching out. We'll be in touch within 24 hours to schedule your consultation.</p>
+      </div>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
