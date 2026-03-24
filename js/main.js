@@ -245,21 +245,20 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       btn.textContent = 'Sending...';
       btn.disabled = true;
       try {
-        const res  = await fetch('https://api.web3forms.com/submit', {
+        const res  = await fetch('https://formspree.io/f/mbdprgwb', {
           method: 'POST',
-          body: new FormData(modalForm)
+          body: new FormData(modalForm),
+          headers: { 'Accept': 'application/json' }
         });
         const json = await res.json();
-        console.log('Web3Forms response:', json);
-        if (json.success) {
+        if (json.ok) {
           modalForm.style.display = 'none';
           if (modalSuccess) modalSuccess.style.display = 'block';
         } else {
-          throw new Error(json.message || 'Submission failed');
+          throw new Error((json.errors || []).map(e => e.message).join(', ') || 'Submission failed');
         }
       } catch (err) {
-        console.error('Form error:', err);
-        btn.textContent = err.message || 'Something went wrong — try again';
+        btn.textContent = 'Something went wrong — try again';
         btn.disabled = false;
         setTimeout(() => { btn.textContent = orig; }, 4000);
       }
@@ -278,13 +277,14 @@ if (contactForm) {
     btn.disabled = true;
 
     try {
-      const res  = await fetch('https://api.web3forms.com/submit', {
+      const res  = await fetch('https://formspree.io/f/mbdprgwb', {
         method: 'POST',
-        body: new FormData(contactForm)
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
       });
       const json = await res.json();
 
-      if (json.success) {
+      if (json.ok) {
         contactForm.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
       } else {
