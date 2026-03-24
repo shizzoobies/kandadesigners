@@ -101,9 +101,13 @@
           </div>
 
           <div class="project-card-actions">
+            <button class="btn btn-primary" id="play-shooter-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:0.5rem;margin-top:-2px"><polygon points="5,3 19,12 5,21"/></svg>
+              Play Now
+            </button>
             <a href="https://github.com/shizzoobies/scrolling-shooter" class="btn btn-outline" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:0.5rem;margin-top:-2px"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              View on GitHub
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:0.5rem;margin-top:-2px"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
             </a>
           </div>
         </article>
@@ -169,6 +173,58 @@
     </div>
   </footer>
 
+  <!-- Game Modal -->
+  <div class="game-modal" id="game-modal" aria-hidden="true">
+    <div class="game-modal-backdrop" id="game-modal-backdrop"></div>
+    <div class="game-modal-panel" role="dialog" aria-label="Scrolling Shooter">
+      <div class="game-modal-header">
+        <div class="game-modal-title">
+          <span class="game-modal-name">Scrolling Shooter</span>
+          <span class="project-status project-status--active" style="margin-left:1rem;">
+            <span class="dot"></span>Live
+          </span>
+        </div>
+        <div class="game-modal-controls">
+          <a href="https://game.kandadesigner.com" target="_blank" rel="noopener" class="game-modal-external" title="Open in new tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <button class="game-modal-close" id="game-modal-close" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="game-modal-frame-wrap">
+        <iframe id="game-iframe" class="game-iframe" src="" title="Scrolling Shooter Game" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
   <script src="../js/main.js"></script>
+  <script>
+    const playBtn      = document.getElementById('play-shooter-btn');
+    const gameModal    = document.getElementById('game-modal');
+    const gameClose    = document.getElementById('game-modal-close');
+    const gameBackdrop = document.getElementById('game-modal-backdrop');
+    const gameIframe   = document.getElementById('game-iframe');
+    const GAME_URL     = 'https://game.kandadesigner.com';
+
+    function openGame() {
+      gameIframe.src = GAME_URL;
+      gameModal.classList.add('is-open');
+      gameModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeGame() {
+      gameModal.classList.remove('is-open');
+      gameModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      // small delay so close animation plays before iframe unloads
+      setTimeout(() => { gameIframe.src = ''; }, 300);
+    }
+
+    playBtn?.addEventListener('click', openGame);
+    gameClose?.addEventListener('click', closeGame);
+    gameBackdrop?.addEventListener('click', closeGame);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGame(); });
+  </script>
 </body>
 </html>
