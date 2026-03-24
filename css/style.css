@@ -112,7 +112,7 @@ h1, h2, h3, h4 {
 }
 
 /* Logo */
-.nav-logo { display: flex; align-items: center; gap: 0.75rem; align-self: flex-start; }
+.nav-logo { display: flex; align-items: center; gap: 0.75rem; align-self: flex-end; }
 .nav-logo img { height: 190px; width: auto; }
 .nav-logo-name {
   font-family: 'Montserrat', sans-serif;
