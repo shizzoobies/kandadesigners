@@ -1505,34 +1505,56 @@ a.ticker-item:hover {
 
 /* ─── CTA Strip ───────────────────────────────── */
 .cta-strip {
-  padding: 9rem 0;
-  text-align: center;
+  padding: 5rem 0;
   position: relative;
   overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .cta-strip::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(192,154,94,0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 120% at 0% 50%, rgba(192,154,94,0.06) 0%, transparent 65%);
   pointer-events: none;
 }
 
+.cta-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5rem;
+}
+
+.cta-strip-text {
+  flex: 1;
+  border-left: 2px solid var(--accent);
+  padding-left: 2rem;
+}
+
 .cta-strip h2 {
-  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
   font-weight: 300;
-  max-width: 700px;
-  margin: 0 auto 1.5rem;
-  position: relative;
+  line-height: 1.15;
+  margin: 0.5rem 0 0;
+}
+
+.cta-strip-action {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
+  max-width: 360px;
+  text-align: right;
 }
 
 .cta-strip p {
   color: var(--text-mid);
-  font-size: 1rem;
-  max-width: 460px;
-  margin: 0 auto 3rem;
-  position: relative;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  margin: 0;
 }
 
 /* ─── Page Hero (inner pages) ─────────────────── */
@@ -2114,6 +2136,8 @@ a.ticker-item:hover {
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   .form-row { grid-template-columns: 1fr; }
   .contact-modal-panel { padding: 2.5rem 1.5rem; }
+  .cta-strip-inner { flex-direction: column; gap: 2.5rem; }
+  .cta-strip-action { align-items: flex-start; text-align: left; max-width: 100%; }
   .footer-top { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
   .portfolio-section-head { flex-direction: column; align-items: flex-start; }
