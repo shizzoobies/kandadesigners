@@ -42,6 +42,13 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
 
+// ─── Work marquee pause on hover ─────────────────
+const workTrack = document.getElementById('work-marquee-track');
+if (workTrack) {
+  workTrack.addEventListener('mouseenter', () => workTrack.classList.add('paused'));
+  workTrack.addEventListener('mouseleave', () => workTrack.classList.remove('paused'));
+}
+
 // ─── Lightbox ────────────────────────────────────
 const lightbox    = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
