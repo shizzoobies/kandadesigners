@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — K &amp; A Designs</title>
+  <meta name="description" content="Ongoing and open-source projects from K &amp; A Designs — games, tools, and experiments built in public." />
+  <link rel="icon" href="../images/favicon.png" sizes="512x512" type="image/png" />
+  <link rel="stylesheet" href="../css/style.css?v=7" />
+</head>
+<body>
+
+  <nav class="site-nav solid" id="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><img src="../images/approved-logo-transparent.png" alt="K &amp; A Designs" /></a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <div class="nav-has-dropdown">
+          <a href="/portfolio/" class="nav-link">Portfolio</a>
+          <div class="nav-dropdown">
+            <a href="/portfolio/alex/">Alex's Portfolio</a>
+            <a href="/portfolio/kristina/">Kristina's Portfolio</a>
+          </div>
+        </div>
+        <a href="/projects/" class="nav-link active">Projects</a>
+        <a href="/services/" class="nav-link">Services</a>
+        <a href="/contact/" class="nav-cta nav-link">Book a Consultation</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/">Home</a>
+    <a href="/portfolio/">Portfolio</a>
+    <a href="/portfolio/alex/" style="padding-left:1rem;font-size:0.65rem;">Alex's Portfolio</a>
+    <a href="/portfolio/kristina/" style="padding-left:1rem;font-size:0.65rem;">Kristina's Portfolio</a>
+    <a href="/projects/">Projects</a>
+    <a href="/services/">Services</a>
+    <a href="/contact/" class="mobile-cta">Book a Consultation</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="wrap page-hero-inner">
+      <div class="page-hero-eyebrow">Built in Public</div>
+      <h1>Ongoing Projects</h1>
+      <p>Open-source work, experiments, and side projects — built, iterated, and shipped in the open.</p>
+    </div>
+  </header>
+
+  <!-- PROJECTS GRID -->
+  <section class="section">
+    <div class="wrap">
+
+      <div class="projects-grid">
+
+        <!-- Scrolling Shooter -->
+        <article class="project-card fade-up">
+          <div class="project-card-top">
+            <div class="project-card-icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <!-- Spaceship -->
+                <polygon points="24,6 30,20 24,17 18,20"/>
+                <line x1="24" y1="17" x2="24" y2="26"/>
+                <!-- Exhaust flame -->
+                <path d="M20 26 C20 26 22 32 24 30 C26 32 28 26 28 26"/>
+                <!-- Stars -->
+                <circle cx="8" cy="10" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="38" cy="16" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="12" cy="36" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="40" cy="38" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="6" cy="28" r="0.8" fill="currentColor" stroke="none"/>
+                <circle cx="42" cy="8" r="0.8" fill="currentColor" stroke="none"/>
+                <!-- Enemy -->
+                <rect x="32" y="8" width="8" height="6" rx="1"/>
+                <line x1="33" y1="8" x2="33" y2="5"/>
+                <line x1="39" y1="8" x2="39" y2="5"/>
+                <!-- Bullet -->
+                <line x1="24" y1="2" x2="24" y2="5"/>
+                <line x1="35" y1="30" x2="35" y2="38"/>
+              </svg>
+            </div>
+            <div class="project-card-meta">
+              <span class="project-status project-status--active">
+                <span class="dot"></span>In Development
+              </span>
+              <span class="project-type">Browser Game</span>
+            </div>
+          </div>
+
+          <h2 class="project-card-title">Scrolling Shooter</h2>
+          <p class="project-card-desc">A browser-based scrolling shooter game built from scratch — custom sprite graphics, integrated audio, and pure vanilla JavaScript. No frameworks, no libraries, just web APIs and game logic.</p>
+
+          <div class="project-tech-stack">
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">Canvas API</span>
+            <span class="tech-tag">Web Audio</span>
+          </div>
+
+          <div class="project-card-actions">
+            <a href="https://github.com/shizzoobies/scrolling-shooter" class="btn btn-outline" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:0.5rem;margin-top:-2px"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.4.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- More coming soon placeholder -->
+        <article class="project-card project-card--placeholder fade-up">
+          <div class="project-card-top">
+            <div class="project-card-icon project-card-icon--dim">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="24" cy="24" r="18"/>
+                <line x1="24" y1="16" x2="24" y2="24"/>
+                <line x1="24" y1="28" x2="24" y2="32"/>
+              </svg>
+            </div>
+            <div class="project-card-meta">
+              <span class="project-status project-status--soon">
+                <span class="dot dot--dim"></span>Coming Soon
+              </span>
+            </div>
+          </div>
+          <h2 class="project-card-title" style="color:var(--text-dim);">More Projects</h2>
+          <p class="project-card-desc" style="color:var(--text-dim);">Additional projects will be listed here as they launch. Check back soon.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-strip fade-up">
+    <div class="wrap">
+      <span class="label" style="display:block;text-align:center;margin-bottom:1.5rem;">Work With Us</span>
+      <h2>Have a project idea?<br><em>Let's build it.</em></h2>
+      <p>Whether it's a game, an app, or a full creative campaign — we're always interested in something new.</p>
+      <a href="/contact/" class="btn btn-primary">Start a Conversation</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../images/approved-logo-transparent.png" alt="K &amp; A Designs" />
+          <p>Elevated design for brands that want to be noticed.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="/">Home</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/services/">Services</a><a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Portfolio</h4>
+          <a href="/portfolio/alex/">Alex's Work</a><a href="/portfolio/kristina/">Kristina's Work</a>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="/services/">Instructional Design</a><a href="/services/">Video &amp; Audio</a><a href="/services/">Social Media</a><a href="/services/">Web Design</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 K &amp; A Designs. All rights reserved.</span>
+        <span>kandadesigner.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

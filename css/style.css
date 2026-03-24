@@ -1060,6 +1060,131 @@ a.ticker-item:hover {
   color: var(--text-dim);
 }
 
+/* ─── Projects Page ─────────────────────────────── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 32px rgba(192,154,94,0.10);
+}
+
+.project-card--placeholder {
+  border-style: dashed;
+  opacity: 0.5;
+}
+
+.project-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.project-card-icon {
+  width: 52px;
+  height: 52px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.project-card-icon--dim { color: var(--text-dim); }
+
+.project-card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.project-status {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.project-status--active { color: #6fcf97; }
+.project-status--soon   { color: var(--text-dim); }
+
+.project-status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6fcf97;
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.project-status .dot--dim {
+  background: var(--text-dim);
+  animation: none;
+}
+
+.project-type {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.project-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.project-card-desc {
+  color: var(--text-mid);
+  font-size: 0.925rem;
+  line-height: 1.8;
+  flex: 1;
+}
+
+.project-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(192,154,94,0.08);
+  border: 1px solid rgba(192,154,94,0.25);
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+}
+
+.project-card-actions { margin-top: 0.5rem; }
+
 /* ─── CTA Strip ───────────────────────────────── */
 .cta-strip {
   padding: 9rem 0;
