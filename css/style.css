@@ -368,6 +368,14 @@ h1, h2, h3, h4 {
   .hero-left { padding-left: calc((100vw - var(--max)) / 2 + var(--gutter)); }
 }
 
+/* Hero logo (large) */
+.hero-logo {
+  height: 160px;
+  width: auto;
+  margin-bottom: 2.5rem;
+  display: block;
+}
+
 .hero-label {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.65rem;
