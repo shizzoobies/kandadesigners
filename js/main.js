@@ -250,14 +250,18 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
           body: new FormData(modalForm)
         });
         const json = await res.json();
+        console.log('Web3Forms response:', json);
         if (json.success) {
           modalForm.style.display = 'none';
           if (modalSuccess) modalSuccess.style.display = 'block';
-        } else { throw new Error(); }
-      } catch {
-        btn.textContent = 'Something went wrong — try again';
+        } else {
+          throw new Error(json.message || 'Submission failed');
+        }
+      } catch (err) {
+        console.error('Form error:', err);
+        btn.textContent = err.message || 'Something went wrong — try again';
         btn.disabled = false;
-        setTimeout(() => { btn.textContent = orig; }, 3500);
+        setTimeout(() => { btn.textContent = orig; }, 4000);
       }
     });
   }
