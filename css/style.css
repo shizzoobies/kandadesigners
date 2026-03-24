@@ -1105,8 +1105,31 @@ a.ticker-item:hover {
 }
 
 .team-cards {
+  position: relative;
   display: flex;
   height: 640px;
+}
+
+.team-cards-header {
+  position: absolute;
+  top: 3rem;
+  left: 3rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.team-cards-header .label {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.team-cards-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.75rem, 2.5vw, 2.75rem);
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.15;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
 }
 
 .team-member {
