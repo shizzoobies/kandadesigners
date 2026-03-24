@@ -245,22 +245,22 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       btn.textContent = 'Sending...';
       btn.disabled = true;
       try {
+        const data = {};
+        new FormData(modalForm).forEach((v, k) => { data[k] = v; });
         const res  = await fetch('https://formspree.io/f/mbdprgwb', {
           method: 'POST',
-          body: new FormData(modalForm),
-          headers: { 'Accept': 'application/json' }
+          body: JSON.stringify(data),
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
         });
         const json = await res.json();
-        console.log('Formspree status:', res.status, json);
         if (json.ok) {
           modalForm.style.display = 'none';
           if (modalSuccess) modalSuccess.style.display = 'block';
         } else {
-          throw new Error((json.errors || []).map(e => e.message).join(', ') || 'Submission failed');
+          throw new Error();
         }
-      } catch (err) {
-        console.error('Form submit error:', err);
-        btn.textContent = err.message && err.message !== 'Submission failed' ? err.message : 'Something went wrong — try again';
+      } catch {
+        btn.textContent = 'Something went wrong — try again';
         btn.disabled = false;
         setTimeout(() => { btn.textContent = orig; }, 4000);
       }
@@ -279,10 +279,12 @@ if (contactForm) {
     btn.disabled = true;
 
     try {
+      const data = {};
+      new FormData(contactForm).forEach((v, k) => { data[k] = v; });
       const res  = await fetch('https://formspree.io/f/mbdprgwb', {
         method: 'POST',
-        body: new FormData(contactForm),
-        headers: { 'Accept': 'application/json' }
+        body: JSON.stringify(data),
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
       });
       const json = await res.json();
 
