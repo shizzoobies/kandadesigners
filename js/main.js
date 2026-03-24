@@ -251,6 +251,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
           headers: { 'Accept': 'application/json' }
         });
         const json = await res.json();
+        console.log('Formspree status:', res.status, json);
         if (json.ok) {
           modalForm.style.display = 'none';
           if (modalSuccess) modalSuccess.style.display = 'block';
@@ -258,7 +259,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
           throw new Error((json.errors || []).map(e => e.message).join(', ') || 'Submission failed');
         }
       } catch (err) {
-        btn.textContent = 'Something went wrong — try again';
+        console.error('Form submit error:', err);
+        btn.textContent = err.message && err.message !== 'Submission failed' ? err.message : 'Something went wrong — try again';
         btn.disabled = false;
         setTimeout(() => { btn.textContent = orig; }, 4000);
       }
