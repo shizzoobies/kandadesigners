@@ -647,11 +647,11 @@ a.ticker-item:hover {
 .orbit-node {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 118px;
-  padding: 0.9rem 1rem;
+  width: 136px;
+  padding: 1.1rem 1rem 1rem;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 6px;
   text-align: center;
   cursor: pointer;
   transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
@@ -662,23 +662,28 @@ a.ticker-item:hover {
 .orbit-node.is-active {
   border-color: var(--accent);
   background: var(--surface-2);
-  box-shadow: 0 0 20px rgba(192,154,94,0.15);
+  box-shadow: 0 0 28px rgba(192,154,94,0.18);
 }
 
-.orbit-node-num {
+.orbit-node-icon {
   display: block;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.52rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 0.6rem;
   color: var(--accent);
-  margin-bottom: 0.45rem;
+  opacity: 0.7;
+  transition: opacity 0.25s;
+}
+
+.orbit-node:hover .orbit-node-icon,
+.orbit-node.is-active .orbit-node-icon {
+  opacity: 1;
 }
 
 .orbit-node-name {
   display: block;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 400;
   color: var(--text);
   line-height: 1.35;

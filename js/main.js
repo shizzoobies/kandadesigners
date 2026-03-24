@@ -156,7 +156,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 
   function tick() {
     if (!paused) {
-      rot += 0.003;
+      rot += 0.0008;
       positionNodes();
       setActive(nearestToTop());
     }
