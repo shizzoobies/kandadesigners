@@ -370,10 +370,11 @@ h1, h2, h3, h4 {
 
 /* Hero logo (large) */
 .hero-logo {
-  height: 160px;
+  height: 240px;
   width: auto;
   margin-bottom: 2.5rem;
   display: block;
+  background: none;
 }
 
 .hero-label {
@@ -450,7 +451,8 @@ h1, h2, h3, h4 {
   overflow: hidden;
 }
 
-.hero-right img {
+.hero-right img,
+.hero-right video {
   position: absolute;
   inset: 0;
   width: 100%;
