@@ -6,12 +6,14 @@
   <title>K &amp; A Designs — Web Design, Video Production &amp; Instructional Design</title>
   <meta name="description" content="A husband and wife creative team delivering web design, video production, photography, and instructional design. Premium work. Real results." />
   <link rel="icon" href="images/favicon.png" sizes="512x512" type="image/png" />
-  <link rel="stylesheet" href="css/style.css?v=9" />
+  <link rel="stylesheet" href="css/style.css?v=10" />
 </head>
 <body>
 
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
   <!-- ─── NAV ──────────────────────────────────── -->
-  <nav class="site-nav" id="site-nav">
+  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="/" class="nav-logo">
         <img src="images/approved-logo-transparent.png" alt="K &amp; A Designs" />
@@ -35,7 +37,7 @@
     </div>
   </nav>
 
-  <nav class="mobile-menu" id="mobile-menu">
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
     <a href="/">Home</a>
     <a href="portfolio/">Portfolio</a>
     <a href="portfolio/alex/" style="padding-left: 1rem; font-size: 0.65rem;">Alex's Portfolio</a>
@@ -43,6 +45,8 @@
     <a href="services/">Services</a>
     <a href="contact/" class="mobile-cta" data-open-contact>Book a Consultation</a>
   </nav>
+
+  <main id="main-content">
 
   <!-- ─── HERO ──────────────────────────────────── -->
   <section class="hero">
@@ -209,7 +213,7 @@
   <!-- Services Modal -->
   <div class="svc-modal" id="svc-modal" aria-hidden="true">
     <div class="svc-modal-backdrop" id="svc-modal-backdrop"></div>
-    <div class="svc-modal-panel" role="dialog" aria-label="All Services">
+    <div class="svc-modal-panel" role="dialog" aria-label="All Services" aria-modal="true">
       <button class="svc-modal-close" id="svc-modal-close" aria-label="Close">✕</button>
       <div class="svc-modal-head">
         <span class="label">All Services</span>
@@ -256,7 +260,7 @@
       <div class="work-marquee-track" id="work-marquee-track">
 
         <!-- Set 1 -->
-        <div class="work-card gallery-item" data-full="images/Rise-Portfolio.png">
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="images/Rise-Portfolio.png">
           <img src="images/Rise-Portfolio.png" alt="eLearning Development" />
           <div class="work-card-overlay">
             <div class="work-card-text">
@@ -268,7 +272,7 @@
             </div>
           </div>
         </div>
-        <div class="work-card gallery-item" data-full="images/API-Portfolio.png">
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="images/API-Portfolio.png">
           <img src="images/API-Portfolio.png" alt="Search Performance" />
           <div class="work-card-overlay">
             <div class="work-card-text">
@@ -280,7 +284,7 @@
             </div>
           </div>
         </div>
-        <div class="work-card gallery-item" data-full="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
           <img src="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="Book Cover Design" />
           <div class="work-card-overlay">
             <div class="work-card-text">
@@ -294,7 +298,7 @@
         </div>
 
         <!-- Set 2 — duplicate for seamless loop -->
-        <div class="work-card gallery-item" data-full="images/Rise-Portfolio.png">
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="images/Rise-Portfolio.png">
           <img src="images/Rise-Portfolio.png" alt="eLearning Development" />
           <div class="work-card-overlay">
             <div class="work-card-text">
@@ -306,7 +310,7 @@
             </div>
           </div>
         </div>
-        <div class="work-card gallery-item" data-full="images/API-Portfolio.png">
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="images/API-Portfolio.png">
           <img src="images/API-Portfolio.png" alt="Search Performance" />
           <div class="work-card-overlay">
             <div class="work-card-text">
@@ -318,7 +322,7 @@
             </div>
           </div>
         </div>
-        <div class="work-card gallery-item" data-full="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
           <img src="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="Book Cover Design" />
           <div class="work-card-overlay">
             <div class="work-card-text">
@@ -413,6 +417,8 @@
     </div>
   </section>
 
+  </main>
+
   <!-- ─── FOOTER ────────────────────────────────── -->
   <footer class="site-footer">
     <div class="wrap">
@@ -452,7 +458,7 @@
   <!-- Contact Modal -->
   <div class="contact-modal" id="contact-modal" aria-hidden="true">
     <div class="contact-modal-backdrop" id="contact-modal-backdrop"></div>
-    <div class="contact-modal-panel" role="dialog" aria-label="Book a Consultation">
+    <div class="contact-modal-panel" role="dialog" aria-label="Book a Consultation" aria-modal="true">
       <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">✕</button>
       <div class="contact-modal-head">
         <span class="label">Get In Touch</span>

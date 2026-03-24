@@ -54,23 +54,38 @@ const lightbox    = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxClose = document.getElementById('lightbox-close');
 
+let lightboxTrigger = null;
+
+function openLightbox(item) {
+  const img  = item.querySelector('img');
+  const full = item.dataset.full || img?.src;
+  const alt  = img?.alt || '';
+  if (lightbox && lightboxImg && full) {
+    lightboxImg.src = full;
+    lightboxImg.alt = alt;
+    lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lightboxTrigger = item;
+    lightboxClose?.focus();
+  }
+}
+
 document.querySelectorAll('.gallery-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const img  = item.querySelector('img');
-    const full = item.dataset.full || img?.src;
-    if (lightbox && lightboxImg && full) {
-      lightboxImg.src = full;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+  item.addEventListener('click', () => openLightbox(item));
+  item.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(item); }
   });
 });
 
 function closeLightbox() {
   if (!lightbox) return;
   lightbox.classList.remove('active');
+  lightbox.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   if (lightboxImg) lightboxImg.src = '';
+  lightboxTrigger?.focus();
+  lightboxTrigger = null;
 }
 
 lightboxClose?.addEventListener('click', closeLightbox);
@@ -213,17 +228,36 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   const closeBtn = document.getElementById('contact-modal-close');
   if (!modal) return;
 
+  let contactTrigger = null;
+
+  const focusable = 'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
+
+  function trapFocus(e) {
+    const els = Array.from(modal.querySelectorAll(focusable));
+    const first = els[0], last = els[els.length - 1];
+    if (e.key === 'Tab') {
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
+
   function openContactModal(e) {
     e.preventDefault();
+    contactTrigger = e.currentTarget;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    modal.addEventListener('keydown', trapFocus);
+    setTimeout(() => closeBtn?.focus(), 50);
   }
 
   function closeContactModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    modal.removeEventListener('keydown', trapFocus);
+    contactTrigger?.focus();
+    contactTrigger = null;
   }
 
   document.querySelectorAll('[data-open-contact]').forEach(el => {
