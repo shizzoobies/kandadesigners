@@ -70,6 +70,135 @@ lightboxClose?.addEventListener('click', closeLightbox);
 lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
+// ─── Services Orbital ────────────────────────────
+(function () {
+  const stage = document.getElementById('orbit-stage');
+  if (!stage) return;
+
+  const nodes      = Array.from(stage.querySelectorAll('.orbit-node'));
+  const ringDash   = stage.querySelector('.orbit-ring-dash');
+  const detailInner = document.getElementById('orbit-detail-inner');
+  const odNum      = document.getElementById('od-num');
+  const odName     = document.getElementById('od-name');
+  const odDesc     = document.getElementById('od-desc');
+  const odList     = document.getElementById('od-list');
+  const centerBtn  = document.getElementById('orbit-center');
+  const modal      = document.getElementById('svc-modal');
+  const modalClose = document.getElementById('svc-modal-close');
+  const backdrop   = document.getElementById('svc-modal-backdrop');
+
+  const SERVICES = [
+    {
+      num: '01', name: 'Instructional Design',
+      desc: 'Backed by 15+ years of education experience — from K‑12 classrooms to corporate training programs.',
+      items: ['Articulate 360 & Rise', 'SCORM & LMS delivery', 'End-to-end course development', 'SME collaboration']
+    },
+    {
+      num: '02', name: 'Web & Digital Design',
+      desc: 'Modern, conversion-focused websites engineered for clarity, accessibility, and measurable performance.',
+      items: ['Custom website design', 'SEO strategy & analytics', 'HTML interactives', 'AI-powered systems']
+    },
+    {
+      num: '03', name: 'Video & Audio Production',
+      desc: 'Clean sound, sharp visuals — from corporate training content to social-ready short-form video.',
+      items: ['Adobe Premiere editing', 'ElevenLabs AI voice', 'Motion graphics', 'Captioning & accessibility']
+    },
+    {
+      num: '04', name: 'Social Media & Branding',
+      desc: 'Strategy-first content powered by keywords, AI, and a consistent visual voice across every channel.',
+      items: ['Brand voice & consistency', 'Keyword-led content planning', 'AI-assisted creation', 'Content calendars']
+    }
+  ];
+
+  const RADIUS = 172;
+  const TOTAL  = nodes.length;
+  let rot      = -Math.PI / 2;
+  let paused   = false;
+  let activeIdx = -1;
+  let raf;
+
+  function cx() { return stage.offsetWidth  / 2; }
+  function cy() { return stage.offsetHeight / 2; }
+
+  function positionNodes() {
+    nodes.forEach((node, i) => {
+      const angle = (i / TOTAL) * Math.PI * 2 + rot;
+      node.style.left = (cx() + Math.cos(angle) * RADIUS) + 'px';
+      node.style.top  = (cy() + Math.sin(angle) * RADIUS) + 'px';
+    });
+  }
+
+  function nearestToTop() {
+    let best = 0, bestDist = Infinity;
+    nodes.forEach((_, i) => {
+      const angle = (i / TOTAL) * Math.PI * 2 + rot;
+      let diff = ((angle + Math.PI / 2) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+      if (diff > Math.PI) diff = Math.PI * 2 - diff;
+      if (diff < bestDist) { bestDist = diff; best = i; }
+    });
+    return best;
+  }
+
+  function setActive(idx) {
+    if (idx === activeIdx) return;
+    activeIdx = idx;
+    nodes.forEach((n, i) => n.classList.toggle('is-active', i === idx));
+    detailInner.classList.add('switching');
+    setTimeout(() => {
+      const s = SERVICES[idx];
+      odNum.textContent  = s.num;
+      odName.textContent = s.name;
+      odDesc.textContent = s.desc;
+      odList.innerHTML   = s.items.map(t => `<li>${t}</li>`).join('');
+      detailInner.classList.remove('switching');
+    }, 180);
+  }
+
+  function tick() {
+    if (!paused) {
+      rot += 0.003;
+      positionNodes();
+      setActive(nearestToTop());
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  positionNodes();
+  setActive(0);
+  tick();
+
+  nodes.forEach((node, i) => {
+    node.addEventListener('mouseenter', () => {
+      paused = true;
+      ringDash && ringDash.classList.add('paused');
+      setActive(i);
+    });
+    node.addEventListener('mouseleave', () => {
+      paused = false;
+      ringDash && ringDash.classList.remove('paused');
+    });
+    node.addEventListener('click', () => { window.location.href = 'services/'; });
+  });
+
+  function openModal()  {
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  centerBtn?.addEventListener('click', openModal);
+  modalClose?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) paused = true;
+})();
+
 // ─── Contact form (Web3Forms) ─────────────────────
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {

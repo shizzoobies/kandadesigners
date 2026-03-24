@@ -109,7 +109,7 @@
     </div>
   </div>
 
-  <!-- ─── SERVICES LIST ─────────────────────────── -->
+  <!-- ─── SERVICES ORBITAL ─────────────────────── -->
   <section class="section">
     <div class="wrap">
       <div class="section-header fade-up">
@@ -118,42 +118,95 @@
         <p>From immersive eLearning to cinematic video — we build work that performs, not just looks good.</p>
       </div>
 
-      <div class="services-list stagger">
-        <a href="services/" class="service-row fade-up">
-          <span class="service-row-num">01</span>
-          <div class="service-row-body">
-            <div class="service-row-name">Instructional Design</div>
-            <div class="service-row-sub">Articulate 360, Rise, SCORM, LMS — 100+ courses built</div>
+      <div class="orbit-wrap fade-up">
+
+        <!-- Orbit stage -->
+        <div class="orbit-stage" id="orbit-stage">
+          <svg class="orbit-ring-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="240" cy="240" r="172" fill="none" stroke="rgba(192,154,94,0.12)" stroke-width="1"/>
+            <circle class="orbit-ring-dash" cx="240" cy="240" r="172" fill="none"
+                    stroke="rgba(192,154,94,0.45)" stroke-width="1" stroke-dasharray="18 14"/>
+          </svg>
+
+          <button class="orbit-node" data-index="0">
+            <span class="orbit-node-num">01</span>
+            <span class="orbit-node-name">Instructional<br>Design</span>
+          </button>
+          <button class="orbit-node" data-index="1">
+            <span class="orbit-node-num">02</span>
+            <span class="orbit-node-name">Web &amp;<br>Digital</span>
+          </button>
+          <button class="orbit-node" data-index="2">
+            <span class="orbit-node-num">03</span>
+            <span class="orbit-node-name">Video &amp;<br>Audio</span>
+          </button>
+          <button class="orbit-node" data-index="3">
+            <span class="orbit-node-num">04</span>
+            <span class="orbit-node-name">Social &amp;<br>Branding</span>
+          </button>
+
+          <button class="orbit-center" id="orbit-center" aria-label="View all services">
+            <span class="orbit-center-eye">Explore</span>
+            <span class="orbit-center-lbl">All Services</span>
+          </button>
+        </div>
+
+        <!-- Active service detail -->
+        <div class="orbit-detail">
+          <div class="orbit-detail-inner" id="orbit-detail-inner">
+            <span class="orbit-detail-num" id="od-num">01</span>
+            <h3 class="orbit-detail-name" id="od-name">Instructional Design</h3>
+            <p class="orbit-detail-desc" id="od-desc">Backed by 15+ years of education experience — from K‑12 classrooms to corporate training programs.</p>
+            <ul class="orbit-detail-list" id="od-list">
+              <li>Articulate 360 &amp; Rise</li>
+              <li>SCORM &amp; LMS delivery</li>
+              <li>End-to-end course development</li>
+              <li>SME collaboration</li>
+            </ul>
+            <a href="services/" class="btn btn-ghost">View Service <span class="arr">→</span></a>
           </div>
-          <span class="service-row-arr">→</span>
-        </a>
-        <a href="services/" class="service-row fade-up">
-          <span class="service-row-num">02</span>
-          <div class="service-row-body">
-            <div class="service-row-name">Web &amp; Digital Design</div>
-            <div class="service-row-sub">Custom sites, SEO, HTML interactives, AI-powered systems</div>
-          </div>
-          <span class="service-row-arr">→</span>
-        </a>
-        <a href="services/" class="service-row fade-up">
-          <span class="service-row-num">03</span>
-          <div class="service-row-body">
-            <div class="service-row-name">Video &amp; Audio Production</div>
-            <div class="service-row-sub">Adobe Premiere, ElevenLabs AI voice, thumbnails, motion graphics</div>
-          </div>
-          <span class="service-row-arr">→</span>
-        </a>
-        <a href="services/" class="service-row fade-up">
-          <span class="service-row-num">04</span>
-          <div class="service-row-body">
-            <div class="service-row-name">Social Media &amp; Branding</div>
-            <div class="service-row-sub">Keyword-led strategy, AI-assisted content, visual consistency</div>
-          </div>
-          <span class="service-row-arr">→</span>
-        </a>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- Services Modal -->
+  <div class="svc-modal" id="svc-modal" aria-hidden="true">
+    <div class="svc-modal-backdrop" id="svc-modal-backdrop"></div>
+    <div class="svc-modal-panel" role="dialog" aria-label="All Services">
+      <button class="svc-modal-close" id="svc-modal-close" aria-label="Close">✕</button>
+      <div class="svc-modal-head">
+        <span class="label">All Services</span>
+        <h2>What we offer</h2>
+      </div>
+      <div class="svc-modal-grid">
+        <a href="services/" class="svc-modal-card">
+          <span class="svc-modal-num">01</span>
+          <h3>Instructional Design</h3>
+          <p>Articulate 360, Rise, SCORM, LMS — 100+ courses built from concept to launch.</p>
+        </a>
+        <a href="services/" class="svc-modal-card">
+          <span class="svc-modal-num">02</span>
+          <h3>Web &amp; Digital Design</h3>
+          <p>Custom sites, SEO, HTML interactives, and AI-powered systems.</p>
+        </a>
+        <a href="services/" class="svc-modal-card">
+          <span class="svc-modal-num">03</span>
+          <h3>Video &amp; Audio Production</h3>
+          <p>Adobe Premiere, ElevenLabs AI voice, motion graphics, captioning.</p>
+        </a>
+        <a href="services/" class="svc-modal-card">
+          <span class="svc-modal-num">04</span>
+          <h3>Social Media &amp; Branding</h3>
+          <p>Keyword-led strategy, AI-assisted content, visual consistency.</p>
+        </a>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem;">
+        <a href="services/" class="btn btn-primary">See Full Services Page</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ─── WORK SHOWCASE ─────────────────────────── -->
   <section class="section" style="padding-top: 0;">
@@ -200,16 +253,16 @@
       <div class="stat-label">Courses Built</div>
     </div>
     <div class="stat">
-      <div class="stat-num">15+</div>
-      <div class="stat-label">Years Experience</div>
+      <div class="stat-num">30+</div>
+      <div class="stat-label">Years Combined Experience</div>
     </div>
     <div class="stat">
       <div class="stat-num">2</div>
       <div class="stat-label">Dedicated Designers</div>
     </div>
     <div class="stat">
-      <div class="stat-num">∞</div>
-      <div class="stat-label">Projects Considered</div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">Ongoing Projects</div>
     </div>
   </div>
 
