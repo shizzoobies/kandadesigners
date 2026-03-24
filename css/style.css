@@ -91,6 +91,7 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   transition: background var(--t), border-color var(--t);
+  overflow: visible;
 }
 
 .site-nav.solid {
@@ -112,7 +113,7 @@ h1, h2, h3, h4 {
 
 /* Logo */
 .nav-logo { display: flex; align-items: center; gap: 0.75rem; }
-.nav-logo img { height: 38px; width: auto; }
+.nav-logo img { height: 190px; width: auto; }
 .nav-logo-name {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.8rem;
