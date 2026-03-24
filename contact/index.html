@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Consultation — K &amp; A Designs</title>
+  <meta name="description" content="Tell us about your project and we'll schedule a free consultation to explore how we can bring it to life." />
+  <link rel="icon" href="../images/site-logo.png" type="image/png" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <nav class="site-nav solid" id="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><img src="../images/site-logo.png" alt="K &amp; A Designs" /></a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <div class="nav-has-dropdown">
+          <a href="/portfolio/" class="nav-link">Portfolio</a>
+          <div class="nav-dropdown">
+            <a href="/portfolio/alex/">Alex's Portfolio</a>
+            <a href="/portfolio/kristina/">Kristina's Portfolio</a>
+          </div>
+        </div>
+        <a href="/services/" class="nav-link">Services</a>
+        <a href="/contact/" class="nav-cta nav-link active">Book a Consultation</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/">Home</a>
+    <a href="/portfolio/">Portfolio</a>
+    <a href="/portfolio/alex/" style="padding-left:1rem;font-size:0.65rem;">Alex's Portfolio</a>
+    <a href="/portfolio/kristina/" style="padding-left:1rem;font-size:0.65rem;">Kristina's Portfolio</a>
+    <a href="/services/">Services</a>
+    <a href="/contact/" class="mobile-cta">Book a Consultation</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="wrap page-hero-inner">
+      <div class="page-hero-eyebrow">Get In Touch</div>
+      <h1>Let's Build Something<br><em>Exceptional.</em></h1>
+      <p>Tell us about your project — we'll schedule a free consultation and map out exactly how to bring it to life.</p>
+    </div>
+  </header>
+
+  <!-- CONTACT SECTION -->
+  <section class="section">
+    <div class="wrap">
+      <div class="contact-grid">
+
+        <!-- LEFT: Info -->
+        <div class="contact-info fade-up">
+          <span class="label">What to Expect</span>
+          <h2>A real conversation,<br><em>no pressure.</em></h2>
+          <p>Every project starts with a free, honest conversation. We'll talk through your goals, timeline, and budget — then figure out the best path forward together. No templates, no upsells.</p>
+
+          <div class="contact-meta">
+            <div class="contact-meta-item">
+              <div class="contact-meta-icon">✉</div>
+              <div class="contact-meta-text">
+                <strong>Email</strong>
+                <span>asoalexander@gmail.com</span>
+              </div>
+            </div>
+            <div class="contact-meta-item">
+              <div class="contact-meta-icon">⚡</div>
+              <div class="contact-meta-text">
+                <strong>Response Time</strong>
+                <span>Fast and personal — usually within 24 hours</span>
+              </div>
+            </div>
+            <div class="contact-meta-item">
+              <div class="contact-meta-icon">🌐</div>
+              <div class="contact-meta-text">
+                <strong>Location</strong>
+                <span>Based in the US — working with clients nationwide</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service list -->
+          <div style="margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border);">
+            <span class="label" style="display: block; margin-bottom: 1.25rem;">Services We Offer</span>
+            <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+              <span style="font-size: 0.875rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.75rem;">
+                <span style="color: var(--accent); font-size: 0.7rem;">—</span> Instructional Design &amp; eLearning
+              </span>
+              <span style="font-size: 0.875rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.75rem;">
+                <span style="color: var(--accent); font-size: 0.7rem;">—</span> Web &amp; Digital Design
+              </span>
+              <span style="font-size: 0.875rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.75rem;">
+                <span style="color: var(--accent); font-size: 0.7rem;">—</span> Video &amp; Audio Production
+              </span>
+              <span style="font-size: 0.875rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.75rem;">
+                <span style="color: var(--accent); font-size: 0.7rem;">—</span> Social Media &amp; Branding
+              </span>
+              <span style="font-size: 0.875rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.75rem;">
+                <span style="color: var(--accent); font-size: 0.7rem;">—</span> AI Voice &amp; Audio Solutions
+              </span>
+              <span style="font-size: 0.875rem; color: var(--text-mid); display: flex; align-items: center; gap: 0.75rem;">
+                <span style="color: var(--accent); font-size: 0.7rem;">—</span> Photography &amp; Visual Media
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Form -->
+        <div class="fade-up">
+          <div class="form-card">
+            <form id="contact-form">
+              <!-- Replace YOUR_ACCESS_KEY with your key from web3forms.com -->
+              <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY" />
+              <input type="hidden" name="subject" value="New Consultation Request — K &amp; A Designs" />
+              <input type="hidden" name="from_name" value="K &amp; A Designs Website" />
+              <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" />
+
+              <div class="form-row">
+                <div class="field">
+                  <label for="name">Full Name *</label>
+                  <input type="text" id="name" name="name" placeholder="Your name" required />
+                </div>
+                <div class="field">
+                  <label for="email">Email *</label>
+                  <input type="email" id="email" name="email" placeholder="your@email.com" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="company">Company (Optional)</label>
+                <input type="text" id="company" name="company" placeholder="Your company or organization" />
+              </div>
+
+              <div class="form-row">
+                <div class="field">
+                  <label for="service">Project Type</label>
+                  <select id="service" name="service">
+                    <option value="" disabled selected>Select a service...</option>
+                    <option>Instructional Design / eLearning</option>
+                    <option>Web &amp; Digital Design</option>
+                    <option>Video &amp; Audio Production</option>
+                    <option>Social Media &amp; Branding</option>
+                    <option>AI Voice &amp; Audio</option>
+                    <option>Photography</option>
+                    <option>Multiple Services</option>
+                    <option>Not Sure Yet</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="budget">Estimated Budget</label>
+                  <select id="budget" name="budget">
+                    <option value="" disabled selected>Select a range...</option>
+                    <option>Under $500</option>
+                    <option>$500 – $1,500</option>
+                    <option>$1,500 – $5,000</option>
+                    <option>$5,000 – $10,000</option>
+                    <option>$10,000+</option>
+                    <option>Let's discuss</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field span-2">
+                <label for="message">Tell Us About Your Project *</label>
+                <textarea id="message" name="message" placeholder="Describe your project, goals, and timeline..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+              <p class="form-note">We'll get back to you within 24 hours.</p>
+            </form>
+
+            <div class="form-success" id="form-success">
+              <h3>Message Received</h3>
+              <p>Thanks for reaching out. We'll be in touch within 24 hours to schedule your consultation.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../images/site-logo.png" alt="K &amp; A Designs" />
+          <p>Elevated design for brands that want to be noticed.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="/">Home</a><a href="/portfolio/">Portfolio</a><a href="/services/">Services</a><a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Portfolio</h4>
+          <a href="/portfolio/alex/">Alex's Work</a><a href="/portfolio/kristina/">Kristina's Work</a>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="/services/">Instructional Design</a><a href="/services/">Video &amp; Audio</a><a href="/services/">Social Media</a><a href="/services/">Web Design</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 K &amp; A Designs. All rights reserved.</span>
+        <span>kandadesigner.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

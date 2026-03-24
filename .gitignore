@@ -1,0 +1,15 @@
+# Claude Code internal files
+.claude/
+
+# WordPress export (not needed for the live site)
+*.xml
+images from Wordpress/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
