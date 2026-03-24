@@ -495,6 +495,11 @@ h1, h2, h3, h4 {
   color: var(--text-dim);
   padding: 0 3rem;
   flex-shrink: 0;
+  transition: color 0.2s;
+}
+a.ticker-item:hover {
+  color: var(--accent);
+  cursor: pointer;
 }
 
 .ticker-sep {
