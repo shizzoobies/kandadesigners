@@ -21,16 +21,15 @@
 
     .alex-hero-grid {
       display: grid;
-      grid-template-columns: 55% 45%;
-      min-height: calc(92vh - var(--nav-h));
+      grid-template-columns: 58% 42%;
+      align-items: center;
     }
 
     .alex-hero-left {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 5rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
-      padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+      padding: 5rem var(--gutter) 5rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
       position: relative;
       z-index: 2;
     }
@@ -67,26 +66,31 @@
 
     .alex-hero-disciplines {
       margin-bottom: 2.75rem;
-      border-top: 1px solid var(--border);
     }
-    .alex-hero-disciplines span {
+    .alex-discipline {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .alex-discipline:first-child { border-top: 1px solid var(--border); }
+    .alex-disc-num {
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      flex-shrink: 0;
+      min-width: 1.25rem;
+    }
+    .alex-disc-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-mid);
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: color var(--t);
-    }
-    .alex-hero-disciplines span em {
-      font-style: normal;
-      color: var(--accent);
-      font-size: 0.65rem;
     }
 
     .alex-hero-ctas {
@@ -97,34 +101,35 @@
     }
 
     .alex-hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 4rem 3rem 4rem 0;
       position: relative;
-      overflow: hidden;
     }
     .alex-hero-right img {
       width: 100%;
-      height: 100%;
+      max-width: 340px;
+      height: 460px;
       object-fit: cover;
       object-position: center top;
       display: block;
+      border-radius: 4px;
+      position: relative;
+      z-index: 1;
     }
-    /* Gradient fade on left edge so photo bleeds into background */
-    .alex-hero-right::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      width: 120px;
-      background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
-      z-index: 2;
-      pointer-events: none;
-    }
-    /* Vertical gold accent line */
+    /* Offset gold frame behind the photo */
     .alex-hero-right::after {
       content: '';
       position: absolute;
-      top: 10%; bottom: 10%; left: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%);
-      z-index: 3;
+      top: calc(4rem + 16px);
+      left: 16px;
+      width: 340px;
+      max-width: calc(100% - 3rem - 16px);
+      height: 460px;
+      border: 1px solid rgba(192,154,94,0.35);
+      border-radius: 4px;
+      z-index: 0;
     }
 
     /* Stats bar */
@@ -226,42 +231,43 @@
       padding: 5rem 0;
       border-bottom: 1px solid var(--border);
     }
+    .alex-quote-inner {
+      display: grid;
+      grid-template-columns: 3px 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      max-width: 760px;
+    }
+    .alex-quote-bar {
+      background: linear-gradient(to bottom, transparent, var(--accent) 15%, var(--accent) 85%, transparent);
+      width: 3px;
+      align-self: stretch;
+    }
     .alex-quote blockquote {
-      max-width: 820px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+      font-size: clamp(1.15rem, 1.8vw, 1.5rem);
       font-weight: 300;
       font-style: italic;
-      line-height: 1.6;
+      line-height: 1.7;
       color: var(--text-mid);
-    }
-    .alex-quote blockquote::before {
-      content: '\201C';
-      font-size: 6rem;
-      line-height: 0;
-      vertical-align: -2.25rem;
-      margin-right: 0.15rem;
-      color: var(--accent);
-      font-style: normal;
-      font-weight: 300;
+      margin: 0 0 1.5rem;
     }
     .alex-quote-attr {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-top: 2rem;
+      gap: 0.75rem;
     }
     .alex-quote-attr::before {
       content: '';
       display: block;
-      width: 32px;
+      width: 20px;
       height: 1px;
       background: var(--accent);
       flex-shrink: 0;
     }
     .alex-quote-attr span {
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
@@ -580,14 +586,19 @@
     @media (max-width: 1000px) {
       .alex-hero-grid { grid-template-columns: 1fr; }
       .alex-hero-right {
-        height: 55vw;
-        max-height: 480px;
+        justify-content: center;
+        padding: 2rem var(--gutter) 3rem;
       }
-      .alex-hero-right::before { width: 60px; }
+      .alex-hero-right img {
+        max-width: 280px;
+        height: 360px;
+      }
+      .alex-hero-right::after { display: none; }
       .alex-hero-left {
         padding: 4rem var(--gutter);
         padding-top: calc(var(--nav-h) + 2.5rem);
       }
+      .alex-quote-inner { grid-template-columns: 2px 1fr; gap: 1.5rem; }
       .alex-hero-stats { grid-template-columns: 1fr 1fr; }
       .alex-stat:nth-child(2) { border-right: none; }
       .alex-stat:nth-child(3),
@@ -662,10 +673,22 @@
         <h1 class="alex-hero-name">Alex<br>Anderson</h1>
 
         <div class="alex-hero-disciplines">
-          <span>Web Design <em>&amp; Development</em></span>
-          <span>eLearning <em>&amp; Instructional Design</em></span>
-          <span>AI-Powered Systems <em>&amp; Automation</em></span>
-          <span>Cinematic Media <em>&amp; AI Audio</em></span>
+          <div class="alex-discipline">
+            <span class="alex-disc-num">01</span>
+            <span class="alex-disc-name">Web Design &amp; Development</span>
+          </div>
+          <div class="alex-discipline">
+            <span class="alex-disc-num">02</span>
+            <span class="alex-disc-name">eLearning &amp; Instructional Design</span>
+          </div>
+          <div class="alex-discipline">
+            <span class="alex-disc-num">03</span>
+            <span class="alex-disc-name">AI-Powered Systems &amp; Automation</span>
+          </div>
+          <div class="alex-discipline">
+            <span class="alex-disc-num">04</span>
+            <span class="alex-disc-name">Cinematic Media &amp; AI Audio</span>
+          </div>
         </div>
 
         <div class="alex-hero-ctas">
@@ -756,11 +779,16 @@
        ════════════════════════════════════════════ -->
   <section class="alex-quote">
     <div class="wrap">
-      <blockquote>
-        I design and build digital experiences from the ground up. Every project on this page was conceived, designed, coded, and shipped by me personally &mdash; including this website.
-      </blockquote>
-      <div class="alex-quote-attr">
-        <span>Alex Anderson &mdash; K &amp; A Designs</span>
+      <div class="alex-quote-inner">
+        <div class="alex-quote-bar"></div>
+        <div>
+          <blockquote>
+            I design and build digital experiences from the ground up. Every project on this page was conceived, designed, coded, and shipped by me personally &mdash; including this website.
+          </blockquote>
+          <div class="alex-quote-attr">
+            <span>Alex Anderson &mdash; K &amp; A Designs</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
