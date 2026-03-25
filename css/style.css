@@ -1100,6 +1100,18 @@ a.ticker-item:hover {
   height: 640px;
 }
 
+.team-cards::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 60%;
+  background: linear-gradient(135deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 .team-cards-header {
   position: absolute;
   top: 3rem;
@@ -1119,7 +1131,7 @@ a.ticker-item:hover {
   font-weight: 300;
   color: #fff;
   line-height: 1.15;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 16px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.6);
 }
 
 .team-member {
