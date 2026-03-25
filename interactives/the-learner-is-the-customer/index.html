@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audience Is Your Customer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#f4f7fb;
+}
+
+.bleed{
+margin:-24px -20px;
+padding:48px 48px;
+background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);
+box-shadow:inset 0 -80px 120px rgba(0,0,0,0.25);
+}
+
+.wrap{
+max-width:1100px;
+margin:auto;
+color:white;
+}
+
+/* hero */
+
+.hero{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:28px;
+align-items:start;
+margin-bottom:28px;
+}
+
+.eyebrow{
+display:inline-block;
+background:#F4B400;
+color:#0F2747;
+padding:6px 16px;
+border-radius:999px;
+font-weight:600;
+font-size:12px;
+letter-spacing:1px;
+text-transform:uppercase;
+margin-bottom:12px;
+}
+
+.title{
+margin:0 0 12px;
+font-size:36px;
+font-weight:600;
+line-height:1.15;
+}
+
+.intro{
+margin:0;
+color:#DBE7F5;
+font-size:16px;
+line-height:1.7;
+max-width:680px;
+}
+
+.guide-panel{
+position:relative;
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.08);
+padding:16px;
+border-radius:16px;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+min-height:170px;
+overflow:hidden;
+}
+
+/* subtle radial glow behind guide */
+.guide-panel::before{
+content:"";
+position:absolute;
+width:220px;
+height:220px;
+background:radial-gradient(circle, rgba(244,180,0,0.35) 0%, rgba(244,180,0,0.15) 35%, rgba(244,180,0,0.05) 55%, transparent 70%);
+filter:blur(18px);
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+opacity:.65;
+pointer-events:none;
+}
+
+.guide-image{
+width:130px;
+display:block;
+filter:drop-shadow(0 12px 16px rgba(0,0,0,0.25));
+position:relative;
+z-index:2;
+}
+
+/* steps */
+
+.controls{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+margin-top:8px;
+}
+
+.step-btn{
+border:0;
+padding:16px 16px 16px;
+border-radius:16px;
+background:rgba(255,255,255,0.08);
+color:white;
+text-align:left;
+cursor:pointer;
+transition:.2s;
+box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1);
+position:relative;
+min-height:118px;
+}
+
+.step-btn:hover{
+background:rgba(255,255,255,0.12);
+transform:translateY(-2px);
+}
+
+.step-btn.active{
+background:rgba(0,0,0,0.32);
+box-shadow:0 8px 16px rgba(0,0,0,0.28), inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.step-btn::after{
+content:"";
+position:absolute;
+left:16px;
+right:16px;
+bottom:10px;
+height:4px;
+border-radius:999px;
+background:rgba(244,180,0,0.2);
+transform:scaleX(.25);
+transform-origin:left center;
+transition:.22s ease;
+}
+
+.step-btn.active::after{
+background:#F4B400;
+transform:scaleX(1);
+}
+
+.step-num{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:28px;
+height:28px;
+border-radius:50%;
+background:rgba(244,180,0,0.2);
+color:#F4B400;
+font-weight:700;
+font-size:13px;
+margin-bottom:10px;
+}
+
+.step-title{
+display:block;
+font-weight:600;
+font-size:16px;
+margin-bottom:4px;
+}
+
+.step-sub{
+font-size:13px;
+opacity:.9;
+}
+
+.detail{
+margin-top:26px;
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.12);
+padding:26px;
+border-radius:18px;
+}
+
+.detail h2{
+margin:0 0 12px;
+font-size:26px;
+}
+
+.detail p{
+margin:0 0 18px;
+line-height:1.7;
+color:#DBE7F5;
+}
+
+.bullets{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px;
+}
+
+.bullet{
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.12);
+padding:16px;
+border-radius:14px;
+}
+
+.bullet h3{
+margin:0 0 6px;
+font-size:15px;
+}
+
+.bullet p{
+margin:0;
+font-size:14px;
+color:#DBE7F5;
+}
+
+@media(max-width:900px){
+.hero{grid-template-columns:1fr}
+.controls{grid-template-columns:repeat(2,1fr)}
+.bullets{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bleed">
+<div class="wrap">
+
+<div class="hero">
+
+<div>
+<div class="eyebrow">Know Your Learner</div>
+<h1 class="title">Your Audience Is Your Customer</h1>
+<p class="intro">
+Many educators do not always think about it this way, but they are providing a service and their students are their customer.
+Great learning design begins by understanding who learners are, what they need, and how they will interact with the experience you build.
+</p>
+</div>
+
+<div class="guide-panel">
+<img src="assets/guide.png" class="guide-image">
+</div>
+
+</div>
+
+<div class="controls" id="controls"></div>
+
+<div class="detail">
+<h2 id="headline"></h2>
+<p id="text"></p>
+<div class="bullets" id="bullets"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+const steps=[
+{
+title:"Know the learner",
+sub:"Start with audience needs",
+headline:"Know who your learners are.",
+text:"Before building any lesson, identify the learner’s role, experience level, environment, and expectations. Understanding the learner helps guide every design decision.",
+bullets:[
+{t:"Role and context",p:"What does the learner do and where will they apply this knowledge?"},
+{t:"Experience level",p:"What do they already know and where are the true gaps?"},
+{t:"Motivation",p:"Why should they care about this learning experience?"}
+]
+},
+{
+title:"Recognize learning needs",
+sub:"Different learners need support",
+headline:"Not every learner engages the same way.",
+text:"Some learners need examples, some prefer visuals, and some learn best through doing. Designing for different learning approaches improves engagement.",
+bullets:[
+{t:"Visual learners",p:"Use diagrams and visual structure."},
+{t:"Applied learners",p:"Give scenarios and practice."},
+{t:"Reflective learners",p:"Provide time to pause and think."}
+]
+},
+{
+title:"Build accordingly",
+sub:"Shape the experience",
+headline:"Design learning around the audience.",
+text:"Once you know the learner, shape navigation, pacing, and interaction style to fit how they will use the learning.",
+bullets:[
+{t:"Choose format",p:"Microlearning, scenarios, or guided lessons."},
+{t:"Reduce friction",p:"Make navigation intuitive."},
+{t:"Support transfer",p:"Focus on real-world application."}
+]
+},
+{
+title:"Customer mindset",
+sub:"Respect the learner",
+headline:"Treat the learner experience like a service.",
+text:"When educators think like service providers, learning becomes clearer, more relevant, and more respectful of the learner’s time.",
+bullets:[
+{t:"Respect time",p:"Keep content focused and purposeful."},
+{t:"Reduce confusion",p:"Provide clear structure."},
+{t:"Deliver value",p:"Help learners improve real skills."}
+]
+}
+]
+
+const controls=document.getElementById("controls")
+const headline=document.getElementById("headline")
+const text=document.getElementById("text")
+const bullets=document.getElementById("bullets")
+
+function setStep(i){
+const step=steps[i]
+headline.innerText=step.headline
+text.innerText=step.text
+bullets.innerHTML=""
+step.bullets.forEach(b=>{
+const el=document.createElement("div")
+el.className="bullet"
+el.innerHTML="<h3>"+b.t+"</h3><p>"+b.p+"</p>"
+bullets.appendChild(el)
+})
+document.querySelectorAll(".step-btn").forEach((b,bi)=>{
+b.classList.toggle("active",bi===i)
+})
+}
+
+steps.forEach((s,i)=>{
+const btn=document.createElement("button")
+btn.className="step-btn"
+btn.innerHTML=`
+<span class="step-num">${i+1}</span>
+<span class="step-title">${s.title}</span>
+<span class="step-sub">${s.sub}</span>
+`
+btn.onclick=()=>setStep(i)
+controls.appendChild(btn)
+})
+
+setStep(0)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Why Intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Poppins',sans-serif;background:#f4f7fb}
+
+.bleed{
+  margin:-24px -20px;
+  padding:34px 38px;
+  background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);
+  color:#fff;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:auto;
+  position:relative;
+}
+
+.hero{
+  position:relative;
+  padding-right:220px;
+}
+
+.eyebrow{
+  display:inline-block;
+  background:#F4B400;
+  color:#0F2747;
+  padding:5px 14px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+h1{
+  margin:0 0 10px;
+  font-size:34px;
+  line-height:1.12;
+  font-weight:600;
+  max-width:860px;
+}
+
+.intro{
+  margin:0;
+  color:#DBE7F5;
+  font-size:15px;
+  line-height:1.72;
+  max-width:860px;
+}
+
+.emphasis{color:#FFFFFF;font-weight:600}
+
+.guide{
+  position:absolute;
+  top:4px;
+  right:0;
+  width:180px;
+  display:flex;
+  justify-content:flex-end;
+  pointer-events:none;
+}
+
+.guide img{
+  width:100%;
+  height:auto;
+  opacity:.95;
+}
+
+.bridge{
+  margin-top:8px;
+  background:#ffffff;
+  border-radius:20px;
+  padding:18px 20px;
+  color:#1F2937;
+  box-shadow:0 12px 26px rgba(0,0,0,.12);
+}
+
+.bridge h3{
+  margin:0 0 8px;
+  color:#0F2747;
+  font-size:22px;
+}
+
+.bridge p{
+  margin:0;
+  color:#4B5563;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.callout{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.callout-box{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:16px;
+  padding:14px;
+}
+
+.callout-box h4{
+  margin:0 0 6px;
+  color:#F4B400;
+  font-size:14px;
+}
+
+.callout-box p{
+  margin:0;
+  color:#DBE7F5;
+  font-size:13px;
+  line-height:1.55;
+}
+
+@media(max-width:900px){
+  .hero{
+    padding-right:0;
+  }
+  .guide{
+    position:relative;
+    top:auto;
+    right:auto;
+    width:140px;
+    margin:12px auto 0;
+  }
+  .callout{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bleed">
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="eyebrow">The Why</div>
+
+      <h1>Now that we know <span class="emphasis">who our customer is</span>, why is what they are learning important?</h1>
+
+      <p class="intro">
+        Effective learning is not just about delivering information. It is about helping learners gain knowledge and skills that make a meaningful difference in their work, decisions, and performance.
+      </p>
+
+      <p class="intro" style="margin-top:10px;">
+        Once we understand the learner, the next question becomes just as important:
+        <span class="emphasis">why does this learning matter to them?</span> Learners, especially adult learners, are far more likely to engage when they can clearly see the relevance, value, and practical payoff of what they are being asked to learn.
+      </p>
+
+      <div class="guide">
+        <img src="guide.png" alt="Course Guide">
+      </div>
+    </div>
+
+    <div class="bridge">
+      <h3>From thinking to impact</h3>
+      <p>
+        Bloom’s Taxonomy helps us think about <strong>how</strong> learners process information.
+        The why reminds us that every level of thinking should lead to something that
+        <strong>matters in the real world</strong>.
+      </p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-box">
+        <h4>Relevance</h4>
+        <p>Learning should connect directly to the learner’s role and environment.</p>
+      </div>
+
+      <div class="callout-box">
+        <h4>Application</h4>
+        <p>Good instruction helps learners use knowledge, not just remember it.</p>
+      </div>
+
+      <div class="callout-box">
+        <h4>Impact</h4>
+        <p>Strong learning design leads to better performance and better outcomes.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

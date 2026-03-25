@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADDIE Scenario Knowledge Check</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,sans-serif;background:#f4f7fb}
+.bleed{margin:-24px -20px;padding:42px 36px;background:linear-gradient(180deg,#0F2747,#16365F);color:#fff}
+.wrap{max-width:1280px;margin:auto}
+h1{margin:0 0 10px;font-size:30px;line-height:1.14}
+.intro{color:#DBE7F5;font-size:14px;line-height:1.65;max-width:900px;margin:0 0 18px}
+.activity{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:24px;position:relative;overflow:hidden}
+
+.question-wrap{transform:translateY(10px);opacity:0}
+.question-wrap.in{animation:questionIn .45s ease forwards}
+@keyframes questionIn{0%{transform:translateY(10px);opacity:0}100%{transform:translateY(0);opacity:1}}
+
+.step{color:#F4B400;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.question{font-size:22px;font-weight:600;line-height:1.35;margin-bottom:8px}
+.hint{font-size:13px;color:#DBE7F5;margin-bottom:12px}
+.feedback{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;margin-bottom:18px;min-height:74px}
+.feedback.good{background:rgba(74,222,128,.10);border-color:rgba(74,222,128,.28)}
+.feedback.bad{background:rgba(248,113,113,.10);border-color:rgba(248,113,113,.28)}
+
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;position:relative}
+.flow.complete{animation:rowGlow 1s ease}
+.flow.complete::after{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:-18%;width:16%;
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.34) 50%, rgba(255,255,255,0) 100%);
+  transform:skewX(-18deg);
+  animation:fullSweep 1.15s ease forwards;
+  pointer-events:none;
+}
+@keyframes fullSweep{0%{left:-18%;opacity:0}12%{opacity:1}100%{left:118%;opacity:0}}
+
+.phase{border:0;background:transparent;color:#fff;cursor:pointer;padding:0;position:relative}
+.phase.locked{cursor:default}
+.face{
+  height:140px;display:flex;align-items:center;justify-content:center;
+  font-size:70px;font-weight:700;border-radius:6px;position:relative;overflow:hidden;
+  box-shadow:0 8px 18px rgba(0,0,0,.14);
+  opacity:.18;filter:grayscale(.2);
+  transition:opacity .2s ease, filter .2s ease, transform .2s ease;
+}
+.phase:hover .face{transform:translateY(-4px)}
+.phase.locked:hover .face{transform:none}
+.phase.done .face{
+  opacity:1;filter:none;
+  animation:pop .4s ease, glowPulse .7s ease;
+}
+.phase.done .face::after{
+  content:"";
+  position:absolute;top:0;bottom:0;left:-40%;width:34%;
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.35) 48%, rgba(255,255,255,0) 100%);
+  transform:skewX(-20deg);
+  animation:shine .8s ease forwards;
+}
+.flow.complete .phase.done .face{opacity:1 !important;filter:none !important}
+
+.letter{font-size:76px;line-height:1;font-weight:700;color:rgba(255,255,255,.96);position:relative;z-index:1}
+.phase[data-phase="Analyze"] .face{background:#57A8C9}
+.phase[data-phase="Design"] .face{background:#60C98B}
+.phase[data-phase="Develop"] .face{background:#F06454}
+.phase[data-phase="Implement"] .face{background:#D14687}
+.phase[data-phase="Evaluate"] .face{
+  background:#0E8C98;
+  clip-path:polygon(0 0,78% 0,78% 0,78% 0,100% 50%,78% 100%,0 100%);
+}
+
+.complete-msg{display:none;background:#fff;color:#0F2747;padding:18px;border-radius:16px;margin-top:18px}
+.complete-msg.show{display:block;animation:pop .4s ease}
+
+.confetti{position:absolute;width:10px;height:14px;top:-12px;opacity:.95;animation:fall 3s linear forwards;z-index:3}
+@keyframes fall{to{transform:translateY(560px) rotate(720deg)}}
+@keyframes pop{0%{transform:scale(.82)}100%{transform:scale(1)}}
+@keyframes glowPulse{0%{box-shadow:0 0 0 rgba(255,255,255,0)}40%{box-shadow:0 0 24px rgba(255,255,255,.32)}100%{box-shadow:0 8px 18px rgba(0,0,0,.14)}}
+@keyframes shine{0%{left:-40%;opacity:0}20%{opacity:1}100%{left:120%;opacity:0}}
+@keyframes rowGlow{0%{filter:brightness(1)}40%{filter:brightness(1.18)}100%{filter:brightness(1)}}
+
+@media(max-width:1080px){.flow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="bleed">
+  <div class="wrap">
+    <h1>Click the ADDIE phase that matches the scenario</h1>
+    <p class="intro">Scenarios appear in random order, but the ADDIE model stays in its correct order below. Correct choices light up the matching phase and the model remains visible at completion.</p>
+
+    <div class="activity" id="activity">
+      <div class="question-wrap in" id="questionWrap">
+        <div class="step" id="stepLabel"></div>
+        <div class="question" id="question"></div>
+        <div class="hint" id="hint"></div>
+        <div class="feedback" id="feedback">Click a phase in the model.</div>
+      </div>
+
+      <div class="flow" id="flow"></div>
+
+      <div class="complete-msg" id="completeMsg">
+        <strong>You completed the ADDIE model.</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const phases = [
+  {name:"Analyze", letter:"A", scenario:"An instructional designer interviews stakeholders and analyzes performance data to understand why employees struggle.", hint:"This phase identifies the problem."},
+  {name:"Design", letter:"D", scenario:"A designer creates learning objectives and outlines the structure of the training.", hint:"This phase plans the learning experience."},
+  {name:"Develop", letter:"D", scenario:"The course is built in Rise with graphics, content, and activities.", hint:"This phase produces the learning materials."},
+  {name:"Implement", letter:"I", scenario:"The training is launched and learners begin accessing the course.", hint:"Think delivery and rollout."},
+  {name:"Evaluate", letter:"E", scenario:"The team reviews feedback and performance data to improve the course.", hint:"This phase measures success."}
+];
+
+const scenarioOrder = [...phases].sort(() => Math.random() - 0.5);
+let index = 0;
+let locked = false;
+const doneSet = new Set();
+
+const flow = document.getElementById("flow");
+const question = document.getElementById("question");
+const hint = document.getElementById("hint");
+const feedback = document.getElementById("feedback");
+const activity = document.getElementById("activity");
+const questionWrap = document.getElementById("questionWrap");
+const stepLabel = document.getElementById("stepLabel");
+const completeMsg = document.getElementById("completeMsg");
+let modelButtons = [];
+
+function buildModel(){
+  flow.innerHTML = "";
+  modelButtons = [];
+  phases.forEach(p => {
+    const btn = document.createElement("button");
+    btn.className = "phase";
+    btn.type = "button";
+    btn.dataset.phase = p.name;
+    btn.innerHTML = `<div class="face"><div class="letter">${p.letter}</div></div>`;
+    btn.addEventListener("click", () => choosePhase(p.name));
+    flow.appendChild(btn);
+    modelButtons.push(btn);
+  });
+}
+
+function animateQuestionIn(){
+  questionWrap.classList.remove("in");
+  void questionWrap.offsetWidth;
+  questionWrap.classList.add("in");
+}
+
+function syncModelState(){
+  modelButtons.forEach(btn => {
+    btn.classList.toggle("done", doneSet.has(btn.dataset.phase));
+    btn.classList.toggle("locked", index >= scenarioOrder.length);
+  });
+}
+
+function setFeedback(kind, text){
+  feedback.className = "feedback" + (kind ? " " + kind : "");
+  feedback.textContent = text;
+}
+
+function renderQuestion(){
+  syncModelState();
+
+  if(index >= scenarioOrder.length){
+    stepLabel.textContent = "Complete";
+    question.textContent = "All scenarios complete";
+    hint.textContent = "Enjoy the finished ADDIE model.";
+    setFeedback("good", "Well done. You completed the ADDIE model.");
+    completeMsg.classList.add("show");
+    flow.classList.add("complete");
+    launchConfetti();
+    return;
+  }
+
+  const current = scenarioOrder[index];
+  stepLabel.textContent = `Scenario ${index + 1} of ${scenarioOrder.length}`;
+  question.textContent = current.scenario;
+  hint.textContent = current.hint;
+  setFeedback("", "Click a phase in the model.");
+  animateQuestionIn();
+}
+
+function choosePhase(name){
+  if(locked || index >= scenarioOrder.length) return;
+
+  const current = scenarioOrder[index];
+  if(name === current.name){
+    locked = true;
+    doneSet.add(name);
+    syncModelState();
+    setFeedback("good", "Correct.");
+    setTimeout(() => {
+      index += 1;
+      locked = false;
+      renderQuestion();
+    }, 900);
+  } else {
+    setFeedback("bad", "Not quite. Try again.");
+  }
+}
+
+function launchConfetti(){
+  const colors = ["#F4B400","#57A8C9","#60C98B","#F06454","#D14687","#0E8C98"];
+  for(let i = 0; i < 120; i++){
+    const piece = document.createElement("div");
+    piece.className = "confetti";
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    activity.appendChild(piece);
+    setTimeout(() => piece.remove(), 3000);
+  }
+}
+
+buildModel();
+renderQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Knowledge Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,sans-serif;background:#f4f7fb}
+.bleed{margin:-18px -12px;padding:36px 44px;background:linear-gradient(180deg,#0F2747,#16365F);color:white;min-height:100vh}
+.wrap{max-width:1320px;margin:auto}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin-bottom:16px;align-items:start}
+.eyebrow{background:#F4B400;color:#0F2747;padding:5px 14px;border-radius:999px;font-size:11px;font-weight:600;display:inline-block;margin-bottom:8px}
+h1{margin:0 0 6px;font-size:27px}
+.intro{color:#E6EEF8;font-size:13.5px;line-height:1.6;max-width:760px}
+.status-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px}
+.status-value{font-size:20px;font-weight:700}
+.progress-track{height:8px;background:rgba(255,255,255,.1);border-radius:999px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;width:0%;background:#F4B400;transition:.3s}
+.board{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+.card{background:rgba(255,255,255,.08);border-radius:18px;padding:16px;border:1px solid rgba(255,255,255,.1)}
+.challenge-question{font-size:18px;font-weight:600;margin-bottom:10px}
+.challenge-meta{font-size:11px;color:#F4B400;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;font-weight:700}
+.challenge-hint{color:#DBE7F5;font-size:12px;line-height:1.55;margin-bottom:12px}
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.option{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px;cursor:pointer;min-height:80px}
+.option:hover{background:rgba(255,255,255,.15)}
+.option.correct{background:rgba(97,191,123,.25)}
+.option.incorrect{background:rgba(220,83,83,.25)}
+.feedback{margin-top:10px;font-size:13px;color:#DBE7F5;min-height:40px}
+.pyramid-card{position:relative;background:white;border-radius:18px;padding:12px 16px 16px;color:#0F2747;box-shadow:0 14px 26px rgba(0,0,0,.1);text-align:center;overflow:visible}
+.pyramid{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:10px;position:relative}
+.tier{height:26px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:12px;font-weight:600;background:#E8EEF6;width:100%;transition:.4s}
+.tier[data-level="remember"]{width:100%}
+.tier[data-level="understand"]{width:85%}
+.tier[data-level="apply"]{width:70%}
+.tier[data-level="analyze"]{width:55%}
+.tier[data-level="evaluate"]{width:40%}
+.tier[data-level="create"]{width:25%}
+.tier.filled{background:#F4B400;transform:scale(1.05);box-shadow:0 0 18px rgba(244,180,0,.45)}
+.pyramid.complete{animation:bounce .8s ease}
+@keyframes bounce{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+.splash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(15,39,71,.96), rgba(22,54,95,.97));z-index:1000;padding:24px}
+.splash-card{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:28px;max-width:560px}
+.splash-card h2{margin:0 0 10px;color:white;font-size:30px}
+.splash-card p{color:#EEF4FB;font-size:15px;line-height:1.6;margin-bottom:18px}
+.start-btn{background:#F4B400;border:0;border-radius:10px;padding:10px 18px;font-weight:600;cursor:pointer;color:#0F2747}
+
+/* Confetti layers */
+#confettiTop{position:fixed;inset:0;pointer-events:none;overflow:hidden;display:none;z-index:999}
+#burstLayer{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.confetti,.burst-piece{position:absolute;width:8px;height:14px}
+.confetti{animation:fall 3s linear forwards}
+.burst-piece{transform-origin:center center;opacity:1}
+@keyframes fall{from{transform:translateY(-10vh) rotate(0)}to{transform:translateY(110vh) rotate(360deg)}}
+@keyframes burstFly{
+  0%{transform:translate(0,0) rotate(0) scale(1);opacity:1}
+  100%{transform:translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.8);opacity:0}
+}
+@media(max-width:980px){.hero,.board{grid-template-columns:1fr}.options{grid-template-columns:repeat(2,1fr)}.bleed{padding:24px 24px 28px}}
+@media(max-width:640px){.options{grid-template-columns:1fr}.splash-card h2{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="splash" id="splash">
+  <div class="splash-card">
+    <div class="eyebrow">Knowledge Check</div>
+    <h2>Bloom's Taxonomy Challenge</h2>
+    <p>Read each scenario and choose the Bloom's level that best matches the type of thinking the learner is doing.</p>
+    <button class="start-btn" onclick="start()">Begin</button>
+  </div>
+</div>
+
+<div id="confettiTop"></div>
+
+<div class="bleed">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Knowledge Check</div>
+        <h1>Identify the Bloom's Level</h1>
+        <p class="intro">Answer each scenario by selecting the Bloom's level that best matches the thinking required.</p>
+      </div>
+      <div class="status-panel">
+        <div class="status-value" id="score">0 / 6</div>
+        <div class="progress-track"><div class="progress-fill" id="progress"></div></div>
+      </div>
+    </div>
+
+    <div class="board">
+      <div class="card">
+        <div class="challenge-meta" id="meta">Question 1 of 6</div>
+        <div class="challenge-question" id="question"></div>
+        <div class="challenge-hint" id="hint"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback">Select an answer.</div>
+      </div>
+
+      <div class="pyramid-card" id="pyramidCard">
+        <div id="burstLayer"></div>
+        <h3>Bloom's Pyramid</h3>
+        <div class="pyramid" id="pyramid">
+          <div class="tier" data-level="create">Create</div>
+          <div class="tier" data-level="evaluate">Evaluate</div>
+          <div class="tier" data-level="analyze">Analyze</div>
+          <div class="tier" data-level="apply">Apply</div>
+          <div class="tier" data-level="understand">Understand</div>
+          <div class="tier" data-level="remember">Remember</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions=[
+{q:"Learners identify the six levels of Bloom's taxonomy.",h:"Focus on the thinking required.",a:"remember"},
+{q:"Learners explain why Bloom's levels affect assessment design.",h:"This asks for comprehension.",a:"understand"},
+{q:"Learners use Bloom's taxonomy to select activities.",h:"Applying knowledge in context.",a:"apply"},
+{q:"Learners compare lesson activities to determine deeper thinking.",h:"Breaking things apart.",a:"analyze"},
+{q:"Learners critique a training evaluation.",h:"Making a reasoned judgment.",a:"evaluate"},
+{q:"Learners design a full lesson sequence.",h:"Producing something new.",a:"create"}
+];
+const levels=["remember","understand","apply","analyze","evaluate","create"];
+let order=[], qIndex=0, score=0;
+const qEl=document.getElementById("question");
+const hEl=document.getElementById("hint");
+const mEl=document.getElementById("meta");
+const optEl=document.getElementById("options");
+const feedback=document.getElementById("feedback");
+const scoreEl=document.getElementById("score");
+const progress=document.getElementById("progress");
+const pyramid=document.getElementById("pyramid");
+const confettiTop=document.getElementById("confettiTop");
+const burstLayer=document.getElementById("burstLayer");
+function shuffle(a){
+  const arr=[...a];
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+function init(){ order=shuffle(questions); render(); update(); }
+function render(){
+  if(qIndex>=order.length){
+    qEl.textContent="Complete!";
+    hEl.textContent="";
+    optEl.innerHTML="";
+    feedback.textContent="Great work!";
+    pyramid.classList.add("complete");
+    launchBurstConfetti();
+    launchTopConfetti();
+    return;
+  }
+  const q=order[qIndex];
+  mEl.textContent="Question "+(qIndex+1)+" of "+order.length;
+  qEl.textContent=q.q;
+  hEl.textContent=q.h;
+  feedback.textContent="Select an answer.";
+  optEl.innerHTML="";
+  shuffle(levels).forEach(level=>{
+    const btn=document.createElement("div");
+    btn.className="option";
+    btn.innerHTML="<strong>"+level.charAt(0).toUpperCase()+level.slice(1)+"</strong><br><span style='font-size:11px;color:#DBE7F5'>Choose this level</span>";
+    btn.onclick=()=>choose(level,btn);
+    optEl.appendChild(btn);
+  });
+}
+function choose(level,btn){
+  const correct=order[qIndex].a;
+  if(level===correct){
+    btn.classList.add("correct");
+    const tier=document.querySelector('.tier[data-level="'+level+'"]');
+    if(tier) tier.classList.add("filled");
+    score++;
+    setTimeout(next,700);
+  }else{
+    btn.classList.add("incorrect");
+    feedback.textContent="Not quite — try again.";
+  }
+  update();
+}
+function next(){ qIndex++; feedback.textContent=""; render(); }
+function update(){
+  scoreEl.textContent=score+" / "+questions.length;
+  progress.style.width=(score/questions.length*100)+"%";
+}
+function start(){ document.getElementById("splash").style.display="none"; }
+function launchTopConfetti(){
+  confettiTop.innerHTML="";
+  confettiTop.style.display="block";
+  for(let i=0;i<150;i++){
+    const piece=document.createElement("div");
+    piece.className="confetti";
+    piece.style.left=Math.random()*100+"vw";
+    piece.style.background=["#F4B400","#FFD54A","#ffffff","#8FD19E"][Math.floor(Math.random()*4)];
+    piece.style.animationDelay=(Math.random()*1.5)+"s";
+    confettiTop.appendChild(piece);
+  }
+}
+function launchBurstConfetti(){
+  burstLayer.innerHTML="";
+  const colors=["#F4B400","#FFD54A","#ffffff","#8FD19E"];
+  for(let i=0;i<90;i++){
+    const piece=document.createElement("div");
+    piece.className="burst-piece";
+    piece.style.background=colors[Math.floor(Math.random()*colors.length)];
+    piece.style.left="50%";
+    piece.style.top="55%";
+    const angle=(Math.PI*2)*(i/90) + (Math.random()*0.25);
+    const dist=120 + Math.random()*180;
+    const dx=Math.cos(angle)*dist + "px";
+    const dy=Math.sin(angle)*dist + "px";
+    const rot=(Math.random()*720-360)+"deg";
+    piece.style.setProperty("--dx", dx);
+    piece.style.setProperty("--dy", dy);
+    piece.style.setProperty("--rot", rot);
+    piece.style.animation=`burstFly ${1.1 + Math.random()*0.5}s ease-out forwards`;
+    burstLayer.appendChild(piece);
+  }
+}
+init();
+</script>
+</body>
+</html>

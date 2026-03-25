@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Interactives — K &amp; A Designs</title>
+  <meta name="description" content="Custom-built HTML interactive slides designed for Rise 360 eLearning — pure web APIs, no frameworks, built for performance and engagement." />
+  <link rel="icon" href="../images/favicon.png" sizes="512x512" type="image/png" />
+  <link rel="stylesheet" href="../css/style.css?v=11" />
+  <style>
+    .interactives-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 900px) { .interactives-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .interactives-grid { grid-template-columns: 1fr; } }
+
+    .interactive-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .interactive-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .interactive-card-topic {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .interactive-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .interactive-card p {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+      margin: 0;
+      flex: 1;
+    }
+
+    .interactive-card .btn {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="site-nav solid" id="site-nav" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><img src="../images/approved-logo-transparent.png" alt="K &amp; A Designs" /></a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <div class="nav-has-dropdown">
+          <a href="/portfolio/" class="nav-link">Portfolio</a>
+          <div class="nav-dropdown">
+            <a href="/portfolio/alex/">Alex's Portfolio</a>
+            <a href="/portfolio/kristina/">Kristina's Portfolio</a>
+          </div>
+        </div>
+        <a href="/projects/" class="nav-link">Projects</a>
+        <a href="/interactives/" class="nav-link active">Interactives</a>
+        <a href="/services/" class="nav-link">Services</a>
+        <a href="/contact/" class="nav-cta nav-link" data-open-contact>Book a Consultation</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+    <a href="/">Home</a>
+    <a href="/portfolio/">Portfolio</a>
+    <a href="/portfolio/alex/" style="padding-left:1rem;font-size:0.65rem;">Alex's Portfolio</a>
+    <a href="/portfolio/kristina/" style="padding-left:1rem;font-size:0.65rem;">Kristina's Portfolio</a>
+    <a href="/projects/">Projects</a>
+    <a href="/interactives/">Interactives</a>
+    <a href="/services/">Services</a>
+    <a href="/contact/" class="mobile-cta" data-open-contact>Book a Consultation</a>
+  </nav>
+
+  <main id="main-content">
+
+  <!-- PAGE HERO -->
+  <header class="page-hero">
+    <div class="wrap page-hero-inner">
+      <div class="page-hero-eyebrow">HTML Interactives</div>
+      <h1>Built for eLearning.<br><em>Designed to engage.</em></h1>
+      <p>Custom HTML slides crafted for Rise 360 courses — pure web APIs, zero frameworks, built for performance and real instructional impact.</p>
+    </div>
+  </header>
+
+  <!-- INTERACTIVES GRID -->
+  <section class="section">
+    <div class="wrap">
+
+      <div class="interactives-grid">
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Course Welcome</span>
+          <h3>Course Welcome</h3>
+          <p>An opening slide introducing the Rise 360 instructional design portfolio — featuring a guide character, audio narration, and welcome cards.</p>
+          <button class="btn btn-primary" data-interactive="welcome" data-title="Course Welcome">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Why We Learn</span>
+          <h3>The Why Intro</h3>
+          <p>A framing slide that builds the case for intentional learning design — setting the instructional mindset before the course begins.</p>
+          <button class="btn btn-primary" data-interactive="the-why" data-title="The Why Intro">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Learner Focus</span>
+          <h3>The Learner is the Customer</h3>
+          <p>A persuasive slide reframing the learner as a customer whose needs drive every design decision in the course.</p>
+          <button class="btn btn-primary" data-interactive="the-learner-is-the-customer" data-title="The Learner is the Customer">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Bloom's Taxonomy</span>
+          <h3>Teaching with a Purpose</h3>
+          <p>An animated Bloom's Taxonomy pyramid — guiding learners from basic recall up through synthesis and evaluation.</p>
+          <button class="btn btn-primary" data-interactive="teaching-with-a-purpose" data-title="Teaching with a Purpose">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">ADDIE Framework</span>
+          <h3>From Strategy to Design</h3>
+          <p>An interactive introduction to the ADDIE model — walking through each phase with visual breakdowns and real design context.</p>
+          <button class="btn btn-primary" data-interactive="from-strategy-to-design-1" data-title="From Strategy to Design — Part 1">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">ADDIE Framework</span>
+          <h3>ADDIE Linear Interactive</h3>
+          <p>A step-by-step linear walkthrough of the ADDIE process — each phase revealed in sequence to reinforce the design workflow.</p>
+          <button class="btn btn-primary" data-interactive="from-strategy-to-design-2" data-title="From Strategy to Design — Part 2">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Kirkpatrick Model</span>
+          <h3>Success Must Be Measurable</h3>
+          <p>An introduction to the Kirkpatrick evaluation model — explaining why measurement matters and how to apply each of the four levels.</p>
+          <button class="btn btn-primary" data-interactive="success-must-be-measurable" data-title="Success Must Be Measurable">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Kirkpatrick Model</span>
+          <h3>Ideas of Things to Measure</h3>
+          <p>A tiered interactive with embedded video — exploring concrete examples of what to measure at each Kirkpatrick evaluation level.</p>
+          <button class="btn btn-primary" data-interactive="ideas-to-measure" data-title="Ideas of Things to Measure">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Knowledge Check</span>
+          <h3>Bloom Knowledge Check</h3>
+          <p>A scenario-based check-in using Bloom's Taxonomy levels — asking learners to identify which cognitive level each activity targets.</p>
+          <button class="btn btn-primary" data-interactive="check-in-1" data-title="Bloom Knowledge Check">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+        <article class="interactive-card fade-up">
+          <span class="interactive-card-topic">Knowledge Check</span>
+          <h3>ADDIE Scenario Check</h3>
+          <p>A scenario-driven knowledge check on the ADDIE framework — presenting real design situations and asking learners to identify the correct phase.</p>
+          <button class="btn btn-primary" data-interactive="check-in-2" data-title="ADDIE Scenario Knowledge Check">
+            Launch <span class="arr">→</span>
+          </button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-strip fade-up">
+    <div class="wrap cta-strip-inner">
+      <div class="cta-strip-text">
+        <span class="label">Commission a Custom Interactive</span>
+        <h2>Need a slide<br><em>built to spec?</em></h2>
+        <p>We build custom HTML interactives for Rise 360, Articulate Storyline, and standalone delivery — tailored to your course design and brand.</p>
+      </div>
+      <div class="cta-strip-action">
+        <a href="/contact/" class="btn btn-primary" data-open-contact>Start a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../images/approved-logo-transparent.png" alt="K &amp; A Designs" class="footer-logo" />
+          <p>Elevated design for brands that want to be noticed.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="/">Home</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a><a href="/interactives/">Interactives</a><a href="/services/">Services</a><a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Portfolio</h4>
+          <a href="/portfolio/alex/">Alex's Work</a><a href="/portfolio/kristina/">Kristina's Work</a>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="/services/">Instructional Design</a><a href="/services/">Video &amp; Audio</a><a href="/services/">Social Media</a><a href="/services/">Web Design</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 K &amp; A Designs. All rights reserved.</span>
+        <span>kandadesigners.com</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Modal -->
+  <div class="game-modal" id="interactive-modal" aria-hidden="true">
+    <div class="game-modal-backdrop" id="interactive-modal-backdrop"></div>
+    <div class="game-modal-panel" role="dialog" aria-modal="true" aria-labelledby="interactive-modal-title">
+      <div class="game-modal-header">
+        <div class="game-modal-title">
+          <span class="game-modal-name" id="interactive-modal-title">Interactive</span>
+        </div>
+        <div class="game-modal-controls">
+          <button class="game-modal-close" id="interactive-modal-close" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="game-modal-frame-wrap">
+        <iframe id="interactive-iframe" class="game-iframe" src="" title="HTML Interactive" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="contact-modal" id="contact-modal" aria-hidden="true">
+    <div class="contact-modal-backdrop" id="contact-modal-backdrop"></div>
+    <div class="contact-modal-panel" role="dialog" aria-label="Book a Consultation" aria-modal="true">
+      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">✕</button>
+      <div class="contact-modal-head">
+        <span class="label">Get In Touch</span>
+        <h2>Let's build something<br><em>exceptional.</em></h2>
+        <p>Tell us about your project — we'll get back to you within 24 hours.</p>
+      </div>
+      <form id="contact-modal-form">
+        <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
+        <input type="hidden" name="subject" value="New Consultation Request — K &amp; A Designs" />
+        <input type="hidden" name="from_name" value="K &amp; A Designs Website" />
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" />
+        <div class="form-row">
+          <div class="field">
+            <label for="modal-name">Full Name *</label>
+            <input type="text" id="modal-name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="modal-email">Email *</label>
+            <input type="email" id="modal-email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="modal-company">Company (Optional)</label>
+          <input type="text" id="modal-company" name="company" placeholder="Your company or organization" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="modal-service">Project Type</label>
+            <select id="modal-service" name="service">
+              <option value="" disabled selected>Select a service...</option>
+              <option>Instructional Design / eLearning</option>
+              <option>Web &amp; Digital Design</option>
+              <option>Video &amp; Audio Production</option>
+              <option>Social Media &amp; Branding</option>
+              <option>AI Voice &amp; Audio</option>
+              <option>Photography</option>
+              <option>Multiple Services</option>
+              <option>Not Sure Yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="modal-budget">Estimated Budget</label>
+            <select id="modal-budget" name="budget">
+              <option value="" disabled selected>Select a range...</option>
+              <option>Under $500</option>
+              <option>$500 – $1,500</option>
+              <option>$1,500 – $5,000</option>
+              <option>$5,000 – $10,000</option>
+              <option>$10,000+</option>
+              <option>Let's discuss</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="modal-message">Tell Us About Your Project *</label>
+          <textarea id="modal-message" name="message" placeholder="Describe your project, goals, and timeline..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+        <p class="form-note">We'll get back to you within 24 hours.</p>
+      </form>
+      <div class="form-success" id="contact-modal-success" style="display:none;">
+        <h3>Message Received</h3>
+        <p>Thanks for reaching out. We'll be in touch within 24 hours to schedule your consultation.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main-v2.js"></script>
+  <script>
+    const modal    = document.getElementById('interactive-modal');
+    const backdrop = document.getElementById('interactive-modal-backdrop');
+    const closeBtn = document.getElementById('interactive-modal-close');
+    const iframe   = document.getElementById('interactive-iframe');
+    const titleEl  = document.getElementById('interactive-modal-title');
+    let triggerEl  = null;
+
+    function openInteractive(slug, title, trigger) {
+      triggerEl = trigger;
+      titleEl.textContent = title;
+      iframe.src = '/interactives/' + slug + '/index.html';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeInteractive() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      setTimeout(() => { iframe.src = ''; }, 300);
+      triggerEl?.focus();
+    }
+
+    document.querySelectorAll('[data-interactive]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        openInteractive(btn.dataset.interactive, btn.dataset.title, btn);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeInteractive);
+    backdrop.addEventListener('click', closeInteractive);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInteractive(); });
+  </script>
+</body>
+</html>

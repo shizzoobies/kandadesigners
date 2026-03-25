@@ -133,7 +133,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     {
       num: '05', name: 'HTML Interactives',
       desc: 'Custom-built interactive experiences using pure web APIs — no frameworks, no dependencies, just fast and precise.',
-      items: ['Custom UI components', 'Canvas & SVG animation', 'Game & simulation logic', 'Embedded eLearning tools']
+      items: ['Custom UI components', 'Canvas & SVG animation', 'Game & simulation logic', 'Embedded eLearning tools'],
+      link: 'interactives/'
     }
   ];
 
@@ -177,6 +178,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       odName.textContent = s.name;
       odDesc.textContent = s.desc;
       odList.innerHTML   = s.items.map(t => `<li>${t}</li>`).join('');
+      const viewLink = detailInner.querySelector('a.btn');
+      if (viewLink) viewLink.href = s.link || 'services/';
       detailInner.classList.remove('switching');
     }, 180);
   }

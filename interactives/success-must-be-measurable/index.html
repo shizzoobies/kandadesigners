@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirkpatrick Intro</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,sans-serif;background:#f4f7fb}
+.bleed{margin:-24px -20px;padding:32px 36px;background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);color:#fff}
+.wrap{max-width:1220px;margin:auto}
+
+.hero{
+  position:relative;
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:12px;
+  align-items:center;
+}
+
+h1{margin:0 0 8px;font-size:32px;font-weight:600}
+.eyebrow{
+  background:#F4B400;color:#0F2747;
+  padding:4px 12px;border-radius:999px;
+  font-size:11px;font-weight:600;
+  display:inline-block;margin-bottom:8px
+}
+
+.intro{margin:0;color:#DBE7F5;font-size:15px;line-height:1.6}
+.intro + .intro{margin-top:6px}
+
+.left-col{position:relative;z-index:2}
+
+.guide{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+
+.guide img{
+  width:100%;
+  max-width:290px;
+  display:block;
+  margin-top:10px;
+}
+
+/* glow now positioned relative to bullet stack midpoint between 2 and 3, but to the right of bullets */
+.glow{
+  position:absolute;
+  top:275px;
+  left:615px;
+  width:150px;
+  height:190px;
+  background:radial-gradient(circle at center, rgba(244,180,0,0.28) 0%, rgba(244,180,0,0.11) 38%, rgba(244,180,0,0.03) 68%, transparent 100%);
+  filter:blur(20px);
+  transform:rotate(-10deg);
+  z-index:1;
+  pointer-events:none;
+  animation:glowPulse 4.8s ease-in-out infinite;
+}
+
+@keyframes glowPulse{
+  0%{opacity:.72; transform:rotate(-10deg) scale(.96)}
+  50%{opacity:1; transform:rotate(-8deg) scale(1.04)}
+  100%{opacity:.72; transform:rotate(-10deg) scale(.96)}
+}
+
+.bullets{
+  margin-top:12px;
+  margin-left:18px;
+  max-width:560px;
+  display:grid;
+  gap:8px;
+  position:relative;
+  z-index:2;
+}
+
+.bullet{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:9px 10px;
+  opacity:0;
+  transform:translateY(10px);
+  animation:fadeUp .5s ease forwards;
+}
+.bullet:nth-child(1){animation-delay:.1s}
+.bullet:nth-child(2){animation-delay:.2s}
+.bullet:nth-child(3){animation-delay:.3s}
+.bullet:nth-child(4){animation-delay:.4s}
+
+@keyframes fadeUp{
+  to{opacity:1;transform:translateY(0)}
+}
+
+.dot{
+  width:24px;height:24px;border-radius:999px;
+  background:#F4B400;color:#0F2747;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+  flex-shrink:0;
+  margin-top:1px;
+}
+
+.bullet h3{margin:0;font-size:13px}
+.bullet p{margin:2px 0 0;font-size:12px;color:#DBE7F5}
+
+.bridge{
+  margin-top:12px;
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  color:#1F2937;
+}
+
+.bridge h3{margin:0 0 6px;font-size:20px;color:#0F2747}
+.bridge p{margin:0;font-size:13.5px;color:#4B5563}
+
+.next{
+  margin-top:12px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;
+  padding:12px;
+  font-size:13px;
+}
+.next strong{color:#F4B400}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .glow{display:none}
+  .bullets{margin-left:0;max-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="bleed">
+<div class="wrap">
+
+<div class="hero">
+
+<div class="glow"></div>
+
+  <div class="left-col">
+    <div class="eyebrow">Success Must Be Measurable</div>
+    <h1>Was the content effective?</h1>
+
+    <p class="intro">
+      Training only matters if it creates change.
+    </p>
+
+    <p class="intro">
+      <strong>Kirkpatrick’s Four Levels</strong> measure impact from reaction to real results.
+    </p>
+
+    <div class="bullets">
+      <div class="bullet">
+        <div class="dot">1</div>
+        <div>
+          <h3>Reaction</h3>
+          <p>Did learners find it useful?</p>
+        </div>
+      </div>
+
+      <div class="bullet">
+        <div class="dot">2</div>
+        <div>
+          <h3>Learning</h3>
+          <p>Did they gain knowledge or skill?</p>
+        </div>
+      </div>
+
+      <div class="bullet">
+        <div class="dot">3</div>
+        <div>
+          <h3>Behavior</h3>
+          <p>Did they apply it on the job?</p>
+        </div>
+      </div>
+
+      <div class="bullet">
+        <div class="dot">4</div>
+        <div>
+          <h3>Results</h3>
+          <p>Did it impact outcomes?</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="guide">
+    <img src="guide.png" alt="guide">
+  </div>
+</div>
+
+<div class="bridge">
+  <h3>From completion to impact</h3>
+  <p>Success is not finishing training. It is what happens because of it.</p>
+</div>
+
+<div class="next">
+  <strong>Next:</strong> Explore each level in action.
+</div>
+
+</div>
+</div>
+</body>
+</html>

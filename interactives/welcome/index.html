@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Welcome</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#f4f7fb;
+}
+
+/* bleed wrapper hides rise canvas edge */
+.bleed{
+margin:-30px -40px;
+padding:30px 40px;
+background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);
+}
+
+.wrap{
+max-width:1280px;
+margin:auto;
+border-radius:20px;
+padding:30px 36px;
+color:white;
+box-shadow:0 14px 28px rgba(0,0,0,0.18);
+}
+
+/* hero layout */
+
+.hero{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:28px;
+align-items:center;
+}
+
+.eyebrow{
+display:inline-block;
+background:#F4B400;
+color:#0F2747;
+padding:6px 16px;
+border-radius:999px;
+font-weight:600;
+font-size:12px;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+h1{
+margin:14px 0 12px;
+font-size:38px;
+font-weight:600;
+line-height:1.2;
+}
+
+.intro{
+color:#DBE7F5;
+font-weight:300;
+line-height:1.7;
+font-size:16px;
+max-width:520px;
+}
+
+.guide-area{
+display:flex;
+align-items:center;
+gap:18px;
+padding:10px;
+border-radius:18px;
+background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);
+}
+
+.guide{
+height:320px;
+width:auto;
+filter:drop-shadow(0 12px 18px rgba(0,0,0,0.18));
+}
+
+.audio-panel{
+position:relative;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(6px);
+border-radius:16px;
+padding:14px 16px;
+box-shadow:0 6px 14px rgba(0,0,0,0.2);
+}
+
+/* speech bubble tail */
+
+.audio-panel:before{
+content:"";
+position:absolute;
+left:-12px;
+top:50%;
+transform:translateY(-50%) rotate(45deg);
+width:24px;
+height:24px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(6px);
+}
+
+audio{
+width:220px;
+}
+
+/* cards */
+
+.cards{
+display:flex;
+gap:16px;
+margin-top:24px;
+flex-wrap:wrap;
+}
+
+.card{
+flex:1 1 220px;
+background:white;
+color:#1F2937;
+border-radius:14px;
+padding:18px;
+border-top:5px solid #F4B400;
+box-shadow:0 6px 14px rgba(0,0,0,0.08);
+}
+
+.card h3{
+margin:0 0 6px;
+font-size:18px;
+font-weight:600;
+color:#0F2747;
+}
+
+.card p{
+margin:0;
+font-size:14px;
+line-height:1.6;
+color:#4B5563;
+}
+
+@media(max-width:900px){
+.hero{grid-template-columns:1fr}
+.guide{height:260px}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bleed">
+<div class="wrap">
+
+<div class="hero">
+
+<div>
+
+<div class="eyebrow">Welcome</div>
+
+<h1>Rise 360 Instructional Design Portfolio</h1>
+
+<p class="intro">
+Explore a learning experience designed to demonstrate instructional strategy,
+Mighty blocks, and custom HTML interactives. This course highlights how thoughtful
+design choices create engaging, purposeful digital learning.
+</p>
+
+</div>
+
+<div class="guide-area">
+
+<img src="assets/guide.png" class="guide" alt="Course guide">
+
+<div class="audio-panel">
+<audio controls preload="metadata">
+<source src="assets/welcome.mp3" type="audio/mpeg">
+</audio>
+</div>
+
+</div>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Purpose</h3>
+<p>Clear learning goals guide every design decision and keep training focused on outcomes that matter.</p>
+</div>
+
+<div class="card">
+<h3>Audience</h3>
+<p>Understanding the learner’s environment and needs helps shape relevant and meaningful experiences.</p>
+</div>
+
+<div class="card">
+<h3>Application</h3>
+<p>Interactive elements and custom HTML bring scenarios and decision-making to life.</p>
+</div>
+
+<div class="card">
+<h3>Success</h3>
+<p>Effective design connects engagement, interaction, and measurable learning results.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

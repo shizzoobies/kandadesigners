@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADDIE Linear Interactive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Poppins',sans-serif;background:#f4f7fb}
+.bleed{
+  margin:-24px -20px;
+  padding:42px 36px 38px;
+  background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);
+  color:#fff;
+}
+.wrap{max-width:1280px;margin:auto}
+.eyebrow{
+  display:inline-block;background:#F4B400;color:#0F2747;padding:5px 14px;border-radius:999px;
+  font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px
+}
+h1{
+  margin:0 0 12px;
+  font-size:30px;
+  line-height:1.14;
+  font-weight:600
+}
+.intro{
+  margin:0;
+  color:#DBE7F5;
+  font-size:14px;
+  line-height:1.65;
+  max-width:780px
+}
+.intro + .intro{margin-top:10px}
+.linear-card{
+  margin-top:22px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+}
+.linear-card::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-6px;
+  height:32px;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,.18) 0%, rgba(0,0,0,0) 72%);
+  pointer-events:none;
+}
+.flow{
+  display:grid;
+  grid-template-columns:repeat(5, minmax(0, 1fr));
+  gap:18px;
+  align-items:end;
+  position:relative;
+}
+.flow::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.16) 48%, rgba(255,255,255,0) 58%);
+  transform:translateX(-125%);
+  animation:introSweep 1.8s ease 0.35s 1 forwards;
+  pointer-events:none;
+}
+@keyframes introSweep{
+  from{transform:translateX(-125%)}
+  to{transform:translateX(125%)}
+}
+.phase{
+  position:relative;
+  border:0;
+  cursor:pointer;
+  font-family:inherit;
+  text-align:left;
+  color:#fff;
+  transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
+  background:transparent;
+  padding:0;
+}
+.phase:hover{
+  transform:translateY(-9px);
+  filter:brightness(1.04);
+}
+.phase.active{
+  filter:brightness(1.06);
+}
+.phase.done .face{
+  box-shadow:0 0 0 3px rgba(255,255,255,.18), 0 12px 22px rgba(0,0,0,.16);
+}
+.phase .label-top{
+  min-height:84px;
+  color:#DBE7F5;
+  font-size:13px;
+  line-height:1.45;
+  padding:0 4px 10px 4px;
+}
+.phase .shape{
+  position:relative;
+  height:150px;
+}
+.face{
+  position:absolute;
+  left:0; right:22px; top:0; bottom:0;
+  border-radius:4px 0 0 4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 18px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.face::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(145deg, rgba(255,255,255,.24) 0%, rgba(255,255,255,.06) 22%, rgba(255,255,255,0) 48%, rgba(0,0,0,.10) 100%);
+  pointer-events:none;
+}
+.face::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:-45%;
+  width:38%;
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.24) 48%, rgba(255,255,255,0) 100%);
+  transform:skewX(-20deg);
+  opacity:0;
+  pointer-events:none;
+}
+.phase:hover .face::after{
+  animation:faceShine .8s ease forwards;
+}
+@keyframes faceShine{
+  0%{left:-45%;opacity:0}
+  18%{opacity:1}
+  100%{left:120%;opacity:0}
+}
+.letter{
+  font-size:76px;
+  line-height:1;
+  font-weight:700;
+  color:rgba(255,255,255,.96);
+  position:relative;
+  z-index:1;
+  text-shadow:0 2px 12px rgba(0,0,0,.08);
+}
+.arrow .face{
+  left:0; right:44px;
+  clip-path:polygon(0 0,78% 0,78% 0,78% 0,100% 50%,78% 100%,0 100%);
+  border-radius:4px;
+}
+.phase[data-phase="analyze"] .face{background:#57A8C9}
+.phase[data-phase="design"] .face{background:#60C98B}
+.phase[data-phase="develop"] .face{background:#F06454}
+.phase[data-phase="implement"] .face{background:#D14687}
+.phase[data-phase="evaluate"] .face{background:#0E8C98}
+
+.complete-banner{
+  display:none;
+  margin-top:16px;
+  background:#fff;
+  color:#1F2937;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 12px 26px rgba(0,0,0,.12);
+}
+.complete-banner.show{display:block;animation:pop .45s ease}
+.complete-banner h2{margin:0 0 6px;color:#0F2747;font-size:22px}
+.complete-banner p{margin:0;color:#4B5563;font-size:14px;line-height:1.6}
+@keyframes pop{0%{transform:scale(.96);opacity:0}100%{transform:scale(1);opacity:1}}
+.flow.complete{animation:pulseFlow 1s ease}
+@keyframes pulseFlow{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(6,14,28,.72);
+  backdrop-filter:blur(4px);
+  z-index:9999;
+  padding:24px;
+}
+.overlay.open{display:flex}
+.modal{
+  width:min(920px,100%);
+  max-height:86vh;
+  overflow:auto;
+  background:#fff;
+  color:#1F2937;
+  border-radius:22px;
+  box-shadow:0 24px 48px rgba(0,0,0,.28);
+  padding:22px;
+  position:relative;
+}
+.close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  border:0;
+  width:38px;
+  height:38px;
+  border-radius:999px;
+  background:#0F2747;
+  color:#fff;
+  cursor:pointer;
+  font-size:20px;
+}
+.modal-kicker{
+  color:#0F2747;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:700;
+  margin-bottom:8px;
+}
+.modal h2{
+  margin:0 0 10px;
+  color:#0F2747;
+  font-size:30px;
+}
+.modal p{
+  margin:0 0 16px;
+  color:#4B5563;
+  font-size:14px;
+  line-height:1.7;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.card{
+  background:#F8FAFC;
+  border:1px solid #E5EDF7;
+  border-radius:16px;
+  padding:14px;
+}
+.card h3{margin:0 0 5px;color:#0F2747;font-size:15px}
+.card p{margin:0;color:#4B5563;font-size:13px}
+.nav{
+  margin-top:16px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:11px 14px;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:600;
+}
+.btn.secondary{background:#EAF0F7;color:#0F2747}
+.btn.primary{background:#0F2747;color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+@media(max-width:1080px){
+  .flow{grid-template-columns:1fr}
+}
+@media(max-width:980px){
+  .grid{grid-template-columns:1fr}
+  .bleed{padding:36px 28px 34px}
+}
+</style>
+</head>
+
+<body>
+<div class="bleed">
+<div class="wrap">
+<div class="eyebrow">Explore ADDIE</div>
+<h1>Click each phase of the ADDIE model to explore how the process works.</h1>
+<p class="intro">ADDIE gives instructional designers a practical framework for moving from a learning need to a complete learning experience.</p>
+<p class="intro">Each section has its own color and opens to reveal how the phase contributes to building effective learning.</p>
+
+<div class="linear-card">
+<div class="flow" id="flow">
+<button class="phase" data-phase="analyze">
+<div class="label-top"><strong>Analysis</strong><br>Understand the learning need and the problem to solve.</div>
+<div class="shape"><div class="face"><div class="letter">A</div></div></div>
+</button>
+
+<button class="phase" data-phase="design">
+<div class="label-top"><strong>Design</strong><br>Plan objectives, structure, and the learning experience.</div>
+<div class="shape"><div class="face"><div class="letter">D</div></div></div>
+</button>
+
+<button class="phase" data-phase="develop">
+<div class="label-top"><strong>Development</strong><br>Create the materials and build the course.</div>
+<div class="shape"><div class="face"><div class="letter">D</div></div></div>
+</button>
+
+<button class="phase" data-phase="implement">
+<div class="label-top"><strong>Implementation</strong><br>Deliver the training and support learners.</div>
+<div class="shape"><div class="face"><div class="letter">I</div></div></div>
+</button>
+
+<button class="phase arrow" data-phase="evaluate">
+<div class="label-top"><strong>Evaluation</strong><br>Measure results and improve the learning.</div>
+<div class="shape"><div class="face"><div class="letter">E</div></div></div>
+</button>
+</div>
+
+<div class="complete-banner" id="completeBanner">
+  <h2>You completed the ADDIE model</h2>
+  <p>You explored all five phases of the framework. Together, these phases help instructional designers build learning experiences that are intentional, structured, and continuously improved.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="close" id="closeBtn" aria-label="Close">×</button>
+    <div class="modal-kicker">ADDIE Phase</div>
+    <h2 id="modalTitle"></h2>
+    <p id="modalCopy"></p>
+    <div class="grid" id="cardGrid"></div>
+    <div class="nav">
+      <button class="btn secondary" id="prevBtn">Previous phase</button>
+      <button class="btn primary" id="nextBtn">Next phase</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const order = ["analyze","design","develop","implement","evaluate"];
+const content = {
+  analyze: {
+    title: "Analyze",
+    copy: "The Analysis phase focuses on understanding the learning problem before anything is built. Instructional designers identify who the learner is, what they need to do, what is getting in the way, and what success should look like. This phase creates the foundation for all later design decisions.",
+    cards: [
+      {title:"Key question", text:"What problem should learning solve?"},
+      {title:"Focus", text:"Learners, performance gaps, context, and goals."},
+      {title:"Example", text:"Identify that new managers need better coaching conversations, not just more policy knowledge."}
+    ]
+  },
+  design: {
+    title: "Design",
+    copy: "The Design phase turns analysis into a clear learning plan. Instructional designers map objectives, choose the structure of the experience, define assessments, and decide how learners will engage with the content. This is where the blueprint for the learning experience is created.",
+    cards: [
+      {title:"Key question", text:"What should learners be able to do?"},
+      {title:"Focus", text:"Objectives, sequencing, assessments, and interaction planning."},
+      {title:"Example", text:"Outline a module sequence, draft measurable objectives, and choose scenario-based checks."}
+    ]
+  },
+  develop: {
+    title: "Develop",
+    copy: "The Development phase is where the learning experience is actually built. Content is written, visuals are created, media is produced, and interactions are assembled. At this stage, the design plan becomes a working product learners can use.",
+    cards: [
+      {title:"Key question", text:"How do we build the learning materials?"},
+      {title:"Focus", text:"Content production, media creation, build work, and testing."},
+      {title:"Example", text:"Create Rise lessons, record narration, design graphics, and build custom interactions."}
+    ]
+  },
+  implement: {
+    title: "Implement",
+    copy: "The Implementation phase is about delivering the training to learners. This includes launch planning, facilitator readiness when needed, technical setup, and making sure the learning experience is accessible and supported in the real environment where it will be used.",
+    cards: [
+      {title:"Key question", text:"How will learners receive and use the training?"},
+      {title:"Focus", text:"Delivery, access, support, rollout, and readiness."},
+      {title:"Example", text:"Publish the course, communicate the launch, and ensure learners can access it smoothly."}
+    ]
+  },
+  evaluate: {
+    title: "Evaluate",
+    copy: "The Evaluation phase measures how well the learning worked and identifies what should improve next. Instructional designers look at learner feedback, performance data, completion trends, and observed outcomes to refine the experience over time.",
+    cards: [
+      {title:"Key question", text:"Did the learning achieve its purpose?"},
+      {title:"Focus", text:"Feedback, performance outcomes, data, and iteration."},
+      {title:"Example", text:"Review learner feedback and assessment results to revise confusing sections."}
+    ]
+  }
+};
+
+const explored = new Set();
+let current = "analyze";
+
+const overlay = document.getElementById("overlay");
+const modalTitle = document.getElementById("modalTitle");
+const modalCopy = document.getElementById("modalCopy");
+const cardGrid = document.getElementById("cardGrid");
+const completeBanner = document.getElementById("completeBanner");
+const flow = document.getElementById("flow");
+const phases = [...document.querySelectorAll(".phase")];
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const closeBtn = document.getElementById("closeBtn");
+
+function renderPhase(phase){
+  current = phase;
+  const data = content[phase];
+  modalTitle.textContent = data.title;
+  modalCopy.textContent = data.copy;
+  cardGrid.innerHTML = "";
+  data.cards.forEach(card => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<h3>${card.title}</h3><p>${card.text}</p>`;
+    cardGrid.appendChild(div);
+  });
+
+  explored.add(phase);
+  phases.forEach(h => {
+    h.classList.toggle("active", h.dataset.phase === phase);
+    h.classList.toggle("done", explored.has(h.dataset.phase) && h.dataset.phase !== phase);
+  });
+
+  const idx = order.indexOf(phase);
+  prevBtn.disabled = idx === 0;
+  nextBtn.textContent = idx === order.length - 1 ? "Done" : "Next phase";
+
+  if(explored.size === order.length){
+    completeBanner.classList.add("show");
+    flow.classList.add("complete");
+    setTimeout(()=>flow.classList.remove("complete"), 1000);
+  }
+
+  overlay.classList.add("open");
+  overlay.setAttribute("aria-hidden","false");
+}
+
+phases.forEach(h => h.addEventListener("click", () => renderPhase(h.dataset.phase)));
+
+function closeModal(){
+  overlay.classList.remove("open");
+  overlay.setAttribute("aria-hidden","true");
+}
+closeBtn.addEventListener("click", closeModal);
+overlay.addEventListener("click", e => { if(e.target === overlay) closeModal(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeModal(); });
+
+prevBtn.addEventListener("click", () => {
+  const idx = order.indexOf(current);
+  if(idx > 0) renderPhase(order[idx - 1]);
+});
+nextBtn.addEventListener("click", () => {
+  const idx = order.indexOf(current);
+  if(idx < order.length - 1) renderPhase(order[idx + 1]);
+  else closeModal();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Progress Pyramid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Poppins',sans-serif;background:#f4f7fb}
+.bleed{
+  margin:-24px -20px;
+  padding:30px;
+  background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);
+  color:white
+}
+.wrap{max-width:980px;margin:auto}
+.hero{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:18px;
+  align-items:center;
+  margin-bottom:14px
+}
+.eyebrow{
+  background:#F4B400;
+  color:#0F2747;
+  padding:5px 14px;
+  border-radius:999px;
+  font-size:11px;
+  display:inline-block;
+  margin-bottom:8px;
+  font-weight:600
+}
+h1{margin:0 0 6px;font-size:30px;line-height:1.15}
+.intro{font-size:14px;color:#DBE7F5;line-height:1.6;max-width:560px}
+
+/* monitor */
+.monitor{width:300px;margin:auto}
+.screen-frame{
+  background:#0e1520;
+  border-radius:14px;
+  padding:8px;
+  border:1px solid rgba(255,255,255,.1)
+}
+.screen{aspect-ratio:16/9;overflow:hidden;border-radius:6px;position:relative}
+.screen iframe{width:100%;height:100%;border:0;pointer-events:none}
+.screen-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,rgba(15,39,71,.2),rgba(15,39,71,.6));cursor:pointer
+}
+.play{
+  width:48px;height:48px;border-radius:999px;background:#F4B400;
+  display:flex;align-items:center;justify-content:center
+}
+.triangle{
+  width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:14px solid #0F2747
+}
+.video-hint{font-size:11px;text-align:center;margin-top:6px;color:#DBE7F5}
+
+/* pyramid */
+.pyramid-shell{background:rgba(255,255,255,.08);border-radius:16px;padding:12px}
+.pyramid{display:flex;flex-direction:column;align-items:center;gap:6px}
+.tier{
+  border:0;width:100%;padding:9px;border-radius:10px;background:rgba(255,255,255,.1);
+  color:white;cursor:pointer;text-align:center;transition:.25s;position:relative
+}
+.tier:hover{background:rgba(255,255,255,.18)}
+.tier[data-level="create"]{width:42%}
+.tier[data-level="evaluate"]{width:52%}
+.tier[data-level="analyze"]{width:62%}
+.tier[data-level="apply"]{width:72%}
+.tier[data-level="understand"]{width:82%}
+.tier[data-level="remember"]{width:92%}
+.tier.completed{
+  background:#F4B400;
+  color:#0F2747;
+  font-weight:600
+}
+.tier.active{
+  box-shadow:0 0 14px rgba(244,180,0,.45)
+}
+.tier .label{font-size:14px;font-weight:600}
+.tier .sub{font-size:11px;color:#DBE7F5}
+.tier.completed .sub{color:#0F2747}
+
+/* overlays */
+.video-overlay,.content-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
+  align-items:center;justify-content:center;z-index:1000
+}
+.video-overlay.open,.content-overlay.open{display:flex}
+.video-frame{width:min(900px,100%);aspect-ratio:16/9}
+.video-frame iframe{width:100%;height:100%;border:0}
+
+.content-wrap{
+  width:min(900px, calc(100vw - 40px));
+  max-height:min(86vh, 860px);
+  overflow:auto;
+  background:white;
+  color:#1F2937;
+  border-radius:20px;
+  padding:22px;
+  position:relative;
+  box-shadow:0 24px 48px rgba(0,0,0,.35)
+}
+.close-btn{
+  position:absolute;top:14px;right:14px;border:0;background:#0F2747;color:white;
+  width:34px;height:34px;border-radius:999px;cursor:pointer;font-size:18px
+}
+.kicker{
+  color:#0F2747;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:8px
+}
+.content-title{
+  margin:0 0 8px;
+  color:#0F2747;
+  font-size:28px;
+  line-height:1.15
+}
+.content-copy{
+  margin:0 0 14px;
+  color:#4B5563;
+  font-size:14px;
+  line-height:1.7
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+.card{
+  background:#F8FAFC;
+  border:1px solid #E5EDF7;
+  border-radius:12px;
+  padding:12px
+}
+.card h3{
+  margin:0 0 4px;
+  font-size:14px;
+  color:#0F2747
+}
+.card p{
+  margin:0;
+  font-size:13px;
+  color:#4B5563;
+  line-height:1.55
+}
+.prompt{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid #E5EDF7;
+  color:#6B7280;
+  font-size:13px;
+  line-height:1.6
+}
+.nav-row{
+  margin-top:16px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap
+}
+.nav-btn{
+  border:0;
+  border-radius:12px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-family:inherit;
+  font-weight:600
+}
+.nav-btn.secondary{background:#EAF0F7;color:#0F2747}
+.nav-btn.primary{background:#0F2747;color:white}
+.nav-btn:disabled{opacity:.45;cursor:not-allowed}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .monitor{width:280px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="bleed">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Teaching with Purpose</div>
+        <h1>Bloom’s Taxonomy</h1>
+        <p class="intro">
+          Bloom’s Taxonomy helps instructional designers move beyond content coverage and toward intentional learning design.
+          Each level represents a different type of thinking we can ask learners to do. Click a level to learn more.
+        </p>
+      </div>
+
+      <div class="monitor">
+        <div class="screen-frame">
+          <div class="screen" id="videoLaunch">
+            <iframe src="https://www.youtube.com/embed/ve-Evb5bGoc"></iframe>
+            <div class="screen-overlay">
+              <div class="play"><div class="triangle"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="video-hint">Click video to expand</div>
+      </div>
+    </div>
+
+    <div class="pyramid-shell">
+      <div class="pyramid" id="pyramid">
+        <button class="tier active" data-level="remember"><span class="label">Remember</span><div class="sub">Recall</div></button>
+        <button class="tier" data-level="understand"><span class="label">Understand</span><div class="sub">Explain</div></button>
+        <button class="tier" data-level="apply"><span class="label">Apply</span><div class="sub">Use</div></button>
+        <button class="tier" data-level="analyze"><span class="label">Analyze</span><div class="sub">Break apart</div></button>
+        <button class="tier" data-level="evaluate"><span class="label">Evaluate</span><div class="sub">Judge</div></button>
+        <button class="tier" data-level="create"><span class="label">Create</span><div class="sub">Produce</div></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="video-overlay" id="videoOverlay">
+  <div class="video-frame" id="videoFrame"></div>
+</div>
+
+<div class="content-overlay" id="contentOverlay">
+  <div class="content-wrap">
+    <button class="close-btn" id="contentClose">×</button>
+    <div class="kicker">Bloom’s Level</div>
+    <h2 class="content-title" id="contentTitle"></h2>
+    <p class="content-copy" id="contentCopy"></p>
+    <div class="grid" id="contentGrid"></div>
+    <div class="prompt" id="contentPrompt"></div>
+    <div class="nav-row">
+      <button class="nav-btn secondary" id="prevBtn">Previous level</button>
+      <button class="nav-btn primary" id="nextBtn">Next level</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const levelOrder = ["remember","understand","apply","analyze","evaluate","create"];
+const content = {
+  remember: {
+    title: "Remember",
+    copy: "At the Remember level, learners recall facts, terms, definitions, or basic concepts. This is the foundation layer and is most useful when learners need key information before moving into deeper thinking.",
+    cards: [
+      {title: "Action verbs", text: "Recall, list, identify, define, label"},
+      {title: "Sample objective", text: "Identify the six levels of Bloom’s Taxonomy in order."},
+      {title: "Design tip", text: "Use this level for foundational knowledge, but avoid stopping here when performance is the real goal."}
+    ],
+    prompt: "Ask yourself: Is simple recall enough, or do learners need to move into understanding or application?"
+  },
+  understand: {
+    title: "Understand",
+    copy: "At the Understand level, learners show comprehension by explaining ideas in their own words, summarizing meaning, or interpreting information. This goes beyond recall because learners demonstrate that they grasp what the content means.",
+    cards: [
+      {title: "Action verbs", text: "Explain, summarize, interpret, describe, discuss"},
+      {title: "Sample objective", text: "Explain why each step of the safety process matters to the overall procedure."},
+      {title: "Design tip", text: "Use prompts that ask learners to explain meaning, not just repeat facts."}
+    ],
+    prompt: "Ask yourself: Am I checking that the learner truly understands the concept, not just that they can repeat it?"
+  },
+  apply: {
+    title: "Apply",
+    copy: "At the Apply level, learners use what they know in a practical situation. This is often where training becomes more performance-focused because learners demonstrate procedures, complete tasks, or solve problems.",
+    cards: [
+      {title: "Action verbs", text: "Apply, use, demonstrate, solve, implement"},
+      {title: "Sample objective", text: "Apply the escalation process correctly in a realistic customer scenario."},
+      {title: "Design tip", text: "Use scenarios, practice tasks, or simulations when you want learners to do something with the content."}
+    ],
+    prompt: "Ask yourself: Will learners need to perform this task or use this knowledge in the real world?"
+  },
+  analyze: {
+    title: "Analyze",
+    copy: "At the Analyze level, learners break ideas into parts, examine relationships, and identify patterns or causes. This is useful when learners must investigate, compare, or distinguish between elements.",
+    cards: [
+      {title: "Action verbs", text: "Analyze, compare, categorize, differentiate, examine"},
+      {title: "Sample objective", text: "Analyze a workflow to identify where communication breakdowns are happening."},
+      {title: "Design tip", text: "Use this level when learners must sort, compare, or find meaning in structure and relationships."}
+    ],
+    prompt: "Ask yourself: Am I asking learners to unpack information and make sense of how the parts fit together?"
+  },
+  evaluate: {
+    title: "Evaluate",
+    copy: "At the Evaluate level, learners make judgments based on criteria, evidence, or standards. Use this level when learners need to justify choices, critique quality, or decide between options.",
+    cards: [
+      {title: "Action verbs", text: "Evaluate, judge, justify, critique, defend"},
+      {title: "Sample objective", text: "Evaluate two lesson plans and defend which one better supports performance outcomes."},
+      {title: "Design tip", text: "This level works well when learners must weigh options, apply standards, or make reasoned decisions."}
+    ],
+    prompt: "Ask yourself: Does the activity require learners to defend a position or make a judgment using evidence?"
+  },
+  create: {
+    title: "Create",
+    copy: "At the Create level, learners produce something new by combining ideas, skills, or information in an original way. This is the highest level of Bloom’s and is useful when the goal is innovation, design, or problem-solving in new situations.",
+    cards: [
+      {title: "Action verbs", text: "Design, build, generate, develop, formulate"},
+      {title: "Sample objective", text: "Design a customer onboarding workflow that improves first-day readiness."},
+      {title: "Design tip", text: "Use this level when learners need to make, plan, or construct something that shows synthesis."}
+    ],
+    prompt: "Ask yourself: Am I asking the learner to produce something new, not just explain or practice something familiar?"
+  }
+};
+
+const tiers = [...document.querySelectorAll(".tier")];
+let progressIndex = 0;
+let currentLevel = "remember";
+
+const contentOverlay = document.getElementById("contentOverlay");
+const contentTitle = document.getElementById("contentTitle");
+const contentCopy = document.getElementById("contentCopy");
+const contentGrid = document.getElementById("contentGrid");
+const contentPrompt = document.getElementById("contentPrompt");
+const contentClose = document.getElementById("contentClose");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function renderLevel(level){
+  currentLevel = level;
+  const data = content[level];
+  contentTitle.textContent = data.title;
+  contentCopy.textContent = data.copy;
+  contentGrid.innerHTML = "";
+  data.cards.forEach(card => {
+    const el = document.createElement("div");
+    el.className = "card";
+    el.innerHTML = `<h3>${card.title}</h3><p>${card.text}</p>`;
+    contentGrid.appendChild(el);
+  });
+  contentPrompt.textContent = data.prompt;
+
+  const idx = levelOrder.indexOf(level);
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === levelOrder.length - 1;
+  nextBtn.textContent = idx === levelOrder.length - 1 ? "Done" : "Next level";
+
+  contentOverlay.classList.add("open");
+}
+
+tiers.forEach((tier, i) => {
+  tier.addEventListener("click", () => {
+    renderLevel(tier.dataset.level);
+
+    if (i === progressIndex) {
+      tier.classList.add("completed");
+      tier.classList.remove("active");
+      progressIndex++;
+      if (tiers[progressIndex]) tiers[progressIndex].classList.add("active");
+    }
+  });
+});
+
+contentClose.addEventListener("click", () => contentOverlay.classList.remove("open"));
+contentOverlay.addEventListener("click", (e) => {
+  if (e.target === contentOverlay) contentOverlay.classList.remove("open");
+});
+
+prevBtn.addEventListener("click", () => {
+  const idx = levelOrder.indexOf(currentLevel);
+  if (idx > 0) renderLevel(levelOrder[idx - 1]);
+});
+
+nextBtn.addEventListener("click", () => {
+  const idx = levelOrder.indexOf(currentLevel);
+  if (idx < levelOrder.length - 1) {
+    renderLevel(levelOrder[idx + 1]);
+  } else {
+    contentOverlay.classList.remove("open");
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    contentOverlay.classList.remove("open");
+    videoOverlay.classList.remove("open");
+    videoFrame.innerHTML = "";
+  }
+});
+
+const launch = document.getElementById("videoLaunch");
+const videoOverlay = document.getElementById("videoOverlay");
+const videoFrame = document.getElementById("videoFrame");
+
+launch.onclick = () => {
+  videoFrame.innerHTML = '<iframe src="https://www.youtube.com/embed/ve-Evb5bGoc?autoplay=1"></iframe>';
+  videoOverlay.classList.add("open");
+};
+
+videoOverlay.onclick = () => {
+  videoOverlay.classList.remove("open");
+  videoFrame.innerHTML = "";
+};
+</script>
+
+</body>
+</html>

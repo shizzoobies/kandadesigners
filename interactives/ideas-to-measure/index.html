@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kirkpatrick Tiered with Video</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins,sans-serif;background:#f4f7fb;overflow-x:hidden}
+.bleed{
+  margin:-24px -20px;
+  padding:30px 30px 28px;
+  background:linear-gradient(180deg,#0F2747 0%,#16365F 100%);
+  color:#fff;
+  overflow:visible;
+}
+.wrap{max-width:1180px;margin:auto}
+.hero{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  gap:24px;
+  align-items:start;
+}
+.eyebrow{
+  display:inline-block;
+  background:#F4B400;
+  color:#0F2747;
+  padding:4px 12px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+h1{margin:0 0 8px;font-size:31px;line-height:1.12}
+.intro{margin:0;color:#DBE7F5;font-size:14px;line-height:1.65;max-width:680px}
+
+/* monitor */
+.monitor-wrap{
+  position:relative;
+  margin-right:-14px;
+}
+.monitor{
+  position:relative;
+  background:#0b1f36;
+  border-radius:20px;
+  padding:14px;
+  box-shadow:0 24px 48px rgba(0,0,0,.38);
+  transform:translateX(8px);
+}
+.screen{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:12px;
+  overflow:hidden;
+  background:#081626;
+  cursor:pointer;
+}
+.screen iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;
+}
+.screen::after{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:-30%;
+  width:24%;
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(244,180,0,.22) 50%, rgba(255,255,255,0) 100%);
+  transform:skewX(-18deg);
+  animation:screenSweep 5.2s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes screenSweep{
+  0%,72%{left:-30%;opacity:0}
+  78%{opacity:1}
+  100%{left:125%;opacity:0}
+}
+.screen-overlay{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,rgba(15,39,71,.14),rgba(15,39,71,.48));
+}
+.play{
+  width:54px;height:54px;border-radius:999px;background:#F4B400;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 10px 22px rgba(0,0,0,.22)
+}
+.triangle{
+  width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:14px solid #0F2747;margin-left:2px
+}
+.stand{
+  width:120px;height:12px;background:#0b1f36;margin:12px auto 0;border-radius:6px;
+  box-shadow:0 10px 18px rgba(0,0,0,.24);
+}
+.stand::after{
+  content:"";
+  display:block;
+  width:170px;height:10px;
+  margin:10px auto 0;
+  border-radius:999px;
+  background:rgba(0,0,0,.18);
+  filter:blur(4px);
+}
+.video-hint{margin-top:6px;text-align:center;font-size:11px;color:#DBE7F5}
+
+/* tiered model */
+.model-shell{
+  margin-top:18px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:14px;
+}
+.tier-stack{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.tier{
+  appearance:none;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border-radius:14px;
+  padding:13px 14px;
+  cursor:pointer;
+  text-align:left;
+  transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+  position:relative;
+}
+.tier:hover{
+  transform:translateY(-2px);
+  background:rgba(255,255,255,.13);
+}
+.tier.visited{
+  border-color:rgba(244,180,0,.3);
+  box-shadow:0 0 0 1px rgba(244,180,0,.16) inset;
+}
+.tier.active{
+  box-shadow:0 0 14px rgba(244,180,0,.35);
+}
+.tier:nth-child(1){width:72%;margin-left:auto;background:linear-gradient(90deg, rgba(244,180,0,.16), rgba(255,255,255,.08))}
+.tier:nth-child(2){width:81%;margin-left:auto;background:linear-gradient(90deg, rgba(96,201,139,.18), rgba(255,255,255,.08))}
+.tier:nth-child(3){width:90%;margin-left:auto;background:linear-gradient(90deg, rgba(209,70,135,.16), rgba(255,255,255,.08))}
+.tier:nth-child(4){width:100%;background:linear-gradient(90deg, rgba(14,140,152,.18), rgba(255,255,255,.08))}
+.tier-row{
+  display:flex;align-items:center;gap:10px;
+}
+.badge{
+  width:28px;height:28px;border-radius:999px;
+  background:#F4B400;color:#0F2747;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0
+}
+.label{font-size:15px;font-weight:600}
+.sub{
+  padding-left:38px;
+  margin-top:3px;
+  color:#DBE7F5;
+  font-size:11.5px;
+  line-height:1.45;
+}
+.progress{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.progress-step{
+  height:8px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden
+}
+.progress-step span{
+  display:block;width:0;height:100%;background:#F4B400;transition:width .25s ease
+}
+.progress-label{
+  margin-top:8px;
+  font-size:12px;
+  color:#DBE7F5;
+}
+
+/* overlays */
+.overlay{
+  position:fixed;inset:0;
+  display:none;
+  align-items:center;justify-content:center;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(6px);
+  z-index:9999;
+  padding:18px;
+}
+.overlay.open{display:flex}
+.video-frame{
+  width:min(1080px, calc(100vw - 36px));
+  aspect-ratio:16/9;
+}
+.video-frame iframe{
+  width:100%;height:100%;border:0;border-radius:16px;
+  box-shadow:0 24px 48px rgba(0,0,0,.35)
+}
+.content-wrap{
+  width:min(980px, calc(100vw - 36px));
+  max-height:min(92vh, 900px);
+  overflow:auto;
+  background:#fff;
+  color:#1F2937;
+  border-radius:22px;
+  padding:22px;
+  position:relative;
+  box-shadow:0 24px 48px rgba(0,0,0,.35);
+}
+.close-btn{
+  position:absolute;top:14px;right:14px;
+  border:0;background:#0F2747;color:#fff;width:36px;height:36px;border-radius:999px;
+  font-size:18px;cursor:pointer
+}
+.top-band{
+  border-radius:18px;
+  padding:16px 16px 14px;
+  margin-bottom:14px;
+  position:relative;
+  overflow:hidden;
+}
+.top-band::after{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;left:-20%;
+  width:26%;
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.22) 50%, rgba(255,255,255,0) 100%);
+  transform:skewX(-18deg);
+  animation:shine 1.1s ease forwards
+}
+@keyframes shine{
+  0%{left:-20%;opacity:0}
+  18%{opacity:1}
+  100%{left:120%;opacity:0}
+}
+.kicker{
+  color:#0F2747;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:8px;
+}
+.content-title{
+  margin:0 0 8px;
+  color:#0F2747;
+  font-size:28px;
+  line-height:1.12;
+}
+.content-copy{
+  margin:0;
+  color:#4B5563;
+  font-size:14px;
+  line-height:1.7;
+}
+.tag-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 14px;
+}
+.tag{
+  background:#EEF4FB;
+  color:#0F2747;
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:12px;
+  font-weight:600;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.card{
+  background:#F8FAFC;
+  border:1px solid #E5EDF7;
+  border-radius:14px;
+  padding:14px;
+}
+.card h3{
+  margin:0 0 6px;
+  font-size:14px;
+  color:#0F2747;
+}
+.card p{
+  margin:0;
+  font-size:13px;
+  color:#4B5563;
+  line-height:1.55;
+}
+.prompt{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid #E5EDF7;
+  color:#6B7280;
+  font-size:13px;
+  line-height:1.6;
+}
+.nav-row{
+  margin-top:16px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.nav-btn{
+  border:0;border-radius:12px;padding:10px 14px;cursor:pointer;font-family:inherit;font-weight:600
+}
+.nav-btn.secondary{background:#EAF0F7;color:#0F2747}
+.nav-btn.primary{background:#0F2747;color:#fff}
+.nav-btn:disabled{opacity:.45;cursor:not-allowed}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .monitor{width:300px;margin:auto}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="bleed">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Success Must Be Measurable</div>
+        <h1>How do we measure success?</h1>
+        <p class="intro">Kirkpatrick’s Four Levels help measure whether training truly worked. Watch the overview or click a level to dive deeper.</p>
+      </div>
+
+      <div class="monitor">
+        <div class="screen-frame">
+          <div class="screen" id="videoLaunch" tabindex="0" role="button" aria-label="Open video">
+            <iframe src="https://www.youtube.com/embed/aw9sqEvfuf8"></iframe>
+            <div class="screen-overlay">
+              <div class="play"><div class="triangle"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="video-hint">Click video to expand</div>
+      </div>
+    </div>
+
+    <div class="model-shell">
+      <div class="tier-stack">
+        <button class="tier active" data-level="reaction">
+          <div class="tier-row"><div class="badge">1</div><div class="label">Reaction</div></div>
+          <div class="sub">How learners felt about the training experience.</div>
+        </button>
+        <button class="tier" data-level="learning">
+          <div class="tier-row"><div class="badge">2</div><div class="label">Learning</div></div>
+          <div class="sub">What learners gained in knowledge or skill.</div>
+        </button>
+        <button class="tier" data-level="behavior">
+          <div class="tier-row"><div class="badge">3</div><div class="label">Behavior</div></div>
+          <div class="sub">How learning shows up in real-world performance.</div>
+        </button>
+        <button class="tier" data-level="results">
+          <div class="tier-row"><div class="badge">4</div><div class="label">Results</div></div>
+          <div class="sub">The broader outcomes created by the training.</div>
+        </button>
+      </div>
+
+      <div class="progress" id="progress">
+        <div class="progress-step"><span></span></div>
+        <div class="progress-step"><span></span></div>
+        <div class="progress-step"><span></span></div>
+        <div class="progress-step"><span></span></div>
+      </div>
+      <div class="progress-label" id="progressLabel">0 of 4 opened</div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="videoOverlay">
+  <div class="video-frame" id="videoFrame"></div>
+</div>
+
+<div class="overlay" id="contentOverlay">
+  <div class="content-wrap">
+    <button class="close-btn" id="contentClose">×</button>
+    <div class="top-band" id="topBand">
+      <div class="kicker">Kirkpatrick Level</div>
+      <h2 class="content-title" id="contentTitle"></h2>
+      <p class="content-copy" id="contentCopy"></p>
+    </div>
+    <div class="tag-row" id="contentTags"></div>
+    <div class="grid" id="contentGrid"></div>
+    <div class="prompt" id="contentPrompt"></div>
+    <div class="nav-row">
+      <button class="nav-btn secondary" id="prevBtn">Previous level</button>
+      <button class="nav-btn primary" id="nextBtn">Next level</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const levelOrder = ["reaction","learning","behavior","results"];
+const content = {
+  reaction: {
+    title: "Reaction",
+    color: "rgba(244,180,0,.14)",
+    copy: "Reaction measures how learners experienced the training. This level looks at whether the learning felt useful, engaging, relevant, and worth the learner’s time.",
+    tags: ["Surveys","Feedback forms","Satisfaction"],
+    cards: [
+      {title:"What it asks", text:"Did learners feel the training was useful and engaging?"},
+      {title:"What to measure", text:"Course feedback, satisfaction scores, and learner comments."},
+      {title:"Good example", text:"A post-course survey asking learners whether the training felt relevant to their role."},
+      {title:"Why it matters", text:"If learners reject the experience, the rest of the learning journey becomes harder."}
+    ],
+    prompt: "Reaction is a starting point. It tells us how learners experienced the training, but not yet whether meaningful learning or change occurred."
+  },
+  learning: {
+    title: "Learning",
+    color: "rgba(96,201,139,.18)",
+    copy: "Learning measures what learners actually gained. This level looks for evidence that knowledge, skills, confidence, or understanding increased because of the training.",
+    tags: ["Knowledge checks","Assessments","Skill demos"],
+    cards: [
+      {title:"What it asks", text:"Did learners gain the intended knowledge or skill?"},
+      {title:"What to measure", text:"Quiz scores, pre and post assessments, demonstrations, or practice activities."},
+      {title:"Good example", text:"A learner successfully completes a scenario-based knowledge check after training."},
+      {title:"Why it matters", text:"Training cannot be effective if no learning actually happened."}
+    ],
+    prompt: "Learning helps confirm that the training improved knowledge or skill, but strong evaluation does not stop here."
+  },
+  behavior: {
+    title: "Behavior",
+    color: "rgba(209,70,135,.14)",
+    copy: "Behavior measures whether learners apply what they learned after training. This level focuses on transfer, looking for evidence that the learning changed performance in the real world.",
+    tags: ["On-the-job use","Observation","Manager feedback"],
+    cards: [
+      {title:"What it asks", text:"Did learners change what they do on the job?"},
+      {title:"What to measure", text:"Observation, coaching notes, manager reports, or workflow behavior."},
+      {title:"Good example", text:"A supervisor observes employees consistently using the new process after training."},
+      {title:"Why it matters", text:"If learning stays in the course and never shows up in practice, impact is limited."}
+    ],
+    prompt: "Behavior is where training begins to show its value in the real world through changed actions and performance."
+  },
+  results: {
+    title: "Results",
+    color: "rgba(14,140,152,.16)",
+    copy: "Results measure the broader outcome of training. This level looks at whether learning contributed to meaningful business, operational, safety, or performance improvements.",
+    tags: ["KPIs","Performance data","Business impact"],
+    cards: [
+      {title:"What it asks", text:"Did the training improve outcomes that matter?"},
+      {title:"What to measure", text:"Error reduction, productivity, customer satisfaction, safety, or retention."},
+      {title:"Good example", text:"After training, a team reduces mistakes and improves performance metrics over time."},
+      {title:"Why it matters", text:"This is where learning connects to measurable organizational value."}
+    ],
+    prompt: "Results connect learning to measurable impact. This is where training proves that it made a difference beyond the course itself."
+  }
+};
+
+const videoLaunch = document.getElementById('videoLaunch');
+const videoOverlay = document.getElementById('videoOverlay');
+const videoFrame = document.getElementById('videoFrame');
+
+const contentOverlay = document.getElementById('contentOverlay');
+const contentClose = document.getElementById('contentClose');
+const contentTitle = document.getElementById('contentTitle');
+const contentCopy = document.getElementById('contentCopy');
+const contentGrid = document.getElementById('contentGrid');
+const contentTags = document.getElementById('contentTags');
+const contentPrompt = document.getElementById('contentPrompt');
+const topBand = document.getElementById('topBand');
+
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const levels = [...document.querySelectorAll('.tier')];
+const progressSpans = [...document.querySelectorAll('.progress-step span')];
+const progressLabel = document.getElementById('progressLabel');
+
+const visited = new Set();
+let currentIndex = 0;
+
+function renderProgress(){
+  progressSpans.forEach((span, idx) => {
+    span.style.width = visited.has(levelOrder[idx]) ? '100%' : '0%';
+  });
+  progressLabel.textContent = visited.size + ' of ' + levelOrder.length + ' opened';
+  levels.forEach(btn => btn.classList.toggle('visited', visited.has(btn.dataset.level)));
+}
+
+function openVideo(){
+  videoFrame.innerHTML = '<iframe src="https://www.youtube.com/embed/aw9sqEvfuf8?autoplay=1" allowfullscreen></iframe>';
+  videoOverlay.classList.add('open');
+}
+function closeVideo(){
+  videoOverlay.classList.remove('open');
+  videoFrame.innerHTML = '';
+}
+
+function renderLevel(levelKey){
+  const item = content[levelKey];
+  currentIndex = levelOrder.indexOf(levelKey);
+  visited.add(levelKey);
+  renderProgress();
+
+  levels.forEach(btn => btn.classList.toggle('active', btn.dataset.level === levelKey));
+
+  contentTitle.textContent = item.title;
+  contentCopy.textContent = item.copy;
+  contentPrompt.textContent = item.prompt;
+  topBand.style.background = item.color;
+
+  contentTags.innerHTML = '';
+  item.tags.forEach(tag => {
+    const el = document.createElement('span');
+    el.className = 'tag';
+    el.textContent = tag;
+    contentTags.appendChild(el);
+  });
+
+  contentGrid.innerHTML = '';
+  item.cards.forEach(card => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = '<h3>' + card.title + '</h3><p>' + card.text + '</p>';
+    contentGrid.appendChild(el);
+  });
+
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.textContent = currentIndex === levelOrder.length - 1 ? 'Done' : 'Next level';
+  contentOverlay.classList.add('open');
+}
+
+function closeContent(){
+  contentOverlay.classList.remove('open');
+}
+
+videoLaunch.addEventListener('click', openVideo);
+videoLaunch.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter' || e.key === ' '){
+    e.preventDefault();
+    openVideo();
+  }
+});
+videoOverlay.addEventListener('click', (e) => { if(e.target === videoOverlay) closeVideo(); });
+
+levels.forEach(btn => {
+  btn.addEventListener('click', () => renderLevel(btn.dataset.level));
+});
+
+contentClose.addEventListener('click', closeContent);
+contentOverlay.addEventListener('click', (e) => { if(e.target === contentOverlay) closeContent(); });
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    closeVideo();
+    closeContent();
+  }
+});
+
+prevBtn.addEventListener('click', () => {
+  if(currentIndex > 0) renderLevel(levelOrder[currentIndex - 1]);
+});
+nextBtn.addEventListener('click', () => {
+  if(currentIndex < levelOrder.length - 1) renderLevel(levelOrder[currentIndex + 1]);
+  else closeContent();
+});
+
+renderProgress();
+</script>
+</body>
+</html>
