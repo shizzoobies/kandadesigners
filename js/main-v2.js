@@ -456,6 +456,45 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && iframeModal?.classList.contains('is-open')) closeIframe(); });
 })();
 
+// ─── Nonprofit Modal ──────────────────────────────
+(function () {
+  const modal    = document.getElementById('nonprofit-modal');
+  const backdrop = document.getElementById('nonprofit-modal-backdrop');
+  const closeBtn = document.getElementById('nonprofit-modal-close');
+  if (!modal) return;
+
+  let nonprofitTrigger = null;
+
+  function openNonprofitModal(trigger) {
+    nonprofitTrigger = trigger || null;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeNonprofitModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    nonprofitTrigger?.focus();
+    nonprofitTrigger = null;
+  }
+
+  document.querySelectorAll('[data-open-nonprofit]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); openNonprofitModal(el); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openNonprofitModal(el); }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeNonprofitModal);
+  backdrop?.addEventListener('click', closeNonprofitModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeNonprofitModal();
+  });
+})();
+
 // ─── Contact form (Web3Forms) ─────────────────────
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {

@@ -790,6 +790,123 @@ a.ticker-item:hover {
   flex-shrink: 0;
 }
 
+/* ─── Nonprofit Collage Work Card ────────────────── */
+.work-card--nonprofit { cursor: pointer; }
+
+.nonprofit-collage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  height: 100%;
+}
+
+.nonprofit-collage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.9s cubic-bezier(0.25,0.1,0.25,1);
+}
+
+.work-card--nonprofit:hover .nonprofit-collage img { transform: scale(1.05); }
+
+/* ─── Nonprofit Modal ─────────────────────────────── */
+.nonprofit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.nonprofit-modal.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nonprofit-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.nonprofit-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(860px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem;
+  transform: translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nonprofit-modal.is-open .nonprofit-modal-panel { transform: translateY(0); }
+
+.nonprofit-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin: 2rem 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.nonprofit-photo-grid img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.nonprofit-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.nonprofit-body-block h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+
+.nonprofit-body-block p {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.nonprofit-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 640px) {
+  .nonprofit-photo-grid { grid-template-columns: repeat(2, 1fr); }
+  .nonprofit-body { grid-template-columns: 1fr; gap: 1.25rem; }
+  .nonprofit-modal-panel { padding: 2rem 1.5rem; }
+}
+
 /* ─── Book Cover Gallery Modal ───────────────────── */
 .book-modal {
   position: fixed;
