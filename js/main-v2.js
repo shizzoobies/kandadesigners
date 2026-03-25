@@ -310,6 +310,47 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   }
 })();
 
+// ─── Book Cover Gallery Modal ─────────────────────
+(function () {
+  const modal    = document.getElementById('book-modal');
+  const backdrop = document.getElementById('book-modal-backdrop');
+  const closeBtn = document.getElementById('book-modal-close');
+  if (!modal) return;
+
+  let bookTrigger = null;
+
+  function openBookModal(trigger) {
+    bookTrigger = trigger || null;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeBookModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    bookTrigger?.focus();
+    bookTrigger = null;
+  }
+
+  document.querySelectorAll('[data-open-bookcovers]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); openBookModal(el); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBookModal(el); }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeBookModal);
+  backdrop?.addEventListener('click', closeBookModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open') && !document.getElementById('lightbox')?.classList.contains('active')) {
+      closeBookModal();
+    }
+  });
+})();
+
 // ─── eLearning Preview Modal ──────────────────────
 (function () {
   const modal    = document.getElementById('elearn-modal');
