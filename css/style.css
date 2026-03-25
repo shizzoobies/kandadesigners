@@ -924,14 +924,19 @@ a.ticker-item:hover {
 .img-hover-preview.active { opacity: 1; }
 .img-hover-preview img { width: 100%; display: block; }
 
-/* Subtle ring on hovered grid image */
+/* Audio modal: 2×2 collage grid */
+.audio-photo-grid {
+  grid-template-columns: repeat(2, 1fr);
+  overflow: visible;
+}
 .audio-photo-grid img {
+  border-radius: 4px;
   cursor: zoom-in;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .audio-photo-grid img:hover {
   box-shadow: 0 0 0 2px var(--accent);
-  transform: scale(1.03);
+  transform: scale(1.04);
   position: relative;
   z-index: 1;
 }
