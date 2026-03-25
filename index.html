@@ -314,20 +314,20 @@
           </div>
         </div>
 
-        <a href="projects/" class="work-card" style="display:block;text-decoration:none;color:inherit;">
+        <div class="work-card work-card--shooter" role="button" tabindex="0" data-open-shooter>
           <video autoplay muted loop playsinline>
             <source src="images/Shooter%20Demo.mp4" type="video/mp4" />
           </video>
           <div class="work-card-overlay">
             <div class="work-card-text">
-              <span class="work-label">Unity / C#</span>
+              <span class="work-label">Vanilla JS / Web APIs</span>
               <span class="work-title">Scrolling Shooter</span>
             </div>
             <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
             </div>
           </div>
-        </a>
+        </div>
 
         <!-- Set 2 — duplicate for seamless loop -->
         <div class="work-card" role="button" tabindex="0" data-open-elearn>
@@ -366,20 +366,20 @@
             </div>
           </div>
         </div>
-        <a href="projects/" class="work-card" style="display:block;text-decoration:none;color:inherit;">
+        <div class="work-card work-card--shooter" role="button" tabindex="0" data-open-shooter>
           <video autoplay muted loop playsinline>
             <source src="images/Shooter%20Demo.mp4" type="video/mp4" />
           </video>
           <div class="work-card-overlay">
             <div class="work-card-text">
-              <span class="work-label">Unity / C#</span>
+              <span class="work-label">Vanilla JS / Web APIs</span>
               <span class="work-title">Scrolling Shooter</span>
             </div>
             <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
             </div>
           </div>
-        </a>
+        </div>
 
       </div>
     </div>
@@ -569,6 +569,27 @@
       <div class="form-success" id="contact-modal-success" style="display:none;">
         <h3>Message Received</h3>
         <p>Thanks for reaching out. We'll be in touch within 24 hours to schedule your consultation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shooter Game Modal -->
+  <div class="game-modal" id="home-game-modal" aria-hidden="true">
+    <div class="game-modal-backdrop" id="home-game-backdrop"></div>
+    <div class="game-modal-panel" role="dialog" aria-label="Scrolling Shooter" aria-modal="true">
+      <div class="game-modal-header">
+        <div class="game-modal-title">
+          <span class="game-modal-name">Scrolling Shooter</span>
+        </div>
+        <div class="game-modal-controls">
+          <a href="https://game.kandadesigners.com" target="_blank" rel="noopener" class="game-modal-external" title="Open in new tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <button class="game-modal-close" id="home-game-close" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="game-modal-frame-wrap">
+        <iframe id="home-game-iframe" class="game-iframe" src="" title="Scrolling Shooter Game" allowfullscreen></iframe>
       </div>
     </div>
   </div>

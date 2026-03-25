@@ -310,6 +310,44 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   }
 })();
 
+// ─── Home Shooter Game Modal ──────────────────────
+(function () {
+  const modal    = document.getElementById('home-game-modal');
+  const backdrop = document.getElementById('home-game-backdrop');
+  const closeBtn = document.getElementById('home-game-close');
+  const iframe   = document.getElementById('home-game-iframe');
+  if (!modal) return;
+
+  const GAME_URL = 'https://game.kandadesigners.com';
+
+  function openGameModal() {
+    iframe.src = GAME_URL;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeGameModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(() => { iframe.src = ''; }, 300);
+  }
+
+  document.querySelectorAll('[data-open-shooter]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); openGameModal(); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openGameModal(); }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeGameModal);
+  backdrop?.addEventListener('click', closeGameModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeGameModal();
+  });
+})();
+
 // ─── Book Cover Gallery Modal ─────────────────────
 (function () {
   const modal    = document.getElementById('book-modal');

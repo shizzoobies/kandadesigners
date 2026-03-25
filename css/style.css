@@ -1237,6 +1237,11 @@ a.ticker-item:hover {
   display: block;
 }
 
+.work-card--shooter video {
+  object-fit: contain;
+  background: #000;
+}
+
 .work-card a.work-card {
   display: block;
   text-decoration: none;
