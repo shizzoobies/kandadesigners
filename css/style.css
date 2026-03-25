@@ -907,6 +907,65 @@ a.ticker-item:hover {
   .nonprofit-modal-panel { padding: 2rem 1.5rem; }
 }
 
+/* ─── AI Music Modal ─────────────────────────────── */
+.music-tracks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+
+.music-track-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.music-track-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.music-track-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}
+
+.music-track-tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.music-track-card audio {
+  width: 100%;
+  height: 36px;
+  border-radius: 20px;
+  accent-color: var(--accent);
+  opacity: 0.9;
+}
+.music-track-card audio:focus { outline: none; }
+
+.music-modal-intro {
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 640px) {
+  .music-tracks { grid-template-columns: 1fr; }
+}
+
 /* ─── Image hover preview (floating tooltip) ─────── */
 .img-hover-preview {
   position: fixed;

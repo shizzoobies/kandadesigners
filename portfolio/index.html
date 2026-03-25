@@ -6,7 +6,7 @@
   <title>Portfolio | K &amp; A Designs</title>
   <meta name="description" content="A curated selection of instructional design, digital experiences, and visual storytelling from K &amp; A Designs." />
   <link rel="icon" href="../images/favicon.png" sizes="512x512" type="image/png" />
-  <link rel="stylesheet" href="../css/style.css?v=14" />
+  <link rel="stylesheet" href="../css/style.css?v=15" />
 </head>
 <body>
 
@@ -146,6 +146,21 @@
             </div>
             <div class="work-card-zoom">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-card work-card--shooter" role="button" tabindex="0" data-open-music>
+          <video autoplay muted loop playsinline>
+            <source src="../images/AI%20Music.mp4" type="video/mp4" />
+          </video>
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">AI Production</span>
+              <span class="work-title">AI Music</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             </div>
           </div>
         </div>
@@ -308,6 +323,62 @@
       <div class="form-success" id="contact-modal-success" style="display:none;">
         <h3>Message Received</h3>
         <p>Thanks for reaching out. We'll be in touch within 24 hours to schedule your consultation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Music Modal -->
+  <div class="nonprofit-modal" id="music-modal" aria-hidden="true">
+    <div class="nonprofit-modal-backdrop" id="music-modal-backdrop"></div>
+    <div class="nonprofit-modal-panel" role="dialog" aria-label="AI Music Production" aria-modal="true">
+      <button class="svc-modal-close" id="music-modal-close" aria-label="Close">✕</button>
+      <div class="svc-modal-head">
+        <span class="label">AI Production</span>
+        <h2>AI Music</h2>
+        <p>Studio-quality tracks built entirely through precision prompting. Press play on any demo below.</p>
+      </div>
+      <p class="music-modal-intro">Every track here was generated using carefully crafted AI prompts, not a single instrument recorded. The goal is the same as any professional session: nail the right mood, energy, and tone for the project. Whether that's a cinematic swell, a tense underscore, a romantic ballad, or something upbeat and light — the craft is in knowing exactly how to prompt for it and how to refine until it lands. These are four examples across different genres, each built from scratch using AI music tools.</p>
+      <div class="music-tracks">
+        <div class="music-track-card">
+          <div class="music-track-info">
+            <span class="music-track-title">A Hold On Me</span>
+            <span class="music-track-tag">Romantic / Emotional</span>
+          </div>
+          <audio controls preload="none">
+            <source src="../images/A_Hold_On_Me_2026-03-25T164648.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+        <div class="music-track-card">
+          <div class="music-track-info">
+            <span class="music-track-title">Crown</span>
+            <span class="music-track-tag">Cinematic / Epic</span>
+          </div>
+          <audio controls preload="none">
+            <source src="../images/Crown_Music_2026-03-25T163917.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+        <div class="music-track-card">
+          <div class="music-track-info">
+            <span class="music-track-title">Sunshine Bounce</span>
+            <span class="music-track-tag">Upbeat / Corporate</span>
+          </div>
+          <audio controls preload="none">
+            <source src="../images/Sunshine_Bounce_2026-03-25T170749.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+        <div class="music-track-card">
+          <div class="music-track-info">
+            <span class="music-track-title">Tension Point</span>
+            <span class="music-track-tag">Tense / Dramatic</span>
+          </div>
+          <audio controls preload="none">
+            <source src="../images/Tension_Point_2026-03-25T170738.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </div>
+      <div class="nonprofit-modal-footer">
+        <a href="alex/" class="btn btn-primary">Alex's Full Portfolio</a>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Commission a Track</a>
       </div>
     </div>
   </div>
@@ -515,6 +586,6 @@
     </div>
   </div>
 
-  <script src="../js/main-v2.js?v=16"></script>
+  <script src="../js/main-v2.js?v=17"></script>
 </body>
 </html>

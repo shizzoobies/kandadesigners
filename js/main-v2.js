@@ -467,6 +467,47 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && iframeModal?.classList.contains('is-open')) closeIframe(); });
 })();
 
+// ─── AI Music Modal ───────────────────────────────
+(function () {
+  const modal    = document.getElementById('music-modal');
+  const backdrop = document.getElementById('music-modal-backdrop');
+  const closeBtn = document.getElementById('music-modal-close');
+  if (!modal) return;
+
+  let musicTrigger = null;
+
+  function openMusicModal(trigger) {
+    musicTrigger = trigger || null;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeMusicModal() {
+    // Pause all audio when closing
+    modal.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    musicTrigger?.focus();
+    musicTrigger = null;
+  }
+
+  document.querySelectorAll('[data-open-music]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); openMusicModal(el); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMusicModal(el); }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeMusicModal);
+  backdrop?.addEventListener('click', closeMusicModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeMusicModal();
+  });
+})();
+
 // ─── Image hover preview (floating tooltip) ──────
 (function () {
   const preview = document.createElement('div');
