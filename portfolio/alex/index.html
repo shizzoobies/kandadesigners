@@ -402,9 +402,14 @@
     .video-banner {
       position: relative;
       width: 100%;
-      aspect-ratio: 16 / 7;
+      height: 240px;
       overflow: hidden;
       background: #000;
+      transition: height 0.55s cubic-bezier(0.25, 0.1, 0.25, 1);
+      cursor: pointer;
+    }
+    .video-banner:hover {
+      height: 480px;
     }
     .video-banner video {
       width: 100%;
@@ -520,7 +525,8 @@
       .alex-hero-right { flex-direction: column; }
       .alex-hero-right img { max-width: 100%; height: 300px; }
       .alex-video-grid { grid-template-columns: 1fr; }
-      .video-banner { aspect-ratio: 16 / 9; }
+      .video-banner { height: 180px; }
+      .video-banner:hover { height: 320px; }
     }
   </style>
 </head>
@@ -643,7 +649,7 @@
           <h2>Custom Web Experiences</h2>
           <p>Full frontend builds from concept to deployment &mdash; performance-focused, accessibility-first, and hand-coded from scratch. No templates. No page builders. No WordPress.</p>
         </div>
-        <a href="/contact/" class="btn btn-outline" data-open-contact>Work With Me</a>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
       <!-- FixAlways Case Study -->
@@ -681,7 +687,7 @@
         <div class="alex-web-card">
           <div class="alex-web-card-title">Client Sites</div>
           <p>Production websites built for real clients &mdash; SEO-optimized, performance-focused, and clean. Minimal dependencies, fast load times, and tracked with Google Analytics and Search Console for ongoing improvement.</p>
-          <a href="https://fixalways.com" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;margin-top:0.5rem;">View Example ↗</a>
+          <button class="btn btn-ghost" data-open-fixalways style="align-self:flex-start;margin-top:0.5rem;">Preview Example <span class="arr">→</span></button>
         </div>
       </div>
 
@@ -700,7 +706,7 @@
           <h2>Articulate 360 &amp; Rise 360</h2>
           <p>100+ courses and microlearning experiences built &mdash; from streamlined compliance training to highly interactive, custom HTML-enhanced solutions. If it can be done in Articulate, it's been built.</p>
         </div>
-        <a href="/contact/" class="btn btn-outline" data-open-contact>Work With Me</a>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
       <div class="elearn-image-wrap fade-up">
@@ -756,7 +762,7 @@
           <h2>Video &amp; AI Voice</h2>
           <p>Full lifecycle YouTube content &mdash; concept to publish. Video editing in Adobe Premiere, AI voice produced via ElevenLabs, custom thumbnail design, and keyword strategy for discoverability.</p>
         </div>
-        <a href="/contact/" class="btn btn-outline" data-open-contact>Work With Me</a>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
       <div class="alex-video-grid fade-up">
@@ -786,7 +792,7 @@
   </section>
 
   <!-- ════════════════════════════════════════════
-       04 — AI MUSIC
+       AI MUSIC
        ════════════════════════════════════════════ -->
   <section class="alex-music-section">
 
@@ -801,10 +807,11 @@
     <div class="alex-chapter-inner" style="padding-top:3.5rem;padding-bottom:5rem;">
       <div class="portfolio-section-head fade-up" style="margin-bottom:0;">
         <div>
-          <span class="label">04 &mdash; AI Audio</span>
-          <h2>AI Music &amp; Sound Design</h2>
-          <p>Using AI music tools with precision prompting, we produce high-end, genre-specific tracks for any purpose &mdash; branded content, storytelling scores, or standalone releases. The craft is in knowing exactly how to prompt and how to refine until it lands.</p>
+          <span class="label">AI Music &amp; Sound Design</span>
+          <h2>Studio-Quality,<br>Prompt-Built.</h2>
+          <p>Using AI music tools with precision prompting, we produce high-end, genre-specific tracks for any purpose &mdash; branded content, storytelling scores, or standalone releases. The craft is in knowing exactly how to prompt and refine until it lands.</p>
         </div>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
       <div class="track-grid fade-up">
@@ -834,7 +841,7 @@
   </section>
 
   <!-- ════════════════════════════════════════════
-       05 — BOOK COVERS & GRAPHIC DESIGN
+       BOOK COVERS & GRAPHIC DESIGN
        ════════════════════════════════════════════ -->
   <section class="alex-chapter">
     <div class="alex-chapter-inner">
@@ -846,6 +853,7 @@
           <h2>Book Covers &amp; Thumbnails</h2>
           <p>Book cover design, YouTube thumbnails, and visual branding assets crafted for maximum impact and discoverability. Click any image to view full size.</p>
         </div>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
       <div class="gallery fade-up">
@@ -928,6 +936,11 @@
         </div>
 
       </div>
+
+      <div class="fade-up" style="margin-top:3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;padding-top:2.5rem;border-top:1px solid var(--border);">
+        <p style="color:var(--text-mid);font-size:0.9rem;margin:0;">Need cover design, thumbnail work, or visual branding? Let's talk.</p>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
+      </div>
     </div>
   </section>
 
@@ -939,7 +952,7 @@
       <span class="label" style="display:block;text-align:center;margin-bottom:1.5rem;">Start a Project</span>
       <h2>If it can be designed,<br><em>let's build it.</em></h2>
       <p>Whether it's a full eLearning course, a custom website, or a cinematic video &mdash; ready to make it happen.</p>
-      <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+      <a href="/contact/" class="btn btn-primary" data-open-contact>Let's Build Together</a>
     </div>
   </section>
 
