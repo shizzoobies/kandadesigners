@@ -8,11 +8,109 @@
   <link rel="icon" href="../images/favicon.png" sizes="512x512" type="image/png" />
   <link rel="stylesheet" href="../css/style.css?v=12" />
   <style>
+    /* ── Context intro ── */
+    .interactives-context {
+      margin-bottom: 3rem;
+      padding: 2rem 2.5rem;
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+    }
+    .interactives-context p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin: 0 0 0.75rem;
+    }
+    .interactives-context p:last-child { margin-bottom: 0; }
+    .interactives-context strong { color: var(--text); font-weight: 600; }
+
+    /* ── Featured phishing card ── */
+    .featured-interactive {
+      margin-bottom: 3rem;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(192,154,94,0.12), 0 6px 32px rgba(192,154,94,0.1);
+    }
+    .featured-interactive-badge {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem 1.75rem;
+      background: rgba(192,154,94,0.1);
+      border-bottom: 1px solid rgba(192,154,94,0.2);
+    }
+    .featured-badge-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .featured-badge-sub {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .featured-interactive-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .featured-info {
+      padding: 2.25rem 2.25rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .featured-stats {
+      padding: 2.25rem 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .featured-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .featured-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.25rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .featured-stat-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+    .featured-tech-note {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin: 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 768px) {
+      .featured-interactive-body { grid-template-columns: 1fr; }
+      .featured-info { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    /* ── Rise grid ── */
     .interactives-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
-      margin-top: 3rem;
     }
     @media (max-width: 900px) { .interactives-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 560px) { .interactives-grid { grid-template-columns: 1fr; } }
@@ -31,7 +129,6 @@
       border-color: var(--accent);
       transform: translateY(-3px);
     }
-
     .interactive-card-topic {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.6rem;
@@ -40,7 +137,6 @@
       text-transform: uppercase;
       color: var(--accent);
     }
-
     .interactive-card h3 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.35rem;
@@ -49,7 +145,6 @@
       margin: 0;
       line-height: 1.3;
     }
-
     .interactive-card p {
       font-size: 0.82rem;
       color: var(--text-dim);
@@ -57,10 +152,17 @@
       margin: 0;
       flex: 1;
     }
+    .interactive-card .btn { align-self: flex-start; margin-top: 0.5rem; }
 
-    .interactive-card .btn {
-      align-self: flex-start;
-      margin-top: 0.5rem;
+    /* ── Grid section label ── */
+    .interactives-grid-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
     }
   </style>
 </head>
@@ -111,10 +213,51 @@
     </div>
   </header>
 
-  <!-- INTERACTIVES GRID -->
+  <!-- INTERACTIVES SECTION -->
   <section class="section">
     <div class="wrap">
 
+      <!-- Context -->
+      <div class="interactives-context fade-up">
+        <p>Over the course of our careers, we've built <strong>hundreds of Rise 360 courses</strong> — covering everything from corporate onboarding and compliance training to technical skills development and leadership programs. The vast majority of that work is proprietary to our clients and can't be shared publicly.</p>
+        <p>What you'll find below are examples of the <strong>types of slides and interactives we build within Rise 360</strong> — ranging from clean, informational slides all the way to fully custom, deeply engaging HTML components embedded directly into the course experience.</p>
+      </div>
+
+      <!-- Featured: Phishing Scenarios -->
+      <div class="featured-interactive fade-up">
+        <div class="featured-interactive-badge">
+          <span class="featured-badge-tag">⚡ Featured Interactive</span>
+          <span class="featured-badge-sub">Most Complex Build</span>
+        </div>
+        <div class="featured-interactive-body">
+          <div class="featured-info">
+            <span class="interactive-card-topic">Security Awareness</span>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;margin:0;line-height:1.25;">Phishing Scenarios</h3>
+            <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.75;margin:0;">Inspect real-looking emails and texts for red flags, then decide how to respond. Five randomized scenarios covering executive impersonation, fake IT alerts, SMS phishing, and a legitimate message to correctly identify — every session plays out differently.</p>
+            <button class="btn btn-primary" data-interactive="phishing-scenarios" data-title="Phishing Scenarios" style="align-self:flex-start;margin-top:0.5rem;">
+              Launch <span class="arr">→</span>
+            </button>
+          </div>
+          <div class="featured-stats">
+            <div class="featured-stat">
+              <span class="featured-stat-num">500+</span>
+              <span class="featured-stat-label">Lines of custom HTML / CSS / JS</span>
+            </div>
+            <div class="featured-stat">
+              <span class="featured-stat-num">5</span>
+              <span class="featured-stat-label">Randomized scenarios — no two sessions identical</span>
+            </div>
+            <div class="featured-stat">
+              <span class="featured-stat-num">∞</span>
+              <span class="featured-stat-label">Replayability with shuffled scenario order</span>
+            </div>
+            <p class="featured-tech-note">Built with a custom state machine, randomized scenario selection engine, animated message-reveal transitions, real-time feedback logic, and a fully self-contained scoring system — all in pure HTML, CSS, and JavaScript. No frameworks, no dependencies.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rise 360 Slide Examples -->
+      <p class="interactives-grid-label fade-up">Rise 360 Slide Examples — Basic to Advanced</p>
       <div class="interactives-grid">
 
         <article class="interactive-card fade-up">
@@ -203,15 +346,6 @@
           <h3>ADDIE Scenario Check</h3>
           <p>A scenario-driven knowledge check on the ADDIE framework — presenting real design situations and asking learners to identify the correct phase.</p>
           <button class="btn btn-primary" data-interactive="check-in-2" data-title="ADDIE Scenario Knowledge Check">
-            Launch <span class="arr">→</span>
-          </button>
-        </article>
-
-        <article class="interactive-card fade-up">
-          <span class="interactive-card-topic">Security Awareness</span>
-          <h3>Phishing Scenarios</h3>
-          <p>Inspect real-looking emails and texts for red flags, then decide how to respond. Five randomized scenarios covering executive impersonation, fake IT alerts, SMS phishing, and a legitimate message to identify.</p>
-          <button class="btn btn-primary" data-interactive="phishing-scenarios" data-title="Phishing Scenarios">
             Launch <span class="arr">→</span>
           </button>
         </article>

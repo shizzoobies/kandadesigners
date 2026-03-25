@@ -86,67 +86,136 @@
     </div>
   </section>
 
-  <!-- WORK SAMPLES GALLERY -->
-  <section class="section">
+  <!-- SELECTED WORK MARQUEE -->
+  <section class="section work-section">
     <div class="wrap">
-      <div class="section-header fade-up">
-        <span class="label">Work Samples</span>
-        <h2>A glimpse of what<br><em>we've built.</em></h2>
+      <div class="section-header fade-up" style="margin-bottom:3.5rem;">
+        <span class="label">Selected Work</span>
+        <h2>Craft in every pixel.</h2>
       </div>
+    </div>
 
-      <div class="portfolio-gallery fade-up">
+    <div class="work-marquee-outer fade-up">
+      <div class="work-marquee-track" id="work-marquee-track">
 
-        <div class="work-item work-item--tall">
-          <img src="../images/Rise-Portfolio.png" alt="eLearning" />
-          <div class="work-overlay">
-            <span class="work-label">eLearning</span>
-            <span class="work-title">Articulate 360 &amp; Rise</span>
+        <!-- Set 1 -->
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="../images/Rise-Portfolio.png">
+          <img src="../images/Rise-Portfolio.png" alt="eLearning Development" />
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Articulate 360 &amp; Rise</span>
+              <span class="work-title">eLearning Development</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
           </div>
         </div>
-
-        <div class="work-item">
-          <img src="../images/API-Portfolio.png" alt="Web Design" />
-          <div class="work-overlay">
-            <span class="work-label">Web Design</span>
-            <span class="work-title">SEO &amp; Performance</span>
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="../images/API-Portfolio.png">
+          <img src="../images/API-Portfolio.png" alt="Search Performance" />
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Web Design &amp; SEO</span>
+              <span class="work-title">Search Performance</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
           </div>
         </div>
-
-        <div class="work-item">
-          <img src="../images/ID-Concept-Art.png" alt="Instructional Design" />
-          <div class="work-overlay">
-            <span class="work-label">Instructional Design</span>
-            <span class="work-title">Course Development</span>
-          </div>
-        </div>
-
-        <div class="work-item">
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
           <img src="../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="Book Cover Design" />
-          <div class="work-overlay">
-            <span class="work-label">Graphic Design</span>
-            <span class="work-title">Book Cover Design</span>
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Graphic Design</span>
+              <span class="work-title">Book Cover Design</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
           </div>
         </div>
+        <a href="/projects/" class="work-card work-card--shooter" style="display:block;text-decoration:none;color:inherit;">
+          <video autoplay muted loop playsinline>
+            <source src="../images/Shooter%20Demo.mp4" type="video/mp4" />
+          </video>
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Claude Code / Firebase</span>
+              <span class="work-title">Scrolling Shooter</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+        </a>
 
-        <div class="work-item work-item--wide">
-          <img src="../images/Social-Media-Concept-Art.png" alt="Social Media" />
-          <div class="work-overlay">
-            <span class="work-label">Social Media</span>
-            <span class="work-title">Brand Content</span>
+        <!-- Set 2 — duplicate for seamless loop -->
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="../images/Rise-Portfolio.png">
+          <img src="../images/Rise-Portfolio.png" alt="eLearning Development" />
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Articulate 360 &amp; Rise</span>
+              <span class="work-title">eLearning Development</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
           </div>
         </div>
-
-        <div class="work-item">
-          <img src="../images/Wolfs-Vow-Thumbnail-1.png" alt="Video Thumbnail" />
-          <div class="work-overlay">
-            <span class="work-label">Video Production</span>
-            <span class="work-title">YouTube Thumbnails</span>
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="../images/API-Portfolio.png">
+          <img src="../images/API-Portfolio.png" alt="Search Performance" />
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Web Design &amp; SEO</span>
+              <span class="work-title">Search Performance</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
           </div>
         </div>
+        <div class="work-card gallery-item" role="button" tabindex="0" data-full="../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
+          <img src="../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="Book Cover Design" />
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Graphic Design</span>
+              <span class="work-title">Book Cover Design</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            </div>
+          </div>
+        </div>
+        <a href="/projects/" class="work-card work-card--shooter" style="display:block;text-decoration:none;color:inherit;">
+          <video autoplay muted loop playsinline>
+            <source src="../images/Shooter%20Demo.mp4" type="video/mp4" />
+          </video>
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">Claude Code / Firebase</span>
+              <span class="work-title">Scrolling Shooter</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+        </a>
 
       </div>
     </div>
+
+    <div style="text-align:center;margin-top:3.5rem;">
+      <a href="/portfolio/alex/" class="btn btn-outline" style="margin-right:1rem;">Alex's Work</a>
+      <a href="/portfolio/kristina/" class="btn btn-outline">Kristina's Work</a>
+    </div>
   </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  </div>
 
   <!-- CTA -->
   <section class="cta-strip fade-up">
