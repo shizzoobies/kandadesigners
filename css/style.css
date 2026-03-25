@@ -880,6 +880,19 @@ a.ticker-item:hover {
   .elearn-modal-panel { padding: 2rem 1.5rem; }
 }
 
+/* Override frame-wrap for Rise 360 — tall vertical format, not 16/9 */
+#elearn-iframe-modal .game-modal-panel {
+  width: min(1100px, 96vw);
+  height: calc(100vh - 4rem);
+  max-height: 900px;
+}
+
+#elearn-iframe-modal .game-modal-frame-wrap {
+  aspect-ratio: unset;
+  flex: 1;
+  min-height: 0;
+}
+
 /* ─── Services Modal ─────────────────────────────── */
 .svc-modal {
   position: fixed;
