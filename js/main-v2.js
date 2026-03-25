@@ -129,6 +129,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       num: '04', name: 'Social Media & Branding',
       desc: 'Strategy-first content powered by keywords, AI, and a consistent visual voice across every channel.',
       items: ['Brand voice & consistency', 'Keyword-led content planning', 'AI-assisted creation', 'Content calendars']
+    },
+    {
+      num: '05', name: 'HTML Interactives',
+      desc: 'Custom-built interactive experiences using pure web APIs — no frameworks, no dependencies, just fast and precise.',
+      items: ['Custom UI components', 'Canvas & SVG animation', 'Game & simulation logic', 'Embedded eLearning tools']
     }
   ];
 
