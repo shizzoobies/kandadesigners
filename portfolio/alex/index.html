@@ -20,7 +20,7 @@
 
     /* Ticker lives at top of hero — gets nav offset padding here */
     .alex-hero .skills-ticker {
-      padding-top: calc(var(--nav-h) + 1.25rem);
+      padding-top: var(--nav-h);
     }
 
     .alex-hero-grid {
@@ -33,7 +33,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4.5rem var(--gutter) 5rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+      padding: 2.5rem var(--gutter) 3.5rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
       position: relative;
       z-index: 2;
     }
@@ -89,7 +89,7 @@
       flex-direction: column;
       justify-content: center;
       gap: 2rem;
-      padding: 4rem 4rem 5rem 1rem;
+      padding: 2rem 3.5rem 3.5rem 1rem;
     }
     .alex-hero-right img {
       width: 100%;
@@ -367,12 +367,56 @@
       margin-top: 0.5rem;
     }
 
-    /* ── Video Grid ─────────────────────────────── */
-    .alex-video-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
+    /* ── YouTube Scrolling Gallery ──────────────── */
+    .yt-scroll-outer {
+      overflow: hidden;
+      position: relative;
       margin-bottom: 2.5rem;
+    }
+    .yt-scroll-outer::before,
+    .yt-scroll-outer::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .yt-scroll-outer::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg), transparent);
+    }
+    .yt-scroll-outer::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg), transparent);
+    }
+    .yt-scroll-track {
+      display: flex;
+      gap: 1rem;
+      width: max-content;
+      animation: yt-scroll 28s linear infinite;
+      padding: 0.5rem 0;
+    }
+    .yt-scroll-outer:hover .yt-scroll-track {
+      animation-play-state: paused;
+    }
+    @keyframes yt-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .yt-card {
+      flex-shrink: 0;
+      width: 340px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: border-color var(--t);
+    }
+    .yt-card:hover { border-color: rgba(192,154,94,0.3); }
+    .yt-card .video-embed {
+      margin: 0;
+      border-radius: 0;
     }
 
     /* ElevenReader callout bar */
@@ -457,41 +501,175 @@
       max-width: 680px;
     }
 
-    /* Inline audio track cards */
-    .track-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-      margin-top: 3rem;
+    /* ── Musical Notes Player ────────────────────── */
+    .music-notes-area {
+      position: relative;
+      height: 380px;
+      margin: 2.5rem 0 1rem;
+      user-select: none;
     }
-    .track-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.5rem;
+    .music-note {
+      position: absolute;
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
-      transition: border-color var(--t);
+      align-items: center;
+      gap: 0.35rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.65rem;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+      z-index: 1;
     }
-    .track-card:hover { border-color: rgba(192,154,94,0.35); }
-    .track-genre {
+    .music-note-glyph {
+      font-size: 2.4rem;
+      line-height: 1;
+      color: rgba(237,233,224,0.2);
+      transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+    /* Pulsing ring when playing */
+    .music-note::before {
+      content: '';
+      position: absolute;
+      top: 0.65rem;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1px solid rgba(192,154,94,0.5);
+      background: rgba(192,154,94,0.08);
+      transition: transform 0.3s;
+      pointer-events: none;
+    }
+    .music-note.playing::before {
+      transform: translateX(-50%) scale(1);
+      animation: note-ring 1.8s ease-in-out infinite;
+    }
+    @keyframes note-ring {
+      0%,100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+      50%      { opacity: 0;   transform: translateX(-50%) scale(2.4); }
+    }
+    .music-note:hover .music-note-glyph,
+    .music-note.playing .music-note-glyph {
+      color: var(--accent);
+      transform: scale(1.25);
+    }
+    .music-note.playing .music-note-glyph {
+      text-shadow: 0 0 24px rgba(192,154,94,0.45);
+      animation: note-bounce 0.42s ease-in-out infinite alternate;
+    }
+    @keyframes note-bounce {
+      from { transform: scale(1.25) translateY(0);   }
+      to   { transform: scale(1.35) translateY(-6px); }
+    }
+    .music-note-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.1rem;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    .music-note:hover .music-note-label,
+    .music-note.playing .music-note-label { opacity: 1; transform: translateY(0); }
+    .music-note-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .music-note-genre {
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
+      font-size: 0.48rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
+      white-space: nowrap;
     }
-    .track-title {
+    /* Staggered float animations */
+    .music-note:nth-child(1) { animation: floatA 3.2s ease-in-out infinite; }
+    .music-note:nth-child(2) { animation: floatB 2.8s ease-in-out infinite 0.5s; }
+    .music-note:nth-child(3) { animation: floatC 3.6s ease-in-out infinite 1.1s; }
+    .music-note:nth-child(4) { animation: floatD 2.9s ease-in-out infinite 0.3s; }
+    .music-note:nth-child(5) { animation: floatA 3.4s ease-in-out infinite 0.8s; }
+    .music-note:nth-child(6) { animation: floatB 2.7s ease-in-out infinite 1.4s; }
+    .music-note:nth-child(7) { animation: floatC 3.1s ease-in-out infinite 0.6s; }
+    .music-note:nth-child(8) { animation: floatD 2.6s ease-in-out infinite 1.2s; }
+    @keyframes floatA { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-10px)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-14px)} }
+    @keyframes floatC { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-8px)}  }
+    @keyframes floatD { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-12px)} }
+    .music-note.playing { animation: none !important; }
+
+    /* Now-playing bar */
+    .music-now-playing {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid rgba(192,154,94,0.2);
+      border-radius: 6px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+    .music-now-playing.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .music-np-bars {
+      display: flex;
+      gap: 3px;
+      align-items: flex-end;
+      height: 18px;
+      flex-shrink: 0;
+    }
+    .music-np-bars span {
+      display: block;
+      width: 3px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+    .music-np-bars span:nth-child(1) { animation: npBar 0.7s ease-in-out infinite; }
+    .music-np-bars span:nth-child(2) { animation: npBar 0.9s ease-in-out infinite 0.15s; }
+    .music-np-bars span:nth-child(3) { animation: npBar 0.6s ease-in-out infinite 0.3s; }
+    .music-np-bars span:nth-child(4) { animation: npBar 1.0s ease-in-out infinite 0.05s; }
+    @keyframes npBar { 0%,100%{ height: 4px; } 50%{ height: 18px; } }
+    .music-now-playing.paused .music-np-bars span { animation-play-state: paused; }
+    .music-np-text { flex: 1; }
+    .music-np-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
+      font-size: 0.95rem;
+      color: var(--text);
+      display: block;
     }
-    .track-card audio {
-      width: 100%;
-      height: 36px;
-      accent-color: var(--accent);
-      margin-top: 0.25rem;
+    .music-np-genre {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-top: 0.15rem;
+    }
+    .music-np-hint {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      white-space: nowrap;
     }
 
     /* ── Responsive ─────────────────────────────── */
@@ -518,15 +696,29 @@
       .elearn-stat:nth-child(2) { border-right: none; }
       .elearn-stat:nth-child(3),
       .elearn-stat:nth-child(4) { border-top: 1px solid var(--border); }
-      .track-grid { grid-template-columns: 1fr; }
       .eleven-callout { flex-direction: column; gap: 1.25rem; }
+      .music-notes-area {
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+        padding: 1rem 0;
+      }
+      .music-note {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        animation: none !important;
+      }
+      .music-note-label { opacity: 1; transform: none; }
     }
     @media (max-width: 680px) {
       .alex-hero-right { flex-direction: column; }
       .alex-hero-right img { max-width: 100%; height: 300px; }
-      .alex-video-grid { grid-template-columns: 1fr; }
       .video-banner { height: 180px; }
       .video-banner:hover { height: 320px; }
+      .music-notes-area { grid-template-columns: repeat(2, 1fr); }
+      .yt-card { width: 280px; }
     }
   </style>
 </head>
@@ -709,10 +901,6 @@
         <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
-      <div class="elearn-image-wrap fade-up">
-        <img src="../../images/Rise-Portfolio.png" alt="Rise 360 Portfolio" />
-      </div>
-
       <div class="elearn-stats-row fade-up">
         <div class="elearn-stat">
           <div class="elearn-stat-val">100<span style="font-size:1.25rem;">+</span></div>
@@ -765,18 +953,21 @@
         <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
-      <div class="alex-video-grid fade-up">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/hsflWITN1G4" title="Video production example" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/gT3ihRVP6rI" title="AI Audio showcase 1" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/BSwVFmr_Xz8" title="AI Audio showcase 2" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/Lu8Qpj6mdXk" title="AI Audio showcase 3" allowfullscreen loading="lazy"></iframe>
+      <!-- Scrolling YouTube gallery — hovers to pause -->
+      <div class="yt-scroll-outer fade-up">
+        <div class="yt-scroll-track">
+          <!-- Set 1 -->
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/hsflWITN1G4" title="Video production example" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/gT3ihRVP6rI" title="AI Audio showcase 1" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/BSwVFmr_Xz8" title="AI Audio showcase 2" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/Lu8Qpj6mdXk" title="AI Audio showcase 3" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/4gSZbLdbyzg" title="AI Audio showcase 4" allowfullscreen loading="lazy"></iframe></div></div>
+          <!-- Set 2 (seamless loop clone) -->
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/hsflWITN1G4" title="Video production example" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/gT3ihRVP6rI" title="AI Audio showcase 1" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/BSwVFmr_Xz8" title="AI Audio showcase 2" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/Lu8Qpj6mdXk" title="AI Audio showcase 3" allowfullscreen loading="lazy"></iframe></div></div>
+          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/4gSZbLdbyzg" title="AI Audio showcase 4" allowfullscreen loading="lazy"></iframe></div></div>
         </div>
       </div>
 
@@ -814,27 +1005,93 @@
         <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
-      <div class="track-grid fade-up">
-        <div class="track-card">
-          <div class="track-genre">Romantic / Emotional</div>
-          <div class="track-title">A Hold On Me</div>
-          <audio controls preload="none" src="../../images/A_Hold_On_Me_2026-03-25T164648.mp3"></audio>
+      <p style="color:var(--text-dim);font-size:0.8rem;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;text-transform:uppercase;margin-top:2rem;" class="fade-up">Click any note to play &mdash; hover to see the track</p>
+
+      <div class="music-notes-area fade-up" id="music-notes-area">
+        <button class="music-note" style="left:4%;top:48%;"
+          data-src="../../images/A_Hold_On_Me_2026-03-25T164648.mp3"
+          data-title="A Hold On Me" data-genre="Romantic / Emotional">
+          <span class="music-note-glyph">♪</span>
+          <div class="music-note-label">
+            <span class="music-note-title">A Hold On Me</span>
+            <span class="music-note-genre">Romantic / Emotional</span>
+          </div>
+        </button>
+        <button class="music-note" style="left:17%;top:14%;"
+          data-src="../../images/Crown_Music_2026-03-25T163917.mp3"
+          data-title="Crown" data-genre="Cinematic / Epic">
+          <span class="music-note-glyph">♫</span>
+          <div class="music-note-label">
+            <span class="music-note-title">Crown</span>
+            <span class="music-note-genre">Cinematic / Epic</span>
+          </div>
+        </button>
+        <button class="music-note" style="left:32%;top:62%;"
+          data-src="../../images/Sunshine_Bounce_2026-03-25T170749.mp3"
+          data-title="Sunshine Bounce" data-genre="Upbeat / Energetic">
+          <span class="music-note-glyph">♩</span>
+          <div class="music-note-label">
+            <span class="music-note-title">Sunshine Bounce</span>
+            <span class="music-note-genre">Upbeat / Energetic</span>
+          </div>
+        </button>
+        <button class="music-note" style="left:46%;top:22%;"
+          data-src="../../images/Tension_Point_2026-03-25T170738.mp3"
+          data-title="Tension Point" data-genre="Dramatic / Tension">
+          <span class="music-note-glyph">♬</span>
+          <div class="music-note-label">
+            <span class="music-note-title">Tension Point</span>
+            <span class="music-note-genre">Dramatic / Tension</span>
+          </div>
+        </button>
+        <button class="music-note" style="left:13%;top:74%;"
+          data-src="../../images/Digital_Pulse_Loop_2026-03-25T170731.mp3"
+          data-title="Digital Pulse Loop" data-genre="Electronic / Loop">
+          <span class="music-note-glyph">♫</span>
+          <div class="music-note-label">
+            <span class="music-note-title">Digital Pulse Loop</span>
+            <span class="music-note-genre">Electronic / Loop</span>
+          </div>
+        </button>
+        <button class="music-note" style="left:60%;top:52%;"
+          data-src="../../images/Instant_Impact_Loop_2026-03-25T170607.mp3"
+          data-title="Instant Impact" data-genre="High Energy / Driving">
+          <span class="music-note-glyph">♪</span>
+          <div class="music-note-label">
+            <span class="music-note-title">Instant Impact</span>
+            <span class="music-note-genre">High Energy / Driving</span>
+          </div>
+        </button>
+        <button class="music-note" style="left:75%;top:18%;"
+          data-src="../../images/Pixel_Pursuit_2026-03-25T170617.mp3"
+          data-title="Pixel Pursuit" data-genre="Playful / Retro">
+          <span class="music-note-glyph">♬</span>
+          <div class="music-note-label">
+            <span class="music-note-title">Pixel Pursuit</span>
+            <span class="music-note-genre">Playful / Retro</span>
+          </div>
+        </button>
+        <button class="music-note" style="left:86%;top:66%;"
+          data-src="../../images/Summer_Bliss_2026-03-25T170628.mp3"
+          data-title="Summer Bliss" data-genre="Warm / Feel-Good">
+          <span class="music-note-glyph">♩</span>
+          <div class="music-note-label">
+            <span class="music-note-title">Summer Bliss</span>
+            <span class="music-note-genre">Warm / Feel-Good</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Now Playing bar -->
+      <div class="music-now-playing" id="music-now-playing">
+        <div class="music-np-bars">
+          <span></span><span></span><span></span><span></span>
         </div>
-        <div class="track-card">
-          <div class="track-genre">Cinematic / Epic</div>
-          <div class="track-title">Crown</div>
-          <audio controls preload="none" src="../../images/Crown_Music_2026-03-25T163917.mp3"></audio>
+        <div class="music-np-text">
+          <span class="music-np-title" id="music-np-title">—</span>
+          <span class="music-np-genre" id="music-np-genre">—</span>
         </div>
-        <div class="track-card">
-          <div class="track-genre">Upbeat / Energetic</div>
-          <div class="track-title">Sunshine Bounce</div>
-          <audio controls preload="none" src="../../images/Sunshine_Bounce_2026-03-25T170749.mp3"></audio>
-        </div>
-        <div class="track-card">
-          <div class="track-genre">Dramatic / Tension</div>
-          <div class="track-title">Tension Point</div>
-          <audio controls preload="none" src="../../images/Tension_Point_2026-03-25T170738.mp3"></audio>
-        </div>
+        <span class="music-np-hint">Click note again to pause</span>
       </div>
     </div>
 
@@ -1215,6 +1472,58 @@
         });
       }, { threshold: 0.6 });
       counters.forEach(function (el) { obs.observe(el); });
+    })();
+  </script>
+
+  <!-- ── Musical Notes Audio Player ─────────────────────────────────── -->
+  <script>
+    (function () {
+      var notes = document.querySelectorAll('.music-note');
+      var nowPlaying = document.getElementById('music-now-playing');
+      var npTitle = document.getElementById('music-np-title');
+      var npGenre = document.getElementById('music-np-genre');
+      if (!notes.length) return;
+      var audio = new Audio();
+      var currentNote = null;
+
+      function stopCurrent() {
+        if (currentNote) { currentNote.classList.remove('playing'); currentNote = null; }
+        audio.pause();
+        audio.currentTime = 0;
+        if (nowPlaying) { nowPlaying.classList.remove('visible'); nowPlaying.classList.remove('paused'); }
+      }
+
+      notes.forEach(function (note) {
+        note.addEventListener('click', function () {
+          // Same note — toggle pause/play
+          if (currentNote === this) {
+            if (audio.paused) {
+              audio.play().catch(function () {});
+              this.classList.add('playing');
+              if (nowPlaying) nowPlaying.classList.remove('paused');
+            } else {
+              audio.pause();
+              this.classList.remove('playing');
+              if (nowPlaying) nowPlaying.classList.add('paused');
+            }
+            return;
+          }
+          // New note
+          stopCurrent();
+          currentNote = this;
+          audio.src = this.dataset.src;
+          audio.play().catch(function () {});
+          this.classList.add('playing');
+          if (nowPlaying) {
+            npTitle.textContent = this.dataset.title || '—';
+            npGenre.textContent = this.dataset.genre || '—';
+            nowPlaying.classList.add('visible');
+            nowPlaying.classList.remove('paused');
+          }
+        });
+      });
+
+      audio.addEventListener('ended', stopCurrent);
     })();
   </script>
 
