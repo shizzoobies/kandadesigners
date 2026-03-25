@@ -467,6 +467,45 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && iframeModal?.classList.contains('is-open')) closeIframe(); });
 })();
 
+// ─── AI Audio & YouTube Modal ─────────────────────
+(function () {
+  const modal    = document.getElementById('audio-modal');
+  const backdrop = document.getElementById('audio-modal-backdrop');
+  const closeBtn = document.getElementById('audio-modal-close');
+  if (!modal) return;
+
+  let audioTrigger = null;
+
+  function openAudioModal(trigger) {
+    audioTrigger = trigger || null;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeAudioModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    audioTrigger?.focus();
+    audioTrigger = null;
+  }
+
+  document.querySelectorAll('[data-open-audio]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); openAudioModal(el); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAudioModal(el); }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeAudioModal);
+  backdrop?.addEventListener('click', closeAudioModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeAudioModal();
+  });
+})();
+
 // ─── Nonprofit Modal ──────────────────────────────
 (function () {
   const modal    = document.getElementById('nonprofit-modal');

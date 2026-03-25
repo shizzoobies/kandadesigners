@@ -150,6 +150,24 @@
           </div>
         </div>
 
+        <div class="work-card work-card--nonprofit" role="button" tabindex="0" data-open-audio>
+          <div class="nonprofit-collage">
+            <img src="../images/Wolfs-Vow.png" alt="Wolf's Vow book cover" loading="lazy" />
+            <img src="../images/Ash%20on%20the%20Road%20(1).png" alt="Ash on the Road cover" loading="lazy" />
+            <img src="../images/Wolfs-Vow-Thumbnail-1.png" alt="Wolf's Vow YouTube thumbnail" loading="lazy" />
+            <img src="../images/Chapter_1_Thumbnail_Optimized.jpg" alt="Chapter 1 thumbnail" loading="lazy" />
+          </div>
+          <div class="work-card-overlay">
+            <div class="work-card-text">
+              <span class="work-label">AI Audio &amp; YouTube</span>
+              <span class="work-title">Audio &amp; Content Production</span>
+            </div>
+            <div class="work-card-zoom">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </div>
+          </div>
+        </div>
+
         <div class="work-card work-card--nonprofit" role="button" tabindex="0" data-open-nonprofit>
           <div class="nonprofit-collage">
             <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="Project Makeover volunteers" loading="lazy" />
@@ -290,6 +308,40 @@
       <div class="form-success" id="contact-modal-success" style="display:none;">
         <h3>Message Received</h3>
         <p>Thanks for reaching out. We'll be in touch within 24 hours to schedule your consultation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Audio & YouTube Modal -->
+  <div class="nonprofit-modal" id="audio-modal" aria-hidden="true">
+    <div class="nonprofit-modal-backdrop" id="audio-modal-backdrop"></div>
+    <div class="nonprofit-modal-panel" role="dialog" aria-label="AI Audio and YouTube" aria-modal="true">
+      <button class="svc-modal-close" id="audio-modal-close" aria-label="Close">✕</button>
+      <div class="svc-modal-head">
+        <span class="label">AI Audio &amp; YouTube</span>
+        <h2>Audio &amp; Content Production</h2>
+        <p>AI-narrated audiobooks and YouTube content produced and managed from concept to publish.</p>
+      </div>
+      <div class="nonprofit-photo-grid">
+        <img src="../images/Wolfs-Vow.png" alt="Wolf's Vow cover" />
+        <img src="../images/Ash%20on%20the%20Road%20(1).png" alt="Ash on the Road cover" />
+        <img src="../images/Wolfs-Vow-Thumbnail-1.png" alt="Wolf's Vow YouTube thumbnail" />
+        <img src="../images/Chapter_1_Thumbnail_Optimized.jpg" alt="Chapter 1 thumbnail" />
+      </div>
+      <div class="nonprofit-body">
+        <div class="nonprofit-body-block">
+          <h4>AI Audiobook Production</h4>
+          <p>Using ElevenLabs AI voice technology, Alex produces fully narrated audiobooks with professional-quality pacing, tone, and character consistency. Each title is edited, mastered, and published as a complete listening experience. The two examples below are live and publicly available on ElevenReader.</p>
+        </div>
+        <div class="nonprofit-body-block">
+          <h4>YouTube Channel Management</h4>
+          <p>From thumbnail design and chapter structuring to upload optimization and audience growth strategy, Alex manages the full production pipeline for YouTube content. This includes custom thumbnails, SEO-driven titles and descriptions, and ongoing channel analytics to drive discoverability.</p>
+        </div>
+      </div>
+      <div class="nonprofit-modal-footer" style="flex-wrap:wrap;gap:0.75rem;">
+        <a href="https://elevenreader.io/audiobooks/what-was-written-audiobook/zyvYhCGgf9iRNAm6PlCk" target="_blank" rel="noopener" class="btn btn-primary">Listen: What Was Written →</a>
+        <a href="https://elevenreader.io/audiobooks/what-holds-the-door-audiobook/fVXqStGEpGWOISxGRlSX" target="_blank" rel="noopener" class="btn btn-primary">Listen: What Holds the Door →</a>
+        <a href="alex/" class="btn btn-outline">Alex's Full Portfolio</a>
       </div>
     </div>
   </div>
@@ -459,6 +511,6 @@
     </div>
   </div>
 
-  <script src="../js/main-v2.js?v=14"></script>
+  <script src="../js/main-v2.js?v=15"></script>
 </body>
 </html>
