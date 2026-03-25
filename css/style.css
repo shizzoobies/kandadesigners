@@ -1324,9 +1324,7 @@ a.ticker-item:hover {
   background: var(--surface);
 }
 
-.work-card:nth-child(3n+1) { width: 480px; }
-.work-card:nth-child(3n+2) { width: 340px; }
-.work-card:nth-child(3n)   { width: 420px; }
+.work-card { width: 420px; }
 
 .work-card img {
   width: 100%;
@@ -2573,10 +2571,7 @@ a.ticker-item:hover {
   .team-member-bio { max-height: none !important; opacity: 1 !important; margin-bottom: 1.5rem !important; }
   .team-member-btn { opacity: 1 !important; transform: none !important; }
   .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-  .work-card { height: 360px; }
-  .work-card:nth-child(3n+1),
-  .work-card:nth-child(3n+2),
-  .work-card:nth-child(3n) { width: 280px; }
+  .work-card { height: 360px; width: 280px; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(2) { border-right: none; }
   .stat:nth-child(3) { border-top: 1px solid var(--border); }
@@ -2605,10 +2600,7 @@ a.ticker-item:hover {
   .section { padding: 4rem 0; }
   .section--lg { padding: 5rem 0; }
   .work-marquee-outer { -webkit-mask-image: none; mask-image: none; }
-  .work-card { height: 320px; }
-  .work-card:nth-child(3n+1),
-  .work-card:nth-child(3n+2),
-  .work-card:nth-child(3n) { width: 260px; }
+  .work-card { height: 320px; width: 260px; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(2) { border-right: none; }
   .stat:nth-child(3) { border-top: 1px solid var(--border); }

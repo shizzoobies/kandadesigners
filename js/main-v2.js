@@ -2,6 +2,17 @@
    K & A DESIGNS — MAIN JS
    ============================================= */
 
+// ─── Marquee seamless-loop clone ─────────────────
+// Clones the unique cards once so the loop is seamless.
+// Runs synchronously here so cloned elements get event listeners below.
+(function () {
+  const track = document.getElementById('work-marquee-track');
+  if (!track) return;
+  Array.from(track.children).forEach(card => {
+    track.appendChild(card.cloneNode(true));
+  });
+})();
+
 // ─── Nav scroll ──────────────────────────────────
 const nav = document.getElementById('site-nav');
 if (nav) {
