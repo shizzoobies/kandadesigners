@@ -160,18 +160,12 @@ h1, h2, h3, h4 {
 
 /* Dropdown */
 .nav-has-dropdown { position: relative; }
-.nav-has-dropdown > .nav-link::before {
-  content: '▾';
-  margin-left: 0.3em;
-  font-size: 0.6em;
-  opacity: 0.5;
-}
 
 .nav-dropdown {
   position: absolute;
-  top: calc(100% + 1.25rem);
+  top: calc(100% + 0.75rem);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(4px);
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -180,7 +174,16 @@ h1, h2, h3, h4 {
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--t), transform var(--t);
-  transform: translateX(-50%) translateY(6px);
+}
+
+/* Invisible bridge fills the gap so hover isn't broken */
+.nav-dropdown::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  height: 0.75rem;
 }
 
 .nav-has-dropdown:hover .nav-dropdown {
