@@ -1433,7 +1433,7 @@ a.ticker-item:hover {
   background: var(--surface);
   border-radius: 6px;
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.18),
+    inset 0 0 0 1px rgba(192,154,94,0.55),
     0 12px 40px rgba(0,0,0,0.6),
     0 2px 8px rgba(0,0,0,0.4);
 }
