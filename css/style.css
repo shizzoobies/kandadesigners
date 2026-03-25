@@ -137,7 +137,7 @@ h1, h2, h3, h4 {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text);
   transition: color var(--t);
   position: relative;
 }
@@ -153,7 +153,7 @@ h1, h2, h3, h4 {
   transition: width var(--t);
 }
 
-.nav-link:hover,
+.nav-link:hover { color: var(--accent); }
 .nav-link.active { color: var(--text); }
 .nav-link:hover::after,
 .nav-link.active::after { width: 100%; }
