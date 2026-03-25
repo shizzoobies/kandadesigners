@@ -1688,6 +1688,78 @@ a.ticker-item:hover {
   color: var(--accent);
 }
 
+/* ─── Portfolio Gallery (work samples grid) ──── */
+.portfolio-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 300px;
+  gap: 3px;
+  margin-top: 3rem;
+}
+
+.work-item {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.work-item--tall { grid-row: span 2; }
+.work-item--wide { grid-column: span 2; }
+
+.work-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.65s cubic-bezier(0.25, 0.1, 0.25, 1), filter 0.5s ease;
+  filter: brightness(0.92);
+}
+
+.work-item:hover img {
+  transform: scale(1.05);
+  filter: brightness(1);
+}
+
+.work-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.15) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem 1.75rem;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.work-item:hover .work-overlay { opacity: 1; }
+
+.work-overlay .work-label {
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.work-overlay .work-title {
+  color: #fff;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+}
+
+@media (max-width: 768px) {
+  .portfolio-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 220px;
+  }
+  .work-item--tall { grid-row: span 1; }
+  .work-item--wide { grid-column: span 1; }
+}
+
+@media (max-width: 480px) {
+  .portfolio-gallery {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 240px;
+  }
+}
+
 /* ─── Portfolio Detail Sections ───────────────── */
 .portfolio-section {
   padding: 6rem 0;
