@@ -215,19 +215,21 @@ h1, h2, h3, h4 {
   font-size: 0.65rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.16em;
-  color: var(--text) !important;
-  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--bg) !important;
+  background: var(--accent) !important;
+  border: 1px solid var(--accent);
   padding: 0.55rem 1.25rem;
   border-radius: var(--radius);
-  transition: border-color var(--t), background var(--t) !important;
+  transition: background var(--t), box-shadow var(--t), transform var(--t) !important;
 }
 
 .nav-cta::after { display: none !important; }
 
 .nav-cta:hover {
-  border-color: var(--accent) !important;
-  background: var(--accent-pale) !important;
-  color: var(--accent) !important;
+  background: var(--accent-l) !important;
+  color: var(--bg) !important;
+  box-shadow: 0 8px 24px rgba(192,154,94,0.3) !important;
+  transform: translateY(-1px);
 }
 
 /* Hamburger */
@@ -310,14 +312,16 @@ h1, h2, h3, h4 {
 }
 
 .btn-outline {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border-h);
+  background: rgba(192,154,94,0.08);
+  color: var(--accent);
+  border: 1px solid rgba(192,154,94,0.55);
 }
 .btn-outline:hover {
+  background: var(--accent);
   border-color: var(--accent);
-  color: var(--accent);
+  color: var(--bg);
   transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(192,154,94,0.25);
 }
 
 .btn-ghost {
