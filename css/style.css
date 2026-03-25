@@ -790,6 +790,96 @@ a.ticker-item:hover {
   flex-shrink: 0;
 }
 
+/* ─── eLearning Preview Modal ────────────────────── */
+.elearn-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.elearn-modal.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.elearn-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.elearn-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(840px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem;
+  transform: translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.elearn-modal.is-open .elearn-modal-panel { transform: translateY(0); }
+
+.elearn-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.elearn-preview-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--t);
+}
+
+.elearn-preview-card:hover { border-color: var(--accent); }
+
+.elearn-preview-info h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.elearn-preview-info p {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.elearn-preview-btn { align-self: flex-start; }
+
+.elearn-modal-footer {
+  text-align: center;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 640px) {
+  .elearn-preview-grid { grid-template-columns: 1fr; }
+  .elearn-modal-panel { padding: 2rem 1.5rem; }
+}
+
 /* ─── Services Modal ─────────────────────────────── */
 .svc-modal {
   position: fixed;

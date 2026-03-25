@@ -310,6 +310,73 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   }
 })();
 
+// ─── eLearning Preview Modal ──────────────────────
+(function () {
+  const modal    = document.getElementById('elearn-modal');
+  const backdrop = document.getElementById('elearn-modal-backdrop');
+  const closeBtn = document.getElementById('elearn-modal-close');
+  if (!modal) return;
+
+  let elearnTrigger = null;
+
+  function openElearnModal(trigger) {
+    elearnTrigger = trigger || null;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeElearnModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    elearnTrigger?.focus();
+    elearnTrigger = null;
+  }
+
+  document.querySelectorAll('[data-open-elearn]').forEach(el => {
+    el.addEventListener('click', (e) => { e.stopPropagation(); openElearnModal(el); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openElearnModal(el); }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeElearnModal);
+  backdrop?.addEventListener('click', closeElearnModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('is-open')) closeElearnModal(); });
+
+  // Preview buttons → launch iframe modal
+  const iframeModal    = document.getElementById('elearn-iframe-modal');
+  const iframeEl       = document.getElementById('elearn-iframe');
+  const iframeTitleEl  = document.getElementById('elearn-iframe-title');
+  const iframeCloseBtn = document.getElementById('elearn-iframe-close');
+  const iframeBackdrop = document.getElementById('elearn-iframe-backdrop');
+
+  function openIframe(slug, title) {
+    if (!iframeModal || !iframeEl) return;
+    iframeEl.src = '/interactives/' + slug + '/index.html';
+    if (iframeTitleEl) iframeTitleEl.textContent = title;
+    iframeModal.classList.add('is-open');
+    iframeModal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeIframe() {
+    if (!iframeModal) return;
+    iframeModal.classList.remove('is-open');
+    iframeModal.setAttribute('aria-hidden', 'true');
+    if (iframeEl) iframeEl.src = '';
+  }
+
+  modal.querySelectorAll('[data-interactive]').forEach(btn => {
+    btn.addEventListener('click', () => openIframe(btn.dataset.interactive, btn.dataset.title));
+  });
+
+  iframeCloseBtn?.addEventListener('click', closeIframe);
+  iframeBackdrop?.addEventListener('click', closeIframe);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && iframeModal?.classList.contains('is-open')) closeIframe(); });
+})();
+
 // ─── Contact form (Web3Forms) ─────────────────────
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
