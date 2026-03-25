@@ -907,6 +907,51 @@ a.ticker-item:hover {
   .nonprofit-modal-panel { padding: 2rem 1.5rem; }
 }
 
+/* ─── Image hover preview (floating tooltip) ─────── */
+.img-hover-preview {
+  position: fixed;
+  z-index: 9100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.65);
+  max-width: 300px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.img-hover-preview.active { opacity: 1; }
+.img-hover-preview img { width: 100%; display: block; }
+
+/* Subtle ring on hovered grid image */
+.audio-photo-grid img {
+  cursor: zoom-in;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.audio-photo-grid img:hover {
+  box-shadow: 0 0 0 2px var(--accent);
+  transform: scale(1.03);
+  position: relative;
+  z-index: 1;
+}
+
+/* "Demo AI Audiobooks" callout label */
+.audio-demo-label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.audio-demo-label svg { flex-shrink: 0; }
+
 /* ─── Book Cover Gallery Modal ───────────────────── */
 .book-modal {
   position: fixed;

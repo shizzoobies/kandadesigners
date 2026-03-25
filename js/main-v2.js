@@ -467,6 +467,37 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && iframeModal?.classList.contains('is-open')) closeIframe(); });
 })();
 
+// ─── Image hover preview (floating tooltip) ──────
+(function () {
+  const preview = document.createElement('div');
+  preview.className = 'img-hover-preview';
+  const previewImg = document.createElement('img');
+  preview.appendChild(previewImg);
+  document.body.appendChild(preview);
+
+  function reposition(e) {
+    let x = e.clientX + 20;
+    let y = e.clientY - 100;
+    if (x + 320 > window.innerWidth) x = e.clientX - 320;
+    if (y < 10) y = 10;
+    if (y + 320 > window.innerHeight) y = window.innerHeight - 330;
+    preview.style.left = x + 'px';
+    preview.style.top  = y + 'px';
+  }
+
+  document.querySelectorAll('[data-hover-preview]').forEach(el => {
+    el.addEventListener('mouseenter', e => {
+      previewImg.src = el.dataset.hoverPreview;
+      preview.classList.add('active');
+      reposition(e);
+    });
+    el.addEventListener('mousemove', reposition);
+    el.addEventListener('mouseleave', () => {
+      preview.classList.remove('active');
+    });
+  });
+})();
+
 // ─── AI Audio & YouTube Modal ─────────────────────
 (function () {
   const modal    = document.getElementById('audio-modal');
