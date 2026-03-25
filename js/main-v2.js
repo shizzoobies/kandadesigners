@@ -467,6 +467,71 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && iframeModal?.classList.contains('is-open')) closeIframe(); });
 })();
 
+// ─── FixAlways Modal ──────────────────────────────
+(function () {
+  const modal       = document.getElementById('fixalways-modal');
+  const backdrop    = document.getElementById('fixalways-modal-backdrop');
+  const closeBtn    = document.getElementById('fixalways-modal-close');
+  const previewBtn  = document.getElementById('fixalways-preview-btn');
+  const iframeModal = document.getElementById('fixalways-iframe-modal');
+  const iframeEl    = document.getElementById('fixalways-iframe');
+  const iframeClose = document.getElementById('fixalways-iframe-close');
+  const iframeBd    = document.getElementById('fixalways-iframe-backdrop');
+  if (!modal) return;
+
+  let trigger = null;
+
+  function openModal(el) {
+    trigger = el || null;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => closeBtn?.focus(), 50);
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    trigger?.focus();
+    trigger = null;
+  }
+
+  function openIframe() {
+    if (!iframeModal || !iframeEl) return;
+    iframeEl.src = 'https://fixalways.com';
+    iframeModal.classList.add('is-open');
+    iframeModal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeIframe() {
+    if (!iframeModal) return;
+    iframeModal.classList.remove('is-open');
+    iframeModal.setAttribute('aria-hidden', 'true');
+    setTimeout(() => { if (iframeEl) iframeEl.src = ''; }, 300);
+  }
+
+  document.querySelectorAll('[data-open-fixalways]').forEach(el => {
+    el.addEventListener('click', e => { e.stopPropagation(); openModal(el); });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(el); }
+    });
+  });
+
+  previewBtn?.addEventListener('click', openIframe);
+  closeBtn?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('click', closeModal);
+  iframeClose?.addEventListener('click', closeIframe);
+  iframeBd?.addEventListener('click', closeIframe);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (iframeModal?.classList.contains('is-open')) { closeIframe(); return; }
+      if (modal.classList.contains('is-open')) closeModal();
+    }
+  });
+})();
+
 // ─── AI Music Modal ───────────────────────────────
 (function () {
   const modal    = document.getElementById('music-modal');
