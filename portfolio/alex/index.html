@@ -26,14 +26,14 @@
     .alex-hero-grid {
       display: grid;
       grid-template-columns: 58% 42%;
-      align-items: center;
+      align-items: start;
     }
 
     .alex-hero-left {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 2.5rem var(--gutter) 3.5rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+      justify-content: flex-start;
+      padding: 1.75rem var(--gutter) 3rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
       position: relative;
       z-index: 2;
     }
@@ -45,7 +45,7 @@
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1.75rem;
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -65,7 +65,7 @@
       font-weight: 300;
       line-height: 0.95;
       letter-spacing: -0.03em;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.9rem;
     }
 
     .alex-hero-tagline {
@@ -73,7 +73,7 @@
       color: var(--text-mid);
       line-height: 1.8;
       max-width: 440px;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.75rem;
     }
 
     .alex-hero-ctas {
@@ -87,14 +87,14 @@
     .alex-hero-right {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: 2rem;
-      padding: 2rem 3.5rem 3.5rem 1rem;
+      justify-content: flex-start;
+      gap: 1.25rem;
+      padding: 1.75rem 3.5rem 3rem 1rem;
     }
     .alex-hero-right img {
       width: 100%;
-      max-width: 300px;
-      height: 380px;
+      max-width: 280px;
+      height: 320px;
       object-fit: cover;
       object-position: center top;
       display: block;
@@ -672,6 +672,39 @@
       white-space: nowrap;
     }
 
+    /* ── Book Covers Gallery ────────────────────── */
+    .alex-book-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 3px;
+    }
+    .alex-book-gallery .gallery-item img {
+      aspect-ratio: 2/3;
+      width: 100%;
+      object-fit: cover;
+    }
+    /* Title label on hover overlay */
+    .alex-book-gallery .gallery-item-over {
+      flex-direction: column;
+      gap: 0.65rem;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .alex-book-gallery .gallery-item-over svg {
+      width: 28px;
+      height: 28px;
+      opacity: 0.9;
+    }
+    .gallery-item-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.3;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+
     /* ── Responsive ─────────────────────────────── */
     @media (max-width: 1000px) {
       .alex-hero-grid { grid-template-columns: 1fr; }
@@ -719,6 +752,20 @@
       .video-banner:hover { height: 320px; }
       .music-notes-area { grid-template-columns: repeat(2, 1fr); }
       .yt-card { width: 280px; }
+      .alex-book-gallery { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 420px) {
+      .alex-book-gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Respect reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .skills-ticker-track,
+      .yt-scroll-track { animation: none; }
+      .music-note { animation: none !important; }
+      .live-dot { animation: none; }
+      .music-np-bars span { animation: none; height: 10px; }
     }
   </style>
 </head>
@@ -922,7 +969,7 @@
 
       <!-- Interactives card with modal -->
       <div class="alex-web-cards fade-up" style="margin-top:0;">
-        <div class="alex-web-card" style="cursor:pointer;" role="button" tabindex="0" data-open-elearn>
+        <div class="alex-web-card" style="cursor:pointer;" role="button" tabindex="0" data-open-elearn aria-label="Open HTML Interactives and Games preview">
           <span class="label" style="display:block;margin-bottom:0.75rem;">HTML Interactives &amp; Games</span>
           <div class="alex-web-card-title">See Live Examples</div>
           <p>From a scrolling shooter game to custom phishing simulations and hotspot exercises &mdash; advanced HTML/CSS/JS interactives built inside and outside Articulate. Click to preview.</p>
@@ -962,12 +1009,12 @@
           <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/BSwVFmr_Xz8" title="AI Audio showcase 2" allowfullscreen loading="lazy"></iframe></div></div>
           <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/Lu8Qpj6mdXk" title="AI Audio showcase 3" allowfullscreen loading="lazy"></iframe></div></div>
           <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/4gSZbLdbyzg" title="AI Audio showcase 4" allowfullscreen loading="lazy"></iframe></div></div>
-          <!-- Set 2 (seamless loop clone) -->
-          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/hsflWITN1G4" title="Video production example" allowfullscreen loading="lazy"></iframe></div></div>
-          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/gT3ihRVP6rI" title="AI Audio showcase 1" allowfullscreen loading="lazy"></iframe></div></div>
-          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/BSwVFmr_Xz8" title="AI Audio showcase 2" allowfullscreen loading="lazy"></iframe></div></div>
-          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/Lu8Qpj6mdXk" title="AI Audio showcase 3" allowfullscreen loading="lazy"></iframe></div></div>
-          <div class="yt-card"><div class="video-embed"><iframe src="https://www.youtube.com/embed/4gSZbLdbyzg" title="AI Audio showcase 4" allowfullscreen loading="lazy"></iframe></div></div>
+          <!-- Set 2 (seamless loop clone — hidden from screen readers) -->
+          <div class="yt-card" aria-hidden="true"><div class="video-embed"><iframe src="https://www.youtube.com/embed/hsflWITN1G4" title="" allowfullscreen loading="lazy" tabindex="-1"></iframe></div></div>
+          <div class="yt-card" aria-hidden="true"><div class="video-embed"><iframe src="https://www.youtube.com/embed/gT3ihRVP6rI" title="" allowfullscreen loading="lazy" tabindex="-1"></iframe></div></div>
+          <div class="yt-card" aria-hidden="true"><div class="video-embed"><iframe src="https://www.youtube.com/embed/BSwVFmr_Xz8" title="" allowfullscreen loading="lazy" tabindex="-1"></iframe></div></div>
+          <div class="yt-card" aria-hidden="true"><div class="video-embed"><iframe src="https://www.youtube.com/embed/Lu8Qpj6mdXk" title="" allowfullscreen loading="lazy" tabindex="-1"></iframe></div></div>
+          <div class="yt-card" aria-hidden="true"><div class="video-embed"><iframe src="https://www.youtube.com/embed/4gSZbLdbyzg" title="" allowfullscreen loading="lazy" tabindex="-1"></iframe></div></div>
         </div>
       </div>
 
@@ -1010,8 +1057,9 @@
       <div class="music-notes-area fade-up" id="music-notes-area">
         <button class="music-note" style="left:4%;top:48%;"
           data-src="../../images/A_Hold_On_Me_2026-03-25T164648.mp3"
-          data-title="A Hold On Me" data-genre="Romantic / Emotional">
-          <span class="music-note-glyph">♪</span>
+          data-title="A Hold On Me" data-genre="Romantic / Emotional"
+          aria-label="Play A Hold On Me — Romantic / Emotional">
+          <span class="music-note-glyph" aria-hidden="true">♪</span>
           <div class="music-note-label">
             <span class="music-note-title">A Hold On Me</span>
             <span class="music-note-genre">Romantic / Emotional</span>
@@ -1019,8 +1067,9 @@
         </button>
         <button class="music-note" style="left:17%;top:14%;"
           data-src="../../images/Crown_Music_2026-03-25T163917.mp3"
-          data-title="Crown" data-genre="Cinematic / Epic">
-          <span class="music-note-glyph">♫</span>
+          data-title="Crown" data-genre="Cinematic / Epic"
+          aria-label="Play Crown — Cinematic / Epic">
+          <span class="music-note-glyph" aria-hidden="true">♫</span>
           <div class="music-note-label">
             <span class="music-note-title">Crown</span>
             <span class="music-note-genre">Cinematic / Epic</span>
@@ -1028,8 +1077,9 @@
         </button>
         <button class="music-note" style="left:32%;top:62%;"
           data-src="../../images/Sunshine_Bounce_2026-03-25T170749.mp3"
-          data-title="Sunshine Bounce" data-genre="Upbeat / Energetic">
-          <span class="music-note-glyph">♩</span>
+          data-title="Sunshine Bounce" data-genre="Upbeat / Energetic"
+          aria-label="Play Sunshine Bounce — Upbeat / Energetic">
+          <span class="music-note-glyph" aria-hidden="true">♩</span>
           <div class="music-note-label">
             <span class="music-note-title">Sunshine Bounce</span>
             <span class="music-note-genre">Upbeat / Energetic</span>
@@ -1037,8 +1087,9 @@
         </button>
         <button class="music-note" style="left:46%;top:22%;"
           data-src="../../images/Tension_Point_2026-03-25T170738.mp3"
-          data-title="Tension Point" data-genre="Dramatic / Tension">
-          <span class="music-note-glyph">♬</span>
+          data-title="Tension Point" data-genre="Dramatic / Tension"
+          aria-label="Play Tension Point — Dramatic / Tension">
+          <span class="music-note-glyph" aria-hidden="true">♬</span>
           <div class="music-note-label">
             <span class="music-note-title">Tension Point</span>
             <span class="music-note-genre">Dramatic / Tension</span>
@@ -1046,8 +1097,9 @@
         </button>
         <button class="music-note" style="left:13%;top:74%;"
           data-src="../../images/Digital_Pulse_Loop_2026-03-25T170731.mp3"
-          data-title="Digital Pulse Loop" data-genre="Electronic / Loop">
-          <span class="music-note-glyph">♫</span>
+          data-title="Digital Pulse Loop" data-genre="Electronic / Loop"
+          aria-label="Play Digital Pulse Loop — Electronic / Loop">
+          <span class="music-note-glyph" aria-hidden="true">♫</span>
           <div class="music-note-label">
             <span class="music-note-title">Digital Pulse Loop</span>
             <span class="music-note-genre">Electronic / Loop</span>
@@ -1055,8 +1107,9 @@
         </button>
         <button class="music-note" style="left:60%;top:52%;"
           data-src="../../images/Instant_Impact_Loop_2026-03-25T170607.mp3"
-          data-title="Instant Impact" data-genre="High Energy / Driving">
-          <span class="music-note-glyph">♪</span>
+          data-title="Instant Impact" data-genre="High Energy / Driving"
+          aria-label="Play Instant Impact — High Energy / Driving">
+          <span class="music-note-glyph" aria-hidden="true">♪</span>
           <div class="music-note-label">
             <span class="music-note-title">Instant Impact</span>
             <span class="music-note-genre">High Energy / Driving</span>
@@ -1064,8 +1117,9 @@
         </button>
         <button class="music-note" style="left:75%;top:18%;"
           data-src="../../images/Pixel_Pursuit_2026-03-25T170617.mp3"
-          data-title="Pixel Pursuit" data-genre="Playful / Retro">
-          <span class="music-note-glyph">♬</span>
+          data-title="Pixel Pursuit" data-genre="Playful / Retro"
+          aria-label="Play Pixel Pursuit — Playful / Retro">
+          <span class="music-note-glyph" aria-hidden="true">♬</span>
           <div class="music-note-label">
             <span class="music-note-title">Pixel Pursuit</span>
             <span class="music-note-genre">Playful / Retro</span>
@@ -1073,8 +1127,9 @@
         </button>
         <button class="music-note" style="left:86%;top:66%;"
           data-src="../../images/Summer_Bliss_2026-03-25T170628.mp3"
-          data-title="Summer Bliss" data-genre="Warm / Feel-Good">
-          <span class="music-note-glyph">♩</span>
+          data-title="Summer Bliss" data-genre="Warm / Feel-Good"
+          aria-label="Play Summer Bliss — Warm / Feel-Good">
+          <span class="music-note-glyph" aria-hidden="true">♩</span>
           <div class="music-note-label">
             <span class="music-note-title">Summer Bliss</span>
             <span class="music-note-genre">Warm / Feel-Good</span>
@@ -1083,7 +1138,7 @@
       </div>
 
       <!-- Now Playing bar -->
-      <div class="music-now-playing" id="music-now-playing">
+      <div class="music-now-playing" id="music-now-playing" role="status" aria-live="polite" aria-atomic="true">
         <div class="music-np-bars">
           <span></span><span></span><span></span><span></span>
         </div>
@@ -1113,83 +1168,126 @@
         <a href="/contact/" class="btn btn-outline" data-open-contact>Let's Build Together</a>
       </div>
 
-      <div class="gallery fade-up">
+      <div class="gallery alex-book-gallery fade-up">
 
-        <div class="gallery-item" data-full="../../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
-          <img src="../../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="The Regent's Bride" />
-          <div class="gallery-item-over">
+        <div class="gallery-item" data-full="../../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" role="button" tabindex="0" aria-label="View The Regent's Bride full size">
+          <img src="../../images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="The Regent's Bride — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Regent's Bride</span>
           </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Book_5_The_Thornwood_Witch_MAX_QUALITY.jpg">
-          <img src="../../images/Book_5_The_Thornwood_Witch_MAX_QUALITY.jpg" alt="The Thornwood Witch" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Book_5_The_Thornwood_Witch_MAX_QUALITY.jpg" role="button" tabindex="0" aria-label="View The Thornwood Witch full size">
+          <img src="../../images/Book_5_The_Thornwood_Witch_MAX_QUALITY.jpg" alt="The Thornwood Witch — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Thornwood Witch</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Book_15_The_Unsworn_Crown_MAX_QUALITY.jpg">
-          <img src="../../images/Book_15_The_Unsworn_Crown_MAX_QUALITY.jpg" alt="The Unsworn Crown" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Book_15_The_Unsworn_Crown_MAX_QUALITY.jpg" role="button" tabindex="0" aria-label="View The Unsworn Crown full size">
+          <img src="../../images/Book_15_The_Unsworn_Crown_MAX_QUALITY.jpg" alt="The Unsworn Crown — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Unsworn Crown</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Second_Bloom_Series_Book1_What_Grows_After_Goodbye_Alexi_Hart (1).jpg">
-          <img src="../../images/Second_Bloom_Series_Book1_What_Grows_After_Goodbye_Alexi_Hart (1).jpg" alt="What Grows After Goodbye" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Second_Bloom_Series_Book1_What_Grows_After_Goodbye_Alexi_Hart (1).jpg" role="button" tabindex="0" aria-label="View What Grows After Goodbye full size">
+          <img src="../../images/Second_Bloom_Series_Book1_What_Grows_After_Goodbye_Alexi_Hart (1).jpg" alt="What Grows After Goodbye — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">What Grows After Goodbye</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Book-01-The-Packet-in-Portland.jpg">
-          <img src="../../images/Book-01-The-Packet-in-Portland.jpg" alt="The Packet in Portland" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Book-01-The-Packet-in-Portland.jpg" role="button" tabindex="0" aria-label="View The Packet in Portland full size">
+          <img src="../../images/Book-01-The-Packet-in-Portland.jpg" alt="The Packet in Portland — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Packet in Portland</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Austin-After-Hours-Cover.jpg">
-          <img src="../../images/Austin-After-Hours-Cover.jpg" alt="Austin After Hours" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Austin-After-Hours-Cover.jpg" role="button" tabindex="0" aria-label="View Austin After Hours full size">
+          <img src="../../images/Austin-After-Hours-Cover.jpg" alt="Austin After Hours — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">Austin After Hours</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/The_Dons_Code_Alexi_Hart.jpg">
-          <img src="../../images/The_Dons_Code_Alexi_Hart.jpg" alt="The Don's Code" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/The_Dons_Code_Alexi_Hart.jpg" role="button" tabindex="0" aria-label="View The Don's Code full size">
+          <img src="../../images/The_Dons_Code_Alexi_Hart.jpg" alt="The Don's Code — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Don's Code</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/The_Wolfs_Vow_Through_His_Eyes.jpg">
-          <img src="../../images/The_Wolfs_Vow_Through_His_Eyes.jpg" alt="The Wolf's Vow" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/The_Wolfs_Vow_Through_His_Eyes.jpg" role="button" tabindex="0" aria-label="View The Wolf's Vow full size">
+          <img src="../../images/The_Wolfs_Vow_Through_His_Eyes.jpg" alt="The Wolf's Vow — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Wolf's Vow</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Book-04-The-Orchard-Grave.jpg">
-          <img src="../../images/Book-04-The-Orchard-Grave.jpg" alt="The Orchard Grave" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Book-04-The-Orchard-Grave.jpg" role="button" tabindex="0" aria-label="View The Orchard Grave full size">
+          <img src="../../images/Book-04-The-Orchard-Grave.jpg" alt="The Orchard Grave — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Orchard Grave</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Book-06-The-Glass-Alibi.jpg">
-          <img src="../../images/Book-06-The-Glass-Alibi.jpg" alt="The Glass Alibi" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Book-06-The-Glass-Alibi.jpg" role="button" tabindex="0" aria-label="View The Glass Alibi full size">
+          <img src="../../images/Book-06-The-Glass-Alibi.jpg" alt="The Glass Alibi — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">The Glass Alibi</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Chapter_1_Thumbnail_Optimized.jpg">
-          <img src="../../images/Chapter_1_Thumbnail_Optimized.jpg" alt="Chapter 1 Thumbnail" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Chapter_1_Thumbnail_Optimized.jpg" role="button" tabindex="0" aria-label="View Chapter 1 Thumbnail full size">
+          <img src="../../images/Chapter_1_Thumbnail_Optimized.jpg" alt="Chapter 1 YouTube thumbnail design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">Chapter 1 Thumbnail</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Wolfs-Vow-Thumbnail-1.png">
-          <img src="../../images/Wolfs-Vow-Thumbnail-1.png" alt="Wolf's Vow Thumbnail" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Wolfs-Vow-Thumbnail-1.png" role="button" tabindex="0" aria-label="View Wolf's Vow Thumbnail full size">
+          <img src="../../images/Wolfs-Vow-Thumbnail-1.png" alt="Wolf's Vow YouTube thumbnail design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">Wolf's Vow Thumbnail</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Wolfs-Vow.png">
-          <img src="../../images/Wolfs-Vow.png" alt="Wolf's Vow" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Wolfs-Vow.png" role="button" tabindex="0" aria-label="View Wolf's Vow cover full size">
+          <img src="../../images/Wolfs-Vow.png" alt="Wolf's Vow — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">Wolf's Vow</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Ash-on-the-Road-Cover.jpg">
-          <img src="../../images/Ash-on-the-Road-Cover.jpg" alt="Ash on the Road" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Ash-on-the-Road-Cover.jpg" role="button" tabindex="0" aria-label="View Ash on the Road full size">
+          <img src="../../images/Ash-on-the-Road-Cover.jpg" alt="Ash on the Road — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">Ash on the Road</span>
+          </div>
         </div>
 
-        <div class="gallery-item" data-full="../../images/Kindle-Cover.jpg">
-          <img src="../../images/Kindle-Cover.jpg" alt="Kindle Cover" />
-          <div class="gallery-item-over"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg></div>
+        <div class="gallery-item" data-full="../../images/Kindle-Cover.jpg" role="button" tabindex="0" aria-label="View Kindle Cover full size">
+          <img src="../../images/Kindle-Cover.jpg" alt="Kindle Cover — book cover design" />
+          <div class="gallery-item-over" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607zM10.5 7.5v6m3-3h-6" /></svg>
+            <span class="gallery-item-title">Kindle Edition Cover</span>
+          </div>
         </div>
 
       </div>
@@ -1248,8 +1346,8 @@
   <!-- ════════════════════════════════════════════
        LIGHTBOX
        ════════════════════════════════════════════ -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightbox-close">&#x2715;</button>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close image viewer">&#x2715;</button>
     <img class="lightbox-img" id="lightbox-img" src="" alt="" />
   </div>
 
@@ -1486,8 +1584,22 @@
       var audio = new Audio();
       var currentNote = null;
 
+      function setLabel(note, state) {
+        // state: 'play' | 'pause' | 'resume'
+        var title = note.dataset.title || '';
+        var genre = note.dataset.genre || '';
+        var base = title + (genre ? ' \u2014 ' + genre : '');
+        if (state === 'pause') note.setAttribute('aria-label', 'Pause ' + base);
+        else if (state === 'resume') note.setAttribute('aria-label', 'Resume ' + base);
+        else note.setAttribute('aria-label', 'Play ' + base);
+      }
+
       function stopCurrent() {
-        if (currentNote) { currentNote.classList.remove('playing'); currentNote = null; }
+        if (currentNote) {
+          currentNote.classList.remove('playing');
+          setLabel(currentNote, 'play');
+          currentNote = null;
+        }
         audio.pause();
         audio.currentTime = 0;
         if (nowPlaying) { nowPlaying.classList.remove('visible'); nowPlaying.classList.remove('paused'); }
@@ -1500,10 +1612,12 @@
             if (audio.paused) {
               audio.play().catch(function () {});
               this.classList.add('playing');
+              setLabel(this, 'pause');
               if (nowPlaying) nowPlaying.classList.remove('paused');
             } else {
               audio.pause();
               this.classList.remove('playing');
+              setLabel(this, 'resume');
               if (nowPlaying) nowPlaying.classList.add('paused');
             }
             return;
@@ -1514,6 +1628,7 @@
           audio.src = this.dataset.src;
           audio.play().catch(function () {});
           this.classList.add('playing');
+          setLabel(this, 'pause');
           if (nowPlaying) {
             npTitle.textContent = this.dataset.title || '—';
             npGenre.textContent = this.dataset.genre || '—';
