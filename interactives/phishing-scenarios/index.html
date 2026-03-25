@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<!--
+  Title: Phishing Story - Email + Text Scenarios with Inspect-then-Decide Flow + Link Hover Preview
+  Author: Learning Experience Demo (Portfolio Example)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Phishing Scenarios — Interactive Learning</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #f3f4f6;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 12px 40px;
+  }
+  .page-wrap {
+    width: 100%;
+    max-width: 980px;
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+<div
+    class="phx-phish-mixed"
+    role="region"
+    aria-label="Phishing email and text scenarios"
+>
+    <style>
+        .phx-phish-mixed{
+          --accent:#6366f1;
+          --accent-soft:#e0e7ff;
+          --navy:#0f172a;
+          --navy-soft:#e2e8f0;
+          --ink:#111827;
+          --muted:#374151;
+          --surface:#ffffff;
+          --bg:#f3f4f6;
+          --border:#e5e7eb;
+          --radius:18px;
+          --shadow:0 10px 26px rgba(15,23,42,.18);
+          --correct:#16a34a;
+          --incorrect:#b91c1c;
+          font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+          color:var(--ink);
+          max-width:960px;
+          margin:0 auto;
+          position:relative;
+        }
+        .phx-shell{
+          background:var(--surface);
+          border-radius:20px;
+          border:1px solid var(--border);
+          box-shadow:var(--shadow);
+          padding:16px 18px;
+          position:relative;
+          overflow:visible;
+        }
+        .phx-header{
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:10px;
+          margin-bottom:14px;
+        }
+        .phx-header-main{
+          display:flex;
+          flex-direction:column;
+          gap:2px;
+        }
+        .phx-title{
+          font-size:1.08rem;
+          font-weight:650;
+          color:var(--navy);
+        }
+        .phx-sub{
+          font-size:.82rem;
+          color:var(--muted);
+        }
+        /* Intro panel */
+        .phx-intro{
+          border-radius:16px;
+          border:1px solid var(--border);
+          background:linear-gradient(145deg,#f9fafb,#eef2ff);
+          padding:12px 14px;
+          display:flex;
+          flex-direction:column;
+          gap:8px;
+          margin-bottom:14px;
+        }
+        .phx-intro-title{
+          font-size:.96rem;
+          font-weight:650;
+          color:var(--navy);
+          margin:0;
+        }
+        .phx-intro-body{
+          font-size:.84rem;
+          color:var(--ink);
+          margin:0;
+        }
+        .phx-intro-disclaimer{
+          font-size:.75rem;
+          color:#4b5563;
+          margin:0;
+          border-left:3px solid var(--accent);
+          padding-left:8px;
+        }
+        .phx-intro-actions{
+          margin-top:6px;
+        }
+        .phx-intro-btn{
+          font-size:.82rem;
+          border-radius:999px;
+          padding:7px 14px;
+          cursor:pointer;
+          border:1px solid var(--accent);
+          background:var(--accent);
+          color:#0b1020;
+          font-weight:600;
+          display:inline-flex;
+          align-items:center;
+          gap:6px;
+          transition:background .18s ease, box-shadow .18s ease, transform .18s ease;
+        }
+        .phx-intro-btn:hover{
+          box-shadow:0 8px 18px rgba(15,23,42,.22);
+          transform:translateY(-1px);
+        }
+        /* Layout (hidden until Start is clicked) */
+        .phx-layout{
+          display:none;
+          grid-template-columns:minmax(0,1fr);
+          gap:16px;
+          align-items:flex-start;
+          margin-top:4px;
+        }
+        /* Inspect instructions bar at top of message area */
+        .phx-inspect-tip{
+          font-size:.78rem;
+          background:#fef3c7;
+          border-radius:10px;
+          padding:6px 9px;
+          border:1px solid #facc15;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:6px;
+          margin-bottom:8px;
+        }
+        .phx-inspect-tip-label{
+          font-weight:600;
+          color:#92400e;
+        }
+        .phx-inspect-tip-status{
+          font-size:.72rem;
+          color:#92400e;
+          white-space:nowrap;
+        }
+        .phx-inspect-tip-hidden{
+          display:none;
+        }
+        /* Panel (right) */
+        .phx-panel{
+          background:var(--bg);
+          border-radius:16px;
+          padding:12px 13px 14px;
+          border:1px solid var(--border);
+          display:flex;
+          flex-direction:column;
+          gap:10px;
+          position:relative;
+          overflow:hidden;
+        }
+        .phx-panel-top{
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:10px;
+          position:relative;
+          z-index:1;
+        }
+        .phx-panel-step{
+          font-size:.78rem;
+          color:var(--muted);
+        }
+        .phx-next-btn{
+          font-size:.78rem;
+          border-radius:999px;
+          padding:6px 12px;
+          border:1px solid var(--accent);
+          background:var(--accent);
+          color:#0b1020;
+          font-weight:600;
+          cursor:pointer;
+          display:none;
+          align-items:center;
+          gap:6px;
+          transition:box-shadow .18s ease, transform .18s ease, background .18s ease;
+          white-space:nowrap;
+        }
+        .phx-next-btn:hover{
+          box-shadow:0 6px 14px rgba(15,23,42,.18);
+          transform:translateY(-1px);
+        }
+        .phx-impact-tag{
+          font-size:.7rem;
+          display:inline-flex;
+          align-items:center;
+          padding:3px 9px;
+          border-radius:999px;
+          background:var(--navy-soft);
+          color:var(--navy);
+          font-weight:700;
+          text-transform:uppercase;
+          letter-spacing:.08em;
+          width:max-content;
+          margin-bottom:4px;
+        }
+        /* Scenario decision stage */
+        .phx-scenario-stage{
+          background:#ffffff;
+          border-radius:14px;
+          padding:9px 11px 11px;
+          border:1px solid rgba(15,23,42,.05);
+          display:none;
+          flex-direction:column;
+          gap:6px;
+          position:relative;
+          z-index:1;
+        }
+        .phx-decision-header{
+          font-size:.9rem;
+          font-weight:650;
+          color:var(--navy);
+          margin:0 0 4px;
+        }
+        .phx-role{
+          font-size:.82rem;
+          color:var(--muted);
+          margin:0 0 5px;
+        }
+        .phx-options{
+          display:flex;
+          flex-direction:column;
+          gap:7px;
+          margin-top:4px;
+        }
+        .phx-options button{
+          text-align:left;
+          width:100%;
+          border-radius:999px;
+          border:1px solid var(--border);
+          background:#ffffff;
+          padding:8px 11px;
+          font-size:.84rem;
+          cursor:pointer;
+          display:flex;
+          gap:7px;
+          align-items:flex-start;
+          transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease, background .18s ease;
+          color:var(--ink);
+        }
+        .phx-options button:hover:not(:disabled){
+          box-shadow:0 7px 16px rgba(15,23,42,.12);
+          transform:translateY(-1px);
+          border-color:rgba(15,23,42,.35);
+        }
+        .phx-options button:disabled{
+          opacity:.6;
+          cursor:default;
+          box-shadow:none;
+          transform:none;
+        }
+        .phx-option-dot{
+          font-size:.9rem;
+          flex:0 0 auto;
+          margin-top:4px;
+          margin-right:2px;
+          width:10px;
+          display:inline-flex;
+          align-items:center;
+          justify-content:center;
+          color:var(--navy);
+        }
+        .phx-option-text{
+          flex:1 1 auto;
+        }
+        .phx-option-correct{
+          border-color:var(--correct);
+          background:rgba(22,163,74,.08);
+        }
+        .phx-option-incorrect{
+          border-color:var(--incorrect);
+          background:rgba(248,113,113,.12);
+        }
+        .phx-progress{
+          margin-top:5px;
+          display:flex;
+          align-items:center;
+          gap:8px;
+          font-size:.76rem;
+          color:var(--muted);
+        }
+        .phx-progress-bar{
+          flex:1 1 auto;
+          height:5px;
+          background:#e5e7eb;
+          border-radius:999px;
+          overflow:hidden;
+        }
+        .phx-progress-fill{
+          height:100%;
+          width:0%;
+          background:linear-gradient(90deg,var(--accent),#22c55e);
+          transition:width .25s ease;
+        }
+        .phx-status-pill{
+          font-size:.72rem;
+          padding:3px 8px;
+          border-radius:999px;
+          background:#e5e7eb;
+          color:#374151;
+          font-weight:600;
+          white-space:nowrap;
+        }
+        .phx-status-pill.phx-status-complete{
+          background:rgba(22,163,74,.1);
+          color:#166534;
+          border:1px solid rgba(22,163,74,.4);
+        }
+        .phx-complete-banner{
+          margin-top:7px;
+          padding:7px 9px;
+          border-radius:10px;
+          background:linear-gradient(90deg,#16a34a,#22c55e);
+          color:#ecfdf5;
+          font-size:.8rem;
+          display:none;
+          align-items:flex-start;
+          gap:7px;
+        }
+        .phx-complete-banner strong{
+          display:block;
+          font-weight:700;
+        }
+        /* Wrap-up screen */
+        .phx-wrapup{
+          display:none;
+          background:linear-gradient(135deg,#020617,#111827);
+          border-radius:14px;
+          padding:16px 18px 18px;
+          border:1px solid rgba(15,23,42,.6);
+          position:relative;
+          z-index:1;
+          box-shadow:0 16px 34px rgba(0,0,0,0.7);
+          max-width:720px;
+          width:100%;
+          margin:16px auto 0;
+          color:#e5e7eb;
+          flex-direction:column;
+          gap:8px;
+        }
+        .phx-wrapup-title{
+          font-size:1rem;
+          font-weight:700;
+          margin:0;
+          text-align:center;
+          color:#f9fafb;
+        }
+        .phx-wrapup-body{
+          font-size:.84rem;
+          margin:0;
+          text-align:center;
+          color:#e5e7eb;
+        }
+        .phx-wrapup-list{
+          font-size:.82rem;
+          margin:4px auto 0;
+          padding-left:1.2rem;
+          max-width:560px;
+          text-align:left;
+          color:#e5e7eb;
+        }
+        .phx-wrapup-list li{
+          margin-bottom:3px;
+        }
+        .phx-wrapup-body-strong{
+          font-weight:600;
+          color:#bbf7d0;
+        }
+        /* Modal overlay */
+        .phx-overlay{
+          position:absolute;
+          inset:0;
+          display:none;
+          align-items:center;
+          justify-content:center;
+          z-index:40;
+          background:rgba(15,23,42,.45);
+          backdrop-filter:blur(4px);
+        }
+        .phx-overlay-card{
+          background:#ffffff;
+          border-radius:16px;
+          padding:14px 16px;
+          max-width:460px;
+          width:100%;
+          box-shadow:0 18px 40px rgba(15,23,42,.45);
+          border:1px solid rgba(15,23,42,.08);
+        }
+        .phx-overlay-tag{
+          font-size:.72rem;
+          display:inline-flex;
+          align-items:center;
+          padding:3px 8px;
+          border-radius:999px;
+          background:var(--navy-soft);
+          color:var(--navy);
+          font-weight:600;
+          margin-bottom:6px;
+        }
+        .phx-overlay-title{
+          font-size:.96rem;
+          font-weight:650;
+          color:var(--navy);
+          margin:0 0 4px;
+        }
+        .phx-overlay-body{
+          font-size:.84rem;
+          color:var(--ink);
+          margin:0;
+        }
+        .phx-overlay-actions{
+          display:flex;
+          justify-content:flex-end;
+          gap:8px;
+          margin-top:12px;
+        }
+        .phx-overlay-btn{
+          font-size:.8rem;
+          border-radius:999px;
+          padding:6px 12px;
+          cursor:pointer;
+          display:inline-flex;
+          align-items:center;
+          gap:6px;
+          border:1px solid transparent;
+          transition:background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease, opacity .18s ease;
+        }
+        .phx-overlay-btn-primary{
+          background:var(--accent);
+          border-color:var(--accent);
+          color:#0b1020;
+          font-weight:600;
+        }
+        .phx-overlay-btn-primary:hover{
+          box-shadow:0 8px 20px rgba(15,23,42,.25);
+          transform:translateY(-1px);
+        }
+        .phx-overlay-btn-secondary{
+          background:#ffffff;
+          border-color:var(--border);
+          color:#374151;
+        }
+        .phx-overlay-btn-secondary:hover{
+          box-shadow:0 6px 16px rgba(15,23,42,.12);
+          transform:translateY(-1px);
+        }
+        /* Confetti */
+        .phx-confetti{
+          position:absolute;
+          inset:0;
+          pointer-events:none;
+          overflow:hidden;
+          z-index:50;
+          display:none;
+        }
+        .phx-confetti-piece{
+          position:absolute;
+          top:-10px;
+          opacity:1;
+          border-radius:2px;
+          animation:phx-confetti-fall 2.3s ease-out forwards;
+        }
+        @keyframes phx-confetti-fall{
+          0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+          85%{ transform:translateY(85vh) rotate(260deg); opacity:1; }
+          100%{ transform:translateY(100vh) rotate(360deg); opacity:0; }
+        }
+        /* EMAIL CLIENT */
+        .phx-email-client{
+          width:100%;
+          border-radius:18px;
+          background:#0f172a;
+          box-shadow:0 14px 26px rgba(15,23,42,.35);
+          padding:8px;
+          display:flex;
+          flex-direction:column;
+          transition:max-width .25s ease, transform .25s ease;
+        }
+        .phx-email-client.phx-email-compact{ max-width:520px; }
+        .phx-email-topbar{
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          margin-bottom:6px;
+        }
+        .phx-top-buttons{ display:flex; gap:4px; }
+        .phx-top-dot{ width:8px; height:8px; border-radius:999px; background:#4b5563; }
+        .phx-top-title{ flex:1; text-align:center; font-size:.7rem; color:#9ca3af; }
+        .phx-email-inner{
+          background:#020617;
+          border-radius:14px;
+          display:grid;
+          grid-template-columns:minmax(0,0.7fr) minmax(0,1.3fr);
+          overflow:hidden;
+          border:1px solid rgba(15,23,42,.9);
+        }
+        .phx-sidebar{
+          background:#020617;
+          border-right:1px solid #111827;
+          display:flex;
+          flex-direction:column;
+          padding:6px 6px 8px;
+          gap:6px;
+        }
+        .phx-mailbox-label{ font-size:.68rem; text-transform:uppercase; letter-spacing:.04em; color:#6b7280; margin-bottom:2px; }
+        .phx-folder-pill{ font-size:.74rem; padding:3px 6px; border-radius:999px; background:rgba(31,41,55,.9); color:#e5e7eb; align-self:flex-start; display:inline-flex; align-items:center; gap:4px; }
+        .phx-folder-pill span{ width:6px; height:6px; border-radius:999px; background:#22c55e; }
+        .phx-email-list-item{ border-radius:9px; padding:5px 6px; font-size:.72rem; color:#e5e7eb; display:flex; flex-direction:column; gap:1px; background:rgba(248,250,252,.05); border:1px solid rgba(148,163,184,.4); }
+        .phx-email-list-from{ font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .phx-email-list-subject{ color:#9ca3af; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .phx-email-view{ background:#020617; padding:8px 10px 10px; display:flex; flex-direction:column; gap:5px; }
+        .phx-email-meta-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:2px; }
+        .phx-email-from-block{ display:flex; align-items:flex-start; gap:7px; }
+        .phx-email-avatar{ width:24px; height:24px; border-radius:999px; background:linear-gradient(135deg,var(--accent),#60a5fa); display:flex; align-items:center; justify-content:center; font-size:.74rem; font-weight:700; color:#0b1020; flex-shrink:0; }
+        .phx-email-from-lines{ display:flex; flex-direction:column; font-size:.76rem; color:#e5e7eb; }
+        .phx-email-from-name{ font-weight:600; }
+        .phx-email-from-address{ font-size:.7rem; color:#9ca3af; }
+        .phx-email-badge-row{ display:flex; flex-direction:column; align-items:flex-end; gap:3px; font-size:.68rem; color:#9ca3af; }
+        .phx-email-flag{ padding:2px 6px; border-radius:999px; border:1px solid rgba(248,250,252,.09); background:rgba(15,23,42,.7); color:#e5e7eb; font-size:.68rem; display:inline-flex; align-items:center; gap:4px; }
+        .phx-email-flag span{ width:6px; height:6px; border-radius:999px; background:#60a5fa; }
+        .phx-email-subject{ font-size:.88rem; font-weight:600; color:#e5e7eb; margin-top:2px; }
+        .phx-email-recip{ font-size:.7rem; color:#9ca3af; }
+        .phx-email-body{ margin-top:6px; background:#020617; border-radius:8px; padding:8px; border:1px solid rgba(15,23,42,.9); font-size:.78rem; color:#e5e7eb; line-height:1.45; min-height:90px; }
+        .phx-email-body p{ margin:0 0 6px; }
+        .phx-email-body p:last-child{ margin-bottom:0; }
+        .phx-email-link{ color:#38bdf8; text-decoration:underline; text-decoration-style:dotted; cursor:pointer; }
+        .phx-email-attachment{ margin-top:6px; padding:5px 7px; border-radius:7px; background:#020617; border:1px dashed rgba(148,163,184,.6); font-size:.72rem; color:#9ca3af; display:flex; align-items:center; gap:6px; }
+        .phx-email-attachment span{ font-size:.9rem; color:#e5e7eb; }
+        /* SMS PHONE */
+        .phx-phone-shell{ display:flex; justify-content:center; align-items:center; padding:4px 0; }
+        .phx-phone-device{ width:230px; max-width:100%; border-radius:26px; padding:8px; background:linear-gradient(135deg,#020617,#111827); box-shadow:0 10px 24px rgba(0,0,0,0.7); border:1px solid rgba(148,163,184,0.7); position:relative; }
+        .phx-phone-device::before{ content:""; position:absolute; inset:4px; border-radius:24px; border:1px solid rgba(15,23,42,0.65); pointer-events:none; }
+        .phx-phone-notch{ width:60%; height:10px; background:#020617; border-radius:0 0 12px 12px; margin:0 auto 6px; }
+        .phx-phone-screen{ background:#020617; border-radius:20px; padding:8px 8px 9px; border:1px solid rgba(15,23,42,.9); display:flex; flex-direction:column; gap:5px; position:relative; z-index:1; }
+        .phx-phone-status{ display:flex; flex-direction:column; align-items:center; gap:1px; font-size:.7rem; color:#e5e7eb; padding-bottom:4px; border-bottom:1px solid rgba(55,65,81,.85); }
+        .phx-phone-status-name{ font-weight:600; }
+        .phx-phone-status-number{ font-size:.64rem; color:#9ca3af; }
+        .phx-phone-bubbles{ display:flex; flex-direction:column; gap:4px; padding-top:4px; font-size:.74rem; }
+        .phx-phone-row{ display:flex; }
+        .phx-phone-row.them{ justify-content:flex-start; }
+        .phx-phone-row.me{ justify-content:flex-end; }
+        .phx-phone-bubble{ max-width:78%; padding:5px 8px; border-radius:14px; line-height:1.35; word-wrap:break-word; word-break:break-word; }
+        .phx-phone-bubble-them{ background:#111827; color:#e5e7eb; border-radius:14px 14px 14px 4px; }
+        .phx-phone-bubble-me{ background:#22c55e; color:#022c22; border-radius:14px 14px 4px 14px; }
+        .phx-phone-bubble-strong{ font-weight:600; }
+        .phx-phone-link-text{ color:#38bdf8; text-decoration:underline; text-decoration-style:dotted; cursor:pointer; word-break:break-all; }
+        .phx-phone-meta{ align-self:center; font-size:.64rem; color:#9ca3af; padding-top:2px; }
+        .phx-phone-footer-hint{ margin-top:4px; font-size:.64rem; color:#9ca3af; text-align:center; }
+        /* Hotspots */
+        .phx-hotspot{ position:relative; border-radius:4px; background:rgba(250,204,21,.22); box-shadow:0 0 0 2px rgba(250,204,21,.9); cursor:pointer; transition:background .18s ease, box-shadow .18s ease; }
+        .phx-hotspot-pulse{ animation:phx-pulse 1.3s ease-out infinite; }
+        .phx-hotspot-visited{ background:transparent; box-shadow:none; cursor:default; }
+        @keyframes phx-pulse{
+          0%{ box-shadow:0 0 0 0 rgba(251,191,36,0.8); }
+          70%{ box-shadow:0 0 0 8px rgba(251,191,36,0); }
+          100%{ box-shadow:0 0 0 0 rgba(251,191,36,0); }
+        }
+        /* Link hover preview tooltip */
+        .phx-link-preview{ position:fixed; z-index:5000; background:#111827; color:#f9fafb; padding:6px 9px; border-radius:6px; font-size:.72rem; max-width:260px; box-shadow:0 4px 14px rgba(0,0,0,.5); pointer-events:none; border:1px solid rgba(255,255,255,.18); white-space:normal; word-break:normal; overflow-wrap:break-word; opacity:0; transition:opacity .12s ease; }
+        .phx-link-preview-visible{ opacity:1; }
+        .phx-link-preview-safe{ border-color:#22c55e; }
+        .phx-link-preview-phish{ border-color:#f97316; }
+        .phx-link-preview strong{ font-weight:600; }
+        /* Responsive */
+        @media (max-width:899px){
+          .phx-email-inner{ grid-template-columns:minmax(0,1fr); }
+          .phx-layout{ grid-template-columns:minmax(0,1fr); }
+        }
+        @media (max-width:520px){
+          .phx-shell{ padding:12px 10px; }
+          .phx-header{ flex-direction:column; align-items:flex-start; gap:5px; }
+          .phx-panel{ padding:11px; }
+        }
+    </style>
+    <div class="phx-confetti" id="phx-confetti" aria-hidden="true"></div>
+    <div class="phx-shell">
+        <div class="phx-header">
+            <div class="phx-header-main">
+                <div class="phx-title">Phishing Scenarios</div>
+                <div class="phx-sub">
+                    Inspect each message for clues, then decide how you would
+                    respond to keep any customer and company information safe.
+                    Remember: never share your Employee ID, password, or
+                    security verification codes with anyone, including anyone
+                    claiming to be from Support or IT.
+                </div>
+            </div>
+        </div>
+        <div class="phx-intro" id="phx-intro">
+            <h3 class="phx-intro-title">How do you protect customer and company data?</h3>
+            <p class="phx-intro-body">
+                How do you avoid becoming a victim of phishing? Inspect each of
+                the presented emails and texts for red flags to determine
+                whether responding will keep information safe.
+            </p>
+            <p class="phx-intro-body">
+                Remember: apply critical thinking to each message, including one
+                legitimate internal message.
+            </p>
+            <p class="phx-intro-body">
+                The goal is to recognize risky indicators within phishing
+                messages, so you can protect systems and customer information.
+            </p>
+            <p class="phx-intro-disclaimer">
+                These scenarios use fictional people and messages, but the risks
+                and consequences are very real.
+            </p>
+            <div class="phx-intro-actions">
+                <button type="button" class="phx-intro-btn" id="phx-intro-start">
+                    Start the scenarios
+                </button>
+            </div>
+        </div>
+        <div class="phx-layout">
+            <div class="phx-inspect-tip" id="phx-inspect-tip">
+                <span class="phx-inspect-tip-label">Click the highlighted areas in the message to learn what they mean.</span>
+                <span class="phx-inspect-tip-status" id="phx-inspect-tip-status">(0 of 0 areas checked)</span>
+            </div>
+            <div class="phx-email-client" id="phx-email-client">
+                <div class="phx-email-topbar">
+                    <div class="phx-top-buttons">
+                        <span class="phx-top-dot"></span>
+                        <span class="phx-top-dot"></span>
+                        <span class="phx-top-dot"></span>
+                    </div>
+                    <div class="phx-top-title" id="phx-top-title">Mail - Demo Contact Center</div>
+                    <div style="width:42px;"></div>
+                </div>
+                <div class="phx-email-inner">
+                    <div class="phx-sidebar">
+                        <div class="phx-mailbox-label" id="phx-mailbox-label">Mailbox</div>
+                        <div class="phx-folder-pill"><span></span> Inbox</div>
+                        <div class="phx-email-list-item" id="phx-email-list-item">
+                            <div class="phx-email-list-from" id="phx-email-list-from">From</div>
+                            <div class="phx-email-list-subject" id="phx-email-list-subject">Subject</div>
+                        </div>
+                    </div>
+                    <div class="phx-email-view">
+                        <div class="phx-email-meta-top">
+                            <div class="phx-email-from-block">
+                                <div class="phx-email-avatar" id="phx-email-avatar">SL</div>
+                                <div class="phx-email-from-lines">
+                                    <span class="phx-email-from-name" id="phx-email-from-name">Sender name</span>
+                                    <span class="phx-email-from-address" id="phx-email-from-address">sender@example.com</span>
+                                </div>
+                            </div>
+                            <div class="phx-email-badge-row">
+                                <div class="phx-email-flag" id="phx-email-flag">
+                                    <span></span> Sent outside the organization
+                                </div>
+                                <div id="phx-email-time">Today · 11:02 AM</div>
+                            </div>
+                        </div>
+                        <div class="phx-email-subject" id="phx-email-subject">Email subject line</div>
+                        <div class="phx-email-recip" id="phx-email-recip">To: You &lt;agent@company.example&gt;</div>
+                        <div class="phx-email-body" id="phx-email-body"></div>
+                        <div class="phx-email-attachment" id="phx-email-attachment" style="display:none;">
+                            <span>📎</span><span id="phx-email-attachment-label">Attachment-name.pdf</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="phx-panel" id="phx-panel">
+                <div class="phx-panel-top">
+                    <div class="phx-panel-step" id="phx-step-label">Scenario 1 of 5</div>
+                    <button type="button" class="phx-next-btn" id="phx-next-btn">Next scenario</button>
+                </div>
+                <div class="phx-scenario-stage" id="phx-scenario-stage">
+                    <div class="phx-impact-tag" id="phx-scenario-tag">Scenario 1</div>
+                    <h3 class="phx-decision-header" id="phx-decision-header">What is this message asking you to do?</h3>
+                    <p class="phx-role" id="phx-scenario-role">How would you respond to this message?</p>
+                    <div class="phx-options" role="group" aria-label="Possible actions" id="phx-options-group"></div>
+                    <div class="phx-progress" aria-hidden="true">
+                        <div class="phx-progress-bar">
+                            <div class="phx-progress-fill" id="phx-progress-fill"></div>
+                        </div>
+                        <span class="phx-status-pill" id="phx-status-pill">0 of 5 complete</span>
+                    </div>
+                    <div class="phx-complete-banner" id="phx-complete-banner" aria-live="polite">
+                        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="#ecfdf5" d="M9 16.17L4.83 12l-1.42 1.41L9 19l12-12l-1.41-1.41z"/>
+                        </svg>
+                        <div>
+                            <strong>You practiced safer choices.</strong>
+                            You walked through several message moments and chose responses that help keep customer information and systems secure.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="phx-wrapup" id="phx-wrapup" style="display:none;">
+            <div class="phx-impact-tag" style="margin:0 auto 4px;">Wrap up</div>
+            <h2 class="phx-wrapup-title">Carry these habits into real messages</h2>
+            <p class="phx-wrapup-body">
+                You reviewed several emails and texts, including phishing attempts and a normal internal message, and selected responses that keep information where it belongs.
+            </p>
+            <ul class="phx-wrapup-list">
+                <li>Look at <strong>who</strong> a message is really from, not just the display name or contact label.</li>
+                <li>Notice warnings, links, and attachments that do not match normal internal patterns.</li>
+                <li>Keep customer and payment details inside approved tools instead of replying with them or sending screenshots.</li>
+                <li>Never share your Employee ID, password, or security verification codes, and do not start screen sharing or install a "security fix" from an unexpected message.</li>
+            </ul>
+            <p class="phx-wrapup-body">
+                <span class="phx-wrapup-body-strong">Those extra seconds you spend checking a message can prevent data exposure and protect customers. If you are ever unsure, stop and check with your supervisor or your security point-of-contact before you act.</span>
+            </p>
+        </div>
+        <div class="phx-overlay" id="phx-overlay" aria-hidden="true">
+            <div class="phx-overlay-card" role="dialog" aria-modal="true" aria-labelledby="phx-overlay-title">
+                <div class="phx-overlay-tag" id="phx-overlay-tag">Message clue</div>
+                <h3 class="phx-overlay-title" id="phx-overlay-title">What does this tell you?</h3>
+                <p class="phx-overlay-body" id="phx-overlay-body">Feedback body goes here.</p>
+                <div class="phx-overlay-actions">
+                    <button type="button" class="phx-overlay-btn phx-overlay-btn-secondary" id="phx-overlay-secondary">Review</button>
+                    <button type="button" class="phx-overlay-btn phx-overlay-btn-primary" id="phx-overlay-primary">Got it</button>
+                </div>
+            </div>
+        </div>
+        <div id="phx-link-preview" class="phx-link-preview" style="display:none;"></div>
+    </div>
+    <script>
+        (function(){
+          var root = document.querySelector(".phx-phish-mixed");
+          var layoutEl = root.querySelector(".phx-layout");
+          var introEl = root.querySelector("#phx-intro");
+          var introStartBtn = root.querySelector("#phx-intro-start");
+          var headerSubEl = root.querySelector(".phx-sub");
+          var initialHeaderSubText = headerSubEl ? headerSubEl.textContent : "";
+          var inspectTip = root.querySelector("#phx-inspect-tip");
+          var inspectTipStatus = root.querySelector("#phx-inspect-tip-status");
+          var topTitleEl = root.querySelector("#phx-top-title");
+          var mailboxLabelEl = root.querySelector("#phx-mailbox-label");
+          var emailClient = root.querySelector("#phx-email-client");
+          var emailInner = root.querySelector(".phx-email-inner");
+          var emailSidebar = root.querySelector(".phx-sidebar");
+          var emailListFrom = root.querySelector("#phx-email-list-from");
+          var emailListSubject = root.querySelector("#phx-email-list-subject");
+          var emailAvatar = root.querySelector("#phx-email-avatar");
+          var emailFromName = root.querySelector("#phx-email-from-name");
+          var emailFromAddress = root.querySelector("#phx-email-from-address");
+          var emailMetaTop = root.querySelector(".phx-email-meta-top");
+          var emailFlag = root.querySelector("#phx-email-flag");
+          var emailTime = root.querySelector("#phx-email-time");
+          var emailSubject = root.querySelector("#phx-email-subject");
+          var emailRecip = root.querySelector("#phx-email-recip");
+          var emailBody = root.querySelector("#phx-email-body");
+          var emailAttachment = root.querySelector("#phx-email-attachment");
+          var emailAttachmentLabel = root.querySelector("#phx-email-attachment-label");
+          var panelEl = root.querySelector("#phx-panel");
+          var stepLabel = root.querySelector("#phx-step-label");
+          var decisionHeaderEl = root.querySelector("#phx-decision-header");
+          var scenarioRoleEl = root.querySelector("#phx-scenario-role");
+          var optionsGroupEl = root.querySelector("#phx-options-group");
+          var progressFill = root.querySelector("#phx-progress-fill");
+          var statusPill = root.querySelector("#phx-status-pill");
+          var completeBanner = root.querySelector("#phx-complete-banner");
+          var scenarioTagEl = root.querySelector("#phx-scenario-tag");
+          var scenarioStage = root.querySelector("#phx-scenario-stage");
+          var wrapupEl = root.querySelector("#phx-wrapup");
+          var nextBtn = root.querySelector("#phx-next-btn");
+          var overlay = root.querySelector("#phx-overlay");
+          var overlayTag = root.querySelector("#phx-overlay-tag");
+          var overlayTitle = root.querySelector("#phx-overlay-title");
+          var overlayBody = root.querySelector("#phx-overlay-body");
+          var overlayPrimary = root.querySelector("#phx-overlay-primary");
+          var overlaySecondary = root.querySelector("#phx-overlay-secondary");
+          var confettiContainer = root.querySelector("#phx-confetti");
+          var linkPreview = root.querySelector("#phx-link-preview");
+          var linkPreviewTimer = null;
+          var sentCompletion = false;
+          var hotspotsTotal = 0;
+          var hotspotsVisited = 0;
+          var exploreComplete = false;
+          var lastHotspotEl = null;
+          var scenarios = {
+            emailExec:{
+              type:"email",safeType:"phish",
+              headerSub:"An email that uses an executive's name asks for full customer details to be sent by reply.",
+              decisionHeader:"An email that uses an executive's name asks you to send full reservation and payment details for a VIP customer.",
+              listFrom:"Morgan Hale",listSubject:"Need quick help with VIP customer",
+              meta:{avatar:"MH",fromName:"Morgan Hale",fromAddress:"morgan.hale-exec@vipsecure-portal.example",flag:"Sent outside the organization",time:"Today · 9:12 AM",recip:"To: You <agent@company.example>"},
+              subject:"VIP customer details needed now",
+              bodyHTML:"<p>Hi,</p><p>This is Morgan Hale. I am traveling and do not have access to my usual tools right now.</p><p>I was told you are one of our top agents. Please reply with the full reservation details and payment information for the customer you are helping so I can ensure they are handled as a VIP.</p><p>You can also confirm by using this quick link: <a href=\"#\" class=\"phx-email-link\" data-link-type=\"phish\">https://vip-support-secure.example</a>.</p><p>Please send everything as soon as possible so we do not keep any customer waiting.</p><p>Thank you,</p><p>Morgan</p>",
+              attachment:{label:"VIP-Customer-invoice.xlsm"},
+              options:[{id:"a",text:"Reply with the customer name, reservation number, and payment details so the request is handled quickly."},{id:"b",text:"Reply with only the reservation number and wait for a follow up before sharing anything else."},{id:"c",text:"Do not send customer or payment information by email to this address and report the message through the official process."}],
+              correct:"c",
+              choiceStories:{a:"You reply with full reservation and payment information. Later that day, the customer reports unexpected changes and charges. Security traces the activity to a device outside the organization that used the details from your reply, and the customer now questions whether their information is safe.",b:"You send only the reservation number, thinking it is safer. Soon after, someone contacts the customer pretending to be from support, using that reservation number to sound legitimate and pressure them to reconfirm payment. The customer calls in confused and worried about who knows their details.",c:"You notice the address is not a company account, the message is marked as sent outside the organization, and it asks for sensitive details in an unusual way. You do not reply. You report the email and verify the reservation inside approved tools. No payment details leave secure systems, and the attempt is blocked."},
+              hotspotStories:{sender:"The sender name sounds authoritative, but the email address is not a standard company domain. If you trust the display name instead of the real address, sensitive reservation details could land in an attacker's inbox.",flag:"The external banner is an early warning that this message started outside the organization. Combined with urgency and a request for sensitive details, it suggests someone is trying to exploit authority to extract data.",link:"On a quick skim, this link appears official, but the URL pattern is suspicious. If you click it and sign in, an attacker could capture credentials.",attachment:"A spreadsheet attachment labeled as an invoice may sound routine, but when it comes from an external sender it can be a malware delivery method. One click could compromise your device."}
+            },
+            emailManager:{
+              type:"email",safeType:"phish",
+              headerSub:"An email that uses an HR leader's name claims payroll needs an update and asks you to reply with sensitive personal information.",
+              decisionHeader:"An email that uses an HR leader's name claims payroll needs an update and asks you to share sensitive personal information.",
+              listFrom:"Jordan Price",listSubject:"HR update needed: Direct deposit",
+              meta:{avatar:"JP",fromName:"Jordan Price",fromAddress:"jordan.price-hr@payroll-update-portal.example",flag:"Sent outside the organization",time:"Today · 10:04 AM",recip:"To: You <agent@company.example>"},
+              subject:"Action required: Direct deposit update",
+              bodyHTML:"<p>Hi,</p><p>This is Jordan Price. HR is completing an audit and we need to update your direct deposit information today.</p><p>Please reply with your bank name, routing number, account number, and the best phone number to reach you so we can confirm the update and prevent any pay delay.</p><p>If it is easier, you can submit the update here: <a href=\"#\" class=\"phx-email-link\" data-link-type=\"phish\">https://hr-directdeposit-update.example</a>.</p><p>Do not wait on this. This must be completed right away.</p><p>Thanks,</p><p>Jordan</p>",
+              attachment:null,
+              options:[{id:"a",text:"Reply with the requested bank and account details so HR can update direct deposit quickly."},{id:"b",text:"Reply with only the bank name and phone number and wait for follow up before sharing anything else."},{id:"c",text:"Do not share payroll or personal information to this address. Verify the request through normal channels and report the message through the official process."}],
+              correct:"c",
+              choiceStories:{a:"You reply with your bank and account details. Shortly after, you receive additional messages pushing you to enter a verification code. A threat actor can use the information for account takeovers or social engineering, creating real financial and identity risk.",b:"You reply with partial details and your phone number. A scammer follows up by phone, using the context to sound legitimate and pressure you for the remaining details or a verification code.",c:"You slow down, notice the outside sender warning and the non-company email domain. You do not reply with any information. You verify through the normal HR channel and report the suspicious email. You avoid exposing sensitive information and help block the attempt."},
+              hotspotStories:{sender:"The display name looks familiar, but the address ends in a non-company domain. That mismatch is a major warning sign, especially when the message asks for payroll or personal data.",flag:"The external flag tells you this message started outside the organization. Payroll updates should not come from outside domains asking you to reply with sensitive information.",link:"This link tries to look official, but it does not match normal internal tool patterns. If you type payroll details into a site like this, you may be handing them directly to an attacker."}
+            },
+            textSMS:{
+              type:"text",safeType:"phish",
+              headerSub:"A text message that looks like an alert asks you to tap a link and enter your password to keep your account from being locked.",
+              decisionHeader:"A text message that looks like an alert asks you to tap a link and enter your password.",
+              smsMeta:{contactName:"Security Alerts",phone:"+1 (833) 555-0134",time:"Today · 7:42 PM"},
+              smsThreadHTML:'<div class="phx-phone-bubbles"><div class="phx-phone-row them"><div class="phx-phone-bubble phx-phone-bubble-them"><span class="phx-phone-bubble-strong">SECURITY ALERT:</span> We detected unusual sign-in activity. To keep your account active, verify now at <span class="phx-phone-link-text js-sms-link">https://account-security-check.example</span>.</div></div><div class="phx-phone-row me"><div class="phx-phone-bubble phx-phone-bubble-me">Is this really from security?</div></div><div class="phx-phone-row them"><div class="phx-phone-bubble phx-phone-bubble-them">Yes, this is required. Log in with your Employee ID and password in the next 10 minutes or your account will be locked.</div></div><div class="phx-phone-meta">Messages · Today · 7:42 PM</div></div>',
+              options:[{id:"a",text:"Tap the link and enter your Employee ID and password so your access is not locked."},{id:"b",text:"Reply and ask if they can call you instead, then share your Employee ID over the phone."},{id:"c",text:"Do not tap the link or share credentials. Report the text and sign in only through normal, trusted tools."}],
+              correct:"c",
+              choiceStories:{a:"You tap the link and sign in. The page is a fake login that captures your credentials. Later, an attacker signs in as you and changes account settings. Time is spent locking the account, repairing changes, and reassuring customers.",b:"You do not click the link, but you text back and agree to a call. The caller pressures you to share your Employee ID and then tries to extract more details. Engagement increases risk and can make future phishing more convincing.",c:"You recognize real security alerts will not ask for credentials through a random text link. You do not tap or reply. You report the text and sign in only through trusted tools. Your credentials stay secure."},
+              hotspotStories:{sender:"Text sender names and numbers can be spoofed. Treat surprise security texts that ask for logins or codes as high risk and verify through normal tools.",link:"This link uses vague security wording to look official. If you follow it and sign in, you may be handing over the key to your account."}
+            },
+            emailITSecurity:{
+              type:"email",safeType:"phish",
+              headerSub:"An email claiming to be from IT Support urges you to start a screen share and enter your credentials to install a security fix.",
+              decisionHeader:"An email claiming to be from IT Support asks you to start a screen share and enter your Employee ID, password, and a verification code to install a security update.",
+              listFrom:"IT Support",listSubject:"Required security update for your account",
+              meta:{avatar:"IT",fromName:"IT Support",fromAddress:"it-support@security-check.example",flag:"Sent outside the organization",time:"Today · 12:05 PM",recip:"To: You <agent@company.example>"},
+              subject:"Immediate action: keep your account from being locked",
+              bodyHTML:"<p>Hi,</p><p>We detected unusual sign-in activity and need to verify your access.</p><p>To keep your account from being locked, use the secure link below to start a quick screen share and install the required security update. When prompted, enter your Employee ID, password, and the verification code sent to your phone.</p><p><a href=\"#\" class=\"phx-email-link\" data-link-type=\"phish\">https://secure-fix-session.example/session</a></p><p>If the link does not work, open the attached tool instead and run it while we are connected.</p><p>This must be completed in the next 15 minutes so you do not lose access.</p><p>Thank you,</p><p>IT Support</p>",
+              attachment:{label:"SecurityFixTool.exe"},
+              options:[{id:"a",text:"Click the link, start the screen share, and enter your Employee ID, password, and verification code so the issue is fixed quickly."},{id:"b",text:"Run the attached tool and reply that you completed the update."},{id:"c",text:"Do not click the link, do not run the attachment, and do not share credentials or codes. Follow the security process to report this email."}],
+              correct:"c",
+              choiceStories:{a:"You click the link, start a screen share, and type in credentials and a code while the 'technician' watches. The attacker now has what they need to sign in as you. Over the next hour, accounts are accessed and changed, creating customer confusion and requiring cleanup.",b:"You ignore the link but run the attached tool. It installs malicious software that gives the attacker a foothold on your device. Over time, performance issues appear and a security response is triggered.",c:"You remember real support will not ask for credentials, verification codes, or surprise screen shares through an unexpected email. You do not click or open the attachment. You report the message through the proper process."},
+              hotspotStories:{sender:"The display name says IT Support, but the address is a look-alike domain. If you ignore that detail, you could hand a stranger authority to access your account.",flag:"The external warning is a clue this did not start inside the organization. Real internal updates do not arrive from outside domains demanding screen shares within minutes.",link:"The link promises a security session but does not match normal tool patterns. If you enter credentials here, you may be handing access to an attacker.",attachment:"An unexpected .exe tool is a common way to deliver malware. Running it from an untrusted email can turn your device into a doorway for attackers."}
+            },
+            emailLegit:{
+              type:"email",safeType:"legit",
+              headerSub:"An internal email from a company address follows up on a documented case and does not ask for customer information to leave approved tools.",
+              decisionHeader:"A follow up email from an internal company address asks you to add clearer documentation in the case record.",
+              listFrom:"Customer Care Queue",listSubject:"Case follow up: documentation needed",
+              meta:{avatar:"RK",fromName:"Riley Knox",fromAddress:"riley.knox@company.example",flag:"",time:"Today · 1:17 PM",recip:"To: You <agent@company.example>"},
+              subject:"Case documentation reminder",
+              bodyHTML:"<p>Hi,</p><p>I was reviewing Case ID 6842190 that you created for Avery Park and the refund assigned to 731044. Thank you for resolving the concern.</p><p>Your case notes only state \"Customer disputed a fee; issuing a refund.\"</p><p>Please document customer concerns clearly. Describe the customer's objection and what you reviewed to determine the resolution was appropriate.</p><p>You can review <a href=\"https://intranet.company.example/cases/documentation\" class=\"phx-email-link\" data-link-type=\"legit\">Case Documentation Guide</a> in the internal hub. Let me know if you have any questions.</p><p>I appreciate you, thanks!</p><p>Riley</p>",
+              attachment:null,
+              options:[{id:"a",text:"Sign in to the approved tools, update the case documentation, and reply that the notes are updated without sending any customer details."},{id:"b",text:"Reply with a screenshot of the case and notes so the team can see everything without signing in."},{id:"c",text:"Ignore the email and wait to see if anyone messages you again."}],
+              correct:"a",
+              choiceStories:{a:"You sign in using normal tools and update the case notes with clear documentation. You reply with a simple 'Notes updated.' If the customer contacts you again, anyone can understand what happened without extra copies of data floating around.",b:"You reply with a screenshot of the case notes. Even though the email is internal, the screenshot creates another copy of customer data outside the tools designed to protect it.",c:"You ignore the email and the case stays under-documented. If the customer calls back, the next agent cannot see what was already reviewed, and the customer feels like they are starting over."},
+              hotspotStories:{sender:"This sender uses a standard internal address tied to a team member. That is one sign this is a normal follow up, not an outside sender trying to extract customer details.",link:"This link points to an internal resource. Even with safe links, it is a good habit to open key resources from trusted bookmarks or internal navigation when you can."}
+            }
+          };
+          function shuffleArray(arr){
+            var a=arr.slice();
+            for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=a[i];a[i]=a[j];a[j]=tmp;}
+            return a;
+          }
+          var scenarioOrder=shuffleArray(["emailExec","emailManager","textSMS","emailITSecurity","emailLegit"]);
+          var TOTAL_ROUNDS=scenarioOrder.length;
+          var currentIndex=0;
+          var currentKey=null;
+          var roundsCompleted=0;
+          function hideNextButton(){if(nextBtn)nextBtn.style.display="none";}
+          function showNextButton(doneAll){if(!nextBtn)return;nextBtn.textContent=doneAll?"Finish":"Next scenario";nextBtn.style.display="inline-flex";}
+          function resetHotspots(){
+            hotspotsTotal=0;hotspotsVisited=0;exploreComplete=false;lastHotspotEl=null;
+            var olds=root.querySelectorAll(".phx-hotspot,.phx-hotspot-pulse,.phx-hotspot-visited");
+            olds.forEach(function(el){el.classList.remove("phx-hotspot","phx-hotspot-pulse","phx-hotspot-visited");el.removeAttribute("data-spot");el.removeAttribute("data-visited");el.removeAttribute("data-link-type");el.style.cursor="";});
+            if(inspectTipStatus)inspectTipStatus.textContent="(0 of 0 areas checked)";
+            if(inspectTip)inspectTip.classList.remove("phx-inspect-tip-hidden");
+          }
+          function revealScenarioStage(){
+            if(!scenarioStage)return;
+            scenarioStage.style.display="flex";
+            if(layoutEl)layoutEl.style.gridTemplateColumns="minmax(0,1.2fr) minmax(0,1fr)";
+            if(emailClient)emailClient.classList.add("phx-email-compact");
+            if(inspectTip)inspectTip.classList.add("phx-inspect-tip-hidden");
+          }
+          function markHotspotVisited(el){
+            if(!el)return;
+            if(el.getAttribute("data-visited")==="true")return;
+            el.setAttribute("data-visited","true");
+            hotspotsVisited++;
+            if(hotspotsVisited<0)hotspotsVisited=0;
+            if(hotspotsVisited>hotspotsTotal)hotspotsVisited=hotspotsTotal;
+            if(inspectTipStatus)inspectTipStatus.textContent="("+hotspotsVisited+" of "+hotspotsTotal+" areas checked)";
+            if(hotspotsVisited===hotspotsTotal&&hotspotsTotal>0){
+              exploreComplete=true;
+              revealScenarioStage();
+              var btns=optionsGroupEl.querySelectorAll("button");
+              btns.forEach(function(b){b.disabled=false;});
+            }
+          }
+          function showHotspotOverlay(sc,el){
+            var spot=el.getAttribute("data-spot")||"";
+            var linkType=el.getAttribute("data-link-type")||"";
+            var isLegit=sc.safeType==="legit";
+            overlayTag.textContent="Message clue";
+            var title="";var body="";
+            if(spot==="sender"){
+              if(sc.type==="text"){title="Check who the text is really from.";body="Text sender names and numbers can be spoofed. Treat surprise security texts that ask for logins or codes as high risk and verify through your normal tools instead.";}
+              else{var addr=(emailFromAddress&&emailFromAddress.textContent)?emailFromAddress.textContent.trim():"";var isInternal=/@company\.example$/i.test(addr);if(isInternal){title="Check the sender address.";body="This address uses a normal internal domain. That is one sign the message could be legitimate, but you should still check what it is asking you to do.";}else{title="Check who the email is really from.";body="This address does not use a standard internal domain. When the sender name sounds important but the email address does not match your normal pattern, treat the message as high risk.";}}
+            }else if(spot==="flag"){
+              if(sc.type==="text"){title="Pay attention to warnings and patterns.";body="If a message does not follow your normal security patterns, slow down. Combine that with what it is asking for to decide how risky it is.";}
+              else{title="Pay attention to system warnings.";body="This banner shows the message was sent from outside the organization. That does not always mean it is phishing, but when it appears with requests for account, payroll, or payment details, it is a major red flag.";}
+            }else if(spot==="link"){
+              if(sc.type==="text"){title="Links in texts can hide fake sign-in pages.";body="Never enter your Employee ID, password, or verification codes after tapping a link from a random text. If you are unsure, do not tap the link. Open trusted tools directly instead.";}
+              else{var addr2=el.textContent.trim();var isInternalLink=/company\.example/i.test(addr2);if(isLegit&&(linkType==="legit"||isInternalLink)){title="Look closely at links.";body="This link points to a trusted internal resource. Even when a link looks familiar, it is safer to open it from trusted navigation or bookmarks. You can hover your mouse over a link to preview the full address before clicking.";}else{title="Links can hide fake sign-in pages.";body="This link does not match trusted internal patterns. Never sign in or enter customer or payment details after clicking links from unexpected messages. Open trusted tools directly instead. Hover your mouse over a link to preview the full address.";}}
+            }else if(spot==="attachment"){
+              title="Unexpected attachments are risky.";body="Attachments from unknown senders can carry malicious code or be used to collect information. Confirm through trusted channels before opening, or follow your security process for reporting.";
+            }else{title="Look for clues before you respond.";body="Names, numbers, subject lines, links, and attachments all give you hints about whether a message is safe. When multiple red flags show up at once, slow down and verify before you reply.";}
+            if(sc.hotspotStories&&sc.hotspotStories[spot])body=sc.hotspotStories[spot];
+            overlayTitle.textContent=title;overlayBody.textContent=body;
+            overlayPrimary.textContent="Got it";overlayPrimary.onclick=function(){hideOverlay();};
+            overlaySecondary.style.display="none";
+            overlay.style.display="flex";overlay.setAttribute("aria-hidden","false");
+            setTimeout(function(){try{overlayPrimary.focus();}catch(e){};},10);
+          }
+          function renderEmailOrTextScenario(sc){
+            if(emailInner)emailInner.style.gridTemplateColumns="minmax(0,0.7fr) minmax(0,1.3fr)";
+            if(emailSidebar)emailSidebar.style.display="flex";
+            if(emailMetaTop)emailMetaTop.style.display="flex";
+            if(emailSubject)emailSubject.style.display="block";
+            if(emailRecip)emailRecip.style.display="block";
+            if(emailAttachment)emailAttachment.style.display="none";
+            if(emailFlag)emailFlag.style.display="inline-flex";
+            if(topTitleEl)topTitleEl.textContent="Mail - Demo Contact Center";
+            if(mailboxLabelEl)mailboxLabelEl.textContent="Mailbox";
+            emailBody.innerHTML="";
+            if(sc.type==="text"){
+              if(emailSidebar)emailSidebar.style.display="none";
+              if(emailInner)emailInner.style.gridTemplateColumns="minmax(0,1fr)";
+              if(emailMetaTop)emailMetaTop.style.display="none";
+              if(emailSubject)emailSubject.style.display="none";
+              if(emailRecip)emailRecip.style.display="none";
+              if(emailAttachment)emailAttachment.style.display="none";
+              if(emailFlag)emailFlag.style.display="none";
+              if(topTitleEl)topTitleEl.textContent="Messages - Demo";
+              if(mailboxLabelEl)mailboxLabelEl.textContent="Messages";
+              if(emailListFrom)emailListFrom.textContent=sc.smsMeta.contactName||"Security Alerts";
+              if(emailListSubject)emailListSubject.textContent="Security notice about your account";
+              var smsMeta=sc.smsMeta||{};var contactName=smsMeta.contactName||"Security Alerts";var phone=smsMeta.phone||"";
+              emailBody.innerHTML='<div class="phx-phone-shell"><div class="phx-phone-device"><div class="phx-phone-notch"></div><div class="phx-phone-screen"><div class="phx-phone-status"><span class="phx-phone-status-name js-sms-sender">'+contactName+'</span>'+(phone?'<span class="phx-phone-status-number">'+phone+'</span>':'')+' </div>'+sc.smsThreadHTML+'<div class="phx-phone-footer-hint">Never enter your Employee ID, password, or verification codes after tapping a link from a text.</div></div></div></div>';
+              return;
+            }
+            emailListFrom.textContent=sc.listFrom;emailListSubject.textContent=sc.listSubject;
+            emailAvatar.textContent=sc.meta.avatar;emailFromName.textContent=sc.meta.fromName;emailFromAddress.textContent=sc.meta.fromAddress;
+            emailTime.textContent=sc.meta.time;emailSubject.textContent=sc.subject;emailRecip.textContent=sc.meta.recip;
+            if(sc.meta.flag){emailFlag.style.display="inline-flex";emailFlag.textContent="";var dot=document.createElement("span");emailFlag.appendChild(dot);emailFlag.appendChild(document.createTextNode(" "+sc.meta.flag));}
+            else{emailFlag.style.display="none";}
+            emailBody.innerHTML=sc.bodyHTML||"";
+            if(sc.attachment&&sc.attachment.label){emailAttachment.style.display="flex";emailAttachmentLabel.textContent=sc.attachment.label;}
+            else{emailAttachment.style.display="none";}
+            attachLinkHoverEvents();
+          }
+          function attachLinkHoverEvents(){
+            if(!emailBody||!linkPreview)return;
+            linkPreview.style.display="none";linkPreview.className="phx-link-preview";linkPreview.textContent="";
+            var links=emailBody.querySelectorAll(".phx-email-link");
+            links.forEach(function(linkEl){
+              var clone=linkEl.cloneNode(true);linkEl.parentNode.replaceChild(clone,linkEl);linkEl=clone;
+              var href=linkEl.getAttribute("href")||"";var textUrl=linkEl.textContent.trim();var displayUrl=href&&href!=="#"?href:textUrl;
+              var linkType=linkEl.getAttribute("data-link-type")||"";var isTrusted=/company\.example/i.test(displayUrl);
+              function movePreview(e){var offset=14;linkPreview.style.left=(e.clientX+offset)+"px";linkPreview.style.top=(e.clientY+offset)+"px";}
+              linkEl.addEventListener("mousemove",function(e){
+                movePreview(e);if(linkPreviewTimer)clearTimeout(linkPreviewTimer);
+                linkPreviewTimer=setTimeout(function(){
+                  linkPreview.style.display="block";linkPreview.className="phx-link-preview";
+                  if(linkType==="legit"||isTrusted){linkPreview.classList.add("phx-link-preview-safe");linkPreview.innerHTML="🟢 <strong>"+displayUrl+"</strong><br>This link points to a trusted internal domain. It is still safer to open key resources from trusted navigation or bookmarks.";}
+                  else{linkPreview.classList.add("phx-link-preview-phish");linkPreview.innerHTML="🔶 <strong>"+displayUrl+"</strong><br>This link does not match trusted internal patterns. Do not sign in or enter customer details here.";}
+                  requestAnimationFrame(function(){linkPreview.classList.add("phx-link-preview-visible");});
+                },120);
+              });
+              linkEl.addEventListener("mouseleave",function(){if(linkPreviewTimer){clearTimeout(linkPreviewTimer);linkPreviewTimer=null;}linkPreview.classList.remove("phx-link-preview-visible");setTimeout(function(){linkPreview.style.display="none";},100);});
+            });
+          }
+          function setupTextHotspots(sc){
+            resetHotspots();var hotspots=[];
+            var senderEl=root.querySelector(".js-sms-sender");
+            if(senderEl){senderEl.classList.add("phx-hotspot","phx-hotspot-pulse");senderEl.setAttribute("data-spot","sender");senderEl.setAttribute("data-visited","false");hotspots.push(senderEl);}
+            var linkEl=root.querySelector(".js-sms-link");
+            if(linkEl){linkEl.classList.add("phx-hotspot","phx-hotspot-pulse");linkEl.setAttribute("data-spot","link");linkEl.setAttribute("data-visited","false");hotspots.push(linkEl);}
+            hotspotsTotal=hotspots.length;
+            if(inspectTipStatus)inspectTipStatus.textContent="(0 of "+hotspotsTotal+" areas checked)";
+            var btns=optionsGroupEl.querySelectorAll("button");btns.forEach(function(b){b.disabled=true;});
+            hotspots.forEach(function(el){el.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();lastHotspotEl=el;markHotspotVisited(el);showHotspotOverlay(sc,el);});});
+            if(scenarioStage)scenarioStage.style.display="none";
+            if(layoutEl)layoutEl.style.gridTemplateColumns="minmax(0,1fr)";
+            if(emailClient)emailClient.classList.remove("phx-email-compact");
+          }
+          function setupEmailHotspots(sc){
+            resetHotspots();var hotspotElements=[];
+            if(emailFromAddress&&emailFromAddress.textContent.trim()!==""){emailFromAddress.classList.add("phx-hotspot","phx-hotspot-pulse");emailFromAddress.setAttribute("data-spot","sender");emailFromAddress.setAttribute("data-visited","false");hotspotElements.push(emailFromAddress);}
+            if(emailFlag&&emailFlag.style.display!=="none"){emailFlag.classList.add("phx-hotspot","phx-hotspot-pulse");emailFlag.setAttribute("data-spot","flag");emailFlag.setAttribute("data-visited","false");hotspotElements.push(emailFlag);}
+            var links=emailBody?emailBody.querySelectorAll(".phx-email-link"):[];
+            links.forEach(function(linkEl){linkEl.classList.add("phx-hotspot","phx-hotspot-pulse");linkEl.setAttribute("data-spot","link");linkEl.setAttribute("data-visited","false");hotspotElements.push(linkEl);});
+            if(emailAttachment&&emailAttachment.style.display!=="none"){emailAttachment.classList.add("phx-hotspot","phx-hotspot-pulse");emailAttachment.setAttribute("data-spot","attachment");emailAttachment.setAttribute("data-visited","false");hotspotElements.push(emailAttachment);}
+            hotspotsTotal=hotspotElements.length;
+            if(inspectTipStatus)inspectTipStatus.textContent="(0 of "+hotspotsTotal+" areas checked)";
+            var btns2=optionsGroupEl.querySelectorAll("button");btns2.forEach(function(b){b.disabled=true;});
+            hotspotElements.forEach(function(el){el.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();lastHotspotEl=el;markHotspotVisited(el);showHotspotOverlay(sc,el);});});
+            if(scenarioStage)scenarioStage.style.display="none";
+            if(layoutEl)layoutEl.style.gridTemplateColumns="minmax(0,1fr)";
+            if(emailClient)emailClient.classList.remove("phx-email-compact");
+          }
+          function setupHotspots(sc){if(sc.type==="text")setupTextHotspots(sc);else setupEmailHotspots(sc);}
+          function renderScenario(key){
+            currentKey=key;var sc=scenarios[key];var roundNumber=currentIndex+1;
+            hideNextButton();
+            if(headerSubEl)headerSubEl.textContent=sc.headerSub||initialHeaderSubText||"";
+            if(wrapupEl)wrapupEl.style.display="none";
+            if(layoutEl)layoutEl.style.display="grid";
+            if(stepLabel)stepLabel.textContent="Scenario "+roundNumber+" of "+TOTAL_ROUNDS;
+            if(scenarioTagEl)scenarioTagEl.textContent="Scenario "+roundNumber;
+            if(decisionHeaderEl)decisionHeaderEl.textContent=sc.decisionHeader||"What is this message asking you to do?";
+            if(scenarioRoleEl)scenarioRoleEl.textContent="How would you respond to this message?";
+            var shuffledOptions=shuffleArray(sc.options||[]);
+            optionsGroupEl.innerHTML="";
+            shuffledOptions.forEach(function(opt){
+              var btn=document.createElement("button");btn.type="button";btn.setAttribute("data-choice",opt.id);
+              btn.innerHTML='<span class="phx-option-dot" aria-hidden="true">•</span><span class="phx-option-text">'+opt.text+'</span>';
+              btn.addEventListener("click",function(){handleChoice(key,opt.id,btn);});
+              optionsGroupEl.appendChild(btn);
+            });
+            renderEmailOrTextScenario(sc);
+            setupHotspots(sc);
+          }
+          function handleChoice(key,choiceId,btnEl){
+            var sc=scenarios[key];
+            if(!exploreComplete){
+              overlayTag.textContent="Explore first";overlayTitle.textContent="Look at the message clues before you decide.";
+              overlayBody.textContent="Click the highlighted parts of the message, like the sender, warnings, links, and attachments, to see what they tell you. Then choose what you would do next.";
+              overlayPrimary.textContent="Ok";overlayPrimary.onclick=function(){hideOverlay();};overlaySecondary.style.display="none";
+              overlay.style.display="flex";overlay.setAttribute("aria-hidden","false");setTimeout(function(){try{overlayPrimary.focus();}catch(e){};},10);return;
+            }
+            var alreadyComplete=!!sc._completed;var isSafe=(choiceId===sc.correct);
+            var allButtons=optionsGroupEl.querySelectorAll("button");allButtons.forEach(function(b){b.classList.remove("phx-option-correct","phx-option-incorrect");});
+            var hypothetical=false;
+            if(!alreadyComplete){
+              if(isSafe){btnEl.classList.add("phx-option-correct");sc._completed=true;roundsCompleted++;updateProgress();maybeSendCompletionToRise();triggerConfetti();var doneAll=(roundsCompleted>=TOTAL_ROUNDS);showNextButton(doneAll);}
+              else{btnEl.classList.add("phx-option-incorrect");}
+            }else{hypothetical=true;if(isSafe)btnEl.classList.add("phx-option-correct");else btnEl.classList.add("phx-option-incorrect");}
+            showFeedbackOverlay(key,choiceId,isSafe,hypothetical);
+          }
+          function showFeedbackOverlay(key,choiceId,isSafe,hypothetical){
+            var sc=scenarios[key];var storyText=(sc.choiceStories&&sc.choiceStories[choiceId])||"";var doneAll=(roundsCompleted>=TOTAL_ROUNDS);
+            if(!storyText)storyText="This choice would shape what happens next. Focus on the option that keeps information safest, even when a message feels urgent.";
+            if(hypothetical){
+              if(isSafe){overlayTag.textContent="Outcome";overlayTitle.textContent="You already chose this safest option.";}
+              else{overlayTag.textContent="What if?";overlayTitle.textContent="If you had chosen this option...";}
+              overlayBody.textContent=storyText;overlayPrimary.textContent=doneAll?"Finish":"Next scenario";
+              overlayPrimary.onclick=function(){hideOverlay();if(!doneAll)loadNextScenario();else showWrapup();};
+              overlaySecondary.style.display="inline-flex";overlaySecondary.textContent="Stay on this scenario";overlaySecondary.onclick=function(){hideOverlay();};
+            }else{
+              overlayTag.textContent="Outcome";overlayTitle.textContent=isSafe?(key==="emailLegit"?"This message is a normal request.":"Better outcome for this situation"):"What happens next?";
+              overlayBody.textContent=storyText;
+              if(isSafe){overlayPrimary.textContent=doneAll?"Finish":"Next scenario";overlayPrimary.onclick=function(){hideOverlay();if(!doneAll)loadNextScenario();else showWrapup();};overlaySecondary.style.display="inline-flex";overlaySecondary.textContent="Review message";overlaySecondary.onclick=function(){hideOverlay();};}
+              else{overlayPrimary.textContent="Try again";overlayPrimary.onclick=function(){hideOverlay();};overlaySecondary.style.display="none";}
+            }
+            overlay.style.display="flex";overlay.setAttribute("aria-hidden","false");setTimeout(function(){try{overlayPrimary.focus();}catch(e){};},10);
+          }
+          function hideOverlay(){
+            overlay.style.display="none";overlay.setAttribute("aria-hidden","true");
+            if(lastHotspotEl&&lastHotspotEl.getAttribute("data-visited")==="true"){lastHotspotEl.classList.remove("phx-hotspot","phx-hotspot-pulse");lastHotspotEl.classList.add("phx-hotspot-visited");lastHotspotEl.style.cursor="default";}
+            lastHotspotEl=null;
+          }
+          function updateProgress(){
+            var done=roundsCompleted;if(done<0)done=0;if(done>TOTAL_ROUNDS)done=TOTAL_ROUNDS;
+            var pct=(done/TOTAL_ROUNDS)*100;progressFill.style.width=pct+"%";statusPill.textContent=done+" of "+TOTAL_ROUNDS+" complete";
+            if(done===TOTAL_ROUNDS){statusPill.classList.add("phx-status-complete");completeBanner.style.display="flex";}
+            else{statusPill.classList.remove("phx-status-complete");completeBanner.style.display="none";}
+          }
+          function maybeSendCompletionToRise(){
+            if(roundsCompleted<TOTAL_ROUNDS||sentCompletion)return;
+            sentCompletion=true;try{if(window.parent)window.parent.postMessage({type:"complete"},"*");}catch(e){}
+          }
+          function triggerConfetti(){
+            if(!confettiContainer)return;
+            confettiContainer.innerHTML="";confettiContainer.style.display="block";
+            var colors=["#6366f1","#0f172a","#ffffff","#22c55e"];var pieces=90;
+            for(var i=0;i<pieces;i++){
+              var piece=document.createElement("span");piece.className="phx-confetti-piece";
+              var left=Math.random()*100;var delay=Math.random()*0.4;var size=0.7+Math.random()*1.3;
+              piece.style.left=left+"%";piece.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+              piece.style.width=(4*size)+"px";piece.style.height=(10*size)+"px";piece.style.animationDelay=delay+"s";
+              confettiContainer.appendChild(piece);
+            }
+            setTimeout(function(){confettiContainer.style.display="none";confettiContainer.innerHTML="";},2600);
+          }
+          function loadNextScenario(){if(currentIndex>=scenarioOrder.length-1)return;currentIndex++;renderScenario(scenarioOrder[currentIndex]);}
+          function showWrapup(){if(layoutEl)layoutEl.style.display="none";if(wrapupEl)wrapupEl.style.display="flex";if(headerSubEl)headerSubEl.textContent="You practiced spotting phishing red flags and responding in ways that keep information secure.";hideNextButton();}
+          if(nextBtn)nextBtn.addEventListener("click",function(){var doneAll=(roundsCompleted>=TOTAL_ROUNDS);if(doneAll)showWrapup();else loadNextScenario();});
+          if(introStartBtn){
+            introStartBtn.addEventListener("click",function(){
+              if(introEl)introEl.style.display="none";
+              if(layoutEl){layoutEl.style.display="grid";layoutEl.style.gridTemplateColumns="minmax(0,1fr)";}
+              if(emailClient)emailClient.classList.remove("phx-email-compact");
+              scenarioOrder=shuffleArray(["emailExec","emailManager","textSMS","emailITSecurity","emailLegit"]);
+              TOTAL_ROUNDS=scenarioOrder.length;currentIndex=0;roundsCompleted=0;updateProgress();
+              renderScenario(scenarioOrder[currentIndex]);
+            });
+          }
+          updateProgress();
+        })();
+    </script>
+</div>
+</div>
+</body>
+</html>
