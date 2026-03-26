@@ -2651,6 +2651,14 @@ a.ticker-item:hover {
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 0.08em;
 }
+.footer-url {
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+}
+.footer-url:hover { color: var(--accent); }
+.footer-brand a { display: contents; }
 
 /* ─── Coming Soon ─────────────────────────────── */
 .coming-hero {
