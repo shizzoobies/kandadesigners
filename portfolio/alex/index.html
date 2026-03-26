@@ -875,6 +875,437 @@
         </div>
       </div>
 
+      <!-- PBJ Strategic Accounting Before/After Showcase -->
+      <style>
+        .pbj-showcase { margin: 4rem 0 0; }
+        .pbj-showcase-head {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 2rem;
+          flex-wrap: wrap;
+          margin-bottom: 2rem;
+        }
+        .pbj-showcase-head h3 {
+          font-size: 1.8rem;
+          margin: 0.4rem 0 0.6rem;
+        }
+        .pbj-showcase-head p {
+          font-size: 0.88rem;
+          color: var(--text-mid);
+          max-width: 560px;
+          line-height: 1.7;
+          margin-bottom: 1rem;
+        }
+        .pbj-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .pbj-badge {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.58rem;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          padding: 0.3rem 0.75rem;
+          border-radius: 100px;
+        }
+        .pbj-badge--new { background: rgba(94,245,144,0.12); color: #5ef590; border: 1px solid rgba(94,245,144,0.3); }
+        .pbj-badge--ai  { background: rgba(61,217,214,0.12); color: #3dd9d6; border: 1px solid rgba(61,217,214,0.3); }
+        .pbj-badge--ada { background: rgba(192,154,94,0.12); color: var(--accent); border: 1px solid rgba(192,154,94,0.3); }
+
+        /* Slideshow wrapper */
+        .pbj-slideshow {
+          position: relative;
+          border-radius: 8px;
+          overflow: hidden;
+          background: var(--surface-2);
+          border: 1px solid var(--border);
+          box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+        }
+
+        /* Browser chrome bar */
+        .pbj-chrome {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.65rem 1rem;
+          background: var(--surface-3);
+          border-bottom: 1px solid var(--border);
+        }
+        .pbj-chrome-dots { display: flex; gap: 5px; }
+        .pbj-chrome-dots span {
+          width: 10px; height: 10px; border-radius: 50%;
+          background: var(--border-h);
+        }
+        .pbj-chrome-url {
+          flex: 1;
+          background: var(--surface-2);
+          border: 1px solid var(--border);
+          border-radius: 4px;
+          padding: 0.25rem 0.75rem;
+          font-size: 0.7rem;
+          color: var(--text-dim);
+          font-family: 'Montserrat', sans-serif;
+          letter-spacing: 0.04em;
+          max-width: 340px;
+          margin: 0 auto;
+        }
+
+        /* Slide container */
+        .pbj-slide { display: none; position: relative; }
+        .pbj-slide.active { display: block; }
+
+        /* Image layers */
+        .pbj-img-wrap {
+          position: relative;
+          height: 440px;
+          overflow: hidden;
+          cursor: pointer;
+        }
+        /* Bottom fade — masks any footer contact info that could appear */
+        .pbj-img-wrap::after {
+          content: '';
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 80px;
+          background: linear-gradient(to bottom, transparent, var(--surface-2));
+          z-index: 4;
+          pointer-events: none;
+        }
+        .pbj-img-wrap img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          display: block;
+          max-width: none;
+        }
+        .pbj-img-after { opacity: 0; transition: opacity 1s ease; }
+        .pbj-img-after.visible { opacity: 1; }
+
+        /* Before / After labels */
+        .pbj-label {
+          position: absolute;
+          top: 1rem; left: 1rem;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.58rem;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          padding: 0.3rem 0.75rem;
+          border-radius: 4px;
+          transition: opacity 0.5s ease;
+          z-index: 10;
+          pointer-events: none;
+        }
+        .pbj-label-before { background: rgba(8,8,8,0.7); color: var(--text-mid); border: 1px solid var(--border-h); }
+        .pbj-label-after  { background: rgba(192,154,94,0.85); color: var(--bg); opacity: 0; }
+        .pbj-label-after.visible { opacity: 1; }
+        .pbj-label-before.hidden { opacity: 0; }
+
+        /* NEW PAGE overlay */
+        .pbj-new-overlay {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(8,8,8,0.35);
+          z-index: 5;
+          pointer-events: none;
+        }
+        .pbj-new-pill {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          padding: 0.5rem 1.25rem;
+          border-radius: 100px;
+          background: rgba(94,245,144,0.18);
+          color: #5ef590;
+          border: 1px solid rgba(94,245,144,0.5);
+          backdrop-filter: blur(4px);
+        }
+
+        /* Slide footer: label + nav */
+        .pbj-slide-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.75rem 1.25rem;
+          background: var(--surface-3);
+          border-top: 1px solid var(--border);
+        }
+        .pbj-slide-label {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 0.6rem;
+          font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: var(--text-mid);
+        }
+        .pbj-nav { display: flex; align-items: center; gap: 0.75rem; }
+        .pbj-nav-btn {
+          width: 30px; height: 30px;
+          border-radius: 50%;
+          border: 1px solid var(--border-h);
+          background: var(--surface-2);
+          color: var(--text-mid);
+          font-size: 0.85rem;
+          display: flex; align-items: center; justify-content: center;
+          transition: background var(--t), border-color var(--t), color var(--t);
+          cursor: pointer;
+        }
+        .pbj-nav-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+        .pbj-nav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .pbj-dots-row { display: flex; gap: 5px; align-items: center; }
+        .pbj-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: var(--border-h);
+          transition: background var(--t), transform var(--t);
+          cursor: pointer;
+          border: none;
+          padding: 0;
+        }
+        .pbj-dot.active { background: var(--accent); transform: scale(1.3); }
+
+        /* Hover-to-pause hint */
+        .pbj-hint {
+          font-size: 0.58rem;
+          color: var(--text-dim);
+          font-family: 'Montserrat', sans-serif;
+          letter-spacing: 0.08em;
+          display: flex; align-items: center; gap: 0.4rem;
+        }
+        .pbj-hint::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); display: block; }
+
+        @media (max-width: 700px) {
+          .pbj-img-wrap { height: 280px; }
+          .pbj-showcase-head { flex-direction: column; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .pbj-img-after { transition: none; }
+          .pbj-label { transition: none; }
+        }
+      </style>
+
+      <div class="pbj-showcase fade-up">
+
+        <div class="pbj-showcase-head">
+          <div>
+            <span class="label">Client Redesign · 2026</span>
+            <h3>PBJ Strategic Accounting</h3>
+            <p>Full website redesign for a Clay County bookkeeping firm. Complete rebuild with improved information architecture, brand new pages, WCAG-aligned ADA compliance, and an Anthropic Claude-powered AI assistant for instant client support.</p>
+            <div class="pbj-badges">
+              <span class="pbj-badge pbj-badge--new">+ FAQ Page</span>
+              <span class="pbj-badge pbj-badge--ai">+ AI Chat Bot</span>
+              <span class="pbj-badge pbj-badge--ada">ADA Compliant</span>
+              <span class="pbj-badge pbj-badge--ada">Semantic HTML</span>
+              <span class="pbj-badge pbj-badge--ada">Skip Links</span>
+            </div>
+          </div>
+          <a href="https://pbja.pages.dev/" target="_blank" rel="noopener" class="btn btn-outline" style="flex-shrink:0;">View Dev Build ↗</a>
+        </div>
+
+        <div class="pbj-slideshow" id="pbjSlideshow" aria-label="Before and after website redesign comparison">
+
+          <!-- Slide 1: Homepage -->
+          <article class="pbj-slide active" aria-label="Homepage comparison">
+            <div class="pbj-chrome" aria-hidden="true">
+              <div class="pbj-chrome-dots"><span></span><span></span><span></span></div>
+              <div class="pbj-chrome-url">pbjsa.com</div>
+            </div>
+            <div class="pbj-img-wrap" title="Hover to pause">
+              <img class="pbj-img-before" src="../../images/pbj-old-home.jpg" alt="Homepage before redesign" />
+              <img class="pbj-img-after"  src="../../images/pbj-new-home.jpg" alt="Homepage after redesign" />
+              <div class="pbj-label pbj-label-before" aria-hidden="true">Before</div>
+              <div class="pbj-label pbj-label-after"  aria-hidden="true">After</div>
+            </div>
+            <div class="pbj-slide-footer">
+              <span class="pbj-slide-label">Homepage</span>
+              <div class="pbj-nav" id="pbjNav"></div>
+            </div>
+          </article>
+
+          <!-- Slide 2: About -->
+          <article class="pbj-slide" aria-label="About page comparison">
+            <div class="pbj-chrome" aria-hidden="true">
+              <div class="pbj-chrome-dots"><span></span><span></span><span></span></div>
+              <div class="pbj-chrome-url">pbjsa.com / about</div>
+            </div>
+            <div class="pbj-img-wrap">
+              <img class="pbj-img-before" src="../../images/pbj-old-about.jpg" alt="About page before redesign" />
+              <img class="pbj-img-after"  src="../../images/pbj-new-about.jpg" alt="About page after redesign" />
+              <div class="pbj-label pbj-label-before" aria-hidden="true">Before</div>
+              <div class="pbj-label pbj-label-after"  aria-hidden="true">After</div>
+            </div>
+            <div class="pbj-slide-footer">
+              <span class="pbj-slide-label">About Page</span>
+            </div>
+          </article>
+
+          <!-- Slide 3: Services -->
+          <article class="pbj-slide" aria-label="Services page comparison">
+            <div class="pbj-chrome" aria-hidden="true">
+              <div class="pbj-chrome-dots"><span></span><span></span><span></span></div>
+              <div class="pbj-chrome-url">pbjsa.com / services</div>
+            </div>
+            <div class="pbj-img-wrap">
+              <img class="pbj-img-before" src="../../images/pbj-old-services.jpg" alt="Services page before redesign" />
+              <img class="pbj-img-after"  src="../../images/pbj-new-services.jpg" alt="Services page after redesign" />
+              <div class="pbj-label pbj-label-before" aria-hidden="true">Before</div>
+              <div class="pbj-label pbj-label-after"  aria-hidden="true">After</div>
+            </div>
+            <div class="pbj-slide-footer">
+              <span class="pbj-slide-label">Services Page</span>
+            </div>
+          </article>
+
+          <!-- Slide 4: FAQ — brand new page -->
+          <article class="pbj-slide" aria-label="New FAQ page — did not exist on old site">
+            <div class="pbj-chrome" aria-hidden="true">
+              <div class="pbj-chrome-dots"><span></span><span></span><span></span></div>
+              <div class="pbj-chrome-url">pbja.pages.dev / faq</div>
+            </div>
+            <div class="pbj-img-wrap">
+              <img class="pbj-img-before" src="../../images/pbj-new-faq.jpg" alt="New FAQ page" style="opacity:1;" />
+              <div class="pbj-new-overlay" aria-hidden="true">
+                <span class="pbj-new-pill">✦ New Page — Did Not Exist</span>
+              </div>
+              <div class="pbj-label pbj-label-after" style="opacity:1;" aria-hidden="true">New</div>
+            </div>
+            <div class="pbj-slide-footer">
+              <span class="pbj-slide-label">FAQ Page <span style="color:#5ef590;margin-left:0.5rem;font-size:0.5rem;">NEW</span></span>
+            </div>
+          </article>
+
+        </div><!-- /pbj-slideshow -->
+
+        <!-- ADA & feature callout strip -->
+        <div style="display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1.5rem;">
+          <div style="flex:1;min-width:200px;padding:1.25rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:#3dd9d6;margin-bottom:0.5rem;">AI Integration</div>
+            <div style="font-size:0.88rem;color:var(--text-mid);line-height:1.6;">Embedded Anthropic Claude-powered chat assistant ("Robo-Brittany") answers client questions instantly, routes to the right page, and handles FAQs without staff involvement.</div>
+          </div>
+          <div style="flex:1;min-width:200px;padding:1.25rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">ADA Compliance</div>
+            <div style="font-size:0.88rem;color:var(--text-mid);line-height:1.6;">Skip links, ARIA landmarks, semantic heading hierarchy, keyboard navigation, focus management, and screen-reader-friendly markup throughout every page.</div>
+          </div>
+          <div style="flex:1;min-width:200px;padding:1.25rem 1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:#5ef590;margin-bottom:0.5rem;">New Pages Added</div>
+            <div style="font-size:0.88rem;color:var(--text-mid);line-height:1.6;">Dedicated FAQ page with categorized accordion sections and anchor navigation. No equivalent existed on the old site — now a standalone indexed resource.</div>
+          </div>
+        </div>
+
+      </div><!-- /pbj-showcase -->
+
+      <script>
+        (function () {
+          var slides    = Array.from(document.querySelectorAll('.pbj-slide'));
+          var navEl     = document.getElementById('pbjNav');
+          var slideshow = document.getElementById('pbjSlideshow');
+          var total     = slides.length;
+          var current   = 0;
+          var phase     = 0; // 0=before, 1=after
+          var timer;
+          var paused    = false;
+
+          /* Build nav into first slide footer only */
+          var prevBtn = document.createElement('button');
+          prevBtn.className = 'pbj-nav-btn'; prevBtn.innerHTML = '&#8592;'; prevBtn.setAttribute('aria-label', 'Previous slide');
+          var dotsRow = document.createElement('div'); dotsRow.className = 'pbj-dots-row';
+          var nextBtn = document.createElement('button');
+          nextBtn.className = 'pbj-nav-btn'; nextBtn.innerHTML = '&#8594;'; nextBtn.setAttribute('aria-label', 'Next slide');
+
+          var dots = slides.map(function (_, i) {
+            var d = document.createElement('button');
+            d.className = 'pbj-dot' + (i === 0 ? ' active' : '');
+            d.setAttribute('aria-label', 'Slide ' + (i + 1));
+            d.addEventListener('click', function () { goTo(i); });
+            dotsRow.appendChild(d);
+            return d;
+          });
+
+          navEl.appendChild(prevBtn);
+          navEl.appendChild(dotsRow);
+          navEl.appendChild(nextBtn);
+
+          /* Copy nav to other slide footers */
+          slides.forEach(function (sl, i) {
+            if (i === 0) return;
+            var footer = sl.querySelector('.pbj-slide-footer');
+            if (!footer) return;
+            var navClone = document.createElement('div');
+            navClone.className = 'pbj-nav';
+            navClone.setAttribute('aria-hidden', 'true');
+            footer.appendChild(navClone);
+          });
+
+          prevBtn.addEventListener('click', function () { goTo(current - 1); });
+          nextBtn.addEventListener('click', function () { goTo(current + 1); });
+
+          /* Pause on hover */
+          slideshow.addEventListener('mouseenter', function () { paused = true; clearTimeout(timer); });
+          slideshow.addEventListener('mouseleave', function () { paused = false; scheduleNext(); });
+
+          function syncDots() {
+            dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+          }
+
+          function showBefore(sl) {
+            var after   = sl.querySelector('.pbj-img-after');
+            var lblB    = sl.querySelector('.pbj-label-before');
+            var lblA    = sl.querySelector('.pbj-label-after');
+            if (after)  after.classList.remove('visible');
+            if (lblB)   { lblB.classList.remove('hidden'); }
+            if (lblA)   lblA.classList.remove('visible');
+            phase = 0;
+          }
+
+          function showAfter(sl) {
+            var after = sl.querySelector('.pbj-img-after');
+            var lblB  = sl.querySelector('.pbj-label-before');
+            var lblA  = sl.querySelector('.pbj-label-after');
+            if (after)  after.classList.add('visible');
+            if (lblB)   lblB.classList.add('hidden');
+            if (lblA)   lblA.classList.add('visible');
+            phase = 1;
+          }
+
+          function goTo(idx) {
+            idx = ((idx % total) + total) % total;
+            slides[current].classList.remove('active');
+            current = idx;
+            var sl = slides[current];
+            sl.classList.add('active');
+            var isNew = sl.classList.contains('pbj-slide--new') || !sl.querySelector('.pbj-img-after');
+            showBefore(sl);
+            syncDots();
+            clearTimeout(timer);
+            if (!isNew) scheduleNext();
+          }
+
+          function scheduleNext() {
+            clearTimeout(timer);
+            if (paused) return;
+            var delay = phase === 0 ? 2200 : 2000;
+            timer = setTimeout(function () {
+              if (paused) return;
+              var sl = slides[current];
+              if (phase === 0) {
+                showAfter(sl);
+                scheduleNext();
+              } else {
+                goTo(current + 1);
+              }
+            }, delay);
+          }
+
+          goTo(0);
+        })();
+      </script>
+
       <!-- Secondary web cards -->
       <div class="alex-web-cards fade-up">
         <div class="alex-web-card">
