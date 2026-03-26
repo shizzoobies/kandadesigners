@@ -636,43 +636,175 @@
         <p>Studio-quality tracks built entirely through precision prompting. Press play on any demo below.</p>
       </div>
       <p class="music-modal-intro">Every track here was generated using carefully crafted AI prompts, not a single instrument recorded. The goal is the same as any professional session: nail the right mood, energy, and tone for the project. Whether that's a cinematic swell, a tense underscore, a romantic ballad, or something upbeat and light. The craft is in knowing exactly how to prompt for it and how to refine until it lands. These are four examples across different genres, each built from scratch using AI music tools.</p>
-      <div class="music-tracks">
-        <div class="music-track-card">
-          <div class="music-track-info">
-            <span class="music-track-title">A Hold On Me</span>
-            <span class="music-track-tag">Romantic / Emotional</span>
+      <style>
+        /* Music note buttons inside the AI Music modal */
+        .modal-music-notes {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.6rem;
+          user-select: none;
+          margin-bottom: 1.25rem;
+        }
+        .modal-music-note {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.9rem 0.4rem 0.75rem;
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 8px;
+          cursor: pointer;
+          font-family: inherit;
+          -webkit-tap-highlight-color: transparent;
+          transition: border-color 0.3s, transform 0.3s;
+          overflow: hidden;
+        }
+        .modal-music-note::after {
+          content: "";
+          position: absolute; inset: 0; border-radius: 8px;
+          background: var(--nc, var(--accent));
+          opacity: 0; transition: opacity 0.3s; pointer-events: none;
+        }
+        .modal-music-note:hover { border-color: var(--nc, var(--accent)); transform: translateY(-3px); }
+        .modal-music-note:hover::after { opacity: 0.08; }
+        .modal-music-note.playing { border-color: var(--nc, var(--accent)); animation: none !important; }
+        .modal-music-note.playing::after { opacity: 0.12; }
+        .modal-music-note::before {
+          content: ""; position: absolute; inset: -1px; border-radius: 8px;
+          border: 1px solid var(--nc, var(--accent));
+          opacity: 0; pointer-events: none; z-index: 2;
+        }
+        .modal-music-note.playing::before { animation: modal-note-ring 1.8s ease-in-out infinite; }
+        @keyframes modal-note-ring {
+          0%,100% { opacity: 0.85; transform: scale(1); }
+          50%      { opacity: 0;    transform: scale(1.6); }
+        }
+        .modal-note-glyph {
+          font-size: 2rem; line-height: 1;
+          color: var(--nc, rgba(237,233,224,0.6));
+          opacity: 0.45; transition: opacity 0.3s, transform 0.3s, text-shadow 0.3s;
+          display: block; position: relative; z-index: 1;
+        }
+        .modal-music-note:hover .modal-note-glyph { opacity: 1; transform: scale(1.2); }
+        .modal-music-note.playing .modal-note-glyph {
+          opacity: 1;
+          text-shadow: 0 0 20px var(--nc, rgba(192,154,94,0.5));
+          animation: modal-note-bounce 0.42s ease-in-out infinite alternate;
+        }
+        @keyframes modal-note-bounce {
+          from { transform: scale(1.2) translateY(0); }
+          to   { transform: scale(1.3) translateY(-4px); }
+        }
+        .modal-note-label {
+          display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+          pointer-events: none; position: relative; z-index: 1;
+        }
+        .modal-note-title {
+          font-family: "Cormorant Garamond", serif;
+          font-size: 0.78rem; font-weight: 400;
+          color: var(--text-mid); white-space: nowrap; line-height: 1.2;
+        }
+        .modal-note-genre {
+          font-family: "Montserrat", sans-serif;
+          font-size: 0.42rem; letter-spacing: 0.12em; text-transform: uppercase;
+          color: var(--nc, var(--accent)); opacity: 0.85; white-space: nowrap;
+        }
+        .modal-music-note:nth-child(1) { animation: floatA 3.2s ease-in-out infinite; }
+        .modal-music-note:nth-child(2) { animation: floatB 2.8s ease-in-out infinite 0.5s; }
+        .modal-music-note:nth-child(3) { animation: floatC 3.6s ease-in-out infinite 1.1s; }
+        .modal-music-note:nth-child(4) { animation: floatD 2.9s ease-in-out infinite 0.3s; }
+        .modal-music-note:hover { animation: none !important; }
+
+        /* Now-playing bar */
+        .modal-now-playing {
+          display: flex; align-items: center; gap: 1rem;
+          padding: 0.75rem 1.1rem;
+          background: var(--surface); border: 1px solid rgba(192,154,94,0.2); border-radius: 6px;
+          opacity: 0; transform: translateY(6px);
+          transition: opacity 0.3s, transform 0.3s;
+          pointer-events: none; margin-bottom: 1.25rem;
+        }
+        .modal-now-playing.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .modal-np-bars {
+          display: flex; gap: 3px; align-items: flex-end; height: 18px; flex-shrink: 0;
+        }
+        .modal-np-bars span {
+          display: block; width: 3px; border-radius: 2px; background: var(--accent);
+        }
+        .modal-np-bars span:nth-child(1) { animation: npBar 0.7s ease-in-out infinite; }
+        .modal-np-bars span:nth-child(2) { animation: npBar 0.9s ease-in-out infinite 0.15s; }
+        .modal-np-bars span:nth-child(3) { animation: npBar 0.6s ease-in-out infinite 0.3s; }
+        .modal-np-bars span:nth-child(4) { animation: npBar 1.0s ease-in-out infinite 0.05s; }
+        @keyframes npBar { 0%,100%{ height: 4px; } 50%{ height: 18px; } }
+        .modal-now-playing.paused .modal-np-bars span { animation-play-state: paused; }
+        .modal-np-text { flex: 1; }
+        .modal-np-track-title { font-family: "Cormorant Garamond", serif; font-size: 0.95rem; color: var(--text); display: block; }
+        .modal-np-genre { font-family: "Montserrat", sans-serif; font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+        .modal-np-stop {
+          background: none; border: 1px solid var(--border-h); border-radius: 50%;
+          width: 28px; height: 28px; color: var(--text-dim); cursor: pointer;
+          display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
+          transition: background 0.2s, color 0.2s; flex-shrink: 0;
+        }
+        .modal-np-stop:hover { background: var(--surface-3); color: var(--text); }
+
+        @media (max-width: 500px) {
+          .modal-music-notes { grid-template-columns: repeat(2, 1fr); }
+        }
+      </style>
+
+      <div class="modal-music-notes" id="modal-music-notes">
+        <button class="modal-music-note" style="--nc:#e8607a"
+          data-src="images/A_Hold_On_Me_2026-03-25T164648.mp3"
+          data-title="A Hold On Me" data-genre="Romantic"
+          aria-label="Play A Hold On Me: Romantic">
+          <span class="modal-note-glyph" aria-hidden="true">&#9834;</span>
+          <div class="modal-note-label">
+            <span class="modal-note-title">A Hold On Me</span>
+            <span class="modal-note-genre">Romantic</span>
           </div>
-          <audio controls preload="none">
-            <source src="images/A_Hold_On_Me_2026-03-25T164648.mp3" type="audio/mpeg" />
-          </audio>
-        </div>
-        <div class="music-track-card">
-          <div class="music-track-info">
-            <span class="music-track-title">Crown</span>
-            <span class="music-track-tag">Cinematic / Epic</span>
+        </button>
+        <button class="modal-music-note" style="--nc:#c09a5e"
+          data-src="images/Crown_Music_2026-03-25T163917.mp3"
+          data-title="Crown" data-genre="Cinematic"
+          aria-label="Play Crown: Cinematic">
+          <span class="modal-note-glyph" aria-hidden="true">&#9835;</span>
+          <div class="modal-note-label">
+            <span class="modal-note-title">Crown</span>
+            <span class="modal-note-genre">Cinematic</span>
           </div>
-          <audio controls preload="none">
-            <source src="images/Crown_Music_2026-03-25T163917.mp3" type="audio/mpeg" />
-          </audio>
-        </div>
-        <div class="music-track-card">
-          <div class="music-track-info">
-            <span class="music-track-title">Sunshine Bounce</span>
-            <span class="music-track-tag">Upbeat / Corporate</span>
+        </button>
+        <button class="modal-music-note" style="--nc:#f5c842"
+          data-src="images/Sunshine_Bounce_2026-03-25T170749.mp3"
+          data-title="Sunshine Bounce" data-genre="Upbeat"
+          aria-label="Play Sunshine Bounce: Upbeat">
+          <span class="modal-note-glyph" aria-hidden="true">&#9833;</span>
+          <div class="modal-note-label">
+            <span class="modal-note-title">Sunshine Bounce</span>
+            <span class="modal-note-genre">Upbeat</span>
           </div>
-          <audio controls preload="none">
-            <source src="images/Sunshine_Bounce_2026-03-25T170749.mp3" type="audio/mpeg" />
-          </audio>
-        </div>
-        <div class="music-track-card">
-          <div class="music-track-info">
-            <span class="music-track-title">Tension Point</span>
-            <span class="music-track-tag">Tense / Dramatic</span>
+        </button>
+        <button class="modal-music-note" style="--nc:#9b5ef5"
+          data-src="images/Tension_Point_2026-03-25T170738.mp3"
+          data-title="Tension Point" data-genre="Dramatic"
+          aria-label="Play Tension Point: Dramatic">
+          <span class="modal-note-glyph" aria-hidden="true">&#9836;</span>
+          <div class="modal-note-label">
+            <span class="modal-note-title">Tension Point</span>
+            <span class="modal-note-genre">Dramatic</span>
           </div>
-          <audio controls preload="none">
-            <source src="images/Tension_Point_2026-03-25T170738.mp3" type="audio/mpeg" />
-          </audio>
+        </button>
+      </div>
+
+      <div class="modal-now-playing" id="modal-now-playing">
+        <div class="modal-np-bars"><span></span><span></span><span></span><span></span></div>
+        <div class="modal-np-text">
+          <span class="modal-np-track-title" id="modal-np-title">...</span>
+          <span class="modal-np-genre" id="modal-np-genre">...</span>
         </div>
+        <button class="modal-np-stop" id="modal-np-stop" aria-label="Stop">&#9632;</button>
       </div>
       <div class="nonprofit-modal-footer">
         <a href="portfolio/alex/" class="btn btn-primary">Alex's Full Portfolio</a>
@@ -899,5 +1031,72 @@
   </div>
 
   <script src="js/main-v2.js?v=18"></script>
+
+  <!-- AI Music Modal Note Player -->
+  <script>
+    (function () {
+      var notes    = document.querySelectorAll('.modal-music-note');
+      var nowBar   = document.getElementById('modal-now-playing');
+      var npTitle  = document.getElementById('modal-np-title');
+      var npGenre  = document.getElementById('modal-np-genre');
+      var stopBtn  = document.getElementById('modal-np-stop');
+      if (!notes.length) return;
+
+      var audio = new Audio();
+      var current = null;
+
+      function stopAll() {
+        if (current) { current.classList.remove('playing'); current = null; }
+        audio.pause(); audio.currentTime = 0;
+        if (nowBar) { nowBar.classList.remove('visible', 'paused'); }
+      }
+
+      function setPlaying(note) {
+        if (current) current.classList.remove('playing');
+        current = note;
+        note.classList.add('playing');
+        if (nowBar) {
+          npTitle.textContent = note.dataset.title || '';
+          npGenre.textContent = note.dataset.genre || '';
+          nowBar.classList.add('visible');
+          nowBar.classList.remove('paused');
+        }
+      }
+
+      notes.forEach(function (note) {
+        note.addEventListener('click', function () {
+          if (current === this) {
+            if (audio.paused) {
+              audio.play().catch(function(){});
+              this.classList.add('playing');
+              if (nowBar) nowBar.classList.remove('paused');
+            } else {
+              audio.pause();
+              this.classList.remove('playing');
+              if (nowBar) nowBar.classList.add('paused');
+            }
+            return;
+          }
+          stopAll();
+          audio.src = this.dataset.src;
+          audio.play().catch(function(){});
+          setPlaying(this);
+        });
+      });
+
+      if (stopBtn) stopBtn.addEventListener('click', stopAll);
+      audio.addEventListener('ended', stopAll);
+
+      // Stop audio when modal closes
+      var closeBtn = document.getElementById('music-modal-close');
+      var backdrop = document.getElementById('music-modal-backdrop');
+      function onClose() { stopAll(); }
+      if (closeBtn) closeBtn.addEventListener('click', onClose);
+      if (backdrop) backdrop.addEventListener('click', onClose);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') onClose();
+      });
+    })();
+  </script>
 </body>
 </html>

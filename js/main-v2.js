@@ -723,8 +723,8 @@ if (contactForm) {
   var wrap = document.createElement('div');
   wrap.innerHTML =
     '<button class="ka-chat-btn" id="ka-chat-btn" aria-label="Chat with K &amp; A Designs AI" aria-expanded="false">' +
-      '<img class="ka-chat-btn-img" src="/images/Alex-Image.jpg" alt="Alex Anderson" />' +
       '<span class="ka-chat-online-dot" aria-hidden="true"></span>' +
+      'Need Help?' +
     '</button>' +
     '<div class="ka-chat-panel" id="ka-chat-panel" role="dialog" aria-label="K &amp; A Designs AI assistant" aria-hidden="true">' +
       '<div class="ka-chat-head">' +
