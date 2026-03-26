@@ -86,7 +86,7 @@
       flex: 0 0 100%;
       scroll-snap-align: start;
       position: relative;
-      min-height: 88vh;
+      height: clamp(520px, 68vh, 760px);
       display: flex;
       align-items: center;
       overflow: hidden;
@@ -120,7 +120,7 @@
       position: relative;
       z-index: 1;
       max-width: 640px;
-      padding: 7rem 3rem 7rem max(3rem, calc((100vw - 1320px) / 2 + 3rem));
+      padding: 3.5rem 3rem 3.5rem max(3rem, calc((100vw - 1320px) / 2 + 3rem));
     }
     .svc-slide-content .label {
       color: var(--sc, var(--accent));
@@ -252,9 +252,9 @@
 
     /* ── Mobile ───────────────────────────────────── */
     @media (max-width: 700px) {
-      .svc-slide { min-height: auto; }
+      .svc-slide { height: auto; min-height: 480px; }
       .svc-slide-content {
-        padding: 5rem 1.5rem 4rem 1.5rem;
+        padding: 3rem 1.5rem 3rem 1.5rem;
         max-width: 100%;
       }
       .svc-slide-bg img { object-position: center; }
