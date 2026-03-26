@@ -3,10 +3,299 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kristina's Portfolio | K &amp; A Designs</title>
-  <meta name="description" content="Kristina Anderson, Instructional Designer and Photographer with 15+ years experience in K-12, corporate, and higher education." />
+  <title>Kristina Anderson | Portfolio | K &amp; A Designs</title>
+  <meta name="description" content="Instructional designer, photographer, and nonprofit leader with 15+ years building meaningful learning experiences across K-12, corporate, and higher education." />
   <link rel="icon" href="../../images/favicon.svg" type="image/svg+xml" /><link rel="icon" href="../../images/favicon.png" sizes="512x512" type="image/png" />
   <link rel="stylesheet" href="../../css/style.css?v=18" />
+  <style>
+    :root { --gold: #C09A5E; }
+
+    /* ── Hero ───────────────────────────────────── */
+    .kris-hero {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .kris-hero .skills-ticker {
+      padding-top: var(--nav-h);
+    }
+    .kris-hero-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 2rem 3.5rem;
+      gap: 1rem;
+    }
+    .kris-hero-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 15%;
+      border: 2px solid rgba(192,154,94,0.45);
+      box-shadow: 0 0 0 6px rgba(192,154,94,0.07);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .kris-hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    .kris-hero-tagline {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      max-width: 500px;
+      margin: 0;
+    }
+
+    /* ── Skills Ticker ──────────────────────────── */
+    .skills-ticker {
+      padding: 1.25rem 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+    .skills-ticker::before,
+    .skills-ticker::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .skills-ticker::before {
+      left: 0;
+      background: linear-gradient(to right, var(--surface), transparent);
+    }
+    .skills-ticker::after {
+      right: 0;
+      background: linear-gradient(to left, var(--surface), transparent);
+    }
+    .skills-ticker-track {
+      display: flex;
+      gap: 0.65rem;
+      width: max-content;
+      animation: skills-scroll 70s linear infinite;
+    }
+    @keyframes skills-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .skill-pill--gold {
+      border-color: rgba(192,154,94,0.4);
+      color: var(--accent);
+    }
+
+    /* ── Chapter Sections ───────────────────────── */
+    .alex-chapter {
+      padding: 5rem 0 5.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .alex-chapter-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* ── Case Study ─────────────────────────────── */
+    .case-study {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .case-study-visual {
+      position: relative;
+    }
+    .case-study-visual img {
+      width: 100%;
+      border-radius: 6px;
+      display: block;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .case-study-visual::after {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border: 1px solid rgba(192,154,94,0.25);
+      border-radius: 10px;
+      z-index: 0;
+    }
+    .case-study-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.25rem;
+      font-weight: 300;
+      margin: 0.75rem 0 0;
+    }
+    .case-study-desc {
+      color: var(--text-mid);
+      font-size: 0.9rem;
+      line-height: 1.85;
+      margin-top: 1rem;
+    }
+    .case-study-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0 2rem;
+    }
+    .tech-pill {
+      display: inline-block;
+      padding: 0.3rem 0.85rem;
+      background: var(--accent-pale);
+      border: 1px solid rgba(192,154,94,0.25);
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .case-study-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── ID Stats Row ────────────────────────────── */
+    .elearn-stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 2.5rem 0;
+    }
+    .elearn-stat {
+      padding: 1.75rem 1.5rem;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .elearn-stat:last-child { border-right: none; }
+    .elearn-stat-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .elearn-stat-lbl {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* ── Mini Cards ─────────────────────────────── */
+    .alex-web-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .alex-web-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color var(--t);
+    }
+    .alex-web-card:hover { border-color: rgba(192,154,94,0.3); }
+    .alex-web-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+    .alex-web-card p {
+      font-size: 0.83rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      flex: 1;
+    }
+
+    /* ── Project Makeover Scroll Strip ──────────── */
+    .pm-strip-section {
+      margin: 2.5rem 0;
+    }
+    .pm-strip-outer {
+      position: relative;
+      overflow: hidden;
+      margin: 0 calc(-1 * var(--gutter));
+    }
+    .pm-strip-outer::before,
+    .pm-strip-outer::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; width: 80px;
+      z-index: 2; pointer-events: none;
+    }
+    .pm-strip-outer::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .pm-strip-outer::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
+    .pm-strip-track {
+      display: flex;
+      gap: 8px;
+      width: max-content;
+      animation: pm-scroll 28s linear infinite;
+    }
+    .pm-strip-outer:hover .pm-strip-track { animation-play-state: paused; }
+    @keyframes pm-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .pm-strip-img {
+      flex-shrink: 0;
+      width: 300px;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Responsive ─────────────────────────────── */
+    @media (max-width: 1000px) {
+      .case-study { grid-template-columns: 1fr; gap: 2.5rem; }
+      .alex-web-cards { grid-template-columns: 1fr; }
+      .elearn-stats-row { grid-template-columns: 1fr 1fr; }
+      .elearn-stat:nth-child(2) { border-right: none; }
+      .elearn-stat:nth-child(3),
+      .elearn-stat:nth-child(4) { border-top: 1px solid var(--border); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skills-ticker-track,
+      .pm-strip-track { animation: none; }
+    }
+  </style>
 </head>
 <body>
 
@@ -46,86 +335,189 @@
 
   <main id="main-content">
 
-  <!-- PAGE HERO -->
-  <header class="page-hero">
-    <div class="wrap page-hero-inner">
-      <h1>Creative Learning Designer<br><em>Photography + ID</em></h1>
-      <p>Where visual storytelling meets effective instructional strategy.</p>
+  <!-- ════════════════════════════════════════════
+       HERO
+       ════════════════════════════════════════════ -->
+  <section class="kris-hero">
+
+    <div class="skills-ticker" aria-hidden="true">
+      <div class="skills-ticker-track">
+        <span class="skill-pill skill-pill--gold">Instructional Design</span>
+        <span class="skill-pill">Curriculum Development</span>
+        <span class="skill-pill skill-pill--gold">Rise 360</span>
+        <span class="skill-pill">Articulate 360</span>
+        <span class="skill-pill skill-pill--gold">Photography</span>
+        <span class="skill-pill">Storyline 360</span>
+        <span class="skill-pill skill-pill--gold">K-12 Education</span>
+        <span class="skill-pill">Corporate Training</span>
+        <span class="skill-pill skill-pill--gold">Nonprofit Leadership</span>
+        <span class="skill-pill">Higher Education</span>
+        <span class="skill-pill skill-pill--gold">Assessment Design</span>
+        <span class="skill-pill">Visual Storytelling</span>
+        <span class="skill-pill skill-pill--gold">eLearning</span>
+        <span class="skill-pill">Needs Analysis</span>
+        <span class="skill-pill skill-pill--gold">Adobe Suite</span>
+        <span class="skill-pill">Project Management</span>
+        <span class="skill-pill skill-pill--gold">Instructional Design</span>
+        <span class="skill-pill">Curriculum Development</span>
+        <span class="skill-pill skill-pill--gold">Rise 360</span>
+        <span class="skill-pill">Articulate 360</span>
+        <span class="skill-pill skill-pill--gold">Photography</span>
+        <span class="skill-pill">Storyline 360</span>
+        <span class="skill-pill skill-pill--gold">K-12 Education</span>
+        <span class="skill-pill">Corporate Training</span>
+        <span class="skill-pill skill-pill--gold">Nonprofit Leadership</span>
+        <span class="skill-pill">Higher Education</span>
+        <span class="skill-pill skill-pill--gold">Assessment Design</span>
+        <span class="skill-pill">Visual Storytelling</span>
+        <span class="skill-pill skill-pill--gold">eLearning</span>
+        <span class="skill-pill">Needs Analysis</span>
+        <span class="skill-pill skill-pill--gold">Adobe Suite</span>
+        <span class="skill-pill">Project Management</span>
+      </div>
     </div>
-  </header>
 
-  <!-- COMING SOON HERO -->
-  <section class="section">
-    <div class="wrap">
-      <div class="coming-hero fade-up">
-        <div style="max-width: 620px;">
-          <div class="badge">
-            <span class="dot"></span>
-            Available for consultations
-          </div>
-          <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; margin-bottom: 1.5rem;">
-            Full portfolio<br><em>coming soon.</em>
-          </h2>
-          <p style="font-size: 1rem; color: var(--text-mid); line-height: 1.85; margin-bottom: 2.5rem;">
-            Kristina's portfolio is being built out. She's available for consultations now but currently unavailable for new contracts. Check back soon for the full showcase of her instructional design and photography work.
-          </p>
-          <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-            <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
-            <a href="/portfolio/alex/" class="btn btn-outline">View Alex's Work</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Feature image -->
-      <div class="fade-up" style="margin-top: 5rem;">
-        <img
-          src="../../images/ChatGPT-Image-Feb-15-2026-03_13_00-PM.png"
-          alt="Kristina Anderson portfolio preview"
-          style="width: 100%; max-height: 560px; object-fit: cover; object-position: center; border-radius: 4px;"
-        />
-      </div>
+    <div class="kris-hero-center">
+      <img src="../../images/Kristina-Image.jpg" alt="Kristina Anderson" class="kris-hero-photo" />
+      <h1 class="kris-hero-name">Kristina Anderson</h1>
+      <p class="kris-hero-tagline">Instructional designer, photographer, and nonprofit leader. Fifteen years building learning that actually works. Scroll down to see the work.</p>
+      <a href="#work" class="btn btn-primary">See My Work ↓</a>
     </div>
   </section>
 
-  <!-- ABOUT KRISTINA -->
-  <section class="section" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-    <div class="wrap">
-      <div style="display: grid; grid-template-columns: 320px 1fr; gap: 5rem; align-items: center;" class="fade-up">
-        <img
-          src="../../images/Kristina-Image.jpg"
-          alt="Kristina Anderson"
-          style="width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: top; border-radius: 4px;"
-        />
+  <div id="work"></div>
+
+  <!-- ════════════════════════════════════════════
+       INSTRUCTIONAL DESIGN & eLEARNING
+       ════════════════════════════════════════════ -->
+  <section class="alex-chapter">
+    <div class="alex-chapter-inner">
+
+      <div class="portfolio-section-head fade-up">
         <div>
-          <h2 style="font-size: clamp(2rem, 3.5vw, 3.5rem); font-weight: 300; margin-bottom: 0.5rem;">Kristina Anderson</h2>
-          <p style="font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 2rem;">
-            Instructional Designer &amp; Photographer
-          </p>
-          <p style="color: var(--text-mid); font-size: 0.95rem; line-height: 1.85; margin-bottom: 1.25rem;">
-            Kristina is an educator and Instructional Designer with over 15 years of experience creating meaningful, measurable learning experiences. Beginning her career in K-12 education and expanding into corporate and higher education, she brings a deep understanding of how adults and students learn.
-          </p>
-          <p style="color: var(--text-mid); font-size: 0.95rem; line-height: 1.85; margin-bottom: 2.5rem;">
-            Her work spans eLearning development, curriculum design, photography, and visual storytelling, always grounded in strategy and purpose. Every project she takes on reflects her belief that good design and good learning go hand in hand.
-          </p>
+          <span class="label">eLearning &amp; Curriculum</span>
+          <h2>Instructional Design</h2>
+          <p>From K-12 classrooms to corporate onboarding to higher education modules, building learning experiences that are measurable, engaging, and grounded in how people actually learn.</p>
+        </div>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Book a Consultation</a>
+      </div>
 
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--border); margin-bottom: 2.5rem;">
-            <div>
-              <div style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--accent); line-height: 1;">15+</div>
-              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.4rem;">Years Experience</div>
-            </div>
-            <div>
-              <div style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--accent); line-height: 1;">K-12</div>
-              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.4rem;">to Corporate</div>
-            </div>
-            <div>
-              <div style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--accent); line-height: 1;">2</div>
-              <div style="font-family: 'Montserrat', sans-serif; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.4rem;">Core Disciplines</div>
-            </div>
-          </div>
-
-          <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+      <div class="elearn-stats-row fade-up">
+        <div class="elearn-stat">
+          <div class="elearn-stat-val">15<span style="font-size:1.25rem;">+</span></div>
+          <div class="elearn-stat-lbl">Years Experience</div>
+        </div>
+        <div class="elearn-stat">
+          <div class="elearn-stat-val" style="font-size:1.1rem;">K-12</div>
+          <div class="elearn-stat-lbl">to Corporate</div>
+        </div>
+        <div class="elearn-stat">
+          <div class="elearn-stat-val" style="font-size:1.5rem;">Rise 360</div>
+          <div class="elearn-stat-lbl">Articulate</div>
+        </div>
+        <div class="elearn-stat">
+          <div class="elearn-stat-val" style="font-size:1.5rem;">Storyline</div>
+          <div class="elearn-stat-lbl">Articulate</div>
         </div>
       </div>
+
+      <div class="alex-web-cards fade-up" style="margin-top:0;">
+        <div class="alex-web-card">
+          <span class="label" style="display:block;margin-bottom:0.75rem;">eLearning Development</span>
+          <div class="alex-web-card-title">Rise 360 &amp; Storyline</div>
+          <p>Highly interactive course builds in Articulate Rise and Storyline, from streamlined compliance training to scenario-based branching modules with custom assessments. Every course is designed around the learner, not the tool.</p>
+        </div>
+        <div class="alex-web-card">
+          <span class="label" style="display:block;margin-bottom:0.75rem;">Curriculum &amp; Assessment</span>
+          <div class="alex-web-card-title">Strategy First</div>
+          <p>Curriculum development that starts with a needs analysis and ends with measurable outcomes. Whether it's a full course map for a corporate training program or a classroom unit for K-12, the design process always starts with why.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       PROJECT MAKEOVER — MOVING SECTION
+       ════════════════════════════════════════════ -->
+  <section class="alex-chapter">
+    <div class="alex-chapter-inner">
+
+      <div class="portfolio-section-head fade-up">
+        <div>
+          <span class="label">Nonprofit Leadership</span>
+          <h2>Project Makeover</h2>
+          <p>Board member and on-the-ground volunteer coordinator for a nonprofit that transforms elementary schools into spaces where students feel seen, valued, and inspired.</p>
+        </div>
+        <button class="btn btn-outline" data-open-nonprofit>See Full Story</button>
+      </div>
+
+    </div>
+
+    <!-- Scrolling photo strip — full bleed -->
+    <div class="pm-strip-outer fade-up" aria-label="Project Makeover photos">
+      <div class="pm-strip-track">
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="Volunteers at work" />
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="School transformation" />
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="Students and volunteers" />
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="Believe in yourself mural" />
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="" aria-hidden="true" />
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="" aria-hidden="true" />
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="" aria-hidden="true" />
+        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="" aria-hidden="true" />
+      </div>
+    </div>
+
+    <div class="alex-chapter-inner" style="padding-top:2.5rem;">
+      <div class="fade-up" style="display:flex; align-items:center; gap:2rem; padding:2rem 2.25rem; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:0 6px 6px 0;">
+        <div style="flex:1;">
+          <span class="label" style="display:block;margin-bottom:0.5rem;">Board Member &middot; Volunteer Coordinator</span>
+          <p style="font-size:0.88rem;color:var(--text-mid);line-height:1.75;margin:0;">Kristina serves on the Project Makeover board and helps coordinate the volunteer teams that descend on schools for weekend makeover blitzes: painting murals, building gardens, refreshing libraries, and transforming tired spaces into ones that tell kids their dreams matter.</p>
+        </div>
+        <a href="https://www.projectmakeover.org" target="_blank" rel="noopener" class="btn btn-outline" style="flex-shrink:0;">Visit projectmakeover.org ↗</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       PHOTOGRAPHY & VISUAL STORYTELLING
+       ════════════════════════════════════════════ -->
+  <section class="alex-chapter">
+    <div class="alex-chapter-inner">
+
+      <div class="portfolio-section-head fade-up">
+        <div>
+          <span class="label">Photography</span>
+          <h2>Visual Storytelling</h2>
+          <p>Photography that captures real moments and communicates with intention. Available for portrait, event, and editorial work.</p>
+        </div>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Book a Shoot</a>
+      </div>
+
+      <div class="case-study fade-up">
+        <div class="case-study-visual">
+          <img src="../../images/ChatGPT-Image-Feb-15-2026-03_13_00-PM.png" alt="Kristina Anderson photography" />
+        </div>
+        <div class="case-study-body">
+          <span class="label">Portrait &middot; Event &middot; Editorial</span>
+          <h3>The Story Behind the Frame</h3>
+          <p class="case-study-desc">
+            Kristina's photography is rooted in the same philosophy as her instructional design work: every image should communicate something true. Whether it's a portrait session, a community event, or editorial work, she brings the same attention to composition and storytelling that she brings to every learning experience she designs.
+          </p>
+          <div class="case-study-tech">
+            <span class="tech-pill">Portrait Photography</span>
+            <span class="tech-pill">Event Coverage</span>
+            <span class="tech-pill">Adobe Lightroom</span>
+            <span class="tech-pill">Adobe Photoshop</span>
+            <span class="tech-pill">Editorial</span>
+          </div>
+          <div class="case-study-ctas">
+            <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -133,7 +525,7 @@
   <section class="cta-strip fade-up">
     <div class="wrap">
       <h2>Ready to start a<br><em>conversation?</em></h2>
-      <p>Consultations are available now. Reach out and let's talk about your project.</p>
+      <p>Consultations are available now. Let's talk about what you're building.</p>
       <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Free Consultation</a>
     </div>
   </section>
@@ -150,7 +542,7 @@
         <div class="footer-col">
           <h4>Navigate</h4>
           <a href="/">Home</a><a href="/portfolio/">Portfolio</a><a href="/projects/">Projects</a>
-    <a href="/services/">Services</a><a href="/contact/">Contact</a>
+          <a href="/services/">Services</a><a href="/contact/">Contact</a>
         </div>
         <div class="footer-col">
           <h4>Portfolio</h4>
@@ -168,11 +560,50 @@
     </div>
   </footer>
 
+  <!-- Project Makeover Modal -->
+  <div class="nonprofit-modal" id="nonprofit-modal" aria-hidden="true">
+    <div class="nonprofit-modal-backdrop" id="nonprofit-modal-backdrop"></div>
+    <div class="nonprofit-modal-panel" role="dialog" aria-label="Project Makeover" aria-modal="true">
+      <button class="svc-modal-close" id="nonprofit-modal-close" aria-label="Close">&#x2715;</button>
+      <div class="svc-modal-head">
+        <span class="label">Nonprofit Leadership</span>
+        <h2>Project Makeover</h2>
+        <p>Transforming elementary schools into spaces where students experience wonder, joy, and the belief that anything is possible.</p>
+      </div>
+      <div style="position:relative;overflow:hidden;margin:1.5rem -3rem;">
+        <div style="display:flex;gap:8px;width:max-content;animation:pm-scroll 28s linear infinite;">
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="Volunteers at work" />
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="School transformation" />
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="Students and volunteers" />
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="Believe in yourself mural" />
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="" aria-hidden="true" />
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="" aria-hidden="true" />
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="" aria-hidden="true" />
+          <img style="flex-shrink:0;width:260px;height:185px;object-fit:cover;display:block;" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="" aria-hidden="true" />
+        </div>
+      </div>
+      <div class="nonprofit-body">
+        <div class="nonprofit-body-block">
+          <h4>About Project Makeover</h4>
+          <p>Project Makeover is on a mission to help schools spark wonder, joy, and dreams, for the joy of learning. Volunteers descend on elementary schools for a weekend makeover blitz, transforming tired hallways, classrooms, and outdoor spaces into vibrant, inspiring environments that tell kids: you matter, and your dreams matter too.</p>
+        </div>
+        <div class="nonprofit-body-block">
+          <h4>Kristina's Role</h4>
+          <p>Kristina serves on the board of Project Makeover and works directly with volunteers on the ground during makeover weekends. She helps coordinate the teams that show up to paint murals, build gardens, refresh libraries, and bring color and life to schools that need it most. Her nonprofit project management experience, rooted in real community work, shapes how she approaches every collaboration she takes on.</p>
+        </div>
+      </div>
+      <div class="nonprofit-modal-footer">
+        <a href="https://www.projectmakeover.org" target="_blank" rel="noopener" class="btn btn-primary">Visit Project Makeover &#x2192;</a>
+        <a href="/contact/" class="btn btn-outline" data-open-contact>Book a Consultation</a>
+      </div>
+    </div>
+  </div>
+
   <!-- Contact Modal -->
   <div class="contact-modal" id="contact-modal" aria-hidden="true">
     <div class="contact-modal-backdrop" id="contact-modal-backdrop"></div>
     <div class="contact-modal-panel" role="dialog" aria-label="Book a Consultation" aria-modal="true">
-      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">✕</button>
+      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">&#x2715;</button>
       <div class="contact-modal-head">
         <h2>Let's build something<br><em>exceptional.</em></h2>
         <p>Tell us about your project. We'll get back to you within 24 hours.</p>
