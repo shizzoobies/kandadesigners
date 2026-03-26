@@ -13,6 +13,19 @@
   });
 })();
 
+// ─── Modal scroll lock / restore ─────────────────
+// Saves scroll position before locking and restores it after unlocking.
+// Used by every modal open/close so the page jumps back to where the user was.
+var _savedScrollY = 0;
+function lockScroll() {
+  _savedScrollY = window.scrollY;
+  document.body.style.overflow = 'hidden';
+}
+function unlockScroll() {
+  document.body.style.overflow = '';
+  window.scrollTo({ top: _savedScrollY, behavior: 'instant' });
+}
+
 // ─── Nav scroll ──────────────────────────────────
 const nav = document.getElementById('site-nav');
 if (nav) {
@@ -36,7 +49,7 @@ if (hamburger && mobileMenu) {
     a.addEventListener('click', () => {
       hamburger.classList.remove('open');
       mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
+      unlockScroll();
     });
   });
 }
@@ -76,7 +89,7 @@ function openLightbox(item) {
     lightboxImg.alt = alt;
     lightbox.classList.add('active');
     lightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     lightboxTrigger = item;
     lightboxClose?.focus();
   }
@@ -93,7 +106,7 @@ function closeLightbox() {
   if (!lightbox) return;
   lightbox.classList.remove('active');
   lightbox.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  unlockScroll();
   if (lightboxImg) lightboxImg.src = '';
   lightboxTrigger?.focus();
   lightboxTrigger = null;
@@ -224,12 +237,12 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   function openModal()  {
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
   }
   function closeModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
   }
 
   centerBtn?.addEventListener('click', openModal);
@@ -265,7 +278,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     contactTrigger = e.currentTarget;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     modal.addEventListener('keydown', trapFocus);
     setTimeout(() => closeBtn?.focus(), 50);
   }
@@ -273,7 +286,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   function closeContactModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     modal.removeEventListener('keydown', trapFocus);
     contactTrigger?.focus();
     contactTrigger = null;
@@ -335,13 +348,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     iframe.src = GAME_URL;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
   }
 
   function closeGameModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     setTimeout(() => { iframe.src = ''; }, 300);
   }
 
@@ -372,14 +385,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     bookTrigger = trigger || null;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     setTimeout(() => closeBtn?.focus(), 50);
   }
 
   function closeBookModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     bookTrigger?.focus();
     bookTrigger = null;
   }
@@ -413,14 +426,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     elearnTrigger = trigger || null;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     setTimeout(() => closeBtn?.focus(), 50);
   }
 
   function closeElearnModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     elearnTrigger?.focus();
     elearnTrigger = null;
   }
@@ -485,14 +498,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     trigger = el || null;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     setTimeout(() => closeBtn?.focus(), 50);
   }
 
   function closeModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     trigger?.focus();
     trigger = null;
   }
@@ -545,7 +558,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     musicTrigger = trigger || null;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     setTimeout(() => closeBtn?.focus(), 50);
   }
 
@@ -554,7 +567,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     modal.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     musicTrigger?.focus();
     musicTrigger = null;
   }
@@ -617,14 +630,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     audioTrigger = trigger || null;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     setTimeout(() => closeBtn?.focus(), 50);
   }
 
   function closeAudioModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     audioTrigger?.focus();
     audioTrigger = null;
   }
@@ -656,14 +669,14 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     nonprofitTrigger = trigger || null;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     setTimeout(() => closeBtn?.focus(), 50);
   }
 
   function closeNonprofitModal() {
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    unlockScroll();
     nonprofitTrigger?.focus();
     nonprofitTrigger = null;
   }
