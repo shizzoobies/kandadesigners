@@ -1838,7 +1838,7 @@ a.ticker-item:hover {
   border-radius: 2px;
 }
 
-.project-card-actions { margin-top: 0.5rem; }
+.project-card-actions { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.65rem; }
 
 /* ─── Game Modal ─────────────────────────────────── */
 .game-modal {
