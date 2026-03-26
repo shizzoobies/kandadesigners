@@ -57,7 +57,7 @@
 
   <!-- PRICING NOTE -->
   <div style="background: var(--surface); border-bottom: 1px solid var(--border);">
-    <div class="wrap" style="padding-top: 2rem; padding-bottom: 2rem;">
+    <div class="wrap" style="padding-top: 1rem; padding-bottom: 1rem;">
       <p style="font-size: 0.875rem; color: var(--text-mid); max-width: 680px;">
         <span style="color: var(--accent); font-family: 'Montserrat',sans-serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-right: 1rem;">Pricing</span>
         Because every project is unique, we review pricing during your free consultation. From quick focused tasks to large-scale multi-month collaborations. No project is too small or too large.
@@ -67,10 +67,11 @@
 
   <!-- SERVICE GALLERY -->
   <style>
+    .page-hero { padding: 2.5rem 0 2rem; }
     .svc-gallery {
       background: var(--bg);
       border-top: 1px solid var(--border);
-      padding: 3rem 2rem;
+      padding: 1.5rem 2rem 2rem;
     }
     .svc-gallery-inner {
       max-width: 1200px;
@@ -107,7 +108,7 @@
     }
     .svc-body {
       flex: 1;
-      padding: 2.75rem 3rem;
+      padding: 2rem 2.25rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -176,6 +177,44 @@
     }
     .svc-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
+    /* Side arrows */
+    .svc-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-h);
+      background: rgba(8,8,8,0.6);
+      color: var(--text);
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .svc-arrow:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .svc-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .svc-arrow-prev { left: 0.75rem; }
+    .svc-arrow-next { right: 0.75rem; }
+
+    /* See example button */
+    .svc-see-example {
+      margin-top: 0.6rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--sc, var(--accent));
+      background: none; border: none;
+      cursor: pointer; padding: 0;
+      text-decoration: underline; text-underline-offset: 3px;
+      align-self: flex-start;
+      transition: opacity 0.2s;
+    }
+    .svc-see-example:hover { opacity: 0.7; }
+    .cta-strip { padding: 2.5rem 0; }
+
     @media (max-width: 700px) {
       .svc-gallery { padding: 1.25rem 1rem; }
       .svc-gallery-inner { border-radius: 8px; }
@@ -197,6 +236,9 @@
 
     <div class="svc-wrap" id="svcWrap">
 
+      <button class="svc-arrow svc-arrow-prev" id="svcPrev" aria-label="Previous service">&#8592;</button>
+      <button class="svc-arrow svc-arrow-next" id="svcNext" aria-label="Next service">&#8594;</button>
+
       <!-- 01 Instructional Design -->
       <article class="svc-slide active" id="svcSlide0" style="--sc:#c09a5e" aria-label="Instructional Design">
         <div class="svc-img">
@@ -215,6 +257,7 @@
             <li>End-to-end course development from concept to launch</li>
           </ul>
           <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
+          <button class="svc-see-example" data-href="/#elearn-preview">See Interactive Examples &rarr;</button>
         </div>
       </article>
 
@@ -236,6 +279,7 @@
             <li>Motion graphics and visual enhancements for engagement</li>
           </ul>
           <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
+          <button class="svc-see-example" data-href="/#music-preview">Hear AI Audio Samples &rarr;</button>
         </div>
       </article>
 
@@ -278,6 +322,7 @@
             <li>Landing pages, portfolio sites, and business websites</li>
           </ul>
           <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
+          <button class="svc-see-example" data-href="/projects/#pbj-preview">See Web Design Case Study &rarr;</button>
         </div>
       </article>
 
@@ -322,6 +367,18 @@
 
       dots.forEach(function (dot, i) {
         dot.addEventListener('click', function () { goTo(i); startAuto(); });
+      });
+
+      var prevBtn = document.getElementById('svcPrev');
+      var nextBtn = document.getElementById('svcNext');
+      if (prevBtn) prevBtn.addEventListener('click', function () { goTo(current - 1); startAuto(); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); startAuto(); });
+
+      document.querySelectorAll('.svc-see-example').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var href = btn.getAttribute('data-href');
+          if (href) window.location.href = href;
+        });
       });
 
       gallery.addEventListener('mouseenter', stopAuto);

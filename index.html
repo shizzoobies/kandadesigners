@@ -1032,6 +1032,29 @@
 
   <script src="js/main-v2.js?v=18"></script>
 
+  <!-- Hash-based modal deep-linking from services page -->
+  <script>
+    (function () {
+      var hash = window.location.hash;
+      if (!hash) return;
+      history.replaceState(null, '', window.location.pathname);
+      function openByHash() {
+        if (hash === '#elearn-preview') {
+          var trigger = document.querySelector('[data-open-elearn]');
+          if (trigger) trigger.click();
+        } else if (hash === '#music-preview') {
+          var trigger = document.querySelector('[data-open-music]');
+          if (trigger) trigger.click();
+        }
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', openByHash);
+      } else {
+        openByHash();
+      }
+    })();
+  </script>
+
   <!-- AI Music Modal Note Player -->
   <script>
     (function () {
