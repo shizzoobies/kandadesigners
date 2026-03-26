@@ -356,9 +356,9 @@
 
   <main>
     <div class="fb-hero">
-      <span class="label">Client Portal</span>
-      <h1>Share Your<br><em>Feedback</em></h1>
-      <p>Your honest input helps us deliver the best possible work. Fill out as much or as little as you'd like, and attach any screenshots or files that are helpful.</p>
+      <span class="label">MBS Medical Website</span>
+      <h1>What's On<br><em>Your Mind?</em></h1>
+      <p>Drop your ideas below whenever they come to you. Website changes, business thoughts, anything you want us to look at. We'll review everything and follow up.</p>
     </div>
 
     <div class="fb-form-wrap">
@@ -374,65 +374,36 @@
         <!-- Form -->
         <form id="fb-form" novalidate>
           <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
-          <input type="hidden" name="subject" value="Client Feedback | K &amp; A Designs" />
+          <input type="hidden" name="subject" value="MBS Medical Website Ideas | David Hervig" />
           <input type="hidden" name="from_name" value="K &amp; A Designs Feedback Portal" />
           <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" />
 
-          <!-- Identity -->
-          <p class="fb-section-label">About You</p>
-          <div class="fb-row">
-            <div class="fb-field">
-              <label for="fb-name">Your Name *</label>
-              <input type="text" id="fb-name" name="name" placeholder="Your full name" required />
-            </div>
-            <div class="fb-field">
-              <label for="fb-email">Email Address</label>
-              <input type="email" id="fb-email" name="email" placeholder="So we can follow up" />
-            </div>
-          </div>
+          <!-- Hidden identity fields — pre-filled -->
+          <input type="hidden" name="name"    value="David Hervig" />
+          <input type="hidden" name="email"   value="david.hervig@gmail.com" />
+          <input type="hidden" name="project" value="MBS Medical Website" />
+
+          <!-- Website Ideas -->
+          <p class="fb-section-label">Website Change Ideas</p>
           <div class="fb-field">
-            <label for="fb-project">Project / Deliverable</label>
-            <input type="text" id="fb-project" name="project" placeholder="e.g. Website redesign, eLearning course, logo..." />
+            <label for="fb-website">Pages, content, layout, features, copy changes...</label>
+            <textarea id="fb-website" name="website_ideas" placeholder="e.g. Add a new services page, update the hero text, change the contact form..." style="min-height:140px;"></textarea>
           </div>
 
           <hr class="fb-divider" />
 
-          <!-- Rating -->
-          <p class="fb-section-label">Overall Rating</p>
-          <div class="star-wrap">
-            <label class="field-label">How would you rate the work overall?</label>
-            <div class="stars" role="radiogroup" aria-label="Star rating">
-              <input type="radio" id="s5" name="rating" value="5 stars" /><label for="s5" title="5 stars">★</label>
-              <input type="radio" id="s4" name="rating" value="4 stars" /><label for="s4" title="4 stars">★</label>
-              <input type="radio" id="s3" name="rating" value="3 stars" /><label for="s3" title="3 stars">★</label>
-              <input type="radio" id="s2" name="rating" value="2 stars" /><label for="s2" title="2 stars">★</label>
-              <input type="radio" id="s1" name="rating" value="1 star"  /><label for="s1" title="1 star">★</label>
-            </div>
-            <p class="star-hint">Click a star to rate</p>
-          </div>
-
-          <hr class="fb-divider" />
-
-          <!-- Feedback text -->
-          <p class="fb-section-label">Your Feedback</p>
+          <!-- Business Ideas -->
+          <p class="fb-section-label">Business Ideas</p>
           <div class="fb-field">
-            <label for="fb-love">What did you love about the work?</label>
-            <textarea id="fb-love" name="what_worked_well" placeholder="Tell us what landed well..."></textarea>
-          </div>
-          <div class="fb-field">
-            <label for="fb-improve">What could be improved or changed?</label>
-            <textarea id="fb-improve" name="improvements" placeholder="Constructive feedback helps us get it exactly right..."></textarea>
-          </div>
-          <div class="fb-field">
-            <label for="fb-other">Anything else we should know?</label>
-            <textarea id="fb-other" name="other_notes" placeholder="Questions, timeline notes, next steps..."></textarea>
+            <label for="fb-business">New directions, offerings, marketing, partnerships...</label>
+            <textarea id="fb-business" name="business_ideas" placeholder="e.g. Add a patient portal, run Google ads, partner with local clinics..." style="min-height:140px;"></textarea>
           </div>
 
           <hr class="fb-divider" />
 
           <!-- File uploads -->
-          <p class="fb-section-label">Attachments</p>
-          <p style="font-size:0.8rem;color:var(--text-dim);margin:0 0 1rem;">Screenshots, reference images, documents — anything visual that helps explain your feedback.</p>
+          <p class="fb-section-label">Media &amp; References</p>
+          <p style="font-size:0.8rem;color:var(--text-dim);margin:0 0 1rem;">Screenshots, photos, documents, videos, competitor sites — anything visual that helps illustrate what you have in mind.</p>
 
           <div class="file-drop-zone" id="dropZone">
             <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx,.mp4,.mov,.zip" aria-label="Attach files" />
@@ -448,7 +419,7 @@
 
           <!-- Submit -->
           <div class="fb-submit-row">
-            <button type="submit" class="btn btn-primary" id="fb-submit-btn">Send Feedback</button>
+            <button type="submit" class="btn btn-primary" id="fb-submit-btn">Send to K &amp; A</button>
             <div class="fb-loading" id="fb-loading">
               <div class="fb-spinner"></div>
               <span>Sending your feedback...</span>
