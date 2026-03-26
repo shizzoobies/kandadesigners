@@ -25,15 +25,15 @@
 
     .alex-hero-grid {
       display: grid;
-      grid-template-columns: 58% 42%;
-      align-items: start;
+      grid-template-columns: 55% 45%;
+      align-items: stretch;
     }
 
     .alex-hero-left {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      padding: 1.5rem var(--gutter) 1.75rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
+      justify-content: center;
+      padding: 2.5rem var(--gutter) 2.5rem max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
       position: relative;
       z-index: 2;
     }
@@ -45,7 +45,7 @@
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.9rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -65,15 +65,15 @@
       font-weight: 300;
       line-height: 0.95;
       letter-spacing: -0.03em;
-      margin-bottom: 0.7rem;
+      margin-bottom: 1rem;
     }
 
     .alex-hero-tagline {
       font-size: 0.9rem;
       color: var(--text-mid);
       line-height: 1.8;
-      max-width: 440px;
-      margin-bottom: 1.25rem;
+      max-width: 420px;
+      margin-bottom: 1.5rem;
     }
 
     .alex-hero-ctas {
@@ -83,40 +83,38 @@
       flex-wrap: wrap;
     }
 
-    /* Right column: photo + quote side-by-side */
+    /* Right column: photo fills full column height */
     .alex-hero-right {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 1.5rem;
-      padding: 1.5rem 2rem 1.75rem 1rem;
+      position: relative;
+      min-height: 400px;
     }
     .alex-hero-right img {
-      width: 220px;
-      flex-shrink: 0;
-      height: 300px;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      object-position: center top;
+      object-position: center 20%;
       display: block;
-      border-radius: 4px;
-      box-shadow: 8px 8px 0 rgba(192,154,94,0.18);
     }
     .alex-hero-inline-quote {
-      flex: 1;
-      min-width: 0;
-      max-width: none;
-      padding-left: 1.25rem;
-      border-left: 2px solid rgba(192,154,94,0.55);
-      padding-top: 0.5rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 2rem 1.75rem 1.75rem;
+      background: linear-gradient(to top, rgba(8,8,8,0.88) 0%, rgba(8,8,8,0.4) 70%, transparent 100%);
+      padding-left: 1.75rem;
+      border-left: none;
     }
     .alex-hero-inline-quote p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.975rem;
+      font-size: 1rem;
       font-style: italic;
       font-weight: 300;
-      line-height: 1.75;
-      color: var(--text-mid);
-      margin: 0 0 0.6rem;
+      line-height: 1.7;
+      color: rgba(237,233,224,0.85);
+      margin: 0 0 0.5rem;
     }
     .alex-hero-inline-quote cite {
       font-family: 'Montserrat', sans-serif;
@@ -779,19 +777,10 @@
     @media (max-width: 1000px) {
       .alex-hero-grid { grid-template-columns: 1fr; }
       .alex-hero-right {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 1.25rem;
-        padding: 1rem var(--gutter) 2rem;
+        min-height: 300px;
       }
-      .alex-hero-right img {
-        width: 180px;
-        height: 220px;
-        flex-shrink: 0;
-      }
-      .alex-hero-inline-quote { flex: 1; max-width: none; }
       .alex-hero-left {
-        padding: 2.25rem var(--gutter) 1rem;
+        padding: 2rem var(--gutter) 1.5rem;
       }
       .case-study { grid-template-columns: 1fr; gap: 2.5rem; }
       .alex-web-cards { grid-template-columns: 1fr; }
@@ -804,8 +793,7 @@
       .music-notes-compact { grid-template-columns: repeat(4, 1fr); }
     }
     @media (max-width: 680px) {
-      .alex-hero-right { flex-direction: column; gap: 1rem; }
-      .alex-hero-right img { width: 100%; height: 280px; }
+      .alex-hero-right { min-height: 260px; }
       .video-banner { height: 180px; }
       .video-banner:hover { height: 320px; }
       .music-notes-compact { grid-template-columns: repeat(4, 1fr); }
