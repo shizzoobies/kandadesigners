@@ -998,6 +998,22 @@
           thumb.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') open(); });
           lightbox.addEventListener('click', close);
           document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+
+          /* Save scroll position before leaving for the PBJ modal */
+          var pbjLink = document.querySelector('a[href="/projects/#pbj-preview"]');
+          if (pbjLink) {
+            pbjLink.addEventListener('click', function () {
+              sessionStorage.setItem('pbj-return-scroll', window.scrollY);
+            });
+          }
+
+          /* Restore scroll position if returning from PBJ modal */
+          var saved = sessionStorage.getItem('pbj-return-scroll');
+          if (saved !== null) {
+            sessionStorage.removeItem('pbj-return-scroll');
+            history.scrollRestoration = 'manual';
+            window.scrollTo({ top: parseInt(saved, 10), behavior: 'instant' });
+          }
         })();
       </script>
 
