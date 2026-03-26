@@ -902,7 +902,9 @@
         iframeAfter.classList.remove('visible');
         if (returnToPortfolio) {
           returnToPortfolio = false;
-          window.location.href = '/portfolio/alex/';
+          var returnUrl = sessionStorage.getItem('pbj-return-url') || '/portfolio/alex/';
+          sessionStorage.removeItem('pbj-return-url');
+          window.location.href = returnUrl;
         }
       }
 

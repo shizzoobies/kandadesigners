@@ -12,6 +12,8 @@
        ALEX ANDERSON PORTFOLIO — Custom Page Styles
        ══════════════════════════════════════════════ */
 
+    :root { --gold: #C09A5E; }
+
     /* ── Hero ───────────────────────────────────── */
     .alex-hero {
       background: var(--bg);
@@ -262,6 +264,42 @@
       color: var(--text-dim);
       line-height: 1.8;
       flex: 1;
+    }
+
+    /* Featured "This Site" card */
+    .alex-web-card--featured {
+      grid-column: 1 / -1;
+      border-color: rgba(192,154,94,0.35);
+      border-top: 3px solid var(--gold);
+      background: linear-gradient(135deg, rgba(192,154,94,0.05) 0%, var(--surface) 60%);
+      padding: 2.5rem;
+      gap: 1.25rem;
+    }
+    .alex-web-card--featured:hover { border-color: rgba(192,154,94,0.6); border-top-color: var(--gold); }
+    .alex-web-card--featured .alex-web-card-title {
+      font-size: 2rem;
+      color: var(--gold);
+    }
+    .alex-web-card--featured p {
+      font-size: 0.875rem;
+      max-width: 72ch;
+    }
+    .site-feature-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    .site-chip {
+      font-size: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(192,154,94,0.35);
+      border-radius: 99px;
+      padding: 0.25rem 0.75rem;
+      white-space: nowrap;
     }
 
     /* ── eLearning Stats ────────────────────────── */
@@ -1019,15 +1057,32 @@
 
       <!-- Secondary web cards -->
       <div class="alex-web-cards fade-up">
-        <div class="alex-web-card">
-          <div class="alex-web-card-title">This Site</div>
-          <p>kandadesigners.com, every page of it, was built using Claude Code as a development partner. Orbital service navigator, scroll-snap galleries, game modals, before/after showcases, contact form, CI/CD pipeline: all of it designed and directed by Alex, with Claude Code used to augment and accelerate the build. That's the honest version, and it's the point.</p>
+
+        <!-- Featured: This Site -->
+        <div class="alex-web-card alex-web-card--featured">
+          <div class="alex-web-card-title">This Site Is the Case Study</div>
+          <p>kandadesigners.com is a live, fully custom web build -- every page, interaction, and system designed and directed by Alex. The orbital service navigator, scroll-snap galleries, cross-page modal routing, a playable scrolling shooter, before/after image comparisons, animated skill tickers, and a CI/CD deployment pipeline are all running right now, in the browser you are using. Claude Code was used as a development accelerator throughout -- the same way a senior developer uses any modern tooling: to move faster and ship better.</p>
+          <div class="site-feature-chips">
+            <span class="site-chip">Orbital Navigator</span>
+            <span class="site-chip">Scroll-Snap Galleries</span>
+            <span class="site-chip">Playable Game Modal</span>
+            <span class="site-chip">Before / After Slider</span>
+            <span class="site-chip">Cross-Page Modal Routing</span>
+            <span class="site-chip">Animated Skill Ticker</span>
+            <span class="site-chip">CI / CD Pipeline</span>
+            <span class="site-chip">SVG Animations</span>
+            <span class="site-chip">Responsive Design</span>
+          </div>
+          <a href="/" class="btn btn-outline" style="align-self:flex-start;margin-top:0.25rem;">Explore the Site <span class="arr">→</span></a>
         </div>
+
+        <!-- Client Sites -->
         <div class="alex-web-card">
           <div class="alex-web-card-title">Client Sites</div>
           <p>Production websites built for real clients: SEO-optimized, performance-focused, and clean. Minimal dependencies, fast load times, and tracked with Google Analytics and Search Console for ongoing improvement.</p>
           <button class="btn btn-ghost" data-open-fixalways style="align-self:flex-start;margin-top:0.5rem;">Preview Example <span class="arr">→</span></button>
         </div>
+
       </div>
 
     </div>

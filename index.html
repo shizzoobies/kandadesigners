@@ -138,12 +138,13 @@
           <!-- Instructional Design -->
           <button class="orbit-node" data-index="0">
             <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polygon points="18,4 33,12 18,20 3,12"/>
-              <path d="M8 14.5 L8 24 C8 24 12 28 18 28 C24 28 28 24 28 24 L28 14.5"/>
-              <line x1="33" y1="12" x2="33" y2="21"/>
-              <circle cx="33" cy="23" r="1.5" fill="currentColor" stroke="none"/>
+              <!-- Heart -->
+              <path d="M18 30 C18 30 4 21 4 12 C4 8 7 5 11 5 C14 5 17 7 18 10 C19 7 22 5 25 5 C29 5 32 8 32 12 C32 21 18 30 18 30Z"/>
+              <!-- School building -->
+              <rect x="11" y="16" width="14" height="10" rx="1"/>
+              <rect x="15" y="20" width="6" height="6" rx="0.5"/>
             </svg>
-            <span class="orbit-node-name">Instructional<br>Design</span>
+            <span class="orbit-node-name">Project<br>Management</span>
           </button>
 
           <!-- Web & Digital -->
@@ -173,17 +174,21 @@
             <span class="orbit-node-name">Video &amp;<br>Audio</span>
           </button>
 
-          <!-- Social & Branding -->
+          <!-- Web Games -->
           <button class="orbit-node" data-index="3">
-            <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">
-              <circle cx="18" cy="6" r="3.5"/>
-              <circle cx="6" cy="28" r="3.5"/>
-              <circle cx="30" cy="28" r="3.5"/>
-              <line x1="18" y1="9.5" x2="8.2" y2="24.8"/>
-              <line x1="18" y1="9.5" x2="27.8" y2="24.8"/>
-              <line x1="9.5" y1="28" x2="26.5" y2="28"/>
+            <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <!-- Gamepad body -->
+              <rect x="4" y="12" width="28" height="16" rx="6"/>
+              <!-- D-pad -->
+              <line x1="11" y1="17" x2="11" y2="23"/>
+              <line x1="8" y1="20" x2="14" y2="20"/>
+              <!-- Buttons -->
+              <circle cx="24" cy="18" r="1.5"/>
+              <circle cx="27" cy="21" r="1.5"/>
+              <!-- Spaceship accent on top -->
+              <polyline points="14,12 18,6 22,12"/>
             </svg>
-            <span class="orbit-node-name">Social &amp;<br>Branding</span>
+            <span class="orbit-node-name">Web<br>Games</span>
           </button>
 
           <!-- HTML Interactives -->
@@ -408,8 +413,10 @@
       <div class="stat-label">Dedicated Designers</div>
     </div>
     <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Ongoing Projects</div>
+      <a href="/projects/" style="text-decoration:none;color:inherit;display:contents;">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Ongoing Projects</div>
+      </a>
     </div>
   </div>
 
@@ -1025,6 +1032,18 @@
   </div>
 
   <script src="js/main-v2.js?v=18"></script>
+
+  <!-- Restore scroll when returning from PBJ modal on projects page -->
+  <script>
+    (function () {
+      var saved = sessionStorage.getItem('pbj-return-scroll');
+      if (saved !== null) {
+        sessionStorage.removeItem('pbj-return-scroll');
+        history.scrollRestoration = 'manual';
+        window.scrollTo({ top: parseInt(saved, 10), behavior: 'instant' });
+      }
+    })();
+  </script>
 
   <!-- Hash-based modal deep-linking from services page -->
   <script>

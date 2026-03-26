@@ -135,9 +135,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
 
   const SERVICES = [
     {
-      num: '01', name: 'Instructional Design',
-      desc: 'Backed by 15+ years of education experience — from K‑12 classrooms to corporate training programs.',
-      items: ['Articulate 360 & Rise', 'SCORM & LMS delivery', 'End-to-end course development', 'SME collaboration']
+      num: '01', name: 'Project Management',
+      desc: 'Nonprofit board leadership, volunteer coordination, and community-driven project execution on the ground.',
+      items: ['Board leadership', 'Volunteer coordination', 'Community impact', 'Project Makeover']
     },
     {
       num: '02', name: 'Web & Digital Design',
@@ -150,9 +150,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       items: ['Adobe Premiere editing', 'ElevenLabs AI voice', 'Motion graphics', 'Captioning & accessibility']
     },
     {
-      num: '04', name: 'Social Media & Branding',
-      desc: 'Strategy-first content powered by keywords, AI, and a consistent visual voice across every channel.',
-      items: ['Brand voice & consistency', 'Keyword-led content planning', 'AI-assisted creation', 'Content calendars']
+      num: '04', name: 'Web Games',
+      desc: 'Browser-based games built with pure JavaScript — no engines, no frameworks, just fast custom logic.',
+      items: ['Scrolling shooter', 'Tower defense', 'Firebase leaderboards', 'Claude Code AI development']
     },
     {
       num: '05', name: 'HTML Interactives',
@@ -231,7 +231,25 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       paused = false;
       ringDash && ringDash.classList.remove('paused');
     });
-    node.addEventListener('click', () => { window.location.href = 'services/'; });
+    node.addEventListener('click', () => {
+      // 0=Project Management→nonprofit, 1=Web&Digital→PBJ, 2=Video&Audio→music,
+      // 3=Web Games→shooter, 4=HTML Interactives→elearn
+      const actions = ['nonprofit', 'pbj', 'music', 'shooter', 'elearn'];
+      const action  = actions[i];
+      if (action === 'pbj') {
+        sessionStorage.setItem('pbj-return-url', '/');
+        sessionStorage.setItem('pbj-return-scroll', window.scrollY);
+        window.location.href = '/projects/#pbj-preview';
+      } else {
+        const sel = {
+          nonprofit: '[data-open-nonprofit]',
+          music:     '[data-open-music]',
+          shooter:   '[data-open-shooter]',
+          elearn:    '[data-open-elearn]',
+        }[action];
+        if (sel) document.querySelector(sel)?.click();
+      }
+    });
   });
 
   function openModal()  {
