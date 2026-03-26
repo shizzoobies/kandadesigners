@@ -715,3 +715,137 @@ if (contactForm) {
     }
   });
 }
+
+
+// ─── AI Chat Widget ────────────────────────────────
+(function () {
+  // Inject widget HTML into every page
+  var wrap = document.createElement('div');
+  wrap.innerHTML =
+    '<button class="ka-chat-btn" id="ka-chat-btn" aria-label="Chat with K &amp; A Designs AI" aria-expanded="false">' +
+      '<img class="ka-chat-btn-img" src="/images/Alex-Image.jpg" alt="Alex Anderson" />' +
+      '<span class="ka-chat-online-dot" aria-hidden="true"></span>' +
+    '</button>' +
+    '<div class="ka-chat-panel" id="ka-chat-panel" role="dialog" aria-label="K &amp; A Designs AI assistant" aria-hidden="true">' +
+      '<div class="ka-chat-head">' +
+        '<img class="ka-chat-head-avatar" src="/images/Alex-Image.jpg" alt="Alex" />' +
+        '<div class="ka-chat-head-info">' +
+          '<div class="ka-chat-head-name">K &amp; A Designs AI</div>' +
+          '<div class="ka-chat-head-status">Online</div>' +
+        '</div>' +
+        '<button class="ka-chat-head-close" id="ka-chat-close" aria-label="Close chat">&#x2715;</button>' +
+      '</div>' +
+      '<div class="ka-chat-messages" id="ka-chat-messages" aria-live="polite"></div>' +
+      '<div class="ka-chat-input-row">' +
+        '<textarea class="ka-chat-input" id="ka-chat-input" placeholder="Ask anything about our work..." rows="1" aria-label="Chat message"></textarea>' +
+        '<button class="ka-chat-send" id="ka-chat-send" aria-label="Send">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>' +
+        '</button>' +
+      '</div>' +
+      '<div class="ka-chat-brand">Powered by Anthropic Claude</div>' +
+    '</div>';
+  document.body.appendChild(wrap);
+
+  var chatBtn   = document.getElementById('ka-chat-btn');
+  var chatPanel = document.getElementById('ka-chat-panel');
+  var closeBtn  = document.getElementById('ka-chat-close');
+  var msgArea   = document.getElementById('ka-chat-messages');
+  var inputEl   = document.getElementById('ka-chat-input');
+  var sendBtn   = document.getElementById('ka-chat-send');
+  var history   = [];
+  var isOpen    = false;
+  var busy      = false;
+
+  function openChat() {
+    isOpen = true;
+    chatPanel.classList.add('open');
+    chatPanel.setAttribute('aria-hidden', 'false');
+    chatBtn.setAttribute('aria-expanded', 'true');
+    if (history.length === 0) {
+      addMsg('ai', "Hi! I'm the K & A Designs AI assistant. Ask me anything about our services, portfolio, or how to get started on a project.");
+    }
+    setTimeout(function () { inputEl.focus(); }, 260);
+  }
+
+  function closeChat() {
+    isOpen = false;
+    chatPanel.classList.remove('open');
+    chatPanel.setAttribute('aria-hidden', 'true');
+    chatBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function addMsg(role, text) {
+    var div = document.createElement('div');
+    div.className = 'ka-msg ka-msg--' + role;
+    div.textContent = text;
+    msgArea.appendChild(div);
+    msgArea.scrollTop = msgArea.scrollHeight;
+    return div;
+  }
+
+  function addTyping() {
+    var div = document.createElement('div');
+    div.className = 'ka-msg--typing';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    msgArea.appendChild(div);
+    msgArea.scrollTop = msgArea.scrollHeight;
+    return div;
+  }
+
+  function autoResize() {
+    inputEl.style.height = '';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
+  }
+
+  async function sendMessage() {
+    var text = inputEl.value.trim();
+    if (!text || busy) return;
+
+    busy = true;
+    sendBtn.disabled = true;
+    inputEl.value = '';
+    inputEl.style.height = '';
+
+    addMsg('user', text);
+    history.push({ role: 'user', content: text });
+
+    var typing = addTyping();
+
+    try {
+      var res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history }),
+      });
+      var data = await res.json();
+      var reply = (data.content && data.content[0] && data.content[0].text)
+        || "Sorry, something went wrong. Please try again.";
+      typing.remove();
+      addMsg('ai', reply);
+      history.push({ role: 'assistant', content: reply });
+    } catch (e) {
+      typing.remove();
+      addMsg('ai', "Sorry, I'm having trouble connecting right now. Please try again in a moment.");
+    }
+
+    busy = false;
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+
+  chatBtn.addEventListener('click', function () { isOpen ? closeChat() : openChat(); });
+  closeBtn.addEventListener('click', closeChat);
+  sendBtn.addEventListener('click', sendMessage);
+
+  inputEl.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  inputEl.addEventListener('input', autoResize);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isOpen) closeChat();
+  });
+})();

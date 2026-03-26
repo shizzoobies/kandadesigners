@@ -2802,3 +2802,262 @@ a.ticker-item:hover {
 .skip-link:focus {
   top: 1rem;
 }
+
+
+/* =============================================
+   AI CHAT WIDGET
+   ============================================= */
+
+/* Trigger button */
+.ka-chat-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 900;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid rgba(192,154,94,0.5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 5px rgba(192,154,94,0.08);
+  cursor: pointer;
+  overflow: visible;
+  background: var(--surface);
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ka-chat-btn-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  border-radius: 50%;
+  display: block;
+  pointer-events: none;
+}
+.ka-chat-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.6), 0 0 0 5px rgba(192,154,94,0.18);
+}
+.ka-chat-online-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #5ef590;
+  border: 2.5px solid var(--bg);
+  pointer-events: none;
+}
+
+/* Panel */
+.ka-chat-panel {
+  position: fixed;
+  bottom: calc(1.5rem + 58px + 0.85rem);
+  right: 1.5rem;
+  z-index: 901;
+  width: 360px;
+  max-height: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border-h);
+  border-radius: 14px;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.65);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(14px) scale(0.97);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.ka-chat-panel.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Header */
+.ka-chat-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface-2);
+}
+.ka-chat-head-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(192,154,94,0.4);
+  object-fit: cover;
+  object-position: center 12%;
+  flex-shrink: 0;
+  display: block;
+}
+.ka-chat-head-info { flex: 1; }
+.ka-chat-head-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+.ka-chat-head-status {
+  font-size: 0.6rem;
+  color: #5ef590;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 2px;
+}
+.ka-chat-head-status::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #5ef590;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.ka-chat-head-close {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.3rem;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+}
+.ka-chat-head-close:hover { color: var(--text); background: var(--surface-3); }
+
+/* Messages */
+.ka-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  scroll-behavior: smooth;
+}
+.ka-chat-messages::-webkit-scrollbar { width: 4px; }
+.ka-chat-messages::-webkit-scrollbar-track { background: transparent; }
+.ka-chat-messages::-webkit-scrollbar-thumb { background: var(--border-h); border-radius: 4px; }
+
+.ka-msg {
+  max-width: 88%;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
+  word-break: break-word;
+}
+.ka-msg--ai {
+  background: var(--surface-2);
+  color: var(--text-mid);
+  border-bottom-left-radius: 3px;
+  align-self: flex-start;
+}
+.ka-msg--user {
+  background: var(--accent);
+  color: var(--bg);
+  border-bottom-right-radius: 3px;
+  align-self: flex-end;
+  font-weight: 500;
+}
+.ka-msg--typing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 0.75rem 0.85rem;
+  background: var(--surface-2);
+  border-radius: 12px;
+  border-bottom-left-radius: 3px;
+  align-self: flex-start;
+}
+.ka-msg--typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  display: inline-block;
+  animation: ka-bounce 1.3s ease-in-out infinite;
+}
+.ka-msg--typing span:nth-child(2) { animation-delay: 0.18s; }
+.ka-msg--typing span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes ka-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Input row */
+.ka-chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  padding: 0.75rem 1.1rem;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  background: var(--surface-2);
+}
+.ka-chat-input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.84rem;
+  padding: 0.5rem 0.75rem;
+  resize: none;
+  outline: none;
+  font-family: inherit;
+  line-height: 1.45;
+  transition: border-color 0.2s;
+  max-height: 80px;
+  overflow-y: auto;
+}
+.ka-chat-input:focus { border-color: var(--border-h); }
+.ka-chat-input::placeholder { color: var(--text-dim); }
+.ka-chat-send {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  color: var(--bg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.ka-chat-send:hover { transform: scale(1.08); }
+.ka-chat-send:disabled { opacity: 0.35; cursor: default; transform: none; }
+
+/* Branding footer */
+.ka-chat-brand {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.4rem;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .ka-chat-panel { width: calc(100vw - 2rem); right: 1rem; bottom: calc(1rem + 58px + 0.85rem); }
+  .ka-chat-btn { bottom: 1rem; right: 1rem; }
+}
