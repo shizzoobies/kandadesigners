@@ -284,6 +284,48 @@
       font-size: 0.875rem;
       max-width: 72ch;
     }
+    /* Site screenshots row */
+    .site-screens {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .site-screen-wrap {
+      display: block;
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(192,154,94,0.2);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .site-screen-wrap:hover {
+      border-color: rgba(192,154,94,0.5);
+      transform: translateY(-3px);
+    }
+    .site-screen-img {
+      display: block;
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .site-screen-label {
+      display: block;
+      padding: 0.6rem 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(13,13,13,0.9);
+      font-family: 'DM Sans', sans-serif;
+    }
+    @media (max-width: 700px) {
+      .site-screens { grid-template-columns: 1fr; }
+      .site-screen-img { height: 280px; }
+    }
+
     .site-feature-chips {
       display: flex;
       flex-wrap: wrap;
@@ -1083,6 +1125,18 @@
           <button class="btn btn-ghost" data-open-fixalways style="align-self:flex-start;margin-top:0.5rem;">Preview Example <span class="arr">→</span></button>
         </div>
 
+      </div>
+
+      <!-- Site screenshots -->
+      <div class="site-screens fade-up">
+        <a href="/" class="site-screen-wrap" aria-label="View the home page">
+          <img src="../../images/site-screenshot-home.jpeg" alt="K &amp; A Designs home page screenshot" class="site-screen-img" />
+          <span class="site-screen-label">Home Page</span>
+        </a>
+        <a href="/projects/" class="site-screen-wrap" aria-label="View the projects page">
+          <img src="../../images/site-screenshot-projects.jpeg" alt="K &amp; A Designs projects page screenshot" class="site-screen-img" />
+          <span class="site-screen-label">Projects Page</span>
+        </a>
       </div>
 
     </div>
