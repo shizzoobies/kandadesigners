@@ -442,20 +442,23 @@
   <style>
     .pbj-modal {
       position: fixed; inset: 0; z-index: 2000;
-      display: none; align-items: stretch;
+      display: none; align-items: center; justify-content: center;
+      padding: 2.5vh 2.5vw;
     }
     .pbj-modal.is-open { display: flex; }
     .pbj-modal-backdrop {
       position: absolute; inset: 0;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(6px);
     }
     .pbj-modal-panel {
       position: relative; z-index: 1;
       display: flex; flex-direction: row;
-      width: 100%; height: 100%;
+      width: 95vw; height: 95vh;
       background: var(--bg);
+      border-radius: 12px;
       overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
     }
 
     /* ── Sidebar ─── */
@@ -811,6 +814,7 @@
       var fill        = document.getElementById('pbj-fill');
       var btns        = Array.from(document.querySelectorAll('.pbj-change-btn'));
       var fadeTimer;
+      var returnToPortfolio = false;
 
       function openModal() {
         modal.classList.add('is-open');
@@ -827,6 +831,10 @@
         /* Unload iframe so it stops running in background */
         iframeAfter.src = '';
         iframeAfter.classList.remove('visible');
+        if (returnToPortfolio) {
+          returnToPortfolio = false;
+          window.location.href = '/portfolio/alex/';
+        }
       }
 
       function restartScrollAnim() {
@@ -911,6 +919,7 @@
 
       /* Auto-open when arriving from portfolio via #pbj-preview */
       if (window.location.hash === '#pbj-preview') {
+        returnToPortfolio = true;
         openModal();
         history.replaceState(null, '', window.location.pathname);
       }
