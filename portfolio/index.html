@@ -144,6 +144,64 @@
     @media (prefers-reduced-motion: reduce) {
       .pm-strip-track { animation: none; }
     }
+
+    /* ── Meet the Team ── */
+    .team-duo {
+      display: flex;
+      justify-content: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+      padding: 1rem 0 0.5rem;
+    }
+    .team-person {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 280px;
+    }
+    .team-avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      margin-bottom: 1.4rem;
+      flex-shrink: 0;
+    }
+    .team-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .team-person h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+      line-height: 1.1;
+      margin: 0 0 0.3rem;
+    }
+    .team-person h3 em { font-style: italic; color: var(--accent); }
+    .team-role {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 0 0 1rem;
+    }
+    .team-bio {
+      font-size: 0.875rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin: 0 0 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .team-duo { gap: 3rem; }
+      .team-avatar { width: 140px; height: 140px; }
+    }
   </style>
 </head>
 <body>
@@ -192,34 +250,32 @@
     </div>
   </header>
 
-  <!-- DESIGNER PROFILES — Alex + Kristina -->
-  <section class="section" style="padding-bottom:2rem;">
+  <!-- MEET THE TEAM -->
+  <section class="section" style="padding: 3rem 0;">
     <div class="wrap">
+      <div class="team-duo">
 
-      <div class="designer-card fade-up">
-        <div class="designer-card-img">
-          <img src="../images/Alex-Portfolio.png" alt="Alex Anderson Portfolio" />
+        <div class="team-person fade-up">
+          <div class="team-avatar">
+            <img src="../images/Alex-Image.jpg" alt="Alex Anderson" />
+          </div>
+          <h3>Alex<br><em>Anderson</em></h3>
+          <p class="team-role">Web Design &amp; Media Production</p>
+          <p class="team-bio">Websites, video, SEO, and AI-powered tools. Alex brings precision and polish to every digital project, from high-performance builds to cinematic content.</p>
+          <a href="alex/" class="btn btn-outline">View His Work →</a>
         </div>
-        <div class="designer-card-body">
-          <span class="label">Web Design &amp; Media Production</span>
-          <h2>Alex<br><em>Anderson</em></h2>
-          <p>Alex brings precision and polish to every digital project: from high-performance websites and SEO strategy to cinematic video production and YouTube content. His work blends technical fluency with a sharp eye for design, creating experiences that look great and perform even better.</p>
-          <a href="alex/" class="btn btn-primary">View His Work →</a>
+
+        <div class="team-person fade-up">
+          <div class="team-avatar">
+            <img src="../images/K-Portfolio.png" alt="Kristina Anderson" />
+          </div>
+          <h3>Kristina<br><em>Anderson</em></h3>
+          <p class="team-role">Instructional Design &amp; Photography</p>
+          <p class="team-bio">eLearning, curriculum design, and visual storytelling. Kristina turns complex ideas into experiences that resonate, stick, and actually get results.</p>
+          <a href="kristina/" class="btn btn-outline">View Her Work →</a>
         </div>
+
       </div>
-
-      <div class="designer-card designer-card--flip fade-up">
-        <div class="designer-card-img">
-          <img src="../images/K-Portfolio.png" alt="Kristina Anderson Portfolio" />
-        </div>
-        <div class="designer-card-body">
-          <span class="label">Instructional Design &amp; Photography</span>
-          <h2>Kristina<br><em>Anderson</em></h2>
-          <p>Kristina transforms complex ideas into clear, engaging learning experiences. With a background in instructional design, eLearning development, and photography, she crafts courses and visuals that don't just inform. They resonate and stick with the people who experience them.</p>
-          <a href="kristina/" class="btn btn-primary">View Her Work →</a>
-        </div>
-      </div>
-
     </div>
   </section>
 
