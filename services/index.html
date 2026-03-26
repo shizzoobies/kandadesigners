@@ -65,231 +65,135 @@
     </div>
   </div>
 
-  <!-- SERVICE SCROLL GALLERY -->
+  <!-- SERVICE GALLERY -->
   <style>
-    /* ── Service scroll gallery ─────────────────── */
     .svc-gallery {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .svc-wrap {
       position: relative;
-      width: 100%;
+      height: clamp(440px, 58vh, 640px);
       overflow: hidden;
     }
-    .svc-track {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .svc-track::-webkit-scrollbar { display: none; }
-
     .svc-slide {
-      flex: 0 0 100%;
-      scroll-snap-align: start;
-      position: relative;
-      height: clamp(520px, 68vh, 760px);
+      position: absolute; inset: 0;
       display: flex;
-      align-items: center;
+      opacity: 0;
+      transition: opacity 0.75s ease;
+      pointer-events: none;
+    }
+    .svc-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .svc-img {
+      flex: 0 0 52%;
       overflow: hidden;
     }
-    .svc-slide-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-    .svc-slide-bg img {
-      width: 100%;
-      height: 100%;
+    .svc-img img {
+      width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center right;
-      opacity: 0.45;
-      transition: opacity 0.6s;
+      object-position: center;
+      display: block;
     }
-    .svc-slide-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to right,
-          rgba(8,8,8,0.97) 0%,
-          rgba(8,8,8,0.88) 45%,
-          rgba(8,8,8,0.55) 72%,
-          rgba(8,8,8,0.10) 100%),
-        linear-gradient(to top, rgba(8,8,8,0.6) 0%, transparent 40%);
+    .svc-body {
+      flex: 1;
+      padding: 2.75rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+      border-left: 1px solid var(--border);
+      background: var(--surface);
     }
-    .svc-slide-content {
-      position: relative;
-      z-index: 1;
-      max-width: 640px;
-      padding: 3.5rem 3rem 3.5rem max(3rem, calc((100vw - 1320px) / 2 + 3rem));
-    }
-    .svc-slide-content .label {
+    .svc-body .label {
+      display: block;
       color: var(--sc, var(--accent));
       border-color: var(--sc, var(--accent));
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.6rem;
     }
-    .svc-slide-content h2 {
-      font-size: clamp(2.4rem, 5vw, 3.8rem);
-      line-height: 1.05;
-      margin-bottom: 0.75rem;
+    .svc-body h2 {
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      line-height: 1.1;
+      margin: 0 0 0.4rem;
     }
-    .svc-slide-content .svc-sub {
-      font-size: 1.05rem;
-      color: var(--text-mid);
-      margin-bottom: 2rem;
+    .svc-body .svc-sub {
+      font-size: 0.85rem;
+      color: var(--text-dim);
       font-style: italic;
+      margin: 0 0 1.1rem;
     }
-    .svc-slide-content ul {
-      margin-bottom: 2.5rem;
-      display: grid;
-      gap: 0.55rem;
+    .svc-body ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin: 0 0 1.5rem;
+      padding: 0;
+      list-style: none;
     }
-    .svc-slide-content ul li {
-      padding-left: 1.4rem;
+    .svc-body ul li {
+      padding-left: 1.2rem;
       position: relative;
-      font-size: 0.94rem;
+      font-size: 0.86rem;
       color: var(--text-mid);
       line-height: 1.5;
     }
-    .svc-slide-content ul li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.55em;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .svc-body ul li::before {
+      content: "";
+      position: absolute; left: 0; top: 0.52em;
+      width: 5px; height: 5px; border-radius: 50%;
       background: var(--sc, var(--accent));
-      flex-shrink: 0;
     }
-
-    /* slide number badge */
-    .svc-slide-num {
-      position: absolute;
-      top: 2.5rem;
-      right: 3rem;
-      z-index: 2;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 5rem;
-      font-weight: 300;
-      color: var(--sc, var(--accent));
-      opacity: 0.15;
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* ── Navigation arrows ───────────────────────── */
-    .svc-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 10;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(8,8,8,0.55);
-      color: var(--text);
-      font-size: 1.4rem;
+    .svc-dots-strip {
       display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(6px);
-      transition: background var(--t), border-color var(--t), color var(--t), transform var(--t);
-      cursor: pointer;
-    }
-    .svc-arrow:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--bg);
-      transform: translateY(-50%) scale(1.08);
-    }
-    .svc-arrow:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-    }
-    .svc-arrow-prev { left: 1.5rem; }
-    .svc-arrow-next { right: 1.5rem; }
-    .svc-arrow[disabled] { opacity: 0.25; pointer-events: none; }
-
-    /* ── Dot nav ──────────────────────────────────── */
-    .svc-dots {
-      display: flex;
-      justify-content: center;
-      gap: 0.6rem;
-      padding: 1.5rem 0 1rem;
+      gap: 0.55rem;
+      padding: 1rem 0;
       background: var(--surface);
+      border-top: 1px solid var(--border);
     }
     .svc-dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--border-h);
-      border: none;
-      cursor: pointer;
-      transition: background var(--t), transform var(--t), width var(--t);
-      padding: 0;
+      border: none; cursor: pointer; padding: 0;
+      transition: background 0.3s, width 0.3s, border-radius 0.3s;
     }
     .svc-dot.active {
       background: var(--accent);
-      width: 24px;
+      width: 22px;
       border-radius: 4px;
     }
     .svc-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-    /* ── Progress bar ─────────────────────────────── */
-    .svc-progress {
-      height: 2px;
-      background: var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    .svc-progress-fill {
-      height: 100%;
-      background: var(--accent);
-      transition: width 0.35s ease;
-    }
-
-    /* ── Mobile ───────────────────────────────────── */
     @media (max-width: 700px) {
-      .svc-slide { height: auto; min-height: 480px; }
-      .svc-slide-content {
-        padding: 3rem 1.5rem 3rem 1.5rem;
-        max-width: 100%;
+      .svc-wrap { height: auto; }
+      .svc-slide {
+        position: relative; inset: auto;
+        flex-direction: column;
+        opacity: 1; pointer-events: auto;
+        display: none;
       }
-      .svc-slide-bg img { object-position: center; }
-      .svc-slide-bg::after {
-        background: linear-gradient(to bottom,
-          rgba(8,8,8,0.6) 0%,
-          rgba(8,8,8,0.92) 50%,
-          rgba(8,8,8,0.98) 100%);
-      }
-      .svc-arrow { display: none; }
-      .svc-slide-num { font-size: 3rem; top: 1.5rem; right: 1.5rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .svc-slide-bg img { transition: none; }
+      .svc-slide.active { display: flex; }
+      .svc-img { flex: none; height: 220px; }
+      .svc-body { padding: 1.75rem 1.5rem; border-left: none; border-top: 1px solid var(--border); }
     }
   </style>
 
-  <section class="svc-gallery" aria-label="Services gallery">
+  <section class="svc-gallery" id="svcGallery" aria-label="Services">
 
-    <div class="svc-progress" role="progressbar" aria-label="Gallery progress" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-      <div class="svc-progress-fill" id="svcProgressFill" style="width:25%"></div>
-    </div>
-
-    <div class="svc-track" id="svcTrack" aria-live="polite">
+    <div class="svc-wrap" id="svcWrap">
 
       <!-- 01 Instructional Design -->
-      <article class="svc-slide" id="svcSlide0" style="--sc:#c09a5e" aria-label="Service 1 of 4: Instructional Design">
-        <div class="svc-slide-bg">
-          <img src="../images/ID-Concept-Art.png" alt="" aria-hidden="true" />
+      <article class="svc-slide active" id="svcSlide0" style="--sc:#c09a5e" aria-label="Instructional Design">
+        <div class="svc-img">
+          <img src="../images/ID-Concept-Art.png" alt="Instructional Design" />
         </div>
-        <span class="svc-slide-num" aria-hidden="true">01</span>
-        <div class="svc-slide-content">
+        <div class="svc-body">
           <span class="label">Instructional Design</span>
-          <h2>Instructional<br>Design</h2>
+          <h2>Instructional Design</h2>
           <p class="svc-sub">Backed by over a decade of adult and K-12 education experience.</p>
           <ul>
             <li>Custom eLearning in Articulate Storyline and Rise 360</li>
@@ -298,21 +202,19 @@
             <li>Video and audio production for learning experiences</li>
             <li>Job aids, infographics, and performance support materials</li>
             <li>End-to-end course development from concept to launch</li>
-            <li>SME collaboration to structure learning outcomes</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
         </div>
       </article>
 
-      <!-- 02 Audio & Video -->
-      <article class="svc-slide" id="svcSlide1" style="--sc:#3dd9d6" aria-label="Service 2 of 4: Audio and Video Design">
-        <div class="svc-slide-bg">
-          <img src="../images/Video-and-Audio-concept-art.png" alt="" aria-hidden="true" />
+      <!-- 02 Audio and Video -->
+      <article class="svc-slide" id="svcSlide1" style="--sc:#3dd9d6" aria-label="Audio and Video Design">
+        <div class="svc-img">
+          <img src="../images/Video-and-Audio-concept-art.png" alt="Audio and Video Design" />
         </div>
-        <span class="svc-slide-num" aria-hidden="true">02</span>
-        <div class="svc-slide-content">
+        <div class="svc-body">
           <span class="label">Audio &amp; Video</span>
-          <h2>Audio &amp; Video<br>Design</h2>
+          <h2>Audio &amp; Video Design</h2>
           <p class="svc-sub">Clean sound, sharp visuals, smarter workflows.</p>
           <ul>
             <li>Professional video editing for training, marketing, and social</li>
@@ -322,19 +224,18 @@
             <li>Captioning, transcripts, and accessibility formatting</li>
             <li>Motion graphics and visual enhancements for engagement</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
         </div>
       </article>
 
-      <!-- 03 Social & Branding -->
-      <article class="svc-slide" id="svcSlide2" style="--sc:#9b5ef5" aria-label="Service 3 of 4: Social Media and Branding">
-        <div class="svc-slide-bg">
-          <img src="../images/Social-Media-Concept-Art.png" alt="" aria-hidden="true" />
+      <!-- 03 Social and Branding -->
+      <article class="svc-slide" id="svcSlide2" style="--sc:#9b5ef5" aria-label="Social Media and Branding">
+        <div class="svc-img">
+          <img src="../images/Social-Media-Concept-Art.png" alt="Social Media and Branding" />
         </div>
-        <span class="svc-slide-num" aria-hidden="true">03</span>
-        <div class="svc-slide-content">
-          <span class="label">Social &amp; Brand</span>
-          <h2>Social Media &amp;<br>Branding</h2>
+        <div class="svc-body">
+          <span class="label">Social &amp; Branding</span>
+          <h2>Social Media &amp; Branding</h2>
           <p class="svc-sub">Strategy-first content, powered by keywords and AI.</p>
           <ul>
             <li>Brand voice, messaging, and visual consistency across channels</li>
@@ -344,19 +245,18 @@
             <li>Creative assets: templates, graphics, short-form edits, banners</li>
             <li>Performance check-ins and optimization based on results</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
         </div>
       </article>
 
-      <!-- 04 Web & Digital -->
-      <article class="svc-slide" id="svcSlide3" style="--sc:#5ef590" aria-label="Service 4 of 4: Web and Digital Design">
-        <div class="svc-slide-bg">
-          <img src="../images/chatgpt-image-feb-13-2026-04_37_13-pm.png" alt="" aria-hidden="true" />
+      <!-- 04 Web and Digital -->
+      <article class="svc-slide" id="svcSlide3" style="--sc:#5ef590" aria-label="Web and Digital Design">
+        <div class="svc-img">
+          <img src="../images/chatgpt-image-feb-13-2026-04_37_13-pm.png" alt="Web and Digital Design" />
         </div>
-        <span class="svc-slide-num" aria-hidden="true">04</span>
-        <div class="svc-slide-content">
+        <div class="svc-body">
           <span class="label">Web &amp; Digital</span>
-          <h2>Web &amp; Digital<br>Design</h2>
+          <h2>Web &amp; Digital Design</h2>
           <p class="svc-sub">Modern, conversion-focused sites built to feel premium and perform.</p>
           <ul>
             <li>Custom website design and development</li>
@@ -366,18 +266,13 @@
             <li>AI-powered systems and workflow automation</li>
             <li>Landing pages, portfolio sites, and business websites</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
         </div>
       </article>
 
     </div>
 
-    <!-- Arrow navigation -->
-    <button class="svc-arrow svc-arrow-prev" id="svcPrev" aria-label="Previous service" disabled>&#8592;</button>
-    <button class="svc-arrow svc-arrow-next" id="svcNext" aria-label="Next service">&#8594;</button>
-
-    <!-- Dot navigation -->
-    <div class="svc-dots" role="tablist" aria-label="Service slides">
+    <div class="svc-dots-strip" role="tablist" aria-label="Service slides">
       <button class="svc-dot active" role="tab" aria-selected="true"  aria-controls="svcSlide0" aria-label="Instructional Design"></button>
       <button class="svc-dot"        role="tab" aria-selected="false" aria-controls="svcSlide1" aria-label="Audio and Video"></button>
       <button class="svc-dot"        role="tab" aria-selected="false" aria-controls="svcSlide2" aria-label="Social and Branding"></button>
@@ -388,57 +283,45 @@
 
   <script>
     (function () {
-      var track   = document.getElementById('svcTrack');
-      var prev    = document.getElementById('svcPrev');
-      var next    = document.getElementById('svcNext');
+      var slides  = Array.from(document.querySelectorAll('.svc-slide'));
       var dots    = Array.from(document.querySelectorAll('.svc-dot'));
-      var fill    = document.getElementById('svcProgressFill');
-      var total   = 4;
+      var gallery = document.getElementById('svcGallery');
+      var total   = slides.length;
       var current = 0;
+      var timer;
+      var INTERVAL = 5000;
 
       function goTo(idx) {
-        idx = Math.max(0, Math.min(total - 1, idx));
-        current = idx;
-        track.scrollTo({ left: track.clientWidth * idx, behavior: 'smooth' });
-        sync();
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        dots[current].setAttribute('aria-selected', 'false');
+        current = (idx + total) % total;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        dots[current].setAttribute('aria-selected', 'true');
       }
 
-      function sync() {
-        prev.disabled = current === 0;
-        next.disabled = current === total - 1;
-        dots.forEach(function (d, i) {
-          d.classList.toggle('active', i === current);
-          d.setAttribute('aria-selected', i === current ? 'true' : 'false');
-        });
-        if (fill) fill.style.width = ((current + 1) / total * 100) + '%';
-        var pb = document.querySelector('.svc-progress');
-        if (pb) pb.setAttribute('aria-valuenow', Math.round((current + 1) / total * 100));
+      function startAuto() {
+        clearInterval(timer);
+        timer = setInterval(function () { goTo(current + 1); }, INTERVAL);
       }
 
-      prev.addEventListener('click', function () { goTo(current - 1); });
-      next.addEventListener('click', function () { goTo(current + 1); });
-      dots.forEach(function (d, i) {
-        d.addEventListener('click', function () { goTo(i); });
+      function stopAuto() { clearInterval(timer); }
+
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); startAuto(); });
       });
 
-      /* keyboard: left/right arrows when gallery is focused */
-      track.setAttribute('tabindex', '0');
-      track.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); }
-        if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+      gallery.addEventListener('mouseenter', stopAuto);
+      gallery.addEventListener('mouseleave', startAuto);
+
+      gallery.setAttribute('tabindex', '0');
+      gallery.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); startAuto(); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); startAuto(); }
       });
 
-      /* sync dots on manual touch/scroll */
-      var scrollTimer;
-      track.addEventListener('scroll', function () {
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(function () {
-          var idx = Math.round(track.scrollLeft / track.clientWidth);
-          if (idx !== current) { current = idx; sync(); }
-        }, 80);
-      });
-
-      sync();
+      startAuto();
     })();
   </script>
 
