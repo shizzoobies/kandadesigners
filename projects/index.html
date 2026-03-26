@@ -208,6 +208,50 @@
           </div>
         </article>
 
+        <!-- PBJ Strategic Accounting Redesign -->
+        <article class="project-card fade-up">
+          <div class="project-card-top">
+            <div class="project-card-icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="6" y="10" width="36" height="26" rx="2"/>
+                <line x1="6" y1="16" x2="42" y2="16"/>
+                <circle cx="10" cy="13" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="14" cy="13" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="18" cy="13" r="1" fill="currentColor" stroke="none"/>
+                <rect x="11" y="21" width="12" height="10" rx="1"/>
+                <line x1="27" y1="21" x2="38" y2="21"/>
+                <line x1="27" y1="25" x2="38" y2="25"/>
+                <line x1="27" y1="29" x2="34" y2="29"/>
+                <line x1="18" y1="36" x2="18" y2="40"/>
+                <line x1="30" y1="36" x2="30" y2="40"/>
+                <line x1="12" y1="40" x2="36" y2="40"/>
+              </svg>
+            </div>
+            <div class="project-card-meta">
+              <span class="project-status" style="color:#f5c842;font-size:0.65rem;font-family:'Montserrat',sans-serif;font-weight:600;letter-spacing:0.1em;display:flex;align-items:center;gap:0.4rem;">
+                <span class="dot" style="background:#f5c842;width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0;animation:pulse 2s ease-in-out infinite;"></span>In Review
+              </span>
+              <span class="project-type">Web Redesign</span>
+            </div>
+          </div>
+
+          <h2 class="project-card-title">PBJ Strategic Accounting</h2>
+          <p class="project-card-desc">Full website redesign for a Clay County bookkeeping firm. New information architecture, ADA compliance, brand new FAQ page, and an Anthropic Claude-powered AI assistant. Currently in client review.</p>
+
+          <div class="project-tech-stack">
+            <span class="tech-tag">HTML / CSS / JS</span>
+            <span class="tech-tag">Anthropic Claude AI</span>
+            <span class="tech-tag">ADA / WCAG</span>
+            <span class="tech-tag">Cloudflare Pages</span>
+            <span class="tech-tag">GitHub CI/CD</span>
+          </div>
+
+          <div class="project-card-actions">
+            <button class="btn btn-primary" id="open-pbj-btn">Preview Redesign →</button>
+            <a href="https://pbja.pages.dev/" target="_blank" rel="noopener" class="btn btn-outline">Dev Build ↗</a>
+          </div>
+        </article>
+
         <!-- 13 Step Training Program -->
         <article class="project-card fade-up">
           <div class="project-card-top">
@@ -394,7 +438,409 @@
     </div>
   </div>
 
+  <!-- PBJ Redesign Modal -->
+  <style>
+    .pbj-modal {
+      position: fixed; inset: 0; z-index: 2000;
+      display: none; align-items: stretch;
+    }
+    .pbj-modal.is-open { display: flex; }
+    .pbj-modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(4px);
+    }
+    .pbj-modal-panel {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: row;
+      width: 100%; height: 100%;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ─── */
+    .pbj-sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 2rem 1.5rem;
+      gap: 2rem;
+    }
+    .pbj-sidebar-head .label { display: block; margin-bottom: 0.5rem; }
+    .pbj-sidebar-head h3 {
+      font-size: 1.25rem; margin: 0 0 0.75rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400; line-height: 1.2;
+    }
+    .pbj-sidebar-status { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .pbj-ext-link {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent);
+      text-decoration: none;
+    }
+    .pbj-ext-link:hover { text-decoration: underline; }
+
+    .pbj-section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 0.75rem;
+    }
+
+    /* Change buttons */
+    .pbj-change-nav { display: flex; flex-direction: column; gap: 0.4rem; }
+    .pbj-change-btn {
+      display: flex; align-items: center; gap: 0.65rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-mid);
+      font-size: 0.85rem;
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--t), color var(--t), border-color var(--t);
+      position: relative;
+    }
+    .pbj-change-btn:hover {
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    .pbj-change-btn.active {
+      background: var(--surface-3);
+      border-color: var(--border-h);
+      color: var(--text);
+    }
+    .pbj-change-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .pbj-change-icon {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--surface-3);
+      border: 1px solid var(--border-h);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; flex-shrink: 0; color: var(--text-dim);
+    }
+    .pbj-change-btn.active .pbj-change-icon {
+      background: var(--accent); border-color: var(--accent); color: var(--bg);
+    }
+    .pbj-new-tag {
+      margin-left: auto;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.48rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.15rem 0.4rem; border-radius: 3px;
+      background: rgba(94,245,144,0.15);
+      color: #5ef590;
+      border: 1px solid rgba(94,245,144,0.3);
+    }
+
+    /* Feature list */
+    .pbj-feature-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .pbj-feature {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.8rem; color: var(--text-mid);
+    }
+    .pbj-feature-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Main display ─── */
+    .pbj-main {
+      flex: 1;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    .pbj-close {
+      position: absolute; top: 1rem; right: 1rem; z-index: 20;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid var(--border-h);
+      background: rgba(8,8,8,0.7);
+      color: var(--text);
+      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background var(--t), border-color var(--t);
+      backdrop-filter: blur(4px);
+    }
+    .pbj-close:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .pbj-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Browser chrome */
+    .pbj-chrome {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.6rem 1rem;
+      background: var(--surface-3);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .pbj-chrome-dots { display: flex; gap: 5px; }
+    .pbj-chrome-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border-h); }
+    .pbj-chrome-url {
+      flex: 1; max-width: 360px; margin: 0 auto;
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: 4px; padding: 0.2rem 0.75rem;
+      font-size: 0.72rem; color: var(--text-dim);
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.03em;
+      transition: color 0.3s;
+    }
+
+    /* Image area */
+    .pbj-img-area {
+      flex: 1; position: relative; overflow: hidden;
+    }
+    .pbj-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block; max-width: none;
+    }
+    .pbj-img--after {
+      opacity: 0;
+      transition: opacity 1.1s ease;
+    }
+    .pbj-img--after.visible { opacity: 1; }
+
+    /* Labels */
+    .pbj-phase-label {
+      position: absolute; top: 1rem; left: 1rem; z-index: 10;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem; border-radius: 4px;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .pbj-label-before {
+      background: rgba(8,8,8,0.65);
+      color: var(--text-mid);
+      border: 1px solid var(--border-h);
+    }
+    .pbj-label-after {
+      background: rgba(192,154,94,0.9);
+      color: var(--bg);
+      opacity: 0;
+    }
+    .pbj-label-after.visible { opacity: 1; }
+    .pbj-label-before.hidden { opacity: 0; }
+
+    /* New page overlay */
+    .pbj-new-overlay {
+      position: absolute; inset: 0; z-index: 8;
+      display: none;
+      align-items: center; justify-content: center;
+      background: rgba(8,8,8,0.3);
+      pointer-events: none;
+    }
+    .pbj-new-overlay.visible { display: flex; }
+    .pbj-new-overlay span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.6rem 1.5rem; border-radius: 100px;
+      background: rgba(94,245,144,0.15); color: #5ef590;
+      border: 1px solid rgba(94,245,144,0.4);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Bottom mask — hides footer contact info */
+    .pbj-bottom-mask {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 100px; z-index: 5; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+    }
+
+    /* Progress bar */
+    .pbj-progress {
+      height: 2px; background: var(--border); flex-shrink: 0;
+    }
+    .pbj-progress-fill {
+      height: 100%; background: var(--accent);
+      width: 0; transition: width 1.5s linear;
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .pbj-modal-panel { flex-direction: column; }
+      .pbj-sidebar { width: 100%; height: auto; flex-direction: row; flex-wrap: wrap; padding: 1rem; gap: 1rem; border-right: none; border-bottom: 1px solid var(--border); }
+      .pbj-sidebar-head { width: 100%; }
+      .pbj-change-nav { flex-direction: row; flex-wrap: wrap; }
+      .pbj-feature-list { display: none; }
+    }
+  </style>
+
+  <div class="pbj-modal" id="pbj-modal" aria-hidden="true">
+    <div class="pbj-modal-backdrop" id="pbj-modal-backdrop"></div>
+    <div class="pbj-modal-panel" role="dialog" aria-modal="true" aria-label="PBJ Strategic Accounting Website Redesign">
+
+      <!-- Sidebar -->
+      <aside class="pbj-sidebar">
+        <div class="pbj-sidebar-head">
+          <span class="label">Client Redesign · 2026</span>
+          <h3>PBJ Strategic Accounting</h3>
+          <div class="pbj-sidebar-status">
+            <span style="display:flex;align-items:center;gap:0.4rem;font-family:'Montserrat',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.1em;color:#f5c842;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#f5c842;flex-shrink:0;animation:pulse 2s ease-in-out infinite;display:inline-block;"></span>In Review
+            </span>
+            <a href="https://pbja.pages.dev/" target="_blank" rel="noopener" class="pbj-ext-link">Dev Build ↗</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="pbj-section-label">Page Changes</div>
+          <nav class="pbj-change-nav" aria-label="Page comparisons">
+            <button class="pbj-change-btn active" data-idx="0">
+              <span class="pbj-change-icon">◈</span> Homepage
+            </button>
+            <button class="pbj-change-btn" data-idx="1">
+              <span class="pbj-change-icon">◈</span> About Page
+            </button>
+            <button class="pbj-change-btn" data-idx="2">
+              <span class="pbj-change-icon">◈</span> Services Page
+            </button>
+            <button class="pbj-change-btn" data-idx="3">
+              <span class="pbj-change-icon">+</span> FAQ Page
+              <span class="pbj-new-tag">NEW</span>
+            </button>
+          </nav>
+        </div>
+
+        <div>
+          <div class="pbj-section-label">Features Added</div>
+          <div class="pbj-feature-list">
+            <div class="pbj-feature"><span class="pbj-feature-dot" style="background:#3dd9d6;"></span>Anthropic Claude AI Chat</div>
+            <div class="pbj-feature"><span class="pbj-feature-dot" style="background:var(--accent);"></span>ADA / WCAG Compliance</div>
+            <div class="pbj-feature"><span class="pbj-feature-dot" style="background:var(--accent);"></span>Semantic HTML &amp; ARIA</div>
+            <div class="pbj-feature"><span class="pbj-feature-dot" style="background:#5ef590;"></span>Skip Links &amp; Focus Mgmt</div>
+            <div class="pbj-feature"><span class="pbj-feature-dot" style="background:#5ef590;"></span>Expanded Navigation</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main display -->
+      <div class="pbj-main">
+        <button class="pbj-close" id="pbj-close" aria-label="Close redesign preview">✕</button>
+
+        <div class="pbj-chrome" aria-hidden="true">
+          <div class="pbj-chrome-dots"><span></span><span></span><span></span></div>
+          <div class="pbj-chrome-url" id="pbj-url">pbjsa.com</div>
+        </div>
+
+        <div class="pbj-progress" aria-hidden="true"><div class="pbj-progress-fill" id="pbj-fill"></div></div>
+
+        <div class="pbj-img-area">
+          <img class="pbj-img pbj-img--before" id="pbj-before" src="../images/pbj-old-home.jpg" alt="Homepage before redesign" />
+          <img class="pbj-img pbj-img--after"  id="pbj-after"  src="../images/pbj-new-home.jpg" alt="Homepage after redesign" />
+          <div class="pbj-phase-label pbj-label-before" id="pbj-lbl-before" aria-hidden="true">Before</div>
+          <div class="pbj-phase-label pbj-label-after"  id="pbj-lbl-after"  aria-hidden="true">After</div>
+          <div class="pbj-new-overlay" id="pbj-new-overlay" aria-hidden="true">
+            <span>✦ New Page — Did Not Exist Before</span>
+          </div>
+          <div class="pbj-bottom-mask" aria-hidden="true"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <script src="../js/main-v2.js"></script>
+  <script>
+    /* ── PBJ Redesign Modal ── */
+    (function () {
+      var CHANGES = [
+        { label: 'Homepage',     url: 'pbjsa.com',          before: '../images/pbj-old-home.jpg',     after: '../images/pbj-new-home.jpg',     isNew: false },
+        { label: 'About Page',   url: 'pbjsa.com / about',  before: '../images/pbj-old-about.jpg',    after: '../images/pbj-new-about.jpg',    isNew: false },
+        { label: 'Services',     url: 'pbjsa.com / services',before: '../images/pbj-old-services.jpg',after: '../images/pbj-new-services.jpg', isNew: false },
+        { label: 'FAQ Page',     url: 'pbja.pages.dev / faq',before: null,                            after: '../images/pbj-new-faq.jpg',      isNew: true  },
+      ];
+
+      var modal      = document.getElementById('pbj-modal');
+      var backdrop   = document.getElementById('pbj-modal-backdrop');
+      var closeBtn   = document.getElementById('pbj-close');
+      var openBtn    = document.getElementById('open-pbj-btn');
+      var urlBar     = document.getElementById('pbj-url');
+      var imgBefore  = document.getElementById('pbj-before');
+      var imgAfter   = document.getElementById('pbj-after');
+      var lblBefore  = document.getElementById('pbj-lbl-before');
+      var lblAfter   = document.getElementById('pbj-lbl-after');
+      var newOverlay = document.getElementById('pbj-new-overlay');
+      var fill       = document.getElementById('pbj-fill');
+      var btns       = Array.from(document.querySelectorAll('.pbj-change-btn'));
+      var fadeTimer;
+
+      function openModal() {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        selectChange(0);
+      }
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        clearTimeout(fadeTimer);
+      }
+
+      function selectChange(idx) {
+        clearTimeout(fadeTimer);
+        var c = CHANGES[idx];
+
+        /* Update URL bar */
+        urlBar.textContent = c.url;
+
+        /* Swap images */
+        imgBefore.src = c.before || c.after;
+        imgAfter.src  = c.after;
+        imgAfter.classList.remove('visible');
+
+        /* Active button */
+        btns.forEach(function (b, i) { b.classList.toggle('active', i === idx); });
+
+        /* Reset labels */
+        lblBefore.classList.remove('hidden');
+        lblAfter.classList.remove('visible');
+        fill.style.transition = 'none';
+        fill.style.width = '0';
+
+        if (c.isNew) {
+          /* New page — show directly as "after" */
+          newOverlay.classList.add('visible');
+          lblBefore.classList.add('hidden');
+          lblAfter.classList.add('visible');
+          imgAfter.classList.add('visible');
+          fill.style.width = '100%';
+        } else {
+          newOverlay.classList.remove('visible');
+          /* Start progress bar, then crossfade */
+          requestAnimationFrame(function () {
+            fill.style.transition = 'width 1.6s linear';
+            fill.style.width = '100%';
+          });
+          fadeTimer = setTimeout(function () {
+            imgAfter.classList.add('visible');
+            lblBefore.classList.add('hidden');
+            lblAfter.classList.add('visible');
+          }, 1600);
+        }
+      }
+
+      /* Wire buttons */
+      btns.forEach(function (btn, i) {
+        btn.addEventListener('click', function () { selectChange(i); });
+      });
+
+      openBtn  && openBtn.addEventListener('click', openModal);
+      closeBtn && closeBtn.addEventListener('click', closeModal);
+      backdrop && backdrop.addEventListener('click', closeModal);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+      });
+    })();
+  </script>
+
   <script>
     const playBtn      = document.getElementById('play-shooter-btn');
     const gameModal    = document.getElementById('game-modal');
