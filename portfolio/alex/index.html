@@ -529,35 +529,48 @@
       gap: 0.4rem;
       padding: 0.9rem 0.4rem 0.75rem;
       background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: 8px;
       cursor: pointer;
       font-family: inherit;
       -webkit-tap-highlight-color: transparent;
-      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      transition: border-color 0.3s, transform 0.3s;
+      overflow: hidden;
+    }
+    /* Colour tint overlay — opacity trick avoids color-mix */
+    .music-note::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: var(--nc, var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
     }
     .music-note:hover {
-      background: color-mix(in srgb, var(--nc, var(--accent)) 10%, transparent);
-      border-color: color-mix(in srgb, var(--nc, var(--accent)) 35%, transparent);
+      border-color: var(--nc, var(--accent));
       transform: translateY(-3px);
     }
-    .music-note.playing {
-      background: color-mix(in srgb, var(--nc, var(--accent)) 14%, transparent);
-      border-color: color-mix(in srgb, var(--nc, var(--accent)) 55%, transparent);
-    }
+    .music-note:hover::after { opacity: 0.08; }
+    .music-note.playing { border-color: var(--nc, var(--accent)); }
+    .music-note.playing::after { opacity: 0.12; }
     .music-note-glyph {
       font-size: 2rem;
       line-height: 1;
-      color: color-mix(in srgb, var(--nc, rgba(237,233,224,1)) 35%, transparent);
-      transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
+      color: var(--nc, rgba(237,233,224,0.6));
+      opacity: 0.45;
+      transition: opacity 0.3s, transform 0.3s, text-shadow 0.3s;
       display: block;
+      position: relative;
+      z-index: 1;
     }
     .music-note:hover .music-note-glyph {
-      color: var(--nc, var(--accent));
+      opacity: 1;
       transform: scale(1.2);
     }
     .music-note.playing .music-note-glyph {
-      color: var(--nc, var(--accent));
+      opacity: 1;
       text-shadow: 0 0 20px var(--nc, rgba(192,154,94,0.5));
       animation: note-bounce 0.42s ease-in-out infinite alternate;
     }
@@ -571,16 +584,17 @@
       position: absolute;
       inset: -1px;
       border-radius: 8px;
-      border: 1px solid color-mix(in srgb, var(--nc, var(--accent)) 60%, transparent);
+      border: 1px solid var(--nc, var(--accent));
       opacity: 0;
       pointer-events: none;
+      z-index: 2;
     }
     .music-note.playing::before {
       animation: note-ring 1.8s ease-in-out infinite;
     }
     @keyframes note-ring {
-      0%,100% { opacity: 0.9; transform: scale(1); }
-      50%      { opacity: 0;   transform: scale(1.5); }
+      0%,100% { opacity: 0.85; transform: scale(1); }
+      50%      { opacity: 0;    transform: scale(1.6); }
     }
     /* Labels — always visible in compact mode */
     .music-note-label {
@@ -589,6 +603,8 @@
       align-items: center;
       gap: 0.1rem;
       pointer-events: none;
+      position: relative;
+      z-index: 1;
     }
     .music-note-title {
       font-family: 'Cormorant Garamond', serif;
@@ -603,7 +619,8 @@
       font-size: 0.42rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: color-mix(in srgb, var(--nc, var(--accent)) 80%, transparent);
+      color: var(--nc, var(--accent));
+      opacity: 0.85;
       white-space: nowrap;
     }
     /* Staggered float — subtle bob in place */
