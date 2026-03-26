@@ -7,8 +7,92 @@
   <meta name="description" content="A husband and wife creative team delivering web design, video production, photography, and instructional design. Premium work. Real results." />
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml" /><link rel="icon" href="images/favicon.png" sizes="512x512" type="image/png" />
   <link rel="stylesheet" href="css/style.css?v=18" />
+  <style>
+    /* ── Splash Screen ─────────────────────────── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #080808;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #splash.splash-exit {
+      animation: splash-fade-out 1s cubic-bezier(0.4,0,1,1) forwards;
+      pointer-events: none;
+    }
+    @keyframes splash-fade-out {
+      0%   { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    .splash-logo-wrap {
+      position: relative;
+      z-index: 4;
+      animation: splash-logo-grow 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+    .splash-logo-wrap img {
+      width: 230px;
+      height: auto;
+      display: block;
+      animation: splash-logo-glow 2.6s ease-out both;
+    }
+    @keyframes splash-logo-grow {
+      0%   { transform: scale(0.28); opacity: 0; }
+      14%  { opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes splash-logo-glow {
+      0%   { filter: drop-shadow(0 0 0px rgba(192,154,94,0)); }
+      45%  { filter: drop-shadow(0 0 38px rgba(192,154,94,0.75)) drop-shadow(0 0 80px rgba(192,154,94,0.3)); }
+      100% { filter: drop-shadow(0 0 22px rgba(192,154,94,0.55)) drop-shadow(0 0 55px rgba(192,154,94,0.2)); }
+    }
+    .splash-ring {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .splash-ring-1 {
+      width: 300px; height: 300px;
+      left: calc(50% - 150px);
+      top: calc(50% - 150px);
+      background: radial-gradient(circle, rgba(192,154,94,0.55) 0%, rgba(192,154,94,0.22) 40%, transparent 70%);
+      animation: ring-radiate 2.1s ease-out 0.28s both;
+    }
+    .splash-ring-2 {
+      width: 560px; height: 560px;
+      left: calc(50% - 280px);
+      top: calc(50% - 280px);
+      background: radial-gradient(circle, rgba(192,154,94,0.28) 0%, rgba(192,154,94,0.1) 40%, transparent 70%);
+      animation: ring-radiate 2.4s ease-out 0.55s both;
+    }
+    .splash-ring-3 {
+      width: 960px; height: 960px;
+      left: calc(50% - 480px);
+      top: calc(50% - 480px);
+      background: radial-gradient(circle, rgba(192,154,94,0.12) 0%, rgba(192,154,94,0.04) 42%, transparent 70%);
+      animation: ring-radiate 2.8s ease-out 0.85s both;
+    }
+    @keyframes ring-radiate {
+      0%   { transform: scale(0.08); opacity: 0; }
+      18%  { opacity: 1; }
+      68%  { opacity: 0.85; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Splash Screen -->
+  <div id="splash" aria-hidden="true">
+    <div class="splash-ring splash-ring-1"></div>
+    <div class="splash-ring splash-ring-2"></div>
+    <div class="splash-ring splash-ring-3"></div>
+    <div class="splash-logo-wrap">
+      <img src="images/logo-new.png" alt="K &amp; A Designs" />
+    </div>
+  </div>
 
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
@@ -1032,6 +1116,21 @@
   </div>
 
   <script src="js/main-v2.js?v=18"></script>
+  <script>
+    (function() {
+      var splash = document.getElementById('splash');
+      if (!splash) return;
+      if (sessionStorage.getItem('ka-splash-shown')) {
+        splash.remove();
+        return;
+      }
+      sessionStorage.setItem('ka-splash-shown', '1');
+      setTimeout(function() {
+        splash.classList.add('splash-exit');
+        setTimeout(function() { splash.remove(); }, 1000);
+      }, 2600);
+    })();
+  </script>
 
   <!-- Restore scroll when returning from PBJ modal on projects page -->
   <script>
