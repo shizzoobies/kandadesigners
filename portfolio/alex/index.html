@@ -1130,18 +1130,19 @@
           .kanda-card-imgs {
             flex: 0 0 300px; max-width: 300px;
             display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
-            align-self: stretch;
-            cursor: zoom-in;
+            align-self: flex-start;
+            max-height: 260px;
           }
           .kanda-card-imgs img {
-            display: block; width: 100%; height: 100%;
+            display: block; width: 100%; height: 260px;
             object-fit: cover; object-position: top center;
             border-radius: 6px;
             border: 1px solid var(--border);
             box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-            transition: border-color 0.2s, box-shadow 0.2s;
+            cursor: zoom-in;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
           }
-          .kanda-card-imgs:hover img { border-color: rgba(192,154,94,0.4); box-shadow: 0 6px 24px rgba(0,0,0,0.5); }
+          .kanda-card-imgs img:hover { border-color: rgba(192,154,94,0.5); box-shadow: 0 6px 24px rgba(0,0,0,0.5); transform: scale(1.02); }
           .kanda-lightbox {
             position: fixed; inset: 0; z-index: 3000;
             background: rgba(0,0,0,0.92);
@@ -1158,7 +1159,8 @@
           }
           @media (max-width: 700px) {
             .kanda-card { flex-direction: column; }
-            .kanda-card-imgs { flex: 0 0 auto; max-width: 100%; grid-template-columns: 1fr 1fr; height: 200px; }
+            .kanda-card-imgs { flex: 0 0 auto; max-width: 100%; grid-template-columns: 1fr 1fr; }
+            .kanda-card-imgs img { height: 160px; }
           }
         </style>
 
@@ -1184,50 +1186,32 @@
 
       <!-- Lightbox for site screenshots -->
       <div class="kanda-lightbox" id="kanda-lightbox" aria-hidden="true">
-        <img src="../../images/site-screenshot-home.jpeg" alt="K&amp;A Designs — full view" />
+        <img src="" alt="K&amp;A Designs — full view" id="kanda-lightbox-img" />
       </div>
       <script>
         (function () {
-          var thumb    = document.getElementById('kanda-thumb');
+          var imgs     = document.querySelectorAll('#kanda-thumb img');
           var lightbox = document.getElementById('kanda-lightbox');
-          function open()  { lightbox.classList.add('open');    lightbox.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-          function close() { lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true');  document.body.style.overflow=''; }
-          thumb.addEventListener('click', open);
-          thumb.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' ') open(); });
+          var lbImg    = document.getElementById('kanda-lightbox-img');
+          function open(src, alt) {
+            lbImg.src = src; lbImg.alt = alt;
+            lightbox.classList.add('open');
+            lightbox.setAttribute('aria-hidden','false');
+            document.body.style.overflow='hidden';
+          }
+          function close() {
+            lightbox.classList.remove('open');
+            lightbox.setAttribute('aria-hidden','true');
+            document.body.style.overflow='';
+          }
+          imgs.forEach(function(img) {
+            img.addEventListener('click', function(e) { e.stopPropagation(); open(img.src, img.alt); });
+          });
           lightbox.addEventListener('click', close);
           document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&lightbox.classList.contains('open')) close(); });
         })();
       </script>
 
-      <!-- Secondary web cards -->
-      <div class="alex-web-cards fade-up">
-
-        <!-- Featured: This Site -->
-        <div class="alex-web-card alex-web-card--featured">
-          <div class="alex-web-card-title">This Site Is the Case Study</div>
-          <p>kandadesigners.com is a live, fully custom web build -- every page, interaction, and system designed and directed by Alex. The orbital service navigator, scroll-snap galleries, cross-page modal routing, a playable scrolling shooter, before/after image comparisons, animated skill tickers, and a CI/CD deployment pipeline are all running right now, in the browser you are using. Claude Code was used as a development accelerator throughout -- the same way a senior developer uses any modern tooling: to move faster and ship better.</p>
-          <div class="site-feature-chips">
-            <span class="site-chip">Orbital Navigator</span>
-            <span class="site-chip">Scroll-Snap Galleries</span>
-            <span class="site-chip">Playable Game Modal</span>
-            <span class="site-chip">Before / After Slider</span>
-            <span class="site-chip">Cross-Page Modal Routing</span>
-            <span class="site-chip">Animated Skill Ticker</span>
-            <span class="site-chip">CI / CD Pipeline</span>
-            <span class="site-chip">SVG Animations</span>
-            <span class="site-chip">Responsive Design</span>
-          </div>
-          <a href="/" class="btn btn-outline" style="align-self:flex-start;margin-top:0.25rem;">Explore the Site <span class="arr">→</span></a>
-        </div>
-
-        <!-- Client Sites -->
-        <div class="alex-web-card">
-          <div class="alex-web-card-title">Client Sites</div>
-          <p>Production websites built for real clients: SEO-optimized, performance-focused, and clean. Minimal dependencies, fast load times, and tracked with Google Analytics and Search Console for ongoing improvement.</p>
-          <button class="btn btn-ghost" data-open-fixalways style="align-self:flex-start;margin-top:0.5rem;">Preview Example <span class="arr">→</span></button>
-        </div>
-
-      </div>
 
 
     </div>
