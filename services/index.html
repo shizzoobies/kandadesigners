@@ -70,6 +70,14 @@
     .svc-gallery {
       background: var(--bg);
       border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+    }
+    .svc-gallery-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
     }
     .svc-wrap {
       position: relative;
@@ -169,6 +177,8 @@
     .svc-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
     @media (max-width: 700px) {
+      .svc-gallery { padding: 1.25rem 1rem; }
+      .svc-gallery-inner { border-radius: 8px; }
       .svc-wrap { height: auto; }
       .svc-slide {
         position: relative; inset: auto;
@@ -183,6 +193,7 @@
   </style>
 
   <section class="svc-gallery" id="svcGallery" aria-label="Services">
+    <div class="svc-gallery-inner">
 
     <div class="svc-wrap" id="svcWrap">
 
@@ -279,6 +290,7 @@
       <button class="svc-dot"        role="tab" aria-selected="false" aria-controls="svcSlide3" aria-label="Web and Digital"></button>
     </div>
 
+    </div><!-- /svc-gallery-inner -->
   </section>
 
   <script>
