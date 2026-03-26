@@ -244,43 +244,6 @@
       flex: 1;
     }
 
-    /* ── Project Makeover Scroll Strip ──────────── */
-    .pm-strip-section {
-      margin: 2.5rem 0;
-    }
-    .pm-strip-outer {
-      position: relative;
-      overflow: hidden;
-      margin: 0 calc(-1 * var(--gutter));
-    }
-    .pm-strip-outer::before,
-    .pm-strip-outer::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0; width: 80px;
-      z-index: 2; pointer-events: none;
-    }
-    .pm-strip-outer::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
-    .pm-strip-outer::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
-    .pm-strip-track {
-      display: flex;
-      gap: 8px;
-      width: max-content;
-      animation: pm-scroll 28s linear infinite;
-    }
-    .pm-strip-outer:hover .pm-strip-track { animation-play-state: paused; }
-    @keyframes pm-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    .pm-strip-img {
-      flex-shrink: 0;
-      width: 300px;
-      height: 210px;
-      object-fit: cover;
-      display: block;
-    }
-
     /* ── Responsive ─────────────────────────────── */
     @media (max-width: 1000px) {
       .case-study { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -291,9 +254,36 @@
       .elearn-stat:nth-child(4) { border-top: 1px solid var(--border); }
     }
 
+    /* ── Project Makeover Collage ───────────────── */
+    .pm-collage {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 8px;
+      height: 380px;
+      margin: 2.5rem 0 2rem;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .pm-collage img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pm-collage-main {
+      grid-row: 1 / 3;
+    }
+
+    @media (max-width: 680px) {
+      .pm-collage {
+        grid-template-columns: 1fr 1fr;
+        height: 260px;
+      }
+      .pm-collage-main { grid-row: 1 / 1; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .skills-ticker-track,
-      .pm-strip-track { animation: none; }
+      .skills-ticker-track { animation: none; }
     }
   </style>
 </head>
@@ -452,70 +442,10 @@
         <button class="btn btn-outline" data-open-nonprofit>See Full Story</button>
       </div>
 
-    </div>
-
-    <!-- Scrolling photo strip — full bleed -->
-    <div class="pm-strip-outer fade-up" aria-label="Project Makeover photos">
-      <div class="pm-strip-track">
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="Volunteers at work" />
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="School transformation" />
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="Students and volunteers" />
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="Believe in yourself mural" />
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="" aria-hidden="true" />
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="" aria-hidden="true" />
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="" aria-hidden="true" />
-        <img class="pm-strip-img" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="" aria-hidden="true" />
-      </div>
-    </div>
-
-    <div class="alex-chapter-inner" style="padding-top:2.5rem;">
-      <div class="fade-up" style="display:flex; align-items:center; gap:2rem; padding:2rem 2.25rem; background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:0 6px 6px 0;">
-        <div style="flex:1;">
-          <span class="label" style="display:block;margin-bottom:0.5rem;">Board Member &middot; Volunteer Coordinator</span>
-          <p style="font-size:0.88rem;color:var(--text-mid);line-height:1.75;margin:0;">Kristina serves on the Project Makeover board and helps coordinate the volunteer teams that descend on schools for weekend makeover blitzes: painting murals, building gardens, refreshing libraries, and transforming tired spaces into ones that tell kids their dreams matter.</p>
-        </div>
-        <a href="https://www.projectmakeover.org" target="_blank" rel="noopener" class="btn btn-outline" style="flex-shrink:0;">Visit projectmakeover.org ↗</a>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ════════════════════════════════════════════
-       PHOTOGRAPHY & VISUAL STORYTELLING
-       ════════════════════════════════════════════ -->
-  <section class="alex-chapter">
-    <div class="alex-chapter-inner">
-
-      <div class="portfolio-section-head fade-up">
-        <div>
-          <span class="label">Photography</span>
-          <h2>Visual Storytelling</h2>
-          <p>Photography that captures real moments and communicates with intention. Available for portrait, event, and editorial work.</p>
-        </div>
-        <a href="/contact/" class="btn btn-outline" data-open-contact>Book a Shoot</a>
-      </div>
-
-      <div class="case-study fade-up">
-        <div class="case-study-visual">
-          <img src="../../images/ChatGPT-Image-Feb-15-2026-03_13_00-PM.png" alt="Kristina Anderson photography" />
-        </div>
-        <div class="case-study-body">
-          <span class="label">Portrait &middot; Event &middot; Editorial</span>
-          <h3>The Story Behind the Frame</h3>
-          <p class="case-study-desc">
-            Kristina's photography is rooted in the same philosophy as her instructional design work: every image should communicate something true. Whether it's a portrait session, a community event, or editorial work, she brings the same attention to composition and storytelling that she brings to every learning experience she designs.
-          </p>
-          <div class="case-study-tech">
-            <span class="tech-pill">Portrait Photography</span>
-            <span class="tech-pill">Event Coverage</span>
-            <span class="tech-pill">Adobe Lightroom</span>
-            <span class="tech-pill">Adobe Photoshop</span>
-            <span class="tech-pill">Editorial</span>
-          </div>
-          <div class="case-study-ctas">
-            <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
-          </div>
-        </div>
+      <div class="pm-collage fade-up">
+        <img class="pm-collage-main" src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="Students and volunteers" />
+        <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="Volunteers at work" />
+        <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="Believe in yourself mural" />
       </div>
 
     </div>
