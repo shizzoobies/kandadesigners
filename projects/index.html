@@ -908,6 +908,12 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
       });
+
+      /* Auto-open when arriving from portfolio via #pbj-preview */
+      if (window.location.hash === '#pbj-preview') {
+        openModal();
+        history.replaceState(null, '', window.location.pathname);
+      }
     })();
   </script>
 
