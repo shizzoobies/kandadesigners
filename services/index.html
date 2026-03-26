@@ -199,20 +199,16 @@
     .svc-arrow-prev { left: 0.75rem; }
     .svc-arrow-next { right: 0.75rem; }
 
-    /* See example button */
-    .svc-see-example {
-      margin-top: 0.6rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.6rem; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--sc, var(--accent));
-      background: none; border: none;
-      cursor: pointer; padding: 0;
-      text-decoration: underline; text-underline-offset: 3px;
+    .svc-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
       align-self: flex-start;
-      transition: opacity 0.2s;
     }
-    .svc-see-example:hover { opacity: 0.7; }
+    .svc-see-example {
+      color: var(--sc, var(--accent));
+      border-color: var(--sc, var(--accent));
+    }
     .cta-strip { padding: 2.5rem 0; }
 
     @media (max-width: 700px) {
@@ -256,8 +252,10 @@
             <li>Job aids, infographics, and performance support materials</li>
             <li>End-to-end course development from concept to launch</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
-          <button class="svc-see-example" data-href="/#elearn-preview">See Interactive Examples &rarr;</button>
+          <div class="svc-btns">
+            <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+            <button class="btn btn-ghost svc-see-example" data-href="/#elearn-preview">See Examples</button>
+          </div>
         </div>
       </article>
 
@@ -278,8 +276,10 @@
             <li>Captioning, transcripts, and accessibility formatting</li>
             <li>Motion graphics and visual enhancements for engagement</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
-          <button class="svc-see-example" data-href="/#music-preview">Hear AI Audio Samples &rarr;</button>
+          <div class="svc-btns">
+            <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+            <button class="btn btn-ghost svc-see-example" data-href="/#music-preview">Hear Samples</button>
+          </div>
         </div>
       </article>
 
@@ -300,7 +300,9 @@
             <li>Creative assets: templates, graphics, short-form edits, banners</li>
             <li>Performance check-ins and optimization based on results</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
+          <div class="svc-btns">
+            <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+          </div>
         </div>
       </article>
 
@@ -321,8 +323,10 @@
             <li>AI-powered systems and workflow automation</li>
             <li>Landing pages, portfolio sites, and business websites</li>
           </ul>
-          <a href="/contact/" class="btn btn-primary" data-open-contact style="align-self:flex-start;">Book a Consultation</a>
-          <button class="svc-see-example" data-href="/projects/#pbj-preview">See Web Design Case Study &rarr;</button>
+          <div class="svc-btns">
+            <a href="/contact/" class="btn btn-primary" data-open-contact>Book a Consultation</a>
+            <button class="btn btn-ghost svc-see-example" data-href="/projects/#pbj-preview">See Case Study</button>
+          </div>
         </div>
       </article>
 
