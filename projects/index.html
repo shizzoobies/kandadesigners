@@ -598,12 +598,29 @@
       width: 100%; height: 100%;
       object-fit: cover; object-position: top center;
       display: block; max-width: none;
+      z-index: 1;
     }
-    .pbj-img--after {
+
+    /* Slow scroll pan — reveals full page from top to bottom */
+    @keyframes pbj-scroll-shot {
+      0%, 6%   { object-position: center top; }
+      86%, 100% { object-position: center bottom; }
+    }
+    .pbj-img--before.scrolling {
+      animation: pbj-scroll-shot 14s ease-in-out forwards;
+    }
+
+    /* Live iframe for the "after" state */
+    .pbj-iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border: none;
+      z-index: 2;
       opacity: 0;
       transition: opacity 1.1s ease;
+      background: var(--bg);
     }
-    .pbj-img--after.visible { opacity: 1; }
+    .pbj-iframe.visible { opacity: 1; }
 
     /* Labels */
     .pbj-phase-label {
@@ -646,10 +663,10 @@
       backdrop-filter: blur(4px);
     }
 
-    /* Bottom mask — hides footer contact info */
+    /* Bottom mask — hides footer contact info in screenshots + iframe footer */
     .pbj-bottom-mask {
       position: absolute; bottom: 0; left: 0; right: 0;
-      height: 100px; z-index: 5; pointer-events: none;
+      height: 120px; z-index: 6; pointer-events: none;
       background: linear-gradient(to bottom, transparent, var(--bg));
     }
 
@@ -733,7 +750,7 @@
 
         <div class="pbj-img-area">
           <img class="pbj-img pbj-img--before" id="pbj-before" src="../images/pbj-old-home.jpg" alt="Homepage before redesign" />
-          <img class="pbj-img pbj-img--after"  id="pbj-after"  src="../images/pbj-new-home.jpg" alt="Homepage after redesign" />
+          <iframe class="pbj-iframe" id="pbj-after" src="" title="PBJ Strategic Accounting — redesigned site" allowfullscreen></iframe>
           <div class="pbj-phase-label pbj-label-before" id="pbj-lbl-before" aria-hidden="true">Before</div>
           <div class="pbj-phase-label pbj-label-after"  id="pbj-lbl-after"  aria-hidden="true">After</div>
           <div class="pbj-new-overlay" id="pbj-new-overlay" aria-hidden="true">
@@ -751,24 +768,48 @@
     /* ── PBJ Redesign Modal ── */
     (function () {
       var CHANGES = [
-        { label: 'Homepage',     url: 'pbjsa.com',          before: '../images/pbj-old-home.jpg',     after: '../images/pbj-new-home.jpg',     isNew: false },
-        { label: 'About Page',   url: 'pbjsa.com / about',  before: '../images/pbj-old-about.jpg',    after: '../images/pbj-new-about.jpg',    isNew: false },
-        { label: 'Services',     url: 'pbjsa.com / services',before: '../images/pbj-old-services.jpg',after: '../images/pbj-new-services.jpg', isNew: false },
-        { label: 'FAQ Page',     url: 'pbja.pages.dev / faq',before: null,                            after: '../images/pbj-new-faq.jpg',      isNew: true  },
+        {
+          label:     'Homepage',
+          oldUrl:    'pbjsa.com',
+          iframeUrl: 'https://pbja.pages.dev/',
+          before:    '../images/pbj-old-home.jpg',
+          isNew:     false
+        },
+        {
+          label:     'About Page',
+          oldUrl:    'pbjsa.com / about',
+          iframeUrl: 'https://pbja.pages.dev/about',
+          before:    '../images/pbj-old-about.jpg',
+          isNew:     false
+        },
+        {
+          label:     'Services',
+          oldUrl:    'pbjsa.com / services',
+          iframeUrl: 'https://pbja.pages.dev/services',
+          before:    '../images/pbj-old-services.jpg',
+          isNew:     false
+        },
+        {
+          label:     'FAQ Page',
+          oldUrl:    '—',
+          iframeUrl: 'https://pbja.pages.dev/faq',
+          before:    null,
+          isNew:     true
+        },
       ];
 
-      var modal      = document.getElementById('pbj-modal');
-      var backdrop   = document.getElementById('pbj-modal-backdrop');
-      var closeBtn   = document.getElementById('pbj-close');
-      var openBtn    = document.getElementById('open-pbj-btn');
-      var urlBar     = document.getElementById('pbj-url');
-      var imgBefore  = document.getElementById('pbj-before');
-      var imgAfter   = document.getElementById('pbj-after');
-      var lblBefore  = document.getElementById('pbj-lbl-before');
-      var lblAfter   = document.getElementById('pbj-lbl-after');
-      var newOverlay = document.getElementById('pbj-new-overlay');
-      var fill       = document.getElementById('pbj-fill');
-      var btns       = Array.from(document.querySelectorAll('.pbj-change-btn'));
+      var modal       = document.getElementById('pbj-modal');
+      var backdrop    = document.getElementById('pbj-modal-backdrop');
+      var closeBtn    = document.getElementById('pbj-close');
+      var openBtn     = document.getElementById('open-pbj-btn');
+      var urlBar      = document.getElementById('pbj-url');
+      var imgBefore   = document.getElementById('pbj-before');
+      var iframeAfter = document.getElementById('pbj-after');
+      var lblBefore   = document.getElementById('pbj-lbl-before');
+      var lblAfter    = document.getElementById('pbj-lbl-after');
+      var newOverlay  = document.getElementById('pbj-new-overlay');
+      var fill        = document.getElementById('pbj-fill');
+      var btns        = Array.from(document.querySelectorAll('.pbj-change-btn'));
       var fadeTimer;
 
       function openModal() {
@@ -777,57 +818,86 @@
         document.body.style.overflow = 'hidden';
         selectChange(0);
       }
+
       function closeModal() {
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         clearTimeout(fadeTimer);
+        /* Unload iframe so it stops running in background */
+        iframeAfter.src = '';
+        iframeAfter.classList.remove('visible');
+      }
+
+      function restartScrollAnim() {
+        /* Force CSS animation restart via reflow trick */
+        imgBefore.classList.remove('scrolling');
+        void imgBefore.offsetWidth;
+        imgBefore.classList.add('scrolling');
       }
 
       function selectChange(idx) {
         clearTimeout(fadeTimer);
         var c = CHANGES[idx];
 
-        /* Update URL bar */
-        urlBar.textContent = c.url;
-
-        /* Swap images */
-        imgBefore.src = c.before || c.after;
-        imgAfter.src  = c.after;
-        imgAfter.classList.remove('visible');
-
-        /* Active button */
+        /* Active sidebar button */
         btns.forEach(function (b, i) { b.classList.toggle('active', i === idx); });
 
-        /* Reset labels */
+        /* URL bar → old site while before is showing */
+        urlBar.textContent = c.oldUrl;
+
+        /* Reset before image */
+        if (c.before) {
+          imgBefore.src = c.before;
+          imgBefore.style.display = '';
+          restartScrollAnim();
+        } else {
+          imgBefore.style.display = 'none';
+          imgBefore.classList.remove('scrolling');
+        }
+
+        /* Reset iframe & labels */
+        iframeAfter.src = '';
+        iframeAfter.classList.remove('visible');
         lblBefore.classList.remove('hidden');
         lblAfter.classList.remove('visible');
+        newOverlay.classList.remove('visible');
+
+        /* Reset progress bar */
         fill.style.transition = 'none';
         fill.style.width = '0';
 
         if (c.isNew) {
-          /* New page — show directly as "after" */
+          /* New page — skip before state, load iframe immediately */
           newOverlay.classList.add('visible');
           lblBefore.classList.add('hidden');
           lblAfter.classList.add('visible');
-          imgAfter.classList.add('visible');
+          iframeAfter.src = c.iframeUrl;
+          iframeAfter.classList.add('visible');
+          urlBar.textContent = c.iframeUrl.replace('https://', '');
           fill.style.width = '100%';
         } else {
-          newOverlay.classList.remove('visible');
-          /* Start progress bar, then crossfade */
+          /* Start loading iframe in the background while before plays */
+          iframeAfter.src = c.iframeUrl;
+
+          /* Kick off progress bar */
           requestAnimationFrame(function () {
             fill.style.transition = 'width 1.6s linear';
             fill.style.width = '100%';
           });
+
+          /* After progress bar completes → crossfade to live iframe */
           fadeTimer = setTimeout(function () {
-            imgAfter.classList.add('visible');
+            iframeAfter.classList.add('visible');
             lblBefore.classList.add('hidden');
             lblAfter.classList.add('visible');
+            /* Update URL bar to new site */
+            urlBar.textContent = c.iframeUrl.replace('https://', '');
           }, 1600);
         }
       }
 
-      /* Wire buttons */
+      /* Wire sidebar nav buttons */
       btns.forEach(function (btn, i) {
         btn.addEventListener('click', function () { selectChange(i); });
       });
