@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Services | K &amp; A Designs</title>
   <meta name="description" content="Instructional design, web design, video production, AI audio, social media, and branding services from K &amp; A Designs." />
+  <link rel="canonical" href="https://kandadesigners.com/services/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kandadesigners.com/services/" />
+  <meta property="og:title" content="Services | K &amp; A Designs" />
+  <meta property="og:description" content="Instructional design, web design, video production, AI audio, social media, and branding services from K &amp; A Designs." />
+  <meta property="og:image" content="https://kandadesigners.com/images/site-screenshot-home.jpeg" />
+  <meta property="og:site_name" content="K &amp; A Designs" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Services | K &amp; A Designs" />
+  <meta name="twitter:description" content="Instructional design, web design, video production, AI audio, social media, and branding services from K &amp; A Designs." />
+  <meta name="twitter:image" content="https://kandadesigners.com/images/site-screenshot-home.jpeg" />
   <link rel="icon" href="../images/favicon.svg" type="image/svg+xml" /><link rel="icon" href="../images/favicon.png" sizes="512x512" type="image/png" />
   <link rel="stylesheet" href="../css/style.css?v=18" />
 </head>
@@ -238,7 +249,7 @@
       <!-- 01 Instructional Design -->
       <article class="svc-slide active" id="svcSlide0" style="--sc:#c09a5e" aria-label="Instructional Design">
         <div class="svc-img">
-          <img src="../images/ID-Concept-Art.png" alt="Instructional Design" />
+          <img src="../images/ID-Concept-Art.png" alt="Instructional Design" loading="lazy" />
         </div>
         <div class="svc-body">
           <h2>Instructional Design</h2>
@@ -261,7 +272,7 @@
       <!-- 02 Audio and Video -->
       <article class="svc-slide" id="svcSlide1" style="--sc:#3dd9d6" aria-label="Audio and Video Design">
         <div class="svc-img">
-          <img src="../images/Video-and-Audio-concept-art.png" alt="Audio and Video Design" />
+          <img src="../images/Video-and-Audio-concept-art.png" alt="Audio and Video Design" loading="lazy" />
         </div>
         <div class="svc-body">
           <h2>Audio &amp; Video Design</h2>
@@ -284,7 +295,7 @@
       <!-- 03 Social and Branding -->
       <article class="svc-slide" id="svcSlide2" style="--sc:#9b5ef5" aria-label="Social Media and Branding">
         <div class="svc-img">
-          <img src="../images/Social-Media-Concept-Art.png" alt="Social Media and Branding" />
+          <img src="../images/Social-Media-Concept-Art.png" alt="Social Media and Branding" loading="lazy" />
         </div>
         <div class="svc-body">
           <h2>Social Media &amp; Branding</h2>
@@ -306,7 +317,7 @@
       <!-- 04 Web and Digital -->
       <article class="svc-slide" id="svcSlide3" style="--sc:#5ef590" aria-label="Web and Digital Design">
         <div class="svc-img">
-          <img src="../images/chatgpt-image-feb-13-2026-04_37_13-pm.png" alt="Web and Digital Design" />
+          <img src="../images/chatgpt-image-feb-13-2026-04_37_13-pm.png" alt="Web and Digital Design" loading="lazy" />
         </div>
         <div class="svc-body">
           <h2>Web &amp; Digital Design</h2>
@@ -383,6 +394,28 @@
 
       gallery.addEventListener('mouseenter', stopAuto);
       gallery.addEventListener('mouseleave', startAuto);
+
+      // Touch swipe support
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var swiping = false;
+      gallery.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+        swiping = true;
+        stopAuto();
+      }, { passive: true });
+      gallery.addEventListener('touchend', function (e) {
+        if (!swiping) return;
+        swiping = false;
+        var dx = e.changedTouches[0].screenX - touchStartX;
+        var dy = e.changedTouches[0].screenY - touchStartY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+          if (dx < 0) goTo(current + 1);
+          else goTo(current - 1);
+        }
+        startAuto();
+      }, { passive: true });
 
       gallery.setAttribute('tabindex', '0');
       gallery.addEventListener('keydown', function (e) {
