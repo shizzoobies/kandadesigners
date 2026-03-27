@@ -1398,8 +1398,13 @@ a.ticker-item:hover {
 }
 
 @media (max-width: 540px) {
-  .orbit-stage { width: 320px; height: 320px; }
-  .orbit-ring-svg { viewBox: "0 0 320 320"; }
+  .orbit-stage { width: 300px; height: 300px; }
+  .orbit-node { width: 80px; height: 80px; }
+  .orbit-node-icon { width: 22px; height: 22px; }
+  .orbit-node-name { font-size: 0.72rem; }
+  .orbit-center { width: 90px; height: 90px; }
+  .orbit-center-eye { font-size: 0.4rem; }
+  .orbit-center-lbl { font-size: 0.85rem; }
   .svc-modal-grid { grid-template-columns: 1fr; }
 }
 

@@ -168,23 +168,35 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
     }
   ];
 
-  const RADIUS = 172;
   const TOTAL  = nodes.length;
   let rot      = -Math.PI / 2;
   let paused   = false;
   let activeIdx = -1;
+  let visible  = true;
   let raf;
+
+  function getRadius() {
+    return Math.min(stage.offsetWidth, stage.offsetHeight) / 2 - 60;
+  }
 
   function cx() { return stage.offsetWidth  / 2; }
   function cy() { return stage.offsetHeight / 2; }
 
   function positionNodes() {
+    var r = getRadius();
     nodes.forEach((node, i) => {
       const angle = (i / TOTAL) * Math.PI * 2 + rot;
-      node.style.left = (cx() + Math.cos(angle) * RADIUS) + 'px';
-      node.style.top  = (cy() + Math.sin(angle) * RADIUS) + 'px';
+      node.style.left = (cx() + Math.cos(angle) * r) + 'px';
+      node.style.top  = (cy() + Math.sin(angle) * r) + 'px';
     });
   }
+
+  // Pause animation when orbit is off-screen
+  var orbitObserver = new IntersectionObserver(function (entries) {
+    visible = entries[0].isIntersecting;
+    if (visible && !raf) tick();
+  }, { threshold: 0.1 });
+  orbitObserver.observe(stage);
 
   function nearestToTop() {
     let best = 0, bestDist = Infinity;
@@ -215,6 +227,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   }
 
   function tick() {
+    if (!visible) { raf = null; return; }
     if (!paused) {
       rot += 0.0008;
       positionNodes();
@@ -227,6 +240,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
   setActive(0);
   tick();
 
+  window.addEventListener('resize', positionNodes);
+
   nodes.forEach((node, i) => {
     node.addEventListener('mouseenter', () => {
       paused = true;
@@ -237,6 +252,11 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       paused = false;
       ringDash && ringDash.classList.remove('paused');
     });
+    node.addEventListener('touchstart', () => {
+      paused = true;
+      ringDash && ringDash.classList.add('paused');
+      setActive(i);
+    }, { passive: true });
     node.addEventListener('click', () => {
       // 0=Project Management→nonprofit, 1=Web&Digital→PBJ, 2=Video&Audio→music,
       // 3=Web Games→shooter, 4=HTML Interactives→elearn
@@ -257,6 +277,15 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbo
       }
     });
   });
+
+  // Resume orbit after tapping outside nodes on mobile
+  document.addEventListener('touchstart', function (e) {
+    if (!paused) return;
+    if (!e.target.closest('.orbit-node')) {
+      paused = false;
+      ringDash && ringDash.classList.remove('paused');
+    }
+  }, { passive: true });
 
   function openModal()  {
     modal.classList.add('is-open');

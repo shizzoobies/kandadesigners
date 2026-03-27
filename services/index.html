@@ -395,6 +395,28 @@
       gallery.addEventListener('mouseenter', stopAuto);
       gallery.addEventListener('mouseleave', startAuto);
 
+      // Touch swipe support
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var swiping = false;
+      gallery.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+        swiping = true;
+        stopAuto();
+      }, { passive: true });
+      gallery.addEventListener('touchend', function (e) {
+        if (!swiping) return;
+        swiping = false;
+        var dx = e.changedTouches[0].screenX - touchStartX;
+        var dy = e.changedTouches[0].screenY - touchStartY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+          if (dx < 0) goTo(current + 1);
+          else goTo(current - 1);
+        }
+        startAuto();
+      }, { passive: true });
+
       gallery.setAttribute('tabindex', '0');
       gallery.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current - 1); startAuto(); }
