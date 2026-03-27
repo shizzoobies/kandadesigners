@@ -3,6 +3,7 @@
 
 # WordPress export (not needed for the live site)
 *.xml
+!sitemap.xml
 images from Wordpress/
 
 # OS junk

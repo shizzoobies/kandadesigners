@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /mbsfeedback/
+
+Sitemap: https://kandadesigners.com/sitemap.xml
