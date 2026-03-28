@@ -412,7 +412,7 @@
               <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
             </svg>
             <p class="drop-primary">Drop files here, or <strong>click to browse</strong></p>
-            <p class="drop-sub">Images, PDFs, documents, video &nbsp;·&nbsp; Up to 10 files &nbsp;·&nbsp; 5MB each</p>
+            <p class="drop-sub">Images, PDFs, documents, video &nbsp;·&nbsp; Up to 10 files &nbsp;·&nbsp; 20MB each</p>
           </div>
 
           <div class="file-previews" id="filePreviews"></div>
@@ -446,8 +446,8 @@
       function addFiles(newFiles) {
         Array.from(newFiles).forEach(function (f) {
           if (attachedFiles.length >= 10) return;
-          if (f.size > 5 * 1024 * 1024) {
-            alert('"' + f.name + '" is over 5MB and was skipped.');
+          if (f.size > 20 * 1024 * 1024) {
+            alert('"' + f.name + '" is over 20MB and was skipped. For large videos, paste a Drive or Dropbox link in the notes field.');
             return;
           }
           attachedFiles.push(f);
