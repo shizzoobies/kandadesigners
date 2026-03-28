@@ -514,12 +514,6 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        var name = document.getElementById('fb-name').value.trim();
-        if (!name) {
-          document.getElementById('fb-name').focus();
-          return;
-        }
-
         submitBtn.disabled = true;
         submitBtn.style.display = 'none';
         loading.classList.add('visible');
