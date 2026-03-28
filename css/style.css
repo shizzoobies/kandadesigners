@@ -1784,6 +1784,8 @@ a.ticker-item:hover {
 }
 
 .project-status--active { color: #6fcf97; }
+.project-status--alpha  { color: #f2c94c; }
+.project-status--alpha .dot { background: #f2c94c; }
 .project-status--soon   { color: var(--text-dim); }
 
 .project-status .dot {
@@ -1883,6 +1885,10 @@ a.ticker-item:hover {
   transition: transform 0.3s;
   display: flex;
   flex-direction: column;
+}
+
+.game-modal-panel--large {
+  width: min(1400px, 95vw);
 }
 
 .game-modal.is-open .game-modal-panel { transform: scale(1); }
