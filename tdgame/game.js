@@ -1349,5 +1349,7 @@ window.onload=async function(){
 
   document.addEventListener('click',(e)=>{if(!e.target.closest('#info-popup')&&!e.target.closest('canvas')){document.getElementById('info-popup').style.display='none';game.selectedBuilding=null;}});
 
+  document.addEventListener('keydown',(e)=>{if(e.code==='Space'&&game.phase==='play'){e.preventDefault();upgradeAll();}});
+
   requestAnimationFrame(loop);
 };
