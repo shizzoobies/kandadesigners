@@ -16,7 +16,9 @@ class StockfishEngine {
       try {
         // Use locally served Stockfish — prefer WASM (faster), fallback to pure JS
         const wasmSupported = typeof WebAssembly === 'object' && WebAssembly.validate(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
-        this.worker = new Worker(wasmSupported ? '/stockfish/stockfish.wasm.js' : '/stockfish/stockfish.js');
+        // Resolve paths relative to the chess page
+        const base = location.pathname.replace(/\/[^/]*$/, '/');
+        this.worker = new Worker(wasmSupported ? base + 'stockfish/stockfish.wasm.js' : base + 'stockfish/stockfish.js');
 
         this.worker.onmessage = (e) => {
           const line = e.data;
