@@ -34,7 +34,8 @@ const AGE_TILES=[
   {grass:1,path:2},{grass:3,path:4},{grass:5,path:6},
   {grass:7,path:8},{grass:9,path:10},{grass:11,path:12}
 ];
-const TOWER_IMGS=[13,14,15,16,17,18,19,20,21,22,23,24];
+// Tower images: indices 0-11 = original (13-24), indices 12-23 = new (60-71)
+const TOWER_IMGS=[13,14,15,16,17,18,19,20,21,22,23,24,60,61,62,63,64,65,66,67,68,69,70,71];
 const ECON_IMGS=[25,26,27,28,29,30];
 const ENEMY_IMGS=[
   {regular:[31,32],boss:33},
@@ -44,7 +45,9 @@ const ENEMY_IMGS=[
   {regular:[43,44],boss:45},
   {regular:[46,47],boss:48}
 ];
-const PROJ_IMGS=[49,49,50,50,50,51,52,53,54,55,null,56];
+// Projectile images per tower index (null = no projectile / melee / beam)
+const PROJ_IMGS=[49,49,50,50,50,51,52,53,54,55,null,56,
+  null,73,74,75,76,77,78,79,80,81,null,83];
 
 // ============= TOWERS (with targeting + armor bonuses) =============
 const TOWERS=[
@@ -83,7 +86,44 @@ const TOWERS=[
    desc:'Continuous beam, reveals all stealth in range',strong:'Everything'},
   {name:'Plasma',cost:1500,dmg:500,range:4.0,rate:2.0,pSpd:8,splash:2.5,age:5,clr:'#9400D3',
    targets:'both',canDetect:false,slow:0,bonusVs:'heavy',
-   desc:'Massive plasma blast, huge splash',strong:'Groups / Bosses'}
+   desc:'Massive plasma blast, huge splash',strong:'Groups / Bosses'},
+  // ---- NEW TOWERS (indices 12-23, images 60-71) ----
+  {name:'Bone Snare',cost:40,dmg:5,range:1.8,rate:0.8,pSpd:8,splash:0,age:0,clr:'#D2B48C',
+   targets:'ground',canDetect:false,slow:0.5,bonusVs:null,
+   desc:'Bone trap that heavily slows enemies',strong:'Fast enemies'},
+  {name:'Watchtower',cost:55,dmg:8,range:4.0,rate:1.0,pSpd:6,splash:0,age:0,clr:'#A0522D',
+   targets:'both',canDetect:true,slow:0,bonusVs:null,
+   desc:'Long range lookout, reveals stealth and hits air',strong:'Stealth / Air scout'},
+  {name:'Oil Cauldron',cost:100,dmg:35,range:2.0,rate:1.8,pSpd:4,splash:1.2,age:1,clr:'#B8860B',
+   targets:'ground',canDetect:false,slow:0.2,bonusVs:null,
+   desc:'Boiling oil deals splash damage and slows',strong:'Groups'},
+  {name:'Sling Tower',cost:70,dmg:30,range:4.0,rate:0.9,pSpd:7,splash:0,age:1,clr:'#C4A46C',
+   targets:'both',canDetect:false,slow:0,bonusVs:'light',
+   desc:'Long range sling hits air and ground',strong:'Light armor / Air'},
+  {name:'Boiling Pitch',cost:180,dmg:50,range:2.2,rate:2.5,pSpd:3,splash:1.8,age:2,clr:'#2F2F2F',
+   targets:'ground',canDetect:false,slow:0.4,bonusVs:null,
+   desc:'Tar trap with massive slow and splash',strong:'Groups / Fast enemies'},
+  {name:'Wizard Tower',cost:200,dmg:55,range:3.5,rate:1.2,pSpd:9,splash:0,age:2,clr:'#8A2BE2',
+   targets:'both',canDetect:true,slow:0,bonusVs:'heavy',
+   desc:'Magic bolts pierce defenses, reveals hidden foes',strong:'Stealth / Heavy'},
+  {name:'Tesla Coil',cost:350,dmg:40,range:3.0,rate:0.8,pSpd:15,splash:0,age:3,clr:'#4682B4',
+   targets:'both',canDetect:false,slow:0.15,bonusVs:null,isChain:true,chainCount:3,
+   desc:'Electric arcs chain between nearby enemies',strong:'Swarms'},
+  {name:'Flamethrower',cost:280,dmg:30,range:2.0,rate:0.1,pSpd:10,splash:1.5,age:3,clr:'#FF4500',
+   targets:'ground',canDetect:false,slow:0,bonusVs:'light',
+   desc:'Short range fire cone shreds groups',strong:'Swarms / Light armor'},
+  {name:'SAM Site',cost:450,dmg:350,range:5.5,rate:2.5,pSpd:9,splash:0,age:4,clr:'#556B2F',
+   targets:'air',canDetect:false,slow:0,bonusVs:'air',
+   desc:'Devastating anti-air missiles, ignores ground',strong:'Air specialist'},
+  {name:'Radar Station',cost:400,dmg:15,range:5.0,rate:1.5,pSpd:6,splash:0,age:4,clr:'#228B22',
+   targets:'both',canDetect:true,slow:0,bonusVs:null,isRadar:true,radarBuff:0.15,
+   desc:'Reveals stealth, boosts nearby tower range +15%',strong:'Stealth / Support'},
+  {name:'Gravity Well',cost:1200,dmg:60,range:3.5,rate:0,pSpd:0,splash:0,age:5,clr:'#4B0082',isLaser:true,
+   targets:'both',canDetect:false,slow:0.6,bonusVs:null,isGravity:true,
+   desc:'Warps spacetime, massively slows all in range',strong:'Everything (crowd control)'},
+  {name:'Railgun',cost:2000,dmg:800,range:7.0,rate:4.0,pSpd:30,splash:0,age:5,clr:'#FF6600',
+   targets:'both',canDetect:true,slow:0,bonusVs:'heavy',
+   desc:'Hypersonic round, extreme damage and range',strong:'Bosses / Heavy'}
 ];
 
 const ECONS=[
@@ -137,9 +177,8 @@ function armorMod(towerDef,enemyArmor){
 }
 
 function canTarget(towerDef,enemy){
-  // Check targeting type
   if(towerDef.targets==='ground'&&enemy.moveType==='air') return false;
-  // Check stealth
+  if(towerDef.targets==='air'&&enemy.moveType!=='air') return false; // SAM Site
   if(enemy.moveType==='stealth'&&!enemy.detected) return false;
   return true;
 }
@@ -150,7 +189,7 @@ let imagesLoaded=false;
 
 function preloadAssets(){
   return new Promise(resolve=>{
-    let total=59,loaded=0;
+    let total=83,loaded=0;
     const fill=document.getElementById('load-fill');
     const loadTxt=document.getElementById('load-text');
 
@@ -162,10 +201,13 @@ function preloadAssets(){
       if(loaded>=total){imagesLoaded=true;resolve();}
     }
 
-    for(let i=1;i<=59;i++){
+    // Load assets 1-71 and 73-83 (72,82 don't exist — trap towers)
+    let toLoad=[...Array.from({length:71},(_,i)=>i+1),73,74,75,76,77,78,79,80,81,83];
+    total=toLoad.length;
+    for(let i of toLoad){
       const img=new Image();
       img.onload=()=>{IMAGES[i]=img;onDone();};
-      img.onerror=()=>{onDone();}; // skip broken images, don't block
+      img.onerror=()=>{onDone();};
       img.src='Assets/'+i+'.png';
     }
 
@@ -331,14 +373,14 @@ function resize(){
 
 // ============= WAVE SYSTEM =============
 function getAge(wave){
-  if(wave<=5)return 0;if(wave<=10)return 1;if(wave<=15)return 2;
-  if(wave<=20)return 3;if(wave<=25)return 4;return 5;
+  if(wave<=8)return 0;if(wave<=16)return 1;if(wave<=24)return 2;
+  if(wave<=32)return 3;if(wave<=40)return 4;return 5;
 }
 function enemyHP(wave){return Math.round(40*Math.pow(1.18,wave))}
 function enemySpeed(wave){return 1.2+wave*0.02}
 function enemyCount(wave){return Math.min(6+wave*2,60)}
 function spawnInterval(wave){return Math.max(0.3,1.5-wave*0.04)}
-function isBoss(wave){return wave%5===0}
+function isBoss(wave){return wave%8===0}
 function killReward(hp){return Math.max(1,Math.ceil(hp*0.08))}
 function waveBonus(wave){return 25+wave*15}
 
@@ -360,6 +402,130 @@ function buildWaveComposition(wave){
   return comp;
 }
 
+// ============= AGE TRANSITION CUTSCENE =============
+let transition={active:false,startTime:0,fromAge:0,toAge:0,refund:0,particles:[]};
+const TRANSITION_DURATION=3500; // ms
+const TRANSITION_TEXTS=[
+  '','The Bronze Age Dawns','The Medieval Era Begins',
+  'The Industrial Revolution','The Modern Age','The Future Is Now'
+];
+
+function runTransition(fromAge,toAge,refund){
+  transition={active:true,startTime:Date.now(),fromAge,toAge,refund,particles:[]};
+  // Generate transition particles from old tile colors
+  let oldAge=AGES[fromAge],newAge=AGES[toAge];
+  for(let i=0;i<60;i++){
+    transition.particles.push({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-0.5)*200,vy:(Math.random()-0.5)*200+100,
+      size:Math.random()*8+4,life:1,
+      color:oldAge.path
+    });
+  }
+  game.phase='transition';
+}
+
+function renderTransition(){
+  let elapsed=Date.now()-transition.startTime;
+  let progress=Math.min(1,elapsed/TRANSITION_DURATION);
+
+  // Background: crossfade between age colors
+  let oldBg=AGES[transition.fromAge].bg,newBg=AGES[transition.toAge].bg;
+  ctx.fillStyle=oldBg;ctx.fillRect(0,0,W,H);
+  ctx.globalAlpha=progress;
+  ctx.fillStyle=newBg;ctx.fillRect(0,0,W,H);
+  ctx.globalAlpha=1;
+
+  // Old tiles shatter and fall away (first half)
+  if(progress<0.5){
+    let oldTiles=AGE_TILES[transition.fromAge];
+    let shatter=progress*2; // 0->1 during first half
+    let oldImg=IMAGES[oldTiles.grass];
+    if(oldImg){
+      for(let i=0;i<12;i++){
+        let x=W*0.1+i*(W*0.07);
+        let y=H*0.3+Math.sin(i*1.5)*40;
+        let sz=cellSize*(1-shatter*0.5);
+        ctx.globalAlpha=1-shatter;
+        ctx.save();ctx.translate(x,y);
+        ctx.rotate(shatter*i*0.3);
+        ctx.drawImage(oldImg,-sz/2,-sz/2+shatter*200,sz,sz);
+        ctx.restore();
+      }
+      ctx.globalAlpha=1;
+    }
+  }
+
+  // New tiles build up (second half)
+  if(progress>0.4){
+    let newTiles=AGE_TILES[transition.toAge];
+    let build=Math.min(1,(progress-0.4)/0.6);
+    let newImg=IMAGES[newTiles.grass];
+    let newPathImg=IMAGES[newTiles.path];
+    if(newImg){
+      for(let i=0;i<14;i++){
+        if(build<i/14)break;
+        let x=W*0.08+i*(W*0.065);
+        let y=H*0.35+Math.sin(i*1.2)*30;
+        let sz=cellSize*Math.min(1,(build-i/14)*5);
+        ctx.globalAlpha=Math.min(1,(build-i/14)*4);
+        ctx.drawImage(Math.random()>0.7&&newPathImg?newPathImg:newImg,x-sz/2,y-sz/2,sz,sz);
+      }
+      ctx.globalAlpha=1;
+    }
+  }
+
+  // Falling particles (old age debris)
+  for(let p of transition.particles){
+    p.x+=p.vx*0.016;p.y+=p.vy*0.016;p.vy+=300*0.016;p.life-=0.012;
+    if(p.life>0){
+      ctx.globalAlpha=p.life*0.6;ctx.fillStyle=p.color;
+      ctx.fillRect(p.x,p.y,p.size,p.size);
+    }
+  }
+  ctx.globalAlpha=1;
+
+  // Center text
+  let textProgress=Math.min(1,Math.max(0,(progress-0.2)/0.6));
+  if(textProgress>0){
+    ctx.globalAlpha=textProgress<0.8?textProgress:Math.max(0,1-(textProgress-0.8)*5);
+    ctx.textAlign='center';
+    ctx.font='bold '+Math.max(24,W*0.04)+'px sans-serif';
+    ctx.fillStyle='#FFD700';
+    ctx.strokeStyle='rgba(0,0,0,0.8)';ctx.lineWidth=4;
+    let txt=TRANSITION_TEXTS[transition.toAge]||AGES[transition.toAge].name;
+    ctx.strokeText(txt,W/2,H*0.45);
+    ctx.fillText(txt,W/2,H*0.45);
+
+    // Refund text
+    if(transition.refund>0&&progress>0.5){
+      ctx.font='bold '+Math.max(16,W*0.025)+'px sans-serif';
+      ctx.fillStyle='#fff';
+      ctx.globalAlpha*=0.8;
+      ctx.fillText('Buildings refunded: +'+transition.refund+' gold',W/2,H*0.55);
+    }
+    ctx.globalAlpha=1;
+  }
+
+  // Scanline effect
+  ctx.globalAlpha=0.03;
+  for(let y=0;y<H;y+=4){ctx.fillStyle=y%8<4?'#fff':'#000';ctx.fillRect(0,y,W,2);}
+  ctx.globalAlpha=1;
+
+  // Complete transition
+  if(progress>=1){
+    transition.active=false;
+    game.phase='play';
+    game.age=transition.toAge;
+    computePath();computeSmoothPath();
+    mapCacheCellSize=-1;
+    announceAge();
+    playEraMusic(game.age);
+    game.waveComposition=buildWaveComposition(game.wave+1);
+    updateUI();
+  }
+}
+
 function transitionAge(newAge){
   // Sell all buildings and refund full cost
   let refund=0;
@@ -372,19 +538,13 @@ function transitionAge(newAge){
     game.grid[r][c]=null;
   }
   game.gold+=refund;
-  if(refund>0){
-    game.floats.push({x:W/2,y:H/2-30,text:'Buildings sold: +'+refund,life:2.5,color:'#FFD700'});
-  }
-  // Clear any leftover projectiles/particles
-  game.projectiles=[];
+  game.projectiles=[];game.particles=[];
   game.selectedType=null;game.selectedCat=null;game.selectedBuilding=null;
   document.getElementById('info-popup').style.display='none';
 
-  // Switch age
-  game.age=newAge;
-  computePath();computeSmoothPath();
-  mapCacheCellSize=-1;
-  announceAge();
+  // Start animated transition instead of instant switch
+  playSFX(SFX.ageUp,0.7);
+  runTransition(game.age,newAge,refund);
 }
 
 function startWave(){
@@ -487,8 +647,9 @@ function update(dt){
     e.radius=e.boss?cellSize*0.4:cellSize*0.3;
   }
 
-  // Detection
+  // Detection + Radar buffs
   updateDetection();
+  updateRadarBuffs();
 
   // Towers
   game.laserTargets.clear();
@@ -514,25 +675,38 @@ function update(dt){
     // Air bonus
     if(def.bonusVs==='air'&&best.moveType==='air')dmgMult*=2.0;
 
-    if(def.isLaser){
+    if(def.isGravity){
+      // Gravity Well: continuous area slow + DPS to ALL in range
+      b.laserSndTimer=(b.laserSndTimer||0)-dt;
+      if(b.laserSndTimer<=0){playSFX(SFX.towerShot[b.typeId%12]||SFX.towerShot[10],0.1);b.laserSndTimer=2;}
+      for(let e of game.enemies){
+        if(e.hp<=0||!canTarget(def,e))continue;
+        if(dist(pos.x,pos.y,e.x,e.y)<=rng){
+          e.hp-=towerDmg(b)*dt;e.slow=Math.max(e.slow,def.slow);
+          if(e.hp<=0){e.hp=0;game.gold+=e.reward;spawnKillFx(e);}
+        }
+      }
+      game.laserTargets.set(b,{tx:pos.x,ty:pos.y-rng*0.3,sx:pos.x,sy:pos.y,isGravity:true,range:rng});
+    } else if(def.isLaser){
       let dmg=towerDmg(b)*dt*dmgMult;
       best.hp-=dmg;
       if(def.slow>0)best.slow=Math.max(best.slow,def.slow);
       game.laserTargets.set(b,{tx:best.x,ty:best.y,sx:pos.x,sy:pos.y});
       b.laserSndTimer=(b.laserSndTimer||0)-dt;
-      if(b.laserSndTimer<=0){playSFX(SFX.towerShot[b.typeId],0.1);b.laserSndTimer=2;}
+      if(b.laserSndTimer<=0){playSFX(SFX.towerShot[b.typeId%12]||SFX.towerShot[10],0.1);b.laserSndTimer=2;}
       if(best.hp<=0){best.hp=0;game.gold+=best.reward;spawnKillFx(best);}
     } else {
       b.cooldown=(b.cooldown||0)-dt;
       if(b.cooldown<=0){
         b.cooldown=def.rate/(1+b.level*0.1);
-        playSFX(SFX.towerShot[b.typeId],0.15);
+        playSFX(SFX.towerShot[b.typeId%12]||SFX.towerShot[0],0.15);
         let angle=Math.atan2(best.y-pos.y,best.x-pos.x);
         game.projectiles.push({
           x:pos.x,y:pos.y,tx:best.x,ty:best.y,target:best,
           speed:def.pSpd*cellSize,damage:towerDmg(b)*dmgMult,splash:def.splash*cellSize,
           slow:def.slow,color:def.clr,age:def.age,angle,
-          imgId:PROJ_IMGS[b.typeId],towerDef:def
+          imgId:PROJ_IMGS[b.typeId],towerDef:def,
+          isChain:def.isChain,chainCount:def.chainCount||0
         });
       }
     }
@@ -558,6 +732,25 @@ function update(dt){
         p.target.hp-=p.damage;
         if(p.slow>0)p.target.slow=Math.max(p.target.slow,p.slow);
         if(p.target.hp<=0){p.target.hp=0;game.gold+=p.target.reward;spawnKillFx(p.target);}
+        // Chain lightning: jump to nearby enemies
+        if(p.isChain&&p.chainCount>0){
+          let chainRange=cellSize*2.5,hit=p.target;
+          for(let c=0;c<p.chainCount;c++){
+            let closest=null,closestD=chainRange;
+            for(let e of game.enemies){
+              if(e.hp<=0||e===hit)continue;
+              let d=dist(hit.x,hit.y,e.x,e.y);
+              if(d<closestD){closest=e;closestD=d;}
+            }
+            if(!closest)break;
+            closest.hp-=p.damage*0.6;
+            if(p.slow>0)closest.slow=Math.max(closest.slow,p.slow);
+            // Chain visual
+            game.particles.push({x:hit.x,y:hit.y,vx:(closest.x-hit.x)*2,vy:(closest.y-hit.y)*2,life:0.2,color:'#64B5F6',size:2});
+            if(closest.hp<=0){closest.hp=0;game.gold+=closest.reward;spawnKillFx(closest);}
+            hit=closest;
+          }
+        }
       }
       for(let k=0;k<5;k++)game.particles.push({x:p.tx,y:p.ty,vx:(Math.random()-0.5)*100,vy:(Math.random()-0.5)*100,life:0.4,color:p.color,size:3});
       game.projectiles.splice(i,1);
@@ -590,8 +783,7 @@ function update(dt){
     // Check for age transition (boss wave = age boundary)
     let nextAge=getAge(game.wave+1);
     if(nextAge>game.age){
-      // Delay transition so player sees the "wave complete" message
-      setTimeout(()=>{transitionAge(nextAge);updateUI();},1500);
+      setTimeout(()=>{transitionAge(nextAge);},1500);
     } else {
       game.waveComposition=buildWaveComposition(game.wave+1);
       updateUI();
@@ -604,7 +796,30 @@ function update(dt){
 }
 
 function towerDmg(b){return TOWERS[b.typeId].dmg*(1+b.level*0.5)}
-function towerRange(b){return TOWERS[b.typeId].range*(1+b.level*0.1)}
+function towerRange(b){
+  let base=TOWERS[b.typeId].range*(1+b.level*0.1);
+  // Radar Station buff: check if a radar tower is adjacent
+  if(b._radarBuff) base*=(1+b._radarBuff);
+  return base;
+}
+// Update radar buffs periodically
+function updateRadarBuffs(){
+  // Clear all buffs first
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){let b=game.grid[r][c];if(b)b._radarBuff=0;}
+  // Apply radar buffs
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    let b=game.grid[r][c];if(!b||b.cat!=='tower')continue;
+    let def=TOWERS[b.typeId];if(!def.isRadar)continue;
+    let buff=def.radarBuff*(1+b.level*0.05);
+    // Buff all towers within 3 cells
+    for(let dr=-3;dr<=3;dr++)for(let dc=-3;dc<=3;dc++){
+      let nr=r+dr,nc=c+dc;
+      if(nr<0||nr>=ROWS||nc<0||nc>=COLS)continue;
+      let nb=game.grid[nr][nc];if(!nb||nb===b||nb.cat!=='tower')continue;
+      nb._radarBuff=Math.max(nb._radarBuff||0,buff);
+    }
+  }
+}
 function econProd(b){return ECONS[b.typeId].prod*(1+b.level*0.6)}
 function upgradeCost(b){let base=b.cat==='tower'?TOWERS[b.typeId].cost:ECONS[b.typeId].cost;return Math.round(base*(0.6+b.level*0.3));}
 function sellValue(b){let base=b.cat==='tower'?TOWERS[b.typeId].cost:ECONS[b.typeId].cost;let spent=base;for(let i=0;i<b.level;i++)spent+=Math.round(base*(0.6+i*0.3));return Math.round(spent*0.6);}
@@ -628,7 +843,6 @@ function announceAge(){
   document.getElementById('age-label').textContent=AGES[game.age].name;
   setTimeout(()=>el.style.display='none',2200);
   mapCacheCellSize=-1;
-  playSFX(SFX.ageUp,0.7);
   updateBuildCards();
 }
 
@@ -761,14 +975,30 @@ function render(){
     }
   }
 
-  // Laser beams
+  // Laser beams + Gravity wells
   for(let [b,t] of game.laserTargets){
-    let gr=ctx.createLinearGradient(t.sx,t.sy,t.tx,t.ty);
-    gr.addColorStop(0,'rgba(0,206,209,0.8)');gr.addColorStop(1,'rgba(0,255,255,0.4)');
-    ctx.strokeStyle=gr;ctx.lineWidth=3+Math.random()*2;ctx.globalAlpha=0.7+Math.random()*0.3;
-    ctx.beginPath();ctx.moveTo(t.sx,t.sy);ctx.lineTo(t.tx,t.ty);ctx.stroke();
-    ctx.strokeStyle='rgba(0,255,255,0.15)';ctx.lineWidth=10;
-    ctx.beginPath();ctx.moveTo(t.sx,t.sy);ctx.lineTo(t.tx,t.ty);ctx.stroke();ctx.globalAlpha=1;
+    if(t.isGravity){
+      // Gravity well: swirling purple vortex
+      let time=Date.now()*0.003;
+      ctx.globalAlpha=0.2;
+      ctx.fillStyle='#4B0082';
+      ctx.beginPath();ctx.arc(t.sx,t.sy,t.range,0,Math.PI*2);ctx.fill();
+      ctx.globalAlpha=0.4;
+      for(let i=0;i<3;i++){
+        let r=t.range*(0.3+i*0.25);
+        ctx.strokeStyle=i%2?'rgba(138,43,226,0.4)':'rgba(75,0,130,0.5)';
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(t.sx,t.sy,r,time+i*2,time+i*2+Math.PI*1.2);ctx.stroke();
+      }
+      ctx.globalAlpha=1;
+    } else {
+      let gr=ctx.createLinearGradient(t.sx,t.sy,t.tx,t.ty);
+      gr.addColorStop(0,'rgba(0,206,209,0.8)');gr.addColorStop(1,'rgba(0,255,255,0.4)');
+      ctx.strokeStyle=gr;ctx.lineWidth=3+Math.random()*2;ctx.globalAlpha=0.7+Math.random()*0.3;
+      ctx.beginPath();ctx.moveTo(t.sx,t.sy);ctx.lineTo(t.tx,t.ty);ctx.stroke();
+      ctx.strokeStyle='rgba(0,255,255,0.15)';ctx.lineWidth=10;
+      ctx.beginPath();ctx.moveTo(t.sx,t.sy);ctx.lineTo(t.tx,t.ty);ctx.stroke();ctx.globalAlpha=1;
+    }
   }
 
   // Projectiles
@@ -967,7 +1197,15 @@ function startGame(){
 function restartGame(){startGame();playEraMusic(0);}
 
 let lastTime=0;
-function loop(ts){let dt=(ts-lastTime)/1000;lastTime=ts;update(dt);render();requestAnimationFrame(loop);}
+function loop(ts){
+  if(!lastTime)lastTime=ts; // prevent huge dt on first frame
+  let dt=Math.min((ts-lastTime)/1000,0.1);lastTime=ts;
+  try{
+    if(transition.active){renderTransition();}
+    else{update(dt);render();}
+  }catch(e){console.error('Loop error:',e);}
+  requestAnimationFrame(loop);
+}
 
 window.onload=async function(){
   canvas=document.getElementById('c');ctx=canvas.getContext('2d');
