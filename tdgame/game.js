@@ -1345,6 +1345,22 @@ window.onload=async function(){
   canvas.addEventListener('click',(e)=>handleClick(e.clientX,e.clientY));
   canvas.addEventListener('mousemove',(e)=>{game.hoverCell=p2g(e.clientX,e.clientY);});
   canvas.addEventListener('mouseleave',()=>{game.hoverCell=null;});
+  canvas.addEventListener('wheel',(e)=>{
+    if(game.phase!=='play'||game.selectedType===null)return;
+    e.preventDefault();
+    let items=(game.selectedCat==='tower'?TOWERS:ECONS);
+    // Get list of current-age indices
+    let available=[];
+    items.forEach((def,i)=>{if(def.age===game.age)available.push(i);});
+    if(available.length<2)return;
+    let curIdx=available.indexOf(game.selectedType);
+    if(curIdx===-1)curIdx=0;
+    curIdx+=(e.deltaY>0?1:-1);
+    if(curIdx<0)curIdx=available.length-1;
+    if(curIdx>=available.length)curIdx=0;
+    game.selectedType=available[curIdx];
+    updateBuildCards();
+  },{passive:false});
   canvas.addEventListener('touchstart',(e)=>{e.preventDefault();let t=e.touches[0];game.hoverCell=p2g(t.clientX,t.clientY);handleClick(t.clientX,t.clientY);},{passive:false});
 
   document.addEventListener('click',(e)=>{if(!e.target.closest('#info-popup')&&!e.target.closest('canvas')){document.getElementById('info-popup').style.display='none';game.selectedBuilding=null;}});
