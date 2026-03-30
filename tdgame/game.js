@@ -376,9 +376,9 @@ function getAge(wave){
   if(wave<=8)return 0;if(wave<=16)return 1;if(wave<=24)return 2;
   if(wave<=32)return 3;if(wave<=40)return 4;return 5;
 }
-function enemyHP(wave){return Math.round(40*Math.pow(1.18,wave))}
-function enemySpeed(wave){return 1.2+wave*0.02}
-function enemyCount(wave){return Math.min(6+wave*2,60)}
+function enemyHP(wave){return Math.round(50*Math.pow(1.22,wave))}
+function enemySpeed(wave){return 1.3+wave*0.025}
+function enemyCount(wave){return Math.min(8+wave*2,70)}
 function spawnInterval(wave){return Math.max(0.3,1.5-wave*0.04)}
 function isBoss(wave){return wave%8===0}
 function killReward(hp){return Math.max(1,Math.ceil(hp*0.08))}
@@ -566,12 +566,12 @@ function spawnEnemy(){
   if(!def)return;
   let hp=enemyHP(game.wave),spd=enemySpeed(game.wave);
   let isBossEnemy=!!def.boss;
-  if(isBossEnemy){hp*=5;}
+  if(isBossEnemy){hp*=7;}
   spd*=def.spdMult;
 
-  // Elite chance (10% for regular enemies)
-  let isElite=!isBossEnemy&&Math.random()<0.1;
-  if(isElite){hp*=2;}
+  // Elite chance (12% for regular enemies)
+  let isElite=!isBossEnemy&&Math.random()<0.12;
+  if(isElite){hp*=2.5;}
 
   let ageIdx=Math.min(game.age,5);
   let imgs=ENEMY_IMGS[ageIdx];
@@ -647,9 +647,10 @@ function update(dt){
     e.radius=e.boss?cellSize*0.4:cellSize*0.3;
   }
 
-  // Detection + Radar buffs
+  // Detection + Radar + Enhancement buffs
   updateDetection();
   updateRadarBuffs();
+  updateEnhanceBuffs();
 
   // Towers
   game.laserTargets.clear();
@@ -698,7 +699,8 @@ function update(dt){
     } else {
       b.cooldown=(b.cooldown||0)-dt;
       if(b.cooldown<=0){
-        b.cooldown=def.rate/(1+b.level*0.1);
+        let spdBonus=1+Math.min(b.level,3)*0.1+(b._enhanceSpd||0);
+        b.cooldown=def.rate/spdBonus;
         playSFX(SFX.towerShot[b.typeId%12]||SFX.towerShot[0],0.15);
         let angle=Math.atan2(best.y-pos.y,best.x-pos.x);
         game.projectiles.push({
@@ -795,11 +797,23 @@ function update(dt){
   document.getElementById('wave-val').textContent=game.wave;
 }
 
-function towerDmg(b){return TOWERS[b.typeId].dmg*(1+b.level*0.5)}
+function towerDmg(b){
+  let base=TOWERS[b.typeId].dmg*(1+Math.min(b.level,3)*0.5);
+  // Enhancement bonuses
+  if(b.level>=4) base*=1.3;
+  if(b.level>=5) base*=1.15;
+  if(b.level>=6) base*=1.15;
+  // Area buff from nearby enhanced towers
+  if(b._enhanceDmg) base*=(1+b._enhanceDmg);
+  return base;
+}
 function towerRange(b){
-  let base=TOWERS[b.typeId].range*(1+b.level*0.1);
-  // Radar Station buff: check if a radar tower is adjacent
+  let base=TOWERS[b.typeId].range*(1+Math.min(b.level,3)*0.1);
+  if(b.level>=4) base*=1.15;
+  if(b.level>=5) base*=1.1;
+  if(b.level>=6) base*=1.1;
   if(b._radarBuff) base*=(1+b._radarBuff);
+  if(b._enhanceRange) base*=(1+b._enhanceRange);
   return base;
 }
 // Update radar buffs periodically
@@ -820,8 +834,38 @@ function updateRadarBuffs(){
     }
   }
 }
-function econProd(b){return ECONS[b.typeId].prod*(1+b.level*0.6)}
-function upgradeCost(b){let base=b.cat==='tower'?TOWERS[b.typeId].cost:ECONS[b.typeId].cost;return Math.round(base*(0.6+b.level*0.3));}
+// Enhancement area buffs from level 4+ towers
+function updateEnhanceBuffs(){
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){let b=game.grid[r][c];if(b){b._enhanceDmg=0;b._enhanceRange=0;b._enhanceSpd=0;}}
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    let b=game.grid[r][c];if(!b||b.cat!=='tower'||b.level<4)continue;
+    let dmgBuff=b.level>=6?0.25:b.level>=5?0.15:0.10;
+    let rngBuff=b.level>=6?0.15:b.level>=5?0.10:0;
+    let spdBuff=b.level>=6?0.10:0;
+    for(let dr=-3;dr<=3;dr++)for(let dc=-3;dc<=3;dc++){
+      let nr=r+dr,nc=c+dc;
+      if(nr<0||nr>=ROWS||nc<0||nc>=COLS)continue;
+      let nb=game.grid[nr][nc];if(!nb||nb===b||nb.cat!=='tower')continue;
+      nb._enhanceDmg=Math.max(nb._enhanceDmg||0,dmgBuff);
+      nb._enhanceRange=Math.max(nb._enhanceRange||0,rngBuff);
+      nb._enhanceSpd=Math.max(nb._enhanceSpd||0,spdBuff);
+    }
+  }
+}
+function econProd(b){return ECONS[b.typeId].prod*(1+Math.min(b.level,3)*0.6)+(b.level>=4?ECONS[b.typeId].prod*(b.level-3)*1.5:0)}
+function upgradeCost(b){
+  let base=b.cat==='tower'?TOWERS[b.typeId].cost:ECONS[b.typeId].cost;
+  if(b.level<3) return Math.round(base*(0.6+b.level*0.3));
+  // Enhancement costs
+  let enhMult=[5,10,20];
+  if(b.level>=6) return Infinity; // already max enhanced
+  return Math.round(base*enhMult[b.level-3]);
+}
+function maxLevel(){return 6;}
+function levelName(level){
+  if(level<=3) return 'Lv'+(level+1);
+  return ['Enh I','Enh II','Enh III'][level-4]||'MAX';
+}
 function sellValue(b){let base=b.cat==='tower'?TOWERS[b.typeId].cost:ECONS[b.typeId].cost;let spent=base;for(let i=0;i<b.level;i++)spent+=Math.round(base*(0.6+i*0.3));return Math.round(spent*0.6);}
 
 function spawnKillFx(e){
@@ -912,7 +956,33 @@ function render(){
       if(img)drawImageCentered(img,pos.x,pos.y,sz,0);
       else{ctx.fillStyle=ECONS[b.typeId].clr;ctx.beginPath();ctx.arc(pos.x,pos.y,cellSize*0.35,0,Math.PI*2);ctx.fill();}
     }
-    if(b.level>0){let ds=cellSize*0.06,sx=pos.x-(b.level-1)*ds*1.8/2;for(let i=0;i<b.level;i++){ctx.fillStyle='#FFD700';ctx.shadowColor='#FFD700';ctx.shadowBlur=4;ctx.beginPath();ctx.arc(sx+i*ds*1.8,pos.y-sz/2-ds*1.5,ds,0,Math.PI*2);ctx.fill();}ctx.shadowBlur=0;}
+    // Level indicators + Enhancement glow
+    if(b.level>0){
+      let ds=cellSize*0.06;
+      let dots=Math.min(b.level,3);
+      let sx=pos.x-(dots-1)*ds*1.8/2;
+      for(let i=0;i<dots;i++){ctx.fillStyle='#FFD700';ctx.shadowColor='#FFD700';ctx.shadowBlur=4;ctx.beginPath();ctx.arc(sx+i*ds*1.8,pos.y-sz/2-ds*1.5,ds,0,Math.PI*2);ctx.fill();}
+      // Enhancement diamonds
+      if(b.level>=4){
+        let enhColors=['#FFD700','#9C27B0','#FF4500'];
+        let enhCount=b.level-3;
+        let esx=pos.x-(enhCount-1)*ds*2/2;
+        for(let i=0;i<enhCount;i++){
+          ctx.fillStyle=enhColors[i];ctx.shadowColor=enhColors[i];ctx.shadowBlur=6;
+          ctx.save();ctx.translate(esx+i*ds*2,pos.y+sz/2+ds*2);ctx.rotate(Math.PI/4);
+          ctx.fillRect(-ds,-ds,ds*2,ds*2);ctx.restore();
+        }
+      }
+      ctx.shadowBlur=0;
+    }
+    // Enhancement glow aura
+    if(b.level>=4){
+      let glowColors=['rgba(255,215,0,','rgba(156,39,176,','rgba(255,69,0,'];
+      let glowClr=glowColors[Math.min(b.level-4,2)];
+      let pulse=0.15+Math.sin(Date.now()*0.004)*0.1;
+      ctx.strokeStyle=glowClr+pulse+')';ctx.lineWidth=3;
+      ctx.beginPath();ctx.arc(pos.x,pos.y,sz/2+4,0,Math.PI*2);ctx.stroke();
+    }
   }
 
   // Selected building range
@@ -1027,6 +1097,20 @@ function handleClick(px,py){
   let g=p2g(px,py),popup=document.getElementById('info-popup');
   if(g.x>=0&&g.x<COLS&&g.y>=0&&g.y<ROWS&&game.grid[g.y][g.x]){
     let b=game.grid[g.y][g.x];b.row=g.y;b.col=g.x;
+    let now=Date.now();
+    let cellKey=g.x+','+g.y;
+    // Double-click: upgrade immediately
+    if(lastClickCell===cellKey&&now-lastClickTime<400){
+      if(b.level<6&&game.gold>=upgradeCost(b)){
+        game.gold-=upgradeCost(b);b.level++;
+        playSFX(SFX.upgrade);
+        let pos=g2p(g.x,g.y);
+        game.floats.push({x:pos.x,y:pos.y-cellSize*0.4,text:levelName(b.level),life:1,color:'#FFD700'});
+        updateUI();
+      }
+      lastClickTime=0;lastClickCell=null;return;
+    }
+    lastClickTime=now;lastClickCell=cellKey;
     game.selectedBuilding=b;game.selectedType=null;
     showInfoPopup(b,px,py);updateBuildCards();return;
   }
@@ -1043,7 +1127,7 @@ function showInfoPopup(b,px,py){
   let def=b.cat==='tower'?TOWERS[b.typeId]:ECONS[b.typeId];
   let imgNum=b.cat==='tower'?TOWER_IMGS[b.typeId]:ECON_IMGS[b.typeId];
   let imgTag=IMAGES[imgNum]?'<img src="Assets/'+imgNum+'.png">':'';
-  document.getElementById('info-name').innerHTML=imgTag+def.name+' Lv'+(b.level+1);
+  document.getElementById('info-name').innerHTML=imgTag+def.name+' '+levelName(b.level);
   let stats='';
   if(b.cat==='tower'){
     stats='<div class="stat"><span>Damage</span><span>'+Math.round(towerDmg(b))+'</span></div>';
@@ -1054,6 +1138,10 @@ function showInfoPopup(b,px,py){
     stats+='<div class="stat"><span>Targets</span><span>'+targetLabel+'</span></div>';
     if(def.canDetect)stats+='<div class="stat" style="color:#64B5F6"><span>Detects stealth</span><span>\u2713</span></div>';
     if(def.slow>0)stats+='<div class="stat" style="color:#81D4FA"><span>Slows</span><span>'+Math.round(def.slow*100)+'%</span></div>';
+    if(b.level>=4){
+      let buffDesc=b.level>=6?'+25% dmg, +15% range, +10% speed':b.level>=5?'+15% dmg, +10% range':'+10% dmg';
+      stats+='<div class="stat" style="color:#FFD700"><span>Area Buff</span><span>'+buffDesc+'</span></div>';
+    }
     stats+='<div style="margin-top:4px;font-size:11px;opacity:0.7;font-style:italic">'+def.desc+'</div>';
     stats+='<div style="margin-top:2px;font-size:11px;color:#4CAF50">Strong vs: '+def.strong+'</div>';
   } else {
@@ -1063,15 +1151,40 @@ function showInfoPopup(b,px,py){
   }
   document.getElementById('info-stats').innerHTML=stats;
   let ubtn=document.getElementById('upgrade-btn'),sbtn=document.getElementById('sell-btn');
-  if(b.level>=3){ubtn.textContent='MAX';ubtn.disabled=true;}
-  else{let uc=upgradeCost(b);ubtn.textContent='Upgrade ('+uc+')';ubtn.disabled=game.gold<uc;}
+  if(b.level>=6){ubtn.textContent='MAX';ubtn.disabled=true;}
+  else{
+    let uc=upgradeCost(b);
+    let label=b.level>=3?'Enhance ('+uc+')':'Upgrade ('+uc+')';
+    ubtn.textContent=label;ubtn.disabled=game.gold<uc;
+  }
   sbtn.textContent='Sell ('+sellValue(b)+')';
-  ubtn.onclick=()=>{if(b.level<3&&game.gold>=upgradeCost(b)){game.gold-=upgradeCost(b);b.level++;playSFX(SFX.upgrade);showInfoPopup(b,px,py);updateUI();}};
+  ubtn.onclick=()=>{if(b.level<6&&game.gold>=upgradeCost(b)){game.gold-=upgradeCost(b);b.level++;playSFX(SFX.upgrade);showInfoPopup(b,px,py);updateUI();}};
   sbtn.onclick=()=>{game.gold+=sellValue(b);game.grid[b.row][b.col]=null;popup.style.display='none';game.selectedBuilding=null;playSFX(SFX.sell);updateUI();};
   popup.style.display='block';
   popup.style.left=Math.min(px,W-200)+'px';
   popup.style.top=Math.max(50,Math.min(py-180,H-320))+'px';
 }
+
+// ============= UPGRADE ALL =============
+function upgradeAll(){
+  let totalSpent=0,upgraded=0,keepGoing=true;
+  while(keepGoing){
+    keepGoing=false;
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      let b=game.grid[r][c];if(!b||b.level>=6)continue;
+      let cost=upgradeCost(b);
+      if(game.gold>=cost){game.gold-=cost;b.level++;totalSpent+=cost;upgraded++;keepGoing=true;}
+    }
+  }
+  if(upgraded>0){
+    playSFX(SFX.upgrade);
+    game.floats.push({x:W/2,y:H/2,text:'Upgraded '+upgraded+'x (-'+totalSpent+')',life:2,color:'#FFD700'});
+    updateUI();
+  }
+}
+
+// ============= DOUBLE-CLICK UPGRADE =============
+let lastClickTime=0,lastClickCell=null;
 
 // ============= TOOLTIPS =============
 function buildTooltipData(tab,idx){
@@ -1119,7 +1232,7 @@ function updateBuildCards(){
   let items=game.tab==='tower'?TOWERS:ECONS;
   let imgMap=game.tab==='tower'?TOWER_IMGS:ECON_IMGS;
   items.forEach((def,i)=>{
-    if(def.age>game.age)return;
+    if(def.age!==game.age)return;
     let card=document.createElement('div');card.className='card';
     if(game.selectedCat===game.tab&&game.selectedType===i)card.className+=' selected';
     let imgNum=imgMap[i];
@@ -1225,6 +1338,7 @@ window.onload=async function(){
   });
 
   document.getElementById('wave-btn').onclick=startWave;
+  document.getElementById('upgrade-all-btn').onclick=upgradeAll;
   document.getElementById('speed-btn').onclick=()=>{game.speed=game.speed>=3?1:game.speed+1;document.getElementById('speed-btn').textContent=game.speed+'x';};
   document.getElementById('mute-btn').onclick=()=>{allMuted=!allMuted;updateAllVolumes();document.getElementById('mute-btn').textContent=allMuted?'Sound OFF':'Sound ON';};
 
