@@ -42,27 +42,27 @@ const PROJ_IMGS=[49,49,50,50,50,51,52,53,54,55,null,56];
 
 // ============= TOWERS =============
 const TOWERS=[
-  {name:'Rock Thrower',cost:30,dmg:15,range:2.5,rate:1.2,pSpd:5,splash:0,age:0,clr:'#8B7355'},
-  {name:'Spike Trap',cost:20,dmg:10,range:1.5,rate:0.5,pSpd:8,splash:0,age:0,clr:'#556B2F'},
-  {name:'Archer',cost:60,dmg:22,range:3.5,rate:0.8,pSpd:8,splash:0,age:1,clr:'#CD853F'},
-  {name:'Spear Thrower',cost:80,dmg:40,range:2.8,rate:1.4,pSpd:6,splash:0,age:1,clr:'#B8860B'},
-  {name:'Crossbow',cost:120,dmg:45,range:3.8,rate:0.65,pSpd:10,splash:0,age:2,clr:'#808080'},
-  {name:'Catapult',cost:160,dmg:65,range:3.5,rate:2.0,pSpd:4,splash:1.5,age:2,clr:'#8B4513'},
-  {name:'Cannon',cost:250,dmg:100,range:3.2,rate:2.2,pSpd:6,splash:1.8,age:3,clr:'#4A4A4A'},
-  {name:'Gatling',cost:300,dmg:18,range:3.0,rate:0.15,pSpd:12,splash:0,age:3,clr:'#556B2F'},
-  {name:'Missile',cost:500,dmg:200,range:5.0,rate:2.8,pSpd:7,splash:2.0,age:4,clr:'#2F4F4F'},
-  {name:'Sniper',cost:600,dmg:400,range:6.0,rate:3.0,pSpd:25,splash:0,age:4,clr:'#1C1C1C'},
-  {name:'Laser',cost:1000,dmg:100,range:4.5,rate:0,pSpd:0,splash:0,age:5,clr:'#00CED1',isLaser:true},
-  {name:'Plasma',cost:1500,dmg:500,range:4.0,rate:2.0,pSpd:8,splash:2.5,age:5,clr:'#9400D3'}
+  {name:'Rock Thrower',cost:30,dmg:15,range:2.5,rate:1.2,pSpd:5,splash:0,age:0,clr:'#8B7355',desc:'Hurls rocks at nearby enemies',strong:'Single targets'},
+  {name:'Spike Trap',cost:20,dmg:10,range:1.5,rate:0.5,pSpd:8,splash:0,age:0,clr:'#556B2F',desc:'Damages enemies that pass nearby',strong:'Fast enemies'},
+  {name:'Archer',cost:60,dmg:22,range:3.5,rate:0.8,pSpd:8,splash:0,age:1,clr:'#CD853F',desc:'Rapid arrows at long range',strong:'Fast enemies'},
+  {name:'Spear Thrower',cost:80,dmg:40,range:2.8,rate:1.4,pSpd:6,splash:0,age:1,clr:'#B8860B',desc:'Heavy single-target piercing damage',strong:'Armored / Bosses'},
+  {name:'Crossbow',cost:120,dmg:45,range:3.8,rate:0.65,pSpd:10,splash:0,age:2,clr:'#808080',desc:'Precise bolts at extreme range',strong:'Fast enemies'},
+  {name:'Catapult',cost:160,dmg:65,range:3.5,rate:2.0,pSpd:4,splash:1.5,age:2,clr:'#8B4513',desc:'Launches boulders dealing splash damage',strong:'Groups'},
+  {name:'Cannon',cost:250,dmg:100,range:3.2,rate:2.2,pSpd:6,splash:1.8,age:3,clr:'#4A4A4A',desc:'Explosive shells with area damage',strong:'Groups'},
+  {name:'Gatling',cost:300,dmg:18,range:3.0,rate:0.15,pSpd:12,splash:0,age:3,clr:'#556B2F',desc:'Rapid-fire shreds groups of weak enemies',strong:'Swarms'},
+  {name:'Missile',cost:500,dmg:200,range:5.0,rate:2.8,pSpd:7,splash:2.0,age:4,clr:'#2F4F4F',desc:'Guided rockets with large blast radius',strong:'Groups / Bosses'},
+  {name:'Sniper',cost:600,dmg:400,range:6.0,rate:3.0,pSpd:25,splash:0,age:4,clr:'#1C1C1C',desc:'Extreme range, devastating single shots',strong:'Bosses'},
+  {name:'Laser',cost:1000,dmg:100,range:4.5,rate:0,pSpd:0,splash:0,age:5,clr:'#00CED1',isLaser:true,desc:'Continuous beam, never misses',strong:'Everything'},
+  {name:'Plasma',cost:1500,dmg:500,range:4.0,rate:2.0,pSpd:8,splash:2.5,age:5,clr:'#9400D3',desc:'Massive plasma blast, huge splash',strong:'Groups / Bosses'}
 ];
 
 const ECONS=[
-  {name:'Hut',cost:50,prod:0.5,age:0,clr:'#8B7355'},
-  {name:'Farm',cost:120,prod:1.5,age:1,clr:'#DAA520'},
-  {name:'Market',cost:300,prod:4,age:2,clr:'#B22222'},
-  {name:'Factory',cost:700,prod:10,age:3,clr:'#708090'},
-  {name:'Corp',cost:1500,prod:25,age:4,clr:'#4169E1'},
-  {name:'Quantum Forge',cost:3500,prod:65,age:5,clr:'#00FFFF'}
+  {name:'Hut',cost:50,prod:0.5,age:0,clr:'#8B7355',desc:'Basic shelter, generates a trickle of gold'},
+  {name:'Farm',cost:120,prod:1.5,age:1,clr:'#DAA520',desc:'Cultivated fields produce steady income'},
+  {name:'Market',cost:300,prod:4,age:2,clr:'#B22222',desc:'Trade hub generating good gold flow'},
+  {name:'Factory',cost:700,prod:10,age:3,clr:'#708090',desc:'Industrial production, high gold output'},
+  {name:'Corp',cost:1500,prod:25,age:4,clr:'#4169E1',desc:'Corporate profits fuel your war machine'},
+  {name:'Quantum Forge',cost:3500,prod:65,age:5,clr:'#00FFFF',desc:'Bleeding-edge tech, maximum gold generation'}
 ];
 
 // ============= IMAGE LOADING =============
@@ -84,6 +84,59 @@ function preloadAssets(){
       img.src='Assets/'+i+'.png';
     }
   });
+}
+
+// ============= AUDIO =============
+const AUDIO={};
+const AUDIO_POOL={};
+let audioReady=false;
+let musicVolume=0.3,sfxVolume=0.5,musicMuted=false,sfxMuted=false;
+let currentAmbient=null;
+
+// SFX mapping
+const SFX={
+  click:1,place:2,sell:3,upgrade:4,noGold:5,gold:6,
+  // Tower attacks indexed by tower typeId
+  towerShot:[7,8,9,10,11,12,13,14,15,16,17,18],
+  hit:19,splash:20,kill:21,bossKill:22,lifeLost:23,
+  waveStart:24,waveComplete:25,ageUp:26,gameStart:27,gameOver:28
+};
+// Ambient music per age (indices 29-34)
+const AMBIENT_START=29;
+
+function loadAudio(){
+  for(let i=1;i<=34;i++){
+    let a=new Audio('Audio/'+i+'.mp3');
+    a.preload='auto';
+    AUDIO[i]=a;
+  }
+  audioReady=true;
+}
+
+function playSFX(id,vol){
+  if(!audioReady||sfxMuted||!AUDIO[id])return;
+  // Use cloned audio for overlapping sounds
+  let a=AUDIO[id].cloneNode();
+  a.volume=Math.min(1,(vol||1)*sfxVolume);
+  a.play().catch(()=>{});
+}
+
+function playAmbient(ageIdx){
+  let id=AMBIENT_START+ageIdx;
+  if(currentAmbient){currentAmbient.pause();currentAmbient.currentTime=0;}
+  if(musicMuted||!AUDIO[id])return;
+  currentAmbient=AUDIO[id];
+  currentAmbient.loop=true;
+  currentAmbient.volume=musicVolume;
+  currentAmbient.play().catch(()=>{});
+}
+
+function stopAmbient(){
+  if(currentAmbient){currentAmbient.pause();currentAmbient.currentTime=0;currentAmbient=null;}
+}
+
+function updateAmbientVolume(){
+  if(currentAmbient) currentAmbient.volume=musicMuted?0:musicVolume;
 }
 
 // ============= STATE =============
@@ -157,11 +210,15 @@ function resize(){
   canvas.width=W*dpr;canvas.height=H*dpr;
   canvas.style.width=W+'px';canvas.style.height=H+'px';
   ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
-  let hudH=44,barH=game.phase==='title'?0:130;
+  // Responsive layout
+  let hudH=38;
+  let barH=game.phase==='title'?0:(W<768?110:100);
   let aW=W,aH=H-hudH-barH;
   cellSize=Math.min(aW/COLS,aH/ROWS);
   offX=(aW-cellSize*COLS)/2;
   offY=hudH+(aH-cellSize*ROWS)/2;
+  // Update CSS vars
+  document.getElementById('hud').style.height=hudH+'px';
   mapCacheCellSize=-1; // invalidate cache
 }
 
@@ -170,9 +227,9 @@ function getAge(wave){
   if(wave<=5)return 0;if(wave<=10)return 1;if(wave<=15)return 2;
   if(wave<=20)return 3;if(wave<=25)return 4;return 5;
 }
-function enemyHP(wave){return Math.round(30*Math.pow(1.15,wave))}
+function enemyHP(wave){return Math.round(40*Math.pow(1.18,wave))}
 function enemySpeed(wave){return 1.2+wave*0.02}
-function enemyCount(wave){return Math.min(5+wave*2,50)}
+function enemyCount(wave){return Math.min(6+wave*2,60)}
 function spawnInterval(wave){return Math.max(0.3,1.5-wave*0.04)}
 function isBoss(wave){return wave%5===0}
 function killReward(hp){return Math.max(1,Math.ceil(hp*0.08))}
@@ -184,6 +241,7 @@ function startWave(){
   let newAge=getAge(game.wave);
   if(newAge>game.age){game.age=newAge;announceAge();}
   game.waveActive=true;
+  playSFX(SFX.waveStart,0.6);
   game.waveEnemies=enemyCount(game.wave);
   if(isBoss(game.wave))game.waveEnemies++;
   game.waveSpawned=0;game.spawnTimer=0;
@@ -193,7 +251,7 @@ function startWave(){
 function spawnEnemy(){
   let hp=enemyHP(game.wave),spd=enemySpeed(game.wave);
   let boss=isBoss(game.wave)&&game.waveSpawned===game.waveEnemies-1;
-  if(boss){hp*=5;spd*=0.6;}
+  if(boss){hp*=5;spd*=0.7;}
 
   // Pick enemy image based on age
   let ageIdx=Math.min(game.age,5);
@@ -232,7 +290,7 @@ function update(dt){
     e.pathIdx+=spd*dt;
     if(e.slow>0)e.slow-=dt;
     if(e.pathIdx>=path.length-1){
-      e.hp=0;game.lives--;
+      e.hp=0;game.lives--;playSFX(SFX.lifeLost,0.6);
       if(game.lives<=0){gameOver();return;}
       continue;
     }
@@ -264,11 +322,15 @@ function update(dt){
       let dmg=towerDmg(b)*dt;
       best.hp-=dmg;
       game.laserTargets.set(b,{tx:best.x,ty:best.y,sx:pos.x,sy:pos.y});
+      // Laser sound (throttled — play every 2s)
+      b.laserSndTimer=(b.laserSndTimer||0)-dt;
+      if(b.laserSndTimer<=0){playSFX(SFX.towerShot[b.typeId],0.3);b.laserSndTimer=2;}
       if(best.hp<=0){best.hp=0;game.gold+=best.reward;spawnKillFx(best);}
     } else {
       b.cooldown=(b.cooldown||0)-dt;
       if(b.cooldown<=0){
         b.cooldown=def.rate/(1+b.level*0.1);
+        playSFX(SFX.towerShot[b.typeId],0.4);
         let angle=Math.atan2(best.y-pos.y,best.x-pos.x);
         game.projectiles.push({
           x:pos.x,y:pos.y,tx:best.x,ty:best.y,target:best,
@@ -303,13 +365,15 @@ function update(dt){
     }
   }
 
-  // Economy
-  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-    let b=game.grid[r][c];if(!b||b.cat!=='econ')continue;
-    b.timer=(b.timer||0)+dt;
-    let prod=econProd(b);
-    if(b.timer>=1){b.timer-=1;game.gold+=prod;
-      let pos=g2p(c,r);game.floats.push({x:pos.x,y:pos.y-cellSize*0.3,text:'+'+Math.round(prod),life:1,color:'#FFD700'});
+  // Economy — only produces during active waves
+  if(game.waveActive){
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      let b=game.grid[r][c];if(!b||b.cat!=='econ')continue;
+      b.timer=(b.timer||0)+dt;
+      let prod=econProd(b);
+      if(b.timer>=1){b.timer-=1;game.gold+=prod;
+        let pos=g2p(c,r);game.floats.push({x:pos.x,y:pos.y-cellSize*0.3,text:'+'+Math.round(prod),life:1,color:'#FFD700'});
+      }
     }
   }
 
@@ -330,6 +394,7 @@ function update(dt){
   if(game.waveActive&&game.waveSpawned>=game.waveEnemies&&game.enemies.length===0){
     game.waveActive=false;game.gold+=waveBonus(game.wave);
     game.floats.push({x:W/2,y:H/2,text:'Wave '+game.wave+' Complete! +'+waveBonus(game.wave),life:2,color:'#4CAF50'});
+    playSFX(SFX.waveComplete,0.6);
     updateUI();
   }
 
@@ -354,10 +419,13 @@ function sellValue(b){
 function spawnKillFx(e){
   for(let i=0;i<8;i++)game.particles.push({x:e.x,y:e.y,vx:(Math.random()-0.5)*150,vy:(Math.random()-0.5)*150,life:0.5,color:'#FFD700',size:4});
   game.floats.push({x:e.x,y:e.y-10,text:'+'+e.reward,life:1,color:'#FFD700'});
+  playSFX(e.boss?SFX.bossKill:SFX.kill,0.5);
 }
 
 function gameOver(){
   game.phase='over';
+  stopAmbient();
+  playSFX(SFX.gameOver,0.7);
   document.getElementById('overlay').style.display='flex';
   document.getElementById('overlay').innerHTML='<h1>GAME OVER</h1><h2>You reached Wave '+game.wave+' \u2014 '+AGES[game.age].name+'</h2><button onclick="restartGame()">PLAY AGAIN</button>';
 }
@@ -369,6 +437,8 @@ function announceAge(){
   document.getElementById('age-label').textContent=AGES[game.age].name;
   setTimeout(()=>el.style.display='none',2200);
   mapCacheCellSize=-1; // invalidate map cache for new age
+  playSFX(SFX.ageUp,0.7);
+  playAmbient(game.age);
   updateBuildCards();
 }
 
@@ -558,6 +628,7 @@ function handleClick(px,py){
     if(game.gold>=def.cost){
       game.gold-=def.cost;
       game.grid[g.y][g.x]={cat,typeId:game.selectedType,level:0,cooldown:0,timer:0,angle:0};
+      playSFX(SFX.place);
       updateUI();
     }
     return;
@@ -580,8 +651,13 @@ function showInfoPopup(b,px,py){
     stats='<div class="stat"><span>Damage</span><span>'+Math.round(towerDmg(b))+'</span></div>';
     stats+='<div class="stat"><span>Range</span><span>'+towerRange(b).toFixed(1)+'</span></div>';
     if(def.isLaser)stats+='<div class="stat"><span>Type</span><span>Beam (DPS)</span></div>';
+    if(def.splash>0)stats+='<div class="stat"><span>Splash</span><span>'+def.splash.toFixed(1)+'</span></div>';
+    stats+='<div style="margin-top:4px;font-size:11px;opacity:0.7;font-style:italic">'+def.desc+'</div>';
+    stats+='<div style="margin-top:2px;font-size:11px;color:#4CAF50">Strong vs: '+def.strong+'</div>';
   } else {
     stats='<div class="stat"><span>Production</span><span>'+econProd(b).toFixed(1)+'/s</span></div>';
+    stats+='<div style="margin-top:2px;font-size:10px;color:#FF9800;font-style:italic">Only active during waves</div>';
+    stats+='<div style="margin-top:4px;font-size:11px;opacity:0.7;font-style:italic">'+def.desc+'</div>';
   }
   document.getElementById('info-stats').innerHTML=stats;
   let ubtn=document.getElementById('upgrade-btn');
@@ -590,16 +666,65 @@ function showInfoPopup(b,px,py){
   else{let uc=upgradeCost(b);ubtn.textContent='Upgrade ('+uc+')';ubtn.disabled=game.gold<uc;}
   sbtn.textContent='Sell ('+sellValue(b)+')';
   ubtn.onclick=()=>{
-    if(b.level<3&&game.gold>=upgradeCost(b)){game.gold-=upgradeCost(b);b.level++;showInfoPopup(b,px,py);updateUI();}
+    if(b.level<3&&game.gold>=upgradeCost(b)){game.gold-=upgradeCost(b);b.level++;playSFX(SFX.upgrade);showInfoPopup(b,px,py);updateUI();}
   };
   sbtn.onclick=()=>{
     game.gold+=sellValue(b);game.grid[b.row][b.col]=null;popup.style.display='none';
-    game.selectedBuilding=null;updateUI();
+    game.selectedBuilding=null;playSFX(SFX.sell);updateUI();
   };
   popup.style.display='block';
   let popW=190,popH=180;
   popup.style.left=Math.min(px,W-popW-10)+'px';
   popup.style.top=Math.max(50,Math.min(py-popH,H-popH-140))+'px';
+}
+
+// ============= TOOLTIPS =============
+function buildTooltipData(tab,idx){
+  if(tab==='tower'){
+    let d=TOWERS[idx];
+    let dps=d.isLaser?d.dmg.toFixed(0):(d.dmg/(d.rate||1)).toFixed(1);
+    return{name:d.name,cost:d.cost,lines:[
+      'Damage: '+d.dmg+(d.isLaser?' /sec':''),
+      'Range: '+d.range.toFixed(1),
+      d.isLaser?'Type: Continuous beam':'Fire rate: '+(1/(d.rate||1)).toFixed(1)+'/sec',
+      d.splash>0?'Splash: '+d.splash.toFixed(1)+' radius':null,
+      'DPS: ~'+dps,
+      '',d.desc,
+      'Strong vs: '+d.strong
+    ].filter(Boolean)};
+  } else {
+    let d=ECONS[idx];
+    return{name:d.name,cost:d.cost,lines:[
+      'Production: '+d.prod.toFixed(1)+' gold/sec',
+      'Only active during waves',
+      '',d.desc
+    ]};
+  }
+}
+
+function showTooltip(ev,data){
+  let tip=document.getElementById('tooltip');
+  if(!tip) return;
+  let html='<b>'+data.name+'</b> <span style="color:#FFD700">\uD83D\uDCB0'+data.cost+'</span><br>';
+  html+=data.lines.map(l=>{
+    if(l==='')return'<div style="height:4px"></div>';
+    if(l.startsWith('Strong vs:'))return'<div style="color:#4CAF50;margin-top:2px">'+l+'</div>';
+    if(l.startsWith('Only active'))return'<div style="color:#FF9800;font-style:italic">'+l+'</div>';
+    return'<div style="opacity:0.8">'+l+'</div>';
+  }).join('');
+  tip.innerHTML=html;
+  tip.style.display='block';
+  // Position above the card
+  let rect=ev.target.closest('.card').getBoundingClientRect();
+  let tipW=200;
+  tip.style.left=Math.max(4,Math.min(rect.left+rect.width/2-tipW/2,W-tipW-4))+'px';
+  tip.style.bottom=(H-rect.top+6)+'px';
+  tip.style.top='auto';
+}
+
+function hideTooltip(){
+  let tip=document.getElementById('tooltip');
+  if(tip) tip.style.display='none';
 }
 
 // ============= UI =============
@@ -609,25 +734,28 @@ function updateBuildCards(){
   let items=game.tab==='tower'?TOWERS:ECONS;
   let imgMap=game.tab==='tower'?TOWER_IMGS:ECON_IMGS;
   items.forEach((def,i)=>{
+    // Only show towers/econ from current age or earlier
+    if(def.age>game.age) return;
     let card=document.createElement('div');
     card.className='card';
-    if(def.age>game.age)card.className+=' locked';
     if(game.selectedCat===game.tab&&game.selectedType===i)card.className+=' selected';
     let imgNum=imgMap[i];
     let iconHTML=IMAGES[imgNum]
       ?'<img src="Assets/'+imgNum+'.png">'
       :'<span style="font-size:22px">\u2699</span>';
     card.innerHTML='<div class="card-icon">'+iconHTML+'</div><div class="card-name">'+def.name+'</div><div class="card-cost">\uD83D\uDCB0 '+def.cost+'</div>';
-    if(def.age<=game.age){
-      card.onclick=(e)=>{
-        e.stopPropagation();
-        if(game.selectedCat===game.tab&&game.selectedType===i){game.selectedType=null;game.selectedCat=null;}
-        else{game.selectedType=i;game.selectedCat=game.tab;}
-        game.selectedBuilding=null;
-        document.getElementById('info-popup').style.display='none';
-        updateBuildCards();
-      };
-    }
+    // Tooltip on hover
+    let tipData=buildTooltipData(game.tab,i);
+    card.onmouseenter=(ev)=>showTooltip(ev,tipData);
+    card.onmouseleave=hideTooltip;
+    card.onclick=(e)=>{
+      e.stopPropagation();
+      if(game.selectedCat===game.tab&&game.selectedType===i){game.selectedType=null;game.selectedCat=null;}
+      else{game.selectedType=i;game.selectedCat=game.tab;}
+      game.selectedBuilding=null;
+      document.getElementById('info-popup').style.display='none';
+      updateBuildCards();
+    };
     container.appendChild(card);
   });
 }
@@ -656,6 +784,8 @@ function startGame(){
   document.getElementById('age-label').textContent=AGES[0].name;
   document.getElementById('build-bar').style.display='block';
   mapCacheCellSize=-1;
+  playSFX(SFX.gameStart,0.6);
+  playAmbient(0);
   resize();updateUI();
 }
 
@@ -675,6 +805,7 @@ window.onload=async function(){
 
   // Load all assets
   await preloadAssets();
+  loadAudio();
   document.getElementById('loading').style.display='none';
   document.getElementById('overlay').style.display='flex';
 
@@ -693,6 +824,11 @@ window.onload=async function(){
   });
 
   document.getElementById('wave-btn').onclick=startWave;
+  document.getElementById('mute-btn').onclick=()=>{
+    sfxMuted=!sfxMuted;musicMuted=!musicMuted;
+    updateAmbientVolume();
+    document.getElementById('mute-btn').textContent=sfxMuted?'Sound OFF':'Sound ON';
+  };
   document.getElementById('speed-btn').onclick=()=>{
     game.speed=game.speed>=3?1:game.speed+1;
     document.getElementById('speed-btn').textContent=game.speed+'x';
