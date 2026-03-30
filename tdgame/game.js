@@ -169,6 +169,61 @@ function computePath(){
   pathSet=new Set(path.map(p=>p.x+','+p.y));
 }
 
+// Smooth pixel path using Catmull-Rom spline through grid centers
+let smoothPath=[];
+function computeSmoothPath(){
+  // Get pixel positions for each path cell
+  let pts=path.map(p=>g2p(p.x,p.y));
+  // Add entry/exit points offscreen
+  let entry=g2p(WAYPOINTS[0][0],WAYPOINTS[0][1]);
+  let exit=g2p(WAYPOINTS[WAYPOINTS.length-1][0],WAYPOINTS[WAYPOINTS.length-1][1]);
+  pts.unshift(entry);
+  pts.push(exit);
+  // Generate smooth curve with Catmull-Rom
+  smoothPath=[];
+  let stepsPerSeg=8; // smoothness
+  for(let i=0;i<pts.length-1;i++){
+    let p0=pts[Math.max(0,i-1)];
+    let p1=pts[i];
+    let p2=pts[Math.min(pts.length-1,i+1)];
+    let p3=pts[Math.min(pts.length-1,i+2)];
+    for(let s=0;s<stepsPerSeg;s++){
+      let t=s/stepsPerSeg;
+      let t2=t*t,t3=t2*t;
+      smoothPath.push({
+        x:0.5*(2*p1.x+(-p0.x+p2.x)*t+(2*p0.x-5*p1.x+4*p2.x-p3.x)*t2+(-p0.x+3*p1.x-3*p2.x+p3.x)*t3),
+        y:0.5*(2*p1.y+(-p0.y+p2.y)*t+(2*p0.y-5*p1.y+4*p2.y-p3.y)*t2+(-p0.y+3*p1.y-3*p2.y+p3.y)*t3)
+      });
+    }
+  }
+  // Add final point
+  smoothPath.push(pts[pts.length-1]);
+}
+
+// Map enemy pathIdx (grid-based) to smoothPath position
+function getSmoothPos(pathIdx){
+  // pathIdx ranges 0..path.length-1, smoothPath has (path.length+1)*stepsPerSeg+1 points
+  // Map: pathIdx 0 = smoothPath index stepsPerSeg (past the entry point)
+  let stepsPerSeg=8;
+  let smoothIdx=(pathIdx+1)*stepsPerSeg; // +1 because smoothPath has entry point prepended
+  let idx=Math.floor(smoothIdx);
+  let frac=smoothIdx-idx;
+  if(idx>=smoothPath.length-1) return smoothPath[smoothPath.length-1];
+  if(idx<0) return smoothPath[0];
+  let a=smoothPath[idx],b=smoothPath[Math.min(idx+1,smoothPath.length-1)];
+  return{x:a.x+(b.x-a.x)*frac, y:a.y+(b.y-a.y)*frac};
+}
+
+function getSmoothAngle(pathIdx){
+  let stepsPerSeg=8;
+  let smoothIdx=(pathIdx+1)*stepsPerSeg;
+  let idx=Math.floor(smoothIdx);
+  if(idx>=smoothPath.length-2) idx=smoothPath.length-2;
+  if(idx<0) idx=0;
+  let a=smoothPath[idx],b=smoothPath[Math.min(idx+1,smoothPath.length-1)];
+  return Math.atan2(b.y-a.y,b.x-a.x);
+}
+
 function g2p(gx,gy){return{x:offX+gx*cellSize+cellSize/2,y:offY+gy*cellSize+cellSize/2}}
 function p2g(px,py){return{x:Math.floor((px-offX)/cellSize),y:Math.floor((py-offY)/cellSize)}}
 function dist(x1,y1,x2,y2){return Math.sqrt((x2-x1)**2+(y2-y1)**2)}
@@ -210,6 +265,7 @@ function resize(){
   canvas.width=W*dpr;canvas.height=H*dpr;
   canvas.style.width=W+'px';canvas.style.height=H+'px';
   ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
   // Responsive layout
   let hudH=38;
   let barH=game.phase==='title'?0:(W<768?110:100);
@@ -220,6 +276,7 @@ function resize(){
   // Update CSS vars
   document.getElementById('hud').style.height=hudH+'px';
   mapCacheCellSize=-1; // invalidate cache
+  computeSmoothPath();
 }
 
 // ============= WAVE SYSTEM =============
@@ -242,6 +299,7 @@ function startWave(){
   if(newAge>game.age){game.age=newAge;announceAge();}
   game.waveActive=true;
   playSFX(SFX.waveStart,0.6);
+  playAmbient(game.age);
   game.waveEnemies=enemyCount(game.wave);
   if(isBoss(game.wave))game.waveEnemies++;
   game.waveSpawned=0;game.spawnTimer=0;
@@ -294,13 +352,16 @@ function update(dt){
       if(game.lives<=0){gameOver();return;}
       continue;
     }
-    let idx=Math.floor(e.pathIdx),frac=e.pathIdx-idx;
-    let p1=path[idx],p2=path[Math.min(idx+1,path.length-1)];
-    let a=g2p(p1.x,p1.y),b=g2p(p2.x,p2.y);
-    e.x=a.x+(b.x-a.x)*frac;e.y=a.y+(b.y-a.y)*frac;
-    // Track movement angle for rotation
-    e.angle=Math.atan2(b.y-a.y,b.x-a.x);
-    // Update radius based on cellSize (for boss scaling after resize)
+    // Smooth position from spline path
+    let pos=getSmoothPos(e.pathIdx);
+    e.angle=getSmoothAngle(e.pathIdx);
+    // Walking bob animation
+    e.walkCycle=(e.walkCycle||0)+spd*dt*8;
+    let bob=Math.sin(e.walkCycle)*cellSize*0.04;
+    let sway=Math.sin(e.walkCycle*0.5)*0.06;
+    e.x=pos.x;
+    e.y=pos.y+bob;
+    e.sway=sway;
     e.radius=e.boss?cellSize*0.4:cellSize*0.3;
   }
 
@@ -317,7 +378,13 @@ function update(dt){
       if(dist(pos.x,pos.y,e.x,e.y)<=rng&&e.pathIdx>bestProg){best=e;bestProg=e.pathIdx;}
     }
     if(!best)continue;
-    b.angle=Math.atan2(best.y-pos.y,best.x-pos.x);
+    // Smooth tower rotation (lerp toward target)
+    let targetAngle=Math.atan2(best.y-pos.y,best.x-pos.x);
+    let da=targetAngle-(b.angle||0);
+    // Normalize angle difference to [-PI, PI]
+    while(da>Math.PI)da-=2*Math.PI;
+    while(da<-Math.PI)da+=2*Math.PI;
+    b.angle=(b.angle||0)+da*Math.min(1,dt*10);
     if(def.isLaser){
       let dmg=towerDmg(b)*dt;
       best.hp-=dmg;
@@ -395,6 +462,7 @@ function update(dt){
     game.waveActive=false;game.gold+=waveBonus(game.wave);
     game.floats.push({x:W/2,y:H/2,text:'Wave '+game.wave+' Complete! +'+waveBonus(game.wave),life:2,color:'#4CAF50'});
     playSFX(SFX.waveComplete,0.6);
+    stopAmbient();
     updateUI();
   }
 
@@ -438,7 +506,6 @@ function announceAge(){
   setTimeout(()=>el.style.display='none',2200);
   mapCacheCellSize=-1; // invalidate map cache for new age
   playSFX(SFX.ageUp,0.7);
-  playAmbient(game.age);
   updateBuildCards();
 }
 
@@ -536,7 +603,7 @@ function render(){
     let img=IMAGES[e.imgId];
     let sz=e.boss?cellSize*0.9:cellSize*0.65;
     if(img){
-      drawImageCentered(img,e.x,e.y,sz,e.angle);
+      drawImageCentered(img,e.x,e.y,sz,e.angle+(e.sway||0));
     } else {
       // Fallback: colored circle
       ctx.fillStyle='#c4a46c';
@@ -785,7 +852,6 @@ function startGame(){
   document.getElementById('build-bar').style.display='block';
   mapCacheCellSize=-1;
   playSFX(SFX.gameStart,0.6);
-  playAmbient(0);
   resize();updateUI();
 }
 
@@ -801,7 +867,7 @@ function loop(ts){
 window.onload=async function(){
   canvas=document.getElementById('c');
   ctx=canvas.getContext('2d');
-  computePath();resize();
+  computePath();resize();computeSmoothPath();
 
   // Load all assets
   await preloadAssets();
