@@ -88,55 +88,83 @@ function preloadAssets(){
 
 // ============= AUDIO =============
 const AUDIO={};
-const AUDIO_POOL={};
+const MUSIC={};
 let audioReady=false;
-let musicVolume=0.3,sfxVolume=0.5,musicMuted=false,sfxMuted=false;
-let currentAmbient=null;
+let musicVolume=0.5,ambientVolume=0.15,sfxVolume=0.5,allMuted=false;
+let currentMusic=null,currentMusicAge=-1;
+let currentAmbient=null,currentAmbientAge=-1;
 
 // SFX mapping
 const SFX={
   click:1,place:2,sell:3,upgrade:4,noGold:5,gold:6,
-  // Tower attacks indexed by tower typeId
   towerShot:[7,8,9,10,11,12,13,14,15,16,17,18],
   hit:19,splash:20,kill:21,bossKill:22,lifeLost:23,
   waveStart:24,waveComplete:25,ageUp:26,gameStart:27,gameOver:28
 };
-// Ambient music per age (indices 29-34)
 const AMBIENT_START=29;
 
 function loadAudio(){
+  // SFX + ambient (1-34)
   for(let i=1;i<=34;i++){
     let a=new Audio('Audio/'+i+'.mp3');
     a.preload='auto';
     AUDIO[i]=a;
   }
+  // Era music (1-6)
+  for(let i=1;i<=6;i++){
+    let a=new Audio('Audio/Music/'+i+'.mp3');
+    a.preload='auto';
+    MUSIC[i]=a;
+  }
   audioReady=true;
 }
 
 function playSFX(id,vol){
-  if(!audioReady||sfxMuted||!AUDIO[id])return;
-  // Use cloned audio for overlapping sounds
+  if(!audioReady||allMuted||!AUDIO[id])return;
   let a=AUDIO[id].cloneNode();
   a.volume=Math.min(1,(vol||1)*sfxVolume);
   a.play().catch(()=>{});
 }
 
+// Era music — plays continuously, only changes on age change
+function playEraMusic(ageIdx){
+  if(ageIdx===currentMusicAge)return; // already playing this era
+  if(currentMusic){currentMusic.pause();currentMusic.currentTime=0;}
+  currentMusicAge=ageIdx;
+  let m=MUSIC[ageIdx+1]; // MUSIC is 1-indexed
+  if(allMuted||!m)return;
+  currentMusic=m;
+  currentMusic.loop=true;
+  currentMusic.volume=musicVolume;
+  currentMusic.play().catch(()=>{});
+}
+
+function stopEraMusic(){
+  if(currentMusic){currentMusic.pause();currentMusic.currentTime=0;currentMusic=null;}
+  currentMusicAge=-1;
+}
+
+// Ambient — lower background layer during waves
 function playAmbient(ageIdx){
-  let id=AMBIENT_START+ageIdx;
+  if(ageIdx===currentAmbientAge&&currentAmbient&&!currentAmbient.paused)return;
   if(currentAmbient){currentAmbient.pause();currentAmbient.currentTime=0;}
-  if(musicMuted||!AUDIO[id])return;
+  currentAmbientAge=ageIdx;
+  let id=AMBIENT_START+ageIdx;
+  if(allMuted||!AUDIO[id])return;
   currentAmbient=AUDIO[id];
   currentAmbient.loop=true;
-  currentAmbient.volume=musicVolume;
+  currentAmbient.volume=ambientVolume;
   currentAmbient.play().catch(()=>{});
 }
 
 function stopAmbient(){
   if(currentAmbient){currentAmbient.pause();currentAmbient.currentTime=0;currentAmbient=null;}
+  currentAmbientAge=-1;
 }
 
-function updateAmbientVolume(){
-  if(currentAmbient) currentAmbient.volume=musicMuted?0:musicVolume;
+function updateAllVolumes(){
+  if(currentMusic) currentMusic.volume=allMuted?0:musicVolume;
+  if(currentAmbient) currentAmbient.volume=allMuted?0:ambientVolume;
 }
 
 // ============= STATE =============
@@ -493,6 +521,7 @@ function spawnKillFx(e){
 function gameOver(){
   game.phase='over';
   stopAmbient();
+  stopEraMusic();
   playSFX(SFX.gameOver,0.7);
   document.getElementById('overlay').style.display='flex';
   document.getElementById('overlay').innerHTML='<h1>GAME OVER</h1><h2>You reached Wave '+game.wave+' \u2014 '+AGES[game.age].name+'</h2><button onclick="restartGame()">PLAY AGAIN</button>';
@@ -506,6 +535,7 @@ function announceAge(){
   setTimeout(()=>el.style.display='none',2200);
   mapCacheCellSize=-1; // invalidate map cache for new age
   playSFX(SFX.ageUp,0.7);
+  playEraMusic(game.age);
   updateBuildCards();
 }
 
@@ -852,6 +882,7 @@ function startGame(){
   document.getElementById('build-bar').style.display='block';
   mapCacheCellSize=-1;
   playSFX(SFX.gameStart,0.6);
+  playEraMusic(0);
   resize();updateUI();
 }
 
@@ -877,7 +908,13 @@ window.onload=async function(){
 
   // Events
   window.addEventListener('resize',()=>{resize();mapCacheCellSize=-1;});
-  document.getElementById('start-btn').onclick=startGame;
+  document.getElementById('start-btn').onclick=()=>{
+    // Resume audio context on user interaction (autoplay policy)
+    startGame();
+    // Retry era music after user gesture
+    if(currentMusic&&currentMusic.paused) currentMusic.play().catch(()=>{});
+    if(!currentMusic) playEraMusic(0);
+  };
 
   // Tabs
   document.querySelectorAll('#build-tabs button').forEach(btn=>{
@@ -891,9 +928,9 @@ window.onload=async function(){
 
   document.getElementById('wave-btn').onclick=startWave;
   document.getElementById('mute-btn').onclick=()=>{
-    sfxMuted=!sfxMuted;musicMuted=!musicMuted;
-    updateAmbientVolume();
-    document.getElementById('mute-btn').textContent=sfxMuted?'Sound OFF':'Sound ON';
+    allMuted=!allMuted;
+    updateAllVolumes();
+    document.getElementById('mute-btn').textContent=allMuted?'Sound OFF':'Sound ON';
   };
   document.getElementById('speed-btn').onclick=()=>{
     game.speed=game.speed>=3?1:game.speed+1;
