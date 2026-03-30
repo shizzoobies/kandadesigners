@@ -55,7 +55,7 @@ canvas{display:block;position:absolute;top:0;left:0}
 </head>
 <body>
 <canvas id="c"></canvas>
-<div id="loading"><h2>LOADING ASSETS...</h2><div id="load-bar"><div id="load-fill"></div></div></div>
+<div id="loading"><h2 id="load-text">Loading assets... 0%</h2><div id="load-bar"><div id="load-fill"></div></div></div>
 <div id="hud" style="display:none">
  <div>&#x1FA99; <span id="gold-val">200</span></div>
  <div>&#10084;&#65039; <span id="lives-val">20</span></div>
@@ -65,6 +65,7 @@ canvas{display:block;position:absolute;top:0;left:0}
 </div>
 <div id="age-label" style="display:none"></div>
 <div id="build-bar">
+ <div id="wave-preview" style="display:none;padding:2px 6px;font-size:11px;background:rgba(255,255,255,0.05);border-radius:4px;margin-bottom:4px;overflow-x:auto;white-space:nowrap"></div>
  <div id="build-tabs"><button class="active" data-tab="tower">Towers</button><button data-tab="econ">Economy</button></div>
  <div id="build-cards"></div>
  <div id="bottom-btns"><button id="wave-btn">Start Wave 1</button><button id="speed-btn">1x</button></div>
