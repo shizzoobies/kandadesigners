@@ -360,17 +360,37 @@ function buildWaveComposition(wave){
   return comp;
 }
 
+function transitionAge(newAge){
+  // Sell all buildings and refund full cost
+  let refund=0;
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    let b=game.grid[r][c];if(!b)continue;
+    let base=b.cat==='tower'?TOWERS[b.typeId].cost:ECONS[b.typeId].cost;
+    let val=base;
+    for(let i=0;i<b.level;i++)val+=Math.round(base*(0.6+i*0.3));
+    refund+=val;
+    game.grid[r][c]=null;
+  }
+  game.gold+=refund;
+  if(refund>0){
+    game.floats.push({x:W/2,y:H/2-30,text:'Buildings sold: +'+refund,life:2.5,color:'#FFD700'});
+  }
+  // Clear any leftover projectiles/particles
+  game.projectiles=[];
+  game.selectedType=null;game.selectedCat=null;game.selectedBuilding=null;
+  document.getElementById('info-popup').style.display='none';
+
+  // Switch age
+  game.age=newAge;
+  computePath();computeSmoothPath();
+  mapCacheCellSize=-1;
+  announceAge();
+}
+
 function startWave(){
   if(game.waveActive)return;
   game.wave++;
-  let newAge=getAge(game.wave);
-  if(newAge>game.age){
-    game.age=newAge;
-    // Rebuild map for new age
-    computePath();computeSmoothPath();
-    mapCacheCellSize=-1;
-    announceAge();
-  }
+  // Age transition now happens on boss kill (see wave complete), not here
   game.waveActive=true;
   game.waveComposition=buildWaveComposition(game.wave);
   game.waveEnemies=game.waveComposition.length;
@@ -566,9 +586,16 @@ function update(dt){
     game.waveActive=false;game.gold+=waveBonus(game.wave);
     game.floats.push({x:W/2,y:H/2,text:'Wave '+game.wave+' Complete! +'+waveBonus(game.wave),life:2,color:'#4CAF50'});
     playSFX(SFX.waveComplete,0.6);stopAmbient();
-    // Build next wave preview
-    game.waveComposition=buildWaveComposition(game.wave+1);
-    updateUI();
+
+    // Check for age transition (boss wave = age boundary)
+    let nextAge=getAge(game.wave+1);
+    if(nextAge>game.age){
+      // Delay transition so player sees the "wave complete" message
+      setTimeout(()=>{transitionAge(nextAge);updateUI();},1500);
+    } else {
+      game.waveComposition=buildWaveComposition(game.wave+1);
+      updateUI();
+    }
   }
 
   document.getElementById('gold-val').textContent=Math.floor(game.gold);
