@@ -556,6 +556,46 @@ function render(){
   if(mapCacheAge!==game.age||mapCacheCellSize!==cellSize) buildMapCache();
   if(mapCache) ctx.drawImage(mapCache,offX,offY);
 
+  // ---- Path direction arrows (before wave starts) ----
+  if(!game.waveActive&&smoothPath.length>1){
+    let t=Date.now()*0.001;
+    let spacing=cellSize*1.2;
+    let totalLen=0;
+    // Compute cumulative lengths along smooth path
+    for(let i=1;i<smoothPath.length;i++){
+      let dx=smoothPath[i].x-smoothPath[i-1].x,dy=smoothPath[i].y-smoothPath[i-1].y;
+      totalLen+=Math.sqrt(dx*dx+dy*dy);
+    }
+    let arrowCount=Math.floor(totalLen/spacing);
+    let animOffset=(t%1)*spacing; // animate arrows flowing along path
+    ctx.globalAlpha=0.4;
+    for(let a=0;a<arrowCount;a++){
+      let targetDist=a*spacing+animOffset;
+      // Walk along smooth path to find position at targetDist
+      let cumDist=0,px=smoothPath[0].x,py=smoothPath[0].y,angle=0;
+      for(let i=1;i<smoothPath.length;i++){
+        let dx=smoothPath[i].x-smoothPath[i-1].x,dy=smoothPath[i].y-smoothPath[i-1].y;
+        let segLen=Math.sqrt(dx*dx+dy*dy);
+        if(cumDist+segLen>=targetDist){
+          let frac=(targetDist-cumDist)/segLen;
+          px=smoothPath[i-1].x+dx*frac;
+          py=smoothPath[i-1].y+dy*frac;
+          angle=Math.atan2(dy,dx);
+          break;
+        }
+        cumDist+=segLen;
+      }
+      // Draw small arrow
+      let sz=cellSize*0.15;
+      ctx.save();ctx.translate(px,py);ctx.rotate(angle);
+      ctx.fillStyle='#fff';
+      ctx.beginPath();ctx.moveTo(sz,0);ctx.lineTo(-sz*0.6,-sz*0.5);ctx.lineTo(-sz*0.3,0);ctx.lineTo(-sz*0.6,sz*0.5);ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.globalAlpha=1;
+  }
+
   // ---- Placement preview ----
   if(game.selectedType!==null&&game.hoverCell){
     let hc=game.hoverCell,x=offX+hc.x*cellSize,y=offY+hc.y*cellSize;
