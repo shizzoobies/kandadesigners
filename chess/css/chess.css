@@ -103,12 +103,8 @@ h1 .accent {
 /* ── Difficulty toggle ── */
 #difficulty-bar {
   display: flex;
+  gap: 6px;
   justify-content: center;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 3px;
-  max-width: 220px;
   margin: 0 auto;
 }
 
@@ -116,14 +112,13 @@ h1 .accent {
   font-family: var(--font);
   font-size: 12px;
   font-weight: 600;
-  padding: 7px 0;
+  padding: 9px 28px;
   border-radius: 8px;
-  border: none;
-  background: transparent;
+  border: 1px solid var(--border);
+  background: var(--surface);
   color: var(--text-dim);
   cursor: pointer;
   transition: all 0.2s;
-  flex: 1;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -133,6 +128,7 @@ h1 .accent {
 .diff-btn.active {
   background: var(--gold);
   color: #0a0a0f;
+  border-color: var(--gold);
   box-shadow: 0 1px 8px rgba(201, 168, 76, 0.25);
 }
 
@@ -201,19 +197,17 @@ h1 .accent {
 .sq.last-move-d { background: var(--last-move-d) !important; }
 .sq:hover { filter: brightness(1.05); }
 
-/* Piece sprites */
-.piece-sprite {
-  width: 82%;
-  height: 82%;
-  background-image: url('../pieces/sprites.png');
-  background-size: 600% 200%;
-  background-repeat: no-repeat;
+/* Piece images */
+.piece-img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
   pointer-events: none;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
   transition: transform 0.1s ease;
 }
 
-.sq:hover .piece-sprite { transform: scale(1.05); }
+.sq:hover .piece-img { transform: scale(1.05); }
 
 .sq.legal-move::after {
   content: '';

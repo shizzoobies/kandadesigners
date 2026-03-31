@@ -6,13 +6,10 @@ let stockfish = null;
 let sfReady = false;
 let commentaryEnabled = true;
 
-// Sprite sheet: 6 columns x 2 rows
-// Top row (white): King, Queen, Bishop, Knight, Rook, Pawn
-// Bottom row (black): Pawn, Rook, Knight, Bishop, Queen, King
-// background-position as [x%, y%]
-const SPRITE_POS = {
-  wK: [0, 0],    wQ: [20, 0],   wB: [40, 0],   wN: [60, 0],   wR: [80, 0],   wP: [100, 0],
-  bP: [0, 100],  bR: [20, 100], bN: [40, 100],  bB: [60, 100], bQ: [80, 100], bK: [100, 100],
+// Piece image files
+const PIECE_IMG = {
+  wK:'wK.png',wQ:'wQ.png',wR:'wR.png',wB:'wB.png',wN:'wN.png',wP:'wP.png',
+  bK:'bK.png',bQ:'bQ.png',bR:'bR.png',bB:'bB.png',bN:'bN.png',bP:'bP.png',
 };
 
 // Difficulty presets: [skillLevel 0-20, moveTimeMs, label, eloApprox]
@@ -121,13 +118,14 @@ function render() {
         if (r===hintMove.tr && c===hintMove.tc) sq.classList.add('hint-to');
       }
 
-      // Render piece from sprite sheet
-      if (board[r][c] && SPRITE_POS[board[r][c]]) {
-        const piece = document.createElement('div');
-        piece.className = 'piece-sprite';
-        const [px, py] = SPRITE_POS[board[r][c]];
-        piece.style.backgroundPosition = `${px}% ${py}%`;
-        sq.appendChild(piece);
+      // Render piece image
+      if (board[r][c] && PIECE_IMG[board[r][c]]) {
+        const img = document.createElement('img');
+        img.className = 'piece-img';
+        img.src = 'pieces/' + PIECE_IMG[board[r][c]];
+        img.alt = '';
+        img.draggable = false;
+        sq.appendChild(img);
       }
 
       if (dR===7) {
