@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#c8b890"/>
+    </linearGradient>
+    <filter id="sh">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#sh)" fill="url(#wg)" stroke="#a09070" stroke-width="1.5" stroke-linejoin="round">
+    <!-- Horse head profile facing left -->
+    <path d="
+      M38 28
+      Q34 22 30 20
+      L28 24
+      Q32 26 34 30
+      Q30 34 28 40
+      Q26 48 30 52
+      L36 48
+      Q38 42 42 36
+      Q48 28 56 22
+      Q62 18 68 16
+      Q78 14 82 20
+      Q86 26 84 36
+      Q82 46 80 52
+      Q78 60 78 68
+      L82 72
+      Q84 78 84 84
+      L84 92
+      L44 92
+      L44 84
+      Q44 72 46 64
+      Q48 54 46 46
+      Q44 38 38 28
+      Z"/>
+    <!-- Ear -->
+    <path d="M62 16 L58 8 L68 14" fill="url(#wg)" stroke="#a09070" stroke-width="1.5"/>
+    <!-- Eye -->
+    <circle cx="46" cy="32" r="3" fill="#a09070" stroke="none"/>
+    <!-- Nostril -->
+    <circle cx="30" cy="46" r="2" fill="#a09070" stroke="none"/>
+    <!-- Base rim -->
+    <rect x="38" y="92" width="52" height="8" rx="3"/>
+    <!-- Base -->
+    <rect x="34" y="100" width="60" height="12" rx="4"/>
+  </g>
+</svg>

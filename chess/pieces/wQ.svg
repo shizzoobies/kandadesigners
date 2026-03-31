@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#c8b890"/>
+    </linearGradient>
+    <filter id="sh">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#sh)" fill="url(#wg)" stroke="#a09070" stroke-width="1.5" stroke-linejoin="round">
+    <!-- Crown points -->
+    <polygon points="64,8 68,24 60,24"/>
+    <polygon points="42,16 50,28 38,28"/>
+    <polygon points="86,16 90,28 78,28"/>
+    <polygon points="30,24 38,32 28,34"/>
+    <polygon points="98,24 100,34 90,32"/>
+    <!-- Crown band -->
+    <ellipse cx="64" cy="34" rx="26" ry="10"/>
+    <!-- Crown jewels (small circles on points) -->
+    <circle cx="64" cy="10" r="3" stroke-width="1"/>
+    <circle cx="42" cy="18" r="3" stroke-width="1"/>
+    <circle cx="86" cy="18" r="3" stroke-width="1"/>
+    <circle cx="30" cy="26" r="3" stroke-width="1"/>
+    <circle cx="98" cy="26" r="3" stroke-width="1"/>
+    <!-- Neck -->
+    <rect x="50" y="42" width="28" height="8" rx="3"/>
+    <!-- Body -->
+    <path d="M52 50 Q48 70 44 92 L84 92 Q80 70 76 50 Z"/>
+    <!-- Base rim -->
+    <rect x="38" y="92" width="52" height="8" rx="3"/>
+    <!-- Base -->
+    <rect x="34" y="100" width="60" height="12" rx="4"/>
+  </g>
+</svg>

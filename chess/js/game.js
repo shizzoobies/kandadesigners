@@ -6,15 +6,21 @@ let stockfish = null;
 let sfReady = false;
 let commentaryEnabled = true;
 
+// Piece image path base (relative to chess page)
+const PIECE_BASE = 'pieces/';
+
+// Map piece codes to SVG filenames
+const PIECE_IMG = {
+  wK:'wK.svg',wQ:'wQ.svg',wR:'wR.svg',wB:'wB.svg',wN:'wN.svg',wP:'wP.svg',
+  bK:'bK.svg',bQ:'bQ.svg',bR:'bR.svg',bB:'bB.svg',bN:'bN.svg',bP:'bP.svg',
+};
+
 // Difficulty presets: [skillLevel 0-20, moveTimeMs, label, eloApprox]
 const DIFFICULTY = {
-  beginner:     [2,  500,  'Beginner',     '~900'],
-  intermediate: [8,  800,  'Intermediate', '~1400'],
-  advanced:     [14, 1200, 'Advanced',     '~1900'],
-  master:       [18, 1500, 'Master',       '~2300'],
-  grandmaster:  [20, 2000, 'Grandmaster',  '3500+'],
+  casual: [5,  600,  'Casual',  '~1100'],
+  ultra:  [20, 2000, 'Ultra',   '3500+'],
 };
-let currentDifficulty = 'grandmaster';
+let currentDifficulty = 'ultra';
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', async () => {
@@ -24,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function loadStockfish() {
-  setSFStatus('Loading Stockfish engine...');
+  setSFStatus('Loading engine...');
   stockfish = new StockfishEngine();
   stockfish.onReady = () => {
     sfReady = true;
@@ -37,7 +43,7 @@ async function loadStockfish() {
     await stockfish.load();
   } catch (err) {
     console.error('Stockfish failed to load:', err);
-    setSFStatus('Engine unavailable — using fallback AI');
+    setSFStatus('Engine unavailable');
     sfReady = false;
     setStatus('Your turn — play as White');
   }
@@ -55,12 +61,11 @@ function initDifficultyButtons() {
         stockfish.setSkillLevel(skill);
       }
       const [,, label, elo] = DIFFICULTY[currentDifficulty];
-      showCommentary(`Difficulty set to ${label} (${elo} ELO). New game started.`, true);
+      showCommentary(`${label} mode (${elo} ELO). New game started.`, true);
       resetGame();
     });
   });
-  // Set default active
-  document.querySelector('[data-diff="grandmaster"]').classList.add('active');
+  document.querySelector('[data-diff="ultra"]').classList.add('active');
 }
 
 // ── Reset ─────────────────────────────────────────────────────────────────────
@@ -108,7 +113,15 @@ function render() {
         if (r===hintMove.tr && c===hintMove.tc) sq.classList.add('hint-to');
       }
 
-      if (board[r][c]) sq.textContent = PIECES[board[r][c]];
+      // Render piece as image
+      if (board[r][c] && PIECE_IMG[board[r][c]]) {
+        const img = document.createElement('img');
+        img.className = 'piece-img';
+        img.src = PIECE_BASE + PIECE_IMG[board[r][c]];
+        img.alt = board[r][c];
+        img.draggable = false;
+        sq.appendChild(img);
+      }
 
       if (dR===7) {
         const lbl = document.createElement('span');
@@ -188,7 +201,7 @@ function checkGameState(isHuman, lastSAN) {
   if (moves.length === 0) {
     gameOver = true;
     if (inCheck(board, turn)) {
-      const winner = turn==='w' ? 'Stockfish wins\nCheckmate' : 'You win!\nCheckmate';
+      const winner = turn==='w' ? 'AI wins\nCheckmate' : 'You win!\nCheckmate';
       showResult(winner);
     } else {
       showResult('Stalemate\nDraw!');
@@ -196,9 +209,9 @@ function checkGameState(isHuman, lastSAN) {
     return;
   }
   if (inCheck(board, turn))
-    setStatus(turn==='w' ? 'Your king is in check!' : "Stockfish's king is in check!");
+    setStatus(turn==='w' ? 'Your king is in check!' : "AI's king is in check!");
   else if (isHuman)
-    setStatus('Stockfish is thinking...');
+    setStatus('AI is thinking...');
   else
     setStatus('Your turn');
 
@@ -217,7 +230,6 @@ async function sfMove(prevSAN) {
   }
 
   if (!uciStr) {
-    // Fallback: random legal move
     const moves = allLegalMoves(board, 'b', enPassant, castling);
     if (moves.length === 0) return;
     const m = moves[Math.floor(Math.random() * moves.length)];
@@ -235,7 +247,6 @@ async function sfMove(prevSAN) {
   const san = moveToSAN(board, move);
   executeMove(move, false);
 
-  // Ask Claude for commentary (non-blocking)
   if (commentaryEnabled) {
     fetchCommentary(fen, uciStr, san, Math.ceil(moveHistory.length / 2));
   }
@@ -271,18 +282,17 @@ async function requestHint() {
   if (gameOver || turn !== 'w') return;
   document.getElementById('btn-hint').disabled = true;
   hintMove = null;
-  showCommentary('Finding best move for you...', true);
+  showCommentary('Finding best move...', true);
 
   const fen = boardToFEN(board, turn, castling, enPassant, halfmove, fullmove);
 
-  // Stockfish at full strength for the hint move
   let uciStr = null;
   if (sfReady && stockfish) {
     uciStr = await stockfish.getBestMoveFullStrength(fen, 2000);
   }
 
   if (!uciStr) {
-    showCommentary('No hint available right now.', true);
+    showCommentary('No hint available.', true);
     document.getElementById('btn-hint').disabled = false;
     return;
   }
@@ -299,7 +309,6 @@ async function requestHint() {
   legalMoves = legalMovesFor(board, move.fr, move.fc, enPassant, castling);
   render();
 
-  // Ask Claude to explain the hint
   try {
     const resp = await fetch('/api/hint', {
       method: 'POST',
@@ -313,7 +322,7 @@ async function requestHint() {
     showCommentary(`Best move: ${san}`, false);
   }
 
-  setStatus(`Hint: ${toAlg(move.fr,move.fc)} → ${toAlg(move.tr,move.tc)}`);
+  setStatus(`Hint: ${toAlg(move.fr,move.fc)} \u2192 ${toAlg(move.tr,move.tc)}`);
   document.getElementById('btn-hint').disabled = false;
 }
 
@@ -373,7 +382,6 @@ async function requestAnalysis() {
     });
     const data = await resp.json();
     if (data.analysis) {
-      // Render markdown-style bold
       document.getElementById('analysis-text').innerHTML =
         data.analysis.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     }

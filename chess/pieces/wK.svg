@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff"/>
+      <stop offset="100%" stop-color="#c8b890"/>
+    </linearGradient>
+    <filter id="sh">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g filter="url(#sh)" fill="url(#wg)" stroke="#a09070" stroke-width="1.5" stroke-linejoin="round">
+    <!-- Cross -->
+    <rect x="59" y="10" width="10" height="18" rx="2"/>
+    <rect x="52" y="16" width="24" height="8" rx="2"/>
+    <!-- Crown head -->
+    <ellipse cx="64" cy="36" rx="18" ry="10"/>
+    <!-- Band -->
+    <rect x="48" y="44" width="32" height="8" rx="3"/>
+    <!-- Body -->
+    <path d="M50 52 Q48 72 44 92 L84 92 Q80 72 78 52 Z"/>
+    <!-- Base rim -->
+    <rect x="38" y="92" width="52" height="8" rx="3"/>
+    <!-- Base -->
+    <rect x="34" y="100" width="60" height="12" rx="4"/>
+  </g>
+</svg>
