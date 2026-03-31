@@ -6,13 +6,13 @@ let stockfish = null;
 let sfReady = false;
 let commentaryEnabled = true;
 
-// Piece image path base (relative to chess page)
-const PIECE_BASE = 'pieces/';
-
-// Map piece codes to SVG filenames
-const PIECE_IMG = {
-  wK:'wK.svg',wQ:'wQ.svg',wR:'wR.svg',wB:'wB.svg',wN:'wN.svg',wP:'wP.svg',
-  bK:'bK.svg',bQ:'bQ.svg',bR:'bR.svg',bB:'bB.svg',bN:'bN.svg',bP:'bP.svg',
+// Sprite sheet: 6 columns x 2 rows
+// Top row (white): King, Queen, Bishop, Knight, Rook, Pawn
+// Bottom row (black): Pawn, Rook, Knight, Bishop, Queen, King
+// background-position as [x%, y%]
+const SPRITE_POS = {
+  wK: [0, 0],    wQ: [20, 0],   wB: [40, 0],   wN: [60, 0],   wR: [80, 0],   wP: [100, 0],
+  bP: [0, 100],  bR: [20, 100], bN: [40, 100],  bB: [60, 100], bQ: [80, 100], bK: [100, 100],
 };
 
 // Difficulty presets: [skillLevel 0-20, moveTimeMs, label, eloApprox]
@@ -80,8 +80,16 @@ function resetGame() {
   document.getElementById('result-overlay').classList.remove('show');
   document.getElementById('move-log').innerHTML = '';
   document.getElementById('analysis-wrap').classList.remove('show');
-  document.getElementById('btn-undo').disabled = false;
-  document.getElementById('btn-hint').disabled = false;
+
+  // Restore normal controls
+  const controls = document.getElementById('controls');
+  controls.innerHTML = `
+    <button class="ctrl" id="btn-undo" onclick="undoMove()">Undo</button>
+    <button class="ctrl accent" id="btn-hint" onclick="requestHint()">Hint</button>
+    <button class="ctrl" onclick="flipBoard()">Flip</button>
+    <button class="ctrl" onclick="resetGame()">New Game</button>
+  `;
+
   if (!gameOver) setStatus('Your turn — play as White');
   render();
 }
@@ -113,14 +121,13 @@ function render() {
         if (r===hintMove.tr && c===hintMove.tc) sq.classList.add('hint-to');
       }
 
-      // Render piece as image
-      if (board[r][c] && PIECE_IMG[board[r][c]]) {
-        const img = document.createElement('img');
-        img.className = 'piece-img';
-        img.src = PIECE_BASE + PIECE_IMG[board[r][c]];
-        img.alt = board[r][c];
-        img.draggable = false;
-        sq.appendChild(img);
+      // Render piece from sprite sheet
+      if (board[r][c] && SPRITE_POS[board[r][c]]) {
+        const piece = document.createElement('div');
+        piece.className = 'piece-sprite';
+        const [px, py] = SPRITE_POS[board[r][c]];
+        piece.style.backgroundPosition = `${px}% ${py}%`;
+        sq.appendChild(piece);
       }
 
       if (dR===7) {
@@ -355,13 +362,29 @@ function flipBoard() {
 
 // ── Result / Post-game analysis ───────────────────────────────────────────────
 function showResult(msg) {
+  const lines = msg.split('\n');
+  setStatus(lines.join(' — '));
+  showCommentary(lines.join(' — ') + '  ·  Click Analyze or New Game below.');
+
+  // Swap controls to show endgame actions
+  const controls = document.getElementById('controls');
+  controls.innerHTML = '';
+  const analyzeBtn = document.createElement('button');
+  analyzeBtn.className = 'ctrl';
+  analyzeBtn.textContent = 'Analyze';
+  analyzeBtn.onclick = requestAnalysis;
+  const rematchBtn = document.createElement('button');
+  rematchBtn.className = 'ctrl accent';
+  rematchBtn.textContent = 'Rematch';
+  rematchBtn.onclick = resetGame;
+  controls.appendChild(analyzeBtn);
+  controls.appendChild(rematchBtn);
+
+  // Store result for analysis
   document.getElementById('result-text').textContent = msg;
-  document.getElementById('result-overlay').classList.add('show');
-  setStatus(msg.split('\n')[0]);
 }
 
 async function requestAnalysis() {
-  document.getElementById('result-overlay').classList.remove('show');
   const wrap = document.getElementById('analysis-wrap');
   wrap.classList.add('show');
   document.getElementById('analysis-text').textContent = 'Analyzing your game...';
