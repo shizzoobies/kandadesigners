@@ -9,40 +9,35 @@
     </filter>
   </defs>
   <g filter="url(#sh)" fill="url(#bg)" stroke="#000" stroke-width="1.5" stroke-linejoin="round">
-    <!-- Horse head profile facing left -->
+    <!-- Horse head - classic Staunton knight profile -->
     <path d="
-      M38 28
-      Q34 22 30 20
-      L28 24
-      Q32 26 34 30
-      Q30 34 28 40
-      Q26 48 30 52
-      L36 48
-      Q38 42 42 36
-      Q48 28 56 22
-      Q62 18 68 16
-      Q78 14 82 20
-      Q86 26 84 36
-      Q82 46 80 52
-      Q78 60 78 68
-      L82 72
-      Q84 78 84 84
-      L84 92
-      L44 92
-      L44 84
-      Q44 72 46 64
-      Q48 54 46 46
-      Q44 38 38 28
+      M72 92
+      L72 70
+      C72 58 76 50 80 42
+      C84 34 86 26 82 20
+      C78 14 70 12 62 14
+      L56 8
+      L58 16
+      C52 18 46 22 42 28
+      C38 34 36 40 36 46
+      L32 48
+      L38 54
+      C40 58 40 64 38 70
+      L38 92
       Z"/>
     <!-- Ear -->
-    <path d="M62 16 L58 8 L68 14" fill="url(#bg)" stroke="#000" stroke-width="1.5"/>
+    <path d="M62 14 L56 8 L66 10" fill="url(#bg)" stroke="#000" stroke-width="1.2"/>
     <!-- Eye -->
-    <circle cx="46" cy="32" r="3" fill="#888" stroke="none"/>
+    <circle cx="58" cy="28" r="2.5" fill="#888" stroke="none"/>
     <!-- Nostril -->
-    <circle cx="30" cy="46" r="2" fill="#888" stroke="none"/>
+    <circle cx="40" cy="44" r="1.8" fill="#888" stroke="none"/>
+    <!-- Mouth line -->
+    <path d="M36 46 C38 48 40 49 42 48" fill="none" stroke="#555" stroke-width="1"/>
+    <!-- Mane -->
+    <path d="M70 18 C74 24 76 32 76 40" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"/>
     <!-- Base rim -->
-    <rect x="38" y="92" width="52" height="8" rx="3"/>
+    <rect x="32" y="92" width="46" height="8" rx="3"/>
     <!-- Base -->
-    <rect x="34" y="100" width="60" height="12" rx="4"/>
+    <rect x="28" y="100" width="54" height="12" rx="4"/>
   </g>
 </svg>
