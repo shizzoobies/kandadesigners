@@ -415,9 +415,10 @@
           </div>
 
           <div class="project-card-actions">
-            <a href="/chess/" class="btn btn-outline">
+            <button class="btn btn-primary" id="play-chess-btn">
               Play Now
-            </a>
+            </button>
+            <a href="/chess/" class="btn btn-outline">Open Full Page ↗</a>
           </div>
         </article>
 
@@ -507,6 +508,30 @@
       </div>
       <div class="game-modal-frame-wrap">
         <iframe id="fort-iframe" class="game-iframe" src="" title="Castle Defender Game" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chess VS AI Modal -->
+  <div class="game-modal" id="chess-modal" aria-hidden="true">
+    <div class="game-modal-backdrop" id="chess-modal-backdrop"></div>
+    <div class="game-modal-panel game-modal-panel--large" role="dialog" aria-label="Chess VS AI">
+      <div class="game-modal-header">
+        <div class="game-modal-title">
+          <span class="game-modal-name">Chess VS AI</span>
+          <span class="project-status project-status--active" style="margin-left:1rem;">
+            <span class="dot"></span>Live
+          </span>
+        </div>
+        <div class="game-modal-controls">
+          <a href="/chess/" target="_blank" rel="noopener" class="game-modal-external" title="Open in new tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <button class="game-modal-close" id="chess-modal-close" aria-label="Close">&#10005;</button>
+        </div>
+      </div>
+      <div class="game-modal-frame-wrap">
+        <iframe id="chess-iframe" class="game-iframe" src="" title="Chess VS AI" allowfullscreen></iframe>
       </div>
     </div>
   </div>
@@ -1163,7 +1188,7 @@
     playBtn?.addEventListener('click', openGame);
     gameClose?.addEventListener('click', closeGame);
     gameBackdrop?.addEventListener('click', closeGame);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeGame(); closeFort(); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeGame(); closeFort(); closeChess(); } });
 
     /* Castle Defender modal */
     const fortBtn      = document.getElementById('play-fort-btn');
@@ -1190,6 +1215,32 @@
     fortBtn?.addEventListener('click', openFort);
     fortClose?.addEventListener('click', closeFort);
     fortBackdrop?.addEventListener('click', closeFort);
+
+    /* Chess VS AI modal */
+    const chessBtn      = document.getElementById('play-chess-btn');
+    const chessModal    = document.getElementById('chess-modal');
+    const chessClose    = document.getElementById('chess-modal-close');
+    const chessBackdrop = document.getElementById('chess-modal-backdrop');
+    const chessIframe   = document.getElementById('chess-iframe');
+    const CHESS_URL     = '/chess/';
+
+    function openChess() {
+      chessIframe.src = CHESS_URL;
+      chessModal.classList.add('is-open');
+      chessModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeChess() {
+      chessModal.classList.remove('is-open');
+      chessModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      setTimeout(() => { chessIframe.src = ''; }, 300);
+    }
+
+    chessBtn?.addEventListener('click', openChess);
+    chessClose?.addEventListener('click', closeChess);
+    chessBackdrop?.addEventListener('click', closeChess);
   </script>
 </body>
 </html>
