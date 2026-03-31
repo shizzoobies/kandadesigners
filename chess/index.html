@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Chess VS AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/chess.css" />
 </head>
 <body>
   <div id="app">
 
     <div id="header">
-      <h1>Chess <span class="accent">VS</span> AI</h1>
-      <div id="subtitle">Stockfish engine &middot; AI commentary</div>
+      <h1>Chess <span class="accent">vs</span> AI</h1>
     </div>
 
     <div id="difficulty-bar">
@@ -22,7 +21,7 @@
     </div>
 
     <div id="sf-status"></div>
-    <div id="status-bar">Loading engine...</div>
+    <div id="status-bar">Loading...</div>
 
     <div id="board-wrap">
       <div id="board-container">
@@ -30,8 +29,8 @@
         <div id="result-overlay">
           <div id="result-text"></div>
           <div id="result-btns">
-            <button class="btn-overlay secondary" onclick="requestAnalysis()">Analyze Game</button>
-            <button class="btn-overlay primary" onclick="resetGame()">New Game</button>
+            <button class="btn-overlay secondary" onclick="requestAnalysis()">Analyze</button>
+            <button class="btn-overlay primary" onclick="resetGame()">Rematch</button>
           </div>
         </div>
       </div>
@@ -39,14 +38,13 @@
 
     <div id="controls">
       <button class="ctrl" id="btn-undo" onclick="undoMove()">Undo</button>
-      <button class="ctrl primary" id="btn-hint" onclick="requestHint()">Hint</button>
+      <button class="ctrl accent" id="btn-hint" onclick="requestHint()">Hint</button>
       <button class="ctrl" onclick="flipBoard()">Flip</button>
       <button class="ctrl" onclick="resetGame()">New Game</button>
     </div>
 
     <div id="commentary-wrap">
-      <div id="commentary-icon">&#9823;</div>
-      <div id="commentary-text" class="muted">Make your first move to begin.</div>
+      <div id="commentary-text" class="muted">Make your first move.</div>
     </div>
 
     <div id="move-log-wrap">
@@ -54,7 +52,7 @@
     </div>
 
     <div id="analysis-wrap">
-      <div id="analysis-title">Game Analysis</div>
+      <div id="analysis-title">Post-Game Analysis</div>
       <div id="analysis-text"></div>
     </div>
 

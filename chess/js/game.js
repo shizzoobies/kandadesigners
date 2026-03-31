@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function loadStockfish() {
-  setSFStatus('Loading engine...');
+  setSFStatus('Loading...');
   stockfish = new StockfishEngine();
   stockfish.onReady = () => {
     sfReady = true;
@@ -43,7 +43,7 @@ async function loadStockfish() {
     await stockfish.load();
   } catch (err) {
     console.error('Stockfish failed to load:', err);
-    setSFStatus('Engine unavailable');
+    setSFStatus('AI unavailable');
     sfReady = false;
     setStatus('Your turn — play as White');
   }
@@ -201,7 +201,7 @@ function checkGameState(isHuman, lastSAN) {
   if (moves.length === 0) {
     gameOver = true;
     if (inCheck(board, turn)) {
-      const winner = turn==='w' ? 'AI wins\nCheckmate' : 'You win!\nCheckmate';
+      const winner = turn==='w' ? 'You lose\nCheckmate' : 'You win!\nCheckmate';
       showResult(winner);
     } else {
       showResult('Stalemate\nDraw!');
@@ -209,9 +209,9 @@ function checkGameState(isHuman, lastSAN) {
     return;
   }
   if (inCheck(board, turn))
-    setStatus(turn==='w' ? 'Your king is in check!' : "AI's king is in check!");
+    setStatus(turn==='w' ? 'Your king is in check!' : "Enemy king is in check!");
   else if (isHuman)
-    setStatus('AI is thinking...');
+    setStatus('Thinking...');
   else
     setStatus('Your turn');
 

@@ -9,35 +9,30 @@
     </filter>
   </defs>
   <g filter="url(#sh)" fill="url(#bg)" stroke="#000" stroke-width="1.5" stroke-linejoin="round">
-    <!-- Horse head - classic Staunton knight profile -->
+    <!-- Horse head - simple clean shape -->
     <path d="
-      M72 92
-      L72 70
-      C72 58 76 50 80 42
-      C84 34 86 26 82 20
-      C78 14 70 12 62 14
-      L56 8
-      L58 16
-      C52 18 46 22 42 28
-      C38 34 36 40 36 46
-      L32 48
-      L38 54
-      C40 58 40 64 38 70
-      L38 92
+      M58 14 L52 10 L54 18
+      C48 22 42 30 40 40
+      C38 48 38 50 34 52
+      L40 56
+      C42 54 44 50 44 44
+      C44 40 46 36 50 32
+      C50 44 48 58 46 68
+      L46 92
+      L80 92
+      L80 68
+      C80 54 82 42 84 34
+      C86 26 84 18 78 14
+      C72 10 64 12 58 14
       Z"/>
-    <!-- Ear -->
-    <path d="M62 14 L56 8 L66 10" fill="url(#bg)" stroke="#000" stroke-width="1.2"/>
     <!-- Eye -->
-    <circle cx="58" cy="28" r="2.5" fill="#888" stroke="none"/>
+    <circle cx="62" cy="26" r="2.5" fill="#888" stroke="none"/>
+    <circle cx="62" cy="26" r="1" fill="#333" stroke="none"/>
     <!-- Nostril -->
-    <circle cx="40" cy="44" r="1.8" fill="#888" stroke="none"/>
-    <!-- Mouth line -->
-    <path d="M36 46 C38 48 40 49 42 48" fill="none" stroke="#555" stroke-width="1"/>
-    <!-- Mane -->
-    <path d="M70 18 C74 24 76 32 76 40" fill="none" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="42" cy="48" rx="2" ry="1.5" fill="#888" stroke="none"/>
     <!-- Base rim -->
-    <rect x="32" y="92" width="46" height="8" rx="3"/>
+    <rect x="40" y="92" width="46" height="7" rx="3"/>
     <!-- Base -->
-    <rect x="28" y="100" width="54" height="12" rx="4"/>
+    <rect x="36" y="99" width="54" height="12" rx="4"/>
   </g>
 </svg>
