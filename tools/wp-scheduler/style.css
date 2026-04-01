@@ -305,14 +305,24 @@ body {
 .btn-send:active { transform: scale(0.95); }
 .btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* ===== Planner Panel ===== */
+/* ===== Planner Panel (Light theme card) ===== */
 .planner-panel {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  background: var(--bg);
+  background: #faf9f5;
+  color: #1a1a18;
+  margin: 10px 10px 10px 0;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
+
+/* -- Planner light palette overrides -- */
+.planner-panel .week-nav,
+.planner-panel .form-section,
+.planner-panel .export-section { background: #f5f2ea; }
 
 /* ===== Week Nav ===== */
 .week-nav {
@@ -320,9 +330,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
+  border-bottom: 1px solid #e8e4d8;
   flex-shrink: 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .week-label-wrap {
@@ -334,7 +344,7 @@ body {
 .week-label {
   font-weight: 500;
   font-size: 15px;
-  color: var(--text);
+  color: #1a1a18;
   min-width: 210px;
   text-align: center;
 }
@@ -343,31 +353,31 @@ body {
   width: 34px;
   height: 34px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-h);
-  background: var(--surface-2);
+  border: 1px solid #e8e4d8;
+  background: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-mid);
+  color: #8a8a80;
   transition: background 0.15s, border-color 0.15s;
 }
 
-.nav-btn:hover { background: var(--surface-3); border-color: var(--accent); color: var(--accent); }
+.nav-btn:hover { background: #f0ede4; border-color: #c0bfb5; color: #4a4a44; }
 
 .today-pill {
   font-size: 12px;
   font-weight: 500;
   padding: 4px 12px;
   border-radius: 20px;
-  border: 1px solid var(--border-h);
-  background: var(--surface-2);
-  color: var(--text-dim);
+  border: 1px solid #e8e4d8;
+  background: #fff;
+  color: #8a8a80;
   cursor: pointer;
   transition: all 0.15s;
 }
 
-.today-pill:hover { background: var(--accent-pale); color: var(--accent); border-color: rgba(192,154,94,0.3); }
+.today-pill:hover { background: #e8f0ea; color: #2d5a3d; border-color: #e8f0ea; }
 
 /* ===== Day Grid ===== */
 .day-grid {
@@ -378,17 +388,17 @@ body {
 }
 
 .day-col {
-  border-right: 1px solid var(--border);
+  border-right: 1px solid #f0ede4;
   min-height: 160px;
   padding: 10px 8px;
 }
 
 .day-col:last-child { border-right: none; }
 
-.day-col.is-today .day-header-name { color: var(--accent); }
+.day-col.is-today .day-header-name { color: #2d5a3d; }
 .day-col.is-today .day-header-date {
-  background: var(--accent);
-  color: var(--bg);
+  background: #2d5a3d;
+  color: #fff;
   border-radius: 50%;
   width: 26px;
   height: 26px;
@@ -404,21 +414,21 @@ body {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-dim);
+  color: #8a8a80;
   margin-bottom: 2px;
 }
 
 .day-header-date {
   font-size: 18px;
   font-weight: 500;
-  color: var(--text);
+  color: #1a1a18;
   line-height: 1;
 }
 
 /* ===== Event Chips ===== */
 .event-chip {
-  background: var(--event-bg);
-  border-left: 3px solid var(--event-border);
+  background: #f0f4f1;
+  border-left: 3px solid #2d5a3d;
   border-radius: var(--radius-sm);
   padding: 4px 22px 4px 6px;
   margin-bottom: 4px;
@@ -427,12 +437,12 @@ body {
   transition: background 0.15s;
 }
 
-.event-chip:hover { background: rgba(192,154,94,0.15); }
+.event-chip:hover { background: #ddeae0; }
 
 .event-chip-title {
   font-size: 11px;
   font-weight: 500;
-  color: var(--text);
+  color: #1a1a18;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -440,7 +450,7 @@ body {
 
 .event-chip-time {
   font-size: 10px;
-  color: var(--text-dim);
+  color: #8a8a80;
 }
 
 .chip-tentative,
@@ -456,13 +466,13 @@ body {
 }
 
 .chip-tentative {
-  background: rgba(192,154,94,0.2);
-  color: var(--accent-l);
+  background: #fff3cd;
+  color: #856404;
 }
 
 .chip-free {
-  background: rgba(100,180,100,0.15);
-  color: #8cc88c;
+  background: #d4edda;
+  color: #155724;
 }
 
 .event-chip-del {
@@ -471,7 +481,7 @@ body {
   right: 4px;
   transform: translateY(-50%);
   font-size: 13px;
-  color: var(--text-dim);
+  color: #c0bfb5;
   cursor: pointer;
   line-height: 1;
   padding: 2px;
@@ -481,11 +491,11 @@ body {
   border: none;
 }
 
-.event-chip-del:hover { color: var(--danger); background: var(--danger-bg); }
+.event-chip-del:hover { color: #8b3a2a; background: #f5ebe8; }
 
 .add-event-btn {
   font-size: 11px;
-  color: var(--text-dim);
+  color: #c0bfb5;
   cursor: pointer;
   background: none;
   border: none;
@@ -494,13 +504,12 @@ body {
   margin-top: 2px;
 }
 
-.add-event-btn:hover { color: var(--accent); }
+.add-event-btn:hover { color: #2d5a3d; }
 
 /* ===== Form ===== */
 .form-section {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #e8e4d8;
   padding: 1rem 1.25rem;
-  background: var(--surface);
   flex-shrink: 0;
 }
 
@@ -514,12 +523,12 @@ body {
 .form-title {
   font-size: 14px;
   font-weight: 500;
-  color: var(--text);
+  color: #1a1a18;
 }
 
 .cancel-btn {
   font-size: 13px;
-  color: var(--text-mid);
+  color: #8a8a80;
   background: none;
   border: none;
   cursor: pointer;
@@ -528,41 +537,41 @@ body {
   transition: background 0.15s;
 }
 
-.cancel-btn:hover { background: var(--surface-3); color: var(--text); }
+.cancel-btn:hover { background: #f0ede4; color: #1a1a18; }
 
 .form-body { display: grid; gap: 8px; }
 
-.field label {
+.planner-panel .field label {
   font-size: 12px;
-  color: var(--text-mid);
+  color: #8a8a80;
   display: block;
   margin-bottom: 3px;
   font-weight: 500;
 }
 
-.req { color: var(--accent); }
-.opt { font-weight: 400; color: var(--text-dim); }
+.req { color: #2d5a3d; }
+.opt { font-weight: 400; color: #c0bfb5; }
 
-.field input,
-.field select {
+.planner-panel .field input,
+.planner-panel .field select {
   width: 100%;
   height: 36px;
   padding: 0 10px;
-  border: 1px solid var(--border-h);
+  border: 1px solid #e8e4d8;
   border-radius: var(--radius-sm);
-  background: var(--surface-2);
+  background: #fff;
   font-family: var(--font-body);
   font-size: 13px;
-  color: var(--text);
+  color: #1a1a18;
   outline: none;
   transition: border-color 0.15s, box-shadow 0.15s;
   appearance: auto;
 }
 
-.field input:focus,
-.field select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(192,154,94,0.15);
+.planner-panel .field input:focus,
+.planner-panel .field select:focus {
+  border-color: #2d5a3d;
+  box-shadow: 0 0 0 3px rgba(45,90,61,0.12);
 }
 
 .field-row {
@@ -585,8 +594,8 @@ body {
   padding: 0 18px;
   border-radius: var(--radius-sm);
   border: none;
-  background: var(--accent);
-  color: var(--bg);
+  background: #2d5a3d;
+  color: #fff;
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 500;
@@ -594,12 +603,12 @@ body {
   transition: background 0.15s, transform 0.1s;
 }
 
-.btn-add:hover { background: var(--accent-l); }
+.btn-add:hover { background: #234d34; }
 .btn-add:active { transform: scale(0.98); }
 
 .form-hint {
   font-size: 13px;
-  color: var(--accent);
+  color: #4a8c62;
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -608,25 +617,25 @@ body {
 
 /* ===== Export ===== */
 .export-section {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #e8e4d8;
   padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  background: var(--surface);
   flex-shrink: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 .export-count {
   font-weight: 500;
   font-size: 14px;
-  color: var(--text);
+  color: #1a1a18;
 }
 
 .export-sub {
   font-size: 12px;
-  color: var(--text-dim);
+  color: #8a8a80;
   margin-top: 1px;
 }
 
@@ -637,9 +646,9 @@ body {
   height: 38px;
   padding: 0 18px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--accent);
-  background: transparent;
-  color: var(--accent);
+  border: 1.5px solid #2d5a3d;
+  background: #fff;
+  color: #2d5a3d;
   font-family: var(--font-body);
   font-size: 13px;
   font-weight: 500;
@@ -649,7 +658,7 @@ body {
   flex-shrink: 0;
 }
 
-.btn-export:hover { background: var(--accent); color: var(--bg); }
+.btn-export:hover { background: #2d5a3d; color: #fff; }
 .btn-export:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* ===== Footer ===== */
