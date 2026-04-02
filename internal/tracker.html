@@ -7,7 +7,7 @@
 
   <!-- Firebase SDK (CDN, no build step needed) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -325,6 +325,7 @@
   const FIREBASE_CONFIG = {
     apiKey:            "AIzaSyCh1LXZsA73cDOz1Xe_Q2I6nPdK3ytX1JY",
     authDomain:        "team-tracker-bad55.firebaseapp.com",
+    databaseURL:       "https://team-tracker-bad55-default-rtdb.firebaseio.com",
     projectId:         "team-tracker-bad55",
     storageBucket:     "team-tracker-bad55.firebasestorage.app",
     messagingSenderId: "709267369815",
@@ -369,7 +370,7 @@
   // ---- Firebase ----
   function initFirebase() {
     firebase.initializeApp(FIREBASE_CONFIG);
-    db = firebase.firestore();
+    db = firebase.database();
     buildMemberBar();
     buildOwnerSelects();
     subscribeToProjects();
@@ -377,17 +378,20 @@
 
   function subscribeToProjects() {
     setSyncStatus(true);
-    unsubscribe = db.collection(COLLECTION)
-      .orderBy('addedAt', 'asc')
-      .onSnapshot(snapshot => {
-        projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        renderProjects();
-        if (reportVisible) renderReport();
-        setSyncStatus(true);
-      }, err => {
-        console.error(err);
-        setSyncStatus(false);
-      });
+    const ref = db.ref(COLLECTION);
+    unsubscribe = () => ref.off('value');
+    ref.orderByChild('addedAt').on('value', snapshot => {
+      const data = snapshot.val() || {};
+      projects = Object.entries(data)
+        .map(([id, val]) => ({ id, ...val }))
+        .sort((a, b) => (a.addedAt || 0) - (b.addedAt || 0));
+      renderProjects();
+      if (reportVisible) renderReport();
+      setSyncStatus(true);
+    }, err => {
+      console.error(err);
+      setSyncStatus(false);
+    });
   }
 
   function setSyncStatus(online) {
@@ -403,11 +407,11 @@
     const btn = document.getElementById('addBtn');
     btn.disabled = true;
     try {
-      await db.collection(COLLECTION).add({
+      await db.ref(COLLECTION).push({
         title,
         owner,
         pct,
-        addedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        addedAt: firebase.database.ServerValue.TIMESTAMP,
         addedDisplay: new Date().toLocaleDateString()
       });
       document.getElementById('newTitle').value = '';
@@ -418,7 +422,7 @@
   }
 
   async function deleteProject(id) {
-    try { await db.collection(COLLECTION).doc(id).delete(); }
+    try { await db.ref(COLLECTION + '/' + id).remove(); }
     catch(e) { console.error(e); }
   }
 
@@ -429,7 +433,7 @@
     const title = document.getElementById('editTitle_' + id).value.trim();
     if (!title) return;
     try {
-      await db.collection(COLLECTION).doc(id).update({ pct, title });
+      await db.ref(COLLECTION + '/' + id).update({ pct, title });
     } catch(e) { console.error(e); }
     editingId = null;
   }
