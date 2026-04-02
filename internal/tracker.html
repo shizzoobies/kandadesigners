@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Project Tracker</title>
+
+  <!-- Firebase SDK (CDN, no build step needed) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f4;
+      --bg-tertiary: #eeede9;
+      --text-primary: #1a1a18;
+      --text-secondary: #6b6b67;
+      --border: rgba(0,0,0,0.12);
+      --border-strong: rgba(0,0,0,0.22);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #1e1e1c;
+        --bg-secondary: #2a2a28;
+        --bg-tertiary: #333330;
+        --text-primary: #f0efe9;
+        --text-secondary: #9e9e98;
+        --border: rgba(255,255,255,0.12);
+        --border-strong: rgba(255,255,255,0.22);
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .page { max-width: 860px; margin: 0 auto; }
+
+    /* Password gate */
+    #passwordGate {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 1rem;
+    }
+    #passwordGate h1 { font-size: 22px; font-weight: 500; }
+    #passwordGate p { font-size: 14px; color: var(--text-secondary); }
+    #passwordGate input {
+      height: 40px; padding: 0 14px; font-size: 15px;
+      border: 0.5px solid var(--border-strong); border-radius: var(--radius-md);
+      background: var(--bg-primary); color: var(--text-primary);
+      font-family: inherit; width: 260px; text-align: center;
+    }
+    #passwordGate button {
+      height: 40px; padding: 0 24px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border-strong); background: var(--bg-primary);
+      color: var(--text-primary); font-size: 14px; font-family: inherit; cursor: pointer;
+    }
+    #passwordGate button:hover { background: var(--bg-secondary); }
+    #gateError { color: #A32D2D; font-size: 13px; display: none; }
+
+    /* Main app */
+    #app { display: none; }
+
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; flex-wrap: wrap; gap: 12px;
+    }
+    .header h1 { font-size: 22px; font-weight: 500; }
+
+    .member-bar { display: flex; gap: 8px; flex-wrap: wrap; }
+    .member-chip {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 13px; font-weight: 500;
+    }
+    .member-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    .card {
+      background: var(--bg-primary); border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border); padding: 1rem 1.25rem;
+    }
+
+    .add-section { background: var(--bg-secondary); margin-bottom: 1.5rem; }
+    .add-section h2 { font-size: 14px; font-weight: 500; color: var(--text-secondary); margin-bottom: 12px; }
+    .add-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+    .field { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
+    .field label { font-size: 12px; color: var(--text-secondary); }
+    .field input, .field select {
+      height: 36px; padding: 0 10px;
+      border: 0.5px solid var(--border-strong); border-radius: var(--radius-md);
+      background: var(--bg-primary); color: var(--text-primary);
+      font-size: 14px; font-family: inherit;
+    }
+    .pct-row { display: flex; align-items: center; gap: 8px; }
+    .pct-row input[type=range] { flex: 1; cursor: pointer; }
+    .pct-val { font-size: 13px; font-weight: 500; min-width: 36px; }
+
+    .add-btn {
+      height: 36px; padding: 0 18px; border-radius: var(--radius-md);
+      border: 0.5px solid var(--border-strong); background: var(--bg-primary);
+      color: var(--text-primary); font-size: 14px; font-family: inherit;
+      cursor: pointer; white-space: nowrap;
+    }
+    .add-btn:hover { background: var(--bg-tertiary); }
+    .add-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .filter-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 1rem; flex-wrap: wrap;
+    }
+    .filter-row label { font-size: 13px; color: var(--text-secondary); }
+    .filter-row select {
+      height: 32px; padding: 0 8px;
+      border: 0.5px solid var(--border-strong); border-radius: var(--radius-md);
+      background: var(--bg-primary); color: var(--text-primary);
+      font-size: 13px; font-family: inherit;
+    }
+    .report-btn {
+      margin-left: auto; height: 32px; padding: 0 14px;
+      border-radius: var(--radius-md); font-size: 13px; font-family: inherit;
+      cursor: pointer; border: 0.5px solid var(--border-strong);
+      background: var(--bg-primary); color: var(--text-primary);
+    }
+    .report-btn:hover { background: var(--bg-secondary); }
+
+    .projects-grid { display: flex; flex-direction: column; gap: 10px; }
+
+    .proj-card { display: flex; flex-direction: column; gap: 10px; }
+    .proj-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .proj-title-row { display: flex; align-items: center; gap: 10px; }
+    .proj-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 500; flex-shrink: 0;
+    }
+    .proj-title { font-size: 15px; font-weight: 500; }
+    .proj-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    .proj-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .edit-btn, .del-btn {
+      height: 28px; padding: 0 10px; border-radius: var(--radius-md);
+      font-size: 12px; font-family: inherit; cursor: pointer;
+      border: 0.5px solid var(--border); background: transparent;
+      color: var(--text-secondary);
+    }
+    .edit-btn:hover { background: var(--bg-secondary); }
+    .del-btn:hover { background: #FCEBEB; color: #A32D2D; border-color: #F09595; }
+
+    .proj-progress-row { display: flex; align-items: center; gap: 10px; }
+    .prog-track {
+      flex: 1; height: 8px; background: var(--bg-secondary);
+      border-radius: 4px; overflow: hidden; border: 0.5px solid var(--border);
+    }
+    .prog-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+    .prog-pct { font-size: 13px; font-weight: 500; min-width: 36px; text-align: right; }
+
+    .proj-edit-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .proj-edit-row input[type=range] { flex: 1; min-width: 100px; }
+    .save-btn {
+      height: 28px; padding: 0 12px; border-radius: var(--radius-md);
+      font-size: 12px; font-family: inherit; cursor: pointer;
+      border: 0.5px solid var(--border-strong); background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .status-badge {
+      font-size: 11px; padding: 2px 8px;
+      border-radius: 10px; font-weight: 500;
+    }
+
+    .empty { text-align: center; color: var(--text-secondary); font-size: 14px; padding: 2rem 0; }
+
+    .sync-indicator {
+      font-size: 12px; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .sync-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #1D9E75; display: inline-block;
+    }
+    .sync-dot.offline { background: #E24B4A; }
+
+    /* Report */
+    .report-overlay { display: none; margin-top: 1.5rem; }
+    .report-overlay.visible { display: block; }
+    .report-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; margin-bottom: 1.25rem; gap: 12px;
+    }
+    .report-title { font-size: 18px; font-weight: 500; }
+    .report-date { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .report-actions { display: flex; gap: 8px; }
+    .print-btn, .close-btn {
+      height: 32px; padding: 0 14px; border-radius: var(--radius-md);
+      font-size: 13px; font-family: inherit; cursor: pointer;
+      border: 0.5px solid var(--border-strong);
+    }
+    .print-btn { background: var(--bg-secondary); color: var(--text-primary); }
+    .close-btn { background: transparent; color: var(--text-secondary); }
+
+    .report-summary {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 1.25rem; padding-bottom: 1.25rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .summary-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 500;
+    }
+    .report-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .report-table th {
+      text-align: left; padding: 6px 10px;
+      border-bottom: 1px solid var(--border-strong);
+      font-size: 11px; color: var(--text-secondary);
+      font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .report-table td {
+      padding: 8px 10px; border-bottom: 0.5px solid var(--border);
+      vertical-align: middle;
+    }
+    .mini-track {
+      background: var(--bg-secondary); border-radius: 4px;
+      height: 8px; width: 100px; overflow: hidden; display: inline-block;
+    }
+    .mini-fill { height: 100%; border-radius: 4px; }
+    .report-footer { margin-top: 1rem; font-size: 12px; color: var(--text-secondary); }
+
+    @media (max-width: 600px) {
+      .proj-actions { flex-wrap: wrap; }
+      .add-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Password Gate -->
+  <div id="passwordGate">
+    <h1>Team Project Tracker</h1>
+    <p>Enter the team password to continue</p>
+    <input type="password" id="pwInput" placeholder="Password" onkeydown="if(event.key==='Enter')checkPassword()" />
+    <button onclick="checkPassword()">Enter</button>
+    <span id="gateError">Incorrect password. Try again.</span>
+  </div>
+
+  <!-- Main App (hidden until password passed) -->
+  <div id="app">
+    <div class="header">
+      <h1>Team Project Tracker</h1>
+      <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+        <div class="sync-indicator">
+          <span class="sync-dot" id="syncDot"></span>
+          <span id="syncLabel">Live</span>
+        </div>
+        <div class="member-bar" id="memberBar"></div>
+      </div>
+    </div>
+
+    <div class="card add-section" style="margin-bottom:1.5rem;">
+      <h2>Add a project</h2>
+      <div class="add-row">
+        <div class="field">
+          <label>Project title</label>
+          <input type="text" id="newTitle" placeholder="e.g. Q2 Sales Rollout" />
+        </div>
+        <div class="field" style="max-width:160px;">
+          <label>Owner</label>
+          <select id="newOwner"></select>
+        </div>
+        <div class="field" style="min-width:180px;">
+          <label>Completion</label>
+          <div class="pct-row">
+            <input type="range" min="0" max="100" step="1" value="0" id="newPct"
+              oninput="document.getElementById('newPctVal').textContent=this.value+'%'" />
+            <span class="pct-val" id="newPctVal">0%</span>
+          </div>
+        </div>
+        <button class="add-btn" id="addBtn" onclick="addProject()">+ Add project</button>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <label>Owner:</label>
+      <select id="filterOwner" onchange="renderProjects()">
+        <option value="all">All members</option>
+      </select>
+      <label style="margin-left:8px;">Status:</label>
+      <select id="filterStatus" onchange="renderProjects()">
+        <option value="all">All</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="complete">Complete</option>
+      </select>
+      <button class="report-btn" onclick="toggleReport()">View report</button>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+      <div class="empty">Connecting to database...</div>
+    </div>
+
+    <div class="report-overlay" id="reportOverlay">
+      <div class="card" id="reportBox"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ============================================================
+  // CONFIGURATION — Claude Code will fill these in
+  // ============================================================
+  const FIREBASE_CONFIG = {
+    apiKey:            "AIzaSyCh1LXZsA73cDOz1Xe_Q2I6nPdK3ytX1JY",
+    authDomain:        "team-tracker-bad55.firebaseapp.com",
+    projectId:         "team-tracker-bad55",
+    storageBucket:     "team-tracker-bad55.firebasestorage.app",
+    messagingSenderId: "709267369815",
+    appId:             "1:709267369815:web:d292fdbbead608be491812"
+  };
+
+  // Password to access the page (change this to whatever your team wants)
+  const TEAM_PASSWORD = "csrocks26!";
+
+  // Firestore collection name
+  const COLLECTION = "projects";
+  // ============================================================
+
+  const MEMBERS = [
+    { name: 'Bobbie',    initials: 'BO', bg: '#EEEDFE', color: '#3C3489', bar: '#7F77DD' },
+    { name: 'Nicole',   initials: 'NI', bg: '#FBEAF0', color: '#72243E', bar: '#D4537E' },
+    { name: 'James',    initials: 'JA', bg: '#E1F5EE', color: '#085041', bar: '#1D9E75' },
+    { name: 'Jon Marc', initials: 'JM', bg: '#FAEEDA', color: '#633806', bar: '#BA7517' },
+    { name: 'Alex',     initials: 'AL', bg: '#E6F1FB', color: '#0C447C', bar: '#378ADD' },
+  ];
+
+  let db = null;
+  let projects = [];
+  let editingId = null;
+  let reportVisible = false;
+  let unsubscribe = null;
+
+  // ---- Password gate ----
+  function checkPassword() {
+    const val = document.getElementById('pwInput').value;
+    if (val === TEAM_PASSWORD) {
+      document.getElementById('passwordGate').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      initFirebase();
+    } else {
+      document.getElementById('gateError').style.display = 'block';
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').focus();
+    }
+  }
+
+  // ---- Firebase ----
+  function initFirebase() {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    buildMemberBar();
+    buildOwnerSelects();
+    subscribeToProjects();
+  }
+
+  function subscribeToProjects() {
+    setSyncStatus(true);
+    unsubscribe = db.collection(COLLECTION)
+      .orderBy('addedAt', 'asc')
+      .onSnapshot(snapshot => {
+        projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderProjects();
+        if (reportVisible) renderReport();
+        setSyncStatus(true);
+      }, err => {
+        console.error(err);
+        setSyncStatus(false);
+      });
+  }
+
+  function setSyncStatus(online) {
+    document.getElementById('syncDot').className = 'sync-dot' + (online ? '' : ' offline');
+    document.getElementById('syncLabel').textContent = online ? 'Live' : 'Offline';
+  }
+
+  async function addProject() {
+    const title = document.getElementById('newTitle').value.trim();
+    const owner = document.getElementById('newOwner').value;
+    const pct = parseInt(document.getElementById('newPct').value);
+    if (!title) { document.getElementById('newTitle').focus(); return; }
+    const btn = document.getElementById('addBtn');
+    btn.disabled = true;
+    try {
+      await db.collection(COLLECTION).add({
+        title,
+        owner,
+        pct,
+        addedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        addedDisplay: new Date().toLocaleDateString()
+      });
+      document.getElementById('newTitle').value = '';
+      document.getElementById('newPct').value = 0;
+      document.getElementById('newPctVal').textContent = '0%';
+    } catch(e) { console.error(e); }
+    btn.disabled = false;
+  }
+
+  async function deleteProject(id) {
+    try { await db.collection(COLLECTION).doc(id).delete(); }
+    catch(e) { console.error(e); }
+  }
+
+  function startEdit(id) { editingId = id; renderProjects(); }
+
+  async function saveEdit(id) {
+    const pct = parseInt(document.getElementById('editPct_' + id).value);
+    const title = document.getElementById('editTitle_' + id).value.trim();
+    if (!title) return;
+    try {
+      await db.collection(COLLECTION).doc(id).update({ pct, title });
+    } catch(e) { console.error(e); }
+    editingId = null;
+  }
+
+  // ---- UI helpers ----
+  function getMember(name) { return MEMBERS.find(m => m.name === name) || MEMBERS[0]; }
+
+  function statusLabel(pct) {
+    if (pct === 100) return { text: 'Complete',     bg: '#EAF3DE', color: '#3B6D11' };
+    if (pct >= 75)   return { text: 'Near done',    bg: '#E1F5EE', color: '#0F6E56' };
+    if (pct >= 25)   return { text: 'In progress',  bg: '#FAEEDA', color: '#854F0B' };
+    return               { text: 'Just started', bg: '#EEEDFE', color: '#534AB7' };
+  }
+
+  function getFiltered() {
+    const ownerFilter  = document.getElementById('filterOwner').value;
+    const statusFilter = document.getElementById('filterStatus').value;
+    return projects.filter(p => {
+      if (ownerFilter !== 'all' && p.owner !== ownerFilter) return false;
+      if (statusFilter === 'ongoing'  && p.pct === 100) return false;
+      if (statusFilter === 'complete' && p.pct < 100)   return false;
+      return true;
+    });
+  }
+
+  function buildMemberBar() {
+    const bar = document.getElementById('memberBar');
+    bar.innerHTML = '';
+    MEMBERS.forEach(m => {
+      const chip = document.createElement('div');
+      chip.className = 'member-chip';
+      chip.innerHTML = `<span class="dot" style="background:${m.bar}"></span>${m.name}`;
+      chip.style.background = m.bg;
+      chip.style.color = m.color;
+      bar.appendChild(chip);
+    });
+  }
+
+  function buildOwnerSelects() {
+    ['newOwner', 'filterOwner'].forEach(id => {
+      const sel = document.getElementById(id);
+      const extra = id === 'filterOwner' ? '<option value="all">All members</option>' : '';
+      sel.innerHTML = extra + MEMBERS.map(m => `<option value="${m.name}">${m.name}</option>`).join('');
+    });
+  }
+
+  function renderProjects() {
+    const grid = document.getElementById('projectsGrid');
+    const filtered = getFiltered();
+    if (!filtered.length) {
+      grid.innerHTML = '<div class="empty">No projects yet. Add one above!</div>';
+      return;
+    }
+    grid.innerHTML = filtered.map(p => {
+      const m  = getMember(p.owner);
+      const sl = statusLabel(p.pct);
+      const isEditing = editingId === p.id;
+      return `
+      <div class="card proj-card">
+        <div class="proj-top">
+          <div class="proj-title-row">
+            <div class="proj-avatar" style="background:${m.bg};color:${m.color}">${m.initials}</div>
+            <div>
+              <div class="proj-title">${p.title}</div>
+              <div class="proj-meta">${m.name} &middot; Added ${p.addedDisplay || ''}</div>
+            </div>
+          </div>
+          <div class="proj-actions">
+            <span class="status-badge" style="background:${sl.bg};color:${sl.color}">${sl.text}</span>
+            <button class="edit-btn" onclick="startEdit('${p.id}')">${isEditing ? 'Cancel' : 'Edit'}</button>
+            <button class="del-btn" onclick="deleteProject('${p.id}')">Remove</button>
+          </div>
+        </div>
+        ${isEditing ? `
+        <div class="proj-edit-row">
+          <label style="font-size:12px;color:var(--text-secondary);white-space:nowrap">Title:</label>
+          <input id="editTitle_${p.id}" type="text" value="${p.title}"
+            style="height:28px;flex:1;min-width:100px;padding:0 8px;border:0.5px solid var(--border-strong);border-radius:var(--radius-md);background:var(--bg-primary);color:var(--text-primary);font-size:13px;font-family:inherit" />
+          <label style="font-size:12px;color:var(--text-secondary);white-space:nowrap">Progress:</label>
+          <input id="editPct_${p.id}" type="range" min="0" max="100" step="1" value="${p.pct}"
+            oninput="document.getElementById('epd_${p.id}').textContent=this.value+'%'" />
+          <span id="epd_${p.id}" style="font-size:13px;font-weight:500;min-width:36px">${p.pct}%</span>
+          <button class="save-btn" onclick="saveEdit('${p.id}')">Save</button>
+        </div>` : `
+        <div class="proj-progress-row">
+          <div class="prog-track"><div class="prog-fill" style="width:${p.pct}%;background:${m.bar}"></div></div>
+          <span class="prog-pct">${p.pct}%</span>
+        </div>`}
+      </div>`;
+    }).join('');
+  }
+
+  function toggleReport() {
+    reportVisible = !reportVisible;
+    document.querySelector('.report-btn').textContent = reportVisible ? 'Hide report' : 'View report';
+    document.getElementById('reportOverlay').classList.toggle('visible', reportVisible);
+    if (reportVisible) renderReport();
+  }
+
+  function renderReport() {
+    const filtered = getFiltered();
+    const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    const summary = MEMBERS.map(m => {
+      const mp = filtered.filter(p => p.owner === m.name);
+      if (!mp.length) return '';
+      const avg = Math.round(mp.reduce((a, p) => a + p.pct, 0) / mp.length);
+      return `<span class="summary-chip" style="background:${m.bg};color:${m.color}">
+        <span style="width:8px;height:8px;border-radius:50%;background:${m.bar};display:inline-block"></span>
+        ${m.name}: ${mp.length} project${mp.length !== 1 ? 's' : ''}, avg ${avg}%
+      </span>`;
+    }).join('');
+    const rows = filtered.length ? filtered.map(p => {
+      const m  = getMember(p.owner);
+      const sl = statusLabel(p.pct);
+      return `<tr>
+        <td style="font-weight:500">${p.title}</td>
+        <td>
+          <span style="display:inline-flex;align-items:center;gap:6px">
+            <span style="width:22px;height:22px;border-radius:50%;background:${m.bg};color:${m.color};display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:500">${m.initials}</span>
+            ${m.name}
+          </span>
+        </td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="mini-track"><div class="mini-fill" style="width:${p.pct}%;background:${m.bar}"></div></div>
+            <span style="font-size:12px;font-weight:500">${p.pct}%</span>
+          </div>
+        </td>
+        <td><span class="status-badge" style="background:${sl.bg};color:${sl.color}">${sl.text}</span></td>
+        <td style="color:var(--text-secondary)">${p.addedDisplay || ''}</td>
+      </tr>`;
+    }).join('') : `<tr><td colspan="5" style="text-align:center;color:var(--text-secondary);padding:1.5rem">No projects match the current filter.</td></tr>`;
+
+    document.getElementById('reportBox').innerHTML = `
+      <div class="report-header">
+        <div>
+          <div class="report-title">Project Report</div>
+          <div class="report-date">${date}</div>
+        </div>
+        <div class="report-actions">
+          <button class="print-btn" onclick="printReport()">Print / Save PDF</button>
+          <button class="close-btn" onclick="toggleReport()">Close</button>
+        </div>
+      </div>
+      <div class="report-summary">${summary || '<span style="font-size:13px;color:var(--text-secondary)">No projects to summarize.</span>'}</div>
+      <table class="report-table">
+        <thead><tr>
+          <th>Project</th><th>Owner</th><th>Progress</th><th>Status</th><th>Added</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div class="report-footer">${filtered.length} project${filtered.length !== 1 ? 's' : ''} shown</div>
+    `;
+  }
+
+  function printReport() {
+    const box  = document.getElementById('reportBox').innerHTML;
+    const date = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+    const win  = window.open('', '_blank');
+    win.document.write(`<!DOCTYPE html><html><head><title>Project Report ${date}</title>
+    <style>
+      body{font-family:Arial,sans-serif;padding:2rem;color:#222;font-size:14px}
+      .report-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem}
+      .report-title{font-size:20px;font-weight:600}.report-date{font-size:12px;color:#666;margin-top:2px}
+      .report-actions{display:none}
+      .report-summary{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid #eee}
+      .summary-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500}
+      .report-table{width:100%;border-collapse:collapse;font-size:13px}
+      .report-table th{text-align:left;padding:6px 10px;border-bottom:2px solid #333;font-size:11px;color:#555;text-transform:uppercase;letter-spacing:0.04em}
+      .report-table td{padding:8px 10px;border-bottom:1px solid #eee;vertical-align:middle}
+      .mini-track{background:#eee;border-radius:4px;height:8px;width:100px;overflow:hidden;display:inline-block}
+      .mini-fill{height:100%;border-radius:4px}
+      .status-badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
+      .report-footer{margin-top:1rem;font-size:12px;color:#999}
+      @media print{.print-btn,.close-btn{display:none}}
+    </style></head><body>${box}
+    <script>window.onload=()=>window.print()<\/script>
+    </body></html>`);
+    win.document.close();
+  }
+</script>
+</body>
+</html>
