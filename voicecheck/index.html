@@ -801,6 +801,7 @@
   let hasContent = false;
   let voiceProfile = null;
   let analysisMode = 'voice'; // 'voice' | 'proofread'
+  let activeHighlightIdx = null;
 
   function togglePrompt() {
     const body = document.getElementById('prompt-body');
@@ -1009,24 +1010,54 @@
     }
   }
 
+  function clearActiveHighlight() {
+    if (activeHighlightIdx === null) return;
+    const mark = document.querySelector(`mark[data-flag-index="${activeHighlightIdx}"]`);
+    if (mark) {
+      const parent = mark.parentNode;
+      while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      mark.remove();
+      parent.normalize();
+    }
+    const block = document.querySelector(`[data-flag-index="${activeHighlightIdx}"]:not(mark)`);
+    if (block) {
+      delete block.dataset.flagIndex;
+      block.style.borderLeft = '';
+      block.style.paddingLeft = '';
+    }
+    activeHighlightIdx = null;
+  }
+
   function selectFlag(idx) {
     document.querySelectorAll('.flag-card').forEach(c => c.classList.remove('active'));
     const card = document.getElementById('flag-card-' + idx);
     if (card) { card.classList.add('active'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
     document.querySelectorAll('.tab')[0].click();
 
-    // 1. Try existing mark
-    const mark = document.querySelector(`mark[data-flag-index="${idx}"]`);
-    if (mark) { mark.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+    // Clear previous flag's highlight (unless same flag clicked again)
+    if (activeHighlightIdx !== null && activeHighlightIdx !== idx) clearActiveHighlight();
 
-    // 1b. Try block-level fallback marker (when surroundContents threw)
-    const block = document.querySelector(`[data-flag-index="${idx}"]:not(mark)`);
-    if (block) { block.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+    // 1. Try existing mark (already highlighted from a previous click)
+    const existingMark = document.querySelector(`mark[data-flag-index="${idx}"]`);
+    if (existingMark) { existingMark.scrollIntoView({behavior:'smooth', block:'center'}); return; }
 
-    // 2. Mark gone (rewritten) — find rewrite text or original in doc and flash it
+    const existingBlock = document.querySelector(`[data-flag-index="${idx}"]:not(mark)`);
+    if (existingBlock) { existingBlock.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+
     const flag = flagsData[idx];
     if (!flag) return;
-    scrollToTextInDoc(flag._rewrite || flag.excerpt);
+
+    // 2. If already rewritten, flash the rewrite text
+    if (flag._rewrite) { scrollToTextInDoc(flag._rewrite); return; }
+
+    // 3. Create highlight now on first click
+    if (flag._hlClass && highlightExcerpt(flag.excerpt, flag._hlClass, idx)) {
+      activeHighlightIdx = idx;
+      const newMark = document.querySelector(`mark[data-flag-index="${idx}"]`);
+      if (newMark) newMark.scrollIntoView({behavior:'smooth', block:'center'});
+    } else {
+      scrollToTextInDoc(flag.excerpt);
+    }
   }
 
   function scrollToTextInDoc(searchText) {
@@ -1328,6 +1359,7 @@ Return ONLY JSON: {"match_score": number, "assessment": string (1-2 sentences)}`
   function renderFlags(result, mode) {
     analysisMode = mode || 'voice';
     flagsData = result.flags || [];
+    activeHighlightIdx = null;
     const list = document.getElementById('flags-list');
     const empty = document.getElementById('flags-empty');
     const badge = document.getElementById('mode-badge');
@@ -1356,12 +1388,11 @@ Return ONLY JSON: {"match_score": number, "assessment": string (1-2 sentences)}`
       const sev = flag.severity||'Low';
       if(sev==='High') cH++; else if(sev==='Medium') cM++; else cL++;
 
-      // Highlight class depends on mode (CSS uses 'med' not 'medium')
+      // Store highlight class for on-demand highlighting when flag is clicked
       const sevKey = sev === 'Medium' ? 'med' : sev.toLowerCase();
-      const hlClass = analysisMode === 'proofread'
+      flag._hlClass = analysisMode === 'proofread'
         ? `proof-${sevKey}`
         : `flag-${sevKey}`;
-      highlightExcerpt(flag.excerpt, hlClass, i);
 
       const pillClass = analysisMode === 'proofread'
         ? `pill-proof-${sev.toLowerCase()}`
