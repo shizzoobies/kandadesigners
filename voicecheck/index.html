@@ -301,14 +301,34 @@
   /* ── Voice model selection ── */
   #selection-tooltip {
     position: fixed; display: none; z-index: 100;
-    background: var(--surface); border: 1px solid var(--orange);
-    border-radius: 4px; padding: 5px 12px;
-    font-size: 0.72rem; font-family: 'Barlow', sans-serif; font-weight: 600;
-    color: var(--orange-light); cursor: pointer; white-space: nowrap;
+    background: var(--surface); border: 1px solid var(--border-light);
+    border-radius: 5px; overflow: hidden;
     box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-    transition: opacity 0.15s;
+    white-space: nowrap; flex-direction: row;
   }
-  #selection-tooltip:hover { background: var(--orange); color: var(--white); }
+  #selection-tooltip.visible { display: flex; }
+  .sel-btn {
+    padding: 7px 13px; font-size: 0.72rem; font-family: 'Barlow', sans-serif;
+    font-weight: 600; cursor: pointer; border: none; background: transparent;
+    transition: background 0.15s;
+  }
+  .sel-btn-model { color: var(--orange-light); border-right: 1px solid var(--border); }
+  .sel-btn-model:hover { background: var(--orange); color: var(--white); }
+  .sel-btn-ignore { color: var(--muted); }
+  .sel-btn-ignore:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+
+  #doc-page .ignore-zone {
+    background: repeating-linear-gradient(
+      135deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 4px,
+      rgba(255,255,255,0.07) 4px, rgba(255,255,255,0.07) 8px
+    );
+    color: #888; border-left: 3px solid #444; padding-left: 4px;
+    cursor: pointer; display: inline;
+    text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.2);
+  }
+  #doc-page .ignore-zone:hover::after {
+    content: ' ✕ remove'; font-size: 0.7em; color: #aaa;
+  }
 
   #doc-page .voice-model-ref {
     background: rgba(111,207,151,0.12);
@@ -685,7 +705,10 @@
 
 </div>
 
-<div id="selection-tooltip" onclick="setVoiceModel()">📌 Set as Voice Model</div>
+<div id="selection-tooltip">
+  <button class="sel-btn sel-btn-model" onclick="setVoiceModel()">📌 Voice Model</button>
+  <button class="sel-btn sel-btn-ignore" onclick="markAsIgnored()">🚫 Ignore Zone</button>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -959,10 +982,73 @@
     }
   }
 
+  // ── Get text excluding ignore zones ──────────────────────────────────────────
+  function getAnalysisText() {
+    const clone = document.getElementById('doc-page').cloneNode(true);
+    clone.querySelectorAll('.ignore-zone').forEach(el => el.remove());
+    return clone.innerText.trim();
+  }
+
+  // ── Dismiss a flag ────────────────────────────────────────────────────────────
+  let originalScore = 0;
+  let originalFlagCount = 0;
+
+  function dismissFlag(idx, e) {
+    if (e) e.stopPropagation();
+    // Remove highlight mark
+    const mark = document.querySelector(`mark[data-flag-index="${idx}"]`);
+    if (mark) {
+      const parent = mark.parentNode;
+      while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+      parent.removeChild(mark);
+    }
+    // Remove card
+    const card = document.getElementById('flag-card-' + idx);
+    if (card) card.remove();
+    // Null out flag
+    flagsData[idx] = null;
+
+    const remaining = flagsData.filter(f => f !== null);
+    // Update counts
+    let cH=0,cM=0,cL=0;
+    remaining.forEach(f => {
+      if(f.severity==='High') cH++;
+      else if(f.severity==='Medium') cM++;
+      else cL++;
+    });
+    document.getElementById('count-high').textContent = cH;
+    document.getElementById('count-med').textContent  = cM;
+    document.getElementById('count-low').textContent  = cL;
+
+    // Recalculate score proportionally
+    if (originalFlagCount > 0) {
+      const dismissed = originalFlagCount - remaining.length;
+      const newScore = Math.min(100, Math.round(originalScore + (dismissed / originalFlagCount) * (100 - originalScore)));
+      const scoreEl = document.querySelector('.ring-label');
+      const fillEl  = document.querySelector('.ring-fill');
+      if (scoreEl) {
+        const col = newScore>=70?'#FF6600':newScore>=45?'#FFA600':'#FF3C3C';
+        scoreEl.textContent = newScore;
+        scoreEl.style.color = col;
+        if (fillEl) {
+          const circ = 2*Math.PI*30;
+          fillEl.setAttribute('stroke-dashoffset', circ - (newScore/100)*circ);
+          fillEl.setAttribute('stroke', col);
+        }
+      }
+    }
+
+    if (remaining.length === 0) {
+      document.getElementById('flags-empty').style.display = 'flex';
+      document.getElementById('flags-empty').querySelector('.empty-label').textContent = 'All flags dismissed. Looking good!';
+      document.getElementById('stats-bar').style.display = 'none';
+      document.getElementById('replace-bar').classList.remove('visible');
+    }
+  }
+
   // ── Analyze ───────────────────────────────────────────────────────────────────
   async function analyzeStoryboard() {
-    const doc = document.getElementById('doc-page');
-    const text = doc.innerText.trim();
+    const text = getAnalysisText();
     if (!text) return;
 
     const tone = document.getElementById('tone-select').value;
@@ -1020,6 +1106,8 @@ Rules: Excerpts must be exact character-for-character substrings. Flag only genu
       overlay.classList.remove('visible');
       btn.disabled = false;
       voiceProfile = { dominant_voice: result.dominant_voice, voice_traits: result.voice_traits };
+      originalScore = result.consistency_score || 0;
+      originalFlagCount = (result.flags || []).length;
       renderFlags(result, 'voice');
       renderSummary(result);
     } catch(err) {
@@ -1033,8 +1121,7 @@ Rules: Excerpts must be exact character-for-character substrings. Flag only genu
 
   // ── Proofread ─────────────────────────────────────────────────────────────────
   async function proofread() {
-    const doc = document.getElementById('doc-page');
-    const text = doc.innerText.trim();
+    const text = getAnalysisText();
     if (!text) return;
 
     analysisMode = 'proofread';
@@ -1214,6 +1301,7 @@ Return ONLY JSON: {"match_score": number, "assessment": string (1-2 sentences)}`
         <div class="flag-actions">
           <button class="mini-btn suggest" id="sbtn-${i}" onclick="getSuggestion(event,${i})">${actionLabel}</button>
           <button class="mini-btn" onclick="copyClip(event,'${flag.excerpt.replace(/'/g,"\\'").replace(/\n/g,' ')}')">📋 Copy</button>
+          <button class="mini-btn" onclick="dismissFlag(${i},event)" title="Remove this flag and update score">✕ Dismiss</button>
         </div>
         <div class="suggestion-box" id="sbox-${i}">
           <div class="suggestion-label">${analysisMode==='proofread' ? 'Correction' : 'Suggested Rewrite'}</div>
@@ -1468,19 +1556,19 @@ Rules:
       const range = sel.getRangeAt(0);
       const rect = range.getBoundingClientRect();
       const tooltip = document.getElementById('selection-tooltip');
-      const tooltipLeft = Math.max(8, Math.min(rect.left + rect.width / 2 - 80, window.innerWidth - 200));
+      const tooltipLeft = Math.max(8, Math.min(rect.left + rect.width / 2 - 100, window.innerWidth - 220));
       const tooltipTop = rect.top < 48
-        ? rect.bottom + 8 + window.scrollY   // below if near top
-        : rect.top - 38 + window.scrollY;    // above otherwise
-      tooltip.style.display = 'block';
+        ? rect.bottom + 8 + window.scrollY
+        : rect.top - 38 + window.scrollY;
+      tooltip.classList.add('visible');
       tooltip.style.left = tooltipLeft + 'px';
       tooltip.style.top = tooltipTop + 'px';
     }, 10);
   });
 
   document.addEventListener('mousedown', (e) => {
-    if (e.target.id !== 'selection-tooltip') {
-      document.getElementById('selection-tooltip').style.display = 'none';
+    if (!e.target.closest('#selection-tooltip')) {
+      document.getElementById('selection-tooltip').classList.remove('visible');
     }
   });
 
@@ -1518,9 +1606,51 @@ Rules:
       } catch(e) { /* spans multiple blocks, highlight not applied but text stored */ }
     }
 
-    document.getElementById('selection-tooltip').style.display = 'none';
+    document.getElementById('selection-tooltip').classList.remove('visible');
     document.getElementById('match-btn').disabled = false;
     showToast('Voice model set — click "Match All to Model" to rewrite the doc');
+  }
+
+  function markAsIgnored() {
+    if (!pendingSelectionText) return;
+    const selectedText = pendingSelectionText;
+    pendingSelectionText = null;
+    document.getElementById('selection-tooltip').classList.remove('visible');
+
+    const docEl = document.getElementById('doc-page');
+    docEl.normalize();
+    const walker = document.createTreeWalker(docEl, NodeFilter.SHOW_TEXT);
+    let fullText = '', nodes = [], node;
+    while (node = walker.nextNode()) { nodes.push({ node, start: fullText.length }); fullText += node.textContent; }
+
+    const idx = fullText.indexOf(selectedText);
+    if (idx === -1) { showToast('Could not locate selection — try again'); return; }
+    const endIdx = idx + selectedText.length;
+
+    const range = document.createRange();
+    let started = false;
+    for (const { node, start } of nodes) {
+      const end = start + node.textContent.length;
+      if (!started && start <= idx && end > idx) { range.setStart(node, idx - start); started = true; }
+      if (started && start < endIdx && end >= endIdx) { range.setEnd(node, endIdx - start); break; }
+    }
+    if (!started) { showToast('Select within a single paragraph'); return; }
+
+    try {
+      const span = document.createElement('span');
+      span.className = 'ignore-zone';
+      span.title = 'Click to remove ignore zone';
+      span.onclick = function() {
+        const parent = this.parentNode;
+        while (this.firstChild) parent.insertBefore(this.firstChild, this);
+        parent.removeChild(this);
+        showToast('Ignore zone removed');
+      };
+      range.surroundContents(span);
+      showToast('Marked as ignored — excluded from analysis and rewrites');
+    } catch(e) {
+      showToast('Select within a single paragraph');
+    }
   }
 
   async function matchToModel() {
@@ -1534,10 +1664,12 @@ Rules:
     const custom = (document.getElementById('rewrite-instructions').value || '').trim();
     const customBlock = custom ? `\nAdditional instructions: ${custom}` : '';
 
-    // Collect block elements, skip the one containing the reference
+    // Collect block elements, skip reference and ignore zones
     const blocks = Array.from(docEl.querySelectorAll('p, li, h1, h2, h3, h4')).filter(el => {
       const t = el.innerText.trim();
-      return t.length > 0 && !voiceModelText.includes(t) && !t.includes(voiceModelText);
+      return t.length > 0
+        && !voiceModelText.includes(t) && !t.includes(voiceModelText)
+        && !el.closest('.ignore-zone') && !el.querySelector('.ignore-zone');
     });
 
     if (!blocks.length) { showToast('No paragraphs to rewrite'); btn.disabled = false; return; }
