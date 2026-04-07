@@ -859,10 +859,52 @@
     document.querySelectorAll('.flag-card').forEach(c => c.classList.remove('active'));
     const card = document.getElementById('flag-card-' + idx);
     if (card) { card.classList.add('active'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
-    // Scroll the mark into view in the doc
-    const mark = document.querySelector(`mark[data-flag-index="${idx}"]`);
-    if (mark) mark.scrollIntoView({behavior:'smooth', block:'center'});
     document.querySelectorAll('.tab')[0].click();
+
+    // 1. Try existing mark
+    const mark = document.querySelector(`mark[data-flag-index="${idx}"]`);
+    if (mark) { mark.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+
+    // 2. Mark gone (rewritten) — find rewrite text or original in doc and flash it
+    const flag = flagsData[idx];
+    if (!flag) return;
+    scrollToTextInDoc(flag._rewrite || flag.excerpt);
+  }
+
+  function scrollToTextInDoc(searchText) {
+    if (!searchText) return;
+    const docEl = document.getElementById('doc-page');
+    const walker = document.createTreeWalker(docEl, NodeFilter.SHOW_TEXT);
+    let fullText = '', nodes = [], node;
+    while (node = walker.nextNode()) { nodes.push({ node, start: fullText.length }); fullText += node.textContent; }
+    const idx = fullText.indexOf(searchText);
+    if (idx === -1) return;
+    const endIdx = idx + searchText.length;
+
+    const range = document.createRange();
+    let started = false;
+    for (const { node, start } of nodes) {
+      const end = start + node.textContent.length;
+      if (!started && start <= idx && end > idx) { range.setStart(node, idx - start); started = true; }
+      if (started && start < endIdx && end >= endIdx) { range.setEnd(node, endIdx - start); break; }
+    }
+    if (!started) return;
+
+    try {
+      const flash = document.createElement('span');
+      flash.style.cssText = 'background:rgba(255,102,0,0.35);border-radius:2px;transition:background 1s;';
+      range.surroundContents(flash);
+      flash.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => { flash.style.background = 'transparent'; }, 800);
+      setTimeout(() => {
+        const p = flash.parentNode;
+        if (p) { while (flash.firstChild) p.insertBefore(flash.firstChild, flash); p.removeChild(flash); }
+      }, 1400);
+    } catch(e) {
+      // Spans block elements — just scroll the nearest parent into view
+      const n = nodes.find(n => n.start <= idx && n.start + n.node.textContent.length > idx);
+      if (n && n.node.parentElement) n.node.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
   // ── Analyze ───────────────────────────────────────────────────────────────────
