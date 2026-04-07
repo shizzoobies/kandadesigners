@@ -375,6 +375,34 @@
     content: ' ✕ remove'; font-size: 0.7em; color: #aaa;
   }
 
+  /* ── Voice model indicator bar ── */
+  #voice-model-bar {
+    display: none;
+    align-items: center; gap: 8px;
+    padding: 5px 14px;
+    background: rgba(111,207,151,0.07);
+    border-bottom: 1px solid rgba(111,207,151,0.2);
+    font-size: 0.72rem; font-family: 'DM Mono', monospace;
+    color: #6fcf97;
+  }
+  #voice-model-bar.visible { display: flex; }
+  #voice-model-bar .vm-label {
+    font-family: 'Barlow', sans-serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    font-size: 0.65rem; flex-shrink: 0;
+  }
+  #voice-model-bar .vm-text {
+    flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    color: #a8e6c0; opacity: 0.85;
+  }
+  #voice-model-bar .vm-clear {
+    flex-shrink: 0; background: none; border: 1px solid rgba(111,207,151,0.3);
+    border-radius: 3px; color: #6fcf97; cursor: pointer;
+    font-size: 0.65rem; padding: 2px 7px; font-family: 'Barlow', sans-serif;
+    transition: background 0.15s;
+  }
+  #voice-model-bar .vm-clear:hover { background: rgba(111,207,151,0.12); }
+
   #doc-page .voice-model-ref {
     background: rgba(111,207,151,0.12);
     border-left: 3px solid #6fcf97;
@@ -676,6 +704,12 @@
     </div>
   </div>
 
+  <div id="voice-model-bar">
+    <span class="vm-label">🎯 Voice Model:</span>
+    <span class="vm-text" id="vm-preview"></span>
+    <button class="vm-clear" onclick="clearVoiceModel()">✕ Clear</button>
+  </div>
+
   <div class="editor-pane">
     <div class="editor-header">
       <span>Document Editor</span>
@@ -937,6 +971,10 @@
     document.getElementById('save-btn').disabled = true;
     hasContent = false;
     flagsData = [];
+    voiceModelText = null;
+    document.getElementById('voice-model-bar').classList.remove('visible');
+    document.getElementById('vm-preview').textContent = '';
+    document.getElementById('match-btn').disabled = true;
   }
 
   // ── Highlights via Range API ──────────────────────────────────────────────────
@@ -1723,7 +1761,29 @@ Rules:
 
     document.getElementById('selection-tooltip').classList.remove('visible');
     document.getElementById('match-btn').disabled = false;
+
+    // Show voice model indicator bar
+    const preview = voiceModelText.length > 120
+      ? voiceModelText.slice(0, 120).trimEnd() + '…'
+      : voiceModelText;
+    document.getElementById('vm-preview').textContent = preview;
+    document.getElementById('voice-model-bar').classList.add('visible');
+
     showToast('Voice model set — click "Match All to Model" to rewrite the doc');
+  }
+
+  function clearVoiceModel() {
+    voiceModelText = null;
+    document.getElementById('voice-model-bar').classList.remove('visible');
+    document.getElementById('vm-preview').textContent = '';
+    document.getElementById('match-btn').disabled = true;
+    // Remove highlight in doc
+    document.querySelectorAll('.voice-model-ref').forEach(el => {
+      const parent = el.parentNode;
+      while (el.firstChild) parent.insertBefore(el.firstChild, el);
+      parent.removeChild(el);
+    });
+    showToast('Voice model cleared');
   }
 
   function markAsIgnored() {
