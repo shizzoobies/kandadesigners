@@ -1658,7 +1658,7 @@ Rules:
     setTimeout(() => {
       const sel = window.getSelection();
       if (!sel || sel.isCollapsed || !sel.toString().trim()) {
-        document.getElementById('selection-tooltip').style.display = 'none';
+        document.getElementById('selection-tooltip').classList.remove('visible');
         pendingSelectionText = null;
         return;
       }
