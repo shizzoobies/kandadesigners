@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VoiceCheck — Storyboard Analyzer</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --orange:       #FF6600;
+    --orange-light: #FF8533;
+    --orange-dark:  #CC5200;
+    --orange-glow:  rgba(255,102,0,0.12);
+    --black:        #0D0D0D;
+    --surface:      #161616;
+    --surface2:     #1F1F1F;
+    --surface3:     #282828;
+    --border:       #2E2E2E;
+    --border-light: #3A3A3A;
+    --text:         #F0F0F0;
+    --muted:        #888888;
+    --muted2:       #555555;
+    --white:        #FFFFFF;
+    --flag-high-bg:     rgba(255,60,60,0.10);
+    --flag-high-border: #FF3C3C;
+    --flag-med-bg:      rgba(255,166,0,0.10);
+    --flag-med-border:  #FFA600;
+    --flag-low-bg:      rgba(255,102,0,0.10);
+    --flag-low-border:  var(--orange);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Password Gate ── */
+  #pw-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #pw-gate.hidden { display: none; }
+  .pw-box {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-top: 3px solid var(--orange);
+    border-radius: 8px;
+    padding: 40px 36px;
+    width: 100%; max-width: 360px;
+    display: flex; flex-direction: column; gap: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  .pw-logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .pw-mark {
+    width: 38px; height: 38px; background: var(--orange); border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 1rem; color: var(--white); flex-shrink: 0;
+  }
+  .pw-title {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 1.3rem; text-transform: uppercase; letter-spacing: 0.04em;
+    color: var(--white);
+  }
+  .pw-title span { color: var(--orange); }
+  .pw-label {
+    font-size: 0.72rem; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 6px;
+  }
+  .pw-input {
+    width: 100%; background: var(--surface2);
+    border: 1px solid var(--border-light); border-radius: 4px;
+    padding: 10px 12px; color: var(--text);
+    font-family: 'DM Mono', monospace; font-size: 0.9rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .pw-input:focus { border-color: var(--orange); }
+  .pw-error {
+    font-size: 0.75rem; color: #FF3C3C;
+    font-family: 'DM Mono', monospace; display: none; margin-top: -10px;
+  }
+  .pw-error.show { display: block; }
+  .pw-btn {
+    width: 100%; padding: 10px; border: none; border-radius: 4px;
+    background: var(--orange); color: var(--white); cursor: pointer;
+    font-family: 'Barlow', sans-serif; font-weight: 700;
+    font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: background 0.18s;
+  }
+  .pw-btn:hover { background: var(--orange-light); }
+
+  header {
+    background: var(--surface);
+    border-bottom: 2px solid var(--orange);
+    padding: 0 28px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .logo-wrap { display: flex; align-items: center; gap: 14px; }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: var(--orange);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 1rem;
+    color: var(--white); letter-spacing: -0.5px; flex-shrink: 0;
+  }
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 1.35rem;
+    letter-spacing: 0.02em; color: var(--white); text-transform: uppercase;
+  }
+  .logo-text span { color: var(--orange); }
+  .logo-divider { width: 1px; height: 24px; background: var(--border-light); }
+  .logo-sub { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .header-badge {
+    background: var(--orange-glow);
+    border: 1px solid rgba(255,102,0,0.35);
+    border-radius: 20px; padding: 4px 12px;
+    font-size: 0.68rem; color: var(--orange-light);
+    font-family: 'DM Mono', monospace; letter-spacing: 0.04em;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 1fr 390px;
+    grid-template-rows: auto 1fr;
+    flex: 1; min-height: 0; overflow: hidden;
+  }
+
+  .toolbar {
+    grid-column: 1 / -1;
+    padding: 10px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+
+  .toolbar-label {
+    font-size: 0.68rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap;
+  }
+
+  .tone-select {
+    background: var(--surface2); border: 1px solid var(--border-light);
+    color: var(--text); border-radius: 4px; padding: 6px 10px;
+    font-size: 0.8rem; font-family: 'Barlow', sans-serif;
+    cursor: pointer; outline: none; transition: border-color 0.2s;
+  }
+  .tone-select:focus { border-color: var(--orange); }
+  .tone-select option { background: var(--surface2); }
+
+  .sep { width: 1px; height: 22px; background: var(--border); margin: 0 2px; }
+  .spacer { flex: 1; }
+
+  .btn {
+    padding: 7px 16px; border-radius: 4px;
+    font-size: 0.8rem; font-family: 'Barlow', sans-serif;
+    font-weight: 600; cursor: pointer; border: none;
+    transition: all 0.18s; display: flex; align-items: center;
+    gap: 6px; white-space: nowrap; letter-spacing: 0.02em;
+  }
+  .btn-primary { background: var(--orange); color: var(--white); }
+  .btn-primary:hover:not(:disabled) { background: var(--orange-light); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,102,0,0.3); }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border-light); }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+  .btn-upload { background: var(--surface2); color: var(--orange-light); border: 1px solid rgba(255,102,0,0.35); }
+  .btn-upload:hover { background: var(--orange-glow); border-color: var(--orange); }
+  .btn-danger { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-danger:hover { color: #FF3C3C; border-color: rgba(255,60,60,0.4); }
+
+  .stats-bar { display: flex; align-items: center; gap: 14px; font-size: 0.72rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .stat { display: flex; align-items: center; gap: 5px; }
+  .stat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .dot-high { background: #FF3C3C; }
+  .dot-med  { background: #FFA600; }
+  .dot-low  { background: var(--orange); }
+
+  #file-input { display: none; }
+
+  .editor-pane {
+    grid-row: 2; display: flex; flex-direction: column;
+    overflow: hidden; border-right: 1px solid var(--border); position: relative;
+  }
+
+  .editor-header {
+    padding: 10px 18px; border-bottom: 1px solid var(--border);
+    font-size: 0.68rem; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.08em; display: flex; align-items: center;
+    justify-content: space-between; background: var(--surface); flex-shrink: 0;
+  }
+
+  .file-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--orange-glow); border: 1px solid rgba(255,102,0,0.3);
+    border-radius: 3px; padding: 2px 8px;
+    font-size: 0.68rem; color: var(--orange-light); font-family: 'DM Mono', monospace;
+  }
+
+  .editor-wrap { flex: 1; position: relative; overflow: hidden; }
+
+  .upload-zone {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px;
+    cursor: pointer; transition: all 0.2s; z-index: 3;
+    background: var(--black);
+  }
+  .upload-zone.has-text { display: none; }
+  .upload-zone.dragover { background: rgba(255,102,0,0.04); }
+
+  .upload-icon {
+    width: 68px; height: 68px; border-radius: 12px;
+    background: var(--surface2); border: 2px dashed var(--border-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; transition: all 0.2s;
+  }
+  .upload-zone:hover .upload-icon,
+  .upload-zone.dragover .upload-icon { border-color: var(--orange); background: var(--orange-glow); }
+
+  .upload-title {
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 1.1rem; letter-spacing: 0.04em;
+    text-transform: uppercase; color: var(--text);
+  }
+  .upload-sub { font-size: 0.78rem; color: var(--muted); text-align: center; line-height: 1.55; }
+  .upload-or { font-size: 0.68rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .highlight-layer {
+    position: absolute; inset: 0; pointer-events: none;
+    padding: 22px; font-family: 'DM Mono', monospace;
+    font-size: 0.82rem; line-height: 1.8;
+    white-space: pre-wrap; word-break: break-word;
+    overflow: hidden; color: var(--text); z-index: 1;
+  }
+
+  #storyboard-input {
+    width: 100%; height: 100%; background: transparent;
+    border: none; outline: none; color: var(--text);
+    font-family: 'DM Mono', monospace; font-size: 0.82rem; line-height: 1.8;
+    padding: 22px; resize: none; position: absolute; inset: 0; z-index: 2;
+  }
+  #storyboard-input::placeholder { color: var(--muted2); }
+  #storyboard-input.transparent { color: transparent; caret-color: var(--orange); }
+
+  mark.flag {
+    border-radius: 2px; padding: 1px 0;
+    cursor: pointer; pointer-events: all; transition: filter 0.15s;
+  }
+  mark.flag-high { background: var(--flag-high-bg); border-bottom: 2px solid var(--flag-high-border); }
+  mark.flag-med  { background: var(--flag-med-bg);  border-bottom: 2px solid var(--flag-med-border); }
+  mark.flag-low  { background: var(--flag-low-bg);  border-bottom: 2px solid var(--flag-low-border); }
+  mark.flag:hover { filter: brightness(1.5); }
+
+  .analyzing-overlay {
+    display: none; position: absolute; inset: 0;
+    background: rgba(13,13,13,0.85); backdrop-filter: blur(3px);
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 14px; z-index: 20;
+  }
+  .analyzing-overlay.visible { display: flex; }
+
+  .spinner {
+    width: 28px; height: 28px;
+    border: 2.5px solid var(--border-light);
+    border-top-color: var(--orange);
+    border-radius: 50%; animation: spin 0.65s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .analyze-msg { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  .analyze-progress { width: 180px; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .analyze-progress-fill { height: 100%; background: var(--orange); border-radius: 2px; animation: ppulse 1.8s ease-in-out infinite; }
+  @keyframes ppulse { 0%{width:10%} 50%{width:75%} 100%{width:10%} }
+
+  .side-panel {
+    grid-row: 2; display: flex; flex-direction: column;
+    overflow: hidden; background: var(--surface);
+  }
+
+  .panel-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .tab {
+    flex: 1; padding: 11px; font-size: 0.72rem; text-align: center;
+    cursor: pointer; color: var(--muted); letter-spacing: 0.07em;
+    text-transform: uppercase; border-bottom: 2px solid transparent;
+    border-top: none; border-left: none; border-right: none;
+    background: none; font-family: 'Barlow', sans-serif;
+    font-weight: 600; transition: all 0.18s;
+  }
+  .tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  .tab-content { display: none; flex: 1; overflow-y: auto; min-height: 0; }
+  .tab-content.active { display: flex; flex-direction: column; }
+
+  .flags-list { padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+
+  .empty-state {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--muted); gap: 10px; padding: 40px 28px; text-align: center;
+  }
+  .empty-icon { font-size: 2rem; opacity: 0.35; }
+  .empty-label { font-size: 0.8rem; line-height: 1.65; color: var(--muted); }
+  .empty-label strong { color: var(--orange-light); }
+
+  .flag-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 13px; cursor: pointer;
+    transition: all 0.18s; animation: slideIn 0.25s ease forwards; opacity: 0;
+  }
+  .flag-card:hover { border-color: var(--border-light); transform: translateX(2px); }
+  .flag-card.active { border-color: var(--orange); background: rgba(255,102,0,0.04); }
+  .flag-card.severity-high { border-left: 3px solid var(--flag-high-border); }
+  .flag-card.severity-medium { border-left: 3px solid var(--flag-med-border); }
+  .flag-card.severity-low { border-left: 3px solid var(--flag-low-border); }
+
+  @keyframes slideIn { from{opacity:0;transform:translateX(8px)} to{opacity:1;transform:translateX(0)} }
+
+  .flag-meta { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
+
+  .severity-pill {
+    font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 2px 7px; border-radius: 3px; font-weight: 700;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  .pill-high   { background: rgba(255,60,60,0.15);  color: #FF6060; }
+  .pill-medium { background: rgba(255,166,0,0.15);  color: #FFA600; }
+  .pill-low    { background: var(--orange-glow);    color: var(--orange-light); }
+
+  .flag-type { font-size: 0.68rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  .flag-excerpt {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted);
+    background: rgba(255,255,255,0.03); border-radius: 3px; padding: 5px 8px;
+    margin-bottom: 6px; border-left: 2px solid var(--border-light);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .flag-reason { font-size: 0.78rem; color: var(--text); line-height: 1.55; opacity: 0.82; }
+
+  .flag-actions { display: flex; gap: 7px; margin-top: 10px; }
+
+  .mini-btn {
+    font-size: 0.7rem; padding: 4px 10px; border-radius: 3px;
+    cursor: pointer; border: 1px solid var(--border);
+    background: transparent; color: var(--muted);
+    font-family: 'Barlow', sans-serif; font-weight: 500;
+    transition: all 0.15s; display: flex; align-items: center; gap: 4px;
+  }
+  .mini-btn:hover { color: var(--text); border-color: var(--border-light); }
+  .mini-btn.suggest { color: var(--orange-light); border-color: rgba(255,102,0,0.3); }
+  .mini-btn.suggest:hover { background: var(--orange-glow); border-color: var(--orange); }
+  .mini-btn:disabled { opacity: 0.5; pointer-events: none; }
+
+  .suggestion-box {
+    margin-top: 10px; background: rgba(255,102,0,0.04);
+    border: 1px solid rgba(255,102,0,0.2); border-radius: 4px;
+    padding: 10px; display: none; animation: slideIn 0.2s ease;
+  }
+  .suggestion-box.visible { display: block; }
+
+  .suggestion-label {
+    font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--orange); margin-bottom: 6px;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  }
+  .suggestion-text {
+    font-size: 0.78rem; color: var(--text); line-height: 1.6;
+    font-family: 'DM Mono', monospace; white-space: pre-wrap;
+  }
+  .apply-btn {
+    margin-top: 8px; font-size: 0.7rem; padding: 5px 12px;
+    border-radius: 3px; cursor: pointer; border: none;
+    background: var(--orange); color: var(--white);
+    font-family: 'Barlow', sans-serif; font-weight: 600;
+    transition: all 0.15s; letter-spacing: 0.02em;
+  }
+  .apply-btn:hover { background: var(--orange-light); }
+
+  .summary-content { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .summary-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+  .summary-title {
+    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--muted); margin-bottom: 12px;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  }
+
+  .score-ring { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .ring-wrap { position: relative; width: 76px; height: 76px; flex-shrink: 0; }
+  .ring-wrap svg { transform: rotate(-90deg); }
+  .ring-bg { fill: none; stroke: var(--border); stroke-width: 7; }
+  .ring-fill { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 0.9s ease; }
+  .ring-label {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.25rem;
+  }
+  .score-desc { font-size: 0.8rem; line-height: 1.55; color: var(--text); opacity: 0.82; }
+
+  .trait-row {
+    display: flex; align-items: center; padding: 7px 0;
+    border-bottom: 1px solid var(--border); font-size: 0.78rem; gap: 8px;
+  }
+  .trait-row:last-child { border-bottom: none; }
+  .trait-name { color: var(--muted); flex-shrink: 0; min-width: 85px; }
+  .trait-val { font-family: 'DM Mono', monospace; flex-shrink: 0; }
+  .trait-bar { height: 3px; background: var(--border); border-radius: 2px; flex: 1; }
+  .trait-fill { height: 100%; border-radius: 2px; background: var(--orange); transition: width 0.7s ease; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted2); }
+
+  .toast {
+    position: fixed; bottom: 22px; left: 50%;
+    transform: translateX(-50%) translateY(70px);
+    background: var(--surface2); border: 1px solid var(--border-light);
+    border-top: 2px solid var(--orange); border-radius: 5px;
+    padding: 9px 20px; font-size: 0.78rem; color: var(--text);
+    transition: transform 0.28s ease; z-index: 200; white-space: nowrap;
+    font-family: 'Barlow', sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- Password Gate -->
+<div id="pw-gate">
+  <div class="pw-box">
+    <div class="pw-logo">
+      <div class="pw-mark">VC</div>
+      <div class="pw-title">Voice<span>Check</span></div>
+    </div>
+    <div>
+      <div class="pw-label">Access Password</div>
+      <input id="pw-input" class="pw-input" type="password" placeholder="Enter password"
+             onkeydown="if(event.key==='Enter')checkPassword()" autofocus />
+      <div class="pw-error" id="pw-error">Incorrect password</div>
+    </div>
+    <button class="pw-btn" onclick="checkPassword()">Unlock</button>
+  </div>
+</div>
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo-mark">VC</div>
+    <div class="logo-text">Voice<span>Check</span></div>
+    <div class="logo-divider"></div>
+    <div class="logo-sub">Storyboard Consistency Analyzer</div>
+  </div>
+  <div class="header-badge">Powered by Claude AI</div>
+</header>
+
+<div class="app">
+
+  <div class="toolbar">
+    <span class="toolbar-label">Target Voice</span>
+    <select class="tone-select" id="tone-select">
+      <option value="conversational">Conversational &amp; Friendly</option>
+      <option value="professional">Professional &amp; Formal</option>
+      <option value="instructional" selected>Clear &amp; Instructional</option>
+      <option value="casual">Casual &amp; Energetic</option>
+      <option value="authoritative">Authoritative &amp; Direct</option>
+      <option value="empathetic">Warm &amp; Empathetic</option>
+    </select>
+    <div class="sep"></div>
+    <input type="file" id="file-input" accept=".docx" onchange="handleFileUpload(event)" />
+    <button class="btn btn-upload" onclick="document.getElementById('file-input').click()">📄 Upload .docx</button>
+    <button class="btn btn-ghost" onclick="loadSample()">Sample</button>
+    <div class="sep"></div>
+    <button class="btn btn-primary" id="analyze-btn" onclick="analyzeStoryboard()" disabled>⚡ Analyze</button>
+    <button class="btn btn-danger" onclick="clearAll()">✕ Clear</button>
+    <div class="spacer"></div>
+    <div class="stats-bar" id="stats-bar" style="display:none;">
+      <div class="stat"><span class="stat-dot dot-high"></span><span id="count-high">0</span> High</div>
+      <div class="stat"><span class="stat-dot dot-med"></span><span id="count-med">0</span> Med</div>
+      <div class="stat"><span class="stat-dot dot-low"></span><span id="count-low">0</span> Low</div>
+    </div>
+  </div>
+
+  <div class="editor-pane">
+    <div class="editor-header">
+      <span>Storyboard Content</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="file-chip" id="file-chip" style="display:none;">📄 <span id="file-name"></span></div>
+        <span id="char-count" style="font-family:'DM Mono',monospace;font-size:0.7rem;">0 chars</span>
+      </div>
+    </div>
+    <div class="editor-wrap">
+      <div class="upload-zone" id="upload-zone"
+           onclick="document.getElementById('file-input').click()"
+           ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+        <div class="upload-icon">📄</div>
+        <div class="upload-title">Drop your .docx here</div>
+        <div class="upload-or">or</div>
+        <button class="btn btn-upload" style="pointer-events:none;">Browse Files</button>
+        <div class="upload-sub">Supports .docx storyboard files<br>or paste text directly in the editor</div>
+      </div>
+      <div class="highlight-layer" id="highlight-layer"></div>
+      <textarea id="storyboard-input"
+        placeholder="Or type / paste your storyboard text here..."
+        spellcheck="true"
+        oninput="onTextChange()"></textarea>
+      <div class="analyzing-overlay" id="analyzing-overlay">
+        <div class="spinner"></div>
+        <div class="analyze-msg" id="analyze-msg">Parsing voice patterns...</div>
+        <div class="analyze-progress"><div class="analyze-progress-fill"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="side-panel">
+    <div class="panel-tabs">
+      <button class="tab active" onclick="switchTab('flags',this)">Flags</button>
+      <button class="tab" onclick="switchTab('summary',this)">Summary</button>
+    </div>
+    <div class="tab-content active" id="tab-flags">
+      <div class="empty-state" id="flags-empty">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-label">Upload a <strong>.docx file</strong> or paste your storyboard,<br>then click <strong>Analyze</strong> to detect voice inconsistencies.</div>
+      </div>
+      <div class="flags-list" id="flags-list"></div>
+    </div>
+    <div class="tab-content" id="tab-summary">
+      <div class="empty-state" id="summary-empty">
+        <div class="empty-icon">📊</div>
+        <div class="empty-label">Run an analysis to see your<br>consistency score and voice profile.</div>
+      </div>
+      <div class="summary-content" id="summary-content" style="display:none;"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── Password Gate ─────────────────────────────────────────────────────────────
+  const CORRECT_PASSWORD = 'csrocks26!';
+
+  function checkPassword() {
+    const val = document.getElementById('pw-input').value;
+    const errEl = document.getElementById('pw-error');
+    if (val === CORRECT_PASSWORD) {
+      document.getElementById('pw-gate').classList.add('hidden');
+      errEl.classList.remove('show');
+    } else {
+      errEl.classList.add('show');
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  }
+
+  // ── App ───────────────────────────────────────────────────────────────────────
+  let flagsData = [];
+
+  // ── File handling ─────────────────────────────────────────────────────────────
+  function handleFileUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.name.endsWith('.docx')) { showToast('Please upload a .docx file'); return; }
+    readDocx(file);
+  }
+
+  function onDragOver(e) { e.preventDefault(); document.getElementById('upload-zone').classList.add('dragover'); }
+  function onDragLeave() { document.getElementById('upload-zone').classList.remove('dragover'); }
+  function onDrop(e) {
+    e.preventDefault();
+    document.getElementById('upload-zone').classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    if (!file.name.endsWith('.docx')) { showToast('Please drop a .docx file'); return; }
+    readDocx(file);
+  }
+
+  function readDocx(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      mammoth.extractRawText({ arrayBuffer: e.target.result })
+        .then(result => {
+          const text = result.value.trim();
+          if (!text) { showToast('Could not extract text from this file'); return; }
+          document.getElementById('storyboard-input').value = text;
+          document.getElementById('file-name').textContent = file.name;
+          document.getElementById('file-chip').style.display = 'flex';
+          onTextChange();
+          showToast('Loaded: ' + file.name);
+        })
+        .catch(() => showToast('Error reading file'));
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  // ── Text state ────────────────────────────────────────────────────────────────
+  function onTextChange() {
+    const txt = document.getElementById('storyboard-input').value;
+    const has = txt.trim().length > 0;
+    document.getElementById('char-count').textContent = txt.length.toLocaleString() + ' chars';
+    document.getElementById('upload-zone').classList.toggle('has-text', has);
+    document.getElementById('analyze-btn').disabled = !has;
+    if (!has) {
+      document.getElementById('storyboard-input').classList.remove('transparent');
+      document.getElementById('highlight-layer').innerHTML = '';
+      document.getElementById('stats-bar').style.display = 'none';
+      document.getElementById('flags-empty').style.display = 'flex';
+      document.getElementById('flags-list').innerHTML = '';
+      document.getElementById('file-chip').style.display = 'none';
+      flagsData = [];
+    }
+  }
+
+  // ── Tabs ──────────────────────────────────────────────────────────────────────
+  function switchTab(name, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  // ── Sample ────────────────────────────────────────────────────────────────────
+  function loadSample() {
+    document.getElementById('storyboard-input').value = `Welcome to the Customer Journey module! We're so pumped you're here. Let's dive right in and have some fun learning about how our customers experience our brand from start to finish.
+
+In this section, the learner will be introduced to the concept of customer touchpoints. A touchpoint is defined as any interaction between a customer and the organization across the entire lifecycle of their engagement. These interactions may occur through digital channels, physical locations, or mediated communication.
+
+Now let's talk about what happens when a customer walks through the door. You gotta be ready to bring your A-game every single time! First impressions are EVERYTHING. Smile, make eye contact, and don't just stand there, go say hi!
+
+The resolution phase of customer interaction requires systematic documentation and escalation procedures. Representatives must adhere to established protocols when addressing customer complaints, ensuring compliance with organizational standards and regulatory requirements.
+
+After you handle the issue, it's super important to do a little check-in with the customer. Like, did we actually fix the problem? Do they feel heard? This is your moment to really shine and turn a frustrated customer into a loyal fan. It doesn't have to be complicated, just genuine.
+
+In conclusion, the aforementioned principles constitute the foundational framework upon which effective customer relationship management is predicated. Adherence to these guidelines will facilitate optimal outcomes across all customer-facing operational domains.`;
+    document.getElementById('file-chip').style.display = 'none';
+    onTextChange();
+    showToast('Sample storyboard loaded');
+  }
+
+  // ── Clear ─────────────────────────────────────────────────────────────────────
+  function clearAll() {
+    document.getElementById('storyboard-input').value = '';
+    document.getElementById('file-input').value = '';
+    document.getElementById('storyboard-input').classList.remove('transparent');
+    document.getElementById('highlight-layer').innerHTML = '';
+    document.getElementById('flags-list').innerHTML = '';
+    document.getElementById('flags-empty').style.display = 'flex';
+    document.getElementById('flags-empty').querySelector('.empty-label').innerHTML = 'Upload a <strong>.docx file</strong> or paste your storyboard,<br>then click <strong>Analyze</strong> to detect voice inconsistencies.';
+    document.getElementById('stats-bar').style.display = 'none';
+    document.getElementById('summary-empty').style.display = 'flex';
+    document.getElementById('summary-content').style.display = 'none';
+    document.getElementById('char-count').textContent = '0 chars';
+    document.getElementById('file-chip').style.display = 'none';
+    document.getElementById('analyze-btn').disabled = true;
+    flagsData = [];
+  }
+
+  // ── Highlights ────────────────────────────────────────────────────────────────
+  function escapeHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function applyHighlights(text, flags) {
+    let html = escapeHtml(text);
+    flags.forEach((flag, i) => {
+      const esc = escapeHtml(flag.excerpt);
+      html = html.replace(esc,
+        `<mark class="flag flag-${flag.severity.toLowerCase()}" onclick="selectFlag(${i})" title="${escapeHtml(flag.reason)}">${esc}</mark>`);
+    });
+    document.getElementById('highlight-layer').innerHTML = html;
+    document.getElementById('storyboard-input').classList.add('transparent');
+  }
+
+  function selectFlag(idx) {
+    document.querySelectorAll('.flag-card').forEach(c => c.classList.remove('active'));
+    const card = document.getElementById('flag-card-' + idx);
+    if (card) { card.classList.add('active'); card.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+    document.querySelectorAll('.tab')[0].click();
+  }
+
+  // ── Analyze ───────────────────────────────────────────────────────────────────
+  async function analyzeStoryboard() {
+    const text = document.getElementById('storyboard-input').value.trim();
+    if (!text) return;
+    const tone = document.getElementById('tone-select').value;
+    const btn = document.getElementById('analyze-btn');
+    btn.disabled = true;
+    const overlay = document.getElementById('analyzing-overlay');
+    const msgEl = document.getElementById('analyze-msg');
+    overlay.classList.add('visible');
+
+    const msgs = ['Parsing voice patterns...','Comparing paragraph styles...','Detecting tone shifts...','Scoring consistency...','Generating flags...'];
+    let mi = 0;
+    const iv = setInterval(() => { mi=(mi+1)%msgs.length; msgEl.textContent=msgs[mi]; }, 1700);
+
+    const sys = `You are a voice and tone consistency expert specializing in instructional design and corporate eLearning storyboards. Analyze the provided storyboard text written by multiple authors and identify where voice, tone, or style breaks consistency for a unified learning experience.
+
+Target voice: ${tone}
+
+Return ONLY a raw JSON object. No markdown, no explanation.
+
+Schema:
+{
+  "consistency_score": number (0-100),
+  "overall_assessment": string (2-3 sentences),
+  "dominant_voice": string,
+  "voice_traits": [{"trait":string,"score":number,"note":string}],
+  "flags": [{
+    "excerpt": string (EXACT substring from input, 10-35 words),
+    "severity": "High"|"Medium"|"Low",
+    "type": string,
+    "reason": string (1-2 sentences),
+    "suggestion": string (directional guidance only)
+  }]
+}
+
+Rules: Excerpts must be exact character-for-character substrings. Flag 3-8 meaningful breaks. Include 3-5 voice traits.`;
+
+    try {
+      const res = await fetch('/api/voiceanalyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: sys,
+          messages: [{ role: 'user', content: text }]
+        })
+      });
+      const data = await res.json();
+      const raw = (data.content||[]).map(c=>c.text||'').join('');
+      const result = JSON.parse(raw.replace(/```json|```/g,'').trim());
+      clearInterval(iv);
+      overlay.classList.remove('visible');
+      btn.disabled = false;
+      renderFlags(text, result);
+      renderSummary(result);
+    } catch(err) {
+      clearInterval(iv);
+      overlay.classList.remove('visible');
+      btn.disabled = false;
+      console.error(err);
+      showToast('Analysis failed — check console');
+    }
+  }
+
+  // ── Render flags ──────────────────────────────────────────────────────────────
+  function renderFlags(text, result) {
+    flagsData = result.flags || [];
+    const list = document.getElementById('flags-list');
+    const empty = document.getElementById('flags-empty');
+    list.innerHTML = '';
+    if (!flagsData.length) {
+      empty.style.display = 'flex';
+      empty.querySelector('.empty-label').textContent = 'No significant voice inconsistencies detected. Great consistency!';
+      document.getElementById('stats-bar').style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    let cH=0,cM=0,cL=0;
+    flagsData.forEach((flag, i) => {
+      const sev = flag.severity||'Low';
+      if(sev==='High') cH++; else if(sev==='Medium') cM++; else cL++;
+      const card = document.createElement('div');
+      card.className = `flag-card severity-${sev.toLowerCase()}`;
+      card.id = 'flag-card-'+i;
+      card.style.animationDelay = (i*0.055)+'s';
+      card.innerHTML = `
+        <div class="flag-meta">
+          <span class="severity-pill pill-${sev.toLowerCase()}">${sev}</span>
+          <span class="flag-type">${flag.type||'Voice Issue'}</span>
+        </div>
+        <div class="flag-excerpt">"${flag.excerpt}"</div>
+        <div class="flag-reason">${flag.reason}</div>
+        <div class="flag-actions">
+          <button class="mini-btn suggest" id="sbtn-${i}" onclick="getSuggestion(event,${i})">✨ Suggest Rewrite</button>
+          <button class="mini-btn" onclick="copyClip(event,'${flag.excerpt.replace(/'/g,"\\'").replace(/\n/g,' ')}')">📋 Copy</button>
+        </div>
+        <div class="suggestion-box" id="sbox-${i}">
+          <div class="suggestion-label">Suggested Rewrite</div>
+          <div class="suggestion-text" id="stxt-${i}"></div>
+          <button class="apply-btn" onclick="applyRewrite(event,${i})">Apply to Editor</button>
+        </div>`;
+      card.addEventListener('click', e => {
+        if(e.target.closest('button')) return;
+        const ta = document.getElementById('storyboard-input');
+        const idx = ta.value.indexOf(flag.excerpt);
+        if(idx!==-1){ta.focus();ta.setSelectionRange(idx,idx+flag.excerpt.length);}
+      });
+      list.appendChild(card);
+    });
+    document.getElementById('count-high').textContent=cH;
+    document.getElementById('count-med').textContent=cM;
+    document.getElementById('count-low').textContent=cL;
+    document.getElementById('stats-bar').style.display='flex';
+    applyHighlights(text, flagsData);
+  }
+
+  function copyClip(e, txt) { e.stopPropagation(); navigator.clipboard.writeText(txt).then(()=>showToast('Copied')); }
+
+  // ── Live suggestion ───────────────────────────────────────────────────────────
+  async function getSuggestion(e, idx) {
+    e.stopPropagation();
+    const flag = flagsData[idx];
+    const btn = document.getElementById('sbtn-'+idx);
+    const box = document.getElementById('sbox-'+idx);
+    const txtEl = document.getElementById('stxt-'+idx);
+    const tone = document.getElementById('tone-select').value;
+    btn.disabled=true; btn.textContent='⟳ Generating...';
+    box.classList.remove('visible'); txtEl.textContent='';
+    try {
+      const res = await fetch('/api/voiceanalyze', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model:'claude-sonnet-4-20250514', max_tokens:1000,
+          messages:[{role:'user',content:`Rewrite this passage to match a ${tone} voice. Preserve all meaning. Return ONLY the rewritten text, no preamble.\n\nOriginal: "${flag.excerpt}"\nIssue: ${flag.reason}`}]
+        })
+      });
+      const data = await res.json();
+      const rewrite = (data.content||[]).map(c=>c.text||'').join('').trim();
+      txtEl.textContent = rewrite;
+      box.classList.add('visible');
+      flagsData[idx]._rewrite = rewrite;
+    } catch(err) { showToast('Failed to generate suggestion'); }
+    btn.disabled=false; btn.textContent='✨ Suggest Rewrite';
+  }
+
+  function applyRewrite(e, idx) {
+    e.stopPropagation();
+    const flag = flagsData[idx];
+    if(!flag._rewrite) return;
+    const ta = document.getElementById('storyboard-input');
+    ta.value = ta.value.replace(flag.excerpt, flag._rewrite);
+    onTextChange();
+    showToast('Rewrite applied — re-analyze to refresh flags');
+  }
+
+  // ── Summary ───────────────────────────────────────────────────────────────────
+  function renderSummary(result) {
+    const container = document.getElementById('summary-content');
+    document.getElementById('summary-empty').style.display='none';
+    container.style.display='flex';
+    const score = result.consistency_score||0;
+    const circ = 2*Math.PI*30;
+    const offset = circ - (score/100)*circ;
+    const col = score>=70?'#FF6600':score>=45?'#FFA600':'#FF3C3C';
+    const traits = (result.voice_traits||[]).map(t=>`
+      <div class="trait-row">
+        <span class="trait-name">${t.trait}</span>
+        <div class="trait-bar"><div class="trait-fill" style="width:${t.score}%"></div></div>
+        <span class="trait-val" style="color:${t.score>55?'var(--orange-light)':'var(--muted)'}">${t.score}</span>
+      </div>`).join('');
+    container.innerHTML = `
+      <div class="summary-card">
+        <div class="summary-title">Consistency Score</div>
+        <div class="score-ring">
+          <div class="ring-wrap">
+            <svg width="76" height="76" viewBox="0 0 76 76">
+              <circle class="ring-bg" cx="38" cy="38" r="30"/>
+              <circle class="ring-fill" cx="38" cy="38" r="30" stroke="${col}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/>
+            </svg>
+            <div class="ring-label" style="color:${col}">${score}</div>
+          </div>
+          <div class="score-desc">${result.overall_assessment||''}</div>
+        </div>
+        <div class="trait-row">
+          <span class="trait-name">Dominant voice</span>
+          <span class="trait-val" style="color:var(--orange-light)">${result.dominant_voice||'—'}</span>
+        </div>
+      </div>
+      ${traits?`<div class="summary-card"><div class="summary-title">Voice Traits</div>${traits}</div>`:''}
+      <div class="summary-card">
+        <div class="summary-title">Flag Summary</div>
+        <div class="trait-row"><span class="trait-name" style="color:#FF6060">High</span><span class="trait-val">${flagsData.filter(f=>f.severity==='High').length}</span></div>
+        <div class="trait-row"><span class="trait-name" style="color:#FFA600">Medium</span><span class="trait-val">${flagsData.filter(f=>f.severity==='Medium').length}</span></div>
+        <div class="trait-row"><span class="trait-name" style="color:var(--orange-light)">Low</span><span class="trait-val">${flagsData.filter(f=>f.severity==='Low').length}</span></div>
+      </div>`;
+  }
+
+  // ── Toast ─────────────────────────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
+  }
+</script>
+</body>
+</html>
