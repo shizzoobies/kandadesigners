@@ -994,6 +994,17 @@
       range.surroundContents(mark);
       return true;
     } catch(e) {
+      // surroundContents fails when range spans block elements.
+      // Fall back: mark the nearest block ancestor so selectFlag can scroll to it.
+      try {
+        const container = range.commonAncestorContainer;
+        const block = (container.nodeType === 1 ? container : container.parentElement).closest('p,li,h1,h2,h3,h4,blockquote') || container.parentElement;
+        if (block) {
+          block.dataset.flagIndex = flagIndex;
+          block.style.borderLeft = '3px solid ' + (hlClass.includes('high') ? '#FF3C3C' : hlClass.includes('med') ? '#FFA600' : '#FF6600');
+          block.style.paddingLeft = '6px';
+        }
+      } catch(_) {}
       return false;
     }
   }
@@ -1007,6 +1018,10 @@
     // 1. Try existing mark
     const mark = document.querySelector(`mark[data-flag-index="${idx}"]`);
     if (mark) { mark.scrollIntoView({behavior:'smooth', block:'center'}); return; }
+
+    // 1b. Try block-level fallback marker (when surroundContents threw)
+    const block = document.querySelector(`[data-flag-index="${idx}"]:not(mark)`);
+    if (block) { block.scrollIntoView({behavior:'smooth', block:'center'}); return; }
 
     // 2. Mark gone (rewritten) — find rewrite text or original in doc and flash it
     const flag = flagsData[idx];
@@ -1341,10 +1356,11 @@ Return ONLY JSON: {"match_score": number, "assessment": string (1-2 sentences)}`
       const sev = flag.severity||'Low';
       if(sev==='High') cH++; else if(sev==='Medium') cM++; else cL++;
 
-      // Highlight class depends on mode
+      // Highlight class depends on mode (CSS uses 'med' not 'medium')
+      const sevKey = sev === 'Medium' ? 'med' : sev.toLowerCase();
       const hlClass = analysisMode === 'proofread'
-        ? `proof-${sev.toLowerCase()}`
-        : sev.toLowerCase();
+        ? `proof-${sevKey}`
+        : `flag-${sevKey}`;
       highlightExcerpt(flag.excerpt, hlClass, i);
 
       const pillClass = analysisMode === 'proofread'
