@@ -1203,24 +1203,32 @@ Rules:
 
   // ── Voice Model ───────────────────────────────────────────────────────────────
   let voiceModelText = null;
+  let pendingSelectionText = null;
 
   document.getElementById('doc-page').addEventListener('mouseup', () => {
     setTimeout(() => {
       const sel = window.getSelection();
       if (!sel || sel.isCollapsed || !sel.toString().trim()) {
         document.getElementById('selection-tooltip').style.display = 'none';
+        pendingSelectionText = null;
         return;
       }
-      // Only show if selection is inside the doc
       const doc = document.getElementById('doc-page');
       if (!doc.contains(sel.anchorNode)) return;
+
+      // Store now — click will clear the selection before setVoiceModel runs
+      pendingSelectionText = sel.toString().trim();
 
       const range = sel.getRangeAt(0);
       const rect = range.getBoundingClientRect();
       const tooltip = document.getElementById('selection-tooltip');
+      const tooltipLeft = Math.max(8, Math.min(rect.left + rect.width / 2 - 80, window.innerWidth - 200));
+      const tooltipTop = rect.top < 48
+        ? rect.bottom + 8 + window.scrollY   // below if near top
+        : rect.top - 38 + window.scrollY;    // above otherwise
       tooltip.style.display = 'block';
-      tooltip.style.left = (rect.left + rect.width / 2 - 80) + 'px';
-      tooltip.style.top = (rect.top - 38 + window.scrollY) + 'px';
+      tooltip.style.left = tooltipLeft + 'px';
+      tooltip.style.top = tooltipTop + 'px';
     }, 10);
   });
 
@@ -1231,24 +1239,39 @@ Rules:
   });
 
   function setVoiceModel() {
-    const sel = window.getSelection();
-    if (!sel || sel.isCollapsed) return;
-    voiceModelText = sel.toString().trim();
+    if (!pendingSelectionText) return;
+    voiceModelText = pendingSelectionText;
+    pendingSelectionText = null;
 
     // Remove previous reference highlight
     document.querySelectorAll('.voice-model-ref').forEach(el => {
-      el.classList.remove('voice-model-ref');
+      const parent = el.parentNode;
+      while (el.firstChild) parent.insertBefore(el.firstChild, el);
+      parent.removeChild(el);
     });
 
-    // Wrap selection in a span to highlight it
-    try {
-      const range = sel.getRangeAt(0);
-      const span = document.createElement('span');
-      span.className = 'voice-model-ref';
-      range.surroundContents(span);
-    } catch(e) { /* selection spans multiple blocks — just store the text */ }
+    // Find and highlight the text in the DOM via TreeWalker
+    const docEl = document.getElementById('doc-page');
+    docEl.normalize();
+    const walker = document.createTreeWalker(docEl, NodeFilter.SHOW_TEXT);
+    let fullText = '', nodes = [], node;
+    while (node = walker.nextNode()) { nodes.push({ node, start: fullText.length }); fullText += node.textContent; }
+    const idx = fullText.indexOf(voiceModelText);
+    if (idx !== -1) {
+      try {
+        const range = document.createRange();
+        const endIdx = idx + voiceModelText.length;
+        for (const { node, start } of nodes) {
+          const end = start + node.textContent.length;
+          if (!range.startContainer.nodeType && start <= idx && end > idx) range.setStart(node, idx - start);
+          if (start < endIdx && end >= endIdx) { range.setEnd(node, endIdx - start); break; }
+        }
+        const span = document.createElement('span');
+        span.className = 'voice-model-ref';
+        range.surroundContents(span);
+      } catch(e) { /* spans multiple blocks, highlight not applied but text stored */ }
+    }
 
-    sel.removeAllRanges();
     document.getElementById('selection-tooltip').style.display = 'none';
     document.getElementById('match-btn').disabled = false;
     showToast('Voice model set — click "Match All to Model" to rewrite the doc');
