@@ -57,17 +57,18 @@
     border: 1px solid var(--border-light);
     border-top: 3px solid var(--orange);
     border-radius: 8px;
-    padding: 16px 36px 24px;
+    padding: 24px 36px;
     width: 100%; max-width: 360px;
-    display: flex; flex-direction: column; gap: 10px;
+    display: flex; flex-direction: column; gap: 0;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   }
-  .pw-logo { justify-content: center; line-height: 0; }
-  .pw-logo img { height: 200px; width: auto; display: block; }
+  .pw-logo { justify-content: center; line-height: 0; margin-bottom: 16px; }
+  .pw-logo img { height: 90px; width: auto; display: block; object-fit: contain; }
   .pw-label {
     font-size: 0.72rem; color: var(--muted); text-transform: uppercase;
-    letter-spacing: 0.08em; margin-bottom: 6px;
+    letter-spacing: 0.08em; margin-bottom: 6px; display: block;
   }
+  .pw-field { margin-bottom: 14px; }
   .pw-input {
     width: 100%; background: var(--surface2);
     border: 1px solid var(--border-light); border-radius: 4px;
@@ -507,7 +508,7 @@
     <div class="pw-logo">
       <img src="/voicecheck-logo.png" alt="VoiceCheck" />
     </div>
-    <div>
+    <div class="pw-field">
       <div class="pw-label">Access Password</div>
       <input id="pw-input" class="pw-input" type="password" placeholder="Enter password"
              onkeydown="if(event.key==='Enter')checkPassword()" autofocus />
