@@ -1525,83 +1525,61 @@ Rules:
 
   async function matchToModel() {
     if (!voiceModelText) return;
-    const doc = document.getElementById('doc-page');
-    const fullText = doc.innerText.trim();
-    if (!fullText) return;
+    const docEl = document.getElementById('doc-page');
+    if (!docEl.innerText.trim()) return;
 
     const btn = document.getElementById('match-btn');
     btn.disabled = true;
-    btn.textContent = '⟳ Rewriting...';
 
     const custom = (document.getElementById('rewrite-instructions').value || '').trim();
-    const customBlock = custom ? `\n\nAdditional instructions:\n${custom}` : '';
+    const customBlock = custom ? `\nAdditional instructions: ${custom}` : '';
 
-    const prompt = `You are a voice and style editor. The user has selected a REFERENCE PARAGRAPH that defines how the entire document should sound — as if one person wrote the whole thing in that voice.
+    // Collect block elements, skip the one containing the reference
+    const blocks = Array.from(docEl.querySelectorAll('p, li, h1, h2, h3, h4')).filter(el => {
+      const t = el.innerText.trim();
+      return t.length > 0 && !voiceModelText.includes(t) && !t.includes(voiceModelText);
+    });
 
-Reference paragraph (the target voice — do NOT rewrite this one):
+    if (!blocks.length) { showToast('No paragraphs to rewrite'); btn.disabled = false; return; }
+
+    let done = 0;
+    btn.textContent = `⟳ 0/${blocks.length}`;
+
+    // Rewrite each block individually with Haiku — small focused calls
+    for (const block of blocks) {
+      const original = block.innerText.trim();
+      if (!original) continue;
+      try {
+        const res = await fetch('/api/voiceanalyze', {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 600,
+            messages: [{ role: 'user', content:
+              `Rewrite the passage below to sound exactly like the reference paragraph — same sentence length, vocabulary, formality, rhythm, and personality. Return ONLY the rewritten text, nothing else.${customBlock}
+
+Reference voice:
 "${voiceModelText}"
 
-Your job: Rewrite every OTHER paragraph in the document to sound like the same person who wrote the reference paragraph. Match their sentence length, vocabulary level, formality, rhythm, and personality exactly. The reader should not be able to tell which paragraphs were rewritten.${customBlock}
+Passage to rewrite:
+"${original}"`
+            }]
+          })
+        });
+        const data = await res.json();
+        const rewrite = (data.content||[]).map(c=>c.text||'').join('').trim();
+        if (rewrite) block.textContent = rewrite;
+      } catch(e) { /* skip this block on error */ }
 
-Full document text:
-${fullText}
-
-Return ONLY a valid JSON array — no markdown, no explanation:
-[{"original": "exact original paragraph text", "rewrite": "rewritten text"}, ...]
-
-Only include paragraphs that need to change. Do not include the reference paragraph.`;
-
-    try {
-      const res = await fetch('/api/voiceanalyze', {
-        method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 4000,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-      const data = await res.json();
-      const raw = (data.content||[]).map(c=>c.text||'').join('').replace(/```json|```/g,'').trim();
-      const rewrites = JSON.parse(raw);
-
-      // Apply rewrites by walking text nodes
-      const docEl = document.getElementById('doc-page');
-      let applied = 0;
-      for (const { original, rewrite } of rewrites) {
-        // Try to find and replace in innerHTML (paragraph-level)
-        const walker = document.createTreeWalker(docEl, NodeFilter.SHOW_TEXT);
-        let combined = '';
-        const nodes = [];
-        let node;
-        while (node = walker.nextNode()) {
-          nodes.push({ node, start: combined.length });
-          combined += node.textContent;
-        }
-        const idx = combined.indexOf(original);
-        if (idx === -1) continue;
-        // Find the block element (p, li, etc.) containing this text
-        const startNode = nodes.find(n => n.start <= idx && n.start + n.node.textContent.length > idx);
-        if (!startNode) continue;
-        let block = startNode.node.parentElement;
-        while (block && block !== docEl && !['P','LI','H1','H2','H3','H4','DIV'].includes(block.tagName)) {
-          block = block.parentElement;
-        }
-        if (block && block !== docEl) {
-          block.textContent = rewrite;
-          applied++;
-        }
-      }
-
-      onDocChange();
-      showToast(`Rewrote ${applied} paragraph${applied!==1?'s':''} to match voice model`);
-      scoreVsModel();
-    } catch(err) {
-      console.error(err);
-      showToast('Match failed — check console');
+      done++;
+      btn.textContent = `⟳ ${done}/${blocks.length}`;
     }
 
+    onDocChange();
     btn.disabled = false;
     btn.textContent = '🎯 Match All to Model';
+    showToast(`Rewrote ${done} paragraph${done!==1?'s':''} to match voice model`);
+    scoreVsModel();
   }
 
   // ── Toast ─────────────────────────────────────────────────────────────────────
