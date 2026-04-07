@@ -261,6 +261,43 @@
   #doc-page mark.flag-low  { background-color: var(--flag-low-bg);  border-bottom: 2px solid var(--flag-low-border); }
   #doc-page mark.flag:hover { filter: brightness(0.85); }
 
+  /* ── Proofread flag colors ── */
+  :root {
+    --proof-high-bg:     rgba(91,141,239,0.15);
+    --proof-high-border: #5B8DEF;
+    --proof-med-bg:      rgba(155,89,182,0.15);
+    --proof-med-border:  #9B59B6;
+    --proof-low-bg:      rgba(39,174,96,0.12);
+    --proof-low-border:  #27AE60;
+  }
+  #doc-page mark.proof-high { background-color: var(--proof-high-bg); border-bottom: 2px solid var(--proof-high-border); }
+  #doc-page mark.proof-med  { background-color: var(--proof-med-bg);  border-bottom: 2px solid var(--proof-med-border); }
+  #doc-page mark.proof-low  { background-color: var(--proof-low-bg);  border-bottom: 2px solid var(--proof-low-border); }
+  .pill-proof-high { background: rgba(91,141,239,0.15); color: #5B8DEF; }
+  .pill-proof-med  { background: rgba(155,89,182,0.15); color: #9B59B6; }
+  .pill-proof-low  { background: rgba(39,174,96,0.15);  color: #27AE60; }
+  .flag-card.proof-high { border-left: 3px solid var(--proof-high-border); }
+  .flag-card.proof-med  { border-left: 3px solid var(--proof-med-border); }
+  .flag-card.proof-low  { border-left: 3px solid var(--proof-low-border); }
+
+  .mode-badge {
+    display: none; padding: 3px 10px; border-radius: 3px; font-size: 0.62rem;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .mode-badge.voice    { display: inline-block; background: var(--orange-glow); color: var(--orange-light); border: 1px solid rgba(255,102,0,0.3); }
+  .mode-badge.proofread { display: inline-block; background: rgba(91,141,239,0.1); color: #5B8DEF; border: 1px solid rgba(91,141,239,0.3); }
+
+  .model-score-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 14px; display: none; }
+  .model-score-card.visible { display: block; }
+  .model-score-row { display: flex; align-items: center; gap: 14px; }
+  .model-score-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 2rem; }
+  .model-score-desc { font-size: 0.78rem; color: var(--text); opacity: 0.82; line-height: 1.5; }
+
+  .btn-proof { background: var(--surface2); color: #5B8DEF; border: 1px solid rgba(91,141,239,0.35); }
+  .btn-proof:hover:not(:disabled) { background: rgba(91,141,239,0.1); border-color: #5B8DEF; }
+  .btn-proof:disabled { opacity: 0.35; cursor: not-allowed; }
+
   /* ── Voice model selection ── */
   #selection-tooltip {
     position: fixed; display: none; z-index: 100;
@@ -543,7 +580,8 @@
     <button class="btn btn-upload" onclick="document.getElementById('file-input').click()">📄 Upload .docx</button>
     <button class="btn btn-ghost" onclick="loadSample()">Sample</button>
     <div class="sep"></div>
-    <button class="btn btn-primary" id="analyze-btn" onclick="analyzeStoryboard()" disabled>⚡ Analyze</button>
+    <button class="btn btn-primary" id="analyze-btn" onclick="analyzeStoryboard()" disabled>⚡ Analyze Voice</button>
+    <button class="btn btn-proof" id="proof-btn" onclick="proofread()" disabled>🔍 Proofread</button>
     <button class="btn btn-model" id="match-btn" onclick="matchToModel()" disabled title="Select a paragraph first to set it as the voice reference">🎯 Match All to Model</button>
     <button class="btn btn-save" id="save-btn" onclick="saveDocx()" disabled>💾 Save .docx</button>
     <button class="btn btn-danger" onclick="clearAll()">✕ Clear</button>
@@ -618,6 +656,10 @@
           <div class="prompt-hint">These instructions are added to every rewrite — individual and Replace All.</div>
         </div>
       </div>
+      <div style="padding:8px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;background:var(--surface);">
+        <span style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;">Mode</span>
+        <span class="mode-badge" id="mode-badge"></span>
+      </div>
       <div class="empty-state" id="flags-empty">
         <div class="empty-icon">🔍</div>
         <div class="empty-label">Upload a <strong>.docx file</strong> or paste your storyboard,<br>then click <strong>Analyze</strong> to detect voice inconsistencies.</div>
@@ -629,7 +671,15 @@
         <div class="empty-icon">📊</div>
         <div class="empty-label">Run an analysis to see your<br>consistency score and voice profile.</div>
       </div>
-      <div class="summary-content" id="summary-content" style="display:none;"></div>
+      <div class="summary-content" id="summary-content" style="display:none;">
+        <div class="model-score-card" id="model-score-card">
+          <div class="summary-title">Voice Model Match</div>
+          <div class="model-score-row">
+            <div class="model-score-num" id="model-score-num">—</div>
+            <div class="model-score-desc" id="model-score-desc"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -658,7 +708,8 @@
   // ── State ─────────────────────────────────────────────────────────────────────
   let flagsData = [];
   let hasContent = false;
-  let voiceProfile = null; // set after analysis
+  let voiceProfile = null;
+  let analysisMode = 'voice'; // 'voice' | 'proofread'
 
   function togglePrompt() {
     const body = document.getElementById('prompt-body');
@@ -740,6 +791,7 @@
     hasContent = text.length > 0;
     document.getElementById('char-count').textContent = text.length.toLocaleString() + ' chars';
     document.getElementById('analyze-btn').disabled = !hasContent;
+    document.getElementById('proof-btn').disabled = !hasContent;
     document.getElementById('save-btn').disabled = !hasContent;
     if (!hasContent) resetResults();
   }
@@ -807,7 +859,7 @@
     doc.normalize();
   }
 
-  function highlightExcerpt(searchText, severity, flagIndex) {
+  function highlightExcerpt(searchText, hlClass, flagIndex) {
     const doc = document.getElementById('doc-page');
     const walker = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, null, false);
     const textNodes = [];
@@ -844,7 +896,7 @@
 
     try {
       const mark = document.createElement('mark');
-      mark.className = `flag flag-${severity.toLowerCase()}`;
+      mark.className = `flag ${hlClass}`;
       mark.dataset.flagIndex = flagIndex;
       mark.title = flagsData[flagIndex] ? flagsData[flagIndex].reason : '';
       mark.onclick = () => selectFlag(flagIndex);
@@ -968,7 +1020,7 @@ Rules: Excerpts must be exact character-for-character substrings. Flag only genu
       overlay.classList.remove('visible');
       btn.disabled = false;
       voiceProfile = { dominant_voice: result.dominant_voice, voice_traits: result.voice_traits };
-      renderFlags(result);
+      renderFlags(result, 'voice');
       renderSummary(result);
     } catch(err) {
       clearInterval(iv);
@@ -979,17 +1031,151 @@ Rules: Excerpts must be exact character-for-character substrings. Flag only genu
     }
   }
 
+  // ── Proofread ─────────────────────────────────────────────────────────────────
+  async function proofread() {
+    const doc = document.getElementById('doc-page');
+    const text = doc.innerText.trim();
+    if (!text) return;
+
+    analysisMode = 'proofread';
+    const btn = document.getElementById('proof-btn');
+    btn.disabled = true;
+    document.getElementById('analyze-btn').disabled = true;
+    const overlay = document.getElementById('analyzing-overlay');
+    const msgEl = document.getElementById('analyze-msg');
+    overlay.classList.add('visible');
+    clearHighlights();
+
+    const msgs = ['Checking grammar...','Scanning punctuation...','Reviewing clarity...','Checking spelling...','Finalizing...'];
+    let mi = 0;
+    const iv = setInterval(() => { mi=(mi+1)%msgs.length; msgEl.textContent=msgs[mi]; }, 1500);
+
+    const sys = `You are a professional proofreader. Review the document below for grammar, spelling, punctuation, word choice, and clarity issues only. Do NOT flag voice or tone differences between sections — only technical writing errors and genuinely unclear sentences.
+
+Return ONLY a raw JSON object. No markdown, no explanation.
+
+Schema:
+{
+  "proofread_score": number (0-100, where 100 is error-free),
+  "flags": [{
+    "excerpt": string (EXACT substring from input, 5-30 words),
+    "severity": "High"|"Medium"|"Low",
+    "type": "Grammar"|"Spelling"|"Punctuation"|"Clarity"|"Wordiness",
+    "reason": string (1 sentence explaining the issue),
+    "suggestion": string (the corrected text only, no explanation)
+  }]
+}
+
+Rules: Excerpts must be exact character-for-character substrings. High = errors that confuse meaning, Medium = clear grammatical errors, Low = minor clarity or style issues. Only flag genuine errors — if the doc is clean, return an empty flags array.`;
+
+    try {
+      const res = await fetch('/api/voiceanalyze', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1500,
+          system: sys,
+          messages: [{ role: 'user', content: text }]
+        })
+      });
+      const data = await res.json();
+      const raw = (data.content||[]).map(c=>c.text||'').join('');
+      const result = JSON.parse(raw.replace(/```json|```/g,'').trim());
+      clearInterval(iv);
+      overlay.classList.remove('visible');
+      btn.disabled = false;
+      document.getElementById('analyze-btn').disabled = false;
+      renderFlags(result, 'proofread');
+      // Show score in summary
+      document.getElementById('summary-empty').style.display = 'none';
+      document.getElementById('summary-content').style.display = 'flex';
+      const scoreNum = result.proofread_score || 0;
+      const col = scoreNum >= 80 ? '#27AE60' : scoreNum >= 55 ? '#FFA600' : '#FF3C3C';
+      document.getElementById('model-score-card').classList.add('visible');
+      document.getElementById('model-score-card').querySelector('.summary-title').textContent = 'Proofread Score';
+      document.getElementById('model-score-num').textContent = scoreNum;
+      document.getElementById('model-score-num').style.color = col;
+      document.getElementById('model-score-desc').textContent = scoreNum >= 80 ? 'Document is largely clean.' : scoreNum >= 55 ? 'Several issues found.' : 'Significant errors detected.';
+    } catch(err) {
+      clearInterval(iv);
+      overlay.classList.remove('visible');
+      btn.disabled = false;
+      document.getElementById('analyze-btn').disabled = false;
+      console.error(err);
+      showToast('Proofread failed — check console');
+    }
+  }
+
+  // ── Score vs Voice Model ───────────────────────────────────────────────────────
+  async function scoreVsModel() {
+    if (!voiceModelText) return;
+    const doc = document.getElementById('doc-page');
+    const fullText = doc.innerText.trim();
+    if (!fullText) return;
+
+    const scoreCard = document.getElementById('model-score-card');
+    scoreCard.classList.add('visible');
+    scoreCard.querySelector('.summary-title').textContent = 'Voice Model Match';
+    document.getElementById('model-score-num').textContent = '…';
+    document.getElementById('model-score-num').style.color = 'var(--muted)';
+    document.getElementById('model-score-desc').textContent = 'Scoring against your reference paragraph…';
+    document.getElementById('summary-empty').style.display = 'none';
+    document.getElementById('summary-content').style.display = 'flex';
+
+    try {
+      const res = await fetch('/api/voiceanalyze', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 300,
+          messages: [{ role: 'user', content:
+            `Score how consistently the document below matches the voice, tone, sentence structure, and style of the reference paragraph (0-100, where 100 = entire document sounds like one author).
+
+Reference paragraph:
+"${voiceModelText}"
+
+Document:
+${fullText}
+
+Return ONLY JSON: {"match_score": number, "assessment": string (1-2 sentences)}`
+          }]
+        })
+      });
+      const data = await res.json();
+      const raw = (data.content||[]).map(c=>c.text||'').join('').replace(/```json|```/g,'').trim();
+      const result = JSON.parse(raw);
+      const score = result.match_score || 0;
+      const col = score >= 75 ? '#FF6600' : score >= 50 ? '#FFA600' : '#FF3C3C';
+      document.getElementById('model-score-num').textContent = score;
+      document.getElementById('model-score-num').style.color = col;
+      document.getElementById('model-score-desc').textContent = result.assessment || '';
+      // Switch to summary tab
+      document.querySelectorAll('.tab')[1].click();
+    } catch(err) { console.error('Score error:', err); }
+  }
+
   // ── Render flags ──────────────────────────────────────────────────────────────
-  function renderFlags(result) {
+  function renderFlags(result, mode) {
+    analysisMode = mode || 'voice';
     flagsData = result.flags || [];
     const list = document.getElementById('flags-list');
     const empty = document.getElementById('flags-empty');
+    const badge = document.getElementById('mode-badge');
     list.innerHTML = '';
+
+    // Mode badge
+    badge.className = 'mode-badge ' + analysisMode;
+    badge.textContent = analysisMode === 'proofread' ? '🔍 Proofread' : '⚡ Voice Analysis';
+
+    const emptyMsg = analysisMode === 'proofread'
+      ? 'No errors found. Document looks clean!'
+      : 'No significant voice inconsistencies detected. Great consistency!';
 
     if (!flagsData.length) {
       empty.style.display = 'flex';
-      empty.querySelector('.empty-label').textContent = 'No significant voice inconsistencies detected. Great consistency!';
+      empty.querySelector('.empty-label').textContent = emptyMsg;
       document.getElementById('stats-bar').style.display = 'none';
+      document.getElementById('replace-bar').classList.remove('visible');
       return;
     }
 
@@ -1000,26 +1186,37 @@ Rules: Excerpts must be exact character-for-character substrings. Flag only genu
       const sev = flag.severity||'Low';
       if(sev==='High') cH++; else if(sev==='Medium') cM++; else cL++;
 
-      // Apply highlight in the doc
-      highlightExcerpt(flag.excerpt, sev, i);
+      // Highlight class depends on mode
+      const hlClass = analysisMode === 'proofread'
+        ? `proof-${sev.toLowerCase()}`
+        : sev.toLowerCase();
+      highlightExcerpt(flag.excerpt, hlClass, i);
+
+      const pillClass = analysisMode === 'proofread'
+        ? `pill-proof-${sev.toLowerCase()}`
+        : `pill-${sev.toLowerCase()}`;
+      const cardClass = analysisMode === 'proofread'
+        ? `proof-${sev.toLowerCase()}`
+        : `severity-${sev.toLowerCase()}`;
+      const actionLabel = analysisMode === 'proofread' ? '✏️ Apply Fix' : '✨ Suggest Rewrite';
 
       const card = document.createElement('div');
-      card.className = `flag-card severity-${sev.toLowerCase()}`;
+      card.className = `flag-card ${cardClass}`;
       card.id = 'flag-card-'+i;
       card.style.animationDelay = (i*0.055)+'s';
       card.innerHTML = `
         <div class="flag-meta">
-          <span class="severity-pill pill-${sev.toLowerCase()}">${sev}</span>
-          <span class="flag-type">${flag.type||'Voice Issue'}</span>
+          <span class="severity-pill ${pillClass}">${sev}</span>
+          <span class="flag-type">${flag.type || (analysisMode==='proofread' ? 'Writing Issue' : 'Voice Issue')}</span>
         </div>
         <div class="flag-excerpt">"${flag.excerpt}"</div>
         <div class="flag-reason">${flag.reason}</div>
         <div class="flag-actions">
-          <button class="mini-btn suggest" id="sbtn-${i}" onclick="getSuggestion(event,${i})">✨ Suggest Rewrite</button>
+          <button class="mini-btn suggest" id="sbtn-${i}" onclick="getSuggestion(event,${i})">${actionLabel}</button>
           <button class="mini-btn" onclick="copyClip(event,'${flag.excerpt.replace(/'/g,"\\'").replace(/\n/g,' ')}')">📋 Copy</button>
         </div>
         <div class="suggestion-box" id="sbox-${i}">
-          <div class="suggestion-label">Suggested Rewrite</div>
+          <div class="suggestion-label">${analysisMode==='proofread' ? 'Correction' : 'Suggested Rewrite'}</div>
           <div class="suggestion-text" id="stxt-${i}"></div>
           <button class="apply-btn" onclick="applyRewrite(event,${i})">Apply to Editor</button>
         </div>`;
@@ -1139,20 +1336,27 @@ Rules:
     btn.disabled=true; btn.textContent='⟳ Generating...';
     box.classList.remove('visible'); txtEl.textContent='';
     try {
-      const res = await fetch('/api/voiceanalyze', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          model:'claude-haiku-4-5-20251001', max_tokens:1000,
-          messages:[{role:'user',content:getRewritePrompt(flag.excerpt, flag.reason, tone)}]
-        })
-      });
-      const data = await res.json();
-      const rewrite = (data.content||[]).map(c=>c.text||'').join('').trim();
+      let rewrite;
+      // Proofread: use the suggestion field Claude already returned
+      if (analysisMode === 'proofread' && flag.suggestion) {
+        rewrite = flag.suggestion;
+      } else {
+        const res = await fetch('/api/voiceanalyze', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            model:'claude-haiku-4-5-20251001', max_tokens:1000,
+            messages:[{role:'user',content:getRewritePrompt(flag.excerpt, flag.reason, tone)}]
+          })
+        });
+        const data = await res.json();
+        rewrite = (data.content||[]).map(c=>c.text||'').join('').trim();
+      }
       txtEl.textContent = rewrite;
       box.classList.add('visible');
       flagsData[idx]._rewrite = rewrite;
     } catch(err) { showToast('Failed to generate suggestion'); }
-    btn.disabled=false; btn.textContent='✨ Suggest Rewrite';
+    btn.disabled=false;
+    btn.textContent = analysisMode === 'proofread' ? '✏️ Apply Fix' : '✨ Suggest Rewrite';
   }
 
   // ── Apply rewrite in the doc ──────────────────────────────────────────────────
@@ -1390,6 +1594,7 @@ Only include paragraphs that need to change. Do not include the reference paragr
 
       onDocChange();
       showToast(`Rewrote ${applied} paragraph${applied!==1?'s':''} to match voice model`);
+      scoreVsModel();
     } catch(err) {
       console.error(err);
       showToast('Match failed — check console');
