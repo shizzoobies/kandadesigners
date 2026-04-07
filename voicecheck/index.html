@@ -302,6 +302,28 @@
   .tab-content { display: none; flex: 1; overflow-y: auto; min-height: 0; }
   .tab-content.active { display: flex; flex-direction: column; }
 
+  .replace-bar {
+    display: none; padding: 10px 14px; gap: 7px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); background: var(--surface2);
+    align-items: center;
+  }
+  .replace-bar.visible { display: flex; }
+  .replace-bar-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; margin-right: 4px; }
+  .rbtn {
+    font-size: 0.7rem; padding: 5px 11px; border-radius: 3px; cursor: pointer;
+    font-family: 'Barlow', sans-serif; font-weight: 600; border: 1px solid;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .rbtn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .rbtn-all  { background: rgba(255,102,0,0.1);  color: var(--orange-light); border-color: rgba(255,102,0,0.4); }
+  .rbtn-all:hover:not(:disabled)  { background: rgba(255,102,0,0.2); }
+  .rbtn-high { background: rgba(255,60,60,0.08);  color: #FF6060; border-color: rgba(255,60,60,0.35); }
+  .rbtn-high:hover:not(:disabled) { background: rgba(255,60,60,0.18); }
+  .rbtn-med  { background: rgba(255,166,0,0.08); color: #FFA600; border-color: rgba(255,166,0,0.35); }
+  .rbtn-med:hover:not(:disabled)  { background: rgba(255,166,0,0.18); }
+  .rbtn-low  { background: rgba(255,102,0,0.06); color: var(--orange); border-color: rgba(255,102,0,0.25); }
+  .rbtn-low:hover:not(:disabled)  { background: rgba(255,102,0,0.15); }
+
   .flags-list { padding: 14px; display: flex; flex-direction: column; gap: 9px; }
 
   .empty-state {
@@ -532,6 +554,13 @@
       <button class="tab" onclick="switchTab('summary',this)">Summary</button>
     </div>
     <div class="tab-content active" id="tab-flags">
+      <div class="replace-bar" id="replace-bar">
+        <span class="replace-bar-label">Replace All</span>
+        <button class="rbtn rbtn-all"  onclick="replaceAll()">⚡ All</button>
+        <button class="rbtn rbtn-high" onclick="replaceAllBySeverity('High')">● High</button>
+        <button class="rbtn rbtn-med"  onclick="replaceAllBySeverity('Medium')">● Medium</button>
+        <button class="rbtn rbtn-low"  onclick="replaceAllBySeverity('Low')">● Low</button>
+      </div>
       <div class="empty-state" id="flags-empty">
         <div class="empty-icon">🔍</div>
         <div class="empty-label">Upload a <strong>.docx file</strong> or paste your storyboard,<br>then click <strong>Analyze</strong> to detect voice inconsistencies.</div>
@@ -883,6 +912,58 @@ Rules: Excerpts must be exact character-for-character substrings. Flag 3-8 meani
     document.getElementById('count-med').textContent=cM;
     document.getElementById('count-low').textContent=cL;
     document.getElementById('stats-bar').style.display='flex';
+    document.getElementById('replace-bar').classList.add('visible');
+  }
+
+  // ── Replace all by severity (or all) ─────────────────────────────────────────
+  async function replaceAllBySeverity(severity) {
+    const targets = flagsData.map((f,i)=>({f,i})).filter(({f})=> f.severity===severity);
+    if (!targets.length) { showToast('No ' + severity + ' flags to replace'); return; }
+    await runBatchReplace(targets);
+  }
+
+  async function replaceAll() {
+    const targets = flagsData.map((f,i)=>({f,i}));
+    if (!targets.length) { showToast('No flags to replace'); return; }
+    await runBatchReplace(targets);
+  }
+
+  async function runBatchReplace(targets) {
+    // Disable all replace buttons during run
+    document.querySelectorAll('.rbtn').forEach(b => b.disabled = true);
+    const tone = document.getElementById('tone-select').value;
+    let applied = 0;
+
+    for (const {f, i} of targets) {
+      // Generate suggestion if not already done
+      if (!f._rewrite) {
+        try {
+          const res = await fetch('/api/voiceanalyze', {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({
+              model:'claude-sonnet-4-20250514', max_tokens:500,
+              messages:[{role:'user',content:`Rewrite this passage to match a ${tone} voice. Preserve all meaning. Return ONLY the rewritten text, no preamble.\n\nOriginal: "${f.excerpt}"\nIssue: ${f.reason}`}]
+            })
+          });
+          const data = await res.json();
+          f._rewrite = (data.content||[]).map(c=>c.text||'').join('').trim();
+          // Update the suggestion box if visible
+          const txtEl = document.getElementById('stxt-'+i);
+          if (txtEl) { txtEl.textContent = f._rewrite; document.getElementById('sbox-'+i).classList.add('visible'); }
+        } catch(e) { continue; }
+      }
+
+      // Apply the rewrite
+      const mark = document.querySelector(`mark[data-flag-index="${i}"]`);
+      if (mark) {
+        mark.replaceWith(document.createTextNode(f._rewrite));
+        applied++;
+      }
+    }
+
+    onDocChange();
+    document.querySelectorAll('.rbtn').forEach(b => b.disabled = false);
+    showToast(`Applied ${applied} rewrite${applied!==1?'s':''}  — re-analyze to refresh flags`);
   }
 
   function copyClip(e, txt) { e.stopPropagation(); navigator.clipboard.writeText(txt).then(()=>showToast('Copied')); }
