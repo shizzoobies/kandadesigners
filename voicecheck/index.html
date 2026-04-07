@@ -983,41 +983,79 @@ Rules: Excerpts must be exact character-for-character substrings. Flag only genu
   }
 
   async function runBatchReplace(targets) {
-    // Disable all replace buttons during run
+    if (!targets.length) return;
     document.querySelectorAll('.rbtn').forEach(b => b.disabled = true);
+
     const tone = document.getElementById('tone-select').value;
-    let applied = 0;
+    const custom = (document.getElementById('rewrite-instructions').value || '').trim();
 
-    for (const {f, i} of targets) {
-      // Generate suggestion if not already done
-      if (!f._rewrite) {
-        try {
-          const res = await fetch('/api/voiceanalyze', {
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({
-              model:'claude-sonnet-4-20250514', max_tokens:500,
-              messages:[{role:'user',content:getRewritePrompt(f.excerpt, f.reason, tone)}]
-            })
-          });
-          const data = await res.json();
-          f._rewrite = (data.content||[]).map(c=>c.text||'').join('').trim();
-          // Update the suggestion box if visible
-          const txtEl = document.getElementById('stxt-'+i);
-          if (txtEl) { txtEl.textContent = f._rewrite; document.getElementById('sbox-'+i).classList.add('visible'); }
-        } catch(e) { continue; }
-      }
-
-      // Apply the rewrite
-      const mark = document.querySelector(`mark[data-flag-index="${i}"]`);
-      if (mark) {
-        mark.replaceWith(document.createTextNode(f._rewrite));
-        applied++;
+    let profileBlock = '';
+    if (voiceProfile) {
+      profileBlock = `\nEstablished voice profile:\n- Dominant voice: ${voiceProfile.dominant_voice}\n- Target tone: ${tone}`;
+      if (voiceProfile.voice_traits && voiceProfile.voice_traits.length) {
+        profileBlock += '\n- Voice traits: ' + voiceProfile.voice_traits.map(t=>`${t.trait} (${t.score}/100)`).join(', ');
       }
     }
+    const customBlock = custom ? `\nAdditional instructions:\n${custom}` : '';
 
-    onDocChange();
+    const passageList = targets.map(({f,i}, n) =>
+      `${n+1}. Original: "${f.excerpt}"\n   Issue: ${f.reason}`
+    ).join('\n\n');
+
+    const prompt = `You are a voice consistency editor. Rewrite ALL of the passages below so they are consistent with each other AND with the rest of the document. Every rewrite must feel like it was written by the same author.${profileBlock}${customBlock}
+
+Passages to rewrite:
+${passageList}
+
+Return ONLY a valid JSON array — no markdown, no explanation:
+[
+  {"original": "exact original text", "rewrite": "rewritten text"},
+  ...
+]
+
+Rules:
+- The "original" field must be the EXACT original text, character for character
+- All rewrites must be harmonious with each other
+- Preserve all meaning`;
+
+    try {
+      const res = await fetch('/api/voiceanalyze', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 2000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      const data = await res.json();
+      const raw = (data.content||[]).map(c=>c.text||'').join('').replace(/```json|```/g,'').trim();
+      const rewrites = JSON.parse(raw);
+
+      let applied = 0;
+      for (const { original, rewrite } of rewrites) {
+        // Find matching flag
+        const matchIdx = targets.findIndex(({f}) => f.excerpt === original);
+        if (matchIdx === -1) continue;
+        const {f, i} = targets[matchIdx];
+        f._rewrite = rewrite;
+
+        // Update suggestion box
+        const txtEl = document.getElementById('stxt-'+i);
+        if (txtEl) { txtEl.textContent = rewrite; document.getElementById('sbox-'+i).classList.add('visible'); }
+
+        // Apply in doc
+        const mark = document.querySelector(`mark[data-flag-index="${i}"]`);
+        if (mark) { mark.replaceWith(document.createTextNode(rewrite)); applied++; }
+      }
+
+      onDocChange();
+      showToast(`Applied ${applied} rewrite${applied!==1?'s':''} — re-analyze to refresh`);
+    } catch(err) {
+      console.error(err);
+      showToast('Batch rewrite failed — check console');
+    }
+
     document.querySelectorAll('.rbtn').forEach(b => b.disabled = false);
-    showToast(`Applied ${applied} rewrite${applied!==1?'s':''}  — re-analyze to refresh flags`);
   }
 
   function copyClip(e, txt) { e.stopPropagation(); navigator.clipboard.writeText(txt).then(()=>showToast('Copied')); }
