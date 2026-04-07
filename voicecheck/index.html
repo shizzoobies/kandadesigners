@@ -395,6 +395,8 @@
     flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     color: #a8e6c0; opacity: 0.85;
   }
+  #voice-model-bar .vm-text:hover,
+  #voice-model-bar .vm-label:hover { opacity: 1; text-decoration: underline; }
   #voice-model-bar .vm-clear {
     flex-shrink: 0; background: none; border: 1px solid rgba(111,207,151,0.3);
     border-radius: 3px; color: #6fcf97; cursor: pointer;
@@ -705,8 +707,8 @@
   </div>
 
   <div id="voice-model-bar">
-    <span class="vm-label">🎯 Voice Model:</span>
-    <span class="vm-text" id="vm-preview"></span>
+    <span class="vm-label" onclick="scrollToVoiceModel()" title="Click to jump to voice model in document" style="cursor:pointer;">🎯 Voice Model:</span>
+    <span class="vm-text" id="vm-preview" onclick="scrollToVoiceModel()" title="Click to jump to voice model in document" style="cursor:pointer;"></span>
     <button class="vm-clear" onclick="clearVoiceModel()">✕ Clear</button>
   </div>
 
@@ -1770,6 +1772,19 @@ Rules:
     document.getElementById('voice-model-bar').classList.add('visible');
 
     showToast('Voice model set — click "Match All to Model" to rewrite the doc');
+  }
+
+  function scrollToVoiceModel() {
+    const ref = document.querySelector('.voice-model-ref');
+    if (ref) {
+      ref.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      ref.style.transition = 'outline 0.1s';
+      ref.style.outline = '2px solid #6fcf97';
+      setTimeout(() => { ref.style.outline = 'none'; }, 1200);
+      return;
+    }
+    // No span (cross-block selection) — flash the text in doc
+    if (voiceModelText) scrollToTextInDoc(voiceModelText);
   }
 
   function clearVoiceModel() {
