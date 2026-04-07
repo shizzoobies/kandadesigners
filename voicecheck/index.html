@@ -260,6 +260,29 @@
   #doc-page mark.flag-low  { background-color: var(--flag-low-bg);  border-bottom: 2px solid var(--flag-low-border); }
   #doc-page mark.flag:hover { filter: brightness(0.85); }
 
+  /* ── Voice model selection ── */
+  #selection-tooltip {
+    position: fixed; display: none; z-index: 100;
+    background: var(--surface); border: 1px solid var(--orange);
+    border-radius: 4px; padding: 5px 12px;
+    font-size: 0.72rem; font-family: 'Barlow', sans-serif; font-weight: 600;
+    color: var(--orange-light); cursor: pointer; white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+    transition: opacity 0.15s;
+  }
+  #selection-tooltip:hover { background: var(--orange-glow); }
+
+  #doc-page .voice-model-ref {
+    background: rgba(111,207,151,0.12);
+    border-left: 3px solid #6fcf97;
+    padding-left: 6px;
+    display: block;
+  }
+
+  .btn-model { background: var(--surface2); color: #6fcf97; border: 1px solid rgba(111,207,151,0.4); }
+  .btn-model:hover:not(:disabled) { background: rgba(111,207,151,0.1); border-color: #6fcf97; }
+  .btn-model:disabled { opacity: 0.35; cursor: not-allowed; }
+
   .analyzing-overlay {
     display: none; position: absolute; inset: 0;
     background: rgba(13,13,13,0.85); backdrop-filter: blur(3px);
@@ -520,6 +543,7 @@
     <button class="btn btn-ghost" onclick="loadSample()">Sample</button>
     <div class="sep"></div>
     <button class="btn btn-primary" id="analyze-btn" onclick="analyzeStoryboard()" disabled>⚡ Analyze</button>
+    <button class="btn btn-model" id="match-btn" onclick="matchToModel()" disabled title="Select a paragraph first to set it as the voice reference">🎯 Match All to Model</button>
     <button class="btn btn-save" id="save-btn" onclick="saveDocx()" disabled>💾 Save .docx</button>
     <button class="btn btn-danger" onclick="clearAll()">✕ Clear</button>
     <div class="spacer"></div>
@@ -610,6 +634,7 @@
 
 </div>
 
+<div id="selection-tooltip" onclick="setVoiceModel()">📌 Set as Voice Model</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1173,6 +1198,139 @@ Rules:
         <div class="trait-row"><span class="trait-name" style="color:#FFA600">Medium</span><span class="trait-val">${flagsData.filter(f=>f.severity==='Medium').length}</span></div>
         <div class="trait-row"><span class="trait-name" style="color:var(--orange-light)">Low</span><span class="trait-val">${flagsData.filter(f=>f.severity==='Low').length}</span></div>
       </div>`;
+  }
+
+  // ── Voice Model ───────────────────────────────────────────────────────────────
+  let voiceModelText = null;
+
+  document.getElementById('doc-page').addEventListener('mouseup', () => {
+    setTimeout(() => {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+        document.getElementById('selection-tooltip').style.display = 'none';
+        return;
+      }
+      // Only show if selection is inside the doc
+      const doc = document.getElementById('doc-page');
+      if (!doc.contains(sel.anchorNode)) return;
+
+      const range = sel.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      const tooltip = document.getElementById('selection-tooltip');
+      tooltip.style.display = 'block';
+      tooltip.style.left = (rect.left + rect.width / 2 - 80) + 'px';
+      tooltip.style.top = (rect.top - 38 + window.scrollY) + 'px';
+    }, 10);
+  });
+
+  document.addEventListener('mousedown', (e) => {
+    if (e.target.id !== 'selection-tooltip') {
+      document.getElementById('selection-tooltip').style.display = 'none';
+    }
+  });
+
+  function setVoiceModel() {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) return;
+    voiceModelText = sel.toString().trim();
+
+    // Remove previous reference highlight
+    document.querySelectorAll('.voice-model-ref').forEach(el => {
+      el.classList.remove('voice-model-ref');
+    });
+
+    // Wrap selection in a span to highlight it
+    try {
+      const range = sel.getRangeAt(0);
+      const span = document.createElement('span');
+      span.className = 'voice-model-ref';
+      range.surroundContents(span);
+    } catch(e) { /* selection spans multiple blocks — just store the text */ }
+
+    sel.removeAllRanges();
+    document.getElementById('selection-tooltip').style.display = 'none';
+    document.getElementById('match-btn').disabled = false;
+    showToast('Voice model set — click "Match All to Model" to rewrite the doc');
+  }
+
+  async function matchToModel() {
+    if (!voiceModelText) return;
+    const doc = document.getElementById('doc-page');
+    const fullText = doc.innerText.trim();
+    if (!fullText) return;
+
+    const btn = document.getElementById('match-btn');
+    btn.disabled = true;
+    btn.textContent = '⟳ Rewriting...';
+
+    const custom = (document.getElementById('rewrite-instructions').value || '').trim();
+    const customBlock = custom ? `\n\nAdditional instructions:\n${custom}` : '';
+
+    const prompt = `You are a voice and style editor. The user has selected a REFERENCE PARAGRAPH that defines how the entire document should sound — as if one person wrote the whole thing in that voice.
+
+Reference paragraph (the target voice — do NOT rewrite this one):
+"${voiceModelText}"
+
+Your job: Rewrite every OTHER paragraph in the document to sound like the same person who wrote the reference paragraph. Match their sentence length, vocabulary level, formality, rhythm, and personality exactly. The reader should not be able to tell which paragraphs were rewritten.${customBlock}
+
+Full document text:
+${fullText}
+
+Return ONLY a valid JSON array — no markdown, no explanation:
+[{"original": "exact original paragraph text", "rewrite": "rewritten text"}, ...]
+
+Only include paragraphs that need to change. Do not include the reference paragraph.`;
+
+    try {
+      const res = await fetch('/api/voiceanalyze', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 4000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      const data = await res.json();
+      const raw = (data.content||[]).map(c=>c.text||'').join('').replace(/```json|```/g,'').trim();
+      const rewrites = JSON.parse(raw);
+
+      // Apply rewrites by walking text nodes
+      const docEl = document.getElementById('doc-page');
+      let applied = 0;
+      for (const { original, rewrite } of rewrites) {
+        // Try to find and replace in innerHTML (paragraph-level)
+        const walker = document.createTreeWalker(docEl, NodeFilter.SHOW_TEXT);
+        let combined = '';
+        const nodes = [];
+        let node;
+        while (node = walker.nextNode()) {
+          nodes.push({ node, start: combined.length });
+          combined += node.textContent;
+        }
+        const idx = combined.indexOf(original);
+        if (idx === -1) continue;
+        // Find the block element (p, li, etc.) containing this text
+        const startNode = nodes.find(n => n.start <= idx && n.start + n.node.textContent.length > idx);
+        if (!startNode) continue;
+        let block = startNode.node.parentElement;
+        while (block && block !== docEl && !['P','LI','H1','H2','H3','H4','DIV'].includes(block.tagName)) {
+          block = block.parentElement;
+        }
+        if (block && block !== docEl) {
+          block.textContent = rewrite;
+          applied++;
+        }
+      }
+
+      onDocChange();
+      showToast(`Rewrote ${applied} paragraph${applied!==1?'s':''} to match voice model`);
+    } catch(err) {
+      console.error(err);
+      showToast('Match failed — check console');
+    }
+
+    btn.disabled = false;
+    btn.textContent = '🎯 Match All to Model';
   }
 
   // ── Toast ─────────────────────────────────────────────────────────────────────
