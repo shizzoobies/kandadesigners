@@ -180,21 +180,25 @@ async function generate() {
 
 // ── Results ───────────────────────────────
 
-function showResultsView(songs, lane, isHistory, date) {
+function showResultsView(songs, lane, isHistory, date, isRemix = false) {
   fromHistory = isHistory;
 
   document.getElementById('results-lane-name').textContent = lane;
 
   const dateEl = document.getElementById('results-date');
-  if (isHistory && date) {
+  if (isRemix && date) {
+    dateEl.textContent = `Remixed from ${formatHistoryDate(date)}`;
+    dateEl.classList.remove('hidden');
+  } else if (isHistory && date) {
     dateEl.textContent = formatHistoryDate(date);
     dateEl.classList.remove('hidden');
   } else {
     dateEl.classList.add('hidden');
   }
 
-  document.getElementById('change-lane-btn').classList.toggle('hidden', isHistory);
-  document.getElementById('back-to-history-btn').classList.toggle('hidden', !isHistory);
+  const backToHistory = isHistory || isRemix;
+  document.getElementById('change-lane-btn').classList.toggle('hidden', backToHistory);
+  document.getElementById('back-to-history-btn').classList.toggle('hidden', !backToHistory);
 
   const container = document.getElementById('songs-container');
   container.innerHTML = '';
@@ -241,10 +245,16 @@ async function openHistory() {
             <span class="history-entry-lane">${esc(entry.lane)}</span>
             <span class="history-entry-time">${formatTimestamp(entry.generatedAt)}</span>
           </div>
-          <button class="btn-view-history">View</button>
+          <div class="history-entry-actions">
+            <button class="btn-view-history">View</button>
+            <button class="btn-remix-history">Remix</button>
+          </div>
         `;
         row.querySelector('.btn-view-history').addEventListener('click', () => {
           showResultsView(entry.songs, entry.lane, true, entry.date);
+        });
+        row.querySelector('.btn-remix-history').addEventListener('click', (e) => {
+          remixEntry(entry, e.currentTarget);
         });
         list.appendChild(row);
       }
@@ -331,6 +341,41 @@ async function removeBanger(docId, title, card) {
     card.closest('.banger-card-wrapper')?.remove() ?? card.remove();
   } catch (err) {
     console.error('Remove banger failed:', err);
+  }
+}
+
+// ── Remix ─────────────────────────────────
+
+async function remixEntry(entry, btn) {
+  const originalText = btn.textContent;
+  btn.textContent = 'Remixing...';
+  btn.disabled = true;
+
+  try {
+    const res  = await fetch('/api/remix', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ songs: entry.songs, lane: entry.lane }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error || 'Remix failed. Please try again.');
+    if (!Array.isArray(data.songs) || data.songs.length === 0) {
+      throw new Error('Remix returned empty results. Please try again.');
+    }
+
+    showResultsView(data.songs, entry.lane, false, entry.date, true);
+
+    // Save remix to history in the background
+    saveGeneration(entry.lane, data.songs).catch(err => console.error('Save failed:', err));
+  } catch (err) {
+    btn.textContent = 'Failed';
+    setTimeout(() => { btn.textContent = originalText; }, 2000);
+  } finally {
+    btn.disabled = false;
+    if (btn.textContent === originalText || btn.textContent === 'Remixing...') {
+      btn.textContent = originalText;
+    }
   }
 }
 

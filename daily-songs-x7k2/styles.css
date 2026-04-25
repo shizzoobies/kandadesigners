@@ -548,6 +548,37 @@ body {
   color: var(--text-muted);
 }
 
+.history-entry-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-remix-history {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.btn-remix-history:hover:not(:disabled) {
+  border-color: var(--success);
+  color: var(--success);
+  background: rgba(90, 153, 153, 0.06);
+}
+
+.btn-remix-history:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .btn-view-history {
   background: transparent;
   border: 1px solid var(--border);
