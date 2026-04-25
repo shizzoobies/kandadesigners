@@ -1,5 +1,8 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import {
+  getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
+  query, orderBy, Timestamp,
+} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 // ── Firebase ─────────────────────────────
 
@@ -15,20 +18,35 @@ const firebaseConfig = {
 const fbApp = initializeApp(firebaseConfig);
 const db    = getFirestore(fbApp);
 
+// title -> Firestore doc ID. Loaded on init, kept in sync on toggle.
+const bangerMap = new Map();
+
+async function loadBangerMap() {
+  try {
+    const snap = await getDocs(collection(db, 'bangers'));
+    snap.docs.forEach(d => bangerMap.set(d.data().title, d.id));
+  } catch (err) {
+    console.error('Could not load bangers:', err);
+  }
+}
+
 async function saveGeneration(lane, songs) {
-  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const today = new Date().toISOString().slice(0, 10);
   await addDoc(collection(db, 'generations'), {
-    date: today,
-    lane,
-    generatedAt: Timestamp.now(),
-    songs,
+    date: today, lane, generatedAt: Timestamp.now(), songs,
   });
 }
 
 async function fetchHistory() {
   const q    = query(collection(db, 'generations'), orderBy('generatedAt', 'desc'));
   const snap = await getDocs(q);
-  return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function fetchBangers() {
+  const q    = query(collection(db, 'bangers'), orderBy('markedAt', 'desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
 
 // ── Lanes ─────────────────────────────────
@@ -60,6 +78,7 @@ const views = {
   generator: document.getElementById('view-generator'),
   results:   document.getElementById('view-results'),
   history:   document.getElementById('view-history'),
+  bangers:   document.getElementById('view-bangers'),
 };
 
 function showView(name) {
@@ -147,10 +166,10 @@ async function generate() {
       throw new Error('Received an empty response. Please try again.');
     }
 
-    showResultsView(data.songs, lane, false);
+    const today = new Date().toISOString().slice(0, 10);
+    showResultsView(data.songs, lane, false, today);
 
-    // Save to Firestore in the background - don't block the UI on failure
-    saveGeneration(lane, data.songs).catch(err => console.error('Firestore save failed:', err));
+    saveGeneration(lane, data.songs).catch(err => console.error('Save failed:', err));
   } catch (err) {
     errorEl.textContent = err.message;
     errorEl.classList.remove('hidden');
@@ -161,31 +180,29 @@ async function generate() {
 
 // ── Results ───────────────────────────────
 
-function showResultsView(songs, lane, isHistory, historyDate = null) {
+function showResultsView(songs, lane, isHistory, date) {
   fromHistory = isHistory;
 
   document.getElementById('results-lane-name').textContent = lane;
 
   const dateEl = document.getElementById('results-date');
-  if (isHistory && historyDate) {
-    dateEl.textContent = formatHistoryDate(historyDate);
+  if (isHistory && date) {
+    dateEl.textContent = formatHistoryDate(date);
     dateEl.classList.remove('hidden');
   } else {
     dateEl.classList.add('hidden');
   }
 
-  // Toggle action buttons based on context
   document.getElementById('change-lane-btn').classList.toggle('hidden', isHistory);
   document.getElementById('back-to-history-btn').classList.toggle('hidden', !isHistory);
 
-  renderSongs(songs);
-  showView('results');
-}
-
-function renderSongs(songs) {
   const container = document.getElementById('songs-container');
   container.innerHTML = '';
-  songs.forEach((song, i) => container.appendChild(buildSongCard(song, i + 1, songs.length)));
+  songs.forEach((song, i) => {
+    container.appendChild(buildSongCard(song, i + 1, songs.length, { lane, date }));
+  });
+
+  showView('results');
 }
 
 // ── History ───────────────────────────────
@@ -201,52 +218,119 @@ async function openHistory() {
       listEl.innerHTML = '<p class="history-empty">No generations yet. Generate some songs first.</p>';
       return;
     }
-    renderHistoryList(entries, listEl);
+    const groups = new Map();
+    for (const entry of entries) {
+      if (!groups.has(entry.date)) groups.set(entry.date, []);
+      groups.get(entry.date).push(entry);
+    }
+    listEl.innerHTML = '';
+    for (const [date, dayEntries] of groups) {
+      const group = document.createElement('div');
+      group.className = 'history-group';
+      const dateHeader = document.createElement('div');
+      dateHeader.className = 'history-date';
+      dateHeader.textContent = formatHistoryDate(date);
+      group.appendChild(dateHeader);
+      const list = document.createElement('div');
+      list.className = 'history-entries';
+      for (const entry of dayEntries) {
+        const row = document.createElement('div');
+        row.className = 'history-entry';
+        row.innerHTML = `
+          <div class="history-entry-info">
+            <span class="history-entry-lane">${esc(entry.lane)}</span>
+            <span class="history-entry-time">${formatTimestamp(entry.generatedAt)}</span>
+          </div>
+          <button class="btn-view-history">View</button>
+        `;
+        row.querySelector('.btn-view-history').addEventListener('click', () => {
+          showResultsView(entry.songs, entry.lane, true, entry.date);
+        });
+        list.appendChild(row);
+      }
+      group.appendChild(list);
+      listEl.appendChild(group);
+    }
   } catch (err) {
     listEl.innerHTML = '<p class="history-error">Could not load history. Try again.</p>';
     console.error(err);
   }
 }
 
-function renderHistoryList(entries, container) {
-  // Group by date (entries are already newest-first from Firestore query)
-  const groups = new Map();
-  for (const entry of entries) {
-    if (!groups.has(entry.date)) groups.set(entry.date, []);
-    groups.get(entry.date).push(entry);
-  }
+// ── Bangers ───────────────────────────────
 
-  container.innerHTML = '';
-  for (const [date, dayEntries] of groups) {
-    const group = document.createElement('div');
-    group.className = 'history-group';
+async function openBangers() {
+  showView('bangers');
+  const listEl = document.getElementById('bangers-list');
+  listEl.innerHTML = '<p class="history-empty">Loading...</p>';
 
-    const dateHeader = document.createElement('div');
-    dateHeader.className = 'history-date';
-    dateHeader.textContent = formatHistoryDate(date);
-    group.appendChild(dateHeader);
-
-    const list = document.createElement('div');
-    list.className = 'history-entries';
-
-    for (const entry of dayEntries) {
-      const row = document.createElement('div');
-      row.className = 'history-entry';
-      row.innerHTML = `
-        <div class="history-entry-info">
-          <span class="history-entry-lane">${esc(entry.lane)}</span>
-          <span class="history-entry-time">${formatTimestamp(entry.generatedAt)}</span>
-        </div>
-        <button class="btn-view-history">View</button>
-      `;
-      row.querySelector('.btn-view-history').addEventListener('click', () => {
-        showResultsView(entry.songs, entry.lane, true, entry.date);
-      });
-      list.appendChild(row);
+  try {
+    const bangers = await fetchBangers();
+    if (bangers.length === 0) {
+      listEl.innerHTML = '<p class="history-empty">No bangers yet. Check the star on any song that performs well.</p>';
+      return;
     }
+    listEl.innerHTML = '';
+    bangers.forEach((banger, i) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'banger-card-wrapper';
 
-    group.appendChild(list);
-    container.appendChild(group);
+      const laneTag = document.createElement('p');
+      laneTag.className = 'banger-lane-tag';
+      laneTag.textContent = banger.lane || '';
+      wrapper.appendChild(laneTag);
+
+      const card = buildSongCard(
+        banger, i + 1, bangers.length,
+        { lane: banger.lane, date: banger.date, showRemoveBtn: true, docId: banger.id }
+      );
+      wrapper.appendChild(card);
+      listEl.appendChild(wrapper);
+    });
+  } catch (err) {
+    listEl.innerHTML = '<p class="history-error">Could not load bangers. Try again.</p>';
+    console.error(err);
+  }
+}
+
+async function toggleBanger(song, meta, btn) {
+  btn.disabled = true;
+  const title = song.title;
+
+  try {
+    if (bangerMap.has(title)) {
+      await deleteDoc(doc(db, 'bangers', bangerMap.get(title)));
+      bangerMap.delete(title);
+      btn.classList.remove('starred');
+      btn.innerHTML = `${starSVG(false)}<span>Mark as Banger</span>`;
+    } else {
+      const docRef = await addDoc(collection(db, 'bangers'), {
+        title:    song.title,
+        prompt:   song.prompt,
+        description: song.description,
+        tags:     song.tags,
+        lane:     meta.lane || '',
+        date:     meta.date || new Date().toISOString().slice(0, 10),
+        markedAt: Timestamp.now(),
+      });
+      bangerMap.set(title, docRef.id);
+      btn.classList.add('starred');
+      btn.innerHTML = `${starSVG(true)}<span>Banger</span>`;
+    }
+  } catch (err) {
+    console.error('Banger toggle failed:', err);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function removeBanger(docId, title, card) {
+  try {
+    await deleteDoc(doc(db, 'bangers', docId));
+    bangerMap.delete(title);
+    card.closest('.banger-card-wrapper')?.remove() ?? card.remove();
+  } catch (err) {
+    console.error('Remove banger failed:', err);
   }
 }
 
@@ -258,10 +342,17 @@ document.getElementById('change-lane-btn').addEventListener('click', () => showV
 document.getElementById('back-to-history-btn').addEventListener('click', openHistory);
 document.getElementById('history-btn').addEventListener('click', openHistory);
 document.getElementById('history-back-btn').addEventListener('click', () => showView('generator'));
+document.getElementById('bangers-btn').addEventListener('click', openBangers);
+document.getElementById('bangers-back-btn').addEventListener('click', () => showView('generator'));
 
 // ── Song cards ────────────────────────────
 
-function buildSongCard(song, num, total) {
+// options: { lane, date, showRemoveBtn, docId }
+// showRemoveBtn=true is used in the Bangers view instead of the star button
+function buildSongCard(song, num, total, options = {}) {
+  const { lane = '', date = '', showRemoveBtn = false, docId = null } = options;
+  const isStarred = bangerMap.has(song.title);
+
   const card = document.createElement('div');
   card.className = 'song-card';
   card.innerHTML = `
@@ -270,13 +361,29 @@ function buildSongCard(song, num, total) {
     ${buildField('Generation Prompt', song.prompt, 'prompt', true)}
     ${buildField('Marketplace Description', song.description, 'description')}
     ${buildTagsField(song.tags)}
+    ${showRemoveBtn
+      ? `<div class="banger-remove-row"><button class="btn-remove-banger">Remove from Bangers</button></div>`
+      : `<div class="banger-row"><button class="banger-btn${isStarred ? ' starred' : ''}">${starSVG(isStarred)}<span>${isStarred ? 'Banger' : 'Mark as Banger'}</span></button></div>`
+    }
   `;
+
   card.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const textMap = { title: song.title, prompt: song.prompt, description: song.description, tags: song.tags };
       copyText(textMap[btn.dataset.field], btn);
     });
   });
+
+  if (showRemoveBtn && docId) {
+    card.querySelector('.btn-remove-banger').addEventListener('click', () => {
+      removeBanger(docId, song.title, card);
+    });
+  } else {
+    card.querySelector('.banger-btn').addEventListener('click', (e) => {
+      toggleBanger(song, { lane, date }, e.currentTarget);
+    });
+  }
+
   return card;
 }
 
@@ -317,6 +424,14 @@ function buildCopyBtn(field) {
       <span class="copy-label">Copy</span>
     </button>
   `;
+}
+
+function starSVG(filled = false) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+       fill="${filled ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+  </svg>`;
 }
 
 // ── Clipboard ─────────────────────────────
@@ -380,6 +495,9 @@ function setTodayDate() {
 async function init() {
   populateLaneSelect();
   setTodayDate();
+
+  // Load banger state before showing any songs so star buttons render correctly
+  await loadBangerMap();
 
   try {
     const res  = await fetch('/api/generate');

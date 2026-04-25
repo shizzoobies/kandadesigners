@@ -579,6 +579,100 @@ body {
   color: #e07070;
 }
 
+/* ── Generator links ────────────────────── */
+
+.generator-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.link-sep {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+/* ── Banger button (on song cards) ──────── */
+
+.banger-row {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 18px;
+  margin-top: 24px;
+}
+
+.banger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.banger-btn:hover:not(:disabled) {
+  border-color: #c9a961;
+  color: #c9a961;
+}
+
+.banger-btn.starred {
+  border-color: #c9a961;
+  color: #c9a961;
+  background: rgba(201, 169, 97, 0.08);
+}
+
+.banger-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Bangers view ───────────────────────── */
+
+.banger-card-wrapper {
+  margin-bottom: 28px;
+}
+
+.banger-lane-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.banger-remove-row {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 18px;
+  margin-top: 24px;
+}
+
+.btn-remove-banger {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-remove-banger:hover {
+  border-color: var(--error);
+  color: #e07070;
+}
+
 /* ── Mobile ─────────────────────────────── */
 
 @media (max-width: 560px) {

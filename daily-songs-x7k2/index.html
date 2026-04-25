@@ -42,7 +42,11 @@
         </div>
         <div id="generate-error" class="error-msg hidden"></div>
         <p class="date-footer" id="today-date"></p>
-        <button id="history-btn" class="btn-text">View History</button>
+        <div class="generator-links">
+          <button id="history-btn" class="btn-text">View History</button>
+          <span class="link-sep">·</span>
+          <button id="bangers-btn" class="btn-text">Bangers</button>
+        </div>
       </div>
     </section>
 
@@ -70,6 +74,17 @@
           <h2 class="history-title">History</h2>
         </div>
         <div id="history-list"></div>
+      </div>
+    </section>
+
+    <!-- BANGERS -->
+    <section id="view-bangers" class="view hidden">
+      <div class="history-content">
+        <div class="history-header">
+          <button id="bangers-back-btn" class="btn-back">Back</button>
+          <h2 class="history-title">Bangers</h2>
+        </div>
+        <div id="bangers-list"></div>
       </div>
     </section>
 
