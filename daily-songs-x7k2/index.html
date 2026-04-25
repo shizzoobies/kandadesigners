@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Songs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- AUTH GATE -->
+    <section id="view-auth" class="view hidden">
+      <div class="auth-card">
+        <h1 class="app-title">Daily Songs</h1>
+        <p class="auth-subtitle">Enter passphrase to continue.</p>
+        <div id="auth-error" class="error-msg hidden"></div>
+        <form id="auth-form" autocomplete="off">
+          <input
+            type="password"
+            id="passphrase-input"
+            class="passphrase-input"
+            placeholder="Passphrase"
+            autocomplete="current-password"
+            required
+          >
+          <button type="submit" id="auth-btn" class="btn-primary">Enter</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- GENERATOR (also used for loading state) -->
+    <section id="view-generator" class="view hidden">
+      <div class="generator-content">
+        <h1 class="app-title">Daily Songs</h1>
+        <div class="controls">
+          <div class="select-wrapper">
+            <label for="lane-select" class="lane-label">Lane</label>
+            <select id="lane-select" class="lane-select"></select>
+          </div>
+          <button id="generate-btn" class="btn-primary btn-generate">Generate 5 Songs</button>
+        </div>
+        <div id="generate-error" class="error-msg hidden"></div>
+        <p class="date-footer" id="today-date"></p>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="view-results" class="view hidden">
+      <div class="results-content">
+        <div class="results-header">
+          <h2 class="results-lane-label" id="results-lane-name"></h2>
+        </div>
+        <div id="songs-container"></div>
+        <div class="results-actions">
+          <button id="regen-btn" class="btn-primary">Generate 5 More</button>
+          <button id="change-lane-btn" class="btn-secondary">Change Lane</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
