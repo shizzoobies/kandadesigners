@@ -1,3 +1,38 @@
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+// ── Firebase ─────────────────────────────
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyB-FDi6pQCanc-LJpWvSA5qxitz62yH7TY',
+  authDomain: 'daily-songs-89174.firebaseapp.com',
+  projectId: 'daily-songs-89174',
+  storageBucket: 'daily-songs-89174.firebasestorage.app',
+  messagingSenderId: '351646460734',
+  appId: '1:351646460734:web:d6ec9e807dcd6ad0365a6f',
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db    = getFirestore(fbApp);
+
+async function saveGeneration(lane, songs) {
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  await addDoc(collection(db, 'generations'), {
+    date: today,
+    lane,
+    generatedAt: Timestamp.now(),
+    songs,
+  });
+}
+
+async function fetchHistory() {
+  const q    = query(collection(db, 'generations'), orderBy('generatedAt', 'desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+// ── Lanes ─────────────────────────────────
+
 const LANES = [
   { id: 'cinematic_tech_underscore', label: 'Cinematic Tech Underscore (proven winner)' },
   { id: 'cinematic_aspirational',    label: 'Cinematic Aspirational / Lifestyle' },
@@ -13,17 +48,18 @@ const LANES = [
 
 const DEFAULT_LANE_ID = 'cinematic_tech_underscore';
 
-// ── State ────────────────────────────────
+// ── State ─────────────────────────────────
 
 let isGenerating = false;
-let currentLaneLabel = LANES.find(l => l.id === DEFAULT_LANE_ID).label;
+let fromHistory  = false;
 
-// ── View management ──────────────────────
+// ── Views ─────────────────────────────────
 
 const views = {
   auth:      document.getElementById('view-auth'),
   generator: document.getElementById('view-generator'),
   results:   document.getElementById('view-results'),
+  history:   document.getElementById('view-history'),
 };
 
 function showView(name) {
@@ -31,7 +67,7 @@ function showView(name) {
   views[name].classList.remove('hidden');
 }
 
-// ── Loading state ────────────────────────
+// ── Loading state ─────────────────────────
 
 function setGenerating(loading) {
   isGenerating = loading;
@@ -40,17 +76,17 @@ function setGenerating(loading) {
   if (loading) {
     btn.textContent = 'Generating...';
     btn.classList.add('loading');
-    btn.disabled  = true;
+    btn.disabled    = true;
     select.disabled = true;
   } else {
     btn.textContent = 'Generate 5 Songs';
     btn.classList.remove('loading');
-    btn.disabled  = false;
+    btn.disabled    = false;
     select.disabled = false;
   }
 }
 
-// ── Auth ─────────────────────────────────
+// ── Auth ──────────────────────────────────
 
 document.getElementById('auth-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -86,14 +122,12 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
   }
 });
 
-// ── Generation ───────────────────────────
+// ── Generation ────────────────────────────
 
 async function generate() {
   if (isGenerating) return;
 
   const lane    = document.getElementById('lane-select').value;
-  currentLaneLabel = lane;
-
   const errorEl = document.getElementById('generate-error');
   errorEl.classList.add('hidden');
 
@@ -108,15 +142,15 @@ async function generate() {
     });
     const data = await res.json();
 
-    if (!res.ok) {
-      throw new Error(data.error || 'Generation failed. Please try again.');
-    }
+    if (!res.ok) throw new Error(data.error || 'Generation failed. Please try again.');
     if (!Array.isArray(data.songs) || data.songs.length === 0) {
       throw new Error('Received an empty response. Please try again.');
     }
 
-    renderSongs(data.songs, lane);
-    showView('results');
+    showResultsView(data.songs, lane, false);
+
+    // Save to Firestore in the background - don't block the UI on failure
+    saveGeneration(lane, data.songs).catch(err => console.error('Firestore save failed:', err));
   } catch (err) {
     errorEl.textContent = err.message;
     errorEl.classList.remove('hidden');
@@ -125,27 +159,111 @@ async function generate() {
   }
 }
 
-document.getElementById('generate-btn').addEventListener('click', generate);
-document.getElementById('regen-btn').addEventListener('click', generate);
-document.getElementById('change-lane-btn').addEventListener('click', () => showView('generator'));
+// ── Results ───────────────────────────────
 
-// ── Rendering ────────────────────────────
-
-function renderSongs(songs, lane) {
-  const container = document.getElementById('songs-container');
-  container.innerHTML = '';
+function showResultsView(songs, lane, isHistory, historyDate = null) {
+  fromHistory = isHistory;
 
   document.getElementById('results-lane-name').textContent = lane;
 
-  songs.forEach((song, i) => {
-    container.appendChild(buildSongCard(song, i + 1, songs.length));
-  });
+  const dateEl = document.getElementById('results-date');
+  if (isHistory && historyDate) {
+    dateEl.textContent = formatHistoryDate(historyDate);
+    dateEl.classList.remove('hidden');
+  } else {
+    dateEl.classList.add('hidden');
+  }
+
+  // Toggle action buttons based on context
+  document.getElementById('change-lane-btn').classList.toggle('hidden', isHistory);
+  document.getElementById('back-to-history-btn').classList.toggle('hidden', !isHistory);
+
+  renderSongs(songs);
+  showView('results');
 }
+
+function renderSongs(songs) {
+  const container = document.getElementById('songs-container');
+  container.innerHTML = '';
+  songs.forEach((song, i) => container.appendChild(buildSongCard(song, i + 1, songs.length)));
+}
+
+// ── History ───────────────────────────────
+
+async function openHistory() {
+  showView('history');
+  const listEl = document.getElementById('history-list');
+  listEl.innerHTML = '<p class="history-empty">Loading...</p>';
+
+  try {
+    const entries = await fetchHistory();
+    if (entries.length === 0) {
+      listEl.innerHTML = '<p class="history-empty">No generations yet. Generate some songs first.</p>';
+      return;
+    }
+    renderHistoryList(entries, listEl);
+  } catch (err) {
+    listEl.innerHTML = '<p class="history-error">Could not load history. Try again.</p>';
+    console.error(err);
+  }
+}
+
+function renderHistoryList(entries, container) {
+  // Group by date (entries are already newest-first from Firestore query)
+  const groups = new Map();
+  for (const entry of entries) {
+    if (!groups.has(entry.date)) groups.set(entry.date, []);
+    groups.get(entry.date).push(entry);
+  }
+
+  container.innerHTML = '';
+  for (const [date, dayEntries] of groups) {
+    const group = document.createElement('div');
+    group.className = 'history-group';
+
+    const dateHeader = document.createElement('div');
+    dateHeader.className = 'history-date';
+    dateHeader.textContent = formatHistoryDate(date);
+    group.appendChild(dateHeader);
+
+    const list = document.createElement('div');
+    list.className = 'history-entries';
+
+    for (const entry of dayEntries) {
+      const row = document.createElement('div');
+      row.className = 'history-entry';
+      row.innerHTML = `
+        <div class="history-entry-info">
+          <span class="history-entry-lane">${esc(entry.lane)}</span>
+          <span class="history-entry-time">${formatTimestamp(entry.generatedAt)}</span>
+        </div>
+        <button class="btn-view-history">View</button>
+      `;
+      row.querySelector('.btn-view-history').addEventListener('click', () => {
+        showResultsView(entry.songs, entry.lane, true, entry.date);
+      });
+      list.appendChild(row);
+    }
+
+    group.appendChild(list);
+    container.appendChild(group);
+  }
+}
+
+// ── Event bindings ────────────────────────
+
+document.getElementById('generate-btn').addEventListener('click', generate);
+document.getElementById('regen-btn').addEventListener('click', generate);
+document.getElementById('change-lane-btn').addEventListener('click', () => showView('generator'));
+document.getElementById('back-to-history-btn').addEventListener('click', openHistory);
+document.getElementById('history-btn').addEventListener('click', openHistory);
+document.getElementById('history-back-btn').addEventListener('click', () => showView('generator'));
+
+// ── Song cards ────────────────────────────
 
 function buildSongCard(song, num, total) {
   const card = document.createElement('div');
   card.className = 'song-card';
-
   card.innerHTML = `
     <div class="song-number">${num} of ${total}</div>
     ${buildField('Title', song.title, 'title', false, 'title-value')}
@@ -153,36 +271,30 @@ function buildSongCard(song, num, total) {
     ${buildField('Marketplace Description', song.description, 'description')}
     ${buildTagsField(song.tags)}
   `;
-
-  // Wire up copy buttons
   card.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const field = btn.dataset.field;
       const textMap = { title: song.title, prompt: song.prompt, description: song.description, tags: song.tags };
-      copyText(textMap[field], btn);
+      copyText(textMap[btn.dataset.field], btn);
     });
   });
-
   return card;
 }
 
 function buildField(label, value, field, mono = false, extraClass = '') {
-  const valueClass = ['field-value', mono ? 'mono-block' : '', extraClass].filter(Boolean).join(' ');
+  const cls = ['field-value', mono ? 'mono-block' : '', extraClass].filter(Boolean).join(' ');
   return `
     <div class="song-field">
       <div class="field-header">
         <span class="field-label">${label}</span>
         ${buildCopyBtn(field)}
       </div>
-      <div class="${valueClass}">${esc(value)}</div>
+      <div class="${cls}">${esc(value)}</div>
     </div>
   `;
 }
 
 function buildTagsField(tags) {
-  const pills = tags.split(',')
-    .map(t => `<span class="tag-pill">${esc(t.trim())}</span>`)
-    .join('');
+  const pills = tags.split(',').map(t => `<span class="tag-pill">${esc(t.trim())}</span>`).join('');
   return `
     <div class="song-field">
       <div class="field-header">
@@ -207,13 +319,12 @@ function buildCopyBtn(field) {
   `;
 }
 
-// ── Clipboard ────────────────────────────
+// ── Clipboard ─────────────────────────────
 
 async function copyText(text, btn) {
   try {
     await navigator.clipboard.writeText(text);
   } catch {
-    // Fallback for environments without clipboard API
     const ta = Object.assign(document.createElement('textarea'), {
       value: text, style: 'position:fixed;opacity:0;',
     });
@@ -225,20 +336,25 @@ async function copyText(text, btn) {
   const label = btn.querySelector('.copy-label');
   label.textContent = 'Copied ✓';
   btn.classList.add('copied');
-  setTimeout(() => {
-    label.textContent = 'Copy';
-    btn.classList.remove('copied');
-  }, 1500);
+  setTimeout(() => { label.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
 }
 
-// ── Utilities ────────────────────────────
+// ── Utilities ─────────────────────────────
 
 function esc(str) {
   return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function formatHistoryDate(dateStr) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+  });
+}
+
+function formatTimestamp(ts) {
+  return ts.toDate().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 }
 
 function populateLaneSelect() {
@@ -254,20 +370,17 @@ function populateLaneSelect() {
 
 function setTodayDate() {
   const el = document.getElementById('today-date');
-  if (el) {
-    el.textContent = new Date().toLocaleDateString('en-US', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-    });
-  }
+  if (el) el.textContent = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+  });
 }
 
-// ── Init ─────────────────────────────────
+// ── Init ──────────────────────────────────
 
 async function init() {
   populateLaneSelect();
   setTodayDate();
 
-  // Check auth status via lightweight GET before showing any view
   try {
     const res  = await fetch('/api/generate');
     const data = await res.json();
@@ -276,7 +389,6 @@ async function init() {
     showView('auth');
   }
 
-  // Focus the passphrase input if the auth gate is shown
   if (!views.auth.classList.contains('hidden')) {
     document.getElementById('passphrase-input').focus();
   }

@@ -42,6 +42,7 @@
         </div>
         <div id="generate-error" class="error-msg hidden"></div>
         <p class="date-footer" id="today-date"></p>
+        <button id="history-btn" class="btn-text">View History</button>
       </div>
     </section>
 
@@ -50,16 +51,29 @@
       <div class="results-content">
         <div class="results-header">
           <h2 class="results-lane-label" id="results-lane-name"></h2>
+          <p class="results-date hidden" id="results-date"></p>
         </div>
         <div id="songs-container"></div>
         <div class="results-actions">
           <button id="regen-btn" class="btn-primary">Generate 5 More</button>
           <button id="change-lane-btn" class="btn-secondary">Change Lane</button>
+          <button id="back-to-history-btn" class="btn-secondary hidden">Back to History</button>
         </div>
       </div>
     </section>
 
+    <!-- HISTORY -->
+    <section id="view-history" class="view hidden">
+      <div class="history-content">
+        <div class="history-header">
+          <button id="history-back-btn" class="btn-back">Back</button>
+          <h2 class="history-title">History</h2>
+        </div>
+        <div id="history-list"></div>
+      </div>
+    </section>
+
   </div>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
