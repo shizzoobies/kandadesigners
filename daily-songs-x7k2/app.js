@@ -30,6 +30,15 @@ async function loadBangerMap() {
   }
 }
 
+async function loadUsedTitles() {
+  try {
+    const entries = await fetchHistory();
+    entries.forEach(e => e.songs?.forEach(s => s.title && usedTitles.add(s.title)));
+  } catch {
+    // non-blocking, ignore errors
+  }
+}
+
 async function saveGeneration(lane, songs) {
   const today = new Date().toISOString().slice(0, 10);
   await addDoc(collection(db, 'generations'), {
@@ -84,6 +93,7 @@ const DURATIONS = [
 
 let isGenerating = false;
 let fromHistory  = false;
+const usedTitles = new Set();
 
 // ── Views ─────────────────────────────────
 
@@ -175,7 +185,7 @@ async function generate() {
     const res  = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lane, duration }),
+      body: JSON.stringify({ lane, duration, usedTitles: [...usedTitles] }),
     });
     const data = await res.json();
 
@@ -183,6 +193,8 @@ async function generate() {
     if (!Array.isArray(data.songs) || data.songs.length === 0) {
       throw new Error('Received an empty response. Please try again.');
     }
+
+    data.songs.forEach(s => s.title && usedTitles.add(s.title));
 
     const today = new Date().toISOString().slice(0, 10);
     showResultsView(data.songs, lane, false, today);
@@ -573,6 +585,9 @@ async function init() {
 
   // Load banger state before showing any songs so star buttons render correctly
   await loadBangerMap();
+
+  // Non-blocking: populate usedTitles from history so Claude avoids duplicates
+  loadUsedTitles();
 
   try {
     const res  = await fetch('/api/generate');

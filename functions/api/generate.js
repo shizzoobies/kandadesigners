@@ -25,12 +25,16 @@ function jsonResponse(data, status = 200) {
   });
 }
 
-async function callClaude(apiKey, model, lane, duration, strict = false) {
+async function callClaude(apiKey, model, lane, duration, usedTitles = [], strict = false) {
   const durationLine = duration === 'varied'
     ? 'Vary the duration across the 5 songs: use a mix of short (30s), medium (60s), and longer (up to 2 minutes) lengths. No more than 2 songs should share the same duration.'
     : `All 5 songs must target exactly ${duration}.`;
 
-  const baseMsg = `Generate 5 song packages for the lane: ${lane}. ${durationLine}`;
+  const titleBlock = usedTitles.length > 0
+    ? ` The following titles already exist in this creator's catalog and must not be reused or closely echoed: ${usedTitles.join(', ')}.`
+    : '';
+
+  const baseMsg = `Generate 5 song packages for the lane: ${lane}. ${durationLine}${titleBlock}`;
   const userMsg = strict
     ? `${baseMsg} IMPORTANT: Return ONLY the raw JSON object. Start with { and end with }. No markdown, no preamble, no explanation.`
     : baseMsg;
@@ -95,23 +99,24 @@ export async function onRequestPost(context) {
     return jsonResponse({ error: 'Invalid request body.' }, 400);
   }
 
-  const { lane, duration = 'varied' } = body;
+  const { lane, duration = 'varied', usedTitles = [] } = body;
   if (!lane || typeof lane !== 'string') {
     return jsonResponse({ error: 'Lane is required.' }, 400);
   }
 
   const apiKey = env.ANTHROPIC_API_KEY;
   const model = env.MODEL_NAME || 'claude-sonnet-4-6';
+  const titles = Array.isArray(usedTitles) ? usedTitles.slice(0, 300) : [];
 
   let rawText;
 
   try {
-    rawText = await callClaude(apiKey, model, lane, duration);
+    rawText = await callClaude(apiKey, model, lane, duration, titles);
   } catch (err) {
     if (err.message === 'rate_limited') {
       // Anthropic rate limit: retry once with Haiku
       try {
-        rawText = await callClaude(apiKey, 'claude-haiku-4-5-20251001', lane, duration);
+        rawText = await callClaude(apiKey, 'claude-haiku-4-5-20251001', lane, duration, titles);
       } catch {
         return jsonResponse({ error: 'Generation failed. Please try again.' }, 502);
       }
@@ -126,7 +131,7 @@ export async function onRequestPost(context) {
   } catch {
     // Malformed JSON: retry once with a stricter prompt
     try {
-      const retryText = await callClaude(apiKey, model, lane, duration, true);
+      const retryText = await callClaude(apiKey, model, lane, duration, titles, true);
       result = JSON.parse(retryText);
     } catch {
       return jsonResponse({ error: 'Generation failed. Please try again.' }, 502);
