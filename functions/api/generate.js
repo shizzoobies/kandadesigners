@@ -25,10 +25,15 @@ function jsonResponse(data, status = 200) {
   });
 }
 
-async function callClaude(apiKey, model, lane, strict = false) {
+async function callClaude(apiKey, model, lane, duration, strict = false) {
+  const durationLine = duration === 'varied'
+    ? 'Vary the duration across the 5 songs: use a mix of short (30s), medium (60s), and longer (up to 2 minutes) lengths. No more than 2 songs should share the same duration.'
+    : `All 5 songs must target exactly ${duration}.`;
+
+  const baseMsg = `Generate 5 song packages for the lane: ${lane}. ${durationLine}`;
   const userMsg = strict
-    ? `Generate 5 song packages for the lane: ${lane}. IMPORTANT: Return ONLY the raw JSON object. Start with { and end with }. No markdown, no preamble, no explanation.`
-    : `Generate 5 song packages for the lane: ${lane}`;
+    ? `${baseMsg} IMPORTANT: Return ONLY the raw JSON object. Start with { and end with }. No markdown, no preamble, no explanation.`
+    : baseMsg;
 
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -90,7 +95,7 @@ export async function onRequestPost(context) {
     return jsonResponse({ error: 'Invalid request body.' }, 400);
   }
 
-  const { lane } = body;
+  const { lane, duration = 'varied' } = body;
   if (!lane || typeof lane !== 'string') {
     return jsonResponse({ error: 'Lane is required.' }, 400);
   }
@@ -101,12 +106,12 @@ export async function onRequestPost(context) {
   let rawText;
 
   try {
-    rawText = await callClaude(apiKey, model, lane);
+    rawText = await callClaude(apiKey, model, lane, duration);
   } catch (err) {
     if (err.message === 'rate_limited') {
       // Anthropic rate limit: retry once with Haiku
       try {
-        rawText = await callClaude(apiKey, 'claude-haiku-4-5-20251001', lane);
+        rawText = await callClaude(apiKey, 'claude-haiku-4-5-20251001', lane, duration);
       } catch {
         return jsonResponse({ error: 'Generation failed. Please try again.' }, 502);
       }
@@ -121,7 +126,7 @@ export async function onRequestPost(context) {
   } catch {
     // Malformed JSON: retry once with a stricter prompt
     try {
-      const retryText = await callClaude(apiKey, model, lane, true);
+      const retryText = await callClaude(apiKey, model, lane, duration, true);
       result = JSON.parse(retryText);
     } catch {
       return jsonResponse({ error: 'Generation failed. Please try again.' }, 502);

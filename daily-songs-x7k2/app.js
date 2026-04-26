@@ -66,6 +66,20 @@ const LANES = [
 
 const DEFAULT_LANE_ID = 'cinematic_tech_underscore';
 
+const DURATIONS = [
+  { value: 'varied',     label: 'Varied (30s - 2min)' },
+  { value: '15 seconds', label: '15 seconds' },
+  { value: '30 seconds', label: '30 seconds' },
+  { value: '45 seconds', label: '45 seconds' },
+  { value: '60 seconds', label: '60 seconds' },
+  { value: '90 seconds', label: '90 seconds' },
+  { value: '2 minutes',  label: '2 minutes' },
+  { value: '3 minutes',  label: '3 minutes' },
+  { value: '4 minutes',  label: '4 minutes' },
+  { value: '5 minutes',  label: '5 minutes' },
+  { value: '6 minutes',  label: '6 minutes' },
+];
+
 // ── State ─────────────────────────────────
 
 let isGenerating = false;
@@ -90,18 +104,21 @@ function showView(name) {
 
 function setGenerating(loading) {
   isGenerating = loading;
-  const btn    = document.getElementById('generate-btn');
-  const select = document.getElementById('lane-select');
+  const btn      = document.getElementById('generate-btn');
+  const select   = document.getElementById('lane-select');
+  const durSel   = document.getElementById('duration-select');
   if (loading) {
-    btn.textContent = 'Generating...';
+    btn.textContent  = 'Generating...';
     btn.classList.add('loading');
-    btn.disabled    = true;
-    select.disabled = true;
+    btn.disabled     = true;
+    select.disabled  = true;
+    durSel.disabled  = true;
   } else {
-    btn.textContent = 'Generate 5 Songs';
+    btn.textContent  = 'Generate 5 Songs';
     btn.classList.remove('loading');
-    btn.disabled    = false;
-    select.disabled = false;
+    btn.disabled     = false;
+    select.disabled  = false;
+    durSel.disabled  = false;
   }
 }
 
@@ -146,8 +163,9 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
 async function generate() {
   if (isGenerating) return;
 
-  const lane    = document.getElementById('lane-select').value;
-  const errorEl = document.getElementById('generate-error');
+  const lane     = document.getElementById('lane-select').value;
+  const duration = document.getElementById('duration-select').value;
+  const errorEl  = document.getElementById('generate-error');
   errorEl.classList.add('hidden');
 
   showView('generator');
@@ -157,7 +175,7 @@ async function generate() {
     const res  = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lane }),
+      body: JSON.stringify({ lane, duration }),
     });
     const data = await res.json();
 
@@ -528,6 +546,17 @@ function populateLaneSelect() {
   });
 }
 
+function populateDurationSelect() {
+  const select = document.getElementById('duration-select');
+  DURATIONS.forEach(({ value, label }) => {
+    const opt = document.createElement('option');
+    opt.value = value;
+    opt.textContent = label;
+    if (value === 'varied') opt.selected = true;
+    select.appendChild(opt);
+  });
+}
+
 function setTodayDate() {
   const el = document.getElementById('today-date');
   if (el) el.textContent = new Date().toLocaleDateString('en-US', {
@@ -539,6 +568,7 @@ function setTodayDate() {
 
 async function init() {
   populateLaneSelect();
+  populateDurationSelect();
   setTodayDate();
 
   // Load banger state before showing any songs so star buttons render correctly
