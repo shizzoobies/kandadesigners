@@ -335,8 +335,13 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 32px 30px;
+  padding: 24px 30px;
   margin-bottom: 18px;
+}
+
+.song-card-header {
+  cursor: pointer;
+  user-select: none;
 }
 
 .song-number {
@@ -345,7 +350,38 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-dim);
-  margin-bottom: 22px;
+  margin-bottom: 10px;
+}
+
+.song-card-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.song-card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding-top: 5px;
+}
+
+.song-chevron {
+  color: var(--text-dim);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.song-card.open .song-chevron {
+  transform: rotate(180deg);
+}
+
+.song-card-body {
+  margin-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 24px;
 }
 
 .song-field {

@@ -627,9 +627,25 @@ function buildSongCard(song, num, total, options = {}) {
 
   const card = document.createElement('div');
   card.className = 'song-card';
-  card.innerHTML = `
+
+  // Header: always visible, click to toggle body
+  const header = document.createElement('div');
+  header.className = 'song-card-header';
+  header.innerHTML = `
     <div class="song-number">${num} of ${total}</div>
-    ${buildField('Title', song.title, 'title', false, 'title-value')}
+    <div class="song-card-title-row">
+      <div class="field-value title-value">${esc(song.title)}</div>
+      <div class="song-card-header-actions">
+        ${buildCopyBtn('title')}
+        <svg class="song-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    </div>
+  `;
+
+  // Body: hidden until expanded
+  const body = document.createElement('div');
+  body.className = 'song-card-body hidden';
+  body.innerHTML = `
     ${buildField('Generation Prompt', song.prompt, 'prompt', true)}
     ${buildField('Marketplace Description', song.description, 'description')}
     ${buildTagsField(song.tags)}
@@ -639,23 +655,35 @@ function buildSongCard(song, num, total, options = {}) {
     }
   `;
 
-  card.querySelectorAll('.copy-btn').forEach(btn => {
+  header.addEventListener('click', (e) => {
+    if (e.target.closest('.copy-btn')) return;
+    card.classList.toggle('open');
+    body.classList.toggle('hidden');
+  });
+
+  header.querySelector('.copy-btn').addEventListener('click', () => {
+    copyText(song.title, header.querySelector('.copy-btn'));
+  });
+
+  body.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const textMap = { title: song.title, prompt: song.prompt, description: song.description, tags: song.tags };
+      const textMap = { prompt: song.prompt, description: song.description, tags: song.tags };
       copyText(textMap[btn.dataset.field], btn);
     });
   });
 
   if (showRemoveBtn && docId) {
-    card.querySelector('.btn-remove-banger').addEventListener('click', () => {
+    body.querySelector('.btn-remove-banger').addEventListener('click', () => {
       removeBanger(docId, song.title, card);
     });
   } else {
-    card.querySelector('.banger-btn').addEventListener('click', (e) => {
+    body.querySelector('.banger-btn').addEventListener('click', (e) => {
       toggleBanger(song, { lane, date }, e.currentTarget);
     });
   }
 
+  card.appendChild(header);
+  card.appendChild(body);
   return card;
 }
 
