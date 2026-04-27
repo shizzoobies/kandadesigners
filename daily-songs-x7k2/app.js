@@ -103,6 +103,7 @@ const views = {
   results:   document.getElementById('view-results'),
   history:   document.getElementById('view-history'),
   bangers:   document.getElementById('view-bangers'),
+  import:    document.getElementById('view-import'),
 };
 
 function showView(name) {
@@ -409,6 +410,92 @@ async function remixEntry(entry, btn) {
   }
 }
 
+// ── Import ────────────────────────────────
+
+function parseImportJSON(text) {
+  const raw = JSON.parse(text.trim());
+  const songs = Array.isArray(raw) ? raw : raw.songs;
+  const lane  = Array.isArray(raw) ? 'Imported' : (raw.lane || 'Imported');
+  if (!Array.isArray(songs) || songs.length === 0) throw new Error('No songs found.');
+  for (const s of songs) {
+    if (!s.title || !s.prompt || !s.description || !s.tags) {
+      throw new Error('Each song needs title, prompt, description, and tags.');
+    }
+  }
+  return { lane, songs };
+}
+
+function openImport() {
+  document.getElementById('import-textarea').value = '';
+  document.getElementById('import-error').classList.add('hidden');
+  const statusEl = document.getElementById('import-parse-status');
+  statusEl.textContent = '';
+  statusEl.className = 'import-parse-status';
+  const saveBtn = document.getElementById('import-save-btn');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Save to History';
+  showView('import');
+}
+
+document.getElementById('import-textarea').addEventListener('input', () => {
+  const statusEl = document.getElementById('import-parse-status');
+  const saveBtn  = document.getElementById('import-save-btn');
+  const text     = document.getElementById('import-textarea').value.trim();
+
+  if (!text) {
+    statusEl.textContent = '';
+    statusEl.className = 'import-parse-status';
+    saveBtn.disabled = true;
+    return;
+  }
+  try {
+    const { lane, songs } = parseImportJSON(text);
+    statusEl.textContent = `${songs.length} song${songs.length !== 1 ? 's' : ''} from "${lane}", ready to import`;
+    statusEl.className = 'import-parse-status valid';
+    saveBtn.disabled = false;
+  } catch (err) {
+    statusEl.textContent = `Cannot parse: ${err.message}`;
+    statusEl.className = 'import-parse-status invalid';
+    saveBtn.disabled = true;
+  }
+});
+
+document.getElementById('import-save-btn').addEventListener('click', async () => {
+  const saveBtn  = document.getElementById('import-save-btn');
+  const errorEl  = document.getElementById('import-error');
+  const statusEl = document.getElementById('import-parse-status');
+  errorEl.classList.add('hidden');
+
+  let parsed;
+  try {
+    parsed = parseImportJSON(document.getElementById('import-textarea').value);
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.classList.remove('hidden');
+    return;
+  }
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving...';
+
+  try {
+    await saveGeneration(parsed.lane, parsed.songs);
+    parsed.songs.forEach(s => s.title && usedTitles.add(s.title));
+    document.getElementById('import-textarea').value = '';
+    statusEl.textContent = `${parsed.songs.length} songs saved to history.`;
+    statusEl.className = 'import-parse-status valid';
+    saveBtn.textContent = 'Saved!';
+    setTimeout(() => {
+      saveBtn.textContent = 'Save to History';
+    }, 2500);
+  } catch {
+    errorEl.textContent = 'Save failed. Please try again.';
+    errorEl.classList.remove('hidden');
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Save to History';
+  }
+});
+
 // ── Event bindings ────────────────────────
 
 document.getElementById('generate-btn').addEventListener('click', generate);
@@ -419,6 +506,8 @@ document.getElementById('history-btn').addEventListener('click', openHistory);
 document.getElementById('history-back-btn').addEventListener('click', () => showView('generator'));
 document.getElementById('bangers-btn').addEventListener('click', openBangers);
 document.getElementById('bangers-back-btn').addEventListener('click', () => showView('generator'));
+document.getElementById('import-btn').addEventListener('click', openImport);
+document.getElementById('import-back-btn').addEventListener('click', () => showView('generator'));
 
 // ── Song cards ────────────────────────────
 

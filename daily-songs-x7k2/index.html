@@ -50,6 +50,8 @@
           <button id="history-btn" class="btn-text">View History</button>
           <span class="link-sep">·</span>
           <button id="bangers-btn" class="btn-text">Bangers</button>
+          <span class="link-sep">·</span>
+          <button id="import-btn" class="btn-text">Import</button>
         </div>
       </div>
     </section>
@@ -89,6 +91,26 @@
           <h2 class="history-title">Bangers</h2>
         </div>
         <div id="bangers-list"></div>
+      </div>
+    </section>
+
+    <!-- IMPORT -->
+    <section id="view-import" class="view hidden">
+      <div class="history-content">
+        <div class="history-header">
+          <button id="import-back-btn" class="btn-back">Back</button>
+          <h2 class="history-title">Import Songs</h2>
+        </div>
+        <p class="import-instructions">Paste the JSON from a Claude chat session. It saves directly to your history.</p>
+        <div id="import-parse-status" class="import-parse-status"></div>
+        <textarea
+          id="import-textarea"
+          class="import-textarea"
+          placeholder='{ "lane": "Cinematic Tech Underscore", "songs": [ { "title": "...", "prompt": "...", "description": "...", "tags": "..." } ] }'
+          spellcheck="false"
+        ></textarea>
+        <div id="import-error" class="error-msg hidden"></div>
+        <button id="import-save-btn" class="btn-primary" disabled>Save to History</button>
       </div>
     </section>
 
