@@ -526,6 +526,26 @@ body {
   letter-spacing: -0.02em;
 }
 
+.btn-sort {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-sort:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
 .history-group {
   margin-bottom: 40px;
 }

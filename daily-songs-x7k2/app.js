@@ -245,8 +245,11 @@ function showResultsView(songs, lane, isHistory, date, isRemix = false) {
 async function openHistory() {
   showView('history');
   const searchEl = document.getElementById('history-search');
-  searchEl.value = '';
+  const sortBtn  = document.getElementById('history-sort-btn');
+  searchEl.value   = '';
   searchEl.oninput = null;
+  sortBtn.onclick  = null;
+  sortBtn.textContent = 'A-Z';
   const listEl = document.getElementById('history-list');
   listEl.innerHTML = '<p class="history-empty">Loading...</p>';
 
@@ -257,20 +260,27 @@ async function openHistory() {
       return;
     }
 
-    // Alphabetical by lane, newest-first within the same lane
-    entries.sort((a, b) => {
-      const lc = a.lane.localeCompare(b.lane);
-      if (lc !== 0) return lc;
-      return b.generatedAt.toMillis() - a.generatedAt.toMillis();
-    });
+    let asc = true;
 
-    renderHistoryList(entries, listEl);
-
-    searchEl.oninput = () => {
+    function sortedFiltered() {
       const q = searchEl.value.trim().toLowerCase();
-      const filtered = q ? entries.filter(e => e.lane.toLowerCase().includes(q)) : entries;
-      renderHistoryList(filtered, listEl);
+      const base = q ? entries.filter(e => e.lane.toLowerCase().includes(q)) : entries;
+      return [...base].sort((a, b) => {
+        const lc = asc ? a.lane.localeCompare(b.lane) : b.lane.localeCompare(a.lane);
+        if (lc !== 0) return lc;
+        return b.generatedAt.toMillis() - a.generatedAt.toMillis();
+      });
+    }
+
+    renderHistoryList(sortedFiltered(), listEl);
+
+    sortBtn.onclick = () => {
+      asc = !asc;
+      sortBtn.textContent = asc ? 'A-Z' : 'Z-A';
+      renderHistoryList(sortedFiltered(), listEl);
     };
+
+    searchEl.oninput = () => renderHistoryList(sortedFiltered(), listEl);
   } catch (err) {
     listEl.innerHTML = '<p class="history-error">Could not load history. Try again.</p>';
     console.error(err);
@@ -348,8 +358,11 @@ function renderHistoryList(entries, listEl) {
 async function openBangers() {
   showView('bangers');
   const searchEl = document.getElementById('bangers-search');
-  searchEl.value = '';
+  const sortBtn  = document.getElementById('bangers-sort-btn');
+  searchEl.value   = '';
   searchEl.oninput = null;
+  sortBtn.onclick  = null;
+  sortBtn.textContent = 'A-Z';
   const listEl = document.getElementById('bangers-list');
   listEl.innerHTML = '<p class="history-empty">Loading...</p>';
 
@@ -360,21 +373,30 @@ async function openBangers() {
       return;
     }
 
-    // Alphabetical by title
-    bangers.sort((a, b) => a.title.localeCompare(b.title));
+    let asc = true;
 
-    renderBangersList(bangers, listEl);
-
-    searchEl.oninput = () => {
+    function sortedFiltered() {
       const q = searchEl.value.trim().toLowerCase();
-      const filtered = q
+      const base = q
         ? bangers.filter(b =>
             b.title.toLowerCase().includes(q) ||
             (b.lane || '').toLowerCase().includes(q)
           )
         : bangers;
-      renderBangersList(filtered, listEl);
+      return [...base].sort((a, b) =>
+        asc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)
+      );
+    }
+
+    renderBangersList(sortedFiltered(), listEl);
+
+    sortBtn.onclick = () => {
+      asc = !asc;
+      sortBtn.textContent = asc ? 'A-Z' : 'Z-A';
+      renderBangersList(sortedFiltered(), listEl);
     };
+
+    searchEl.oninput = () => renderBangersList(sortedFiltered(), listEl);
   } catch (err) {
     listEl.innerHTML = '<p class="history-error">Could not load bangers. Try again.</p>';
     console.error(err);
