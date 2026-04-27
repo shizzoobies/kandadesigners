@@ -244,6 +244,9 @@ function showResultsView(songs, lane, isHistory, date, isRemix = false) {
 
 async function openHistory() {
   showView('history');
+  const searchEl = document.getElementById('history-search');
+  searchEl.value = '';
+  searchEl.oninput = null;
   const listEl = document.getElementById('history-list');
   listEl.innerHTML = '<p class="history-empty">Loading...</p>';
 
@@ -253,85 +256,190 @@ async function openHistory() {
       listEl.innerHTML = '<p class="history-empty">No generations yet. Generate some songs first.</p>';
       return;
     }
-    const groups = new Map();
-    for (const entry of entries) {
-      if (!groups.has(entry.date)) groups.set(entry.date, []);
-      groups.get(entry.date).push(entry);
-    }
-    listEl.innerHTML = '';
-    for (const [date, dayEntries] of groups) {
-      const group = document.createElement('div');
-      group.className = 'history-group';
-      const dateHeader = document.createElement('div');
-      dateHeader.className = 'history-date';
-      dateHeader.textContent = formatHistoryDate(date);
-      group.appendChild(dateHeader);
-      const list = document.createElement('div');
-      list.className = 'history-entries';
-      for (const entry of dayEntries) {
-        const row = document.createElement('div');
-        row.className = 'history-entry';
-        row.innerHTML = `
-          <div class="history-entry-info">
-            <span class="history-entry-lane">${esc(entry.lane)}</span>
-            <span class="history-entry-time">${formatTimestamp(entry.generatedAt)}</span>
-          </div>
-          <div class="history-entry-actions">
-            <button class="btn-view-history">View</button>
-            <button class="btn-remix-history">Remix</button>
-          </div>
-        `;
-        row.querySelector('.btn-view-history').addEventListener('click', () => {
-          showResultsView(entry.songs, entry.lane, true, entry.date);
-        });
-        row.querySelector('.btn-remix-history').addEventListener('click', (e) => {
-          remixEntry(entry, e.currentTarget);
-        });
-        list.appendChild(row);
-      }
-      group.appendChild(list);
-      listEl.appendChild(group);
-    }
+
+    // Alphabetical by lane, newest-first within the same lane
+    entries.sort((a, b) => {
+      const lc = a.lane.localeCompare(b.lane);
+      if (lc !== 0) return lc;
+      return b.generatedAt.toMillis() - a.generatedAt.toMillis();
+    });
+
+    renderHistoryList(entries, listEl);
+
+    searchEl.oninput = () => {
+      const q = searchEl.value.trim().toLowerCase();
+      const filtered = q ? entries.filter(e => e.lane.toLowerCase().includes(q)) : entries;
+      renderHistoryList(filtered, listEl);
+    };
   } catch (err) {
     listEl.innerHTML = '<p class="history-error">Could not load history. Try again.</p>';
     console.error(err);
   }
 }
 
+function renderHistoryList(entries, listEl) {
+  listEl.innerHTML = '';
+  if (entries.length === 0) {
+    listEl.innerHTML = '<p class="history-empty">No matching entries.</p>';
+    return;
+  }
+
+  let openItem = null;
+  let openBody = null;
+
+  entries.forEach(entry => {
+    const item = document.createElement('div');
+    item.className = 'history-entry';
+
+    const header = document.createElement('div');
+    header.className = 'history-entry-header';
+    header.innerHTML = `
+      <div class="history-entry-info">
+        <span class="history-entry-lane">${esc(entry.lane)}</span>
+        <span class="history-entry-time">${formatTimestamp(entry.generatedAt)} · ${formatHistoryDate(entry.date)}</span>
+      </div>
+      <div class="history-entry-actions">
+        <button class="btn-remix-history">Remix</button>
+        <svg class="history-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'history-entry-body hidden';
+    let songsBuilt = false;
+
+    header.addEventListener('click', (e) => {
+      if (e.target.closest('.btn-remix-history')) return;
+      if (item.classList.contains('open')) {
+        item.classList.remove('open');
+        body.classList.add('hidden');
+        openItem = null;
+        openBody = null;
+      } else {
+        if (openItem) {
+          openItem.classList.remove('open');
+          openBody.classList.add('hidden');
+        }
+        item.classList.add('open');
+        body.classList.remove('hidden');
+        openItem = item;
+        openBody = body;
+        if (!songsBuilt) {
+          songsBuilt = true;
+          entry.songs.forEach((song, i) => {
+            body.appendChild(buildSongCard(song, i + 1, entry.songs.length, { lane: entry.lane, date: entry.date }));
+          });
+        }
+      }
+    });
+
+    header.querySelector('.btn-remix-history').addEventListener('click', (e) => {
+      remixEntry(entry, e.currentTarget);
+    });
+
+    item.appendChild(header);
+    item.appendChild(body);
+    listEl.appendChild(item);
+  });
+}
+
 // ── Bangers ───────────────────────────────
 
 async function openBangers() {
   showView('bangers');
+  const searchEl = document.getElementById('bangers-search');
+  searchEl.value = '';
+  searchEl.oninput = null;
   const listEl = document.getElementById('bangers-list');
   listEl.innerHTML = '<p class="history-empty">Loading...</p>';
 
   try {
     const bangers = await fetchBangers();
     if (bangers.length === 0) {
-      listEl.innerHTML = '<p class="history-empty">No bangers yet. Check the star on any song that performs well.</p>';
+      listEl.innerHTML = '<p class="history-empty">No bangers yet. Star any song that performs well.</p>';
       return;
     }
-    listEl.innerHTML = '';
-    bangers.forEach((banger, i) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'banger-card-wrapper';
 
-      const laneTag = document.createElement('p');
-      laneTag.className = 'banger-lane-tag';
-      laneTag.textContent = banger.lane || '';
-      wrapper.appendChild(laneTag);
+    // Alphabetical by title
+    bangers.sort((a, b) => a.title.localeCompare(b.title));
 
-      const card = buildSongCard(
-        banger, i + 1, bangers.length,
-        { lane: banger.lane, date: banger.date, showRemoveBtn: true, docId: banger.id }
-      );
-      wrapper.appendChild(card);
-      listEl.appendChild(wrapper);
-    });
+    renderBangersList(bangers, listEl);
+
+    searchEl.oninput = () => {
+      const q = searchEl.value.trim().toLowerCase();
+      const filtered = q
+        ? bangers.filter(b =>
+            b.title.toLowerCase().includes(q) ||
+            (b.lane || '').toLowerCase().includes(q)
+          )
+        : bangers;
+      renderBangersList(filtered, listEl);
+    };
   } catch (err) {
     listEl.innerHTML = '<p class="history-error">Could not load bangers. Try again.</p>';
     console.error(err);
   }
+}
+
+function renderBangersList(bangers, listEl) {
+  listEl.innerHTML = '';
+  if (bangers.length === 0) {
+    listEl.innerHTML = '<p class="history-empty">No matching bangers.</p>';
+    return;
+  }
+
+  let openItem = null;
+  let openBody = null;
+
+  bangers.forEach(banger => {
+    const item = document.createElement('div');
+    item.className = 'history-entry';
+
+    const header = document.createElement('div');
+    header.className = 'history-entry-header';
+    header.innerHTML = `
+      <div class="history-entry-info">
+        <span class="history-entry-lane">${esc(banger.title)}</span>
+        <span class="history-entry-time">${esc(banger.lane || '')}</span>
+      </div>
+      <div class="history-entry-actions">
+        <svg class="history-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'history-entry-body hidden';
+    let cardBuilt = false;
+
+    header.addEventListener('click', () => {
+      if (item.classList.contains('open')) {
+        item.classList.remove('open');
+        body.classList.add('hidden');
+        openItem = null;
+        openBody = null;
+      } else {
+        if (openItem) {
+          openItem.classList.remove('open');
+          openBody.classList.add('hidden');
+        }
+        item.classList.add('open');
+        body.classList.remove('hidden');
+        openItem = item;
+        openBody = body;
+        if (!cardBuilt) {
+          cardBuilt = true;
+          body.appendChild(buildSongCard(
+            banger, 1, 1,
+            { lane: banger.lane, date: banger.date, showRemoveBtn: true, docId: banger.id }
+          ));
+        }
+      }
+    });
+
+    item.appendChild(header);
+    item.appendChild(body);
+    listEl.appendChild(item);
+  });
 }
 
 async function toggleBanger(song, meta, btn) {
@@ -369,7 +477,7 @@ async function removeBanger(docId, title, card) {
   try {
     await deleteDoc(doc(db, 'bangers', docId));
     bangerMap.delete(title);
-    card.closest('.banger-card-wrapper')?.remove() ?? card.remove();
+    card.closest('.history-entry')?.remove() ?? card.remove();
   } catch (err) {
     console.error('Remove banger failed:', err);
   }
