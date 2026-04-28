@@ -108,7 +108,8 @@ body {
 
 /* ── Generator ──────────────────────────── */
 
-#view-generator {
+#view-generator,
+#view-banger-remix {
   display: flex;
   align-items: center;
   justify-content: center;
