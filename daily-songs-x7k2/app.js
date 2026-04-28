@@ -89,6 +89,9 @@ const DURATIONS = [
   { value: '6 minutes',  label: '6 minutes' },
 ];
 
+// Ordered list without 'varied', used for duration range selects and validation
+const DURATIONS_FIXED = DURATIONS.filter(d => d.value !== 'varied');
+
 // ── State ─────────────────────────────────
 
 let isGenerating = false;
@@ -103,7 +106,8 @@ const views = {
   results:   document.getElementById('view-results'),
   history:   document.getElementById('view-history'),
   bangers:   document.getElementById('view-bangers'),
-  import:    document.getElementById('view-import'),
+  import:       document.getElementById('view-import'),
+  bangerRemix:  document.getElementById('view-banger-remix'),
 };
 
 function showView(name) {
@@ -626,6 +630,86 @@ document.getElementById('import-save-btn').addEventListener('click', async () =>
   }
 });
 
+// ── Banger Remix ──────────────────────────
+
+function openBangerRemix() {
+  const minSel = document.getElementById('banger-remix-min');
+  const maxSel = document.getElementById('banger-remix-max');
+  if (!minSel.children.length) {
+    DURATIONS_FIXED.forEach(({ value, label }) => {
+      const oMin = document.createElement('option');
+      oMin.value = value; oMin.textContent = label;
+      if (value === '30 seconds') oMin.selected = true;
+      minSel.appendChild(oMin);
+
+      const oMax = document.createElement('option');
+      oMax.value = value; oMax.textContent = label;
+      if (value === '2 minutes') oMax.selected = true;
+      maxSel.appendChild(oMax);
+    });
+  }
+  document.getElementById('banger-remix-error').classList.add('hidden');
+  const btn = document.getElementById('banger-remix-btn');
+  btn.disabled = false;
+  btn.textContent = 'Generate 5 Remixes';
+  btn.classList.remove('loading');
+  showView('bangerRemix');
+}
+
+async function bangerRemixGenerate() {
+  const minDuration = document.getElementById('banger-remix-min').value;
+  const maxDuration = document.getElementById('banger-remix-max').value;
+  const errorEl = document.getElementById('banger-remix-error');
+  const btn = document.getElementById('banger-remix-btn');
+  errorEl.classList.add('hidden');
+
+  const minIdx = DURATIONS_FIXED.findIndex(d => d.value === minDuration);
+  const maxIdx = DURATIONS_FIXED.findIndex(d => d.value === maxDuration);
+  if (maxIdx < minIdx) {
+    errorEl.textContent = 'Max duration must be greater than or equal to min duration.';
+    errorEl.classList.remove('hidden');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Generating...';
+  btn.classList.add('loading');
+
+  try {
+    const bangers = await fetchBangers();
+    if (bangers.length === 0) {
+      errorEl.textContent = 'No bangers yet. Star some songs first.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+
+    const res  = await fetch('/api/remix-bangers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ songs: bangers, minDuration, maxDuration, usedTitles: [...usedTitles] }),
+    });
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.error || 'Generation failed. Please try again.');
+    if (!Array.isArray(data.songs) || data.songs.length === 0) {
+      throw new Error('Received an empty response. Please try again.');
+    }
+
+    data.songs.forEach(s => s.title && usedTitles.add(s.title));
+
+    const today = new Date().toISOString().slice(0, 10);
+    showResultsView(data.songs, data.lane || 'Banger Remix', false, today);
+    saveGeneration(data.lane || 'Banger Remix', data.songs).catch(err => console.error('Save failed:', err));
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Generate 5 Remixes';
+    btn.classList.remove('loading');
+  }
+}
+
 // ── Event bindings ────────────────────────
 
 document.getElementById('generate-btn').addEventListener('click', generate);
@@ -638,6 +722,9 @@ document.getElementById('bangers-btn').addEventListener('click', openBangers);
 document.getElementById('bangers-back-btn').addEventListener('click', () => showView('generator'));
 document.getElementById('import-btn').addEventListener('click', openImport);
 document.getElementById('import-back-btn').addEventListener('click', () => showView('generator'));
+document.getElementById('banger-remix-nav-btn').addEventListener('click', openBangerRemix);
+document.getElementById('banger-remix-back-btn').addEventListener('click', () => showView('generator'));
+document.getElementById('banger-remix-btn').addEventListener('click', bangerRemixGenerate);
 
 // ── Song cards ────────────────────────────
 

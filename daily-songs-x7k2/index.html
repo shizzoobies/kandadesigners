@@ -51,6 +51,8 @@
           <span class="link-sep">·</span>
           <button id="bangers-btn" class="btn-text">Bangers</button>
           <span class="link-sep">·</span>
+          <button id="banger-remix-nav-btn" class="btn-text">Remix Bangers</button>
+          <span class="link-sep">·</span>
           <button id="import-btn" class="btn-text">Import</button>
         </div>
       </div>
@@ -107,6 +109,29 @@
           autocomplete="off"
         >
         <div id="bangers-list"></div>
+      </div>
+    </section>
+
+    <!-- BANGER REMIX -->
+    <section id="view-banger-remix" class="view hidden">
+      <div class="generator-content">
+        <h1 class="app-title">Remix from Bangers</h1>
+        <p class="auth-subtitle">5 new songs drawn from your top performers. Pick a duration range to vary across.</p>
+        <div class="controls">
+          <div class="select-wrapper">
+            <label for="banger-remix-min" class="lane-label">Min Duration</label>
+            <select id="banger-remix-min" class="lane-select"></select>
+          </div>
+          <div class="select-wrapper">
+            <label for="banger-remix-max" class="lane-label">Max Duration</label>
+            <select id="banger-remix-max" class="lane-select"></select>
+          </div>
+          <button id="banger-remix-btn" class="btn-primary btn-generate">Generate 5 Remixes</button>
+        </div>
+        <div id="banger-remix-error" class="error-msg hidden"></div>
+        <div class="generator-links">
+          <button id="banger-remix-back-btn" class="btn-text">Back</button>
+        </div>
       </div>
     </section>
 
