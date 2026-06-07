@@ -31,7 +31,7 @@ Services:
 - AI Solutions: Claude-powered chatbots, workflow automation, prompt engineering
 
 Notable projects:
-- This site, kandadesigners.com, built with Claude Code
+- This site, ka-performancefl.com, built with Claude Code
 - PBJ Strategic Accounting website redesign with full ADA compliance and Claude AI chat (currently in client review)
 - FixAlways.com, a Florida home services directory powered by Google Places API and Claude AI
 - Scrolling Shooter browser game, built in vanilla JS

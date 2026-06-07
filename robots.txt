@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /mbsfeedback/
 
-Sitemap: https://kandadesigners.com/sitemap.xml
+Sitemap: https://ka-performancefl.com/sitemap.xml

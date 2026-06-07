@@ -1,7 +1,7 @@
 # Daily Songs
 
 Private daily ElevenLabs Music Marketplace prompt generator.
-Hosted at `kandadesigners.com/daily-songs-x7k2` (or your configured slug).
+Hosted at `ka-performancefl.com/daily-songs-x7k2` (or your configured slug).
 
 ---
 
@@ -65,7 +65,7 @@ Cloudflare Pages picks up the push and deploys automatically.
 
 ### 3. Visit the app
 
-`https://kandadesigners.com/daily-songs-x7k2`
+`https://ka-performancefl.com/daily-songs-x7k2`
 
 Enter the passphrase, pick a lane, generate.
 

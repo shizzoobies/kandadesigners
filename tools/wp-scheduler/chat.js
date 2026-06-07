@@ -1,5 +1,5 @@
 /* =========================================================
-   chat.js — Web version for kandadesigners.com
+   chat.js — Web version for ka-performancefl.com
    Calls /api/planner (Cloudflare Pages Function)
    ========================================================= */
 
