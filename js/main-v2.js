@@ -1,5 +1,5 @@
 /* =============================================
-   K & A DESIGNS — MAIN JS
+   K & A PERFORMANCE — MAIN JS
    ============================================= */
 
 // ─── Marquee seamless-loop clone ─────────────────
@@ -788,15 +788,15 @@ if (contactForm) {
   // Inject widget HTML into every page
   var wrap = document.createElement('div');
   wrap.innerHTML =
-    '<button class="ka-chat-btn" id="ka-chat-btn" aria-label="Chat with K &amp; A Designs AI" aria-expanded="false">' +
+    '<button class="ka-chat-btn" id="ka-chat-btn" aria-label="Chat with K &amp; A Performance AI" aria-expanded="false">' +
       '<span class="ka-chat-online-dot" aria-hidden="true"></span>' +
       'Need Help?' +
     '</button>' +
-    '<div class="ka-chat-panel" id="ka-chat-panel" role="dialog" aria-label="K &amp; A Designs AI assistant" aria-hidden="true">' +
+    '<div class="ka-chat-panel" id="ka-chat-panel" role="dialog" aria-label="K &amp; A Performance AI assistant" aria-hidden="true">' +
       '<div class="ka-chat-head">' +
         '<img class="ka-chat-head-avatar" src="/images/Alex-Image.jpg" alt="Alex" />' +
         '<div class="ka-chat-head-info">' +
-          '<div class="ka-chat-head-name">K &amp; A Designs AI</div>' +
+          '<div class="ka-chat-head-name">K &amp; A Performance AI</div>' +
           '<div class="ka-chat-head-status">Online</div>' +
         '</div>' +
         '<button class="ka-chat-head-close" id="ka-chat-close" aria-label="Close chat">&#x2715;</button>' +
@@ -828,7 +828,7 @@ if (contactForm) {
     chatPanel.setAttribute('aria-hidden', 'false');
     chatBtn.setAttribute('aria-expanded', 'true');
     if (history.length === 0) {
-      addMsg('ai', "Hi! I'm the K & A Designs AI assistant. Ask me anything about our services, portfolio, or how to get started on a project.");
+      addMsg('ai', "Hi! I'm the K & A Performance AI assistant. Ask me anything about our services, portfolio, or how to get started on a project.");
     }
     setTimeout(function () { inputEl.focus(); }, 260);
   }
