@@ -57,26 +57,54 @@ body.has-hero-image .site-header:not(.scrolled) .site-logo{ height:86px; transfo
 .marquee-item{ display:inline-flex; align-items:center; gap:0.85rem; padding:0 2.6rem; font-size:11px; }
 @media (min-width:768px){ .marquee-item{ padding:0 3.5rem; font-size:12px; } }
 
-/* ── Capabilities: hover pops a larger preview collage ─────────── */
-.cap-card{ position:relative; z-index:1; }
-.cap-card:hover{ z-index:30; }
-.cap-media{ position:relative; height:210px; margin-bottom:2rem; }
-.cap-collage{
-  position:absolute; inset:0; border-radius:0.5rem; background:#ffffff;
-  box-shadow:0 0 0 1px var(--line); overflow:hidden; transform-origin:center;
-  transition:transform .45s cubic-bezier(.2,0,.2,1), box-shadow .45s ease; will-change:transform;
+/* ── Capabilities: premium framed collage; title default, details on hover ─────── */
+.cap-card{ position:relative; }
+.cap-frame{
+  position:relative; height:360px; border-radius:20px; overflow:hidden; background:#fff;
+  border:1px solid rgba(180,150,110,0.30);
+  box-shadow:0 1px 0 rgba(255,255,255,0.85) inset, 0 14px 26px -16px rgba(45,30,12,0.38), 0 46px 70px -46px rgba(45,30,12,0.5);
+  transition:transform .55s cubic-bezier(.2,0,.2,1), box-shadow .55s ease, border-color .55s ease;
 }
-.cap-card:hover .cap-collage{ transform:scale(1.26); box-shadow:0 30px 70px rgba(40,28,12,0.26); }
-.grid-web, .grid-ai, .grid-brand{ position:absolute; inset:0; display:grid; gap:6px; padding:8px; }
-.grid-web{ grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
-.grid-web img{ width:100%; height:100%; object-fit:cover; border-radius:0.3rem; }
+.cap-card:hover .cap-frame{
+  transform:translateY(-10px);
+  border-color:rgba(176,107,22,0.55);
+  box-shadow:0 1px 0 rgba(255,255,255,0.9) inset, 0 30px 46px -20px rgba(45,30,12,0.42), 0 70px 100px -55px rgba(45,30,12,0.55);
+}
+.cap-collage{ position:absolute; inset:0; padding:16px; display:grid; gap:12px; transition:transform .6s cubic-bezier(.2,0,.2,1), filter .5s ease; }
+.cap-card:hover .cap-collage{ transform:scale(1.04); }
+/* depth on inner tiles/images — no more flat */
+.cap-collage img, .ai-tile, .brand-tile{
+  border-radius:12px; background:#fff;
+  box-shadow:0 2px 5px rgba(45,30,12,0.10), 0 14px 24px -14px rgba(45,30,12,0.4);
+}
+.grid-web{ grid-template-columns:1fr 1fr; grid-template-rows:1.2fr 1fr; }
+.grid-web img{ width:100%; height:100%; object-fit:cover; object-position:top center; }
+.grid-web .span2{ grid-column:1 / -1; }
 .grid-ai{ grid-template-columns:repeat(3,1fr); grid-template-rows:1fr 1fr; }
-.ai-chip{ display:flex; align-items:center; justify-content:center; text-align:center; background:#f3ede2; border:1px solid var(--line); border-radius:0.35rem; font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:11px; line-height:1.1; color:#3a2f22; padding:4px; }
-.ai-chip.accent{ background:var(--gold); color:#ffffff; border-color:var(--gold); }
+.ai-tile{ display:flex; align-items:center; justify-content:center; border:1px solid rgba(180,150,110,0.24); padding:10px; }
+.ai-tile img{ max-width:78%; max-height:40px; width:auto; height:auto; object-fit:contain; box-shadow:none; border-radius:0; background:transparent; }
+.ai-tile .ai-word{ font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; letter-spacing:-0.01em; color:#241f1b; }
+.ai-tile.accent{ background:var(--gold); color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; box-shadow:0 8px 18px -8px rgba(176,107,22,0.6); }
 .grid-brand{ grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
-.brand-tile{ display:flex; align-items:center; justify-content:center; background:#f3ede2; border:1px solid var(--line); border-radius:0.35rem; overflow:hidden; }
-.brand-tile img{ width:72%; height:auto; }
-.brand-mark{ font-family:'EB Garamond',serif; font-size:32px; line-height:1; color:var(--gold); }
+.brand-tile{ display:flex; align-items:center; justify-content:center; border:1px solid rgba(180,150,110,0.24); overflow:hidden; }
+.brand-tile img{ width:66%; height:auto; box-shadow:none; border-radius:0; background:transparent; }
+.brand-mark{ font-family:'EB Garamond',serif; font-size:30px; line-height:1; color:var(--gold); }
+/* Caption: description + bullets slide up on hover */
+.cap-caption{
+  position:absolute; left:0; right:0; bottom:0; padding:30px 24px 24px;
+  background:linear-gradient(180deg, rgba(250,247,241,0) 0%, rgba(250,247,241,0.94) 30%, rgba(250,247,241,0.99) 100%);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  transform:translateY(100%); opacity:0;
+  transition:transform .55s cubic-bezier(.2,0,.2,1), opacity .4s ease;
+}
+.cap-card:hover .cap-caption{ transform:translateY(0); opacity:1; }
+.cap-caption p{ color:#3a3128; font-size:14px; line-height:1.55; margin-bottom:14px; }
+.cap-caption ul{ display:flex; flex-wrap:wrap; gap:8px; }
+.cap-caption li{ list-style:none; font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(176,107,22,0.4); border-radius:999px; padding:5px 11px; }
+/* Title row */
+.cap-head{ display:flex; align-items:center; justify-content:space-between; margin-top:24px; }
+.cap-plus{ color:var(--gold); font-size:26px; transition:transform .45s ease; }
+.cap-card:hover .cap-plus{ transform:rotate(45deg); }
 
 /* ── Scroll reveal (progressive enhancement) ────────────────── */
 .reveal{ opacity:0; transform:translateY(40px); transition:opacity .9s ease, transform .9s ease; }
