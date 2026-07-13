@@ -155,6 +155,10 @@ body.has-hero-image .site-header:not(.scrolled) .site-logo{ height:86px; transfo
 .montage img{ width:100%; height:100%; object-fit:cover; object-position:top center; filter:saturate(0.92) contrast(1.03); }
 .cap-hero-scrim{ position:absolute; inset:0; z-index:3; }
 .cap-hero-scrim-web{ background:linear-gradient(90deg, rgba(20,14,8,0.94) 0%, rgba(20,14,8,0.76) 38%, rgba(20,14,8,0.36) 72%, rgba(20,14,8,0.12) 100%); }
+.cap-hero-aimg{ min-height:80vh; }
+.cap-hero-photo{ position:absolute; inset:0; background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#0a0e14; }
+@media (max-width:1023px){ .cap-hero-photo{ background-size:cover; opacity:0.5; } }
+.cap-hero-scrim-aimg{ background:linear-gradient(270deg, rgba(6,9,20,0.97) 0%, rgba(6,9,20,0.93) 26%, rgba(6,9,20,0.78) 44%, rgba(6,9,20,0.35) 64%, rgba(6,9,20,0.05) 82%, rgba(6,9,20,0) 100%); }
 .cap-hero-inner{ position:relative; z-index:4; width:100%; }
 .cap-eyebrow{ color:var(--gold); }
 .cap-hero-title{ color:#f6efe2; letter-spacing:-0.01em; }
