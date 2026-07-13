@@ -48,7 +48,35 @@ body.has-hero-image .site-header:not(.scrolled) .site-logo{ height:86px; transfo
 
 /* Marquee (home capabilities strip) */
 @keyframes marquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
-.animate-marquee { animation:marquee 30s linear infinite; }
+.animate-marquee { animation:marquee 42s linear infinite; will-change:transform; }
+/* Fade items out well before each edge so something is always visible */
+.marquee-mask{
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-image:linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+.marquee-item{ display:inline-flex; align-items:center; gap:0.85rem; padding:0 2.6rem; font-size:11px; }
+@media (min-width:768px){ .marquee-item{ padding:0 3.5rem; font-size:12px; } }
+
+/* ── Capabilities: hover pops a larger preview collage ─────────── */
+.cap-card{ position:relative; z-index:1; }
+.cap-card:hover{ z-index:30; }
+.cap-media{ position:relative; height:210px; margin-bottom:2rem; }
+.cap-collage{
+  position:absolute; inset:0; border-radius:0.5rem; background:#ffffff;
+  box-shadow:0 0 0 1px var(--line); overflow:hidden; transform-origin:center;
+  transition:transform .45s cubic-bezier(.2,0,.2,1), box-shadow .45s ease; will-change:transform;
+}
+.cap-card:hover .cap-collage{ transform:scale(1.26); box-shadow:0 30px 70px rgba(40,28,12,0.26); }
+.grid-web, .grid-ai, .grid-brand{ position:absolute; inset:0; display:grid; gap:6px; padding:8px; }
+.grid-web{ grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+.grid-web img{ width:100%; height:100%; object-fit:cover; border-radius:0.3rem; }
+.grid-ai{ grid-template-columns:repeat(3,1fr); grid-template-rows:1fr 1fr; }
+.ai-chip{ display:flex; align-items:center; justify-content:center; text-align:center; background:#f3ede2; border:1px solid var(--line); border-radius:0.35rem; font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:11px; line-height:1.1; color:#3a2f22; padding:4px; }
+.ai-chip.accent{ background:var(--gold); color:#ffffff; border-color:var(--gold); }
+.grid-brand{ grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+.brand-tile{ display:flex; align-items:center; justify-content:center; background:#f3ede2; border:1px solid var(--line); border-radius:0.35rem; overflow:hidden; }
+.brand-tile img{ width:72%; height:auto; }
+.brand-mark{ font-family:'EB Garamond',serif; font-size:32px; line-height:1; color:var(--gold); }
 
 /* ── Scroll reveal (progressive enhancement) ────────────────── */
 .reveal{ opacity:0; transform:translateY(40px); transition:opacity .9s ease, transform .9s ease; }
