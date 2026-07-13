@@ -1,0 +1,74 @@
+/* K&A Performance — custom theme layer (light warm editorial).
+   Loaded AFTER css/site.css so its base rules win. Hand-authored; not generated. */
+
+:root { --bg: #f6f1e8; --ink: #241f1b; --muted: #8a7b67; --gold: #b06b16; --line: #d9cdb9; }
+
+html, body { background-color: var(--bg); color: var(--ink); }
+body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* Icons */
+.material-symbols-outlined{
+  font-family:'Material Symbols Outlined'; font-weight:normal; font-style:normal;
+  line-height:1; letter-spacing:normal; text-transform:none; display:inline-block;
+  white-space:nowrap; word-wrap:normal; direction:ltr; -webkit-font-feature-settings:'liga'; font-feature-settings:'liga';
+}
+
+/* Editorial accents */
+.serif-italic{ font-family:'EB Garamond', serif; font-style:italic; }
+.technical-accent{ font-family:'Plus Jakarta Sans', sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:0.3em; color:var(--muted); }
+.technical-hairline{ background:linear-gradient(90deg, transparent, rgba(164,145,123,0.45), transparent); height:1px; width:100%; }
+
+/* ── Header / nav ─────────────────────────────────────────────
+   Transparent at the top of the page; darkens (solid) on scroll. */
+.site-header{
+  transition: background-color .45s ease, box-shadow .45s ease, padding .45s ease, border-color .45s ease;
+  padding-top:1.6rem; padding-bottom:1.6rem; background-color:transparent; border-bottom:1px solid transparent;
+}
+.site-header.scrolled{
+  background-color:rgba(246,241,232,0.92);
+  -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(217,205,185,0.7);
+  box-shadow:0 8px 30px rgba(40,28,12,0.07);
+  padding-top:0.55rem; padding-bottom:0.55rem;
+}
+
+/* Logo: bigger at the top, slides/shrinks into the bar on scroll */
+.site-logo{ height:46px; width:auto; display:block; transition:height .45s cubic-bezier(.2,0,.2,1), transform .45s cubic-bezier(.2,0,.2,1), filter .45s ease; transform-origin:left center; }
+.footer-logo{ height:56px; width:auto; display:block; }
+body.has-hero-image .site-header:not(.scrolled) .site-logo{ height:86px; transform:translateY(6px); filter:drop-shadow(0 4px 14px rgba(30,20,8,0.28)); }
+
+/* ── Full-bleed hero header (home) ──────────────────────────── */
+.hero-header{
+  position:relative; min-height:92vh; display:flex; align-items:center;
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+}
+.hero-header::before{ content:''; position:absolute; inset:0; background:linear-gradient(90deg, rgba(246,241,232,0.72) 0%, rgba(246,241,232,0.30) 55%, rgba(246,241,232,0.05) 100%); }
+.hero-header::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:34%; background:linear-gradient(180deg, transparent, var(--bg)); }
+.hero-header > .hero-inner{ position:relative; z-index:2; width:100%; }
+
+/* Marquee (home capabilities strip) */
+@keyframes marquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+.animate-marquee { animation:marquee 30s linear infinite; }
+
+/* ── Scroll reveal (progressive enhancement) ────────────────── */
+.reveal{ opacity:0; transform:translateY(40px); transition:opacity .9s ease, transform .9s ease; }
+.revealed{ opacity:1; transform:none; }
+
+/* ── Contact form fields (light) ────────────────────────────── */
+#contact-form input[type="text"], #contact-form input[type="email"],
+#contact-form textarea, #contact-form select, .form-field{
+  width:100%; background:#ffffff; border:1px solid var(--line); color:var(--ink);
+  padding:0.85rem 1rem; border-radius:0.4rem; font-family:'Plus Jakarta Sans', sans-serif; font-size:15px;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+#contact-form input::placeholder, #contact-form textarea::placeholder, .form-field::placeholder{ color:#a4917b; }
+#contact-form input:focus, #contact-form textarea:focus, #contact-form select:focus, .form-field:focus{
+  outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(176,107,22,0.16);
+}
+#contact-form select, select.form-field{
+  appearance:none; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b06b16' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 1rem center; padding-right:2.5rem;
+}
+#contact-form textarea{ min-height:150px; resize:vertical; }
+.form-success{ background:#ffffff; border:1px solid var(--line); border-radius:0.5rem; padding:2rem; }

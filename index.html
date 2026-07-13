@@ -34,12 +34,13 @@
   .nav-logo { height:40px; width:auto; display:block; }
   .footer-logo { height:56px; width:auto; display:block; }
 </style>
+<link href="css/theme.css" rel="stylesheet"/>
 </head>
-<body class="font-body-md text-body-md selection:bg-primary selection:text-on-primary">
+<body class="font-body-md text-body-md selection:bg-primary selection:text-on-primary has-hero-image">
 <!-- TopNavBar -->
-<header class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant/10">
+<header id="site-header" class="site-header fixed top-0 w-full z-50">
 <div class="flex justify-between items-center px-margin-mobile lg:px-margin-desktop py-5 max-w-container-max mx-auto">
-<a href="/" aria-label="K &amp; A Performance home"><img src="images/kandalogo2.0-performance.svg" alt="K &amp; A Performance" class="nav-logo"/></a>
+<a href="/" aria-label="K &amp; A Performance home"><img src="images/kandalogo2.0-performance.svg" alt="K &amp; A Performance" class="site-logo"/></a>
 <nav class="hidden md:flex items-center gap-12">
 <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/">Home</a>
 <a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/services/">Services</a>
@@ -64,39 +65,29 @@
 </header>
 <main>
 <!-- Hero -->
-<section class="relative min-h-screen flex items-center pt-32 pb-20 px-margin-mobile lg:px-margin-desktop overflow-hidden">
-<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
-<div class="max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter relative items-center">
-<div class="lg:col-span-7 z-20">
+<section class="hero-header px-margin-mobile lg:px-margin-desktop" style="background-image:url('images/header-placeholder.jpg')">
+<div class="hero-inner max-w-container-max mx-auto pt-28 pb-20">
+<div class="max-w-3xl">
 <div class="flex items-center gap-4 mb-8">
 <div class="w-12 h-[1px] bg-primary"></div>
 <span class="font-label-sm text-primary uppercase tracking-[0.4em]">Design &amp; Engineering Studio</span>
 </div>
-<h1 class="font-display-lg text-display-lg-mobile lg:text-display-lg mb-12 leading-[0.9]">
-Design That <br/>
-<span class="serif-italic text-primary font-light">Moves</span> <br/>
+<h1 class="font-display-lg text-display-lg-mobile lg:text-display-lg mb-10 leading-[0.9]">
+Design That <span class="serif-italic text-primary font-light">Moves</span> <br/>
 Your Brand.
 </h1>
-<div class="max-w-md">
-<p class="font-body-lg text-on-surface-variant mb-12">
+<p class="font-body-lg text-on-surface mb-12 max-w-xl">
 High-performance websites and AI-driven systems, crafted with technical mastery and aesthetic excellence.
 </p>
 <div class="flex flex-wrap gap-8 items-center">
-<a class="inline-flex items-center gap-4 bg-primary text-on-primary px-10 py-5 font-label-sm uppercase tracking-widest hover:brightness-110 transition-all rounded" href="/contact/">
+<a class="inline-flex items-center gap-4 bg-primary text-on-primary px-10 py-5 font-label-sm uppercase tracking-widest hover:brightness-110 transition-all rounded shadow-lg" href="/contact/">
 Start a Project <span class="material-symbols-outlined text-sm">arrow_forward</span>
 </a>
-<a class="group flex items-center gap-4 font-label-sm text-primary uppercase tracking-widest" href="/services/">
+<a class="group flex items-center gap-4 font-label-sm text-on-surface uppercase tracking-widest hover:text-primary transition-colors" href="/services/">
 <span>Explore Services</span>
 <span class="w-8 h-[1px] bg-primary group-hover:w-16 transition-all"></span>
 </a>
 </div>
-</div>
-</div>
-<div class="lg:col-span-4 lg:col-start-9 relative hidden lg:flex items-center justify-center min-h-[520px]">
-<div class="absolute w-[460px] h-[460px] rounded-[9999px] border border-primary/10"></div>
-<div class="absolute w-[340px] h-[340px] rounded-[9999px] border border-primary/20"></div>
-<div class="absolute w-[210px] h-[210px] rounded-[9999px] border border-primary/30" style="background:radial-gradient(circle, rgba(255,183,125,0.16), transparent 70%)"></div>
-<span class="relative font-display-lg text-primary text-7xl select-none">K&amp;A</span>
 </div>
 </div>
 </section>
@@ -304,23 +295,5 @@ Human-centric engineering for the digital era.
 </div>
 </div>
 </footer>
-<script>
-  // Mobile menu toggle
-  (function(){
-    var b=document.getElementById('menu-btn'), m=document.getElementById('mobile-menu');
-    if(b&&m){ b.addEventListener('click',function(){ m.classList.toggle('hidden'); m.classList.toggle('flex'); }); }
-  })();
-  // Scroll reveal (progressive enhancement — content is visible without JS)
-  document.addEventListener('DOMContentLoaded', function(){
-    if(!('IntersectionObserver' in window)) return;
-    var obs=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; obs.unobserve(e.target);} });
-    },{threshold:0.08});
-    document.querySelectorAll('main section').forEach(function(el){
-      el.style.opacity='0'; el.style.transform='translateY(40px)';
-      el.style.transition='opacity 0.9s ease, transform 0.9s ease';
-      obs.observe(el);
-    });
-  });
-</script>
+<script src="js/site.js" defer></script>
 </body></html>
