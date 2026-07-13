@@ -14,3 +14,11 @@ desktop.ini
 # Editor
 .vscode/
 .idea/
+
+# Tooling / build
+node_modules/
+tailwind-build/node_modules/
+.playwright-mcp/
+.omc/
+_shot_*.png
+_home_preview.html

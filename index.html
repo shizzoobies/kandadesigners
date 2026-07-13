@@ -1,1278 +1,326 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>K &amp; A Performance | Web Design, Video Production &amp; Instructional Design</title>
-  <meta name="description" content="A husband and wife creative team delivering web design, video production, photography, and instructional design. Premium work. Real results." />
-  <link rel="canonical" href="https://ka-performancefl.com/" />
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ka-performancefl.com/" />
-  <meta property="og:title" content="K &amp; A Performance | Web Design, Video Production &amp; Instructional Design" />
-  <meta property="og:description" content="A husband and wife creative team delivering web design, video production, photography, and instructional design. Premium work. Real results." />
-  <meta property="og:image" content="https://ka-performancefl.com/images/site-screenshot-home.jpeg" />
-  <meta property="og:site_name" content="K &amp; A Performance" />
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="K &amp; A Performance | Web Design, Video Production &amp; Instructional Design" />
-  <meta name="twitter:description" content="A husband and wife creative team delivering web design, video production, photography, and instructional design. Premium work. Real results." />
-  <meta name="twitter:image" content="https://ka-performancefl.com/images/site-screenshot-home.jpeg" />
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" /><link rel="icon" href="images/favicon.png" sizes="512x512" type="image/png" />
-  <link rel="stylesheet" href="css/style.css?v=18" />
-  <style>
-    /* ── Splash Screen ─────────────────────────── */
-    #splash {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background: #080808;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    #splash.splash-exit {
-      animation: splash-fade-out 1s cubic-bezier(0.4,0,1,1) forwards;
-      pointer-events: none;
-    }
-    @keyframes splash-fade-out {
-      0%   { opacity: 1; }
-      100% { opacity: 0; }
-    }
-    .splash-logo-wrap {
-      position: relative;
-      z-index: 4;
-      animation: splash-logo-grow 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-    }
-    .splash-logo-wrap img {
-      width: 230px;
-      height: auto;
-      display: block;
-      animation: splash-logo-glow 2.6s ease-out both;
-    }
-    @keyframes splash-logo-grow {
-      0%   { transform: scale(0.28); opacity: 0; }
-      14%  { opacity: 1; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes splash-logo-glow {
-      0%   { filter: drop-shadow(0 0 0px rgba(192,154,94,0)); }
-      45%  { filter: drop-shadow(0 0 38px rgba(192,154,94,0.75)) drop-shadow(0 0 80px rgba(192,154,94,0.3)); }
-      100% { filter: drop-shadow(0 0 22px rgba(192,154,94,0.55)) drop-shadow(0 0 55px rgba(192,154,94,0.2)); }
-    }
-    .splash-ring {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .splash-ring-1 {
-      width: 300px; height: 300px;
-      left: calc(50% - 150px);
-      top: calc(50% - 150px);
-      background: radial-gradient(circle, rgba(192,154,94,0.55) 0%, rgba(192,154,94,0.22) 40%, transparent 70%);
-      animation: ring-radiate 2.1s ease-out 0.28s both;
-    }
-    .splash-ring-2 {
-      width: 560px; height: 560px;
-      left: calc(50% - 280px);
-      top: calc(50% - 280px);
-      background: radial-gradient(circle, rgba(192,154,94,0.28) 0%, rgba(192,154,94,0.1) 40%, transparent 70%);
-      animation: ring-radiate 2.4s ease-out 0.55s both;
-    }
-    .splash-ring-3 {
-      width: 960px; height: 960px;
-      left: calc(50% - 480px);
-      top: calc(50% - 480px);
-      background: radial-gradient(circle, rgba(192,154,94,0.12) 0%, rgba(192,154,94,0.04) 42%, transparent 70%);
-      animation: ring-radiate 2.8s ease-out 0.85s both;
-    }
-    @keyframes ring-radiate {
-      0%   { transform: scale(0.08); opacity: 0; }
-      18%  { opacity: 1; }
-      68%  { opacity: 0.85; }
-      100% { transform: scale(2.4); opacity: 0; }
-    }
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "K & A Performance",
-    "url": "https://ka-performancefl.com",
-    "logo": "https://ka-performancefl.com/images/kandalogo2.0-performance.svg",
-    "description": "A husband and wife creative team delivering web design, video production, photography, and instructional design.",
-    "foundingDate": "2024",
-    "founders": [
-      { "@type": "Person", "name": "Alex Anderson" },
-      { "@type": "Person", "name": "Kristina Anderson" }
-    ],
-    "sameAs": [],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "url": "https://ka-performancefl.com/contact/"
-    },
-    "service": [
-      { "@type": "Service", "name": "Web Design" },
-      { "@type": "Service", "name": "Instructional Design" },
-      { "@type": "Service", "name": "Video Production" },
-      { "@type": "Service", "name": "Photography" },
-      { "@type": "Service", "name": "Branding" }
-    ]
-  }
-  </script>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>K &amp; A Performance | Web Design &amp; AI Integration Studio</title>
+<meta name="description" content="A design and engineering studio building high-performance websites, AI integrations, and brand identity. Premium work. Real results."/>
+<link rel="canonical" href="https://ka-performancefl.com/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://ka-performancefl.com/"/>
+<meta property="og:title" content="K &amp; A Performance | Web Design &amp; AI Integration Studio"/>
+<meta property="og:description" content="High-performance websites, AI integrations, and brand identity, crafted with precision and craft."/>
+<meta property="og:image" content="https://ka-performancefl.com/images/site-screenshot-home.jpeg"/>
+<meta property="og:site_name" content="K &amp; A Performance"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="K &amp; A Performance | Web Design &amp; AI Integration Studio"/>
+<meta name="twitter:description" content="High-performance websites, AI integrations, and brand identity, crafted with precision and craft."/>
+<meta name="twitter:image" content="https://ka-performancefl.com/images/site-screenshot-home.jpeg"/>
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
+<link href="css/site.css" rel="stylesheet"/>
+<style>
+  body { background-color:#161311; color:#e9e1dd; overflow-x:hidden; }
+  .material-symbols-outlined { font-family:'Material Symbols Outlined'; font-weight:normal; font-style:normal; line-height:1; letter-spacing:normal; text-transform:none; display:inline-block; white-space:nowrap; word-wrap:normal; direction:ltr; }
+  .technical-hairline { background:linear-gradient(90deg, transparent, rgba(163,140,124,0.3), transparent); height:1px; width:100%; }
+  .hero-floating-element { filter:drop-shadow(0 25px 50px rgba(0,0,0,0.5)); transition:transform 0.5s cubic-bezier(0.2,0,0.2,1); }
+  .hero-floating-element:hover { transform:translateY(-10px) rotateX(2deg) rotateY(-2deg); }
+  @keyframes marquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+  .animate-marquee { animation:marquee 30s linear infinite; }
+  .serif-italic { font-family:'EB Garamond', serif; font-style:italic; }
+  .technical-accent { font-family:'Plus Jakarta Sans', sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:0.3em; color:#a38c7c; }
+  .nav-logo { height:40px; width:auto; display:block; }
+  .footer-logo { height:56px; width:auto; display:block; }
+</style>
 </head>
-<body>
-
-  <!-- Splash Screen -->
-  <div id="splash" aria-hidden="true">
-    <div class="splash-ring splash-ring-1"></div>
-    <div class="splash-ring splash-ring-2"></div>
-    <div class="splash-ring splash-ring-3"></div>
-    <div class="splash-logo-wrap">
-      <img src="images/kandalogo2.0-performance.svg" alt="K &amp; A Performance" />
-    </div>
-  </div>
-
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-
-  <!-- ─── NAV ──────────────────────────────────── -->
-  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <img src="images/kandalogo2.0-performance.svg" alt="K &amp; A Performance" />
-      </a>
-      <div class="nav-links">
-        <a href="/" class="nav-link active">Home</a>
-        <div class="nav-has-dropdown">
-          <a href="portfolio/" class="nav-link">Portfolio</a>
-          <div class="nav-dropdown">
-            <a href="portfolio/alex/">Alex's Portfolio</a>
-            <a href="portfolio/kristina/">Kristina's Portfolio</a>
-          </div>
-        </div>
-        <a href="projects/" class="nav-link">Projects</a>
-        <a href="interactives/" class="nav-link">Interactives</a>
-        <a href="services/" class="nav-link">Services</a>
-        <a href="contact/" class="nav-cta nav-link" data-open-contact>Book a Consultation</a>
-      </div>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-    <a href="/">Home</a>
-    <a href="portfolio/">Portfolio</a>
-    <a href="portfolio/alex/" style="padding-left: 1rem; font-size: 0.65rem;">Alex's Portfolio</a>
-    <a href="portfolio/kristina/" style="padding-left: 1rem; font-size: 0.65rem;">Kristina's Portfolio</a>
-    <a href="projects/">Projects</a>
-    <a href="interactives/">Interactives</a>
-    <a href="services/">Services</a>
-    <a href="contact/" class="mobile-cta" data-open-contact>Book a Consultation</a>
-  </nav>
-
-  <main id="main-content">
-
-  <!-- ─── HERO ──────────────────────────────────── -->
-  <section class="hero">
-    <video class="hero-video" autoplay muted playsinline>
-      <source src="images/Intro%20Video%202.mp4" type="video/mp4" />
-    </video>
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <h1 class="hero-headline">
-        Design That<br>
-        <em>Moves</em><br>
-        Your Brand.
-      </h1>
-
-      <p class="hero-desc">
-        A husband and wife creative team delivering web design, instructional design, video production, and visual storytelling, crafted with precision and purpose.
-      </p>
-
-      <div class="hero-actions">
-        <a href="portfolio/" class="btn btn-primary">View Our Work</a>
-        <a href="contact/" class="btn btn-outline" data-open-contact>Start a Project</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ─── TICKER ────────────────────────────────── -->
-  <div class="ticker">
-    <div class="ticker-inner">
-      <!-- Repeated twice for seamless loop -->
-      <a href="services/" class="ticker-item">Instructional Design</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Web &amp; Digital Design</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Video Production</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">AI Audio &amp; Voice</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Social Media &amp; Branding</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Photography</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">SEO &amp; Analytics</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">eLearning Development</a>
-      <span class="ticker-sep">✦</span>
-      <!-- Duplicate for loop -->
-      <a href="services/" class="ticker-item">Instructional Design</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Web &amp; Digital Design</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Video Production</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">AI Audio &amp; Voice</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Social Media &amp; Branding</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">Photography</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">SEO &amp; Analytics</a>
-      <span class="ticker-sep">✦</span>
-      <a href="services/" class="ticker-item">eLearning Development</a>
-      <span class="ticker-sep">✦</span>
-    </div>
-  </div>
-
-  <!-- ─── SERVICES ORBITAL ─────────────────────── -->
-  <section class="section">
-    <div class="wrap">
-      <div class="section-header fade-up">
-        <h2>Strategy behind<br><em>every deliverable.</em></h2>
-        <p>From immersive eLearning to cinematic video. We build work that performs, not just looks good.</p>
-      </div>
-
-      <div class="orbit-wrap fade-up">
-
-        <!-- Orbit stage -->
-        <div class="orbit-stage" id="orbit-stage">
-          <svg class="orbit-ring-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="240" cy="240" r="172" fill="none" stroke="rgba(192,154,94,0.12)" stroke-width="1"/>
-            <circle class="orbit-ring-dash" cx="240" cy="240" r="172" fill="none"
-                    stroke="rgba(192,154,94,0.45)" stroke-width="1" stroke-dasharray="18 14"/>
-          </svg>
-
-          <!-- Instructional Design -->
-          <button class="orbit-node" data-index="0">
-            <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <!-- Heart -->
-              <path d="M18 30 C18 30 4 21 4 12 C4 8 7 5 11 5 C14 5 17 7 18 10 C19 7 22 5 25 5 C29 5 32 8 32 12 C32 21 18 30 18 30Z"/>
-              <!-- School building -->
-              <rect x="11" y="16" width="14" height="10" rx="1"/>
-              <rect x="15" y="20" width="6" height="6" rx="0.5"/>
-            </svg>
-            <span class="orbit-node-name">Project<br>Management</span>
-          </button>
-
-          <!-- Web & Digital -->
-          <button class="orbit-node" data-index="1">
-            <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="5" width="30" height="20" rx="2"/>
-              <line x1="3" y1="11" x2="33" y2="11"/>
-              <circle cx="8" cy="8" r="1.2" fill="currentColor" stroke="none"/>
-              <circle cx="13" cy="8" r="1.2" fill="currentColor" stroke="none"/>
-              <polyline points="12,18 15,21 12,24"/>
-              <line x1="17" y1="24" x2="24" y2="24"/>
-              <line x1="28" y1="28" x2="8" y2="28"/>
-              <line x1="18" y1="25" x2="18" y2="28"/>
-            </svg>
-            <span class="orbit-node-name">Web &amp;<br>Digital</span>
-          </button>
-
-          <!-- Video & Audio -->
-          <button class="orbit-node" data-index="2">
-            <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="2" y="9" width="22" height="16" rx="2"/>
-              <polyline points="24,15 34,10 34,26 24,21"/>
-              <line x1="8" y1="9" x2="8" y2="25"/>
-              <line x1="14" y1="9" x2="14" y2="25"/>
-              <line x1="19" y1="9" x2="19" y2="25"/>
-            </svg>
-            <span class="orbit-node-name">Video &amp;<br>Audio</span>
-          </button>
-
-          <!-- Web Games -->
-          <button class="orbit-node" data-index="3">
-            <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <!-- Gamepad body -->
-              <rect x="4" y="12" width="28" height="16" rx="6"/>
-              <!-- D-pad -->
-              <line x1="11" y1="17" x2="11" y2="23"/>
-              <line x1="8" y1="20" x2="14" y2="20"/>
-              <!-- Buttons -->
-              <circle cx="24" cy="18" r="1.5"/>
-              <circle cx="27" cy="21" r="1.5"/>
-              <!-- Spaceship accent on top -->
-              <polyline points="14,12 18,6 22,12"/>
-            </svg>
-            <span class="orbit-node-name">Web<br>Games</span>
-          </button>
-
-          <!-- HTML Interactives -->
-          <button class="orbit-node" data-index="4">
-            <svg class="orbit-node-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="10,13 4,18 10,23"/>
-              <polyline points="26,13 32,18 26,23"/>
-              <line x1="21" y1="10" x2="15" y2="26"/>
-            </svg>
-            <span class="orbit-node-name">HTML<br>Interactives</span>
-          </button>
-
-          <button class="orbit-center" id="orbit-center" aria-label="View all services">
-            <span class="orbit-center-eye">Explore</span>
-            <span class="orbit-center-lbl">All Services</span>
-          </button>
-        </div>
-
-        <!-- Active service detail -->
-        <div class="orbit-detail">
-          <div class="orbit-detail-inner" id="orbit-detail-inner">
-            <span class="orbit-detail-num" id="od-num">01</span>
-            <h3 class="orbit-detail-name" id="od-name">Instructional Design</h3>
-            <p class="orbit-detail-desc" id="od-desc">Backed by 15+ years of education experience, from K‑12 classrooms to corporate training programs.</p>
-            <ul class="orbit-detail-list" id="od-list">
-              <li>Articulate 360 &amp; Rise</li>
-              <li>SCORM &amp; LMS delivery</li>
-              <li>End-to-end course development</li>
-              <li>SME collaboration</li>
-            </ul>
-            <a href="services/" class="btn btn-ghost">View Service <span class="arr">→</span></a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Modal -->
-  <div class="svc-modal" id="svc-modal" aria-hidden="true">
-    <div class="svc-modal-backdrop" id="svc-modal-backdrop"></div>
-    <div class="svc-modal-panel" role="dialog" aria-label="All Services" aria-modal="true">
-      <button class="svc-modal-close" id="svc-modal-close" aria-label="Close">✕</button>
-      <div class="svc-modal-head">
-        <h2>What we offer</h2>
-      </div>
-      <div class="svc-modal-grid">
-        <a href="services/" class="svc-modal-card">
-          <span class="svc-modal-num">01</span>
-          <h3>Instructional Design</h3>
-          <p>Articulate 360, Rise, SCORM, LMS: 100+ courses built from concept to launch.</p>
-        </a>
-        <a href="services/" class="svc-modal-card">
-          <span class="svc-modal-num">02</span>
-          <h3>Web &amp; Digital Design</h3>
-          <p>Custom sites, SEO, HTML interactives, and AI-powered systems.</p>
-        </a>
-        <a href="services/" class="svc-modal-card">
-          <span class="svc-modal-num">03</span>
-          <h3>Video &amp; Audio Production</h3>
-          <p>Adobe Premiere, ElevenLabs AI voice, motion graphics, captioning.</p>
-        </a>
-        <a href="services/" class="svc-modal-card">
-          <span class="svc-modal-num">04</span>
-          <h3>Social Media &amp; Branding</h3>
-          <p>Keyword-led strategy, AI-assisted content, visual consistency.</p>
-        </a>
-        <a href="services/" class="svc-modal-card">
-          <h3>HTML Interactives</h3>
-          <p>Custom UI components, Canvas &amp; SVG animation, game logic, and embedded eLearning tools. Pure web APIs, no frameworks.</p>
-        </a>
-      </div>
-      <div style="text-align:center;margin-top:2.5rem;">
-        <a href="services/" class="btn btn-primary">See Full Services Page</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── WORK SHOWCASE ─────────────────────────── -->
-  <section class="section work-section">
-    <div class="wrap">
-      <div class="section-header fade-up" style="margin-bottom: 3.5rem;">
-        <h2>Craft in every pixel.</h2>
-      </div>
-    </div>
-
-    <div class="work-marquee-outer fade-up">
-      <div class="work-marquee-track" id="work-marquee-track">
-
-        <!-- Set 1 -->
-        <div class="work-card" role="button" tabindex="0" data-open-elearn>
-          <img src="images/Rise-Portfolio.png" alt="eLearning Development" loading="lazy" />
-          <div class="work-card-overlay">
-            <div class="work-card-text">
-              <span class="work-label">Articulate 360 &amp; Rise</span>
-              <span class="work-title">eLearning Development</span>
-            </div>
-            <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-            </div>
-          </div>
-        </div>
-        <div class="work-card work-card--fixalways" role="button" tabindex="0" data-open-fixalways>
-          <img src="images/fixalways-hero.jpg" alt="FixAlways Web Design" loading="lazy" />
-          <div class="work-card-overlay">
-            <div class="work-card-text">
-              <span class="work-label">SEO &amp; API</span>
-              <span class="work-title">Web Design</span>
-            </div>
-            <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="work-card work-card--shooter" role="button" tabindex="0" data-open-shooter>
-          <video autoplay muted loop playsinline>
-            <source src="images/Shooter%20Demo.mp4" type="video/mp4" />
-          </video>
-          <div class="work-card-overlay">
-            <div class="work-card-text">
-              <span class="work-label">Claude Code / Firebase</span>
-              <span class="work-title">Scrolling Shooter</span>
-            </div>
-            <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="work-card work-card--nonprofit" role="button" tabindex="0" data-open-audio>
-          <div class="nonprofit-collage">
-            <img src="images/Wolfs-Vow.png" alt="Wolf's Vow book cover" loading="lazy" />
-            <img src="images/Ash-on-the-Road-Cover.jpg" alt="Ash on the Road cover" loading="lazy" />
-            <img src="images/Wolfs-Vow-Thumbnail-1.png" alt="Wolf's Vow YouTube thumbnail" loading="lazy" />
-            <img src="images/Chapter_1_Thumbnail_Optimized.jpg" alt="Chapter 1 thumbnail" loading="lazy" />
-          </div>
-          <div class="work-card-overlay">
-            <div class="work-card-text">
-              <span class="work-label">AI Audio &amp; YouTube</span>
-              <span class="work-title">Audio &amp; Content Production</span>
-            </div>
-            <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="work-card" role="button" tabindex="0" data-open-bookcovers>
-          <img src="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="Book Cover Design" loading="lazy" />
-          <div class="work-card-overlay">
-            <div class="work-card-text">
-              <span class="work-label">Graphic Design</span>
-              <span class="work-title">Book Cover Design</span>
-            </div>
-            <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="work-card work-card--shooter" role="button" tabindex="0" data-open-music>
-          <video autoplay muted loop playsinline>
-            <source src="images/AI-Music.mp4" type="video/mp4" />
-          </video>
-          <div class="work-card-overlay">
-            <div class="work-card-text">
-              <span class="work-label">AI Production</span>
-              <span class="work-title">AI Music</span>
-            </div>
-            <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="work-card work-card--nonprofit" role="button" tabindex="0" data-open-nonprofit>
-          <div class="nonprofit-collage">
-            <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="Project Makeover volunteers" loading="lazy" />
-            <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="Project Makeover school work" loading="lazy" />
-            <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="Project Makeover students" loading="lazy" />
-            <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="Project Makeover mural" loading="lazy" />
-          </div>
-          <div class="work-card-overlay">
-            <div class="work-card-text">
-              <span class="work-label">Nonprofit Leadership</span>
-              <span class="work-title">Project Makeover</span>
-            </div>
-            <div class="work-card-zoom">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 3.5rem;">
-      <a href="portfolio/" class="btn btn-outline">View Full Portfolio</a>
-    </div>
-  </section>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
-  </div>
-
-  <!-- ─── STATS ─────────────────────────────────── -->
-  <div class="stats-row fade-up">
-    <div class="stat">
-      <div class="stat-num">100+</div>
-      <div class="stat-label">Courses Built</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">30+</div>
-      <div class="stat-label">Years Combined Experience</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">2</div>
-      <div class="stat-label">Dedicated Designers</div>
-    </div>
-    <div class="stat">
-      <a href="/projects/" style="text-decoration:none;color:inherit;display:contents;">
-        <div class="stat-num">5</div>
-        <div class="stat-label">Ongoing Projects</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ─── TEAM ──────────────────────────────────── -->
-  <section class="team-section">
-    <div class="team-cards fade-up">
-
-      <div class="team-cards-header">
-        <h2>Two designers.<br><em>One shared<br>vision.</em></h2>
-      </div>
-
-      <div class="team-member">
-        <img class="team-member-photo" src="images/Kristina-Image.jpg" alt="Kristina Anderson" loading="lazy" />
-        <div class="team-member-overlay"></div>
-        <div class="team-member-content">
-          <div class="team-member-name">Kristina</div>
-          <div class="team-member-role">Instructional Designer &amp; Photographer</div>
-          <p class="team-member-bio">An educator and Instructional Designer with over 15 years of experience, from K‑12 classrooms to corporate training programs. She creates eLearning experiences that reflect how people actually learn.</p>
-          <a href="portfolio/kristina/" class="btn btn-ghost team-member-btn">View Her Work <span class="arr">→</span></a>
-        </div>
-      </div>
-
-      <div class="team-member">
-        <img class="team-member-photo" src="images/Alex-Image.jpg" alt="Alexander Anderson" loading="lazy" />
-        <div class="team-member-overlay"></div>
-        <div class="team-member-content">
-          <div class="team-member-name">Alex</div>
-          <div class="team-member-role">Web Designer &amp; Media Producer</div>
-          <p class="team-member-bio">Designs immersive digital experiences engineered for clarity, accessibility, and performance, from custom web builds and cinematic video to AI-driven systems built from scratch.</p>
-          <a href="portfolio/alex/" class="btn btn-ghost team-member-btn">View His Work <span class="arr">→</span></a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ─── CTA ───────────────────────────────────── -->
-  <section class="cta-strip fade-up">
-    <div class="wrap cta-strip-inner">
-      <div class="cta-strip-text">
-        <h2>Ready to build something<br><em>exceptional?</em></h2>
-      </div>
-      <div class="cta-strip-action">
-        <p>Tell us about your project. We'll map out exactly how to bring it to life.</p>
-        <a href="contact/" class="btn btn-primary" data-open-contact>Book a Free Consultation</a>
-      </div>
-    </div>
-  </section>
-
-  </main>
-
-  <!-- ─── FOOTER ────────────────────────────────── -->
-  <footer class="site-footer">
-    <div class="wrap">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a href="/" aria-label="K &amp; A Performance home"><img src="images/kandalogo2.0-performance.svg" alt="K &amp; A Performance" class="footer-logo" /></a>
-          <p>Elevated design for brands that want to be noticed. Based in the US, working with clients nationwide.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Navigate</h4>
-          <a href="/">Home</a>
-          <a href="/portfolio/">Portfolio</a>
-          <a href="/projects/">Projects</a>
-          <a href="/interactives/">Interactives</a>
-          <a href="/services/">Services</a>
-          <a href="/contact/">Contact</a>
-        </div>
-        <div class="footer-col">
-          <h4>Portfolio</h4>
-          <a href="/portfolio/alex/">Alex's Work</a>
-          <a href="/portfolio/kristina/">Kristina's Work</a>
-        </div>
-        <div class="footer-col">
-          <h4>Services</h4>
-          <a href="/services/">Instructional Design</a>
-          <a href="/services/">Video &amp; Audio</a>
-          <a href="/services/">Social Media</a>
-          <a href="/services/">Web Design</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 K &amp; A Performance. All rights reserved.</span>
-        <a href="/" class="footer-url">ka-performancefl.com</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Contact Modal -->
-  <div class="contact-modal" id="contact-modal" aria-hidden="true">
-    <div class="contact-modal-backdrop" id="contact-modal-backdrop"></div>
-    <div class="contact-modal-panel" role="dialog" aria-label="Book a Consultation" aria-modal="true">
-      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">✕</button>
-      <div class="contact-modal-head">
-        <h2>Let's build something<br><em>exceptional.</em></h2>
-        <p>Tell us about your project. We'll get back to you within 24 hours.</p>
-      </div>
-      <form id="contact-modal-form">
-        <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
-        <input type="hidden" name="subject" value="New Consultation Request | K &amp; A Performance" />
-        <input type="hidden" name="from_name" value="K &amp; A Performance Website" />
-        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" />
-        <div class="form-row">
-          <div class="field">
-            <label for="modal-name">Full Name *</label>
-            <input type="text" id="modal-name" name="name" placeholder="Your name" required />
-          </div>
-          <div class="field">
-            <label for="modal-email">Email *</label>
-            <input type="email" id="modal-email" name="email" placeholder="your@email.com" required />
-          </div>
-        </div>
-        <div class="field">
-          <label for="modal-company">Company (Optional)</label>
-          <input type="text" id="modal-company" name="company" placeholder="Your company or organization" />
-        </div>
-        <div class="form-row">
-          <div class="field">
-            <label for="modal-service">Project Type</label>
-            <select id="modal-service" name="service">
-              <option value="" disabled selected>Select a service...</option>
-              <option>Instructional Design / eLearning</option>
-              <option>Web &amp; Digital Design</option>
-              <option>Video &amp; Audio Production</option>
-              <option>Social Media &amp; Branding</option>
-              <option>AI Voice &amp; Audio</option>
-              <option>Photography</option>
-              <option>Multiple Services</option>
-              <option>Not Sure Yet</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="modal-budget">Estimated Budget</label>
-            <select id="modal-budget" name="budget">
-              <option value="" disabled selected>Select a range...</option>
-              <option>Under $500</option>
-              <option>$500 to $1,500</option>
-              <option>$1,500 to $5,000</option>
-              <option>$5,000 to $10,000</option>
-              <option>$10,000+</option>
-              <option>Let's discuss</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label for="modal-message">Tell Us About Your Project *</label>
-          <textarea id="modal-message" name="message" placeholder="Describe your project, goals, and timeline..." required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary form-submit">Send Message</button>
-        <p class="form-note">We'll get back to you within 24 hours.</p>
-      </form>
-      <div class="form-success" id="contact-modal-success" style="display:none;">
-        <h3>Message Received</h3>
-        <p>Thanks for reaching out. We'll be in touch within 24 hours to schedule your consultation.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- FixAlways Web Design Modal -->
-  <div class="nonprofit-modal" id="fixalways-modal" aria-hidden="true">
-    <div class="nonprofit-modal-backdrop" id="fixalways-modal-backdrop"></div>
-    <div class="nonprofit-modal-panel" role="dialog" aria-label="FixAlways Web Design" aria-modal="true">
-      <button class="svc-modal-close" id="fixalways-modal-close" aria-label="Close">✕</button>
-      <div class="svc-modal-head">
-        <span class="label">Web Design &amp; API Integration</span>
-        <h2>FixAlways</h2>
-        <p>A full-stack Florida home services directory powered by real vendor data and an AI chat assistant.</p>
-      </div>
-      <div class="nonprofit-photo-grid" style="grid-template-columns:1fr; margin-bottom:1.5rem;">
-        <img src="images/fixalways-hero.jpg" alt="FixAlways homepage" style="height:260px;object-fit:cover;object-position:top;border-radius:6px;" />
-      </div>
-      <div class="nonprofit-body">
-        <div class="nonprofit-body-block">
-          <h4>Google Places API</h4>
-          <p>Vendor data across 188+ Florida cities is pulled and structured using the Google Places API. Each listing is automatically enriched with business name, address, phone, ratings, and review counts, building a live, searchable database without manual data entry.</p>
-        </div>
-        <div class="nonprofit-body-block">
-          <h4>Anthropic Claude API</h4>
-          <p>An embedded chat assistant powered by Claude's API lets users describe their home service problem in plain language and get matched to relevant service categories and local providers. Context-aware, fast, and built entirely through the Anthropic API.</p>
-        </div>
-      </div>
-      <div class="nonprofit-modal-footer">
-        <button class="btn btn-primary" id="fixalways-preview-btn">Preview Site →</button>
-        <a href="https://fixalways.com" target="_blank" rel="noopener" class="btn btn-outline">Open in New Tab ↗</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- FixAlways iframe preview modal -->
-  <div class="game-modal" id="fixalways-iframe-modal" aria-hidden="true">
-    <div class="game-modal-backdrop" id="fixalways-iframe-backdrop"></div>
-    <div class="game-modal-panel" role="dialog" aria-label="FixAlways Preview" aria-modal="true">
-      <div class="game-modal-header">
-        <div class="game-modal-title">
-          <span class="game-modal-name">FixAlways</span>
-        </div>
-        <div class="game-modal-controls">
-          <a href="https://fixalways.com" target="_blank" rel="noopener" class="game-modal-external" title="Open in new tab">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <button class="game-modal-close" id="fixalways-iframe-close" aria-label="Close">✕</button>
-        </div>
-      </div>
-      <div class="game-modal-frame-wrap">
-        <iframe id="fixalways-iframe" class="game-iframe" src="" title="FixAlways" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI Music Modal -->
-  <div class="nonprofit-modal" id="music-modal" aria-hidden="true">
-    <div class="nonprofit-modal-backdrop" id="music-modal-backdrop"></div>
-    <div class="nonprofit-modal-panel" role="dialog" aria-label="AI Music Production" aria-modal="true">
-      <button class="svc-modal-close" id="music-modal-close" aria-label="Close">✕</button>
-      <div class="svc-modal-head">
-        <span class="label">AI Production</span>
-        <h2>AI Music</h2>
-        <p>Studio-quality tracks built entirely through precision prompting. Press play on any demo below.</p>
-      </div>
-      <p class="music-modal-intro">Every track here was generated using carefully crafted AI prompts, not a single instrument recorded. The goal is the same as any professional session: nail the right mood, energy, and tone for the project. Whether that's a cinematic swell, a tense underscore, a romantic ballad, or something upbeat and light. The craft is in knowing exactly how to prompt for it and how to refine until it lands. These are four examples across different genres, each built from scratch using AI music tools.</p>
-      <style>
-        /* Music note buttons inside the AI Music modal */
-        .modal-music-notes {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 0.6rem;
-          user-select: none;
-          margin-bottom: 1.25rem;
-        }
-        .modal-music-note {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0.4rem;
-          padding: 0.9rem 0.4rem 0.75rem;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.07);
-          border-radius: 8px;
-          cursor: pointer;
-          font-family: inherit;
-          -webkit-tap-highlight-color: transparent;
-          transition: border-color 0.3s, transform 0.3s;
-          overflow: hidden;
-        }
-        .modal-music-note::after {
-          content: "";
-          position: absolute; inset: 0; border-radius: 8px;
-          background: var(--nc, var(--accent));
-          opacity: 0; transition: opacity 0.3s; pointer-events: none;
-        }
-        .modal-music-note:hover { border-color: var(--nc, var(--accent)); transform: translateY(-3px); }
-        .modal-music-note:hover::after { opacity: 0.08; }
-        .modal-music-note.playing { border-color: var(--nc, var(--accent)); animation: none !important; }
-        .modal-music-note.playing::after { opacity: 0.12; }
-        .modal-music-note::before {
-          content: ""; position: absolute; inset: -1px; border-radius: 8px;
-          border: 1px solid var(--nc, var(--accent));
-          opacity: 0; pointer-events: none; z-index: 2;
-        }
-        .modal-music-note.playing::before { animation: modal-note-ring 1.8s ease-in-out infinite; }
-        @keyframes modal-note-ring {
-          0%,100% { opacity: 0.85; transform: scale(1); }
-          50%      { opacity: 0;    transform: scale(1.6); }
-        }
-        .modal-note-glyph {
-          font-size: 2rem; line-height: 1;
-          color: var(--nc, rgba(237,233,224,0.6));
-          opacity: 0.45; transition: opacity 0.3s, transform 0.3s, text-shadow 0.3s;
-          display: block; position: relative; z-index: 1;
-        }
-        .modal-music-note:hover .modal-note-glyph { opacity: 1; transform: scale(1.2); }
-        .modal-music-note.playing .modal-note-glyph {
-          opacity: 1;
-          text-shadow: 0 0 20px var(--nc, rgba(192,154,94,0.5));
-          animation: modal-note-bounce 0.42s ease-in-out infinite alternate;
-        }
-        @keyframes modal-note-bounce {
-          from { transform: scale(1.2) translateY(0); }
-          to   { transform: scale(1.3) translateY(-4px); }
-        }
-        .modal-note-label {
-          display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
-          pointer-events: none; position: relative; z-index: 1;
-        }
-        .modal-note-title {
-          font-family: "Cormorant Garamond", serif;
-          font-size: 0.78rem; font-weight: 400;
-          color: var(--text-mid); white-space: nowrap; line-height: 1.2;
-        }
-        .modal-note-genre {
-          font-family: "Montserrat", sans-serif;
-          font-size: 0.42rem; letter-spacing: 0.12em; text-transform: uppercase;
-          color: var(--nc, var(--accent)); opacity: 0.85; white-space: nowrap;
-        }
-        .modal-music-note:nth-child(1) { animation: floatA 3.2s ease-in-out infinite; }
-        .modal-music-note:nth-child(2) { animation: floatB 2.8s ease-in-out infinite 0.5s; }
-        .modal-music-note:nth-child(3) { animation: floatC 3.6s ease-in-out infinite 1.1s; }
-        .modal-music-note:nth-child(4) { animation: floatD 2.9s ease-in-out infinite 0.3s; }
-        .modal-music-note:hover { animation: none !important; }
-
-        /* Now-playing bar */
-        .modal-now-playing {
-          display: flex; align-items: center; gap: 1rem;
-          padding: 0.75rem 1.1rem;
-          background: var(--surface); border: 1px solid rgba(192,154,94,0.2); border-radius: 6px;
-          opacity: 0; transform: translateY(6px);
-          transition: opacity 0.3s, transform 0.3s;
-          pointer-events: none; margin-bottom: 1.25rem;
-        }
-        .modal-now-playing.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .modal-np-bars {
-          display: flex; gap: 3px; align-items: flex-end; height: 18px; flex-shrink: 0;
-        }
-        .modal-np-bars span {
-          display: block; width: 3px; border-radius: 2px; background: var(--accent);
-        }
-        .modal-np-bars span:nth-child(1) { animation: npBar 0.7s ease-in-out infinite; }
-        .modal-np-bars span:nth-child(2) { animation: npBar 0.9s ease-in-out infinite 0.15s; }
-        .modal-np-bars span:nth-child(3) { animation: npBar 0.6s ease-in-out infinite 0.3s; }
-        .modal-np-bars span:nth-child(4) { animation: npBar 1.0s ease-in-out infinite 0.05s; }
-        @keyframes npBar { 0%,100%{ height: 4px; } 50%{ height: 18px; } }
-        .modal-now-playing.paused .modal-np-bars span { animation-play-state: paused; }
-        .modal-np-text { flex: 1; }
-        .modal-np-track-title { font-family: "Cormorant Garamond", serif; font-size: 0.95rem; color: var(--text); display: block; }
-        .modal-np-genre { font-family: "Montserrat", sans-serif; font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
-        .modal-np-stop {
-          background: none; border: 1px solid var(--border-h); border-radius: 50%;
-          width: 28px; height: 28px; color: var(--text-dim); cursor: pointer;
-          display: flex; align-items: center; justify-content: center; font-size: 0.7rem;
-          transition: background 0.2s, color 0.2s; flex-shrink: 0;
-        }
-        .modal-np-stop:hover { background: var(--surface-3); color: var(--text); }
-
-        @media (max-width: 500px) {
-          .modal-music-notes { grid-template-columns: repeat(2, 1fr); }
-        }
-      </style>
-
-      <div class="modal-music-notes" id="modal-music-notes">
-        <button class="modal-music-note" style="--nc:#e8607a"
-          data-src="images/A_Hold_On_Me_2026-03-25T164648.mp3"
-          data-title="A Hold On Me" data-genre="Romantic"
-          aria-label="Play A Hold On Me: Romantic">
-          <span class="modal-note-glyph" aria-hidden="true">&#9834;</span>
-          <div class="modal-note-label">
-            <span class="modal-note-title">A Hold On Me</span>
-            <span class="modal-note-genre">Romantic</span>
-          </div>
-        </button>
-        <button class="modal-music-note" style="--nc:#c09a5e"
-          data-src="images/Crown_Music_2026-03-25T163917.mp3"
-          data-title="Crown" data-genre="Cinematic"
-          aria-label="Play Crown: Cinematic">
-          <span class="modal-note-glyph" aria-hidden="true">&#9835;</span>
-          <div class="modal-note-label">
-            <span class="modal-note-title">Crown</span>
-            <span class="modal-note-genre">Cinematic</span>
-          </div>
-        </button>
-        <button class="modal-music-note" style="--nc:#f5c842"
-          data-src="images/Sunshine_Bounce_2026-03-25T170749.mp3"
-          data-title="Sunshine Bounce" data-genre="Upbeat"
-          aria-label="Play Sunshine Bounce: Upbeat">
-          <span class="modal-note-glyph" aria-hidden="true">&#9833;</span>
-          <div class="modal-note-label">
-            <span class="modal-note-title">Sunshine Bounce</span>
-            <span class="modal-note-genre">Upbeat</span>
-          </div>
-        </button>
-        <button class="modal-music-note" style="--nc:#9b5ef5"
-          data-src="images/Tension_Point_2026-03-25T170738.mp3"
-          data-title="Tension Point" data-genre="Dramatic"
-          aria-label="Play Tension Point: Dramatic">
-          <span class="modal-note-glyph" aria-hidden="true">&#9836;</span>
-          <div class="modal-note-label">
-            <span class="modal-note-title">Tension Point</span>
-            <span class="modal-note-genre">Dramatic</span>
-          </div>
-        </button>
-      </div>
-
-      <div class="modal-now-playing" id="modal-now-playing">
-        <div class="modal-np-bars"><span></span><span></span><span></span><span></span></div>
-        <div class="modal-np-text">
-          <span class="modal-np-track-title" id="modal-np-title">...</span>
-          <span class="modal-np-genre" id="modal-np-genre">...</span>
-        </div>
-        <button class="modal-np-stop" id="modal-np-stop" aria-label="Stop">&#9632;</button>
-      </div>
-      <div class="nonprofit-modal-footer">
-        <a href="portfolio/alex/" class="btn btn-primary">Alex's Full Portfolio</a>
-        <a href="contact/" class="btn btn-outline" data-open-contact>Commission a Track</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Nonprofit Leadership Modal -->
-  <div class="nonprofit-modal" id="nonprofit-modal" aria-hidden="true">
-    <div class="nonprofit-modal-backdrop" id="nonprofit-modal-backdrop"></div>
-    <div class="nonprofit-modal-panel" role="dialog" aria-label="Project Makeover" aria-modal="true">
-      <button class="svc-modal-close" id="nonprofit-modal-close" aria-label="Close">✕</button>
-      <div class="svc-modal-head">
-        <span class="label">Nonprofit Leadership</span>
-        <h2>Project Makeover</h2>
-        <p>Transforming elementary schools into spaces where students experience wonder, joy, and the belief that anything is possible.</p>
-      </div>
-      <div class="nonprofit-photo-grid">
-        <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/274895080-10159657858166357-3582460136931148333-n.jpeg" alt="Volunteers at work" />
-        <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0078-2.jpg" alt="School transformation" />
-        <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/dsc-0171-2.jpg" alt="Students and volunteers" />
-        <img src="https://www.projectmakeover.org/uploads/1/3/8/4/138499606/believe-in-yourself.jpg" alt="Believe in yourself mural" />
-      </div>
-      <div class="nonprofit-body">
-        <div class="nonprofit-body-block">
-          <h4>About Project Makeover</h4>
-          <p>Project Makeover is on a mission to help schools spark wonder, joy, and dreams, for the joy of learning. Volunteers descend on elementary schools for a weekend makeover blitz, transforming tired hallways, classrooms, and outdoor spaces into vibrant, inspiring environments that tell kids: you matter, and your dreams matter too.</p>
-        </div>
-        <div class="nonprofit-body-block">
-          <h4>Kristina's Role</h4>
-          <p>Kristina serves on the board of Project Makeover and works directly with volunteers on the ground during makeover weekends. She helps coordinate the teams that show up to paint murals, build gardens, refresh libraries, and bring color and life to schools that need it most. Her nonprofit project management experience, rooted in real community work, shapes how she approaches every collaboration she takes on.</p>
-        </div>
-      </div>
-      <div class="nonprofit-modal-footer">
-        <a href="https://www.projectmakeover.org" target="_blank" rel="noopener" class="btn btn-primary">Visit Project Makeover →</a>
-        <a href="portfolio/kristina/" class="btn btn-outline">Kristina's Full Portfolio</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI Audio & YouTube Modal -->
-  <div class="nonprofit-modal" id="audio-modal" aria-hidden="true">
-    <div class="nonprofit-modal-backdrop" id="audio-modal-backdrop"></div>
-    <div class="nonprofit-modal-panel" role="dialog" aria-label="AI Audio and YouTube" aria-modal="true">
-      <button class="svc-modal-close" id="audio-modal-close" aria-label="Close">✕</button>
-      <div class="svc-modal-head">
-        <span class="label">AI Audio &amp; YouTube</span>
-        <h2>Audio &amp; Content Production</h2>
-        <p>AI-narrated audiobooks and YouTube content produced and managed from concept to publish.</p>
-      </div>
-      <div class="nonprofit-photo-grid audio-photo-grid">
-        <img src="images/Wolfs-Vow.png" alt="Wolf's Vow cover" data-hover-preview="images/Wolfs-Vow.png" />
-        <img src="images/Ash-on-the-Road-Cover.jpg" alt="Ash on the Road cover" data-hover-preview="images/Ash-on-the-Road-Cover.jpg" />
-        <img src="images/Wolfs-Vow-Thumbnail-1.png" alt="Wolf's Vow YouTube thumbnail" data-hover-preview="images/Wolfs-Vow-Thumbnail-1.png" />
-        <img src="images/Chapter_1_Thumbnail_Optimized.jpg" alt="Chapter 1 thumbnail" data-hover-preview="images/Chapter_1_Thumbnail_Optimized.jpg" />
-      </div>
-      <div class="nonprofit-body">
-        <div class="nonprofit-body-block">
-          <h4>AI Audiobook Production</h4>
-          <p>Using ElevenLabs AI voice technology, Alex produces fully narrated audiobooks with professional-quality pacing, tone, and character consistency. Each title is edited, mastered, and published as a complete listening experience. The two examples below are live and publicly available on ElevenReader.</p>
-        </div>
-        <div class="nonprofit-body-block">
-          <h4>YouTube Channel Management</h4>
-          <p>From thumbnail design and chapter structuring to upload optimization and audience growth strategy, Alex manages the full production pipeline for YouTube content. This includes custom thumbnails, SEO-driven titles and descriptions, and ongoing channel analytics to drive discoverability.</p>
-        </div>
-      </div>
-      <div class="nonprofit-modal-footer" style="flex-wrap:wrap;gap:0.75rem;">
-        <div class="audio-demo-label">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          Demo AI Audiobooks &middot; Live on ElevenReader
-        </div>
-        <a href="https://elevenreader.io/audiobooks/what-was-written-audiobook/zyvYhCGgf9iRNAm6PlCk" target="_blank" rel="noopener" class="btn btn-primary">Listen: What Was Written →</a>
-        <a href="https://elevenreader.io/audiobooks/what-holds-the-door-audiobook/fVXqStGEpGWOISxGRlSX" target="_blank" rel="noopener" class="btn btn-primary">Listen: What Holds the Door →</a>
-        <a href="portfolio/alex/" class="btn btn-outline">Alex's Full Portfolio</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Shooter Game Modal -->
-  <div class="game-modal" id="home-game-modal" aria-hidden="true">
-    <div class="game-modal-backdrop" id="home-game-backdrop"></div>
-    <div class="game-modal-panel" role="dialog" aria-label="Scrolling Shooter" aria-modal="true">
-      <div class="game-modal-header">
-        <div class="game-modal-title">
-          <span class="game-modal-name">Scrolling Shooter</span>
-        </div>
-        <div class="game-modal-controls">
-          <a href="https://game.kandadesigners.com" target="_blank" rel="noopener" class="game-modal-external" title="Open in new tab">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <button class="game-modal-close" id="home-game-close" aria-label="Close">✕</button>
-        </div>
-      </div>
-      <div class="game-modal-frame-wrap">
-        <iframe id="home-game-iframe" class="game-iframe" src="" title="Scrolling Shooter Game" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-
-  <!-- Book Cover Gallery Modal -->
-  <div class="book-modal" id="book-modal" aria-hidden="true">
-    <div class="book-modal-backdrop" id="book-modal-backdrop"></div>
-    <div class="book-modal-panel" role="dialog" aria-label="Book Cover Gallery" aria-modal="true">
-      <button class="svc-modal-close" id="book-modal-close" aria-label="Close">✕</button>
-      <div class="svc-modal-head">
-        <span class="label">Graphic Design</span>
-        <h2>Book Cover Portfolio</h2>
-        <p>Custom cover designs for published authors, blending genre, mood, and visual storytelling.</p>
-      </div>
-      <div class="book-cover-grid">
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/Book-01-The-Packet-in-Portland.jpg">
-          <img src="images/Book-01-The-Packet-in-Portland.jpg" alt="The Packet in Portland" />
-          <div class="book-cover-overlay"><span>The Packet in Portland</span></div>
-        </div>
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/Book-04-The-Orchard-Grave.jpg">
-          <img src="images/Book-04-The-Orchard-Grave.jpg" alt="The Orchard Grave" />
-          <div class="book-cover-overlay"><span>The Orchard Grave</span></div>
-        </div>
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/Book-06-The-Glass-Alibi.jpg">
-          <img src="images/Book-06-The-Glass-Alibi.jpg" alt="The Glass Alibi" />
-          <div class="book-cover-overlay"><span>The Glass Alibi</span></div>
-        </div>
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/Book_5_The_Thornwood_Witch_MAX_QUALITY.jpg">
-          <img src="images/Book_5_The_Thornwood_Witch_MAX_QUALITY.jpg" alt="The Thornwood Witch" />
-          <div class="book-cover-overlay"><span>The Thornwood Witch</span></div>
-        </div>
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg">
-          <img src="images/Book_8_The_Regents_Bride_MAX_QUALITY.jpg" alt="The Regent's Bride" />
-          <div class="book-cover-overlay"><span>The Regent's Bride</span></div>
-        </div>
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/Book_15_The_Unsworn_Crown_MAX_QUALITY.jpg">
-          <img src="images/Book_15_The_Unsworn_Crown_MAX_QUALITY.jpg" alt="The Unsworn Crown" />
-          <div class="book-cover-overlay"><span>The Unsworn Crown</span></div>
-        </div>
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/Second_Bloom_Series_Book1_What_Grows_After_Goodbye_Alexi_Hart (1).jpg">
-          <img src="images/Second_Bloom_Series_Book1_What_Grows_After_Goodbye_Alexi_Hart (1).jpg" alt="What Grows After Goodbye" />
-          <div class="book-cover-overlay"><span>What Grows After Goodbye</span></div>
-        </div>
-
-        <div class="book-cover-item gallery-item" role="button" tabindex="0" data-full="images/The_Wolfs_Vow_Through_His_Eyes.jpg">
-          <img src="images/The_Wolfs_Vow_Through_His_Eyes.jpg" alt="The Wolf's Vow: Through His Eyes" />
-          <div class="book-cover-overlay"><span>The Wolf's Vow: Through His Eyes</span></div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- eLearning Preview Modal -->
-  <div class="elearn-modal" id="elearn-modal" aria-hidden="true">
-    <div class="elearn-modal-backdrop" id="elearn-modal-backdrop"></div>
-    <div class="elearn-modal-panel" role="dialog" aria-label="eLearning Demos" aria-modal="true">
-      <button class="svc-modal-close" id="elearn-modal-close" aria-label="Close">✕</button>
-      <div class="svc-modal-head">
-        <span class="label">eLearning Development</span>
-        <h2>Live Rise 360 Demos</h2>
-        <p>Real interactive modules built in Articulate Rise 360. Click any to launch it live.</p>
-      </div>
-      <div class="elearn-preview-grid">
-
-        <div class="elearn-preview-card">
-          <div class="elearn-preview-info">
-            <h3>Phishing Scenarios</h3>
-            <p>Inspect real-looking emails and texts for red flags, then decide how to respond. Five randomized scenarios covering executive impersonation, fake IT alerts, and SMS phishing.</p>
-          </div>
-          <button class="btn btn-ghost elearn-preview-btn" data-interactive="phishing-scenarios" data-title="Phishing Scenarios">Demo <span class="arr">→</span></button>
-        </div>
-
-        <div class="elearn-preview-card">
-          <div class="elearn-preview-info">
-            <h3>Teaching with a Purpose</h3>
-            <p>An animated Bloom's Taxonomy pyramid walking learners from basic recall up through synthesis and evaluation, with real instructional design context at each level.</p>
-          </div>
-          <button class="btn btn-ghost elearn-preview-btn" data-interactive="teaching-with-a-purpose" data-title="Teaching with a Purpose">Demo <span class="arr">→</span></button>
-        </div>
-
-        <div class="elearn-preview-card">
-          <div class="elearn-preview-info">
-            <h3>From Strategy to Design</h3>
-            <p>An interactive introduction to the ADDIE instructional design model, walking through each phase with visual breakdowns and real design context.</p>
-          </div>
-          <button class="btn btn-ghost elearn-preview-btn" data-interactive="from-strategy-to-design-1" data-title="From Strategy to Design, Part 1">Demo <span class="arr">→</span></button>
-        </div>
-
-        <div class="elearn-preview-card">
-          <div class="elearn-preview-info">
-            <h3>Success Must Be Measurable</h3>
-            <p>An introduction to the Kirkpatrick evaluation model, explaining why measurement matters and how to apply each of the four evaluation levels to real training outcomes.</p>
-          </div>
-          <button class="btn btn-ghost elearn-preview-btn" data-interactive="success-must-be-measurable" data-title="Success Must Be Measurable">Demo <span class="arr">→</span></button>
-        </div>
-
-      </div>
-      <div class="elearn-modal-footer">
-        <a href="interactives/" class="btn btn-primary">See All Interactives in Rise 360 →</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Interactive iframe modal (launched from elearn preview cards) -->
-  <div class="game-modal" id="elearn-iframe-modal" aria-hidden="true">
-    <div class="game-modal-backdrop" id="elearn-iframe-backdrop"></div>
-    <div class="game-modal-panel" role="dialog" aria-label="Interactive Demo" aria-modal="true">
-      <div class="game-modal-header">
-        <div class="game-modal-title">
-          <span class="game-modal-name" id="elearn-iframe-title">Interactive</span>
-        </div>
-        <div class="game-modal-controls">
-          <button class="game-modal-close" id="elearn-iframe-close" aria-label="Close">✕</button>
-        </div>
-      </div>
-      <div class="game-modal-frame-wrap">
-        <iframe id="elearn-iframe" class="game-iframe" src="" frameborder="0" allowfullscreen title="Interactive Demo"></iframe>
-      </div>
-    </div>
-  </div>
-
-  <script src="js/main-v2.js?v=18"></script>
-  <script>
-    (function() {
-      var splash = document.getElementById('splash');
-      if (!splash) return;
-      if (sessionStorage.getItem('ka-splash-shown')) {
-        splash.remove();
-        return;
-      }
-      sessionStorage.setItem('ka-splash-shown', '1');
-      setTimeout(function() {
-        splash.classList.add('splash-exit');
-        setTimeout(function() { splash.remove(); }, 1000);
-      }, 2600);
-    })();
-  </script>
-
-  <!-- Restore scroll when returning from PBJ modal on projects page -->
-  <script>
-    (function () {
-      var saved = sessionStorage.getItem('pbj-return-scroll');
-      if (saved !== null) {
-        sessionStorage.removeItem('pbj-return-scroll');
-        history.scrollRestoration = 'manual';
-        window.scrollTo({ top: parseInt(saved, 10), behavior: 'instant' });
-      }
-    })();
-  </script>
-
-  <!-- Hash-based modal deep-linking from services page -->
-  <script>
-    (function () {
-      var hash = window.location.hash;
-      if (!hash) return;
-      history.replaceState(null, '', window.location.pathname);
-      function openByHash() {
-        if (hash === '#elearn-preview') {
-          var trigger = document.querySelector('[data-open-elearn]');
-          if (trigger) trigger.click();
-        } else if (hash === '#music-preview') {
-          var trigger = document.querySelector('[data-open-music]');
-          if (trigger) trigger.click();
-        }
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', openByHash);
-      } else {
-        openByHash();
-      }
-    })();
-  </script>
-
-  <!-- AI Music Modal Note Player -->
-  <script>
-    (function () {
-      var notes    = document.querySelectorAll('.modal-music-note');
-      var nowBar   = document.getElementById('modal-now-playing');
-      var npTitle  = document.getElementById('modal-np-title');
-      var npGenre  = document.getElementById('modal-np-genre');
-      var stopBtn  = document.getElementById('modal-np-stop');
-      if (!notes.length) return;
-
-      var audio = new Audio();
-      var current = null;
-
-      function stopAll() {
-        if (current) { current.classList.remove('playing'); current = null; }
-        audio.pause(); audio.currentTime = 0;
-        if (nowBar) { nowBar.classList.remove('visible', 'paused'); }
-      }
-
-      function setPlaying(note) {
-        if (current) current.classList.remove('playing');
-        current = note;
-        note.classList.add('playing');
-        if (nowBar) {
-          npTitle.textContent = note.dataset.title || '';
-          npGenre.textContent = note.dataset.genre || '';
-          nowBar.classList.add('visible');
-          nowBar.classList.remove('paused');
-        }
-      }
-
-      notes.forEach(function (note) {
-        note.addEventListener('click', function () {
-          if (current === this) {
-            if (audio.paused) {
-              audio.play().catch(function(){});
-              this.classList.add('playing');
-              if (nowBar) nowBar.classList.remove('paused');
-            } else {
-              audio.pause();
-              this.classList.remove('playing');
-              if (nowBar) nowBar.classList.add('paused');
-            }
-            return;
-          }
-          stopAll();
-          audio.src = this.dataset.src;
-          audio.play().catch(function(){});
-          setPlaying(this);
-        });
-      });
-
-      if (stopBtn) stopBtn.addEventListener('click', stopAll);
-      audio.addEventListener('ended', stopAll);
-
-      // Stop audio when modal closes
-      var closeBtn = document.getElementById('music-modal-close');
-      var backdrop = document.getElementById('music-modal-backdrop');
-      function onClose() { stopAll(); }
-      if (closeBtn) closeBtn.addEventListener('click', onClose);
-      if (backdrop) backdrop.addEventListener('click', onClose);
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') onClose();
-      });
-    })();
-  </script>
-</body>
-</html>
+<body class="font-body-md text-body-md selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant/10">
+<div class="flex justify-between items-center px-margin-mobile lg:px-margin-desktop py-5 max-w-container-max mx-auto">
+<a href="/" aria-label="K &amp; A Performance home"><img src="images/kandalogo2.0-performance.svg" alt="K &amp; A Performance" class="nav-logo"/></a>
+<nav class="hidden md:flex items-center gap-12">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/services/">Services</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/faq/">FAQ</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/contact/">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<a class="hidden md:block border border-primary text-primary px-8 py-3 font-label-sm uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all rounded" href="/contact/">Start a Project</a>
+<button class="md:hidden text-primary" aria-label="Open menu" id="menu-btn">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile menu -->
+<nav id="mobile-menu" class="hidden md:hidden flex-col gap-2 px-margin-mobile pb-6 border-t border-outline-variant/10 bg-background">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase py-3" href="/">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase py-3" href="/services/">Services</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase py-3" href="/faq/">FAQ</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase py-3" href="/contact/">Contact</a>
+<a class="mt-2 border border-primary text-primary text-center px-8 py-3 font-label-sm uppercase tracking-widest rounded" href="/contact/">Start a Project</a>
+</nav>
+</header>
+<main>
+<!-- Hero -->
+<section class="relative min-h-screen flex items-center pt-32 pb-20 px-margin-mobile lg:px-margin-desktop overflow-hidden">
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
+<div class="max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter relative items-center">
+<div class="lg:col-span-7 z-20">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-[1px] bg-primary"></div>
+<span class="font-label-sm text-primary uppercase tracking-[0.4em]">Design &amp; Engineering Studio</span>
+</div>
+<h1 class="font-display-lg text-display-lg-mobile lg:text-display-lg mb-12 leading-[0.9]">
+Design That <br/>
+<span class="serif-italic text-primary font-light">Moves</span> <br/>
+Your Brand.
+</h1>
+<div class="max-w-md">
+<p class="font-body-lg text-on-surface-variant mb-12">
+High-performance websites and AI-driven systems, crafted with technical mastery and aesthetic excellence.
+</p>
+<div class="flex flex-wrap gap-8 items-center">
+<a class="inline-flex items-center gap-4 bg-primary text-on-primary px-10 py-5 font-label-sm uppercase tracking-widest hover:brightness-110 transition-all rounded" href="/contact/">
+Start a Project <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+<a class="group flex items-center gap-4 font-label-sm text-primary uppercase tracking-widest" href="/services/">
+<span>Explore Services</span>
+<span class="w-8 h-[1px] bg-primary group-hover:w-16 transition-all"></span>
+</a>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 lg:col-start-9 relative hidden lg:flex items-center justify-center min-h-[520px]">
+<div class="absolute w-[460px] h-[460px] rounded-[9999px] border border-primary/10"></div>
+<div class="absolute w-[340px] h-[340px] rounded-[9999px] border border-primary/20"></div>
+<div class="absolute w-[210px] h-[210px] rounded-[9999px] border border-primary/30" style="background:radial-gradient(circle, rgba(255,183,125,0.16), transparent 70%)"></div>
+<span class="relative font-display-lg text-primary text-7xl select-none">K&amp;A</span>
+</div>
+</div>
+</section>
+<!-- Marquee -->
+<div class="py-10 border-y border-outline-variant/10 overflow-hidden bg-surface-container-lowest">
+<div class="flex whitespace-nowrap animate-marquee">
+<div class="flex items-center gap-20 px-10">
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> Web Design</span>
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> AI Integration</span>
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> Brand &amp; Digital Design</span>
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> SEO &amp; Analytics</span>
+</div>
+<div class="flex items-center gap-20 px-10" aria-hidden="true">
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> Web Design</span>
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> AI Integration</span>
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> Brand &amp; Digital Design</span>
+<span class="technical-accent flex items-center gap-4"><span class="text-primary">//</span> SEO &amp; Analytics</span>
+</div>
+</div>
+</div>
+<!-- Services -->
+<section class="py-section-gap px-margin-mobile lg:px-margin-desktop bg-background">
+<div class="max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-32 items-end">
+<div class="lg:col-span-7">
+<span class="technical-accent text-primary mb-6 block">Capabilities</span>
+<h2 class="font-display-lg text-6xl md:text-7xl">Strategy behind <br/><span class="serif-italic">every deliverable.</span></h2>
+</div>
+<div class="lg:col-span-4 lg:col-start-9">
+<p class="font-body-md text-on-surface-variant border-l border-primary/30 pl-8 py-2">
+We build solutions that perform, moving beyond aesthetics into functional excellence.
+</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-32">
+<!-- Web Design -->
+<div class="group relative">
+<div class="mb-12 overflow-hidden border border-outline-variant/10 rounded">
+<div class="aspect-square bg-surface-container relative flex items-center justify-center">
+<span class="material-symbols-outlined text-[80px] text-primary/20 group-hover:text-primary/40 transition-all group-hover:scale-110 duration-700">language</span>
+</div>
+</div>
+<h3 class="font-display-lg text-4xl mb-6">Web Design</h3>
+<p class="font-body-md text-on-surface-variant mb-8 max-w-sm">Custom, high-performance websites built to convert — fast, responsive, and search-ready from day one.</p>
+<div class="technical-hairline mb-8"></div>
+<ul class="space-y-3 font-label-sm text-[10px] text-on-surface/80">
+<li class="flex items-center gap-3"><span class="text-primary">»</span> RESPONSIVE CUSTOM BUILDS</li>
+<li class="flex items-center gap-3"><span class="text-primary">»</span> SEO &amp; ANALYTICS</li>
+</ul>
+</div>
+<!-- AI Integration -->
+<div class="group relative md:mt-24">
+<div class="mb-12 overflow-hidden border border-outline-variant/10 rounded">
+<div class="aspect-square bg-surface-container relative flex items-center justify-center">
+<span class="material-symbols-outlined text-[80px] text-primary/20 group-hover:text-primary/40 transition-all group-hover:scale-110 duration-700">smart_toy</span>
+</div>
+</div>
+<h3 class="font-display-lg text-4xl mb-6">AI Integration</h3>
+<p class="font-body-md text-on-surface-variant mb-8 max-w-sm">Claude-powered assistants, automations, and data systems wired directly into your site and workflow.</p>
+<div class="technical-hairline mb-8"></div>
+<ul class="space-y-3 font-label-sm text-[10px] text-on-surface/80">
+<li class="flex items-center gap-3"><span class="text-primary">»</span> CLAUDE API INTEGRATIONS</li>
+<li class="flex items-center gap-3"><span class="text-primary">»</span> WORKFLOW AUTOMATION</li>
+</ul>
+</div>
+<!-- Brand & Digital Design -->
+<div class="group relative lg:mt-48">
+<div class="mb-12 overflow-hidden border border-outline-variant/10 rounded">
+<div class="aspect-square bg-surface-container relative flex items-center justify-center">
+<span class="material-symbols-outlined text-[80px] text-primary/20 group-hover:text-primary/40 transition-all group-hover:scale-110 duration-700">palette</span>
+</div>
+</div>
+<h3 class="font-display-lg text-4xl mb-6">Brand &amp; Digital</h3>
+<p class="font-body-md text-on-surface-variant mb-8 max-w-sm">Logos, visual identity, and social-ready assets that make your brand unmistakable across every channel.</p>
+<div class="technical-hairline mb-8"></div>
+<ul class="space-y-3 font-label-sm text-[10px] text-on-surface/80">
+<li class="flex items-center gap-3"><span class="text-primary">»</span> LOGO &amp; IDENTITY</li>
+<li class="flex items-center gap-3"><span class="text-primary">»</span> SOCIAL CONTENT</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Case Study -->
+<section class="py-section-gap bg-surface-container-lowest">
+<div class="px-margin-mobile lg:px-margin-desktop max-w-container-max mx-auto relative">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<div class="lg:col-span-7 relative order-2 lg:order-1">
+<div class="relative z-10 border border-outline-variant/10 p-1 bg-background rounded">
+<img class="w-full grayscale hover:grayscale-0 transition-all duration-700 rounded-sm" src="images/fixalways-hero.jpg" alt="FixAlways — Florida home services directory"/>
+</div>
+<div class="absolute -top-12 -left-12 w-32 h-32 border-t border-l border-primary/30 hidden lg:block"></div>
+</div>
+<div class="lg:col-span-4 lg:col-start-9 order-1 lg:order-2 mb-16 lg:mb-0">
+<span class="technical-accent text-primary mb-6 block">Case Study: FixAlways</span>
+<h2 class="font-display-lg text-5xl md:text-6xl mb-8 leading-tight">AI-Driven <br/><span class="serif-italic">Precision.</span></h2>
+<p class="font-body-lg text-on-surface-variant mb-12">A full-stack Florida home-services directory powered by real-time Google Places data and an Anthropic Claude assistant.</p>
+<div class="space-y-10 mb-16">
+<div class="flex gap-6 items-start">
+<span class="text-primary pt-1 text-lg leading-none">»</span>
+<div>
+<h4 class="text-on-surface font-semibold mb-2 uppercase tracking-widest text-xs">Google Enrichment</h4>
+<p class="text-on-surface-variant text-sm font-light">Automated data enrichment for thousands of vendors across 188+ cities.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<span class="text-primary pt-1 text-lg leading-none">»</span>
+<div>
+<h4 class="text-on-surface font-semibold mb-2 uppercase tracking-widest text-xs">Claude Concierge</h4>
+<p class="text-on-surface-variant text-sm font-light">Natural-language matching that connects users with local providers instantly.</p>
+</div>
+</div>
+</div>
+<a class="inline-flex items-center gap-4 bg-primary text-on-primary px-10 py-5 font-label-sm uppercase tracking-widest hover:brightness-110 transition-all rounded" href="https://fixalways.com" target="_blank" rel="noopener">
+Launch Live <span class="material-symbols-outlined text-sm">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Team -->
+<section class="py-section-gap px-margin-mobile lg:px-margin-desktop bg-background">
+<div class="max-w-container-max mx-auto">
+<div class="mb-32 flex justify-between items-start border-b border-outline-variant/10 pb-12">
+<div>
+<h2 class="font-display-lg text-6xl md:text-7xl">Two Designers. <br/><span class="serif-italic">One Vision.</span></h2>
+</div>
+<div class="hidden lg:block technical-accent max-w-[200px] text-right">
+Human-centric engineering for the digital era.
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter gap-y-32">
+<div class="group">
+<div class="aspect-[4/5] mb-10 overflow-hidden relative border border-outline-variant/10 rounded">
+<img class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 scale-105 group-hover:scale-100" src="images/Alex-Image.jpg" alt="Alex Anderson"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+</div>
+<div class="flex items-end justify-between border-b border-outline-variant/10 pb-6 mb-6">
+<h3 class="font-display-lg text-4xl">Alex</h3>
+<span class="technical-accent text-primary">Design &amp; Development</span>
+</div>
+<p class="font-body-md text-on-surface-variant max-w-md">Builds immersive digital experiences engineered for performance — from custom websites to AI-driven systems.</p>
+</div>
+<div class="group md:mt-40">
+<div class="aspect-[4/5] mb-10 overflow-hidden relative border border-outline-variant/10 rounded">
+<img class="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 scale-105 group-hover:scale-100" src="images/Kristina-Image.jpg" alt="Kristina Anderson"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60"></div>
+</div>
+<div class="flex items-end justify-between border-b border-outline-variant/10 pb-6 mb-6">
+<h3 class="font-display-lg text-4xl">Kristina</h3>
+<span class="technical-accent text-primary">Strategy &amp; Content</span>
+</div>
+<p class="font-body-md text-on-surface-variant max-w-md">Leads strategy and content with 15+ years turning complex ideas into clear, engaging experiences.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA -->
+<section class="py-section-gap px-margin-mobile lg:px-margin-desktop">
+<div class="max-w-container-max mx-auto border border-outline-variant/10 p-16 md:p-40 text-center relative overflow-hidden bg-surface-container-lowest rounded-xl">
+<div class="relative z-10 max-w-4xl mx-auto">
+<h2 class="font-display-lg text-5xl md:text-7xl mb-12">Ready to build something <br/><span class="serif-italic">exceptional?</span></h2>
+<p class="font-body-lg text-on-surface-variant mb-16 max-w-2xl mx-auto">Tell us about your project. We'll map out exactly how to bring your vision to life with precision and craft.</p>
+<div class="flex flex-col items-center gap-10">
+<a class="bg-primary text-on-primary px-16 py-6 font-label-sm uppercase tracking-[0.3em] hover:scale-105 transition-all shadow-xl rounded" href="/contact/">Start a Project</a>
+<div class="technical-hairline w-32"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background border-t border-outline-variant/10 py-24 lg:py-32">
+<div class="px-margin-mobile lg:px-margin-desktop max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20">
+<div class="lg:col-span-5">
+<a href="/" aria-label="K &amp; A Performance home"><img src="images/kandalogo2.0-performance.svg" alt="K &amp; A Performance" class="footer-logo mb-8"/></a>
+<p class="text-on-surface-variant font-body-md mb-12 max-w-sm">Elevated design for brands that want to be noticed. Based in Florida, working with clients nationwide.</p>
+<div class="technical-accent text-[9px] opacity-40">© 2026 K&amp;A PERFORMANCE. ALL RIGHTS RESERVED.</div>
+</div>
+<div class="lg:col-span-6 lg:col-start-7 grid grid-cols-2 md:grid-cols-3 gap-12 lg:gap-16">
+<div>
+<h4 class="technical-accent text-primary mb-8">Navigate</h4>
+<ul class="space-y-6">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/">Home</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/services/">Services</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/faq/">FAQ</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/contact/">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="technical-accent text-primary mb-8">Capabilities</h4>
+<ul class="space-y-6">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/services/">Web Design</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/services/">AI Integration</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/services/">Brand &amp; Digital</a></li>
+</ul>
+</div>
+<div>
+<h4 class="technical-accent text-primary mb-8">Connect</h4>
+<ul class="space-y-6">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/contact/">Start a Project</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm uppercase" href="/contact/">Get a Quote</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+<script>
+  // Mobile menu toggle
+  (function(){
+    var b=document.getElementById('menu-btn'), m=document.getElementById('mobile-menu');
+    if(b&&m){ b.addEventListener('click',function(){ m.classList.toggle('hidden'); m.classList.toggle('flex'); }); }
+  })();
+  // Scroll reveal (progressive enhancement — content is visible without JS)
+  document.addEventListener('DOMContentLoaded', function(){
+    if(!('IntersectionObserver' in window)) return;
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; obs.unobserve(e.target);} });
+    },{threshold:0.08});
+    document.querySelectorAll('main section').forEach(function(el){
+      el.style.opacity='0'; el.style.transform='translateY(40px)';
+      el.style.transition='opacity 0.9s ease, transform 0.9s ease';
+      obs.observe(el);
+    });
+  });
+</script>
+</body></html>
