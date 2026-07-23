@@ -1,3 +1,18 @@
+// Inner-page captures that only appear in the hero stack — they scatter with
+// the mosaic for density, then fly off as the home pages form the horseshoe.
+export const stackExtras = [
+  { img: '/images/work-extras/fdaaf-project.webp' },
+  { img: '/images/work-extras/fdaaf-projects.webp' },
+  { img: '/images/work-extras/pmbuild-makeovers.webp' },
+  { img: '/images/work-extras/pmbuild-alumni.webp' },
+  { img: '/images/work-extras/fixalways-hvac.webp' },
+  { img: '/images/work-extras/fixalways-plumbing.webp' },
+  { img: '/images/work-extras/familypractice-dpc.webp' },
+  { img: '/images/work-extras/familypractice-medicine.webp' },
+  { img: '/images/work-extras/pbj-services.webp' },
+  { img: '/images/work-extras/pbj-about.webp' },
+];
+
 export const projects = [
   {
     slug: 'fdaaf',

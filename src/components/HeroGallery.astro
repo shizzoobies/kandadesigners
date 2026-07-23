@@ -11,7 +11,7 @@
 // transformPerspective and explicit z-index depth ordering (painter's
 // algorithm, no preserve-3d) — so cards can never slice through each other,
 // and stack poses face the viewer flat.
-import { projects } from '../data/work.js';
+import { projects, stackExtras } from '../data/work.js';
 
 const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 ---
@@ -78,6 +78,34 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
             />
           </div>
         ))}
+        <!-- inner-page extras: stack-only set dressing. They scatter with the
+             mosaic, then disperse into the depths while the home pages sweep
+             into the ring. Desktop-only, purely decorative. -->
+        {stackExtras.map((e, i) => (
+          <div class="hg-extra glow-frame bg-surface" aria-hidden="true">
+            {i % 2 === 0 ? (
+              <span class="flex items-center gap-1.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#EC6A5E]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#F4BF4F]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#61C554]"></span>
+                <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+              </span>
+            ) : (
+              <span class="flex items-center justify-end gap-3.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5">
+                <span class="text-[9px] leading-none text-ink/45">&#8213;</span>
+                <span class="text-[9px] leading-none text-ink/45">&#9633;</span>
+                <span class="text-[10px] leading-none text-ink/45">&#10005;</span>
+              </span>
+            )}
+            <img
+              src={e.img}
+              alt=""
+              class="aspect-[16/10] w-full object-cover object-top"
+              loading="eager"
+              fetchpriority="low"
+            />
+          </div>
+        ))}
       </div>
     </div>
 
@@ -125,6 +153,26 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     .hg-slot {
       width: 72%;
     }
+  }
+  /* Extras only exist for the desktop scatter act. */
+  .hg-extra {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(42%, 520px);
+    display: block;
+    overflow: hidden;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    pointer-events: none;
+  }
+  @media (max-width: 1023px) {
+    .hg-extra {
+      display: none;
+    }
+  }
+  :global(.motion-reduced) .hg-extra {
+    display: none;
   }
   .hg-slot.hg-side {
     cursor: pointer;
@@ -198,6 +246,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   const section = document.getElementById('gallery');
   const stage = document.getElementById('hg-stage');
   const slots = [...document.querySelectorAll('.hg-slot')];
+  const extras = [...document.querySelectorAll('.hg-extra')];
   const dots = [...document.querySelectorAll('.hg-dot')];
   const title = document.getElementById('hg-title');
   const blurb = document.getElementById('hg-blurb');
@@ -223,6 +272,20 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     { tx: 0.03,  ty: 0.02,  r: 10,  s: 1.62, a: 1    }, // fixalways — center, biggest
     { tx: 0.4,   ty: 0.26,  r: -8,  s: 1.5,  a: 0.95 }, // foremotion — bottom right
     { tx: -0.02, ty: 0.36,  r: -11, s: 1.42, a: 0.95 }, // family practice — bottom center
+  ];
+
+  // Inner-page tiles slot into the seams of the mosaic, one layer back.
+  const EXTRA_STACK = [
+    { tx: -0.22, ty: -0.36, r: 5,   s: 1.22 },
+    { tx: 0.21,  ty: -0.3,  r: -9,  s: 1.26 },
+    { tx: -0.48, ty: -0.04, r: -6,  s: 1.28 },
+    { tx: 0.48,  ty: -0.02, r: 8,   s: 1.3  },
+    { tx: -0.21, ty: 0.28,  r: -5,  s: 1.22 },
+    { tx: 0.22,  ty: 0.3,   r: 9,   s: 1.26 },
+    { tx: -0.45, ty: 0.44,  r: 4,   s: 1.18 },
+    { tx: 0.44,  ty: 0.46,  r: -6,  s: 1.2  },
+    { tx: 0.01,  ty: -0.1,  r: 4,   s: 1.16 },
+    { tx: -0.04, ty: 0.48,  r: -8,  s: 1.2  },
   ];
 
   const relOf = (i, cur) => {
@@ -327,6 +390,20 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
       });
       slot.style.zIndex = String(10 + i);
     });
+    // Extras scatter one layer behind the mains.
+    gsap.set(extras, { xPercent: -50, yPercent: -50, transformPerspective: 1600, transformOrigin: '50% 50%' });
+    extras.forEach((el, i) => {
+      const t = EXTRA_STACK[i % EXTRA_STACK.length];
+      gsap.set(el, {
+        x: t.tx * window.innerWidth,
+        y: t.ty * window.innerHeight,
+        z: 0,
+        rotation: t.r,
+        scale: t.s,
+        opacity: 0.92,
+      });
+      el.style.zIndex = String(2 + (i % EXTRA_STACK.length));
+    });
     gsap.set([ui, heading], { autoAlpha: 0, y: 24 });
 
     const endPoses = slots.map((_, i) => ringPose(relOf(i, 0)));
@@ -360,6 +437,17 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     });
 
     tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.2, ease: 'power1.in' }, 0.05)
+      // inner pages disperse into the depths while the home pages regroup
+      .to(extras, {
+        z: -620,
+        y: (i) => (EXTRA_STACK[i % EXTRA_STACK.length].ty > 0 ? 140 : -140),
+        opacity: 0,
+        scale: 0.78,
+        rotation: 0,
+        duration: 0.45,
+        stagger: 0.03,
+        ease: 'power2.in',
+      }, 0.1)
       .to(slots, {
         x: (i) => endPoses[i].x,
         y: 0,
@@ -388,6 +476,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
       }, 1.62);
   } else {
     // Mobile / reduced motion: no scatter, ring formed, UI visible.
+    gsap.set(extras, { display: 'none' });
     goTo(0, false);
     stage.classList.add('hg-live');
     if (heading) gsap.set(heading, { autoAlpha: 1 });
