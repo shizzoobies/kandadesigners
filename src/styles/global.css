@@ -1,0 +1,114 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/inter";
+
+@theme {
+  --color-canvas: #0B0B10;
+  --color-surface: #14141C;
+  --color-ink: #EDEDF2;
+  --color-muted: #9A9AAB;
+  --color-accent: #8A7CFF;
+  --color-accent-hot: #B9AFFF;
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-heading: "Space Grotesk Variable", system-ui, sans-serif;
+  --font-body: "Inter Variable", system-ui, sans-serif;
+}
+
+:root {
+  --dur-fast: 0.4s;
+  --dur-base: 0.8s;
+  --dur-slow: 1.4s;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-canvas);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* The single elevation treatment used site-wide. */
+.glow-frame {
+  border: 1px solid rgb(138 124 255 / 0.25);
+  border-radius: 12px;
+  box-shadow: 0 0 60px -20px rgb(138 124 255 / 0.35);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+@layer components {
+  .btn-accent {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    color: var(--color-canvas);
+    background: var(--color-accent);
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    transition: background var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .btn-accent:hover {
+    background: var(--color-accent-hot);
+    transform: translateY(-2px);
+  }
+  .btn-ghost {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    border: 1px solid rgb(237 237 242 / 0.25);
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    transition: border-color var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+}
+
+/* Nav state toggled by the motion engine on scroll. */
+[data-nav] {
+  transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  border-bottom: 1px solid transparent;
+}
+[data-nav].nav-scrolled {
+  background: rgb(11 11 16 / 0.82);
+  backdrop-filter: blur(12px);
+  border-bottom-color: rgb(237 237 242 / 0.08);
+}
+
+/* White treatment for the brand mark on the dark canvas. */
+.logo-white {
+  filter: brightness(0) invert(1);
+}
+
+/* Reduced motion: everything visible and static. */
+.motion-reduced [data-animate],
+.motion-reduced [data-pin-step] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.motion-reduced svg[data-animate="line-draw"] * {
+  stroke-dasharray: none !important;
+  stroke-dashoffset: 0 !important;
+}
