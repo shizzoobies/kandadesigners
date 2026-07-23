@@ -15,13 +15,15 @@
   font-display: swap;
 }
 
+/* Warm-light editorial theme. Ivory canvas, espresso ink, violet accent
+   deepened for AA on light. The dark values live only in .dark-band. */
 @theme {
-  --color-canvas: #0B0B10;
-  --color-surface: #14141C;
-  --color-ink: #EDEDF2;
-  --color-muted: #9A9AAB;
-  --color-accent: #8A7CFF;
-  --color-accent-hot: #B9AFFF;
+  --color-canvas: #F7F3EC;
+  --color-surface: #FFFDF9;
+  --color-ink: #221C15;
+  --color-muted: #7A7166;
+  --color-accent: #6C5CE7;
+  --color-accent-hot: #5646D6;
   --font-display: "Grivon", Georgia, serif;
   --font-heading: "Neutrix", system-ui, sans-serif;
   --font-body: "Neutrix", system-ui, sans-serif;
@@ -47,7 +49,7 @@ body {
 
 ::selection {
   background: var(--color-accent);
-  color: var(--color-canvas);
+  color: #FFFDF9;
 }
 
 :focus-visible {
@@ -56,13 +58,37 @@ body {
   border-radius: 2px;
 }
 
-/* The single elevation treatment used site-wide. */
+/* The single elevation treatment used site-wide: warm card lift with a
+   faint violet ambient so the frames still feel branded. */
 .glow-frame {
-  border: 1px solid rgb(138 124 255 / 0.25);
+  border: 1px solid rgb(34 28 21 / 0.08);
   border-radius: 12px;
-  box-shadow: 0 0 60px -20px rgb(138 124 255 / 0.35);
+  box-shadow:
+    0 1px 2px rgb(34 28 21 / 0.05),
+    0 12px 32px -12px rgb(34 28 21 / 0.16),
+    0 24px 64px -32px rgb(108 92 231 / 0.25);
   background: var(--color-surface);
   overflow: hidden;
+}
+
+/* The one deliberate dark moment on the site (homepage AI band). Re-declares
+   the theme variables locally, so every token utility inside adapts. */
+.dark-band {
+  --color-canvas: #0B0B10;
+  --color-surface: #14141C;
+  --color-ink: #EDEDF2;
+  --color-muted: #9A9AAB;
+  --color-accent: #8A7CFF;
+  --color-accent-hot: #B9AFFF;
+  background: linear-gradient(180deg, #0B0B10 0%, #14121D 100%);
+  color: var(--color-ink);
+}
+.dark-band .glow-frame {
+  border-color: rgb(138 124 255 / 0.25);
+  box-shadow: 0 0 60px -20px rgb(138 124 255 / 0.35);
+}
+.dark-band .btn-accent {
+  color: #0B0B10;
 }
 
 @layer components {
@@ -71,7 +97,7 @@ body {
     font-family: var(--font-heading);
     font-size: 0.875rem;
     letter-spacing: 0.04em;
-    color: var(--color-canvas);
+    color: #FFFDF9;
     background: var(--color-accent);
     border-radius: 9999px;
     padding: 0.75rem 1.5rem;
@@ -87,7 +113,7 @@ body {
     font-size: 0.875rem;
     letter-spacing: 0.04em;
     color: var(--color-ink);
-    border: 1px solid rgb(237 237 242 / 0.25);
+    border: 1px solid rgb(34 28 21 / 0.25);
     border-radius: 9999px;
     padding: 0.75rem 1.5rem;
     transition: border-color var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo);
@@ -104,14 +130,15 @@ body {
   border-bottom: 1px solid transparent;
 }
 [data-nav].nav-scrolled {
-  background: rgb(11 11 16 / 0.82);
+  background: rgb(247 243 236 / 0.85);
   backdrop-filter: blur(12px);
-  border-bottom-color: rgb(237 237 242 / 0.08);
+  border-bottom-color: rgb(34 28 21 / 0.08);
 }
 
-/* White treatment for the brand mark on the dark canvas. */
+/* Brand mark renders in its original colors on the light canvas. The class
+   stays so a future dark context can re-apply a treatment in one place. */
 .logo-white {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 /* Reduced motion: everything visible and static. */

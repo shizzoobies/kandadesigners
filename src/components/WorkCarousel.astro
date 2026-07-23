@@ -1,0 +1,211 @@
+---
+// Cycling work showcase: center card crisp, neighbors tilted back in
+// perspective, caption crossfades with the active project. Auto-advances;
+// arrows/dots always work; reduced motion = no autoplay, instant swaps.
+import { projects } from '../data/work.js';
+---
+<div
+  id="work-carousel"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Recent builds"
+  class="relative"
+>
+  <div class="wc-stage relative mx-auto h-[19rem] w-full max-w-5xl sm:h-[22rem] md:h-[26rem]">
+    {projects.map((p, i) => (
+      <a
+        href="/work/"
+        class="wc-card glow-frame absolute left-1/2 top-0 block w-[82%] sm:w-[62%] md:w-[56%]"
+        data-index={i}
+        aria-hidden={i === 0 ? 'false' : 'true'}
+        tabindex={i === 0 ? 0 : -1}
+      >
+        <span class="flex items-center gap-1.5 border-b border-ink/10 px-4 py-2.5" aria-hidden="true">
+          <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+          <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+          <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+          <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+        </span>
+        <img
+          src={p.img}
+          alt={`${p.title} website screenshot`}
+          class="aspect-[16/10] w-full object-cover object-top"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+        />
+      </a>
+    ))}
+  </div>
+
+  <div class="mx-auto mt-8 min-h-[7.5rem] max-w-2xl text-center md:min-h-[6.5rem]">
+    <h3 id="wc-title" class="font-heading text-xl tracking-wide text-ink"></h3>
+    <p id="wc-blurb" class="mt-2 text-sm leading-relaxed text-muted"></p>
+    <p class="sr-only" id="wc-live" aria-live="polite"></p>
+  </div>
+
+  <div class="mt-6 flex items-center justify-center gap-6">
+    <button type="button" id="wc-prev" class="wc-arrow" aria-label="Previous project">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4 7 10l5.5 6"/></svg>
+    </button>
+    <div id="wc-dots" class="flex items-center gap-3" role="tablist" aria-label="Choose project">
+      {projects.map((p, i) => (
+        <button
+          type="button"
+          class="wc-dot"
+          role="tab"
+          data-index={i}
+          aria-label={`Show ${p.title}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+        ></button>
+      ))}
+    </div>
+    <button type="button" id="wc-next" class="wc-arrow" aria-label="Next project">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4 13 10l-5.5 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  #work-carousel {
+    overflow-x: clip;
+  }
+  .wc-stage {
+    perspective: 1400px;
+  }
+  .wc-card {
+    transform-origin: center center;
+    transition:
+      transform 0.7s var(--ease-out-expo),
+      opacity 0.7s var(--ease-out-expo);
+    will-change: transform, opacity;
+  }
+  .wc-card.pos-center {
+    transform: translateX(-50%) scale(1) rotateY(0deg);
+    opacity: 1;
+    z-index: 30;
+  }
+  .wc-card.pos-left {
+    transform: translateX(-102%) scale(0.78) rotateY(14deg);
+    opacity: 0.5;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .wc-card.pos-right {
+    transform: translateX(2%) scale(0.78) rotateY(-14deg);
+    opacity: 0.5;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .wc-card.pos-hidden {
+    transform: translateX(-50%) scale(0.6);
+    opacity: 0;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .wc-arrow {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(34 28 21 / 0.2);
+    color: var(--color-ink);
+    transition: border-color var(--dur-fast) ease, color var(--dur-fast) ease;
+  }
+  .wc-arrow:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .wc-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: rgb(34 28 21 / 0.18);
+    transition: background var(--dur-fast) ease, transform var(--dur-fast) ease;
+  }
+  .wc-dot[aria-selected="true"] {
+    background: var(--color-accent);
+    transform: scale(1.35);
+  }
+  .wc-caption-fade {
+    transition: opacity 0.3s ease;
+  }
+  :global(.motion-reduced) .wc-card,
+  :global(.motion-reduced) .wc-dot,
+  :global(.motion-reduced) .wc-caption-fade {
+    transition: none !important;
+  }
+</style>
+
+<script>
+  import { projects } from '../data/work.js';
+
+  const cards = [...document.querySelectorAll('#work-carousel .wc-card')];
+  const dots = [...document.querySelectorAll('#work-carousel .wc-dot')];
+  const title = document.getElementById('wc-title');
+  const blurb = document.getElementById('wc-blurb');
+  const live = document.getElementById('wc-live');
+  const region = document.getElementById('work-carousel');
+  const reduced = window.__motion?.reduced ?? false;
+
+  const n = projects.length;
+  let current = 0;
+  let timer = null;
+
+  title.classList.add('wc-caption-fade');
+  blurb.classList.add('wc-caption-fade');
+
+  function setCaption(i) {
+    title.style.opacity = '0';
+    blurb.style.opacity = '0';
+    const swap = () => {
+      title.textContent = projects[i].title;
+      blurb.textContent = projects[i].blurb;
+      live.textContent = `Showing ${projects[i].title}, project ${i + 1} of ${n}`;
+      title.style.opacity = '1';
+      blurb.style.opacity = '1';
+    };
+    reduced ? swap() : setTimeout(swap, 200);
+  }
+
+  function layout() {
+    cards.forEach((card, i) => {
+      const rel = (i - current + n) % n;
+      card.classList.remove('pos-center', 'pos-left', 'pos-right', 'pos-hidden');
+      if (rel === 0) card.classList.add('pos-center');
+      else if (rel === 1) card.classList.add('pos-right');
+      else if (rel === n - 1) card.classList.add('pos-left');
+      else card.classList.add('pos-hidden');
+      const isCenter = rel === 0;
+      card.setAttribute('aria-hidden', String(!isCenter));
+      card.tabIndex = isCenter ? 0 : -1;
+    });
+    dots.forEach((dot, i) => dot.setAttribute('aria-selected', String(i === current)));
+  }
+
+  function goTo(i) {
+    current = (i + n) % n;
+    layout();
+    setCaption(current);
+  }
+
+  function startAutoplay() {
+    if (reduced || timer) return;
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+  function stopAutoplay() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  document.getElementById('wc-prev').addEventListener('click', () => { stopAutoplay(); goTo(current - 1); });
+  document.getElementById('wc-next').addEventListener('click', () => { stopAutoplay(); goTo(current + 1); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAutoplay(); goTo(i); }));
+
+  region.addEventListener('pointerenter', stopAutoplay);
+  region.addEventListener('focusin', stopAutoplay);
+  region.addEventListener('pointerleave', () => { if (!document.activeElement || !region.contains(document.activeElement)) startAutoplay(); });
+
+  goTo(0);
+  startAutoplay();
+</script>
