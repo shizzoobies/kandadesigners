@@ -10,8 +10,10 @@ import { projects } from '../data/work.js';
 >
   <WireframeHero />
 
-  <!-- Craft sequence: the page builds itself as you scroll. -->
-  <section data-pin-sequence class="relative h-screen overflow-hidden" aria-label="How we build">
+  <!-- Craft sequence: the page builds itself as you scroll.
+       Sticky viewport + scrubbed timeline; wrapper height set by motion.js. -->
+  <section data-pin-sequence class="relative" aria-label="How we build">
+    <div data-pin-viewport class="sticky top-0 h-screen overflow-hidden">
     <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
       <div class="w-full max-w-3xl text-center">
         <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Structure</p>
@@ -64,6 +66,7 @@ import { projects } from '../data/work.js';
         </figure>
         <p class="mt-8 text-muted">Then we make it move — and think.</p>
       </div>
+    </div>
     </div>
   </section>
 

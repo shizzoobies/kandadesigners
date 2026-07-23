@@ -58,13 +58,15 @@ if (reduced) {
     });
   });
 
+  // Pinning is done with CSS position:sticky (see [data-pin-viewport]), not
+  // ScrollTrigger's pin — fixed-position swaps register as layout shifts and
+  // wreck CLS; sticky movement is exempt. The timeline only scrubs opacity
+  // and transforms.
   document.querySelectorAll('[data-pin-sequence]').forEach((seq) => {
     const steps = seq.querySelectorAll('[data-pin-step]');
+    seq.style.height = `${(steps.length + 1) * 100}vh`;
     const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: seq, start: 'top top', end: `+=${steps.length * 100}%`,
-        pin: true, scrub: 0.6,
-      },
+      scrollTrigger: { trigger: seq, start: 'top top', end: 'bottom bottom', scrub: 0.6 },
     });
     steps.forEach((step, i) => {
       if (i > 0) tl.from(step, { opacity: 0, y: 30, duration: 1 });

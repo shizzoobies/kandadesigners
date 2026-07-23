@@ -126,6 +126,11 @@ body {
   height: auto !important;
   overflow: visible !important;
 }
+.motion-reduced [data-pin-viewport] {
+  position: static !important;
+  height: auto !important;
+  overflow: visible !important;
+}
 .motion-reduced [data-pin-step] {
   position: static !important;
   padding: 3rem 1.5rem;
