@@ -1,12 +1,12 @@
 ---
-// Hero intro: a client site is built through four phases, each drifting at
-// its own spot and angle, with long overlapping dissolves — two phases
-// visibly developing at once — before settling into the finished page.
-// The finished mock is art-directed, not templated: full-bleed photography,
-// a vertical section rail, oversized display type overlapping the image,
-// one floating exhibit card, a mixed-scale image strip with a press quote,
-// and a hairline footer. Fictional client "Atelier North", pine/brass
-// palette (deliberately not ours), Pixabay photography.
+// Hero intro: a client site develops through four phases that dissolve
+// into one another in place — sketch, blocking, styled, finished — with
+// overlapping fades (two phases visible mid-transition). The frame itself
+// never moves; the only life after settle is a very slow ken-burns inside
+// the photograph. Finished mock is an editorial page for fictional client
+// "Atelier North" (pine/brass, Pixabay photography): full-bleed image,
+// vertical section rail, stacked display type, a "now showing" editorial
+// row (no floating cards), press quote, mixed-scale strip, hairline footer.
 ---
 <section class="relative flex min-h-screen items-center overflow-hidden px-6">
   <div
@@ -14,158 +14,167 @@
     class="pointer-events-none absolute right-[-6%] top-1/2 hidden w-[60%] -translate-y-1/2 lg:block"
     aria-hidden="true"
   >
-    <div id="wf-mover">
-      <div id="wf-frame" class="relative aspect-[800/540] w-full overflow-hidden rounded-[14px] border border-ink/10 bg-[#FBF9F4]">
+    <div id="wf-frame" class="wf-lit relative aspect-[800/540] w-full overflow-hidden rounded-[14px] border border-ink/10 bg-[#FBF9F4]">
 
-        <!-- PHASE 1 — wireframe sketch -->
-        <div data-stage="1" class="absolute inset-0">
-          <div class="absolute inset-x-0 top-0 h-[7%] border-b border-ink/25"></div>
-          <!-- vertical rail -->
-          <div class="absolute bottom-[12%] left-[2.5%] top-[10%] w-[3%] border border-ink/20"></div>
-          <!-- full-bleed photo slot with X -->
-          <div class="absolute bottom-[12%] right-0 top-[7%] w-[48%] border border-ink/25">
-            <span class="absolute left-0 top-0 h-[1px] w-[152%] origin-top-left rotate-[52deg] bg-ink/20"></span>
-            <span class="absolute bottom-0 left-0 h-[1px] w-[152%] origin-bottom-left -rotate-[52deg] bg-ink/20"></span>
-          </div>
-          <!-- headline lines overlapping photo edge -->
-          <div class="absolute left-[9%] top-[24%] h-[7%] w-[52%] border border-ink/25"></div>
-          <div class="absolute left-[9%] top-[33%] h-[7%] w-[44%] border border-ink/25"></div>
-          <div class="absolute left-[9%] top-[44%] h-[3%] w-[30%] border border-ink/20"></div>
-          <div class="absolute left-[9%] top-[50%] h-[5%] w-[16%] rounded-full border border-ink/25"></div>
-          <!-- season chip -->
-          <div class="absolute right-[4%] top-[11%] h-[4%] w-[14%] rounded-full border border-ink/25"></div>
-          <!-- floating card -->
-          <div class="absolute left-[38%] top-[60%] h-[13%] w-[24%] border border-ink/30 bg-[#FBF9F4]"></div>
-          <!-- mixed strip -->
-          <div class="absolute bottom-[13%] left-[9%] h-[11%] w-[20%] border border-ink/20"></div>
-          <div class="absolute bottom-[13%] left-[31%] h-[11%] w-[11%] border border-ink/20"></div>
-          <div class="absolute bottom-[13%] left-[44%] h-[11%] w-[8%] border border-ink/20"></div>
-          <!-- footer hairline -->
-          <div class="absolute inset-x-0 bottom-0 h-[9%] border-t border-ink/25"></div>
+      <!-- PHASE 1 — wireframe sketch -->
+      <div data-stage="1" class="absolute inset-0">
+        <div class="absolute inset-x-0 top-0 h-[7%] border-b border-ink/25"></div>
+        <div class="absolute bottom-[9%] left-[2.5%] top-[10%] w-[3%] border border-ink/20"></div>
+        <div class="absolute bottom-[9%] right-0 top-[7%] w-[48%] border border-ink/25">
+          <span class="absolute left-0 top-0 h-[1px] w-[152%] origin-top-left rotate-[52deg] bg-ink/20"></span>
+          <span class="absolute bottom-0 left-0 h-[1px] w-[152%] origin-bottom-left -rotate-[52deg] bg-ink/20"></span>
         </div>
-
-        <!-- PHASE 2 — gray blocking -->
-        <div data-stage="2" class="absolute inset-0 opacity-0">
-          <div class="absolute inset-x-0 top-0 h-[7%] bg-ink/10"></div>
-          <div class="absolute bottom-[12%] left-[2.5%] top-[10%] w-[3%] bg-ink/15"></div>
-          <div class="absolute bottom-[12%] right-0 top-[7%] w-[48%] bg-ink/15"></div>
-          <div class="absolute left-[9%] top-[24%] h-[7%] w-[52%] bg-ink/25"></div>
-          <div class="absolute left-[9%] top-[33%] h-[7%] w-[44%] bg-ink/20"></div>
-          <div class="absolute left-[9%] top-[44%] h-[3%] w-[30%] bg-ink/10"></div>
-          <div class="absolute left-[9%] top-[50%] h-[5%] w-[16%] rounded-full bg-ink/20"></div>
-          <div class="absolute right-[4%] top-[11%] h-[4%] w-[14%] rounded-full bg-ink/15"></div>
-          <div class="absolute left-[38%] top-[60%] h-[13%] w-[24%] bg-ink/20"></div>
-          <div class="absolute bottom-[13%] left-[9%] h-[11%] w-[20%] bg-ink/15"></div>
-          <div class="absolute bottom-[13%] left-[31%] h-[11%] w-[11%] bg-ink/15"></div>
-          <div class="absolute bottom-[13%] left-[44%] h-[11%] w-[8%] bg-ink/15"></div>
-          <div class="absolute inset-x-0 bottom-0 h-[9%] bg-ink/20"></div>
-        </div>
-
-        <!-- PHASE 3 — styled pass: palette + type land, photos still swatches -->
-        <div data-stage="3" class="absolute inset-0 opacity-0">
-          <div class="absolute inset-x-0 top-0 flex h-[7%] items-center gap-[0.9%] border-b border-[#21423A]/10 bg-white/85 px-[3%]">
-            <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/20"></span>
-            <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/20"></span>
-            <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/20"></span>
-          </div>
-          <div class="absolute bottom-[12%] left-[2.5%] top-[10%] flex w-[3%] items-center justify-center bg-[#21423A]">
-            <span class="rotate-180 font-heading text-[8px] tracking-[0.4em] text-[#FBF9F4]/80 [writing-mode:vertical-lr]">EXHIBITS · ARTISTS · VISIT</span>
-          </div>
-          <div class="absolute bottom-[12%] right-0 top-[7%] w-[48%] bg-gradient-to-br from-[#DCE8DE] to-[#B9CDBD]"></div>
-          <div class="absolute left-[9%] top-[22%] w-[56%]">
-            <p class="font-display text-[clamp(20px,2.2vw,32px)] leading-[1.02] text-[#21423A]">Craft,<br /><span class="italic text-[#B9822E]">curated.</span></p>
-            <span class="mt-[10px] block h-[5px] w-[52%] rounded-full bg-[#21423A]/20"></span>
-            <span class="mt-[10px] inline-block rounded-full bg-[#B9822E] px-[14px] py-[6px] font-heading text-[9px] text-white">Plan a visit</span>
-          </div>
-          <div class="absolute right-[4%] top-[11%] rounded-full border border-[#B9822E]/60 px-[10px] py-[3px] font-heading text-[8px] tracking-[0.18em] text-[#B9822E]">N° 04 — SPRING</div>
-          <div class="absolute left-[38%] top-[60%] h-[13%] w-[24%] rounded-[6px] bg-white shadow-md"></div>
-          <div class="absolute bottom-[13%] left-[9%] h-[11%] w-[20%] rounded-[4px] bg-[#CBDCCF]"></div>
-          <div class="absolute bottom-[13%] left-[31%] h-[11%] w-[11%] rounded-[4px] bg-[#CBDCCF]"></div>
-          <div class="absolute bottom-[13%] left-[44%] h-[11%] w-[8%] rounded-[4px] bg-[#CBDCCF]"></div>
-          <div class="absolute inset-x-0 bottom-0 h-[9%] border-t border-[#21423A]/15 bg-[#FBF9F4]"></div>
-        </div>
-
-        <!-- PHASE 4 — the finished, art-directed page -->
-        <div data-stage="4" class="absolute inset-0 opacity-0">
-          <!-- slim chrome -->
-          <div class="absolute inset-x-0 top-0 z-20 flex h-[7%] items-center gap-[0.9%] border-b border-[#21423A]/10 bg-white/90 px-[3%]">
-            <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/15"></span>
-            <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/15"></span>
-            <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/15"></span>
-            <span class="ml-auto flex h-[54%] w-[28%] items-center rounded-full border border-[#21423A]/10 bg-[#FBF9F4] px-[2%] font-heading text-[8.5px] text-[#6E7A72]">ateliernorth.com</span>
-          </div>
-
-          <!-- full-bleed photography, right half, edge to edge -->
-          <div class="absolute bottom-[9%] right-0 top-[7%] w-[48%] overflow-hidden">
-            <img id="wf-photo" src="/images/mock/pottery-hero.webp" alt="" class="h-full w-full object-cover" loading="eager" fetchpriority="high" />
-            <span class="absolute inset-0 bg-gradient-to-t from-[#21423A]/35 via-transparent to-transparent"></span>
-            <span class="absolute bottom-[4%] left-[6%] font-heading text-[8px] tracking-[0.22em] text-[#FBF9F4]/90">TERRA — NEW CERAMICS, OPENING MAY 4</span>
-          </div>
-
-          <!-- vertical section rail -->
-          <div class="absolute bottom-[9%] left-[2.5%] top-[10%] flex w-[3%] items-center justify-center bg-[#21423A]">
-            <span class="rotate-180 font-heading text-[8px] tracking-[0.4em] text-[#FBF9F4]/80 [writing-mode:vertical-lr]">EXHIBITS · ARTISTS · VISIT</span>
-          </div>
-
-          <!-- brand + season chip -->
-          <div class="absolute left-[9%] top-[11%] flex items-center gap-[7px]">
-            <span class="h-[10px] w-[10px] rounded-full bg-[#B9822E]"></span>
-            <span class="font-heading text-[10.5px] font-semibold tracking-[0.16em] text-[#21423A]">ATELIER NORTH</span>
-          </div>
-          <div class="absolute right-[4%] top-[11%] z-20 rounded-full border border-[#FBF9F4]/70 px-[10px] py-[3px] font-heading text-[8px] tracking-[0.18em] text-[#FBF9F4]">N° 04 — SPRING</div>
-
-          <!-- oversized display type, overlapping the photo edge -->
-          <div class="absolute left-[9%] top-[20%] z-10 w-[58%]">
-            <p class="font-display text-[clamp(24px,2.6vw,38px)] leading-[0.98] text-[#21423A]">
-              Craft,<br /><span class="italic text-[#B9822E]">curated.</span>
-            </p>
-            <p class="mt-[9px] max-w-[62%] font-body text-[9.5px] leading-relaxed text-[#6E7A72]">
-              Forty makers. One converted mill. Ceramics, fiber, glass, and
-              light — rotating seasonally.
-            </p>
-            <span class="mt-[10px] inline-flex items-center gap-[8px]">
-              <span class="rounded-full bg-[#B9822E] px-[14px] py-[6px] font-heading text-[9px] text-white">Plan a visit</span>
-              <span class="font-heading text-[8.5px] tracking-[0.14em] text-[#21423A] underline underline-offset-2">This season →</span>
-            </span>
-          </div>
-
-          <!-- floating exhibit card bridging copy and photo -->
-          <div class="absolute left-[38%] top-[59%] z-10 flex h-[14%] w-[25%] items-center gap-[6px] rounded-[6px] bg-white p-[5px] shadow-[0_10px_28px_-10px_rgba(33,66,58,0.4)]">
-            <span class="h-full w-[34%] shrink-0 overflow-hidden rounded-[4px]">
-              <img src="/images/mock/teaset.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
-            </span>
-            <span>
-              <span class="block font-heading text-[7.5px] font-semibold tracking-[0.14em] text-[#B9822E]">NOW SHOWING</span>
-              <span class="mt-[2px] block font-display text-[11px] italic leading-tight text-[#21423A]">Terra</span>
-            </span>
-          </div>
-
-          <!-- mixed-scale strip + press quote -->
-          <div class="absolute bottom-[12%] left-[9%] h-[12%] w-[20%] overflow-hidden rounded-[4px]">
-            <img src="/images/mock/loom.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
-          </div>
-          <div class="absolute bottom-[12%] left-[31%] h-[12%] w-[11%] overflow-hidden rounded-[4px]">
-            <img src="/images/mock/exhibit.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
-          </div>
-          <div class="absolute bottom-[12%] left-[44%] h-[12%] w-[7%] overflow-hidden rounded-[4px]">
-            <img src="/images/mock/vase.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
-          </div>
-          <p class="absolute left-[9%] top-[58%] w-[24%] font-display text-[10.5px] italic leading-snug text-[#21423A]/85">
-            “The most alive room in the city.” <span class="mt-[3px] block font-heading text-[7px] not-italic tracking-[0.14em] text-[#6E7A72]">COASTLINE JOURNAL</span>
-          </p>
-
-          <!-- hairline footer -->
-          <div class="absolute inset-x-0 bottom-0 flex h-[9%] items-center justify-between border-t border-[#21423A]/15 bg-[#FBF9F4] px-[4%]">
-            <span class="font-heading text-[8px] tracking-[0.1em] text-[#6E7A72]">&copy; ATELIER NORTH &middot; THU–SUN 10–6</span>
-            <span class="flex gap-[12px]">
-              <span class="font-heading text-[8px] tracking-[0.1em] text-[#21423A]/70">NEWSLETTER</span>
-              <span class="font-heading text-[8px] tracking-[0.1em] text-[#21423A]/70">INSTAGRAM</span>
-              <span class="font-heading text-[8px] tracking-[0.1em] text-[#21423A]/70">MAPS</span>
-            </span>
-          </div>
-        </div>
-
+        <div class="absolute left-[9%] top-[12%] h-[3.5%] w-[20%] border border-ink/20"></div>
+        <div class="absolute left-[9%] top-[20%] h-[9%] w-[34%] border border-ink/25"></div>
+        <div class="absolute left-[9%] top-[30%] h-[9%] w-[26%] border border-ink/25"></div>
+        <div class="absolute left-[9%] top-[42%] h-[2.5%] w-[36%] border border-ink/20"></div>
+        <div class="absolute left-[9%] top-[47.5%] h-[4.5%] w-[14%] rounded-full border border-ink/25"></div>
+        <div class="absolute left-[9%] top-[56%] h-[1px] w-[34%] bg-ink/25"></div>
+        <div class="absolute left-[9%] top-[60%] h-[8%] w-[8%] border border-ink/25"></div>
+        <div class="absolute left-[19%] top-[60%] h-[8%] w-[24%] border border-ink/20"></div>
+        <div class="absolute left-[9%] top-[73%] h-[6%] w-[26%] border border-ink/20"></div>
+        <div class="absolute bottom-[11%] left-[9%] h-[10%] w-[19%] border border-ink/20"></div>
+        <div class="absolute bottom-[11%] left-[30%] h-[10%] w-[11%] border border-ink/20"></div>
+        <div class="absolute bottom-[11%] left-[43%] h-[10%] w-[7%] border border-ink/20"></div>
+        <div class="absolute inset-x-0 bottom-0 h-[8%] border-t border-ink/25"></div>
       </div>
+
+      <!-- PHASE 2 — gray blocking -->
+      <div data-stage="2" class="absolute inset-0 opacity-0">
+        <div class="absolute inset-x-0 top-0 h-[7%] bg-ink/10"></div>
+        <div class="absolute bottom-[9%] left-[2.5%] top-[10%] w-[3%] bg-ink/15"></div>
+        <div class="absolute bottom-[9%] right-0 top-[7%] w-[48%] bg-ink/15"></div>
+        <div class="absolute left-[9%] top-[12%] h-[3.5%] w-[20%] bg-ink/15"></div>
+        <div class="absolute left-[9%] top-[20%] h-[9%] w-[34%] bg-ink/25"></div>
+        <div class="absolute left-[9%] top-[30%] h-[9%] w-[26%] bg-ink/20"></div>
+        <div class="absolute left-[9%] top-[42%] h-[2.5%] w-[36%] bg-ink/10"></div>
+        <div class="absolute left-[9%] top-[47.5%] h-[4.5%] w-[14%] rounded-full bg-ink/20"></div>
+        <div class="absolute left-[9%] top-[56%] h-[1px] w-[34%] bg-ink/20"></div>
+        <div class="absolute left-[9%] top-[60%] h-[8%] w-[8%] bg-ink/20"></div>
+        <div class="absolute left-[19%] top-[60%] h-[8%] w-[24%] bg-ink/10"></div>
+        <div class="absolute left-[9%] top-[73%] h-[6%] w-[26%] bg-ink/10"></div>
+        <div class="absolute bottom-[11%] left-[9%] h-[10%] w-[19%] bg-ink/15"></div>
+        <div class="absolute bottom-[11%] left-[30%] h-[10%] w-[11%] bg-ink/15"></div>
+        <div class="absolute bottom-[11%] left-[43%] h-[10%] w-[7%] bg-ink/15"></div>
+        <div class="absolute inset-x-0 bottom-0 h-[8%] bg-ink/20"></div>
+      </div>
+
+      <!-- PHASE 3 — styled pass -->
+      <div data-stage="3" class="absolute inset-0 opacity-0">
+        <div class="absolute inset-x-0 top-0 flex h-[7%] items-center gap-[0.9%] border-b border-[#21423A]/10 bg-white/85 px-[3%]">
+          <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/20"></span>
+          <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/20"></span>
+          <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/20"></span>
+        </div>
+        <div class="absolute bottom-[9%] left-[2.5%] top-[10%] flex w-[3%] items-center justify-center bg-[#21423A]">
+          <span class="rotate-180 font-heading text-[8px] tracking-[0.4em] text-[#FBF9F4]/80 [writing-mode:vertical-lr]">EXHIBITS · ARTISTS · VISIT</span>
+        </div>
+        <div class="absolute bottom-[9%] right-0 top-[7%] w-[48%] bg-gradient-to-br from-[#DCE8DE] to-[#B9CDBD]"></div>
+        <div class="absolute left-[9%] top-[12%] flex items-center gap-[6px]">
+          <span class="h-[9px] w-[9px] rounded-full bg-[#B9822E]"></span>
+          <span class="font-heading text-[10px] font-semibold tracking-[0.16em] text-[#21423A]">ATELIER NORTH</span>
+        </div>
+        <div class="absolute left-[9%] top-[19%] w-[38%]">
+          <p class="font-display text-[clamp(26px,3vw,44px)] leading-[0.98] text-[#21423A]">Craft,<br /><span class="italic text-[#B9822E]">curated.</span></p>
+          <span class="mt-[10px] block h-[5px] w-[80%] rounded-full bg-[#21423A]/20"></span>
+          <span class="mt-[12px] inline-block rounded-full bg-[#B9822E] px-[14px] py-[6px] font-heading text-[9px] text-white">Plan a visit</span>
+        </div>
+        <div class="absolute left-[9%] top-[56%] h-[1px] w-[34%] bg-[#21423A]/20"></div>
+        <div class="absolute left-[9%] top-[60%] h-[8%] w-[8%] rounded-[4px] bg-[#CBDCCF]"></div>
+        <div class="absolute left-[19%] top-[60%] h-[8%] w-[24%]">
+          <span class="block h-[6px] w-[40%] rounded-full bg-[#B9822E]/50"></span>
+          <span class="mt-[6px] block h-[8px] w-[60%] rounded-full bg-[#21423A]/25"></span>
+        </div>
+        <div class="absolute left-[9%] top-[73%] h-[6%] w-[26%]">
+          <span class="block h-[6px] w-[90%] rounded-full bg-[#21423A]/20"></span>
+          <span class="mt-[5px] block h-[4px] w-[40%] rounded-full bg-[#21423A]/15"></span>
+        </div>
+        <div class="absolute bottom-[11%] left-[9%] h-[10%] w-[19%] rounded-[4px] bg-[#CBDCCF]"></div>
+        <div class="absolute bottom-[11%] left-[30%] h-[10%] w-[11%] rounded-[4px] bg-[#CBDCCF]"></div>
+        <div class="absolute bottom-[11%] left-[43%] h-[10%] w-[7%] rounded-[4px] bg-[#CBDCCF]"></div>
+        <div class="absolute inset-x-0 bottom-0 h-[8%] border-t border-[#21423A]/15 bg-[#FBF9F4]"></div>
+      </div>
+
+      <!-- PHASE 4 — the finished editorial page -->
+      <div data-stage="4" class="absolute inset-0 opacity-0">
+        <div class="absolute inset-x-0 top-0 z-20 flex h-[7%] items-center gap-[0.9%] border-b border-[#21423A]/10 bg-white/90 px-[3%]">
+          <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/15"></span>
+          <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/15"></span>
+          <span class="h-[28%] aspect-square rounded-full bg-[#21423A]/15"></span>
+          <span class="ml-auto flex h-[54%] w-[28%] items-center rounded-full border border-[#21423A]/10 bg-[#FBF9F4] px-[2%] font-heading text-[8.5px] text-[#6E7A72]">ateliernorth.com</span>
+        </div>
+
+        <div class="absolute bottom-[9%] right-0 top-[7%] w-[48%] overflow-hidden">
+          <img id="wf-photo" src="/images/mock/pottery-hero.webp" alt="" class="h-full w-full object-cover" loading="eager" fetchpriority="high" />
+          <span class="absolute inset-0 bg-gradient-to-t from-[#21423A]/40 via-transparent to-transparent"></span>
+          <span class="absolute bottom-[4%] left-[6%] font-heading text-[8px] tracking-[0.22em] text-[#FBF9F4]/90">TERRA — NEW CERAMICS, OPENING MAY 4</span>
+        </div>
+
+        <div class="absolute bottom-[9%] left-[2.5%] top-[10%] flex w-[3%] items-center justify-center bg-[#21423A]">
+          <span class="rotate-180 font-heading text-[8px] tracking-[0.4em] text-[#FBF9F4]/80 [writing-mode:vertical-lr]">EXHIBITS · ARTISTS · VISIT</span>
+        </div>
+
+        <div class="absolute left-[9%] top-[12%] flex items-center gap-[6px]">
+          <span class="h-[9px] w-[9px] rounded-full bg-[#B9822E]"></span>
+          <span class="font-heading text-[10px] font-semibold tracking-[0.16em] text-[#21423A]">ATELIER NORTH</span>
+        </div>
+
+        <div class="absolute left-[9%] top-[19%] w-[40%]">
+          <p class="font-display text-[clamp(26px,3vw,44px)] leading-[0.98] text-[#21423A]">
+            Craft,<br /><span class="italic text-[#B9822E]">curated.</span>
+          </p>
+          <p class="mt-[9px] max-w-[92%] font-body text-[9.5px] leading-relaxed text-[#6E7A72]">
+            Forty makers. One converted mill. Ceramics, fiber, glass, and
+            light — rotating seasonally.
+          </p>
+          <span class="mt-[11px] inline-flex items-center gap-[10px]">
+            <span class="rounded-full bg-[#B9822E] px-[14px] py-[6px] font-heading text-[9px] text-white">Plan a visit</span>
+            <span class="font-heading text-[8.5px] tracking-[0.12em] text-[#21423A]/80">THIS SEASON →</span>
+          </span>
+        </div>
+
+        <!-- hairline divider -->
+        <div class="absolute left-[9%] top-[56%] h-[1px] w-[34%] bg-[#21423A]/20"></div>
+
+        <!-- "now showing" editorial row: stamp image + text, no card -->
+        <div class="absolute left-[9%] top-[60%] flex w-[36%] items-center gap-[10px]">
+          <span class="h-[44px] w-[44px] shrink-0 overflow-hidden rounded-[4px]">
+            <img src="/images/mock/teaset.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
+          </span>
+          <span>
+            <span class="block font-heading text-[7.5px] font-semibold tracking-[0.18em] text-[#B9822E]">NOW SHOWING</span>
+            <span class="mt-[2px] block font-display text-[13px] italic leading-tight text-[#21423A]">Terra — new ceramics</span>
+            <span class="mt-[1px] block font-heading text-[7.5px] tracking-[0.1em] text-[#6E7A72]">MAY 4 — AUG 30</span>
+          </span>
+        </div>
+
+        <!-- press quote -->
+        <p class="absolute left-[9%] top-[73%] w-[28%] font-display text-[11px] italic leading-snug text-[#21423A]/85">
+          “The most alive room in the city.”
+          <span class="mt-[3px] block font-heading text-[7px] not-italic tracking-[0.14em] text-[#6E7A72]">COASTLINE JOURNAL</span>
+        </p>
+
+        <!-- mixed-scale strip -->
+        <div class="absolute bottom-[11%] left-[9%] h-[10%] w-[19%] overflow-hidden rounded-[4px]">
+          <img src="/images/mock/loom.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
+        </div>
+        <div class="absolute bottom-[11%] left-[30%] h-[10%] w-[11%] overflow-hidden rounded-[4px]">
+          <img src="/images/mock/exhibit.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
+        </div>
+        <div class="absolute bottom-[11%] left-[43%] h-[10%] w-[7%] overflow-hidden rounded-[4px]">
+          <img src="/images/mock/vase.webp" alt="" class="h-full w-full object-cover" loading="lazy" />
+        </div>
+
+        <div class="absolute inset-x-0 bottom-0 flex h-[8%] items-center justify-between border-t border-[#21423A]/15 bg-[#FBF9F4] px-[4%]">
+          <span class="font-heading text-[8px] tracking-[0.1em] text-[#6E7A72]">&copy; ATELIER NORTH &middot; THU–SUN 10–6</span>
+          <span class="flex gap-[12px]">
+            <span class="font-heading text-[8px] tracking-[0.1em] text-[#21423A]/70">NEWSLETTER</span>
+            <span class="font-heading text-[8px] tracking-[0.1em] text-[#21423A]/70">INSTAGRAM</span>
+            <span class="font-heading text-[8px] tracking-[0.1em] text-[#21423A]/70">MAPS</span>
+          </span>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -201,9 +210,6 @@
 </section>
 
 <style>
-  #wf-frame {
-    transition: box-shadow 0.8s var(--ease-out-expo);
-  }
   #wf-frame.wf-lit {
     box-shadow:
       0 1px 2px rgb(34 28 21 / 0.05),
@@ -246,48 +252,33 @@
   import gsap from 'gsap';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mover = document.getElementById('wf-mover');
   const frame = document.getElementById('wf-frame');
   const photo = document.getElementById('wf-photo');
   const stage = (n) => frame?.querySelector(`[data-stage="${n}"]`);
 
-  const SPOTS = {
-    sketch:  { x: -560, y: -150, rotation: -7, scale: 0.55 },
-    blocks:  { x: -430, y: 170,  rotation: 5,  scale: 0.68 },
-    styled:  { x: -150, y: -110, rotation: -3, scale: 0.84 },
-    settled: { x: 0,    y: 0,    rotation: 0,  scale: 1 },
-  };
-
   if (frame && !reduced) {
-    gsap.set(mover, SPOTS.sketch);
     gsap.set(frame, { autoAlpha: 0 });
     gsap.set([stage(2), stage(3), stage(4)], { autoAlpha: 0 });
 
     const tl = gsap.timeline({
-      delay: 0.3,
+      delay: 0.35,
       onComplete: () => {
-        frame.classList.add('wf-lit');
-        gsap.to(mover, { y: '+=10', duration: 5.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-        gsap.to(photo, { scale: 1.07, duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+        // The only life after settle: a very slow drift inside the photo.
+        gsap.to(photo, { scale: 1.05, duration: 14, ease: 'sine.inOut', yoyo: true, repeat: -1 });
       },
     });
 
-    // Long overlapping dissolves: the next phase starts developing while the
-    // previous is still visible, so two phases coexist mid-travel.
-    tl.to(frame, { autoAlpha: 1, duration: 0.45, ease: 'power2.out' })
-      .to(mover, { ...SPOTS.blocks, duration: 1.15, ease: 'power2.inOut' }, '+=0.45')
-      .to(stage(2), { autoAlpha: 1, duration: 0.9, ease: 'power1.inOut' }, '<10%')
-      .to(stage(1), { autoAlpha: 0, duration: 1.0, ease: 'power1.inOut' }, '<35%')
-      .to(mover, { ...SPOTS.styled, duration: 1.15, ease: 'power2.inOut' }, '+=0.3')
-      .to(stage(3), { autoAlpha: 1, duration: 0.9, ease: 'power1.inOut' }, '<10%')
-      .to(stage(2), { autoAlpha: 0, duration: 1.0, ease: 'power1.inOut' }, '<35%')
-      .to(mover, { ...SPOTS.settled, duration: 1.25, ease: 'expo.inOut' }, '+=0.3')
-      .to(stage(4), { autoAlpha: 1, duration: 1.0, ease: 'power1.inOut' }, '<12%')
-      .to(stage(3), { autoAlpha: 0, duration: 1.1, ease: 'power1.inOut' }, '<30%');
+    // Phases dissolve in place with overlap — two visible mid-transition.
+    tl.to(frame, { autoAlpha: 1, duration: 0.6, ease: 'power2.out' })
+      .to(stage(2), { autoAlpha: 1, duration: 1.0, ease: 'power1.inOut' }, '+=0.7')
+      .to(stage(1), { autoAlpha: 0, duration: 1.1, ease: 'power1.inOut' }, '<40%')
+      .to(stage(3), { autoAlpha: 1, duration: 1.0, ease: 'power1.inOut' }, '+=0.55')
+      .to(stage(2), { autoAlpha: 0, duration: 1.1, ease: 'power1.inOut' }, '<40%')
+      .to(stage(4), { autoAlpha: 1, duration: 1.2, ease: 'power1.inOut' }, '+=0.55')
+      .to(stage(3), { autoAlpha: 0, duration: 1.3, ease: 'power1.inOut' }, '<35%');
   } else if (frame) {
     gsap.set([stage(1), stage(2), stage(3)], { autoAlpha: 0 });
     gsap.set(stage(4), { autoAlpha: 1 });
-    frame.classList.add('wf-lit');
   }
 
   const cue = document.getElementById('scroll-cue');
