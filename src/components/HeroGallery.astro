@@ -17,24 +17,26 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 <section id="gallery" class="relative lg:h-[300vh]">
   <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
 
-    <!-- top scrim: keeps the transparent nav and oversized logo readable
-         over whatever the stack puts beneath them -->
-    <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-[18vh] bg-gradient-to-b from-canvas via-canvas/70 to-transparent"></div>
+    <!-- top scrim: near-solid band so the nav and oversized logo always sit
+         on ivory, whatever the stack puts beneath them (WCAG-safe, not
+         best-effort) -->
+    <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-[24vh] bg-gradient-to-b from-canvas from-40% via-canvas/90 to-transparent"></div>
 
-    <!-- headline: above the stack, fades out as the sweep begins -->
-    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-40 lg:pt-[22vh]">
-      <!-- soft glow pad so the headline never fights the screenshots behind it -->
-      <div class="absolute -inset-x-12 -inset-y-10 -z-10 rounded-[4rem] bg-canvas/70 blur-3xl"></div>
-      <h1 class="font-display max-w-4xl text-[clamp(3.25rem,8vw,7rem)] leading-[0.95] tracking-tight">
-        Built to <span class="text-accent italic">perform.</span>
-      </h1>
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-        K &amp; A Performance crafts fast, animated, AI-ready websites for
-        businesses that refuse to blend in.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-4">
-        <a href="/contact/#scope" class="btn-accent">Start a project</a>
-        <a href="/work/" class="btn-ghost">See the work</a>
+    <!-- headline: a true glass panel — near-solid canvas + heavy blur — so
+         espresso-on-ivory contrast holds regardless of what's behind it -->
+    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-36 lg:pt-[20vh]">
+      <div class="inline-block max-w-4xl rounded-3xl bg-canvas/90 p-8 shadow-[0_24px_80px_-32px_rgb(34_28_21/0.25)] ring-1 ring-ink/5 backdrop-blur-2xl md:p-10">
+        <h1 class="font-display text-[clamp(3.25rem,7vw,6.5rem)] leading-[0.95] tracking-tight">
+          Built to <span class="text-accent italic">perform.</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+          K &amp; A Performance crafts fast, animated, AI-ready websites for
+          businesses that refuse to blend in.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="/contact/#scope" class="btn-accent">Start a project</a>
+          <a href="/work/" class="btn-ghost">See the work</a>
+        </div>
       </div>
     </div>
 
@@ -216,13 +218,13 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   // Sloppy-stack targets: viewport-fraction offsets from center, covering
   // the whole hero. Order matches projects[].
   const STACK = [
-    { tx: -0.36, ty: -0.28, r: -10, s: 1.1,  a: 0.9  }, // fdaaf — top left
-    { tx: -0.08, ty: -0.3,  r: 7,   s: 1.15, a: 0.95 }, // mbs — top center
-    { tx: 0.34,  ty: -0.27, r: -6,  s: 1.1,  a: 0.9  }, // pbj — top right
-    { tx: -0.37, ty: 0.24,  r: 8,   s: 1.05, a: 0.9  }, // makeover — bottom left
-    { tx: 0.05,  ty: 0.1,   r: 12,  s: 1.3,  a: 1    }, // fixalways — center, big
-    { tx: 0.37,  ty: 0.26,  r: -9,  s: 1.1,  a: 0.95 }, // foremotion — bottom right
-    { tx: -0.05, ty: 0.34,  r: -13, s: 1.0,  a: 0.9  }, // family practice — bottom center
+    { tx: -0.41, ty: -0.31, r: -10, s: 1.3,  a: 0.92 }, // fdaaf — top left corner
+    { tx: -0.05, ty: -0.33, r: 7,   s: 1.32, a: 0.95 }, // mbs — top center
+    { tx: 0.41,  ty: -0.3,  r: -6,  s: 1.3,  a: 0.92 }, // pbj — top right corner
+    { tx: -0.42, ty: 0.28,  r: 8,   s: 1.3,  a: 0.92 }, // makeover — bottom left corner
+    { tx: 0.07,  ty: 0.05,  r: 12,  s: 1.5,  a: 1    }, // fixalways — center, biggest
+    { tx: 0.42,  ty: 0.3,   r: -9,  s: 1.35, a: 0.95 }, // foremotion — bottom right corner
+    { tx: -0.04, ty: 0.37,  r: -13, s: 1.22, a: 0.92 }, // family practice — bottom center
   ];
 
   const relOf = (i, cur) => {
