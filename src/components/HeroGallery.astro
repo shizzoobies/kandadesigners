@@ -231,15 +231,16 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     return rel;
   };
 
-  // rotateY(-rel*30) then translateZ(R), expressed in GSAP's fixed
-  // translate-then-rotate order: x = -R sin, z = R cos.
+  // rotateY(rel*STEP) then translateZ(R), expressed in GSAP's fixed
+  // translate-then-rotate order: x = R sin, z = R cos. Positive rel sits to
+  // the RIGHT so the right arrow visibly rotates rightward into the queue.
   const ringPose = (rel) => {
     const th = (rel * STEP * Math.PI) / 180;
     return {
-      x: -R * Math.sin(th),
+      x: R * Math.sin(th),
       y: 0,
       z: R * Math.cos(th) - R * 0.62, // recenter depth so edges recede, front advances
-      rotationY: -rel * STEP,
+      rotationY: rel * STEP,
       rotation: 0,
       scale: 1,
       opacity: OPACITY[Math.abs(rel)],
