@@ -1,0 +1,128 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const webCapabilities = [
+  'Custom design',
+  'Motion',
+  'Performance',
+  'SEO-ready',
+  'Launch on modern hosting',
+];
+
+const aiCapabilities = ['Assistants', 'Automations', 'Content tooling'];
+
+const process = [
+  { label: 'Discover', note: 'Goals, audience, scope.' },
+  { label: 'Design', note: 'Structure, type, motion.' },
+  { label: 'Build', note: 'Fast, accessible, tested.' },
+  { label: 'Launch', note: 'Ship on modern hosting.' },
+];
+---
+<BaseLayout
+  title="Services — K & A Performance"
+  description="Web design & build and AI integration from K & A Performance — custom, fast, animated sites scoped per project."
+>
+  <!-- Editorial header -->
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-24 md:pt-48">
+    <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Services</p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
+      What we <span class="text-accent italic">build.</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Two disciplines, one standard: sites that look sharp, move well, and pull
+      their weight. Scoped per project — most builds land between a focused
+      landing page and a full multi-page platform.
+    </p>
+  </section>
+
+  <!-- Primary offering: Web design & build -->
+  <section class="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+    <div data-animate="frame-lift" class="glow-frame p-8 md:p-14">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Primary offering</p>
+      <h2 class="mt-6 font-display text-4xl leading-tight md:text-6xl">Web design &amp; build</h2>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        A site designed from the ground up for your business — no templates, no
+        stock, no compromise on speed. Built to load fast, feel alive, and rank.
+      </p>
+      <ul class="mt-10 flex flex-wrap gap-3">
+        {webCapabilities.map((cap) => (
+          <li class="rounded-full border border-ink/15 px-5 py-2 font-heading text-sm tracking-wide text-ink">
+            {cap}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Secondary offering: AI integration -->
+  <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
+    <div data-animate="frame-lift" class="glow-frame p-8 md:p-14" style="background: linear-gradient(135deg, #14141C 0%, #1d1a33 100%);">
+      <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Also available</p>
+      <h2 class="mt-6 font-display text-3xl leading-tight md:text-5xl">
+        AI <span class="text-accent italic">integration.</span>
+      </h2>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        We add AI where it earns its place — assistants that qualify leads,
+        automations that save hours, content tooling that keeps the pipeline
+        full.
+      </p>
+      <ul class="mt-10 flex flex-wrap gap-3">
+        {aiCapabilities.map((cap) => (
+          <li class="rounded-full border border-accent/30 px-5 py-2 font-heading text-sm tracking-wide text-ink">
+            {cap}
+          </li>
+        ))}
+      </ul>
+      <div class="mt-10">
+        <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+          Try ours on the contact page &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process strip -->
+  <section class="border-y border-ink/10" style="background: linear-gradient(180deg, #0B0B10 0%, #08080C 100%);">
+    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">How it goes</h2>
+
+      <!-- Single line-draw connector links the four stages. -->
+      <svg
+        data-animate="line-draw"
+        class="mt-16 hidden w-full text-accent/60 md:block"
+        viewBox="0 0 800 40"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+      >
+        <line x1="40" y1="20" x2="760" y2="20" />
+        <circle cx="40" cy="20" r="7" />
+        <circle cx="280" cy="20" r="7" />
+        <circle cx="520" cy="20" r="7" />
+        <circle cx="760" cy="20" r="7" />
+      </svg>
+
+      <ol class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:mt-8 md:grid-cols-4">
+        {process.map((step, i) => (
+          <li data-animate="type-settle" data-animate-delay={(i * 0.1).toFixed(1)}>
+            <p class="font-display text-2xl md:text-3xl">{step.label}</p>
+            <p class="mt-3 text-muted">{step.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="px-6 pb-40 pt-24 md:pt-32">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.05]">
+        Let's build something that <span class="text-accent italic">performs.</span>
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.15" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a project</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
