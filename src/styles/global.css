@@ -1,7 +1,19 @@
 @import "tailwindcss";
-@import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/space-grotesk";
-@import "@fontsource-variable/inter";
+
+/* Licensed via Envato Elements (Alex's account): Grivon (display serif),
+   Neutrix VF (variable grotesk: wght 400-700, wdth, ital slant). */
+@font-face {
+  font-family: "Grivon";
+  src: url("/fonts/Grivon.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neutrix";
+  src: url("/fonts/Neutrix-VF.woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-display: swap;
+}
 
 @theme {
   --color-canvas: #0B0B10;
@@ -10,9 +22,9 @@
   --color-muted: #9A9AAB;
   --color-accent: #8A7CFF;
   --color-accent-hot: #B9AFFF;
-  --font-display: "Fraunces Variable", Georgia, serif;
-  --font-heading: "Space Grotesk Variable", system-ui, sans-serif;
-  --font-body: "Inter Variable", system-ui, sans-serif;
+  --font-display: "Grivon", Georgia, serif;
+  --font-heading: "Neutrix", system-ui, sans-serif;
+  --font-body: "Neutrix", system-ui, sans-serif;
 }
 
 :root {
