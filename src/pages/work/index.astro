@@ -25,7 +25,7 @@ const whatWeDid = 'Design, build, launch';
     <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
         <div class={i % 2 === 1 ? 'md:order-2' : ''}>
-          <WorkFrame title={p.title} blurb={p.blurb} img={p.img} eager={i === 0} />
+          <WorkFrame title={p.title} blurb={p.blurb} img={p.img} eager={i === 0} caption={false} />
         </div>
         <div class={i % 2 === 1 ? 'md:order-1' : ''}>
           <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">{p.title}</h2>

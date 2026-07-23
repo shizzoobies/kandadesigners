@@ -5,8 +5,9 @@ interface Props {
   img: string;
   href?: string;
   eager?: boolean;
+  caption?: boolean;
 }
-const { title, blurb, img, href, eager = false } = Astro.props;
+const { title, blurb, img, href, eager = false, caption = true } = Astro.props;
 const Tag = href ? 'a' : 'div';
 ---
 <Tag href={href} class="group block" data-animate="frame-lift">
@@ -24,8 +25,10 @@ const Tag = href ? 'a' : 'div';
       loading={eager ? 'eager' : 'lazy'}
     />
   </figure>
-  <figcaption class="mt-4">
-    <h3 class="font-heading text-lg tracking-wide text-ink">{title}</h3>
-    <p class="mt-1 max-w-md text-sm leading-relaxed text-muted">{blurb}</p>
-  </figcaption>
+  {caption && (
+    <figcaption class="mt-4">
+      <h3 class="font-heading text-lg tracking-wide text-ink">{title}</h3>
+      <p class="mt-1 max-w-md text-sm leading-relaxed text-muted">{blurb}</p>
+    </figcaption>
+  )}
 </Tag>
