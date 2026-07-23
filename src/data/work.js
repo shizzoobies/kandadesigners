@@ -23,4 +23,10 @@ export const projects = [
     blurb: 'A nonprofit transforming school spaces into vibrant learning environments. A joyful, gallery-driven site with donation and makeover-showcase paths built for community momentum.',
     img: '/images/work-pmbuild.webp',
   },
+  {
+    slug: 'fixalways',
+    title: 'FixAlways',
+    blurb: 'A Florida home-services directory powered by Google Places and Claude AI — search that actually finds the right pro, fast.',
+    img: '/images/fixalways-hero.webp',
+  },
 ];

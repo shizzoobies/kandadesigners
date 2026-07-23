@@ -1,26 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WireframeHero from '../components/WireframeHero.astro';
-import WorkCarousel from '../components/WorkCarousel.astro';
+import HeroGallery from '../components/HeroGallery.astro';
 ---
 <BaseLayout
   title="K & A Performance — Web Design & AI Integration"
   description="K & A Performance crafts fast, animated, AI-ready websites for businesses that refuse to blend in."
 >
-  <WireframeHero />
-
-  <!-- Work showcase: cycling carousel -->
-  <section id="gallery" class="mx-auto max-w-6xl px-6 py-32 scroll-mt-16">
-    <h2 data-animate="type-settle" class="text-center font-display text-4xl md:text-6xl">Recent builds</h2>
-    <div data-animate="flood-in" class="mt-14">
-      <WorkCarousel />
-    </div>
-    <div data-animate="type-settle" class="mt-10 text-center">
-      <a href="/work/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
-        All work &rarr;
-      </a>
-    </div>
-  </section>
+  <!-- Hero and work gallery are one scroll-driven piece: the sloppy stack
+       of client sites sweeps into the 3D horseshoe as you scroll. -->
+  <HeroGallery />
 
   <!-- AI section: the one deliberate dark moment on the light site. -->
   <section class="dark-band border-y border-ink/10">

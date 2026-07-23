@@ -1,0 +1,364 @@
+---
+// Hero + gallery as one scroll-driven piece. The whole portfolio fills the
+// hero as a sloppy stack of browser windows (mixed macOS/Windows chrome).
+// Scrolling sweeps every window out of the stack and into its slot on a
+// 3D horseshoe gallery — cards arranged on an arc that wraps toward the
+// viewer — which then behaves as an interactive rotating ring (arrows,
+// dots, click a side card to bring it forward; center card links to /work/).
+//
+// Architecture: each window is .hg-slot (ring placement, CSS-class
+// transforms with transitions — owned by the carousel logic) containing
+// .hg-fly (scatter offsets, inline transforms — owned by the ScrollTrigger
+// scrub). The two layers never fight.
+import { projects } from '../data/work.js';
+
+// Sloppy-stack pose per window (px at 1440w, scaled at runtime) + chrome style.
+const POSES = [
+  { x: -560, y: -190, r: -12, s: 1.22, a: 0.9,  chrome: 'mac' },
+  { x: 170,  y: -260, r: 8,   s: 1.08, a: 1,    chrome: 'win' },
+  { x: -650, y: 150,  r: 6,   s: 0.92, a: 0.35, chrome: 'mac' },
+  { x: 430,  y: 230,  r: -7,  s: 1.18, a: 0.95, chrome: 'win' },
+  { x: -90,  y: 30,   r: 14,  s: 1.32, a: 1,    chrome: 'mac' },
+];
+---
+<section id="gallery" class="relative lg:h-[300vh]">
+  <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
+
+    <!-- top scrim: keeps the transparent nav and oversized logo readable
+         over whatever the stack puts beneath them -->
+    <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-[18vh] bg-gradient-to-b from-canvas via-canvas/70 to-transparent"></div>
+
+    <!-- headline: above the stack, fades out as the sweep begins -->
+    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-40 lg:pt-[22vh]">
+      <!-- soft glow pad so the headline never fights the screenshots behind it -->
+      <div class="absolute -inset-x-12 -inset-y-10 -z-10 rounded-[4rem] bg-canvas/70 blur-3xl"></div>
+      <h1 class="font-display max-w-4xl text-[clamp(3.25rem,8vw,7rem)] leading-[0.95] tracking-tight">
+        Built to <span class="text-accent italic">perform.</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+        K &amp; A Performance crafts fast, animated, AI-ready websites for
+        businesses that refuse to blend in.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="/contact/#scope" class="btn-accent">Start a project</a>
+        <a href="/work/" class="btn-ghost">See the work</a>
+      </div>
+    </div>
+
+    <!-- gallery heading: hidden until the horseshoe forms -->
+    <h2 id="hg-heading" class="pointer-events-none absolute left-1/2 top-[9vh] z-30 hidden -translate-x-1/2 text-center font-display text-4xl opacity-0 md:text-5xl lg:block">
+      Recent builds
+    </h2>
+
+    <!-- the ring stage -->
+    <div id="hg-stage" class="relative mx-auto mt-10 h-[21rem] w-full max-w-6xl sm:h-[24rem] lg:absolute lg:inset-x-0 lg:top-1/2 lg:mt-0 lg:h-[54vh] lg:-translate-y-1/2">
+      <div id="hg-ring" class="absolute inset-0">
+        {projects.map((p, i) => (
+          <a
+            href="/work/"
+            class="hg-slot"
+            data-index={i}
+            aria-hidden={i === 0 ? 'false' : 'true'}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            <span
+              class="hg-fly glow-frame block bg-surface"
+              data-pose={`${POSES[i].x},${POSES[i].y},${POSES[i].r},${POSES[i].s},${POSES[i].a}`}
+            >
+              {POSES[i].chrome === 'mac' ? (
+                <span class="flex items-center gap-1.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
+                  <span class="h-2.5 w-2.5 rounded-full bg-[#EC6A5E]"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-[#F4BF4F]"></span>
+                  <span class="h-2.5 w-2.5 rounded-full bg-[#61C554]"></span>
+                  <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+                </span>
+              ) : (
+                <span class="flex items-center justify-end gap-3.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
+                  <span class="text-[9px] leading-none text-ink/45">&#8213;</span>
+                  <span class="text-[9px] leading-none text-ink/45">&#9633;</span>
+                  <span class="text-[10px] leading-none text-ink/45">&#10005;</span>
+                </span>
+              )}
+              <img
+                src={p.img}
+                alt={`${p.title} website screenshot`}
+                class="aspect-[16/10] w-full object-cover object-top"
+                loading="eager"
+                fetchpriority={i === 4 ? 'high' : 'auto'}
+              />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- caption + controls: hidden until the horseshoe forms (desktop) -->
+    <div id="hg-ui" class="relative z-30 mx-auto max-w-2xl px-6 pb-16 text-center lg:absolute lg:inset-x-0 lg:bottom-[4vh] lg:pb-0">
+      <div class="min-h-[6.5rem]">
+        <h3 id="hg-title" class="font-heading text-xl tracking-wide text-ink"></h3>
+        <p id="hg-blurb" class="mt-2 text-sm leading-relaxed text-muted"></p>
+        <p class="sr-only" id="hg-live" aria-live="polite"></p>
+      </div>
+      <div class="mt-4 flex items-center justify-center gap-6">
+        <button type="button" id="hg-prev" class="hg-arrow" aria-label="Previous project">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4 7 10l5.5 6"/></svg>
+        </button>
+        <div id="hg-dots" class="flex items-center gap-3" role="tablist" aria-label="Choose project">
+          {projects.map((p, i) => (
+            <button type="button" class="hg-dot" role="tab" data-index={i} aria-label={`Show ${p.title}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
+          ))}
+        </div>
+        <button type="button" id="hg-next" class="hg-arrow" aria-label="Next project">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4 13 10l-5.5 6"/></svg>
+        </button>
+      </div>
+      <div class="mt-6">
+        <a href="/work/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">All work &rarr;</a>
+      </div>
+    </div>
+
+    <div id="scroll-cue" class="absolute bottom-6 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-3 text-muted transition-opacity duration-500 lg:flex" aria-hidden="true">
+      <span class="font-heading text-[0.65rem] uppercase tracking-[0.35em]">Scroll</span>
+      <span class="cue-line"></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  #hg-stage {
+    perspective: 1600px;
+  }
+  #hg-ring {
+    transform-style: preserve-3d;
+    --hgr: 480px;
+  }
+  @media (max-width: 1023px) {
+    #hg-ring {
+      --hgr: 260px;
+    }
+  }
+  .hg-slot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(44%, 540px);
+    display: block;
+    transform-style: preserve-3d;
+    transition:
+      transform 0.85s var(--ease-out-expo),
+      opacity 0.85s var(--ease-out-expo);
+    will-change: transform, opacity;
+  }
+  @media (max-width: 1023px) {
+    .hg-slot {
+      width: 72%;
+    }
+  }
+  .hg-slot.slot-n2 { transform: translate(-50%, -50%) rotateY(88deg) translateZ(var(--hgr)); opacity: 0.45; }
+  .hg-slot.slot-n1 { transform: translate(-50%, -50%) rotateY(44deg) translateZ(var(--hgr)); opacity: 0.8; }
+  .hg-slot.slot-0  { transform: translate(-50%, -50%) rotateY(0deg) translateZ(var(--hgr)); opacity: 1; }
+  .hg-slot.slot-p1 { transform: translate(-50%, -50%) rotateY(-44deg) translateZ(var(--hgr)); opacity: 0.8; }
+  .hg-slot.slot-p2 { transform: translate(-50%, -50%) rotateY(-88deg) translateZ(var(--hgr)); opacity: 0.45; }
+  .hg-slot:not(.slot-0) {
+    cursor: pointer;
+  }
+  .hg-slot:not(.slot-0):hover {
+    opacity: 0.95;
+  }
+  #hg-stage:not(.hg-live) .hg-slot {
+    pointer-events: none;
+  }
+  .hg-fly {
+    display: block;
+    overflow: hidden;
+    will-change: transform, opacity;
+  }
+  .hg-arrow {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(34 28 21 / 0.2);
+    color: var(--color-ink);
+    transition: border-color var(--dur-fast) ease, color var(--dur-fast) ease;
+  }
+  .hg-arrow:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .hg-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: rgb(34 28 21 / 0.18);
+    transition: background var(--dur-fast) ease, transform var(--dur-fast) ease;
+  }
+  .hg-dot[aria-selected='true'] {
+    background: var(--color-accent);
+    transform: scale(1.35);
+  }
+  .cue-line {
+    position: relative;
+    width: 1px;
+    height: 2.75rem;
+    background: rgb(34 28 21 / 0.15);
+    overflow: hidden;
+  }
+  .cue-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -50%;
+    width: 100%;
+    height: 50%;
+    background: var(--color-accent);
+    animation: cue-drop 1.8s ease-in-out infinite;
+  }
+  @keyframes cue-drop {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(300%); }
+  }
+  #scroll-cue.cue-hidden {
+    opacity: 0;
+  }
+  :global(.motion-reduced) .cue-line::after {
+    animation: none;
+    top: 0;
+    height: 100%;
+  }
+  :global(.motion-reduced) .hg-slot {
+    transition: none;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { projects } from '../data/work.js';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.getElementById('gallery');
+  const stage = document.getElementById('hg-stage');
+  const slots = [...document.querySelectorAll('.hg-slot')];
+  const flies = [...document.querySelectorAll('.hg-fly')];
+  const dots = [...document.querySelectorAll('.hg-dot')];
+  const title = document.getElementById('hg-title');
+  const blurb = document.getElementById('hg-blurb');
+  const live = document.getElementById('hg-live');
+  const ui = document.getElementById('hg-ui');
+  const heading = document.getElementById('hg-heading');
+  const headline = document.getElementById('hg-headline');
+
+  const n = projects.length;
+  const SLOT_CLASSES = ['slot-n2', 'slot-n1', 'slot-0', 'slot-p1', 'slot-p2'];
+  let current = 0;
+  let timer = null;
+  let autoplayStarted = false;
+
+  function setCaption(i) {
+    const swap = () => {
+      title.textContent = projects[i].title;
+      blurb.textContent = projects[i].blurb;
+      live.textContent = `Showing ${projects[i].title}, project ${i + 1} of ${n}`;
+      gsap.to([title, blurb], { opacity: 1, duration: 0.25 });
+    };
+    if (reduced) {
+      swap();
+    } else {
+      gsap.to([title, blurb], { opacity: 0, duration: 0.18, onComplete: swap });
+    }
+  }
+
+  function layout() {
+    slots.forEach((slot, i) => {
+      // shortest wrap of (i - current) into [-2, 2]
+      let rel = (((i - current) % n) + n) % n;
+      if (rel > 2) rel -= n;
+      slot.classList.remove(...SLOT_CLASSES);
+      slot.classList.add(SLOT_CLASSES[rel + 2]);
+      const isCenter = rel === 0;
+      slot.setAttribute('aria-hidden', String(!isCenter));
+      slot.tabIndex = isCenter ? 0 : -1;
+    });
+    dots.forEach((dot, i) => dot.setAttribute('aria-selected', String(i === current)));
+  }
+
+  function goTo(i) {
+    current = ((i % n) + n) % n;
+    layout();
+    setCaption(current);
+  }
+
+  function startAutoplay() {
+    if (reduced || timer) return;
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+  function stopAutoplay() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  document.getElementById('hg-prev').addEventListener('click', () => { stopAutoplay(); goTo(current - 1); });
+  document.getElementById('hg-next').addEventListener('click', () => { stopAutoplay(); goTo(current + 1); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAutoplay(); goTo(i); }));
+
+  // Clicking any non-center card rotates it to the front; center card links out.
+  slots.forEach((slot, i) => {
+    slot.addEventListener('click', (e) => {
+      if (!slot.classList.contains('slot-0')) {
+        e.preventDefault();
+        stopAutoplay();
+        goTo(i);
+      }
+    });
+  });
+  stage.addEventListener('pointerenter', stopAutoplay);
+  stage.addEventListener('focusin', stopAutoplay);
+
+  goTo(0);
+
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+  if (!reduced && isDesktop) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Scatter the flock across the whole hero (scaled to viewport).
+    const k = Math.min(window.innerWidth / 1440, 1.2);
+    flies.forEach((fly) => {
+      const [x, y, r, s, a] = fly.dataset.pose.split(',').map(Number);
+      gsap.set(fly, { x: x * k, y: y * k, rotation: r, scale: s, opacity: a });
+    });
+    gsap.set([ui, heading], { autoAlpha: 0, y: 24 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=170%',
+        scrub: 0.6,
+        onUpdate: (st) => {
+          stage.classList.toggle('hg-live', st.progress > 0.93);
+          if (st.progress > 0.97 && !autoplayStarted) {
+            autoplayStarted = true;
+            startAutoplay();
+          }
+          document.getElementById('scroll-cue')?.classList.toggle('cue-hidden', st.progress > 0.05);
+        },
+      },
+    });
+
+    tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.22, ease: 'power1.in' }, 0.03)
+      .to(flies, {
+        x: 0, y: 0, rotation: 0, scale: 1, opacity: 1,
+        duration: 0.62, stagger: 0.055, ease: 'power2.inOut',
+      }, 0.08)
+      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.18 }, 0.8);
+  } else {
+    // Mobile / reduced motion: no scatter, ring formed, UI visible.
+    stage.classList.add('hg-live');
+    if (heading) gsap.set(heading, { autoAlpha: 1 });
+    gsap.set(ui, { autoAlpha: 1 });
+    if (!reduced) startAutoplay();
+  }
+</script>
