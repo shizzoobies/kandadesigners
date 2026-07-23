@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkFrame from '../../components/WorkFrame.astro';
+import { projects } from '../../data/work.js';
+
+const whatWeDid = 'Design, build, launch';
+---
+<BaseLayout
+  title="Work — K & A Performance"
+  description="Selected builds from K & A Performance — fast, animated, AI-ready websites designed to work as hard as the businesses behind them."
+>
+  <!-- Editorial header -->
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-24 md:pt-48">
+    <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Selected work</p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
+      Work that <span class="text-accent italic">works.</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Every project starts as bones and ends as something that earns its keep. A look at what we have shipped.
+    </p>
+  </section>
+
+  <!-- One full-width project per row, text column alternating sides -->
+  {projects.map((p, i) => (
+    <section class="mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+        <div class={i % 2 === 1 ? 'md:order-2' : ''}>
+          <WorkFrame title={p.title} blurb={p.blurb} img={p.img} eager={i === 0} />
+        </div>
+        <div class={i % 2 === 1 ? 'md:order-1' : ''}>
+          <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">{p.title}</h2>
+          <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-md text-lg leading-relaxed text-muted">{p.blurb}</p>
+          <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 font-heading text-sm uppercase tracking-[0.25em] text-accent">
+            What we did — {whatWeDid}
+          </p>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Closing CTA -->
+  <section class="px-6 pb-40 pt-16">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.05]">
+        Want your site on <span class="text-accent italic">this list?</span>
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.15" class="mt-10">
+        <a href="/contact/#scope" class="btn-accent">Start a project</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
