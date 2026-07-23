@@ -108,6 +108,16 @@ body {
   opacity: 1 !important;
   transform: none !important;
 }
+/* Pinned steps are absolutely stacked for the scrub timeline; lay them out
+   as a normal vertical flow when motion is off. */
+.motion-reduced [data-pin-sequence] {
+  height: auto !important;
+  overflow: visible !important;
+}
+.motion-reduced [data-pin-step] {
+  position: static !important;
+  padding: 3rem 1.5rem;
+}
 .motion-reduced svg[data-animate="line-draw"] * {
   stroke-dasharray: none !important;
   stroke-dashoffset: 0 !important;

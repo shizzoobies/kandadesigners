@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  blurb: string;
+  img: string;
+  href?: string;
+  eager?: boolean;
+}
+const { title, blurb, img, href, eager = false } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+<Tag href={href} class="group block" data-animate="frame-lift">
+  <figure class="glow-frame transition-transform duration-300 group-hover:-translate-y-1">
+    <div class="flex items-center gap-1.5 border-b border-ink/10 px-4 py-2.5" aria-hidden="true">
+      <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+      <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+      <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+      <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+    </div>
+    <img
+      src={img}
+      alt={`${title} website screenshot`}
+      class="aspect-[16/10] w-full object-cover object-top"
+      loading={eager ? 'eager' : 'lazy'}
+    />
+  </figure>
+  <figcaption class="mt-4">
+    <h3 class="font-heading text-lg tracking-wide text-ink">{title}</h3>
+    <p class="mt-1 max-w-md text-sm leading-relaxed text-muted">{blurb}</p>
+  </figcaption>
+</Tag>

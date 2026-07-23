@@ -1,11 +1,134 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WireframeHero from '../components/WireframeHero.astro';
+import WorkFrame from '../components/WorkFrame.astro';
+import { projects } from '../data/work.js';
 ---
 <BaseLayout
   title="K & A Performance — Web Design & AI Integration"
   description="K & A Performance crafts fast, animated, AI-ready websites for businesses that refuse to blend in."
 >
-  <section class="flex min-h-screen items-center justify-center px-6">
-    <h1 data-animate="type-settle" class="font-display text-5xl md:text-7xl">Built to perform.</h1>
+  <WireframeHero />
+
+  <!-- Craft sequence: the page builds itself as you scroll. -->
+  <section data-pin-sequence class="relative h-screen overflow-hidden" aria-label="How we build">
+    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
+      <div class="w-full max-w-3xl text-center">
+        <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Structure</p>
+        <svg
+          class="mx-auto mt-8 w-full max-w-xl text-ink/30"
+          viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"
+        >
+          <rect x="10" y="10" width="620" height="380" rx="12" />
+          <line x1="10" y1="52" x2="630" y2="52" />
+          <line x1="60" y1="120" x2="380" y2="120" />
+          <line x1="60" y1="156" x2="320" y2="156" />
+          <rect x="60" y="210" width="240" height="130" rx="8" />
+          <rect x="340" y="210" width="240" height="130" rx="8" />
+        </svg>
+        <p class="mt-8 text-muted">Every build starts as bones — hierarchy, flow, intent.</p>
+      </div>
+    </div>
+
+    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
+      <div class="w-full max-w-3xl text-center">
+        <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Type</p>
+        <div class="glow-frame mx-auto mt-8 w-full max-w-xl px-10 py-16 text-left">
+          <p class="font-display text-4xl leading-tight md:text-5xl">Words that carry weight.</p>
+          <p class="mt-4 text-muted">Typography does the heavy lifting before a single image loads.</p>
+        </div>
+        <p class="mt-8 text-muted">Then the voice — type that sounds like you.</p>
+      </div>
+    </div>
+
+    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
+      <div class="w-full max-w-3xl text-center">
+        <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Color</p>
+        <div class="glow-frame mx-auto mt-8 w-full max-w-xl px-10 py-16 text-left" style="background: linear-gradient(135deg, #14141C 0%, #1d1a33 100%);">
+          <p class="font-display text-4xl leading-tight md:text-5xl">Words that carry <span class="text-accent italic">weight.</span></p>
+          <div class="mt-6 flex gap-3" aria-hidden="true">
+            <span class="h-8 w-8 rounded-full bg-accent"></span>
+            <span class="h-8 w-8 rounded-full bg-accent-hot"></span>
+            <span class="h-8 w-8 rounded-full bg-surface ring-1 ring-ink/20"></span>
+          </div>
+        </div>
+        <p class="mt-8 text-muted">Then the temperature — a palette with a point of view.</p>
+      </div>
+    </div>
+
+    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
+      <div class="w-full max-w-3xl text-center">
+        <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Motion &amp; intelligence</p>
+        <figure class="glow-frame mx-auto mt-8 w-full max-w-xl">
+          <img src="/images/work-fdaaf.webp" alt="FDAAF website, a K & A Performance build" class="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
+        </figure>
+        <p class="mt-8 text-muted">Then we make it move — and think.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work preview -->
+  <section class="mx-auto max-w-6xl px-6 py-32">
+    <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Recent builds</h2>
+    <div class="mt-14 grid gap-x-10 gap-y-16 md:grid-cols-2">
+      {projects.map((p) => (
+        <WorkFrame title={p.title} blurb={p.blurb} img={p.img} href="/work/" />
+      ))}
+    </div>
+    <div data-animate="type-settle" class="mt-16">
+      <a href="/work/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+        All work &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- AI section -->
+  <section class="border-y border-ink/10" style="background: linear-gradient(180deg, #0B0B10 0%, #08080C 100%);">
+    <div class="mx-auto max-w-6xl px-6 py-32">
+      <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Sites that <span class="text-accent italic">think.</span></h2>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        We integrate AI where it earns its place — assistants that qualify leads,
+        content engines, smart search. Ours is live right now:
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/#scope" class="btn-accent">Scope your project with our AI</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Artists teaser -->
+  <section class="mx-auto max-w-6xl px-6 py-32">
+    <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">In-house artistry</h2>
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Original illustration and artwork through our collaborating artists — no stock, ever.
+    </p>
+    <div class="mt-14 grid gap-10 md:grid-cols-2">
+      <a href="/artists/artist-one/" class="group block" data-animate="frame-lift">
+        <figure class="glow-frame transition-transform duration-300 group-hover:-translate-y-1">
+          <img src="/images/museum.webp" alt="Artist One — portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+        </figure>
+        <h3 class="mt-4 font-heading text-lg tracking-wide">Artist One</h3>
+        <p class="mt-1 text-sm text-muted">Illustration &amp; brand artwork</p>
+      </a>
+      <a href="/artists/artist-two/" class="group block" data-animate="frame-lift">
+        <figure class="glow-frame transition-transform duration-300 group-hover:-translate-y-1">
+          <img src="/images/abstract-geometric-art.webp" alt="Artist Two — portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+        </figure>
+        <h3 class="mt-4 font-heading text-lg tracking-wide">Artist Two</h3>
+        <p class="mt-1 text-sm text-muted">Digital art &amp; visual identity</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="px-6 pb-40 pt-16">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.05]">
+        Your site should work <span class="text-accent italic">this hard.</span>
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.15" class="mt-10">
+        <a href="/contact/#scope" class="btn-accent">Start a project</a>
+      </div>
+    </div>
   </section>
 </BaseLayout>
