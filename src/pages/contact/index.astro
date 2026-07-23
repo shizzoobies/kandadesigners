@@ -23,7 +23,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 lg:items-stretch">
 
       <!-- Path A: AI scoping (Task 9 mounts the chat inside #scope) -->
-      <div data-animate="frame-lift" id="scope" class="glow-frame flex flex-col p-8 md:p-10 scroll-mt-28">
+      <section data-animate="frame-lift" id="scope" class="glow-frame flex flex-col p-8 md:p-10 scroll-mt-28">
         <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Fastest way</p>
         <h2 class="mt-6 font-display text-3xl leading-tight md:text-4xl">
           Scope it with our <span class="text-accent italic">AI</span>
@@ -34,7 +34,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
         <!-- Task 9 mounts the scoping assistant here. Do not remove. -->
         <div id="scope-chat-root" class="mt-8 min-h-[22rem] flex-1"></div>
-      </div>
+      </section>
 
       <!-- Path B: classic form -->
       <div data-animate="frame-lift" data-animate-delay="0.1" class="glow-frame flex flex-col p-8 md:p-10">
@@ -68,7 +68,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </div>
 
           <button type="submit" id="contact-submit" class="btn-accent w-full text-center">Send message</button>
-          <p id="form-error" class="hidden text-sm leading-relaxed text-muted" role="alert">
+          <!-- Polite live region: announces the pending state without stealing focus. -->
+          <p id="form-status" class="sr-only" role="status" aria-live="polite"></p>
+          <p id="form-error" tabindex="-1" class="hidden text-sm leading-relaxed text-muted" role="alert">
             Something went wrong sending that. Please email us directly at
             <a href="mailto:alex@ka-performancefl.com" class="text-accent underline transition-colors hover:text-accent-hot">alex@ka-performancefl.com</a>
             and we'll pick it up.
@@ -76,7 +78,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </form>
 
         <!-- Inline success state (replaces the form on success). -->
-        <div id="form-success" class="hidden flex-1 flex-col justify-center">
+        <div id="form-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-1 flex-col justify-center">
           <h3 class="font-display text-3xl leading-tight md:text-4xl">Message received.</h3>
           <p class="mt-6 text-lg leading-relaxed text-muted">
             Thanks for reaching out — we'll be in touch within 24 hours. If it's
@@ -93,7 +95,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <style>
   .field {
     width: 100%;
-    background: #0B0B10;
+    background: var(--color-canvas);
     border: 1px solid rgb(237 237 242 / 0.14);
     border-radius: 8px;
     color: var(--color-ink);
@@ -123,6 +125,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const successEl = document.getElementById('form-success');
   const errorEl = document.getElementById('form-error');
+  const statusEl = document.getElementById('form-status');
   const btn = document.getElementById('contact-submit') as HTMLButtonElement | null;
 
   if (form && btn) {
@@ -139,6 +142,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       errorEl?.classList.add('hidden');
       btn.disabled = true;
       btn.textContent = 'Sending…';
+      if (statusEl) statusEl.textContent = 'Sending your message…';
 
       const data: Record<string, string> = {};
       new FormData(form).forEach((value, key) => {
@@ -154,16 +158,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         const result = await res.json();
 
         if (result.success) {
+          if (statusEl) statusEl.textContent = '';
           form.classList.add('hidden');
           successEl?.classList.remove('hidden');
           successEl?.classList.add('flex');
+          // Move keyboard/SR focus to the outcome, not the now-hidden button.
+          (successEl as HTMLElement | null)?.focus();
         } else {
           throw new Error(result.message || 'Submission failed');
         }
       } catch {
+        if (statusEl) statusEl.textContent = '';
         errorEl?.classList.remove('hidden');
         btn.disabled = false;
         btn.textContent = original;
+        // Land focus on the error message so it isn't missed.
+        (errorEl as HTMLElement | null)?.focus();
       }
     });
   }
