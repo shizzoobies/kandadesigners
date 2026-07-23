@@ -29,4 +29,16 @@ export const projects = [
     blurb: 'A Florida home-services directory powered by Google Places and Claude AI — search that actually finds the right pro, fast.',
     img: '/images/fixalways-hero.webp',
   },
+  {
+    slug: 'foremotion-golf',
+    title: 'Fore Motion Golf',
+    blurb: 'Indoor golf in Jacksonville — always 70, always sunny. A moody launch site with founding-membership waitlist capture and an AI Robo Caddie.',
+    img: '/images/work-foremotion.webp',
+  },
+  {
+    slug: 'ellenton-family-practice',
+    title: 'Ellenton Family Practice Direct',
+    blurb: 'Direct primary care in Ellenton, Florida. Modern medicine, old-fashioned doctors — a warm, trustworthy site built around membership signups.',
+    img: '/images/work-familypractice.webp',
+  },
 ];

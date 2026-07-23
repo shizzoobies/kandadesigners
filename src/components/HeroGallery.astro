@@ -1,25 +1,18 @@
 ---
 // Hero + gallery as one scroll-driven piece. The whole portfolio fills the
 // hero as a sloppy stack of browser windows (mixed macOS/Windows chrome).
-// Scrolling sweeps every window out of the stack and into its slot on a
-// 3D horseshoe gallery — cards arranged on an arc that wraps toward the
-// viewer — which then behaves as an interactive rotating ring (arrows,
-// dots, click a side card to bring it forward; center card links to /work/).
+// Scrolling sweeps every window into its slot on a 3D horseshoe — cards on
+// an arc wrapping toward the viewer — which then behaves as an interactive
+// rotating ring (arrows, dots, click a side card to bring it forward; the
+// front card links to /work/).
 //
-// Architecture: each window is .hg-slot (ring placement, CSS-class
-// transforms with transitions — owned by the carousel logic) containing
-// .hg-fly (scatter offsets, inline transforms — owned by the ScrollTrigger
-// scrub). The two layers never fight.
+// All card transforms are GSAP-owned inline styles with per-card
+// transformPerspective and explicit z-index depth ordering (painter's
+// algorithm, no preserve-3d) — so cards can never slice through each other,
+// and stack poses face the viewer flat.
 import { projects } from '../data/work.js';
 
-// Sloppy-stack pose per window (px at 1440w, scaled at runtime) + chrome style.
-const POSES = [
-  { x: -560, y: -190, r: -12, s: 1.22, a: 0.9,  chrome: 'mac' },
-  { x: 170,  y: -260, r: 8,   s: 1.08, a: 1,    chrome: 'win' },
-  { x: -650, y: 150,  r: 6,   s: 0.92, a: 0.35, chrome: 'mac' },
-  { x: 430,  y: 230,  r: -7,  s: 1.18, a: 0.95, chrome: 'win' },
-  { x: -90,  y: 30,   r: 14,  s: 1.32, a: 1,    chrome: 'mac' },
-];
+const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 ---
 <section id="gallery" class="relative lg:h-[300vh]">
   <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
@@ -56,37 +49,32 @@ const POSES = [
         {projects.map((p, i) => (
           <a
             href="/work/"
-            class="hg-slot"
+            class="hg-slot glow-frame bg-surface"
             data-index={i}
             aria-hidden={i === 0 ? 'false' : 'true'}
             tabindex={i === 0 ? 0 : -1}
           >
-            <span
-              class="hg-fly glow-frame block bg-surface"
-              data-pose={`${POSES[i].x},${POSES[i].y},${POSES[i].r},${POSES[i].s},${POSES[i].a}`}
-            >
-              {POSES[i].chrome === 'mac' ? (
-                <span class="flex items-center gap-1.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
-                  <span class="h-2.5 w-2.5 rounded-full bg-[#EC6A5E]"></span>
-                  <span class="h-2.5 w-2.5 rounded-full bg-[#F4BF4F]"></span>
-                  <span class="h-2.5 w-2.5 rounded-full bg-[#61C554]"></span>
-                  <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
-                </span>
-              ) : (
-                <span class="flex items-center justify-end gap-3.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
-                  <span class="text-[9px] leading-none text-ink/45">&#8213;</span>
-                  <span class="text-[9px] leading-none text-ink/45">&#9633;</span>
-                  <span class="text-[10px] leading-none text-ink/45">&#10005;</span>
-                </span>
-              )}
-              <img
-                src={p.img}
-                alt={`${p.title} website screenshot`}
-                class="aspect-[16/10] w-full object-cover object-top"
-                loading="eager"
-                fetchpriority={i === 4 ? 'high' : 'auto'}
-              />
-            </span>
+            {CHROMES[i] === 'mac' ? (
+              <span class="flex items-center gap-1.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#EC6A5E]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#F4BF4F]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#61C554]"></span>
+                <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+              </span>
+            ) : (
+              <span class="flex items-center justify-end gap-3.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
+                <span class="text-[9px] leading-none text-ink/45">&#8213;</span>
+                <span class="text-[9px] leading-none text-ink/45">&#9633;</span>
+                <span class="text-[10px] leading-none text-ink/45">&#10005;</span>
+              </span>
+            )}
+            <img
+              src={p.img}
+              alt={`${p.title} website screenshot`}
+              class="aspect-[16/10] w-full object-cover object-top"
+              loading="eager"
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+            />
           </a>
         ))}
       </div>
@@ -125,53 +113,26 @@ const POSES = [
 </section>
 
 <style>
-  #hg-stage {
-    perspective: 1600px;
-  }
-  #hg-ring {
-    transform-style: preserve-3d;
-    --hgr: 480px;
-  }
-  @media (max-width: 1023px) {
-    #hg-ring {
-      --hgr: 260px;
-    }
-  }
   .hg-slot {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: min(44%, 540px);
+    width: min(42%, 520px);
     display: block;
-    transform-style: preserve-3d;
-    transition:
-      transform 0.85s var(--ease-out-expo),
-      opacity 0.85s var(--ease-out-expo);
+    overflow: hidden;
     will-change: transform, opacity;
+    backface-visibility: hidden;
   }
   @media (max-width: 1023px) {
     .hg-slot {
       width: 72%;
     }
   }
-  .hg-slot.slot-n2 { transform: translate(-50%, -50%) rotateY(88deg) translateZ(var(--hgr)); opacity: 0.45; }
-  .hg-slot.slot-n1 { transform: translate(-50%, -50%) rotateY(44deg) translateZ(var(--hgr)); opacity: 0.8; }
-  .hg-slot.slot-0  { transform: translate(-50%, -50%) rotateY(0deg) translateZ(var(--hgr)); opacity: 1; }
-  .hg-slot.slot-p1 { transform: translate(-50%, -50%) rotateY(-44deg) translateZ(var(--hgr)); opacity: 0.8; }
-  .hg-slot.slot-p2 { transform: translate(-50%, -50%) rotateY(-88deg) translateZ(var(--hgr)); opacity: 0.45; }
-  .hg-slot:not(.slot-0) {
+  .hg-slot.hg-side {
     cursor: pointer;
-  }
-  .hg-slot:not(.slot-0):hover {
-    opacity: 0.95;
   }
   #hg-stage:not(.hg-live) .hg-slot {
     pointer-events: none;
-  }
-  .hg-fly {
-    display: block;
-    overflow: hidden;
-    will-change: transform, opacity;
   }
   .hg-arrow {
     display: grid;
@@ -227,9 +188,6 @@ const POSES = [
     top: 0;
     height: 100%;
   }
-  :global(.motion-reduced) .hg-slot {
-    transition: none;
-  }
 </style>
 
 <script>
@@ -238,10 +196,10 @@ const POSES = [
   import { projects } from '../data/work.js';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
   const section = document.getElementById('gallery');
   const stage = document.getElementById('hg-stage');
   const slots = [...document.querySelectorAll('.hg-slot')];
-  const flies = [...document.querySelectorAll('.hg-fly')];
   const dots = [...document.querySelectorAll('.hg-dot')];
   const title = document.getElementById('hg-title');
   const blurb = document.getElementById('hg-blurb');
@@ -251,10 +209,48 @@ const POSES = [
   const headline = document.getElementById('hg-headline');
 
   const n = projects.length;
-  const SLOT_CLASSES = ['slot-n2', 'slot-n1', 'slot-0', 'slot-p1', 'slot-p2'];
+  const R = isDesktop ? 520 : 260;
+  const STEP = 36; // degrees between slots
+  const OPACITY = [1, 0.85, 0.55, 0]; // rel ±3 sits past 90° — hidden
+
+  // Sloppy-stack targets: viewport-fraction offsets from center, covering
+  // the whole hero. Order matches projects[].
+  const STACK = [
+    { tx: -0.36, ty: -0.28, r: -10, s: 1.1,  a: 0.9  }, // fdaaf — top left
+    { tx: -0.08, ty: -0.3,  r: 7,   s: 1.15, a: 0.95 }, // mbs — top center
+    { tx: 0.34,  ty: -0.27, r: -6,  s: 1.1,  a: 0.9  }, // pbj — top right
+    { tx: -0.37, ty: 0.24,  r: 8,   s: 1.05, a: 0.9  }, // makeover — bottom left
+    { tx: 0.05,  ty: 0.1,   r: 12,  s: 1.3,  a: 1    }, // fixalways — center, big
+    { tx: 0.37,  ty: 0.26,  r: -9,  s: 1.1,  a: 0.95 }, // foremotion — bottom right
+    { tx: -0.05, ty: 0.34,  r: -13, s: 1.0,  a: 0.9  }, // family practice — bottom center
+  ];
+
+  const relOf = (i, cur) => {
+    let rel = (((i - cur) % n) + n) % n;
+    if (rel > 3) rel -= n;
+    return rel;
+  };
+
+  // rotateY(-rel*30) then translateZ(R), expressed in GSAP's fixed
+  // translate-then-rotate order: x = -R sin, z = R cos.
+  const ringPose = (rel) => {
+    const th = (rel * STEP * Math.PI) / 180;
+    return {
+      x: -R * Math.sin(th),
+      y: 0,
+      z: R * Math.cos(th) - R * 0.62, // recenter depth so edges recede, front advances
+      rotationY: -rel * STEP,
+      rotation: 0,
+      scale: 1,
+      opacity: OPACITY[Math.abs(rel)],
+    };
+  };
+
   let current = 0;
   let timer = null;
   let autoplayStarted = false;
+
+  gsap.set(slots, { xPercent: -50, yPercent: -50, transformPerspective: 1600, transformOrigin: '50% 50%' });
 
   function setCaption(i) {
     const swap = () => {
@@ -263,20 +259,18 @@ const POSES = [
       live.textContent = `Showing ${projects[i].title}, project ${i + 1} of ${n}`;
       gsap.to([title, blurb], { opacity: 1, duration: 0.25 });
     };
-    if (reduced) {
-      swap();
-    } else {
-      gsap.to([title, blurb], { opacity: 0, duration: 0.18, onComplete: swap });
-    }
+    if (reduced) swap();
+    else gsap.to([title, blurb], { opacity: 0, duration: 0.18, onComplete: swap });
   }
 
-  function layout() {
+  function layout(animate) {
     slots.forEach((slot, i) => {
-      // shortest wrap of (i - current) into [-2, 2]
-      let rel = (((i - current) % n) + n) % n;
-      if (rel > 2) rel -= n;
-      slot.classList.remove(...SLOT_CLASSES);
-      slot.classList.add(SLOT_CLASSES[rel + 2]);
+      const rel = relOf(i, current);
+      const pose = ringPose(rel);
+      slot.style.zIndex = String(40 - Math.abs(rel) * 10);
+      slot.classList.toggle('hg-side', rel !== 0);
+      if (animate && !reduced) gsap.to(slot, { ...pose, duration: 0.85, ease: 'expo.out' });
+      else gsap.set(slot, pose);
       const isCenter = rel === 0;
       slot.setAttribute('aria-hidden', String(!isCenter));
       slot.tabIndex = isCenter ? 0 : -1;
@@ -284,9 +278,9 @@ const POSES = [
     dots.forEach((dot, i) => dot.setAttribute('aria-selected', String(i === current)));
   }
 
-  function goTo(i) {
+  function goTo(i, animate = true) {
     current = ((i % n) + n) % n;
-    layout();
+    layout(animate);
     setCaption(current);
   }
 
@@ -303,10 +297,9 @@ const POSES = [
   document.getElementById('hg-next').addEventListener('click', () => { stopAutoplay(); goTo(current + 1); });
   dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAutoplay(); goTo(i); }));
 
-  // Clicking any non-center card rotates it to the front; center card links out.
   slots.forEach((slot, i) => {
     slot.addEventListener('click', (e) => {
-      if (!slot.classList.contains('slot-0')) {
+      if (relOf(i, current) !== 0) {
         e.preventDefault();
         stopAutoplay();
         goTo(i);
@@ -316,20 +309,28 @@ const POSES = [
   stage.addEventListener('pointerenter', stopAutoplay);
   stage.addEventListener('focusin', stopAutoplay);
 
-  goTo(0);
-
-  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  setCaption(0);
 
   if (!reduced && isDesktop) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Scatter the flock across the whole hero (scaled to viewport).
-    const k = Math.min(window.innerWidth / 1440, 1.2);
-    flies.forEach((fly) => {
-      const [x, y, r, s, a] = fly.dataset.pose.split(',').map(Number);
-      gsap.set(fly, { x: x * k, y: y * k, rotation: r, scale: s, opacity: a });
+    // Scatter the flock across the whole hero; cards face the viewer flat.
+    slots.forEach((slot, i) => {
+      const t = STACK[i];
+      gsap.set(slot, {
+        x: t.tx * window.innerWidth,
+        y: t.ty * window.innerHeight,
+        z: 0,
+        rotationY: 0,
+        rotation: t.r,
+        scale: t.s,
+        opacity: t.a,
+      });
+      slot.style.zIndex = String(10 + i);
     });
     gsap.set([ui, heading], { autoAlpha: 0, y: 24 });
+
+    const endPoses = slots.map((_, i) => ringPose(relOf(i, 0)));
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -341,21 +342,36 @@ const POSES = [
           stage.classList.toggle('hg-live', st.progress > 0.93);
           if (st.progress > 0.97 && !autoplayStarted) {
             autoplayStarted = true;
+            layout(false); // lock in exact ring poses + z order
             startAutoplay();
           }
+          if (st.progress < 0.5 && current !== 0) {
+            stopAutoplay();
+            goTo(0, false);
+          }
+          if (st.progress < 0.5) autoplayStarted = false;
           document.getElementById('scroll-cue')?.classList.toggle('cue-hidden', st.progress > 0.05);
         },
       },
     });
 
     tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.22, ease: 'power1.in' }, 0.03)
-      .to(flies, {
-        x: 0, y: 0, rotation: 0, scale: 1, opacity: 1,
-        duration: 0.62, stagger: 0.055, ease: 'power2.inOut',
+      .to(slots, {
+        x: (i) => endPoses[i].x,
+        y: 0,
+        z: (i) => endPoses[i].z,
+        rotationY: (i) => endPoses[i].rotationY,
+        rotation: 0,
+        scale: 1,
+        opacity: (i) => endPoses[i].opacity,
+        duration: 0.62,
+        stagger: 0.05,
+        ease: 'power2.inOut',
       }, 0.08)
       .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.18 }, 0.8);
   } else {
     // Mobile / reduced motion: no scatter, ring formed, UI visible.
+    goTo(0, false);
     stage.classList.add('hg-live');
     if (heading) gsap.set(heading, { autoAlpha: 1 });
     gsap.set(ui, { autoAlpha: 1 });
