@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScopeChat from '../../components/ScopeChat.astro';
 ---
 <BaseLayout
   title="Contact — K & A Performance"
@@ -32,8 +33,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           Answer a few questions, get a project scope in minutes.
         </p>
 
-        <!-- Task 9 mounts the scoping assistant here. Do not remove. -->
-        <div id="scope-chat-root" class="mt-8 min-h-[22rem] flex-1"></div>
+        <div id="scope-chat-root" class="mt-8 flex min-h-[22rem] flex-1 flex-col">
+          <ScopeChat />
+        </div>
       </section>
 
       <!-- Path B: classic form -->
