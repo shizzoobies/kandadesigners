@@ -3,8 +3,9 @@
 // hero as a sloppy stack of browser windows (mixed macOS/Windows chrome).
 // Scrolling sweeps every window into its slot on a 3D horseshoe — cards on
 // an arc wrapping toward the viewer — which then behaves as an interactive
-// rotating ring (arrows, dots, click a side card to bring it forward; the
-// front card links to /work/).
+// rotating ring (arrows, dots, click a side card to bring it forward).
+// Scrolling on past the gallery sends the tiles flying back into the
+// depths, fading out before the next section arrives.
 //
 // All card transforms are GSAP-owned inline styles with per-card
 // transformPerspective and explicit z-index depth ordering (painter's
@@ -14,7 +15,7 @@ import { projects } from '../data/work.js';
 
 const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 ---
-<section id="gallery" class="relative lg:h-[300vh]">
+<section id="gallery" class="relative lg:h-[420vh]">
   <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
 
     <!-- top scrim: near-solid band so the nav and oversized logo always sit
@@ -35,7 +36,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         </p>
         <div class="mt-8 flex flex-wrap gap-4">
           <a href="/contact/#scope" class="btn-accent">Start a project</a>
-          <a href="/work/" class="btn-ghost">See the work</a>
+          <a href="/services/" class="btn-ghost">What we do</a>
         </div>
       </div>
     </div>
@@ -49,12 +50,10 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     <div id="hg-stage" class="relative mx-auto mt-10 h-[21rem] w-full max-w-6xl sm:h-[24rem] lg:absolute lg:inset-x-0 lg:top-1/2 lg:mt-0 lg:h-[54vh] lg:-translate-y-1/2">
       <div id="hg-ring" class="absolute inset-0">
         {projects.map((p, i) => (
-          <a
-            href="/work/"
+          <div
             class="hg-slot glow-frame bg-surface"
             data-index={i}
             aria-hidden={i === 0 ? 'false' : 'true'}
-            tabindex={i === 0 ? 0 : -1}
           >
             {CHROMES[i] === 'mac' ? (
               <span class="flex items-center gap-1.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
@@ -77,7 +76,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
               loading="eager"
               fetchpriority={i === 0 ? 'high' : 'auto'}
             />
-          </a>
+          </div>
         ))}
       </div>
     </div>
@@ -101,9 +100,6 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         <button type="button" id="hg-next" class="hg-arrow" aria-label="Next project">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4 13 10l-5.5 6"/></svg>
         </button>
-      </div>
-      <div class="mt-6">
-        <a href="/work/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">All work &rarr;</a>
       </div>
     </div>
 
@@ -275,9 +271,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
       slot.classList.toggle('hg-side', rel !== 0);
       if (animate && !reduced) gsap.to(slot, { ...pose, duration: 0.85, ease: 'expo.out' });
       else gsap.set(slot, pose);
-      const isCenter = rel === 0;
-      slot.setAttribute('aria-hidden', String(!isCenter));
-      slot.tabIndex = isCenter ? 0 : -1;
+      slot.setAttribute('aria-hidden', String(rel !== 0));
     });
     dots.forEach((dot, i) => dot.setAttribute('aria-selected', String(i === current)));
   }
@@ -336,30 +330,35 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 
     const endPoses = slots.map((_, i) => ringPose(relOf(i, 0)));
 
+    // Three acts: sweep into the horseshoe, hold as an interactive gallery,
+    // then fly back into the depths and fade before the next section.
+    const LIVE_MIN = 0.5;
+    const LIVE_MAX = 0.78;
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: '+=170%',
+        end: '+=320%',
         scrub: 0.6,
         onUpdate: (st) => {
-          stage.classList.toggle('hg-live', st.progress > 0.93);
-          if (st.progress > 0.97 && !autoplayStarted) {
+          const inBand = st.progress > LIVE_MIN && st.progress < LIVE_MAX;
+          stage.classList.toggle('hg-live', inBand);
+          if (inBand && !autoplayStarted) {
             autoplayStarted = true;
-            layout(false); // lock in exact ring poses + z order
             startAutoplay();
           }
-          if (st.progress < 0.5 && current !== 0) {
+          if (!inBand && autoplayStarted) {
+            autoplayStarted = false;
             stopAutoplay();
-            goTo(0, false);
+            if (current !== 0) goTo(0, false); // resync before scrub retakes the poses
           }
-          if (st.progress < 0.5) autoplayStarted = false;
           document.getElementById('scroll-cue')?.classList.toggle('cue-hidden', st.progress > 0.05);
         },
       },
     });
 
-    tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.22, ease: 'power1.in' }, 0.03)
+    tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.2, ease: 'power1.in' }, 0.05)
       .to(slots, {
         x: (i) => endPoses[i].x,
         y: 0,
@@ -368,11 +367,24 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         rotation: 0,
         scale: 1,
         opacity: (i) => endPoses[i].opacity,
-        duration: 0.62,
+        duration: 0.6,
         stagger: 0.05,
         ease: 'power2.inOut',
-      }, 0.08)
-      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.18 }, 0.8);
+      }, 0.12)
+      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.12 }, 0.98)
+      .to({}, { duration: 0.45 }, 1.1) // hold: the interactive gallery band
+      .to([heading, ui], { autoAlpha: 0, y: -24, duration: 0.1 }, 1.58)
+      .to(slots, {
+        x: (i) => endPoses[i].x * 0.45,
+        y: -70,
+        z: -680,
+        rotationY: 0,
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.32,
+        stagger: 0.03,
+        ease: 'power2.in',
+      }, 1.62);
   } else {
     // Mobile / reduced motion: no scatter, ring formed, UI visible.
     goTo(0, false);
