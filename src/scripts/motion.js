@@ -17,6 +17,7 @@ if (reduced) {
 } else {
   gsap.registerPlugin(ScrollTrigger);
   const lenis = new Lenis({ lerp: 0.12 });
+  window.__motion.lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((t) => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);

@@ -9,68 +9,8 @@ import WorkCarousel from '../components/WorkCarousel.astro';
 >
   <WireframeHero />
 
-  <!-- Craft sequence: the page builds itself as you scroll.
-       Sticky viewport + scrubbed timeline; wrapper height set by motion.js. -->
-  <section data-pin-sequence class="relative" aria-label="How we build">
-    <div data-pin-viewport class="sticky top-0 h-screen overflow-hidden">
-    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
-      <div class="w-full max-w-3xl text-center">
-        <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Structure</p>
-        <svg
-          class="mx-auto mt-8 w-full max-w-xl text-ink/30"
-          viewBox="0 0 640 400" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"
-        >
-          <rect x="10" y="10" width="620" height="380" rx="12" />
-          <line x1="10" y1="52" x2="630" y2="52" />
-          <line x1="60" y1="120" x2="380" y2="120" />
-          <line x1="60" y1="156" x2="320" y2="156" />
-          <rect x="60" y="210" width="240" height="130" rx="8" />
-          <rect x="340" y="210" width="240" height="130" rx="8" />
-        </svg>
-        <p class="mt-8 text-muted">Every build starts as bones — hierarchy, flow, intent.</p>
-      </div>
-    </div>
-
-    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
-      <div class="w-full max-w-3xl text-center">
-        <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Type</p>
-        <div class="glow-frame mx-auto mt-8 w-full max-w-xl px-10 py-16 text-left">
-          <p class="font-display text-4xl leading-tight md:text-5xl">Words that carry weight.</p>
-          <p class="mt-4 text-muted">Typography does the heavy lifting before a single image loads.</p>
-        </div>
-        <p class="mt-8 text-muted">Then the voice — type that sounds like you.</p>
-      </div>
-    </div>
-
-    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
-      <div class="w-full max-w-3xl text-center">
-        <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Color</p>
-        <div class="glow-frame mx-auto mt-8 w-full max-w-xl px-10 py-16 text-left" style="background: linear-gradient(135deg, #FFFDF9 0%, #EFEAFB 100%);">
-          <p class="font-display text-4xl leading-tight md:text-5xl">Words that carry <span class="text-accent italic">weight.</span></p>
-          <div class="mt-6 flex gap-3" aria-hidden="true">
-            <span class="h-8 w-8 rounded-full bg-accent"></span>
-            <span class="h-8 w-8 rounded-full bg-accent-hot"></span>
-            <span class="h-8 w-8 rounded-full bg-surface ring-1 ring-ink/20"></span>
-          </div>
-        </div>
-        <p class="mt-8 text-muted">Then the temperature — a palette with a point of view.</p>
-      </div>
-    </div>
-
-    <div data-pin-step class="absolute inset-0 flex items-center justify-center px-6">
-      <div class="w-full max-w-3xl text-center">
-        <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Motion &amp; intelligence</p>
-        <figure class="glow-frame mx-auto mt-8 w-full max-w-xl">
-          <img src="/images/work-fdaaf.webp" alt="FDAAF website, a K & A Performance build" class="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
-        </figure>
-        <p class="mt-8 text-muted">Then we make it move — and think.</p>
-      </div>
-    </div>
-    </div>
-  </section>
-
   <!-- Work showcase: cycling carousel -->
-  <section class="mx-auto max-w-6xl px-6 py-32">
+  <section id="gallery" class="mx-auto max-w-6xl px-6 py-32 scroll-mt-16">
     <h2 data-animate="type-settle" class="text-center font-display text-4xl md:text-6xl">Recent builds</h2>
     <div data-animate="flood-in" class="mt-14">
       <WorkCarousel />
