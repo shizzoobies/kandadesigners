@@ -1,9 +1,10 @@
 ---
-// Hero intro: pieces of a site (chrome, nav, copy, imagery, cards, footer)
-// fly in from scattered spots and assemble into one finished mock — a
-// stylized site built from our own tokens, not a screenshot. When the
-// assembly lands, the page glides down to the work gallery on its own
-// (unless the visitor has already started scrolling).
+// Hero intro: pieces of a webpage fly in from scattered spots and assemble
+// into a finished, real-feeling site for a fictional client ("Atelier
+// North") — real copy, a real photograph, our design language. After the
+// pieces land it settles cinematically: shadow bloom, slow ken-burns on
+// the photo, and a gentle breathing float. No auto-scroll — the cue below
+// invites the visitor to move on their own.
 ---
 <section class="relative flex min-h-screen items-center overflow-hidden px-6">
   <div
@@ -13,58 +14,57 @@
   >
     <div id="wf-frame" class="relative aspect-[800/540] w-full overflow-hidden rounded-[14px] border border-ink/10 bg-surface">
       <!-- browser chrome -->
-      <div data-piece data-fly="0,-90,0" class="absolute inset-x-0 top-0 flex h-[9.5%] items-center gap-[0.9%] border-b border-ink/10 bg-canvas/70 px-[3%]">
+      <div data-piece data-fly="0,-90,0" class="absolute inset-x-0 top-0 z-10 flex h-[9.5%] items-center gap-[0.9%] border-b border-ink/10 bg-canvas/80 px-[3%]">
         <span class="h-[26%] aspect-square rounded-full bg-ink/15"></span>
         <span class="h-[26%] aspect-square rounded-full bg-ink/15"></span>
         <span class="h-[26%] aspect-square rounded-full bg-ink/15"></span>
-        <span class="ml-auto h-[42%] w-[26%] rounded-full border border-ink/10 bg-surface"></span>
+        <span class="ml-auto flex h-[46%] w-[30%] items-center rounded-full border border-ink/10 bg-surface px-[2%] font-heading text-[9px] text-muted">ateliernorth.com</span>
       </div>
       <!-- site nav -->
-      <div data-piece data-fly="-160,-40,-4" class="absolute left-[4%] right-[4%] top-[14%] flex items-center justify-between">
-        <span class="flex items-center gap-[6px]">
-          <span class="h-[10px] w-[10px] rounded-full bg-accent"></span>
-          <span class="h-[7px] w-[54px] rounded-full bg-ink/25"></span>
+      <div data-piece data-fly="-160,-40,-4" class="absolute left-[4%] right-[4%] top-[13.5%] flex items-center justify-between">
+        <span class="flex items-center gap-[7px]">
+          <span class="h-[11px] w-[11px] rounded-full bg-accent"></span>
+          <span class="font-heading text-[11px] font-semibold tracking-[0.14em] text-ink">ATELIER NORTH</span>
         </span>
-        <span class="flex items-center gap-[10px]">
-          <span class="h-[6px] w-[34px] rounded-full bg-ink/15"></span>
-          <span class="h-[6px] w-[34px] rounded-full bg-ink/15"></span>
-          <span class="h-[6px] w-[34px] rounded-full bg-ink/15"></span>
-          <span class="h-[18px] w-[64px] rounded-full bg-accent/85"></span>
+        <span class="flex items-center gap-[14px]">
+          <span class="font-heading text-[9px] tracking-wide text-muted">Exhibits</span>
+          <span class="font-heading text-[9px] tracking-wide text-muted">Artists</span>
+          <span class="font-heading text-[9px] tracking-wide text-muted">Visit</span>
+          <span class="rounded-full bg-accent px-[10px] py-[4px] font-heading text-[8.5px] text-white">Plan a visit</span>
         </span>
       </div>
       <!-- hero copy block -->
-      <div data-piece data-fly="-220,60,-6" class="absolute left-[4%] top-[30%] w-[40%]">
-        <span class="block h-[13px] w-[92%] rounded-full bg-ink/40"></span>
-        <span class="mt-[7px] block h-[13px] w-[70%] rounded-full bg-accent/50"></span>
-        <span class="mt-[14px] block h-[6px] w-[88%] rounded-full bg-ink/15"></span>
-        <span class="mt-[6px] block h-[6px] w-[64%] rounded-full bg-ink/15"></span>
-        <span class="mt-[16px] inline-block h-[22px] w-[84px] rounded-full bg-accent"></span>
+      <div data-piece data-fly="-220,60,-6" class="absolute left-[4%] top-[30%] w-[41%]">
+        <p class="font-display text-[clamp(16px,1.6vw,24px)] leading-[1.08] text-ink">
+          Contemporary craft, <span class="italic text-accent">curated.</span>
+        </p>
+        <p class="mt-[8px] font-body text-[10px] leading-relaxed text-muted">
+          Rotating exhibitions from forty makers — ceramics, fiber, glass, and
+          light. Open Thursday through Sunday.
+        </p>
+        <span class="mt-[12px] inline-block rounded-full bg-accent px-[14px] py-[6px] font-heading text-[9px] text-white">Visit the gallery</span>
       </div>
       <!-- hero imagery -->
-      <div data-piece data-fly="240,40,7" class="absolute right-[4%] top-[26%] h-[36%] w-[46%] overflow-hidden rounded-[10px] bg-gradient-to-br from-[#EFEAFB] to-[#D9CEF6]">
-        <span class="absolute left-[12%] top-[18%] h-[46%] w-[46%] rounded-full bg-accent/25"></span>
-        <span class="absolute bottom-[-18%] right-[-8%] h-[70%] w-[70%] rounded-full bg-accent/15"></span>
+      <div data-piece data-fly="240,40,7" class="absolute right-[4%] top-[26%] h-[38%] w-[45%] overflow-hidden rounded-[10px]">
+        <img id="wf-photo" src="/images/museum.webp" alt="" class="h-full w-full object-cover" loading="eager" fetchpriority="high" />
       </div>
       <!-- three feature cards -->
-      <div data-piece data-fly="-120,190,-5" class="absolute bottom-[12%] left-[4%] h-[20%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/80 p-[1.6%]">
-        <span class="block h-[8px] w-[36%] rounded-full bg-accent/60"></span>
-        <span class="mt-[8px] block h-[5px] w-[82%] rounded-full bg-ink/15"></span>
-        <span class="mt-[5px] block h-[5px] w-[60%] rounded-full bg-ink/15"></span>
+      <div data-piece data-fly="-120,190,-5" class="absolute bottom-[11%] left-[4%] h-[21%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/85 px-[1.8%] py-[1.4%]">
+        <p class="font-heading text-[9px] font-semibold tracking-[0.12em] text-accent">EXHIBITS</p>
+        <p class="mt-[5px] font-body text-[9.5px] leading-snug text-ink/80">Now showing: Terra — new ceramics from the north coast.</p>
       </div>
-      <div data-piece data-fly="0,230,0" class="absolute bottom-[12%] left-[36%] h-[20%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/80 p-[1.6%]">
-        <span class="block h-[8px] w-[36%] rounded-full bg-accent/60"></span>
-        <span class="mt-[8px] block h-[5px] w-[82%] rounded-full bg-ink/15"></span>
-        <span class="mt-[5px] block h-[5px] w-[60%] rounded-full bg-ink/15"></span>
+      <div data-piece data-fly="0,230,0" class="absolute bottom-[11%] left-[36%] h-[21%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/85 px-[1.8%] py-[1.4%]">
+        <p class="font-heading text-[9px] font-semibold tracking-[0.12em] text-accent">ARTISTS</p>
+        <p class="mt-[5px] font-body text-[9.5px] leading-snug text-ink/80">Forty studios under one roof, from throwers to weavers.</p>
       </div>
-      <div data-piece data-fly="140,190,6" class="absolute bottom-[12%] right-[4%] h-[20%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/80 p-[1.6%]">
-        <span class="block h-[8px] w-[36%] rounded-full bg-accent/60"></span>
-        <span class="mt-[8px] block h-[5px] w-[82%] rounded-full bg-ink/15"></span>
-        <span class="mt-[5px] block h-[5px] w-[60%] rounded-full bg-ink/15"></span>
+      <div data-piece data-fly="140,190,6" class="absolute bottom-[11%] right-[4%] h-[21%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/85 px-[1.8%] py-[1.4%]">
+        <p class="font-heading text-[9px] font-semibold tracking-[0.12em] text-accent">VISIT</p>
+        <p class="mt-[5px] font-body text-[9.5px] leading-snug text-ink/80">Thu–Sun, 10–6. Coffee cart on weekends.</p>
       </div>
       <!-- footer bar -->
-      <div data-piece data-fly="0,110,0" class="absolute inset-x-0 bottom-0 flex h-[7%] items-center justify-between border-t border-ink/10 bg-canvas/70 px-[4%]">
-        <span class="h-[24%] w-[14%] rounded-full bg-ink/20"></span>
-        <span class="h-[24%] w-[24%] rounded-full bg-ink/10"></span>
+      <div data-piece data-fly="0,110,0" class="absolute inset-x-0 bottom-0 flex h-[7%] items-center justify-between border-t border-ink/10 bg-canvas/80 px-[4%]">
+        <span class="font-heading text-[8.5px] text-muted">&copy; Atelier North</span>
+        <span class="font-heading text-[8.5px] text-muted">Instagram &middot; Maps</span>
       </div>
     </div>
   </div>
@@ -146,30 +146,19 @@
   import gsap from 'gsap';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scene = document.getElementById('wf-scene');
   const frame = document.getElementById('wf-frame');
+  const photo = document.getElementById('wf-photo');
   const pieces = frame ? [...frame.querySelectorAll('[data-piece]')] : [];
-
-  let userScrolled = false;
-  const markScrolled = () => { userScrolled = true; };
-  ['wheel', 'touchstart', 'keydown'].forEach((ev) =>
-    window.addEventListener(ev, markScrolled, { passive: true, once: true })
-  );
-
-  function glideToGallery() {
-    if (userScrolled || window.scrollY > 60) return;
-    const target = document.getElementById('gallery');
-    if (!target) return;
-    const lenis = window.__motion?.lenis;
-    if (lenis) lenis.scrollTo(target, { duration: 1.6, offset: -40 });
-    else target.scrollIntoView({ behavior: 'smooth' });
-  }
 
   if (frame && !reduced) {
     const tl = gsap.timeline({
       delay: 0.35,
       onComplete: () => {
         frame.classList.add('wf-lit');
-        setTimeout(glideToGallery, 1400);
+        // Cinematic idle: the frame breathes, the photo drifts (ken burns).
+        gsap.to(scene, { y: 10, duration: 5.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+        gsap.to(photo, { scale: 1.07, duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
       },
     });
     tl.from(frame, { opacity: 0, scale: 0.94, duration: 0.6, ease: 'expo.out' });

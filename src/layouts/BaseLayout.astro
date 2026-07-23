@@ -28,6 +28,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
+    <div class="bg-ambient" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+    </div>
     <Nav />
     <main>
       <slot />

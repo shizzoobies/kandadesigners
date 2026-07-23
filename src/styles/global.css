@@ -124,6 +124,58 @@ body {
   }
 }
 
+/* Ambient background: blurred color fields drifting slowly behind every
+   page so the canvas never reads flat. Transform-only, GPU-cheap. */
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-ambient .blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+}
+.bg-ambient .blob-a {
+  width: 44vw;
+  height: 44vw;
+  left: -10vw;
+  top: -12vw;
+  background: radial-gradient(circle, rgb(108 92 231 / 0.16), transparent 65%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+.bg-ambient .blob-b {
+  width: 38vw;
+  height: 38vw;
+  right: -8vw;
+  top: 20vh;
+  background: radial-gradient(circle, rgb(224 122 95 / 0.14), transparent 65%);
+  animation: drift-b 34s ease-in-out infinite alternate;
+}
+.bg-ambient .blob-c {
+  width: 42vw;
+  height: 42vw;
+  left: 22vw;
+  bottom: -16vw;
+  background: radial-gradient(circle, rgb(108 92 231 / 0.1), transparent 65%);
+  animation: drift-c 40s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  to { transform: translate(8vw, 6vh) scale(1.12); }
+}
+@keyframes drift-b {
+  to { transform: translate(-7vw, -8vh) scale(1.18); }
+}
+@keyframes drift-c {
+  to { transform: translate(6vw, -7vh) scale(1.06); }
+}
+.motion-reduced .bg-ambient .blob {
+  animation: none;
+}
+
 /* Nav state toggled by the motion engine on scroll. */
 [data-nav] {
   transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
