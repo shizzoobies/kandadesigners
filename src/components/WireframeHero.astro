@@ -1,10 +1,11 @@
 ---
-// Hero intro: pieces of a webpage fly in from scattered spots and assemble
-// into a finished, real-feeling site for a fictional client ("Atelier
-// North") — real copy, a real photograph, our design language. After the
-// pieces land it settles cinematically: shadow bloom, slow ken-burns on
-// the photo, and a gentle breathing float. No auto-scroll — the cue below
-// invites the visitor to move on their own.
+// Hero intro: a client site is built through four visible stages, each at a
+// different spot and angle in the hero space — wireframe sketch, gray
+// blocking, styled pass, then the finished page — before settling into its
+// final position. The finished mock is a dense, real-feeling site for a
+// fictional gallery ("Atelier North") with its own pine/brass palette
+// (deliberately not ours) and Pixabay photography. Cinematic settle:
+// shadow bloom, ken-burns photo, breathing float. No auto-scroll.
 ---
 <section class="relative flex min-h-screen items-center overflow-hidden px-6">
   <div
@@ -12,59 +13,148 @@
     class="pointer-events-none absolute right-[-6%] top-1/2 hidden w-[60%] -translate-y-1/2 lg:block"
     aria-hidden="true"
   >
-    <div id="wf-frame" class="relative aspect-[800/540] w-full overflow-hidden rounded-[14px] border border-ink/10 bg-surface">
-      <!-- browser chrome -->
-      <div data-piece data-fly="0,-90,0" class="absolute inset-x-0 top-0 z-10 flex h-[9.5%] items-center gap-[0.9%] border-b border-ink/10 bg-canvas/80 px-[3%]">
-        <span class="h-[26%] aspect-square rounded-full bg-ink/15"></span>
-        <span class="h-[26%] aspect-square rounded-full bg-ink/15"></span>
-        <span class="h-[26%] aspect-square rounded-full bg-ink/15"></span>
-        <span class="ml-auto flex h-[46%] w-[30%] items-center rounded-full border border-ink/10 bg-surface px-[2%] font-heading text-[9px] text-muted">ateliernorth.com</span>
-      </div>
-      <!-- site nav -->
-      <div data-piece data-fly="-160,-40,-4" class="absolute left-[4%] right-[4%] top-[13.5%] flex items-center justify-between">
-        <span class="flex items-center gap-[7px]">
-          <span class="h-[11px] w-[11px] rounded-full bg-accent"></span>
-          <span class="font-heading text-[11px] font-semibold tracking-[0.14em] text-ink">ATELIER NORTH</span>
-        </span>
-        <span class="flex items-center gap-[14px]">
-          <span class="font-heading text-[9px] tracking-wide text-muted">Exhibits</span>
-          <span class="font-heading text-[9px] tracking-wide text-muted">Artists</span>
-          <span class="font-heading text-[9px] tracking-wide text-muted">Visit</span>
-          <span class="rounded-full bg-accent px-[10px] py-[4px] font-heading text-[8.5px] text-white">Plan a visit</span>
-        </span>
-      </div>
-      <!-- hero copy block -->
-      <div data-piece data-fly="-220,60,-6" class="absolute left-[4%] top-[30%] w-[41%]">
-        <p class="font-display text-[clamp(16px,1.6vw,24px)] leading-[1.08] text-ink">
-          Contemporary craft, <span class="italic text-accent">curated.</span>
-        </p>
-        <p class="mt-[8px] font-body text-[10px] leading-relaxed text-muted">
-          Rotating exhibitions from forty makers — ceramics, fiber, glass, and
-          light. Open Thursday through Sunday.
-        </p>
-        <span class="mt-[12px] inline-block rounded-full bg-accent px-[14px] py-[6px] font-heading text-[9px] text-white">Visit the gallery</span>
-      </div>
-      <!-- hero imagery -->
-      <div data-piece data-fly="240,40,7" class="absolute right-[4%] top-[26%] h-[38%] w-[45%] overflow-hidden rounded-[10px]">
-        <img id="wf-photo" src="/images/museum.webp" alt="" class="h-full w-full object-cover" loading="eager" fetchpriority="high" />
-      </div>
-      <!-- three feature cards -->
-      <div data-piece data-fly="-120,190,-5" class="absolute bottom-[11%] left-[4%] h-[21%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/85 px-[1.8%] py-[1.4%]">
-        <p class="font-heading text-[9px] font-semibold tracking-[0.12em] text-accent">EXHIBITS</p>
-        <p class="mt-[5px] font-body text-[9.5px] leading-snug text-ink/80">Now showing: Terra — new ceramics from the north coast.</p>
-      </div>
-      <div data-piece data-fly="0,230,0" class="absolute bottom-[11%] left-[36%] h-[21%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/85 px-[1.8%] py-[1.4%]">
-        <p class="font-heading text-[9px] font-semibold tracking-[0.12em] text-accent">ARTISTS</p>
-        <p class="mt-[5px] font-body text-[9.5px] leading-snug text-ink/80">Forty studios under one roof, from throwers to weavers.</p>
-      </div>
-      <div data-piece data-fly="140,190,6" class="absolute bottom-[11%] right-[4%] h-[21%] w-[28%] rounded-[10px] border border-ink/10 bg-canvas/85 px-[1.8%] py-[1.4%]">
-        <p class="font-heading text-[9px] font-semibold tracking-[0.12em] text-accent">VISIT</p>
-        <p class="mt-[5px] font-body text-[9.5px] leading-snug text-ink/80">Thu–Sun, 10–6. Coffee cart on weekends.</p>
-      </div>
-      <!-- footer bar -->
-      <div data-piece data-fly="0,110,0" class="absolute inset-x-0 bottom-0 flex h-[7%] items-center justify-between border-t border-ink/10 bg-canvas/80 px-[4%]">
-        <span class="font-heading text-[8.5px] text-muted">&copy; Atelier North</span>
-        <span class="font-heading text-[8.5px] text-muted">Instagram &middot; Maps</span>
+    <div id="wf-mover">
+      <div id="wf-frame" class="relative aspect-[800/540] w-full overflow-hidden rounded-[14px] border border-ink/10 bg-[#FBF9F4]">
+
+        <!-- STAGE 1 — wireframe sketch -->
+        <div data-stage="1" class="absolute inset-0">
+          <div class="absolute inset-x-0 top-0 h-[8%] border-b border-ink/25"></div>
+          <div class="absolute left-[4%] top-[9.5%] h-[4%] w-[22%] rounded-sm border border-ink/25"></div>
+          <div class="absolute right-[4%] top-[9.5%] h-[4%] w-[34%] rounded-sm border border-ink/25"></div>
+          <div class="absolute left-[4%] top-[20%] h-[6%] w-[38%] border border-ink/25"></div>
+          <div class="absolute left-[4%] top-[28%] h-[3%] w-[30%] border border-ink/20"></div>
+          <div class="absolute left-[4%] top-[34%] h-[5%] w-[18%] rounded-full border border-ink/25"></div>
+          <div class="absolute right-[4%] top-[18%] h-[32%] w-[45%] border border-ink/25">
+            <span class="absolute left-0 top-0 h-full w-full">
+              <span class="absolute left-0 top-0 h-[1px] w-[141%] origin-top-left rotate-[36deg] bg-ink/20"></span>
+              <span class="absolute bottom-0 left-0 h-[1px] w-[141%] origin-bottom-left -rotate-[36deg] bg-ink/20"></span>
+            </span>
+          </div>
+          <div class="absolute bottom-[30%] left-[4%] h-[14%] w-[28%] border border-ink/25"></div>
+          <div class="absolute bottom-[30%] left-[36%] h-[14%] w-[28%] border border-ink/25"></div>
+          <div class="absolute bottom-[30%] right-[4%] h-[14%] w-[28%] border border-ink/25"></div>
+          <div class="absolute bottom-[14%] left-[4%] h-[10%] w-[21.5%] border border-ink/20"></div>
+          <div class="absolute bottom-[14%] left-[28.5%] h-[10%] w-[21.5%] border border-ink/20"></div>
+          <div class="absolute bottom-[14%] left-[53%] h-[10%] w-[21.5%] border border-ink/20"></div>
+          <div class="absolute bottom-[14%] right-[4%] h-[10%] w-[21.5%] border border-ink/20"></div>
+          <div class="absolute inset-x-0 bottom-0 h-[10%] border-t border-ink/25"></div>
+        </div>
+
+        <!-- STAGE 2 — gray blocking -->
+        <div data-stage="2" class="absolute inset-0 opacity-0">
+          <div class="absolute inset-x-0 top-0 h-[8%] bg-ink/10"></div>
+          <div class="absolute left-[4%] top-[9.5%] h-[4%] w-[22%] rounded-sm bg-ink/15"></div>
+          <div class="absolute right-[4%] top-[9.5%] h-[4%] w-[34%] rounded-sm bg-ink/10"></div>
+          <div class="absolute left-[4%] top-[20%] h-[6%] w-[38%] bg-ink/20"></div>
+          <div class="absolute left-[4%] top-[28%] h-[3%] w-[30%] bg-ink/10"></div>
+          <div class="absolute left-[4%] top-[34%] h-[5%] w-[18%] rounded-full bg-ink/20"></div>
+          <div class="absolute right-[4%] top-[18%] h-[32%] w-[45%] bg-ink/15"></div>
+          <div class="absolute bottom-[30%] left-[4%] h-[14%] w-[28%] bg-ink/10"></div>
+          <div class="absolute bottom-[30%] left-[36%] h-[14%] w-[28%] bg-ink/10"></div>
+          <div class="absolute bottom-[30%] right-[4%] h-[14%] w-[28%] bg-ink/10"></div>
+          <div class="absolute bottom-[14%] left-[4%] h-[10%] w-[21.5%] bg-ink/15"></div>
+          <div class="absolute bottom-[14%] left-[28.5%] h-[10%] w-[21.5%] bg-ink/15"></div>
+          <div class="absolute bottom-[14%] left-[53%] h-[10%] w-[21.5%] bg-ink/15"></div>
+          <div class="absolute bottom-[14%] right-[4%] h-[10%] w-[21.5%] bg-ink/15"></div>
+          <div class="absolute inset-x-0 bottom-0 h-[10%] bg-ink/20"></div>
+        </div>
+
+        <!-- STAGE 3 — styled pass (palette + type, images still swatches) -->
+        <div data-stage="3" class="absolute inset-0 opacity-0">
+          <div class="absolute inset-x-0 top-0 flex h-[8%] items-center gap-[0.9%] border-b border-[#21423A]/10 bg-white/80 px-[3%]">
+            <span class="h-[26%] aspect-square rounded-full bg-[#21423A]/20"></span>
+            <span class="h-[26%] aspect-square rounded-full bg-[#21423A]/20"></span>
+            <span class="h-[26%] aspect-square rounded-full bg-[#21423A]/20"></span>
+          </div>
+          <div class="absolute left-[4%] top-[9.5%] flex items-center gap-[6px]">
+            <span class="h-[10px] w-[10px] rounded-full bg-[#B9822E]"></span>
+            <span class="font-heading text-[10px] font-semibold tracking-[0.14em] text-[#21423A]">ATELIER NORTH</span>
+          </div>
+          <div class="absolute left-[4%] top-[20%] w-[40%]">
+            <p class="font-display text-[clamp(15px,1.5vw,22px)] leading-[1.08] text-[#21423A]">Contemporary craft, <span class="italic text-[#B9822E]">curated.</span></p>
+            <span class="mt-[8px] block h-[5px] w-[86%] rounded-full bg-[#21423A]/20"></span>
+            <span class="mt-[5px] block h-[5px] w-[62%] rounded-full bg-[#21423A]/20"></span>
+            <span class="mt-[12px] inline-block rounded-full bg-[#B9822E] px-[14px] py-[6px] font-heading text-[9px] text-white">Visit the gallery</span>
+          </div>
+          <div class="absolute right-[4%] top-[18%] h-[32%] w-[45%] rounded-[8px] bg-gradient-to-br from-[#E8EFE9] to-[#CBDCCF]"></div>
+          <div class="absolute bottom-[30%] left-[4%] h-[14%] w-[28%] rounded-[8px] bg-[#E8EFE9]"></div>
+          <div class="absolute bottom-[30%] left-[36%] h-[14%] w-[28%] rounded-[8px] bg-[#E8EFE9]"></div>
+          <div class="absolute bottom-[30%] right-[4%] h-[14%] w-[28%] rounded-[8px] bg-[#E8EFE9]"></div>
+          <div class="absolute bottom-[14%] left-[4%] h-[10%] w-[21.5%] rounded-[6px] bg-[#CBDCCF]"></div>
+          <div class="absolute bottom-[14%] left-[28.5%] h-[10%] w-[21.5%] rounded-[6px] bg-[#CBDCCF]"></div>
+          <div class="absolute bottom-[14%] left-[53%] h-[10%] w-[21.5%] rounded-[6px] bg-[#CBDCCF]"></div>
+          <div class="absolute bottom-[14%] right-[4%] h-[10%] w-[21.5%] rounded-[6px] bg-[#CBDCCF]"></div>
+          <div class="absolute inset-x-0 bottom-0 h-[10%] bg-[#21423A]"></div>
+        </div>
+
+        <!-- STAGE 4 — the finished site (dense, real content, photos) -->
+        <div data-stage="4" class="absolute inset-0 opacity-0">
+          <div class="absolute inset-x-0 top-0 z-10 flex h-[8%] items-center gap-[0.9%] border-b border-[#21423A]/10 bg-white/85 px-[3%]">
+            <span class="h-[26%] aspect-square rounded-full bg-[#21423A]/15"></span>
+            <span class="h-[26%] aspect-square rounded-full bg-[#21423A]/15"></span>
+            <span class="h-[26%] aspect-square rounded-full bg-[#21423A]/15"></span>
+            <span class="ml-auto flex h-[52%] w-[30%] items-center rounded-full border border-[#21423A]/10 bg-[#FBF9F4] px-[2%] font-heading text-[8.5px] text-[#6E7A72]">ateliernorth.com</span>
+          </div>
+          <div class="absolute left-[4%] right-[4%] top-[9.5%] flex items-center justify-between">
+            <span class="flex items-center gap-[6px]">
+              <span class="h-[10px] w-[10px] rounded-full bg-[#B9822E]"></span>
+              <span class="font-heading text-[10.5px] font-semibold tracking-[0.14em] text-[#21423A]">ATELIER NORTH</span>
+            </span>
+            <span class="flex items-center gap-[13px]">
+              <span class="font-heading text-[8.5px] tracking-wide text-[#6E7A72]">Exhibits</span>
+              <span class="font-heading text-[8.5px] tracking-wide text-[#6E7A72]">Artists</span>
+              <span class="font-heading text-[8.5px] tracking-wide text-[#6E7A72]">Shop</span>
+              <span class="font-heading text-[8.5px] tracking-wide text-[#6E7A72]">Visit</span>
+              <span class="rounded-full bg-[#B9822E] px-[10px] py-[4px] font-heading text-[8px] text-white">Plan a visit</span>
+            </span>
+          </div>
+          <div class="absolute left-[4%] top-[19%] w-[41%]">
+            <p class="font-heading text-[8px] font-semibold tracking-[0.22em] text-[#B9822E]">SPRING SEASON</p>
+            <p class="mt-[5px] font-display text-[clamp(15px,1.5vw,22px)] leading-[1.08] text-[#21423A]">
+              Contemporary craft, <span class="italic text-[#B9822E]">curated.</span>
+            </p>
+            <p class="mt-[7px] font-body text-[9.5px] leading-relaxed text-[#6E7A72]">
+              Rotating exhibitions from forty makers — ceramics, fiber, glass,
+              and light. Open Thursday through Sunday in the old mill district.
+            </p>
+            <span class="mt-[10px] inline-flex gap-[8px]">
+              <span class="rounded-full bg-[#B9822E] px-[13px] py-[6px] font-heading text-[8.5px] text-white">Visit the gallery</span>
+              <span class="rounded-full border border-[#21423A]/30 px-[13px] py-[6px] font-heading text-[8.5px] text-[#21423A]">This season</span>
+            </span>
+          </div>
+          <div class="absolute right-[4%] top-[17%] h-[33%] w-[45%] overflow-hidden rounded-[8px]">
+            <img id="wf-photo" src="/images/mock/pottery-hero.webp" alt="" class="h-full w-full object-cover" loading="eager" fetchpriority="high" />
+          </div>
+          <div class="absolute bottom-[29%] left-[4%] h-[15%] w-[28%] rounded-[8px] bg-[#E8EFE9] px-[1.6%] py-[1.2%]">
+            <p class="font-heading text-[8px] font-semibold tracking-[0.12em] text-[#B9822E]">EXHIBITS</p>
+            <p class="mt-[4px] font-body text-[8.5px] leading-snug text-[#21423A]/85">Now showing: Terra — new ceramics from the north coast.</p>
+          </div>
+          <div class="absolute bottom-[29%] left-[36%] h-[15%] w-[28%] rounded-[8px] bg-[#E8EFE9] px-[1.6%] py-[1.2%]">
+            <p class="font-heading text-[8px] font-semibold tracking-[0.12em] text-[#B9822E]">ARTISTS</p>
+            <p class="mt-[4px] font-body text-[8.5px] leading-snug text-[#21423A]/85">Forty studios under one roof, from throwers to weavers.</p>
+          </div>
+          <div class="absolute bottom-[29%] right-[4%] h-[15%] w-[28%] rounded-[8px] bg-[#E8EFE9] px-[1.6%] py-[1.2%]">
+            <p class="font-heading text-[8px] font-semibold tracking-[0.12em] text-[#B9822E]">VISIT</p>
+            <p class="mt-[4px] font-body text-[8.5px] leading-snug text-[#21423A]/85">Thu–Sun, 10–6. Coffee cart on weekends.</p>
+          </div>
+          <div class="absolute bottom-[13.5%] left-[4%] right-[4%]">
+            <div class="flex h-full gap-[1.5%]">
+              <span class="h-[52px] w-1/4 overflow-hidden rounded-[6px]"><img src="/images/mock/teaset.webp" alt="" class="h-full w-full object-cover" loading="lazy" /></span>
+              <span class="h-[52px] w-1/4 overflow-hidden rounded-[6px]"><img src="/images/mock/loom.webp" alt="" class="h-full w-full object-cover" loading="lazy" /></span>
+              <span class="h-[52px] w-1/4 overflow-hidden rounded-[6px]"><img src="/images/mock/exhibit.webp" alt="" class="h-full w-full object-cover" loading="lazy" /></span>
+              <span class="h-[52px] w-1/4 overflow-hidden rounded-[6px]"><img src="/images/mock/vase.webp" alt="" class="h-full w-full object-cover" loading="lazy" /></span>
+            </div>
+          </div>
+          <div class="absolute inset-x-0 bottom-0 flex h-[10%] items-center justify-between bg-[#21423A] px-[4%]">
+            <span class="font-heading text-[8.5px] text-[#FBF9F4]/90">&copy; Atelier North &middot; Craft, curated.</span>
+            <span class="flex gap-[12px]">
+              <span class="font-heading text-[8px] text-[#FBF9F4]/60">Newsletter</span>
+              <span class="font-heading text-[8px] text-[#FBF9F4]/60">Instagram</span>
+              <span class="font-heading text-[8px] text-[#FBF9F4]/60">Maps</span>
+            </span>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -146,31 +236,47 @@
   import gsap from 'gsap';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const scene = document.getElementById('wf-scene');
+  const mover = document.getElementById('wf-mover');
   const frame = document.getElementById('wf-frame');
   const photo = document.getElementById('wf-photo');
-  const pieces = frame ? [...frame.querySelectorAll('[data-piece]')] : [];
+  const stage = (n) => frame?.querySelector(`[data-stage="${n}"]`);
+
+  // Waypoints for the build journey: each stage lives at a different spot
+  // and angle in the hero space before the site settles home.
+  const SPOTS = {
+    sketch:  { x: -560, y: -150, rotation: -7, scale: 0.55 },
+    blocks:  { x: -430, y: 170,  rotation: 5,  scale: 0.68 },
+    styled:  { x: -150, y: -110, rotation: -3, scale: 0.84 },
+    settled: { x: 0,    y: 0,    rotation: 0,  scale: 1 },
+  };
 
   if (frame && !reduced) {
+    gsap.set(mover, SPOTS.sketch);
+    gsap.set(frame, { autoAlpha: 0 });
+    gsap.set([stage(2), stage(3), stage(4)], { autoAlpha: 0 });
+
     const tl = gsap.timeline({
-      delay: 0.35,
+      delay: 0.3,
       onComplete: () => {
         frame.classList.add('wf-lit');
-        // Cinematic idle: the frame breathes, the photo drifts (ken burns).
-        gsap.to(scene, { y: 10, duration: 5.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+        gsap.to(mover, { y: '+=10', duration: 5.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
         gsap.to(photo, { scale: 1.07, duration: 11, ease: 'sine.inOut', yoyo: true, repeat: -1 });
       },
     });
-    tl.from(frame, { opacity: 0, scale: 0.94, duration: 0.6, ease: 'expo.out' });
-    pieces.forEach((piece, i) => {
-      const [x, y, r] = piece.dataset.fly.split(',').map(Number);
-      tl.from(
-        piece,
-        { x, y, rotation: r, opacity: 0, duration: 0.75, ease: 'expo.out' },
-        0.35 + i * 0.16
-      );
-    });
+
+    tl.to(frame, { autoAlpha: 1, duration: 0.45, ease: 'power2.out' })
+      .to(mover, { ...SPOTS.blocks, duration: 0.95, ease: 'power2.inOut' }, '+=0.55')
+      .to(stage(1), { autoAlpha: 0, duration: 0.3 }, '<45%')
+      .to(stage(2), { autoAlpha: 1, duration: 0.3 }, '<')
+      .to(mover, { ...SPOTS.styled, duration: 0.95, ease: 'power2.inOut' }, '+=0.5')
+      .to(stage(2), { autoAlpha: 0, duration: 0.3 }, '<45%')
+      .to(stage(3), { autoAlpha: 1, duration: 0.3 }, '<')
+      .to(mover, { ...SPOTS.settled, duration: 1.05, ease: 'expo.inOut' }, '+=0.5')
+      .to(stage(3), { autoAlpha: 0, duration: 0.35 }, '<55%')
+      .to(stage(4), { autoAlpha: 1, duration: 0.35 }, '<');
   } else if (frame) {
+    gsap.set([stage(1), stage(2), stage(3)], { autoAlpha: 0 });
+    gsap.set(stage(4), { autoAlpha: 1 });
     frame.classList.add('wf-lit');
   }
 
