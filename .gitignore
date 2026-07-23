@@ -22,6 +22,9 @@ tailwind-build/node_modules/
 .omc/
 _shot_*.png
 _home_preview.html
+dist/
+.astro/
+.dev.vars
 
 # Working source drops (originals kept locally, web-ready copies live in images/)
-images/New Images/
+public/images/New Images/
