@@ -1,32 +1,53 @@
 ---
+// Hero: the wireframe draws itself on load, then resolves into a real
+// rendered site — this site — inside the browser frame. The intro is
+// self-driven (not scroll-scrubbed) so it completes without user input;
+// a scroll cue below invites the rest of the story.
 ---
 <section class="relative flex min-h-screen items-center overflow-hidden px-6">
-  <svg
-    data-animate="line-draw"
-    class="pointer-events-none absolute right-[-8%] top-1/2 hidden w-[58%] -translate-y-1/2 text-ink/25 lg:block"
-    viewBox="0 0 800 540"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.5"
+  <div
+    class="pointer-events-none absolute right-[-8%] top-1/2 hidden w-[58%] -translate-y-1/2 lg:block"
     aria-hidden="true"
   >
-    <rect x="20" y="20" width="760" height="500" rx="14" />
-    <line x1="20" y1="72" x2="780" y2="72" />
-    <circle cx="52" cy="46" r="6" />
-    <circle cx="76" cy="46" r="6" />
-    <circle cx="100" cy="46" r="6" />
-    <rect x="560" y="34" width="180" height="24" rx="12" />
-    <line x1="70" y1="150" x2="430" y2="150" />
-    <line x1="70" y1="192" x2="370" y2="192" />
-    <line x1="70" y1="234" x2="300" y2="234" />
-    <rect x="70" y="280" width="140" height="42" rx="21" />
-    <rect x="70" y="360" width="310" height="120" rx="10" />
-    <rect x="410" y="360" width="310" height="120" rx="10" />
-    <line x1="90" y1="392" x2="270" y2="392" />
-    <line x1="90" y1="420" x2="230" y2="420" />
-    <line x1="430" y1="392" x2="610" y2="392" />
-    <line x1="430" y1="420" x2="570" y2="420" />
-  </svg>
+    <svg
+      id="wf-svg"
+      class="w-full text-ink/25"
+      viewBox="0 0 800 540"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+    >
+      <g data-wf-shell>
+        <rect x="20" y="20" width="760" height="500" rx="14" />
+        <line x1="20" y1="72" x2="780" y2="72" />
+        <circle cx="52" cy="46" r="6" />
+        <circle cx="76" cy="46" r="6" />
+        <circle cx="100" cy="46" r="6" />
+        <rect x="560" y="34" width="180" height="24" rx="12" />
+      </g>
+      <g data-wf-guts>
+        <line x1="70" y1="150" x2="430" y2="150" />
+        <line x1="70" y1="192" x2="370" y2="192" />
+        <line x1="70" y1="234" x2="300" y2="234" />
+        <rect x="70" y="280" width="140" height="42" rx="21" />
+        <rect x="70" y="360" width="310" height="120" rx="10" />
+        <rect x="410" y="360" width="310" height="120" rx="10" />
+        <line x1="90" y1="392" x2="270" y2="392" />
+        <line x1="90" y1="420" x2="230" y2="420" />
+        <line x1="430" y1="392" x2="610" y2="392" />
+        <line x1="430" y1="420" x2="570" y2="420" />
+      </g>
+    </svg>
+    <img
+      id="wf-real"
+      src="/images/site-self.webp"
+      alt=""
+      class="absolute rounded-b-[10px] object-cover object-top"
+      style="left: 2.5%; right: 2.5%; top: 13.35%; bottom: 3.75%; width: 95%; height: 82.9%; opacity: 0; transform: scale(0.985);"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
 
   <div class="relative mx-auto w-full max-w-6xl pt-20">
     <h1
@@ -48,4 +69,84 @@
       <a href="/work/" class="btn-ghost">See the work</a>
     </div>
   </div>
+
+  <div
+    id="scroll-cue"
+    class="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-muted transition-opacity duration-500"
+    aria-hidden="true"
+  >
+    <span class="font-heading text-[0.65rem] uppercase tracking-[0.35em]">Scroll</span>
+    <span class="cue-line"></span>
+  </div>
 </section>
+
+<style>
+  .cue-line {
+    position: relative;
+    width: 1px;
+    height: 2.75rem;
+    background: rgb(34 28 21 / 0.15);
+    overflow: hidden;
+  }
+  .cue-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -50%;
+    width: 100%;
+    height: 50%;
+    background: var(--color-accent);
+    animation: cue-drop 1.8s ease-in-out infinite;
+  }
+  @keyframes cue-drop {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(300%); }
+  }
+  #scroll-cue.cue-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  :global(.motion-reduced) .cue-line::after {
+    animation: none;
+    top: 0;
+    height: 100%;
+  }
+  :global(.motion-reduced) #wf-real {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  :global(.motion-reduced) [data-wf-guts] {
+    opacity: 0 !important;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const svg = document.getElementById('wf-svg');
+  const real = document.getElementById('wf-real');
+
+  if (svg && real && !reduced) {
+    const strokes = svg.querySelectorAll('path, line, rect, circle');
+    const guts = svg.querySelector('[data-wf-guts]');
+    strokes.forEach((p) => {
+      const len = p.getTotalLength ? p.getTotalLength() : 1000;
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+    });
+    gsap.timeline({ delay: 0.35 })
+      .to(strokes, { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut', stagger: 0.05 })
+      .to(real, { opacity: 1, scale: 1, duration: 0.9, ease: 'expo.out' }, '-=0.1')
+      .to(guts, { opacity: 0, duration: 0.5, ease: 'power2.out' }, '<+0.15');
+  }
+
+  const cue = document.getElementById('scroll-cue');
+  const hideCue = () => {
+    if (window.scrollY > 60) {
+      cue?.classList.add('cue-hidden');
+      window.removeEventListener('scroll', hideCue);
+    }
+  };
+  window.addEventListener('scroll', hideCue, { passive: true });
+</script>
