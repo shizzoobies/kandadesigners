@@ -48,13 +48,14 @@ const process = [
             A site designed from the ground up for your business — no templates, no
             stock, no compromise on speed. Built to load fast, feel alive, and rank.
           </p>
-          <ul class="mt-10 flex flex-wrap gap-3">
-            {webCapabilities.map((cap) => (
-              <li data-web="pill" class="rounded-full border border-ink/15 px-5 py-2 font-heading text-sm tracking-wide text-ink">
-                {cap}
-              </li>
+          <p class="svc-caps mt-10 max-w-xl font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+            {webCapabilities.map((cap, i) => (
+              <Fragment>
+                <span class="inline-block whitespace-nowrap">{cap}</span>
+                {i < webCapabilities.length - 1 && <span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span>}
+              </Fragment>
             ))}
-          </ul>
+          </p>
         </div>
         <!-- Real client work, fanned like prints on a desk — same language as
              the home hero mosaic. Not stock: these are live builds. -->
@@ -91,13 +92,14 @@ const process = [
             automations that save hours, content tooling that keeps the pipeline
             full.
           </p>
-          <ul class="mt-10 flex flex-wrap gap-3">
-            {aiCapabilities.map((cap) => (
-              <li data-ai="pill" class="rounded-full border border-accent/30 px-5 py-2 font-heading text-sm tracking-wide text-ink">
-                {cap}
-              </li>
+          <p class="ai-caps mt-10 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+            {aiCapabilities.map((cap, i) => (
+              <Fragment>
+                <span class="inline-block whitespace-nowrap">{cap}</span>
+                {i < aiCapabilities.length - 1 && <span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span>}
+              </Fragment>
             ))}
-          </ul>
+          </p>
           <div data-ai="link" class="mt-10">
             <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
               Try ours on the contact page &rarr;
@@ -260,9 +262,9 @@ const process = [
       .from(web.querySelector('[data-web="kicker"]'), { opacity: 0, duration: 0.3 }, '-=0.35')
       .from(web.querySelector('[data-web="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' }, '-=0.3')
       .from(web.querySelector('[data-web="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.35')
-      .from(web.querySelectorAll('[data-web="pill"]'), {
-        y: 16, scale: 0.8, opacity: 0,
-        duration: 0.45, stagger: 0.08, ease: 'back.out(1.8)',
+      .from(web.querySelectorAll('.svc-caps > span'), {
+        y: 10, opacity: 0,
+        duration: 0.4, stagger: 0.05, ease: 'power2.out',
       }, '-=0.15')
       // client shots land on the desk one by one, settling into their tilt
       .from(web.querySelectorAll('.svc-shot'), {
@@ -281,9 +283,9 @@ const process = [
       .from(ai.querySelector('[data-ai="word-a"]'), { opacity: 0, y: 14, duration: 0.4, ease: 'power2.out' }, 0.3)
       .from(ai.querySelector('[data-ai="word-b"]'), { opacity: 0, filter: 'blur(10px)', duration: 0.7, ease: 'power2.out' }, 0.42)
       .from(ai.querySelector('[data-ai="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, 0.6)
-      .from(ai.querySelectorAll('[data-ai="pill"]'), {
-        x: -14, opacity: 0,
-        duration: 0.35, stagger: 0.09, ease: 'power2.out',
+      .from(ai.querySelectorAll('.ai-caps > span'), {
+        x: -10, opacity: 0,
+        duration: 0.35, stagger: 0.06, ease: 'power2.out',
       }, 0.8)
       .from(ai.querySelector('[data-ai="link"]'), { opacity: 0, duration: 0.35 }, 1.1)
       // the mini conversation plays out like the real assistant answering
