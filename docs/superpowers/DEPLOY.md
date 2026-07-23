@@ -9,6 +9,9 @@ The repo used to deploy with no build step. The rebuild is an Astro project, so 
 3. **Build output directory:** `dist`
 4. Root directory: leave as `/` (repo root)
 5. **Environment variables / secrets:** `ANTHROPIC_API_KEY` already exists (used by the old chat function) — nothing to add. The scoping assistant reuses it.
+6. **Rate-limit the assistant (recommended before launch):** dashboard → Security → WAF → Rate limiting rules → new rule matching URI path `/api/scope`, e.g. max 10 requests per minute per IP, action Block. This caps what a scripted abuser can spend of your Anthropic quota; no code change needed.
+
+**Sitemap scope (deliberate call):** the sitemap lists only the 7 marketing routes. The spec said "including preserved apps," but listing games/tools in the marketing sitemap dilutes what search engines see as the site's purpose — the apps remain crawlable and linked. Override by editing `public/sitemap.xml` if you want them indexed.
 
 Recommended order: push `rebuild/dark-cinematic`, point a **preview deployment** at it, verify, then merge to `main`.
 
