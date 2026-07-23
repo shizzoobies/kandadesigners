@@ -1,28 +1,26 @@
-// Titles/blurbs are best-guess from project shorthand — Alex corrects these
-// here in one place (see DEPLOY.md content-swap checklist).
 export const projects = [
   {
     slug: 'fdaaf',
     title: 'FDAAF',
-    blurb: 'A full design and build with a bold identity, giving the organization a home that finally matches its mission.',
+    blurb: 'The Florida Disability Access and Awareness Foundation uses media to change how the world sees disability — we built them a bright, accessible home for that mission, with donation and volunteer paths front and center.',
     img: '/images/work-fdaaf.webp',
   },
   {
-    slug: 'mbsdoc',
-    title: 'MBS Documentation',
-    blurb: 'Dense reference material turned into a fast, searchable, readable documentation site people actually use.',
+    slug: 'mbs-medicine',
+    title: 'MBS Medicine',
+    blurb: 'A veteran-owned Florida telehealth clinic. Bold, unmistakable identity with same-week booking and a patient portal — healthcare that treats the whole person, online.',
     img: '/images/work-mbsdoc.webp',
   },
   {
-    slug: 'pbjsa',
-    title: 'PBJ San Antonio',
-    blurb: 'A ground-up redesign — modern layout, clear services, and a booking path that turns visitors into customers.',
+    slug: 'pbj-strategic-accounting',
+    title: 'PB&J Strategic Accounting',
+    blurb: 'Accounting and bookkeeping for growing businesses — a clean, trustworthy redesign with clear services, pricing paths, and a free-call booking flow that converts.',
     img: '/images/work-pbjsa.webp',
   },
   {
-    slug: 'pmbuild',
-    title: 'PM Build 2026',
-    blurb: 'A construction brand online: heavyweight visuals, project galleries, and lead capture built for the trades.',
+    slug: 'project-makeover',
+    title: 'Project Makeover',
+    blurb: 'A nonprofit transforming school spaces into vibrant learning environments. A joyful, gallery-driven site with donation and makeover-showcase paths built for community momentum.',
     img: '/images/work-pmbuild.webp',
   },
 ];

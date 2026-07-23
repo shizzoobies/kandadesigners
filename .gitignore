@@ -28,3 +28,4 @@ dist/
 
 # Working source drops (originals kept locally, web-ready copies live in images/)
 public/images/New Images/
+fonts-drop/
