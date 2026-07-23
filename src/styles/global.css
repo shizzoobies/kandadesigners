@@ -176,6 +176,68 @@ body {
   animation: none;
 }
 
+/* AI sections breathe: slow-drifting blurred orbs behind the content and a
+   gentle pulse on accent words. Transform-only loops, compositor-cheap. */
+.ai-alive {
+  position: relative;
+  overflow: hidden;
+}
+.ai-alive > * {
+  position: relative;
+  z-index: 1;
+}
+.ai-alive::before,
+.ai-alive::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+}
+.ai-alive::before {
+  width: 46%;
+  aspect-ratio: 1;
+  left: -8%;
+  top: -22%;
+  background: radial-gradient(circle, rgb(108 92 231 / 0.22), transparent 65%);
+  animation: ai-drift-a 14s ease-in-out infinite alternate;
+}
+.ai-alive::after {
+  width: 58%;
+  aspect-ratio: 1;
+  right: -14%;
+  bottom: -32%;
+  background: radial-gradient(circle, rgb(91 75 216 / 0.16), transparent 65%);
+  animation: ai-drift-b 19s ease-in-out infinite alternate;
+}
+.ai-alive-dark::before {
+  background: radial-gradient(circle, rgb(138 124 255 / 0.3), transparent 65%);
+}
+.ai-alive-dark::after {
+  background: radial-gradient(circle, rgb(185 175 255 / 0.16), transparent 65%);
+}
+@keyframes ai-drift-a {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(14%, 16%) scale(1.28); }
+}
+@keyframes ai-drift-b {
+  from { transform: translate(0, 0) scale(1.18); }
+  to { transform: translate(-12%, -14%) scale(0.94); }
+}
+.ai-pulse {
+  animation: ai-word-breathe 5.5s ease-in-out infinite;
+}
+@keyframes ai-word-breathe {
+  0%, 100% { text-shadow: 0 0 0 rgb(138 124 255 / 0); }
+  50% { text-shadow: 0 0 28px rgb(138 124 255 / 0.5); }
+}
+.motion-reduced .ai-alive::before,
+.motion-reduced .ai-alive::after,
+.motion-reduced .ai-pulse {
+  animation: none;
+}
+
 /* Nav state toggled by the motion engine on scroll: transparent over the
    hero, solid once moving. The logo starts oversized and shrinks/drops
    into the bar as the solid nav arrives. */

@@ -35,18 +35,20 @@ const process = [
     </p>
   </section>
 
-  <!-- Primary offering: Web design & build -->
+  <!-- Primary offering: assembles itself like a build -->
   <section class="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
-    <div data-animate="frame-lift" class="glow-frame p-8 md:p-14">
-      <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Primary offering</p>
-      <h2 class="mt-6 font-display text-4xl leading-tight md:text-6xl">Web design &amp; build</h2>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+    <div id="svc-web" class="glow-frame p-8 md:p-14">
+      <p data-web="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Primary offering</p>
+      <div class="overflow-hidden">
+        <h2 data-web="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Web design &amp; build</h2>
+      </div>
+      <p data-web="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
         A site designed from the ground up for your business — no templates, no
         stock, no compromise on speed. Built to load fast, feel alive, and rank.
       </p>
       <ul class="mt-10 flex flex-wrap gap-3">
         {webCapabilities.map((cap) => (
-          <li class="rounded-full border border-ink/15 px-5 py-2 font-heading text-sm tracking-wide text-ink">
+          <li data-web="pill" class="rounded-full border border-ink/15 px-5 py-2 font-heading text-sm tracking-wide text-ink">
             {cap}
           </li>
         ))}
@@ -54,26 +56,30 @@ const process = [
     </div>
   </section>
 
-  <!-- Secondary offering: AI integration -->
+  <!-- Secondary offering: resolves and streams like a thought -->
   <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
-    <div data-animate="frame-lift" class="glow-frame p-8 md:p-14" style="background: linear-gradient(135deg, #FFFDF9 0%, #EFEAFB 100%);">
-      <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Also available</p>
+    <div
+      id="svc-ai"
+      class="glow-frame ai-alive p-8 md:p-14"
+      style="background: linear-gradient(120deg, #FFFDF9 0%, #EFEAFB 42%, #E3D9FA 55%, #EFEAFB 68%, #FFFDF9 100%); background-size: 240% 240%; background-position: 0% 50%;"
+    >
+      <p data-ai="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Also available</p>
       <h2 class="mt-6 font-display text-3xl leading-tight md:text-5xl">
-        AI <span class="text-accent italic">integration.</span>
+        <span data-ai="word-a">AI</span> <span data-ai="word-b" class="text-accent italic">integration.</span>
       </h2>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      <p data-ai="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
         We add AI where it earns its place — assistants that qualify leads,
         automations that save hours, content tooling that keeps the pipeline
         full.
       </p>
       <ul class="mt-10 flex flex-wrap gap-3">
         {aiCapabilities.map((cap) => (
-          <li class="rounded-full border border-accent/30 px-5 py-2 font-heading text-sm tracking-wide text-ink">
+          <li data-ai="pill" class="rounded-full border border-accent/30 px-5 py-2 font-heading text-sm tracking-wide text-ink">
             {cap}
           </li>
         ))}
       </ul>
-      <div class="mt-10">
+      <div data-ai="link" class="mt-10">
         <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
           Try ours on the contact page &rarr;
         </a>
@@ -81,14 +87,13 @@ const process = [
     </div>
   </section>
 
-  <!-- Process strip -->
+  <!-- Process strip: the pipeline draws itself, station by station -->
   <section class="border-y border-ink/10 bg-surface">
-    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div id="svc-proc" class="mx-auto max-w-6xl px-6 py-24 md:py-32">
       <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">How it goes</h2>
 
-      <!-- Single line-draw connector links the four stages. -->
       <svg
-        data-animate="line-draw"
+        id="svc-proc-svg"
         class="mt-16 hidden w-full text-accent/60 md:block"
         viewBox="0 0 800 40"
         fill="none"
@@ -96,16 +101,16 @@ const process = [
         stroke-width="1.5"
         aria-hidden="true"
       >
-        <line x1="40" y1="20" x2="760" y2="20" />
-        <circle cx="40" cy="20" r="7" />
-        <circle cx="280" cy="20" r="7" />
-        <circle cx="520" cy="20" r="7" />
-        <circle cx="760" cy="20" r="7" />
+        <line id="svc-proc-line" x1="40" y1="20" x2="760" y2="20" />
+        <circle class="svc-dot" cx="40" cy="20" r="7" />
+        <circle class="svc-dot" cx="280" cy="20" r="7" />
+        <circle class="svc-dot" cx="520" cy="20" r="7" />
+        <circle class="svc-dot" cx="760" cy="20" r="7" />
       </svg>
 
       <ol class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:mt-8 md:grid-cols-4">
-        {process.map((step, i) => (
-          <li data-animate="type-settle" data-animate-delay={(i * 0.1).toFixed(1)}>
+        {process.map((step) => (
+          <li data-proc="step">
             <p class="font-display text-2xl md:text-3xl">{step.label}</p>
             <p class="mt-3 text-muted">{step.note}</p>
           </li>
@@ -126,3 +131,83 @@ const process = [
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .svc-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduced) {
+    gsap.registerPlugin(ScrollTrigger);
+    const once = (trigger) => ({ scrollTrigger: { trigger, start: 'top 78%' } });
+
+    // — Web design & build: the card assembles like a build.
+    // Frame rises, headline unmasks, then capability pills snap into place
+    // one by one like components being installed.
+    const web = document.getElementById('svc-web');
+    gsap.timeline(once(web))
+      .from(web, { y: 48, opacity: 0, duration: 0.7, ease: 'expo.out' })
+      .from(web.querySelector('[data-web="kicker"]'), { opacity: 0, duration: 0.3 }, '-=0.35')
+      .from(web.querySelector('[data-web="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' }, '-=0.3')
+      .from(web.querySelector('[data-web="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.35')
+      .from(web.querySelectorAll('[data-web="pill"]'), {
+        y: 16, scale: 0.8, opacity: 0,
+        duration: 0.45, stagger: 0.08, ease: 'back.out(1.8)',
+      }, '-=0.15');
+
+    // — AI integration: resolves like a thought. The accent word sharpens
+    // from a blur, a soft gradient shimmer sweeps the card once, and the
+    // capability pills stream in left-to-right, machine-smooth.
+    const ai = document.getElementById('svc-ai');
+    gsap.timeline(once(ai))
+      .from(ai, { y: 48, opacity: 0, duration: 0.7, ease: 'expo.out' })
+      .fromTo(ai, { backgroundPosition: '100% 50%' }, { backgroundPosition: '0% 50%', duration: 1.6, ease: 'power2.inOut' }, 0.15)
+      .from(ai.querySelector('[data-ai="kicker"]'), { opacity: 0, duration: 0.3 }, 0.25)
+      .from(ai.querySelector('[data-ai="word-a"]'), { opacity: 0, y: 14, duration: 0.4, ease: 'power2.out' }, 0.3)
+      .from(ai.querySelector('[data-ai="word-b"]'), { opacity: 0, filter: 'blur(10px)', duration: 0.7, ease: 'power2.out' }, 0.42)
+      .from(ai.querySelector('[data-ai="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, 0.6)
+      .from(ai.querySelectorAll('[data-ai="pill"]'), {
+        x: -14, opacity: 0,
+        duration: 0.35, stagger: 0.09, ease: 'power2.out',
+      }, 0.8)
+      .from(ai.querySelector('[data-ai="link"]'), { opacity: 0, duration: 0.35 }, 1.1);
+
+    // — Process: the pipeline draws itself. The connector line travels left
+    // to right; each station's dot pops and its label rises exactly when
+    // the line arrives.
+    const proc = document.getElementById('svc-proc');
+    const line = document.getElementById('svc-proc-line');
+    const dots = [...proc.querySelectorAll('.svc-dot')];
+    const steps = [...proc.querySelectorAll('[data-proc="step"]')];
+    const svgVisible = line && getComputedStyle(document.getElementById('svc-proc-svg')).display !== 'none';
+
+    if (svgVisible) {
+      const len = line.getTotalLength();
+      line.style.strokeDasharray = len;
+      line.style.strokeDashoffset = len;
+      const DRAW = 1.5;
+      // station beat: when the tip reaches each dot's x (line runs 40→760)
+      const beat = (cx) => DRAW * ((cx - 40) / 720);
+      const tl = gsap.timeline(once(proc));
+      tl.to(line, { strokeDashoffset: 0, duration: DRAW, ease: 'none' }, 0);
+      dots.forEach((dot, i) => {
+        const t = beat(+dot.getAttribute('cx'));
+        tl.from(dot, { scale: 0, duration: 0.35, ease: 'back.out(2)' }, t);
+        tl.from(steps[i], { y: 22, opacity: 0, duration: 0.5, ease: 'power2.out' }, t + 0.05);
+      });
+    } else {
+      gsap.from(steps, {
+        y: 22, opacity: 0, duration: 0.5, stagger: 0.12, ease: 'power2.out',
+        scrollTrigger: { trigger: proc, start: 'top 80%' },
+      });
+    }
+  }
+</script>
