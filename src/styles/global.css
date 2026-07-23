@@ -176,7 +176,9 @@ body {
   animation: none;
 }
 
-/* Nav state toggled by the motion engine on scroll. */
+/* Nav state toggled by the motion engine on scroll: transparent over the
+   hero, solid once moving. The logo starts oversized and shrinks/drops
+   into the bar as the solid nav arrives. */
 [data-nav] {
   transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
   border-bottom: 1px solid transparent;
@@ -185,6 +187,17 @@ body {
   background: rgb(247 243 236 / 0.85);
   backdrop-filter: blur(12px);
   border-bottom-color: rgb(34 28 21 / 0.08);
+}
+.nav-logo {
+  transform-origin: left center;
+  transform: scale(1.8) translateY(10px);
+  transition: transform 0.5s var(--ease-out-expo);
+}
+[data-nav].nav-scrolled .nav-logo {
+  transform: scale(1) translateY(0);
+}
+.motion-reduced .nav-logo {
+  transition: none;
 }
 
 /* Brand mark renders in its original colors on the light canvas. The class

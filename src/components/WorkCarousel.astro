@@ -20,19 +20,21 @@ import { projects } from '../data/work.js';
         aria-hidden={i === 0 ? 'false' : 'true'}
         tabindex={i === 0 ? 0 : -1}
       >
-        <span class="flex items-center gap-1.5 border-b border-ink/10 px-4 py-2.5" aria-hidden="true">
-          <span class="h-2 w-2 rounded-full bg-ink/20"></span>
-          <span class="h-2 w-2 rounded-full bg-ink/20"></span>
-          <span class="h-2 w-2 rounded-full bg-ink/20"></span>
-          <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+        <span class="wc-inner block">
+          <span class="flex items-center gap-1.5 border-b border-ink/10 px-4 py-2.5" aria-hidden="true">
+            <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+            <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+            <span class="h-2 w-2 rounded-full bg-ink/20"></span>
+            <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+          </span>
+          <img
+            src={p.img}
+            alt={`${p.title} website screenshot`}
+            class="aspect-[16/10] w-full object-cover object-top"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+          />
         </span>
-        <img
-          src={p.img}
-          alt={`${p.title} website screenshot`}
-          class="aspect-[16/10] w-full object-cover object-top"
-          loading={i === 0 ? 'eager' : 'lazy'}
-          fetchpriority={i === 0 ? 'high' : 'auto'}
-        />
       </a>
     ))}
   </div>
@@ -74,34 +76,35 @@ import { projects } from '../data/work.js';
   }
   .wc-card {
     transform-origin: center center;
+    transform-style: preserve-3d;
     transition:
-      transform 0.7s var(--ease-out-expo),
-      opacity 0.7s var(--ease-out-expo);
+      transform 0.8s var(--ease-out-expo),
+      opacity 0.8s var(--ease-out-expo);
     will-change: transform, opacity;
   }
   .wc-card.pos-center {
-    transform: translateX(-50%) scale(1) rotateY(0deg);
+    transform: translateX(-50%) translateZ(70px) rotateY(0deg) scale(1);
     opacity: 1;
     z-index: 30;
   }
   .wc-card.pos-left {
-    transform: translateX(-102%) scale(0.78) rotateY(14deg);
-    opacity: 0.5;
+    transform: translateX(-106%) translateZ(-170px) rotateY(34deg) scale(0.86);
+    opacity: 0.55;
     z-index: 20;
     cursor: pointer;
   }
   .wc-card.pos-right {
-    transform: translateX(2%) scale(0.78) rotateY(-14deg);
-    opacity: 0.5;
+    transform: translateX(6%) translateZ(-170px) rotateY(-34deg) scale(0.86);
+    opacity: 0.55;
     z-index: 20;
     cursor: pointer;
   }
   .wc-card.pos-left:hover,
   .wc-card.pos-right:hover {
-    opacity: 0.75;
+    opacity: 0.8;
   }
   .wc-card.pos-hidden {
-    transform: translateX(-50%) scale(0.6);
+    transform: translateX(-50%) translateZ(-320px) scale(0.6);
     opacity: 0;
     z-index: 10;
     pointer-events: none;
@@ -142,6 +145,8 @@ import { projects } from '../data/work.js';
 </style>
 
 <script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { projects } from '../data/work.js';
 
   const cards = [...document.querySelectorAll('#work-carousel .wc-card')];
@@ -228,4 +233,23 @@ import { projects } from '../data/work.js';
 
   goTo(0);
   startAutoplay();
+
+  // Entrance: thumbnails pitch down from above and land in the 3D ring —
+  // animated on the inner wrapper so the carousel's own position transforms
+  // on .wc-card are never touched.
+  if (!reduced) {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from('#work-carousel .wc-inner', {
+      rotationX: -78,
+      y: -150,
+      z: -240,
+      opacity: 0,
+      transformOrigin: '50% 0%',
+      duration: 1.15,
+      stagger: 0.13,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#work-carousel', start: 'top 80%' },
+      onComplete: () => gsap.set('#work-carousel .wc-inner', { clearProps: 'transform,opacity' }),
+    });
+  }
 </script>
