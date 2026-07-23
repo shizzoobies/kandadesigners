@@ -38,21 +38,38 @@ const process = [
   <!-- Primary offering: assembles itself like a build -->
   <section class="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
     <div id="svc-web" class="glow-frame p-8 md:p-14">
-      <p data-web="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Primary offering</p>
-      <div class="overflow-hidden">
-        <h2 data-web="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Web design &amp; build</h2>
+      <div class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+        <div>
+          <p data-web="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Primary offering</p>
+          <div class="overflow-hidden">
+            <h2 data-web="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Web design &amp; build</h2>
+          </div>
+          <p data-web="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+            A site designed from the ground up for your business — no templates, no
+            stock, no compromise on speed. Built to load fast, feel alive, and rank.
+          </p>
+          <ul class="mt-10 flex flex-wrap gap-3">
+            {webCapabilities.map((cap) => (
+              <li data-web="pill" class="rounded-full border border-ink/15 px-5 py-2 font-heading text-sm tracking-wide text-ink">
+                {cap}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <!-- Real client work, fanned like prints on a desk — same language as
+             the home hero mosaic. Not stock: these are live builds. -->
+        <div class="svc-shots relative aspect-[4/3] md:aspect-auto md:min-h-[26rem] md:self-stretch">
+          <figure class="svc-shot svc-shot-1">
+            <img src="/images/work-fdaaf.webp" alt="FDAAF — live client build" loading="lazy" />
+          </figure>
+          <figure class="svc-shot svc-shot-2">
+            <img src="/images/work-foremotion.webp" alt="Fore Motion Golf — live client build" loading="lazy" />
+          </figure>
+          <figure class="svc-shot svc-shot-3">
+            <img src="/images/work-pmbuild.webp" alt="Project Makeover — live client build" loading="lazy" />
+          </figure>
+        </div>
       </div>
-      <p data-web="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        A site designed from the ground up for your business — no templates, no
-        stock, no compromise on speed. Built to load fast, feel alive, and rank.
-      </p>
-      <ul class="mt-10 flex flex-wrap gap-3">
-        {webCapabilities.map((cap) => (
-          <li data-web="pill" class="rounded-full border border-ink/15 px-5 py-2 font-heading text-sm tracking-wide text-ink">
-            {cap}
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
 
@@ -63,26 +80,38 @@ const process = [
       class="glow-frame ai-alive p-8 md:p-14"
       style="background: linear-gradient(120deg, #FFFDF9 0%, #EFEAFB 42%, #E3D9FA 55%, #EFEAFB 68%, #FFFDF9 100%); background-size: 240% 240%; background-position: 0% 50%;"
     >
-      <p data-ai="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Also available</p>
-      <h2 class="mt-6 font-display text-3xl leading-tight md:text-5xl">
-        <span data-ai="word-a">AI</span> <span data-ai="word-b" class="text-accent italic">integration.</span>
-      </h2>
-      <p data-ai="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        We add AI where it earns its place — assistants that qualify leads,
-        automations that save hours, content tooling that keeps the pipeline
-        full.
-      </p>
-      <ul class="mt-10 flex flex-wrap gap-3">
-        {aiCapabilities.map((cap) => (
-          <li data-ai="pill" class="rounded-full border border-accent/30 px-5 py-2 font-heading text-sm tracking-wide text-ink">
-            {cap}
-          </li>
-        ))}
-      </ul>
-      <div data-ai="link" class="mt-10">
-        <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
-          Try ours on the contact page &rarr;
-        </a>
+      <div class="grid gap-12 md:grid-cols-[1fr_0.85fr] md:items-center">
+        <div>
+          <p data-ai="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Also available</p>
+          <h2 class="mt-6 font-display text-3xl leading-tight md:text-5xl">
+            <span data-ai="word-a">AI</span> <span data-ai="word-b" class="text-accent italic">integration.</span>
+          </h2>
+          <p data-ai="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+            We add AI where it earns its place — assistants that qualify leads,
+            automations that save hours, content tooling that keeps the pipeline
+            full.
+          </p>
+          <ul class="mt-10 flex flex-wrap gap-3">
+            {aiCapabilities.map((cap) => (
+              <li data-ai="pill" class="rounded-full border border-accent/30 px-5 py-2 font-heading text-sm tracking-wide text-ink">
+                {cap}
+              </li>
+            ))}
+          </ul>
+          <div data-ai="link" class="mt-10">
+            <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+              Try ours on the contact page &rarr;
+            </a>
+          </div>
+        </div>
+        <!-- A miniature of the real scoping assistant on /contact/ — the
+             conversation people actually have with it. -->
+        <div class="svc-chat" aria-hidden="true">
+          <p class="chat-label font-heading text-xs uppercase tracking-[0.25em] text-muted">Live on our contact page</p>
+          <div class="chat-bub chat-q">What would AI actually do on our site?</div>
+          <div class="chat-bub chat-a">Let's scope it. What does your team spend the most time answering?</div>
+          <div class="chat-bub chat-a chat-typing"><span></span><span></span><span></span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -137,6 +166,79 @@ const process = [
     transform-box: fill-box;
     transform-origin: center;
   }
+
+  /* Fanned client screenshots inside the web card. Fixed frame aspect with
+     top-cropped covers so tall page captures read as tidy browser windows. */
+  .svc-shot {
+    position: absolute;
+    width: 74%;
+    aspect-ratio: 16 / 11;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    background: var(--color-surface);
+    box-shadow:
+      0 2px 6px rgb(34 28 21 / 0.08),
+      0 24px 48px -20px rgb(34 28 21 / 0.35);
+  }
+  .svc-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .svc-shot-1 { left: 0; top: 2%; transform: rotate(-6deg); z-index: 1; }
+  .svc-shot-2 { right: 0; top: 30%; transform: rotate(4deg); z-index: 2; }
+  .svc-shot-3 { left: 7%; bottom: 2%; transform: rotate(-2deg); z-index: 3; }
+
+  /* Miniature of the live scoping assistant. Decorative (aria-hidden). */
+  .svc-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    max-width: 24rem;
+  }
+  .chat-label { margin-bottom: 0.25rem; }
+  .chat-bub {
+    border-radius: 16px;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    width: fit-content;
+    color: var(--color-ink);
+  }
+  .chat-q {
+    background: rgb(34 28 21 / 0.06);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .chat-a {
+    background: rgb(91 75 216 / 0.1);
+    border: 1px solid rgb(91 75 216 / 0.16);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .chat-typing {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 0.85rem 1rem;
+  }
+  .chat-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--color-accent);
+    animation: chat-dot 1.3s ease-in-out infinite;
+  }
+  .chat-typing span:nth-child(2) { animation-delay: 0.18s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes chat-dot {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-3px); }
+  }
+  :global(.motion-reduced) .chat-typing span { animation: none; }
 </style>
 
 <script>
@@ -161,7 +263,12 @@ const process = [
       .from(web.querySelectorAll('[data-web="pill"]'), {
         y: 16, scale: 0.8, opacity: 0,
         duration: 0.45, stagger: 0.08, ease: 'back.out(1.8)',
-      }, '-=0.15');
+      }, '-=0.15')
+      // client shots land on the desk one by one, settling into their tilt
+      .from(web.querySelectorAll('.svc-shot'), {
+        y: 60, opacity: 0, rotation: 0, scale: 1.04,
+        duration: 0.7, stagger: 0.14, ease: 'expo.out',
+      }, '-=0.55');
 
     // — AI integration: resolves like a thought. The accent word sharpens
     // from a blur, a soft gradient shimmer sweeps the card once, and the
@@ -178,7 +285,13 @@ const process = [
         x: -14, opacity: 0,
         duration: 0.35, stagger: 0.09, ease: 'power2.out',
       }, 0.8)
-      .from(ai.querySelector('[data-ai="link"]'), { opacity: 0, duration: 0.35 }, 1.1);
+      .from(ai.querySelector('[data-ai="link"]'), { opacity: 0, duration: 0.35 }, 1.1)
+      // the mini conversation plays out like the real assistant answering
+      .from(ai.querySelector('.chat-label'), { opacity: 0, duration: 0.3 }, 0.7)
+      .from(ai.querySelectorAll('.chat-bub'), {
+        y: 16, opacity: 0, scale: 0.95,
+        duration: 0.4, stagger: 0.22, ease: 'power2.out',
+      }, 0.85);
 
     // — Process: the pipeline draws itself. The connector line travels left
     // to right; each station's dot pops and its label rises exactly when

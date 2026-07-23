@@ -28,7 +28,7 @@ import { artists } from '../../data/artists.js';
           <figure class="glow-frame transition-transform duration-300 group-hover:-translate-y-1">
             <img
               src={artist.portrait}
-              alt={`${artist.name} — ${artist.discipline}`}
+              alt={artist.portraitAlt || `${artist.name} — ${artist.discipline}`}
               class="aspect-[4/3] w-full object-cover"
               loading="lazy"
             />
