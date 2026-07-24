@@ -19,17 +19,14 @@ Alex: it collects name, email/phone, business, and preferred time, then
 promises a personal follow-up within 24 hours. It never quotes fixed prices
 (budget bands only) and steers off-topic conversations back.
 
-## Embed (already in src/pages/services/index.astro)
+## Integration (src/pages/services/index.astro)
 
-```html
-<elevenlabs-convai agent-id="agent_2101ky8y21nmeh5ah2ytbntetzhm"></elevenlabs-convai>
-<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async></script>
-```
-
-The widget wants to float fixed bottom-right (which would collide with the
-site-guide FAB) — the page pins its host into `#voice-agent-mount` with
-`position: relative` + a fixed height. If ElevenLabs changes the widget's
-internals and it escapes the mount, that CSS is the place to look.
+The default ElevenLabs widget is NOT used. The voice modal is a custom
+"Kai orb" UI driven by `@elevenlabs/client` (npm): `Conversation.startSession`
+with the agent id, `onModeChange` for Listening / Kai-is-speaking status,
+and `getOutputVolume()` / `getInputVolume()` feeding the orb's `--amp` CSS
+variable each animation frame so it pulses with real voice levels. Closing
+the modal or clicking End call runs `endSession()`.
 
 ## Updating the agent
 

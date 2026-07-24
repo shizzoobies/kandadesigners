@@ -241,18 +241,19 @@ const process = [
           Ask about web design, SEO, or AI search. Kai can also set up a call
           with Alex. Your browser will ask for microphone access.
         </p>
-        <div id="voice-agent-mount" class="mt-auto">
-          <elevenlabs-convai
-            agent-id="agent_2101ky8y21nmeh5ah2ytbntetzhm"
-            action-text="Talk to Kai"
-            start-call-text="Start talking"
-            end-call-text="End call"
-            listening-text="Listening"
-            speaking-text="Kai is speaking"
-            avatar-orb-color-1="#D97706"
-            avatar-orb-color-2="#9A3412"
-          ></elevenlabs-convai>
-          <script is:inline src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+        <!-- Kai's voice stage: our own breathing orb driven by the
+             ElevenLabs SDK, reacting to Kai's voice and yours in real time. -->
+        <div class="voice-stage mt-2 flex flex-1 flex-col items-center justify-center gap-7">
+          <div id="kai-orb" class="kai-orb" aria-hidden="true">
+            <span class="kai-blob kai-blob-a"></span>
+            <span class="kai-blob kai-blob-b"></span>
+            <span class="kai-sheen"></span>
+          </div>
+          <p id="voice-status" class="font-mono text-xs uppercase tracking-[0.25em] text-muted" aria-live="polite">Ready when you are</p>
+          <div class="flex items-center gap-3">
+            <button type="button" id="voice-start" class="btn-accent">Start talking</button>
+            <button type="button" id="voice-end" class="btn-ghost hidden">End call</button>
+          </div>
         </div>
       </dialog>
 
@@ -537,32 +538,73 @@ const process = [
     display: none;
   }
 
-  /* Voice agent block. The ElevenLabs widget anchors its overlay to the
-     host box — give the host a real box inside our mount so the launcher
-     seats in the section instead of floating over the page. */
-  #voice-agent-mount {
-    position: relative;
-    min-height: 11rem;
+  /* Kai's voice stage: a living amber orb. --amp (0..1) is fed by the SDK
+     with real voice levels; idle it just breathes. */
+  #voice-modal {
+    width: 34rem;
+    height: 36rem;
   }
-  #voice-agent-mount :global(elevenlabs-convai) {
-    position: relative !important;
-    display: block;
-    height: 11rem;
-    /* Re-skin the widget with site tokens: its shadow styles read these
-       host-level custom properties. */
-    --el-base: #FFFDF9;
-    --el-base-hover: #F8F5F2;
-    --el-base-active: #F3EDE6;
-    --el-base-border: rgb(34 28 21 / 0.12);
-    --el-base-subtle: #6C635A;
-    --el-base-primary: #221C15;
-    --el-accent: #D97706;
-    --el-accent-hover: #9A3412;
-    --el-accent-active: #7C2D12;
-    --el-accent-border: rgb(154 52 18 / 0.4);
-    --el-accent-subtle: #B45309;
-    --el-accent-primary: #221C15;
-    --el-button-radius: 9999px;
+  .kai-orb {
+    position: relative;
+    width: 13rem;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: radial-gradient(circle at 32% 30%, #F5C67C, #D97706 46%, #9A3412 78%, #6E2810 100%);
+    box-shadow:
+      0 24px 60px -20px rgb(154 52 18 / 0.55),
+      0 0 calc(1.5rem + var(--amp, 0) * 4rem) rgb(217 119 6 / calc(0.25 + var(--amp, 0) * 0.45));
+    transform: scale(calc(1 + var(--amp, 0) * 0.18));
+    transition: transform 90ms linear;
+    animation: kai-breathe 6s ease-in-out infinite;
+  }
+  .kai-orb.kai-live {
+    animation: none;
+  }
+  @keyframes kai-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.045); }
+  }
+  .kai-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(22px);
+  }
+  .kai-blob-a {
+    width: 70%;
+    aspect-ratio: 1;
+    left: -12%;
+    top: -15%;
+    background: rgb(255 214 150 / 0.75);
+    animation: kai-drift-a 9s ease-in-out infinite alternate;
+  }
+  .kai-blob-b {
+    width: 80%;
+    aspect-ratio: 1;
+    right: -18%;
+    bottom: -22%;
+    background: rgb(110 40 16 / 0.6);
+    animation: kai-drift-b 11s ease-in-out infinite alternate;
+  }
+  @keyframes kai-drift-a {
+    to { transform: translate(18%, 22%) scale(1.15); }
+  }
+  @keyframes kai-drift-b {
+    to { transform: translate(-15%, -18%) scale(0.9); }
+  }
+  .kai-sheen {
+    position: absolute;
+    inset: -30%;
+    background: conic-gradient(from 0deg, transparent 0 70%, rgb(255 240 220 / 0.25) 82%, transparent 94%);
+    animation: kai-spin 14s linear infinite;
+  }
+  @keyframes kai-spin {
+    to { transform: rotate(1turn); }
+  }
+  :global(.motion-reduced) .kai-orb,
+  :global(.motion-reduced) .kai-blob,
+  :global(.motion-reduced) .kai-sheen {
+    animation: none;
   }
 
   .voice-soon {
@@ -827,6 +869,62 @@ const process = [
     };
     bindModal('open-chat-demo', 'chat-modal', () => input?.focus());
     bindModal('open-voice-demo', 'voice-modal');
+
+    // — Kai's voice call: custom orb UI over the ElevenLabs SDK. The orb's
+    // --amp variable carries live voice levels (Kai's output, or the
+    // visitor's mic while they speak).
+    const orb = document.getElementById('kai-orb');
+    const voiceStatus = document.getElementById('voice-status');
+    const voiceStart = document.getElementById('voice-start') as HTMLButtonElement | null;
+    const voiceEnd = document.getElementById('voice-end') as HTMLButtonElement | null;
+    const voiceModal = document.getElementById('voice-modal') as HTMLDialogElement | null;
+    let conv: any = null;
+    let voiceRaf = 0;
+
+    const setVoiceStatus = (t: string) => { if (voiceStatus) voiceStatus.textContent = t; };
+    const setVoiceLive = (live: boolean) => {
+      voiceStart?.classList.toggle('hidden', live);
+      voiceEnd?.classList.toggle('hidden', !live);
+      orb?.classList.toggle('kai-live', live);
+      if (!live) (orb as HTMLElement | null)?.style.setProperty('--amp', '0');
+    };
+    const pumpVoice = () => {
+      if (!conv) return;
+      let amp = 0;
+      try {
+        amp = Math.max(conv.getOutputVolume() || 0, (conv.getInputVolume() || 0) * 0.7);
+      } catch { /* volume not ready yet */ }
+      (orb as HTMLElement | null)?.style.setProperty('--amp', String(Math.min(1, amp * 1.5)));
+      voiceRaf = requestAnimationFrame(pumpVoice);
+    };
+    const endVoice = (msg: string) => {
+      cancelAnimationFrame(voiceRaf);
+      const c = conv;
+      conv = null;
+      try { c?.endSession(); } catch { /* already closed */ }
+      setVoiceLive(false);
+      setVoiceStatus(msg);
+    };
+
+    voiceStart?.addEventListener('click', async () => {
+      if (conv) return;
+      setVoiceLive(true);
+      setVoiceStatus('Connecting');
+      try {
+        const { Conversation } = await import('@elevenlabs/client');
+        conv = await Conversation.startSession({
+          agentId: 'agent_2101ky8y21nmeh5ah2ytbntetzhm',
+          onModeChange: (m: any) => setVoiceStatus(m.mode === 'speaking' ? 'Kai is speaking' : 'Listening'),
+          onStatusChange: (s: any) => { if (s.status === 'disconnected' && conv) endVoice('Call ended. Start again anytime.'); },
+          onError: () => endVoice('Something went wrong. Try again.'),
+        });
+        pumpVoice();
+      } catch {
+        endVoice('Microphone unavailable. Check permissions and try again.');
+      }
+    });
+    voiceEnd?.addEventListener('click', () => endVoice('Call ended. Start again anytime.'));
+    voiceModal?.addEventListener('close', () => { if (conv) endVoice('Ready when you are'); });
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
