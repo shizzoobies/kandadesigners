@@ -136,6 +136,11 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
           </div>
         ))}
       </div>
+      <!-- lenient click zones: while the ring is live, clicking anywhere on
+           the left/right half rotates. Pointer convenience only; the real
+           controls (arrows, dots, cards) remain the accessible path. -->
+      <div class="hg-zone hg-zone-left" aria-hidden="true"></div>
+      <div class="hg-zone hg-zone-right" aria-hidden="true"></div>
       <!-- ring arrows: flank the gallery at mid-height -->
       <button type="button" id="hg-prev" class="hg-arrow hg-arrow-side hg-arrow-left" aria-label="Previous project">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4 7 10l5.5 6"/></svg>
@@ -222,6 +227,22 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     border-color: var(--color-accent);
     color: var(--color-accent);
   }
+  /* wide half-stage click zones, active only while the ring is live */
+  .hg-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 5;
+    display: none;
+  }
+  #hg-stage.hg-live .hg-zone {
+    display: block;
+    cursor: pointer;
+  }
+  .hg-zone-left { left: 0; }
+  .hg-zone-right { right: 0; }
+
   /* side arrows flank the ring at mid-height, on a soft surface puck so
      they read over whatever card is behind them */
   .hg-arrow-side {
@@ -406,6 +427,8 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 
   document.getElementById('hg-prev').addEventListener('click', () => { stopAutoplay(); goTo(current - 1); });
   document.getElementById('hg-next').addEventListener('click', () => { stopAutoplay(); goTo(current + 1); });
+  document.querySelector('.hg-zone-left')?.addEventListener('click', () => { stopAutoplay(); goTo(current - 1); });
+  document.querySelector('.hg-zone-right')?.addEventListener('click', () => { stopAutoplay(); goTo(current + 1); });
   dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAutoplay(); goTo(i); }));
 
   slots.forEach((slot, i) => {
