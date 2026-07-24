@@ -25,7 +25,7 @@ export const artists = [
     gallery: [
       { src: '/images/art/jm-hope-humanity.jpg', alt: 'Hand lettered Jesus Hope for Humanity artwork in black and white with reaching hands' },
       { src: '/images/art/jm-home-improvement.jpg', alt: 'Home Improvement series logotype with rooftop mark and paint roller underline' },
-      { src: '/images/art/jm-incarnate.jpg', alt: 'Incarnate series art with a glowing heart constellation over a night sky' },
+      { src: '/images/art/jm-berkseth.jpg', alt: 'Berkseth Quality Landscaping badge logo with a chainsaw silhouette in green and black' },
       { src: '/images/art/jm-anti-running.jpg', alt: 'Anti-Running Running Club badge logo in orange and black' },
       { src: '/images/art/jm-slow-series.jpg', alt: 'Illustrated fist wearing a smartwatch that reads SLOW, series artwork' },
       { src: '/images/art/jm-heel-typography.jpg', alt: 'High heel shoe illustration built entirely from dance step typography' },
@@ -37,6 +37,7 @@ export const artists = [
       { src: '/images/art/jm-set.jpg', alt: 'SET title card over a night skyline, second of a three part series' },
       { src: '/images/art/jm-slow-lake.jpg', alt: 'SLOW title card mirrored across a still lake, third of a three part series' },
       { src: '/images/art/jm-one-sunday.jpg', alt: 'One Sunday event mark in gold and black with a numeral one inside the wordmark' },
+      { src: '/images/art/jm-incarnate.jpg', alt: 'Incarnate series art with a glowing heart constellation over a night sky' },
       { src: '/images/art/jm-beards.jpg', alt: 'Beards of Hollywood logo drawn as a bearded face in black and white' },
       { src: '/images/art/jm-iglesia.jpg', alt: 'BR Iglesia Hispana circular monogram logo' },
       { src: '/images/art/jm-bread-addict.jpg', alt: 'Bread Addict badge with a smiling toast character and an Isaiah 55:2 line' },
