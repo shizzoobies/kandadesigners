@@ -7,8 +7,15 @@ window.__motion = { reduced };
 
 // Nav gains its solid backdrop on scroll regardless of motion preference —
 // a transparent nav over content is a readability problem, not an animation.
+// Exception: while the home hero's full-viewport scrim is under it, the nav
+// stays transparent — the veil carries the contrast until it lifts (~70vh).
 const nav = document.querySelector('[data-nav]');
-const updateNav = () => nav?.classList.toggle('nav-scrolled', window.scrollY > 80);
+const heroScrim = document.getElementById('hg-scrim');
+const navThreshold = () =>
+  heroScrim && getComputedStyle(heroScrim).display !== 'none'
+    ? window.innerHeight * 0.7
+    : 80;
+const updateNav = () => nav?.classList.toggle('nav-scrolled', window.scrollY > navThreshold());
 
 if (reduced) {
   document.documentElement.classList.add('motion-reduced');

@@ -262,6 +262,13 @@ body {
   transition: none;
 }
 
+/* While the nav rides transparent over the veiled home hero, muted links
+   could dip under AA where dark tiles sit beneath the scrim — so links run
+   full espresso until the bar solidifies. */
+body:has(#hg-scrim) [data-nav]:not(.nav-scrolled) .nav-link:not(.text-accent) {
+  color: var(--color-ink);
+}
+
 /* Brand mark renders in its original colors on the light canvas. The class
    stays so a future dark context can re-apply a treatment in one place. */
 .logo-white {

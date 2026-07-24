@@ -18,19 +18,20 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 <section id="gallery" class="relative lg:h-[420vh]">
   <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
 
-    <!-- top scrim: near-solid band so the nav and oversized logo always sit
-         on ivory, whatever the stack puts beneath them (WCAG-safe, not
-         best-effort) -->
-    <div class="pointer-events-none absolute inset-x-0 top-0 z-20 h-[24vh] bg-gradient-to-b from-canvas from-40% via-canvas/90 to-transparent"></div>
+    <!-- one veil over the whole mosaic: near-opaque ivory wash + blur melts
+         the stack back so full-strength espresso text and the transparent
+         nav sit directly on it (measured-AA even over black tiles). Fades
+         out with the headline as the sweep begins. Desktop-only — mobile
+         has no scatter to veil. -->
+    <div id="hg-scrim" class="pointer-events-none absolute inset-0 z-30 hidden bg-canvas/60 lg:block"></div>
 
-    <!-- headline: a true glass panel — near-solid canvas + heavy blur — so
-         espresso-on-ivory contrast holds regardless of what's behind it -->
-    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-36 lg:pt-[20vh]">
-      <div class="inline-block max-w-4xl rounded-3xl bg-canvas/90 p-8 shadow-[0_24px_80px_-32px_rgb(34_28_21/0.25)] ring-1 ring-ink/5 backdrop-blur-2xl md:p-10">
-        <h1 class="font-display text-[clamp(3.25rem,7vw,6.5rem)] leading-[0.95] tracking-tight">
+    <!-- headline: no panel — the full-hero scrim carries the contrast -->
+    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-36 lg:pt-[22vh]">
+      <div class="max-w-4xl">
+        <h1 class="font-display text-[clamp(3.25rem,7vw,6.5rem)] leading-[0.95] tracking-tight text-ink">
           Built to <span class="text-accent italic">perform.</span>
         </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink">
           K &amp; A Performance crafts fast, animated, AI-ready websites for
           businesses that refuse to blend in.
         </p>
@@ -437,6 +438,9 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     });
 
     tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.2, ease: 'power1.in' }, 0.05)
+      // the veil lifts as the stack starts to move — the gallery acts play
+      // on the bare canvas
+      .to('#hg-scrim', { autoAlpha: 0, duration: 0.22, ease: 'power1.in' }, 0.05)
       // inner pages disperse into the depths while the home pages regroup
       .to(extras, {
         z: -620,
@@ -477,6 +481,8 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   } else {
     // Mobile / reduced motion: no scatter, ring formed, UI visible.
     gsap.set(extras, { display: 'none' });
+    const scrim = document.getElementById('hg-scrim');
+    if (scrim) scrim.style.display = 'none';
     goTo(0, false);
     stage.classList.add('hg-live');
     if (heading) gsap.set(heading, { autoAlpha: 1 });
