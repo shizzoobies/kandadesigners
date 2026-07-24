@@ -1,11 +1,20 @@
 @import "tailwindcss";
 
-/* Licensed via Envato Elements (Alex's account): Grivon (display serif),
-   Neutrix VF (variable grotesk: wght 400-700, wdth, ital slant). */
+/* Display: Fraunces variable (OFL, self-hosted) — real 100-900 weights and
+   true italics, so headlines can run genuinely heavy. Body/headings: Neutrix
+   VF (Envato license, wght 400-700). */
 @font-face {
-  font-family: "Grivon";
-  src: url("/fonts/Grivon.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Fraunces";
+  src: url("/fonts/Fraunces-VF.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/Fraunces-Italic-VF.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: italic;
   font-display: swap;
 }
 @font-face {
@@ -22,11 +31,20 @@
   --color-surface: #FFFDF9;
   --color-ink: #221C15;
   --color-muted: #6C635A;
-  --color-accent: #5B4BD8;
-  --color-accent-hot: #4A3BC7;
-  --font-display: "Grivon", Georgia, serif;
+  --color-accent: #1D4ED8;
+  --color-accent-hot: #1E40AF;
+  --font-display: "Fraunces", Georgia, serif;
   --font-heading: "Neutrix", system-ui, sans-serif;
   --font-body: "Neutrix", system-ui, sans-serif;
+}
+
+/* Fraunces carries real weight — display type defaults chunky, and any
+   font-weight utility can still override per element. */
+@layer base {
+  .font-display {
+    font-weight: 640;
+    font-optical-sizing: auto;
+  }
 }
 
 :root {
@@ -66,7 +84,7 @@ body {
   box-shadow:
     0 1px 2px rgb(34 28 21 / 0.05),
     0 12px 32px -12px rgb(34 28 21 / 0.16),
-    0 24px 64px -32px rgb(108 92 231 / 0.25);
+    0 24px 64px -32px rgb(37 99 235 / 0.25);
   background: var(--color-surface);
   overflow: hidden;
 }
@@ -78,14 +96,14 @@ body {
   --color-surface: #14141C;
   --color-ink: #EDEDF2;
   --color-muted: #9A9AAB;
-  --color-accent: #8A7CFF;
-  --color-accent-hot: #B9AFFF;
+  --color-accent: #60A5FA;
+  --color-accent-hot: #93C5FD;
   background: linear-gradient(180deg, #0B0B10 0%, #14121D 100%);
   color: var(--color-ink);
 }
 .dark-band .glow-frame {
-  border-color: rgb(138 124 255 / 0.25);
-  box-shadow: 0 0 60px -20px rgb(138 124 255 / 0.35);
+  border-color: rgb(96 165 250 / 0.25);
+  box-shadow: 0 0 60px -20px rgb(96 165 250 / 0.35);
 }
 .dark-band .btn-accent {
   color: #0B0B10;
@@ -144,7 +162,7 @@ body {
   height: 44vw;
   left: -10vw;
   top: -12vw;
-  background: radial-gradient(circle, rgb(108 92 231 / 0.16), transparent 65%);
+  background: radial-gradient(circle, rgb(37 99 235 / 0.16), transparent 65%);
   animation: drift-a 26s ease-in-out infinite alternate;
 }
 .bg-ambient .blob-b {
@@ -160,7 +178,7 @@ body {
   height: 42vw;
   left: 22vw;
   bottom: -16vw;
-  background: radial-gradient(circle, rgb(108 92 231 / 0.1), transparent 65%);
+  background: radial-gradient(circle, rgb(37 99 235 / 0.1), transparent 65%);
   animation: drift-c 40s ease-in-out infinite alternate;
 }
 @keyframes drift-a {
@@ -200,7 +218,7 @@ body {
   aspect-ratio: 1;
   left: -8%;
   top: -22%;
-  background: radial-gradient(circle, rgb(108 92 231 / 0.22), transparent 65%);
+  background: radial-gradient(circle, rgb(37 99 235 / 0.2), transparent 65%);
   animation: ai-drift-a 14s ease-in-out infinite alternate;
 }
 .ai-alive::after {
@@ -208,14 +226,14 @@ body {
   aspect-ratio: 1;
   right: -14%;
   bottom: -32%;
-  background: radial-gradient(circle, rgb(91 75 216 / 0.16), transparent 65%);
+  background: radial-gradient(circle, rgb(29 78 216 / 0.15), transparent 65%);
   animation: ai-drift-b 19s ease-in-out infinite alternate;
 }
 .ai-alive-dark::before {
-  background: radial-gradient(circle, rgb(138 124 255 / 0.3), transparent 65%);
+  background: radial-gradient(circle, rgb(96 165 250 / 0.3), transparent 65%);
 }
 .ai-alive-dark::after {
-  background: radial-gradient(circle, rgb(185 175 255 / 0.16), transparent 65%);
+  background: radial-gradient(circle, rgb(147 197 253 / 0.16), transparent 65%);
 }
 @keyframes ai-drift-a {
   from { transform: translate(0, 0) scale(1); }
@@ -229,8 +247,8 @@ body {
   animation: ai-word-breathe 5.5s ease-in-out infinite;
 }
 @keyframes ai-word-breathe {
-  0%, 100% { text-shadow: 0 0 0 rgb(138 124 255 / 0); }
-  50% { text-shadow: 0 0 28px rgb(138 124 255 / 0.5); }
+  0%, 100% { text-shadow: 0 0 0 rgb(96 165 250 / 0); }
+  50% { text-shadow: 0 0 28px rgb(96 165 250 / 0.5); }
 }
 .motion-reduced .ai-alive::before,
 .motion-reduced .ai-alive::after,
@@ -260,13 +278,6 @@ body {
 }
 .motion-reduced .nav-logo {
   transition: none;
-}
-
-/* While the nav rides transparent over the veiled home hero, muted links
-   could dip under AA where dark tiles sit beneath the scrim — so links run
-   full espresso until the bar solidifies. */
-body:has(#hg-scrim) [data-nav]:not(.nav-scrolled) .nav-link:not(.text-accent) {
-  color: var(--color-ink);
 }
 
 /* Brand mark renders in its original colors on the light canvas. The class

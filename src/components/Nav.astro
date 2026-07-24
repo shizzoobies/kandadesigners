@@ -17,8 +17,8 @@ const links = [
         <a
           href={l.href}
           class:list={[
-            'nav-link font-heading text-sm tracking-wide transition-colors',
-            Astro.url.pathname === l.href ? 'text-accent' : 'text-muted hover:text-ink',
+            'nav-link font-heading text-base font-semibold tracking-wide transition-colors',
+            Astro.url.pathname === l.href ? 'text-accent' : 'text-ink/80 hover:text-ink',
           ]}
         >
           {l.label}
