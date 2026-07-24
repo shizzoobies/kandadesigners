@@ -1,0 +1,268 @@
+---
+// Google-reviews rail: hydrates live from /api/reviews (Places API, cached
+// 6h server-side), drifts continuously, and opens a modal with every review
+// the API returns plus a link to the full set on Google. On localhost with
+// no API key the placeholder data renders so the design is visible; in
+// production with no data the whole section removes itself.
+---
+<section id="reviews-home" class="hidden py-24" aria-label="Client reviews on Google">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-6 px-6">
+    <div>
+      <h2 class="font-display text-4xl md:text-6xl">Kind <span class="text-accent italic">words.</span></h2>
+      <p id="rev-meta" class="mt-4 text-muted">Reviews from the people we build for.</p>
+    </div>
+    <button type="button" id="rev-open" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot" aria-haspopup="dialog">
+      See all reviews <span aria-hidden="true">&rarr;</span>
+    </button>
+  </div>
+
+  <div class="rev-rail mt-12" id="rev-rail">
+    <div class="rev-track" id="rev-track"></div>
+  </div>
+
+  <dialog id="rev-modal" class="rev-modal" aria-label="All Google reviews">
+    <div class="rev-modal-head">
+      <p class="font-heading text-xs uppercase tracking-[0.25em] text-muted">Google <span class="text-accent">reviews</span></p>
+      <button type="button" id="rev-close" class="rev-x" aria-label="Close reviews">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
+      </button>
+    </div>
+    <div id="rev-modal-list" class="flex flex-1 flex-col gap-4 overflow-y-auto pr-1"></div>
+    <p id="rev-modal-link" class="mt-4 hidden text-center">
+      <a href="#" target="_blank" rel="noopener" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot">
+        Read them all on Google <span aria-hidden="true">&rarr;</span>
+      </a>
+    </p>
+  </dialog>
+</section>
+
+<style>
+  .rev-rail {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
+  }
+  .rev-track {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    padding-block: 0.5rem;
+    animation: rev-drift 55s linear infinite;
+  }
+  .rev-rail:hover .rev-track,
+  .rev-rail:focus-within .rev-track {
+    animation-play-state: paused;
+  }
+  @keyframes rev-drift {
+    to { transform: translateX(calc(-50% - 0.75rem)); }
+  }
+  :global(.motion-reduced) .rev-track {
+    animation: none;
+  }
+  :global(.motion-reduced) .rev-rail {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  :global(.rev-card) {
+    width: 21rem;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 12px;
+    background: var(--color-surface);
+    padding: 1.25rem 1.4rem;
+    box-shadow: 0 14px 36px -20px rgb(34 28 21 / 0.28);
+  }
+  :global(.rev-stars) {
+    display: flex;
+    gap: 2px;
+  }
+  :global(.rev-stars svg) {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: #e7a500;
+  }
+  :global(.rev-text) {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--color-ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  :global(.rev-foot) {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  :global(.rev-name) {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  :global(.rev-when) {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+  :global(.rev-g) {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    fill: rgb(34 28 21 / 0.4);
+  }
+
+  .rev-modal {
+    margin: auto;
+    width: 30rem;
+    max-width: calc(100vw - 2rem);
+    height: 34rem;
+    max-height: calc(100vh - 3rem);
+    display: none;
+    flex-direction: column;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 16px;
+    background: var(--color-surface);
+    padding: 1.4rem 1.5rem;
+    box-shadow:
+      0 24px 80px -24px rgb(34 28 21 / 0.4),
+      0 0 60px -20px rgb(29 78 216 / 0.25);
+    color: var(--color-ink);
+  }
+  .rev-modal[open] { display: flex; }
+  .rev-modal::backdrop {
+    background: rgb(34 28 21 / 0.4);
+    backdrop-filter: blur(6px);
+  }
+  .rev-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    margin-bottom: 0.9rem;
+    border-bottom: 1px solid rgb(34 28 21 / 0.08);
+  }
+  .rev-x {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    color: var(--color-muted);
+    transition: color var(--dur-fast) ease, background var(--dur-fast) ease;
+  }
+  .rev-x:hover {
+    color: var(--color-ink);
+    background: rgb(34 28 21 / 0.06);
+  }
+  :global(.rev-modal .rev-card) {
+    width: 100%;
+  }
+  :global(.rev-modal .rev-text) {
+    -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
+</style>
+
+<script>
+  import { reviews as placeholders } from '../data/reviews.js';
+  import { aiLogos } from '../data/ai-logos.js';
+
+  const section = document.getElementById('reviews-home');
+  const track = document.getElementById('rev-track');
+  const meta = document.getElementById('rev-meta');
+  const modal = document.getElementById('rev-modal') as HTMLDialogElement | null;
+  const modalList = document.getElementById('rev-modal-list');
+  const modalLink = document.getElementById('rev-modal-link');
+
+  const G_PATH = aiLogos.find((l) => l.name === 'google')?.d || '';
+  const STAR = 'M12 2l2.9 6.26 6.86.6-5.2 4.52 1.56 6.7L12 16.53 5.88 20.08l1.56-6.7-5.2-4.52 6.86-.6z';
+
+  const starRow = (n: number) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'rev-stars';
+    for (let i = 0; i < Math.max(1, Math.min(5, Math.round(n))); i++) {
+      wrap.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${STAR}"/></svg>`);
+    }
+    wrap.setAttribute('role', 'img');
+    wrap.setAttribute('aria-label', `${n} out of 5 stars`);
+    return wrap;
+  };
+
+  const card = (r: { name: string; rating: number; text: string; when?: string }) => {
+    const el = document.createElement('article');
+    el.className = 'rev-card';
+    el.appendChild(starRow(r.rating));
+    const p = document.createElement('p');
+    p.className = 'rev-text';
+    p.textContent = r.text;
+    el.appendChild(p);
+    const foot = document.createElement('div');
+    foot.className = 'rev-foot';
+    const left = document.createElement('div');
+    const name = document.createElement('p');
+    name.className = 'rev-name';
+    name.textContent = r.name;
+    left.appendChild(name);
+    if (r.when) {
+      const when = document.createElement('p');
+      when.className = 'rev-when';
+      when.textContent = r.when;
+      left.appendChild(when);
+    }
+    foot.appendChild(left);
+    foot.insertAdjacentHTML('beforeend', `<svg class="rev-g" viewBox="0 0 24 24" aria-hidden="true"><path d="${G_PATH}"/></svg>`);
+    el.appendChild(foot);
+    return el;
+  };
+
+  const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+
+  fetch('/api/reviews')
+    .then((r) => (r.ok ? r.json() : { reviews: [] }))
+    .catch(() => ({ reviews: [] }))
+    .then((data) => {
+      let reviews = data.reviews || [];
+      if (!reviews.length && isLocal) reviews = placeholders;
+      if (!reviews.length || !section || !track) {
+        section?.remove();
+        return;
+      }
+
+      // rail: two identical sets so the drift loops seamlessly
+      for (const set of [false, true]) {
+        const holder = document.createElement('div');
+        holder.style.display = 'contents';
+        if (set) holder.setAttribute('aria-hidden', 'true');
+        reviews.forEach((r) => holder.appendChild(card(r)));
+        track.appendChild(holder);
+      }
+
+      // modal: full text, plus the link out to Google when we have it
+      reviews.forEach((r) => modalList?.appendChild(card(r)));
+      if (data.url && modalLink) {
+        modalLink.classList.remove('hidden');
+        modalLink.querySelector('a')?.setAttribute('href', data.url);
+      }
+      if (data.rating && meta) {
+        meta.textContent = `${data.rating.toFixed(1)} stars across ${data.count} Google reviews.`;
+      }
+
+      section.classList.remove('hidden');
+    });
+
+  document.getElementById('rev-open')?.addEventListener('click', () => modal?.showModal());
+  document.getElementById('rev-close')?.addEventListener('click', () => modal?.close());
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal.close();
+  });
+</script>
