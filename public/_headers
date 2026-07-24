@@ -1,0 +1,14 @@
+# HTML must always revalidate at the edge so new deploys go live instantly.
+# (The old site shipped a 7-day s-maxage that once cached, hid new deploys.)
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Hashed build assets are immutable: cache hard.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=86400
