@@ -25,14 +25,23 @@ export async function onRequestGet(context) {
       },
     });
 
+  // ?debug=1 reports which stage fails without exposing any secret values.
+  const debug = new URL(request.url).searchParams.get('debug') === '1';
+
   if (!env.GOOGLE_MAPS_API_KEY || !env.GOOGLE_PLACE_ID) {
-    return json({ reviews: [] });
+    return json(
+      debug
+        ? { reviews: [], stage: 'missing-env', hasKey: Boolean(env.GOOGLE_MAPS_API_KEY), hasPlaceId: Boolean(env.GOOGLE_PLACE_ID) }
+        : { reviews: [] },
+    );
   }
 
   const cache = caches.default;
   const cacheKey = new Request(new URL(request.url).origin + '/api/reviews');
-  const hit = await cache.match(cacheKey);
-  if (hit) return hit;
+  if (!debug) {
+    const hit = await cache.match(cacheKey);
+    if (hit) return hit;
+  }
 
   try {
     const res = await fetch(
@@ -44,7 +53,13 @@ export async function onRequestGet(context) {
         },
       },
     );
-    if (!res.ok) return json({ reviews: [] });
+    if (!res.ok) {
+      if (debug) {
+        const errBody = (await res.text()).slice(0, 400);
+        return json({ reviews: [], stage: 'upstream-error', upstreamStatus: res.status, upstreamBody: errBody });
+      }
+      return json({ reviews: [] });
+    }
 
     const data = await res.json();
     const out = json({
