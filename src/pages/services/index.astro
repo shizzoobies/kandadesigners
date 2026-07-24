@@ -1,16 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const webCapabilities = [
-  'Custom design',
-  'Motion',
-  'Performance',
-  'SEO-ready',
-  'Launch on modern hosting',
-];
-
-const aiCapabilities = ['Assistants', 'Automations', 'Content tooling'];
-
 const process = [
   { label: 'Discover', note: 'Goals, audience, scope.' },
   { label: 'Design', note: 'Structure, type, motion.' },
@@ -20,7 +10,7 @@ const process = [
 ---
 <BaseLayout
   title="Services — K & A Performance"
-  description="Web design & build and AI integration from K & A Performance — custom, fast, animated sites scoped per project."
+  description="Purpose-built websites, SEO & AI search, accessibility audits, AI integration, and honest answers about hosting — from K & A Performance."
 >
   <!-- Editorial header -->
   <section class="mx-auto max-w-6xl px-6 pt-40 pb-24 md:pt-48">
@@ -29,127 +19,151 @@ const process = [
       What we <span class="text-accent italic">build.</span>
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-      Two disciplines, one standard: sites that look sharp, move well, and pull
-      their weight. Scoped per project — most builds land between a focused
-      landing page and a full multi-page platform.
+      One standard across everything: sharp, fast, accessible, and honest.
+      Scoped per project — most builds land between a focused landing page and
+      a full multi-page platform.
     </p>
   </section>
 
-  <!-- Primary offering: assembles itself like a build -->
-  <section class="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
-    <div id="svc-web" class="glow-frame p-8 md:p-14">
-      <div class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-        <div>
-          <p data-web="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Primary offering</p>
-          <div class="overflow-hidden">
-            <h2 data-web="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Web design &amp; build</h2>
-          </div>
-          <p data-web="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-            A site designed from the ground up for your business — no templates, no
-            stock, no compromise on speed. Built to load fast, feel alive, and rank.
-          </p>
-          <p class="svc-caps mt-10 max-w-xl font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
-            {webCapabilities.map((cap, i) => (
-              <Fragment>
-                <span class="inline-block whitespace-nowrap">{cap}</span>
-                {i < webCapabilities.length - 1 && <span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span>}
-              </Fragment>
-            ))}
-          </p>
+  <!-- 01 · Purpose-built websites -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div id="svc-web" class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+      <div>
+        <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">01 &middot; Web design &amp; build</p>
+        <div class="overflow-hidden">
+          <h2 data-web="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Purpose-built websites.</h2>
         </div>
-        <!-- Real client work, fanned like prints on a desk — same language as
-             the home hero mosaic. Not stock: these are live builds. -->
-        <div class="svc-shots relative aspect-[4/3] md:aspect-auto md:min-h-[26rem] md:self-stretch">
-          <figure class="svc-shot svc-shot-1">
-            <img src="/images/work-fdaaf.webp" alt="FDAAF — live client build" loading="lazy" />
-          </figure>
-          <figure class="svc-shot svc-shot-2">
-            <img src="/images/work-foremotion.webp" alt="Fore Motion Golf — live client build" loading="lazy" />
-          </figure>
-          <figure class="svc-shot svc-shot-3">
-            <img src="/images/work-pmbuild.webp" alt="Project Makeover — live client build" loading="lazy" />
-          </figure>
-        </div>
+        <p data-animate="type-settle" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          Designed from the ground up for your business — no templates, no
+          stock, no compromise on speed. Built to load fast, feel alive, and
+          do the job it exists to do.
+        </p>
+        <p data-animate="type-settle" class="mt-8 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+          Custom design <span class="text-accent" aria-hidden="true">&middot;</span> Motion <span class="text-accent" aria-hidden="true">&middot;</span> Performance <span class="text-accent" aria-hidden="true">&middot;</span> Launch-ready
+        </p>
+      </div>
+      <!-- Real client work, fanned like prints on a desk. Not stock: these
+           are live builds. -->
+      <div class="svc-shots relative aspect-[4/3] md:aspect-auto md:min-h-[24rem] md:self-stretch">
+        <figure class="svc-shot svc-shot-1">
+          <img src="/images/work-fdaaf.webp" alt="FDAAF — live client build" loading="lazy" />
+        </figure>
+        <figure class="svc-shot svc-shot-2">
+          <img src="/images/work-foremotion.webp" alt="Fore Motion Golf — live client build" loading="lazy" />
+        </figure>
+        <figure class="svc-shot svc-shot-3">
+          <img src="/images/work-pmbuild.webp" alt="Project Makeover — live client build" loading="lazy" />
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- Accessibility service: the audit report checks itself off -->
-  <section class="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
-    <div id="svc-a11y" class="glow-frame p-8 md:p-14">
-      <div class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-        <div>
-          <p data-a11y="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Accessibility service</p>
-          <div class="overflow-hidden">
-            <h2 data-a11y="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Accessible, verified.</h2>
-          </div>
-          <p data-a11y="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-            Every site we build ships measured against WCAG AA. Already have a
-            site? We'll audit it — real measurements, not a plugin badge — and
-            fix what fails.
-          </p>
-          <p class="a11y-caps mt-10 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
-            <span class="inline-block whitespace-nowrap">WCAG 2.2 AA</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Contrast</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Keyboard</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Screen readers</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Remediation</span>
-          </p>
-          <div data-a11y="link" class="mt-10">
-            <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
-              Get an accessibility check &rarr;
-            </a>
-          </div>
+  <!-- 02 · SEO & AI search -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div class="max-w-3xl">
+      <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">02 &middot; SEO &amp; AI search</p>
+      <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-4xl leading-tight md:text-6xl">
+        Found by Google. <span class="text-accent italic">Found by AI.</span>
+      </h2>
+      <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-lg leading-relaxed text-muted">
+        Search isn't just a results page anymore — your next customer might
+        ask an assistant instead of typing into a search bar. We build for
+        both: technical SEO done right, structured data machines can read,
+        and content architected so answer engines can find you and quote you.
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.3" class="mt-8 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+        Technical SEO <span class="text-accent" aria-hidden="true">&middot;</span> Structured data <span class="text-accent" aria-hidden="true">&middot;</span> AI-answer readiness <span class="text-accent" aria-hidden="true">&middot;</span> Performance
+      </p>
+    </div>
+  </section>
+
+  <!-- 03 · Accessibility -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div id="svc-a11y" class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+      <div>
+        <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">03 &middot; Accessibility</p>
+        <div class="overflow-hidden">
+          <h2 data-a11y="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Accessible, verified.</h2>
         </div>
-        <!-- a miniature audit report whose checks tick themselves -->
-        <div class="a11y-audit" aria-hidden="true">
-          <p class="font-heading text-xs uppercase tracking-[0.25em] text-muted">Sample audit</p>
-          <ul class="mt-4">
-            <li class="a11y-row"><span>Contrast — body text</span><span class="a11y-val">15.3:1</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
-            <li class="a11y-row"><span>Keyboard path</span><span class="a11y-val">complete</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
-            <li class="a11y-row"><span>Screen-reader labels</span><span class="a11y-val">present</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
-            <li class="a11y-row"><span>Reduced motion</span><span class="a11y-val">respected</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
-          </ul>
+        <p data-animate="type-settle" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          Every site we build ships measured against WCAG AA. Already have a
+          site? We'll audit it — real measurements, not a plugin badge — and
+          fix what fails.
+        </p>
+        <p data-animate="type-settle" class="mt-8 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+          WCAG 2.2 AA <span class="text-accent" aria-hidden="true">&middot;</span> Contrast <span class="text-accent" aria-hidden="true">&middot;</span> Keyboard <span class="text-accent" aria-hidden="true">&middot;</span> Screen readers <span class="text-accent" aria-hidden="true">&middot;</span> Remediation
+        </p>
+        <div data-animate="type-settle" class="mt-8">
+          <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+            Get an accessibility check &rarr;
+          </a>
         </div>
+      </div>
+      <!-- a miniature audit report whose checks tick themselves -->
+      <div class="a11y-audit" aria-hidden="true">
+        <p class="font-heading text-xs uppercase tracking-[0.25em] text-muted">Sample audit</p>
+        <ul class="mt-4">
+          <li class="a11y-row"><span>Contrast — body text</span><span class="a11y-val">15.3:1</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Keyboard path</span><span class="a11y-val">complete</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Screen-reader labels</span><span class="a11y-val">present</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Reduced motion</span><span class="a11y-val">respected</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- Secondary offering: resolves and streams like a thought -->
-  <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
-    <div
-      id="svc-ai"
-      class="glow-frame ai-alive p-8 md:p-14"
-      style="background: linear-gradient(120deg, #FFFDF9 0%, #EAF1FB 42%, #D8E6FA 55%, #EAF1FB 68%, #FFFDF9 100%); background-size: 240% 240%; background-position: 0% 50%;"
-    >
+  <!-- 04 · AI integration -->
+  <section class="border-t border-ink/10">
+    <div id="svc-ai" class="ai-alive mx-auto max-w-6xl px-6 py-20 md:py-28">
       <div class="grid gap-12 md:grid-cols-[1fr_0.85fr] md:items-center">
         <div>
-          <h2 class="font-display text-3xl leading-tight md:text-5xl">
-            <span data-ai="word-a">AI</span> <span data-ai="word-b" class="text-accent italic">integration.</span>
+          <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">04 &middot; AI integration</p>
+          <h2 class="mt-6 font-display text-3xl leading-tight md:text-5xl">
+            <span data-ai="word-a">AI, where it</span> <span data-ai="word-b" class="text-accent italic">earns its place.</span>
           </h2>
           <p data-ai="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-            We add AI where it earns its place — assistants that qualify leads,
-            automations that save hours, content tooling that keeps the pipeline
-            full.
+            Assistants that qualify leads, automations that save hours,
+            content tooling that keeps the pipeline full. No AI for AI's
+            sake — it ships when it pulls its weight.
           </p>
-          <p class="ai-caps mt-10 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
-            {aiCapabilities.map((cap, i) => (
-              <Fragment>
-                <span class="inline-block whitespace-nowrap">{cap}</span>
-                {i < aiCapabilities.length - 1 && <span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span>}
-              </Fragment>
-            ))}
+          <p data-animate="type-settle" class="mt-8 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+            Assistants <span class="text-accent" aria-hidden="true">&middot;</span> Automations <span class="text-accent" aria-hidden="true">&middot;</span> Content tooling
           </p>
-          <div data-ai="link" class="mt-10">
+          <div data-ai="link" class="mt-8">
             <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
               Try ours on the contact page &rarr;
             </a>
           </div>
         </div>
-        <!-- A miniature of the real scoping assistant on /contact/ — the
-             conversation people actually have with it. -->
+        <!-- A miniature of the real scoping assistant on /contact/ -->
         <div class="svc-chat" aria-hidden="true">
           <p class="chat-label font-heading text-xs uppercase tracking-[0.25em] text-muted">Live on our contact page</p>
           <div class="chat-bub chat-q">What would AI actually do on our site?</div>
           <div class="chat-bub chat-a">Let's scope it. What does your team spend the most time answering?</div>
           <div class="chat-bub chat-a chat-typing"><span></span><span></span><span></span></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · Hosting — the honest one -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div class="max-w-3xl">
+      <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">05 &middot; Hosting</p>
+      <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-4xl leading-tight md:text-6xl">
+        Do you really need to <span class="text-accent italic">pay for hosting?</span>
+      </h2>
+      <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-lg leading-relaxed text-muted">
+        Honestly? Most businesses don't. A well-built site runs on modern
+        global infrastructure for little to nothing a month — that's how we
+        ship every build. If you're paying monthly fees for a site that
+        rarely changes, talk to us about a one-time build and retire the
+        hosting bill you never needed.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.3" class="mt-8">
+        <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+          Ask us about a one-time build &rarr;
+        </a>
       </div>
     </div>
   </section>
@@ -205,8 +219,8 @@ const process = [
     transform-origin: center;
   }
 
-  /* Fanned client screenshots inside the web card. Fixed frame aspect with
-     top-cropped covers so tall page captures read as tidy browser windows. */
+  /* Fanned client screenshots. Fixed frame aspect with top-cropped covers
+     so tall page captures read as tidy browser windows. */
   .svc-shot {
     position: absolute;
     width: 74%;
@@ -230,7 +244,7 @@ const process = [
   .svc-shot-2 { right: 0; top: 30%; transform: rotate(4deg); z-index: 2; }
   .svc-shot-3 { left: 7%; bottom: 2%; transform: rotate(-2deg); z-index: 3; }
 
-  /* Miniature audit report inside the accessibility card. */
+  /* Miniature audit report — a small object, not a layout container. */
   .a11y-audit {
     border: 1px solid rgb(34 28 21 / 0.1);
     border-radius: 12px;
@@ -329,24 +343,15 @@ const process = [
     gsap.registerPlugin(ScrollTrigger);
     const once = (trigger) => ({ scrollTrigger: { trigger, start: 'top 78%' } });
 
-    // — Web design & build: the card assembles like a build.
-    // Frame rises, headline unmasks, then capability pills snap into place
-    // one by one like components being installed.
+    // — Purpose-built websites: headline unmasks, then the client shots
+    // land on the desk one by one, settling into their tilt.
     const web = document.getElementById('svc-web');
     gsap.timeline(once(web))
-      .from(web, { y: 48, opacity: 0, duration: 0.7, ease: 'expo.out' })
-      .from(web.querySelector('[data-web="kicker"]'), { opacity: 0, duration: 0.3 }, '-=0.35')
-      .from(web.querySelector('[data-web="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' }, '-=0.3')
-      .from(web.querySelector('[data-web="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.35')
-      .from(web.querySelectorAll('.svc-caps > span'), {
-        y: 10, opacity: 0,
-        duration: 0.4, stagger: 0.05, ease: 'power2.out',
-      }, '-=0.15')
-      // client shots land on the desk one by one, settling into their tilt
+      .from(web.querySelector('[data-web="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' })
       .from(web.querySelectorAll('.svc-shot'), {
         y: 60, opacity: 0, rotation: 0, scale: 1.04,
         duration: 0.7, stagger: 0.14, ease: 'expo.out',
-      }, '-=0.55');
+      }, '-=0.35');
 
     // — Accessibility: the audit report checks itself off. Rows slide in,
     // then each tick draws its stroke — verification you can watch.
@@ -358,45 +363,29 @@ const process = [
       p.style.strokeDashoffset = len;
     });
     gsap.timeline(once(a11y))
-      .from(a11y, { y: 48, opacity: 0, duration: 0.7, ease: 'expo.out' })
-      .from(a11y.querySelector('[data-a11y="kicker"]'), { opacity: 0, duration: 0.3 }, '-=0.35')
-      .from(a11y.querySelector('[data-a11y="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' }, '-=0.3')
-      .from(a11y.querySelector('[data-a11y="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.35')
+      .from(a11y.querySelector('[data-a11y="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' })
       .from(a11y.querySelectorAll('.a11y-row'), {
         x: -20, opacity: 0,
         duration: 0.4, stagger: 0.12, ease: 'power2.out',
-      }, '-=0.2')
+      }, '-=0.3')
       .to(ticks, {
         strokeDashoffset: 0,
         duration: 0.35, stagger: 0.12, ease: 'power2.out',
-      }, '-=0.5')
-      .from(a11y.querySelectorAll('.a11y-caps > span'), {
-        y: 10, opacity: 0,
-        duration: 0.4, stagger: 0.05, ease: 'power2.out',
-      }, '-=0.6')
-      .from(a11y.querySelector('[data-a11y="link"]'), { opacity: 0, duration: 0.35 }, '-=0.2');
+      }, '-=0.5');
 
-    // — AI integration: resolves like a thought. The accent word sharpens
-    // from a blur, a soft gradient shimmer sweeps the card once, and the
-    // capability pills stream in left-to-right, machine-smooth.
+    // — AI integration: the accent phrase sharpens from a blur, then the
+    // mini conversation plays out like the real assistant answering.
     const ai = document.getElementById('svc-ai');
     gsap.timeline(once(ai))
-      .from(ai, { y: 48, opacity: 0, duration: 0.7, ease: 'expo.out' })
-      .fromTo(ai, { backgroundPosition: '100% 50%' }, { backgroundPosition: '0% 50%', duration: 1.6, ease: 'power2.inOut' }, 0.15)
-      .from(ai.querySelector('[data-ai="word-a"]'), { opacity: 0, y: 14, duration: 0.4, ease: 'power2.out' }, 0.3)
-      .from(ai.querySelector('[data-ai="word-b"]'), { opacity: 0, filter: 'blur(10px)', duration: 0.7, ease: 'power2.out' }, 0.42)
-      .from(ai.querySelector('[data-ai="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, 0.6)
-      .from(ai.querySelectorAll('.ai-caps > span'), {
-        x: -10, opacity: 0,
-        duration: 0.35, stagger: 0.06, ease: 'power2.out',
-      }, 0.8)
-      .from(ai.querySelector('[data-ai="link"]'), { opacity: 0, duration: 0.35 }, 1.1)
-      // the mini conversation plays out like the real assistant answering
-      .from(ai.querySelector('.chat-label'), { opacity: 0, duration: 0.3 }, 0.7)
+      .from(ai.querySelector('[data-ai="word-a"]'), { opacity: 0, y: 14, duration: 0.4, ease: 'power2.out' }, 0.1)
+      .from(ai.querySelector('[data-ai="word-b"]'), { opacity: 0, filter: 'blur(10px)', duration: 0.7, ease: 'power2.out' }, 0.25)
+      .from(ai.querySelector('[data-ai="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, 0.45)
+      .from(ai.querySelector('.chat-label'), { opacity: 0, duration: 0.3 }, 0.55)
       .from(ai.querySelectorAll('.chat-bub'), {
         y: 16, opacity: 0, scale: 0.95,
         duration: 0.4, stagger: 0.22, ease: 'power2.out',
-      }, 0.85);
+      }, 0.7)
+      .from(ai.querySelector('[data-ai="link"]'), { opacity: 0, duration: 0.35 }, 1.1);
 
     // — Process: the pipeline draws itself. The connector line travels left
     // to right; each station's dot pops and its label rises exactly when
