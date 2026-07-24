@@ -64,24 +64,42 @@ const { artist } = Astro.props;
     </div>
 
     {artist.archive?.length > 0 && (
-      <details class="archive-toggle mt-16">
-        <summary class="cursor-pointer select-none font-mono text-sm uppercase tracking-[0.3em] text-accent transition-colors hover:text-accent-hot">
-          <span class="archive-label-closed">Browse the full portfolio ({artist.archive.length} more pieces)</span>
-          <span class="archive-label-open">Close the full portfolio</span>
-        </summary>
-        <div class="mt-10 grid gap-6 grid-cols-2 lg:grid-cols-4">
-          {artist.archive.map((item) => (
-            <figure class="glow-frame">
-              <img
-                src={item.src}
-                alt={item.alt}
-                class="aspect-square w-full object-cover"
-                loading="lazy"
-              />
-            </figure>
-          ))}
+      <>
+        <div class="mt-16">
+          <button
+            type="button"
+            id="archive-open"
+            class="cursor-pointer font-mono text-sm uppercase tracking-[0.3em] text-accent transition-colors hover:text-accent-hot"
+          >
+            <span aria-hidden="true" class="mr-3 font-bold">+</span>See more of {artist.name}&rsquo;s work
+          </button>
         </div>
-      </details>
+
+        <dialog id="archive-modal" class="archive-modal" aria-label={`More of ${artist.name}'s work`}>
+          <div class="archive-head">
+            <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
+              More of <span class="text-accent">{artist.name}&rsquo;s</span> work
+            </p>
+            <button type="button" id="archive-close" class="archive-x" aria-label="Close gallery">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
+            </button>
+          </div>
+          <div data-lenis-prevent class="mt-5 min-h-0 flex-1 overflow-y-auto pr-1">
+            <div class="grid grid-cols-2 gap-5 md:grid-cols-3">
+              {artist.archive.map((item) => (
+                <figure class="glow-frame">
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    class="aspect-square w-full object-cover"
+                    loading="lazy"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+        </dialog>
+      </>
     )}
   </section>
 
@@ -105,3 +123,57 @@ const { artist } = Astro.props;
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .archive-modal {
+    margin: auto;
+    width: 64rem;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 3rem);
+    display: none;
+    flex-direction: column;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 16px;
+    background: var(--color-surface);
+    padding: 1.4rem 1.5rem;
+    box-shadow:
+      0 24px 80px -24px rgb(34 28 21 / 0.4),
+      0 0 60px -20px rgb(154 52 18 / 0.25);
+    color: var(--color-ink);
+  }
+  .archive-modal[open] {
+    display: flex;
+  }
+  .archive-modal::backdrop {
+    background: rgb(34 28 21 / 0.4);
+    backdrop-filter: blur(6px);
+  }
+  .archive-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .archive-x {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    color: var(--color-muted);
+    transition: color var(--dur-fast) ease, background var(--dur-fast) ease;
+  }
+  .archive-x:hover {
+    color: var(--color-ink);
+    background: rgb(34 28 21 / 0.06);
+  }
+</style>
+
+<script>
+  const dlg = document.getElementById('archive-modal') as HTMLDialogElement | null;
+  document.getElementById('archive-open')?.addEventListener('click', () => dlg?.showModal());
+  document.getElementById('archive-close')?.addEventListener('click', () => dlg?.close());
+  dlg?.addEventListener('click', (e) => {
+    if (e.target === dlg) dlg.close(); // backdrop click
+  });
+</script>
