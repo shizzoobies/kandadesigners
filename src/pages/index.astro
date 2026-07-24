@@ -10,16 +10,62 @@ import HeroGallery from '../components/HeroGallery.astro';
        of client sites sweeps into the 3D horseshoe as you scroll. -->
   <HeroGallery />
 
-  <!-- Accessibility promise: the differentiator, stated plainly. -->
-  <section class="mx-auto max-w-6xl px-6 py-28">
-    <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent italic">by default.</span></h2>
-    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-      Every build is measured against WCAG AA: contrast, keyboard, screen
-      readers, motion preferences. Already have a site? We'll check it and
-      tell you exactly where it stands.
-    </p>
-    <div data-animate="type-settle" data-animate-delay="0.2" class="mt-8">
-      <a href="/services/#svc-a11y" class="btn-ghost">Get an accessibility check</a>
+  <!-- Accessibility promise: the differentiator, stated plainly, beside a
+       window sketching its own audit (same language as the hero sketch).
+       The draw starts while the gallery's empty tail is still on screen,
+       so the blank beat between sections gets filled. -->
+  <section class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent italic">by default.</span></h2>
+        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          Every build is measured against WCAG AA: contrast, keyboard, screen
+          readers, motion preferences. Already have a site? We'll check it and
+          tell you exactly where it stands.
+        </p>
+        <div data-animate="type-settle" data-animate-delay="0.2" class="mt-8">
+          <a href="/services/#svc-a11y" class="btn-ghost">Get an accessibility check</a>
+        </div>
+      </div>
+      <!-- a site auditing itself, stroke by stroke: focus ring, contrast
+           pair, screen-reader eye, keyboard with Tab. Decorative. -->
+      <svg
+        data-animate="line-draw"
+        class="hidden w-full text-ink/35 lg:block"
+        viewBox="0 0 640 430"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="1" y="1" width="638" height="428" rx="14" />
+        <line x1="1" y1="46" x2="639" y2="46" />
+        <circle cx="26" cy="23" r="6" />
+        <circle cx="48" cy="23" r="6" />
+        <circle cx="70" cy="23" r="6" />
+        <line x1="48" y1="102" x2="300" y2="102" />
+        <line x1="48" y1="132" x2="252" y2="132" />
+        <rect x="48" y="172" width="132" height="36" rx="18" />
+        <rect x="41" y="165" width="146" height="50" rx="25" class="text-accent" />
+        <path d="M400 202 L441 92 L482 202" />
+        <path d="M419 162 L463 162" />
+        <path d="M500 202 L541 92 L582 202" class="text-accent" />
+        <path d="M519 162 L563 162" class="text-accent" />
+        <ellipse cx="112" cy="262" rx="36" ry="20" />
+        <circle cx="112" cy="262" r="8" />
+        <circle cx="490" cy="262" r="26" class="text-accent" />
+        <path d="M478 262 l9 9 l17 -20" class="text-accent" />
+        <rect x="48" y="312" width="544" height="78" rx="10" />
+        <rect x="62" y="326" width="64" height="24" rx="5" class="text-accent" />
+        <rect x="140" y="326" width="28" height="24" rx="5" />
+        <rect x="182" y="326" width="28" height="24" rx="5" />
+        <rect x="224" y="326" width="28" height="24" rx="5" />
+        <rect x="140" y="358" width="220" height="20" rx="5" />
+        <rect x="470" y="326" width="28" height="24" rx="5" />
+        <rect x="512" y="326" width="64" height="24" rx="5" />
+      </svg>
     </div>
   </section>
 
