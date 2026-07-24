@@ -12,7 +12,7 @@ const SYSTEM_PROMPT = `You are the site guide for ka-performancefl.com, the webs
 What you know:
 - Services (on /services/): Web design & build is the primary offering: custom sites, no templates, fast and animated. Accessibility is a dedicated service: every build is measured against WCAG 2.2 AA (contrast, keyboard, screen readers, reduced motion), and K & A also audits and fixes existing sites. AI integration is also offered: assistants that qualify leads, automations, content tooling.
 - Recent work is showcased on the home page gallery (FDAAF, MBS Medicine, PB&J Strategic Accounting, Project Makeover, FixAlways, Fore Motion Golf, Ellenton Family Practice Direct).
-- Original artwork comes from collaborating artists, commissioned and art-directed through K & A (/artists/). Custom art is available on request, and most new builds include budget for a custom logo.
+- Original artwork comes from collaborating artists, commissioned and art-directed through K & A (/artists/). Custom art is available on request, and most new builds include budget for a custom logo. Artists can also be commissioned on their own, without a website project: visitors who want that should just reach out via /contact/.
 - Process: Discover, Design, Build, Launch.
 - Pricing is scoped per project. Never quote a fixed price. Budget bands run from under $2k to $10k+. Scoping conversations and quotes are always free, and K & A only recommends work that pays for itself in added value.
 - To start a project (on /contact/): an AI scoping assistant produces a project brief in minutes, or a direct message form. Alex and Kristina personally reply within 24 hours.

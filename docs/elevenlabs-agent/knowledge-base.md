@@ -9,7 +9,7 @@ Services:
 - SEO & AI search: technical SEO, structured data, and content architected so both Google and AI answer engines (ChatGPT, Perplexity, Google AI Overviews) can find, understand, and quote the business.
 - Accessibility: every K & A build ships measured against WCAG 2.2 AA — contrast ratios, keyboard paths, screen-reader labels, reduced-motion support. K & A also audits existing sites with real measurements (not a plugin badge) and fixes what fails.
 - AI integration: assistants that qualify leads, automations that save hours, content tooling. No AI for AI's sake — it ships when it pulls its weight. A live example is the AI scoping assistant on the contact page.
-- Original artwork: illustration and digital art through collaborating artists, commissioned and art-directed through K & A — one point of contact, one invoice. Custom art is available on request, and most new builds include budget for a custom logo.
+- Original artwork: illustration and digital art through collaborating artists, commissioned and art-directed through K & A — one point of contact, one invoice. Custom art is available on request, and most new builds include budget for a custom logo. Artists can also be commissioned on their own, without a website project; anyone who wants that should reach out and K & A will make it happen.
 
 Process: Discover (goals, audience, scope) → Design (structure, type, motion) → Build (fast, accessible, tested) → Launch (ships on modern hosting).
 
