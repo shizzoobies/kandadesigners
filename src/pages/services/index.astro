@@ -1,5 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { aiLogos } from '../../data/ai-logos.js';
+
+// Scattered placement for the background constellation of AI marks:
+// [left%, top%, size rem, rotate deg, accent?]
+const LOGO_FIELD = [
+  ['openai',        4,  12, 3.2,  -12, false],
+  ['anthropic',    14,  68, 2.6,   10, true ],
+  ['claude',       25,  22, 2.2,   18, false],
+  ['googlegemini', 38,  80, 2.8,   -8, true ],
+  ['google',       55,   8, 2.4,    8, false],
+  ['elevenlabs',   68,  75, 2.4,  -14, false],
+  ['githubcopilot',80,  16, 3.0,   12, false],
+  ['perplexity',   91,  62, 2.6,   -6, true ],
+  ['mistralai',    88,  36, 2.0,    6, false],
+  ['meta',          9,  40, 2.4,   -6, false],
+].map(([name, left, top, size, rot, accent]) => ({
+  ...aiLogos.find((l) => l.name === name),
+  left, top, size, rot, accent,
+}));
 
 const process = [
   { label: 'Discover', note: 'Goals, audience, scope.' },
@@ -143,6 +162,19 @@ const process = [
        breathing treatment rides the full-bleed section so no box edges
        show; only the demo objects carry frames. -->
   <section class="ai-alive border-t border-ink/10">
+    <!-- the tools themselves, worked into the canvas as a faint
+         constellation behind the content -->
+    <div id="svc-ai-logos" aria-hidden="true">
+      {LOGO_FIELD.map((l) => (
+        <svg
+          class:list={['ai-logo', l.accent && 'ai-logo-accent']}
+          style={`left:${l.left}%;top:${l.top}%;width:${l.size}rem;transform:rotate(${l.rot}deg)`}
+          viewBox="0 0 24 24"
+        >
+          <path d={l.d} />
+        </svg>
+      ))}
+    </div>
     <div id="svc-ai" class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
       <h2 class="font-display text-3xl leading-tight md:text-5xl">
         <span data-ai="word-a">AI, where it</span> <span data-ai="word-b" class="text-accent italic">earns its place.</span>
@@ -566,6 +598,25 @@ const process = [
     stroke-width: 2.5;
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+
+  /* Faint constellation of AI marks behind the AI section. The id out-ranks
+     the .ai-alive > * rule that would otherwise force it into the content
+     stacking level. */
+  #svc-ai-logos {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .ai-logo {
+    position: absolute;
+    aspect-ratio: 1;
+    fill: rgb(34 28 21 / 0.05);
+  }
+  .ai-logo-accent {
+    fill: rgb(29 78 216 / 0.07);
   }
 
   /* Demo launchers: open text stacks on a shared hairline, no boxes. The
