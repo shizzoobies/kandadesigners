@@ -18,27 +18,55 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 <section id="gallery" class="relative lg:h-[420vh]">
   <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
 
-    <!-- one veil over the whole mosaic: near-opaque ivory wash + blur melts
-         the stack back so full-strength espresso text and the transparent
-         nav sit directly on it (measured-AA even over black tiles). Fades
-         out with the headline as the sweep begins. Desktop-only — mobile
-         has no scatter to veil. -->
-    <div id="hg-scrim" class="pointer-events-none absolute inset-0 z-30 hidden bg-canvas/60 lg:block"></div>
-
-    <!-- headline: no panel — the full-hero scrim carries the contrast -->
-    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-36 lg:pt-[22vh]">
-      <div class="max-w-4xl">
-        <h1 class="font-display text-[clamp(3.25rem,7vw,6.5rem)] leading-[0.95] tracking-tight text-ink">
-          Built to <span class="text-accent italic">perform.</span>
-        </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink">
-          K &amp; A Performance crafts fast, animated, AI-ready websites for
-          businesses that refuse to blend in.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <a href="/contact/#scope" class="btn-accent">Start a project</a>
-          <a href="/services/" class="btn-ghost">What we do</a>
+    <!-- Act 0: a clean canvas — heavy editorial headline beside a mac
+         window sketching itself in. The mosaic is hidden until scroll. -->
+    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-36 lg:pt-[18vh]">
+      <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div class="max-w-2xl">
+          <h1 class="font-display text-[clamp(3.25rem,5.8vw,6.5rem)] leading-[0.97] tracking-tight text-ink">
+            Built on years of <span class="whitespace-nowrap">experience,</span>
+            <span class="block text-accent italic">made to perform.</span>
+          </h1>
+          <p class="mt-7 max-w-xl text-xl font-medium leading-relaxed text-ink">
+            K &amp; A Performance crafts fast, animated, AI-ready websites for
+            businesses that refuse to blend in.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="/contact/#scope" class="btn-accent">Start a project</a>
+            <a href="/services/" class="btn-ghost">What we do</a>
+          </div>
         </div>
+        <!-- the drawn-in mac window: a site sketching itself, stroke by
+             stroke (motion.js line-draw). Decorative, desktop-only. -->
+        <svg
+          id="hg-wire"
+          data-animate="line-draw"
+          class="hidden w-full text-ink/35 lg:block"
+          viewBox="0 0 640 430"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <rect x="1" y="1" width="638" height="428" rx="14" />
+          <line x1="1" y1="46" x2="639" y2="46" />
+          <circle cx="26" cy="23" r="6" />
+          <circle cx="48" cy="23" r="6" />
+          <circle cx="70" cy="23" r="6" />
+          <rect x="200" y="12" width="240" height="22" rx="11" />
+          <line x1="48" y1="110" x2="300" y2="110" />
+          <line x1="48" y1="140" x2="252" y2="140" class="text-accent" />
+          <line x1="48" y1="180" x2="230" y2="180" />
+          <line x1="48" y1="198" x2="196" y2="198" />
+          <rect x="48" y="230" width="120" height="34" rx="17" class="text-accent" />
+          <rect x="360" y="90" width="232" height="174" rx="8" />
+          <line x1="360" y1="90" x2="592" y2="264" />
+          <line x1="592" y1="90" x2="360" y2="264" />
+          <rect x="48" y="308" width="160" height="76" rx="8" />
+          <rect x="240" y="308" width="160" height="76" rx="8" />
+          <rect x="432" y="308" width="160" height="76" rx="8" />
+        </svg>
       </div>
     </div>
 
@@ -377,17 +405,20 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   if (!reduced && isDesktop) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Scatter the flock across the whole hero; cards face the viewer flat.
+    // Pose the flock in its scatter positions — but invisible. Act 0 is the
+    // clean sketch hero; the windows only appear once scroll begins.
     slots.forEach((slot, i) => {
       const t = STACK[i];
+      slot.dataset.baseOpacity = t.a;
+      slot.dataset.baseScale = t.s;
       gsap.set(slot, {
         x: t.tx * window.innerWidth,
         y: t.ty * window.innerHeight,
         z: 0,
         rotationY: 0,
         rotation: t.r,
-        scale: t.s,
-        opacity: t.a,
+        scale: t.s * 0.9,
+        opacity: 0,
       });
       slot.style.zIndex = String(10 + i);
     });
@@ -395,13 +426,15 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     gsap.set(extras, { xPercent: -50, yPercent: -50, transformPerspective: 1600, transformOrigin: '50% 50%' });
     extras.forEach((el, i) => {
       const t = EXTRA_STACK[i % EXTRA_STACK.length];
+      el.dataset.baseOpacity = 0.92;
+      el.dataset.baseScale = t.s;
       gsap.set(el, {
         x: t.tx * window.innerWidth,
         y: t.ty * window.innerHeight,
         z: 0,
         rotation: t.r,
-        scale: t.s,
-        opacity: 0.92,
+        scale: t.s * 0.9,
+        opacity: 0,
       });
       el.style.zIndex = String(2 + (i % EXTRA_STACK.length));
     });
@@ -411,8 +444,8 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 
     // Three acts: sweep into the horseshoe, hold as an interactive gallery,
     // then fly back into the depths and fade before the next section.
-    const LIVE_MIN = 0.5;
-    const LIVE_MAX = 0.78;
+    const LIVE_MIN = 0.62;
+    const LIVE_MAX = 0.81;
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -438,10 +471,17 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     });
 
     tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.2, ease: 'power1.in' }, 0.05)
-      // the veil lifts as the stack starts to move — the gallery acts play
-      // on the bare canvas
-      .to('#hg-scrim', { autoAlpha: 0, duration: 0.22, ease: 'power1.in' }, 0.05)
-      // inner pages disperse into the depths while the home pages regroup
+      // act 1: the windows all appear across the canvas, popping into the
+      // mosaic in random order as the sketch hero clears
+      .to([...extras, ...slots], {
+        opacity: (i, el) => parseFloat(el.dataset.baseOpacity),
+        scale: (i, el) => parseFloat(el.dataset.baseScale),
+        duration: 0.3,
+        stagger: { each: 0.022, from: 'random' },
+        ease: 'back.out(1.6)',
+      }, 0.16)
+      // act 2: inner pages disperse into the depths while the home pages
+      // sweep into the horseshoe
       .to(extras, {
         z: -620,
         y: (i) => (EXTRA_STACK[i % EXTRA_STACK.length].ty > 0 ? 140 : -140),
@@ -451,7 +491,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         duration: 0.45,
         stagger: 0.03,
         ease: 'power2.in',
-      }, 0.1)
+      }, 0.78)
       .to(slots, {
         x: (i) => endPoses[i].x,
         y: 0,
@@ -463,10 +503,10 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         duration: 0.6,
         stagger: 0.05,
         ease: 'power2.inOut',
-      }, 0.12)
-      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.12 }, 0.98)
-      .to({}, { duration: 0.45 }, 1.1) // hold: the interactive gallery band
-      .to([heading, ui], { autoAlpha: 0, y: -24, duration: 0.1 }, 1.58)
+      }, 0.82)
+      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.12 }, 1.68)
+      .to({}, { duration: 0.5 }, 1.8) // hold: the interactive gallery band
+      .to([heading, ui], { autoAlpha: 0, y: -24, duration: 0.1 }, 2.32)
       .to(slots, {
         x: (i) => endPoses[i].x * 0.45,
         y: -70,
@@ -477,12 +517,10 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         duration: 0.32,
         stagger: 0.03,
         ease: 'power2.in',
-      }, 1.62);
+      }, 2.36);
   } else {
     // Mobile / reduced motion: no scatter, ring formed, UI visible.
     gsap.set(extras, { display: 'none' });
-    const scrim = document.getElementById('hg-scrim');
-    if (scrim) scrim.style.display = 'none';
     goTo(0, false);
     stage.classList.add('hg-live');
     if (heading) gsap.set(heading, { autoAlpha: 1 });
