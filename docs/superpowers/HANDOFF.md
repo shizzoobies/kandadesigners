@@ -1,53 +1,58 @@
-# K&A Performance Rebuild — Session Handoff
+# K&A Performance — Session Handoff
 
-**Date:** 2026-07-23 · **Branch:** `rebuild/dark-cinematic` (pushed to `shizzoobies/kandadesigners`, NOT merged — production `main` still serves the old site) · **Status:** build complete, reviewed, verified; awaiting Alex's Cloudflare config + merge.
+**Date:** 2026-07-24 · **Branch: `main` (repo checked out here now)** · **Status: LIVE at ka-performancefl.com** — launched today, then heavily iterated. `rebuild/dark-cinematic` is merged and historical.
 
-## What this is
+## DEPLOY RUNBOOK (critical, read first)
 
-Full rebuild of ka-performancefl.com as an Astro 5 static site at repo root. Warm-light editorial theme ("ivory/espresso/violet"), licensed Grivon + Neutrix VF fonts (Envato, self-hosted woff2 in `public/fonts/`), Lenis+GSAP motion. Lead-gen focus: web design primary, AI integration secondary (live AI scoping assistant). All other apps in this repo (chess, voicecheck, daily-songs, tools…) were `git mv`'d to `public/` — URLs unchanged; `functions/` + `lib/` stayed at root (existing functions import `../../lib/`).
+**Git-triggered Cloudflare builds FAIL** (unknown cause). Lockfile is synced (`npm ci` passes in a fresh local clone), imports are case-clean; the fix needs the build log from a **Failure** deployment (dashboard → Pages project `kandadesigners` → Deployments → click a Failure → copy log). Alex was asked to paste it; still pending.
 
-**Pages:** `/` (hero+gallery one scroll piece), `/services/`, `/artists/` (+ two placeholder artist pages), `/contact/`. The Work page was **removed** (work is showcased on home); `/work/` 301s home via `public/_redirects`.
+Until fixed, EVERY change ships manually:
+1. `node node_modules/astro/astro.js build` (never `npm run build` — the `&` in the repo path breaks cmd.exe)
+2. `npx wrangler pages deploy dist --project-name kandadesigners --branch main --commit-dirty=true` (wrangler is already authed on this machine)
+3. Still `git push origin main` for history (first push attempt often fails with "failed to push some refs"; an immediate retry always works)
 
-## The homepage scroll piece (`src/components/HeroGallery.astro`)
+Other deploy facts:
+- `public/_headers` makes HTML always-revalidate and assets immutable. **Never remove it** — the old site's 7-day `s-maxage` once hid new deploys behind stale cache and also caused a mixed-version outage (cached HTML pointing at purged hashed CSS). If that ever recurs: union-deploy old hashed assets into dist (fetch them from prior `<id>.kandadesigners.pages.dev` deployment URLs).
+- **Never verify a deploy by hitting only `/api/*`** — functions deploy even when the static build produced nothing. Check `/` content.
+- Local wrangler dev: `npx wrangler pages dev dist --port 8788 --compatibility-date=2026-06-18`; restart it after builds that add/remove routes. No `.dev.vars` exists → AI endpoints 503 locally (they're guarded); production has all secrets.
 
-Three acts, one pinned 420vh section, ScrollTrigger scrub:
-1. **Stack** — seven client-site browser windows (mixed macOS/Windows chrome) blanket the entire hero as an overlapping mosaic; headline sits in a near-solid glass panel; nav rides a near-solid scrim band.
-2. **Horseshoe** — scrolling sweeps every tile into a 3D arc (GSAP-owned transforms, per-card `transformPerspective: 1600`, painter's z-index — **no preserve-3d**, which is what fixed cards clipping through each other; 36° steps, R=520 desktop/260 mobile, rear slots past 90° hidden via backface+opacity 0). Interactive band at scrub progress 0.5–0.78: autoplay, arrows, dots, side-card click rotates. Cards are divs, not links.
-3. **Recede** — continuing to scroll sends tiles flying back into the depths (z −680, fade out) before the dark AI band arrives.
+## Design system (Alex's hard rules in memory: design-tastes-alex)
 
-Gallery data: `src/data/work.js` — 7 entries (FDAAF, MBS Medicine, PB&J, Project Makeover, FixAlways, Fore Motion Golf, Ellenton Family Practice Direct). Tiles are 1800px webp (recaptured live at 2× DPR from fdaaf.org, projectmakeover.org, fixalways.com, foremotiongolf.com, familypracticedirect.com); MBS + PB&J are 1360px from best-available originals (their sites weren't reachable: mbsmedicine.com blocked, PB&J domain unknown — **ask Alex for URLs to recapture**).
+- **Palette "Earthen Sophisticate":** canvas `#F8F5F2`, ink `#221C15`, muted `#6C635A`, accent rust `#9A3412` (hot `#7C2D12`), amber `#D97706` = buttons/highlights ONLY with espresso text (amber fails AA as text on light). Dark band = teal (`#0B302D→#134E4A`, light-teal `#5EEAD4` accent). Tokens in `src/styles/global.css` `@theme`.
+- **Type:** display = Schibsted Grotesk 700 (`--font-display`, base rule sets weight); body/UI = Atkinson Hyperlegible Next; kickers/caps labels = Lenia Mono (`font-mono`); Fraunces ONLY in the logo lockup. Retired: Grivon, Neutrix, Fraunces-as-display, New Black (flat W/V vertices Alex hated).
+- **Logo:** `src/components/LogoLockup.astro` — serif crest: K & A (Fraunces, roman rust ampersand — NOT italic, that's the "Et" squiggle), italic *Performance*, rule+diamond (line-draws), Lenia caps descriptor. Nav = compact variant with shrink-on-scroll; footer = full crest. Old logo files kept in public/images.
+- **Hard rules:** NO em dashes anywhere user-visible (AI prompts instruct against them too); no pill/chip UI; no numbered/redundant eyebrow headers; everything measured-AA.
 
-## Design system & accessibility (Alex's non-negotiable)
+## Kai (the one assistant name, everywhere)
 
-Tokens in `src/styles/global.css` `@theme`: canvas `#F7F3EC`, surface `#FFFDF9`, ink `#221C15`, muted `#6C635A`, accent `#5B4BD8`, accent-hot `#4A3BC7`. Accent/muted were **darkened specifically to pass AA** — measured in-browser: ink 15.25:1, accent 5.51:1, muted 5.32:1, button text 6.0:1 (all ≥4.5 normal-text AA). Keep any new colors AA — Alex sells accessibility. `.dark-band` locally re-overrides tokens for the one dark section. `.glow-frame` = the single elevation treatment. `.ai-alive` (+`-dark`) = breathing orbs + `.ai-pulse` word glow on every AI surface (services AI card, home dark band, contact scope panel). Reduced-motion: every loop/scrub disabled, content fully visible (`.motion-reduced` rules + per-script guards). Keyboard: logical tab order, visible focus rings, aria-live captions on gallery.
+- Corner FAB chat: `SiteGuide.astro` → `/api/guide` (claude-haiku-4-5-20251001).
+- Services page demos: text chat modal (same `/api/guide`) + **custom voice stage**: NOT the ElevenLabs widget — `@elevenlabs/client` SDK, breathing amber orb pulsing with `getOutputVolume/getInputVolume` into `--amp` (see `docs/elevenlabs-agent/README.md`; agent id `agent_2101ky8y21nmeh5ah2ytbntetzhm`, voice qSeXEcewz7tA0Q0qk9fH).
+- Scoping: `ScopeChat.astro` → `/api/scope` (claude-sonnet-5), on /contact/ (fixed-height card, internal scroll) AND inside `StartProjectModal.astro`.
+- **StartProjectModal** intercepts every `/contact/`-bound conversion CTA site-wide (tabs: Scope with Kai / message form). Opt-out via `data-no-modal` (nav + footer Contact links). Not rendered on /contact/.
+- Astro gotcha that bit twice: **runtime-created chat bubbles need `<style is:global>`** — scoped styles never reach them.
+- Kai's ElevenLabs KB is STALE vs `docs/elevenlabs-agent/knowledge-base.md` (pending: no-stock rewording, no-job-too-small, free quotes, standalone artist commissions, em-dash ban). Re-upload needs a fresh ElevenLabs key (old one rotated): create KB doc from the md + PATCH agent.
 
-## AI scoping assistant
+## Google reviews
 
-`functions/api/scope.js` (claude-sonnet-5, thinking disabled, validation caps 24 msgs/2000 chars, refusal handled) + `src/components/ScopeChat.astro` on /contact/ (summary card → Web3Forms lead email, key `7ad90fb9-bc88-411a-9442-c249b49c32f6`). `ANTHROPIC_API_KEY` secret already exists in Cloudflare (old chat function uses it). Verified with a real API round trip locally (wrangler picks up the system env key). Unit harness: 13/13 (scratchpad, rerunnable).
+- `/api/reviews` (Places API New, 6h edge cache) — env `GOOGLE_MAPS_API_KEY` + `GOOGLE_PLACE_ID`=`ChIJ3fkKtTBqQykRtVwEZZwaY3M` set in **Production only** (Preview scope never added → preview tests return empty).
+- `ReviewsRail.astro`: ≤4 reviews → static centered set (current state, 3 five-star reviews live); >4 → drifting rail whose halves repeat to overfill the viewport. `?revmax=N` on localhost simulates counts. "Leave a review" links to `https://g.page/r/CbVcBGWcGmNzEBM/review`.
 
-## Local dev (Windows quirks — important)
+## Home page structure (HeroGallery.astro is the beast)
 
-- `npm run build`/`dev` **fail** (cmd.exe chokes on `&` in the repo path). Use: `node node_modules/astro/astro.js build` / `... dev --port 4321`
-- Full local with functions: `npx wrangler pages dev dist --port 8788 --compatibility-date=2026-06-18` (compat date must be pinned; **restart wrangler after builds that add/remove routes — it serves a stale asset manifest otherwise**, which once faked a broken redirect).
-- Astro dev server under-scans Tailwind for brand-new files; verify styling against a build, not dev.
+Acts: sketch hero (line-drawn mac window) → scroll: 17-tile mosaic pops in (7 mains + 10 inner-page extras) → extras disperse, mains sweep into 3D ring (z-order set at sweep start; LIVE band progress 0.60–0.79; side arrows, dots, half-stage click zones; clicking a not-yet-live ring snaps scroll into the band via Lenis) → recede, overlapped by the a11y sketch section (`lg:-mt-[34vh]`, scrub-drawn so the canvas is never blank; text slides in after). Scroll cue falls left into a subtle rust glow rail tracking page depth. Then teal AI band → artists teaser → reviews → CTA. Services page has its own bespoke timelines (shots fan, SEO typing demo, audit ticks, process diamond rail).
 
-## Remaining work (in order)
+## Artists
 
-1. **Alex: Cloudflare dashboard (was "Step 2" of a click-by-click walkthrough that kept getting deferred for design iterations):** Pages project → build command `npm run build`, output `dist`; add WAF rate-limit rule for `/api/scope` (~10 req/min/IP). Full steps in `docs/superpowers/DEPLOY.md`.
-2. Preview-deploy the branch, run DEPLOY.md's smoke test (includes one live AI message + one labeled form submission).
-3. Merge to `main` → live.
-4. Content swaps (documented in DEPLOY.md): artist placeholders (`src/data/artists.js`), verify my work blurbs (`src/data/work.js`), MBS/PB&J hi-res recaptures when URLs known.
-5. Optional polish backlog (all reviewed-as-Minor): gallery alt-text variety on artist galleries, `ol` ordinal announcement on services process, focus-visible ring on programmatic focus targets.
+Bobbie (illustration), Jon Marc (digital/identity), Nicole (mixed media) — all "Portfolio coming soon" ribbons, cards de-linked, detail pages exist at real-name slugs but unreachable. When a portfolio arrives: replace art in `src/data/artists.js`, drop the ribbon, re-link card + home teaser. Placeholder art = Pixabay files in `public/images/art/`.
 
-## Where things live
+## Open items
 
-- Progress ledger (every task + review verdict): `.superpowers/sdd/progress.md`
-- Spec/plan: `docs/superpowers/specs/2026-07-23-…design.md`, `docs/superpowers/plans/2026-07-23-…rebuild.md`
-- Deploy runbook: `docs/superpowers/DEPLOY.md`
-- Review evidence & screenshots: `.superpowers/sdd/*.png`, task briefs/reports/review diffs alongside
-- Font source zips (licensed, git-ignored): `fonts-drop/`
-- Old warm-editorial WIP: git stash "warm-editorial WIP (abandoned direction, pre-rebuild safety)"
+1. **Fix git CI builds** (needs Alex's build log) — retires manual wrangler deploys.
+2. **Re-upload Kai's ElevenLabs KB** (needs fresh key; content ready in repo).
+3. **Artist portfolios** → de-ribbon flow above.
+4. Preview-scope Google env vars (only if preview testing wanted).
+5. Nice-to-haves: favicon + OG image from the new crest; standalone outlined-SVG logo for print; `/api/scope` WAF rate-limit rule (never done).
 
-## Process notes for the next session
+## Process notes
 
-Fable orchestrates design-critical work directly; Opus subagents for mechanical tasks, Sonnet for task-scoped reviews (per Alex's cost directive). Every visual change gets verified in Playwright against the wrangler build before committing — screenshots into `.superpowers/sdd/`. Alex iterates fast and by feel: ship the change, show it, expect the next tweak. Design bar: "elevated, not templated" — asymmetry, real content, motion with meaning; never text over busy imagery without a solid backdrop; measured AA always.
+Alex iterates fast by feel: ship, show, expect tweaks; mid-turn asks are constant. Verify every visual in Playwright against the wrangler build (screenshots → `.superpowers/sdd/`). He pastes dashboard screenshots/logs when asked plainly. Bash quoting on this repo path is treacherous (trailing `\"` errors) — prefer node scripts for multi-file edits. Playwright MCP blocks `file://` — stage specimens into `dist/__name/` and view via wrangler (wiped on rebuild; re-stage after).
