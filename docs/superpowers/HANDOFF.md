@@ -4,12 +4,14 @@
 
 ## DEPLOY RUNBOOK (critical, read first)
 
-**Git-triggered Cloudflare builds FAIL** (unknown cause). Lockfile is synced (`npm ci` passes in a fresh local clone), imports are case-clean; the fix needs the build log from a **Failure** deployment (dashboard → Pages project `kandadesigners` → Deployments → click a Failure → copy log). Alex was asked to paste it; still pending.
+**Git-triggered Cloudflare builds WORK again** (fixed 2026-07-24, commit 45c0aa7): normal flow is build locally to verify, then `git push origin main` and Cloudflare builds + deploys automatically. Verify at ka-performancefl.com (check `/` content, never just `/api/*`).
 
-Until fixed, EVERY change ships manually:
+**Root cause was npm version skew, and it can RECUR:** CI runs npm 10.9.2, this machine runs npm 11. The lockfile needs top-level entries for `@emnapi/core` + `@emnapi/runtime` (deps of platform-skipped wasm32 optionals). npm 10 refuses `npm ci` without them; **npm 11's `npm install` silently strips them**. So: after ANY local `npm install` that touches the lockfile, grep `package-lock.json` for `"node_modules/@emnapi/core"` — if gone, re-add both entries (see commit 45c0aa7 for the exact blocks) before pushing. Permanent fix Alex can make once: Pages dashboard → kandadesigners → Settings → Variables → add build env var `NPM_VERSION` = `11`.
+
+Manual deploy (fallback only, e.g. iterating fast without commits):
 1. `node node_modules/astro/astro.js build` (never `npm run build` — the `&` in the repo path breaks cmd.exe)
-2. `npx wrangler pages deploy dist --project-name kandadesigners --branch main --commit-dirty=true` (wrangler is already authed on this machine)
-3. Still `git push origin main` for history (first push attempt often fails with "failed to push some refs"; an immediate retry always works)
+2. `npx wrangler pages deploy dist --project-name kandadesigners --branch main --commit-dirty=true` (wrangler authed on this machine, but Claude's deploy runs are blocked by the permission classifier — Alex runs it)
+3. `git push origin main` for history (first push sometimes fails; an immediate retry works)
 
 Other deploy facts:
 - `public/_headers` makes HTML always-revalidate and assets immutable. **Never remove it** — the old site's 7-day `s-maxage` once hid new deploys behind stale cache and also caused a mixed-version outage (cached HTML pointing at purged hashed CSS). If that ever recurs: union-deploy old hashed assets into dist (fetch them from prior `<id>.kandadesigners.pages.dev` deployment URLs).
