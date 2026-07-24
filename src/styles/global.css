@@ -365,6 +365,33 @@ body {
   box-shadow: 0 10px 30px -12px rgb(154 52 18 / 0.5);
 }
 
+/* Full-portfolio disclosure on artist pages. Native details/summary; the two
+   label spans swap with open state so the control reads as its own undo. */
+.archive-toggle > summary {
+  list-style: none;
+}
+.archive-toggle > summary::-webkit-details-marker {
+  display: none;
+}
+.archive-toggle > summary::before {
+  content: '+';
+  display: inline-block;
+  margin-right: 0.75em;
+  font-weight: 700;
+}
+.archive-toggle[open] > summary::before {
+  content: '\2212';
+}
+.archive-toggle .archive-label-open {
+  display: none;
+}
+.archive-toggle[open] .archive-label-closed {
+  display: none;
+}
+.archive-toggle[open] .archive-label-open {
+  display: inline;
+}
+
 /* Brand mark renders in its original colors on the light canvas. The class
    stays so a future dark context can re-apply a treatment in one place. */
 .logo-white {

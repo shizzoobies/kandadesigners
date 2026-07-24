@@ -62,6 +62,27 @@ const { artist } = Astro.props;
         </figure>
       ))}
     </div>
+
+    {artist.archive?.length > 0 && (
+      <details class="archive-toggle mt-16">
+        <summary class="cursor-pointer select-none font-mono text-sm uppercase tracking-[0.3em] text-accent transition-colors hover:text-accent-hot">
+          <span class="archive-label-closed">Browse the full portfolio ({artist.archive.length} more pieces)</span>
+          <span class="archive-label-open">Close the full portfolio</span>
+        </summary>
+        <div class="mt-10 grid gap-6 grid-cols-2 lg:grid-cols-4">
+          {artist.archive.map((item) => (
+            <figure class="glow-frame">
+              <img
+                src={item.src}
+                alt={item.alt}
+                class="aspect-square w-full object-cover"
+                loading="lazy"
+              />
+            </figure>
+          ))}
+        </div>
+      </details>
+    )}
   </section>
 
   <!-- CTA band: every engagement routes through K & A -->
