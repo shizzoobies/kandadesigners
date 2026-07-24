@@ -1,0 +1,259 @@
+---
+// AI project-scoping chat. Mounts inside #scope-chat-root on /contact/.
+// Backend: functions/api/scope.js (POST /api/scope).
+---
+<div id="scope-chat" class="flex h-full flex-col">
+  <div id="chat-log" data-lenis-prevent class="flex-1 space-y-4 overflow-y-auto pr-1" role="log" aria-label="Scoping conversation" aria-live="polite"></div>
+
+  <p id="chat-status" class="sr-only" role="status" aria-live="polite"></p>
+
+  <form id="chat-form" class="mt-6 flex gap-3">
+    <label for="chat-input" class="sr-only">Your message</label>
+    <input
+      id="chat-input"
+      type="text"
+      class="field flex-1"
+      placeholder="Type your answer…"
+      maxlength="2000"
+      autocomplete="off"
+    />
+    <button type="submit" id="chat-send" class="btn-accent shrink-0">Send</button>
+  </form>
+</div>
+
+<template id="summary-actions-template">
+  <div class="mt-4 flex flex-wrap gap-3">
+    <button type="button" class="btn-accent" data-action="send-lead">Send to K &amp; A</button>
+    <button type="button" class="btn-ghost" data-action="copy">Copy summary</button>
+  </div>
+  <form class="mt-4 hidden flex-col gap-3" data-lead-form>
+    <label class="sr-only" data-for="lead-name">Your name</label>
+    <input type="text" required placeholder="Your name" class="field" data-lead-name autocomplete="name" />
+    <label class="sr-only" data-for="lead-email">Your email</label>
+    <input type="email" required placeholder="Your email" class="field" data-lead-email autocomplete="email" />
+    <button type="submit" class="btn-accent">Send it over</button>
+    <p class="hidden text-sm" data-lead-status role="status" aria-live="polite" tabindex="-1"></p>
+  </form>
+</template>
+
+<style>
+  .msg {
+    max-width: 90%;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .msg-assistant {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    border: 1px solid rgb(34 28 21 / 0.08);
+  }
+  .msg-user {
+    background: rgb(19 78 74 / 0.1);
+    color: var(--color-ink);
+    border: 1px solid rgb(19 78 74 / 0.3);
+    margin-left: auto;
+  }
+  .msg-summary {
+    max-width: 100%;
+    border: 1px solid rgb(19 78 74 / 0.3);
+    border-radius: 12px;
+    box-shadow:
+      0 12px 32px -12px rgb(34 28 21 / 0.16),
+      0 24px 64px -32px rgb(19 78 74 / 0.3);
+    background: var(--color-surface);
+    padding: 1.25rem;
+  }
+  .typing {
+    display: inline-flex;
+    gap: 4px;
+    padding: 0.9rem 1rem;
+  }
+  .typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--color-muted);
+    animation: typing-bounce 1.2s infinite ease-in-out;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typing-bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-4px); opacity: 1; }
+  }
+  :global(.motion-reduced) .typing span { animation: none; opacity: 0.7; }
+</style>
+
+<script>
+  const MAX_MESSAGES = 24;
+  const WEB3FORMS_KEY = '7ad90fb9-bc88-411a-9442-c249b49c32f6';
+
+  const log = document.getElementById('chat-log');
+  const form = document.getElementById('chat-form');
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const status = document.getElementById('chat-status');
+  const summaryTemplate = document.getElementById('summary-actions-template');
+
+  /** @type {{role: 'user'|'assistant', content: string}[]} */
+  const messages = [];
+  let latestSummary = '';
+
+  const OPENER = "Hi! I'm K & A's scoping assistant. What are you looking to build?";
+
+  function addBubble(text, who) {
+    const el = document.createElement('div');
+    el.className = `msg msg-${who}`;
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  function addTyping() {
+    const el = document.createElement('div');
+    el.className = 'msg msg-assistant typing';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<span></span><span></span><span></span>';
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+  function endConversation(text) {
+    addBubble(text, 'assistant');
+    input.disabled = true;
+    sendBtn.disabled = true;
+  }
+
+  function renderSummary(summaryText) {
+    latestSummary = summaryText.trim();
+    const card = document.createElement('div');
+    card.className = 'msg-summary';
+    const heading = document.createElement('p');
+    heading.className = 'font-mono text-xs uppercase tracking-[0.2em] text-accent';
+    heading.textContent = 'Your project scope';
+    const body = document.createElement('p');
+    body.className = 'mt-3 whitespace-pre-wrap text-sm leading-relaxed';
+    body.textContent = latestSummary;
+    card.append(heading, body, summaryTemplate.content.cloneNode(true));
+    log.appendChild(card);
+    log.scrollTop = log.scrollHeight;
+
+    const leadForm = card.querySelector('[data-lead-form]');
+    const leadStatus = card.querySelector('[data-lead-status]');
+
+    card.querySelector('[data-action="copy"]').addEventListener('click', async (e) => {
+      try {
+        await navigator.clipboard.writeText(latestSummary);
+        e.target.textContent = 'Copied!';
+        setTimeout(() => { e.target.textContent = 'Copy summary'; }, 2000);
+      } catch {
+        e.target.textContent = 'Copy failed';
+      }
+    });
+
+    card.querySelector('[data-action="send-lead"]').addEventListener('click', (e) => {
+      leadForm.classList.remove('hidden');
+      leadForm.classList.add('flex');
+      e.target.disabled = true;
+      leadForm.querySelector('[data-lead-name]').focus();
+    });
+
+    leadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = leadForm.querySelector('[data-lead-name]').value.trim();
+      const email = leadForm.querySelector('[data-lead-email]').value.trim();
+      const btn = leadForm.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: WEB3FORMS_KEY,
+            subject: 'AI-scoped lead | ka-performancefl.com',
+            from_name: 'K & A Performance Website',
+            name,
+            email,
+            message: `AI-scoped project summary for ${name} <${email}>:\n\n${latestSummary}`,
+          }),
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error('send failed');
+        leadForm.querySelectorAll('input, button').forEach((el) => { el.disabled = true; });
+        leadStatus.textContent = "Sent! We'll be in touch within 24 hours.";
+        leadStatus.classList.remove('hidden');
+        leadStatus.classList.add('text-accent-hot');
+        leadStatus.focus();
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Send it over';
+        leadStatus.textContent = "That didn't go through. Email us at alex@ka-performancefl.com instead.";
+        leadStatus.classList.remove('hidden');
+        leadStatus.focus();
+      }
+    });
+  }
+
+  function handleReply(reply) {
+    const match = reply.match(/<scope_summary>([\s\S]*?)<\/scope_summary>/);
+    if (match) {
+      const before = reply.slice(0, match.index).trim();
+      if (before) addBubble(before, 'assistant');
+      renderSummary(match[1]);
+      const after = reply.slice(match.index + match[0].length).trim();
+      if (after) addBubble(after, 'assistant');
+    } else {
+      addBubble(reply, 'assistant');
+    }
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || sendBtn.disabled) return;
+
+    messages.push({ role: 'user', content: text });
+    addBubble(text, 'user');
+    input.value = '';
+
+    if (messages.length >= MAX_MESSAGES) {
+      endConversation("Let's take it from here. Use the form beside this chat or email alex@ka-performancefl.com.");
+      return;
+    }
+
+    sendBtn.disabled = true;
+    status.textContent = 'Assistant is thinking…';
+    const typing = addTyping();
+
+    try {
+      const res = await fetch('/api/scope', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages }),
+      });
+      const data = await res.json();
+      typing.remove();
+      if (!res.ok || !data.reply) throw new Error(data.error || 'no reply');
+      messages.push({ role: 'assistant', content: data.reply });
+      handleReply(data.reply);
+    } catch {
+      typing.remove();
+      addBubble("I'm having trouble connecting right now. The form beside this chat goes straight to Alex.", 'assistant');
+    } finally {
+      status.textContent = '';
+      sendBtn.disabled = input.disabled;
+      if (!input.disabled) input.focus();
+    }
+  });
+
+  // Opening message is client-side only — not part of the API conversation
+  // (the Messages API requires the first message to be role "user").
+  addBubble(OPENER, 'assistant');
+</script>

@@ -1,0 +1,66 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/services/', label: 'Services' },
+  { href: '/artists/', label: 'Artists' },
+  { href: '/contact/', label: 'Contact' },
+];
+---
+<header data-nav class="fixed inset-x-0 top-0 z-50">
+  <div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+    <a href="/" class="flex items-center" aria-label="K & A Performance home">
+      <img src="/images/kandalogo2.0-performance.svg" alt="K & A Performance" class="logo-white nav-logo h-9 w-auto" />
+    </a>
+
+    <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          data-no-modal
+          class:list={[
+            'nav-link font-heading text-base font-semibold tracking-wide transition-colors',
+            Astro.url.pathname === l.href ? 'text-accent' : 'text-ink/80 hover:text-ink',
+          ]}
+        >
+          {l.label}
+        </a>
+      ))}
+      <a href="/contact/#scope" class="btn-accent">Start a project</a>
+    </nav>
+
+    <button
+      id="nav-toggle"
+      class="md:hidden"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="nav-overlay"
+    >
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" class="text-ink">
+        <line x1="4" y1="9" x2="24" y2="9" />
+        <line x1="4" y1="19" x2="24" y2="19" />
+      </svg>
+    </button>
+  </div>
+
+  <div
+    id="nav-overlay"
+    class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-canvas/95 backdrop-blur-md md:hidden!"
+  >
+    {links.map((l) => (
+      <a href={l.href} data-no-modal class="font-heading text-3xl text-ink">{l.label}</a>
+    ))}
+    <a href="/contact/#scope" class="btn-accent mt-4">Start a project</a>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const overlay = document.getElementById('nav-overlay');
+  toggle?.addEventListener('click', () => {
+    const open = overlay?.classList.toggle('hidden') === false;
+    overlay?.classList.toggle('flex', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+</script>

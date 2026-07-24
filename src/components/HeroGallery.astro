@@ -1,0 +1,670 @@
+---
+// Hero + gallery as one scroll-driven piece. The whole portfolio fills the
+// hero as a sloppy stack of browser windows (mixed macOS/Windows chrome).
+// Scrolling sweeps every window into its slot on a 3D horseshoe — cards on
+// an arc wrapping toward the viewer — which then behaves as an interactive
+// rotating ring (arrows, dots, click a side card to bring it forward).
+// Scrolling on past the gallery sends the tiles flying back into the
+// depths, fading out before the next section arrives.
+//
+// All card transforms are GSAP-owned inline styles with per-card
+// transformPerspective and explicit z-index depth ordering (painter's
+// algorithm, no preserve-3d) — so cards can never slice through each other,
+// and stack poses face the viewer flat.
+import { projects, stackExtras } from '../data/work.js';
+
+const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
+---
+<section id="gallery" class="relative lg:h-[420vh]">
+  <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
+
+    <!-- Act 0: a clean canvas — heavy editorial headline beside a mac
+         window sketching itself in. The mosaic is hidden until scroll. -->
+    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-36 lg:pt-[18vh]">
+      <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div class="max-w-2xl">
+          <h1 class="font-display text-[clamp(3.25rem,5.8vw,6.5rem)] leading-[0.97] tracking-tight text-ink">
+            Built on years of <span class="whitespace-nowrap">experience,</span>
+            <span class="block text-accent">made to perform.</span>
+          </h1>
+          <p class="mt-7 max-w-xl text-xl font-medium leading-relaxed text-ink">
+            K &amp; A Performance crafts fast, animated, AI-ready websites for
+            businesses that refuse to blend in.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="/contact/#scope" class="btn-accent">Start a project</a>
+            <a href="/services/" class="btn-ghost">What we do</a>
+          </div>
+        </div>
+        <!-- the drawn-in mac window: a site sketching itself, stroke by
+             stroke (motion.js line-draw). Decorative, desktop-only. -->
+        <svg
+          id="hg-wire"
+          data-animate="line-draw"
+          class="hidden w-full text-ink/35 lg:block"
+          viewBox="0 0 640 430"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <rect x="1" y="1" width="638" height="428" rx="14" />
+          <line x1="1" y1="46" x2="639" y2="46" />
+          <circle cx="26" cy="23" r="6" />
+          <circle cx="48" cy="23" r="6" />
+          <circle cx="70" cy="23" r="6" />
+          <rect x="200" y="12" width="240" height="22" rx="11" />
+          <line x1="48" y1="110" x2="300" y2="110" />
+          <line x1="48" y1="140" x2="252" y2="140" class="text-accent" />
+          <line x1="48" y1="180" x2="230" y2="180" />
+          <line x1="48" y1="198" x2="196" y2="198" />
+          <rect x="48" y="230" width="120" height="34" rx="17" class="text-accent" />
+          <rect x="360" y="90" width="232" height="174" rx="8" />
+          <line x1="360" y1="90" x2="592" y2="264" />
+          <line x1="592" y1="90" x2="360" y2="264" />
+          <rect x="48" y="308" width="160" height="76" rx="8" />
+          <rect x="240" y="308" width="160" height="76" rx="8" />
+          <rect x="432" y="308" width="160" height="76" rx="8" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- gallery heading: hidden until the horseshoe forms -->
+    <h2 id="hg-heading" class="pointer-events-none absolute left-1/2 top-[9vh] z-30 hidden -translate-x-1/2 text-center font-display text-4xl opacity-0 md:text-5xl lg:block">
+      Recent builds
+    </h2>
+
+    <!-- the ring stage -->
+    <div id="hg-stage" class="relative mx-auto mt-10 h-[21rem] w-full max-w-6xl sm:h-[24rem] lg:absolute lg:inset-x-0 lg:top-1/2 lg:mt-0 lg:h-[54vh] lg:-translate-y-1/2">
+      <div id="hg-ring" class="absolute inset-0">
+        {projects.map((p, i) => (
+          <div
+            class="hg-slot glow-frame bg-surface"
+            data-index={i}
+            aria-hidden={i === 0 ? 'false' : 'true'}
+          >
+            {CHROMES[i] === 'mac' ? (
+              <span class="flex items-center gap-1.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#EC6A5E]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#F4BF4F]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#61C554]"></span>
+                <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+              </span>
+            ) : (
+              <span class="flex items-center justify-end gap-3.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5" aria-hidden="true">
+                <span class="text-[9px] leading-none text-ink/45">&#8213;</span>
+                <span class="text-[9px] leading-none text-ink/45">&#9633;</span>
+                <span class="text-[10px] leading-none text-ink/45">&#10005;</span>
+              </span>
+            )}
+            <img
+              src={p.img}
+              alt={`${p.title} website screenshot`}
+              class="aspect-[16/10] w-full object-cover object-top"
+              loading="eager"
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+            />
+          </div>
+        ))}
+        <!-- inner-page extras: stack-only set dressing. They scatter with the
+             mosaic, then disperse into the depths while the home pages sweep
+             into the ring. Desktop-only, purely decorative. -->
+        {stackExtras.map((e, i) => (
+          <div class="hg-extra glow-frame bg-surface" aria-hidden="true">
+            {i % 2 === 0 ? (
+              <span class="flex items-center gap-1.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#EC6A5E]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#F4BF4F]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#61C554]"></span>
+                <span class="ml-3 h-2 w-24 rounded-full bg-ink/10"></span>
+              </span>
+            ) : (
+              <span class="flex items-center justify-end gap-3.5 border-b border-ink/10 bg-canvas/80 px-4 py-2.5">
+                <span class="text-[9px] leading-none text-ink/45">&#8213;</span>
+                <span class="text-[9px] leading-none text-ink/45">&#9633;</span>
+                <span class="text-[10px] leading-none text-ink/45">&#10005;</span>
+              </span>
+            )}
+            <img
+              src={e.img}
+              alt=""
+              class="aspect-[16/10] w-full object-cover object-top"
+              loading="eager"
+              fetchpriority="low"
+            />
+          </div>
+        ))}
+      </div>
+      <!-- lenient click zones: while the ring is live, clicking anywhere on
+           the left/right half rotates. Pointer convenience only; the real
+           controls (arrows, dots, cards) remain the accessible path. -->
+      <div class="hg-zone hg-zone-left" aria-hidden="true"></div>
+      <div class="hg-zone hg-zone-right" aria-hidden="true"></div>
+      <!-- ring arrows: flank the gallery at mid-height -->
+      <button type="button" id="hg-prev" class="hg-arrow hg-arrow-side hg-arrow-left" aria-label="Previous project">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4 7 10l5.5 6"/></svg>
+      </button>
+      <button type="button" id="hg-next" class="hg-arrow hg-arrow-side hg-arrow-right" aria-label="Next project">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4 13 10l-5.5 6"/></svg>
+      </button>
+    </div>
+
+    <!-- caption + controls: hidden until the horseshoe forms (desktop) -->
+    <div id="hg-ui" class="relative z-30 mx-auto max-w-2xl px-6 pb-16 text-center lg:absolute lg:inset-x-0 lg:bottom-[4vh] lg:pb-0">
+      <div class="min-h-[6.5rem]">
+        <h3 id="hg-title" class="font-heading text-xl tracking-wide text-ink"></h3>
+        <p id="hg-blurb" class="mt-2 text-sm leading-relaxed text-muted"></p>
+        <p class="sr-only" id="hg-live" aria-live="polite"></p>
+      </div>
+      <div id="hg-dots" class="mt-4 flex items-center justify-center gap-3" role="tablist" aria-label="Choose project">
+        {projects.map((p, i) => (
+          <button type="button" class="hg-dot" role="tab" data-index={i} aria-label={`Show ${p.title}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
+        ))}
+      </div>
+    </div>
+
+    <div id="scroll-cue" class="absolute bottom-6 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-3 rounded-full bg-canvas/85 px-5 py-3 text-muted backdrop-blur-md lg:flex" aria-hidden="true">
+      <span class="font-heading text-[0.65rem] uppercase tracking-[0.35em]">Scroll</span>
+      <span class="cue-line"></span>
+    </div>
+  </div>
+</section>
+
+<!-- page progress rail: the scroll cue falls to the left edge and expands
+     into this track, whose fill shows how deep into the page you are.
+     Desktop-only, decorative. -->
+<div id="scroll-rail" class="pointer-events-none fixed left-6 top-1/2 z-40 hidden h-[68vh] -translate-y-1/2 lg:block" aria-hidden="true">
+  <div id="scroll-rail-inner" class="relative h-full w-[3px]">
+    <div class="rail-track"></div>
+    <div id="scroll-rail-glow" class="rail-glow"></div>
+  </div>
+</div>
+
+<style>
+  .hg-slot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(42%, 520px);
+    display: block;
+    overflow: hidden;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+  @media (max-width: 1023px) {
+    .hg-slot {
+      width: 72%;
+    }
+  }
+  /* Extras only exist for the desktop scatter act. */
+  .hg-extra {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(42%, 520px);
+    display: block;
+    overflow: hidden;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    pointer-events: none;
+  }
+  @media (max-width: 1023px) {
+    .hg-extra {
+      display: none;
+    }
+  }
+  :global(.motion-reduced) .hg-extra {
+    display: none;
+  }
+  .hg-slot.hg-side {
+    cursor: pointer;
+  }
+  #hg-stage:not(.hg-live) .hg-slot {
+    pointer-events: none;
+  }
+  .hg-arrow {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(34 28 21 / 0.2);
+    color: var(--color-ink);
+    transition: border-color var(--dur-fast) ease, color var(--dur-fast) ease;
+  }
+  .hg-arrow:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  /* wide half-stage click zones, active only while the ring is live */
+  .hg-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 5;
+    display: none;
+  }
+  #hg-stage.hg-live .hg-zone {
+    display: block;
+    cursor: pointer;
+  }
+  .hg-zone-left { left: 0; }
+  .hg-zone-right { right: 0; }
+
+  /* side arrows flank the ring at mid-height, on a soft surface puck so
+     they read over whatever card is behind them */
+  .hg-arrow-side {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 60;
+    background: rgb(255 253 249 / 0.9);
+    box-shadow: 0 6px 20px -8px rgb(34 28 21 / 0.35);
+  }
+  .hg-arrow-left {
+    left: 2%;
+  }
+  .hg-arrow-right {
+    right: 2%;
+  }
+  @media (min-width: 1024px) {
+    .hg-arrow-left { left: 4%; }
+    .hg-arrow-right { right: 4%; }
+  }
+  .hg-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 9999px;
+    background: rgb(34 28 21 / 0.18);
+    transition: background var(--dur-fast) ease, transform var(--dur-fast) ease;
+  }
+  .hg-dot[aria-selected='true'] {
+    background: var(--color-accent);
+    transform: scale(1.35);
+  }
+  .cue-line {
+    position: relative;
+    width: 1px;
+    height: 2.75rem;
+    background: rgb(34 28 21 / 0.15);
+    overflow: hidden;
+  }
+  .cue-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -50%;
+    width: 100%;
+    height: 50%;
+    background: var(--color-accent);
+    animation: cue-drop 1.8s ease-in-out infinite;
+  }
+  @keyframes cue-drop {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(300%); }
+  }
+  #scroll-cue.cue-hidden {
+    opacity: 0;
+  }
+  #scroll-rail-inner {
+    opacity: 0; /* GSAP reveals it as the cue hands off */
+  }
+  .rail-track {
+    position: absolute;
+    inset: 0;
+    width: 1px;
+    left: 1px;
+    border-radius: 9999px;
+    background: rgb(34 28 21 / 0.08);
+  }
+  /* not a progress bar: a soft glow that rides the hairline at your depth */
+  .rail-glow {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 3px;
+    height: 18%;
+    transform: translateX(-50%);
+    border-radius: 9999px;
+    background: linear-gradient(180deg, transparent, rgb(154 52 18 / 0.75) 50%, transparent);
+    box-shadow: 0 0 14px 2px rgb(154 52 18 / 0.28);
+  }
+  :global(.motion-reduced) #scroll-rail {
+    display: none;
+  }
+  :global(.motion-reduced) .cue-line::after {
+    animation: none;
+    top: 0;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { projects } from '../data/work.js';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  const section = document.getElementById('gallery');
+  const stage = document.getElementById('hg-stage');
+  const slots = [...document.querySelectorAll('.hg-slot')];
+  const extras = [...document.querySelectorAll('.hg-extra')];
+  const arrows = [...document.querySelectorAll('.hg-arrow-side')];
+  const dots = [...document.querySelectorAll('.hg-dot')];
+  const title = document.getElementById('hg-title');
+  const blurb = document.getElementById('hg-blurb');
+  const live = document.getElementById('hg-live');
+  const ui = document.getElementById('hg-ui');
+  const heading = document.getElementById('hg-heading');
+  const headline = document.getElementById('hg-headline');
+
+  const n = projects.length;
+  const R = isDesktop ? 520 : 260;
+  const STEP = 36; // degrees between slots
+  const OPACITY = [1, 0.94, 0.8, 0]; // rel ±3 sits past 90° — hidden; sides stay near-solid so the ring never reads muddled
+
+  // Sloppy-stack targets: viewport-fraction offsets from center, covering
+  // the whole hero. Order matches projects[].
+  // Tight mosaic: tiles sized and placed to overlap their neighbors so
+  // almost no canvas shows between them.
+  const STACK = [
+    { tx: -0.38, ty: -0.28, r: -8,  s: 1.5,  a: 0.95 }, // fdaaf — top left
+    { tx: 0.0,   ty: -0.32, r: 6,   s: 1.48, a: 0.95 }, // mbs — top center
+    { tx: 0.38,  ty: -0.29, r: -7,  s: 1.5,  a: 0.95 }, // pbj — top right
+    { tx: -0.4,  ty: 0.24,  r: 7,   s: 1.5,  a: 0.95 }, // makeover — bottom left
+    { tx: 0.03,  ty: 0.02,  r: 10,  s: 1.62, a: 1    }, // fixalways — center, biggest
+    { tx: 0.4,   ty: 0.26,  r: -8,  s: 1.5,  a: 0.95 }, // foremotion — bottom right
+    { tx: -0.02, ty: 0.36,  r: -11, s: 1.42, a: 0.95 }, // family practice — bottom center
+  ];
+
+  // Inner-page tiles slot into the seams of the mosaic, one layer back.
+  const EXTRA_STACK = [
+    { tx: -0.22, ty: -0.36, r: 5,   s: 1.22 },
+    { tx: 0.21,  ty: -0.3,  r: -9,  s: 1.26 },
+    { tx: -0.48, ty: -0.04, r: -6,  s: 1.28 },
+    { tx: 0.48,  ty: -0.02, r: 8,   s: 1.3  },
+    { tx: -0.21, ty: 0.28,  r: -5,  s: 1.22 },
+    { tx: 0.22,  ty: 0.3,   r: 9,   s: 1.26 },
+    { tx: -0.45, ty: 0.44,  r: 4,   s: 1.18 },
+    { tx: 0.44,  ty: 0.46,  r: -6,  s: 1.2  },
+    { tx: 0.01,  ty: -0.1,  r: 4,   s: 1.16 },
+    { tx: -0.04, ty: 0.48,  r: -8,  s: 1.2  },
+  ];
+
+  const relOf = (i, cur) => {
+    let rel = (((i - cur) % n) + n) % n;
+    if (rel > 3) rel -= n;
+    return rel;
+  };
+
+  // rotateY(rel*STEP) then translateZ(R), expressed in GSAP's fixed
+  // translate-then-rotate order: x = R sin, z = R cos. Positive rel sits to
+  // the RIGHT so the right arrow visibly rotates rightward into the queue.
+  const ringPose = (rel) => {
+    const th = (rel * STEP * Math.PI) / 180;
+    return {
+      x: R * Math.sin(th),
+      y: 0,
+      z: R * Math.cos(th) - R * 0.62, // recenter depth so edges recede, front advances
+      rotationY: rel * STEP,
+      rotation: 0,
+      scale: 1,
+      opacity: OPACITY[Math.abs(rel)],
+    };
+  };
+
+  let current = 0;
+  let timer = null;
+  let autoplayStarted = false;
+
+  gsap.set(slots, { xPercent: -50, yPercent: -50, transformPerspective: 1600, transformOrigin: '50% 50%' });
+
+  function setCaption(i) {
+    const swap = () => {
+      title.textContent = projects[i].title;
+      blurb.textContent = projects[i].blurb;
+      live.textContent = `Showing ${projects[i].title}, project ${i + 1} of ${n}`;
+      gsap.to([title, blurb], { opacity: 1, duration: 0.25 });
+    };
+    if (reduced) swap();
+    else gsap.to([title, blurb], { opacity: 0, duration: 0.18, onComplete: swap });
+  }
+
+  function layout(animate) {
+    slots.forEach((slot, i) => {
+      const rel = relOf(i, current);
+      const pose = ringPose(rel);
+      slot.style.zIndex = String(40 - Math.abs(rel) * 10);
+      slot.classList.toggle('hg-side', rel !== 0);
+      if (animate && !reduced) gsap.to(slot, { ...pose, duration: 0.85, ease: 'expo.out' });
+      else gsap.set(slot, pose);
+      slot.setAttribute('aria-hidden', String(rel !== 0));
+    });
+    dots.forEach((dot, i) => dot.setAttribute('aria-selected', String(i === current)));
+  }
+
+  function goTo(i, animate = true) {
+    current = ((i % n) + n) % n;
+    layout(animate);
+    setCaption(current);
+  }
+
+  function startAutoplay() {
+    if (reduced || timer) return;
+    timer = setInterval(() => goTo(current + 1), 5000);
+  }
+  function stopAutoplay() {
+    clearInterval(timer);
+    timer = null;
+  }
+
+  document.getElementById('hg-prev').addEventListener('click', () => { stopAutoplay(); goTo(current - 1); });
+  document.getElementById('hg-next').addEventListener('click', () => { stopAutoplay(); goTo(current + 1); });
+  document.querySelector('.hg-zone-left')?.addEventListener('click', () => { stopAutoplay(); goTo(current - 1); });
+  document.querySelector('.hg-zone-right')?.addEventListener('click', () => { stopAutoplay(); goTo(current + 1); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAutoplay(); goTo(i); }));
+
+  slots.forEach((slot, i) => {
+    slot.addEventListener('click', (e) => {
+      if (relOf(i, current) !== 0) {
+        e.preventDefault();
+        stopAutoplay();
+        goTo(i);
+      }
+    });
+  });
+  stage.addEventListener('pointerenter', stopAutoplay);
+  stage.addEventListener('focusin', stopAutoplay);
+
+  setCaption(0);
+
+  if (!reduced && isDesktop) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Pose the flock in its scatter positions — but invisible. Act 0 is the
+    // clean sketch hero; the windows only appear once scroll begins.
+    slots.forEach((slot, i) => {
+      const t = STACK[i];
+      slot.dataset.baseOpacity = t.a;
+      slot.dataset.baseScale = t.s;
+      gsap.set(slot, {
+        x: t.tx * window.innerWidth,
+        y: t.ty * window.innerHeight,
+        z: 0,
+        rotationY: 0,
+        rotation: t.r,
+        scale: t.s * 0.9,
+        opacity: 0,
+      });
+      slot.style.zIndex = String(10 + i);
+    });
+    // Extras scatter one layer behind the mains.
+    gsap.set(extras, { xPercent: -50, yPercent: -50, transformPerspective: 1600, transformOrigin: '50% 50%' });
+    extras.forEach((el, i) => {
+      const t = EXTRA_STACK[i % EXTRA_STACK.length];
+      el.dataset.baseOpacity = 0.92;
+      el.dataset.baseScale = t.s;
+      gsap.set(el, {
+        x: t.tx * window.innerWidth,
+        y: t.ty * window.innerHeight,
+        z: 0,
+        rotation: t.r,
+        scale: t.s * 0.9,
+        opacity: 0,
+      });
+      el.style.zIndex = String(2 + (i % EXTRA_STACK.length));
+    });
+    gsap.set([ui, heading], { autoAlpha: 0, y: 24 });
+    gsap.set(arrows, { autoAlpha: 0 });
+
+    const endPoses = slots.map((_, i) => ringPose(relOf(i, 0)));
+
+    // Three acts: sweep into the horseshoe, hold as an interactive gallery,
+    // then fly back into the depths and fade before the next section.
+    const LIVE_MIN = 0.6;
+    const LIVE_MAX = 0.79;
+
+    // cue → rail handoff, built after the main timeline; null until then
+    let cueTl = null;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=320%',
+        scrub: 0.6,
+        onUpdate: (st) => {
+          const inBand = st.progress > LIVE_MIN && st.progress < LIVE_MAX;
+          stage.classList.toggle('hg-live', inBand);
+          if (inBand && !autoplayStarted) {
+            autoplayStarted = true;
+            startAutoplay();
+          }
+          if (!inBand && autoplayStarted) {
+            autoplayStarted = false;
+            stopAutoplay();
+            if (current !== 0) goTo(0, false); // resync before scrub retakes the poses
+          }
+          if (cueTl) {
+            if (st.progress > 0.04) cueTl.play();
+            else cueTl.reverse();
+          }
+        },
+      },
+    });
+
+    tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.2, ease: 'power1.in' }, 0.05)
+      // act 1: the windows all appear across the canvas, popping into the
+      // mosaic in random order as the sketch hero clears
+      .to([...extras, ...slots], {
+        opacity: (i, el) => parseFloat(el.dataset.baseOpacity),
+        scale: (i, el) => parseFloat(el.dataset.baseScale),
+        duration: 0.3,
+        stagger: { each: 0.022, from: 'random' },
+        ease: 'back.out(1.6)',
+      }, 0.16)
+      // act 2: inner pages disperse into the depths while the home pages
+      // sweep into the horseshoe
+      .to(extras, {
+        z: -620,
+        y: (i) => (EXTRA_STACK[i % EXTRA_STACK.length].ty > 0 ? 140 : -140),
+        opacity: 0,
+        scale: 0.78,
+        rotation: 0,
+        duration: 0.45,
+        stagger: 0.03,
+        ease: 'power2.in',
+      }, 0.78)
+      // painter z-order flips to ring order the moment the sweep starts, so
+      // cards land stacked correctly — front over sides, sides over rears
+      .set(slots, { zIndex: (i) => String(40 - Math.abs(relOf(i, 0)) * 10) }, 0.8)
+      .to(slots, {
+        x: (i) => endPoses[i].x,
+        y: 0,
+        z: (i) => endPoses[i].z,
+        rotationY: (i) => endPoses[i].rotationY,
+        rotation: 0,
+        scale: 1,
+        opacity: (i) => endPoses[i].opacity,
+        duration: 0.45,
+        stagger: 0.03,
+        ease: 'power2.inOut',
+      }, 0.82)
+      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.12 }, 1.5)
+      .to(arrows, { autoAlpha: 1, duration: 0.12 }, 1.5) // fade only — y would break their CSS centering
+      .to({}, { duration: 0.5 }, 1.62) // hold: the interactive gallery band
+      .to([heading, ui], { autoAlpha: 0, y: -24, duration: 0.1 }, 2.12)
+      .to(arrows, { autoAlpha: 0, duration: 0.1 }, 2.12)
+      .to(slots, {
+        x: (i) => endPoses[i].x * 0.45,
+        y: -70,
+        z: -680,
+        rotationY: 0,
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.32,
+        stagger: 0.03,
+        ease: 'power2.in',
+      }, 2.16);
+
+    // If someone clicks the gallery while it's forming or receding (not yet
+    // interactive), snap the scroll into the live band instead of letting
+    // the click die. Lenis drives the glide so it matches the site's feel.
+    const snapToBand = () => {
+      const st = tl.scrollTrigger;
+      const target = st.start + ((LIVE_MIN + LIVE_MAX) / 2) * (st.end - st.start);
+      const lenis = window.__motion?.lenis;
+      if (lenis) lenis.scrollTo(target, { duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 3) });
+      else window.scrollTo({ top: target, behavior: 'smooth' });
+    };
+    stage.addEventListener('click', () => {
+      if (stage.classList.contains('hg-live')) return;
+      const p = tl.scrollTrigger?.progress ?? 0;
+      if (p > 0.28 && p < 0.98) snapToBand();
+    });
+
+    // The scroll cue falls to the left edge and expands into the page
+    // progress rail; scrolling back to the top hands it back.
+    const cue = document.getElementById('scroll-cue');
+    const railInner = document.getElementById('scroll-rail-inner');
+    const railGlow = document.getElementById('scroll-rail-glow');
+    if (cue && railInner) {
+      gsap.set(railInner, { scaleY: 0, transformOrigin: 'top' });
+      cueTl = gsap.timeline({ paused: true });
+      cueTl
+        .to(cue, {
+          x: () => {
+            const c = cue.getBoundingClientRect();
+            const r = railInner.getBoundingClientRect();
+            return r.left + r.width / 2 - (c.left + c.width / 2);
+          },
+          y: 46,
+          rotation: -90,
+          scale: 0.4,
+          opacity: 0,
+          duration: 0.55,
+          ease: 'power2.in',
+        })
+        .to(railInner, { opacity: 1, scaleY: 1, duration: 0.7, ease: 'expo.out' }, '-=0.2');
+    }
+    // the glow drifts down the hairline to match page depth
+    if (railGlow) {
+      gsap.to(railGlow, {
+        y: () => railInner.offsetHeight - railGlow.offsetHeight,
+        ease: 'none',
+        scrollTrigger: { start: 0, end: 'max', scrub: 0.4, invalidateOnRefresh: true },
+      });
+    }
+  } else {
+    // Mobile / reduced motion: no scatter, ring formed, UI visible.
+    gsap.set(extras, { display: 'none' });
+    goTo(0, false);
+    stage.classList.add('hg-live');
+    if (heading) gsap.set(heading, { autoAlpha: 1 });
+    gsap.set(ui, { autoAlpha: 1 });
+    if (!reduced) startAutoplay();
+  }
+</script>

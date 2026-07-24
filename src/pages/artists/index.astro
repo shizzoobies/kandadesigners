@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { artists } from '../../data/artists.js';
+---
+<BaseLayout
+  title="Artists | K & A Performance"
+  description="Original illustration and digital artwork through K & A Performance's collaborating artists, commissioned and art-directed through us."
+>
+  <!-- Editorial header -->
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-20 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">Artists</p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
+      In-house <span class="text-accent">artistry.</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Original illustration and artwork through our collaborating artists, available on request. Every artist is commissioned and art-directed through K &amp;
+      A, so you get one point of contact and one consistent standard across the whole build. Most new builds include budget for a custom logo if you want one.
+    </p>
+  </section>
+
+  <!-- Two large cards -->
+  <section class="mx-auto max-w-6xl px-6 pb-32 md:pb-40">
+    <div class="grid gap-12 md:grid-cols-3 md:gap-10">
+      {artists.map((artist) => (
+        <div data-animate="frame-lift">
+          <figure class="glow-frame relative">
+            <img
+              src={artist.portrait}
+              alt={artist.portraitAlt || `${artist.name}, ${artist.discipline}`}
+              class="aspect-[4/3] w-full object-cover"
+              loading="lazy"
+            />
+            <span class="coming-ribbon">Portfolio coming soon</span>
+          </figure>
+          <h2 class="mt-6 font-display text-3xl md:text-4xl">{artist.name}</h2>
+          <p class="mt-2 font-mono text-sm uppercase tracking-[0.3em] text-muted">{artist.discipline}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="border-y border-ink/10 bg-surface">
+    <div class="mx-auto max-w-4xl px-6 py-28 text-center md:py-36">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.05]">
+        Original art, <span class="text-accent">commissioned through us.</span>
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.15" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a commission</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroGallery from '../components/HeroGallery.astro';
+import ReviewsRail from '../components/ReviewsRail.astro';
+---
+<BaseLayout
+  title="K & A Performance | Web Design & AI Integration"
+  description="K & A Performance crafts fast, animated, AI-ready websites for businesses that refuse to blend in."
+>
+  <!-- Hero and work gallery are one scroll-driven piece: the sloppy stack
+       of client sites sweeps into the 3D horseshoe as you scroll. -->
+  <HeroGallery />
+
+  <!-- Accessibility promise: the differentiator, stated plainly, beside a
+       window sketching its own audit (same language as the hero sketch).
+       The draw starts while the gallery's empty tail is still on screen,
+       so the blank beat between sections gets filled. -->
+  <!-- lg pulls this section up into the hero's recede tail: the sketch is
+       already drawing while the last tiles fade, so the canvas never sits
+       blank between acts. -->
+  <section id="a11y-home" class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16 lg:-mt-[34vh]">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
+      <div>
+        <h2 data-a11y-text class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent">by default.</span></h2>
+        <p data-a11y-text class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          Every build is measured against WCAG AA: contrast, keyboard, screen
+          readers, motion preferences. Already have a site? We'll check it and
+          tell you exactly where it stands.
+        </p>
+        <div data-a11y-text class="mt-8">
+          <a href="/services/#svc-a11y" class="btn-ghost">Get an accessibility check</a>
+        </div>
+      </div>
+      <!-- a site auditing itself, stroke by stroke: focus ring, contrast
+           pair, screen-reader eye, keyboard with Tab. Decorative. The draw
+           is scrubbed to scroll so the canvas is never blank; the text
+           slides in as the last strokes land. -->
+      <svg
+        id="a11y-sketch"
+        class="hidden w-full text-ink/35 lg:block"
+        viewBox="0 0 640 430"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="1" y="1" width="638" height="428" rx="14" />
+        <line x1="1" y1="46" x2="639" y2="46" />
+        <circle cx="26" cy="23" r="6" />
+        <circle cx="48" cy="23" r="6" />
+        <circle cx="70" cy="23" r="6" />
+        <line x1="48" y1="102" x2="300" y2="102" />
+        <line x1="48" y1="132" x2="252" y2="132" />
+        <rect x="48" y="172" width="132" height="36" rx="18" />
+        <rect x="41" y="165" width="146" height="50" rx="25" class="text-accent" />
+        <path d="M400 202 L441 92 L482 202" />
+        <path d="M419 162 L463 162" />
+        <path d="M500 202 L541 92 L582 202" class="text-accent" />
+        <path d="M519 162 L563 162" class="text-accent" />
+        <ellipse cx="112" cy="262" rx="36" ry="20" />
+        <circle cx="112" cy="262" r="8" />
+        <circle cx="490" cy="262" r="26" class="text-accent" />
+        <path d="M478 262 l9 9 l17 -20" class="text-accent" />
+        <rect x="48" y="312" width="544" height="78" rx="10" />
+        <rect x="62" y="326" width="64" height="24" rx="5" class="text-accent" />
+        <rect x="140" y="326" width="28" height="24" rx="5" />
+        <rect x="182" y="326" width="28" height="24" rx="5" />
+        <rect x="224" y="326" width="28" height="24" rx="5" />
+        <rect x="140" y="358" width="220" height="20" rx="5" />
+        <rect x="470" y="326" width="28" height="24" rx="5" />
+        <rect x="512" y="326" width="64" height="24" rx="5" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- AI section: the one deliberate dark moment on the light site — and it breathes. -->
+  <section class="dark-band ai-alive ai-alive-dark border-y border-ink/10">
+    <div class="mx-auto max-w-6xl px-6 py-32">
+      <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Sites that <span class="ai-pulse text-accent">think.</span></h2>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        We integrate AI where it earns its place: assistants that qualify leads,
+        content engines, smart search. Ours is live right now:
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/#scope" class="btn-accent">Scope your project with our AI</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Artists teaser -->
+  <section class="mx-auto max-w-6xl px-6 py-32">
+    <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">In-house artistry</h2>
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Original illustration and artwork through our collaborating artists. Custom art is available on request, and most new builds include budget for a custom logo if you want one.
+    </p>
+    <div class="mt-14 grid gap-10 md:grid-cols-3">
+      <div data-animate="frame-lift">
+        <figure class="glow-frame relative">
+          <img src="/images/art/a1-magnolia.jpg" alt="Bobbie, watercolor magnolia study, portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+          <span class="coming-ribbon">Portfolio coming soon</span>
+        </figure>
+        <h3 class="mt-4 font-heading text-lg tracking-wide">Bobbie</h3>
+        <p class="mt-1 text-sm text-muted">Illustration &amp; brand artwork</p>
+      </div>
+      <div data-animate="frame-lift">
+        <figure class="glow-frame relative">
+          <img src="/images/art/a2-abstract-face.png" alt="Jon Marc, abstract geometric face composition, portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+          <span class="coming-ribbon">Portfolio coming soon</span>
+        </figure>
+        <h3 class="mt-4 font-heading text-lg tracking-wide">Jon Marc</h3>
+        <p class="mt-1 text-sm text-muted">Digital art &amp; visual identity</p>
+      </div>
+      <div data-animate="frame-lift">
+        <figure class="glow-frame relative">
+          <img src="/images/art/a1-boho-study.jpg" alt="Nicole, layered boho art study, portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
+          <span class="coming-ribbon">Portfolio coming soon</span>
+        </figure>
+        <h3 class="mt-4 font-heading text-lg tracking-wide">Nicole</h3>
+        <p class="mt-1 text-sm text-muted">Mixed media &amp; fine art</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google reviews rail: live via /api/reviews, hidden until data (or
+       placeholders on localhost) arrives -->
+  <ReviewsRail />
+
+  <!-- Final CTA -->
+  <section class="px-6 pb-40 pt-16">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.05]">
+        Your site should work hard, <span class="text-accent">so you don't have to.</span>
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.15" class="mt-10">
+        <a href="/contact/#scope" class="btn-accent">Start a project</a>
+      </div>
+      <p data-animate="type-settle" data-animate-delay="0.25" class="mt-5 text-sm text-muted">Quotes are always free.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  const section = document.getElementById('a11y-home');
+  const texts = section ? [...section.querySelectorAll('[data-a11y-text]')] : [];
+
+  if (!reduced && section) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (isDesktop) {
+      // The audit sketch draws with the scroll itself: strokes start landing
+      // the moment the section peeks into the viewport (while the gallery's
+      // empty tail is still clearing), and the copy slides in as the last
+      // strokes finish.
+      const strokes = [...document.querySelectorAll('#a11y-sketch path, #a11y-sketch line, #a11y-sketch rect, #a11y-sketch circle, #a11y-sketch ellipse')];
+      strokes.forEach((p) => {
+        const len = p.getTotalLength ? p.getTotalLength() : 800;
+        p.style.strokeDasharray = String(len);
+        p.style.strokeDashoffset = String(len);
+      });
+      gsap.timeline({
+        scrollTrigger: { trigger: section, start: 'top bottom', end: 'top 30%', scrub: 0.7 },
+      })
+        .to(strokes, { strokeDashoffset: 0, duration: 3, stagger: 0.12, ease: 'none' }, 0)
+        .from(texts, { x: -44, opacity: 0, duration: 1.1, stagger: 0.18, ease: 'power2.out' }, '>-0.5');
+    } else {
+      // Mobile has no sketch: the copy gets the standard settle-in.
+      gsap.from(texts, {
+        y: 24, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 85%' },
+      });
+    }
+  }
+</script>

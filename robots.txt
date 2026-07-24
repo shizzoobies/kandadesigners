@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-
-Disallow: /mbsfeedback/
-
-Sitemap: https://ka-performancefl.com/sitemap.xml

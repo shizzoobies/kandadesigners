@@ -1,0 +1,941 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { aiLogos } from '../../data/ai-logos.js';
+
+// Scattered placement for the background constellation of AI marks:
+// [left%, top%, size rem, rotate deg, accent?]
+const LOGO_FIELD = [
+  ['openai',        4,  12, 3.2,  -12, false],
+  ['anthropic',    14,  68, 2.6,   10, true ],
+  ['claude',       25,  22, 2.2,   18, false],
+  ['googlegemini', 38,  80, 2.8,   -8, true ],
+  ['google',       55,   8, 2.4,    8, false],
+  ['elevenlabs',   68,  75, 2.4,  -14, false],
+  ['githubcopilot',80,  16, 3.0,   12, false],
+  ['perplexity',   91,  62, 2.6,   -6, true ],
+  ['mistralai',    88,  36, 2.0,    6, false],
+  ['meta',          9,  40, 2.4,   -6, false],
+].map(([name, left, top, size, rot, accent]) => ({
+  ...aiLogos.find((l) => l.name === name),
+  left, top, size, rot, accent,
+}));
+
+const process = [
+  { label: 'Discover', note: 'Goals, audience, scope.' },
+  { label: 'Design', note: 'Structure, type, motion.' },
+  { label: 'Build', note: 'Fast, accessible, tested.' },
+  { label: 'Launch', note: 'Ship on modern hosting.' },
+];
+---
+<BaseLayout
+  title="Services | K & A Performance"
+  description="Purpose-built websites, SEO & AI search, accessibility audits, AI integration, and honest answers about hosting, from K & A Performance."
+>
+  <!-- Editorial header: centered title -->
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-24 text-center md:pt-48">
+    <h1 data-animate="type-settle" class="font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
+      Services <span class="text-accent">offered.</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      One standard across everything: sharp, fast, accessible, and honest.
+      No job too small, no job too big. Every project is scoped to fit.
+    </p>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-sm text-muted">
+      Don't see what you need? <a href="/contact/" class="font-semibold text-accent transition-colors hover:text-accent-hot">Just ask</a>. The answer is probably yes, and quotes are always free.
+    </p>
+  </section>
+
+  <!-- 01 · Purpose-built websites -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div id="svc-web" class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+      <div>
+        <div class="overflow-hidden">
+          <h2 data-web="headline" class="font-display text-4xl leading-tight md:text-6xl">Purpose-built websites.</h2>
+        </div>
+        <p data-animate="type-settle" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          Designed from the ground up for your business: no templates, no compromise on speed. Built to load fast, feel alive, and
+          do the job it exists to do.
+        </p>
+        <p data-animate="type-settle" class="mt-8 font-mono text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+          Custom design <span class="text-accent" aria-hidden="true">&middot;</span> Motion <span class="text-accent" aria-hidden="true">&middot;</span> Performance <span class="text-accent" aria-hidden="true">&middot;</span> Launch-ready
+        </p>
+      </div>
+      <!-- Real client work, fanned like prints on a desk. Not stock: these
+           are live builds. -->
+      <div class="svc-shots relative aspect-[4/3] md:aspect-auto md:min-h-[24rem] md:self-stretch">
+        <figure class="svc-shot svc-shot-1">
+          <img src="/images/work-fdaaf.webp" alt="FDAAF, live client build" loading="lazy" />
+        </figure>
+        <figure class="svc-shot svc-shot-2">
+          <img src="/images/work-foremotion.webp" alt="Fore Motion Golf, live client build" loading="lazy" />
+        </figure>
+        <figure class="svc-shot svc-shot-3">
+          <img src="/images/work-pmbuild.webp" alt="Project Makeover, live client build" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · SEO & AI search — the search demo mirrors the section above -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div id="svc-seo" class="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-center">
+      <!-- a live search plays out: query types itself, the AI answer
+           surfaces first, and the client ranks. Decorative. -->
+      <div class="seo-demo md:order-first" aria-hidden="true">
+        <div class="seo-bar">
+          <svg viewBox="0 0 20 20" class="seo-glass" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6" /><path d="m18 18-4.2-4.2" /></svg>
+          <span id="seo-query" class="seo-query">who builds accessible websites in Florida?</span><span class="seo-caret"></span>
+        </div>
+        <div class="seo-results">
+          <div class="seo-ai" data-seo="ai">
+            <p class="seo-ai-label"><svg viewBox="0 0 16 16" class="seo-spark" fill="currentColor"><path d="M8 0l1.8 6.2L16 8l-6.2 1.8L8 16l-1.8-6.2L0 8l6.2-1.8L8 0z"/></svg> AI answer</p>
+            <p class="seo-ai-copy">K &amp; A Performance builds fast, WCAG-measured accessible websites for Florida businesses, with SEO and AI integration built in.</p>
+          </div>
+          <div class="seo-hit seo-hit-ka" data-seo="hit">
+            <p class="seo-hit-title">K &amp; A Performance | Web Design &amp; AI Integration</p>
+            <p class="seo-hit-url">ka-performancefl.com</p>
+          </div>
+          <div class="seo-hit" data-seo="hit">
+            <span class="seo-skel" style="width: 72%"></span>
+            <span class="seo-skel seo-skel-dim" style="width: 46%"></span>
+          </div>
+          <div class="seo-hit" data-seo="hit">
+            <span class="seo-skel" style="width: 64%"></span>
+            <span class="seo-skel seo-skel-dim" style="width: 52%"></span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-4xl leading-tight md:text-6xl">
+          Found by Google. <span class="text-accent">Found by AI.</span>
+        </h2>
+        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+          Search isn't just a results page anymore. Your next customer might
+          ask an assistant instead of typing into a search bar. We build for
+          both: technical SEO done right, structured data machines can read,
+          and content architected so answer engines can find you and quote you.
+        </p>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 font-mono text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+          Technical SEO <span class="text-accent" aria-hidden="true">&middot;</span> Structured data <span class="text-accent" aria-hidden="true">&middot;</span> AI-answer readiness <span class="text-accent" aria-hidden="true">&middot;</span> Performance
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · Accessibility -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div id="svc-a11y" class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+      <div>
+        <div class="overflow-hidden">
+          <h2 data-a11y="headline" class="font-display text-4xl leading-tight md:text-6xl">Accessible, verified.</h2>
+        </div>
+        <p data-animate="type-settle" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          Every site we build ships measured against WCAG AA. Already have a
+          site? We'll audit it with real measurements, not a plugin badge, and
+          fix what fails.
+        </p>
+        <p data-animate="type-settle" class="mt-8 font-mono text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+          WCAG 2.2 AA <span class="text-accent" aria-hidden="true">&middot;</span> Contrast <span class="text-accent" aria-hidden="true">&middot;</span> Keyboard <span class="text-accent" aria-hidden="true">&middot;</span> Screen readers <span class="text-accent" aria-hidden="true">&middot;</span> Remediation
+        </p>
+        <div data-animate="type-settle" class="mt-8">
+          <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+            Get an accessibility check &rarr;
+          </a>
+        </div>
+      </div>
+      <!-- a miniature audit report whose checks tick themselves -->
+      <div class="a11y-audit" aria-hidden="true">
+        <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Sample audit</p>
+        <ul class="mt-4">
+          <li class="a11y-row"><span>Body text contrast</span><span class="a11y-val">15.3:1</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Keyboard path</span><span class="a11y-val">complete</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Screen-reader labels</span><span class="a11y-val">present</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Reduced motion</span><span class="a11y-val">respected</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 · AI integration — centered, live demos side by side. The
+       breathing treatment rides the full-bleed section so no box edges
+       show; only the demo objects carry frames. -->
+  <section class="ai-alive border-t border-ink/10">
+    <!-- the tools themselves, worked into the canvas as a faint
+         constellation behind the content -->
+    <div id="svc-ai-logos" aria-hidden="true">
+      {LOGO_FIELD.map((l) => (
+        <svg
+          class:list={['ai-logo', l.accent && 'ai-logo-accent']}
+          style={`left:${l.left}%;top:${l.top}%;width:${l.size}rem;transform:rotate(${l.rot}deg)`}
+          viewBox="0 0 24 24"
+        >
+          <path d={l.d} />
+        </svg>
+      ))}
+    </div>
+    <div id="svc-ai" class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
+      <h2 class="font-display text-3xl leading-tight md:text-5xl">
+        <span data-ai="word-a">AI, where it</span> <span data-ai="word-b" class="text-accent">earns its place.</span>
+      </h2>
+      <p data-ai="copy" class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        Assistants that qualify leads, automations that save hours, content
+        tooling that keeps the pipeline full. No AI for AI's sake. It ships
+        when it pulls its weight.
+      </p>
+      <p data-animate="type-settle" class="mt-8 font-mono text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+        Assistants <span class="text-accent" aria-hidden="true">&middot;</span> Automations <span class="text-accent" aria-hidden="true">&middot;</span> Content tooling
+      </p>
+
+      <!-- live demos: two open stacks on a center hairline; each opens a
+           same-size modal. No boxes, just space and type. -->
+      <div class="mx-auto mt-14 grid max-w-3xl gap-y-12 text-left sm:grid-cols-2 sm:gap-y-0 sm:divide-x sm:divide-ink/10">
+        <button type="button" id="open-chat-demo" class="ai-tile" aria-haspopup="dialog">
+          <span class="tile-kicker">Text</span>
+          <span class="tile-title font-display">Ask it in writing.</span>
+          <span class="tile-copy">A live chat that answers questions about web design, SEO, and AI search.</span>
+          <span class="tile-cta">Try the chat <span class="tile-arr" aria-hidden="true">&rarr;</span></span>
+        </button>
+        <button type="button" id="open-voice-demo" class="ai-tile" aria-haspopup="dialog">
+          <span class="tile-kicker">Voice</span>
+          <span class="tile-title font-display">Or just <span class="ai-pulse text-accent">talk</span> to it.</span>
+          <span class="tile-copy">Our voice agent answers the same questions and can set up a call with Alex.</span>
+          <span class="tile-cta">Start talking <span class="tile-arr" aria-hidden="true">&rarr;</span></span>
+        </button>
+      </div>
+
+      <!-- text chat modal -->
+      <dialog id="chat-modal" class="ai-modal" aria-label="Live AI text chat demo">
+        <div class="modal-head">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Live demo: ask us anything</p>
+          <button type="button" class="modal-close" aria-label="Close chat demo">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
+          </button>
+        </div>
+        <div id="svc-chat-msgs" data-lenis-prevent class="flex flex-1 flex-col gap-3 overflow-y-auto pr-1 text-left" aria-live="polite">
+          <div class="chat-bub chat-q">What would AI actually do on our site?</div>
+          <div class="chat-bub chat-a">Good question. Assistants that answer visitors and qualify leads are the proven win. What does your team spend the most time answering?</div>
+        </div>
+        <form id="svc-chat-form" class="mt-4 flex items-center gap-2">
+          <label for="svc-chat-input" class="sr-only">Ask our AI a question</label>
+          <input
+            type="text"
+            id="svc-chat-input"
+            placeholder="Ask about web design, SEO, AI&hellip;"
+            autocomplete="off"
+            maxlength="900"
+            class="min-w-0 flex-1 rounded-full border border-ink/15 bg-canvas px-4 py-2 text-sm text-ink placeholder:text-muted focus:border-accent focus:outline-none"
+          />
+          <button type="submit" id="svc-chat-send" class="btn-accent shrink-0 px-4! py-2! text-sm">Send</button>
+        </form>
+      </dialog>
+
+      <!-- voice modal -->
+      <dialog id="voice-modal" class="ai-modal" aria-label="Live AI voice demo">
+        <div class="modal-head">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Talk to our AI</p>
+          <button type="button" class="modal-close" aria-label="Close voice demo">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
+          </button>
+        </div>
+        <p class="mt-2 text-left text-sm leading-relaxed text-muted">
+          Ask about web design, SEO, or AI search. Kai can also set up a call
+          with Alex. Your browser will ask for microphone access.
+        </p>
+        <div id="voice-agent-mount" class="mt-auto">
+          <elevenlabs-convai agent-id="agent_2101ky8y21nmeh5ah2ytbntetzhm"></elevenlabs-convai>
+          <script is:inline src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+        </div>
+      </dialog>
+
+      <div data-ai="link" class="mt-12">
+        <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+          Want a project brief instead? Scope it on the contact page &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · Hosting: the honest one, centered, with straight answers below -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-28">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 data-animate="type-settle" class="font-display text-4xl leading-tight md:text-6xl">
+        Do you really need to <span class="text-accent">pay for hosting?</span>
+      </h2>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+        Honestly? Most businesses don't. A well-built site runs on modern
+        global infrastructure for little to nothing a month, and that's how we
+        ship every build. If you're paying monthly fees for a site that
+        rarely changes, talk to us about a one-time build and retire the
+        hosting bill you never needed.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-8">
+        <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+          Ask us about a one-time build &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- straight answers -->
+    <div class="mx-auto mt-16 max-w-2xl text-left">
+      <h3 data-animate="type-settle" class="text-center font-mono text-sm font-semibold uppercase tracking-[0.2em] text-muted">Straight answers</h3>
+      <div data-animate="type-settle" data-animate-delay="0.1" class="mt-6">
+        <details class="faq-item">
+          <summary>How long does a build take?</summary>
+          <p>Most sites launch in two to six weeks depending on scope. A focused landing page moves fastest, and you'll get a real timeline in the first conversation.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What does a website cost?</summary>
+          <p>Every project is scoped to fit the business: we've done everything from fully free builds for nonprofits to ongoing large engagements. Budget bands run from under $2,000 to $10,000 and up, and you'll always know the number before we start. We only recommend work that pays for itself in added value. If you don't need it, we won't recommend it. And the quote itself? Always free.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can you work with the site I already have?</summary>
+          <p>Yes. We audit and fix existing sites, especially for accessibility. And if a rebuild would honestly be better value than patching, we'll tell you straight.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process strip: the pipeline draws itself, station by station -->
+  <section class="border-y border-ink/10 bg-surface">
+    <div id="svc-proc" class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">How it goes</h2>
+
+      <svg
+        id="svc-proc-svg"
+        class="mt-16 hidden w-full md:block"
+        viewBox="0 0 800 44"
+        fill="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="proc-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#9A3412" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#9A3412" />
+          </linearGradient>
+        </defs>
+        <line id="svc-proc-glow" x1="40" y1="22" x2="760" y2="22" stroke="#9A3412" stroke-width="8" stroke-linecap="round" opacity="0.1" />
+        <line id="svc-proc-line" x1="40" y1="22" x2="760" y2="22" stroke="url(#proc-grad)" stroke-width="2" stroke-linecap="round" />
+        <circle class="svc-ring" cx="40" cy="22" r="13" stroke="#9A3412" stroke-width="1" opacity="0.3" />
+        <circle class="svc-ring" cx="280" cy="22" r="13" stroke="#9A3412" stroke-width="1" opacity="0.3" />
+        <circle class="svc-ring" cx="520" cy="22" r="13" stroke="#9A3412" stroke-width="1" opacity="0.3" />
+        <circle class="svc-ring" cx="760" cy="22" r="13" stroke="#9A3412" stroke-width="1" opacity="0.3" />
+        <rect class="svc-dot" x="34.5" y="16.5" width="11" height="11" rx="2.5" fill="#9A3412" />
+        <rect class="svc-dot" x="274.5" y="16.5" width="11" height="11" rx="2.5" fill="#9A3412" />
+        <rect class="svc-dot" x="514.5" y="16.5" width="11" height="11" rx="2.5" fill="#9A3412" />
+        <rect class="svc-dot" x="754.5" y="16.5" width="11" height="11" rx="2.5" fill="#9A3412" />
+      </svg>
+
+      <ol class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 md:mt-8 md:grid-cols-4">
+        {process.map((step) => (
+          <li data-proc="step">
+            <p class="font-display text-2xl md:text-3xl">{step.label}</p>
+            <p class="mt-3 text-muted">{step.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="px-6 pb-40 pt-24 md:pt-32">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.05]">
+        Let's build something that <span class="text-accent">performs.</span>
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.15" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a project</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Process stations: faceted diamonds on a gradient rail. */
+  .svc-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: rotate(45deg);
+  }
+  .svc-ring {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* Straight answers accordion */
+  .faq-item {
+    border-top: 1px solid rgb(34 28 21 / 0.1);
+  }
+  .faq-item:last-child {
+    border-bottom: 1px solid rgb(34 28 21 / 0.1);
+  }
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.05rem 0.25rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary::after {
+    content: '+';
+    flex: none;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--color-accent);
+    transition: transform var(--dur-fast) ease;
+  }
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .faq-item > p {
+    padding: 0 0.25rem 1.15rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  /* Fanned client screenshots. Fixed frame aspect with top-cropped covers
+     so tall page captures read as tidy browser windows. */
+  .svc-shot {
+    position: absolute;
+    width: 74%;
+    aspect-ratio: 16 / 11;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    background: var(--color-surface);
+    box-shadow:
+      0 2px 6px rgb(34 28 21 / 0.08),
+      0 24px 48px -20px rgb(34 28 21 / 0.35);
+  }
+  .svc-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .svc-shot-1 { left: 0; top: 2%; transform: rotate(-6deg); z-index: 1; }
+  .svc-shot-2 { right: 0; top: 30%; transform: rotate(4deg); z-index: 2; }
+  .svc-shot-3 { left: 7%; bottom: 2%; transform: rotate(-2deg); z-index: 3; }
+
+  /* The live search demo: query types itself, AI answer surfaces first. */
+  .seo-demo {
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 14px;
+    background: var(--color-surface);
+    padding: 1.25rem;
+    box-shadow: 0 18px 44px -22px rgb(34 28 21 / 0.3);
+  }
+  .seo-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid rgb(34 28 21 / 0.15);
+    border-radius: 9999px;
+    padding: 0.65rem 1.1rem;
+  }
+  .seo-glass {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    color: var(--color-muted);
+  }
+  .seo-query {
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .seo-caret {
+    width: 2px;
+    height: 1.1em;
+    flex: none;
+    background: var(--color-accent);
+    animation: seo-blink 1.1s steps(1) infinite;
+  }
+  @keyframes seo-blink {
+    50% { opacity: 0; }
+  }
+  .seo-results {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .seo-ai {
+    border: 1px solid rgb(154 52 18 / 0.2);
+    background: rgb(154 52 18 / 0.06);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+  }
+  .seo-ai-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .seo-spark {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+  .seo-ai-copy {
+    margin-top: 0.45rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+  .seo-hit {
+    padding: 0.7rem 0.25rem 0.2rem;
+    border-top: 1px solid rgb(34 28 21 / 0.07);
+  }
+  .seo-hit-ka {
+    border: 1px solid rgb(154 52 18 / 0.25);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+  }
+  .seo-hit-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .seo-hit-url {
+    margin-top: 0.15rem;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+  .seo-skel {
+    display: block;
+    height: 0.55rem;
+    margin: 0.35rem 0;
+    border-radius: 9999px;
+    background: rgb(34 28 21 / 0.12);
+  }
+  .seo-skel-dim {
+    background: rgb(34 28 21 / 0.07);
+  }
+  :global(.motion-reduced) .seo-caret {
+    display: none;
+  }
+
+  /* Voice agent block. The ElevenLabs widget anchors its overlay to the
+     host box — give the host a real box inside our mount so the launcher
+     seats in the section instead of floating over the page. */
+  #voice-agent-mount {
+    position: relative;
+    min-height: 11rem;
+  }
+  #voice-agent-mount :global(elevenlabs-convai) {
+    position: relative !important;
+    display: block;
+    height: 11rem;
+  }
+
+  .voice-soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid rgb(34 28 21 / 0.12);
+    border-radius: 9999px;
+    padding: 0.7rem 1.3rem;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    background: var(--color-surface);
+  }
+  .voice-mic {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--color-accent);
+  }
+
+  /* Miniature audit report — a small object, not a layout container. */
+  .a11y-audit {
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 12px;
+    background: var(--color-surface);
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 18px 44px -22px rgb(34 28 21 / 0.3);
+  }
+  .a11y-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid rgb(34 28 21 / 0.08);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+  .a11y-row:first-child {
+    border-top: 0;
+  }
+  .a11y-row > span:first-child {
+    flex: 1;
+  }
+  .a11y-val {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .a11y-tick {
+    width: 1rem;
+    height: 0.875rem;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Faint constellation of AI marks behind the AI section. The id out-ranks
+     the .ai-alive > * rule that would otherwise force it into the content
+     stacking level. */
+  #svc-ai-logos {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .ai-logo {
+    position: absolute;
+    aspect-ratio: 1;
+    fill: rgb(34 28 21 / 0.05);
+  }
+  .ai-logo-accent {
+    fill: rgb(154 52 18 / 0.07);
+  }
+
+  /* Demo launchers: open text stacks on a shared hairline, no boxes. The
+     whole stack is the click target; elevation comes from type and motion. */
+  .ai-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.5rem 0;
+    text-align: left;
+    cursor: pointer;
+    transition: transform var(--dur-fast) var(--ease-out-expo);
+  }
+  @media (min-width: 640px) {
+    .ai-tile { padding: 0.5rem 2.5rem; }
+    .ai-tile:first-child { padding-left: 1rem; }
+  }
+  .ai-tile:hover {
+    transform: translateY(-3px);
+  }
+  .tile-arr {
+    display: inline-block;
+    transition: transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .ai-tile:hover .tile-arr {
+    transform: translateX(5px);
+  }
+  .tile-kicker {
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .tile-title {
+    font-size: 1.5rem;
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+  .tile-copy {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+  .tile-cta {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+  }
+  .ai-tile:hover .tile-cta {
+    color: var(--color-accent-hot);
+  }
+
+  /* Same-size modals for both demos. */
+  .ai-modal {
+    margin: auto;
+    width: 26rem;
+    max-width: calc(100vw - 2rem);
+    height: 30rem;
+    max-height: calc(100vh - 4rem);
+    display: none;
+    flex-direction: column;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 16px;
+    background: var(--color-surface);
+    padding: 1.4rem 1.5rem;
+    box-shadow:
+      0 24px 80px -24px rgb(34 28 21 / 0.4),
+      0 0 60px -20px rgb(154 52 18 / 0.25);
+    color: var(--color-ink);
+  }
+  .ai-modal[open] {
+    display: flex;
+  }
+  .ai-modal::backdrop {
+    background: rgb(34 28 21 / 0.4);
+    backdrop-filter: blur(6px);
+  }
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    margin-bottom: 0.9rem;
+    border-bottom: 1px solid rgb(34 28 21 / 0.08);
+  }
+  .modal-close {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    color: var(--color-muted);
+    transition: color var(--dur-fast) ease, background var(--dur-fast) ease;
+  }
+  .modal-close:hover {
+    color: var(--color-ink);
+    background: rgb(34 28 21 / 0.06);
+  }
+  .chat-bub {
+    border-radius: 16px;
+    padding: 0.75rem 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    width: fit-content;
+    color: var(--color-ink);
+  }
+  .chat-q {
+    background: rgb(34 28 21 / 0.06);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .chat-a {
+    background: rgb(154 52 18 / 0.08);
+    border: 1px solid rgb(154 52 18 / 0.16);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .chat-typing {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 0.85rem 1rem;
+  }
+  .chat-typing span {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--color-accent);
+    animation: chat-dot 1.3s ease-in-out infinite;
+  }
+  .chat-typing span:nth-child(2) { animation-delay: 0.18s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes chat-dot {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-3px); }
+  }
+  :global(.motion-reduced) .chat-typing span { animation: none; }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // — Live text chat (runs regardless of motion preference): same backend
+  // as the site guide, seeded with the demo exchange.
+  {
+    const msgs = document.getElementById('svc-chat-msgs');
+    const form = document.getElementById('svc-chat-form') as HTMLFormElement;
+    const input = document.getElementById('svc-chat-input') as HTMLInputElement;
+    const send = document.getElementById('svc-chat-send') as HTMLButtonElement;
+    const history: { role: 'user' | 'assistant'; content: string }[] = [
+      { role: 'user', content: 'What would AI actually do on our site?' },
+      { role: 'assistant', content: 'Good question. Assistants that answer visitors and qualify leads are the proven win. What does your team spend the most time answering?' },
+    ];
+    let busy = false;
+
+    const bubble = (cls: string, text?: string) => {
+      const div = document.createElement('div');
+      div.className = `chat-bub ${cls}`;
+      if (text) div.textContent = text;
+      msgs?.appendChild(div);
+      if (msgs) msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    };
+
+    // modal open/close for both demos
+    const bindModal = (btnId: string, dlgId: string, onOpen?: () => void) => {
+      const dlg = document.getElementById(dlgId) as HTMLDialogElement | null;
+      document.getElementById(btnId)?.addEventListener('click', () => {
+        dlg?.showModal();
+        onOpen?.();
+      });
+      dlg?.querySelector('.modal-close')?.addEventListener('click', () => dlg.close());
+      dlg?.addEventListener('click', (e) => {
+        if (e.target === dlg) dlg.close(); // backdrop click
+      });
+    };
+    bindModal('open-chat-demo', 'chat-modal', () => input?.focus());
+    bindModal('open-voice-demo', 'voice-modal');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text || busy) return;
+      input.value = '';
+      bubble('chat-q', text);
+      history.push({ role: 'user', content: text });
+      busy = true;
+      send.disabled = true;
+      const typing = bubble('chat-a chat-typing');
+      typing.innerHTML = '<span></span><span></span><span></span>';
+      try {
+        const res = await fetch('/api/guide', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history.slice(-20) }),
+        });
+        const data = await res.json();
+        typing.remove();
+        if (res.ok && data.reply) {
+          bubble('chat-a', data.reply);
+          history.push({ role: 'assistant', content: data.reply });
+        } else {
+          throw new Error('unavailable');
+        }
+      } catch {
+        typing.remove();
+        bubble('chat-a', "I'm having trouble right now. Reach us directly on the contact page and we'll reply within 24 hours.");
+      } finally {
+        busy = false;
+        send.disabled = false;
+        input.focus();
+      }
+    });
+  }
+
+  if (!reduced) {
+    gsap.registerPlugin(ScrollTrigger);
+    const once = (trigger) => ({ scrollTrigger: { trigger, start: 'top 78%' } });
+
+    // — Purpose-built websites: headline unmasks, then the client shots
+    // land on the desk one by one, settling into their tilt.
+    const web = document.getElementById('svc-web');
+    gsap.timeline(once(web))
+      .from(web.querySelector('[data-web="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' })
+      .from(web.querySelectorAll('.svc-shot'), {
+        y: 60, opacity: 0, rotation: 0, scale: 1.04,
+        duration: 0.7, stagger: 0.14, ease: 'expo.out',
+      }, '-=0.35');
+
+    // — SEO & AI search: the search happens live. Query types itself out,
+    // the AI answer surfaces first, then the results — client on top.
+    const seo = document.getElementById('svc-seo');
+    const queryEl = document.getElementById('seo-query');
+    const fullQuery = queryEl.textContent;
+    queryEl.textContent = '';
+    const typeProxy = { p: 0 };
+    gsap.timeline(once(seo))
+      .from(seo.querySelector('.seo-demo'), { y: 40, opacity: 0, duration: 0.6, ease: 'expo.out' })
+      .to(typeProxy, {
+        p: 1, duration: 1.4, ease: 'none',
+        onUpdate: () => { queryEl.textContent = fullQuery.slice(0, Math.round(typeProxy.p * fullQuery.length)); },
+      }, '-=0.1')
+      .from(seo.querySelector('[data-seo="ai"]'), { opacity: 0, y: 14, duration: 0.45, ease: 'power2.out' }, '+=0.2')
+      .from(seo.querySelectorAll('[data-seo="hit"]'), { opacity: 0, y: 12, duration: 0.35, stagger: 0.12, ease: 'power2.out' }, '-=0.1');
+
+    // — Accessibility: the audit report checks itself off. Rows slide in,
+    // then each tick draws its stroke — verification you can watch.
+    const a11y = document.getElementById('svc-a11y');
+    const ticks = [...a11y.querySelectorAll('.a11y-tick path')];
+    ticks.forEach((p) => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+    });
+    gsap.timeline(once(a11y))
+      .from(a11y.querySelector('[data-a11y="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' })
+      .from(a11y.querySelectorAll('.a11y-row'), {
+        x: -20, opacity: 0,
+        duration: 0.4, stagger: 0.12, ease: 'power2.out',
+      }, '-=0.3')
+      .to(ticks, {
+        strokeDashoffset: 0,
+        duration: 0.35, stagger: 0.12, ease: 'power2.out',
+      }, '-=0.5');
+
+    // — AI integration: the accent phrase sharpens from a blur, then the
+    // mini conversation plays out like the real assistant answering.
+    const ai = document.getElementById('svc-ai');
+    gsap.timeline(once(ai))
+      .from(ai.querySelector('[data-ai="word-a"]'), { opacity: 0, y: 14, duration: 0.4, ease: 'power2.out' }, 0.1)
+      .from(ai.querySelector('[data-ai="word-b"]'), { opacity: 0, filter: 'blur(10px)', duration: 0.7, ease: 'power2.out' }, 0.25)
+      .from(ai.querySelector('[data-ai="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, 0.45)
+      .from(ai.querySelectorAll('.ai-tile'), {
+        y: 26, opacity: 0,
+        duration: 0.5, stagger: 0.15, ease: 'power2.out',
+      }, 0.6)
+      .from(ai.querySelector('[data-ai="link"]'), { opacity: 0, duration: 0.35 }, 1.0);
+
+    // — Process: the pipeline draws itself. The connector line travels left
+    // to right; each station's dot pops and its label rises exactly when
+    // the line arrives.
+    const proc = document.getElementById('svc-proc');
+    const line = document.getElementById('svc-proc-line');
+    const glow = document.getElementById('svc-proc-glow');
+    const dots = [...proc.querySelectorAll('.svc-dot')];
+    const rings = [...proc.querySelectorAll('.svc-ring')];
+    const steps = [...proc.querySelectorAll('[data-proc="step"]')];
+    const svgVisible = line && getComputedStyle(document.getElementById('svc-proc-svg')).display !== 'none';
+
+    if (svgVisible) {
+      [line, glow].forEach((l) => {
+        const len = l.getTotalLength();
+        l.style.strokeDasharray = len;
+        l.style.strokeDashoffset = len;
+      });
+      const DRAW = 1.5;
+      // station beat: when the rail tip reaches each station (rail runs 40→760)
+      const beat = (x) => DRAW * ((x - 40) / 720);
+      const tl = gsap.timeline(once(proc));
+      tl.to([line, glow], { strokeDashoffset: 0, duration: DRAW, ease: 'none' }, 0);
+      dots.forEach((dot, i) => {
+        const t = beat(+rings[i].getAttribute('cx'));
+        tl.from(rings[i], { scale: 0, opacity: 0, duration: 0.4, ease: 'power2.out' }, t);
+        tl.from(dot, { scale: 0, duration: 0.4, ease: 'back.out(2.2)' }, t + 0.05);
+        tl.from(steps[i], { y: 22, opacity: 0, duration: 0.5, ease: 'power2.out' }, t + 0.1);
+      });
+    } else {
+      gsap.from(steps, {
+        y: 22, opacity: 0, duration: 0.5, stagger: 0.12, ease: 'power2.out',
+        scrollTrigger: { trigger: proc, start: 'top 80%' },
+      });
+    }
+  }
+</script>

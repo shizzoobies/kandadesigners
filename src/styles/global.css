@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+/* Type stack (all self-hosted):
+   Display: New Black (Envato) — clean geometric sans, easy to read at size.
+   Body/UI: Atkinson Hyperlegible Next (OFL) — the Braille Institute's
+   legibility face; unambiguous letterforms for an accessibility-first studio.
+   Labels: Lenia Mono (Envato) — geometric monospace for kickers and
+   caps-lines; the precise, technical layer. */
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/AtkinsonNext-VF.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/AtkinsonNext-Italic-VF.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "New Black";
+  src: url("/fonts/NewBlack-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "New Black";
+  src: url("/fonts/NewBlack-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lenia Mono";
+  src: url("/fonts/LeniaMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lenia Mono";
+  src: url("/fonts/LeniaMono-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Earthen Sophisticate palette. Warm neutral canvas, espresso ink; rust is
+   the AA-safe accent for text and details (amber primary fails contrast as
+   text, so it lives on buttons and highlights with espresso text on top).
+   The teal family lives in .dark-band. */
+@theme {
+  --color-canvas: #F8F5F2;
+  --color-surface: #FFFDF9;
+  --color-ink: #221C15;
+  --color-muted: #6C635A;
+  --color-accent: #9A3412;
+  --color-accent-hot: #7C2D12;
+  --color-amber: #D97706;
+  --font-display: "New Black", "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-heading: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-mono: "Lenia Mono", ui-monospace, monospace;
+}
+
+/* Display type defaults to New Black SemiBold; any font-weight utility can
+   still override per element. */
+@layer base {
+  .font-display {
+    font-weight: 600;
+  }
+}
+
+:root {
+  --dur-fast: 0.4s;
+  --dur-base: 0.8s;
+  --dur-slow: 1.4s;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #FFFDF9;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* The single elevation treatment used site-wide: warm card lift with a
+   faint violet ambient so the frames still feel branded. */
+.glow-frame {
+  border: 1px solid rgb(34 28 21 / 0.08);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgb(34 28 21 / 0.05),
+    0 12px 32px -12px rgb(34 28 21 / 0.16),
+    0 24px 64px -32px rgb(19 78 74 / 0.25);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+/* The one deliberate dark moment on the site (homepage AI band). Re-declares
+   the theme variables locally, so every token utility inside adapts. */
+.dark-band {
+  --color-canvas: #0B302D;
+  --color-surface: #134E4A;
+  --color-ink: #F0F7F5;
+  --color-muted: #9FBEB8;
+  --color-accent: #5EEAD4;
+  --color-accent-hot: #99F6E4;
+  background: linear-gradient(180deg, #0B302D 0%, #134E4A 100%);
+  color: var(--color-ink);
+}
+.dark-band .glow-frame {
+  border-color: rgb(94 234 212 / 0.25);
+  box-shadow: 0 0 60px -20px rgb(94 234 212 / 0.35);
+}
+.dark-band .btn-accent {
+  color: #221C15;
+}
+
+@layer components {
+  .btn-accent {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #221C15;
+    background: var(--color-amber);
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    transition: background var(--dur-fast) var(--ease-out-expo), color var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .btn-accent:hover {
+    background: #9A3412;
+    color: #FFFDF9;
+    transform: translateY(-2px);
+  }
+  .btn-ghost {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    border: 1px solid rgb(34 28 21 / 0.25);
+    border-radius: 9999px;
+    padding: 0.75rem 1.5rem;
+    transition: border-color var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+  /* Shared form input treatment (contact page, start-project modal). */
+  .field {
+    width: 100%;
+    background: var(--color-canvas);
+    border: 1px solid rgb(34 28 21 / 0.14);
+    border-radius: 8px;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0.85rem 1rem;
+    transition: border-color var(--dur-fast) var(--ease-out-expo),
+      box-shadow var(--dur-fast) var(--ease-out-expo);
+  }
+  .field::placeholder {
+    color: var(--color-muted);
+    opacity: 0.7;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgb(217 119 6 / 0.2);
+  }
+  .field-area {
+    resize: vertical;
+    min-height: 9rem;
+  }
+}
+
+/* Ambient background: blurred color fields drifting slowly behind every
+   page so the canvas never reads flat. Transform-only, GPU-cheap. */
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-ambient .blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+}
+.bg-ambient .blob-a {
+  width: 44vw;
+  height: 44vw;
+  left: -10vw;
+  top: -12vw;
+  background: radial-gradient(circle, rgb(19 78 74 / 0.16), transparent 65%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+.bg-ambient .blob-b {
+  width: 38vw;
+  height: 38vw;
+  right: -8vw;
+  top: 20vh;
+  background: radial-gradient(circle, rgb(224 122 95 / 0.14), transparent 65%);
+  animation: drift-b 34s ease-in-out infinite alternate;
+}
+.bg-ambient .blob-c {
+  width: 42vw;
+  height: 42vw;
+  left: 22vw;
+  bottom: -16vw;
+  background: radial-gradient(circle, rgb(19 78 74 / 0.1), transparent 65%);
+  animation: drift-c 40s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  to { transform: translate(8vw, 6vh) scale(1.12); }
+}
+@keyframes drift-b {
+  to { transform: translate(-7vw, -8vh) scale(1.18); }
+}
+@keyframes drift-c {
+  to { transform: translate(6vw, -7vh) scale(1.06); }
+}
+.motion-reduced .bg-ambient .blob {
+  animation: none;
+}
+
+/* AI sections breathe: slow-drifting blurred orbs behind the content and a
+   gentle pulse on accent words. Transform-only loops, compositor-cheap. */
+.ai-alive {
+  position: relative;
+  overflow: hidden;
+}
+.ai-alive > * {
+  position: relative;
+  z-index: 1;
+}
+.ai-alive::before,
+.ai-alive::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  border-radius: 9999px;
+  filter: blur(60px);
+  pointer-events: none;
+}
+.ai-alive::before {
+  width: 46%;
+  aspect-ratio: 1;
+  left: -8%;
+  top: -22%;
+  background: radial-gradient(circle, rgb(19 78 74 / 0.2), transparent 65%);
+  animation: ai-drift-a 14s ease-in-out infinite alternate;
+}
+.ai-alive::after {
+  width: 58%;
+  aspect-ratio: 1;
+  right: -14%;
+  bottom: -32%;
+  background: radial-gradient(circle, rgb(154 52 18 / 0.15), transparent 65%);
+  animation: ai-drift-b 19s ease-in-out infinite alternate;
+}
+.ai-alive-dark::before {
+  background: radial-gradient(circle, rgb(94 234 212 / 0.3), transparent 65%);
+}
+.ai-alive-dark::after {
+  background: radial-gradient(circle, rgb(153 246 228 / 0.16), transparent 65%);
+}
+@keyframes ai-drift-a {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(14%, 16%) scale(1.28); }
+}
+@keyframes ai-drift-b {
+  from { transform: translate(0, 0) scale(1.18); }
+  to { transform: translate(-12%, -14%) scale(0.94); }
+}
+.ai-pulse {
+  animation: ai-word-breathe 5.5s ease-in-out infinite;
+}
+@keyframes ai-word-breathe {
+  0%, 100% { text-shadow: 0 0 0 rgb(94 234 212 / 0); }
+  50% { text-shadow: 0 0 28px rgb(94 234 212 / 0.5); }
+}
+.motion-reduced .ai-alive::before,
+.motion-reduced .ai-alive::after,
+.motion-reduced .ai-pulse {
+  animation: none;
+}
+
+/* Nav state toggled by the motion engine on scroll: transparent over the
+   hero, solid once moving. The logo starts oversized and shrinks/drops
+   into the bar as the solid nav arrives. */
+[data-nav] {
+  transition: background-color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  border-bottom: 1px solid transparent;
+}
+[data-nav].nav-scrolled {
+  background: rgb(248 245 242 / 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom-color: rgb(34 28 21 / 0.08);
+}
+.nav-logo {
+  transform-origin: left center;
+  transform: scale(1.8) translateY(10px);
+  transition: transform 0.5s var(--ease-out-expo);
+}
+[data-nav].nav-scrolled .nav-logo {
+  transform: scale(1) translateY(0);
+}
+.motion-reduced .nav-logo {
+  transition: none;
+}
+
+/* Coming-soon ribbon over artist profiles awaiting portfolios. Sits inside
+   a .glow-frame figure; the frame's overflow clip trims it to a clean band. */
+.coming-ribbon {
+  position: absolute;
+  inset-inline: -8%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-5deg);
+  background: var(--color-accent);
+  color: #fffdf9;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.6rem 0;
+  box-shadow: 0 10px 30px -12px rgb(154 52 18 / 0.5);
+}
+
+/* Brand mark renders in its original colors on the light canvas. The class
+   stays so a future dark context can re-apply a treatment in one place. */
+.logo-white {
+  filter: none;
+}
+
+/* Reduced motion: everything visible and static. */
+.motion-reduced [data-animate],
+.motion-reduced [data-pin-step] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+/* Pinned steps are absolutely stacked for the scrub timeline; lay them out
+   as a normal vertical flow when motion is off. */
+.motion-reduced [data-pin-sequence] {
+  height: auto !important;
+  overflow: visible !important;
+}
+.motion-reduced [data-pin-viewport] {
+  position: static !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+.motion-reduced [data-pin-step] {
+  position: static !important;
+  padding: 3rem 1.5rem;
+}
+.motion-reduced svg[data-animate="line-draw"] * {
+  stroke-dasharray: none !important;
+  stroke-dashoffset: 0 !important;
+}

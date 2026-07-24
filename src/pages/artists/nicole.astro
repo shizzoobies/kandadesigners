@@ -1,0 +1,7 @@
+---
+import ArtistLayout from '../../layouts/ArtistLayout.astro';
+import { artists } from '../../data/artists.js';
+
+const artist = artists.find((a) => a.slug === 'nicole');
+---
+<ArtistLayout artist={artist} />

@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScopeChat from '../../components/ScopeChat.astro';
+---
+<BaseLayout
+  title="Contact | K & A Performance"
+  description="Start a project with K & A Performance. Scope it with our AI in minutes, or send us a message directly. We reply within 24 hours."
+>
+  <!-- Editorial header -->
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-16 md:pt-48 md:pb-24">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">Start a project</p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
+      Let's build <span class="text-accent">yours.</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Two ways in. Scope your project with our AI and get a working brief in
+      minutes, or write to us directly. We read every word and reply within 24
+      hours. Scoping and quotes are always free.
+    </p>
+    <!-- The people who actually reply — not a ticket queue. -->
+    <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10 flex items-center gap-4">
+      <div class="flex -space-x-3">
+        <span class="team-avatar">
+          <img src="/images/Alex-Image.webp" alt="Alex, co-founder of K & A Performance" class="team-avatar-img team-avatar-alex" loading="lazy" />
+        </span>
+        <span class="team-avatar">
+          <img src="/images/Kristina-Image.webp" alt="Kristina, co-founder of K & A Performance" class="team-avatar-img team-avatar-kristina" loading="lazy" />
+        </span>
+      </div>
+      <p class="text-sm leading-snug text-muted">
+        You'll hear back from <span class="font-semibold text-ink">Alex &amp; Kristina</span>,<br class="hidden sm:block" />
+        the two of us, not a ticket queue.
+      </p>
+    </div>
+  </section>
+
+  <!-- Two paths -->
+  <section class="mx-auto max-w-6xl px-6 pb-40 md:pb-48">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 lg:items-stretch">
+
+      <!-- Path A: AI scoping (Task 9 mounts the chat inside #scope) -->
+      <section data-animate="frame-lift" id="scope" class="glow-frame ai-alive flex flex-col p-8 md:p-10 scroll-mt-28">
+        <p class="font-mono text-sm uppercase tracking-[0.3em] text-accent">Fastest way</p>
+        <h2 class="mt-6 font-display text-3xl leading-tight md:text-4xl">
+          Scope it with our <span class="text-accent">AI</span>
+        </h2>
+        <p class="mt-6 text-lg leading-relaxed text-muted">
+          Answer a few questions, get a project scope in minutes.
+        </p>
+
+        <div id="scope-chat-root" class="mt-8 flex min-h-[22rem] flex-1 flex-col">
+          <ScopeChat />
+        </div>
+      </section>
+
+      <!-- Path B: classic form -->
+      <div data-animate="frame-lift" data-animate-delay="0.1" class="glow-frame flex flex-col p-8 md:p-10">
+        <p class="font-mono text-sm uppercase tracking-[0.3em] text-muted">Rather just write?</p>
+        <h2 class="mt-6 font-display text-3xl leading-tight md:text-4xl">Send a message</h2>
+        <p class="mt-6 text-lg leading-relaxed text-muted">
+          Tell us about the project: goals, timeline, budget. A real reply, not
+          a form letter.
+        </p>
+
+        <form id="contact-form" class="mt-8 flex flex-1 flex-col gap-6" novalidate>
+          <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
+          <input type="hidden" name="subject" value="New lead | ka-performancefl.com" />
+          <input type="hidden" name="from_name" value="K & A Performance Website" />
+          <!-- Honeypot: hidden from humans, bots fill it and get filtered. -->
+          <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <div>
+            <label for="name" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Name</label>
+            <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your name" class="field" />
+          </div>
+
+          <div>
+            <label for="email" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" class="field" />
+          </div>
+
+          <div class="flex flex-1 flex-col">
+            <label for="message" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Message</label>
+            <textarea id="message" name="message" required rows="5" placeholder="What are you looking to build?" class="field field-area flex-1"></textarea>
+          </div>
+
+          <button type="submit" id="contact-submit" class="btn-accent w-full text-center">Send message</button>
+          <!-- Polite live region: announces the pending state without stealing focus. -->
+          <p id="form-status" class="sr-only" role="status" aria-live="polite"></p>
+          <p id="form-error" tabindex="-1" class="hidden text-sm leading-relaxed text-muted" role="alert">
+            Something went wrong sending that. Please email us directly at
+            <a href="mailto:alex@ka-performancefl.com" class="text-accent underline transition-colors hover:text-accent-hot">alex@ka-performancefl.com</a>
+            and we'll pick it up.
+          </p>
+        </form>
+
+        <!-- Inline success state (replaces the form on success). -->
+        <div id="form-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-1 flex-col justify-center">
+          <h3 class="font-display text-3xl leading-tight md:text-4xl">Message received.</h3>
+          <p class="mt-6 text-lg leading-relaxed text-muted">
+            Thanks for reaching out. We'll be in touch within 24 hours. If it's
+            urgent, email us at
+            <a href="mailto:alex@ka-performancefl.com" class="text-accent underline transition-colors hover:text-accent-hot">alex@ka-performancefl.com</a>.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* The source photos are full-body candids; zoom each circle to the face.
+     transform-origin matches object-position so the face stays anchored. */
+  .team-avatar {
+    display: block;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 2px solid var(--color-surface);
+    box-shadow: 0 2px 8px rgb(34 28 21 / 0.18);
+    background: var(--color-canvas);
+  }
+  .team-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .team-avatar-alex {
+    object-position: 48% 30%;
+    transform: scale(2.4);
+    transform-origin: 48% 30%;
+  }
+  .team-avatar-kristina {
+    object-position: 55% 26%;
+    transform: scale(2.4);
+    transform-origin: 55% 26%;
+  }
+
+  /* .field styles are global now (shared with the start-project modal). */
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const successEl = document.getElementById('form-success');
+  const errorEl = document.getElementById('form-error');
+  const statusEl = document.getElementById('form-status');
+  const btn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+
+  if (form && btn) {
+    const original = btn.textContent;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      errorEl?.classList.add('hidden');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      if (statusEl) statusEl.textContent = 'Sending your message…';
+
+      const data: Record<string, string> = {};
+      new FormData(form).forEach((value, key) => {
+        data[key] = String(value);
+      });
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          if (statusEl) statusEl.textContent = '';
+          form.classList.add('hidden');
+          successEl?.classList.remove('hidden');
+          successEl?.classList.add('flex');
+          // Move keyboard/SR focus to the outcome, not the now-hidden button.
+          (successEl as HTMLElement | null)?.focus();
+        } else {
+          throw new Error(result.message || 'Submission failed');
+        }
+      } catch {
+        if (statusEl) statusEl.textContent = '';
+        errorEl?.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = original;
+        // Land focus on the error message so it isn't missed.
+        (errorEl as HTMLElement | null)?.focus();
+      }
+    });
+  }
+</script>

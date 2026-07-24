@@ -1,0 +1,86 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+const { artist } = Astro.props;
+---
+<BaseLayout
+  title={`${artist.name} | Artist Collaborations | K & A Performance`}
+  description={`${artist.name}: ${artist.discipline}. Original artwork commissioned and art-directed through K & A Performance.`}
+>
+  <!-- Portrait hero -->
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-20 md:pt-48">
+    <div class="grid items-center gap-12 md:grid-cols-2 md:gap-16">
+      <figure data-animate="frame-lift" class="glow-frame">
+        <img
+          src={artist.portrait}
+          alt={artist.portraitAlt || `${artist.name}, ${artist.discipline}`}
+          class="aspect-[4/5] w-full object-cover"
+        />
+      </figure>
+      <div>
+        <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
+          Collaborating artist
+        </p>
+        <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(3rem,9vw,6.5rem)] leading-[0.98]">
+          {artist.name}
+        </h1>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 font-mono text-sm uppercase tracking-[0.3em] text-muted">
+          {artist.discipline}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bio -->
+  <section class="mx-auto max-w-3xl px-6 pb-8">
+    <p data-animate="type-settle" class="text-lg leading-relaxed text-muted">
+      {artist.bio}
+    </p>
+  </section>
+
+  <!-- Style statement pull-quote -->
+  <section class="mx-auto max-w-4xl px-6 py-20 md:py-28">
+    <blockquote data-animate="type-settle" class="border-l-2 border-accent pl-8">
+      <p class="font-display text-3xl leading-tight md:text-5xl">
+        {artist.statement}
+      </p>
+    </blockquote>
+  </section>
+
+  <!-- Gallery -->
+  <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
+    <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Selected work</h2>
+    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {artist.gallery.map((item) => (
+        <figure data-animate="flood-in" class="glow-frame">
+          <img
+            src={item.src}
+            alt={item.alt}
+            class="aspect-[4/5] w-full object-cover"
+            loading="lazy"
+          />
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA band: every engagement routes through K & A -->
+  <section class="border-y border-ink/10 bg-surface">
+    <div class="mx-auto max-w-4xl px-6 py-28 text-center md:py-36">
+      <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
+        Commission through K &amp; A
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-8 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.05]">
+        Want work like this in your <span class="text-accent">build?</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.2" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        Every collaboration is commissioned, art-directed, and delivered through
+        K &amp; A: one point of contact, one standard, one invoice. Tell us what
+        you have in mind and we&rsquo;ll bring the right artist to your project.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a commission</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
