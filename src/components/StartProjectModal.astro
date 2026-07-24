@@ -24,8 +24,8 @@ import ScopeChat from './ScopeChat.astro';
     <ScopeChat />
   </div>
 
-  <div id="sp-panel-form" class="sp-panel hidden min-h-0 flex-1 flex-col overflow-y-auto" role="tabpanel" aria-labelledby="sp-tab-form">
-    <form id="sp-form" class="flex flex-1 flex-col gap-4" novalidate>
+  <div id="sp-panel-form" data-lenis-prevent class="sp-panel hidden min-h-0 flex-1 flex-col overflow-y-auto" role="tabpanel" aria-labelledby="sp-tab-form">
+    <form id="sp-form" class="flex flex-1 flex-col gap-3" novalidate>
       <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
       <input type="hidden" name="subject" value="New lead | ka-performancefl.com" />
       <input type="hidden" name="from_name" value="K & A Performance Website" />
@@ -41,7 +41,7 @@ import ScopeChat from './ScopeChat.astro';
       </div>
       <div class="flex flex-1 flex-col">
         <label for="sp-message" class="mb-2 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Message</label>
-        <textarea id="sp-message" name="message" required rows="4" placeholder="What are you looking to build?" class="field field-area flex-1 min-h-[6rem]!"></textarea>
+        <textarea id="sp-message" name="message" required rows="3" placeholder="What are you looking to build?" class="field field-area flex-1 min-h-[4.5rem]!"></textarea>
       </div>
 
       <button type="submit" id="sp-submit" class="btn-accent w-full text-center">Send message</button>

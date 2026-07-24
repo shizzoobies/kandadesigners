@@ -177,7 +177,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 <div id="scroll-rail" class="pointer-events-none fixed left-6 top-1/2 z-40 hidden h-[68vh] -translate-y-1/2 lg:block" aria-hidden="true">
   <div id="scroll-rail-inner" class="relative h-full w-[3px]">
     <div class="rail-track"></div>
-    <div id="scroll-rail-fill" class="rail-fill"></div>
+    <div id="scroll-rail-glow" class="rail-glow"></div>
   </div>
 </div>
 
@@ -314,16 +314,22 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   .rail-track {
     position: absolute;
     inset: 0;
+    width: 1px;
+    left: 1px;
     border-radius: 9999px;
-    background: rgb(34 28 21 / 0.12);
+    background: rgb(34 28 21 / 0.08);
   }
-  .rail-fill {
+  /* not a progress bar: a soft glow that rides the hairline at your depth */
+  .rail-glow {
     position: absolute;
-    inset: 0;
+    left: 50%;
+    top: 0;
+    width: 3px;
+    height: 18%;
+    transform: translateX(-50%);
     border-radius: 9999px;
-    background: var(--color-accent);
-    transform: scaleY(0);
-    transform-origin: top;
+    background: linear-gradient(180deg, transparent, rgb(154 52 18 / 0.75) 50%, transparent);
+    box-shadow: 0 0 14px 2px rgb(154 52 18 / 0.28);
   }
   :global(.motion-reduced) #scroll-rail {
     display: none;
@@ -624,7 +630,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     // progress rail; scrolling back to the top hands it back.
     const cue = document.getElementById('scroll-cue');
     const railInner = document.getElementById('scroll-rail-inner');
-    const railFill = document.getElementById('scroll-rail-fill');
+    const railGlow = document.getElementById('scroll-rail-glow');
     if (cue && railInner) {
       gsap.set(railInner, { scaleY: 0, transformOrigin: 'top' });
       cueTl = gsap.timeline({ paused: true });
@@ -644,12 +650,12 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         })
         .to(railInner, { opacity: 1, scaleY: 1, duration: 0.7, ease: 'expo.out' }, '-=0.2');
     }
-    // rail fill tracks whole-page depth
-    if (railFill) {
-      gsap.to(railFill, {
-        scaleY: 1,
+    // the glow drifts down the hairline to match page depth
+    if (railGlow) {
+      gsap.to(railGlow, {
+        y: () => railInner.offsetHeight - railGlow.offsetHeight,
         ease: 'none',
-        scrollTrigger: { start: 0, end: 'max', scrub: 0.3 },
+        scrollTrigger: { start: 0, end: 'max', scrub: 0.4, invalidateOnRefresh: true },
       });
     }
   } else {
