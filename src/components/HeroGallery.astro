@@ -136,6 +136,13 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
           </div>
         ))}
       </div>
+      <!-- ring arrows: flank the gallery at mid-height -->
+      <button type="button" id="hg-prev" class="hg-arrow hg-arrow-side hg-arrow-left" aria-label="Previous project">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4 7 10l5.5 6"/></svg>
+      </button>
+      <button type="button" id="hg-next" class="hg-arrow hg-arrow-side hg-arrow-right" aria-label="Next project">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4 13 10l-5.5 6"/></svg>
+      </button>
     </div>
 
     <!-- caption + controls: hidden until the horseshoe forms (desktop) -->
@@ -145,18 +152,10 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         <p id="hg-blurb" class="mt-2 text-sm leading-relaxed text-muted"></p>
         <p class="sr-only" id="hg-live" aria-live="polite"></p>
       </div>
-      <div class="mt-4 flex items-center justify-center gap-6">
-        <button type="button" id="hg-prev" class="hg-arrow" aria-label="Previous project">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 4 7 10l5.5 6"/></svg>
-        </button>
-        <div id="hg-dots" class="flex items-center gap-3" role="tablist" aria-label="Choose project">
-          {projects.map((p, i) => (
-            <button type="button" class="hg-dot" role="tab" data-index={i} aria-label={`Show ${p.title}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
-          ))}
-        </div>
-        <button type="button" id="hg-next" class="hg-arrow" aria-label="Next project">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 4 13 10l-5.5 6"/></svg>
-        </button>
+      <div id="hg-dots" class="mt-4 flex items-center justify-center gap-3" role="tablist" aria-label="Choose project">
+        {projects.map((p, i) => (
+          <button type="button" class="hg-dot" role="tab" data-index={i} aria-label={`Show ${p.title}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
+        ))}
       </div>
     </div>
 
@@ -223,6 +222,26 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     border-color: var(--color-accent);
     color: var(--color-accent);
   }
+  /* side arrows flank the ring at mid-height, on a soft surface puck so
+     they read over whatever card is behind them */
+  .hg-arrow-side {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 60;
+    background: rgb(255 253 249 / 0.9);
+    box-shadow: 0 6px 20px -8px rgb(34 28 21 / 0.35);
+  }
+  .hg-arrow-left {
+    left: 2%;
+  }
+  .hg-arrow-right {
+    right: 2%;
+  }
+  @media (min-width: 1024px) {
+    .hg-arrow-left { left: 4%; }
+    .hg-arrow-right { right: 4%; }
+  }
   .hg-dot {
     width: 0.55rem;
     height: 0.55rem;
@@ -276,6 +295,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   const stage = document.getElementById('hg-stage');
   const slots = [...document.querySelectorAll('.hg-slot')];
   const extras = [...document.querySelectorAll('.hg-extra')];
+  const arrows = [...document.querySelectorAll('.hg-arrow-side')];
   const dots = [...document.querySelectorAll('.hg-dot')];
   const title = document.getElementById('hg-title');
   const blurb = document.getElementById('hg-blurb');
@@ -287,7 +307,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   const n = projects.length;
   const R = isDesktop ? 520 : 260;
   const STEP = 36; // degrees between slots
-  const OPACITY = [1, 0.85, 0.55, 0]; // rel ±3 sits past 90° — hidden
+  const OPACITY = [1, 0.94, 0.8, 0]; // rel ±3 sits past 90° — hidden; sides stay near-solid so the ring never reads muddled
 
   // Sloppy-stack targets: viewport-fraction offsets from center, covering
   // the whole hero. Order matches projects[].
@@ -439,13 +459,14 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
       el.style.zIndex = String(2 + (i % EXTRA_STACK.length));
     });
     gsap.set([ui, heading], { autoAlpha: 0, y: 24 });
+    gsap.set(arrows, { autoAlpha: 0 });
 
     const endPoses = slots.map((_, i) => ringPose(relOf(i, 0)));
 
     // Three acts: sweep into the horseshoe, hold as an interactive gallery,
     // then fly back into the depths and fade before the next section.
-    const LIVE_MIN = 0.62;
-    const LIVE_MAX = 0.81;
+    const LIVE_MIN = 0.6;
+    const LIVE_MAX = 0.79;
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -492,6 +513,9 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         stagger: 0.03,
         ease: 'power2.in',
       }, 0.78)
+      // painter z-order flips to ring order the moment the sweep starts, so
+      // cards land stacked correctly — front over sides, sides over rears
+      .set(slots, { zIndex: (i) => String(40 - Math.abs(relOf(i, 0)) * 10) }, 0.8)
       .to(slots, {
         x: (i) => endPoses[i].x,
         y: 0,
@@ -500,13 +524,15 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         rotation: 0,
         scale: 1,
         opacity: (i) => endPoses[i].opacity,
-        duration: 0.6,
-        stagger: 0.05,
+        duration: 0.45,
+        stagger: 0.03,
         ease: 'power2.inOut',
       }, 0.82)
-      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.12 }, 1.68)
-      .to({}, { duration: 0.5 }, 1.8) // hold: the interactive gallery band
-      .to([heading, ui], { autoAlpha: 0, y: -24, duration: 0.1 }, 2.32)
+      .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.12 }, 1.5)
+      .to(arrows, { autoAlpha: 1, duration: 0.12 }, 1.5) // fade only — y would break their CSS centering
+      .to({}, { duration: 0.5 }, 1.62) // hold: the interactive gallery band
+      .to([heading, ui], { autoAlpha: 0, y: -24, duration: 0.1 }, 2.12)
+      .to(arrows, { autoAlpha: 0, duration: 0.1 }, 2.12)
       .to(slots, {
         x: (i) => endPoses[i].x * 0.45,
         y: -70,
@@ -517,7 +543,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         duration: 0.32,
         stagger: 0.03,
         ease: 'power2.in',
-      }, 2.36);
+      }, 2.16);
   } else {
     // Mobile / reduced motion: no scatter, ring formed, UI visible.
     gsap.set(extras, { display: 'none' });
