@@ -12,16 +12,18 @@ const process = [
   title="Services — K & A Performance"
   description="Purpose-built websites, SEO & AI search, accessibility audits, AI integration, and honest answers about hosting — from K & A Performance."
 >
-  <!-- Editorial header -->
-  <section class="mx-auto max-w-6xl px-6 pt-40 pb-24 md:pt-48">
-    <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Services</p>
-    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
-      What we <span class="text-accent italic">build.</span>
+  <!-- Editorial header: centered title -->
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-24 text-center md:pt-48">
+    <h1 data-animate="type-settle" class="font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
+      Services <span class="text-accent italic">offered.</span>
     </h1>
-    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
       One standard across everything: sharp, fast, accessible, and honest.
       Scoped per project — most builds land between a focused landing page and
       a full multi-page platform.
+    </p>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-sm text-muted">
+      Don't see what you need? <a href="/contact/" class="font-semibold text-accent transition-colors hover:text-accent-hot">Just ask</a> — the answer is probably yes.
     </p>
   </section>
 
@@ -137,9 +139,11 @@ const process = [
     </div>
   </section>
 
-  <!-- 04 · AI integration — centered, with live demos -->
-  <section class="border-t border-ink/10">
-    <div id="svc-ai" class="ai-alive mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
+  <!-- 04 · AI integration — centered, live demos side by side. The
+       breathing treatment rides the full-bleed section so no box edges
+       show; only the demo objects carry frames. -->
+  <section class="ai-alive border-t border-ink/10">
+    <div id="svc-ai" class="mx-auto max-w-6xl px-6 py-20 text-center md:py-28">
       <h2 class="font-display text-3xl leading-tight md:text-5xl">
         <span data-ai="word-a">AI, where it</span> <span data-ai="word-b" class="text-accent italic">earns its place.</span>
       </h2>
@@ -152,31 +156,44 @@ const process = [
         Assistants <span class="text-accent" aria-hidden="true">&middot;</span> Automations <span class="text-accent" aria-hidden="true">&middot;</span> Content tooling
       </p>
 
-      <!-- A miniature of the real scoping assistant on /contact/ -->
-      <div class="svc-chat mx-auto mt-12 text-left" aria-hidden="true">
-        <p class="chat-label font-heading text-xs uppercase tracking-[0.25em] text-muted">Live on our contact page</p>
-        <div class="chat-bub chat-q">What would AI actually do on our site?</div>
-        <div class="chat-bub chat-a">Let's scope it. What does your team spend the most time answering?</div>
-        <div class="chat-bub chat-a chat-typing"><span></span><span></span><span></span></div>
-      </div>
+      <!-- live demos: text chat and voice agent, side by side -->
+      <div class="mx-auto mt-14 grid max-w-4xl gap-10 text-left md:grid-cols-2 md:items-stretch">
+        <div class="chat-live flex flex-col">
+          <p class="chat-label font-heading text-xs uppercase tracking-[0.25em] text-muted">Ask it in <span class="text-accent">text</span> — live demo</p>
+          <div id="svc-chat-msgs" class="mt-4 flex h-60 flex-col gap-3 overflow-y-auto pr-1" aria-live="polite">
+            <div class="chat-bub chat-q">What would AI actually do on our site?</div>
+            <div class="chat-bub chat-a">Good question — assistants that answer visitors and qualify leads are the proven win. What does your team spend the most time answering?</div>
+          </div>
+          <form id="svc-chat-form" class="mt-4 flex items-center gap-2">
+            <label for="svc-chat-input" class="sr-only">Ask our AI a question</label>
+            <input
+              type="text"
+              id="svc-chat-input"
+              placeholder="Ask about web design, SEO, AI&hellip;"
+              autocomplete="off"
+              maxlength="900"
+              class="min-w-0 flex-1 rounded-full border border-ink/15 bg-canvas px-4 py-2 text-sm text-ink placeholder:text-muted focus:border-accent focus:outline-none"
+            />
+            <button type="submit" id="svc-chat-send" class="btn-accent shrink-0 px-4! py-2! text-sm">Send</button>
+          </form>
+        </div>
 
-      <!-- Voice agent demo: ElevenLabs conversational agent mounts here
-           once the agent is provisioned (see docs/elevenlabs-agent/). -->
-      <div data-ai="voice" class="voice-demo mx-auto mt-14 max-w-xl">
-        <p class="font-heading text-sm font-semibold uppercase tracking-[0.2em] text-ink">Or just <span class="ai-pulse text-accent">talk</span> to it</p>
-        <p class="mt-3 text-muted">
-          Our voice agent answers questions about web design, SEO, and AI
-          search — and can set up a call with Alex.
-        </p>
-        <div id="voice-agent-mount" class="mt-6">
-          <elevenlabs-convai agent-id="agent_2101ky8y21nmeh5ah2ytbntetzhm"></elevenlabs-convai>
-          <script is:inline src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+        <div data-ai="voice" class="voice-demo flex flex-col">
+          <p class="chat-label font-heading text-xs uppercase tracking-[0.25em] text-muted">Or just <span class="ai-pulse text-accent">talk</span> to it</p>
+          <p class="mt-4 text-muted">
+            Our voice agent answers questions about web design, SEO, and AI
+            search — and can set up a call with Alex.
+          </p>
+          <div id="voice-agent-mount" class="mt-auto pt-6">
+            <elevenlabs-convai agent-id="agent_2101ky8y21nmeh5ah2ytbntetzhm"></elevenlabs-convai>
+            <script is:inline src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+          </div>
         </div>
       </div>
 
-      <div data-ai="link" class="mt-10">
+      <div data-ai="link" class="mt-12">
         <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
-          Try our scoping assistant on the contact page &rarr;
+          Want a project brief instead? Scope it on the contact page &rarr;
         </a>
       </div>
     </div>
@@ -452,12 +469,13 @@ const process = [
     stroke-linejoin: round;
   }
 
-  /* Miniature of the live scoping assistant. Decorative (aria-hidden). */
-  .svc-chat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    max-width: 24rem;
+  /* Live text-chat demo — a framed object, like the audit report. */
+  .chat-live {
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 12px;
+    background: var(--color-surface);
+    padding: 1.25rem 1.4rem;
+    box-shadow: 0 18px 44px -22px rgb(34 28 21 / 0.3);
   }
   .chat-label { margin-bottom: 0.25rem; }
   .chat-bub {
@@ -506,6 +524,64 @@ const process = [
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // — Live text chat (runs regardless of motion preference): same backend
+  // as the site guide, seeded with the demo exchange.
+  {
+    const msgs = document.getElementById('svc-chat-msgs');
+    const form = document.getElementById('svc-chat-form') as HTMLFormElement;
+    const input = document.getElementById('svc-chat-input') as HTMLInputElement;
+    const send = document.getElementById('svc-chat-send') as HTMLButtonElement;
+    const history: { role: 'user' | 'assistant'; content: string }[] = [
+      { role: 'user', content: 'What would AI actually do on our site?' },
+      { role: 'assistant', content: 'Good question — assistants that answer visitors and qualify leads are the proven win. What does your team spend the most time answering?' },
+    ];
+    let busy = false;
+
+    const bubble = (cls: string, text?: string) => {
+      const div = document.createElement('div');
+      div.className = `chat-bub ${cls}`;
+      if (text) div.textContent = text;
+      msgs?.appendChild(div);
+      if (msgs) msgs.scrollTop = msgs.scrollHeight;
+      return div;
+    };
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text || busy) return;
+      input.value = '';
+      bubble('chat-q', text);
+      history.push({ role: 'user', content: text });
+      busy = true;
+      send.disabled = true;
+      const typing = bubble('chat-a chat-typing');
+      typing.innerHTML = '<span></span><span></span><span></span>';
+      try {
+        const res = await fetch('/api/guide', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history.slice(-20) }),
+        });
+        const data = await res.json();
+        typing.remove();
+        if (res.ok && data.reply) {
+          bubble('chat-a', data.reply);
+          history.push({ role: 'assistant', content: data.reply });
+        } else {
+          throw new Error('unavailable');
+        }
+      } catch {
+        typing.remove();
+        bubble('chat-a', "I'm having trouble right now — reach us directly on the contact page and we'll reply within 24 hours.");
+      } finally {
+        busy = false;
+        send.disabled = false;
+        input.focus();
+      }
+    });
+  }
 
   if (!reduced) {
     gsap.registerPlugin(ScrollTrigger);
