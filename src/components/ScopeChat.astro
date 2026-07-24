@@ -36,7 +36,9 @@
   </form>
 </template>
 
-<style>
+<style is:global>
+  /* Global on purpose: chat messages are created at runtime, so scoped
+     attributes would never reach them. */
   .msg {
     max-width: 90%;
     border-radius: 12px;
@@ -46,15 +48,18 @@
     white-space: pre-wrap;
     overflow-wrap: anywhere;
   }
+  /* Color-coded speakers, matching the site's other chats: the assistant
+     speaks in a rust tint, the visitor in a neutral ink tint. */
   .msg-assistant {
-    background: var(--color-surface);
+    background: rgb(154 52 18 / 0.08);
     color: var(--color-ink);
-    border: 1px solid rgb(34 28 21 / 0.08);
+    border: 1px solid rgb(154 52 18 / 0.16);
+    border-bottom-left-radius: 4px;
   }
   .msg-user {
-    background: rgb(19 78 74 / 0.1);
+    background: rgb(34 28 21 / 0.06);
     color: var(--color-ink);
-    border: 1px solid rgb(19 78 74 / 0.3);
+    border-bottom-right-radius: 4px;
     margin-left: auto;
   }
   .msg-summary {
@@ -85,7 +90,7 @@
     0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
     30% { transform: translateY(-4px); opacity: 1; }
   }
-  :global(.motion-reduced) .typing span { animation: none; opacity: 0.7; }
+  .motion-reduced .typing span { animation: none; opacity: 0.7; }
 </style>
 
 <script>
