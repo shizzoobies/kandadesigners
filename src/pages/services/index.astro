@@ -74,6 +74,43 @@ const process = [
     </div>
   </section>
 
+  <!-- Accessibility service: the audit report checks itself off -->
+  <section class="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+    <div id="svc-a11y" class="glow-frame p-8 md:p-14">
+      <div class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+        <div>
+          <p data-a11y="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Accessibility service</p>
+          <div class="overflow-hidden">
+            <h2 data-a11y="headline" class="mt-6 font-display text-4xl leading-tight md:text-6xl">Accessible, verified.</h2>
+          </div>
+          <p data-a11y="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+            Every site we build ships measured against WCAG AA. Already have a
+            site? We'll audit it — real measurements, not a plugin badge — and
+            fix what fails.
+          </p>
+          <p class="a11y-caps mt-10 font-heading text-sm uppercase tracking-[0.18em] leading-loose text-muted">
+            <span class="inline-block whitespace-nowrap">WCAG 2.2 AA</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Contrast</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Keyboard</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Screen readers</span><span class="inline-block px-2 text-accent" aria-hidden="true">&middot;</span><span class="inline-block whitespace-nowrap">Remediation</span>
+          </p>
+          <div data-a11y="link" class="mt-10">
+            <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+              Get an accessibility check &rarr;
+            </a>
+          </div>
+        </div>
+        <!-- a miniature audit report whose checks tick themselves -->
+        <div class="a11y-audit" aria-hidden="true">
+          <p class="font-heading text-xs uppercase tracking-[0.25em] text-muted">Sample audit</p>
+          <ul class="mt-4">
+            <li class="a11y-row"><span>Contrast — body text</span><span class="a11y-val">15.3:1</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+            <li class="a11y-row"><span>Keyboard path</span><span class="a11y-val">complete</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+            <li class="a11y-row"><span>Screen-reader labels</span><span class="a11y-val">present</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+            <li class="a11y-row"><span>Reduced motion</span><span class="a11y-val">respected</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Secondary offering: resolves and streams like a thought -->
   <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
     <div
@@ -83,8 +120,7 @@ const process = [
     >
       <div class="grid gap-12 md:grid-cols-[1fr_0.85fr] md:items-center">
         <div>
-          <p data-ai="kicker" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Also available</p>
-          <h2 class="mt-6 font-display text-3xl leading-tight md:text-5xl">
+          <h2 class="font-display text-3xl leading-tight md:text-5xl">
             <span data-ai="word-a">AI</span> <span data-ai="word-b" class="text-accent italic">integration.</span>
           </h2>
           <p data-ai="copy" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
@@ -194,6 +230,46 @@ const process = [
   .svc-shot-2 { right: 0; top: 30%; transform: rotate(4deg); z-index: 2; }
   .svc-shot-3 { left: 7%; bottom: 2%; transform: rotate(-2deg); z-index: 3; }
 
+  /* Miniature audit report inside the accessibility card. */
+  .a11y-audit {
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 12px;
+    background: var(--color-surface);
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 18px 44px -22px rgb(34 28 21 / 0.3);
+  }
+  .a11y-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid rgb(34 28 21 / 0.08);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+  .a11y-row:first-child {
+    border-top: 0;
+  }
+  .a11y-row > span:first-child {
+    flex: 1;
+  }
+  .a11y-val {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .a11y-tick {
+    width: 1rem;
+    height: 0.875rem;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
   /* Miniature of the live scoping assistant. Decorative (aria-hidden). */
   .svc-chat {
     display: flex;
@@ -272,6 +348,34 @@ const process = [
         duration: 0.7, stagger: 0.14, ease: 'expo.out',
       }, '-=0.55');
 
+    // — Accessibility: the audit report checks itself off. Rows slide in,
+    // then each tick draws its stroke — verification you can watch.
+    const a11y = document.getElementById('svc-a11y');
+    const ticks = [...a11y.querySelectorAll('.a11y-tick path')];
+    ticks.forEach((p) => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+    });
+    gsap.timeline(once(a11y))
+      .from(a11y, { y: 48, opacity: 0, duration: 0.7, ease: 'expo.out' })
+      .from(a11y.querySelector('[data-a11y="kicker"]'), { opacity: 0, duration: 0.3 }, '-=0.35')
+      .from(a11y.querySelector('[data-a11y="headline"]'), { yPercent: 110, duration: 0.7, ease: 'expo.out' }, '-=0.3')
+      .from(a11y.querySelector('[data-a11y="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.35')
+      .from(a11y.querySelectorAll('.a11y-row'), {
+        x: -20, opacity: 0,
+        duration: 0.4, stagger: 0.12, ease: 'power2.out',
+      }, '-=0.2')
+      .to(ticks, {
+        strokeDashoffset: 0,
+        duration: 0.35, stagger: 0.12, ease: 'power2.out',
+      }, '-=0.5')
+      .from(a11y.querySelectorAll('.a11y-caps > span'), {
+        y: 10, opacity: 0,
+        duration: 0.4, stagger: 0.05, ease: 'power2.out',
+      }, '-=0.6')
+      .from(a11y.querySelector('[data-a11y="link"]'), { opacity: 0, duration: 0.35 }, '-=0.2');
+
     // — AI integration: resolves like a thought. The accent word sharpens
     // from a blur, a soft gradient shimmer sweeps the card once, and the
     // capability pills stream in left-to-right, machine-smooth.
@@ -279,7 +383,6 @@ const process = [
     gsap.timeline(once(ai))
       .from(ai, { y: 48, opacity: 0, duration: 0.7, ease: 'expo.out' })
       .fromTo(ai, { backgroundPosition: '100% 50%' }, { backgroundPosition: '0% 50%', duration: 1.6, ease: 'power2.inOut' }, 0.15)
-      .from(ai.querySelector('[data-ai="kicker"]'), { opacity: 0, duration: 0.3 }, 0.25)
       .from(ai.querySelector('[data-ai="word-a"]'), { opacity: 0, y: 14, duration: 0.4, ease: 'power2.out' }, 0.3)
       .from(ai.querySelector('[data-ai="word-b"]'), { opacity: 0, filter: 'blur(10px)', duration: 0.7, ease: 'power2.out' }, 0.42)
       .from(ai.querySelector('[data-ai="copy"]'), { y: 18, opacity: 0, duration: 0.45, ease: 'power2.out' }, 0.6)
