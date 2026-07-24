@@ -61,6 +61,21 @@
   :global(.motion-reduced) .rev-track {
     animation: none;
   }
+  /* Four or fewer reviews: no drift, just a centered set. */
+  .rev-rail.rev-static {
+    mask-image: none;
+    -webkit-mask-image: none;
+    overflow: visible;
+  }
+  .rev-static .rev-track {
+    animation: none;
+    width: auto;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   :global(.motion-reduced) .rev-rail {
     overflow-x: auto;
     mask-image: none;
@@ -235,18 +250,30 @@
     .then((data) => {
       let reviews = data.reviews || [];
       if (!reviews.length && isLocal) reviews = placeholders;
+      // dev hook: ?revmax=3 simulates a smaller review count locally
+      const cap = new URLSearchParams(location.search).get('revmax');
+      if (cap && isLocal) reviews = reviews.slice(0, +cap);
       if (!reviews.length || !section || !track) {
         section?.remove();
         return;
       }
 
-      // rail: two identical sets so the drift loops seamlessly
-      for (const set of [false, true]) {
-        const holder = document.createElement('div');
-        holder.style.display = 'contents';
-        if (set) holder.setAttribute('aria-hidden', 'true');
-        reviews.forEach((r) => holder.appendChild(card(r)));
-        track.appendChild(holder);
+      if (reviews.length <= 4) {
+        // a handful of reviews reads better standing still, centered
+        document.getElementById('rev-rail')?.classList.add('rev-static');
+        reviews.forEach((r) => track.appendChild(card(r)));
+      } else {
+        // drifting rail: each half repeats the set enough times to span the
+        // viewport, so the loop never exposes blank track
+        const PER_CARD = 360; // 21rem card + 1.5rem gap
+        const repeats = Math.max(1, Math.ceil(window.innerWidth / (reviews.length * PER_CARD)));
+        for (const hidden of [false, true]) {
+          const holder = document.createElement('div');
+          holder.style.display = 'contents';
+          if (hidden) holder.setAttribute('aria-hidden', 'true');
+          for (let i = 0; i < repeats; i++) reviews.forEach((r) => holder.appendChild(card(r)));
+          track.appendChild(holder);
+        }
       }
 
       // modal: full text, plus the link out to Google when we have it
