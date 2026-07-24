@@ -16,6 +16,7 @@ const links = [
       {links.map((l) => (
         <a
           href={l.href}
+          data-no-modal
           class:list={[
             'nav-link font-heading text-base font-semibold tracking-wide transition-colors',
             Astro.url.pathname === l.href ? 'text-accent' : 'text-ink/80 hover:text-ink',
@@ -46,7 +47,7 @@ const links = [
     class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-canvas/95 backdrop-blur-md md:hidden!"
   >
     {links.map((l) => (
-      <a href={l.href} class="font-heading text-3xl text-ink">{l.label}</a>
+      <a href={l.href} data-no-modal class="font-heading text-3xl text-ink">{l.label}</a>
     ))}
     <a href="/contact/#scope" class="btn-accent mt-4">Start a project</a>
   </div>

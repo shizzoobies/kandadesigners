@@ -3,6 +3,9 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SiteGuide from '../components/SiteGuide.astro';
+import StartProjectModal from '../components/StartProjectModal.astro';
+
+const onContactPage = Astro.url.pathname.startsWith('/contact');
 
 interface Props {
   title: string;
@@ -40,6 +43,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </main>
     <Footer />
     <SiteGuide />
+    {!onContactPage && <StartProjectModal />}
     <script>
       import '../scripts/motion.js';
     </script>

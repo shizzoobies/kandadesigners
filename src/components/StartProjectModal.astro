@@ -1,0 +1,238 @@
+---
+// Global start-a-project modal: intercepts every conversion CTA that points
+// at /contact/ so visitors never leave the page they're on. Two paths in
+// tabs: the AI scoping assistant and a direct message form. Rendered on
+// every page except /contact/ (which has both inline).
+import ScopeChat from './ScopeChat.astro';
+---
+<dialog id="sp-modal" class="sp-modal" aria-label="Start a project">
+  <div class="sp-head">
+    <p class="font-heading text-xs uppercase tracking-[0.25em] text-muted">Start a <span class="text-accent">project</span></p>
+    <button type="button" id="sp-close" class="sp-close" aria-label="Close start a project">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
+    </button>
+  </div>
+
+  <div class="sp-tabs" role="tablist" aria-label="Ways to start">
+    <button type="button" id="sp-tab-scope" class="sp-tab sp-tab-active" role="tab" aria-selected="true" aria-controls="sp-panel-scope">Scope it with AI</button>
+    <button type="button" id="sp-tab-form" class="sp-tab" role="tab" aria-selected="false" aria-controls="sp-panel-form">Send a message</button>
+  </div>
+
+  <div id="sp-panel-scope" class="sp-panel flex min-h-0 flex-1 flex-col" role="tabpanel" aria-labelledby="sp-tab-scope">
+    <ScopeChat />
+  </div>
+
+  <div id="sp-panel-form" class="sp-panel hidden min-h-0 flex-1 flex-col overflow-y-auto" role="tabpanel" aria-labelledby="sp-tab-form">
+    <form id="sp-form" class="flex flex-1 flex-col gap-4" novalidate>
+      <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
+      <input type="hidden" name="subject" value="New lead | ka-performancefl.com" />
+      <input type="hidden" name="from_name" value="K & A Performance Website" />
+      <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <div>
+        <label for="sp-name" class="mb-2 block font-heading text-xs uppercase tracking-[0.2em] text-muted">Name</label>
+        <input type="text" id="sp-name" name="name" required autocomplete="name" placeholder="Your name" class="field" />
+      </div>
+      <div>
+        <label for="sp-email" class="mb-2 block font-heading text-xs uppercase tracking-[0.2em] text-muted">Email</label>
+        <input type="email" id="sp-email" name="email" required autocomplete="email" placeholder="your@email.com" class="field" />
+      </div>
+      <div class="flex flex-1 flex-col">
+        <label for="sp-message" class="mb-2 block font-heading text-xs uppercase tracking-[0.2em] text-muted">Message</label>
+        <textarea id="sp-message" name="message" required rows="4" placeholder="What are you looking to build?" class="field field-area flex-1 min-h-[6rem]!"></textarea>
+      </div>
+
+      <button type="submit" id="sp-submit" class="btn-accent w-full text-center">Send message</button>
+      <p id="sp-status" class="sr-only" role="status" aria-live="polite"></p>
+      <p id="sp-error" tabindex="-1" class="hidden text-sm leading-relaxed text-muted" role="alert">
+        Something went wrong sending that. Please email us directly at
+        <a href="mailto:alex@ka-performancefl.com" class="text-accent underline transition-colors hover:text-accent-hot">alex@ka-performancefl.com</a>
+        and we'll pick it up.
+      </p>
+    </form>
+
+    <div id="sp-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-1 flex-col justify-center text-center">
+      <h3 class="font-display text-3xl leading-tight">Message received.</h3>
+      <p class="mt-4 text-muted">
+        Thanks for reaching out. We'll be in touch within 24 hours. If it's
+        urgent, email us at
+        <a href="mailto:alex@ka-performancefl.com" class="text-accent underline transition-colors hover:text-accent-hot">alex@ka-performancefl.com</a>.
+      </p>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .sp-modal {
+    margin: auto;
+    width: 30rem;
+    max-width: calc(100vw - 2rem);
+    height: 34rem;
+    max-height: calc(100vh - 3rem);
+    display: none;
+    flex-direction: column;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 16px;
+    background: var(--color-surface);
+    padding: 1.4rem 1.5rem;
+    box-shadow:
+      0 24px 80px -24px rgb(34 28 21 / 0.4),
+      0 0 60px -20px rgb(29 78 216 / 0.25);
+    color: var(--color-ink);
+  }
+  .sp-modal[open] {
+    display: flex;
+  }
+  .sp-modal::backdrop {
+    background: rgb(34 28 21 / 0.4);
+    backdrop-filter: blur(6px);
+  }
+  .sp-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .sp-close {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    color: var(--color-muted);
+    transition: color var(--dur-fast) ease, background var(--dur-fast) ease;
+  }
+  .sp-close:hover {
+    color: var(--color-ink);
+    background: rgb(34 28 21 / 0.06);
+  }
+  .sp-tabs {
+    display: flex;
+    gap: 1.25rem;
+    margin: 0.9rem 0 1.1rem;
+    border-bottom: 1px solid rgb(34 28 21 / 0.08);
+  }
+  .sp-tab {
+    padding: 0.45rem 0.15rem 0.65rem;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  }
+  .sp-tab:hover {
+    color: var(--color-ink);
+  }
+  .sp-tab-active {
+    color: var(--color-ink);
+    border-bottom-color: var(--color-accent);
+  }
+</style>
+
+<script>
+  const dlg = document.getElementById('sp-modal') as HTMLDialogElement | null;
+  const tabs = {
+    scope: { tab: document.getElementById('sp-tab-scope'), panel: document.getElementById('sp-panel-scope') },
+    form: { tab: document.getElementById('sp-tab-form'), panel: document.getElementById('sp-panel-form') },
+  };
+
+  const switchTab = (which: 'scope' | 'form') => {
+    for (const [key, t] of Object.entries(tabs)) {
+      const active = key === which;
+      t.tab?.classList.toggle('sp-tab-active', active);
+      t.tab?.setAttribute('aria-selected', String(active));
+      t.panel?.classList.toggle('hidden', !active);
+      t.panel?.classList.toggle('flex', active);
+    }
+  };
+
+  const openModal = (which: 'scope' | 'form') => {
+    if (!dlg) return;
+    switchTab(which);
+    dlg.showModal();
+    const focusTarget = which === 'form' ? document.getElementById('sp-name') : document.getElementById('chat-input');
+    focusTarget?.focus();
+  };
+
+  tabs.scope.tab?.addEventListener('click', () => switchTab('scope'));
+  tabs.form.tab?.addEventListener('click', () => switchTab('form'));
+  document.getElementById('sp-close')?.addEventListener('click', () => dlg?.close());
+  dlg?.addEventListener('click', (e) => {
+    if (e.target === dlg) dlg.close(); // backdrop click
+  });
+
+  // Conversion CTAs stay on-page: any link into /contact/ opens this modal
+  // instead of navigating, unless it opts out with data-no-modal.
+  document.addEventListener('click', (e) => {
+    const a = (e.target as Element).closest?.('a[href^="/contact"]');
+    if (!a || a.hasAttribute('data-no-modal') || !dlg) return;
+    const me = e as MouseEvent;
+    if (me.metaKey || me.ctrlKey || me.shiftKey || a.getAttribute('target') === '_blank') return;
+    e.preventDefault();
+    // close the mobile menu if it's open
+    const overlay = document.getElementById('nav-overlay');
+    if (overlay && !overlay.classList.contains('hidden')) {
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+      document.body.style.overflow = '';
+      const toggle = document.getElementById('nav-toggle');
+      toggle?.setAttribute('aria-expanded', 'false');
+      toggle?.setAttribute('aria-label', 'Open menu');
+    }
+    openModal(a.getAttribute('href')?.includes('#scope') ? 'scope' : 'form');
+  });
+
+  // direct message form (mirrors the contact page form)
+  const form = document.getElementById('sp-form') as HTMLFormElement | null;
+  const successEl = document.getElementById('sp-success');
+  const errorEl = document.getElementById('sp-error');
+  const statusEl = document.getElementById('sp-status');
+  const btn = document.getElementById('sp-submit') as HTMLButtonElement | null;
+
+  if (form && btn) {
+    const original = btn.textContent;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      errorEl?.classList.add('hidden');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      if (statusEl) statusEl.textContent = 'Sending your message…';
+
+      const data: Record<string, string> = {};
+      new FormData(form).forEach((value, key) => {
+        data[key] = String(value);
+      });
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (result.success) {
+          if (statusEl) statusEl.textContent = '';
+          form.classList.add('hidden');
+          successEl?.classList.remove('hidden');
+          successEl?.classList.add('flex');
+          (successEl as HTMLElement | null)?.focus();
+        } else {
+          throw new Error(result.message || 'Submission failed');
+        }
+      } catch {
+        if (statusEl) statusEl.textContent = '';
+        errorEl?.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = original;
+        (errorEl as HTMLElement | null)?.focus();
+      }
+    });
+  }
+</script>
