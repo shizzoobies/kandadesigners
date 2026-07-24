@@ -23,17 +23,34 @@ import { artists } from '../../data/artists.js';
     <div class="grid gap-12 md:grid-cols-3 md:gap-10">
       {artists.map((artist) => (
         <div data-animate="frame-lift">
-          <figure class="glow-frame relative">
-            <img
-              src={artist.portrait}
-              alt={artist.portraitAlt || `${artist.name}, ${artist.discipline}`}
-              class="aspect-[4/3] w-full object-cover"
-              loading="lazy"
-            />
-            <span class="coming-ribbon">Portfolio coming soon</span>
-          </figure>
-          <h2 class="mt-6 font-display text-3xl md:text-4xl">{artist.name}</h2>
-          <p class="mt-2 font-mono text-sm uppercase tracking-[0.3em] text-muted">{artist.discipline}</p>
+          {artist.live ? (
+            <a href={`/artists/${artist.slug}/`} class="group block">
+              <figure class="glow-frame relative">
+                <img
+                  src={artist.portrait}
+                  alt={artist.portraitAlt || `${artist.name}, ${artist.discipline}`}
+                  class="aspect-[4/3] w-full object-cover"
+                  loading="lazy"
+                />
+              </figure>
+              <h2 class="mt-6 font-display text-3xl transition-colors group-hover:text-accent md:text-4xl">{artist.name}</h2>
+              <p class="mt-2 font-mono text-sm uppercase tracking-[0.3em] text-muted">{artist.discipline}</p>
+            </a>
+          ) : (
+            <>
+              <figure class="glow-frame relative">
+                <img
+                  src={artist.portrait}
+                  alt={artist.portraitAlt || `${artist.name}, ${artist.discipline}`}
+                  class="aspect-[4/3] w-full object-cover"
+                  loading="lazy"
+                />
+                <span class="coming-ribbon">Portfolio coming soon</span>
+              </figure>
+              <h2 class="mt-6 font-display text-3xl md:text-4xl">{artist.name}</h2>
+              <p class="mt-2 font-mono text-sm uppercase tracking-[0.3em] text-muted">{artist.discipline}</p>
+            </>
+          )}
         </div>
       ))}
     </div>
