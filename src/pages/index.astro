@@ -14,23 +14,25 @@ import HeroGallery from '../components/HeroGallery.astro';
        window sketching its own audit (same language as the hero sketch).
        The draw starts while the gallery's empty tail is still on screen,
        so the blank beat between sections gets filled. -->
-  <section class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16">
+  <section id="a11y-home" class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16">
     <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
       <div>
-        <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent italic">by default.</span></h2>
-        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        <h2 data-a11y-text class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent italic">by default.</span></h2>
+        <p data-a11y-text class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
           Every build is measured against WCAG AA: contrast, keyboard, screen
           readers, motion preferences. Already have a site? We'll check it and
           tell you exactly where it stands.
         </p>
-        <div data-animate="type-settle" data-animate-delay="0.2" class="mt-8">
+        <div data-a11y-text class="mt-8">
           <a href="/services/#svc-a11y" class="btn-ghost">Get an accessibility check</a>
         </div>
       </div>
       <!-- a site auditing itself, stroke by stroke: focus ring, contrast
-           pair, screen-reader eye, keyboard with Tab. Decorative. -->
+           pair, screen-reader eye, keyboard with Tab. Decorative. The draw
+           is scrubbed to scroll so the canvas is never blank; the text
+           slides in as the last strokes land. -->
       <svg
-        data-animate="line-draw"
+        id="a11y-sketch"
         class="hidden w-full text-ink/35 lg:block"
         viewBox="0 0 640 430"
         fill="none"
@@ -119,3 +121,41 @@ import HeroGallery from '../components/HeroGallery.astro';
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+  const section = document.getElementById('a11y-home');
+  const texts = section ? [...section.querySelectorAll('[data-a11y-text]')] : [];
+
+  if (!reduced && section) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (isDesktop) {
+      // The audit sketch draws with the scroll itself: strokes start landing
+      // the moment the section peeks into the viewport (while the gallery's
+      // empty tail is still clearing), and the copy slides in as the last
+      // strokes finish.
+      const strokes = [...document.querySelectorAll('#a11y-sketch path, #a11y-sketch line, #a11y-sketch rect, #a11y-sketch circle, #a11y-sketch ellipse')];
+      strokes.forEach((p) => {
+        const len = p.getTotalLength ? p.getTotalLength() : 800;
+        p.style.strokeDasharray = String(len);
+        p.style.strokeDashoffset = String(len);
+      });
+      gsap.timeline({
+        scrollTrigger: { trigger: section, start: 'top bottom', end: 'top 30%', scrub: 0.7 },
+      })
+        .to(strokes, { strokeDashoffset: 0, duration: 3, stagger: 0.12, ease: 'none' }, 0)
+        .from(texts, { x: -44, opacity: 0, duration: 1.1, stagger: 0.18, ease: 'power2.out' }, '>-0.5');
+    } else {
+      // Mobile has no sketch: the copy gets the standard settle-in.
+      gsap.from(texts, {
+        y: 24, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 85%' },
+      });
+    }
+  }
+</script>
