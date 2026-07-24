@@ -103,7 +103,7 @@
   const messages = [];
   let latestSummary = '';
 
-  const OPENER = "Hi — I'm K & A's scoping assistant. What are you looking to build?";
+  const OPENER = "Hi! I'm K & A's scoping assistant. What are you looking to build?";
 
   function addBubble(text, who) {
     const el = document.createElement('div');
@@ -177,7 +177,7 @@
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({
             access_key: WEB3FORMS_KEY,
-            subject: 'AI-scoped lead — ka-performancefl.com',
+            subject: 'AI-scoped lead | ka-performancefl.com',
             from_name: 'K & A Performance Website',
             name,
             email,
@@ -194,7 +194,7 @@
       } catch {
         btn.disabled = false;
         btn.textContent = 'Send it over';
-        leadStatus.textContent = "That didn't go through — email us at alex@ka-performancefl.com instead.";
+        leadStatus.textContent = "That didn't go through. Email us at alex@ka-performancefl.com instead.";
         leadStatus.classList.remove('hidden');
         leadStatus.focus();
       }
@@ -224,7 +224,7 @@
     input.value = '';
 
     if (messages.length >= MAX_MESSAGES) {
-      endConversation("Let's take it from here — use the form beside this chat or email alex@ka-performancefl.com.");
+      endConversation("Let's take it from here. Use the form beside this chat or email alex@ka-performancefl.com.");
       return;
     }
 
@@ -245,7 +245,7 @@
       handleReply(data.reply);
     } catch {
       typing.remove();
-      addBubble("I'm having trouble connecting right now — the form beside this chat goes straight to Alex.", 'assistant');
+      addBubble("I'm having trouble connecting right now. The form beside this chat goes straight to Alex.", 'assistant');
     } finally {
       status.textContent = '';
       sendBtn.disabled = input.disabled;

@@ -4,7 +4,7 @@ import BaseLayout from './BaseLayout.astro';
 const { artist } = Astro.props;
 ---
 <BaseLayout
-  title={`${artist.name} — Artist Collaborations — K & A Performance`}
+  title={`${artist.name} | Artist Collaborations | K & A Performance`}
   description={`${artist.name}: ${artist.discipline}. Original artwork commissioned and art-directed through K & A Performance.`}
 >
   <!-- Portrait hero -->
@@ -13,7 +13,7 @@ const { artist } = Astro.props;
       <figure data-animate="frame-lift" class="glow-frame">
         <img
           src={artist.portrait}
-          alt={artist.portraitAlt || `${artist.name} — ${artist.discipline}`}
+          alt={artist.portraitAlt || `${artist.name}, ${artist.discipline}`}
           class="aspect-[4/5] w-full object-cover"
         />
       </figure>
@@ -75,7 +75,7 @@ const { artist } = Astro.props;
       </p>
       <p data-animate="type-settle" data-animate-delay="0.2" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
         Every collaboration is commissioned, art-directed, and delivered through
-        K &amp; A — one point of contact, one standard, one invoice. Tell us what
+        K &amp; A: one point of contact, one standard, one invoice. Tell us what
         you have in mind and we&rsquo;ll bring the right artist to your project.
       </p>
       <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10">

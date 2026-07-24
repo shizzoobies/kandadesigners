@@ -3,8 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScopeChat from '../../components/ScopeChat.astro';
 ---
 <BaseLayout
-  title="Contact — K & A Performance"
-  description="Start a project with K & A Performance. Scope it with our AI in minutes, or send us a message directly — we reply within 24 hours."
+  title="Contact | K & A Performance"
+  description="Start a project with K & A Performance. Scope it with our AI in minutes, or send us a message directly. We reply within 24 hours."
 >
   <!-- Editorial header -->
   <section class="mx-auto max-w-6xl px-6 pt-40 pb-16 md:pt-48 md:pb-24">
@@ -14,7 +14,7 @@ import ScopeChat from '../../components/ScopeChat.astro';
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
       Two ways in. Scope your project with our AI and get a working brief in
-      minutes, or write to us directly — we read every word and reply within 24
+      minutes, or write to us directly. We read every word and reply within 24
       hours.
     </p>
     <!-- The people who actually reply — not a ticket queue. -->
@@ -28,7 +28,7 @@ import ScopeChat from '../../components/ScopeChat.astro';
         </span>
       </div>
       <p class="text-sm leading-snug text-muted">
-        You'll hear back from <span class="font-semibold text-ink">Alex &amp; Kristina</span> —<br class="hidden sm:block" />
+        You'll hear back from <span class="font-semibold text-ink">Alex &amp; Kristina</span>,<br class="hidden sm:block" />
         the two of us, not a ticket queue.
       </p>
     </div>
@@ -58,13 +58,13 @@ import ScopeChat from '../../components/ScopeChat.astro';
         <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Rather just write?</p>
         <h2 class="mt-6 font-display text-3xl leading-tight md:text-4xl">Send a message</h2>
         <p class="mt-6 text-lg leading-relaxed text-muted">
-          Tell us about the project — goals, timeline, budget. A real reply, not
+          Tell us about the project: goals, timeline, budget. A real reply, not
           a form letter.
         </p>
 
         <form id="contact-form" class="mt-8 flex flex-1 flex-col gap-6" novalidate>
           <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
-          <input type="hidden" name="subject" value="New lead — ka-performancefl.com" />
+          <input type="hidden" name="subject" value="New lead | ka-performancefl.com" />
           <input type="hidden" name="from_name" value="K & A Performance Website" />
           <!-- Honeypot: hidden from humans, bots fill it and get filtered. -->
           <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
@@ -98,7 +98,7 @@ import ScopeChat from '../../components/ScopeChat.astro';
         <div id="form-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-1 flex-col justify-center">
           <h3 class="font-display text-3xl leading-tight md:text-4xl">Message received.</h3>
           <p class="mt-6 text-lg leading-relaxed text-muted">
-            Thanks for reaching out — we'll be in touch within 24 hours. If it's
+            Thanks for reaching out. We'll be in touch within 24 hours. If it's
             urgent, email us at
             <a href="mailto:alex@ka-performancefl.com" class="text-accent underline transition-colors hover:text-accent-hot">alex@ka-performancefl.com</a>.
           </p>

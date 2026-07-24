@@ -20,7 +20,7 @@
       </button>
     </header>
     <div id="sg-messages" class="flex h-[19rem] flex-col gap-3 overflow-y-auto px-5 py-4" aria-live="polite">
-      <div class="sg-bub sg-bot">Hi — I'm the K &amp; A site guide. Ask me anything: services, accessibility checks, our work, how to start a project.</div>
+      <div class="sg-bub sg-bot">Hi! I'm the K &amp; A site guide. Ask me anything: services, accessibility checks, our work, how to start a project.</div>
     </div>
     <form id="sg-form" class="flex items-center gap-2 border-t border-ink/10 p-3">
       <label for="sg-input" class="sr-only">Ask the site guide</label>
@@ -198,7 +198,7 @@
       }
     } catch {
       typing.remove();
-      addBubble('sg-bot', "I'm having trouble right now — you can reach Alex & Kristina directly on the contact page.");
+      addBubble('sg-bot', "I'm having trouble right now. You can reach Alex & Kristina directly on the contact page.");
     } finally {
       busy = false;
       sendBtn.disabled = false;
