@@ -1,8 +1,24 @@
 @import "tailwindcss";
 
 /* Display: Fraunces variable (OFL, self-hosted) — real 100-900 weights and
-   true italics, so headlines can run genuinely heavy. Body/headings: Neutrix
-   VF (Envato license, wght 400-700). */
+   true italics, so headlines can run genuinely heavy. Body/headings:
+   Atkinson Hyperlegible Next (OFL, self-hosted) — the Braille Institute's
+   legibility face; unambiguous letterforms (Il1, rn/m) for an accessibility
+   -first studio. */
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/AtkinsonNext-VF.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/AtkinsonNext-Italic-VF.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
 @font-face {
   font-family: "Fraunces";
   src: url("/fonts/Fraunces-VF.woff2") format("woff2-variations");
@@ -34,8 +50,8 @@
   --color-accent: #1D4ED8;
   --color-accent-hot: #1E40AF;
   --font-display: "Fraunces", Georgia, serif;
-  --font-heading: "Neutrix", system-ui, sans-serif;
-  --font-body: "Neutrix", system-ui, sans-serif;
+  --font-heading: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
 }
 
 /* Fraunces carries real weight — display type defaults chunky, and any
