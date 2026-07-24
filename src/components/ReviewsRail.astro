@@ -11,9 +11,14 @@
       <h2 class="font-display text-4xl md:text-6xl">Customer <span class="text-accent">reviews.</span></h2>
       <p id="rev-meta" class="mt-4 text-muted">Reviews from the people we build for.</p>
     </div>
-    <button type="button" id="rev-open" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot" aria-haspopup="dialog">
-      See all reviews <span aria-hidden="true">&rarr;</span>
-    </button>
+    <div class="flex items-center gap-6">
+      <a href="https://g.page/r/CbVcBGWcGmNzEBM/review" target="_blank" rel="noopener" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot">
+        Leave a review <span aria-hidden="true">&rarr;</span>
+      </a>
+      <button type="button" id="rev-open" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot" aria-haspopup="dialog">
+        See all reviews <span aria-hidden="true">&rarr;</span>
+      </button>
+    </div>
   </div>
 
   <div class="rev-rail mt-12" id="rev-rail">
@@ -28,11 +33,16 @@
       </button>
     </div>
     <div id="rev-modal-list" data-lenis-prevent class="flex flex-1 flex-col gap-4 overflow-y-auto pr-1"></div>
-    <p id="rev-modal-link" class="mt-4 hidden text-center">
-      <a href="#" target="_blank" rel="noopener" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot">
-        Read them all on Google <span aria-hidden="true">&rarr;</span>
+    <div class="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+      <a href="https://g.page/r/CbVcBGWcGmNzEBM/review" target="_blank" rel="noopener" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot">
+        Leave a review <span aria-hidden="true">&rarr;</span>
       </a>
-    </p>
+      <p id="rev-modal-link" class="hidden">
+        <a href="#" target="_blank" rel="noopener" class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot">
+          Read them all on Google <span aria-hidden="true">&rarr;</span>
+        </a>
+      </p>
+    </div>
   </dialog>
 </section>
 

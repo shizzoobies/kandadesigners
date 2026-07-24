@@ -191,22 +191,22 @@ const process = [
       <div class="mx-auto mt-14 grid max-w-3xl gap-y-12 text-left sm:grid-cols-2 sm:gap-y-0 sm:divide-x sm:divide-ink/10">
         <button type="button" id="open-chat-demo" class="ai-tile" aria-haspopup="dialog">
           <span class="tile-kicker">Text</span>
-          <span class="tile-title font-display">Ask it in writing.</span>
-          <span class="tile-copy">A live chat that answers questions about web design, SEO, and AI search.</span>
+          <span class="tile-title font-display">Ask Kai in writing.</span>
+          <span class="tile-copy">Kai answers questions about web design, SEO, and AI search in a live chat.</span>
           <span class="tile-cta">Try the chat <span class="tile-arr" aria-hidden="true">&rarr;</span></span>
         </button>
         <button type="button" id="open-voice-demo" class="ai-tile" aria-haspopup="dialog">
           <span class="tile-kicker">Voice</span>
-          <span class="tile-title font-display">Or just <span class="ai-pulse text-accent">talk</span> to it.</span>
-          <span class="tile-copy">Our voice agent answers the same questions and can set up a call with Alex.</span>
+          <span class="tile-title font-display">Or just <span class="ai-pulse text-accent">talk</span> to Kai.</span>
+          <span class="tile-copy">Kai answers out loud too and can set up a call with Alex.</span>
           <span class="tile-cta">Start talking <span class="tile-arr" aria-hidden="true">&rarr;</span></span>
         </button>
       </div>
 
       <!-- text chat modal -->
-      <dialog id="chat-modal" class="ai-modal" aria-label="Live AI text chat demo">
+      <dialog id="chat-modal" class="ai-modal" aria-label="Chat with Kai">
         <div class="modal-head">
-          <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Live demo: ask us anything</p>
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Chat with Kai</p>
           <button type="button" class="modal-close" aria-label="Close chat demo">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
           </button>
@@ -230,9 +230,9 @@ const process = [
       </dialog>
 
       <!-- voice modal -->
-      <dialog id="voice-modal" class="ai-modal" aria-label="Live AI voice demo">
+      <dialog id="voice-modal" class="ai-modal" aria-label="Talk to Kai">
         <div class="modal-head">
-          <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Talk to our AI</p>
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Talk to <span class="text-accent">Kai</span></p>
           <button type="button" class="modal-close" aria-label="Close voice demo">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
           </button>
@@ -242,7 +242,16 @@ const process = [
           with Alex. Your browser will ask for microphone access.
         </p>
         <div id="voice-agent-mount" class="mt-auto">
-          <elevenlabs-convai agent-id="agent_2101ky8y21nmeh5ah2ytbntetzhm"></elevenlabs-convai>
+          <elevenlabs-convai
+            agent-id="agent_2101ky8y21nmeh5ah2ytbntetzhm"
+            action-text="Talk to Kai"
+            start-call-text="Start talking"
+            end-call-text="End call"
+            listening-text="Listening"
+            speaking-text="Kai is speaking"
+            avatar-orb-color-1="#D97706"
+            avatar-orb-color-2="#9A3412"
+          ></elevenlabs-convai>
           <script is:inline src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
         </div>
       </dialog>
@@ -539,6 +548,21 @@ const process = [
     position: relative !important;
     display: block;
     height: 11rem;
+    /* Re-skin the widget with site tokens: its shadow styles read these
+       host-level custom properties. */
+    --el-base: #FFFDF9;
+    --el-base-hover: #F8F5F2;
+    --el-base-active: #F3EDE6;
+    --el-base-border: rgb(34 28 21 / 0.12);
+    --el-base-subtle: #6C635A;
+    --el-base-primary: #221C15;
+    --el-accent: #D97706;
+    --el-accent-hover: #9A3412;
+    --el-accent-active: #7C2D12;
+    --el-accent-border: rgb(154 52 18 / 0.4);
+    --el-accent-subtle: #B45309;
+    --el-accent-primary: #221C15;
+    --el-button-radius: 9999px;
   }
 
   .voice-soon {

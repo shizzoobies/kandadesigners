@@ -11,16 +11,16 @@
     class="glow-frame ai-alive absolute bottom-[4.5rem] right-0 hidden w-[22rem] max-w-[calc(100vw-3rem)] flex-col"
     role="dialog"
     aria-modal="false"
-    aria-label="Site guide chat"
+    aria-label="Chat with Kai"
   >
     <header class="flex items-center justify-between border-b border-ink/10 px-5 py-4">
-      <p class="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-ink">Site <span class="ai-pulse text-accent">guide</span></p>
-      <button type="button" id="sg-close" class="sg-icon-btn" aria-label="Close site guide">
+      <p class="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-ink">Chat with <span class="ai-pulse text-accent">Kai</span></p>
+      <button type="button" id="sg-close" class="sg-icon-btn" aria-label="Close chat">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
       </button>
     </header>
     <div id="sg-messages" data-lenis-prevent class="flex h-[19rem] flex-col gap-3 overflow-y-auto px-5 py-4" aria-live="polite">
-      <div class="sg-bub sg-bot">Hi! I'm the K &amp; A site guide. Ask me anything: services, accessibility checks, our work, how to start a project.</div>
+      <div class="sg-bub sg-bot">Hi! I'm Kai, K &amp; A's assistant. Ask me anything: services, accessibility checks, our work, how to start a project.</div>
     </div>
     <form id="sg-form" class="flex items-center gap-2 border-t border-ink/10 p-3">
       <label for="sg-input" class="sr-only">Ask the site guide</label>
@@ -43,7 +43,7 @@
     class="sg-fab"
     aria-expanded="false"
     aria-controls="sg-panel"
-    aria-label="Open the site guide chat"
+    aria-label="Chat with Kai"
   >
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M21 11.5a8.38 8.38 0 0 1-9 8.36 8.5 8.5 0 0 1-3.4-.71L3 21l1.85-4.6A8.38 8.38 0 0 1 3.5 11.5a8.5 8.5 0 0 1 8.5-8.5 8.5 8.5 0 0 1 9 8.5Z"/>

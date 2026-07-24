@@ -36,16 +36,9 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "New Black";
-  src: url("/fonts/NewBlack-SemiBold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "New Black";
-  src: url("/fonts/NewBlack-Bold.woff2") format("woff2");
-  font-weight: 700;
+  font-family: "Schibsted Grotesk";
+  src: url("/fonts/Schibsted-VF.woff2") format("woff2-variations");
+  font-weight: 400 900;
   font-style: normal;
   font-display: swap;
 }
@@ -76,17 +69,18 @@
   --color-accent: #9A3412;
   --color-accent-hot: #7C2D12;
   --color-amber: #D97706;
-  --font-display: "New Black", "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-display: "Schibsted Grotesk", "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-heading: "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-mono: "Lenia Mono", ui-monospace, monospace;
 }
 
-/* Display type defaults to New Black SemiBold; any font-weight utility can
-   still override per element. */
+/* Display type defaults to Schibsted Grotesk Bold; any font-weight utility
+   can still override per element. */
 @layer base {
   .font-display {
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 }
 
