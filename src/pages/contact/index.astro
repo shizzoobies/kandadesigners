@@ -8,9 +8,9 @@ import ScopeChat from '../../components/ScopeChat.astro';
 >
   <!-- Editorial header -->
   <section class="mx-auto max-w-6xl px-6 pt-40 pb-16 md:pt-48 md:pb-24">
-    <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Start a project</p>
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">Start a project</p>
     <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.75rem,8vw,6rem)] leading-[1.02]">
-      Let's build <span class="text-accent italic">yours.</span>
+      Let's build <span class="text-accent">yours.</span>
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
       Two ways in. Scope your project with our AI and get a working brief in
@@ -40,9 +40,9 @@ import ScopeChat from '../../components/ScopeChat.astro';
 
       <!-- Path A: AI scoping (Task 9 mounts the chat inside #scope) -->
       <section data-animate="frame-lift" id="scope" class="glow-frame ai-alive flex flex-col p-8 md:p-10 scroll-mt-28">
-        <p class="font-heading text-sm uppercase tracking-[0.3em] text-accent">Fastest way</p>
+        <p class="font-mono text-sm uppercase tracking-[0.3em] text-accent">Fastest way</p>
         <h2 class="mt-6 font-display text-3xl leading-tight md:text-4xl">
-          Scope it with our <span class="text-accent italic">AI</span>
+          Scope it with our <span class="text-accent">AI</span>
         </h2>
         <p class="mt-6 text-lg leading-relaxed text-muted">
           Answer a few questions, get a project scope in minutes.
@@ -55,7 +55,7 @@ import ScopeChat from '../../components/ScopeChat.astro';
 
       <!-- Path B: classic form -->
       <div data-animate="frame-lift" data-animate-delay="0.1" class="glow-frame flex flex-col p-8 md:p-10">
-        <p class="font-heading text-sm uppercase tracking-[0.3em] text-muted">Rather just write?</p>
+        <p class="font-mono text-sm uppercase tracking-[0.3em] text-muted">Rather just write?</p>
         <h2 class="mt-6 font-display text-3xl leading-tight md:text-4xl">Send a message</h2>
         <p class="mt-6 text-lg leading-relaxed text-muted">
           Tell us about the project: goals, timeline, budget. A real reply, not
@@ -70,17 +70,17 @@ import ScopeChat from '../../components/ScopeChat.astro';
           <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
           <div>
-            <label for="name" class="mb-3 block font-heading text-xs uppercase tracking-[0.2em] text-muted">Name</label>
+            <label for="name" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Name</label>
             <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your name" class="field" />
           </div>
 
           <div>
-            <label for="email" class="mb-3 block font-heading text-xs uppercase tracking-[0.2em] text-muted">Email</label>
+            <label for="email" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Email</label>
             <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" class="field" />
           </div>
 
           <div class="flex flex-1 flex-col">
-            <label for="message" class="mb-3 block font-heading text-xs uppercase tracking-[0.2em] text-muted">Message</label>
+            <label for="message" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Message</label>
             <textarea id="message" name="message" required rows="5" placeholder="What are you looking to build?" class="field field-area flex-1"></textarea>
           </div>
 

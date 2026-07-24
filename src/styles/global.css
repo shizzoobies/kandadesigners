@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
-/* Display: Fraunces variable (OFL, self-hosted) — real 100-900 weights and
-   true italics, so headlines can run genuinely heavy. Body/headings:
-   Atkinson Hyperlegible Next (OFL, self-hosted) — the Braille Institute's
-   legibility face; unambiguous letterforms (Il1, rn/m) for an accessibility
-   -first studio. */
+/* Type stack (all self-hosted):
+   Display: New Black (Envato) — clean geometric sans, easy to read at size.
+   Body/UI: Atkinson Hyperlegible Next (OFL) — the Braille Institute's
+   legibility face; unambiguous letterforms for an accessibility-first studio.
+   Labels: Lenia Mono (Envato) — geometric monospace for kickers and
+   caps-lines; the precise, technical layer. */
 @font-face {
   font-family: "Atkinson Hyperlegible Next";
   src: url("/fonts/AtkinsonNext-VF.woff2") format("woff2-variations");
@@ -20,23 +21,31 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Fraunces";
-  src: url("/fonts/Fraunces-VF.woff2") format("woff2-variations");
-  font-weight: 100 900;
+  font-family: "New Black";
+  src: url("/fonts/NewBlack-SemiBold.woff2") format("woff2");
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Fraunces";
-  src: url("/fonts/Fraunces-Italic-VF.woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: italic;
+  font-family: "New Black";
+  src: url("/fonts/NewBlack-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Neutrix";
-  src: url("/fonts/Neutrix-VF.woff2") format("woff2-variations");
-  font-weight: 400 700;
+  font-family: "Lenia Mono";
+  src: url("/fonts/LeniaMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lenia Mono";
+  src: url("/fonts/LeniaMono-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -49,17 +58,17 @@
   --color-muted: #6C635A;
   --color-accent: #1D4ED8;
   --color-accent-hot: #1E40AF;
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "New Black", "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-heading: "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --font-mono: "Lenia Mono", ui-monospace, monospace;
 }
 
-/* Fraunces carries real weight — display type defaults chunky, and any
-   font-weight utility can still override per element. */
+/* Display type defaults to New Black SemiBold; any font-weight utility can
+   still override per element. */
 @layer base {
   .font-display {
-    font-weight: 640;
-    font-optical-sizing: auto;
+    font-weight: 600;
   }
 }
 
@@ -321,6 +330,25 @@ body {
 }
 .motion-reduced .nav-logo {
   transition: none;
+}
+
+/* Coming-soon ribbon over artist profiles awaiting portfolios. Sits inside
+   a .glow-frame figure; the frame's overflow clip trims it to a clean band. */
+.coming-ribbon {
+  position: absolute;
+  inset-inline: -8%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-5deg);
+  background: var(--color-accent);
+  color: #fffdf9;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.6rem 0;
+  box-shadow: 0 10px 30px -12px rgb(29 78 216 / 0.5);
 }
 
 /* Brand mark renders in its original colors on the light canvas. The class

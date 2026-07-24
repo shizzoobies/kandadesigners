@@ -18,13 +18,13 @@ const { artist } = Astro.props;
         />
       </figure>
       <div>
-        <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">
+        <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
           Collaborating artist
         </p>
         <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(3rem,9vw,6.5rem)] leading-[0.98]">
           {artist.name}
         </h1>
-        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 font-heading text-sm uppercase tracking-[0.3em] text-muted">
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 font-mono text-sm uppercase tracking-[0.3em] text-muted">
           {artist.discipline}
         </p>
       </div>
@@ -41,7 +41,7 @@ const { artist } = Astro.props;
   <!-- Style statement pull-quote -->
   <section class="mx-auto max-w-4xl px-6 py-20 md:py-28">
     <blockquote data-animate="type-settle" class="border-l-2 border-accent pl-8">
-      <p class="font-display text-3xl italic leading-tight md:text-5xl">
+      <p class="font-display text-3xl leading-tight md:text-5xl">
         {artist.statement}
       </p>
     </blockquote>
@@ -67,11 +67,11 @@ const { artist } = Astro.props;
   <!-- CTA band: every engagement routes through K & A -->
   <section class="border-y border-ink/10 bg-surface">
     <div class="mx-auto max-w-4xl px-6 py-28 text-center md:py-36">
-      <p data-animate="type-settle" class="font-heading text-sm uppercase tracking-[0.3em] text-accent">
+      <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
         Commission through K &amp; A
       </p>
       <p data-animate="type-settle" data-animate-delay="0.1" class="mt-8 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.05]">
-        Want work like this in your <span class="text-accent italic">build?</span>
+        Want work like this in your <span class="text-accent">build?</span>
       </p>
       <p data-animate="type-settle" data-animate-delay="0.2" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
         Every collaboration is commissioned, art-directed, and delivered through
