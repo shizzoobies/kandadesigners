@@ -156,19 +156,20 @@ const process = [
         Assistants <span class="text-accent" aria-hidden="true">&middot;</span> Automations <span class="text-accent" aria-hidden="true">&middot;</span> Content tooling
       </p>
 
-      <!-- live demos: two matching tiles; each opens a same-size modal -->
-      <div class="mx-auto mt-14 grid max-w-3xl gap-6 text-left sm:grid-cols-2">
+      <!-- live demos: two open stacks on a center hairline; each opens a
+           same-size modal. No boxes, just space and type. -->
+      <div class="mx-auto mt-14 grid max-w-3xl gap-y-12 text-left sm:grid-cols-2 sm:gap-y-0 sm:divide-x sm:divide-ink/10">
         <button type="button" id="open-chat-demo" class="ai-tile" aria-haspopup="dialog">
           <span class="tile-kicker">Text</span>
           <span class="tile-title font-display">Ask it in writing.</span>
           <span class="tile-copy">A live chat that answers questions about web design, SEO, and AI search.</span>
-          <span class="tile-cta">Try the chat</span>
+          <span class="tile-cta">Try the chat <span class="tile-arr" aria-hidden="true">&rarr;</span></span>
         </button>
         <button type="button" id="open-voice-demo" class="ai-tile" aria-haspopup="dialog">
           <span class="tile-kicker">Voice</span>
           <span class="tile-title font-display">Or just <span class="ai-pulse text-accent italic">talk</span> to it.</span>
           <span class="tile-copy">Our voice agent answers the same questions and can set up a call with Alex.</span>
-          <span class="tile-cta">Start talking</span>
+          <span class="tile-cta">Start talking <span class="tile-arr" aria-hidden="true">&rarr;</span></span>
         </button>
       </div>
 
@@ -254,7 +255,7 @@ const process = [
         </details>
         <details class="faq-item">
           <summary>What does a website cost?</summary>
-          <p>Every project is scoped individually. Budget bands run from under $2,000 to $10,000 and up, and you'll always know the number before we start.</p>
+          <p>Every project is scoped to fit the business: we've done everything from fully free builds for nonprofits to ongoing large engagements. Budget bands run from under $2,000 to $10,000 and up, and you'll always know the number before we start. We only recommend work that pays for itself in added value. If you don't need it, we won't recommend it.</p>
         </details>
         <details class="faq-item">
           <summary>Can you work with the site I already have?</summary>
@@ -567,25 +568,31 @@ const process = [
     stroke-linejoin: round;
   }
 
-  /* Demo launcher tiles — matching framed objects; the demos themselves
-     live in same-size modals so the section stays calm at rest. */
+  /* Demo launchers: open text stacks on a shared hairline, no boxes. The
+     whole stack is the click target; elevation comes from type and motion. */
   .ai-tile {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.65rem;
-    border: 1px solid rgb(34 28 21 / 0.1);
-    border-radius: 12px;
-    background: var(--color-surface);
-    padding: 1.5rem 1.6rem;
-    box-shadow: 0 18px 44px -22px rgb(34 28 21 / 0.3);
+    padding: 0.5rem 0;
     text-align: left;
     cursor: pointer;
-    transition: transform var(--dur-fast) var(--ease-out-expo), border-color var(--dur-fast) ease;
+    transition: transform var(--dur-fast) var(--ease-out-expo);
+  }
+  @media (min-width: 640px) {
+    .ai-tile { padding: 0.5rem 2.5rem; }
+    .ai-tile:first-child { padding-left: 1rem; }
   }
   .ai-tile:hover {
     transform: translateY(-3px);
-    border-color: rgb(29 78 216 / 0.35);
+  }
+  .tile-arr {
+    display: inline-block;
+    transition: transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .ai-tile:hover .tile-arr {
+    transform: translateX(5px);
   }
   .tile-kicker {
     font-family: var(--font-heading);
