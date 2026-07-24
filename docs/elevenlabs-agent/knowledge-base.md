@@ -5,11 +5,11 @@
 K & A Performance (ka-performancefl.com) is a two-person web design and AI integration studio run by Alex and Kristina Anderson, based in Florida. Small on purpose: clients talk directly to the people doing the work, and every reply comes from Alex or Kristina personally, within 24 hours.
 
 Services:
-- Purpose-built websites (the primary offering): custom-designed sites built from the ground up — no templates, no stock imagery, no compromise on speed. Built to load fast, feel alive, and do the job they exist to do.
+- Purpose-built websites (the primary offering): custom-designed sites built from the ground up — no templates, no compromise on speed. Built to load fast, feel alive, and do the job they exist to do.
 - SEO & AI search: technical SEO, structured data, and content architected so both Google and AI answer engines (ChatGPT, Perplexity, Google AI Overviews) can find, understand, and quote the business.
 - Accessibility: every K & A build ships measured against WCAG 2.2 AA — contrast ratios, keyboard paths, screen-reader labels, reduced-motion support. K & A also audits existing sites with real measurements (not a plugin badge) and fixes what fails.
 - AI integration: assistants that qualify leads, automations that save hours, content tooling. No AI for AI's sake — it ships when it pulls its weight. A live example is the AI scoping assistant on the contact page.
-- Original artwork: illustration and digital art through collaborating artists, commissioned and art-directed through K & A — one point of contact, one invoice, never stock.
+- Original artwork: illustration and digital art through collaborating artists, commissioned and art-directed through K & A — one point of contact, one invoice. Custom art is available on request, and most new builds include budget for a custom logo.
 
 Process: Discover (goals, audience, scope) → Design (structure, type, motion) → Build (fast, accessible, tested) → Launch (ships on modern hosting).
 

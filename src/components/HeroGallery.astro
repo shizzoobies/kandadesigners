@@ -164,12 +164,22 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
       </div>
     </div>
 
-    <div id="scroll-cue" class="absolute bottom-6 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-3 rounded-full bg-canvas/85 px-5 py-3 text-muted backdrop-blur-md transition-opacity duration-500 lg:flex" aria-hidden="true">
+    <div id="scroll-cue" class="absolute bottom-6 left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-3 rounded-full bg-canvas/85 px-5 py-3 text-muted backdrop-blur-md lg:flex" aria-hidden="true">
       <span class="font-heading text-[0.65rem] uppercase tracking-[0.35em]">Scroll</span>
       <span class="cue-line"></span>
     </div>
   </div>
 </section>
+
+<!-- page progress rail: the scroll cue falls to the left edge and expands
+     into this track, whose fill shows how deep into the page you are.
+     Desktop-only, decorative. -->
+<div id="scroll-rail" class="pointer-events-none fixed left-6 top-1/2 z-40 hidden h-[68vh] -translate-y-1/2 lg:block" aria-hidden="true">
+  <div id="scroll-rail-inner" class="relative h-full w-[3px]">
+    <div class="rail-track"></div>
+    <div id="scroll-rail-fill" class="rail-fill"></div>
+  </div>
+</div>
 
 <style>
   .hg-slot {
@@ -297,6 +307,26 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   }
   #scroll-cue.cue-hidden {
     opacity: 0;
+  }
+  #scroll-rail-inner {
+    opacity: 0; /* GSAP reveals it as the cue hands off */
+  }
+  .rail-track {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: rgb(34 28 21 / 0.12);
+  }
+  .rail-fill {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: var(--color-accent);
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  :global(.motion-reduced) #scroll-rail {
+    display: none;
   }
   :global(.motion-reduced) .cue-line::after {
     animation: none;
@@ -491,6 +521,9 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     const LIVE_MIN = 0.6;
     const LIVE_MAX = 0.79;
 
+    // cue → rail handoff, built after the main timeline; null until then
+    let cueTl = null;
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -509,7 +542,10 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
             stopAutoplay();
             if (current !== 0) goTo(0, false); // resync before scrub retakes the poses
           }
-          document.getElementById('scroll-cue')?.classList.toggle('cue-hidden', st.progress > 0.05);
+          if (cueTl) {
+            if (st.progress > 0.04) cueTl.play();
+            else cueTl.reverse();
+          }
         },
       },
     });
@@ -567,6 +603,39 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         stagger: 0.03,
         ease: 'power2.in',
       }, 2.16);
+
+    // The scroll cue falls to the left edge and expands into the page
+    // progress rail; scrolling back to the top hands it back.
+    const cue = document.getElementById('scroll-cue');
+    const railInner = document.getElementById('scroll-rail-inner');
+    const railFill = document.getElementById('scroll-rail-fill');
+    if (cue && railInner) {
+      gsap.set(railInner, { scaleY: 0, transformOrigin: 'top' });
+      cueTl = gsap.timeline({ paused: true });
+      cueTl
+        .to(cue, {
+          x: () => {
+            const c = cue.getBoundingClientRect();
+            const r = railInner.getBoundingClientRect();
+            return r.left + r.width / 2 - (c.left + c.width / 2);
+          },
+          y: 46,
+          rotation: -90,
+          scale: 0.4,
+          opacity: 0,
+          duration: 0.55,
+          ease: 'power2.in',
+        })
+        .to(railInner, { opacity: 1, scaleY: 1, duration: 0.7, ease: 'expo.out' }, '-=0.2');
+    }
+    // rail fill tracks whole-page depth
+    if (railFill) {
+      gsap.to(railFill, {
+        scaleY: 1,
+        ease: 'none',
+        scrollTrigger: { start: 0, end: 'max', scrub: 0.3 },
+      });
+    }
   } else {
     // Mobile / reduced motion: no scatter, ring formed, UI visible.
     gsap.set(extras, { display: 'none' });

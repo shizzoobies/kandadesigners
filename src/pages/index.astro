@@ -15,7 +15,10 @@ import ReviewsRail from '../components/ReviewsRail.astro';
        window sketching its own audit (same language as the hero sketch).
        The draw starts while the gallery's empty tail is still on screen,
        so the blank beat between sections gets filled. -->
-  <section id="a11y-home" class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16">
+  <!-- lg pulls this section up into the hero's recede tail: the sketch is
+       already drawing while the last tiles fade, so the canvas never sits
+       blank between acts. -->
+  <section id="a11y-home" class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16 lg:-mt-[34vh]">
     <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
       <div>
         <h2 data-a11y-text class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent">by default.</span></h2>
@@ -90,7 +93,7 @@ import ReviewsRail from '../components/ReviewsRail.astro';
   <section class="mx-auto max-w-6xl px-6 py-32">
     <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">In-house artistry</h2>
     <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-      Original illustration and artwork through our collaborating artists. No stock, ever.
+      Original illustration and artwork through our collaborating artists. Custom art is available on request, and most new builds include budget for a custom logo if you want one.
     </p>
     <div class="mt-14 grid gap-10 md:grid-cols-2">
       <div data-animate="frame-lift">

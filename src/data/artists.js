@@ -3,7 +3,7 @@ export const artists = [
     slug: 'artist-one',
     name: 'Artist One',
     discipline: 'Illustration & brand artwork',
-    bio: 'A placeholder illustrator whose line work and character studies give brands a hand-drawn signature. Every piece is made to order: original artwork, never stock. Commissioned and art-directed through K & A for web, print, and identity systems.',
+    bio: 'A placeholder illustrator whose line work and character studies give brands a hand-drawn signature. Every piece is made to order. Commissioned and art-directed through K & A for web, print, and identity systems.',
     statement: 'A brand should look like it was drawn by a human who cared, because it was.',
     portrait: '/images/art/a1-magnolia.jpg',
     portraitAlt: 'Watercolor magnolia study in soft pinks, representative illustration work',
