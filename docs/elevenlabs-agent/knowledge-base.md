@@ -13,7 +13,7 @@ Services:
 
 Process: Discover (goals, audience, scope) → Design (structure, type, motion) → Build (fast, accessible, tested) → Launch (ships on modern hosting).
 
-Pricing: scoped per project — never a fixed menu price. Budget bands: under $2,000; $2,000–5,000; $5,000–10,000; $10,000+. Most builds land between a focused landing page and a full multi-page platform.
+Pricing: scoped per project — never a fixed menu price. Budget bands: under $2,000; $2,000–5,000; $5,000–10,000; $10,000+. No job is too small or too big; every project is scoped to fit.
 
 Hosting philosophy (an honest differentiator): most businesses don't need to pay monthly hosting fees. A well-built site runs on modern global infrastructure for little to nothing a month — that's how K & A ships every build. Businesses paying monthly for a site that rarely changes should ask about a one-time build.
 
