@@ -20,6 +20,21 @@
   font-style: italic;
   font-display: swap;
 }
+/* Fraunces returns for one job only: the logo lockup's classic serif. */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/Fraunces-VF.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/Fraunces-Italic-VF.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
 @font-face {
   font-family: "New Black";
   src: url("/fonts/NewBlack-SemiBold.woff2") format("woff2");
