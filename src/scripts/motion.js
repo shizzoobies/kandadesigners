@@ -32,23 +32,30 @@ if (reduced) {
     });
   });
 
-  // Artist work tiles. Batched rather than triggered per-element so a row
-  // settles together in sequence instead of each tile fading on its own
-  // schedule. The small alternating tilt reads as objects being set down,
-  // which suits work that is literally pinned, printed and worn.
-  // clearProps drops the inline transform afterwards so nothing is left
-  // interfering with hover or layout.
+  // Artist work tiles tumble in: each one arrives from up and to the left,
+  // rotating down onto its base, which suits work that is physically pinned,
+  // printed and worn. Batched so a row cascades in sequence.
+  //
+  // Two things matter here and were learned the hard way. The rotation has to
+  // be big enough to read as a deliberate tumble - a couple of degrees just
+  // looks like a shudder. And the ease must not overshoot: bouncing y, scale
+  // and rotation together produced a compound wobble that read as a glitch.
+  // power3.out decelerates smoothly, so it lands rather than bounces.
+  // transformOrigin at the bottom edge makes it pivot like it is settling on
+  // a surface instead of spinning around its middle.
   ScrollTrigger.batch('[data-animate="tile-settle"]', {
     start: 'top 88%',
     onEnter: (batch) =>
       gsap.from(batch, {
-        y: 34,
-        scale: 0.9,
-        rotation: (i) => (i % 2 ? 2 : -2),
+        x: -16,
+        y: -30,
+        rotation: -10,
+        scale: 0.86,
         opacity: 0,
-        duration: 0.7,
-        ease: 'back.out(1.4)',
-        stagger: { each: 0.07 },
+        duration: 0.85,
+        ease: 'power3.out',
+        transformOrigin: '50% 100%',
+        stagger: { each: 0.09 },
         clearProps: 'transform',
       }),
   });
