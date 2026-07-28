@@ -178,6 +178,9 @@ import ScopeChat from '../../components/ScopeChat.astro';
         const result = await res.json();
 
         if (result.success) {
+          // Meta Pixel: success path only, never on submit attempt or validation
+          // failure. Guarded because ad blockers stop fbq from ever being defined.
+          if (window.fbq) window.fbq('track', 'Lead');
           if (statusEl) statusEl.textContent = '';
           form.classList.add('hidden');
           successEl?.classList.remove('hidden');
