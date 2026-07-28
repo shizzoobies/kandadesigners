@@ -19,7 +19,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- facebook-domain-verification meta tag goes here when Meta issues the string -->
+    <!-- Meta domain verification. Must stay in place permanently: Meta re-checks
+         periodically and un-verifies the domain if the tag disappears. -->
+    <meta name="facebook-domain-verification" content="2go7mrp4qq77ardj8lsayydn6879x4" />
     <!-- Meta Pixel Code -->
     <script is:inline>
       /* is:inline is required. Without it Astro hands this to Vite, which bundles it
