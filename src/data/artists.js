@@ -79,7 +79,11 @@ export const artists = [
     // Composed with ffmpeg from the 960x960 headshot (crop 768x960 +40x to centre
     // her face) and NCLogo_Color.png at 690px. The mark is centred so it survives
     // the 4/3 centre-crop used by the artists-index and home cards.
-    portrait: '/images/art/nc-portrait.webp',
+    // ?v=1 is a cache-key buster, not decoration: the bare URL got a 404 HTML
+    // response cached against it at the edge during the deploy race (see the
+    // process note in docs/superpowers/HANDOFF.md). Bump the number if it ever
+    // happens again rather than renaming the file.
+    portrait: '/images/art/nc-portrait.webp?v=1',
     portraitAlt: 'Nicole Cruz Design circular wordmark over a softened portrait of the artist',
     // Mirrors the six categories on nicolecruzdesign.com/work. Her site numbers these
     // ("01 · TEAM IDENTITY"); numbering is intentionally dropped per K&A house rule.

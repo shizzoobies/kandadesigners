@@ -68,6 +68,12 @@ _Status synced with Alex 2026-07-25:_
 
 ## Process notes
 
-**Do NOT curl new asset URLs right after `git push` — wait for the Pages deploy to go Active first.** Requesting an asset during the deploy window makes Cloudflare cache the 404 HTML page against that URL with `max-age=86400`, so it serves `text/html` (status 200!) for **24h at that edge** even though the file deployed fine. Diagnose by comparing plain vs cache-busted (`?cb=123`) requests: `text/html` cached + `image/webp` on bust = poisoned cache, not a missing file. Fix = purge those URLs in the Cloudflare dashboard (Caching → Purge by URL); the wrangler OAuth token only has `zone (read)` so it cannot purge. Also note `npx` breaks on this repo path (the `&` in "K & A"): run `node ./node_modules/astro/astro.js dev|build` instead.
+**Never request a NEW asset URL on the bare path until you know it has propagated.** If you hit it during the deploy race, Cloudflare caches the 404 HTML page against that URL with `max-age=86400`, so it then serves `text/html` with a **200 status** for 24h at that edge even though the file deployed fine. Waiting for the HTML to flip is NOT sufficient — the asset can still 404 for a few seconds after the page updates (this bit twice: once mid-deploy, once by probing the asset in the same command as the "has the page updated yet" poll).
+
+- **Diagnose:** compare plain vs cache-busted. `text/html` on the bare URL + `image/webp` on `?cb=123` = poisoned cache, NOT a missing file. Confirm origin is fine before touching anything.
+- **First probe safely:** always cache-bust (`?cb=$RANDOM`) when checking a freshly deployed asset. A cache-busted request cannot poison the real key.
+- **Fix:** append a version query to the reference in source (`/images/art/x.webp?v=1`) — a new cache key, no file rename, bump the number if it recurs. Renaming the file works too but leaves `-v2` noise on disk. Purging via Cloudflare dashboard (Caching → Purge by URL) also works but needs Alex — the wrangler OAuth token only has `zone (read)`.
+
+Also note `npx` breaks on this repo path (the `&` in "K & A"): run `node ./node_modules/astro/astro.js dev|build` instead.
 
 Alex iterates fast by feel: ship, show, expect tweaks; mid-turn asks are constant. Verify every visual in Playwright against the wrangler build (screenshots → `.superpowers/sdd/`). He pastes dashboard screenshots/logs when asked plainly. Bash quoting on this repo path is treacherous — prefer node scripts (or PowerShell) for multi-file edits. Playwright MCP blocks `file://` — stage specimens into `dist/__name/` and view via wrangler (wiped on rebuild; re-stage after).
