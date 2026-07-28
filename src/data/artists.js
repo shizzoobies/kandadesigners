@@ -70,10 +70,12 @@ export const artists = [
     slug: 'nicole',
     name: 'Nicole',
     discipline: 'Brand identity & merchandise design',
+    live: true,
     bio: "Nicole designs identities for teams, events, and small businesses: challenge coins, apparel, caps, stationery, and invitation suites. From Tsunami Fastpitch to Navy squadron coins, the work is built to survive being worn, handed out, and kept. Commissioned and art-directed through K & A for print, merch, and identity systems.",
     statement: 'Design meant to be worn, pinned, printed, and carried. Not just posted.',
-    // PLACEHOLDER PORTRAIT — the original stand-in, restored at Alex's request.
-    // Swap in Nicole's real profile picture here when it lands (then set live: true).
+    // PLACEHOLDER PORTRAIT — she is LIVE with this stand-in on purpose; only the
+    // photo is pending, not the page. Swap in Nicole's real profile picture here
+    // when it lands (no other change needed — the card and teaser already link).
     // Do NOT substitute a piece of her artwork here: a coin was tried and read as
     // confusing on the artists-index card. Her own site's headshot is 156x262,
     // too small for the 4/5 hero, so it is not usable either.
@@ -93,12 +95,12 @@ export const artists = [
           { src: '/images/art/nc-jbs-outline.webp', alt: 'Jax Beach Softball outline wordmark' },
           { src: '/images/art/nc-thunder-wordmark.webp', alt: 'Thunder Softball wordmark in black and blue' },
           // not published on her own site; came from the source drop
-          { src: '/images/art/nc-thunder-allstars.webp', alt: 'Jax Beach Thunder All Stars wordmark in blue and gold', fit: 'contain' },
+          { src: '/images/art/nc-thunder-allstars-v2.webp', alt: 'Jax Beach Thunder All Stars wordmark in blue and gold', fit: 'contain' },
           { src: '/images/art/nc-jbs-jersey.webp', alt: 'Jax Beach Softball jersey wordmark, solid and outline versions', fit: 'contain' },
           { src: '/images/art/nc-beach-thunder.webp', alt: 'Beach Thunder wordmark in blue and yellow', fit: 'contain' },
           { src: '/images/art/nc-tsunami-pin.webp', alt: 'Tsunami Beach Ballers 12U trading pin' },
           { src: '/images/art/nc-tsunami-support.webp', alt: 'Support Tsunami Softball fundraiser flyer', fit: 'contain' },
-          { src: '/images/art/nc-tsunami-practice.webp', alt: 'Tsunami Fastpitch open practice and tryouts flyer', fit: 'contain' },
+          { src: '/images/art/nc-tsunami-practice-v2.webp', alt: 'Tsunami Fastpitch open practice and tryouts flyer', fit: 'contain' },
           { src: '/images/art/nc-tsunami-raffle.webp', alt: 'Tsunami Fastpitch fundraiser raffle flyer', fit: 'contain' },
           { src: '/images/art/nc-thunder-sponsor.webp', alt: 'Jax Beach Thunder All Stars sponsorship flyer', fit: 'contain' },
           { src: '/images/art/nc-thunder-josephs.webp', alt: "Jax Beach Thunder All Stars Joseph's Pizza fundraiser flyer", fit: 'contain' },
@@ -109,12 +111,12 @@ export const artists = [
         title: 'Coins & pins',
         blurb: 'Engraved work for die-strike production: military units, sports teams, small businesses.',
         items: [
-          { src: '/images/art/nc-legends-10u.webp', alt: 'East Bay Legends 10U baseball coin' },
+          { src: '/images/art/nc-legends-10u-v2.webp', alt: 'East Bay Legends 10U baseball coin' },
           { src: '/images/art/nc-legends-9u.webp', alt: 'East Bay Legends 9U baseball coin' },
           { src: '/images/art/nc-indios.webp', alt: 'Indios Baseball 14U coin' },
-          { src: '/images/art/nc-cardinals.webp', alt: 'Virginia Cardinals baseball coin' },
+          { src: '/images/art/nc-cardinals-v2.webp', alt: 'Virginia Cardinals baseball coin' },
           { src: '/images/art/nc-florida-impact.webp', alt: 'Florida Impact softball coin' },
-          { src: '/images/art/nc-impact-gold.webp', alt: 'Impact Gold Texas softball coin' },
+          { src: '/images/art/nc-impact-gold-v2.webp', alt: 'Impact Gold Texas softball coin' },
           { src: '/images/art/nc-central-edge.webp', alt: 'Central Edge Kentucky 8U coin' },
           { src: '/images/art/nc-owlz.webp', alt: 'Crosby Owlz baseball coin' },
           { src: '/images/art/nc-south-sf.webp', alt: 'South San Francisco baseball trading pin' },
