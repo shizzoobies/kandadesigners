@@ -56,17 +56,135 @@ export const artists = [
     ],
   },
   {
+    // MIXED SOURCING — two kinds of image path below, do not "tidy" them into one:
+    //   /images/art/nc-*.webp  = LOCAL. Built from Nicole's hi-res originals in
+    //     `Nicole Images/` (untracked) via ffmpeg: longest side 900px, libwebp q78.
+    //     Covers all of Team identity + Coins & pins, plus a few others. Safe.
+    //   https://nicolecruzdesign.com/... = HOTLINKED off her Netlify site because we
+    //     have no source file for that piece. Those filenames are CONTENT HASHES, so
+    //     any rebuild on her end renames them and the tile goes blank even if the
+    //     artwork never changed. If tiles disappear, re-scrape <img> srcs from
+    //     https://nicolecruzdesign.com/work and update, or get the source file.
+    //     Remaining gaps: most of Apparel, all of Invitations + Digital, 2 branding,
+    //     2 case-study shots. Ask Nicole for these to remove the last of the risk.
     slug: 'nicole',
     name: 'Nicole',
-    discipline: 'Mixed media & fine art',
-    bio: "Nicole's layered, textural work brings depth and warmth to brand storytelling. Every piece is made to order. Commissioned and art-directed through K & A for web, print, and identity systems.",
-    statement: 'Texture is memory. The best work lets you feel where it has been.',
-    portrait: '/images/art/a1-boho-study.jpg',
-    portraitAlt: 'Layered boho art study in warm earth tones, representative mixed-media work',
-    gallery: [
-      { src: '/images/art/a2-ellipse.jpg', alt: 'Elliptical abstract composition in soft gradients' },
-      { src: '/images/art/a1-loose-florals.jpg', alt: 'Loose watercolor florals with ink linework' },
-      { src: '/images/art/a1-hellebore.jpg', alt: 'Hellebore blossom study with layered watercolor washes' },
+    discipline: 'Brand identity & merchandise design',
+    bio: "Nicole designs identities for teams, events, and small businesses: challenge coins, apparel, caps, stationery, and invitation suites. From Tsunami Fastpitch to Navy squadron coins, the work is built to survive being worn, handed out, and kept. Commissioned and art-directed through K & A for print, merch, and identity systems.",
+    statement: 'Design meant to be worn, pinned, printed, and carried. Not just posted.',
+    // PLACEHOLDER PORTRAIT — Alex is getting a proper profile picture for Nicole;
+    // swap it in here when it lands. Using the East Bay Legends 10U coin meanwhile
+    // (near-perfect 4/5 crop). Her own site's headshot is only 156x262, unusable
+    // at hero size, so it is deliberately not used.
+    portrait: '/images/art/nc-legends-10u.webp',
+    portraitAlt: 'East Bay Legends 10U baseball challenge coin designed by Nicole, shown in gold relief',
+    // Mirrors the six categories on nicolecruzdesign.com/work. Her site numbers these
+    // ("01 · TEAM IDENTITY"); numbering is intentionally dropped per K&A house rule.
+    // `fit: 'contain'` = source is wide/tall enough that a square cover-crop would
+    // cut the artwork (wordmarks, front+back tee layouts, flyers). Everything else covers.
+    sections: [
+      {
+        id: 'team-identity',
+        title: 'Team identity',
+        blurb: 'Logos, uniforms, and gameday graphics for athletic organizations.',
+        items: [
+          { src: '/images/art/nc-jbs-circle.webp', alt: 'Jax Beach Softball palm tree circle logo' },
+          { src: '/images/art/nc-jbs-outline.webp', alt: 'Jax Beach Softball outline wordmark' },
+          { src: '/images/art/nc-thunder-wordmark.webp', alt: 'Thunder Softball wordmark in black and blue' },
+          // not published on her own site; came from the source drop
+          { src: '/images/art/nc-thunder-allstars.webp', alt: 'Jax Beach Thunder All Stars wordmark in blue and gold', fit: 'contain' },
+          { src: '/images/art/nc-jbs-jersey.webp', alt: 'Jax Beach Softball jersey wordmark, solid and outline versions', fit: 'contain' },
+          { src: '/images/art/nc-beach-thunder.webp', alt: 'Beach Thunder wordmark in blue and yellow', fit: 'contain' },
+          { src: '/images/art/nc-tsunami-pin.webp', alt: 'Tsunami Beach Ballers 12U trading pin' },
+          { src: '/images/art/nc-tsunami-support.webp', alt: 'Support Tsunami Softball fundraiser flyer', fit: 'contain' },
+          { src: '/images/art/nc-tsunami-practice.webp', alt: 'Tsunami Fastpitch open practice and tryouts flyer', fit: 'contain' },
+          { src: '/images/art/nc-tsunami-raffle.webp', alt: 'Tsunami Fastpitch fundraiser raffle flyer', fit: 'contain' },
+          { src: '/images/art/nc-thunder-sponsor.webp', alt: 'Jax Beach Thunder All Stars sponsorship flyer', fit: 'contain' },
+          { src: '/images/art/nc-thunder-josephs.webp', alt: "Jax Beach Thunder All Stars Joseph's Pizza fundraiser flyer", fit: 'contain' },
+        ],
+      },
+      {
+        id: 'hardware',
+        title: 'Coins & pins',
+        blurb: 'Engraved work for die-strike production: military units, sports teams, small businesses.',
+        items: [
+          { src: '/images/art/nc-legends-10u.webp', alt: 'East Bay Legends 10U baseball coin' },
+          { src: '/images/art/nc-legends-9u.webp', alt: 'East Bay Legends 9U baseball coin' },
+          { src: '/images/art/nc-indios.webp', alt: 'Indios Baseball 14U coin' },
+          { src: '/images/art/nc-cardinals.webp', alt: 'Virginia Cardinals baseball coin' },
+          { src: '/images/art/nc-florida-impact.webp', alt: 'Florida Impact softball coin' },
+          { src: '/images/art/nc-impact-gold.webp', alt: 'Impact Gold Texas softball coin' },
+          { src: '/images/art/nc-central-edge.webp', alt: 'Central Edge Kentucky 8U coin' },
+          { src: '/images/art/nc-owlz.webp', alt: 'Crosby Owlz baseball coin' },
+          { src: '/images/art/nc-south-sf.webp', alt: 'South San Francisco baseball trading pin' },
+          { src: '/images/art/nc-tullahoma.webp', alt: 'Tullahoma Fusion softball coin' },
+          { src: '/images/art/nc-tribe.webp', alt: 'Tribe Baseball 12U coin' },
+          { src: '/images/art/nc-king-neptune.webp', alt: 'King Neptune Navy challenge coin', fit: 'contain' },
+          { src: '/images/art/nc-navy-chief.webp', alt: 'Navy Chief comic book challenge coin', fit: 'contain' },
+          { src: '/images/art/nc-sermc.webp', alt: 'SERMC Goat Locker challenge coin', fit: 'contain' },
+          { src: '/images/art/nc-caliber.webp', alt: 'Caliber Collision $1M Team West challenge coin', fit: 'contain' },
+        ],
+      },
+      {
+        id: 'stationery',
+        title: 'Invitations',
+        blurb: 'Watercolor and hand-lettered suites for weddings and celebrations.',
+        items: [
+          { src: 'https://nicolecruzdesign.com/images/9411f437fc10.jpg', alt: 'Floral wedding invitation suite', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/e3067701a3c4.jpg', alt: 'Peach floral wedding invitation', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/1c85833213c5.jpg', alt: 'Watercolor joint baby shower invitation', fit: 'contain' },
+        ],
+      },
+      {
+        id: 'apparel',
+        title: 'Apparel',
+        blurb: 'Artwork prepped for screen print and embroidery, down to small-size legibility.',
+        items: [
+          { src: 'https://nicolecruzdesign.com/images/c79383751ac9.jpg', alt: 'USS Harry S. Truman Flying Squad tee, front badge' },
+          { src: 'https://nicolecruzdesign.com/images/7e8e8bb07793.jpg', alt: 'USS Harry S. Truman Flying Squad tee, back skull and axes' },
+          { src: 'https://nicolecruzdesign.com/images/52450bdf38c1.jpg', alt: 'U.S. Navy Mustangs tee in black and coyote colorways', fit: 'contain' },
+          { src: '/images/art/nc-mustangs-front.webp', alt: 'U.S. Navy Mustangs tee, front crest', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/0436b3cd3fa4.jpg', alt: 'WRNMMC Junior Enlisted Association tee, front and back', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/6b5ef572221a.jpg', alt: "USS Detroit Chief's Mess tee, front and back", fit: 'contain' },
+          { src: '/images/art/nc-lcsron2.webp', alt: 'LCSRON2 tee, front and back', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/7f129fbbe1f4.jpg', alt: 'Vets Helping Vets Virginia State Meeting tee, front and back', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/fb7c7f5e9113.jpg', alt: 'Neptune Beach sun and palm embroidered cap', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/43b92ee98624.jpg', alt: 'Team snapback cap and Tsunami Fastpitch tumbler', fit: 'contain' },
+        ],
+      },
+      {
+        id: 'digital',
+        title: 'Digital',
+        blurb: 'Flyers, social posts, and campaign graphics.',
+        items: [
+          { src: 'https://nicolecruzdesign.com/images/f318b18cd8b2.jpg', alt: 'Tsunami Fastpitch suit up fundraiser Instagram post' },
+          { src: 'https://nicolecruzdesign.com/images/121c3e82135a.jpg', alt: 'Tsunami Fastpitch suit up fundraiser Instagram post, second layout' },
+          { src: 'https://nicolecruzdesign.com/images/9c98b5f2f249.jpg', alt: 'Tsunami Fastpitch sponsor thank-you post' },
+          { src: 'https://nicolecruzdesign.com/images/c0f01ae35190.jpg', alt: 'BestBet Jacksonville Food Truck Rally flyer', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/9ff93bf79b64.jpg', alt: 'Pool Services and Such website hero design', fit: 'contain' },
+        ],
+      },
+      {
+        id: 'branding',
+        title: 'Logos & brand systems',
+        blurb: 'Identity work for small businesses and event organizers.',
+        items: [
+          { src: 'https://nicolecruzdesign.com/images/28d2f063aec3.png', alt: 'Full Count 32 Events logo' },
+          { src: '/images/art/nc-pool-badge.webp', alt: 'Pool Services and Such badge logo' },
+          { src: '/images/art/nc-beach-bananas.webp', alt: 'Beach Bananas baseball logo, black and white versions', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/40f90da058d0.jpg', alt: 'Tsunami Fastpitch die-cut stickers', fit: 'contain' },
+        ],
+      },
     ],
+    caseStudy: {
+      eyebrow: 'Case study',
+      heading: 'Pool Services & Such.',
+      body: 'A full identity build for a local pool maintenance company: logo design, stationery, apparel, vehicle wrap, and a launch website, all built around a badge mark that reads clearly from a business card or the back of a service van.',
+      items: [
+        { src: '/images/art/nc-pool-logo.webp', alt: 'Pool Services and Such logo in black and white' },
+        { src: 'https://nicolecruzdesign.com/images/c3f30b29a5d3.jpg', alt: 'Pool Services and Such stationery system' },
+        { src: 'https://nicolecruzdesign.com/images/7ce2e454dfbe.jpg', alt: 'Pool Services and Such stationery flat lay' },
+      ],
+    },
   },
 ];

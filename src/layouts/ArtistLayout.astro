@@ -47,7 +47,69 @@ const { artist } = Astro.props;
     </blockquote>
   </section>
 
-  <!-- Gallery -->
+  <!-- Categorised body of work (artists whose portfolio is organised by discipline) -->
+  {artist.sections?.length > 0 && (
+    <section class="mx-auto max-w-6xl px-6 pb-8">
+      {artist.sections.map((sec) => (
+        <div id={sec.id} class="pb-20 md:pb-28">
+          <div class="flex items-baseline justify-between gap-6 border-b border-ink/10 pb-5">
+            <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">{sec.title}</h2>
+            <span class="hidden shrink-0 font-mono text-xs uppercase tracking-[0.25em] text-muted sm:block">
+              {sec.items.length} pieces
+            </span>
+          </div>
+          {sec.blurb && (
+            <p data-animate="type-settle" data-animate-delay="0.1" class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
+              {sec.blurb}
+            </p>
+          )}
+          <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {sec.items.map((item) => (
+              <figure data-animate="flood-in" class="glow-frame">
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  class:list={[
+                    'aspect-square w-full',
+                    item.fit === 'contain' ? 'bg-[#F8F5F2] object-contain p-5' : 'object-cover',
+                  ]}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  )}
+
+  <!-- Case study -->
+  {artist.caseStudy && (
+    <section class="border-y border-ink/10 bg-surface">
+      <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
+          {artist.caseStudy.eyebrow}
+        </p>
+        <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-3xl md:text-5xl">
+          {artist.caseStudy.heading}
+        </h2>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 max-w-3xl text-lg leading-relaxed text-muted">
+          {artist.caseStudy.body}
+        </p>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {artist.caseStudy.items.map((item) => (
+            <figure data-animate="flood-in" class="glow-frame">
+              <img src={item.src} alt={item.alt} class="aspect-square w-full bg-[#F8F5F2] object-contain p-5" loading="lazy" decoding="async" />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Gallery (artists with a single curated set) -->
+  {artist.gallery?.length > 0 && (
   <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
     <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Selected work</h2>
     <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -56,7 +118,10 @@ const { artist } = Astro.props;
           <img
             src={item.src}
             alt={item.alt}
-            class="aspect-[4/5] w-full object-cover"
+            class:list={[
+              'aspect-[4/5] w-full',
+              item.fit === 'contain' ? 'bg-[#F8F5F2] object-contain p-6' : 'object-cover',
+            ]}
             loading="lazy"
           />
         </figure>
@@ -102,6 +167,7 @@ const { artist } = Astro.props;
       </>
     )}
   </section>
+  )}
 
   <!-- CTA band: every engagement routes through K & A -->
   <section class="border-y border-ink/10 bg-surface">
