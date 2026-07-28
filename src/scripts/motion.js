@@ -32,11 +32,25 @@ if (reduced) {
     });
   });
 
-  document.querySelectorAll('[data-animate="flood-in"]').forEach((el) => {
-    gsap.from(el, {
-      opacity: 0, scale: 0.96, duration: 1.4, ease: EASE,
-      scrollTrigger: { trigger: el, start: 'top 80%' },
-    });
+  // Artist work tiles. Batched rather than triggered per-element so a row
+  // settles together in sequence instead of each tile fading on its own
+  // schedule. The small alternating tilt reads as objects being set down,
+  // which suits work that is literally pinned, printed and worn.
+  // clearProps drops the inline transform afterwards so nothing is left
+  // interfering with hover or layout.
+  ScrollTrigger.batch('[data-animate="tile-settle"]', {
+    start: 'top 88%',
+    onEnter: (batch) =>
+      gsap.from(batch, {
+        y: 34,
+        scale: 0.9,
+        rotation: (i) => (i % 2 ? 2 : -2),
+        opacity: 0,
+        duration: 0.7,
+        ease: 'back.out(1.4)',
+        stagger: { each: 0.07 },
+        clearProps: 'transform',
+      }),
   });
 
   document.querySelectorAll('[data-animate="frame-lift"]').forEach((el) => {

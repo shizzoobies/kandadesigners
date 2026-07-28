@@ -371,11 +371,34 @@ body {
   filter: none;
 }
 
+/* Archive tiles cascade in each time a modal opens, rather than the whole
+   grid appearing at once. --i is set per tile in ArtistLayout; the delay is
+   capped so a long archive (Jon Marc's is 22) doesn't get a slow tail.
+   Lives here rather than in the component's scoped block because Astro
+   rewrites @keyframes names and ancestor selectors like .motion-reduced. */
+@keyframes tile-pop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.archive-modal[open] .tile-pop {
+  animation: tile-pop 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.25) backwards;
+  animation-delay: calc(min(var(--i, 0), 9) * 45ms);
+}
+
 /* Reduced motion: everything visible and static. */
 .motion-reduced [data-animate],
 .motion-reduced [data-pin-step] {
   opacity: 1 !important;
   transform: none !important;
+}
+.motion-reduced .archive-modal[open] .tile-pop {
+  animation: none !important;
 }
 /* Pinned steps are absolutely stacked for the scrub timeline; lay them out
    as a normal vertical flow when motion is off. */
