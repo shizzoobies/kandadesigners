@@ -45,6 +45,8 @@ Acts: sketch hero (line-drawn mac window) → scroll: 17-tile mosaic pops in (7 
 
 - **Jon Marc: LIVE** (`/artists/jon-marc/`, linked from home teaser + artists index, no ribbon). Discipline "Graphic design & visual identity". Portrait = composite Alex art-directed: suit photo ghosted (sat 0.45, 78% canvas wash) with JMO caricature mark multiplied on top (`jm-portrait.jpg`). Gallery = curated six (`gallery` in `src/data/artists.js`): Hope for Humanity, Home Improvement, **Berkseth landscaping badge** (newest, replaced Incarnate at Jon Marc's request), Anti-Running club, SLOW series, heel typography. Below: "+ See more of Jon Marc's work" button → site-idiom `<dialog>` modal (`archive` array, 22 square tiles incl. Incarnate; X/backdrop/Esc close). Source drops in `Jon Marc Images/` (untracked); the other original portfolio pulls live in the session scratchpad (gone after cleanup) but originals are at https://jonmarcostrom.myportfolio.com/graphic-design-work (Adobe Portfolio; srcset up to 3840, scrape via browser DOM).
 - **Bobbie + Nicole: still ribboned** ("Portfolio coming soon", cards de-linked). To go live: set `live: true` in artists.js, replace `portrait`/`gallery` (+ optional `archive` — modal renders automatically), drop nothing else — index + teaser render from the flag. Teaser on home (`src/pages/index.astro`) is still hardcoded per-artist though — update Bobbie/Nicole cards there manually like Jon Marc's.
+- **Nicole: page is BUILT but deliberately NOT live** (2026-07-28). Waiting on Alex to supply a proper **profile picture** — until then `portrait` is a placeholder (the East Bay Legends 10U coin); her own site's headshot is 156x262 and unusable. Real discipline is **"Brand identity & merchandise design"** (coins, apparel, stationery, team identity) — the old placeholder data called her "Mixed media & fine art", which was wrong. Her page uses a **new `sections` shape** (not `gallery`): six categories mirroring nicolecruzdesign.com/work — Team identity, Coins & pins, Invitations, Apparel, Digital, Logos & brand systems — plus a `caseStudy` block. `ArtistLayout` renders `sections`+`caseStudy` when present and falls back to `gallery`/`archive` otherwise, so Jon Marc and Bobbie are untouched. Per-item `fit: 'contain'` letterboxes wide pieces (wordmarks, front+back tee layouts, flyers) on `#F8F5F2` instead of cover-cropping them. **Her site numbers its sections ("01 · TEAM IDENTITY"); we deliberately do not** (house rule) and her AI-ish headline stack was collapsed to a plain title + one line.
+- **Nicole images are MIXED-SOURCE — see the big comment at the top of her entry in artists.js.** 33 tiles are local `/images/art/nc-*.webp` (built from `Nicole Images/`, untracked, 68MB of hi-res originals; ffmpeg longest-side 900px libwebp q78 → 3.7MB total). **20 tiles are still HOTLINKED** off her Netlify site because we have no source file — and those filenames are content hashes, so any rebuild on her end renames them and the tiles go blank. Still needed from Nicole: 8 apparel (Truman front/back, Mustangs black+coyote, WRNMMC, USS Detroit Chief's Mess, Vets Helping Vets, Neptune Beach cap, cap+tumbler), 5 digital (3 Tsunami IG posts, BestBet flyer, Pool web hero), 3 invitations, 2 branding (Full Count 32 logo, Tsunami stickers), 2 case-study stationery shots. Her Instagram/Behance/LinkedIn links are `href="#"` on her own site, so there are no socials to link yet.
 - Gallery tiles: 4/5 (1200x1500), archive tiles square 1200; logos get `contain` on canvas `#F8F5F2` with 70-80px margin, full-bleed art gets `cover`. sharp scripts pattern: `createRequire('file:///D:/K%20&%20A%20Performance%20Site/package.json')('sharp')` from any scratch dir.
 
 ## Other state from 2026-07-24 evening session
@@ -55,11 +57,14 @@ Acts: sketch hero (line-drawn mac window) → scroll: 17-tile mosaic pops in (7 
 
 ## Open items
 
-1. **Alex: set `NPM_VERSION=11`** in Pages build env (kills the lockfile-skew recurrence risk for good).
-2. **Re-upload Kai's ElevenLabs KB** (needs fresh key; content ready in repo; add Jon Marc portfolio facts while at it).
-3. **Bobbie + Nicole portfolios** → flow in Artists section above.
-4. Preview-scope Google env vars (only if preview testing wanted).
-5. Nice-to-haves: standalone outlined-SVG logo for print; `/api/scope` WAF rate-limit rule (never done).
+_Status synced with Alex 2026-07-25:_
+
+1. ~~Set `NPM_VERSION=11` in Pages build env~~ — **DONE** (Alex, 2026-07-25). Lockfile-skew recurrence risk is closed. (The post-`npm install` emnapi grep is now belt-and-suspenders, not required.)
+2. **Re-upload Kai's ElevenLabs KB** — fresh key is now available/good to go (blocker cleared). Still TODO: create KB doc from `docs/elevenlabs-agent/knowledge-base.md` + PATCH agent, adding Jon Marc live-portfolio facts. _(Confirm with Alex whether the re-upload itself has been run.)_
+3. **Bobbie + Nicole portfolios** — still in progress (artists working); go-live flow in Artists section above. Not ready yet.
+4. ~~Preview-scope Google env vars~~ — Google reviews env is **working** (Alex confirmed). No action.
+5. On hold: **`Logo Remake/`** ("K & A Memories", separate brand) still in progress — do not touch/integrate/commit (memory: logo-remake-on-hold).
+6. Nice-to-haves: standalone outlined-SVG logo for print; `/api/scope` WAF rate-limit rule (never done).
 
 ## Process notes
 
