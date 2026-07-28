@@ -43,22 +43,45 @@ if (reduced) {
   // power3.out decelerates smoothly, so it lands rather than bounces.
   // transformOrigin at the bottom edge makes it pivot like it is settling on
   // a surface instead of spinning around its middle.
-  ScrollTrigger.batch('[data-animate="tile-settle"]', {
-    start: 'top 88%',
-    onEnter: (batch) =>
-      gsap.from(batch, {
-        x: -16,
-        y: -30,
-        rotation: -10,
-        scale: 0.86,
-        opacity: 0,
-        duration: 0.85,
-        ease: 'power3.out',
-        transformOrigin: '50% 100%',
-        stagger: { each: 0.09 },
-        clearProps: 'transform',
-      }),
-  });
+  //
+  // Note this is set-then-tween-to, NOT gsap.from(). With from() inside a
+  // batch the tween is only built when the tile enters, so the tile paints
+  // once in its resting state before snapping back to the start — a visible
+  // blink. Parking the start state up front removes that frame entirely.
+  // force3D keeps each tile on its own compositor layer, so rotating a
+  // rounded, clipped, shadowed frame doesn't re-rasterise every frame.
+  const tumbleTiles = gsap.utils.toArray('[data-animate="tile-settle"]');
+  if (tumbleTiles.length) {
+    gsap.set(tumbleTiles, {
+      x: -16,
+      y: -30,
+      rotation: -10,
+      scale: 0.86,
+      opacity: 0,
+      transformOrigin: '50% 100%',
+      willChange: 'transform, opacity',
+      force3D: true,
+    });
+
+    ScrollTrigger.batch(tumbleTiles, {
+      start: 'top 88%',
+      onEnter: (batch) =>
+        gsap.to(batch, {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 0.85,
+          ease: 'power3.out',
+          force3D: true,
+          stagger: { each: 0.09 },
+          // drop the promotion hint once landed so idle tiles aren't holding
+          // compositor layers for the life of the page
+          clearProps: 'transform,willChange',
+        }),
+    });
+  }
 
   document.querySelectorAll('[data-animate="frame-lift"]').forEach((el) => {
     gsap.from(el, {
