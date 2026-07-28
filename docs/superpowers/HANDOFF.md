@@ -68,4 +68,6 @@ _Status synced with Alex 2026-07-25:_
 
 ## Process notes
 
+**Do NOT curl new asset URLs right after `git push` — wait for the Pages deploy to go Active first.** Requesting an asset during the deploy window makes Cloudflare cache the 404 HTML page against that URL with `max-age=86400`, so it serves `text/html` (status 200!) for **24h at that edge** even though the file deployed fine. Diagnose by comparing plain vs cache-busted (`?cb=123`) requests: `text/html` cached + `image/webp` on bust = poisoned cache, not a missing file. Fix = purge those URLs in the Cloudflare dashboard (Caching → Purge by URL); the wrangler OAuth token only has `zone (read)` so it cannot purge. Also note `npx` breaks on this repo path (the `&` in "K & A"): run `node ./node_modules/astro/astro.js dev|build` instead.
+
 Alex iterates fast by feel: ship, show, expect tweaks; mid-turn asks are constant. Verify every visual in Playwright against the wrangler build (screenshots → `.superpowers/sdd/`). He pastes dashboard screenshots/logs when asked plainly. Bash quoting on this repo path is treacherous — prefer node scripts (or PowerShell) for multi-file edits. Playwright MCP blocks `file://` — stage specimens into `dist/__name/` and view via wrangler (wiped on rebuild; re-stage after).

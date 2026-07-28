@@ -72,12 +72,13 @@ export const artists = [
     discipline: 'Brand identity & merchandise design',
     bio: "Nicole designs identities for teams, events, and small businesses: challenge coins, apparel, caps, stationery, and invitation suites. From Tsunami Fastpitch to Navy squadron coins, the work is built to survive being worn, handed out, and kept. Commissioned and art-directed through K & A for print, merch, and identity systems.",
     statement: 'Design meant to be worn, pinned, printed, and carried. Not just posted.',
-    // PLACEHOLDER PORTRAIT — Alex is getting a proper profile picture for Nicole;
-    // swap it in here when it lands. Using the East Bay Legends 10U coin meanwhile
-    // (near-perfect 4/5 crop). Her own site's headshot is only 156x262, unusable
-    // at hero size, so it is deliberately not used.
-    portrait: '/images/art/nc-legends-10u.webp',
-    portraitAlt: 'East Bay Legends 10U baseball challenge coin designed by Nicole, shown in gold relief',
+    // PLACEHOLDER PORTRAIT — the original stand-in, restored at Alex's request.
+    // Swap in Nicole's real profile picture here when it lands (then set live: true).
+    // Do NOT substitute a piece of her artwork here: a coin was tried and read as
+    // confusing on the artists-index card. Her own site's headshot is 156x262,
+    // too small for the 4/5 hero, so it is not usable either.
+    portrait: '/images/art/a1-boho-study.jpg',
+    portraitAlt: "Placeholder image, pending Nicole's profile photo",
     // Mirrors the six categories on nicolecruzdesign.com/work. Her site numbers these
     // ("01 · TEAM IDENTITY"); numbering is intentionally dropped per K&A house rule.
     // `fit: 'contain'` = source is wide/tall enough that a square cover-crop would
