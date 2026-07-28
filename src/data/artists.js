@@ -73,14 +73,14 @@ export const artists = [
     live: true,
     bio: "Nicole designs identities for teams, events, and small businesses: challenge coins, apparel, caps, stationery, and invitation suites. From Tsunami Fastpitch to Navy squadron coins, the work is built to survive being worn, handed out, and kept. Commissioned and art-directed through K & A for print, merch, and identity systems.",
     statement: 'Design meant to be worn, pinned, printed, and carried. Not just posted.',
-    // PLACEHOLDER PORTRAIT — she is LIVE with this stand-in on purpose; only the
-    // photo is pending, not the page. Swap in Nicole's real profile picture here
-    // when it lands (no other change needed — the card and teaser already link).
-    // Do NOT substitute a piece of her artwork here: a coin was tried and read as
-    // confusing on the artists-index card. Her own site's headshot is 156x262,
-    // too small for the 4/5 hero, so it is not usable either.
-    portrait: '/images/art/a1-boho-study.jpg',
-    portraitAlt: "Placeholder image, pending Nicole's profile photo",
+    // Portrait is built the same way as Jon Marc's: her own photo washed out to a
+    // pale greyscale, her mark laid over it at full strength. Source photo + both
+    // logo colourways live in `Nicole Images/Logo and Profile/` (untracked).
+    // Composed with ffmpeg from the 960x960 headshot (crop 768x960 +40x to centre
+    // her face) and NCLogo_Color.png at 690px. The mark is centred so it survives
+    // the 4/3 centre-crop used by the artists-index and home cards.
+    portrait: '/images/art/nc-portrait.webp',
+    portraitAlt: 'Nicole Cruz Design circular wordmark over a softened portrait of the artist',
     // Mirrors the six categories on nicolecruzdesign.com/work. Her site numbers these
     // ("01 · TEAM IDENTITY"); numbering is intentionally dropped per K&A house rule.
     // `fit: 'contain'` = source is wide/tall enough that a square cover-crop would
