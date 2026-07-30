@@ -1,38 +1,27 @@
 ---
-// The brand lockup, styled as a classic serif crest: "K & A" in Fraunces
-// with an oversized italic ampersand, "Performance" in Fraunces italic, a
-// hairline rule with a center diamond (draws in via line-draw), and a
-// letterspaced Lenia Mono descriptor. Scales with font-size on the root.
+// The brand lockup: a browser window framing "K & A" in serif with the rust
+// looped ampersand, "PERFORMANCE" in tracked caps breaking the frame, and a
+// mouse hanging off the right edge. Delivered as finished artwork, so it ships
+// as an image rather than being reassembled from live type; `New Logo/K&A
+// Logo.ai` is the vector source of truth for print and any future SVG.
 //
-// variant "nav": K & A + Performance only, left-aligned, compact.
-// variant "full": the complete four-line crest, centered.
+// Both variants size off the parent's font-size in em, which is what lets the
+// nav lockup ride the shrink-on-scroll transform without its own breakpoints.
+//
+// variant "nav": mark only, compact.
+// variant "full": mark plus the letterspaced descriptor, for the footer.
 interface Props {
   variant?: 'nav' | 'full';
 }
 const { variant = 'full' } = Astro.props;
 ---
 {variant === 'nav' ? (
-  <span class="logo-lockup logo-nav" translate="no">
-    <span class="logo-kanda">K <span class="logo-amp">&amp;</span> A</span>
-    <span class="logo-performance">Performance</span>
+  <span class="logo-lockup logo-nav">
+    <img class="logo-mark" src="/images/logo-lockup.webp?v=1" alt="" width="800" height="303" decoding="async" />
   </span>
 ) : (
-  <span class="logo-lockup logo-full" translate="no">
-    <span class="logo-kanda">K <span class="logo-amp">&amp;</span> A</span>
-    <span class="logo-performance">Performance</span>
-    <svg
-      class="logo-rule"
-      data-animate="line-draw"
-      viewBox="0 0 240 12"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1"
-      aria-hidden="true"
-    >
-      <line x1="0" y1="6" x2="106" y2="6" />
-      <path d="M114 6 L120 1.5 L126 6 L120 10.5 Z" fill="currentColor" stroke="none" />
-      <line x1="134" y1="6" x2="240" y2="6" />
-    </svg>
+  <span class="logo-lockup logo-full">
+    <img class="logo-mark" src="/images/logo-lockup.webp?v=1" alt="" width="800" height="303" decoding="async" />
     <span class="logo-tag">Web Design &amp; AI Integration</span>
   </span>
 )}
@@ -45,48 +34,32 @@ const { variant = 'full' } = Astro.props;
     color: var(--color-ink);
     line-height: 1;
   }
-  .logo-kanda {
-    font-family: "Fraunces", Georgia, serif;
-    font-weight: 560;
-    letter-spacing: 0.02em;
-    font-size: 1em;
-  }
-  .logo-amp {
-    font-style: normal;
-    font-weight: 460;
-    font-size: 1.14em;
-    color: var(--color-accent);
-    letter-spacing: 0;
-    margin: 0 -0.02em;
-  }
-  .logo-performance {
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-weight: 430;
-    font-size: 0.42em;
-    letter-spacing: 0.08em;
-    margin-top: 0.28em;
+  .logo-mark {
+    display: block;
+    height: auto;
+    /* The anchors carry the accessible name, so the mark stays decorative. */
   }
   .logo-nav {
     align-items: flex-start;
   }
-  .logo-full {
-    align-items: center;
-    text-align: center;
+  .logo-nav .logo-mark {
+    width: 4.5em;
   }
-  .logo-full .logo-rule {
+  /* Left-aligned so the descriptor hangs off the same edge as the mark and the
+     footer copy beneath it. Centring made the tracked caps, which run wider
+     than the mark, overhang it on both sides. */
+  .logo-full {
+    align-items: flex-start;
+  }
+  .logo-full .logo-mark {
     width: 5.6em;
-    margin-top: 0.5em;
-    color: var(--color-ink);
-    opacity: 0.65;
   }
   .logo-full .logo-tag {
     font-family: var(--font-mono);
-    font-size: 0.24em;
-    letter-spacing: 0.34em;
+    font-size: 0.2em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--color-muted);
-    margin-top: 0.9em;
-    padding-left: 0.34em; /* optically recenter the tracked caps */
+    margin-top: 1.2em;
   }
 </style>
