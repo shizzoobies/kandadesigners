@@ -2,9 +2,13 @@
 // the print file, downscaled to 1200px webp in /images/art/book/. Numeric order
 // IS story order: 01 is the front cover, 22 the back cover, so BookFlip pairs
 // them into 11 physical sheets and the spreads land correctly.
+// ?v= is a cache-key bust, not decoration: on first deploy four of these pages
+// raced the rollout and Cloudflare cached a 404 HTML body against the bare URL
+// with a 200 status, so those pages rendered blank while the file was fine at
+// origin. Bump the number if any book page ever goes blank again.
 const harryAndHopePages = Array.from({ length: 22 }, (_, i) => {
   const n = i + 1;
-  const src = `/images/art/book/hh-${String(n).padStart(2, '0')}.webp`;
+  const src = `/images/art/book/hh-${String(n).padStart(2, '0')}.webp?v=1`;
   if (n === 1) {
     return { src, alt: "Front cover of Hope and Harry's Alaskan Adventure, showing the two characters on a woodland path" };
   }
