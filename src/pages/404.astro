@@ -1,0 +1,26 @@
+---
+// Without this page the build emits no 404.html, and Cloudflare Pages answers
+// every unmatched path with a 200 and an HTML body. That is what let a missing
+// asset under /_astro/* inherit the immutable one-year Cache-Control from
+// public/_headers and pin a 404 page in the edge cache under a stylesheet URL,
+// which took the whole site's CSS down. A real 404 keeps that from recurring.
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Page not found | K & A Performance"
+  description="That page does not exist. Head back to the K & A Performance home page."
+>
+  <section class="mx-auto flex min-h-[70vh] max-w-3xl flex-col justify-center px-6 py-32 text-center">
+    <p class="font-mono text-sm uppercase tracking-[0.3em] text-accent">Error 404</p>
+    <h1 class="mt-8 font-display text-[clamp(2.5rem,7vw,5rem)] leading-[1.05]">
+      That page has <span class="text-accent">wandered off.</span>
+    </h1>
+    <p class="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted">
+      The link may be old, or the address slightly off. Everything we build is
+      still one click away.
+    </p>
+    <div class="mt-10">
+      <a href="/" class="btn-accent">Back to home</a>
+    </div>
+  </section>
+</BaseLayout>
