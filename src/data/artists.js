@@ -1,16 +1,42 @@
+// "Hope & Harry's Alaskan Adventure" — 22 uniform 2000x1545 pages exported from
+// the print file, downscaled to 1200px webp in /images/art/book/. Numeric order
+// IS story order: 01 is the front cover, 22 the back cover, so BookFlip pairs
+// them into 11 physical sheets and the spreads land correctly.
+const harryAndHopePages = Array.from({ length: 22 }, (_, i) => {
+  const n = i + 1;
+  const src = `/images/art/book/hh-${String(n).padStart(2, '0')}.webp`;
+  if (n === 1) {
+    return { src, alt: "Front cover of Hope and Harry's Alaskan Adventure, showing the two characters on a woodland path" };
+  }
+  if (n === 22) {
+    return { src, alt: 'Back cover: a road winding past an Alaskan waterfall' };
+  }
+  return { src, alt: `Page ${n - 1} of Hope and Harry's Alaskan Adventure, an illustrated scene with story text` };
+});
+
 export const artists = [
   {
     slug: 'bobbie',
     name: 'Bobbie',
     discipline: 'Illustration & brand artwork',
-    bio: "Bobbie's line work and character studies give brands a hand-drawn signature. Every piece is made to order. Commissioned and art-directed through K & A for web, print, and identity systems.",
+    live: true,
+    bio: 'Bobbie draws for a living, and it shows: hand-lettered logotypes, character work, and full picture books, all built line by line rather than assembled from parts. She works under her own mark, Bobbie Draws, and is commissioned and art-directed through K & A for web, print, and identity systems.',
     statement: 'A brand should look like it was drawn by a human who cared, because it was.',
-    portrait: '/images/art/a1-magnolia.jpg',
-    portraitAlt: 'Watercolor magnolia study in soft pinks, representative illustration work',
+    portrait: '/images/art/bb-portrait.webp',
+    portraitAlt: "Bobbie's own Bobbie Draws mark, a script wordmark with a palette and brush, layered over a softened portrait of the artist",
+    book: {
+      eyebrow: 'Featured work',
+      title: "Hope & Harry's Alaskan Adventure",
+      blurb: 'A picture book start to finish: characters, landscapes, and every page illustrated by Bobbie. Written by Alex Anderson at K & A, so this one ran the whole way through our own studio. The real thing is below, all 22 pages of it.',
+      pages: harryAndHopePages,
+    },
     gallery: [
-      { src: '/images/art/a1-loose-florals.jpg', alt: 'Loose watercolor florals with ink linework' },
-      { src: '/images/art/a1-stems.jpg', alt: 'Minimal botanical stems painted in muted earth tones' },
-      { src: '/images/art/a1-hellebore.jpg', alt: 'Hellebore blossom study with layered watercolor washes' },
+      { src: '/images/art/bb-bobbie-draws.webp', fit: 'contain', alt: "Bobbie Draws personal logo: a script wordmark with a painter's palette and brush" },
+      { src: '/images/art/bb-champicraft.webp', fit: 'contain', alt: 'ChampiCraft logotype hand lettered out of illustrated mushrooms' },
+      { src: '/images/art/bb-dr-night-phlox.webp', fit: 'contain', alt: 'Dr Night Phlox circular mark, a stylised phlox flower in cream and green on deep maroon' },
+      { src: '/images/art/bb-holder-of-secrets.webp', fit: 'contain', alt: 'The Holder of Secrets title treatment with a dragonfly resting on a leaf' },
+      { src: '/images/art/bb-wrong-answers-only.webp', fit: 'contain', alt: 'Wrong Answers Only circular badge logo built around a sprouting root vegetable' },
+      { src: '/images/art/bb-ka-performance.webp', fit: 'contain', alt: 'K & A Performance logo concept set inside a hand drawn browser window' },
     ],
   },
   {

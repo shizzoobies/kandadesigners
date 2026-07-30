@@ -1,0 +1,396 @@
+---
+// Interactive picture book. Pages are paired into physical sheets (front/back)
+// so the flip behaves like a real book: closed on the cover, each click swings
+// one sheet across the spine. Desktop gets the 3D spread; narrow screens fall
+// back to a swipeable single-page strip because a two-page spread on a phone
+// puts the body copy below readable size.
+const { book } = Astro.props;
+const pages = book.pages;
+const sheets = [];
+for (let i = 0; i < pages.length; i += 2) {
+  sheets.push({ front: pages[i], back: pages[i + 1] });
+}
+const totalSheets = sheets.length;
+---
+<div class="book-wrap" data-book data-total-sheets={totalSheets} data-total-pages={pages.length}>
+  <div class="bookclip">
+    <div class="bookstage">
+      <div class="book closed-front" data-book-el>
+      <div class="book-block book-block-left" aria-hidden="true"></div>
+      <div class="book-block book-block-right" aria-hidden="true"></div>
+
+      {sheets.map((sheet, i) => (
+        <div class="leaf" data-leaf={i}>
+          <div class="leaf-face leaf-front">
+            {sheet.front && (
+              <img
+                src={sheet.front.src}
+                alt={sheet.front.alt}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                draggable="false"
+              />
+            )}
+          </div>
+          <div class="leaf-face leaf-back">
+            {sheet.back && (
+              <img
+                src={sheet.back.src}
+                alt={sheet.back.alt}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                draggable="false"
+              />
+            )}
+          </div>
+        </div>
+      ))}
+
+        <div class="book-gutter" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-controls">
+    <button type="button" class="book-nav" data-book-prev aria-label="Previous page" disabled>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.5 3.5 5.5 9l6 5.5"/></svg>
+    </button>
+    <p class="book-status" data-book-status aria-live="polite">Cover &middot; click to open</p>
+    <button type="button" class="book-nav" data-book-next aria-label="Next page">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5 12.5 9l-6 5.5"/></svg>
+    </button>
+  </div>
+
+  <!-- Narrow screens: plain swipeable page strip, no 3D -->
+  <div class="book-strip" data-lenis-prevent>
+    {pages.map((page) => (
+      <figure class="book-strip-page">
+        <img src={page.src} alt={page.alt} loading="lazy" decoding="async" />
+      </figure>
+    ))}
+  </div>
+  <p class="book-strip-hint">Swipe to turn the pages</p>
+</div>
+
+<style>
+  .book-wrap {
+    --page-aspect: 1.294;
+    --leaf-dur: 820ms;
+  }
+
+  /* ---------- 3D spread (default, hidden on narrow screens) ---------- */
+  /* A closed book slides half a page sideways to stay optically centred, which
+     pushes its empty half past the container. Clip only the horizontal axis so
+     that overhang cannot scroll the page while the drop shadow still spills
+     downward. */
+  .bookclip {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .bookstage {
+    perspective: 2400px;
+    perspective-origin: 50% 45%;
+    display: flex;
+    justify-content: center;
+  }
+  .book {
+    position: relative;
+    width: min(100%, 68rem);
+    aspect-ratio: calc(var(--page-aspect) * 2);
+    transform-style: preserve-3d;
+    transition: transform var(--leaf-dur) cubic-bezier(0.4, 0.1, 0.2, 1);
+    cursor: pointer;
+  }
+  /* A closed book only shows one page, so slide the two-page frame across to
+     keep the visible half centred in the layout box. */
+  .book.closed-front {
+    transform: translateX(-25%);
+  }
+  .book.closed-back {
+    transform: translateX(25%);
+  }
+
+  /* Stack of pages under each half: sells thickness and grounds the book */
+  .book-block {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background: #fffdfa;
+    transition: opacity var(--leaf-dur) ease;
+  }
+  .book-block-left {
+    left: 0;
+    border-radius: 5px 0 0 5px;
+    box-shadow:
+      -1px 2px 0 #efe8df, -2px 4px 0 #fffdfa, -3px 6px 0 #e9e1d7,
+      -26px 34px 60px -30px rgb(34 28 21 / 0.5);
+  }
+  .book-block-right {
+    right: 0;
+    border-radius: 0 5px 5px 0;
+    box-shadow:
+      1px 2px 0 #efe8df, 2px 4px 0 #fffdfa, 3px 6px 0 #e9e1d7,
+      26px 34px 60px -30px rgb(34 28 21 / 0.5);
+  }
+  .book.closed-front .book-block-left,
+  .book.closed-back .book-block-right {
+    opacity: 0;
+  }
+
+  .leaf {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform var(--leaf-dur) cubic-bezier(0.4, 0.1, 0.2, 1);
+  }
+  .leaf.flipped {
+    transform: rotateY(-180deg);
+  }
+  .leaf.flipping {
+    will-change: transform;
+  }
+  /* Lift the airborne page off the spread while it travels */
+  .leaf.flipping .leaf-face {
+    box-shadow: 0 0 50px -6px rgb(34 28 21 / 0.28);
+  }
+
+  .leaf-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    backface-visibility: hidden;
+    background: #fffdfa;
+  }
+  .leaf-face img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+  }
+  /* The back face is mirrored inside a leaf that is itself mirrored when
+     flipped, so its outer edge is on the left and its spine edge on the right. */
+  .leaf-front {
+    border-radius: 0 5px 5px 0;
+  }
+  .leaf-back {
+    transform: rotateY(180deg);
+    border-radius: 5px 0 0 5px;
+  }
+  /* Crease shading along whichever edge meets the spine */
+  .leaf-face::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .leaf-front::after {
+    background: linear-gradient(to right, rgb(34 28 21 / 0.2), rgb(34 28 21 / 0) 10%);
+  }
+  .leaf-back::after {
+    background: linear-gradient(to left, rgb(34 28 21 / 0.2), rgb(34 28 21 / 0) 10%);
+  }
+
+  .book-gutter {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3.5%;
+    height: 100%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--leaf-dur) ease;
+    background: linear-gradient(
+      to right,
+      rgb(34 28 21 / 0) 0%,
+      rgb(34 28 21 / 0.18) 45%,
+      rgb(34 28 21 / 0.18) 55%,
+      rgb(34 28 21 / 0) 100%
+    );
+    z-index: 60;
+  }
+  .book:not(.closed-front):not(.closed-back) .book-gutter {
+    opacity: 1;
+  }
+
+  /* ---------- controls ---------- */
+  .book-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .book-nav {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(34 28 21 / 0.14);
+    border-radius: 9999px;
+    color: var(--color-ink);
+    transition: color var(--dur-fast) ease, background var(--dur-fast) ease,
+      border-color var(--dur-fast) ease, opacity var(--dur-fast) ease;
+  }
+  .book-nav:hover:not(:disabled) {
+    color: var(--color-accent);
+    border-color: rgb(154 52 18 / 0.4);
+    background: rgb(154 52 18 / 0.05);
+  }
+  .book-nav:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+  .book-status {
+    min-width: 15rem;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* ---------- narrow-screen strip ---------- */
+  .book-strip,
+  .book-strip-hint {
+    display: none;
+  }
+
+  @media (max-width: 899px) {
+    .bookstage,
+    .book-controls {
+      display: none;
+    }
+    .book-strip {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.5rem;
+    }
+    .book-strip::-webkit-scrollbar {
+      display: none;
+    }
+    .book-strip-page {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+    }
+    .book-strip-page img {
+      display: block;
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 18px 40px -22px rgb(34 28 21 / 0.45);
+    }
+    .book-strip-hint {
+      display: block;
+      margin-top: 1.5rem;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .book-wrap {
+      --leaf-dur: 1ms;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-book]').forEach((wrap) => {
+    const bookEl = wrap.querySelector<HTMLElement>('[data-book-el]');
+    const leaves = Array.from(wrap.querySelectorAll<HTMLElement>('[data-leaf]'));
+    const statusEl = wrap.querySelector<HTMLElement>('[data-book-status]');
+    const prevBtn = wrap.querySelector<HTMLButtonElement>('[data-book-prev]');
+    const nextBtn = wrap.querySelector<HTMLButtonElement>('[data-book-next]');
+    if (!bookEl || !leaves.length) return;
+
+    const total = leaves.length;
+    const totalPages = Number(wrap.dataset.totalPages || total * 2);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const duration = reduced ? 10 : 820;
+    let sheet = 0;
+    let busy = false;
+
+    const applyZ = () => {
+      // Unflipped leaves stack rightwards with the cover on top; flipped leaves
+      // stack leftwards with the most recently turned sheet on top.
+      leaves.forEach((leaf, i) => {
+        leaf.style.zIndex = String(i < sheet ? i + 1 : total - i);
+      });
+    };
+
+    const updateChrome = () => {
+      bookEl.classList.toggle('closed-front', sheet === 0);
+      bookEl.classList.toggle('closed-back', sheet === total);
+      if (prevBtn) prevBtn.disabled = sheet === 0;
+      if (nextBtn) nextBtn.disabled = sheet === total;
+      if (statusEl) {
+        if (sheet === 0) statusEl.textContent = 'Cover · click to open';
+        else if (sheet === total) statusEl.textContent = 'Back cover';
+        else statusEl.textContent = `Pages ${sheet * 2}–${sheet * 2 + 1} of ${totalPages}`;
+      }
+    };
+
+    const go = (dir: number) => {
+      if (busy) return;
+      const next = sheet + dir;
+      if (next < 0 || next > total) return;
+      // Forward turns the first unflipped sheet; back un-turns the last flipped one.
+      const moving = dir > 0 ? leaves[sheet] : leaves[next];
+      busy = true;
+      sheet = next;
+
+      moving.style.zIndex = String(total + 5);
+      moving.classList.add('flipping');
+      moving.classList.toggle('flipped', dir > 0);
+      leaves.forEach((leaf, i) => {
+        if (leaf === moving) return;
+        leaf.classList.toggle('flipped', i < sheet);
+      });
+      updateChrome();
+
+      window.setTimeout(() => {
+        moving.classList.remove('flipping');
+        applyZ();
+        busy = false;
+      }, duration + 30);
+    };
+
+    bookEl.addEventListener('click', (e) => {
+      // Closed: any click opens. Open: left half goes back, right half forward.
+      if (sheet === 0) return go(1);
+      if (sheet === total) return go(-1);
+      const rect = bookEl.getBoundingClientRect();
+      go((e as MouseEvent).clientX < rect.left + rect.width / 2 ? -1 : 1);
+    });
+    prevBtn?.addEventListener('click', () => go(-1));
+    nextBtn?.addEventListener('click', () => go(1));
+    wrap.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      if (key === 'ArrowLeft') {
+        e.preventDefault();
+        go(-1);
+      } else if (key === 'ArrowRight') {
+        e.preventDefault();
+        go(1);
+      }
+    });
+
+    applyZ();
+    updateChrome();
+  });
+</script>

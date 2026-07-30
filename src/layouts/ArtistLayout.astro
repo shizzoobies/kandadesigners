@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import BookFlip from '../components/BookFlip.astro';
 
 const { artist } = Astro.props;
 ---
@@ -46,6 +47,26 @@ const { artist } = Astro.props;
       </p>
     </blockquote>
   </section>
+
+  <!-- Featured book: readable, page-turnable, sits ahead of the tile work -->
+  {artist.book && (
+    <section class="border-y border-ink/10 bg-surface">
+      <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
+          {artist.book.eyebrow}
+        </p>
+        <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-3xl md:text-5xl">
+          {artist.book.title}
+        </h2>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 max-w-3xl text-lg leading-relaxed text-muted">
+          {artist.book.blurb}
+        </p>
+        <div data-animate="frame-lift" class="mt-14">
+          <BookFlip book={artist.book} />
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- Categorised body of work (artists whose portfolio is organised by discipline) -->
   {artist.sections?.length > 0 && (
