@@ -320,8 +320,12 @@ const totalSheets = sheets.length;
 
     const total = leaves.length;
     const totalPages = Number(wrap.dataset.totalPages || total * 2);
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duration = reduced ? 10 : 820;
+    // Read the turn length from CSS rather than duplicating it here: the z-index
+    // reset has to land after the rotation finishes, and a hardcoded copy would
+    // silently desync (pages flashing through each other) the moment --leaf-dur
+    // changed. This also picks up the reduced-motion override for free.
+    const durVar = getComputedStyle(wrap).getPropertyValue('--leaf-dur').trim();
+    const duration = durVar.endsWith('ms') ? parseFloat(durVar) : parseFloat(durVar) * 1000 || 820;
     let sheet = 0;
     let busy = false;
 
