@@ -3,6 +3,8 @@ import BaseLayout from './BaseLayout.astro';
 import BookFlip from '../components/BookFlip.astro';
 
 const { artist } = Astro.props;
+const hasGallery = artist.gallery?.length > 0;
+const hasArchive = artist.archive?.length > 0;
 ---
 <BaseLayout
   title={`${artist.name} | Artist Collaborations | K & A Performance`}
@@ -52,13 +54,13 @@ const { artist } = Astro.props;
   {artist.book && (
     <section class="border-y border-ink/10 bg-surface">
       <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
+        <p data-animate="type-settle" class="text-center font-mono text-sm uppercase tracking-[0.3em] text-accent">
           {artist.book.eyebrow}
         </p>
-        <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-3xl md:text-5xl">
+        <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-center font-display text-3xl md:text-5xl">
           {artist.book.title}
         </h2>
-        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 max-w-3xl text-lg leading-relaxed text-muted">
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mx-auto mt-6 max-w-2xl text-center text-lg leading-relaxed text-muted">
           {artist.book.blurb}
         </p>
         <div data-animate="frame-lift" class="mt-14">
@@ -173,8 +175,8 @@ const { artist } = Astro.props;
   )}
 
   <!-- Gallery (artists with a single curated set) -->
-  {artist.gallery?.length > 0 && (
-  <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
+  {hasGallery && (
+  <section class:list={['mx-auto max-w-6xl px-6', hasArchive ? '' : 'pb-24 md:pb-32']}>
     <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Selected work</h2>
     <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {artist.gallery.map((item) => (
@@ -191,46 +193,58 @@ const { artist } = Astro.props;
         </figure>
       ))}
     </div>
+  </section>
+  )}
 
-    {artist.archive?.length > 0 && (
-      <>
-        <div class="mt-16">
-          <button
-            type="button"
-            data-archive-open="archive-modal"
-            class="cursor-pointer font-mono text-sm uppercase tracking-[0.3em] text-accent transition-colors hover:text-accent-hot"
-          >
-            <span aria-hidden="true" class="mr-3 font-bold">+</span>See more of {artist.name}&rsquo;s work
+  <!-- Everything-else modal. Stands on its own so an artist whose headline
+       piece carries the page (Bobbie's book) can offer the rest of the work
+       behind one control instead of another full-height tile grid. -->
+  {hasArchive && (
+    <section
+      class:list={[
+        'mx-auto max-w-6xl px-6 pb-24 md:pb-32',
+        // Under a left-aligned tile grid the control belongs on the left margin;
+        // standing alone under a centred featured piece it needs to be centred
+        // or it reads as an orphan.
+        hasGallery ? 'pt-16' : 'pt-14 text-center',
+      ]}
+    >
+      <button
+        type="button"
+        data-archive-open="archive-modal"
+        class="cursor-pointer font-mono text-sm uppercase tracking-[0.3em] text-accent transition-colors hover:text-accent-hot"
+      >
+        <span aria-hidden="true" class="mr-3 font-bold">+</span>See more of {artist.name}&rsquo;s work
+      </button>
+
+      <dialog id="archive-modal" class="archive-modal" aria-label={`More of ${artist.name}'s work`}>
+        <div class="archive-head">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
+            More of <span class="text-accent">{artist.name}&rsquo;s</span> work
+          </p>
+          <button type="button" data-archive-close class="archive-x" aria-label="Close gallery">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
           </button>
         </div>
-
-        <dialog id="archive-modal" class="archive-modal" aria-label={`More of ${artist.name}'s work`}>
-          <div class="archive-head">
-            <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
-              More of <span class="text-accent">{artist.name}&rsquo;s</span> work
-            </p>
-            <button type="button" data-archive-close class="archive-x" aria-label="Close gallery">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
-            </button>
+        <div data-lenis-prevent class="mt-5 min-h-0 flex-1 overflow-y-auto pr-1">
+          <div class="grid grid-cols-2 gap-5 md:grid-cols-3">
+            {artist.archive.map((item, i) => (
+              <figure class="glow-frame tile-pop" style={`--i:${i}`}>
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  class:list={[
+                    'aspect-square w-full',
+                    item.fit === 'contain' ? 'bg-[#F8F5F2] object-contain p-4' : 'object-cover',
+                  ]}
+                  loading="lazy"
+                />
+              </figure>
+            ))}
           </div>
-          <div data-lenis-prevent class="mt-5 min-h-0 flex-1 overflow-y-auto pr-1">
-            <div class="grid grid-cols-2 gap-5 md:grid-cols-3">
-              {artist.archive.map((item, i) => (
-                <figure class="glow-frame tile-pop" style={`--i:${i}`}>
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    class="aspect-square w-full object-cover"
-                    loading="lazy"
-                  />
-                </figure>
-              ))}
-            </div>
-          </div>
-        </dialog>
-      </>
-    )}
-  </section>
+        </div>
+      </dialog>
+    </section>
   )}
 
   <!-- CTA band: every engagement routes through K & A -->

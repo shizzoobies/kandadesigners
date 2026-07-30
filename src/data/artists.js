@@ -34,7 +34,10 @@ export const artists = [
       blurb: 'A picture book start to finish: characters, landscapes, and every page illustrated by Bobbie. Written by Alex Anderson at K & A, so this one ran the whole way through our own studio. The real thing is below, all 22 pages of it.',
       pages: harryAndHopePages,
     },
-    gallery: [
+    // No inline `gallery` on purpose: the book above carries this page, so the
+    // brand work sits behind the one modal control rather than adding another
+    // screen of tile grid after the closer.
+    archive: [
       { src: '/images/art/bb-bobbie-draws.webp', fit: 'contain', alt: "Bobbie Draws personal logo: a script wordmark with a painter's palette and brush" },
       { src: '/images/art/bb-champicraft.webp', fit: 'contain', alt: 'ChampiCraft logotype hand lettered out of illustrated mushrooms' },
       { src: '/images/art/bb-dr-night-phlox.webp', fit: 'contain', alt: 'Dr Night Phlox circular mark, a stylised phlox flower in cream and green on deep maroon' },
