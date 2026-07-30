@@ -1,6 +1,6 @@
 # K&A Performance — Session Handoff
 
-**Date:** 2026-07-30 · **Branch: `main`** · **Status: LIVE at ka-performancefl.com.** CI works: `git push origin main` auto-builds and deploys. Latest work: Bobbie's page went live fronted by an interactive flipbook of the picture book she illustrated (112a85b), which makes all three artists live.
+**Date:** 2026-07-30 · **Branch: `main`** · **Status: LIVE at ka-performancefl.com.** CI works: `git push origin main` auto-builds and deploys. Latest work: the artist-finished logo replaced the Fraunces crest across nav, footer, favicon and share card (7b284eb), and Bobbie's page went live fronted by an interactive flipbook of the picture book she illustrated, which makes all three artists live.
 
 ## DEPLOY RUNBOOK (critical, read first)
 
@@ -19,8 +19,8 @@ Local preview: `npx wrangler pages dev dist --port 8788 --compatibility-date=202
 
 - **Palette "Earthen Sophisticate":** canvas `#F8F5F2`, ink `#221C15`, muted `#6C635A`, accent rust `#9A3412` (hot `#7C2D12`), amber `#D97706` = buttons/highlights ONLY with espresso text (amber fails AA as text on light). Dark band = teal (`#0B302D→#134E4A`, light-teal `#5EEAD4` accent). Tokens in `src/styles/global.css` `@theme`.
 - **Type:** display = Schibsted Grotesk 700 (`--font-display`); body/UI = Atkinson Hyperlegible Next; kickers/caps labels = Lenia Mono (`font-mono`); Fraunces ONLY in the logo lockup. Retired: Grivon, Neutrix, Fraunces-as-display, New Black.
-- **Logo:** `src/components/LogoLockup.astro` — serif crest: K & A (Fraunces, roman rust ampersand — NOT italic), italic *Performance*, rule+diamond, Lenia caps descriptor. Nav = compact shrink-on-scroll; footer = full crest.
-- **Brand assets (new):** favicon = rust Fraunces ampersand on canvas (`public/images/favicon-32/192/512.png` + `apple-touch-icon.png`); share card = full crest with warm washes (`public/images/og-card.png`, 1200x630) wired in BaseLayout with og/twitter meta. Rendered from a browser specimen (dist/__brand trick), NOT hand-drawn SVG. Old favicon.svg + site-logo.png left in repo, unreferenced.
+- **Logo (REPLACED 2026-07-30):** the artist-finished mark — a browser window framing serif "K & A" with the rust looped ampersand, PERFORMANCE breaking the frame in tracked caps, and a mouse off the right edge. It deliberately rhymes with the hero's sketch-window act. `src/components/LogoLockup.astro` now renders it as an **image** (`/images/logo-lockup.webp?v=1`, 800px wide, trimmed, aspect 2.639) rather than reassembling live type; **`New Logo/K&A Logo.ai` (untracked) is the vector source of truth** for print or a future SVG, and it is PDF-1.6 inside, so any PDF→SVG tool can crack it (this machine has none installed; the `convert.exe` on PATH is the Windows filesystem tool, do NOT run it). Both variants size in `em` off the parent so the nav mark still rides the existing `.nav-logo` shrink-on-scroll transform. `variant="full"` (footer) is **left-aligned**: the tracked descriptor runs wider than the mark, so centring made it overhang both edges. The old Fraunces crest markup is gone; `.logo-kanda`/`.logo-amp` classes no longer exist.
+- **Brand assets:** favicon = the new mark's own ampersand, located by scanning for rust pixels and cropped tight (its hairlines vanish at 32px if you pad it). Share card = the new lockup on the washed canvas (`og-card.png`, 1200x630). Both still rendered via the `dist/__brand` browser-specimen trick. **When exporting text there, promote it with `transform: translateZ(0)`** — `-webkit-font-smoothing` is a no-op on Windows Chrome, and without the layer promotion DirectWrite bakes subpixel colour fringes into the PNG (measured channel spread 113 vs 19 for clean text). All four brand URLs carry `?v=`; bump it whenever the artwork changes, because `/images/*` has a 24h max-age and social scrapers hold their copy longer. Old favicon.svg + site-logo.png remain in repo, unreferenced.
 - **Hard rules:** NO em dashes anywhere user-visible; no pill/chip UI; no numbered/redundant eyebrow headers; everything measured-AA.
 
 ## Kai (the one assistant name, everywhere)
@@ -68,7 +68,7 @@ _Status synced with Alex 2026-07-25:_
 3. ~~Bobbie + Nicole portfolios~~ — **DONE.** Nicole live 2026-07-28, Bobbie live 2026-07-30. Only remaining artist ask is the list of 20 source files Nicole still owes (see her entry) so her hotlinked tiles stop depending on her Netlify build.
 4. ~~Preview-scope Google env vars~~ — Google reviews env is **working** (Alex confirmed). No action.
 5. On hold: **`Logo Remake/`** ("K & A Memories", separate brand) still in progress — do not touch/integrate/commit (memory: logo-remake-on-hold).
-6. Nice-to-haves: standalone outlined-SVG logo for print; `/api/scope` WAF rate-limit rule (never done).
+6. Nice-to-haves: convert `New Logo/K&A Logo.ai` to SVG once a converter is available (crisper at any size, recolourable, animatable — the site currently ships the logo as a webp); `/api/scope` WAF rate-limit rule (never done).
 
 ## Process notes
 
