@@ -130,9 +130,12 @@ export const artists = [
         items: [
           { src: '/images/art/nc-jbs-circle.webp', alt: 'Jax Beach Softball palm tree circle logo' },
           { src: '/images/art/nc-jbs-outline.webp', alt: 'Jax Beach Softball outline wordmark' },
-          { src: '/images/art/nc-thunder-wordmark.webp', alt: 'Thunder Softball wordmark in black and blue' },
-          // not published on her own site; came from the source drop
+          // Order matters here: only the first three render on the page, the
+          // rest sit behind the section's modal. All Stars is pulled up into
+          // that visible three because it is the strongest of the wordmarks.
+          // (not published on her own site; came from the source drop)
           { src: '/images/art/nc-thunder-allstars-v2.webp', alt: 'Jax Beach Thunder All Stars wordmark in blue and gold', fit: 'contain' },
+          { src: '/images/art/nc-thunder-wordmark.webp', alt: 'Thunder Softball wordmark in black and blue' },
           { src: '/images/art/nc-jbs-jersey.webp', alt: 'Jax Beach Softball jersey wordmark, solid and outline versions', fit: 'contain' },
           { src: '/images/art/nc-beach-thunder.webp', alt: 'Beach Thunder wordmark in blue and yellow', fit: 'contain' },
           { src: '/images/art/nc-tsunami-pin.webp', alt: 'Tsunami Beach Ballers 12U trading pin' },
@@ -218,7 +221,7 @@ export const artists = [
     ],
     caseStudy: {
       eyebrow: 'Case study',
-      heading: 'Pool Services & Such.',
+      heading: 'Pool Services & Such',
       body: 'A full identity build for a local pool maintenance company: logo design, stationery, apparel, vehicle wrap, and a launch website, all built around a badge mark that reads clearly from a business card or the back of a service van.',
       items: [
         { src: '/images/art/nc-pool-logo.webp', alt: 'Pool Services and Such logo in black and white' },
