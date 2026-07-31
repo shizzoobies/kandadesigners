@@ -150,8 +150,14 @@ export const artists = [
         id: 'hardware',
         title: 'Coins & pins',
         blurb: 'Engraved work for die-strike production: military units, sports teams, small businesses.',
+        // Only the first three show on the page, so they carry one of each
+        // market named in the blurb: a sports team, a military unit, and a
+        // small business. Sorting by client type beats sorting by sport, which
+        // read as eleven baseball coins and nothing else.
         items: [
           { src: '/images/art/nc-legends-10u-v2.webp', alt: 'East Bay Legends 10U baseball coin' },
+          { src: '/images/art/nc-king-neptune.webp?v=2', alt: 'King Neptune Navy challenge coin', fit: 'contain' },
+          { src: '/images/art/nc-caliber.webp?v=2', alt: 'Caliber Collision $1M Team West challenge coin', fit: 'contain' },
           { src: '/images/art/nc-legends-9u.webp', alt: 'East Bay Legends 9U baseball coin' },
           { src: '/images/art/nc-indios.webp', alt: 'Indios Baseball 14U coin' },
           { src: '/images/art/nc-cardinals-v2.webp', alt: 'Virginia Cardinals baseball coin' },
@@ -162,10 +168,8 @@ export const artists = [
           { src: '/images/art/nc-south-sf.webp', alt: 'South San Francisco baseball trading pin' },
           { src: '/images/art/nc-tullahoma.webp', alt: 'Tullahoma Fusion softball coin' },
           { src: '/images/art/nc-tribe.webp', alt: 'Tribe Baseball 12U coin' },
-          { src: '/images/art/nc-king-neptune.webp', alt: 'King Neptune Navy challenge coin', fit: 'contain' },
-          { src: '/images/art/nc-navy-chief.webp', alt: 'Navy Chief comic book challenge coin', fit: 'contain' },
-          { src: '/images/art/nc-sermc.webp', alt: 'SERMC Goat Locker challenge coin', fit: 'contain' },
-          { src: '/images/art/nc-caliber.webp', alt: 'Caliber Collision $1M Team West challenge coin', fit: 'contain' },
+          { src: '/images/art/nc-navy-chief.webp?v=2', alt: 'Navy Chief comic book challenge coin', fit: 'contain' },
+          { src: '/images/art/nc-sermc.webp?v=2', alt: 'SERMC Goat Locker challenge coin', fit: 'contain' },
         ],
       },
       {
