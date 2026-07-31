@@ -107,7 +107,10 @@ const process = [
       </div>
       <div>
         <h2 data-animate="type-settle" class="font-display text-4xl leading-tight md:text-6xl">
-          Found by Google. <span class="text-accent">Found by AI</span>
+          {/* Two statements with no punctuation between them, so the break is
+              forced rather than left to wrapping: on one line they would read
+              as a run-on. Same idiom as the hero's second line. */}
+          Found by Google <span class="block text-accent">Found by AI</span>
         </h2>
         <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
           Search isn't just a results page anymore. Your next customer might
