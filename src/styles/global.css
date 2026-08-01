@@ -113,6 +113,35 @@ body {
   border-radius: 2px;
 }
 
+/* Skip link: first thing in the tab order, parked off-screen until focused.
+   Moved with a transform rather than display/visibility, which would drop it
+   out of the tab order entirely. Fixed rather than absolute so it lands at the
+   top of the viewport however far down the page you are, and above the fixed
+   nav's z-50. `main` carries tabindex="-1" so activating it actually moves
+   focus rather than only scrolling. */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(calc(-100% - 1.5rem));
+  transition: transform var(--dur-fast) ease;
+  background: var(--color-accent);
+  color: #fffdf9;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.7rem 1.25rem;
+  border-radius: 9999px;
+  box-shadow: 0 12px 30px -12px rgb(34 28 21 / 0.45);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+.motion-reduced .skip-link {
+  transition: none;
+}
+
 /* The single elevation treatment used site-wide: warm card lift with a
    faint violet ambient so the frames still feel branded. */
 .glow-frame {

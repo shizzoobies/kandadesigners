@@ -62,13 +62,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:image" content={new URL('/images/og-card.png?v=2', Astro.site)} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="bg-ambient" aria-hidden="true">
       <span class="blob blob-a"></span>
       <span class="blob blob-b"></span>
       <span class="blob blob-c"></span>
     </div>
     <Nav />
-    <main>
+    <main id="main-content" tabindex="-1" class="scroll-mt-24">
       <slot />
     </main>
     <Footer />
