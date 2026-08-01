@@ -23,24 +23,38 @@ const totalSheets = sheets.length;
         <div class="leaf" data-leaf={i}>
           <div class="leaf-face leaf-front">
             {sheet.front && (
-              <img
-                src={sheet.front.src}
-                alt={sheet.front.alt}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-                draggable="false"
-              />
+              <>
+                <img
+                  src={sheet.front.src}
+                  alt={sheet.front.alt}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  draggable="false"
+                />
+                {sheet.front.text && (
+                  <p class:list={['page-text', `page-text-${sheet.front.place || 'bottom'}`]}>
+                    {sheet.front.text}
+                  </p>
+                )}
+              </>
             )}
           </div>
           <div class="leaf-face leaf-back">
             {sheet.back && (
-              <img
-                src={sheet.back.src}
-                alt={sheet.back.alt}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-                draggable="false"
-              />
+              <>
+                <img
+                  src={sheet.back.src}
+                  alt={sheet.back.alt}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  draggable="false"
+                />
+                {sheet.back.text && (
+                  <p class:list={['page-text', `page-text-${sheet.back.place || 'bottom'}`]}>
+                    {sheet.back.text}
+                  </p>
+                )}
+              </>
             )}
           </div>
         </div>
@@ -66,6 +80,9 @@ const totalSheets = sheets.length;
     {pages.map((page) => (
       <figure class="book-strip-page">
         <img src={page.src} alt={page.alt} loading="lazy" decoding="async" />
+        {page.text && (
+          <p class:list={['page-text', `page-text-${page.place || 'bottom'}`]}>{page.text}</p>
+        )}
       </figure>
     ))}
   </div>
@@ -196,6 +213,44 @@ const totalSheets = sheets.length;
     background: linear-gradient(to left, rgb(34 28 21 / 0.2), rgb(34 28 21 / 0) 10%);
   }
 
+  /* The story is live text laid over Bobbie's untexted artwork, so it scales,
+     selects, and is read natively rather than being pixels in a picture. cqw
+     ties the size to the page width, which is what keeps it looking printed at
+     every book size. Kept OUT of the narrow-screen media query on purpose: it
+     has to apply to the 3D spread as well as the mobile strip. */
+  .leaf-face,
+  .book-strip-page {
+    container-type: inline-size;
+  }
+  .page-text {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    margin: 0;
+    z-index: 2;
+    text-align: center;
+    color: #17130f;
+    /* 3.05cqw matches the print proportions on the desktop spread. The floor is
+       what carries the mobile strip, where one page fills the screen and the
+       same proportion would land around 10px. */
+    font-size: clamp(0.83rem, 3.05cqw, 1.05rem);
+    line-height: 1.45;
+    text-wrap: pretty;
+    /* Most pages left a white band for this, where the scrim is invisible. It
+       is load-bearing on the few that sit over artwork: live text over an
+       image gets no artwork exception on contrast, unlike the lettering
+       painted into the piece. */
+    padding: 0.7em 0.9em;
+    border-radius: 5px;
+    background: rgb(255 253 250 / 0.84);
+  }
+  .page-text-top {
+    top: 4.5%;
+  }
+  .page-text-bottom {
+    bottom: 4.5%;
+  }
+
   .book-gutter {
     position: absolute;
     top: 0;
@@ -281,6 +336,7 @@ const totalSheets = sheets.length;
       display: none;
     }
     .book-strip-page {
+      position: relative;
       flex: 0 0 100%;
       scroll-snap-align: center;
     }

@@ -1,22 +1,134 @@
-// "Hope & Harry's Alaskan Adventure" — 22 uniform 2000x1545 pages exported from
-// the print file, downscaled to 1200px webp in /images/art/book/. Numeric order
-// IS story order: 01 is the front cover, 22 the back cover, so BookFlip pairs
-// them into 11 physical sheets and the spreads land correctly.
-// ?v= is a cache-key bust, not decoration: on first deploy four of these pages
-// raced the rollout and Cloudflare cached a 404 HTML body against the bare URL
-// with a 200 status, so those pages rendered blank while the file was fine at
-// origin. Bump the number if any book page ever goes blank again.
-const harryAndHopePages = Array.from({ length: 22 }, (_, i) => {
-  const n = i + 1;
-  const src = `/images/art/book/hh-${String(n).padStart(2, '0')}.webp?v=1`;
-  if (n === 1) {
-    return { src, alt: "Front cover of Hope and Harry's Alaskan Adventure, showing the two characters on a woodland path" };
-  }
-  if (n === 22) {
-    return { src, alt: 'Back cover: a road winding past an Alaskan waterfall' };
-  }
-  return { src, alt: `Page ${n - 1} of Hope and Harry's Alaskan Adventure, an illustrated scene with story text` };
-});
+// "Hope & Harry's Alaskan Adventure", written by Alex and illustrated by Bobbie.
+//
+// This runs on her UNTEXTED artwork with the story set as live HTML over it
+// (`text` + `place`), not the print export that had the words baked into the
+// image. That is the whole point: the story is selectable, resizes with the
+// page, and is read natively by a screen reader, so there is no images-of-text
+// question to argue about for the prose.
+//
+// `alt` therefore describes the artwork only. The exception is lettering that
+// is genuinely painted into the piece (the cover title, "READY!", "KNOCK!", the
+// carved memorial, the ICE MUSEUM sign); that stays in the image, so it stays
+// in the alt.
+//
+// `place` is the band the original print layout used. BookFlip puts a soft
+// scrim behind the text, which is invisible on the pages that left white space
+// and is load-bearing on the handful that sit over artwork, because live text
+// over an image gets no artwork exception on contrast.
+//
+// Reading order is NOT the raw file order: see the ORDER note where these were
+// generated. Pages carry ?v= because /images/* has a 24h max-age.
+const harryAndHopePages = [
+  {
+    alt: `Hope, a pink koala in a maroon hoodie, leans against Harry, a blue hippo in a cream coat, on a sandy path through bare red woods. Painted title lettering reads "Hope & Harry's Alaskan Adventure. Written by Alex Anderson & Illustrated by Bobbie Connor".`,
+  },
+  {
+    alt: `Harry shuts the boot of a green car while Hope, in sunglasses and an orange floral shirt, throws a thumbs up beside hand-lettered "READY!".`,
+    text: `The day is finally here! Harry excitedly closed the trunk after loading the last of their luggage. It was time to drive to the airport for their big Alaskan adventure.`,
+    place: 'bottom',
+  },
+  {
+    alt: `Hope and Harry sit buckled into their seats beside a plane window.`,
+    text: `Hope held Harry's hand as the plane quickly left the ground in Orlando, FL. They were both nervous about flying since it wasn't something they did often, but the second the plane left the ground it finally felt real. They were going to Alaska!`,
+    place: 'top',
+  },
+  {
+    alt: `A green and white plane flies beneath a green and purple aurora, the pair visible in its windows.`,
+    text: `"OMG look!" said Hope. Harry, waking up from his nap looked out the window. The sky was lit green from the Aurora Borealis as they flew into Anchorage. Harry chuckled and exclaimed "Well we can check that of our list already."`,
+    place: 'bottom',
+  },
+  {
+    alt: `Hope and Harry grin for a selfie in front of a giant moose standing behind a rope barrier.`,
+    text: `The sound of rushing wind and then thump, the plane landed, and it was time to start exploring. Right away before they even left the airport Harry excitedly took a selfie with a giant Moose. They were tired from the long flight, but they were so happy to finally arrive.`,
+    place: 'top',
+  },
+  {
+    alt: `The pair drive a pink SUV down a rain-streaked highway at dusk.`,
+    text: `"I found it!" Harry exclaimed as he found the rental car in the airport garage. They loaded their bags into the SUV and off they went to Wasilla to sleep for the night.`,
+    place: 'bottom',
+  },
+  {
+    alt: `A round wooden vacation house glows under a green aurora, the car and their luggage in the snow outside.`,
+    text: `It was still nighttime as they pulled into the driveway to the vacation house driveway. The sky was still lit green by the Aurora Borealis, it was surreal how the lights in the sky reflected off the windows of the beautiful round vacation house at night.`,
+    place: 'top',
+  },
+  {
+    alt: `Harry and Hope stand with their suitcases looking startled, beside hand-lettered "KNOCK! KNOCK! KNOCK!".`,
+    text: `"Is someone at the door?" Hope confusingly asked Harry.`,
+    place: 'top',
+  },
+  {
+    alt: `Hana, a purple bear in a pink coat and neckerchief, waves hello.`,
+    text: `"Hello, welcome to Alaska I'm Hana and I live on the other side of the property." Said Hana in a super friendly tone.`,
+    place: 'top',
+  },
+  {
+    alt: `Hana hands over a wrapped salmon in the doorway while Hope holds a mug and Harry carries a plate of cookies.`,
+    text: `"I also brought you some fresh salmon I caught myself, some rose tea and some cookies I just pulled out of the oven. I hope you enjoy your stay!" Said Hana before she happily hopped away.`,
+    place: 'bottom',
+  },
+  {
+    alt: `The pair perch on stools at a curved wooden counter under pendant lights, with cookies and a teapot.`,
+    text: `Harry and Hope both laughed at each other and agreed that people were incredibly friendly in Alaska so far. After putting the Salmon away to cook for dinner later they enjoyed some tea and cookies before heading out for their first Alaskan hike.`,
+    place: 'bottom',
+  },
+  {
+    alt: `Hope and Harry stand together on the grass beside a flat calm lake with pink mountains behind.`,
+    text: `It was so beautiful as they pulled up to the state park. There was a flat calm lake with a Mountain landscape in the distance. It was misty with some slight rain, but it felt great compared to how hot they were used to. Hope and Harry held hands and slowly walked around the lake stopping occasionally to take a selfie.`,
+    place: 'top',
+  },
+  {
+    alt: `A purple jeep drives a road cut between towering snow banks, a frozen waterfall behind.`,
+    text: `Next day! Time to see some Glaciers. They drove down the coast past dozens of waterfalls on their way to board their boat.`,
+    place: 'bottom',
+  },
+  {
+    alt: `Hope in sunglasses and Harry holding a margarita stand at the glacier's edge while a sea otter floats nearby.`,
+    text: `Hope jumped up and down excitedly as she noticed the sea otters playing near the glacier ice. Harry enjoyed a margarita made using the ice from the glaciers that they fished straight out of the water. The glacier views were amazing!`,
+    place: 'top',
+  },
+  {
+    alt: `The pair step down from a blue and yellow train at the depot with their bags.`,
+    text: `Another night's sleep and it was time to board the train. A full day on a train riding through the Denali Forest did not disappoint! One long blast of the train horn as it slowed to a stop in the Fairbanks depot. Time to explore another area of Alaska. Harry went to pick up the Jeep while Hope grabbed the bags.`,
+    place: 'top',
+  },
+  {
+    alt: `Harry drives a jeep with Hope beside him through blazing orange autumn trees under a rainbow.`,
+    text: `A quick stop for a night at another vacation rental and they were off to the Denali via jeep this time to hike. The views of the river were breathtaking, they even saw a rainbow.`,
+    place: 'top',
+  },
+  {
+    alt: `Hope and Harry stand beside a stone memorial of two airmen, its base carved "WWII" and "ALASKA SIBERIA".`,
+    text: `Harry watched warmly in Fairbanks, as Hope enjoyed touring a museum dedicated to the local indigenous population. They also enjoyed a walk along the river to see some local art and statues before calling it a day.`,
+    place: 'top',
+  },
+  {
+    alt: `The pair walk a snowy path toward a domed ice building, a signpost reading "ICE MUSEUM".`,
+    text: `The sun's up time for another Alaskan adventure. This time a long ride up into the mountains to enjoy an Ice Museum...`,
+    place: 'top',
+  },
+  {
+    alt: `Hope and Harry sit shoulder deep in a steaming pale blue hot spring at night.`,
+    text: `...and a dip in a natural Hot Spring under the night sky.`,
+    place: 'top',
+  },
+  {
+    alt: `Hope reaches down to high five an exhausted Harry, sitting in a marshy clearing among bare trees.`,
+    text: `One last adventure before heading home, Hope and Harry had to Hike in North Pole, Alaska. Hope watches as Harry catches his breath 3 miles into the hike. This hike was the hardest they had done because it was partially underwater, but they proudly found their way through the marshy area before returning to a local tavern for a bite to eat.`,
+    place: 'top',
+  },
+  {
+    alt: `A plane climbs in silhouette over a runway, sunset sea and dark mountains.`,
+    text: `The Alaskan Adventure has come to an end but Hope and Harry know that this was just the first of many adventures in a love story fit for a fairytale.`,
+    place: 'top',
+  },
+  {
+    alt: `Back cover. A road runs between snow banks toward a wide turquoise waterfall in falling snow.`,
+  },
+].map((page, i) => ({
+  ...page,
+  src: `/images/art/book/hha-${String(i + 1).padStart(2, '0')}.webp?v=1`,
+}));
 
 export const artists = [
   {
@@ -38,6 +150,7 @@ export const artists = [
     // brand work sits behind the one modal control rather than adding another
     // screen of tile grid after the closer.
     archive: [
+      { src: '/images/art/bb-hope-harry-wedding.webp?v=1', fit: 'contain', alt: 'Line art of Hope and Harry as bride and groom, she in a veil and gown holding a bouquet, he in a suit and bow tie' },
       { src: '/images/art/bb-bobbie-draws.webp', fit: 'contain', alt: "Bobbie Draws personal logo: a script wordmark with a painter's palette and brush" },
       { src: '/images/art/bb-champicraft.webp', fit: 'contain', alt: 'ChampiCraft logotype hand lettered out of illustrated mushrooms' },
       { src: '/images/art/bb-dr-night-phlox.webp', fit: 'contain', alt: 'Dr Night Phlox circular mark, a stylised phlox flower in cream and green on deep maroon' },

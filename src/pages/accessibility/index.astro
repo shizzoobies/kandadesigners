@@ -60,26 +60,39 @@ const a11yEmail = 'help@ka-performancefl.com';
       </div>
 
       <div>
-        <h2 class="font-display text-2xl md:text-3xl">Where it falls short</h2>
+        <h2 class="font-display text-2xl md:text-3xl">How we handle artwork</h2>
         <p class="mt-5 leading-relaxed text-muted">
-          We would rather list these than pretend they are not there.
+          The portfolios and the illustrated picture book present artwork as content, which changes
+          what conformance means on those pages.
         </p>
-        <ul class="mt-5 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
-          <li>
-            The home page leans on scroll-driven animation. It is built to be understandable without
-            the motion, and it stops entirely when reduced motion is requested, but a long
-            scroll-driven sequence is still harder to use than a plain page.
-          </li>
-          <li>
-            The picture book on our illustration portfolio is an interactive page-turner. It can be
-            driven from the keyboard and each page carries a text alternative, but the artwork
-            itself contains text we cannot expose as selectable copy.
-          </li>
-          <li>
-            Some artwork in the artist portfolios is photographed on a busy background, which can
-            make fine detail hard to read at small sizes.
-          </li>
-        </ul>
+        <p class="mt-5 leading-relaxed text-muted">
+          Where text appears inside a piece, it is part of the composition and cannot be re-rendered
+          as live text without altering the work. WCAG 2.2 excepts this under 1.4.5 where the
+          particular presentation is essential, the same provision that covers logotypes. The same
+          applies to contrast: 1.4.3 does not impose a contrast requirement on text that is part of
+          a picture containing significant other visual content.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          What we do owe, and what we hold ourselves to, is a text alternative for every piece that
+          describes the work and includes any words appearing within it. Interface text around the
+          artwork, including titles, artist names, captions, and controls, is live text held to the
+          full AA standard.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          Where we can avoid the question entirely, we do. The picture book is built from the
+          illustrator's untexted artwork with the story set as live HTML over it, so the prose
+          itself selects, resizes, and is read aloud like any other text on the site. Only the
+          lettering genuinely painted into a scene stays part of the image.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Known limitations</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          The home page leans on scroll-driven animation. The content is built to be understandable
+          without the motion, and the sequence stops entirely when reduced motion is requested. We
+          are continuing to simplify the interaction for people who keep motion enabled.
+        </p>
       </div>
 
       <div>
