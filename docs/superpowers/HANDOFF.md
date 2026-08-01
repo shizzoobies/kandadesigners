@@ -62,6 +62,18 @@ Acts: sketch hero (line-drawn mac window) → scroll: 17-tile mosaic pops in (7 
 - **`Logo Remake/Logo.png`** (untracked) = "K & A Memories" crest, a SEPARATE brand, artist still working on it — Alex said HOLD OFF, don't touch/integrate/commit (also in memory: logo-remake-on-hold).
 - Claude's PowerShell/Bash deploy + config-skill calls get auto-denied by the permission classifier in this environment; read-only wrangler is fine. Hand Alex runnable bash blocks for anything blocked.
 
+## API cost exposure (audited 2026-08-01)
+
+Eleven Pages Functions call Anthropic and all deploy to the public domain. Three are properly gated (`generate`, `remix`, `remix-bangers` verify a signed cookie and return 401). **Eight are callable by anyone with no auth, no origin check and no rate limit:** `scope`, `guide`, `chat`, `analysis`, `commentary`, `hint`, `planner`, `voiceanalyze`. There is no origin checking anywhere in `functions/` — grepping for "origin" hits prose in the prompts, not code.
+
+Worst first: **`/api/scope`** runs `claude-sonnet-5` and accepts up to 24 messages of 2000 chars, so roughly 12k input tokens per call, and it is the endpoint linked from every conversion CTA. **`/api/planner`** runs `claude-sonnet-4` at 2048 max tokens. The rest are Haiku, cheaper but not free.
+
+**`/api/chat` is dead code that still costs money.** It was removed from the site (visible in the `.superpowers/sdd` review diffs) but the function is still deployed and still calls `claude-3-5-haiku`. Nothing in the repo references it. Delete `functions/api/chat.js`.
+
+**Do NOT bolt an origin check onto `chat`, `planner` or `voiceanalyze`** without checking with Alex first: those three return `Access-Control-Allow-Origin: *` and export CORS preflight handlers, so they were built to be called cross-origin and something outside this repo may depend on them. `scope`, `guide`, `analysis`, `commentary` and `hint` have no permissive CORS and only same-domain callers, so those five are safe to gate in code if wanted.
+
+The right primary fix is a **WAF rate-limiting rule**, because it blocks at the edge before the function runs (so the abusive request costs nothing) and it does not care about origin, so it cannot break an unknown caller. Rule spec is in the Open items.
+
 ## Open items
 
 _Status synced with Alex 2026-07-25:_
@@ -73,7 +85,11 @@ _Status synced with Alex 2026-07-25:_
 5. ~~`help@ka-performancefl.com` routing / skip-to-content link~~ — **DONE** (2026-08-01). `help@` is an alternate address on Alex's Google Workspace and reaches his inbox. The skip link shipped. **Cloudflare Email Address Obfuscation is ON for this zone**, which rewrites every `mailto:` into `/cdn-cgi/l/email-protection#…` with visible text `[email protected]`, restored by Cloudflare's JS at runtime. It renders correctly for anyone with JS, but breaks the contact route with JS off, and it is why grepping served HTML for an email address finds nothing. Alex was going to turn it off under Scrape Shield; if a future grep for `mailto:` on production comes back empty, this is why, not a broken build.
 6. On hold: **`Logo Remake/`** ("K & A Memories", separate brand) still in progress — do not touch/integrate/commit (memory: logo-remake-on-hold).
 7. **Nicole's 20 hotlinked tiles** still point at her Netlify build (see her entry). Those filenames are content hashes, so her next deploy blanks them. Also the only images left whose alt was written from a thumbnail rather than the source file, so re-check their alt text when the originals arrive.
-8. Nice-to-haves: convert `New Logo/K&A Logo.ai` to SVG once a converter is available (crisper at any size, recolourable, animatable — the site currently ships the logo as a webp); `/api/scope` WAF rate-limit rule (never done).
+8. **WAF rate-limit rule for the AI endpoints** (Alex, dashboard only, Claude's token is zone-read). Cloudflare → ka-performancefl.com → Security → WAF → Rate limiting rules → Create. Expression:
+   `(http.request.method eq "POST" and http.request.uri.path in {"/api/scope" "/api/guide" "/api/chat" "/api/analysis" "/api/commentary" "/api/hint" "/api/planner" "/api/voiceanalyze"})`
+   Characteristic: IP. Period: 1 minute. Requests: 30. Action: Block, mitigation 10 minutes. Thirty a minute is far above any real user (a full scoping chat is 4 to 6 turns) and far below anything that costs real money. If the plan allows a second rule, add one for `/api/scope` alone at 10 per minute. See the API cost exposure section above.
+9. **Delete `functions/api/chat.js`** — dead endpoint, no caller, still burns Haiku.
+10. Nice-to-haves: convert `New Logo/K&A Logo.ai` to SVG once a converter is available (crisper at any size, recolourable, animatable — the site currently ships the logo as a webp); `/api/scope` WAF rate-limit rule (never done).
 
 ## Process notes
 
