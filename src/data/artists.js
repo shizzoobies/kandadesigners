@@ -316,11 +316,11 @@ export const artists = [
         title: 'Digital',
         blurb: 'Flyers, social posts, and campaign graphics.',
         items: [
-          { src: 'https://nicolecruzdesign.com/images/f318b18cd8b2.jpg', alt: 'Tsunami Fastpitch suit up fundraiser Instagram post' },
-          { src: 'https://nicolecruzdesign.com/images/121c3e82135a.jpg', alt: 'Tsunami Fastpitch suit up fundraiser Instagram post, second layout' },
-          { src: 'https://nicolecruzdesign.com/images/9c98b5f2f249.jpg', alt: 'Tsunami Fastpitch sponsor thank-you post' },
-          { src: 'https://nicolecruzdesign.com/images/c0f01ae35190.jpg', alt: 'BestBet Jacksonville Food Truck Rally flyer', fit: 'contain' },
-          { src: 'https://nicolecruzdesign.com/images/9ff93bf79b64.jpg', alt: 'Pool Services and Such website hero design', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/f318b18cd8b2.jpg', alt: 'Instagram post from tsunami_fastpitch: a team photo above the words "Help suit up Tsunami Fastpitch" on a breaking-wave graphic, captioned "Help suit up Tsunami!"' },
+          { src: 'https://nicolecruzdesign.com/images/121c3e82135a.jpg', alt: 'Second layout of the Tsunami Fastpitch Instagram fundraiser post, the team lined up on the field above "Help suit up Tsunami Fastpitch" with a QR code' },
+          { src: 'https://nicolecruzdesign.com/images/9c98b5f2f249.jpg', alt: 'Instagram post thanking a sponsor: the squad and coaches in team shirts above "Thank You Metal Promo for your sponsorship!"' },
+          { src: 'https://nicolecruzdesign.com/images/c0f01ae35190.jpg', alt: 'Pool Services and Such website shown on a laptop, the hero reading "You deserve an oasis of your own" over a poolside photo, with "The perfect pool" below', fit: 'contain' },
+          { src: 'https://nicolecruzdesign.com/images/9ff93bf79b64.jpg', alt: 'Full Pool Services and Such web page design: hero "You deserve an oasis of your own", a section headed "The perfect pool", service cards for maintenance, pump motor and filter, and openings and closings, then "Our work speaks volumes"', fit: 'contain' },
         ],
       },
       {
