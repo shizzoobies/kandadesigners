@@ -6,9 +6,9 @@ Created 2026-07-23 via the ElevenLabs Agents API.
 ## Live identifiers
 
 - **Agent ID:** `agent_2101ky8y21nmeh5ah2ytbntetzhm` (public — used by the embed, safe in the repo)
-- **Knowledge-base doc ID:** `Xrj4wKy1ZuTRKL4cOVLG` ("K&A Performance KB")
+- **Knowledge-base doc ID:** `77Pgp2ZzOV5gdo3VVXlq` ("K&A Performance KB (2026-08-01)"), re-uploaded 2026-08-01 from `knowledge-base.md`. The previous doc `Xrj4wKy1ZuTRKL4cOVLG` is detached but NOT deleted; delete it in the dashboard if you want the list tidy.
 - **Voice ID:** `qSeXEcewz7tA0Q0qk9fH` (Alex's chosen voice)
-- **LLM:** `gemini-2.5-flash`
+- **LLM:** `qwen35-397b-a17b` (the README previously said gemini-2.5-flash; it had been changed in the dashboard, so read the live agent before assuming)
 - Auth: public widget access (`enable_auth: false`) — anyone on the site can talk to it.
 
 ## What it does
@@ -39,4 +39,16 @@ Agent), or via API with an `xi-api-key` header:
 - Update prompt/voice/first message: `PATCH /v1/convai/agents/{agent_id}`.
 
 The API key used for setup was rotated after creation (by design). Any new
-key with Agents permissions works for maintenance.
+key with Agents permissions works for maintenance. Keys are supplied for a
+single job and rotated straight after; never write one into this repo.
+
+**This ElevenLabs account is shared with unrelated projects.** Listing the
+knowledge base returns ~30 docs belonging to a craft shop and a PB&J app
+alongside the K&A one. Touch only the K&A doc, and never bulk-delete.
+
+**Verify by reading back, not by trusting a 200.** After patching, GET the
+agent to confirm which doc id it points at, then GET that doc and check the
+new material is actually in the stored text. The
+`POST /v1/convai/agents/{id}/simulate-conversation` endpoint was tried as a
+behavioural check and returned the same canned reply regardless of the
+question asked, so it proved nothing; the read-back is the reliable check.

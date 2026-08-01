@@ -9,7 +9,7 @@ Services:
 - SEO & AI search: technical SEO, structured data, and content architected so both Google and AI answer engines (ChatGPT, Perplexity, Google AI Overviews) can find, understand, and quote the business.
 - Accessibility: every K & A build ships measured against WCAG 2.2 AA — contrast ratios, keyboard paths, screen-reader labels, reduced-motion support. K & A also audits existing sites with real measurements (not a plugin badge) and fixes what fails.
 - AI integration: assistants that qualify leads, automations that save hours, content tooling. No AI for AI's sake — it ships when it pulls its weight. A live example is the AI scoping assistant on the contact page.
-- Original artwork: illustration and digital art through collaborating artists, commissioned and art-directed through K & A — one point of contact, one invoice. Custom art is available on request, and most new builds include budget for a custom logo. Artists can also be commissioned on their own, without a website project; anyone who wants that should reach out and K & A will make it happen.
+- Original artwork: illustration and digital art through three collaborating artists, commissioned and art-directed through K & A — one point of contact, one invoice. Custom art is available on request, and most new builds include budget for a custom logo. Artists can also be commissioned on their own, without a website project; anyone who wants that should reach out and K & A will make it happen.
 
 Process: Discover (goals, audience, scope) → Design (structure, type, motion) → Build (fast, accessible, tested) → Launch (ships on modern hosting).
 
@@ -19,7 +19,23 @@ Hosting philosophy (an honest differentiator): most businesses don't need to pay
 
 Recent work: FDAAF (Florida Disability Access and Awareness Foundation), MBS Medicine (veteran-owned telehealth), PB&J Strategic Accounting, Project Makeover (school-space nonprofit), FixAlways (AI-powered home-services directory), Fore Motion Golf (indoor golf, Jacksonville), Ellenton Family Practice Direct (direct primary care).
 
-Contact: ka-performancefl.com/contact/ — either scope a project with the AI assistant in minutes, or send a message directly. Alex and Kristina reply personally within 24 hours.
+Contact: ka-performancefl.com/contact/ — either scope a project with the AI assistant in minutes, or send a message directly. Alex and Kristina reply personally within 24 hours. Accessibility questions and requests go to help@ka-performancefl.com.
+
+## The artists
+
+Three artists work through K & A. Each has a portfolio page at ka-performancefl.com/artists/, and all work is commissioned and art-directed through K & A rather than booked directly.
+
+- Bobbie — illustration and brand artwork. She works under her own mark, Bobbie Draws: hand-lettered logotypes, character work, and full picture books, drawn line by line rather than assembled from parts. Her page leads with a complete picture book you can read on the site.
+- Jon Marc — graphic design and visual identity. Logotypes, campaign art, and identity systems that scale from a single mark to a season of screens, shirts, and social.
+- Nicole — brand identity and merchandise design. Physical-product work in particular: die-struck coins and trading pins, team identity and uniforms, apparel, invitations, and stationery systems for military units, sports teams, and small businesses.
+
+## The picture book
+
+"Hope & Harry's Alaskan Adventure" is a 22-page children's picture book written by Alex Anderson and illustrated by Bobbie, so it ran start to finish through K & A's own studio. The whole book is readable on Bobbie's artist page: it opens closed on the cover, and each click turns a page. It is a genuine example of the studio's illustration and layout work rather than a mock-up, and it is worth pointing visitors to when they ask what custom illustration actually looks like.
+
+## Accessibility of this site
+
+K & A publishes its own accessibility statement at ka-performancefl.com/accessibility/. It states the target (WCAG 2.2 Level AA, self-assessed rather than independently audited), lists what is in place, and is honest about limitations. There is also a privacy policy at ka-performancefl.com/privacy/. Anyone who finds part of the site difficult or impossible to use, or who wants content in another format, should email help@ka-performancefl.com and it gets fixed.
 
 ## Web design — what matters and why
 
@@ -61,6 +77,15 @@ A: Yes for accessibility — K & A audits existing sites and fixes what fails. F
 
 Q: Is my website accessible? / What is WCAG?
 A: WCAG is the international accessibility standard; AA is the level most laws and lawsuits reference. K & A measures real contrast ratios, keyboard paths, and screen-reader behavior — and can audit any existing site.
+
+Q: Can I see examples of the artwork? / Who are your artists?
+A: Three artists work through K & A, each with a portfolio page on the site: Bobbie for illustration and brand artwork, Jon Marc for graphic design and visual identity, and Nicole for brand identity and merchandise design like coins, pins, and apparel. Bobbie's page has a full picture book you can read right there, page by page.
+
+Q: Can I hire one of your artists on their own, without a website?
+A: Yes. Custom art is available on request and does not need a website project attached. It still runs through K & A, so there is one point of contact and one invoice, and the work stays on-brief.
+
+Q: Do you do logos?
+A: Yes, and most new builds include budget for a custom logo if the client wants one. Logo and identity work is also available on its own.
 
 Q: What's AI integration good for on a small-business site?
 A: The proven wins are assistants that answer visitor questions and qualify leads around the clock, automations for repetitive back-office work, and content tooling. K & A's own contact page runs a live AI scoping assistant you can try.
