@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Keep this date current whenever the substance of the statement changes.
+const lastUpdated = 'August 1, 2026';
+const a11yEmail = 'help@ka-performancefl.com';
+---
+<BaseLayout
+  title="Accessibility Statement | K & A Performance"
+  description="How ka-performancefl.com is built for accessibility, where it falls short, and how to reach us if something on the site blocks you."
+>
+  <section class="mx-auto max-w-3xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
+      Accessibility
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.5rem,7vw,4.5rem)] leading-[1.02]">
+      Accessibility Statement
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 font-mono text-sm uppercase tracking-[0.25em] text-muted">
+      Last updated {lastUpdated}
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 pb-32 md:pb-40">
+    <div class="flex flex-col gap-12">
+      <div>
+        <p class="text-lg leading-relaxed text-muted">
+          We build accessible websites for a living, so we hold
+          <strong class="text-ink">ka-performancefl.com</strong> to the same standard we sell. This
+          page says what we aim for, what is actually in place, where the site still falls short,
+          and how to reach a human if any of it gets in your way.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">The standard we build to</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          We aim to meet
+          <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">WCAG 2.2</a>
+          at Level AA. That is the level most accessibility regulations point at, and it is the
+          level we measure client work against too. To be straight with you: this is our own
+          assessment, checked with automated tooling and manual keyboard and screen reader passes.
+          It has not been audited by an independent third party, so we describe the site as aiming
+          at Level AA rather than certified against it.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">What is in place</h2>
+        <ul class="mt-5 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
+          <li>Colour contrast measured against AA for body text, headings, and interface controls.</li>
+          <li>Every page usable by keyboard alone, with a visible focus outline on anything you can interact with.</li>
+          <li>Headings, landmarks, and lists marked up as real structure so screen readers can navigate by them.</li>
+          <li>Text alternatives on images that carry meaning, and decorative artwork hidden from assistive technology instead of read aloud.</li>
+          <li>Labels and accessible names on buttons, form fields, dialogs, and icon-only controls.</li>
+          <li>Motion respects your system setting. If you have asked your device to reduce motion, the scroll animations, the drifting reviews, and the page-turn effects stop moving.</li>
+          <li>Content is written to be readable, and the layout reflows without horizontal scrolling down to a phone-sized screen.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Where it falls short</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          We would rather list these than pretend they are not there.
+        </p>
+        <ul class="mt-5 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
+          <li>
+            The home page leans on scroll-driven animation. It is built to be understandable without
+            the motion, and it stops entirely when reduced motion is requested, but a long
+            scroll-driven sequence is still harder to use than a plain page.
+          </li>
+          <li>
+            The picture book on our illustration portfolio is an interactive page-turner. It can be
+            driven from the keyboard and each page carries a text alternative, but the artwork
+            itself contains text we cannot expose as selectable copy.
+          </li>
+          <li>
+            Some artwork in the artist portfolios is photographed on a busy background, which can
+            make fine detail hard to read at small sizes.
+          </li>
+          <li>
+            We have not yet added a skip-to-content link. It is on our list.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Third-party content</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          A few things on this site come from outside it: customer reviews pulled from Google, and
+          the voice assistant demo on our services page. We choose these carefully and wrap them in
+          our own accessible controls where we can, but we do not control everything they render.
+          If one of them is what is blocking you, tell us anyway. We would rather replace a component
+          than leave you stuck with it.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Tell us if something blocks you</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          If any part of this site is difficult or impossible to use, we want to hear about it, and
+          we will fix it. Email
+          <a href={`mailto:${a11yEmail}`} class="text-accent underline underline-offset-4 hover:text-accent-hot">{a11yEmail}</a>
+          with whatever detail you have: the page you were on, what you were trying to do, and the
+          browser or assistive technology you were using. Rough notes are fine, you do not need to
+          diagnose it for us.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          The same address works for accessibility requests more generally. If you need something
+          from this site in a different format, or you would rather give us your project details by
+          phone or email than through a form, ask and we will make it work.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

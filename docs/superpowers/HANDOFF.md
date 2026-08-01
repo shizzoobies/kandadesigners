@@ -68,8 +68,9 @@ _Status synced with Alex 2026-07-25:_
 2. **Re-upload Kai's ElevenLabs KB** — fresh key is now available/good to go (blocker cleared). Still TODO: create KB doc from `docs/elevenlabs-agent/knowledge-base.md` + PATCH agent, adding Jon Marc live-portfolio facts. _(Confirm with Alex whether the re-upload itself has been run.)_
 3. ~~Bobbie + Nicole portfolios~~ — **DONE.** Nicole live 2026-07-28, Bobbie live 2026-07-30. Only remaining artist ask is the list of 20 source files Nicole still owes (see her entry) so her hotlinked tiles stop depending on her Netlify build.
 4. ~~Preview-scope Google env vars~~ — Google reviews env is **working** (Alex confirmed). No action.
-5. On hold: **`Logo Remake/`** ("K & A Memories", separate brand) still in progress — do not touch/integrate/commit (memory: logo-remake-on-hold).
-6. Nice-to-haves: convert `New Logo/K&A Logo.ai` to SVG once a converter is available (crisper at any size, recolourable, animatable — the site currently ships the logo as a webp); `/api/scope` WAF rate-limit rule (never done).
+5. **Make sure `help@ka-performancefl.com` actually routes** (added 2026-08-01). The new `/accessibility/` statement publishes it as the address for accessibility requests, and it is the only address on the site that is not `alex@`. If it does not exist yet, those requests bounce silently. That statement also admits there is no skip-to-content link yet, which is a genuinely small fix worth doing so the page stops confessing it.
+6. On hold: **`Logo Remake/`** ("K & A Memories", separate brand) still in progress — do not touch/integrate/commit (memory: logo-remake-on-hold).
+7. Nice-to-haves: convert `New Logo/K&A Logo.ai` to SVG once a converter is available (crisper at any size, recolourable, animatable — the site currently ships the logo as a webp); `/api/scope` WAF rate-limit rule (never done).
 
 ## Process notes
 
