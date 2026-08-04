@@ -1,4 +1,4 @@
-# Accessibility pass and statement page — client playbook
+# Accessibility pass and statement page: client playbook
 
 A repeatable process for auditing a client site and publishing an accessibility
 statement that holds up. Written from the pass done on ka-performancefl.com,
@@ -226,19 +226,19 @@ not realised what is legible in their own portfolio.
 
 Structure that works:
 
-1. **Intro** — one short paragraph. What the page is for.
-2. **The standard we build to** — name WCAG 2.2 Level AA, link it, and say
+1. **Intro:** one short paragraph. What the page is for.
+2. **The standard we build to:** name WCAG 2.2 Level AA, link it, and say
    plainly whether this is self-assessed or independently audited. If
    self-assessed, describe the site as *aiming at* AA, not certified.
-3. **What is in place** — a real list of measures, not aspirations.
-4. **How we handle artwork** — only if the site is artwork-heavy. Cite the
+3. **What is in place:** a real list of measures, not aspirations.
+4. **How we handle artwork:** only if the site is artwork-heavy. Cite the
    exceptions, then state the alternative-text obligation that survives them,
    and note that interface text around the artwork is held to full AA.
-5. **Known limitations** — short and true. One honest item beats five vague
+5. **Known limitations:** short and true. One honest item beats five vague
    ones.
-6. **Third-party content** — anything embedded you do not control, and an
+6. **Third-party content:** anything embedded you do not control, and an
    invitation to report it anyway.
-7. **How to reach us** — see below.
+7. **How to reach us:** see below.
 
 ### Rules for the copy
 
