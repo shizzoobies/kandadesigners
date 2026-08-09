@@ -1,0 +1,329 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const PAGE_URL = 'https://ka-performancefl.com/services/seo-ai-search/';
+
+const faqs = [
+  {
+    q: 'How long before I see results?',
+    a: 'Technical fixes show up in weeks. Local rankings in a market the size of Gainesville usually move over one to three months. A competitive market like Jacksonville is a longer climb and needs links and reviews, not just on-page work. Anyone promising faster than that is selling you something.',
+  },
+  {
+    q: 'Can you guarantee I will rank number one?',
+    a: 'No, and neither can anyone else. We can guarantee the work: a site that loads fast, says clearly what you do and where you do it, gives search engines clean structure to read, and stops making the mistakes that were holding it back. That is what actually moves rankings.',
+  },
+  {
+    q: 'Is AI search optimisation different from SEO?',
+    a: 'It overlaps more than the marketing suggests. Assistants read the same pages, so speed, structure, and clarity still matter. What changes is that a machine has to be able to lift a straight answer out of your page and attribute it to you, which rewards plain writing, real facts, and structured data over keyword padding.',
+  },
+  {
+    q: 'Do I have to blog every week?',
+    a: 'No. Weekly filler nobody reads does very little. A handful of pages that genuinely answer what your customers ask, kept accurate, beats a content treadmill. If publishing regularly does make sense for your business, we will say so and help you do it without it eating a day a week.',
+  },
+];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://ka-performancefl.com/services/' },
+    { '@type': 'ListItem', position: 3, name: 'SEO and AI search', item: PAGE_URL },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const siblings = [
+  {
+    href: '/services/web-design/',
+    kicker: 'Web design',
+    blurb: 'Search foundations are built in from the first page we design, not bolted on later.',
+  },
+  {
+    href: '/services/ai-integration/',
+    kicker: 'AI integration',
+    blurb: 'The same assistants that answer your visitors are the ones reading your pages.',
+  },
+  {
+    href: '/services/accessibility/',
+    kicker: 'Accessibility',
+    blurb: 'Clean structure helps screen readers and crawlers for exactly the same reasons.',
+  },
+];
+---
+<BaseLayout
+  title="SEO Services in Gainesville, FL | K & A Performance"
+  description="SEO services in Gainesville and across Florida: technical fixes, local search, structured data, and content built so AI assistants can quote you accurately."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      <a href="/services/" class="transition-colors hover:text-accent">Services</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span> SEO &amp; AI search
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      SEO services in Gainesville, and <span class="text-accent">getting found by AI</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Search is not just a results page anymore. Your next customer might
+      type into Google, or they might ask an assistant and take the first
+      answer it gives them. Both routes reward the same things, and neither
+      of them rewards a page stuffed with the phrase you want to rank for.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-center">
+      <!-- a search plays out: the AI answer surfaces first, then the
+           results. Decorative. -->
+      <div data-animate="frame-lift" class="seo-demo md:order-first" aria-hidden="true">
+        <div class="seo-bar">
+          <svg viewBox="0 0 20 20" class="seo-glass" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="9" r="6" /><path d="m18 18-4.2-4.2" /></svg>
+          <span class="seo-query">who builds accessible websites in Florida?</span><span class="seo-caret"></span>
+        </div>
+        <div class="seo-results">
+          <div class="seo-ai">
+            <p class="seo-ai-label"><svg viewBox="0 0 16 16" class="seo-spark" fill="currentColor"><path d="M8 0l1.8 6.2L16 8l-6.2 1.8L8 16l-1.8-6.2L0 8l6.2-1.8L8 0z"/></svg> AI answer</p>
+            <p class="seo-ai-copy">K &amp; A Performance builds fast, WCAG-measured accessible websites for Florida businesses, with SEO and AI integration built in.</p>
+          </div>
+          <div class="seo-hit seo-hit-ka">
+            <p class="seo-hit-title">K &amp; A Performance | Web Design &amp; AI Integration</p>
+            <p class="seo-hit-url">ka-performancefl.com</p>
+          </div>
+          <div class="seo-hit">
+            <span class="seo-skel" style="width: 72%"></span>
+            <span class="seo-skel seo-skel-dim" style="width: 46%"></span>
+          </div>
+          <div class="seo-hit">
+            <span class="seo-skel" style="width: 64%"></span>
+            <span class="seo-skel seo-skel-dim" style="width: 52%"></span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
+          The technical half
+        </h2>
+        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 leading-relaxed text-muted">
+          Most sites that rank badly are not being punished for their writing.
+          They are slow, they confuse crawlers, or they quietly tell search
+          engines not to index half of themselves. We start there: page speed
+          and Core Web Vitals, a heading structure that describes the page
+          instead of decorating it, canonical URLs, a generated sitemap that
+          cannot fall out of date, and structured data describing the
+          business, the pages, and the questions people ask.
+        </p>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-5 leading-relaxed text-muted">
+          It is unglamorous and it is usually where the fastest wins live.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Local search is its own game</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Ranking for a search with a city attached is a different problem from
+      ranking generally. It depends on your Google Business Profile matching
+      your site exactly, on your service area being stated in plain words on
+      pages that genuinely say something about those places, and on reviews
+      and local links that we cannot write for you but can tell you how to
+      collect. We work the on-site half properly and hand you a short,
+      honest list for the rest.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      The studio is in Gainesville, so we serve Alachua, Newberry, High
+      Springs and Ocala as neighbours, and Jacksonville, Orange Park,
+      Fleming Island and St. Augustine as a market we already build in.
+      <a href="https://mbsdoc.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">mbsdoc.com</a>
+      is a good example of the shape: a Florida clinic whose patients are
+      searching for care near them, not for a brand name they have never
+      heard.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Getting quoted by AI</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      When someone asks an assistant for a recommendation, the assistant is
+      reading pages like yours and deciding what it can safely repeat. That
+      rewards specific, checkable statements over marketing language, real
+      answers to real questions rather than a page of adjectives, structured
+      data that tells a machine what your business is and where it operates,
+      and consistency between your site, your profile, and your listings.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      We build this into the writing rather than treating it as a separate
+      product. It is also a thing we do from the other side:
+      <a href="https://fixalways.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">fixalways.com</a>
+      is our own search product, so we spend a fair amount of time watching
+      what makes a business easy or impossible for an assistant to
+      recommend. That view is hard to get from a checklist.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">What we will not do</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      No bought links, no spun pages, no near identical city pages with the
+      town name swapped out, no reporting dashboard designed to look busy.
+      Those tricks either stop working or get the site penalised, and we
+      would rather keep the client than the retainer.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-2xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="text-center font-mono text-sm font-semibold uppercase tracking-[0.2em] text-muted">Straight answers</h2>
+    <div data-animate="type-settle" data-animate-delay="0.1" class="mt-6">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-2xl md:text-3xl">The rest of what we do</h2>
+    <div class="mt-8 grid gap-8 md:grid-cols-3">
+      {siblings.map((s) => (
+        <a href={s.href} data-animate="frame-lift" class="glow-frame group flex flex-col p-7">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{s.kicker}</p>
+          <p class="mt-3 leading-relaxed text-muted">{s.blurb}</p>
+          <p class="mt-5 font-heading text-sm font-semibold tracking-wide text-accent">
+            Read more <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="px-6 pb-40 pt-16 md:pt-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Find out where you actually <span class="text-accent">stand</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        Send us your address and we will look at the site the way a crawler
+        and an assistant see it, then tell you the three things worth fixing
+        first. No charge, no dashboard login required.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/" class="btn-accent">Ask for a look</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* The search demo: AI answer above the results, client on top. */
+  .seo-demo {
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 14px;
+    background: var(--color-surface);
+    padding: 1.25rem;
+    box-shadow: 0 18px 44px -22px rgb(34 28 21 / 0.3);
+  }
+  .seo-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid rgb(34 28 21 / 0.15);
+    border-radius: 9999px;
+    padding: 0.65rem 1.1rem;
+  }
+  .seo-glass {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    color: var(--color-muted);
+  }
+  .seo-query {
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .seo-caret {
+    width: 2px;
+    height: 1.1em;
+    flex: none;
+    background: var(--color-accent);
+    animation: seo-blink 1.1s steps(1) infinite;
+  }
+  @keyframes seo-blink {
+    50% { opacity: 0; }
+  }
+  .seo-results {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .seo-ai {
+    border: 1px solid rgb(154 52 18 / 0.2);
+    background: rgb(154 52 18 / 0.06);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+  }
+  .seo-ai-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .seo-spark {
+    width: 0.8rem;
+    height: 0.8rem;
+  }
+  .seo-ai-copy {
+    margin-top: 0.45rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--color-ink);
+  }
+  .seo-hit {
+    padding: 0.7rem 0.25rem 0.2rem;
+    border-top: 1px solid rgb(34 28 21 / 0.07);
+  }
+  .seo-hit-ka {
+    border: 1px solid rgb(154 52 18 / 0.25);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+  }
+  .seo-hit-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .seo-hit-url {
+    margin-top: 0.15rem;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+  .seo-skel {
+    display: block;
+    height: 0.55rem;
+    margin: 0.35rem 0;
+    border-radius: 9999px;
+    background: rgb(34 28 21 / 0.12);
+  }
+  .seo-skel-dim {
+    background: rgb(34 28 21 / 0.07);
+  }
+  :global(.motion-reduced) .seo-caret {
+    display: none;
+  }
+</style>

@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const PAGE_URL = 'https://ka-performancefl.com/services/accessibility/';
+
+const faqs = [
+  {
+    q: 'Will an overlay or accessibility plugin fix this?',
+    a: 'No. Overlay widgets sit on top of a site and guess at what its code should have said, and the people who rely on assistive technology are the loudest critics of them. They also do not remove the underlying problems, they hide them behind a badge. We fix the markup instead.',
+  },
+  {
+    q: 'Is my business legally required to have an accessible website?',
+    a: 'We are not lawyers and this is not legal advice. What we can tell you is that web accessibility claims against small and mid sized businesses are common in Florida, that WCAG 2.1 and 2.2 at Level AA is the standard those claims are measured against, and that meeting it is far cheaper than answering a demand letter.',
+  },
+  {
+    q: 'How long does an audit take?',
+    a: 'Usually a few days for a typical business site, longer if it runs to hundreds of pages or has complex applications inside it. You get the findings first, so you can start on the serious items before the full write up lands.',
+  },
+  {
+    q: 'Do you only report problems, or do you fix them?',
+    a: 'Either. Some clients want the report to hand to their own developer, and we write it so that is genuinely usable. Most ask us to do the remediation, which is faster because we already know exactly what is wrong and why.',
+  },
+];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://ka-performancefl.com/services/' },
+    { '@type': 'ListItem', position: 3, name: 'Accessibility audits', item: PAGE_URL },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const siblings = [
+  {
+    href: '/services/web-design/',
+    kicker: 'Web design',
+    blurb: 'New builds ship measured against AA, so there is nothing to remediate later.',
+  },
+  {
+    href: '/services/ai-integration/',
+    kicker: 'AI integration',
+    blurb: 'Assistants and chat widgets are where accessibility usually breaks. Ours are tested.',
+  },
+  {
+    href: '/services/seo-ai-search/',
+    kicker: 'SEO & AI search',
+    blurb: 'Honest structure serves screen readers and search engines with the same markup.',
+  },
+];
+---
+<BaseLayout
+  title="Website Accessibility Audit in Florida | K & A Performance"
+  description="Website accessibility audits measured against WCAG 2.2 AA: contrast, keyboard, screen readers, motion. Real findings and remediation, never an overlay badge."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      <a href="/services/" class="transition-colors hover:text-accent">Services</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span> Accessibility
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      Website accessibility audit, <span class="text-accent">measured not guessed</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Every site we build ships measured against WCAG 2.2 at Level AA.
+      Already have a site? We will audit it with real numbers and real
+      keyboard and screen reader passes, tell you exactly where it stands,
+      and fix what fails. No plugin badge, no overlay, no certificate that
+      means nothing.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What the audit covers</h2>
+        <ul data-animate="type-settle" class="mt-6 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
+          <li>Colour contrast measured across body text, headings, buttons, links, and states, not eyeballed.</li>
+          <li>The full keyboard path: every control reachable, in a sensible order, with a focus outline you can actually see.</li>
+          <li>A screen reader pass over the real pages, because automated tools cannot tell you whether a label makes sense.</li>
+          <li>Headings, landmarks, lists, and tables marked up as real structure rather than styled text pretending to be structure.</li>
+          <li>Text alternatives on images that carry meaning, and decorative artwork hidden from assistive technology instead of read aloud.</li>
+          <li>Forms: labels, error messages, required fields, and whether a mistake is recoverable without starting over.</li>
+          <li>Motion and animation against reduced motion preferences, plus reflow down to a phone sized screen without horizontal scrolling.</li>
+        </ul>
+      </div>
+      <!-- a miniature audit report, the same shape the real findings take -->
+      <div data-animate="frame-lift" class="a11y-audit" aria-hidden="true">
+        <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Sample audit</p>
+        <ul class="mt-4">
+          <li class="a11y-row"><span>Body text contrast</span><span class="a11y-val">15.3:1</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Keyboard path</span><span class="a11y-val">complete</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Screen-reader labels</span><span class="a11y-val">present</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+          <li class="a11y-row"><span>Reduced motion</span><span class="a11y-val">respected</span><svg viewBox="0 0 16 14" class="a11y-tick"><path d="M2 7.5 6 11.5 14 2.5" /></svg></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What you get back</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      A written report in plain English, ordered by what actually blocks
+      somebody rather than by what a scanner found most of. Each item says
+      what the problem is, who it affects, which WCAG criterion it fails,
+      and what fixing it involves. Where a number matters, the number is
+      there. Where a judgement call is involved, we say that too instead of
+      dressing an opinion up as a violation.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      Then we fix it, or your developer does. Remediation usually costs less
+      than the audit, because most sites fail the same handful of things
+      repeatedly and one correction in a template can clear dozens of pages.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Why it is worth doing</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Start with the obvious reason: people who cannot use your site cannot
+      buy from you, book with you, or donate to you. That is a fifth of the
+      population depending on how you count, and they are not a niche.
+      The second reason is that accessibility claims against ordinary
+      Florida businesses are common, and the standard those claims are
+      measured against is the one we build to anyway.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      The third reason is quieter. Sites that get this right are better
+      sites. Clear structure, sensible focus order, honest labels, and text
+      that does not depend on colour to make sense are just good design.
+      Screen readers and search crawlers happen to want the same thing.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">We hold our own work to it</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      This site has a published
+      <a href="/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility statement</a>
+      that says what is in place, where we still fall short, and how to reach
+      a human if any of it gets in your way. It is worth reading before you
+      hire anybody for this work, ours or otherwise. A studio that will not
+      write one about its own site is telling you something.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      We also build for clients where this is the entire point.
+      <a href="https://fdaaf.org" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">fdaaf.org</a>
+      is the Florida Disability Access and Awareness Foundation, an
+      organisation whose whole mission is changing how the world sees
+      disability. Building their site to a standard they would have to
+      apologise for was never an option, and that project is the reason a
+      lot of this is second nature now.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-2xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="text-center font-mono text-sm font-semibold uppercase tracking-[0.2em] text-muted">Straight answers</h2>
+    <div data-animate="type-settle" data-animate-delay="0.1" class="mt-6">
+      {faqs.map((f) => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-2xl md:text-3xl">The rest of what we do</h2>
+    <div class="mt-8 grid gap-8 md:grid-cols-3">
+      {siblings.map((s) => (
+        <a href={s.href} data-animate="frame-lift" class="glow-frame group flex flex-col p-7">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{s.kicker}</p>
+          <p class="mt-3 leading-relaxed text-muted">{s.blurb}</p>
+          <p class="mt-5 font-heading text-sm font-semibold tracking-wide text-accent">
+            Read more <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="px-6 pb-40 pt-16 md:pt-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Find out where your site <span class="text-accent">actually stands</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        Send us the address. We will run the first pass and tell you honestly
+        whether you have a small list of fixes or a real problem, before you
+        commit to anything.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/" class="btn-accent">Get an accessibility check</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Miniature audit report, a small object rather than a layout container. */
+  .a11y-audit {
+    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 12px;
+    background: var(--color-surface);
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0 18px 44px -22px rgb(34 28 21 / 0.3);
+  }
+  .a11y-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid rgb(34 28 21 / 0.08);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+  .a11y-row:first-child {
+    border-top: 0;
+  }
+  .a11y-row > span:first-child {
+    flex: 1;
+  }
+  .a11y-val {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .a11y-tick {
+    width: 1rem;
+    height: 0.875rem;
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+</style>

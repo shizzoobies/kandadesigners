@@ -1,0 +1,255 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const PAGE_URL = 'https://ka-performancefl.com/services/web-design/';
+
+// Real questions from real first conversations. The visible answers and the
+// FAQPage schema below are the same strings, so they cannot drift apart.
+const faqs = [
+  {
+    q: 'How long does a build take?',
+    a: 'Most sites launch in two to six weeks depending on scope. A focused landing page moves fastest. You get a real timeline in the first conversation, not after a deposit.',
+  },
+  {
+    q: 'What does a website cost?',
+    a: 'Every project is scoped to fit the business. We have done everything from fully free builds for nonprofits to ongoing large engagements. Budget bands run from under $2,000 to $10,000 and up, and you will always know the number before we start. The quote itself is always free.',
+  },
+  {
+    q: 'Can you work with the site I already have?',
+    a: 'Yes. We audit and fix existing sites, especially for accessibility and speed. And if a rebuild would honestly be better value than patching, we will tell you straight instead of billing you twice.',
+  },
+  {
+    q: 'Do we have to be in Gainesville to work with you?',
+    a: 'No. The studio is in Gainesville and we are glad to meet in person if you are nearby in Alachua, Newberry, High Springs or Ocala. Everything else runs remotely, and we build for clients across Florida and well outside it.',
+  },
+];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://ka-performancefl.com/services/' },
+    { '@type': 'ListItem', position: 3, name: 'Custom website design', item: PAGE_URL },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const siblings = [
+  {
+    href: '/services/ai-integration/',
+    kicker: 'AI integration',
+    blurb: 'Assistants, automations, and AI audio built into the site we just made you.',
+  },
+  {
+    href: '/services/seo-ai-search/',
+    kicker: 'SEO & AI search',
+    blurb: 'A beautiful site nobody can find is a very expensive business card.',
+  },
+  {
+    href: '/services/accessibility/',
+    kicker: 'Accessibility',
+    blurb: 'Every build ships measured against WCAG 2.2 AA. Existing sites get audited.',
+  },
+];
+---
+<BaseLayout
+  title="Custom Website Design in Gainesville | K & A Performance"
+  description="Custom website design for Gainesville and Florida businesses. No templates, no monthly hosting bill, fast pages measured against WCAG 2.2 AA before launch."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      <a href="/services/" class="transition-colors hover:text-accent">Services</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span> Web design
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      Custom website design in Gainesville, <span class="text-accent">built to do a job</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      A template is cheap because everyone else has it too. We start from a
+      blank page instead: your structure, your words, your typography, your
+      motion. The result loads fast on a phone in a parking lot, reads
+      clearly, and moves people toward the one thing you need them to do.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="grid gap-12 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What a build includes</h2>
+        <p data-animate="type-settle" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+          Every project is scoped to fit, so the list below flexes with the
+          job. What does not flex is the standard.
+        </p>
+        <ul data-animate="type-settle" class="mt-6 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
+          <li>Design from scratch. Layout, typography, colour, and motion decided for your business rather than inherited from a theme somebody else bought.</li>
+          <li>Copy that carries its weight. We write and edit alongside you, because a handsome page saying nothing in particular still sells nothing.</li>
+          <li>Speed treated as a feature. Static builds served from a global network, so pages arrive in well under a second and stay that way when traffic spikes.</li>
+          <li>Accessibility measured, not assumed. Contrast, keyboard paths, screen reader labels, and motion preferences checked before launch.</li>
+          <li>Search foundations from day one: clean heading structure, structured data, a generated sitemap, and titles written for the human doing the searching.</li>
+          <li>Whatever the site actually has to do. Booking flows, donation paths, membership signups, patient portal handoffs, searchable directories.</li>
+        </ul>
+      </div>
+      <!-- Real client work, fanned like prints on a desk. Not stock: these
+           are live builds. -->
+      <div data-animate="frame-lift" class="svc-shots relative aspect-[4/3] md:aspect-auto md:min-h-[24rem] md:self-stretch">
+        <figure class="svc-shot svc-shot-1">
+          <img src="/images/work-fdaaf.webp" alt="FDAAF, live client build" loading="lazy" />
+        </figure>
+        <figure class="svc-shot svc-shot-2">
+          <img src="/images/work-foremotion.webp" alt="Fore Motion Golf, live client build" loading="lazy" />
+        </figure>
+        <figure class="svc-shot svc-shot-3">
+          <img src="/images/work-pmbuild.webp" alt="Project Makeover, live client build" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Sites we have shipped</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      These are live client builds you can open in another tab, not concept
+      art. Every one of them was designed, written, built, and launched by us.
+    </p>
+    <div data-animate="type-settle" class="mt-8 flex flex-col gap-8">
+      <div>
+        <h3 class="font-display text-xl md:text-2xl">
+          <a href="https://mbsdoc.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">mbsdoc.com</a>
+        </h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          MBS Medicine, a veteran owned Florida telehealth clinic. Bold,
+          unmistakable identity with same week booking and a patient portal
+          handoff that does not feel like paperwork.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-display text-xl md:text-2xl">
+          <a href="https://pbjsa.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">pbjsa.com</a>
+        </h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          PB&amp;J Strategic Accounting. A clean, trustworthy redesign with
+          plain service pages, obvious pricing paths, and a free call booking
+          flow that actually converts.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-display text-xl md:text-2xl">
+          <a href="https://projectmakeover.org" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">projectmakeover.org</a>
+        </h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Project Makeover, a nonprofit turning tired school spaces into rooms
+          kids want to sit in. Gallery driven, with donation and volunteer
+          paths kept in front of you the whole way down.
+        </p>
+      </div>
+    </div>
+    <p data-animate="type-settle" class="mt-10 leading-relaxed text-muted">
+      The four stages every one of those projects ran through, discover,
+      design, build, launch, are laid out on the
+      <a href="/services/" class="text-accent underline underline-offset-4 hover:text-accent-hot">services hub</a>.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="mx-auto max-w-3xl text-center">
+      <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
+        Do you really need to <span class="text-accent">pay for hosting?</span>
+      </h2>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+        Honestly? Most businesses don't. A well-built site runs on modern
+        global infrastructure for little to nothing a month, and that's how we
+        ship every build. If you're paying monthly fees for a site that
+        rarely changes, talk to us about a one-time build and retire the
+        hosting bill you never needed.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-8">
+        <a href="/contact/" class="font-heading text-sm tracking-wide text-accent transition-colors hover:text-accent-hot">
+          Ask us about a one-time build &rarr;
+        </a>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-16 max-w-2xl text-left">
+      <h2 data-animate="type-settle" class="text-center font-mono text-sm font-semibold uppercase tracking-[0.2em] text-muted">Straight answers</h2>
+      <div data-animate="type-settle" data-animate-delay="0.1" class="mt-6">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-2xl md:text-3xl">The rest of what we do</h2>
+    <div class="mt-8 grid gap-8 md:grid-cols-3">
+      {siblings.map((s) => (
+        <a href={s.href} data-animate="frame-lift" class="glow-frame group flex flex-col p-7">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{s.kicker}</p>
+          <p class="mt-3 leading-relaxed text-muted">{s.blurb}</p>
+          <p class="mt-5 font-heading text-sm font-semibold tracking-wide text-accent">
+            Read more <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="px-6 pb-40 pt-16 md:pt-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Tell us what it has to <span class="text-accent">do</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        Bring us a rough idea, a competitor you envy, or a site you already
+        hate. We will tell you what it would take, what it would cost, and
+        whether it is worth doing.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a project</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Fanned client screenshots. Fixed frame aspect with top-cropped covers
+     so tall page captures read as tidy browser windows. */
+  .svc-shot {
+    position: absolute;
+    width: 74%;
+    aspect-ratio: 16 / 11;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    background: var(--color-surface);
+    box-shadow:
+      0 2px 6px rgb(34 28 21 / 0.08),
+      0 24px 48px -20px rgb(34 28 21 / 0.35);
+  }
+  .svc-shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .svc-shot-1 { left: 0; top: 2%; transform: rotate(-6deg); z-index: 1; }
+  .svc-shot-2 { right: 0; top: 30%; transform: rotate(4deg); z-index: 2; }
+  .svc-shot-3 { left: 7%; bottom: 2%; transform: rotate(-2deg); z-index: 3; }
+</style>
