@@ -120,8 +120,13 @@ const { always = false, class: className = '' } = Astro.props;
     font-size: 330px;
     color: #2a2422;
   }
+  /* left is 515, not the 545 the design source uses. At 545 the ampersand
+     ends up 92 units clear of the K but only 13 off the A, so it reads as
+     stuck to the A. Sampling the ink columns of the real artwork
+     (logo-lockup.webp) gives gaps of 86 and 61 — very slightly left of
+     centre — and 515 reproduces that balance. */
   .ka-amp {
-    left: 545px;
+    left: 515px;
     top: 108px;
     font-weight: 600;
     font-style: italic;
