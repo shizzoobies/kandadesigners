@@ -189,10 +189,11 @@ const { always = false, class: className = '' } = Astro.props;
     // because the design stroke is only 5/1340 of the width — under a pixel at
     // nav size. A slight enlargement while it draws makes the linework land.
     const BUMP = 1.12;
-    // RATE: the authored piece runs 7s, which is far too long for a mark that
-    // is meant to be a quiet flourish in the corner. This compresses the whole
+    // RATE: the authored piece runs 7s, which is long for a mark that is meant
+    // to be a quiet flourish in the corner. This compresses the whole
     // choreography without changing its proportions. 1 = as authored.
-    const RATE = 2.2;
+    // 1.47 lands it at ~4.8s.
+    const RATE = 1.47;
 
     // offsetWidth, NOT getBoundingClientRect(): the nav lockup sits inside a
     // scale(1.8) transform, and the rect is post-transform. Measuring that and
@@ -281,14 +282,19 @@ const { always = false, class: className = '' } = Astro.props;
     };
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Only the first visit in a session gets the full draw; coming back to the
-    // homepage mid-session lands on the finished lockup.
+    // First visit in a session gets the full draw, and so does any refresh —
+    // reloading the homepage is a deliberate "show me that again". Navigating
+    // back to home from another page mid-session is not, and lands on the
+    // finished lockup.
+    const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+    const reloaded = nav?.type === 'reload';
     let seen = false;
     try {
       seen = sessionStorage.getItem('ka-logo-played') === '1';
     } catch {
       /* private mode — just play it */
     }
+    if (reloaded) seen = false;
 
     // Hand back to the static mark as soon as the visitor scrolls — the nav
     // is shrinking at that point anyway, and the drawn version has said its
