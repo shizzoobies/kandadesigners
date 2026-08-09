@@ -1,0 +1,326 @@
+---
+// The K & A lockup drawing itself: a mouse drags the browser frame into being,
+// clicks, and the letters rise. Ported from the Claude Design project
+// "KA Logo Animation" (logo-scene.jsx) — the per-frame maths below is a direct
+// port of that source so the motion matches the original exactly.
+//
+// Deliberately NOT the design export itself: that ships as a ~1.3MB bundled
+// React app pulling React off unpkg. This is the same animation as inline SVG
+// plus HTML driven by the GSAP already on the site, so it costs one tiny
+// component and three subsetted fonts (12KB total) instead.
+//
+// Differences from the source, on purpose:
+//   - the source loops and fades out at the end; this holds the finished
+//     lockup forever, which is what the hero wants
+//   - Playfair Display / Poppins are self-hosted and subset to just the
+//     glyphs this lockup uses, rather than pulled from Google Fonts
+//
+// The finished frame matches /images/logo-lockup.webp, so the nav lockup
+// takes over seamlessly once you scroll past this.
+interface Props {
+  /** Play even if the visitor has already seen it this session. */
+  always?: boolean;
+  class?: string;
+}
+const { always = false, class: className = '' } = Astro.props;
+---
+<div class:list={['ka-logo-anim', className]} data-ka-logo data-always={always ? 'true' : null} aria-hidden="true">
+  <div class="ka-stage" data-ka-stage>
+    <svg class="ka-frame" width="1340" height="548" viewBox="0 0 1340 548">
+      <path
+        data-ka-path
+        d="M 195 500 L 63 500 Q 47 500 47 484 L 47 61 Q 47 45 63 45 L 1221 45 Q 1237 45 1237 61 L 1237 336 Q 1237 356 1243.5 366"
+        fill="none" stroke="#8B6F5C" stroke-width="5" stroke-linecap="round"
+      />
+      <circle data-ka-dot="0" cx="90" cy="88" r="10" fill="none" stroke="#8B6F5C" stroke-width="5" />
+      <circle data-ka-dot="1" cx="140" cy="88" r="10" fill="none" stroke="#A93C1C" stroke-width="5" />
+      <circle data-ka-dot="2" cx="190" cy="88" r="10" fill="none" stroke="#2E7D74" stroke-width="5" />
+    </svg>
+
+    <div class="ka-k" data-ka-k>K</div>
+    <div class="ka-amp" data-ka-amp>&amp;</div>
+    <div class="ka-a" data-ka-a>A</div>
+
+    <div class="ka-word" data-ka-word>
+      <span>P</span><span>E</span><span>R</span><span>F</span><span>O</span><span>R</span><span>M</span><span>A</span><span>N</span><span>C</span><span>E</span>
+    </div>
+
+    <div class="ka-mouse" data-ka-mouse>
+      <svg width="88" height="148" viewBox="0 0 88 148">
+        <rect x="3" y="3" width="82" height="142" rx="41" fill="var(--color-canvas, #FBF9F6)" stroke="#8B6F5C" stroke-width="5" />
+        <rect x="37" y="26" width="14" height="34" rx="7" fill="none" stroke="#2A2422" stroke-width="5" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Subset to K A & P E R F O M N C only — 12KB for all three faces. */
+  @font-face {
+    font-family: 'KA Playfair';
+    font-style: normal;
+    font-weight: 500;
+    font-display: block;
+    src: url('/fonts/ka-playfair-500.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'KA Playfair';
+    font-style: italic;
+    font-weight: 600;
+    font-display: block;
+    src: url('/fonts/ka-playfair-italic-600.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'KA Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-display: block;
+    src: url('/fonts/ka-poppins-500.woff2') format('woff2');
+  }
+
+  /* The stage is authored at a fixed 1340x548 and scaled to fit, so every
+     coordinate below is straight from the design source with no conversion.
+     --ka-s is set by the script; the fallback keeps it sane before JS runs. */
+  /* Fills whatever box it is dropped into and paints on top of it, so the
+     static mark keeps owning layout and nothing shifts. */
+  .ka-logo-anim {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .ka-logo-anim[data-playing] {
+    opacity: 1;
+  }
+  .ka-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1340px;
+    height: 548px;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%) scale(var(--ka-s, 0.145));
+  }
+  .ka-frame {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+  }
+  .ka-k,
+  .ka-amp,
+  .ka-a {
+    position: absolute;
+    font-family: 'KA Playfair', Georgia, serif;
+    line-height: 1;
+  }
+  .ka-k {
+    left: 230px;
+    top: 100px;
+    font-weight: 500;
+    font-size: 330px;
+    color: #2a2422;
+  }
+  .ka-amp {
+    left: 545px;
+    top: 108px;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 320px;
+    color: #a93c1c;
+    transform-origin: 50% 60%;
+  }
+  .ka-a {
+    left: 830px;
+    top: 100px;
+    font-weight: 500;
+    font-size: 330px;
+    color: #2a2422;
+  }
+  .ka-word {
+    position: absolute;
+    left: 236px;
+    top: 474px;
+    display: flex;
+  }
+  .ka-word span {
+    width: 77px;
+    text-align: center;
+    font-family: 'KA Poppins', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 46px;
+    line-height: 1;
+    color: #8b6f5c;
+  }
+  .ka-mouse {
+    position: absolute;
+    width: 88px;
+    height: 148px;
+    transform-origin: 50% 20%;
+  }
+
+  /* No motion: skip straight to the finished lockup. The script also bails,
+     so nothing is left mid-draw. */
+  :global(.motion-reduced) .ka-logo-anim [data-ka-path] {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const root = document.querySelector<HTMLElement>('[data-ka-logo]');
+  if (root) {
+    const stage = root.querySelector<HTMLElement>('[data-ka-stage]')!;
+    const path = root.querySelector<SVGPathElement>('[data-ka-path]')!;
+    const dots = [...root.querySelectorAll<SVGCircleElement>('[data-ka-dot]')];
+    const kEl = root.querySelector<HTMLElement>('[data-ka-k]')!;
+    const ampEl = root.querySelector<HTMLElement>('[data-ka-amp]')!;
+    const aEl = root.querySelector<HTMLElement>('[data-ka-a]')!;
+    const wordEls = [...root.querySelectorAll<HTMLElement>('[data-ka-word] span')];
+    const mouse = root.querySelector<HTMLElement>('[data-ka-mouse]')!;
+
+    // BUMP: the drawn version reads a touch small against the static mark,
+    // because the design stroke is only 5/1340 of the width — under a pixel at
+    // nav size. A slight enlargement while it draws makes the linework land.
+    const BUMP = 1.12;
+    // RATE: the authored piece runs 7s, which is far too long for a mark that
+    // is meant to be a quiet flourish in the corner. This compresses the whole
+    // choreography without changing its proportions. 1 = as authored.
+    const RATE = 2.2;
+
+    // offsetWidth, NOT getBoundingClientRect(): the nav lockup sits inside a
+    // scale(1.8) transform, and the rect is post-transform. Measuring that and
+    // then scaling again applied the zoom twice and pushed the frame right off
+    // the mark. offsetWidth is the untransformed layout width.
+    const fit = () => {
+      const w = root.offsetWidth;
+      if (w) stage.style.setProperty('--ka-s', String((w / 1340) * BUMP));
+    };
+    fit();
+    new ResizeObserver(fit).observe(root);
+
+    // --- easings, ported from the design source ---
+    const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+    const easeOutCubic = (p: number) => 1 - Math.pow(1 - p, 3);
+    const easeInOutCubic = (p: number) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+    const easeOutBack = (p: number) => {
+      const c1 = 1.70158, c3 = c1 + 1;
+      return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2);
+    };
+    const seg = (T: number, start: number, end: number, ease: (p: number) => number) =>
+      ease(clamp01((T - start) / (end - start)));
+
+    // --- cues, from OM_SCENES: Draw 3s, Letters 2.2s, Wordmark 1.8s ---
+    const DRAW = 0, LETTERS = 3, WORDMARK = 5.2;
+    const END = 7; // the source holds 2s then fades to loop; we freeze instead
+    const TOP_EDGE_AT = 605.2;
+
+    const total = path.getTotalLength();
+    path.style.strokeDasharray = String(total);
+
+    // Every frame recomputes the whole scene from one clock, exactly as the
+    // source does, rather than firing independent tweens per element.
+    const render = (T: number) => {
+      const prog = seg(T, DRAW + 0.35, DRAW + 0.35 + 2.5, easeInOutCubic);
+      path.style.strokeDashoffset = String(total * (1 - prog));
+
+      const tipLen = prog * total;
+      const tip = path.getPointAtLength(tipLen);
+      const back = path.getPointAtLength(Math.max(0, tipLen - 30));
+      const dir = Math.atan2(tip.y - back.y, tip.x - back.x);
+      const mAmt = prog <= 0 ? 0 : prog >= 1 ? 0 : Math.min(1, prog / 0.06, (1 - prog) / 0.12);
+      const rot = Math.cos(dir) * 9 * mAmt;
+      const mouseIn = seg(T, DRAW, DRAW + 0.35, easeOutBack);
+
+      // click pulse as the letters start
+      const L = LETTERS;
+      const press =
+        1 - 0.09 * (T < L ? 0 : T < L + 0.14 ? (T - L) / 0.14 : T < L + 0.34 ? 1 - (T - L - 0.14) / 0.2 : 0);
+
+      mouse.style.opacity = String(mouseIn);
+      mouse.style.left = `${tip.x - 44}px`;
+      mouse.style.top = `${tip.y - 4}px`;
+      mouse.style.transform = `rotate(${rot}deg) scale(${press})`;
+
+      dots.forEach((d, i) => {
+        const x = [90, 140, 190][i];
+        const dLen = TOP_EDGE_AT + (x - 63);
+        const s = easeOutBack(clamp01((tipLen - dLen) / 90));
+        d.style.transform = `scale(${s})`;
+        d.style.transformOrigin = `${x}px 88px`;
+      });
+
+      const enter = (start: number, dur = 0.7) => {
+        const p = seg(T, start, start + dur, easeOutCubic);
+        return { opacity: p, y: (1 - p) * 46 };
+      };
+      const k = enter(L + 0.12);
+      kEl.style.opacity = String(k.opacity);
+      kEl.style.transform = `translateY(${k.y}px)`;
+
+      const a = enter(L + 0.72);
+      aEl.style.opacity = String(a.opacity);
+      aEl.style.transform = `translateY(${a.y}px)`;
+
+      const ampP = seg(T, L + 0.42, L + 1.15, easeOutBack);
+      const ampO = seg(T, L + 0.42, L + 0.75, easeOutCubic);
+      ampEl.style.opacity = String(ampO);
+      ampEl.style.transform = `scale(${0.55 + 0.45 * ampP})`;
+
+      wordEls.forEach((el, i) => {
+        const e = enter(WORDMARK + i * 0.07, 0.5);
+        el.style.opacity = String(e.opacity);
+        el.style.transform = `translateY(${e.y * 0.5}px)`;
+      });
+    };
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Only the first visit in a session gets the full draw; coming back to the
+    // homepage mid-session lands on the finished lockup.
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem('ka-logo-played') === '1';
+    } catch {
+      /* private mode — just play it */
+    }
+
+    // Hand back to the static mark as soon as the visitor scrolls — the nav
+    // is shrinking at that point anyway, and the drawn version has said its
+    // piece. Same 80px threshold the nav itself uses.
+    const handBack = () => {
+      root.removeAttribute('data-playing');
+      window.removeEventListener('scroll', onScroll);
+    };
+    const onScroll = () => {
+      if (window.scrollY > 80) handBack();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const done = () => root.dispatchEvent(new CustomEvent('ka-logo-done', { bubbles: true }));
+
+    if (reduced || (seen && !root.dataset.always)) {
+      // Nothing to show: leave the static mark alone entirely.
+      done();
+    } else {
+      render(0);
+      root.setAttribute('data-playing', '');
+      const clock = { t: 0 };
+      gsap.to(clock, {
+        t: END,
+        duration: END / RATE,
+        ease: 'none',
+        onUpdate: () => render(clock.t),
+        onComplete: () => {
+          render(END); // land exactly on the finished frame
+          try {
+            sessionStorage.setItem('ka-logo-played', '1');
+          } catch {
+            /* ignore */
+          }
+          done();
+        },
+      });
+    }
+  }
+</script>

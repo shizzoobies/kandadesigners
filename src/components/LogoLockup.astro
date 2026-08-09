@@ -10,13 +10,22 @@
 //
 // variant "nav": mark only, compact.
 // variant "full": mark plus the letterspaced descriptor, for the footer.
+import LogoIntroAnimation from './LogoIntroAnimation.astro';
+
 interface Props {
   variant?: 'nav' | 'full';
+  /** Draw the mark on once before settling into the static artwork. */
+  intro?: boolean;
 }
-const { variant = 'full' } = Astro.props;
+const { variant = 'full', intro = false } = Astro.props;
 ---
 {variant === 'nav' ? (
   <span class="logo-lockup logo-nav">
+    {/* The drawn intro sits on top of the finished mark and only takes over
+        while it is actually playing, so the <img> keeps defining the box and
+        nothing moves. Ordered before the mark so the CSS sibling rule below
+        can hide it without any script. */}
+    {intro && <LogoIntroAnimation />}
     <img class="logo-mark" src="/images/logo-lockup.webp?v=1" alt="" width="800" height="303" decoding="async" />
   </span>
 ) : (
@@ -41,6 +50,20 @@ const { variant = 'full' } = Astro.props;
   }
   .logo-nav {
     align-items: flex-start;
+    position: relative;
+  }
+  /* While the intro is drawing it covers the finished mark; the moment it
+     stops (scroll, or reduced motion, or already seen this session) the
+     static artwork is what's left. Pure CSS so there is no scripted swap. */
+  .logo-nav .ka-logo-anim {
+    z-index: 1;
+    transition: opacity 0.35s ease;
+  }
+  .logo-nav .logo-mark {
+    transition: opacity 0.35s ease;
+  }
+  .logo-nav .ka-logo-anim[data-playing] ~ .logo-mark {
+    opacity: 0;
   }
   .logo-nav .logo-mark {
     width: 4.5em;
