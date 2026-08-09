@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReviewsRail from '../../components/ReviewsRail.astro';
+
+const PAGE_URL = 'https://ka-performancefl.com/locations/jacksonville/';
+
+// Home > Jacksonville. No /locations/ index exists on purpose, so the trail
+// has exactly two crumbs and both of them resolve.
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Jacksonville', item: PAGE_URL },
+  ],
+};
+
+const services = [
+  {
+    href: '/services/web-design/',
+    kicker: 'Web design',
+    blurb: 'A site built for your business from scratch, reviewed on a real staging URL.',
+  },
+  {
+    href: '/services/ai-integration/',
+    kicker: 'AI integration',
+    blurb: 'Assistants, automations, and AI audio, built into the site rather than bolted on.',
+  },
+  {
+    href: '/services/seo-ai-search/',
+    kicker: 'SEO & AI search',
+    blurb: 'A competitive market needs links and reviews too. We say so, then do our half.',
+  },
+  {
+    href: '/services/accessibility/',
+    kicker: 'Accessibility',
+    blurb: 'Contrast, keyboard paths, screen readers. Checked, not claimed.',
+  },
+];
+---
+<BaseLayout
+  title="Web Design in Jacksonville, FL | K & A Performance"
+  description="Web design and AI integration for Jacksonville businesses, run remote on purpose. Live client work in Jax, a Jacksonville-based artist, and free project quotes."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      Jacksonville, Florida
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      Web design in Jacksonville, <span class="text-accent">remote on purpose</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      We are not going to pretend there is a Jacksonville office. The studio is
+      in Gainesville, about two hours down the road, and everything we have
+      shipped in Jacksonville got built over shared links, recorded
+      walkthroughs, and a staging site the client could open at midnight. That
+      is the honest version, and so far it has not cost anybody anything.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">We have already built here</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Fore Motion Golf, one of the builds in the gallery on our
+      <a href="/" class="text-accent underline underline-offset-4 hover:text-accent-hot">home page</a>,
+      is indoor golf in Jacksonville: always 70 degrees, always sunny, whatever
+      August is doing outside. Their launch site had one job before the doors
+      opened, which was to turn interest into a founding-membership waitlist, so
+      the whole thing is built around that capture. It runs dark and moody
+      because the room does, and it ships with an AI Robo Caddie visitors can
+      actually talk to.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      It is a fair example of what remote looks like when it works. What the
+      project needed was somebody who understood a membership launch, not
+      somebody who could park in the same lot.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Nicole is Jacksonville</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      The artist we commission for brand identity and merchandise design lives
+      and works here, and her portfolio makes it obvious. Jax Beach Softball,
+      the Jax Beach Thunder All Stars, team identity and challenge coins and
+      apparel for organisations across the First Coast. If a project needs a
+      mark that has to survive being embroidered on a jersey, struck into metal,
+      or carried around a tournament all weekend, that is a different discipline
+      from picking a typeface, and it is hers.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      She is commissioned and art directed through us, so a Jacksonville client
+      who needs both a site and a mark gets one point of contact for the pair.
+      Her work is on
+      <a href="/artists/nicole/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Nicole's page</a>.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">How remote actually runs</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      There is a version of remote that means slow email and a surprise at the
+      end. This is not that. You get a live staging URL early, so you are never
+      approving a picture of a website, and feedback happens on the real thing
+      on your own phone. Walkthroughs get recorded and sent, which you can watch
+      at 6am instead of holding a meeting that a link would have covered.
+      Questions get a reply within 24 hours.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      And the drive is two hours, not two time zones. For a kickoff worth doing
+      in a room, we will make it.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Fleming Island, Orange Park, St. Augustine</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Jacksonville is several markets wearing one name, and the searches do not
+      behave the same way in each of them. A Fleming Island or Orange Park
+      business is usually competing for the people who already live nearby and
+      want a reason to stop driving north. St. Augustine is full of visitors
+      searching on a phone while standing in the street, which is a different
+      page with a different first screen. We write them as separate briefs
+      rather than swapping a town name into the same paragraph, because the
+      person doing the searching wants a different thing in each one.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      Worth saying plainly: Jacksonville is a bigger, harder market than our
+      home one, and on-page work alone will not carry you to the top of it.
+      Reviews and real local links matter more here than anywhere else we work,
+      and we will tell you that before you hire us rather than after.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What we do for Jacksonville clients</h2>
+    <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">
+      The same four things we do everywhere, scoped to what the business
+      actually needs.
+    </p>
+    <div class="mt-10 grid gap-8 md:grid-cols-2">
+      {services.map((s) => (
+        <a href={s.href} data-animate="frame-lift" class="glow-frame group flex flex-col p-7">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{s.kicker}</p>
+          <p class="mt-3 leading-relaxed text-muted">{s.blurb}</p>
+          <p class="mt-5 font-heading text-sm font-semibold tracking-wide text-accent">
+            Read more <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+          </p>
+        </a>
+      ))}
+    </div>
+    <p data-animate="type-settle" class="mt-10 max-w-2xl leading-relaxed text-muted">
+      Closer to the studio? The in-person version of all this is on the
+      <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville page</a>.
+    </p>
+  </section>
+
+  <div class="border-t border-ink/10">
+    <ReviewsRail />
+  </div>
+
+  <section class="px-6 pb-40 pt-16 md:pt-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Send us the <span class="text-accent">rough idea</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        A competitor you envy, a site you already hate, or three lines about
+        what the business does. We will come back with what it would take, what
+        it would cost, and whether it is worth building.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a project</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReviewsRail from '../../components/ReviewsRail.astro';
+
+const PAGE_URL = 'https://ka-performancefl.com/locations/gainesville/';
+
+// Home > Gainesville. There is deliberately no /locations/ index page, so the
+// trail skips straight from the root to this page rather than inventing a
+// middle crumb that would 404 the moment anyone clicked it.
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Gainesville', item: PAGE_URL },
+  ],
+};
+
+const services = [
+  {
+    href: '/services/web-design/',
+    kicker: 'Web design',
+    blurb: 'Designed from a blank page for your business, not chosen from a theme shop.',
+  },
+  {
+    href: '/services/ai-integration/',
+    kicker: 'AI integration',
+    blurb: 'Assistants that answer visitors at 11pm and automations that give hours back.',
+  },
+  {
+    href: '/services/seo-ai-search/',
+    kicker: 'SEO & AI search',
+    blurb: 'The local half of search, done properly, plus an honest list for the rest.',
+  },
+  {
+    href: '/services/accessibility/',
+    kicker: 'Accessibility',
+    blurb: 'Measured against WCAG 2.2 AA before launch. Existing sites get audited.',
+  },
+];
+---
+<BaseLayout
+  title="Web Design in Gainesville, FL | K & A Performance"
+  description="Web design and AI integration from a Gainesville studio. Two founders, no account managers, in-person meetings if you want them, and quotes are always free."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      Gainesville, Florida
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      Web design in Gainesville, <span class="text-accent">from two people who live here</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      This is the home market, not a city name rented for a landing page. K
+      &amp; A Performance is based in Gainesville, the work is done in
+      Gainesville, and if you want the first conversation to happen across a
+      table instead of over email, that is a short drive rather than a flight.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Who you are actually hiring</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Two people, and you will deal with both of them. Alex Anderson does the
+      design and the development, so whoever drew your layout is also the one
+      writing the code, and nothing gets mistranslated in a handoff between
+      departments that do not exist. Kristina Anderson runs strategy and
+      content, which in practice means she is the one asking why a page exists
+      at all and what it is supposed to make somebody do once they are on it.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      There is no account manager in the middle, no ticket queue, and nobody
+      junior quietly doing the work at midnight. The trade is that we take on
+      fewer projects than an agency would. The upside is that the people who
+      pitched you are the people who build it, and they are still answering the
+      email a year later.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Meeting in person is on the table</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Most of the work runs over email, shared links, and a staging site you can
+      open whenever you like, and plenty of clients never want more than that.
+      But a first meeting in a room is genuinely faster for some businesses.
+      Watching an owner describe their busiest hour, or point at the one thing
+      on their current site that makes the phone ring, tells us more in twenty
+      minutes than a questionnaire does in a week. If that sounds like you, say
+      so and we will come to you.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      It also means the site does not disappear into an inbox after launch. When
+      something needs changing before an event, a season, or a grant deadline,
+      you are asking a neighbour rather than opening a support case.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">The towns we count as neighbours</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Alachua, Newberry, High Springs and Ocala are close enough that we treat
+      them exactly like Gainesville: same in-person option, same response times,
+      same pricing. Small towns tend to get the worst of the web industry. A
+      site a relative built years ago and cannot update, or a monthly platform
+      fee paid forever for the privilege of not being allowed to edit your own
+      opening hours. Both are fixable, and neither requires you to be inside the
+      city limits to get help with it.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Gainesville is still winnable</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      This is a market where good work still shows. Plenty of businesses here
+      have no site worth the name, and plenty more have one nobody has opened on
+      a phone since it launched. Ranking for a search with Gainesville attached
+      comes down to a Google Business Profile that matches your site exactly,
+      pages that say something true and specific about what you do here, and
+      reviews from people who really came in. We do the on-site half properly
+      and hand you a short, honest list for the rest, because the parts we
+      cannot do for you are the parts that move the map.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What we build here</h2>
+    <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">
+      Every project starts with the same question: what does this site have to
+      do, and what is stopping it. From there it is usually some mix of these
+      four.
+    </p>
+    <div class="mt-10 grid gap-8 md:grid-cols-2">
+      {services.map((s) => (
+        <a href={s.href} data-animate="frame-lift" class="glow-frame group flex flex-col p-7">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{s.kicker}</p>
+          <p class="mt-3 leading-relaxed text-muted">{s.blurb}</p>
+          <p class="mt-5 font-heading text-sm font-semibold tracking-wide text-accent">
+            Read more <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+          </p>
+        </a>
+      ))}
+    </div>
+    <p data-animate="type-settle" class="mt-10 max-w-2xl leading-relaxed text-muted">
+      Building in Jacksonville or further up the coast instead? That runs
+      remote, and it is described on the
+      <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville page</a>.
+    </p>
+  </section>
+
+  <div class="border-t border-ink/10">
+    <ReviewsRail />
+  </div>
+
+  <section class="px-6 pb-40 pt-16 md:pt-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Let's talk about it <span class="text-accent">locally</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        Tell us what the site has to do and we will tell you what it would take,
+        what it would cost, and whether it is worth doing at all. Coffee
+        optional. The quote is free either way.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a project</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -35,7 +35,7 @@ import ScopeChat from '../../components/ScopeChat.astro';
   </section>
 
   <!-- Two paths -->
-  <section class="mx-auto max-w-6xl px-6 pb-40 md:pb-48">
+  <section class="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-10 lg:items-stretch">
 
       <!-- Path A: AI scoping (Task 9 mounts the chat inside #scope) -->
@@ -105,6 +105,28 @@ import ScopeChat from '../../components/ScopeChat.astro';
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- Where we work: the studio is a real place, and the rest is remote.
+       Says it plainly instead of implying offices we do not have. -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 pb-40 md:py-24 md:pb-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">Where we work</p>
+    <h2 data-animate="type-settle" class="mt-6 font-display text-3xl leading-tight md:text-4xl">A Gainesville studio with Florida clients</h2>
+    <div class="mt-6 grid max-w-4xl gap-8 md:grid-cols-2">
+      <p data-animate="type-settle" class="leading-relaxed text-muted">
+        The studio is in
+        <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville</a>,
+        so Alachua, Newberry, High Springs and Ocala are close enough to meet in
+        person if you would rather start across a table than over email.
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="leading-relaxed text-muted">
+        <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville</a>,
+        Orange Park, Fleming Island and St. Augustine run remote, which is how
+        most projects run anyway. Same for the rest of Florida and everywhere
+        outside it: a staging site you can open whenever you like, and a reply
+        within 24 hours.
+      </p>
     </div>
   </section>
 </BaseLayout>
