@@ -26,10 +26,14 @@ const { variant = 'full', intro = false } = Astro.props;
         nothing moves. Ordered before the mark so the CSS sibling rule below
         can hide it without any script. */}
     {intro && <LogoIntroAnimation />}
+    {/* alt="" on purpose: the wrapping link already announces "K & A
+        Performance home", so naming the mark would say it twice. */}
     <img class="logo-mark" src="/images/logo-lockup.webp?v=1" alt="" width="800" height="303" decoding="async" />
   </span>
 ) : (
   <span class="logo-lockup logo-full">
+    {/* alt="" on purpose, same reason as the nav variant: the link around it
+        carries the accessible name. */}
     <img class="logo-mark" src="/images/logo-lockup.webp?v=1" alt="" width="800" height="303" decoding="async" />
     <span class="logo-tag">Web Design &amp; AI Integration</span>
   </span>

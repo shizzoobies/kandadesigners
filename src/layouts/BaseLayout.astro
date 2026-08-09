@@ -15,17 +15,35 @@ interface Props {
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
-// Sitewide identity for search engines. Deliberately Organization rather than
-// LocalBusiness/ProfessionalService: those want a postal address for rich
-// results and we don't publish one, and asserting a fake one is worse than
-// claiming less. Add `address` and `telephone` here and switch the type if a
-// public business address ever exists.
+// Sitewide identity for search engines. ProfessionalService (a LocalBusiness
+// subtype) because the studio is a real service-area business in Gainesville.
+// The address is deliberately city-level only: there is no public street
+// address and no published phone number, and claiming less beats asserting
+// something a searcher could turn up at. Do not add `streetAddress` or
+// `telephone` until both are genuinely published on the site.
+// No `aggregateRating` either: our reviews live on Google, and marking up
+// someone else's reviews as our own violates their structured-data guidelines.
 const ORG_ID = 'https://ka-performancefl.com/#organization';
+const MAP_URL = 'https://g.page/r/CbVcBGWcGmNzEBM';
+// Canonical spellings, approved 2026-08-09. Keep this list and the copy on the
+// site saying the same thing; a schema that claims towns the pages never
+// mention is the definition of a doorway signal.
+const CITIES_SERVED = [
+  'Gainesville',
+  'Jacksonville',
+  'Fleming Island',
+  'Orange Park',
+  'Ocala',
+  'St. Augustine',
+  'High Springs',
+  'Alachua',
+  'Newberry',
+];
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
+      '@type': 'ProfessionalService',
       '@id': ORG_ID,
       name: 'K & A Performance',
       alternateName: 'K&A Performance',
@@ -40,10 +58,18 @@ const schema = {
         height: 303,
       },
       image: 'https://ka-performancefl.com/images/og-card.png',
-      areaServed: [
-        { '@type': 'State', name: 'Florida' },
-        { '@type': 'Country', name: 'United States' },
-      ],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Gainesville',
+        addressRegion: 'FL',
+        addressCountry: 'US',
+      },
+      hasMap: MAP_URL,
+      areaServed: CITIES_SERVED.map((name) => ({
+        '@type': 'City',
+        name,
+        containedInPlace: { '@type': 'State', name: 'Florida' },
+      })),
       knowsAbout: [
         'Web design',
         'AI integration',
@@ -52,7 +78,13 @@ const schema = {
         'Brand identity',
       ],
       founder: [
-        { '@type': 'Person', name: 'Alex Anderson' },
+        {
+          '@type': 'Person',
+          name: 'Alex Anderson',
+          // LinkedIn belongs to Alex, not the studio, so it hangs off his node
+          // rather than the organisation's sameAs.
+          sameAs: ['https://www.linkedin.com/in/alexander-anderson-73a870252/'],
+        },
         { '@type': 'Person', name: 'Kristina Anderson' },
       ],
       contactPoint: {
@@ -62,7 +94,11 @@ const schema = {
         areaServed: 'US',
         availableLanguage: 'English',
       },
-      sameAs: ['https://g.page/r/CbVcBGWcGmNzEBM'],
+      // Only profiles we actually own and can point at. No placeholders.
+      sameAs: [
+        MAP_URL,
+        'https://www.facebook.com/profile.php?id=61592711216301',
+      ],
     },
     {
       '@type': 'WebSite',
@@ -108,7 +144,9 @@ const schema = {
       fbq('init', '1584105763055085');
       fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
+    <!-- alt="" on purpose: a 1x1 hidden tracking beacon, nothing to describe.
+         It was the one image on the site with no alt attribute at all. -->
+    <noscript><img height="1" width="1" style="display:none" alt=""
       src="https://www.facebook.com/tr?id=1584105763055085&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
     <title>{title}</title>

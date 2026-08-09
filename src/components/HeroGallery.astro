@@ -126,6 +126,10 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
                 <span class="text-[10px] leading-none text-ink/45">&#10005;</span>
               </span>
             )}
+            {/* alt="" on purpose: these inner-page captures are set dressing
+                for the stack, they never reach the ring, and their whole
+                container is aria-hidden. The seven real project tiles above
+                carry the descriptions. */}
             <img
               src={e.img}
               alt=""
