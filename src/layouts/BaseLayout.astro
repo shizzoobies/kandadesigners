@@ -14,6 +14,76 @@ interface Props {
 
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// Sitewide identity for search engines. Deliberately Organization rather than
+// LocalBusiness/ProfessionalService: those want a postal address for rich
+// results and we don't publish one, and asserting a fake one is worse than
+// claiming less. Add `address` and `telephone` here and switch the type if a
+// public business address ever exists.
+const ORG_ID = 'https://ka-performancefl.com/#organization';
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': ORG_ID,
+      name: 'K & A Performance',
+      alternateName: 'K&A Performance',
+      url: 'https://ka-performancefl.com/',
+      email: 'alex@ka-performancefl.com',
+      description:
+        'Web design and AI integration studio building fast, accessible, animated websites for businesses that refuse to blend in.',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://ka-performancefl.com/images/logo-lockup.webp',
+        width: 800,
+        height: 303,
+      },
+      image: 'https://ka-performancefl.com/images/og-card.png',
+      areaServed: [
+        { '@type': 'State', name: 'Florida' },
+        { '@type': 'Country', name: 'United States' },
+      ],
+      knowsAbout: [
+        'Web design',
+        'AI integration',
+        'Web accessibility',
+        'Search engine optimisation',
+        'Brand identity',
+      ],
+      founder: [
+        { '@type': 'Person', name: 'Alex Anderson' },
+        { '@type': 'Person', name: 'Kristina Anderson' },
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        email: 'alex@ka-performancefl.com',
+        areaServed: 'US',
+        availableLanguage: 'English',
+      },
+      sameAs: ['https://g.page/r/CbVcBGWcGmNzEBM'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://ka-performancefl.com/#website',
+      url: 'https://ka-performancefl.com/',
+      name: 'K & A Performance',
+      publisher: { '@id': ORG_ID },
+      inLanguage: 'en-US',
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical.href}#webpage`,
+      url: canonical.href,
+      name: title,
+      description,
+      isPartOf: { '@id': 'https://ka-performancefl.com/#website' },
+      about: { '@id': ORG_ID },
+      inLanguage: 'en-US',
+    },
+  ],
+};
 ---
 <html lang="en">
   <head>
@@ -60,6 +130,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={new URL('/images/og-card.png?v=2', Astro.site)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>

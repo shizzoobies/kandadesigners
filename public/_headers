@@ -12,3 +12,32 @@
 
 /images/*
   Cache-Control: public, max-age=86400
+
+# Legacy apps and demos kept live for direct links, but deliberately kept out
+# of search so they don't compete with the studio pages. These are static HTML
+# in public/, not Astro routes, so they can't take a <meta robots> from the
+# layout — the header does the same job without editing every file.
+/chess/*
+  X-Robots-Tag: noindex, nofollow
+/tdgame/*
+  X-Robots-Tag: noindex, nofollow
+/sky-raider-blitz/*
+  X-Robots-Tag: noindex, nofollow
+/mosslight-run/*
+  X-Robots-Tag: noindex, nofollow
+/daily-songs-x7k2/*
+  X-Robots-Tag: noindex, nofollow
+/voicecheck/*
+  X-Robots-Tag: noindex, nofollow
+/interactives/*
+  X-Robots-Tag: noindex, nofollow
+/portfolio/*
+  X-Robots-Tag: noindex, nofollow
+/projects/*
+  X-Robots-Tag: noindex, nofollow
+/mbsfeedback/*
+  X-Robots-Tag: noindex, nofollow
+/tools/*
+  X-Robots-Tag: noindex, nofollow
+/internal/*
+  X-Robots-Tag: noindex, nofollow

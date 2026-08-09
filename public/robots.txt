@@ -1,7 +1,14 @@
 User-agent: *
 Allow: /
 
-Disallow: /mbsfeedback/
+# Live, but deliberately not for search: legacy apps, demos and client one-offs.
+# Also enforced with X-Robots-Tag in public/_headers, which is what actually
+# binds for crawlers that ignore robots directives on already-known URLs.
 Disallow: /internal/
+Disallow: /mbsfeedback/
+Disallow: /interactives/
+Disallow: /portfolio/
+Disallow: /projects/
+Disallow: /tools/
 
-Sitemap: https://ka-performancefl.com/sitemap.xml
+Sitemap: https://ka-performancefl.com/sitemap-index.xml
