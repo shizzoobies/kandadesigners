@@ -1,12 +1,12 @@
 # K&A Performance — Session Handoff
 
-**Date:** 2026-08-01 · **Branch: `main`** · **Status: LIVE at ka-performancefl.com.** CI works: `git push origin main` auto-builds and deploys. Recent work: the artist-finished logo replaced the Fraunces crest everywhere (7b284eb); all three artists are live; a published `/accessibility/` statement plus a real 404 page and a skip link; heading punctuation normalised site-wide; and the picture book rebuilt on untexted artwork with the story as live HTML.
+**Date:** 2026-08-11 · **Branch: `main`** · **Status: LIVE at ka-performancefl.com.** CI works: `git push origin main` auto-builds and deploys. Recent work (2026-08-09..11): **Meta pixel + domain verification + `/privacy/` page; the nav logo now draws itself on on the homepage; and a full local-SEO campaign shipped** — generated sitemap, ProfessionalService schema, services split into four child pages, and Gainesville/Jacksonville location pages, executed phase-by-phase from `docs/seo/LOCAL-SEO-PLAN.md`. A Facebook photo package (49 files) sits ready in `Facebook Page Photos/` (untracked). Earlier: artist-finished logo everywhere, all three artists live, `/accessibility/` + 404 + skip link, picture book on untexted art.
 
 ## DEPLOY RUNBOOK (critical, read first)
 
 **Git-triggered Cloudflare builds WORK** (fixed 2026-07-24, commit 45c0aa7): normal flow is build locally to verify, then `git push origin main` and Cloudflare builds + deploys automatically (~2-3 min). Verify at ka-performancefl.com (check page content, never just `/api/*`).
 
-**Root cause was npm version skew, and it can RECUR:** CI runs npm 10.9.2, this machine runs npm 11.6.2. The lockfile needs top-level entries for `@emnapi/core` + `@emnapi/runtime` @1.11.2 (deps of platform-skipped wasm32 optionals of sharp/tailwind/rolldown). npm 10 refuses `npm ci` without them; **npm 11's `npm install` silently strips them** (even `--package-lock-only`). So: after ANY local `npm install`, grep `package-lock.json` for `"node_modules/@emnapi/core"` — if gone, re-add both entries (exact blocks in commit 45c0aa7) before pushing. Permanent fix Alex can make once: Pages dashboard → kandadesigners → Settings → Variables → build env var `NPM_VERSION` = `11`. (Not done yet as of this writing.)
+**Root cause was npm version skew, and it RECURS — proven again 2026-08-09.** The lockfile needs top-level entries for `@emnapi/core` + `@emnapi/runtime` (deps of platform-skipped wasm32 optionals of sharp/tailwind/rolldown). **npm 11's `npm install` silently strips them on Windows regardless of `NPM_VERSION=11` being set in CI** — that env var aligns the npm major but does NOT stop platform pruning. Installing `@astrojs/sitemap` dropped both entries (26 emnapi refs → 21) and the Cloudflare build failed; production kept serving the previous deploy. The fix that worked (commit 376019f): merge the two missing `node_modules/@emnapi/*` blocks back from the last good lockfile (`git show <good>:package-lock.json`), do NOT regenerate, then validate with a clean `npm ci --ignore-scripts` from a scratch dir before pushing. **So: after ANY local `npm install`, grep `package-lock.json` for `"node_modules/@emnapi/core"` — if gone, restore before pushing.** Best policy: avoid npm installs entirely; nothing on the current roadmap needs one.
 
 Manual deploy (fallback only):
 1. `node node_modules/astro/astro.js build` (never `npm run build` — the `&` in the repo path breaks cmd.exe)
@@ -62,6 +62,43 @@ Acts: sketch hero (line-drawn mac window) → scroll: 17-tile mosaic pops in (7 
 - **`Logo Remake/Logo.png`** (untracked) = "K & A Memories" crest, a SEPARATE brand, artist still working on it — Alex said HOLD OFF, don't touch/integrate/commit (also in memory: logo-remake-on-hold).
 - Claude's PowerShell/Bash deploy + config-skill calls get auto-denied by the permission classifier in this environment; read-only wrangler is fine. Hand Alex runnable bash blocks for anything blocked.
 
+## Meta pixel + privacy (2026-08-09)
+
+- **Base pixel** (dataset `1584105763055085`) lives in `BaseLayout.astro` head, above `<title>`, as a plain `is:inline` script — **`is:inline` is load-bearing**; without it Vite bundles it as a deferred module and the pixel never initialises. The `facebook-domain-verification` meta tag above it must stay **permanently** (Meta re-checks and un-verifies if it disappears). Domain is verified.
+- **`Lead` fires ONLY on the contact form's `result.success` branch**, guarded with `window.fbq` (ad blockers). Verified in the minified bundle. **Deliberately NOT on StartProjectModal** — Alex said hold; it is the nav CTA on every page, so Meta under-reports conversions until he says go (one guarded line in the modal's success path when he does).
+- Rocket Loader is not on this zone (verified live — no rewrites of the inline script). No consent banner, by explicit scope decision; revisit only if EU/UK targeting starts.
+- **`/privacy/`** exists, footer-linked, written from a code audit (Web3Forms forms, Anthropic chat pass-through with no server-side storage, pixel, Cloudflare logs, server-side Places reviews). If tracking changes, update the page and its `lastUpdated`.
+
+## Logo intro animation (2026-08-09)
+
+The nav logo draws itself on — mouse drags the frame, dots pop, letters rise — then freezes into the static mark. `src/components/LogoIntroAnimation.astro`, ported frame-exactly from Alex's Claude Design project ("KA Logo Animation", readable via DesignSync MCP); deliberately NOT the design export (that is a 1.3MB React bundle).
+
+- Homepage only (`Nav.astro` passes `intro` when pathname is `/`); plays on first visit per session (`sessionStorage` `ka-logo-played`) **and on any hard refresh** (`performance.getEntriesByType('navigation')[0].type === 'reload'` overrides the gate). In-site navigation back to home shows the static mark.
+- The `<img>` keeps owning layout; the animation is an absolute overlay — measured CLS 0. On scroll >80px it fades and the static mark returns (same threshold as `.nav-scrolled`).
+- Tuning knobs, both single constants: `RATE` 1.47 (≈4.8s; 1 = the authored 7s) and `BUMP` 1.12 (drawn 12% larger than the mark so the 5px design stroke survives nav size). Ampersand sits at x=515, NOT the design source's 545 — measured against the real artwork's ink columns (gaps 86/61); 545 glues it to the A.
+- Fonts are self-hosted glyph subsets (`public/fonts/ka-playfair-*.woff2`, `ka-poppins-500.woff2`, 12KB total, glyphs `KA&PERFOMNC` only). **Measure the overlay with `offsetWidth`, never `getBoundingClientRect()`** — the nav lockup sits inside a `scale(1.8)` transform and the rect is post-transform (this bug shipped the mark 1.8x too big before being caught).
+
+## SEO campaign (2026-08-09..11) — plan at `docs/seo/LOCAL-SEO-PLAN.md`, READ IT
+
+**Identity: the studio is in GAINESVILLE, FL** (city-only, no street address, no published phone — deliberate). Target markets: Gainesville first, Jacksonville second, plus Fleming Island, Orange Park, Ocala, St. Augustine, High Springs, Alachua, Newberry (canonical nine-city list, identical in schema `areaServed`, footer, and GBP).
+
+- **Foundation:** `@astrojs/sitemap` generates `sitemap-index.xml` (the old hand-written sitemap served two 404ing URLs and is deleted; never hand-write one again). Legacy apps (chess, tdgame, sky-raider-blitz, mosslight-run, daily-songs, voicecheck, interactives, portfolio, projects, mbsfeedback, tools, internal) are noindexed via `X-Robots-Tag` in `public/_headers` + robots.txt Disallow — they are static files in `public/`, not routes, so a layout meta can't reach them. The `NOINDEX` list in `astro.config.mjs` mirrors `_headers`; keep them in sync.
+- **Schema** (`BaseLayout.astro`): `ProfessionalService` @graph with city-only PostalAddress, nine-city `areaServed`, `hasMap` → g.page, `sameAs` = g.page + FB business page (`facebook.com/profile.php?id=61592711216301`); Alex's LinkedIn hangs on his founder Person node, not the org. **No aggregateRating ever** (our reviews are Google's). Instagram etc. pending — add to `sameAs` when Alex supplies them, never invent.
+- **Phases 1–3 shipped** via Opus executor subagents, one commit each (57ed752 metadata/schema/alt, fa59e66 services split, d4c9fcc location pages + weave). Services: `/services/` is now a short hub (cards + Kai demos + process); children `web-design`, `ai-integration`, `seo-ai-search`, `accessibility` each carry keyword-targeted title/H1, BreadcrumbList + FAQPage JSON-LD, and the `.faq-item` accordion (promoted to global.css). The home a11y CTA still points at `/services/#svc-a11y` — that id lives on the hub's accessibility card. Location pages `/locations/gainesville/` + `/locations/jacksonville/` are deliberately non-templated (Jacksonville opens by admitting there is no Jacksonville office; Fore Motion Golf is the real Jax build, per `src/data/work.js`). Contact has a "where we work" block; artists index got a 142-word intro (it was the one page Google never indexed — thinness).
+- **Executor lesson:** one agent invented a client URL (caught it itself). **Audit outbound links and factual claims in any agent-written marketing copy against `src/data/work.js`** before shipping.
+- **GSC state (domain property — sitemap submissions need FULL URLs):** `sitemap-index.xml` submitted; indexed as of 08-09: `/`, `/services/`, `/contact/`, all three artist pages requested; `/artists/` was not yet indexed. **Remaining Request-Indexing clicks (Alex, ~10/day quota): the four `/services/*` children, then the two `/locations/*` pages.** Re-check GSC Performance ~08-23 and ~09-06 for: web design gainesville, web designer gainesville fl, web design jacksonville, ai integration services, website accessibility audit. Jacksonville will lag until links exist.
+- **GBP (done by Alex 08-09):** service-area business, Gainesville, all nine cities, real hours, primary category **Website designer** (secondaries Design agency, Consultant). **Still to paste:** Services entries (Custom website design · AI integration (assistants & automation) · SEO & AI search optimization · Website accessibility audit) and the business description, which was drafted at ~640 chars: *"K & A Performance is a web design and AI integration studio in Gainesville, FL. We design and build custom websites from a blank page: fast, accessible, measured against WCAG 2.2 AA, and tuned to be found by Google and by AI search. We also wire practical AI into businesses: assistants that answer visitors and qualify leads, and automations that give hours back. Founded by Alex and Kristina Anderson, we serve Gainesville, Ocala, Alachua, High Springs, Newberry, Jacksonville, Fleming Island, Orange Park, and St. Augustine, and work remotely across Florida. Quotes are always free."*
+- **The biggest remaining ranking lever is off-site and Alex's:** "Site by K & A Performance" footer credits on mbsdoc.com, pbjsa.com, projectmakeover.org, fdaaf.org, fixalways.com; then Bing Places / Apple Business Connect mirroring GBP.
+
+## Facebook Page Photos package (2026-08-11)
+
+`Facebook Page Photos/` (untracked, repo root) — **49 upload-ready JPGs, ~15MB**:
+
+- `fb-profile-picture.jpg` (1080x1080, circle-crop safe) + `fb-cover-photo.jpg` (1640x624, mobile-crop safe) — logo on canvas `#F8F5F2`, composed with ffmpeg.
+- The 23 `Google Profile Images/` shots copied in unchanged (client sites + K&A pages).
+- 24 artist files prefixed `artist-<name>-*` for credit-ease: 7 Jon Marc (site-curated six + portrait), 8 Bobbie (full gallery incl. her K&A logo artwork + portrait), 9 Nicole (best coins/pin/logo/tee re-encoded from `Nicole Images/` originals at 1600px — sharper than her own site — plus wordmark portrait). Nicole's `Tsunami Pin2.jpg` source has a one-macroblock mjpeg defect; the output was inspected at the exact region and is visually clean.
+- **Alex is crediting the artists himself.** Nicole = "Nicole Cruz · Nicole Cruz Design" + nicolecruzdesign.com. Jon Marc/Bobbie page handles are not recorded anywhere in the repo — Alex fills those in when tagging. Suggested cadence: cover+profile now, one client group per week (8 groups ≈ two months of posts), artist albums ending with a link to their `/artists/<slug>/` page.
+
 ## API cost exposure (audited 2026-08-01)
 
 Eleven Pages Functions call Anthropic and all deploy to the public domain. Three are properly gated (`generate`, `remix`, `remix-bangers` verify a signed cookie and return 401). **Eight are callable by anyone with no auth, no origin check and no rate limit:** `scope`, `guide`, `chat`, `analysis`, `commentary`, `hint`, `planner`, `voiceanalyze`. There is no origin checking anywhere in `functions/` — grepping for "origin" hits prose in the prompts, not code.
@@ -76,9 +113,21 @@ The right primary fix is a **WAF rate-limiting rule**, because it blocks at the 
 
 ## Open items
 
-_Status synced with Alex 2026-07-25:_
+_Status as of 2026-08-11. Active items first._
 
-1. ~~Set `NPM_VERSION=11` in Pages build env~~ — **DONE** (Alex, 2026-07-25). Lockfile-skew recurrence risk is closed. (The post-`npm install` emnapi grep is now belt-and-suspenders, not required.)
+**ACTIVE — near-term, in rough priority order:**
+
+A. **GSC Request Indexing** (Alex, ~10/day quota): the four `/services/*` child pages, then `/locations/gainesville/` + `/locations/jacksonville/`. Full URLs required (domain property). Then confirm `/artists/` finally indexes now that it has real copy.
+B. **GBP Services + description paste** (Alex) — exact text in the SEO campaign section above.
+C. **Client-site footer backlinks** (Alex) — the single biggest ranking lever left; list in the SEO section.
+D. **Facebook**: upload the `Facebook Page Photos/` package; artist posts need Jon Marc's and Bobbie's page handles (not recorded in repo) for credits.
+E. **GSC ranking checks** ~2026-08-23 and ~2026-09-06 — target queries in the SEO section. If nothing moved by the second check, investigate what Google actually indexed rather than adding more copy.
+F. **`Lead` pixel on StartProjectModal** — HELD by Alex. One guarded line in its success path when he says go; until then Meta under-counts leads.
+G. **Socials into schema `sameAs`** when Alex supplies them (Instagram in progress). Never invent handles.
+
+**STANDING / older:**
+
+1. ~~Set `NPM_VERSION=11`~~ — done 2026-07-25, **but it does NOT close the lockfile risk**: the emnapi strip recurred 2026-08-09 and failed a deploy. See the corrected DEPLOY RUNBOOK. Policy: avoid `npm install` entirely.
 2. ~~Re-upload Kai's ElevenLabs KB~~ — **DONE 2026-08-01.** Content refreshed (all three artists by name, the picture book, the accessibility page and `help@` address, new commissioning Q&As), uploaded as doc `77Pgp2ZzOV5gdo3VVXlq`, agent repointed, verified by reading the stored doc back. Key was supplied for the job and rotated straight after. See `docs/elevenlabs-agent/README.md` for the gotchas: the account is shared with unrelated projects, the README's stated LLM was wrong, and `simulate-conversation` is not a usable behavioural check.
 3. ~~Bobbie + Nicole portfolios~~ — **DONE.** Nicole live 2026-07-28, Bobbie live 2026-07-30. Only remaining artist ask is the list of 20 source files Nicole still owes (see her entry) so her hotlinked tiles stop depending on her Netlify build.
 4. ~~Preview-scope Google env vars~~ — Google reviews env is **working** (Alex confirmed). No action.
