@@ -199,11 +199,24 @@ Deliberately excluded, each with a clean path to add later:
 5. **`admin/` inside the site repo.** Astro's root build only reads `src/` and `public/`, so it ignores `admin/`, but `.gitignore` needs `admin/node_modules` and `admin/dist`, and the Pages build must not be pointed at the new directory.
 6. **The Firebase tracker's current contents are unread.** Phase 2 must export before deleting, and the Firebase rules should be locked whether or not the data is worth keeping.
 
+## Confirmed Access configuration (2026-08-13)
+
+Zero Trust is enabled and the Access application exists. These are configuration values, not secrets: they belong in `wrangler.jsonc` as plain vars and may be committed.
+
+| Value | |
+| --- | --- |
+| Team name | `kandaperformance` |
+| Team domain | `kandaperformance.cloudflareaccess.com` |
+| JWKS / certs URL | `https://kandaperformance.cloudflareaccess.com/cdn-cgi/access/certs` |
+| Application AUD | `2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900` |
+
+Verified by fetching the certs endpoint, which returns a live JWKS. As of this date `admin.ka-performancefl.com` returns NXDOMAIN, meaning the Access application is a policy definition waiting for the hostname to exist. That is the desired state: the Worker's custom domain will create the proxied record, and Access begins gating the moment it does. **Still to confirm: that the Access application's hostname is exactly `admin.ka-performancefl.com`,** since a typo there leaves the admin ungated while looking configured.
+
 ## Tasks that are Alex's (dashboard only)
 
 Claude's deploy-class and dashboard calls are auto-blocked in this environment, so these come as runnable commands or dashboard steps:
 
-1. Enable Zero Trust, create the Access application and policy, and supply the **team name** and **AUD tag**.
+1. ~~Enable Zero Trust, create the Access application and policy, supply team name and AUD tag~~ — **DONE 2026-08-13**, values above.
 2. Create the D1 database and supply its ID.
 3. Add `admin.ka-performancefl.com` as a Worker custom domain (the wrangler token is zone-read only).
 4. Decide on Workers Paid after Phase 0 measures CPU.
