@@ -1,0 +1,43 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "ka-admin-digest",
+  "main": "./index.js",
+  "compatibility_date": "2026-08-13",
+
+  // 7am Eastern year-round. 7am is 11:00 UTC under EDT and 12:00 UTC under EST, so
+  // both fire and the handler discards whichever is not 7am locally. A single UTC
+  // cron would drift an hour at each daylight saving change.
+  "triggers": {
+    "crons": ["0 11,12 * * *"]
+  },
+
+  // The same database the admin UI uses. The digest only reads.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ka-admin",
+      "database_id": "7e6d2716-1744-4618-a971-d12308a7bc5b"
+    }
+  ],
+
+  // Cloudflare Email Sending. Requires the sending domain to be onboarded in the
+  // dashboard first, which adds MX, SPF, DKIM and DMARC records TO THAT DOMAIN.
+  // That is why DIGEST_FROM is on notify.ka-performancefl.com and not the apex:
+  // the apex's mail records belong to Google Workspace and must not be touched.
+  "send_email": [
+    { "name": "EMAIL", "remote": true }
+  ],
+
+  "vars": {
+    "DIGEST_TO": "alex@ka-performancefl.com",
+    "DIGEST_FROM": "digest@notify.ka-performancefl.com",
+    "ADMIN_URL": "https://admin.ka-performancefl.com",
+    "DIGEST_HOUR": "7"
+  },
+
+  "observability": { "enabled": true },
+
+  // No public HTTP surface. The fetch handler exists only for the secret-gated
+  // manual trigger, reached by its workers.dev URL.
+  "workers_dev": true
+}

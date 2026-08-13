@@ -62,7 +62,9 @@ Two Workers, one database, one subdomain, one new directory. The site's build, l
 
 The Astro adapter *generates* the Worker entry point, so adding a `scheduled` handler means wrapping generated code that changes between adapter versions. A separate Worker avoids that, and isolates failures in both directions.
 
-Cron is `["0 10,11 * * *"]` and the handler no-ops unless the current hour in `America/New_York` is 7. Two invocations a day, exact 7am year-round. A single UTC cron would drift an hour at each daylight-saving change.
+Cron is `["0 11,12 * * *"]` and the handler no-ops unless the current hour in `America/New_York` is 7. Two invocations a day, exact 7am year-round. A single UTC cron would drift an hour at each daylight-saving change.
+
+**Corrected 2026-08-13 during implementation:** this spec originally said `0 10,11`, which was wrong. 7am Eastern is **11:00 UTC under EDT** (UTC-4) and **12:00 UTC under EST** (UTC-5). The original values would have delivered at 6am all summer and 5am all winter.
 
 ### Auth flow
 
