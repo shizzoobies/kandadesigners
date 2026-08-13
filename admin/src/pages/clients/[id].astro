@@ -1,18 +1,27 @@
 ---
 import Shell from '../../layouts/Shell.astro';
-import { getClient, listLinks, listNotes, listProjectsForClient } from '../../lib/db.js';
-import { humanDate, money } from '../../lib/format.js';
+import {
+  getClient, listLinks, listNotes, listProjectsForClient,
+  listInvoicesForClient, listRetainersForClient,
+} from '../../lib/db.js';
+import { humanDate, money, todayInEastern, centsToInput } from '../../lib/format.js';
 
 const id = Number(Astro.params.id);
 const db = Astro.locals.runtime.env.DB;
 const client = Number.isInteger(id) && id > 0 ? await getClient(db, id) : null;
 if (!client) return new Response('Client not found', { status: 404 });
 
-const [links, notes, projects] = await Promise.all([
+const [links, notes, projects, invoices, retainers] = await Promise.all([
   listLinks(db, id),
   listNotes(db, 'client', id),
   listProjectsForClient(db, id),
+  listInvoicesForClient(db, id),
+  listRetainersForClient(db, id),
 ]);
+const today = todayInEastern();
+const owed = invoices
+  .filter((i) => i.status === 'sent')
+  .reduce((n, i) => n + i.amount_cents, 0);
 
 const saved = Astro.url.searchParams.get('saved');
 const error = Astro.url.searchParams.get('error');
@@ -31,9 +40,16 @@ const KIND_LABEL = {
 
 const ERRORS = {
   name: 'A client needs a name. Nothing was saved.',
-  label: 'A link needs a label. Nothing was saved.',
+  label: 'That needs a label. Nothing was saved.',
   url: 'That link was rejected. Only http and https addresses are stored.',
   note: 'An empty note was not saved.',
+  money: 'That amount could not be read. Use digits, like 350 or 2,400.00. Nothing was saved.',
+  date: 'A date could not be read. Use YYYY-MM-DD, or leave it blank. Nothing was saved.',
+  day: 'The billing day must be a number from 1 to 28, so a monthly charge cannot skip February.',
+  client: 'That client could not be found. Nothing was saved.',
+  project: 'That project could not be found. Nothing was saved.',
+  id: 'That record could not be found. Nothing was saved.',
+  intent: 'Unrecognised action. Nothing was saved.',
 };
 ---
 <Shell title={client.name} active="clients">
@@ -80,6 +96,131 @@ const ERRORS = {
       ))}
     </div>
   )}
+
+  <div class="groupline">Invoices{owed > 0 ? ` · ${money(owed)} outstanding` : ''}</div>
+  {invoices.length === 0 ? (
+    <p class="empty-state">No invoices recorded for this client yet.</p>
+  ) : (
+    <div class="rows">
+      {invoices.map((inv) => (
+        <div class={`row ${
+          inv.status === 'expected' ? 's-money'
+          : inv.status === 'sent' ? (inv.due_on && inv.due_on < today ? 's-money' : 's-soon')
+          : 's-quiet'
+        }`}>
+          <div class="tag">{inv.kind}</div>
+          <div class="what">
+            <b><a href={`/invoices/${inv.id}`}>{inv.ref || `${inv.kind} invoice`}</a></b>
+            <span>
+              {inv.project_id ? <><a href={`/projects/${inv.project_id}`}>{inv.project_name}</a>{' · '}</> : ''}
+              {inv.status === 'paid' ? `paid ${humanDate(inv.paid_on)}`
+                : inv.status === 'void' ? 'void'
+                : inv.status === 'expected' ? 'not billed yet'
+                : inv.due_on && inv.due_on < today ? `overdue, due ${humanDate(inv.due_on)}`
+                : inv.due_on ? `due ${humanDate(inv.due_on)}` : 'sent, no due date'}
+            </span>
+          </div>
+          <div class="amt">{money(inv.amount_cents)}<em>{inv.status}</em></div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="groupline">Record an invoice, not tied to a project</div>
+  <form method="POST" action="/api/invoices">
+    <input type="hidden" name="intent" value="create" />
+    <input type="hidden" name="clientId" value={id} />
+    <input type="hidden" name="returnTo" value={here} />
+    <div class="field">
+      <label for="iamount">Amount</label>
+      <input id="iamount" name="amount" inputmode="decimal" required placeholder="350" />
+    </div>
+    <div class="field">
+      <label for="ikind">Kind</label>
+      <select id="ikind" name="kind">
+        <option value="retainer">Retainer</option>
+        <option value="other">Other</option>
+        <option value="deposit">Deposit</option>
+        <option value="balance">Balance</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="istatus">Status</label>
+      <select id="istatus" name="status">
+        <option value="expected">Expected, I still need to bill this</option>
+        <option value="sent">Sent, awaiting payment</option>
+        <option value="paid">Already paid</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="idue">Due date</label>
+      <input id="idue" name="dueOn" type="date" />
+    </div>
+    <div class="field">
+      <label for="iref">Reference</label>
+      <input id="iref" name="ref" placeholder="INV-014" autocomplete="off" />
+    </div>
+    <div class="actions"><button class="btn" type="submit">Record invoice</button></div>
+  </form>
+
+  <div class="groupline">Retainers</div>
+  {retainers.length === 0 ? (
+    <p class="empty-state">
+      No retainers. Add one for anything that recurs monthly, like hosting, a care
+      plan, or an AI assistant subscription. The invoices screen then tells you when
+      a month has gone unbilled.
+    </p>
+  ) : (
+    <div class="rows">
+      {retainers.map((r) => (
+        <div class={`row ${r.active ? 's-soon' : 's-quiet'}`}>
+          <div class="tag">{r.active ? `Day ${r.day_of_month}` : 'Paused'}</div>
+          <div class="what">
+            <b>{r.label}</b>
+            <span>
+              {r.active ? `Bills on day ${r.day_of_month} each month` : 'Not billing'}
+              {r.started_on ? ` · since ${humanDate(r.started_on)}` : ''}
+            </span>
+          </div>
+          <div class="amt">
+            {money(r.amount_cents)}
+            <em>
+              <form method="POST" action="/api/retainers" style="display:inline">
+                <input type="hidden" name="intent" value={r.active ? 'pause' : 'resume'} />
+                <input type="hidden" name="id" value={r.id} />
+                <input type="hidden" name="returnTo" value={here} />
+                <button class="danger" type="submit">{r.active ? 'pause' : 'resume'}</button>
+              </form>
+            </em>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="groupline">Add a retainer</div>
+  <form method="POST" action="/api/retainers">
+    <input type="hidden" name="intent" value="create" />
+    <input type="hidden" name="clientId" value={id} />
+    <input type="hidden" name="returnTo" value={here} />
+    <div class="field">
+      <label for="rlabel">What it is</label>
+      <input id="rlabel" name="label" required placeholder="Hosting and care plan" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="ramount">Monthly amount</label>
+      <input id="ramount" name="amount" inputmode="decimal" required placeholder="95" />
+    </div>
+    <div class="field">
+      <label for="rday">Day of the month it bills</label>
+      <input id="rday" name="dayOfMonth" type="number" min="1" max="28" value="1" required />
+    </div>
+    <div class="field">
+      <label for="rstart">Started</label>
+      <input id="rstart" name="startedOn" type="date" />
+    </div>
+    <div class="actions"><button class="btn" type="submit">Add retainer</button></div>
+  </form>
 
   <div class="groupline">Links</div>
   {links.length === 0 ? (

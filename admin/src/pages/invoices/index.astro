@@ -1,0 +1,139 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { listInvoices, getMoneyTotals, listUnbilledRetainers } from '../../lib/db.js';
+import { money, humanDate, todayInEastern } from '../../lib/format.js';
+
+const db = Astro.locals.runtime.env.DB;
+const today = todayInEastern();
+const period = today.slice(0, 7);
+
+const FILTERS = ['open', 'paid', 'void', 'all'];
+const raw = Astro.url.searchParams.get('filter') ?? 'open';
+const filter = FILTERS.includes(raw) ? raw : 'open';
+
+const [invoices, totals, unbilled] = await Promise.all([
+  listInvoices(db, filter),
+  getMoneyTotals(db, today),
+  listUnbilledRetainers(db, period),
+]);
+
+const error = Astro.url.searchParams.get('error');
+const ERRORS = {
+  money: 'That amount could not be read. Use digits, like 2400 or 2,400.00. Nothing was saved.',
+  date: 'A date could not be read. Use YYYY-MM-DD, or leave it blank. Nothing was saved.',
+  url: 'That invoice link was rejected. Only http and https addresses are stored.',
+  client: 'Pick a client. Every invoice belongs to one.',
+  project: 'That project could not be found. Nothing was saved.',
+  id: 'That invoice could not be found. Nothing was saved.',
+  intent: 'Unrecognised action. Nothing was saved.',
+};
+
+const KIND_LABEL = { deposit: 'Deposit', balance: 'Balance', retainer: 'Retainer', other: 'Invoice' };
+
+function severity(inv) {
+  if (inv.status === 'sent') return inv.due_on && inv.due_on < today ? 's-money' : 's-soon';
+  if (inv.status === 'expected') return 's-money';
+  return 's-quiet';
+}
+
+function statusLine(inv) {
+  if (inv.status === 'paid') return `paid ${humanDate(inv.paid_on) || 'date not recorded'}`;
+  if (inv.status === 'void') return 'void';
+  if (inv.status === 'expected') return 'not billed yet';
+  if (!inv.due_on) return 'sent, no due date';
+  if (inv.due_on < today) {
+    const days = Math.round((Date.parse(today) - Date.parse(inv.due_on)) / 86400000);
+    return `overdue by ${days} day${days === 1 ? '' : 's'}, due ${humanDate(inv.due_on)}`;
+  }
+  if (inv.due_on === today) return 'due today';
+  return `due ${humanDate(inv.due_on)}`;
+}
+---
+<Shell title="Invoices" active="invoices">
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+
+  <dl class="money">
+    <div><dt>Outstanding</dt><dd>{money(totals.outstanding_cents)}</dd></div>
+    <div class={totals.overdue_cents > 0 ? 'bad' : ''}>
+      <dt>Overdue</dt>
+      <dd>{money(totals.overdue_cents)}<small>{totals.overdue_count} invoice{totals.overdue_count === 1 ? '' : 's'}</small></dd>
+    </div>
+    <div class={totals.expected_cents > 0 ? 'bad' : ''}>
+      <dt>Not yet invoiced</dt>
+      <dd>{money(totals.expected_cents)}<small>{totals.expected_count} item{totals.expected_count === 1 ? '' : 's'}</small></dd>
+    </div>
+  </dl>
+
+  {unbilled.length > 0 && (
+    <>
+      <div class="groupline">Retainers unbilled this month</div>
+      <div class="rows">
+        {unbilled.map((r) => (
+          <div class="row s-money">
+            <div class="tag">Day {r.day_of_month}</div>
+            <div class="what">
+              <b>{r.label}</b>
+              <span><a href={`/clients/${r.client_id}`}>{r.client_name}</a> · no retainer invoice recorded for {period}</span>
+            </div>
+            <div class="amt">{money(r.amount_cents)}<em>bill it</em></div>
+          </div>
+        ))}
+      </div>
+    </>
+  )}
+
+  <div class="groupline">
+    {FILTERS.map((f, i) => (
+      <>{i > 0 ? ' · ' : ''}<a
+        href={`/invoices?filter=${f}`}
+        style={f === filter ? 'color:var(--ink);text-decoration:underline' : ''}
+      >{f === 'open' ? 'open' : f}</a></>
+    ))}
+  </div>
+
+  {invoices.length === 0 ? (
+    <p class="empty-state">
+      {filter === 'open'
+        ? 'Nothing outstanding. Record invoices from a project or a client page.'
+        : `No ${filter} invoices.`}
+    </p>
+  ) : (
+    <div class="rows">
+      {invoices.map((inv) => (
+        <div class={`row ${severity(inv)}`}>
+          <div class="tag">{KIND_LABEL[inv.kind] ?? 'Invoice'}</div>
+          <div class="what">
+            <b><a href={`/invoices/${inv.id}`}>{inv.ref || `${KIND_LABEL[inv.kind]} for ${inv.client_name}`}</a></b>
+            <span>
+              <a href={`/clients/${inv.client_id}`}>{inv.client_name}</a>
+              {inv.project_id ? <> · <a href={`/projects/${inv.project_id}`}>{inv.project_name}</a></> : ''}
+              {' · '}{statusLine(inv)}
+            </span>
+          </div>
+          <div class={`amt ${inv.status === 'sent' && inv.due_on && inv.due_on < today ? 'due' : ''}`}>
+            {money(inv.amount_cents)}
+            <em>
+              {inv.status === 'expected' && (
+                <form method="POST" action="/api/invoices" style="display:inline">
+                  <input type="hidden" name="intent" value="sent" />
+                  <input type="hidden" name="id" value={inv.id} />
+                  <input type="hidden" name="returnTo" value={`/invoices?filter=${filter}`} />
+                  <button class="danger" type="submit">mark sent</button>
+                </form>
+              )}
+              {inv.status === 'sent' && (
+                <form method="POST" action="/api/invoices" style="display:inline">
+                  <input type="hidden" name="intent" value="paid" />
+                  <input type="hidden" name="id" value={inv.id} />
+                  <input type="hidden" name="returnTo" value={`/invoices?filter=${filter}`} />
+                  <button class="danger" type="submit">mark paid</button>
+                </form>
+              )}
+              {(inv.status === 'paid' || inv.status === 'void') && inv.status}
+            </em>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</Shell>

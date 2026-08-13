@@ -1,6 +1,6 @@
 ---
 import Shell from '../../layouts/Shell.astro';
-import { getProject, getProjectMoney, listNotes, listClients } from '../../lib/db.js';
+import { getProject, getProjectMoney, listNotes, listClients, listInvoicesForProject } from '../../lib/db.js';
 import { money, humanDate, centsToInput, todayInEastern } from '../../lib/format.js';
 
 const id = Number(Astro.params.id);
@@ -8,10 +8,11 @@ const db = Astro.locals.runtime.env.DB;
 const project = Number.isInteger(id) && id > 0 ? await getProject(db, id) : null;
 if (!project) return new Response('Project not found', { status: 404 });
 
-const [cash, notes, clients] = await Promise.all([
+const [cash, notes, clients, invoices] = await Promise.all([
   getProjectMoney(db, id),
   listNotes(db, 'project', id),
   listClients(db),
+  listInvoicesForProject(db, id),
 ]);
 
 const saved = Astro.url.searchParams.get('saved');
@@ -25,6 +26,9 @@ const ERRORS = {
   money: 'That quoted amount could not be read. Use digits, like 8500 or 8,500.00. Nothing was saved.',
   date: 'A date could not be read. Use YYYY-MM-DD, or leave it blank. Nothing was saved.',
   note: 'An empty note was not saved.',
+  url: 'That invoice link was rejected. Only http and https addresses are stored.',
+  id: 'That record could not be found. Nothing was saved.',
+  intent: 'Unrecognised action. Nothing was saved.',
 };
 
 // Every figure here is derived, never stored, so it cannot drift from the
@@ -83,23 +87,76 @@ const unbilledAfterDelivery = delivered && stillToInvoice > 0;
   </div>
 
   <div class="groupline">Invoices</div>
-  {cash.invoice_count === 0 ? (
+  {invoices.length === 0 ? (
     <p class="empty-state">
-      No invoices recorded against this project yet. The figures above will fill
-      in as you record them.
+      No invoices recorded against this project yet. The figures above fill in as
+      you record them.
     </p>
   ) : (
     <div class="rows">
-      <div class="row s-quiet">
-        <div class="tag">Recorded</div>
-        <div class="what">
-          <b>{cash.invoice_count} invoice{cash.invoice_count === 1 ? '' : 's'}</b>
-          <span>{money(cash.unpaid_cents)} sent and unpaid · {money(cash.expected_cents)} flagged but not yet billed</span>
+      {invoices.map((inv) => (
+        <div class={`row ${
+          inv.status === 'expected' ? 's-money'
+          : inv.status === 'sent' ? (inv.due_on && inv.due_on < today ? 's-money' : 's-soon')
+          : 's-quiet'
+        }`}>
+          <div class="tag">{inv.kind}</div>
+          <div class="what">
+            <b><a href={`/invoices/${inv.id}`}>{inv.ref || `${inv.kind} invoice`}</a></b>
+            <span>
+              {inv.status === 'paid' ? `paid ${humanDate(inv.paid_on)}`
+                : inv.status === 'void' ? 'void'
+                : inv.status === 'expected' ? 'not billed yet'
+                : inv.due_on && inv.due_on < today ? `overdue, due ${humanDate(inv.due_on)}`
+                : inv.due_on ? `due ${humanDate(inv.due_on)}` : 'sent, no due date'}
+            </span>
+          </div>
+          <div class="amt">{money(inv.amount_cents)}<em>{inv.status}</em></div>
         </div>
-        <div class="amt">{money(cash.paid_cents)}<em>paid</em></div>
-      </div>
+      ))}
     </div>
   )}
+
+  <div class="groupline">Record an invoice</div>
+  <form method="POST" action="/api/invoices">
+    <input type="hidden" name="intent" value="create" />
+    <input type="hidden" name="projectId" value={id} />
+    <input type="hidden" name="clientId" value={project.client_id} />
+    <input type="hidden" name="returnTo" value={here} />
+    <div class="field">
+      <label for="iamount">Amount</label>
+      <input id="iamount" name="amount" inputmode="decimal" required placeholder={centsToInput(stillToInvoice) || '2400'} />
+    </div>
+    <div class="field">
+      <label for="ikind">Kind</label>
+      <select id="ikind" name="kind">
+        <option value="deposit">Deposit</option>
+        <option value="balance">Balance</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="istatus">Status</label>
+      <select id="istatus" name="status">
+        <option value="expected">Expected, I still need to bill this</option>
+        <option value="sent">Sent, awaiting payment</option>
+        <option value="paid">Already paid</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="idue">Due date</label>
+      <input id="idue" name="dueOn" type="date" />
+    </div>
+    <div class="field">
+      <label for="iref">Reference</label>
+      <input id="iref" name="ref" placeholder="INV-014" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="iurl">Link to the real invoice</label>
+      <input id="iurl" name="externalUrl" type="url" placeholder="https://" />
+    </div>
+    <div class="actions"><button class="btn" type="submit">Record invoice</button></div>
+  </form>
 
   <div class="groupline">Notes</div>
   <form method="POST" action="/api/notes">

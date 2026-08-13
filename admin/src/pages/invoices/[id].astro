@@ -1,0 +1,173 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { getInvoice, listClients, listProjects } from '../../lib/db.js';
+import { money, humanDate, centsToInput, todayInEastern } from '../../lib/format.js';
+
+const id = Number(Astro.params.id);
+const db = Astro.locals.runtime.env.DB;
+const invoice = Number.isInteger(id) && id > 0 ? await getInvoice(db, id) : null;
+if (!invoice) return new Response('Invoice not found', { status: 404 });
+
+const [clients, projects] = await Promise.all([listClients(db), listProjects(db)]);
+
+const saved = Astro.url.searchParams.get('saved');
+const error = Astro.url.searchParams.get('error');
+const here = `/invoices/${id}`;
+const today = todayInEastern();
+
+const ERRORS = {
+  money: 'That amount could not be read. Use digits, like 2400 or 2,400.00. Nothing was saved.',
+  date: 'A date could not be read. Use YYYY-MM-DD, or leave it blank. Nothing was saved.',
+  url: 'That invoice link was rejected. Only http and https addresses are stored.',
+  client: 'Pick a client. Every invoice belongs to one.',
+  project: 'That project could not be found. Nothing was saved.',
+};
+
+const overdue = invoice.status === 'sent' && invoice.due_on && invoice.due_on < today;
+---
+<Shell title={invoice.ref || `Invoice ${invoice.id}`} active="invoices">
+  {saved && <p class="empty-state">Saved.</p>}
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+  {overdue && <p class="notice">Overdue since {humanDate(invoice.due_on)} and not marked paid.</p>}
+  {invoice.status === 'expected' && (
+    <p class="notice">Flagged but not billed yet. Nobody has been asked for this money.</p>
+  )}
+
+  <dl class="money">
+    <div><dt>Amount</dt><dd>{money(invoice.amount_cents)}</dd></div>
+    <div><dt>Status</dt><dd style="font-size:18px">{invoice.status}</dd></div>
+    <div><dt>Kind</dt><dd style="font-size:18px">{invoice.kind}</dd></div>
+  </dl>
+
+  <div class="groupline">Where it belongs</div>
+  <div class="rows">
+    <div class="row s-quiet">
+      <div class="tag">Client</div>
+      <div class="what">
+        <b><a href={`/clients/${invoice.client_id}`}>{invoice.client_name}</a></b>
+        <span>{invoice.project_id
+          ? <a href={`/projects/${invoice.project_id}`}>{invoice.project_name}</a>
+          : 'Not attached to a project'}</span>
+      </div>
+      <div class="amt"><em>{invoice.external_url ? <a href={invoice.external_url} target="_blank" rel="noopener noreferrer">open invoice</a> : 'no link'}</em></div>
+    </div>
+    <div class="row s-quiet">
+      <div class="tag">Dates</div>
+      <div class="what">
+        <b>{invoice.issued_on ? `Issued ${humanDate(invoice.issued_on)}` : 'Not issued'}</b>
+        <span>
+          {invoice.due_on ? `Due ${humanDate(invoice.due_on)}` : 'No due date'}
+          {invoice.paid_on ? ` · Paid ${humanDate(invoice.paid_on)}` : ''}
+        </span>
+      </div>
+      <div class="amt">
+        <em>
+          {invoice.status === 'expected' && (
+            <form method="POST" action="/api/invoices" style="display:inline">
+              <input type="hidden" name="intent" value="sent" />
+              <input type="hidden" name="id" value={id} />
+              <input type="hidden" name="returnTo" value={here} />
+              <button class="danger" type="submit">mark sent</button>
+            </form>
+          )}
+          {invoice.status === 'sent' && (
+            <form method="POST" action="/api/invoices" style="display:inline">
+              <input type="hidden" name="intent" value="paid" />
+              <input type="hidden" name="id" value={id} />
+              <input type="hidden" name="returnTo" value={here} />
+              <button class="danger" type="submit">mark paid</button>
+            </form>
+          )}
+        </em>
+      </div>
+    </div>
+  </div>
+
+  {invoice.notes && (
+    <>
+      <div class="groupline">Notes</div>
+      <p class="empty-state" style="color:var(--ink)">{invoice.notes}</p>
+    </>
+  )}
+
+  <div class="groupline">Edit invoice</div>
+  <form method="POST" action="/api/invoices">
+    <input type="hidden" name="intent" value="update" />
+    <input type="hidden" name="id" value={id} />
+    <input type="hidden" name="returnTo" value={here} />
+    <div class="field">
+      <label for="ref">Reference</label>
+      <input id="ref" name="ref" value={invoice.ref} placeholder="INV-014" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="amount">Amount</label>
+      <input id="amount" name="amount" inputmode="decimal" value={centsToInput(invoice.amount_cents)} required />
+    </div>
+    <div class="field">
+      <label for="kind">Kind</label>
+      <select id="kind" name="kind">
+        {[['deposit', 'Deposit'], ['balance', 'Balance'], ['retainer', 'Retainer'], ['other', 'Other']].map(([v, l]) => (
+          <option value={v} selected={v === invoice.kind}>{l}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        {[['expected', 'Expected, not billed yet'], ['sent', 'Sent, awaiting payment'], ['paid', 'Paid'], ['void', 'Void']].map(([v, l]) => (
+          <option value={v} selected={v === invoice.status}>{l}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="projectId">Project</label>
+      <select id="projectId" name="projectId">
+        <option value="" selected={!invoice.project_id}>No project, bill the client directly</option>
+        {projects.map((p) => (
+          <option value={p.id} selected={p.id === invoice.project_id}>{p.client_name}: {p.name}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="clientId">Client, used only when no project is chosen</label>
+      <select id="clientId" name="clientId">
+        {clients.map((c) => (
+          <option value={c.id} selected={c.id === invoice.client_id}>{c.name}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="issuedOn">Issued</label>
+      <input id="issuedOn" name="issuedOn" type="date" value={invoice.issued_on ?? ''} />
+    </div>
+    <div class="field">
+      <label for="dueOn">Due</label>
+      <input id="dueOn" name="dueOn" type="date" value={invoice.due_on ?? ''} />
+    </div>
+    <div class="field">
+      <label for="paidOn">Paid</label>
+      <input id="paidOn" name="paidOn" type="date" value={invoice.paid_on ?? ''} />
+    </div>
+    <div class="field">
+      <label for="externalUrl">Link to the real invoice</label>
+      <input id="externalUrl" name="externalUrl" type="url" value={invoice.external_url} placeholder="https://" />
+    </div>
+    <div class="field">
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes">{invoice.notes}</textarea>
+    </div>
+    <div class="actions"><button class="btn" type="submit">Save changes</button></div>
+  </form>
+
+  <div class="groupline">Void</div>
+  <form method="POST" action="/api/invoices">
+    <input type="hidden" name="intent" value="void" />
+    <input type="hidden" name="id" value={id} />
+    <input type="hidden" name="returnTo" value="/invoices" />
+    <p class="empty-state">
+      Voiding keeps the record but takes it out of every total. Use this for an
+      invoice raised in error, rather than deleting it, so the history stays honest.
+    </p>
+    <div class="actions"><button class="danger" type="submit">Void this invoice</button></div>
+  </form>
+</Shell>

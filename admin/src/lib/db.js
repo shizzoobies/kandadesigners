@@ -186,3 +186,172 @@ export async function archiveProject(db, id, iso) {
   await db.prepare('UPDATE projects SET archived_at = ?, updated_at = ? WHERE id = ?')
     .bind(iso, iso, id).run();
 }
+
+// ── Invoices ──────────────────────────────
+
+const INVOICE_SELECT = `SELECT i.id, i.client_id, i.project_id, i.ref, i.kind, i.amount_cents,
+       i.issued_on, i.due_on, i.paid_on, i.status, i.external_url, i.notes,
+       c.name AS client_name, p.name AS project_name
+  FROM invoices i
+  JOIN clients c ON c.id = i.client_id
+  LEFT JOIN projects p ON p.id = i.project_id`;
+
+// `open` means anything still representing money you have not banked: flagged but
+// unbilled, or billed but unpaid. That is the working view, so it is the default.
+export async function listInvoices(db, filter = 'open') {
+  const where = {
+    open: "i.status IN ('expected','sent')",
+    paid: "i.status = 'paid'",
+    void: "i.status = 'void'",
+    all: '1 = 1',
+  }[filter] ?? "i.status IN ('expected','sent')";
+
+  const { results } = await db.prepare(
+    `${INVOICE_SELECT} WHERE ${where}
+      ORDER BY CASE i.status WHEN 'sent' THEN 0 WHEN 'expected' THEN 1 ELSE 2 END,
+               COALESCE(i.due_on, '9999-12-31'), i.id DESC`
+  ).all();
+  return results ?? [];
+}
+
+export async function getInvoice(db, id) {
+  return db.prepare(`${INVOICE_SELECT} WHERE i.id = ?`).bind(id).first();
+}
+
+export async function listInvoicesForProject(db, projectId) {
+  const { results } = await db.prepare(
+    `${INVOICE_SELECT} WHERE i.project_id = ?
+      ORDER BY COALESCE(i.issued_on, i.due_on, '9999-12-31'), i.id`
+  ).bind(projectId).all();
+  return results ?? [];
+}
+
+export async function listInvoicesForClient(db, clientId) {
+  const { results } = await db.prepare(
+    `${INVOICE_SELECT} WHERE i.client_id = ?
+      ORDER BY CASE i.status WHEN 'sent' THEN 0 WHEN 'expected' THEN 1 ELSE 2 END,
+               COALESCE(i.due_on, '9999-12-31'), i.id DESC`
+  ).bind(clientId).all();
+  return results ?? [];
+}
+
+// The money strip, defined once here so the screen and the digest cannot disagree.
+// Overdue is a strict subset of outstanding. `expected` is money not yet billed,
+// so it is counted separately rather than folded into either.
+export async function getMoneyTotals(db, today) {
+  return db.prepare(
+    `SELECT
+       COALESCE(SUM(CASE WHEN status = 'sent' THEN amount_cents END), 0) AS outstanding_cents,
+       COALESCE(SUM(CASE WHEN status = 'sent' AND due_on IS NOT NULL AND due_on < ? THEN amount_cents END), 0) AS overdue_cents,
+       COALESCE(SUM(CASE WHEN status = 'sent' AND due_on IS NOT NULL AND due_on < ? THEN 1 END), 0) AS overdue_count,
+       COALESCE(SUM(CASE WHEN status = 'expected' THEN amount_cents END), 0) AS expected_cents,
+       COALESCE(SUM(CASE WHEN status = 'expected' THEN 1 END), 0) AS expected_count
+     FROM invoices`
+  ).bind(today, today).first();
+}
+
+export async function createInvoice(db, f) {
+  const row = await db.prepare(
+    `INSERT INTO invoices (client_id, project_id, ref, kind, amount_cents,
+                           issued_on, due_on, paid_on, status, external_url, notes)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id`
+  ).bind(
+    f.clientId, f.projectId ?? null, f.ref ?? '', f.kind ?? 'other', f.amountCents ?? 0,
+    f.issuedOn || null, f.dueOn || null, f.paidOn || null,
+    f.status ?? 'expected', f.externalUrl ?? '', f.notes ?? ''
+  ).first();
+  return row.id;
+}
+
+export async function updateInvoice(db, id, f) {
+  await db.prepare(
+    `UPDATE invoices SET client_id = ?, project_id = ?, ref = ?, kind = ?, amount_cents = ?,
+            issued_on = ?, due_on = ?, paid_on = ?, status = ?, external_url = ?, notes = ?
+      WHERE id = ?`
+  ).bind(
+    f.clientId, f.projectId ?? null, f.ref ?? '', f.kind ?? 'other', f.amountCents ?? 0,
+    f.issuedOn || null, f.dueOn || null, f.paidOn || null,
+    f.status ?? 'expected', f.externalUrl ?? '', f.notes ?? '', id
+  ).run();
+}
+
+// Deliberately separate one-click transitions, because these are the actions taken
+// most often and making them a trip through the edit form is how a tool stops
+// getting used.
+export async function markInvoiceSent(db, id, today) {
+  await db.prepare(
+    `UPDATE invoices SET status = 'sent', issued_on = COALESCE(issued_on, ?) WHERE id = ?`
+  ).bind(today, id).run();
+}
+
+export async function markInvoicePaid(db, id, today) {
+  await db.prepare(
+    `UPDATE invoices SET status = 'paid', paid_on = COALESCE(paid_on, ?),
+            issued_on = COALESCE(issued_on, ?) WHERE id = ?`
+  ).bind(today, today, id).run();
+}
+
+export async function voidInvoice(db, id) {
+  await db.prepare("UPDATE invoices SET status = 'void' WHERE id = ?").bind(id).run();
+}
+
+// ── Retainers ─────────────────────────────
+
+export async function listRetainers(db) {
+  const { results } = await db.prepare(
+    `SELECT r.id, r.client_id, r.label, r.amount_cents, r.day_of_month, r.active,
+            r.started_on, r.ended_on, c.name AS client_name
+       FROM retainers r JOIN clients c ON c.id = r.client_id
+      ORDER BY r.active DESC, c.name, r.label`
+  ).all();
+  return results ?? [];
+}
+
+export async function listRetainersForClient(db, clientId) {
+  const { results } = await db.prepare(
+    `SELECT id, label, amount_cents, day_of_month, active, started_on, ended_on
+       FROM retainers WHERE client_id = ? ORDER BY active DESC, label`
+  ).bind(clientId).all();
+  return results ?? [];
+}
+
+// Active retainers with no retainer invoice recorded in the given month.
+// `period` is 'YYYY-MM'. The LIKE against issued_on is why issued_on must be
+// stored as YYYY-MM-DD: a different format would silently match nothing and this
+// would report every retainer as unbilled forever.
+export async function listUnbilledRetainers(db, period) {
+  const { results } = await db.prepare(
+    `SELECT r.id, r.client_id, r.label, r.amount_cents, r.day_of_month, c.name AS client_name
+       FROM retainers r JOIN clients c ON c.id = r.client_id
+      WHERE r.active = 1
+        AND (r.started_on IS NULL OR substr(r.started_on, 1, 7) <= ?)
+        AND (r.ended_on IS NULL OR substr(r.ended_on, 1, 7) >= ?)
+        AND NOT EXISTS (
+          SELECT 1 FROM invoices i
+           WHERE i.client_id = r.client_id
+             AND i.kind = 'retainer'
+             AND i.status <> 'void'
+             AND substr(COALESCE(i.issued_on, i.due_on), 1, 7) = ?
+        )
+      ORDER BY r.day_of_month, c.name`
+  ).bind(period, period, period).all();
+  return results ?? [];
+}
+
+export async function createRetainer(db, f) {
+  await db.prepare(
+    `INSERT INTO retainers (client_id, label, amount_cents, day_of_month, active, started_on, ended_on)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`
+  ).bind(
+    f.clientId, f.label, f.amountCents ?? 0, f.dayOfMonth ?? 1,
+    f.active ? 1 : 0, f.startedOn || null, f.endedOn || null
+  ).run();
+}
+
+export async function setRetainerActive(db, id, active) {
+  await db.prepare('UPDATE retainers SET active = ? WHERE id = ?').bind(active ? 1 : 0, id).run();
+}
+
+export async function deleteRetainer(db, id) {
+  await db.prepare('DELETE FROM retainers WHERE id = ?').bind(id).run();
+}
