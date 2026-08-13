@@ -1,16 +1,17 @@
 ---
 import Shell from '../../layouts/Shell.astro';
-import { getClient, listLinks, listNotes } from '../../lib/db.js';
-import { humanDate } from '../../lib/format.js';
+import { getClient, listLinks, listNotes, listProjectsForClient } from '../../lib/db.js';
+import { humanDate, money } from '../../lib/format.js';
 
 const id = Number(Astro.params.id);
 const db = Astro.locals.runtime.env.DB;
 const client = Number.isInteger(id) && id > 0 ? await getClient(db, id) : null;
 if (!client) return new Response('Client not found', { status: 404 });
 
-const [links, notes] = await Promise.all([
+const [links, notes, projects] = await Promise.all([
   listLinks(db, id),
   listNotes(db, 'client', id),
+  listProjectsForClient(db, id),
 ]);
 
 const saved = Astro.url.searchParams.get('saved');
@@ -56,6 +57,29 @@ const ERRORS = {
       <div class="amt"><em>added {humanDate(client.created_at.slice(0, 10))}</em></div>
     </div>
   </div>
+
+  <div class="groupline">Projects</div>
+  {projects.length === 0 ? (
+    <p class="empty-state">
+      No projects for this client yet. Add one from <a href="/projects">Projects</a>.
+    </p>
+  ) : (
+    <div class="rows">
+      {projects.map((p) => (
+        <div class={`row ${p.waiting_on === 'us' ? 's-money' : p.waiting_on ? 's-soon' : 's-quiet'}`}>
+          <div class="tag">{p.status.replace('_', ' ')}</div>
+          <div class="what">
+            <b><a href={`/projects/${p.id}`}>{p.name}</a></b>
+            <span>
+              {p.waiting_on ? `Waiting on ${p.waiting_on === 'us' ? 'us' : p.waiting_on === 'client' ? 'the client' : 'an artist'}` : 'Nobody flagged'}
+              {p.due_on ? ` · due ${humanDate(p.due_on)}` : ''}
+            </span>
+          </div>
+          <div class="amt">{money(p.total_quoted_cents)}<em>quoted</em></div>
+        </div>
+      ))}
+    </div>
+  )}
 
   <div class="groupline">Links</div>
   {links.length === 0 ? (

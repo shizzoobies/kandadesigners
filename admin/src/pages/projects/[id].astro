@@ -1,0 +1,206 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { getProject, getProjectMoney, listNotes, listClients } from '../../lib/db.js';
+import { money, humanDate, centsToInput, todayInEastern } from '../../lib/format.js';
+
+const id = Number(Astro.params.id);
+const db = Astro.locals.runtime.env.DB;
+const project = Number.isInteger(id) && id > 0 ? await getProject(db, id) : null;
+if (!project) return new Response('Project not found', { status: 404 });
+
+const [cash, notes, clients] = await Promise.all([
+  getProjectMoney(db, id),
+  listNotes(db, 'project', id),
+  listClients(db),
+]);
+
+const saved = Astro.url.searchParams.get('saved');
+const error = Astro.url.searchParams.get('error');
+const here = `/projects/${id}`;
+const today = todayInEastern();
+
+const ERRORS = {
+  name: 'A project needs a name. Nothing was saved.',
+  client: 'Pick a client. Every project belongs to one.',
+  money: 'That quoted amount could not be read. Use digits, like 8500 or 8,500.00. Nothing was saved.',
+  date: 'A date could not be read. Use YYYY-MM-DD, or leave it blank. Nothing was saved.',
+  note: 'An empty note was not saved.',
+};
+
+// Every figure here is derived, never stored, so it cannot drift from the
+// invoices behind it.
+const quoted = project.total_quoted_cents || 0;
+const stillToInvoice = Math.max(0, quoted - cash.invoiced_cents);
+const delivered = Boolean(project.delivered_on);
+const overdue = project.due_on && !delivered && project.due_on < today;
+
+// The one thing this page exists to shout about: work handed over with money
+// still unbilled.
+const unbilledAfterDelivery = delivered && stillToInvoice > 0;
+---
+<Shell title={project.name} active="projects">
+  {saved && <p class="empty-state">Saved.</p>}
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+
+  {unbilledAfterDelivery && (
+    <p class="notice">
+      Delivered {humanDate(project.delivered_on)} with {money(stillToInvoice)} of the
+      quoted total never invoiced. This is the leak.
+    </p>
+  )}
+  {overdue && (
+    <p class="notice">Past its due date of {humanDate(project.due_on)} and not marked delivered.</p>
+  )}
+
+  <dl class="money">
+    <div><dt>Quoted</dt><dd>{money(quoted)}</dd></div>
+    <div><dt>Invoiced</dt><dd>{money(cash.invoiced_cents)}</dd></div>
+    <div class={stillToInvoice > 0 ? 'bad' : ''}>
+      <dt>Still to invoice</dt><dd>{money(stillToInvoice)}</dd>
+    </div>
+  </dl>
+
+  <div class="groupline">Status</div>
+  <div class="rows">
+    <div class={`row ${project.waiting_on === 'us' ? 's-money' : project.waiting_on ? 's-soon' : 's-quiet'}`}>
+      <div class="tag">{project.status.replace('_', ' ')}</div>
+      <div class="what">
+        <b><a href={`/clients/${project.client_id}`}>{project.client_name}</a></b>
+        <span>
+          {project.waiting_on ? `Waiting on ${project.waiting_on === 'us' ? 'us' : project.waiting_on === 'client' ? 'the client' : 'an artist'}` : 'Nobody flagged as blocking'}
+        </span>
+      </div>
+      <div class="amt"><em>{project.due_on ? `due ${humanDate(project.due_on)}` : 'no due date'}</em></div>
+    </div>
+    <div class="row s-quiet">
+      <div class="tag">Dates</div>
+      <div class="what">
+        <b>{project.started_on ? `Started ${humanDate(project.started_on)}` : 'No start date'}</b>
+        <span>{project.delivered_on ? `Delivered ${humanDate(project.delivered_on)}` : 'Not delivered'}</span>
+      </div>
+      <div class="amt"><em>{money(cash.paid_cents)} paid</em></div>
+    </div>
+  </div>
+
+  <div class="groupline">Invoices</div>
+  {cash.invoice_count === 0 ? (
+    <p class="empty-state">
+      No invoices recorded against this project yet. The figures above will fill
+      in as you record them.
+    </p>
+  ) : (
+    <div class="rows">
+      <div class="row s-quiet">
+        <div class="tag">Recorded</div>
+        <div class="what">
+          <b>{cash.invoice_count} invoice{cash.invoice_count === 1 ? '' : 's'}</b>
+          <span>{money(cash.unpaid_cents)} sent and unpaid · {money(cash.expected_cents)} flagged but not yet billed</span>
+        </div>
+        <div class="amt">{money(cash.paid_cents)}<em>paid</em></div>
+      </div>
+    </div>
+  )}
+
+  <div class="groupline">Notes</div>
+  <form method="POST" action="/api/notes">
+    <input type="hidden" name="intent" value="create" />
+    <input type="hidden" name="entityType" value="project" />
+    <input type="hidden" name="entityId" value={id} />
+    <input type="hidden" name="returnTo" value={here} />
+    <div class="field">
+      <label for="body">Add a note</label>
+      <textarea id="body" name="body" required></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn" type="submit">Save note</button>
+      <label class="linkish"><input type="checkbox" name="pinned" value="1" /> pin it</label>
+    </div>
+  </form>
+
+  {notes.length === 0 ? (
+    <p class="empty-state">No notes yet.</p>
+  ) : (
+    <div class="rows">
+      {notes.map((n) => (
+        <div class={`row ${n.pinned ? 's-soon' : 's-quiet'}`}>
+          <div class="tag">{n.pinned ? 'Pinned' : humanDate(n.created_at.slice(0, 10))}</div>
+          <div class="what">
+            <b>{n.body}</b>
+            <span>{n.author_email}{n.pinned ? ` · ${humanDate(n.created_at.slice(0, 10))}` : ''}</span>
+          </div>
+          <div class="amt">
+            <form method="POST" action="/api/notes" style="display:inline">
+              <input type="hidden" name="intent" value="delete" />
+              <input type="hidden" name="id" value={n.id} />
+              <input type="hidden" name="returnTo" value={here} />
+              <button class="danger" type="submit">delete</button>
+            </form>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="groupline">Edit project</div>
+  <form method="POST" action="/api/projects">
+    <input type="hidden" name="intent" value="update" />
+    <input type="hidden" name="id" value={id} />
+    <div class="field">
+      <label for="ename">Project name</label>
+      <input id="ename" name="name" value={project.name} required />
+    </div>
+    <div class="field">
+      <label for="eclient">Client</label>
+      <select id="eclient" name="clientId" required>
+        {clients.map((c) => (
+          <option value={c.id} selected={c.id === project.client_id}>{c.name}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="equoted">Quoted total</label>
+      <input id="equoted" name="totalQuoted" inputmode="decimal" value={centsToInput(quoted)} placeholder="8500" />
+    </div>
+    <div class="field">
+      <label for="estatus">Status</label>
+      <select id="estatus" name="status">
+        {['active', 'quoted', 'on_hold', 'delivered', 'complete', 'cancelled'].map((s) => (
+          <option value={s} selected={s === project.status}>{s.replace('_', ' ')}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="ewaiting">Waiting on</label>
+      <select id="ewaiting" name="waitingOn">
+        <option value="" selected={!project.waiting_on}>Nobody</option>
+        {[['us', 'Us'], ['client', 'The client'], ['artist', 'An artist']].map(([v, l]) => (
+          <option value={v} selected={v === project.waiting_on}>{l}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="estarted">Started</label>
+      <input id="estarted" name="startedOn" type="date" value={project.started_on ?? ''} />
+    </div>
+    <div class="field">
+      <label for="edue">Due</label>
+      <input id="edue" name="dueOn" type="date" value={project.due_on ?? ''} />
+    </div>
+    <div class="field">
+      <label for="edelivered">Delivered</label>
+      <input id="edelivered" name="deliveredOn" type="date" value={project.delivered_on ?? ''} />
+    </div>
+    <div class="actions"><button class="btn" type="submit">Save changes</button></div>
+  </form>
+
+  <div class="groupline">Archive</div>
+  <form method="POST" action="/api/projects">
+    <input type="hidden" name="intent" value="archive" />
+    <input type="hidden" name="id" value={id} />
+    <p class="empty-state">
+      Archiving hides this project from the list. Nothing is deleted, because the
+      invoices and notes against it are the record of real money and real work.
+    </p>
+    <div class="actions"><button class="danger" type="submit">Archive {project.name}</button></div>
+  </form>
+</Shell>

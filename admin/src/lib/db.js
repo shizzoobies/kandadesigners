@@ -99,3 +99,90 @@ export async function createNote(db, f) {
 export async function deleteNote(db, id) {
   await db.prepare('DELETE FROM notes WHERE id = ?').bind(id).run();
 }
+
+// ── Projects ──────────────────────────────
+
+const PROJECT_ORDER = `CASE p.status
+    WHEN 'active' THEN 0 WHEN 'quoted' THEN 1 WHEN 'on_hold' THEN 2
+    WHEN 'delivered' THEN 3 WHEN 'complete' THEN 4 ELSE 5 END`;
+
+export async function listProjects(db) {
+  // Live work first, finished work last. Within a status, soonest due date
+  // first; undated projects sort to the end rather than to the top, which is
+  // what COALESCE to a far-future date buys.
+  const { results } = await db.prepare(
+    `SELECT p.id, p.name, p.status, p.waiting_on, p.total_quoted_cents,
+            p.due_on, p.delivered_on, p.client_id, c.name AS client_name
+       FROM projects p JOIN clients c ON c.id = p.client_id
+      WHERE p.archived_at IS NULL
+      ORDER BY ${PROJECT_ORDER}, COALESCE(p.due_on, '9999-12-31'), p.name`
+  ).all();
+  return results ?? [];
+}
+
+export async function listProjectsForClient(db, clientId) {
+  const { results } = await db.prepare(
+    `SELECT p.id, p.name, p.status, p.waiting_on, p.total_quoted_cents, p.due_on, p.delivered_on
+       FROM projects p
+      WHERE p.client_id = ? AND p.archived_at IS NULL
+      ORDER BY ${PROJECT_ORDER}, COALESCE(p.due_on, '9999-12-31'), p.name`
+  ).bind(clientId).all();
+  return results ?? [];
+}
+
+export async function getProject(db, id) {
+  return db.prepare(
+    `SELECT p.*, c.name AS client_name
+       FROM projects p JOIN clients c ON c.id = p.client_id
+      WHERE p.id = ? AND p.archived_at IS NULL`
+  ).bind(id).first();
+}
+
+// The money on a project is always computed, never stored, so it cannot drift
+// from the invoices it is derived from.
+//
+// 'expected' is money known to be owed but NOT yet billed, so it is deliberately
+// excluded from invoiced_cents: that distinction is the whole point of the
+// status. outstanding = quoted - invoiced is therefore "what still needs an
+// invoice raising", which is the leak this admin exists to catch.
+export async function getProjectMoney(db, projectId) {
+  return db.prepare(
+    `SELECT
+       COALESCE(SUM(CASE WHEN status IN ('sent','paid') THEN amount_cents END), 0) AS invoiced_cents,
+       COALESCE(SUM(CASE WHEN status = 'paid' THEN amount_cents END), 0) AS paid_cents,
+       COALESCE(SUM(CASE WHEN status = 'sent' THEN amount_cents END), 0) AS unpaid_cents,
+       COALESCE(SUM(CASE WHEN status = 'expected' THEN amount_cents END), 0) AS expected_cents,
+       COUNT(*) AS invoice_count
+     FROM invoices WHERE project_id = ?`
+  ).bind(projectId).first();
+}
+
+export async function createProject(db, f) {
+  const row = await db.prepare(
+    `INSERT INTO projects (client_id, name, status, waiting_on, total_quoted_cents,
+                           started_on, due_on, delivered_on, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id`
+  ).bind(
+    f.clientId, f.name, f.status ?? 'active', f.waitingOn ?? null,
+    f.totalQuotedCents ?? 0, f.startedOn || null, f.dueOn || null, f.deliveredOn || null,
+    f.createdAt, f.createdAt
+  ).first();
+  return row.id;
+}
+
+export async function updateProject(db, id, f) {
+  await db.prepare(
+    `UPDATE projects SET client_id = ?, name = ?, status = ?, waiting_on = ?,
+            total_quoted_cents = ?, started_on = ?, due_on = ?, delivered_on = ?,
+            updated_at = ? WHERE id = ?`
+  ).bind(
+    f.clientId, f.name, f.status ?? 'active', f.waitingOn ?? null,
+    f.totalQuotedCents ?? 0, f.startedOn || null, f.dueOn || null, f.deliveredOn || null,
+    f.updatedAt, id
+  ).run();
+}
+
+export async function archiveProject(db, id, iso) {
+  await db.prepare('UPDATE projects SET archived_at = ?, updated_at = ? WHERE id = ?')
+    .bind(iso, iso, id).run();
+}
