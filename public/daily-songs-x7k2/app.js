@@ -1,30 +1,38 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import {
-  getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
-  query, orderBy, Timestamp,
-} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+// ── Data API ──────────────────────────────
+//
+// This app used to talk to Google Firestore directly from the browser, under
+// rules that allowed anonymous reads, so its data was world-readable to anyone
+// who found the project id in this file. It now goes through same-origin Pages
+// Functions backed by Cloudflare D1, gated by the same signed cookie as
+// /api/generate. Migrated 2026-08-13.
 
-// ── Firebase ─────────────────────────────
+const API_GENERATIONS = '/api/songs/generations';
+const API_BANGERS     = '/api/songs/bangers';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyB-FDi6pQCanc-LJpWvSA5qxitz62yH7TY',
-  authDomain: 'daily-songs-89174.firebaseapp.com',
-  projectId: 'daily-songs-89174',
-  storageBucket: 'daily-songs-89174.firebasestorage.app',
-  messagingSenderId: '351646460734',
-  appId: '1:351646460734:web:d6ec9e807dcd6ad0365a6f',
-};
+async function apiGet(url) {
+  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  if (!res.ok) throw new Error(`GET ${url} failed: ${res.status}`);
+  return res.json();
+}
 
-const fbApp = initializeApp(firebaseConfig);
-const db    = getFirestore(fbApp);
+async function apiSend(url, method, body) {
+  const res = await fetch(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`${method} ${url} failed: ${res.status}`);
+  return res.json();
+}
 
-// title -> Firestore doc ID. Loaded on init, kept in sync on toggle.
+// title -> D1 row id. Loaded once a session exists, kept in sync on toggle.
 const bangerMap = new Map();
 
 async function loadBangerMap() {
   try {
-    const snap = await getDocs(collection(db, 'bangers'));
-    snap.docs.forEach(d => bangerMap.set(d.data().title, d.id));
+    const { bangers } = await apiGet(API_BANGERS);
+    bangerMap.clear();
+    bangers.forEach(b => bangerMap.set(b.title, b.id));
   } catch (err) {
     console.error('Could not load bangers:', err);
   }
@@ -40,22 +48,17 @@ async function loadUsedTitles() {
 }
 
 async function saveGeneration(lane, songs) {
-  const today = new Date().toISOString().slice(0, 10);
-  await addDoc(collection(db, 'generations'), {
-    date: today, lane, generatedAt: Timestamp.now(), songs,
-  });
+  await apiSend(API_GENERATIONS, 'POST', { lane, songs });
 }
 
 async function fetchHistory() {
-  const q    = query(collection(db, 'generations'), orderBy('generatedAt', 'desc'));
-  const snap = await getDocs(q);
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const { entries } = await apiGet(API_GENERATIONS);
+  return entries;
 }
 
 async function fetchBangers() {
-  const q    = query(collection(db, 'bangers'), orderBy('markedAt', 'desc'));
-  const snap = await getDocs(q);
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const { bangers } = await apiGet(API_BANGERS);
+  return bangers;
 }
 
 // ── Lanes ─────────────────────────────────
@@ -157,6 +160,8 @@ document.getElementById('auth-form').addEventListener('submit', async (e) => {
     });
     const data = await res.json();
     if (res.ok) {
+      // A session exists now, so the gated reads can finally run.
+      await loadAuthedData();
       showView('generator');
     } else {
       errorEl.textContent = data.error || 'Wrong passphrase.';
@@ -272,7 +277,7 @@ async function openHistory() {
       return [...base].sort((a, b) => {
         const lc = asc ? a.lane.localeCompare(b.lane) : b.lane.localeCompare(a.lane);
         if (lc !== 0) return lc;
-        return b.generatedAt.toMillis() - a.generatedAt.toMillis();
+        return Date.parse(b.generatedAt) - Date.parse(a.generatedAt);
       });
     }
 
@@ -474,21 +479,20 @@ async function toggleBanger(song, meta, btn) {
 
   try {
     if (bangerMap.has(title)) {
-      await deleteDoc(doc(db, 'bangers', bangerMap.get(title)));
+      await apiSend(`${API_BANGERS}?id=${bangerMap.get(title)}`, 'DELETE');
       bangerMap.delete(title);
       btn.classList.remove('starred');
       btn.innerHTML = `${starSVG(false)}<span>Mark as Banger</span>`;
     } else {
-      const docRef = await addDoc(collection(db, 'bangers'), {
-        title:    song.title,
-        prompt:   song.prompt,
+      const saved = await apiSend(API_BANGERS, 'POST', {
+        title:       song.title,
+        prompt:      song.prompt,
         description: song.description,
-        tags:     song.tags,
-        lane:     meta.lane || '',
-        date:     meta.date || new Date().toISOString().slice(0, 10),
-        markedAt: Timestamp.now(),
+        tags:        song.tags,
+        lane:        meta.lane || '',
+        date:        meta.date || new Date().toISOString().slice(0, 10),
       });
-      bangerMap.set(title, docRef.id);
+      bangerMap.set(title, saved.id);
       btn.classList.add('starred');
       btn.innerHTML = `${starSVG(true)}<span>Banger</span>`;
     }
@@ -501,7 +505,7 @@ async function toggleBanger(song, meta, btn) {
 
 async function removeBanger(docId, title, card) {
   try {
-    await deleteDoc(doc(db, 'bangers', docId));
+    await apiSend(`${API_BANGERS}?id=${docId}`, 'DELETE');
     bangerMap.delete(title);
     card.closest('.history-entry')?.remove() ?? card.remove();
   } catch (err) {
@@ -877,8 +881,11 @@ function formatHistoryDate(dateStr) {
   });
 }
 
+// Was a Firestore Timestamp carrying .toDate(); now an ISO-8601 string from D1.
 function formatTimestamp(ts) {
-  return ts.toDate().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  const when = new Date(ts);
+  if (Number.isNaN(when.getTime())) return '';
+  return when.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 }
 
 function populateLaneSelect() {
@@ -912,24 +919,32 @@ function setTodayDate() {
 
 // ── Init ──────────────────────────────────
 
+// Both of these reads are gated now, so they must run only once a session
+// exists. Calling them before the auth check would 401 silently, because both
+// swallow their errors: star buttons would render unstarred, and usedTitles
+// would be empty, quietly removing the duplicate-title guard from every
+// generation. That is why the order below matters.
+async function loadAuthedData() {
+  await loadBangerMap();
+  loadUsedTitles(); // non-blocking: feeds usedTitles so Claude avoids repeats
+}
+
 async function init() {
   populateLaneSelect();
   populateDurationSelect();
   setTodayDate();
 
-  // Load banger state before showing any songs so star buttons render correctly
-  await loadBangerMap();
-
-  // Non-blocking: populate usedTitles from history so Claude avoids duplicates
-  loadUsedTitles();
-
+  let authed = false;
   try {
     const res  = await fetch('/api/generate');
     const data = await res.json();
-    showView(data.authenticated ? 'generator' : 'auth');
+    authed = Boolean(data.authenticated);
   } catch {
-    showView('auth');
+    authed = false;
   }
+
+  if (authed) await loadAuthedData();
+  showView(authed ? 'generator' : 'auth');
 
   if (!views.auth.classList.contains('hidden')) {
     document.getElementById('passphrase-input').focus();

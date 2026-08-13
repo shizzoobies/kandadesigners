@@ -1,0 +1,23 @@
+// LOCAL TOOLING ONLY. Not a project config.
+//
+// `wrangler d1 execute --local` resolves a database through a wrangler config,
+// while `--remote` can resolve it by name. This file exists purely so local
+// schema and seed commands can run:
+//
+//   wrangler d1 execute SONGS_DB --local -c db/songs/wrangler.local.jsonc --file=db/songs/schema.sql
+//
+// It is deliberately NOT at the repo root and deliberately NOT named
+// wrangler.toml/wrangler.jsonc: the site's Pages project is dashboard
+// configured, and a root wrangler config would change how Cloudflare builds a
+// live site. The real production binding is added in the Pages dashboard.
+{
+  "name": "ka-songs-local-tooling",
+  "compatibility_date": "2026-08-13",
+  "d1_databases": [
+    {
+      "binding": "SONGS_DB",
+      "database_name": "ka-songs",
+      "database_id": "cd8e0508-f5fe-472d-9ee5-1e9980579c7a"
+    }
+  ]
+}

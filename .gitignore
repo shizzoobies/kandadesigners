@@ -31,6 +31,11 @@ dist/
 # entries: node_modules/, dist/, .astro/, .dev.vars and .wrangler/ above are
 # unanchored, so they match at any depth.
 
+# Generated D1 import SQL: derived from the committed JSON export, so it is
+# reproducible with `node db/songs/import-from-firestore.mjs` and does not need
+# to be tracked twice.
+db/songs/generated/
+
 # Working source drops (originals kept locally, web-ready copies live in images/)
 public/images/New Images/
 fonts-drop/
