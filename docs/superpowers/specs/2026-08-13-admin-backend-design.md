@@ -192,8 +192,8 @@ Deliberately excluded, each with a clean path to add later:
 
 ## Risks and open questions
 
-1. **Workers Paid ($5/mo) is probably needed.** SSR plus several D1 queries per request sits in the 10–20ms band against a 10ms free cap. Phase 0 should measure actual CPU before assuming either way.
-2. **The free email path needs validating** in Phase 5: verified-destination sends are documented as free on all plans, but Email Sending is in public beta. Resend free tier is the fallback.
+1. ~~**Workers Paid ($5/mo) is probably needed.**~~ **CLOSED 2026-08-13: Alex already has Workers Paid, Active** (confirmed from his Cloudflare subscriptions page, on the same account as the Worker — the listed zones match the Pages projects). The 10ms free CPU cap never applied, so no measurement was needed and no design compromise is required for the dashboard's six queries per render.
+2. ~~**The free email path needs validating**~~ **CLOSED 2026-08-13 by the same finding.** Email Sending requires Workers Paid, which is active, so the digest can send to arbitrary recipients rather than only Email-Routing-verified destinations. The Resend fallback is unnecessary, and "email the team too" is available whenever wanted.
 3. **Access adds a Cloudflare dependency for auth.** Acceptable given everything already runs there, and it is what removes password handling entirely.
 4. **The Access login screen is Cloudflare's, not branded.** Fine for internal use; revisit if a client portal ships.
 5. **`admin/` inside the site repo.** Astro's root build only reads `src/` and `public/`, so it ignores `admin/`, but `.gitignore` needs `admin/node_modules` and `admin/dist`, and the Pages build must not be pointed at the new directory.
