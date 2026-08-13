@@ -1,0 +1,15 @@
+---
+// Placeholder so the Task 1 build has a route. Replaced in Task 5 by the real
+// Phase 0 identity check page.
+const teamDomain = Astro.locals.runtime?.env?.ACCESS_TEAM_DOMAIN ?? 'no runtime';
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>K &amp; A admin</title>
+  </head>
+  <body>
+    <p>Scaffold live. Team domain: {teamDomain}</p>
+  </body>
+</html>

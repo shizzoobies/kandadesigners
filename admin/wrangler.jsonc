@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ka-admin",
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2026-08-13",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ka-admin",
+      "database_id": "7e6d2716-1744-4618-a971-d12308a7bc5b"
+    }
+  ],
+  // Identifiers, not secrets: the AUD tag names the Access application and the
+  // team domain is public. Both are safe to commit.
+  "vars": {
+    "ACCESS_TEAM_DOMAIN": "kandaperformance.cloudflareaccess.com",
+    "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900"
+  },
+  "observability": { "enabled": true },
+  // Stays true only until admin.ka-performancefl.com is live. The app denies by
+  // default, so this URL is not a hole, but two doors is one more than needed.
+  "workers_dev": true
+}

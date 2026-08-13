@@ -1,0 +1,15 @@
+{
+  "name": "ka-admin",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Internal admin for K & A Performance. Deployed as its own Worker, separate from the marketing site. Has its own lockfile on purpose: npm 11 strips the top-level @emnapi entries from the site's package-lock.json, so admin installs must never touch it.",
+  "dependencies": {
+    "astro": "^5.0.0",
+    "@astrojs/cloudflare": "^12.0.0"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0",
+    "wrangler": "^4.100.0"
+  }
+}
