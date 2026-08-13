@@ -1,15 +1,56 @@
 ---
-// Placeholder so the Task 1 build has a route. Replaced in Task 5 by the real
-// Phase 0 identity check page.
-const teamDomain = Astro.locals.runtime?.env?.ACCESS_TEAM_DOMAIN ?? 'no runtime';
+import Shell from '../layouts/Shell.astro';
+import { todayInEastern } from '../lib/format.js';
+
+// Phase 0 check page. Replaced in Phase 4 by the real dashboard.
+const started = Date.now();
+const user = Astro.locals.user;
+const env = Astro.locals.runtime.env;
+
+// One trivial query, so the page exercises the same D1 round trip the real
+// screens will.
+const probe = await env.DB.prepare('SELECT COUNT(*) AS n FROM users').first();
+const elapsedMs = Date.now() - started;
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>K &amp; A admin</title>
-  </head>
-  <body>
-    <p>Scaffold live. Team domain: {teamDomain}</p>
-  </body>
-</html>
+<Shell title="Phase 0 check" active="today">
+  <div class="rows">
+    <div class="row s-quiet">
+      <div class="tag">Identity</div>
+      <div class="what">
+        <b>{user.email}</b>
+        <span>role {user.role}, resolved via {user.source}</span>
+      </div>
+      <div class="amt"><em>{user.source}</em></div>
+    </div>
+    <div class="row s-quiet">
+      <div class="tag">Database</div>
+      <div class="what">
+        <b>{probe.n} user row{probe.n === 1 ? '' : 's'}</b>
+        <span>D1 binding DB responded</span>
+      </div>
+      <div class="amt"><em>d1</em></div>
+    </div>
+    <div class="row s-quiet">
+      <div class="tag">Eastern date</div>
+      <div class="what">
+        <b>{todayInEastern()}</b>
+        <span>the value every due-date rule compares against</span>
+      </div>
+      <div class="amt"><em>time</em></div>
+    </div>
+    <div class="row s-quiet">
+      <div class="tag">Render</div>
+      <div class="what">
+        <b>{elapsedMs} ms wall</b>
+        <span>read CPU time from the Workers dashboard, not this number</span>
+      </div>
+      <div class="amt"><em>perf</em></div>
+    </div>
+  </div>
+
+  <p class="empty-state">
+    If you can read this, Access authenticated you, the JWT verified against the
+    team JWKS, your email matched a row in the users table, and D1 answered.
+    That is the whole Phase 0 goal. Next stop is <a href="/clients">Clients</a>.
+  </p>
+</Shell>

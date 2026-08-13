@@ -1,0 +1,41 @@
+---
+import '../styles/admin.css';
+
+const { title, active = '' } = Astro.props;
+const user = Astro.locals.user;
+
+const nav = [
+  { href: '/', label: 'Today', key: 'today' },
+  { href: '/clients', label: 'Clients', key: 'clients' },
+];
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} · K &amp; A admin</title>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="app">
+      <div class="frame">
+        <aside class="side">
+          <div class="brand">K &amp; A <em>admin</em></div>
+          <nav class="nav">
+            {nav.map((item) => (
+              <a href={item.href} class={item.key === active ? 'on' : ''}>{item.label}</a>
+            ))}
+          </nav>
+        </aside>
+        <main class="main" id="main">
+          <div class="head">
+            <h2>{title}</h2>
+            <div class="date">{user?.name || user?.email}</div>
+          </div>
+          <slot />
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
