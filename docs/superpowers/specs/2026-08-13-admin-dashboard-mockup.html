@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K &amp; A Admin, dashboard layout options</title>
+<style>
+  :root{
+    --canvas:#F8F5F2; --surface:#FFFDF9; --ink:#221C15; --muted:#6C635A;
+    --accent:#9A3412; --accent-hot:#7C2D12; --amber:#D97706;
+    --teal-d:#0B302D; --teal:#134E4A; --teal-l:#5EEAD4;
+    --line:rgba(34,28,21,.11); --line-strong:rgba(34,28,21,.20);
+    --font-display:"Schibsted Grotesk",system-ui,sans-serif;
+    --font-body:"Atkinson Hyperlegible Next",system-ui,-apple-system,sans-serif;
+    --font-mono:"Lenia Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--font-body);
+       font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .note{max-width:1180px;margin:0 auto;padding:28px 24px 8px}
+  .note h1{font-family:var(--font-display);font-size:23px;letter-spacing:-.01em}
+  .note p{color:var(--muted);font-size:14px;margin-top:6px;max-width:70ch}
+  .divider{max-width:1180px;margin:44px auto 0;padding:0 24px}
+  .divider span{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;
+       text-transform:uppercase;color:var(--muted);display:block;
+       border-top:1px solid var(--line-strong);padding-top:14px}
+
+  /* ---------- app shell ---------- */
+  .app{max-width:1180px;margin:16px auto 0;padding:0 24px}
+  .frame{display:grid;grid-template-columns:186px 1fr;border:1px solid var(--line-strong);
+       background:var(--surface);overflow:hidden}
+  .side{background:var(--teal-d);padding:18px 0 26px}
+  .brand{font-family:var(--font-display);color:#fff;font-size:15px;
+       padding:0 18px 20px;letter-spacing:-.01em}
+  .brand em{font-style:normal;color:var(--teal-l)}
+  .nav a{display:block;padding:8px 18px;color:rgba(255,255,255,.72);
+       text-decoration:none;font-size:14px;border-left:2px solid transparent}
+  .nav a.on{color:#fff;border-left-color:var(--teal-l);background:rgba(94,234,212,.09)}
+  .navlabel{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+       text-transform:uppercase;color:rgba(94,234,212,.62);padding:18px 18px 6px}
+  .main{padding:22px 24px 28px;min-width:0}
+  .head{display:flex;justify-content:space-between;align-items:baseline;
+       gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .head h2{font-family:var(--font-display);font-size:21px;letter-spacing:-.01em}
+  .head .date{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;
+       text-transform:uppercase;color:var(--muted)}
+
+  /* money strip */
+  .money{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+       border:1px solid var(--line);margin-bottom:22px}
+  .money div{background:var(--surface);padding:12px 14px}
+  .money dt{font-family:var(--font-mono);font-size:10px;letter-spacing:.13em;
+       text-transform:uppercase;color:var(--muted)}
+  .money dd{font-family:var(--font-display);font-size:25px;margin-top:3px;
+       font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .money dd small{font-size:13px;color:var(--muted);font-family:var(--font-body);
+       letter-spacing:0;margin-left:6px}
+  .money .bad dd{color:var(--accent-hot)}
+
+  /* severity rows, no pills */
+  .rows{border-top:1px solid var(--line)}
+  .row{display:grid;grid-template-columns:104px 1fr auto;gap:14px;align-items:baseline;
+       padding:11px 12px 11px 14px;border-bottom:1px solid var(--line);
+       border-left:2px solid transparent}
+  .row:hover{background:#FBF8F4}
+  .row.s-money{border-left-color:var(--accent)}
+  .row.s-soon{border-left-color:var(--amber)}
+  .row.s-quiet{border-left-color:var(--line-strong)}
+  .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.11em;
+       text-transform:uppercase;color:var(--muted);padding-top:2px}
+  .row.s-money .tag{color:var(--accent-hot)}
+  .what{min-width:0}
+  .what b{font-weight:600;font-size:14.5px}
+  .what span{display:block;color:var(--muted);font-size:13px;margin-top:1px}
+  .amt{font-family:var(--font-display);font-size:15px;font-variant-numeric:tabular-nums;
+       white-space:nowrap}
+  .amt.due{color:var(--accent-hot)}
+  .amt em{font-style:normal;font-family:var(--font-mono);font-size:10.5px;
+       letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+       display:block;text-align:right;margin-top:2px}
+
+  .groupline{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+       text-transform:uppercase;color:var(--muted);padding:18px 0 7px;
+       border-bottom:1px solid var(--line-strong)}
+  .groupline:first-child{padding-top:0}
+
+  /* panel grid variant */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .panel{border:1px solid var(--line);background:var(--surface);padding:0 0 6px}
+  .panel h3{font-family:var(--font-mono);font-size:10px;letter-spacing:.13em;
+       text-transform:uppercase;color:var(--muted);padding:11px 13px 9px;
+       border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+  .panel h3 b{color:var(--ink);font-family:var(--font-display);font-size:13px;
+       letter-spacing:0}
+  .panel.urgent{border-top:2px solid var(--accent)}
+  .panel.warn{border-top:2px solid var(--amber)}
+  .panel.calm{border-top:2px solid var(--line-strong)}
+  .panel li{list-style:none;padding:9px 13px;border-bottom:1px solid var(--line);
+       font-size:13.5px;display:flex;justify-content:space-between;gap:10px}
+  .panel li:last-child{border-bottom:0}
+  .panel li span{color:var(--muted);font-size:12.5px;display:block}
+  .panel li i{font-style:normal;font-family:var(--font-display);
+       font-variant-numeric:tabular-nums;white-space:nowrap;font-size:13.5px}
+  .panel .empty{color:var(--muted);font-size:13px;padding:11px 13px;font-style:italic}
+  .btn{display:inline-block;background:var(--amber);color:#3B1F04;font-weight:700;
+       font-size:12.5px;padding:6px 11px;text-decoration:none;border:0}
+  @media(max-width:900px){
+    .frame{grid-template-columns:1fr}.side{display:none}
+    .grid{grid-template-columns:1fr}.money{grid-template-columns:1fr}
+    .row{grid-template-columns:1fr;gap:2px}
+  }
+</style>
+</head>
+<body>
+
+<div class="note">
+  <h1>Admin dashboard, two layouts</h1>
+  <p>Same six rules, same data, two ways of showing it. Client names are yours;
+     every number below is invented for the mockup. Type renders in system fonts
+     here, it will be Schibsted Grotesk and Atkinson in the real build.
+     Note there are no pills anywhere: status is carried by a 2px left rule and a
+     mono caps label.</p>
+</div>
+
+<!-- ============ OPTION A ============ -->
+<div class="divider"><span>Option A · one ranked stream, "what needs me today"</span></div>
+<div class="app">
+<div class="frame">
+  <aside class="side">
+    <div class="brand">K &amp; A <em>admin</em></div>
+    <nav class="nav">
+      <a class="on" href="#">Today</a>
+      <a href="#">Clients</a>
+      <a href="#">Projects</a>
+      <a href="#">Invoices</a>
+      <a href="#">Follow&#8209;ups</a>
+      <a href="#">Notes</a>
+      <div class="navlabel">quick add</div>
+      <a href="#">New follow&#8209;up</a>
+      <a href="#">Record invoice</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="head">
+      <h2>What needs you today</h2>
+      <div class="date">Thu 13 Aug 2026</div>
+    </div>
+
+    <dl class="money">
+      <div><dt>Outstanding</dt><dd>$14,850</dd></div>
+      <div class="bad"><dt>Overdue</dt><dd>$4,200<small>2 invoices</small></dd></div>
+      <div><dt>Not yet invoiced</dt><dd>$9,100<small>3 items</small></dd></div>
+    </dl>
+
+    <div class="groupline">Money, act first</div>
+    <div class="rows">
+      <div class="row s-money">
+        <div class="tag">Overdue 12d</div>
+        <div class="what"><b>MBS Medicine</b><span>Balance invoice, sent 18 Jul, due 01 Aug</span></div>
+        <div class="amt due">$2,400<em>chase</em></div>
+      </div>
+      <div class="row s-money">
+        <div class="tag">Overdue 4d</div>
+        <div class="what"><b>Project Makeover</b><span>Deposit invoice, due 09 Aug</span></div>
+        <div class="amt due">$1,800<em>chase</em></div>
+      </div>
+      <div class="row s-money">
+        <div class="tag">Never billed</div>
+        <div class="what"><b>Fore Motion Golf</b><span>Delivered 02 Aug, quoted $8,500, invoiced $3,000</span></div>
+        <div class="amt">$5,500<em>invoice it</em></div>
+      </div>
+      <div class="row s-money">
+        <div class="tag">Retainer</div>
+        <div class="what"><b>FixAlways</b><span>August care plan not recorded yet</span></div>
+        <div class="amt">$350<em>monthly</em></div>
+      </div>
+    </div>
+
+    <div class="groupline">Promises coming due</div>
+    <div class="rows">
+      <div class="row s-soon">
+        <div class="tag">Today</div>
+        <div class="what"><b>Send Berkseth badge revisions to Jon Marc</b><span>FDAAF</span></div>
+        <div class="amt"><em>follow&#8209;up</em></div>
+      </div>
+      <div class="row s-soon">
+        <div class="tag">Tomorrow</div>
+        <div class="what"><b>PB&amp;J: pricing page copy promised</b><span>Told them Friday</span></div>
+        <div class="amt"><em>follow&#8209;up</em></div>
+      </div>
+    </div>
+
+    <div class="groupline">Gone quiet</div>
+    <div class="rows">
+      <div class="row s-quiet">
+        <div class="tag">21 days</div>
+        <div class="what"><b>Nicole source files</b><span>20 hotlinked tiles still on her Netlify build</span></div>
+        <div class="amt"><em>nudge</em></div>
+      </div>
+      <div class="row s-quiet">
+        <div class="tag">16 days</div>
+        <div class="what"><b>FDAAF, waiting on client</b><span>No activity since 28 Jul</span></div>
+        <div class="amt"><em>waiting</em></div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<!-- ============ OPTION B ============ -->
+<div class="divider"><span>Option B · six panels, one per rule</span></div>
+<div class="app">
+<div class="frame">
+  <aside class="side">
+    <div class="brand">K &amp; A <em>admin</em></div>
+    <nav class="nav">
+      <a class="on" href="#">Dashboard</a>
+      <a href="#">Clients</a>
+      <a href="#">Projects</a>
+      <a href="#">Invoices</a>
+      <a href="#">Follow&#8209;ups</a>
+      <a href="#">Notes</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="head">
+      <h2>Dashboard</h2>
+      <div class="date">Thu 13 Aug 2026</div>
+    </div>
+
+    <dl class="money">
+      <div><dt>Outstanding</dt><dd>$14,850</dd></div>
+      <div class="bad"><dt>Overdue</dt><dd>$4,200<small>2 invoices</small></dd></div>
+      <div><dt>Not yet invoiced</dt><dd>$9,100<small>3 items</small></dd></div>
+    </dl>
+
+    <div class="grid">
+      <section class="panel urgent">
+        <h3><b>Overdue</b><span>2</span></h3>
+        <ul>
+          <li><div>MBS Medicine<span>12 days late</span></div><i>$2,400</i></li>
+          <li><div>Project Makeover<span>4 days late</span></div><i>$1,800</i></li>
+        </ul>
+      </section>
+      <section class="panel urgent">
+        <h3><b>Needs invoicing</b><span>1</span></h3>
+        <ul>
+          <li><div>Fore Motion Golf<span>Delivered, balance open</span></div><i>$5,500</i></li>
+        </ul>
+      </section>
+      <section class="panel urgent">
+        <h3><b>Deposit not billed</b><span>1</span></h3>
+        <ul>
+          <li><div>Alachua Dental<span>Active since 04 Aug</span></div><i>$3,250</i></li>
+        </ul>
+      </section>
+      <section class="panel warn">
+        <h3><b>Retainers unbilled</b><span>2</span></h3>
+        <ul>
+          <li><div>FixAlways<span>August care plan</span></div><i>$350</i></li>
+          <li><div>PB&amp;J Accounting<span>August hosting</span></div><i>$95</i></li>
+        </ul>
+      </section>
+      <section class="panel warn">
+        <h3><b>Follow&#8209;ups due</b><span>2</span></h3>
+        <ul>
+          <li><div>Berkseth revisions to Jon Marc<span>Today</span></div><i>FDAAF</i></li>
+          <li><div>PB&amp;J pricing copy<span>Tomorrow</span></div><i>PB&amp;J</i></li>
+        </ul>
+      </section>
+      <section class="panel calm">
+        <h3><b>Gone quiet</b><span>2</span></h3>
+        <ul>
+          <li><div>Nicole source files<span>21 days</span></div><i>nudge</i></li>
+          <li><div>FDAAF<span>16 days, waiting on client</span></div><i>waiting</i></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</div>
+</div>
+
+<div class="note" style="padding-top:34px;padding-bottom:40px">
+  <p><b>The tradeoff.</b> Option A ranks everything into one stream, so there is
+     exactly one place to look and money always sits at the top. It scales badly
+     past roughly twenty items. Option B keeps each rule in its own box, which is
+     easier to scan when several things are busy and easier to add a seventh rule
+     to later, but nothing forces the money to the top and empty panels take up
+     space on quiet days.</p>
+</div>
+
+</body>
+</html>
