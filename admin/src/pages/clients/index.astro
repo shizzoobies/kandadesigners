@@ -1,0 +1,83 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { listClients } from '../../lib/db.js';
+
+const db = Astro.locals.runtime.env.DB;
+const clients = await listClients(db);
+
+const error = Astro.url.searchParams.get('error');
+const archived = Astro.url.searchParams.get('archived');
+
+// Status carries as a left rule, not a pill: rust for active work, amber for a
+// lead not yet won, neutral for past.
+const STATUS_RULE = { active: 's-money', lead: 's-soon', past: 's-quiet' };
+
+const ERRORS = {
+  name: 'A client needs a name. Nothing was saved.',
+  id: 'That client could not be found. Nothing was saved.',
+  intent: 'Unrecognised action. Nothing was saved.',
+};
+---
+<Shell title="Clients" active="clients">
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+  {archived && <p class="empty-state">Client archived. It is hidden here but nothing was deleted.</p>}
+
+  {clients.length === 0 ? (
+    <p class="empty-state">
+      No clients yet. Add the first one below. Everything else in here hangs off a
+      client, so this is the place to start.
+    </p>
+  ) : (
+    <div class="rows">
+      {clients.map((c) => (
+        <div class={`row ${STATUS_RULE[c.status] ?? 's-quiet'}`}>
+          <div class="tag">{c.status}</div>
+          <div class="what">
+            <b><a href={`/clients/${c.id}`}>{c.name}</a></b>
+            <span>{c.company || 'No company recorded'}</span>
+          </div>
+          <div class="amt">
+            {c.link_count} link{c.link_count === 1 ? '' : 's'}
+            <em>{c.note_count} note{c.note_count === 1 ? '' : 's'}</em>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="groupline">Add a client</div>
+  <form method="POST" action="/api/clients">
+    <input type="hidden" name="intent" value="create" />
+    <div class="field">
+      <label for="name">Name</label>
+      <input id="name" name="name" required autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="company">Company</label>
+      <input id="company" name="company" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="phone">Phone</label>
+      <input id="phone" name="phone" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="active">Active</option>
+        <option value="lead">Lead</option>
+        <option value="past">Past</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="source">How they found us</label>
+      <input id="source" name="source" autocomplete="off" />
+    </div>
+    <div class="actions">
+      <button class="btn" type="submit">Add client</button>
+    </div>
+  </form>
+</Shell>

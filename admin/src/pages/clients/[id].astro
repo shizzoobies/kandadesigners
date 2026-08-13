@@ -1,0 +1,201 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { getClient, listLinks, listNotes } from '../../lib/db.js';
+import { humanDate } from '../../lib/format.js';
+
+const id = Number(Astro.params.id);
+const db = Astro.locals.runtime.env.DB;
+const client = Number.isInteger(id) && id > 0 ? await getClient(db, id) : null;
+if (!client) return new Response('Client not found', { status: 404 });
+
+const [links, notes] = await Promise.all([
+  listLinks(db, id),
+  listNotes(db, 'client', id),
+]);
+
+const saved = Astro.url.searchParams.get('saved');
+const error = Astro.url.searchParams.get('error');
+const here = `/clients/${id}`;
+
+const KIND_LABEL = {
+  live: 'Live site',
+  staging: 'Staging',
+  repo: 'Repo',
+  drive: 'Drive',
+  gbp: 'Google Business',
+  social: 'Social',
+  dashboard: 'Dashboard',
+  other: 'Link',
+};
+
+const ERRORS = {
+  name: 'A client needs a name. Nothing was saved.',
+  label: 'A link needs a label. Nothing was saved.',
+  url: 'That link was rejected. Only http and https addresses are stored.',
+  note: 'An empty note was not saved.',
+};
+---
+<Shell title={client.name} active="clients">
+  {saved && <p class="empty-state">Saved.</p>}
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+
+  <dl class="money">
+    <div><dt>Status</dt><dd style="font-size:18px">{client.status}</dd></div>
+    <div><dt>Company</dt><dd style="font-size:18px">{client.company || 'none'}</dd></div>
+    <div><dt>Found us via</dt><dd style="font-size:18px">{client.source || 'unknown'}</dd></div>
+  </dl>
+
+  <div class="groupline">Contact</div>
+  <div class="rows">
+    <div class="row s-quiet">
+      <div class="tag">Email</div>
+      <div class="what">
+        <b>{client.email ? <a href={`mailto:${client.email}`}>{client.email}</a> : 'Not recorded'}</b>
+        <span>{client.phone ? client.phone : 'No phone recorded'}</span>
+      </div>
+      <div class="amt"><em>added {humanDate(client.created_at.slice(0, 10))}</em></div>
+    </div>
+  </div>
+
+  <div class="groupline">Links</div>
+  {links.length === 0 ? (
+    <p class="empty-state">No links yet. This is where the tab hunting stops.</p>
+  ) : (
+    <div class="rows">
+      {links.map((l) => (
+        <div class="row s-quiet">
+          <div class="tag">{KIND_LABEL[l.kind] ?? 'Link'}</div>
+          <div class="what">
+            <b><a href={l.url} target="_blank" rel="noopener noreferrer">{l.label}</a></b>
+            <span>{l.url}</span>
+          </div>
+          <div class="amt">
+            <form method="POST" action="/api/links" style="display:inline">
+              <input type="hidden" name="intent" value="delete" />
+              <input type="hidden" name="id" value={l.id} />
+              <input type="hidden" name="returnTo" value={here} />
+              <button class="danger" type="submit">remove</button>
+            </form>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="groupline">Add a link</div>
+  <form method="POST" action="/api/links">
+    <input type="hidden" name="intent" value="create" />
+    <input type="hidden" name="clientId" value={id} />
+    <input type="hidden" name="returnTo" value={here} />
+    <div class="field">
+      <label for="label">Link label</label>
+      <input id="label" name="label" required autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="url">URL</label>
+      <input id="url" name="url" type="url" required placeholder="https://" />
+    </div>
+    <div class="field">
+      <label for="kind">Kind</label>
+      <select id="kind" name="kind">
+        {Object.entries(KIND_LABEL).map(([value, label]) => (
+          <option value={value}>{label}</option>
+        ))}
+      </select>
+    </div>
+    <div class="actions">
+      <button class="btn" type="submit">Add link</button>
+    </div>
+  </form>
+
+  <div class="groupline">Notes</div>
+  <form method="POST" action="/api/notes">
+    <input type="hidden" name="intent" value="create" />
+    <input type="hidden" name="entityType" value="client" />
+    <input type="hidden" name="entityId" value={id} />
+    <input type="hidden" name="returnTo" value={here} />
+    <div class="field">
+      <label for="body">Add a note</label>
+      <textarea id="body" name="body" required></textarea>
+    </div>
+    <div class="actions">
+      <button class="btn" type="submit">Save note</button>
+      <label class="linkish"><input type="checkbox" name="pinned" value="1" /> pin it</label>
+    </div>
+  </form>
+
+  {notes.length === 0 ? (
+    <p class="empty-state">No notes yet.</p>
+  ) : (
+    <div class="rows">
+      {notes.map((n) => (
+        <div class={`row ${n.pinned ? 's-soon' : 's-quiet'}`}>
+          <div class="tag">{n.pinned ? 'Pinned' : humanDate(n.created_at.slice(0, 10))}</div>
+          <div class="what">
+            <b>{n.body}</b>
+            <span>{n.author_email}{n.pinned ? ` · ${humanDate(n.created_at.slice(0, 10))}` : ''}</span>
+          </div>
+          <div class="amt">
+            <form method="POST" action="/api/notes" style="display:inline">
+              <input type="hidden" name="intent" value="delete" />
+              <input type="hidden" name="id" value={n.id} />
+              <input type="hidden" name="returnTo" value={here} />
+              <button class="danger" type="submit">delete</button>
+            </form>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <div class="groupline">Edit client</div>
+  <form method="POST" action="/api/clients">
+    <input type="hidden" name="intent" value="update" />
+    <input type="hidden" name="id" value={id} />
+    <div class="field">
+      <label for="ename">Name</label>
+      <input id="ename" name="name" value={client.name} required />
+    </div>
+    <div class="field">
+      <label for="ecompany">Company</label>
+      <input id="ecompany" name="company" value={client.company} />
+    </div>
+    <div class="field">
+      <label for="eemail">Email</label>
+      <input id="eemail" name="email" type="email" value={client.email} />
+    </div>
+    <div class="field">
+      <label for="ephone">Phone</label>
+      <input id="ephone" name="phone" value={client.phone} />
+    </div>
+    <div class="field">
+      <label for="estatus">Status</label>
+      <select id="estatus" name="status">
+        {['active', 'lead', 'past'].map((s) => (
+          <option value={s} selected={s === client.status}>{s}</option>
+        ))}
+      </select>
+    </div>
+    <div class="field">
+      <label for="esource">How they found us</label>
+      <input id="esource" name="source" value={client.source} />
+    </div>
+    <div class="actions">
+      <button class="btn" type="submit">Save changes</button>
+    </div>
+  </form>
+
+  <div class="groupline">Archive</div>
+  <form method="POST" action="/api/clients">
+    <input type="hidden" name="intent" value="archive" />
+    <input type="hidden" name="id" value={id} />
+    <p class="empty-state">
+      Archiving hides this client from the list. Nothing is deleted, because the
+      notes and invoices hanging off it are the record of real money and real
+      conversations.
+    </p>
+    <div class="actions">
+      <button class="danger" type="submit">Archive {client.name}</button>
+    </div>
+  </form>
+</Shell>

@@ -3,6 +3,24 @@
    House rules that apply here: no pill or chip UI (status is a 2px left rule
    plus a mono caps label), no em dashes in copy, amber never as text on light. */
 
+/* The two fonts that carry the brand, copied from the site's public/fonts.
+   Lenia Mono is deliberately NOT included: it is an 82KB TTF used only for 10px
+   caps labels, where the system mono stack is indistinguishable at that size. */
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/AtkinsonNext-VF.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("/fonts/Schibsted-VF.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --canvas: #F8F5F2;
   --surface: #FFFDF9;
@@ -149,6 +167,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 .row.s-money .tag { color: var(--accent-hot); }
 .what { min-width: 0; }
 .what b { font-weight: 600; font-size: 14.5px; }
+/* Row titles stay ink even when they are links. Rust on every row competes with
+   the status rule and reads far louder than the approved mockup. */
+.what b a { color: var(--ink); }
+.what b a:hover { color: var(--accent); }
 .what span { display: block; color: var(--muted); font-size: 13px; margin-top: 1px; word-break: break-word; }
 .amt {
   font-family: var(--font-display);
