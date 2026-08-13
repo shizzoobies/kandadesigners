@@ -13,10 +13,23 @@ export async function touchUser(db, id, iso) {
 }
 
 export async function listClients(db) {
-  // Active first, then leads, then past; alphabetical within each group. The
-  // counts drive the right-hand column without a second round trip.
+  // Active first, then leads, then past; alphabetical within each group.
+  //
+  // The money comes down with the list on purpose. This page used to show link and
+  // note counts, which is true but useless: "0 links, 0 notes" eight times running
+  // tells you nothing, while what a client is worth per month is the thing you
+  // actually came to find out.
   const { results } = await db.prepare(
     `SELECT c.id, c.name, c.company, c.status, c.updated_at,
+            (SELECT COALESCE(SUM(r.amount_cents), 0) FROM retainers r
+              WHERE r.client_id = c.id AND r.active = 1) AS monthly_cents,
+            (SELECT COALESCE(SUM(i.amount_cents), 0) FROM invoices i
+              WHERE i.client_id = c.id AND i.status = 'sent') AS outstanding_cents,
+            (SELECT COALESCE(SUM(i.amount_cents), 0) FROM invoices i
+              WHERE i.client_id = c.id AND i.status = 'expected') AS expected_cents,
+            (SELECT COUNT(*) FROM projects p
+              WHERE p.client_id = c.id AND p.archived_at IS NULL
+                AND p.status NOT IN ('complete','cancelled')) AS open_projects,
             (SELECT COUNT(*) FROM client_links l WHERE l.client_id = c.id) AS link_count,
             (SELECT COUNT(*) FROM notes n WHERE n.entity_type = 'client' AND n.entity_id = c.id) AS note_count
        FROM clients c
@@ -354,6 +367,45 @@ export async function setRetainerActive(db, id, active) {
 
 export async function deleteRetainer(db, id) {
   await db.prepare('DELETE FROM retainers WHERE id = ?').bind(id).run();
+}
+
+// ── Money views ───────────────────────────
+
+// One row per project with its money worked out, for the one-off projects view.
+// Every figure is derived from invoices so nothing can drift.
+export async function listProjectsWithMoney(db) {
+  const { results } = await db.prepare(
+    `SELECT p.id, p.name, p.status, p.waiting_on, p.total_quoted_cents, p.delivered_on,
+            p.client_id, c.name AS client_name,
+            (SELECT COALESCE(SUM(amount_cents), 0) FROM invoices i
+              WHERE i.project_id = p.id AND i.status = 'paid') AS paid_cents,
+            (SELECT COALESCE(SUM(amount_cents), 0) FROM invoices i
+              WHERE i.project_id = p.id AND i.status = 'sent') AS sent_cents,
+            (SELECT COALESCE(SUM(amount_cents), 0) FROM invoices i
+              WHERE i.project_id = p.id AND i.status = 'expected') AS expected_cents,
+            (SELECT COUNT(*) FROM invoices i
+              WHERE i.project_id = p.id AND i.status <> 'void' AND i.due_on IS NOT NULL) AS dated_count
+       FROM projects p JOIN clients c ON c.id = p.client_id
+      WHERE p.archived_at IS NULL AND p.total_quoted_cents > 0
+      ORDER BY CASE p.status WHEN 'active' THEN 0 WHEN 'quoted' THEN 1 WHEN 'delivered' THEN 2
+                             WHEN 'on_hold' THEN 3 WHEN 'complete' THEN 4 ELSE 5 END, c.name`
+  ).all();
+  return results ?? [];
+}
+
+// Every dated invoice from today forward: the cash calendar. Answers "what is
+// coming in and when", which no other view does.
+export async function listScheduled(db, today) {
+  const { results } = await db.prepare(
+    `SELECT i.id, i.ref, i.kind, i.amount_cents, i.due_on, i.status,
+            i.client_id, i.project_id, c.name AS client_name, p.name AS project_name
+       FROM invoices i
+       JOIN clients c ON c.id = i.client_id
+       LEFT JOIN projects p ON p.id = i.project_id
+      WHERE i.status IN ('expected','sent') AND i.due_on IS NOT NULL AND i.due_on >= ?
+      ORDER BY i.due_on, c.name`
+  ).bind(today).all();
+  return results ?? [];
 }
 
 // ── Follow-ups ────────────────────────────

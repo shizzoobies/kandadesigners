@@ -1,0 +1,225 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import {
+  listRetainers, listUnbilledRetainers, listProjectsWithMoney, listScheduled, listClients,
+} from '../../lib/db.js';
+import { money, humanDate, todayInEastern, addDays } from '../../lib/format.js';
+
+const db = Astro.locals.runtime.env.DB;
+const today = todayInEastern();
+const period = today.slice(0, 7);
+const dayOfMonth = Number(today.slice(8, 10));
+
+const TABS = [
+  { key: 'monthly', label: 'Monthly' },
+  { key: 'projects', label: 'One-off projects' },
+  { key: 'scheduled', label: 'Scheduled' },
+  { key: 'pipeline', label: 'Pipeline' },
+];
+const raw = Astro.url.searchParams.get('tab') ?? 'monthly';
+const tab = TABS.some((t) => t.key === raw) ? raw : 'monthly';
+
+const [retainers, unbilled, projects, scheduled, clients] = await Promise.all([
+  listRetainers(db),
+  listUnbilledRetainers(db, period),
+  listProjectsWithMoney(db),
+  listScheduled(db, today),
+  listClients(db),
+]);
+
+const unbilledIds = new Set(unbilled.map((r) => r.id));
+
+// Monthly recurring revenue counts only what is actually active. A paused retainer
+// is not income.
+const activeRetainers = retainers.filter((r) => r.active);
+const mrrCents = activeRetainers.reduce((n, r) => n + r.amount_cents, 0);
+const unbilledThisMonthCents = unbilled.reduce((n, r) => n + r.amount_cents, 0);
+
+const FINISHED = new Set(['complete', 'cancelled']);
+const liveProjects = projects.filter((p) => !FINISHED.has(p.status));
+const quotedCents = liveProjects.reduce((n, p) => n + p.total_quoted_cents, 0);
+const collectedCents = projects.reduce((n, p) => n + p.paid_cents, 0);
+const openProjectCents = liveProjects.reduce(
+  (n, p) => n + Math.max(0, p.total_quoted_cents - p.paid_cents), 0
+);
+
+const next30 = addDays(today, 30);
+const scheduled30 = scheduled.filter((i) => i.due_on <= next30);
+const scheduled30Cents = scheduled30.reduce((n, i) => n + i.amount_cents, 0);
+const scheduledAllCents = scheduled.reduce((n, i) => n + i.amount_cents, 0);
+
+const leads = clients.filter((c) => c.status === 'lead');
+const pipelineCents = projects
+  .filter((p) => p.status === 'quoted')
+  .reduce((n, p) => n + p.total_quoted_cents, 0);
+
+const tabHref = (k) => `/money?tab=${k}`;
+---
+<Shell title="Money" active="money">
+  <div class="groupline">
+    {TABS.map((t, i) => (
+      <>{i > 0 ? ' · ' : ''}<a
+        href={tabHref(t.key)}
+        style={t.key === tab ? 'color:var(--ink);text-decoration:underline' : ''}
+      >{t.label}</a></>
+    ))}
+  </div>
+
+  {tab === 'monthly' && (
+    <>
+      <dl class="money">
+        <div><dt>Monthly recurring</dt><dd>{money(mrrCents)}</dd></div>
+        <div><dt>That is a year</dt><dd>{money(mrrCents * 12)}</dd></div>
+        <div class={unbilledThisMonthCents > 0 ? 'bad' : ''}>
+          <dt>Unbilled this month</dt>
+          <dd>{money(unbilledThisMonthCents)}<small>{unbilled.length} of {activeRetainers.length}</small></dd>
+        </div>
+      </dl>
+
+      {retainers.length === 0 ? (
+        <p class="empty-state">
+          No retainers yet. Add one from a client page for anything that recurs
+          monthly, and this becomes your recurring revenue at a glance.
+        </p>
+      ) : (
+        <div class="rows">
+          {retainers.map((r) => {
+            const isUnbilled = unbilledIds.has(r.id);
+            const notStarted = r.started_on && r.started_on.slice(0, 7) > period;
+            return (
+              <div class={`row ${!r.active ? 's-quiet' : isUnbilled ? 's-money' : 's-soon'}`}>
+                <div class="tag">{!r.active ? 'Paused' : `Day ${r.day_of_month}`}</div>
+                <div class="what">
+                  <b><a href={`/clients/${r.client_id}`}>{r.client_name}</a></b>
+                  <span>
+                    {r.label}
+                    {!r.active ? ' · not billing'
+                      : notStarted ? ` · starts ${humanDate(r.started_on)}`
+                      : isUnbilled ? ` · unbilled for ${period}`
+                      : ` · billed for ${period}`}
+                  </span>
+                </div>
+                <div class="amt">
+                  {money(r.amount_cents)}
+                  <em>{!r.active ? 'paused' : isUnbilled && !notStarted ? 'bill it' : 'per month'}</em>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
+  )}
+
+  {tab === 'projects' && (
+    <>
+      <dl class="money">
+        <div><dt>Quoted, live work</dt><dd>{money(quotedCents)}</dd></div>
+        <div><dt>Collected, all time</dt><dd>{money(collectedCents)}</dd></div>
+        <div class={openProjectCents > 0 ? 'bad' : ''}>
+          <dt>Still to collect</dt><dd>{money(openProjectCents)}</dd>
+        </div>
+      </dl>
+
+      {projects.length === 0 ? (
+        <p class="empty-state">No projects with a quoted figure yet.</p>
+      ) : (
+        <div class="rows">
+          {projects.map((p) => {
+            const outstanding = Math.max(0, p.total_quoted_cents - p.paid_cents);
+            const done = outstanding === 0;
+            return (
+              <div class={`row ${done ? 's-quiet' : p.expected_cents > 0 ? 's-soon' : 's-money'}`}>
+                <div class="tag">{p.status.replace('_', ' ')}</div>
+                <div class="what">
+                  <b><a href={`/projects/${p.id}`}>{p.client_name}</a></b>
+                  <span>
+                    {p.name} · {money(p.paid_cents)} of {money(p.total_quoted_cents)} collected
+                    {p.dated_count > 1 ? ` · ${p.dated_count} scheduled payments` : ''}
+                  </span>
+                </div>
+                <div class={`amt ${done ? '' : 'due'}`}>
+                  {done ? money(p.total_quoted_cents) : money(outstanding)}
+                  <em>{done ? 'paid in full' : 'still owed'}</em>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
+  )}
+
+  {tab === 'scheduled' && (
+    <>
+      <dl class="money">
+        <div><dt>Next 30 days</dt><dd>{money(scheduled30Cents)}<small>{scheduled30.length} payment{scheduled30.length === 1 ? '' : 's'}</small></dd></div>
+        <div><dt>All scheduled ahead</dt><dd>{money(scheduledAllCents)}</dd></div>
+        <div><dt>Plus recurring</dt><dd>{money(mrrCents)}<small>per month</small></dd></div>
+      </dl>
+
+      {scheduled.length === 0 ? (
+        <p class="empty-state">
+          Nothing dated ahead. Give an invoice a due date and it shows up here, so
+          you can see what is landing and when.
+        </p>
+      ) : (
+        <div class="rows">
+          {scheduled.map((i) => (
+            <div class={`row ${i.status === 'expected' ? 's-soon' : 's-quiet'}`}>
+              <div class="tag">{humanDate(i.due_on).replace(/ \d{4}$/, '')}</div>
+              <div class="what">
+                <b><a href={`/invoices/${i.id}`}>{i.client_name}</a></b>
+                <span>
+                  {i.ref ? `${i.ref} · ` : ''}{i.project_name ?? 'No project'}
+                  {i.status === 'expected' ? ' · not billed yet' : ' · sent, awaiting payment'}
+                </span>
+              </div>
+              <div class="amt">{money(i.amount_cents)}<em>{humanDate(i.due_on)}</em></div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  )}
+
+  {tab === 'pipeline' && (
+    <>
+      <dl class="money">
+        <div><dt>Quoted, unsigned</dt><dd>{money(pipelineCents)}</dd></div>
+        <div><dt>Leads</dt><dd>{leads.length}</dd></div>
+        <div><dt>If they all land</dt><dd>{money(quotedCents + pipelineCents)}</dd></div>
+      </dl>
+
+      {leads.length === 0 && pipelineCents === 0 ? (
+        <p class="empty-state">
+          No pipeline. Clients marked as a lead, and projects still at quoted, show
+          up here so unsigned work is visible rather than forgotten.
+        </p>
+      ) : (
+        <div class="rows">
+          {leads.map((c) => (
+            <div class="row s-soon">
+              <div class="tag">Lead</div>
+              <div class="what">
+                <b><a href={`/clients/${c.id}`}>{c.name}</a></b>
+                <span>{c.open_projects > 0 ? `${c.open_projects} project${c.open_projects === 1 ? '' : 's'} on file` : 'No project on file yet'}</span>
+              </div>
+              <div class="amt"><em>not signed</em></div>
+            </div>
+          ))}
+          {projects.filter((p) => p.status === 'quoted').map((p) => (
+            <div class="row s-soon">
+              <div class="tag">Quoted</div>
+              <div class="what">
+                <b><a href={`/projects/${p.id}`}>{p.client_name}</a></b>
+                <span>{p.name}</span>
+              </div>
+              <div class="amt">{money(p.total_quoted_cents)}<em>quoted</em></div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  )}
+</Shell>

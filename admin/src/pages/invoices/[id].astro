@@ -90,84 +90,88 @@ const overdue = invoice.status === 'sent' && invoice.due_on && invoice.due_on < 
     </>
   )}
 
-  <div class="groupline">Edit invoice</div>
-  <form method="POST" action="/api/invoices">
-    <input type="hidden" name="intent" value="update" />
-    <input type="hidden" name="id" value={id} />
-    <input type="hidden" name="returnTo" value={here} />
-    <div class="field">
-      <label for="ref">Reference</label>
-      <input id="ref" name="ref" value={invoice.ref} placeholder="INV-014" autocomplete="off" />
-    </div>
-    <div class="field">
-      <label for="amount">Amount</label>
-      <input id="amount" name="amount" inputmode="decimal" value={centsToInput(invoice.amount_cents)} required />
-    </div>
-    <div class="field">
-      <label for="kind">Kind</label>
-      <select id="kind" name="kind">
-        {[['deposit', 'Deposit'], ['balance', 'Balance'], ['retainer', 'Retainer'], ['other', 'Other']].map(([v, l]) => (
-          <option value={v} selected={v === invoice.kind}>{l}</option>
-        ))}
-      </select>
-    </div>
-    <div class="field">
-      <label for="status">Status</label>
-      <select id="status" name="status">
-        {[['expected', 'Expected, not billed yet'], ['sent', 'Sent, awaiting payment'], ['paid', 'Paid'], ['void', 'Void']].map(([v, l]) => (
-          <option value={v} selected={v === invoice.status}>{l}</option>
-        ))}
-      </select>
-    </div>
-    <div class="field">
-      <label for="projectId">Project</label>
-      <select id="projectId" name="projectId">
-        <option value="" selected={!invoice.project_id}>No project, bill the client directly</option>
-        {projects.map((p) => (
-          <option value={p.id} selected={p.id === invoice.project_id}>{p.client_name}: {p.name}</option>
-        ))}
-      </select>
-    </div>
-    <div class="field">
-      <label for="clientId">Client, used only when no project is chosen</label>
-      <select id="clientId" name="clientId">
-        {clients.map((c) => (
-          <option value={c.id} selected={c.id === invoice.client_id}>{c.name}</option>
-        ))}
-      </select>
-    </div>
-    <div class="field">
-      <label for="issuedOn">Issued</label>
-      <input id="issuedOn" name="issuedOn" type="date" value={invoice.issued_on ?? ''} />
-    </div>
-    <div class="field">
-      <label for="dueOn">Due</label>
-      <input id="dueOn" name="dueOn" type="date" value={invoice.due_on ?? ''} />
-    </div>
-    <div class="field">
-      <label for="paidOn">Paid</label>
-      <input id="paidOn" name="paidOn" type="date" value={invoice.paid_on ?? ''} />
-    </div>
-    <div class="field">
-      <label for="externalUrl">Link to the real invoice</label>
-      <input id="externalUrl" name="externalUrl" type="url" value={invoice.external_url} placeholder="https://" />
-    </div>
-    <div class="field">
-      <label for="notes">Notes</label>
-      <textarea id="notes" name="notes">{invoice.notes}</textarea>
-    </div>
-    <div class="actions"><button class="btn" type="submit">Save changes</button></div>
-  </form>
+  <details class="adder">
+    <summary>Edit invoice</summary>
+    <form method="POST" action="/api/invoices">
+      <input type="hidden" name="intent" value="update" />
+      <input type="hidden" name="id" value={id} />
+      <input type="hidden" name="returnTo" value={here} />
+      <div class="field">
+        <label for="ref">Reference</label>
+        <input id="ref" name="ref" value={invoice.ref} placeholder="INV-014" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="amount">Amount</label>
+        <input id="amount" name="amount" inputmode="decimal" value={centsToInput(invoice.amount_cents)} required />
+      </div>
+      <div class="field">
+        <label for="kind">Kind</label>
+        <select id="kind" name="kind">
+          {[['deposit', 'Deposit'], ['balance', 'Balance'], ['retainer', 'Retainer'], ['other', 'Other']].map(([v, l]) => (
+            <option value={v} selected={v === invoice.kind}>{l}</option>
+          ))}
+        </select>
+      </div>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          {[['expected', 'Expected, not billed yet'], ['sent', 'Sent, awaiting payment'], ['paid', 'Paid'], ['void', 'Void']].map(([v, l]) => (
+            <option value={v} selected={v === invoice.status}>{l}</option>
+          ))}
+        </select>
+      </div>
+      <div class="field">
+        <label for="projectId">Project</label>
+        <select id="projectId" name="projectId">
+          <option value="" selected={!invoice.project_id}>No project, bill the client directly</option>
+          {projects.map((p) => (
+            <option value={p.id} selected={p.id === invoice.project_id}>{p.client_name}: {p.name}</option>
+          ))}
+        </select>
+      </div>
+      <div class="field">
+        <label for="clientId">Client, used only when no project is chosen</label>
+        <select id="clientId" name="clientId">
+          {clients.map((c) => (
+            <option value={c.id} selected={c.id === invoice.client_id}>{c.name}</option>
+          ))}
+        </select>
+      </div>
+      <div class="field">
+        <label for="issuedOn">Issued</label>
+        <input id="issuedOn" name="issuedOn" type="date" value={invoice.issued_on ?? ''} />
+      </div>
+      <div class="field">
+        <label for="dueOn">Due</label>
+        <input id="dueOn" name="dueOn" type="date" value={invoice.due_on ?? ''} />
+      </div>
+      <div class="field">
+        <label for="paidOn">Paid</label>
+        <input id="paidOn" name="paidOn" type="date" value={invoice.paid_on ?? ''} />
+      </div>
+      <div class="field">
+        <label for="externalUrl">Link to the real invoice</label>
+        <input id="externalUrl" name="externalUrl" type="url" value={invoice.external_url} placeholder="https://" />
+      </div>
+      <div class="field">
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes">{invoice.notes}</textarea>
+      </div>
+      <div class="actions"><button class="btn" type="submit">Save changes</button></div>
+    </form>
+  </details>
 
-  <div class="groupline">Void</div>
-  <form method="POST" action="/api/invoices">
-    <input type="hidden" name="intent" value="void" />
-    <input type="hidden" name="id" value={id} />
-    <input type="hidden" name="returnTo" value="/invoices" />
-    <p class="empty-state">
-      Voiding keeps the record but takes it out of every total. Use this for an
-      invoice raised in error, rather than deleting it, so the history stays honest.
-    </p>
-    <div class="actions"><button class="danger" type="submit">Void this invoice</button></div>
-  </form>
+  <details class="adder danger-adder">
+    <summary>Void</summary>
+    <form method="POST" action="/api/invoices">
+      <input type="hidden" name="intent" value="void" />
+      <input type="hidden" name="id" value={id} />
+      <input type="hidden" name="returnTo" value="/invoices" />
+      <p class="empty-state">
+        Voiding keeps the record but takes it out of every total. Use this for an
+        invoice raised in error, rather than deleting it, so the history stays honest.
+      </p>
+      <div class="actions"><button class="danger" type="submit">Void this invoice</button></div>
+    </form>
+  </details>
 </Shell>

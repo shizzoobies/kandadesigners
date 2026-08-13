@@ -1,6 +1,7 @@
 ---
 import Shell from '../../layouts/Shell.astro';
 import { listClients } from '../../lib/db.js';
+import { money } from '../../lib/format.js';
 
 const db = Astro.locals.runtime.env.DB;
 const clients = await listClients(db);
@@ -34,50 +35,56 @@ const ERRORS = {
           <div class="tag">{c.status}</div>
           <div class="what">
             <b><a href={`/clients/${c.id}`}>{c.name}</a></b>
-            <span>{c.company || 'No company recorded'}</span>
+            <span>{[
+              c.company,
+              c.open_projects > 0 ? `${c.open_projects} open project${c.open_projects === 1 ? '' : 's'}` : null,
+              c.expected_cents > 0 ? `${money(c.expected_cents)} to bill` : null,
+            ].filter(Boolean).join(' · ') || 'Nothing recorded yet'}</span>
           </div>
           <div class="amt">
-            {c.link_count} link{c.link_count === 1 ? '' : 's'}
-            <em>{c.note_count} note{c.note_count === 1 ? '' : 's'}</em>
+            {c.monthly_cents > 0 ? `${money(c.monthly_cents)}/mo` : ''}
+            <em>{c.outstanding_cents > 0 ? `${money(c.outstanding_cents)} owed` : (c.monthly_cents > 0 ? 'recurring' : '')}</em>
           </div>
         </div>
       ))}
     </div>
   )}
 
-  <div class="groupline">Add a client</div>
-  <form method="POST" action="/api/clients">
-    <input type="hidden" name="intent" value="create" />
-    <div class="field">
-      <label for="name">Name</label>
-      <input id="name" name="name" required autocomplete="off" />
-    </div>
-    <div class="field">
-      <label for="company">Company</label>
-      <input id="company" name="company" autocomplete="off" />
-    </div>
-    <div class="field">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" autocomplete="off" />
-    </div>
-    <div class="field">
-      <label for="phone">Phone</label>
-      <input id="phone" name="phone" autocomplete="off" />
-    </div>
-    <div class="field">
-      <label for="status">Status</label>
-      <select id="status" name="status">
-        <option value="active">Active</option>
-        <option value="lead">Lead</option>
-        <option value="past">Past</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="source">How they found us</label>
-      <input id="source" name="source" autocomplete="off" />
-    </div>
-    <div class="actions">
-      <button class="btn" type="submit">Add client</button>
-    </div>
-  </form>
+  <details class="adder">
+    <summary>Add a client</summary>
+    <form method="POST" action="/api/clients">
+      <input type="hidden" name="intent" value="create" />
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" required autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="company">Company</label>
+        <input id="company" name="company" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="active">Active</option>
+          <option value="lead">Lead</option>
+          <option value="past">Past</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="source">How they found us</label>
+        <input id="source" name="source" autocomplete="off" />
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit">Add client</button>
+      </div>
+    </form>
+  </details>
 </Shell>

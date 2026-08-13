@@ -254,6 +254,54 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 .btn:hover { background: #C26905; text-decoration: none; }
 
+/* Collapsed form disclosures. Every add and edit form lives behind one of these:
+   if you are not adding a client you should not be looking at a client form, and
+   five open forms stacked down a page is what made the first version unusable.
+   Built on <details> so it needs no JavaScript, keeps keyboard and screen reader
+   behaviour for free, and survives with JS off. */
+details.adder {
+  border-top: 1px solid var(--line-strong);
+  margin-top: 22px;
+}
+details.adder > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+details.adder > summary::-webkit-details-marker { display: none; }
+details.adder > summary::before {
+  content: "+";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  flex: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1;
+  color: var(--ink);
+}
+details.adder[open] > summary::before { content: "\2212"; }
+details.adder[open] > summary { color: var(--ink); }
+details.adder > summary:hover { color: var(--ink); }
+details.adder > summary:hover::before { border-color: var(--accent); color: var(--accent); }
+details.adder > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+details.adder > form, details.adder > p { padding: 4px 0 10px; }
+/* A destructive disclosure reads differently from an additive one. */
+details.adder.danger-adder > summary::before { content: "\00D7"; }
+details.adder.danger-adder[open] > summary::before { content: "\2212"; }
+
 .field { display: block; margin-bottom: 12px; max-width: 520px; }
 .field label {
   display: block;

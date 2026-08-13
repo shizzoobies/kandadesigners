@@ -89,36 +89,38 @@ function state(f) {
     </div>
   )}
 
-  <div class="groupline">Add a follow-up</div>
-  <form method="POST" action="/api/followups">
-    <input type="hidden" name="intent" value="create" />
-    <input type="hidden" name="returnTo" value={`/followups?filter=${filter}`} />
-    <div class="field">
-      <label for="title">What did you promise</label>
-      <input id="title" name="title" required autocomplete="off" placeholder="Send the mockup revisions" />
-    </div>
-    <div class="field">
-      <label for="dueOn">By when</label>
-      <input id="dueOn" name="dueOn" type="date" />
-    </div>
-    <div class="field">
-      <label for="projectId">Project, optional</label>
-      <select id="projectId" name="projectId">
-        <option value="">No project</option>
-        {projects.map((p) => <option value={p.id}>{p.client_name}: {p.name}</option>)}
-      </select>
-    </div>
-    <div class="field">
-      <label for="clientId">Client, used only when no project is chosen</label>
-      <select id="clientId" name="clientId">
-        <option value="">No client</option>
-        {clients.map((c) => <option value={c.id}>{c.name}</option>)}
-      </select>
-    </div>
-    <div class="field">
-      <label for="detail">Detail, optional</label>
-      <input id="detail" name="detail" autocomplete="off" />
-    </div>
-    <div class="actions"><button class="btn" type="submit">Add follow-up</button></div>
-  </form>
+  <details class="adder">
+    <summary>Add a follow-up</summary>
+    <form method="POST" action="/api/followups">
+      <input type="hidden" name="intent" value="create" />
+      <input type="hidden" name="returnTo" value={`/followups?filter=${filter}`} />
+      <div class="field">
+        <label for="title">What did you promise</label>
+        <input id="title" name="title" required autocomplete="off" placeholder="Send the mockup revisions" />
+      </div>
+      <div class="field">
+        <label for="dueOn">By when</label>
+        <input id="dueOn" name="dueOn" type="date" />
+      </div>
+      <div class="field">
+        <label for="projectId">Project, optional</label>
+        <select id="projectId" name="projectId">
+          <option value="">No project</option>
+          {projects.map((p) => <option value={p.id}>{p.client_name}: {p.name}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="clientId">Client, used only when no project is chosen</label>
+        <select id="clientId" name="clientId">
+          <option value="">No client</option>
+          {clients.map((c) => <option value={c.id}>{c.name}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="detail">Detail, optional</label>
+        <input id="detail" name="detail" autocomplete="off" />
+      </div>
+      <div class="actions"><button class="btn" type="submit">Add follow-up</button></div>
+    </form>
+  </details>
 </Shell>

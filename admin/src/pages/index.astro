@@ -163,23 +163,25 @@ const headingDate = new Intl.DateTimeFormat('en-GB', {
     </>
   )}
 
-  <div class="groupline">Quick add a follow-up</div>
-  <form method="POST" action="/api/followups">
-    <input type="hidden" name="intent" value="create" />
-    <input type="hidden" name="returnTo" value="/" />
-    <div class="field">
-      <label for="title">What did you promise</label>
-      <input id="title" name="title" required autocomplete="off" placeholder="Send Berkseth badge revisions" />
-    </div>
-    <div class="field">
-      <label for="dueOn">By when</label>
-      <input id="dueOn" name="dueOn" type="date" />
-    </div>
-    <div class="actions">
-      <button class="btn" type="submit">Add</button>
-      <span class="linkish"><a href="/followups">all follow-ups</a></span>
-    </div>
-  </form>
+  <details class="adder">
+    <summary>Quick add a follow-up</summary>
+    <form method="POST" action="/api/followups">
+      <input type="hidden" name="intent" value="create" />
+      <input type="hidden" name="returnTo" value="/" />
+      <div class="field">
+        <label for="title">What did you promise</label>
+        <input id="title" name="title" required autocomplete="off" placeholder="Send Berkseth badge revisions" />
+      </div>
+      <div class="field">
+        <label for="dueOn">By when</label>
+        <input id="dueOn" name="dueOn" type="date" />
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit">Add</button>
+        <span class="linkish"><a href="/followups">all follow-ups</a></span>
+      </div>
+    </form>
+  </details>
 
   <p class="empty-state" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase">
     {headingDate} · Eastern
