@@ -91,6 +91,29 @@ export function cleanYmd(input) {
   return value;
 }
 
+// Adds days to a YYYY-MM-DD date and returns the same format. Built on UTC
+// instants so it cannot be pushed across a day boundary by a local timezone,
+// and so month, year and leap-year rollovers are the calendar's problem rather
+// than ours.
+export function addDays(ymd, days) {
+  const clean = cleanYmd(ymd);
+  if (!clean) return '';
+  const [y, m, d] = clean.split('-').map(Number);
+  const shifted = new Date(Date.UTC(y, m - 1, d + Number(days)));
+  const mm = String(shifted.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(shifted.getUTCDate()).padStart(2, '0');
+  return `${shifted.getUTCFullYear()}-${mm}-${dd}`;
+}
+
+// Whole days from `from` to `to`, negative when `to` is earlier. Used for the
+// "overdue by N days" copy.
+export function daysBetween(from, to) {
+  const a = cleanYmd(from);
+  const b = cleanYmd(to);
+  if (!a || !b) return 0;
+  return Math.round((Date.parse(`${b}T00:00:00Z`) - Date.parse(`${a}T00:00:00Z`)) / 86400000);
+}
+
 export function humanDate(ymd) {
   if (!ymd) return '';
   const [y, m, d] = String(ymd).split('-').map(Number);

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { money, todayInEastern, nowIso, humanDate, parseMoneyToCents, centsToInput, cleanYmd } from '../src/lib/format.js';
+import { money, todayInEastern, nowIso, humanDate, parseMoneyToCents, centsToInput, cleanYmd, addDays, daysBetween } from '../src/lib/format.js';
 
 describe('parseMoneyToCents', () => {
   it('reads whole dollars', () => expect(parseMoneyToCents('8500')).toBe(850000));
@@ -45,6 +45,30 @@ describe('cleanYmd', () => {
   it('rejects US ordering', () => expect(cleanYmd('08/13/2026')).toBeNull());
   it('rejects words', () => expect(cleanYmd('tomorrow')).toBeNull());
   it('rejects an ISO timestamp', () => expect(cleanYmd('2026-08-13T00:00:00Z')).toBeNull());
+});
+
+describe('addDays', () => {
+  it('adds within a month', () => expect(addDays('2026-08-13', 7)).toBe('2026-08-20'));
+  it('rolls over a month end', () => expect(addDays('2026-08-28', 7)).toBe('2026-09-04'));
+  it('rolls over a year end', () => expect(addDays('2026-12-29', 5)).toBe('2027-01-03'));
+  it('handles a 31 day month', () => expect(addDays('2026-01-31', 1)).toBe('2026-02-01'));
+  it('handles February in a non-leap year', () => expect(addDays('2026-02-28', 1)).toBe('2026-03-01'));
+  it('handles February in a leap year', () => expect(addDays('2028-02-28', 1)).toBe('2028-02-29'));
+  it('subtracts', () => expect(addDays('2026-03-01', -1)).toBe('2026-02-28'));
+  it('subtracts across a year', () => expect(addDays('2026-01-01', -1)).toBe('2025-12-31'));
+  it('adds zero', () => expect(addDays('2026-08-13', 0)).toBe('2026-08-13'));
+  it('returns blank for junk', () => expect(addDays('nope', 3)).toBe(''));
+  it('keeps zero padding', () => expect(addDays('2026-01-05', 1)).toBe('2026-01-06'));
+});
+
+describe('daysBetween', () => {
+  it('counts forward', () => expect(daysBetween('2026-08-01', '2026-08-13')).toBe(12));
+  it('counts backward as negative', () => expect(daysBetween('2026-08-13', '2026-08-01')).toBe(-12));
+  it('is zero for the same day', () => expect(daysBetween('2026-08-13', '2026-08-13')).toBe(0));
+  it('spans a month boundary', () => expect(daysBetween('2026-07-30', '2026-08-02')).toBe(3));
+  it('spans a year boundary', () => expect(daysBetween('2025-12-30', '2026-01-02')).toBe(3));
+  it('is unaffected by the DST change', () => expect(daysBetween('2026-03-07', '2026-03-09')).toBe(2));
+  it('returns 0 for junk', () => expect(daysBetween('nope', '2026-08-13')).toBe(0));
 });
 
 describe('centsToInput', () => {
