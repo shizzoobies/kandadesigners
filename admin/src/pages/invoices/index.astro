@@ -1,6 +1,7 @@
 ---
 import Shell from '../../layouts/Shell.astro';
 import { listInvoices, getMoneyTotals, listUnbilledRetainers } from '../../lib/db.js';
+import { needsInvoicing } from '../../lib/dashboard.js';
 import { money, humanDate, todayInEastern } from '../../lib/format.js';
 
 const db = Astro.locals.runtime.env.DB;
@@ -11,11 +12,20 @@ const FILTERS = ['open', 'paid', 'void', 'all'];
 const raw = Astro.url.searchParams.get('filter') ?? 'open';
 const filter = FILTERS.includes(raw) ? raw : 'open';
 
-const [invoices, totals, unbilled] = await Promise.all([
+const [invoices, totals, unbilled, uncovered] = await Promise.all([
   listInvoices(db, filter),
   getMoneyTotals(db, today),
   listUnbilledRetainers(db, period),
+  needsInvoicing(db),
 ]);
+
+// Same definition as the dashboard, and it has to be: two screens disagreeing
+// about how much is unbilled is worse than either number being slightly off.
+// needsInvoicing excludes anything an `expected` invoice already covers, so
+// adding the two cannot double count.
+const notInvoicedCents = totals.expected_cents
+  + uncovered.reduce((n, p) => n + p.uncovered_cents, 0);
+const notInvoicedCount = totals.expected_count + uncovered.length;
 
 const error = Astro.url.searchParams.get('error');
 const ERRORS = {
@@ -58,9 +68,9 @@ function statusLine(inv) {
       <dt>Overdue</dt>
       <dd>{money(totals.overdue_cents)}<small>{totals.overdue_count} invoice{totals.overdue_count === 1 ? '' : 's'}</small></dd>
     </div>
-    <div class={totals.expected_cents > 0 ? 'bad' : ''}>
+    <div class={notInvoicedCents > 0 ? 'bad' : ''}>
       <dt>Not yet invoiced</dt>
-      <dd>{money(totals.expected_cents)}<small>{totals.expected_count} item{totals.expected_count === 1 ? '' : 's'}</small></dd>
+      <dd>{money(notInvoicedCents)}<small>{notInvoicedCount} item{notInvoicedCount === 1 ? '' : 's'}</small></dd>
     </div>
   </dl>
 

@@ -1,0 +1,124 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { listFollowups, listClients, listProjects } from '../../lib/db.js';
+import { humanDate, todayInEastern, daysBetween } from '../../lib/format.js';
+
+const db = Astro.locals.runtime.env.DB;
+const today = todayInEastern();
+
+const FILTERS = ['open', 'done', 'all'];
+const raw = Astro.url.searchParams.get('filter') ?? 'open';
+const filter = FILTERS.includes(raw) ? raw : 'open';
+
+const [items, clients, projects] = await Promise.all([
+  listFollowups(db, filter),
+  listClients(db),
+  listProjects(db),
+]);
+
+const error = Astro.url.searchParams.get('error');
+const ERRORS = {
+  title: 'A follow-up needs a title. Nothing was saved.',
+  date: 'That date could not be read. Use YYYY-MM-DD, or leave it blank. Nothing was saved.',
+  project: 'That project could not be found. Nothing was saved.',
+  id: 'That follow-up could not be found. Nothing was saved.',
+  intent: 'Unrecognised action. Nothing was saved.',
+};
+
+function state(f) {
+  if (f.done_at) return { rule: 's-quiet', tag: 'Done', line: `completed ${humanDate(f.done_at.slice(0, 10))}` };
+  if (!f.due_on) return { rule: 's-quiet', tag: 'No date', line: 'no due date set' };
+  if (f.due_on < today) {
+    const n = daysBetween(f.due_on, today);
+    return { rule: 's-money', tag: `${n}d late`, line: `was due ${humanDate(f.due_on)}` };
+  }
+  if (f.due_on === today) return { rule: 's-money', tag: 'Today', line: 'due today' };
+  return { rule: 's-soon', tag: humanDate(f.due_on).slice(0, 6), line: `due ${humanDate(f.due_on)}` };
+}
+---
+<Shell title="Follow-ups" active="followups">
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+
+  <p class="empty-state">
+    The things you said you would do. A promise with a date shows up on Today the
+    morning it comes due, and in the digest email once that exists.
+  </p>
+
+  <div class="groupline">
+    {FILTERS.map((f, i) => (
+      <>{i > 0 ? ' · ' : ''}<a
+        href={`/followups?filter=${f}`}
+        style={f === filter ? 'color:var(--ink);text-decoration:underline' : ''}
+      >{f}</a></>
+    ))}
+  </div>
+
+  {items.length === 0 ? (
+    <p class="empty-state">{filter === 'open' ? 'Nothing outstanding.' : `No ${filter} follow-ups.`}</p>
+  ) : (
+    <div class="rows">
+      {items.map((f) => {
+        const s = state(f);
+        return (
+          <div class={`row ${s.rule}`}>
+            <div class="tag">{s.tag}</div>
+            <div class="what">
+              <b>{f.title}</b>
+              <span>
+                {[f.client_name && <a href={`/clients/${f.client_id}`}>{f.client_name}</a>,
+                  f.project_name && <a href={`/projects/${f.project_id}`}>{f.project_name}</a>]
+                  .filter(Boolean)
+                  .reduce((acc, el, i) => (i === 0 ? [el] : [...acc, ' · ', el]), [])}
+                {(f.client_name || f.project_name) ? ' · ' : ''}{s.line}
+                {f.detail ? ` · ${f.detail}` : ''}
+              </span>
+            </div>
+            <div class="amt">
+              <em>
+                <form method="POST" action="/api/followups" style="display:inline">
+                  <input type="hidden" name="intent" value={f.done_at ? 'reopen' : 'done'} />
+                  <input type="hidden" name="id" value={f.id} />
+                  <input type="hidden" name="returnTo" value={`/followups?filter=${filter}`} />
+                  <button class="danger" type="submit">{f.done_at ? 'reopen' : 'done'}</button>
+                </form>
+              </em>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+
+  <div class="groupline">Add a follow-up</div>
+  <form method="POST" action="/api/followups">
+    <input type="hidden" name="intent" value="create" />
+    <input type="hidden" name="returnTo" value={`/followups?filter=${filter}`} />
+    <div class="field">
+      <label for="title">What did you promise</label>
+      <input id="title" name="title" required autocomplete="off" placeholder="Send the mockup revisions" />
+    </div>
+    <div class="field">
+      <label for="dueOn">By when</label>
+      <input id="dueOn" name="dueOn" type="date" />
+    </div>
+    <div class="field">
+      <label for="projectId">Project, optional</label>
+      <select id="projectId" name="projectId">
+        <option value="">No project</option>
+        {projects.map((p) => <option value={p.id}>{p.client_name}: {p.name}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="clientId">Client, used only when no project is chosen</label>
+      <select id="clientId" name="clientId">
+        <option value="">No client</option>
+        {clients.map((c) => <option value={c.id}>{c.name}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="detail">Detail, optional</label>
+      <input id="detail" name="detail" autocomplete="off" />
+    </div>
+    <div class="actions"><button class="btn" type="submit">Add follow-up</button></div>
+  </form>
+</Shell>

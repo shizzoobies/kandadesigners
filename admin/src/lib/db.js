@@ -355,3 +355,57 @@ export async function setRetainerActive(db, id, active) {
 export async function deleteRetainer(db, id) {
   await db.prepare('DELETE FROM retainers WHERE id = ?').bind(id).run();
 }
+
+// ── Follow-ups ────────────────────────────
+
+const FOLLOWUP_SELECT = `SELECT f.id, f.title, f.detail, f.due_on, f.done_at, f.created_at,
+       f.client_id, f.project_id, c.name AS client_name, p.name AS project_name
+  FROM followups f
+  LEFT JOIN clients c ON c.id = f.client_id
+  LEFT JOIN projects p ON p.id = f.project_id`;
+
+// Undated open items sort last rather than first: they are not urgent, but they
+// must stay visible or the list becomes where things go to be forgotten.
+export async function listFollowups(db, filter = 'open') {
+  const where = {
+    open: 'f.done_at IS NULL',
+    done: 'f.done_at IS NOT NULL',
+    all: '1 = 1',
+  }[filter] ?? 'f.done_at IS NULL';
+
+  const { results } = await db.prepare(
+    `${FOLLOWUP_SELECT} WHERE ${where}
+      ORDER BY f.done_at IS NOT NULL, COALESCE(f.due_on, '9999-12-31'), f.created_at DESC`
+  ).all();
+  return results ?? [];
+}
+
+export async function listFollowupsForClient(db, clientId) {
+  const { results } = await db.prepare(
+    `${FOLLOWUP_SELECT} WHERE f.client_id = ? AND f.done_at IS NULL
+      ORDER BY COALESCE(f.due_on, '9999-12-31')`
+  ).bind(clientId).all();
+  return results ?? [];
+}
+
+export async function createFollowup(db, f) {
+  await db.prepare(
+    `INSERT INTO followups (title, detail, client_id, project_id, due_on, created_at)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  ).bind(
+    f.title, f.detail ?? '', f.clientId ?? null, f.projectId ?? null,
+    f.dueOn || null, f.createdAt
+  ).run();
+}
+
+export async function setFollowupDone(db, id, iso) {
+  await db.prepare('UPDATE followups SET done_at = ? WHERE id = ?').bind(iso, id).run();
+}
+
+export async function reopenFollowup(db, id) {
+  await db.prepare('UPDATE followups SET done_at = NULL WHERE id = ?').bind(id).run();
+}
+
+export async function deleteFollowup(db, id) {
+  await db.prepare('DELETE FROM followups WHERE id = ?').bind(id).run();
+}

@@ -23,15 +23,25 @@ async function overdueInvoices(db, today) {
   return results ?? [];
 }
 
-// Delivered work with less invoiced than quoted. `expected` does not count as
-// invoiced: it means flagged, not billed, so it is precisely the gap being
-// reported here.
-async function needsInvoicing(db) {
+// Delivered work whose quote is not yet fully accounted for by any invoice.
+//
+// Two different sums matter here and conflating them is a real bug:
+//   invoiced_cents = sent + paid          (money actually billed)
+//   covered_cents  = sent + paid + expected (money billed OR already flagged)
+//
+// The rule fires on UNCOVERED money only, meaning quote minus covered. If a
+// balance has already been recorded as an `expected` invoice, the invoice list is
+// already nagging about it, so the project must not nag a second time, and more
+// importantly the money strip must not count it twice: once as `expected` and
+// again as a project shortfall.
+export async function needsInvoicing(db) {
   const { results } = await db.prepare(
     `SELECT p.id, p.name, p.client_id, p.total_quoted_cents, p.delivered_on,
             c.name AS client_name,
             (SELECT COALESCE(SUM(amount_cents), 0) FROM invoices i
-              WHERE i.project_id = p.id AND i.status IN ('sent','paid')) AS invoiced_cents
+              WHERE i.project_id = p.id AND i.status IN ('sent','paid')) AS invoiced_cents,
+            (SELECT COALESCE(SUM(amount_cents), 0) FROM invoices i
+              WHERE i.project_id = p.id AND i.status IN ('sent','paid','expected')) AS covered_cents
        FROM projects p JOIN clients c ON c.id = p.client_id
       WHERE p.archived_at IS NULL
         AND p.delivered_on IS NOT NULL
@@ -40,8 +50,8 @@ async function needsInvoicing(db) {
       ORDER BY p.delivered_on`
   ).all();
   return (results ?? [])
-    .filter((p) => p.invoiced_cents < p.total_quoted_cents)
-    .map((p) => ({ ...p, shortfall_cents: p.total_quoted_cents - p.invoiced_cents }));
+    .map((p) => ({ ...p, uncovered_cents: p.total_quoted_cents - p.covered_cents }))
+    .filter((p) => p.uncovered_cents > 0);
 }
 
 // Active, quoted work where no deposit was ever raised. Requires a quoted total,
@@ -204,7 +214,7 @@ export async function getDashboard(db, today) {
       tag: 'Never billed',
       title: p.client_name,
       detail: `${p.name}, delivered ${p.delivered_on}`,
-      amountCents: p.shortfall_cents,
+      amountCents: p.uncovered_cents,
       note: 'invoice it',
       href: `/projects/${p.id}`,
       sortKey: `2-${p.delivered_on}`,
@@ -245,8 +255,16 @@ export async function getDashboard(db, today) {
     })),
   ].sort((a, b) => a.sortKey.localeCompare(b.sortKey));
 
+  // "Not yet invoiced" is expected invoices PLUS delivered work no invoice covers.
+  // needsInvoicing already excludes anything an `expected` invoice covers, so these
+  // two cannot overlap. Showing only expected_cents here was wrong: it read $0.00
+  // directly above a stream listing thousands of dollars of unbilled work.
+  const notInvoicedCents = money.expected_cents
+    + needsInv.reduce((n, p) => n + p.uncovered_cents, 0);
+  const notInvoicedCount = money.expected_count + needsInv.length;
+
   return {
-    money,
+    money: { ...money, not_invoiced_cents: notInvoicedCents, not_invoiced_count: notInvoicedCount },
     stream: stream.slice(0, STREAM_CAP),
     overflow: Math.max(0, stream.length - STREAM_CAP),
     panels: {
