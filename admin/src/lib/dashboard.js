@@ -54,9 +54,17 @@ export async function needsInvoicing(db) {
     .filter((p) => p.uncovered_cents > 0);
 }
 
-// Active, quoted work where no deposit was ever raised. Requires a quoted total,
-// so a project with no number attached does not nag.
-async function depositNeverBilled(db) {
+// Active, quoted work with NOTHING recorded against it: no invoice of any kind,
+// not even flagged as expected. Requires a quoted total, so a project with no
+// number attached does not nag.
+//
+// This deliberately checks for any non-void invoice rather than specifically a
+// deposit. Checking only for kind='deposit' produced a false positive on real
+// data: a build being paid by a four-installment plan had every installment
+// recorded as `other`, so it was accused of having no deposit when in truth the
+// whole 2,500 was already accounted for. The rule means "you started work and
+// have billed nothing", and that is what it should ask.
+async function nothingBilledYet(db) {
   const { results } = await db.prepare(
     `SELECT p.id, p.name, p.client_id, p.total_quoted_cents, p.started_on, c.name AS client_name
        FROM projects p JOIN clients c ON c.id = p.client_id
@@ -65,7 +73,7 @@ async function depositNeverBilled(db) {
         AND p.total_quoted_cents > 0
         AND NOT EXISTS (
           SELECT 1 FROM invoices i
-           WHERE i.project_id = p.id AND i.kind = 'deposit' AND i.status <> 'void'
+           WHERE i.project_id = p.id AND i.status <> 'void'
         )
       ORDER BY COALESCE(p.started_on, '9999-12-31')`
   ).all();
@@ -179,12 +187,12 @@ export async function getDashboard(db, today) {
   const period = today.slice(0, 7);
   const dayOfMonth = Number(today.slice(8, 10));
 
-  const [money, overdue, needsInv, noDeposit, retainers, due, upcoming, undated, quiet] =
+  const [money, overdue, needsInv, nothingBilled, retainers, due, upcoming, undated, quiet] =
     await Promise.all([
       moneyTotals(db, today),
       overdueInvoices(db, today),
       needsInvoicing(db),
-      depositNeverBilled(db),
+      nothingBilledYet(db),
       unbilledRetainers(db, period),
       followupsDue(db, today),
       followupsUpcoming(db, today),
@@ -219,14 +227,14 @@ export async function getDashboard(db, today) {
       href: `/projects/${p.id}`,
       sortKey: `2-${p.delivered_on}`,
     })),
-    ...noDeposit.map((p) => ({
+    ...nothingBilled.map((p) => ({
       group: 'money',
       severity: 'money',
-      tag: 'No deposit',
+      tag: 'Nothing billed',
       title: p.client_name,
-      detail: `${p.name}, active with no deposit raised`,
+      detail: `${p.name}, active with nothing billed or flagged`,
       amountCents: p.total_quoted_cents,
-      note: 'deposit',
+      note: 'bill it',
       href: `/projects/${p.id}`,
       sortKey: `3-${p.started_on ?? ''}`,
     })),
