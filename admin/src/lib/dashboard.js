@@ -54,6 +54,23 @@ export async function needsInvoicing(db) {
     .filter((p) => p.uncovered_cents > 0);
 }
 
+// Invoices flagged as expected whose due date has arrived: money you decided to
+// bill by a certain day and have not billed. The overdue rule cannot catch these
+// because it only looks at `sent`, so without this a dated payment-plan
+// installment would come due and say nothing at all.
+async function expectedNowDue(db, today) {
+  const { results } = await db.prepare(
+    `SELECT i.id, i.ref, i.kind, i.amount_cents, i.due_on, i.client_id, i.project_id,
+            c.name AS client_name, p.name AS project_name
+       FROM invoices i
+       JOIN clients c ON c.id = i.client_id
+       LEFT JOIN projects p ON p.id = i.project_id
+      WHERE i.status = 'expected' AND i.due_on IS NOT NULL AND i.due_on <= ?
+      ORDER BY i.due_on`
+  ).bind(today).all();
+  return results ?? [];
+}
+
 // Active, quoted work with NOTHING recorded against it: no invoice of any kind,
 // not even flagged as expected. Requires a quoted total, so a project with no
 // number attached does not nag.
@@ -187,10 +204,11 @@ export async function getDashboard(db, today) {
   const period = today.slice(0, 7);
   const dayOfMonth = Number(today.slice(8, 10));
 
-  const [money, overdue, needsInv, nothingBilled, retainers, due, upcoming, undated, quiet] =
+  const [money, overdue, expectedDue, needsInv, nothingBilled, retainers, due, upcoming, undated, quiet] =
     await Promise.all([
       moneyTotals(db, today),
       overdueInvoices(db, today),
+      expectedNowDue(db, today),
       needsInvoicing(db),
       nothingBilledYet(db),
       unbilledRetainers(db, period),
@@ -215,6 +233,17 @@ export async function getDashboard(db, today) {
       note: 'chase',
       href: `/invoices/${i.id}`,
       sortKey: `1-${i.due_on}`,
+    })),
+    ...expectedDue.map((i) => ({
+      group: 'money',
+      severity: 'money',
+      tag: i.due_on < today ? `Due ${daysBetween(i.due_on, today)}d ago` : 'Due today',
+      title: i.client_name,
+      detail: `${i.ref ? `${i.ref}, ` : ''}flagged but not billed${i.project_name ? `, ${i.project_name}` : ''}`,
+      amountCents: i.amount_cents,
+      note: 'bill it',
+      href: `/invoices/${i.id}`,
+      sortKey: `1b-${i.due_on}`,
     })),
     ...needsInv.map((p) => ({
       group: 'money',
