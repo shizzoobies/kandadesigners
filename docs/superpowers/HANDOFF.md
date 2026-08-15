@@ -43,6 +43,19 @@ Local preview: `npx wrangler pages dev dist --port 8788 --compatibility-date=202
 - `/api/reviews` (Places API New, 6h edge cache) — env `GOOGLE_MAPS_API_KEY` + `GOOGLE_PLACE_ID`=`ChIJ3fkKtTBqQykRtVwEZZwaY3M` set in **Production only** (Preview scope never added → preview tests return empty).
 - `ReviewsRail.astro`: ≤4 reviews → static centered set; >4 → drifting rail with repeated halves. `?revmax=N` on localhost simulates counts. "Leave a review" → `https://g.page/r/CbVcBGWcGmNzEBM/review`.
 
+## Adding a client to the portfolio (read before you try)
+
+`src/components/HeroGallery.astro` is the **only** consumer of `projects` in `src/data/work.js`, so the hero ring IS the portfolio; there is no separate work grid. Adding a client means touching the hero. As of 2026-08-15 there are **9 projects** (Southern Legacy Contractors and Synovial Marketing joined that day).
+
+Two of the three count assumptions are now generic, so a new client is nearly data-only:
+
+- `opacityFor(rel)` is a function, not an array. It used to be `OPACITY[Math.abs(rel)]` with four entries, which returned `undefined` the moment the count passed 7.
+- `relOf` wraps at `Math.floor(n / 2)`, not a hardcoded `3`. At 9 projects the old literal gave rel from -5 to +3, a lopsided ring.
+
+**`STACK` still needs one hand-placed mosaic position per project.** It is indexed directly, so a missing entry is an undefined read that kills the whole hero animation. It now logs a loud console error when `STACK.length !== n`, but you still have to add the position and look at it. Keep `tx` within about ±0.44: the existing mains top out at ±0.40 and tiles are scaled ~1.4x, so ±0.52 clips them to a sliver. Tiles bleeding off the edge is intentional (full-bleed mosaic), so judge by screenshot rather than by bounding box.
+
+Image spec: hero capture at 1440x900, webp q80, roughly 50-60KB, named `work-<shortname>.webp`, and **reference it with `?v=1`** per the cache-poisoning prevention. Hide the scrollbar before capturing (inject `scrollbar-width:none`) or you bake a grey strip into the right edge. Verify by driving the built site: mosaic tile count, ring cycling all n and wrapping, exactly 5 cards visible, n dots, and the same at 390px wide.
+
 ## Home page structure (HeroGallery.astro is the beast)
 
 Acts: sketch hero (line-drawn mac window) → scroll: 17-tile mosaic pops in (7 mains + 10 inner-page extras) → extras disperse, mains sweep into 3D ring (LIVE band progress 0.60–0.79; arrows, dots, half-stage click zones; Lenis snap) → recede into a11y sketch section (`lg:-mt-[34vh]`) → teal AI band → artists teaser → reviews → CTA. Services page has its own bespoke timelines. Full-page screenshots of animated pages need a scroll-through first (data-animate elements stay opacity-0 until scrolled into view).
