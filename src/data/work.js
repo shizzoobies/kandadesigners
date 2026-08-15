@@ -56,4 +56,16 @@ export const projects = [
     blurb: 'Direct primary care in Ellenton, Florida. Modern medicine, old-fashioned doctors. A warm, trustworthy site built around membership signups.',
     img: '/images/work-familypractice.webp',
   },
+  {
+    slug: 'southern-legacy-contractors',
+    title: 'Southern Legacy Contractors',
+    blurb: 'Residential, commercial, and industrial concrete across Northeast Florida. Six trades, one standard: a dark, photo-led build that leads with the pour and keeps a free quote and the phone number one tap away.',
+    img: '/images/work-southernlegacy.webp?v=1',
+  },
+  {
+    slug: 'synovial-marketing',
+    title: 'Synovial Marketing',
+    blurb: 'A full-service marketing team in Jacksonville that takes the whole puzzle off your plate: brand, social, web, and email. A warm, editorial site built around booking a discovery call, with their own client work front and center.',
+    img: '/images/work-synovial.webp?v=1',
+  },
 ];

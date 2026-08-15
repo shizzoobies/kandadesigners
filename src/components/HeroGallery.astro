@@ -369,7 +369,17 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   const n = projects.length;
   const R = isDesktop ? 520 : 260;
   const STEP = 36; // degrees between slots
-  const OPACITY = [1, 0.94, 0.8, 0]; // rel ±3 sits past 90° — hidden; sides stay near-solid so the ring never reads muddled
+  // Front card solid, the two flanking it near-solid so the ring never reads
+  // muddled, everything further round hidden. A function rather than an array
+  // because the array was indexed by |rel| and silently returned undefined once
+  // the project count grew past seven: adding a client broke the ring opacity.
+  const opacityFor = (rel) => {
+    const a = Math.abs(rel);
+    if (a === 0) return 1;
+    if (a === 1) return 0.94;
+    if (a === 2) return 0.8;
+    return 0;
+  };
 
   // Sloppy-stack targets: viewport-fraction offsets from center, covering
   // the whole hero. Order matches projects[].
@@ -383,7 +393,22 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     { tx: 0.03,  ty: 0.02,  r: 10,  s: 1.62, a: 1    }, // fixalways — center, biggest
     { tx: 0.4,   ty: 0.26,  r: -8,  s: 1.5,  a: 0.95 }, // foremotion — bottom right
     { tx: -0.02, ty: 0.36,  r: -11, s: 1.42, a: 0.95 }, // family practice — bottom center
+    // Mid left and mid right, the last real gaps in the mosaic. Kept at ±0.44,
+    // not further: at ±0.52 both were clipped by the viewport edge, since the
+    // existing mains top out at ±0.40 and these are scaled up 1.4x.
+    { tx: -0.44, ty: -0.10, r: 6,   s: 1.4,  a: 0.95 }, // southern legacy — mid left
+    { tx: 0.44,  ty: 0.12,  r: -6,  s: 1.4,  a: 0.95 }, // synovial — mid right
   ];
+
+  // STACK must have one entry per project: it is indexed directly, so a missing
+  // entry throws and takes the whole hero animation down. Fail loudly in dev
+  // rather than leaving a blank hero to be discovered in production.
+  if (STACK.length !== n) {
+    console.error(
+      `HeroGallery: ${n} projects but ${STACK.length} STACK positions. `
+      + 'Add a mosaic position per project in src/components/HeroGallery.astro.'
+    );
+  }
 
   // Inner-page tiles slot into the seams of the mosaic, one layer back.
   const EXTRA_STACK = [
@@ -399,9 +424,12 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     { tx: -0.04, ty: 0.48,  r: -8,  s: 1.2  },
   ];
 
+  // Signed distance from the current card, wrapped so the ring is symmetric about
+  // the front. The threshold is half the count, not a hardcoded 3: at 3 with nine
+  // projects you get rel from -5 to +3, a visibly lopsided ring.
   const relOf = (i, cur) => {
     let rel = (((i - cur) % n) + n) % n;
-    if (rel > 3) rel -= n;
+    if (rel > Math.floor(n / 2)) rel -= n;
     return rel;
   };
 
@@ -417,7 +445,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
       rotationY: rel * STEP,
       rotation: 0,
       scale: 1,
-      opacity: OPACITY[Math.abs(rel)],
+      opacity: opacityFor(rel),
     };
   };
 
