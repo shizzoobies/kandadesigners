@@ -157,6 +157,9 @@ export const artists = [
       { src: '/images/art/bb-holder-of-secrets.webp', fit: 'contain', alt: 'The Holder of Secrets title treatment with a dragonfly resting on a leaf' },
       { src: '/images/art/bb-wrong-answers-only.webp', fit: 'contain', alt: 'Wrong Answers Only circular badge logo built around a sprouting root vegetable' },
       { src: '/images/art/bb-ka-performance.webp', fit: 'contain', alt: 'K & A Performance logo concept set inside a hand drawn browser window' },
+      { src: '/images/art/bb-magnolia.webp?v=1', fit: 'contain', alt: 'Magnolia Dance Group logo on blush pink: a ballerina in arabesque above navy serif lettering, framed by coral and slate floral sprays' },
+      { src: '/images/art/bb-moon-dancer.webp?v=1', fit: 'contain', alt: 'Moon Dancer circular mark: a ballerina drawn in fine line work en pointe inside a white crescent moon on navy, with a dotted arc and a heart above her' },
+      { src: '/images/art/bb-paper-waltz.webp?v=1', fit: 'contain', alt: 'Paper Waltz logotype in pale sage serif capitals on deep forest green, a waltzing couple between the two words and a floral sprig at each end' },
     ],
   },
   {
