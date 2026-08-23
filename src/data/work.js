@@ -3,8 +3,8 @@
 export const stackExtras = [
   { img: '/images/work-extras/fdaaf-project.webp' },
   { img: '/images/work-extras/fdaaf-projects.webp' },
-  { img: '/images/work-extras/pmbuild-makeovers.webp' },
-  { img: '/images/work-extras/pmbuild-alumni.webp' },
+  { img: '/images/work-extras/pmbuild-makeovers.webp?v=2' },
+  { img: '/images/work-extras/pmbuild-alumni.webp?v=2' },
   { img: '/images/work-extras/fixalways-hvac.webp' },
   { img: '/images/work-extras/fixalways-plumbing.webp' },
   { img: '/images/work-extras/familypractice-dpc.webp' },
@@ -36,7 +36,7 @@ export const projects = [
     slug: 'project-makeover',
     title: 'Project Makeover',
     blurb: 'A nonprofit transforming school spaces into vibrant learning environments. A joyful, gallery-driven site with donation and makeover-showcase paths built for community momentum.',
-    img: '/images/work-pmbuild.webp',
+    img: '/images/work-pmbuild.webp?v=2',
   },
   {
     slug: 'fixalways',
