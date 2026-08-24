@@ -2,35 +2,88 @@
 import LogoLockup from './LogoLockup.astro';
 
 const year = new Date().getFullYear();
+
+// Grouped so the footer reads as columns instead of one twelve-link ladder
+// running off the bottom of the screen. Adding a page means adding a line
+// here, and the column it belongs in is obvious.
+const columns = [
+  {
+    heading: 'Services',
+    links: [
+      { href: '/services/', label: 'All services' },
+      { href: '/services/web-design/', label: 'Web design' },
+      { href: '/services/ai-integration/', label: 'AI integration' },
+      { href: '/services/seo-ai-search/', label: 'SEO & AI search' },
+      { href: '/services/accessibility/', label: 'Accessibility audits' },
+    ],
+  },
+  {
+    heading: 'Locations',
+    links: [
+      { href: '/locations/gainesville/', label: 'Gainesville, FL' },
+      { href: '/locations/jacksonville/', label: 'Jacksonville, FL' },
+    ],
+  },
+  {
+    heading: 'Studio',
+    links: [
+      { href: '/artists/', label: 'Artists' },
+      // Footer contact stays a real navigation, not the modal.
+      { href: '/contact/', label: 'Contact', noModal: true },
+    ],
+  },
+  {
+    heading: 'Legal',
+    links: [
+      { href: '/privacy/', label: 'Privacy' },
+      { href: '/terms/', label: 'Terms & conditions' },
+      { href: '/accessibility/', label: 'Accessibility statement' },
+    ],
+  },
+];
 ---
 <footer class="border-t border-ink/10">
-  <div class="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-16 md:flex-row md:items-start md:justify-between">
-    <div class="flex flex-col gap-4">
-      <a href="/" class="self-start text-[2.75rem]" aria-label="K & A Performance home">
-        <LogoLockup variant="full" />
-      </a>
-      <p class="max-w-xs text-sm text-muted">
-        Web design &amp; AI integration studio. Built in Gainesville, FL. Performing everywhere.
-      </p>
-      <p class="max-w-xs text-xs text-muted">
-        Serving Gainesville, Alachua, Newberry, High Springs, Ocala, Jacksonville,
-        Orange Park, Fleming Island, and St. Augustine.
-      </p>
+  <div class="mx-auto max-w-6xl px-6 py-16">
+    <div class="flex flex-col gap-12 md:flex-row md:items-start md:justify-between md:gap-16">
+      <div class="flex flex-col gap-4 md:max-w-xs">
+        <a href="/" class="self-start text-[2.75rem]" aria-label="K & A Performance home">
+          <LogoLockup variant="full" />
+        </a>
+        <p class="text-sm text-muted">
+          Web design &amp; AI integration studio. Built in Gainesville, FL. Performing everywhere.
+        </p>
+        <p class="text-xs text-muted">
+          Serving Gainesville, Alachua, Newberry, High Springs, Ocala, Jacksonville,
+          Orange Park, Fleming Island, and St. Augustine.
+        </p>
+      </div>
+
+      <!-- Two columns on a phone, then a natural-width row. Equal grid tracks
+           squeezed "Accessibility statement" onto two lines; letting the
+           columns size to their content keeps every label on one. -->
+      <nav class="grid grid-cols-2 gap-x-10 gap-y-10 sm:flex sm:flex-wrap sm:gap-x-12" aria-label="Footer">
+        {columns.map((column) => (
+          <div class="flex flex-col gap-4">
+            <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-ink">{column.heading}</h2>
+            <ul class="flex flex-col gap-3">
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    data-no-modal={link.noModal ? '' : undefined}
+                    class="font-heading text-sm text-muted transition-colors hover:text-ink"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
     </div>
-    <nav class="flex flex-col gap-3" aria-label="Footer">
-      <a href="/services/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Services</a>
-      <a href="/services/web-design/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Web design</a>
-      <a href="/services/ai-integration/" class="font-heading text-sm text-muted transition-colors hover:text-ink">AI integration</a>
-      <a href="/services/seo-ai-search/" class="font-heading text-sm text-muted transition-colors hover:text-ink">SEO &amp; AI search</a>
-      <a href="/services/accessibility/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Accessibility audits</a>
-      <a href="/locations/gainesville/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Gainesville, FL</a>
-      <a href="/locations/jacksonville/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Jacksonville, FL</a>
-      <a href="/artists/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Artists</a>
-      <a href="/contact/" data-no-modal class="font-heading text-sm text-muted transition-colors hover:text-ink">Contact</a>
-      <a href="/privacy/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Privacy</a>
-      <a href="/accessibility/" class="font-heading text-sm text-muted transition-colors hover:text-ink">Accessibility statement</a>
-    </nav>
-    <div class="flex flex-col gap-3">
+
+    <div class="mt-14 flex flex-col gap-3 border-t border-ink/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
       <a href="mailto:alex@ka-performancefl.com" class="font-heading text-sm text-ink transition-colors hover:text-accent">
         alex@ka-performancefl.com
       </a>

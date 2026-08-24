@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Keep this date current whenever the substance of the terms changes.
+const lastUpdated = 'August 24, 2026';
+const contactEmail = 'alex@ka-performancefl.com';
+---
+<BaseLayout
+  title="Terms & Conditions | K & A Performance"
+  description="The terms for using ka-performancefl.com, our services, and our SMS text message program, including opt-in, opt-out, message frequency, and rates."
+>
+  <section class="mx-auto max-w-3xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
+      Legal
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.5rem,7vw,4.5rem)] leading-[1.02]">
+      Terms &amp; Conditions
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 font-mono text-sm uppercase tracking-[0.25em] text-muted">
+      Last updated {lastUpdated}
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-6 pb-32 md:pb-40">
+    <div class="flex flex-col gap-12">
+      <div>
+        <p class="text-lg leading-relaxed text-muted">
+          These terms cover your use of <strong class="text-ink">ka-performancefl.com</strong> and
+          the messages we send you, including text messages. K &amp; A Performance is a web design
+          and AI integration studio operating in Florida. If you use this site, contact us through
+          it, or opt in to our text messages, these terms apply. If you do not agree with them,
+          please do not use the site.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Using this site</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          You may browse the site, read our work, and contact us about a project. Please do not
+          attempt to break, scrape at scale, overload, or gain unauthorised access to any part of
+          it, and do not submit anything unlawful through our forms or chat. We may change, pause,
+          or remove parts of the site at any time without notice.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Enquiries, quotes, and engagements</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          Scoping conversations, estimates, and quotes are free and are not binding offers. Nothing
+          on this site and no reply to a form submission creates a contract on its own. Paid work
+          begins only under a separate written proposal or engagement agreement signed by both of
+          us, and that agreement governs the project, deliverables, timelines, fees, and ownership.
+          Where these terms and a signed engagement agreement conflict, the engagement agreement
+          wins for that project.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">The AI assistant</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          Some pages offer an AI assistant that answers questions and helps scope a project. It is a
+          convenience, not advice, and it can be wrong. Nothing it says is a quote, a commitment, or
+          a professional recommendation, and we are not bound by it. Please do not type passwords,
+          payment details, or confidential material into it. How those messages are handled is
+          described in our
+          <a href="/privacy/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <div id="sms" class="scroll-mt-28">
+        <h2 class="font-display text-2xl md:text-3xl">Text message (SMS) terms</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          K &amp; A Performance runs a text messaging program so we can reach you about your enquiry
+          or your project. These terms apply to that program, and by opting in you agree to them.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">What we send</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Customer care messages only: appointment and consultation scheduling, confirmations,
+          reschedules and reminders, replies to an enquiry you sent us, project updates, and invoice
+          or billing notices. We do not send marketing or promotional text messages, and we do not
+          send recurring campaign blasts.
+        </p>
+        <p class="mt-3 leading-relaxed text-muted">
+          Scheduling messages are handled by an automated assistant that books, confirms, and
+          reminds you about appointments, so some replies you receive are generated automatically
+          rather than typed by a person. You can always reach a human by emailing
+          <a href={`mailto:${contactEmail}`} class="text-accent underline underline-offset-4 hover:text-accent-hot">{contactEmail}</a>.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">How you opt in</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          You opt in by giving us your mobile number and ticking the SMS consent box on a form on
+          this site, or by asking us in writing to text you. The box is never pre-ticked. Consent to
+          receive text messages is not a condition of purchasing anything from us, and you are
+          welcome to work with us by email or phone alone.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">Message frequency</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Message frequency varies. It depends on your enquiry and on whether a project is active,
+          and messages are generally sent in reply to something you asked or in response to a
+          scheduled milestone.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">Cost</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Message and data rates may apply. We do not charge you for text messages, but your mobile
+          carrier may charge you for sending or receiving them under your plan. Check with your
+          carrier if you are unsure.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">How to stop (opt out)</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Reply <strong class="text-ink">STOP</strong> to any message from us at any time to cancel.
+          You will receive one final message confirming that you have been unsubscribed, and we will
+          send no further texts to that number. You can also email
+          <a href={`mailto:${contactEmail}`} class="text-accent underline underline-offset-4 hover:text-accent-hot">{contactEmail}</a>
+          and ask us to remove your number. Opting out of texts does not stop us replying to you by
+          email.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">How to get help</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Reply <strong class="text-ink">HELP</strong> to any message from us for assistance, or
+          email <a href={`mailto:${contactEmail}`} class="text-accent underline underline-offset-4 hover:text-accent-hot">{contactEmail}</a>.
+          We will reply with our contact details and how to opt out.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">Carriers and delivery</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Carriers are not liable for delayed or undelivered messages. Delivery depends on effective
+          transmission by your mobile carrier and is outside our control, so please do not rely on
+          text messages for anything time-critical. Supported carriers may change without notice.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">Your number</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Only give us a mobile number you own or are authorised to use, and tell us if it changes
+          or you give it up, so we do not end up texting someone who never asked to hear from us.
+          You must be at least 18 years old to opt in.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg text-ink">Privacy</h3>
+        <p class="mt-3 leading-relaxed text-muted">
+          Your mobile number and your consent to be texted are handled as described in our
+          <a href="/privacy/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Privacy Policy</a>.
+          We do not sell mobile numbers. No mobile information will be shared with third parties or
+          affiliates for marketing or promotional purposes. Text messaging originator opt-in data
+          and consent will not be shared with any third parties.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Our work and yours</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          The design, copy, code, and imagery on this site belong to K &amp; A Performance or to the
+          clients and artists we credit, and are protected by copyright. Please do not copy or
+          republish them without permission. Anything you send us through a form or the chat stays
+          yours; you give us permission to use it to reply to you and to scope the work you asked
+          about.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Third-party services and links</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          This site links to other sites and relies on third-party services for forms, hosting,
+          messaging, and AI. We do not control those services and are not responsible for their
+          content or their practices. Their own terms and privacy policies apply when you use them.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Disclaimers and limits</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          This site and its content are provided as-is, without warranties of any kind, express or
+          implied. We do not promise the site will be uninterrupted, error-free, or fit for a
+          particular purpose. To the fullest extent the law allows, K &amp; A Performance is not
+          liable for indirect, incidental, or consequential damages arising from your use of this
+          site, our AI assistant, or our text messages. Nothing here limits liability that cannot
+          lawfully be limited.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Governing law</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          These terms are governed by the laws of the State of Florida, without regard to its
+          conflict-of-law rules. Any dispute arising from them belongs in the state or federal
+          courts serving Alachua County, Florida.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Changes and contact</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          If these terms change in substance, we will update the date at the top of this page.
+          Continuing to use the site or our text messages after a change means you accept the
+          updated terms. Questions about any of it can go to
+          <a href={`mailto:${contactEmail}`} class="text-accent underline underline-offset-4 hover:text-accent-hot">{contactEmail}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

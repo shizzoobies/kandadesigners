@@ -235,6 +235,40 @@ body {
     resize: vertical;
     min-height: 9rem;
   }
+  /* SMS opt-in consent row. The disclosure text has to sit next to the box and
+     stay readable — carriers reject opt-ins where the terms are hidden behind a
+     link or shrunk out of sight — so it is a real paragraph, not fine print. */
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .consent-box {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.2rem;
+    accent-color: var(--color-accent);
+    cursor: pointer;
+  }
+  .consent-box:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .consent-label {
+    color: var(--color-muted);
+    cursor: pointer;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+  .consent-label a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .consent-label a:hover {
+    color: var(--color-accent-hot);
+  }
 }
 
 /* Straight-answers accordion. Started life scoped to the services page; it

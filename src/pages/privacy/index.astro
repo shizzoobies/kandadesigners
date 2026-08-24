@@ -2,11 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // Keep this date current whenever the substance of the policy changes.
-const lastUpdated = 'July 28, 2026';
+const lastUpdated = 'August 24, 2026';
 ---
 <BaseLayout
   title="Privacy Policy | K & A Performance"
-  description="How K & A Performance collects, uses, and shares information on ka-performancefl.com, including form submissions, AI chat, and advertising pixels."
+  description="How K & A Performance collects, uses, and shares information on ka-performancefl.com, including form submissions, text messages (SMS), AI chat, and advertising pixels."
 >
   <section class="mx-auto max-w-3xl px-6 pt-40 pb-16 md:pt-48">
     <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">
@@ -35,12 +35,52 @@ const lastUpdated = 'July 28, 2026';
         <h2 class="font-display text-2xl md:text-3xl">Information you give us</h2>
         <p class="mt-5 leading-relaxed text-muted">
           When you use our contact form or the &ldquo;Start a project&rdquo; form, we collect what
-          you type into it: your name, email address, and any company name, service interest,
-          budget range, or project details you choose to share. These submissions are delivered to
+          you type into it: your name, email address, an optional mobile number, and any company
+          name, service interest, budget range, or project details you choose to share. These
+          submissions are delivered to
           us by <a href="https://web3forms.com/privacy" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Web3Forms</a>,
           a form-delivery service that passes the message to our email inbox. We use it to reply to
           you and to keep ordinary business records of the enquiry. We do not sell it, and we do not
           add you to a mailing list.
+        </p>
+      </div>
+
+      <div id="sms" class="scroll-mt-28">
+        <h2 class="font-display text-2xl md:text-3xl">Text messages (SMS)</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          If you give us a mobile number and tick the SMS consent box on one of our forms, or ask us
+          in writing to text you, we use that number to send customer care messages about your
+          appointment, your enquiry, or your project: scheduling, confirmations, reschedules and
+          reminders, replies to what you asked, project updates, and invoice or billing notices.
+          Scheduling is handled by an automated assistant, so some of those messages are generated
+          automatically rather than typed by a person. We do not send marketing or promotional text
+          messages. The consent box is never pre-ticked, and agreeing to texts is never a condition
+          of buying anything from us.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          We keep a record of the number, the consent you gave, and the date you gave it, because
+          telecoms rules require us to be able to show that you asked to be texted. To stop, reply
+          <strong class="text-ink">STOP</strong> to any message from us, or email
+          <a href="mailto:alex@ka-performancefl.com" class="text-accent underline underline-offset-4 hover:text-accent-hot">alex@ka-performancefl.com</a>.
+          Reply <strong class="text-ink">HELP</strong> for help. Message frequency varies, and
+          message and data rates may apply. The full program terms are on our
+          <a href="/terms/#sms" class="text-accent underline underline-offset-4 hover:text-accent-hot">Terms &amp; Conditions</a>
+          page.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          To send those messages we use
+          <a href="https://www.twilio.com/en-us/legal/privacy" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Twilio</a>,
+          a messaging provider that delivers the text to your mobile carrier on our behalf and
+          processes your number only for that purpose. Your mobile carrier also handles the message
+          in order to deliver it.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          <strong class="text-ink">No mobile information will be shared with third parties or
+          affiliates for marketing or promotional purposes.</strong> All other categories of data
+          sharing described in this policy exclude text messaging originator opt-in data and
+          consent; this information will not be shared with any third parties. We do not sell mobile
+          numbers, and we do not use them for anything other than the customer care messages
+          described above.
         </p>
       </div>
 
@@ -100,8 +140,9 @@ const lastUpdated = 'July 28, 2026';
         <p class="mt-5 leading-relaxed text-muted">
           You can ask us what information we hold about you, ask us to correct it, or ask us to
           delete it. Email <a href="mailto:alex@ka-performancefl.com" class="text-accent underline underline-offset-4 hover:text-accent-hot">alex@ka-performancefl.com</a>
-          and we will handle it. You can also decline to use the forms or chat entirely, and browse
-          the site with tracking protection enabled.
+          and we will handle it. You can stop our text messages at any time by replying
+          <strong class="text-ink">STOP</strong>. You can also decline to use the forms or chat
+          entirely, and browse the site with tracking protection enabled.
         </p>
       </div>
 
