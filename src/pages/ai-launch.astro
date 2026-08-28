@@ -1,0 +1,733 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// The lead offer's landing page. Copy source: Coaching/ai-membership-business-plan.md
+// and Coaching/site-integration-handoff.md. Rules that page carries everywhere:
+// no em dashes, no claim that K&A provides Claude accounts or seats, no client
+// names without permission, no guaranteed outcomes.
+//
+// Service schema sits beside BaseLayout's @graph and points provider at the
+// existing organization node, so the offer inherits the LocalBusiness identity
+// instead of describing a second business.
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: '90-Day AI Launch',
+  serviceType: 'AI integration coaching and implementation',
+  url: 'https://ka-performancefl.com/ai-launch/',
+  provider: { '@id': 'https://ka-performancefl.com/#organization' },
+  areaServed: 'Gainesville, FL',
+  offers: [
+    { '@type': 'Offer', name: '90-Day AI Launch', price: '2000', priceCurrency: 'USD' },
+    { '@type': 'Offer', name: 'Launch + Site', price: '3999', priceCurrency: 'USD' },
+  ],
+};
+
+// The twelve weeks, three phases. The track below renders from this.
+const phases = [
+  {
+    weeks: 'Weeks 01 to 02',
+    title: 'Map',
+    copy: 'An opportunity map of your business, your account set up on your own subscription, and one quick win shipped in the first session so you feel it immediately.',
+  },
+  {
+    weeks: 'Weeks 03 to 08',
+    title: 'Build',
+    copy: 'The highest-value workflow in your business, built together, live, on your real data. Not a demo on sample files.',
+  },
+  {
+    weeks: 'Weeks 09 to 12',
+    title: 'Run it yourself',
+    copy: 'You build one on your own with Alex watching. You finish with a handoff doc, recorded walkthroughs, and a written plan for what comes next.',
+  },
+];
+
+// Real workflows, all shipped and running. No client names: nothing here has
+// written permission on file, so everything cited is our own operation.
+const outcomes = [
+  {
+    what: 'A scoping assistant that interviews a website visitor, asks what a first call would ask, and emails a working project brief.',
+    where: 'Live on this site right now',
+  },
+  {
+    what: 'An operations dashboard tracking clients, projects, invoices and follow-ups, with a 7am digest email of what needs attention today.',
+    where: 'Runs this studio every morning',
+  },
+  {
+    what: 'A voice assistant that answers customer questions in text or out loud, trained on the business it serves.',
+    where: 'That is Kai. Hear the voice demo on our services page',
+  },
+  {
+    what: 'A daily content engine that drafts, files and scores creative output, so the good ideas stop dying in a notes app.',
+    where: 'In daily use',
+  },
+];
+
+const answers = [
+  {
+    q: 'Can’t I just use ChatGPT for free?',
+    a: 'You can, and some people should. What you are paying for is not access to a tool. It is twelve weeks not spent finding out which approaches are dead ends. Alex has already spent them.',
+  },
+  {
+    q: 'What does it cost after the twelve weeks?',
+    a: 'Your own Claude subscription, around twenty dollars a month, paid to Anthropic on your own card. There is no ongoing fee to us unless you choose to keep working together after the program ends.',
+  },
+  {
+    q: 'I am not technical.',
+    a: 'Neither are most of the people we build for. The last three weeks of the program exist specifically so you can run everything without us.',
+  },
+  {
+    q: 'What if there is nothing worth building in my business?',
+    a: 'Then Alex tells you so on the first call and it has cost you twenty minutes. He would rather say no than take two thousand dollars for a bad fit.',
+  },
+];
+---
+<BaseLayout
+  title="The 90-Day AI Launch | K&A Performance | Gainesville, FL"
+  description="Twelve weeks, one build, one owner. Get AI running a real job in your business, in your own account, with a Gainesville developer who has shipped it. From $2,000."
+  ogImage="/images/og-ai-launch.png?v=1"
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+
+  <!-- Editorial hero: text beside a window sketching the before-and-after,
+       same drawn language as the home page's act-0 and audit sketches. -->
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-20 md:pt-48 md:pb-24">
+    <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.8fr] lg:gap-16">
+      <div>
+        <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">The 90-Day AI Launch</p>
+        <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.6rem,7vw,5.25rem)] leading-[1.04]">
+          Ninety days to one part of your business <span class="text-accent">running on AI</span>
+        </h1>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+          A twelve-week build, one on one with Alex. We find the job that eats your
+          week, build the workflow that does it, and hand you the controls. You
+          finish with something running in your own account that was not there
+          before, and the ability to run it without us.
+        </p>
+        <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10 flex flex-wrap items-center gap-6">
+          <a href="#apply" class="btn-accent">Book the first call</a>
+          <p class="text-sm text-muted">$2,000 one time, or three payments of $700.<br class="sm:hidden" /> The first call is twenty minutes and free.</p>
+        </div>
+      </div>
+      <!-- A workflow drawing itself: the pile of stuff, through the AI mark,
+           into checked-off lines. Decorative; draws in on load. -->
+      <svg
+        id="al-hero-sketch"
+        class="hidden w-full text-ink/35 lg:block"
+        viewBox="0 0 640 430"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="1" y="1" width="638" height="428" rx="14" />
+        <line x1="1" y1="46" x2="639" y2="46" />
+        <circle cx="26" cy="23" r="6" />
+        <circle cx="48" cy="23" r="6" />
+        <circle cx="70" cy="23" r="6" />
+        <!-- the pile: uneven inbox lines -->
+        <line x1="48" y1="110" x2="196" y2="110" />
+        <line x1="48" y1="140" x2="172" y2="140" />
+        <line x1="48" y1="170" x2="208" y2="170" />
+        <line x1="48" y1="200" x2="160" y2="200" />
+        <line x1="48" y1="230" x2="188" y2="230" />
+        <line x1="48" y1="260" x2="150" y2="260" />
+        <line x1="48" y1="290" x2="200" y2="290" />
+        <line x1="48" y1="320" x2="166" y2="320" />
+        <!-- through the AI mark -->
+        <line x1="240" y1="215" x2="296" y2="215" />
+        <path d="M296 209 L308 215 L296 221" />
+        <circle cx="352" cy="215" r="34" class="text-accent" />
+        <path d="M352 193 v44 M330 215 h44 M337 200 l30 30 M367 200 l-30 30" class="text-accent" />
+        <line x1="396" y1="215" x2="452" y2="215" />
+        <path d="M452 209 L464 215 L452 221" />
+        <!-- out the other side: checked and done -->
+        <path d="M488 104 l8 8 l14 -16" class="text-accent" />
+        <line x1="522" y1="104" x2="592" y2="104" />
+        <path d="M488 164 l8 8 l14 -16" class="text-accent" />
+        <line x1="522" y1="164" x2="592" y2="164" />
+        <path d="M488 224 l8 8 l14 -16" class="text-accent" />
+        <line x1="522" y1="224" x2="592" y2="224" />
+        <path d="M488 284 l8 8 l14 -16" class="text-accent" />
+        <line x1="522" y1="284" x2="592" y2="284" />
+        <rect x="480" y="330" width="112" height="34" rx="17" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- The twelve-week track: the one element doing work no paragraph could. -->
+  <section class="border-t border-ink/10 bg-surface">
+    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">How the twelve weeks work</h2>
+
+      <!-- Decorative tick rail, desktop only. The three phase blocks below are
+           the accessible content; at 375px they are all that renders. -->
+      <div id="al-track" class="mt-16 hidden md:block" aria-hidden="true">
+        <div class="al-rail-wrap">
+          <div class="al-rail"></div>
+          <span class="al-dot"></span>
+          <div class="al-weeks">
+            {Array.from({ length: 12 }, (_, i) => (
+              <span class:list={['al-week', (i === 0 || i === 2 || i === 8) && 'al-week-major']}>
+                <span class="al-num font-mono">{String(i + 1).padStart(2, '0')}</span>
+                <span class="al-tick"></span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <ol class="mt-10 grid gap-10 md:mt-12 md:grid-cols-[2fr_6fr_4fr] md:gap-8">
+        {phases.map((p) => (
+          <li data-animate="type-settle" class="al-phase">
+            <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{p.weeks}</p>
+            <h3 class="mt-3 font-display text-2xl">{p.title}</h3>
+            <p class="mt-3 leading-relaxed text-muted">{p.copy}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Week one, live. The program's first deliverable is an opportunity map,
+       so the page makes a small one on the spot. Same qualifying question as
+       the intake form; the sketch hands its answer straight to the form. -->
+  <section class="mx-auto max-w-4xl px-6 py-24 md:py-32">
+    <div data-animate="frame-lift" class="glow-frame ai-alive p-8 md:p-12">
+      <p class="font-mono text-sm uppercase tracking-[0.3em] text-accent">Try week one now</p>
+      <h2 class="mt-6 font-display text-3xl leading-tight md:text-4xl">What eats your week?</h2>
+      <p class="mt-6 text-lg leading-relaxed text-muted">
+        Answer the same question the intake form asks, and Kai sketches what
+        your Launch would build: the workflow, the first session's quick win,
+        and where you are by week nine.
+      </p>
+
+      <form id="al-map-form" class="mt-8 flex flex-col gap-4 sm:flex-row" novalidate>
+        <label for="al-map-input" class="sr-only">What eats your week?</label>
+        <input
+          type="text"
+          id="al-map-input"
+          maxlength="600"
+          placeholder="Every quote takes me a whole evening"
+          class="field flex-1"
+          autocomplete="off"
+        />
+        <button type="submit" id="al-map-btn" class="btn-accent shrink-0">Sketch my launch</button>
+      </form>
+      <p id="al-map-status" class="sr-only" role="status" aria-live="polite"></p>
+
+      <div id="al-map-out" class="hidden" tabindex="-1">
+        <dl class="mt-8 space-y-6 border-t border-ink/10 pt-8">
+          <div>
+            <dt class="font-mono text-xs uppercase tracking-[0.25em] text-accent">The workflow, weeks 03 to 08</dt>
+            <dd id="al-map-workflow" class="mt-2 leading-relaxed"></dd>
+          </div>
+          <div>
+            <dt class="font-mono text-xs uppercase tracking-[0.25em] text-accent">Session one quick win</dt>
+            <dd id="al-map-quickwin" class="mt-2 leading-relaxed"></dd>
+          </div>
+          <div>
+            <dt class="font-mono text-xs uppercase tracking-[0.25em] text-accent">By week 09, yours to run</dt>
+            <dd id="al-map-week9" class="mt-2 leading-relaxed"></dd>
+          </div>
+        </dl>
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <button type="button" id="al-map-apply" class="btn-accent">Start my intake with this</button>
+          <p class="text-sm text-muted">A sketch, not a quote. The real map happens in week one.</p>
+        </div>
+      </div>
+
+      <p id="al-map-note" class="mt-6 hidden leading-relaxed text-muted" tabindex="-1" role="status"></p>
+      <p id="al-map-error" class="mt-6 hidden leading-relaxed text-muted" tabindex="-1" role="alert">
+        Kai is offline right now. The intake form at the bottom of this page
+        works regardless, and Alex reads every one.
+      </p>
+    </div>
+  </section>
+
+  <!-- The differentiator, allowed to interrupt. -->
+  <section class="dark-band border-y border-ink/10">
+    <div class="mx-auto max-w-6xl px-6 py-28 md:py-36">
+      <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">It is <span class="text-accent">your</span> account</h2>
+      <div class="mt-8 grid max-w-4xl gap-8 md:grid-cols-2">
+        <p data-animate="type-settle" data-animate-delay="0.1" class="text-lg leading-relaxed text-muted">
+          Everything the program builds lives in accounts you own. Your Claude
+          subscription, around twenty dollars a month, paid to Anthropic on your
+          own card. Your data, your files, your workflows. If you walked away
+          the day the program ended, all of it would keep working.
+        </p>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="text-lg leading-relaxed text-muted">
+          We do not sell seats, share logins, or sit between you and your tools.
+          That is not a courtesy, it is the design, and it is the same way we
+          hand over the code on every website we build.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof: shipped work, not hypotheticals. -->
+  <section class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Built and shipped, not hypothetical</h2>
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Every workflow taught in the program is one Alex has already built and
+      runs. A few that are live right now:
+    </p>
+    <div class="mt-12 grid gap-8 md:grid-cols-2">
+      {outcomes.map((o) => (
+        <div data-animate="frame-lift" class="glow-frame flex flex-col p-8">
+          <p class="flex-1 text-lg leading-relaxed">{o.what}</p>
+          <p class="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-accent">{o.where}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- The bundle -->
+  <section class="border-t border-ink/10 bg-surface">
+    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div class="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
+        <div>
+          <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Add the site. <span class="text-accent">$3,999 for both.</span></h2>
+          <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+            The same twelve weeks, with a full custom site built alongside them.
+            That is our $2,500 custom build plus the $2,000 Launch, with $500
+            off for taking both together.
+          </p>
+          <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-lg leading-relaxed text-muted">
+            We build the site. A website is a once-in-five-years artifact, so it
+            gets built to our standard, accessibility included, rather than
+            co-built as a teaching exercise. What the sessions teach is the
+            layer you will actually touch every week: updating your own copy,
+            handling the inquiries the site brings in, writing new pages, and
+            reading what is working.
+          </p>
+        </div>
+        <div data-animate="frame-lift" class="glow-frame self-start p-8 md:p-10">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">What you finish with</p>
+          <ul class="mt-6 space-y-4 text-lg leading-relaxed">
+            <li>A workflow running in your business that was not there before</li>
+            <li>A handoff doc and recorded walkthroughs of everything built</li>
+            <li>A written plan for what to build next</li>
+            <li>The ability to run all of it without us</li>
+            <li class="border-t border-ink/10 pt-4 text-muted">With the bundle: a custom site, built and handed over the way we hand over every build</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Qualify in both directions; every mismatch filtered here saves a call. -->
+  <section class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl md:text-4xl">This is for you if</h2>
+        <ul data-animate="type-settle" data-animate-delay="0.1" class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+          <li>You run a business, roughly one to fifteen people, and something in your week takes hours you know it should not.</li>
+          <li>You want one real thing working, not a survey of what AI can theoretically do.</li>
+          <li>You can commit an hour a week for twelve weeks.</li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl md:text-4xl">It is not for you if</h2>
+        <ul data-animate="type-settle" data-animate-delay="0.1" class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+          <li>You are shopping for a course or a certificate. There is no curriculum, there is your business.</li>
+          <li>You want to learn AI in the abstract. We build one thing that works, and that is the lesson.</li>
+          <li>An hour a week is not going to happen. Then neither is the workflow.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Straight answers -->
+  <section class="border-t border-ink/10 bg-surface">
+    <div class="mx-auto max-w-4xl px-6 py-24 md:py-32">
+      <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Straight answers</h2>
+      <dl class="mt-12 space-y-10">
+        {answers.map((item) => (
+          <div data-animate="type-settle">
+            <dt class="font-heading text-xl font-semibold">{item.q}</dt>
+            <dd class="mt-3 text-lg leading-relaxed text-muted">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+      <p data-animate="type-settle" class="mt-12 border-t border-ink/10 pt-8 leading-relaxed text-muted">
+        When the twelve weeks end, most people keep going on their own. Some
+        keep a working session on the calendar. That conversation happens near
+        the end of the program, not in a pitch on this page.
+      </p>
+    </div>
+  </section>
+
+  <!-- Intake -->
+  <section id="apply" class="scroll-mt-28 border-t border-ink/10">
+    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div class="grid gap-12 lg:grid-cols-[0.9fr_1fr] lg:gap-16">
+        <div>
+          <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Start with a call</h2>
+          <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+            Tell us what eats your week. Alex reads every one of these and calls
+            back within one business day. The call is twenty minutes: whether
+            there is something worth building, and honest advice either way.
+          </p>
+          <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 leading-relaxed text-muted">
+            Two starts a month, so if your timing is tight, say so in the
+            message and we will plan around it.
+          </p>
+        </div>
+
+        <div data-animate="frame-lift" class="glow-frame p-8 md:p-10">
+          <form id="al-form" class="flex flex-col gap-6" novalidate>
+            <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
+            <input type="hidden" name="subject" value="New AI Launch lead | ka-performancefl.com" />
+            <input type="hidden" name="from_name" value="K & A Performance Website" />
+            <!-- Attribution: populated from the first-touch cookie by the
+                 script below. Defaults to direct. -->
+            <input type="hidden" id="al-source" name="source" value="direct" />
+            <!-- This form has no SMS opt-in on purpose: the promised follow-up
+                 is a phone call. The explicit "No" keeps every emailed lead
+                 carrying an unambiguous consent record, same as the contact
+                 form and the start-project modal. Do not text these leads. -->
+            <input type="hidden" name="sms_consent" value="No" />
+            <!-- Honeypot: hidden from humans, bots fill it and get filtered. -->
+            <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label for="al-name" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Name</label>
+                <input type="text" id="al-name" name="name" required autocomplete="name" placeholder="Your name" class="field" />
+              </div>
+              <div>
+                <label for="al-business" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Business name</label>
+                <input type="text" id="al-business" name="business" required autocomplete="organization" placeholder="Your business" class="field" />
+              </div>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label for="al-phone" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Phone</label>
+                <input type="tel" id="al-phone" name="phone" required autocomplete="tel" placeholder="(352) 555-0142" class="field" />
+              </div>
+              <div>
+                <label for="al-email" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Email</label>
+                <input type="email" id="al-email" name="email" required autocomplete="email" placeholder="your@email.com" class="field" />
+              </div>
+            </div>
+
+            <div>
+              <label for="al-week" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">What eats your week?</label>
+              <textarea id="al-week" name="what_eats_your_week" required rows="4" placeholder="The thing that takes hours you know it shouldn't" class="field field-area"></textarea>
+            </div>
+
+            <div class="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label for="al-interest" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Interested in</label>
+                <select id="al-interest" name="interested_in" class="field">
+                  <option>The Launch, $2,000</option>
+                  <option>Launch + Site, $3,999</option>
+                  <option selected>Not sure yet</option>
+                </select>
+              </div>
+              <div>
+                <label for="al-heard" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">How did you hear about us?</label>
+                <select id="al-heard" name="how_did_you_hear" class="field">
+                  <option>Synovial Marketing</option>
+                  <option>Referral</option>
+                  <option>Search</option>
+                  <option selected>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" id="al-submit" class="btn-accent w-full text-center">Request the call</button>
+            <p id="al-status" class="sr-only" role="status" aria-live="polite"></p>
+            <p id="al-error" tabindex="-1" class="hidden text-sm leading-relaxed text-muted" role="alert">
+              Something went wrong sending that. Please email us directly at
+              <a href="mailto:alex@ka-performancefl.com" class="text-accent underline transition-colors hover:text-accent-hot">alex@ka-performancefl.com</a>
+              and we'll pick it up.
+            </p>
+          </form>
+
+          <div id="al-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-col justify-center">
+            <h3 class="font-display text-3xl leading-tight">Got it</h3>
+            <p class="mt-6 text-lg leading-relaxed text-muted">
+              Alex will call you back within one business day, usually the same
+              day. The call is twenty minutes: what eats your week, whether
+              there is something worth building, and honest advice either way.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* The twelve-week rail. Decorative, desktop only; the phase list carries
+     the content. Lenia Mono for the week numbers keeps the site's one mono
+     face doing its usual technical-layer job. */
+  .al-rail-wrap {
+    position: relative;
+    padding-top: 2rem;
+  }
+  .al-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.4rem;
+    height: 2px;
+    background: rgb(34 28 21 / 0.15);
+    transform-origin: left center;
+  }
+  .al-weeks {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .al-week {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .al-num {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--color-muted);
+  }
+  .al-tick {
+    display: block;
+    width: 2px;
+    height: 0.85rem;
+    background: rgb(34 28 21 / 0.25);
+  }
+  .al-week-major .al-num {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+  .al-week-major .al-tick {
+    height: 1.4rem;
+    background: var(--color-accent);
+  }
+  /* The traveling dot rides the rail as the section scrolls through. Its
+     authored resting place is week twelve, so reduced-motion and no-JS both
+     read as a finished program rather than one stuck at the start. */
+  .al-dot {
+    position: absolute;
+    left: 100%;
+    bottom: 0.4rem;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 9999px;
+    background: var(--color-accent);
+    transform: translate(-50%, 40%);
+  }
+</style>
+
+<script>
+  // Attribution read. The write happens sitewide in BaseLayout (first touch
+  // wins there, whatever page the ?src= link landed on); this page only
+  // copies the stored value into the hidden field. Kept in its own module,
+  // fully guarded: a malformed cookie must never take the form's submit
+  // handler down with it. The field defaults to "direct" server-side, so
+  // no JS means no false attribution either way.
+  try {
+    const raw =
+      document.cookie.match(/(?:^|;\s*)ka_src=([^;]+)/)?.[1] ??
+      new URLSearchParams(location.search).get('src');
+    let src = raw;
+    try {
+      src = raw ? decodeURIComponent(raw) : raw;
+    } catch {
+      /* keep the raw value */
+    }
+    const sourceField = document.getElementById('al-source') as HTMLInputElement | null;
+    if (src && sourceField) sourceField.value = src;
+  } catch {
+    /* attribution is best-effort; the form must work regardless */
+  }
+</script>
+
+<script>
+  // Intake submit: same Web3Forms flow as the contact page.
+  const form = document.getElementById('al-form') as HTMLFormElement | null;
+  const successEl = document.getElementById('al-success');
+  const errorEl = document.getElementById('al-error');
+  const statusEl = document.getElementById('al-status');
+  const btn = document.getElementById('al-submit') as HTMLButtonElement | null;
+
+  if (form && btn) {
+    const original = btn.textContent;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      errorEl?.classList.add('hidden');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      if (statusEl) statusEl.textContent = 'Sending your message…';
+
+      const data: Record<string, string> = {};
+      new FormData(form).forEach((value, key) => {
+        data[key] = String(value);
+      });
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          // Success path only; guarded because ad blockers stop fbq existing.
+          if (window.fbq) window.fbq('track', 'Lead');
+          if (statusEl) statusEl.textContent = '';
+          form.classList.add('hidden');
+          successEl?.classList.remove('hidden');
+          successEl?.classList.add('flex');
+          (successEl as HTMLElement | null)?.focus();
+        } else {
+          throw new Error(result.message || 'Submission failed');
+        }
+      } catch {
+        if (statusEl) statusEl.textContent = '';
+        errorEl?.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = original;
+        (errorEl as HTMLElement | null)?.focus();
+      }
+    });
+  }
+</script>
+
+<script>
+  // Motion, front-page style: the hero sketch draws itself on load, and the
+  // twelve-week rail draws scrubbed to the scroll with the dot riding it.
+  // Skipped entirely under reduced motion: everything is authored visible,
+  // gsap only animates FROM states, so the static page is the finished one.
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+  if (!reduced) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero sketch: stroke-by-stroke draw on load, same treatment as the home
+    // page's act-0 window. Desktop only; the element is hidden below lg.
+    const sketch = document.getElementById('al-hero-sketch');
+    if (sketch && isDesktop) {
+      const strokes = [...sketch.querySelectorAll('path, line, rect, circle')];
+      strokes.forEach((p) => {
+        const len = p.getTotalLength ? p.getTotalLength() : 800;
+        p.style.strokeDasharray = String(len);
+        p.style.strokeDashoffset = String(len);
+      });
+      gsap.to(strokes, {
+        strokeDashoffset: 0,
+        duration: 1.1,
+        stagger: 0.05,
+        ease: 'power1.inOut',
+        delay: 0.3,
+      });
+    }
+
+    // The rail is scrubbed rather than one-shot: scroll draws the weeks in
+    // and carries the dot from week one to week twelve, and scrolling back
+    // rewinds it. Motion with meaning: the page is about a timeline.
+    const track = document.getElementById('al-track');
+    if (track) {
+      gsap.timeline({
+        scrollTrigger: { trigger: track, start: 'top 88%', end: 'top 35%', scrub: 0.7 },
+      })
+        .from(track.querySelector('.al-rail'), { scaleX: 0, ease: 'none', duration: 1 }, 0)
+        .from(track.querySelector('.al-dot'), { left: '0%', ease: 'none', duration: 1 }, 0)
+        .from(track.querySelectorAll('.al-tick'), { scaleY: 0, transformOrigin: 'bottom', duration: 0.3, stagger: 0.055, ease: 'none' }, 0.05)
+        .from(track.querySelectorAll('.al-num'), { y: 8, opacity: 0, duration: 0.3, stagger: 0.055, ease: 'none' }, 0.1);
+    }
+  }
+</script>
+
+<script>
+  // Week-one demo: one question in, a three-line opportunity sketch out,
+  // then straight into the intake form with the answer carried over.
+  const mapForm = document.getElementById('al-map-form') as HTMLFormElement | null;
+  const mapInput = document.getElementById('al-map-input') as HTMLInputElement | null;
+  const mapBtn = document.getElementById('al-map-btn') as HTMLButtonElement | null;
+  const mapOut = document.getElementById('al-map-out');
+  const mapNote = document.getElementById('al-map-note');
+  const mapError = document.getElementById('al-map-error');
+  const mapStatus = document.getElementById('al-map-status');
+
+  if (mapForm && mapInput && mapBtn) {
+    const original = mapBtn.textContent;
+
+    mapForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const week = mapInput.value.trim();
+      if (week.length < 3) {
+        mapInput.focus();
+        return;
+      }
+
+      mapOut?.classList.add('hidden');
+      mapNote?.classList.add('hidden');
+      mapError?.classList.add('hidden');
+      mapBtn.disabled = true;
+      mapBtn.textContent = 'Sketching…';
+      if (mapStatus) mapStatus.textContent = 'Kai is sketching your launch…';
+
+      try {
+        const res = await fetch('/api/launchmap', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ week }),
+        });
+        const data = await res.json();
+        if (mapStatus) mapStatus.textContent = '';
+
+        if (res.ok && data.fit === true) {
+          document.getElementById('al-map-workflow')!.textContent = data.workflow;
+          document.getElementById('al-map-quickwin')!.textContent = data.quickWin;
+          document.getElementById('al-map-week9')!.textContent = data.week9;
+          mapOut?.classList.remove('hidden');
+          (mapOut as HTMLElement | null)?.focus();
+        } else if (res.ok && data.fit === false) {
+          if (mapNote) {
+            mapNote.textContent = data.note;
+            mapNote.classList.remove('hidden');
+            mapNote.focus();
+          }
+        } else {
+          throw new Error('unavailable');
+        }
+      } catch {
+        if (mapStatus) mapStatus.textContent = '';
+        mapError?.classList.remove('hidden');
+        (mapError as HTMLElement | null)?.focus();
+      } finally {
+        mapBtn.disabled = false;
+        mapBtn.textContent = original;
+      }
+    });
+
+    // Hand the answer to the real form: the demo asked the intake's
+    // qualifying question, so nobody should have to type it twice.
+    document.getElementById('al-map-apply')?.addEventListener('click', () => {
+      const weekField = document.getElementById('al-week') as HTMLTextAreaElement | null;
+      if (weekField && !weekField.value.trim()) weekField.value = mapInput.value.trim();
+      const apply = document.getElementById('apply');
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      apply?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      weekField?.focus({ preventScroll: true });
+    });
+  }
+</script>

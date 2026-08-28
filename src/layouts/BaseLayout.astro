@@ -10,9 +10,11 @@ const onContactPage = Astro.url.pathname.startsWith('/contact');
 interface Props {
   title: string;
   description: string;
+  /** Page-specific OG card, absolute path with its ?v= cache key. */
+  ogImage?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogImage = '/images/og-card.png?v=2' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // Sitewide identity for search engines. ProfessionalService (a LocalBusiness
@@ -163,11 +165,11 @@ const schema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/images/og-card.png?v=2', Astro.site)} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={new URL('/images/og-card.png?v=2', Astro.site)} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
   </head>
   <body>
@@ -186,6 +188,22 @@ const schema = {
     {!onContactPage && <StartProjectModal />}
     <script>
       import '../scripts/motion.js';
+    </script>
+    <script>
+      // First-touch attribution, sitewide: a partner link can land on any
+      // page (?src=synovial on the homepage, a location page, wherever), and
+      // the AI Launch intake form reads this cookie later. First touch wins:
+      // never overwrite an existing value. Fully guarded, because breaking
+      // every page over a malformed cookie would be a bad trade.
+      try {
+        const src = new URLSearchParams(location.search).get('src');
+        const existing = document.cookie.match(/(?:^|;\s*)ka_src=/);
+        if (src && !existing) {
+          document.cookie = `ka_src=${encodeURIComponent(src)}; Max-Age=7776000; Path=/; SameSite=Lax; Secure`;
+        }
+      } catch {
+        /* attribution is best-effort */
+      }
     </script>
   </body>
 </html>
