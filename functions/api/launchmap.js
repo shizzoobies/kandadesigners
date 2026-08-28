@@ -93,11 +93,14 @@ export async function onRequestPost(context) {
     if (!parsed.workflow || !parsed.quickWin || !parsed.week9) {
       return json({ error: 'Sketch unavailable right now.' }, 502);
     }
+    // Same em-dash scrub as guide/scope: the house rule is enforced in code,
+    // not just in the prompt.
+    const scrub = (v) => String(v).slice(0, 500).replace(/\s*—+\s*/g, ', ').replace(/\s+,/g, ',');
     return json({
       fit: true,
-      workflow: String(parsed.workflow).slice(0, 500),
-      quickWin: String(parsed.quickWin).slice(0, 500),
-      week9: String(parsed.week9).slice(0, 500),
+      workflow: scrub(parsed.workflow),
+      quickWin: scrub(parsed.quickWin),
+      week9: scrub(parsed.week9),
     });
   } catch {
     return json({ error: 'Sketch unavailable right now.' }, 500);

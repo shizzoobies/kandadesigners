@@ -68,7 +68,11 @@ export async function onRequestPost(context) {
       .filter((b) => b.type === 'text')
       .map((b) => b.text)
       .join('');
-    return json({ reply: text });
+    // House rule: no em dashes in anything user-visible. The prompt forbids
+    // them but models slip, so enforce it here. Spaced dashes read as a
+    // comma pause; a tight dash joins its neighbours with a comma too.
+    const clean = text.replace(/\s*—+\s*/g, ', ').replace(/\s+,/g, ',');
+    return json({ reply: clean });
   } catch {
     return json({ error: 'Bad request.' }, 400);
   }
