@@ -1,32 +1,33 @@
 {
-  // K&A course proxy: the AI backend for the members course at
-  // admin.ka-performancefl.com/course/. A dedicated Worker with its own
-  // Anthropic key so coaching costs read straight off the console, and so
-  // nothing here can touch cc-course-proxy, which other course deployments
-  // still call. worker.js is a verbatim copy of that worker's source
-  // (UPSTREAM-README.md documents it); only this config differs.
-  "name": "ka-course-proxy",
-  "main": "worker.js",
-  "compatibility_date": "2026-08-28",
-
-  // Per-learner rate limiting. The Worker URL is public even though the
-  // course page is behind Access, so the limiter stays. Create the
-  // namespace once with:
-  //   npx wrangler kv namespace create RATE_LIMIT
-  // then paste the id it prints over the TODO below before deploying.
-  "kv_namespaces": [
-    { "binding": "RATE_LIMIT", "id": "TODO_PASTE_KV_ID" }
-  ],
-
-  // Members hit the course from exactly one origin, plus local dev. No
-  // Reach or Articulate wildcards here on purpose: narrower is safer, and
-  // anything Reach-hosted belongs to cc-course-proxy.
-  "vars": {
-    "ALLOWED_ORIGINS": "https://admin.ka-performancefl.com,http://localhost:4321,http://localhost:4399",
-    "ELEVENLABS_AGENT_ID": "agent_4601kw4z5f3yfwrsnr4hvafw1sgf"
-  }
-
-  // Secrets, set once after the first deploy (see UPSTREAM-README.md):
-  //   npx wrangler secret put ANTHROPIC_API_KEY     (required: mint a NEW key named ka-course-proxy)
-  //   npx wrangler secret put ELEVENLABS_API_KEY    (optional: enables the voice mic; without it the assistant falls back to text)
+	// K&A course proxy: the AI backend for the members course at
+	// admin.ka-performancefl.com/course/. A dedicated Worker with its own
+	// Anthropic key so coaching costs read straight off the console, and so
+	// nothing here can touch cc-course-proxy, which other course deployments
+	// still call. worker.js is a verbatim copy of that worker's source
+	// (UPSTREAM-README.md documents it); only this config differs.
+	"name": "ka-course-proxy",
+	"main": "worker.js",
+	"compatibility_date": "2026-08-28",
+	// Per-learner rate limiting. The Worker URL is public even though the
+	// course page is behind Access, so the limiter stays. The namespace is
+	// titled KA_COURSE_RATE_LIMIT in the dashboard (the account already had
+	// a "RATE_LIMIT", which belongs to cc-course-proxy), but the BINDING
+	// must stay RATE_LIMIT because that is the name worker.js reads.
+	"kv_namespaces": [
+		{
+			"binding": "RATE_LIMIT",
+			"id": "b16f981540374af5aa9e03cdfedefeb0",
+			"remote": true
+		}
+	],
+	// Members hit the course from exactly one origin, plus local dev. No
+	// Reach or Articulate wildcards here on purpose: narrower is safer, and
+	// anything Reach-hosted belongs to cc-course-proxy.
+	"vars": {
+		"ALLOWED_ORIGINS": "https://admin.ka-performancefl.com,http://localhost:4321,http://localhost:4399",
+		"ELEVENLABS_AGENT_ID": "agent_4601kw4z5f3yfwrsnr4hvafw1sgf"
+	}
+	// Secrets, set once after the first deploy (see UPSTREAM-README.md):
+	//   npx wrangler secret put ANTHROPIC_API_KEY     (required: mint a NEW key named ka-course-proxy)
+	//   npx wrangler secret put ELEVENLABS_API_KEY    (optional: enables the voice mic; without it the assistant falls back to text)
 }
