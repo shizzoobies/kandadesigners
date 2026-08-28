@@ -7,7 +7,11 @@
 	// (UPSTREAM-README.md documents it); only this config differs.
 	"name": "ka-course-proxy",
 	"main": "worker.js",
-	"compatibility_date": "2026-08-28",
+	// Pinned to match cc-course-proxy, which runs this exact code in
+	// production. A bleeding-edge date (2026-08-28, the day this was set up)
+	// made the outbound Anthropic fetch fail with an empty-body 400, and the
+	// local runtime refused the date entirely. Do not bump this casually.
+	"compatibility_date": "2026-01-01",
 	// Per-learner rate limiting. The Worker URL is public even though the
 	// course page is behind Access, so the limiter stays. The namespace is
 	// titled KA_COURSE_RATE_LIMIT in the dashboard (the account already had
