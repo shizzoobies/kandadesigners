@@ -6,7 +6,7 @@ Created 2026-07-23 via the ElevenLabs Agents API.
 ## Live identifiers
 
 - **Agent ID:** `agent_2101ky8y21nmeh5ah2ytbntetzhm` (public — used by the embed, safe in the repo)
-- **Knowledge-base doc ID:** `77Pgp2ZzOV5gdo3VVXlq` ("K&A Performance KB (2026-08-01)"), re-uploaded 2026-08-01 from `knowledge-base.md`. The previous doc `Xrj4wKy1ZuTRKL4cOVLG` is detached but NOT deleted; delete it in the dashboard if you want the list tidy.
+- **Knowledge-base doc ID:** `i4xv7xj525AkR5aaGAHV` ("K&A Performance KB (2026-08-28)"), re-uploaded 2026-08-28 from `knowledge-base.md` (adds Gainesville identity, service area and location pages, the four service children, the 90-Day AI Launch section and Q&As, the two newest portfolio clients). Both older detached docs (`77Pgp2ZzOV5gdo3VVXlq`, `Xrj4wKy1ZuTRKL4cOVLG`) were deleted the same day, verified by name before deletion.
 - **Voice ID:** `qSeXEcewz7tA0Q0qk9fH` (Alex's chosen voice)
 - **LLM:** `qwen35-397b-a17b` (the README previously said gemini-2.5-flash; it had been changed in the dashboard, so read the live agent before assuming)
 - Auth: public widget access (`enable_auth: false`) — anyone on the site can talk to it.
