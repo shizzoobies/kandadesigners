@@ -32,7 +32,7 @@
 
   var CONVAI = {
     enabled: true,
-    workerUrl: "https://cc-course-proxy.tgqhg6kf4g.workers.dev",
+    workerUrl: "https://ka-course-proxy.tgqhg6kf4g.workers.dev",
     voice: true,             // allow the microphone / live voice
     textFallback: true,      // answer typed questions via the Anthropic tutor if ElevenLabs is not reachable
     voiceFallbackUrl: "",    // optional: a public ElevenLabs talk page, opened in a new tab if the mic is blocked
