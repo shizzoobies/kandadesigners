@@ -1,0 +1,122 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { getMemberByClientId, listResources, listSessions } from '../../lib/db.js';
+import { humanDate, todayInEastern } from '../../lib/format.js';
+import { TIER_LABELS, ARC_TIERS, currentWeek } from '../../lib/coaching.js';
+
+// The member portal. One page, deliberately: a member wants to know where
+// they are, what is next, and where their stuff lives. Everything shown here
+// is member-facing by construction; the state of play and session summaries
+// are internal and never rendered on this side of the role gate.
+const db = Astro.locals.runtime.env.DB;
+const user = Astro.locals.user;
+const today = todayInEastern();
+
+// Staff without a client record land here too (the nav link exists for
+// them); show a plain explainer rather than a broken page.
+const member = user.clientId ? await getMemberByClientId(db, user.clientId) : null;
+
+const [resources, sessions] = member
+  ? await Promise.all([listResources(db, member.id), listSessions(db, member.id)])
+  : [[], []];
+
+const isArc = member && ARC_TIERS.includes(member.tier);
+const wk = member ? currentWeek(member.started_on, today) : 0;
+const latest = sessions[0] ?? null;
+// Comparisons live up here: a bare `<` inside a template expression reads
+// as a tag opening to the Astro compiler and breaks the build.
+const inWeeks = isArc && wk > 0 && wk <= 12;
+const notStarted = isArc && wk === 0;
+
+// The three arc milestones, phrased for the member. Only ones with content
+// render; an empty milestone is a plan, not a promise to display.
+const milestones = member
+  ? [
+      { label: 'Your quick win', what: member.quick_win, on: member.quick_win_on },
+      { label: 'Your main workflow', what: member.main_workflow, on: member.workflow_shipped_on },
+      { label: 'Built by you', what: member.own_build, on: member.own_build_on },
+    ].filter((m) => m.what)
+  : [];
+
+const RESOURCE_TAGS = { recording: 'Recording', resource: 'Resource', homework: 'Homework' };
+---
+<Shell title={member ? `Welcome, ${user.name || member.client_name}` : 'Members'} active="members">
+  {!member ? (
+    <p class="empty-state">
+      No program is linked to this login yet. If you were expecting one, email
+      alex@ka-performancefl.com and it gets fixed.
+    </p>
+  ) : (
+    <>
+      <div class="groupline">
+        {TIER_LABELS[member.tier]}
+        {inWeeks && ` · week ${wk} of 12`}
+        {notStarted && ` · starts ${humanDate(member.started_on)}`}
+        {member.status === 'completed' && ' · completed'}
+      </div>
+
+      {latest?.next_plan && member.status === 'active' && (
+        <div class="rows">
+          <div class="row s-soon">
+            <div class="tag">Next</div>
+            <div class="what">
+              <b>Next session's plan</b>
+              <span>{latest.next_plan}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {milestones.length > 0 && (
+        <>
+          <div class="groupline">What we are building</div>
+          <div class="rows">
+            {milestones.map((m) => (
+              <div class={'row ' + (m.on ? 's-quiet' : 's-soon')}>
+                <div class="tag">{m.on ? 'Shipped' : 'In flight'}</div>
+                <div class="what">
+                  <b>{m.label}</b>
+                  <span>{m.what}{m.on ? ` · shipped ${humanDate(m.on)}` : ''}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      <div class="groupline">The course</div>
+      <div class="rows">
+        <div class="row s-soon">
+          <div class="tag">Course</div>
+          <div class="what">
+            <b><a href="/course/index.html">Getting to Know Claude Code</a></b>
+            <span>the full course, yours for the length of the program and after</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="groupline">Your resources</div>
+      {resources.length === 0 ? (
+        <p class="empty-state">Recordings and resources from your sessions will appear here.</p>
+      ) : (
+        <div class="rows">
+          {resources.map((r) => (
+            <div class="row s-quiet">
+              <div class="tag">{RESOURCE_TAGS[r.kind] ?? 'Resource'}</div>
+              <div class="what">
+                <b><a href={r.url} rel="noopener">{r.label}</a></b>
+                <span>added {humanDate(r.created_at.slice(0, 10))}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <p class="empty-state">
+        Questions between sessions go straight to alex@ka-performancefl.com.
+        Everything built in the program lives in your own accounts and stays
+        yours.
+      </p>
+    </>
+  )}
+</Shell>

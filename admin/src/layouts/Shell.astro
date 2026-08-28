@@ -4,14 +4,27 @@ import '../styles/admin.css';
 const { title, active = '' } = Astro.props;
 const user = Astro.locals.user;
 
-const nav = [
-  { href: '/', label: 'Today', key: 'today' },
-  { href: '/clients', label: 'Clients', key: 'clients' },
-  { href: '/projects', label: 'Projects', key: 'projects' },
-  { href: '/money', label: 'Money', key: 'money' },
-  { href: '/invoices', label: 'Invoices', key: 'invoices' },
-  { href: '/followups', label: 'Follow-ups', key: 'followups' },
-];
+// Members get a member nav; showing a client the business sidebar would
+// leak structure and every link would just bounce off the role gate anyway.
+const isMember = user?.role === 'client';
+
+const nav = isMember
+  ? [
+      { href: '/members', label: 'Home', key: 'members' },
+      { href: '/course/index.html', label: 'Course', key: 'course' },
+    ]
+  : [
+      { href: '/', label: 'Today', key: 'today' },
+      { href: '/clients', label: 'Clients', key: 'clients' },
+      { href: '/projects', label: 'Projects', key: 'projects' },
+      { href: '/money', label: 'Money', key: 'money' },
+      { href: '/invoices', label: 'Invoices', key: 'invoices' },
+      { href: '/followups', label: 'Follow-ups', key: 'followups' },
+      { href: '/coaching', label: 'Coaching', key: 'coaching' },
+      // Static artifact, parked here so the commission math lives in one
+      // place until the real Launch Book module gets built.
+      { href: '/launch-book.html', label: 'Launch Book', key: 'launchbook' },
+    ];
 ---
 <html lang="en">
   <head>
@@ -27,7 +40,7 @@ const nav = [
     <div class="app">
       <div class="frame">
         <aside class="side">
-          <div class="brand">K &amp; A <em>admin</em></div>
+          <div class="brand">K &amp; A <em>{isMember ? 'members' : 'admin'}</em></div>
           <nav class="nav">
             {nav.map((item) => (
               <a href={item.href} class={item.key === active ? 'on' : ''}>{item.label}</a>

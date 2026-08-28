@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<style id="mighty-reset-css">/* Basic reset - lowest priority */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</style><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Section 4: Connect a Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-os-pick { display:flex; gap:14px; margin-top:14px; flex-wrap:wrap; }
+  .cc-os-card {
+    flex:1; min-width:200px; cursor:pointer; text-align:left;
+    background:var(--cc-paper-2); border:1.5px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius); padding:18px 20px;
+    transition:border-color .15s, transform .05s, box-shadow .15s;
+    font-family:var(--cc-font-ui);
+  }
+  .cc-os-card:hover { border-color:var(--cc-accent); box-shadow:var(--cc-shadow); }
+  .cc-os-card:active { transform:translateY(1px); }
+  .cc-os-card__icon { font-size:1.6rem; }
+  .cc-os-card__name { font-weight:600; font-size:1.05rem; margin:6px 0 2px; color:var(--cc-ink); }
+  .cc-os-card__sub  { font-size:.85rem; color:var(--cc-ink-faint); }
+  .cc-stage { margin-top:16px; }
+  .cc-concept { margin-bottom:14px; }
+  .cc-concept code {
+    font-family:var(--cc-font-mono); font-size:.85em;
+    background:var(--cc-paper-3); padding:1px 5px; border-radius:4px; color:var(--cc-ink);
+  }
+  .cc-done {
+    margin-top:16px; padding:14px 18px; border-radius:var(--cc-radius);
+    background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft);
+    color:var(--cc-ink); display:none;
+  }
+  .cc-done strong { color:var(--cc-accent-deep); }
+
+  /* ---- Fake authorization browser panel (Adobe) ---- */
+  .cc-oauth-backdrop {
+    position:fixed; inset:0; background:rgba(31,30,27,.46);
+    display:none; align-items:center; justify-content:center; padding:20px; z-index:60;
+  }
+  .cc-oauth-backdrop.is-open { display:flex; }
+  .cc-browser {
+    width:100%; max-width:440px; background:var(--cc-paper);
+    border:1px solid var(--cc-paper-3); border-radius:var(--cc-radius); overflow:hidden;
+    box-shadow:0 24px 70px rgba(31,30,27,.34);
+    transform:translateY(10px); opacity:0; transition:transform .18s ease, opacity .18s ease;
+  }
+  .cc-oauth-backdrop.is-open .cc-browser { transform:translateY(0); opacity:1; }
+  .cc-browser__chrome {
+    display:flex; align-items:center; gap:8px; padding:9px 12px;
+    background:var(--cc-paper-2); border-bottom:1px solid var(--cc-paper-3);
+  }
+  .cc-browser__dots { display:flex; gap:6px; }
+  .cc-browser__dot { width:10px; height:10px; border-radius:50%; background:#cfccc0; }
+  .cc-browser__bar {
+    flex:1; display:flex; align-items:center; gap:7px;
+    background:var(--cc-paper); border:1px solid var(--cc-paper-3); border-radius:999px;
+    padding:5px 12px; font-family:var(--cc-font-ui); font-size:12.5px; color:var(--cc-ink-soft);
+  }
+  .cc-browser__lock { color:var(--cc-ink-faint); }
+  .cc-browser__url { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .cc-browser__body { padding:30px 26px 26px; text-align:center; }
+  .cc-wordmark {
+    display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:18px;
+  }
+  .cc-adobe-mark {
+    width:30px; height:30px; border-radius:6px; flex:none;
+    background:#EC1C24; color:#fff; font-weight:700; font-size:1rem;
+    display:flex; align-items:center; justify-content:center; font-family:var(--cc-font-ui);
+  }
+  .cc-wordmark__txt { font-family:var(--cc-font-ui); font-weight:600; color:var(--cc-ink); }
+  .cc-browser__body h3 { font-family:var(--cc-font-display); font-size:1.25rem; margin:0 0 6px; color:var(--cc-ink); }
+  .cc-browser__body p  { color:var(--cc-ink-soft); font-size:.92rem; margin:0 0 18px; }
+  .cc-acct {
+    display:flex; align-items:center; gap:11px; text-align:left;
+    background:var(--cc-paper-2); border:1px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius-sm); padding:11px 14px; margin-bottom:20px;
+  }
+  .cc-acct__avatar {
+    width:34px; height:34px; border-radius:50%; flex:none; background:#EC1C24; color:#fff;
+    font-weight:600; display:flex; align-items:center; justify-content:center; font-size:.95rem;
+    font-family:var(--cc-font-ui);
+  }
+  .cc-acct__email { font-size:.9rem; color:var(--cc-ink); font-weight:500; }
+  .cc-acct__sub   { font-size:.78rem; color:var(--cc-ink-faint); }
+  .cc-oauth-actions { display:flex; gap:10px; }
+  .cc-oauth-actions .cc-btn { flex:1; }
+  .cc-redirect { color:var(--cc-ink-faint); font-size:.9rem; padding:8px 0 2px; }
+  .cc-retry { margin-top:12px; }
+  @media (prefers-reduced-motion: reduce){
+    .cc-browser { transition:none; transform:none; opacity:1; }
+  }
+</style>
+<script id="mighty-interactive-sdk" src="../../mighty/sdk/v1/mighty-interactive-sdk.min.js"></script></head>
+<body>
+<div class="cc-root">
+
+  <!-- inline OS picker fallback -->
+  <div id="pick" class="cc-card" style="display:none;">
+    <h2>Connect a tool</h2>
+    <p>Quick check before we start. Which operating system are you on?</p>
+    <div class="cc-os-pick">
+      <button class="cc-os-card" data-os="mac">
+        <div class="cc-os-card__icon" aria-hidden="true">🍎</div>
+        <div class="cc-os-card__name">macOS</div>
+        <div class="cc-os-card__sub">zsh in the Terminal app</div>
+      </button>
+      <button class="cc-os-card" data-os="windows">
+        <div class="cc-os-card__icon" aria-hidden="true">🪟</div>
+        <div class="cc-os-card__name">Windows</div>
+        <div class="cc-os-card__sub">PowerShell</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- concept card + lead -->
+  <div id="lead" class="cc-card cc-concept" style="display:none;">
+    <h2>Connect a tool with MCP</h2>
+    <p>MCP (Model Context Protocol) is a standard way to give Claude Code access to other tools and data, like Adobe Creative Cloud, your file storage, or a database. You add a connector once with <code>claude mcp add</code>, authorize it, and it is then available in your sessions. Add the Adobe Creative connector below and watch Claude use it.</p>
+  </div>
+
+  <!-- terminal stage -->
+  <div id="stage" class="cc-stage" style="display:none;">
+    <div id="term-mount"></div>
+    <div id="done" class="cc-done">
+      <strong>Connectors are how Claude Code reaches your real tools.</strong> You added one, confirmed it, and watched Claude call it. Next, you build something for real.
+    </div>
+  </div>
+
+</div>
+
+<!-- Fake authorization browser (Adobe) -->
+<div id="oauth" class="cc-oauth-backdrop" role="dialog" aria-modal="true" aria-labelledby="oauth-title">
+  <div class="cc-browser">
+    <div class="cc-browser__chrome">
+      <div class="cc-browser__dots"><span class="cc-browser__dot"></span><span class="cc-browser__dot"></span><span class="cc-browser__dot"></span></div>
+      <div class="cc-browser__bar">
+        <span class="cc-browser__lock" aria-hidden="true">🔒</span>
+        <span class="cc-browser__url">https://auth.services.adobe.com/authorize</span>
+      </div>
+    </div>
+    <div class="cc-browser__body">
+      <div class="cc-wordmark">
+        <span class="cc-adobe-mark" aria-hidden="true">A</span>
+        <span class="cc-wordmark__txt">Adobe</span>
+      </div>
+      <h3 id="oauth-title">Authorize Claude Code</h3>
+      <p>Claude Code wants to access your Adobe Creative Cloud assets.</p>
+      <div class="cc-acct">
+        <div class="cc-acct__avatar" aria-hidden="true">A</div>
+        <div>
+          <div class="cc-acct__email">alex@studio.example</div>
+          <div class="cc-acct__sub">Adobe Creative Cloud</div>
+        </div>
+      </div>
+      <div id="oauth-actions" class="cc-oauth-actions">
+        <button id="oauth-cancel" class="cc-btn cc-btn--ghost">Deny</button>
+        <button id="oauth-authorize" class="cc-btn">Allow access</button>
+      </div>
+      <div id="oauth-redirect" class="cc-redirect" style="display:none;">Connecting…</div>
+    </div>
+  </div>
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "Lesson 4, Connect a tool. The learner adds an Adobe Creative MCP connector and watches a tool call run.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var pick  = document.getElementById("pick");
+  var lead  = document.getElementById("lead");
+  var stage = document.getElementById("stage");
+  var mount = document.getElementById("term-mount");
+  var done  = document.getElementById("done");
+
+  var backdrop  = document.getElementById("oauth");
+  var authorize = document.getElementById("oauth-authorize");
+  var cancel    = document.getElementById("oauth-cancel");
+  var actions   = document.getElementById("oauth-actions");
+  var redirect  = document.getElementById("oauth-redirect");
+  var reduce    = CCTerminal.reduceMotion;
+
+  function script() {
+    return [
+      { type:"output", lines:[
+        {t:"dim", s:"# Add the Adobe Creative connector to this project."}
+      ]},
+      { type:"prompt",
+        accept:["claude mcp add adobe","claude mcp add adobe-creative"],
+        placeholder:"add the adobe connector",
+        hint:"Add the connector:  claude mcp add adobe",
+        onWrong:{ "_default":[
+          {t:"err", s:"Use the mcp add command to register a connector."}
+        ]},
+        success:[
+          {t:"dim",  s:"Registering connector 'adobe'…"},
+          {t:"warn", s:"Authorization required. Opening your browser…"}
+        ]
+      },
+      { type:"action", name:"connect" },
+      { type:"output", lines:[
+        {t:"ok",  s:"✓ Connector 'adobe' added and authorized."},
+        {t:"dim", s:"# Confirm it is active."}
+      ]},
+      { type:"prompt",
+        accept:["/mcp","claude mcp list","mcp","claude mcp"],
+        placeholder:"list your connectors",
+        hint:"List connectors:  /mcp",
+        success:[
+          {t:"box", title:"Connected tools", lines:[
+            "adobe        connected",
+            "Tools: export_asset, place_image, list_libraries"
+          ]}
+        ]
+      },
+      { type:"claudePrompt",
+        accept:"*",
+        placeholder:"Ask Claude to use Adobe to add an asset",
+        hint:"Try: pull our logo from Creative Cloud and add it to the page header",
+        toolCalls:[
+          {name:"Read", arg:"index.html", working:"Reading files", ms:800},
+          {name:"adobe.list_libraries", arg:"", working:"Querying Creative Cloud", ms:1100},
+          {name:"adobe.export_asset", arg:"logo.svg", working:"Exporting logo.svg", ms:1200},
+          {name:"Update", arg:"index.html", working:"Placing asset", ms:900}
+        ],
+        success:[
+          {t:"diff", del:[], add:['<img src="assets/logo.svg" alt="Company logo" class="logo">']},
+          {t:"ok",  s:"Added logo.svg to the header."},
+          {t:"dim", s:"That purple tool name is the Adobe connector. Same review loop: you describe, Claude calls the right tool, you check the result."}
+        ]
+      }
+    ];
+  }
+
+  /* ---- authorization panel handler (shared shape with s2) ---- */
+  var lastFocused = null;
+  function openPanel() {
+    lastFocused = document.activeElement;
+    actions.style.display = "flex";
+    redirect.style.display = "none";
+    backdrop.classList.add("is-open");
+    setTimeout(function () { authorize.focus(); }, reduce ? 0 : 60);
+    document.addEventListener("keydown", onKey, true);
+  }
+  function closePanel() {
+    backdrop.classList.remove("is-open");
+    document.removeEventListener("keydown", onKey, true);
+    if (lastFocused && lastFocused.focus) { try { lastFocused.focus(); } catch (e) {} }
+  }
+  function onKey(e) {
+    if (e.key === "Escape") { e.preventDefault(); doCancel(); return; }
+    if (e.key !== "Tab") return;
+    var first = cancel, last = authorize;
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  var connectDone = null;
+  function doAuthorize() {
+    actions.style.display = "none";
+    redirect.style.display = "block";
+    setTimeout(function () {
+      closePanel();
+      var fn = connectDone; connectDone = null;
+      if (fn) fn();
+    }, reduce ? 0 : 600);
+  }
+  function doCancel() {
+    closePanel();
+    var term = window.__ccterm;
+    if (term && term.body) {
+      var err = document.createElement("div");
+      err.className = "cc-line cc-line--err";
+      err.textContent = "Authorization denied. Allow access to connect Adobe.";
+      term.body.appendChild(err);
+      term.body.scrollTop = term.body.scrollHeight;
+      var retry = document.createElement("button");
+      retry.className = "cc-btn cc-retry";
+      retry.textContent = "Try connecting again";
+      retry.addEventListener("click", function () { retry.remove(); openPanel(); });
+      term.body.appendChild(retry);
+    }
+  }
+
+  authorize.addEventListener("click", doAuthorize);
+  cancel.addEventListener("click", doCancel);
+  backdrop.addEventListener("click", function (e) { if (e.target === backdrop) doCancel(); });
+
+  function launch(os) {
+    CCTerminal.setOS(os);
+    pick.style.display = "none";
+    lead.style.display = "block";
+    stage.style.display = "block";
+    mount.innerHTML = "";
+    var term = new CCTerminal(mount, {
+      os: os,
+      onComplete: function () { done.style.display = "block"; done.scrollIntoView({behavior:"smooth", block:"nearest"}); }
+    });
+    window.__ccterm = term;
+    term.on("connect", function (payload, finish) {
+      connectDone = finish;
+      openPanel();
+    });
+    term.run(script());
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".cc-os-card"), function (b) {
+    b.addEventListener("click", function () { launch(b.getAttribute("data-os")); });
+  });
+
+  var saved = CCTerminal.getOS();
+  if (saved === "mac" || saved === "windows") { launch(saved); }
+  else { pick.style.display = "block"; }
+})();
+</script>
+
+
+<link rel="stylesheet" href="../../mighty/mighty-additional-fonts.css"><link rel="stylesheet" href="../../mighty/mighty-global-styles.css"><link rel="stylesheet" href="../../mighty/mighty-interactive-body-font.css"></body></html>

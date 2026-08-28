@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<style id="mighty-reset-css">/* Basic reset - lowest priority */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</style><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Section 2: Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-os-pick { display:flex; gap:14px; margin-top:14px; flex-wrap:wrap; }
+  .cc-os-card {
+    flex:1; min-width:200px; cursor:pointer; text-align:left;
+    background:var(--cc-paper-2); border:1.5px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius); padding:18px 20px;
+    transition:border-color .15s, transform .05s, box-shadow .15s;
+    font-family:var(--cc-font-ui);
+  }
+  .cc-os-card:hover { border-color:var(--cc-accent); box-shadow:var(--cc-shadow); }
+  .cc-os-card:active { transform:translateY(1px); }
+  .cc-os-card__icon { font-size:1.6rem; }
+  .cc-os-card__name { font-weight:600; font-size:1.05rem; margin:6px 0 2px; color:var(--cc-ink); }
+  .cc-os-card__sub  { font-size:.85rem; color:var(--cc-ink-faint); }
+  .cc-stage { margin-top:16px; }
+  .cc-done {
+    margin-top:16px; padding:14px 18px; border-radius:var(--cc-radius);
+    background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft);
+    color:var(--cc-ink); display:none;
+  }
+  .cc-done strong { color:var(--cc-accent-deep); }
+
+  /* ---- Fake OAuth browser panel ---- */
+  .cc-oauth-backdrop {
+    position:fixed; inset:0; background:rgba(31,30,27,.46);
+    display:none; align-items:center; justify-content:center;
+    padding:20px; z-index:60;
+  }
+  .cc-oauth-backdrop.is-open { display:flex; }
+  .cc-browser {
+    width:100%; max-width:440px;
+    background:var(--cc-paper); border:1px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius); overflow:hidden;
+    box-shadow:0 24px 70px rgba(31,30,27,.34);
+    transform:translateY(10px); opacity:0;
+    transition:transform .18s ease, opacity .18s ease;
+  }
+  .cc-oauth-backdrop.is-open .cc-browser { transform:translateY(0); opacity:1; }
+  .cc-browser__chrome {
+    display:flex; align-items:center; gap:8px;
+    padding:9px 12px; background:var(--cc-paper-2);
+    border-bottom:1px solid var(--cc-paper-3);
+  }
+  .cc-browser__dots { display:flex; gap:6px; }
+  .cc-browser__dot { width:10px; height:10px; border-radius:50%; background:#cfccc0; }
+  .cc-browser__bar {
+    flex:1; display:flex; align-items:center; gap:7px;
+    background:var(--cc-paper); border:1px solid var(--cc-paper-3);
+    border-radius:999px; padding:5px 12px;
+    font-family:var(--cc-font-ui); font-size:12.5px; color:var(--cc-ink-soft);
+  }
+  .cc-browser__lock { color:var(--cc-ink-faint); }
+  .cc-browser__url { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .cc-browser__body { padding:30px 26px 26px; text-align:center; }
+  .cc-wordmark {
+    font-family:var(--cc-font-display); font-weight:600; font-size:1.15rem;
+    color:var(--cc-accent-deep); margin-bottom:18px;
+  }
+  .cc-wordmark::before { content:"\2731"; margin-right:7px; color:var(--cc-accent); }
+  .cc-browser__body h3 { font-family:var(--cc-font-display); font-size:1.25rem; margin:0 0 6px; color:var(--cc-ink); }
+  .cc-browser__body p  { color:var(--cc-ink-soft); font-size:.92rem; margin:0 0 18px; }
+  .cc-acct {
+    display:flex; align-items:center; gap:11px; text-align:left;
+    background:var(--cc-paper-2); border:1px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius-sm); padding:11px 14px; margin-bottom:20px;
+  }
+  .cc-acct__avatar {
+    width:34px; height:34px; border-radius:50%; flex:none;
+    background:var(--cc-accent); color:#fff; font-weight:600;
+    display:flex; align-items:center; justify-content:center; font-size:.95rem;
+    font-family:var(--cc-font-ui);
+  }
+  .cc-acct__email { font-size:.9rem; color:var(--cc-ink); font-weight:500; }
+  .cc-acct__sub   { font-size:.78rem; color:var(--cc-ink-faint); }
+  .cc-oauth-actions { display:flex; gap:10px; }
+  .cc-oauth-actions .cc-btn { flex:1; }
+  .cc-redirect { color:var(--cc-ink-faint); font-size:.9rem; padding:8px 0 2px; }
+  .cc-retry { margin-top:12px; }
+  @media (prefers-reduced-motion: reduce){
+    .cc-browser { transition:none; transform:none; opacity:1; }
+  }
+</style>
+<script id="mighty-interactive-sdk" src="../../mighty/sdk/v1/mighty-interactive-sdk.min.js"></script></head>
+<body>
+<div class="cc-root">
+
+  <!-- intro / OS picker fallback -->
+  <div id="intro" class="cc-card" style="display:none;">
+    <h2>Sign in to Claude Code</h2>
+    <p>The first time you run Claude Code it opens your browser so you can sign in to your Anthropic account. This happens once per machine. Pick your operating system to begin.</p>
+    <div class="cc-os-pick">
+      <button class="cc-os-card" data-os="mac">
+        <div class="cc-os-card__icon" aria-hidden="true">🍎</div>
+        <div class="cc-os-card__name">macOS</div>
+        <div class="cc-os-card__sub">zsh in the Terminal app</div>
+      </button>
+      <button class="cc-os-card" data-os="windows">
+        <div class="cc-os-card__icon" aria-hidden="true">🪟</div>
+        <div class="cc-os-card__name">Windows</div>
+        <div class="cc-os-card__sub">PowerShell</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- lead card shown when OS already known -->
+  <div id="lead" class="cc-card" style="display:none;">
+    <h2>Sign in to Claude Code</h2>
+    <p>The first time you run Claude Code it opens your browser so you sign in to your Anthropic account. Run it below and authorize the session. This only happens once per machine.</p>
+  </div>
+
+  <!-- terminal stage -->
+  <div id="stage" class="cc-stage" style="display:none;">
+    <div id="term-mount"></div>
+    <div id="done" class="cc-done">
+      <strong>You are signed in.</strong> In the next lesson you open a project and make your first request.
+    </div>
+  </div>
+
+</div>
+
+<!-- Fake OAuth browser (section-local) -->
+<div id="oauth" class="cc-oauth-backdrop" role="dialog" aria-modal="true" aria-labelledby="oauth-title">
+  <div class="cc-browser">
+    <div class="cc-browser__chrome">
+      <div class="cc-browser__dots"><span class="cc-browser__dot"></span><span class="cc-browser__dot"></span><span class="cc-browser__dot"></span></div>
+      <div class="cc-browser__bar">
+        <span class="cc-browser__lock" aria-hidden="true">🔒</span>
+        <span class="cc-browser__url">https://claude.ai/oauth/authorize</span>
+      </div>
+    </div>
+    <div class="cc-browser__body">
+      <div class="cc-wordmark">Claude</div>
+      <h3 id="oauth-title">Authorize Claude Code</h3>
+      <p>Claude Code wants to access your Anthropic account.</p>
+      <div class="cc-acct">
+        <div class="cc-acct__avatar" id="acct-avatar" aria-hidden="true">A</div>
+        <div>
+          <div class="cc-acct__email" id="acct-email">alex@studio.example</div>
+          <div class="cc-acct__sub" id="acct-sub">Anthropic account</div>
+        </div>
+      </div>
+      <div id="oauth-actions" class="cc-oauth-actions">
+        <button id="oauth-cancel" class="cc-btn cc-btn--ghost">Cancel</button>
+        <button id="oauth-authorize" class="cc-btn">Authorize</button>
+      </div>
+      <div id="oauth-redirect" class="cc-redirect" style="display:none;">Redirecting…</div>
+    </div>
+  </div>
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "Lesson 2, Sign in. The learner runs claude and signs in through a browser screen to authenticate Claude Code.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var intro = document.getElementById("intro");
+  var lead  = document.getElementById("lead");
+  var stage = document.getElementById("stage");
+  var mount = document.getElementById("term-mount");
+  var done  = document.getElementById("done");
+
+  var backdrop  = document.getElementById("oauth");
+  var authorize = document.getElementById("oauth-authorize");
+  var cancel    = document.getElementById("oauth-cancel");
+  var actions   = document.getElementById("oauth-actions");
+  var redirect  = document.getElementById("oauth-redirect");
+  var reduce    = CCTerminal.reduceMotion;
+
+  function script() {
+    return [
+      { type:"output", lines:[
+        {t:"dim", s:"# First run starts the sign-in flow. Start Claude Code."}
+      ]},
+      { type:"prompt",
+        accept:["claude"],
+        placeholder:"start claude code",
+        hint:"Type  claude  and press Enter.",
+        onWrong:{ "_default":[
+          {t:"err", s:"Not quite. Just type  claude  to start it."}
+        ]},
+        success:[
+          {t:"dim", s:"Welcome to Claude Code"},
+          "You need to sign in to continue.",
+          {t:"warn", s:"Opening your browser to authenticate…"}
+        ]
+      },
+      { type:"action", name:"oauth" },
+      { type:"output", lines:[
+        {t:"ok",  s:"✓ Signed in as " + CCTerminal.handle() + "@studio.example"},
+        {t:"dim", s:"Authentication token saved to ~/.claude/  (you will not need to do this again)"},
+        "",
+        {t:"box", title:"You are signed in", lines:[
+          "Next: open a project and make your first request."
+        ]}
+      ]}
+    ];
+  }
+
+  /* ---- OAuth panel handler ---- */
+  var lastFocused = null;
+  function openPanel() {
+    lastFocused = document.activeElement;
+    actions.style.display = "flex";
+    redirect.style.display = "none";
+    backdrop.classList.add("is-open");
+    setTimeout(function () { authorize.focus(); }, reduce ? 0 : 60);
+    document.addEventListener("keydown", onKey, true);
+  }
+  function closePanel() {
+    backdrop.classList.remove("is-open");
+    document.removeEventListener("keydown", onKey, true);
+    if (lastFocused && lastFocused.focus) { try { lastFocused.focus(); } catch (e) {} }
+  }
+  // Focus trap: only two buttons, keep Tab cycling between them.
+  function onKey(e) {
+    if (e.key === "Escape") { e.preventDefault(); doCancel(); return; }
+    if (e.key !== "Tab") return;
+    var first = cancel, last = authorize;
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  var oauthDone = null;
+  function doAuthorize() {
+    actions.style.display = "none";
+    redirect.style.display = "block";
+    setTimeout(function () {
+      closePanel();
+      var fn = oauthDone; oauthDone = null;
+      if (fn) fn();
+    }, reduce ? 0 : 600);
+  }
+  function doCancel() {
+    closePanel();
+    // Forgiving: show an error line and a Try again button in the terminal area.
+    var term = window.__ccterm;
+    if (term && term.body) {
+      var err = document.createElement("div");
+      err.className = "cc-line cc-line--err";
+      err.textContent = "Sign-in cancelled. Authorize to continue.";
+      term.body.appendChild(err);
+      term.body.scrollTop = term.body.scrollHeight;
+    }
+    var retry = document.createElement("button");
+    retry.className = "cc-btn cc-retry";
+    retry.textContent = "Try sign-in again";
+    retry.addEventListener("click", function () {
+      retry.remove();
+      openPanel();
+    });
+    if (term && term.body) term.body.appendChild(retry);
+  }
+
+  authorize.addEventListener("click", doAuthorize);
+  cancel.addEventListener("click", doCancel);
+  backdrop.addEventListener("click", function (e) { if (e.target === backdrop) doCancel(); });
+
+  function personalizeAccount() {
+    var fn = CCTerminal.firstName();
+    var av = document.getElementById("acct-avatar");
+    var em = document.getElementById("acct-email");
+    var sub = document.getElementById("acct-sub");
+    if (av) av.textContent = (fn ? fn.charAt(0) : "A").toUpperCase();
+    if (em) em.textContent = CCTerminal.handle() + "@studio.example";
+    if (sub) sub.textContent = fn ? (fn.charAt(0).toUpperCase() + fn.slice(1) + "  ·  Anthropic account") : "Anthropic account";
+  }
+
+  function launch(os) {
+    CCTerminal.setOS(os);
+    personalizeAccount();
+    intro.style.display = "none";
+    lead.style.display = "none";
+    stage.style.display = "block";
+    mount.innerHTML = "";
+    var term = new CCTerminal(mount, {
+      os: os,
+      onComplete: function () { done.style.display = "block"; done.scrollIntoView({behavior:"smooth", block:"nearest"}); }
+    });
+    window.__ccterm = term;
+    term.on("oauth", function (payload, finish) {
+      oauthDone = finish;
+      openPanel();
+    });
+    term.run(script());
+  }
+
+  // OS picker fallback wiring
+  Array.prototype.forEach.call(document.querySelectorAll(".cc-os-card"), function (b) {
+    b.addEventListener("click", function () { launch(b.getAttribute("data-os")); });
+  });
+
+  var saved = CCTerminal.getOS();
+  if (saved === "mac" || saved === "windows") {
+    lead.style.display = "block";
+    launch(saved);
+  } else {
+    intro.style.display = "block";
+  }
+})();
+</script>
+
+
+<link rel="stylesheet" href="../../mighty/mighty-additional-fonts.css"><link rel="stylesheet" href="../../mighty/mighty-global-styles.css"><link rel="stylesheet" href="../../mighty/mighty-interactive-body-font.css"></body></html>

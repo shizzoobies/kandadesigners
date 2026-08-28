@@ -1,0 +1,126 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { listMembers, listClients } from '../../lib/db.js';
+import { humanDate, todayInEastern } from '../../lib/format.js';
+import { TIER_LABELS, TIERS, CAPS, ARC_TIERS, capCounts, currentWeek } from '../../lib/coaching.js';
+
+const db = Astro.locals.runtime.env.DB;
+const today = todayInEastern();
+
+const FILTERS = ['active', 'completed', 'all'];
+const raw = Astro.url.searchParams.get('filter') ?? 'active';
+const filter = FILTERS.includes(raw) ? raw : 'active';
+
+const [members, allMembers, clients] = await Promise.all([
+  listMembers(db, filter),
+  listMembers(db, 'all'),
+  listClients(db),
+]);
+const caps = capCounts(allMembers);
+
+const error = Astro.url.searchParams.get('error');
+const ERRORS = {
+  client: 'That client could not be found. Nothing was saved.',
+  tier: 'Pick a tier. Nothing was saved.',
+  date: 'That date could not be read. Use YYYY-MM-DD. Nothing was saved.',
+  member: 'That member could not be found. Nothing was saved.',
+  intent: 'Unrecognised action. Nothing was saved.',
+};
+
+// One line of truth per member: arc tiers show their week, memberships show
+// their cadence. Severity mirrors the dashboard rules so the roster and the
+// Today stream never disagree about who needs attention.
+function state(m) {
+  if (m.status !== 'active') {
+    return { rule: 's-quiet', tag: m.status, line: `started ${humanDate(m.started_on)}` };
+  }
+  if (ARC_TIERS.includes(m.tier)) {
+    const wk = currentWeek(m.started_on, today);
+    const tag = wk === 0 ? 'Starts soon' : wk > 12 ? 'Overran' : `Week ${String(wk).padStart(2, '0')}`;
+    const rule = wk >= 10 && !m.week10_offered_on ? 's-money' : wk > 12 ? 's-money' : 's-soon';
+    const line = m.last_session_on
+      ? `last session ${humanDate(m.last_session_on)}`
+      : wk === 0 ? `starts ${humanDate(m.started_on)}` : 'no session logged yet';
+    return { rule, tag, line };
+  }
+  return {
+    rule: 's-soon',
+    tag: m.tier === 'advisory' ? 'Weekly' : 'Monthly',
+    line: m.last_session_on ? `last session ${humanDate(m.last_session_on)}` : 'no session logged yet',
+  };
+}
+---
+<Shell title="Coaching" active="coaching">
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+
+  <dl class="money">
+    <div><dt>In the twelve weeks</dt><dd>{caps.arc}</dd></div>
+    <div class={caps.core >= CAPS.core ? 'bad' : ''}>
+      <dt>Core</dt>
+      <dd>{caps.core}<small>of {CAPS.core} seats</small></dd>
+    </div>
+    <div class={caps.advisory >= CAPS.advisory ? 'bad' : ''}>
+      <dt>Advisory</dt>
+      <dd>{caps.advisory}<small>of {CAPS.advisory} seats</small></dd>
+    </div>
+  </dl>
+
+  <div class="groupline">
+    {FILTERS.map((f, i) => (
+      <>{i > 0 ? ' · ' : ''}<a
+        href={`/coaching?filter=${f}`}
+        style={f === filter ? 'color:var(--ink);text-decoration:underline' : ''}
+      >{f}</a></>
+    ))}
+  </div>
+
+  {members.length === 0 ? (
+    <p class="empty-state">
+      {filter === 'active'
+        ? 'No members yet. The first two or three Launches come from existing clients at a discount, per the plan.'
+        : `No ${filter} members.`}
+    </p>
+  ) : (
+    <div class="rows">
+      {members.map((m) => {
+        const s = state(m);
+        return (
+          <div class={`row ${s.rule}`}>
+            <div class="tag">{s.tag}</div>
+            <div class="what">
+              <b><a href={`/coaching/${m.id}`}>{m.client_name}</a></b>
+              <span>{TIER_LABELS[m.tier]} · {s.line}</span>
+            </div>
+            <div class="amt"><em><a href={`/coaching/${m.id}`}>open</a></em></div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+
+  <details class="adder">
+    <summary>Enroll a member</summary>
+    <form method="POST" action="/api/coaching">
+      <input type="hidden" name="intent" value="create" />
+      <input type="hidden" name="returnTo" value={`/coaching?filter=${filter}`} />
+      <div class="field">
+        <label for="clientId">Client</label>
+        <select id="clientId" name="clientId" required>
+          <option value="">Choose a client</option>
+          {clients.map((c) => <option value={c.id}>{c.name}{c.company ? ` (${c.company})` : ''}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="tier">Tier</label>
+        <select id="tier" name="tier" required>
+          {TIERS.map((t) => <option value={t}>{TIER_LABELS[t]}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="startedOn">Week one starts</label>
+        <input id="startedOn" name="startedOn" type="date" required />
+      </div>
+      <div class="actions"><button class="btn" type="submit">Enroll</button></div>
+    </form>
+  </details>
+</Shell>

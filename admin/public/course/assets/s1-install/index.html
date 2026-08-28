@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<style id="mighty-reset-css">/* Basic reset - lowest priority */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</style><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Section 1: Install</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-os-pick { display:flex; gap:14px; margin-top:14px; flex-wrap:wrap; }
+  .cc-os-card {
+    flex:1; min-width:200px; cursor:pointer; text-align:left;
+    background:var(--cc-paper-2); border:1.5px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius); padding:18px 20px;
+    transition:border-color .15s, transform .05s, box-shadow .15s;
+    font-family:var(--cc-font-ui);
+  }
+  .cc-os-card:hover { border-color:var(--cc-accent); box-shadow:var(--cc-shadow); }
+  .cc-os-card:active { transform:translateY(1px); }
+  .cc-os-card__icon { font-size:1.6rem; }
+  .cc-os-card__name { font-weight:600; font-size:1.05rem; margin:6px 0 2px; color:var(--cc-ink); }
+  .cc-os-card__sub  { font-size:.85rem; color:var(--cc-ink-faint); }
+  .cc-stage { margin-top:16px; }
+  .cc-switch {
+    background:none; border:none; color:var(--cc-accent-deep); cursor:pointer;
+    font-family:var(--cc-font-ui); font-size:.85rem; text-decoration:underline;
+    padding:0; margin-top:10px;
+  }
+  .cc-done {
+    margin-top:16px; padding:14px 18px; border-radius:var(--cc-radius);
+    background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft);
+    color:var(--cc-ink); display:none;
+  }
+  .cc-done strong { color:var(--cc-accent-deep); }
+</style>
+<script id="mighty-interactive-sdk" src="../../mighty/sdk/v1/mighty-interactive-sdk.min.js"></script></head>
+<body>
+<div class="cc-root">
+
+  <!-- STEP A: OS branch -->
+  <div id="pick" class="cc-card">
+    <h2>Install Claude Code</h2>
+    <p>This is a safe sandbox. You will type the real commands and see the real output, but nothing installs on your machine and no license is used. Start by choosing your operating system. You only pick once; the rest of the course remembers your choice.</p>
+    <div class="cc-os-pick">
+      <button class="cc-os-card" data-os="mac">
+        <div class="cc-os-card__icon" aria-hidden="true">🍎</div>
+        <div class="cc-os-card__name">macOS</div>
+        <div class="cc-os-card__sub">Install with npm in the Terminal app</div>
+      </button>
+      <button class="cc-os-card" data-os="windows">
+        <div class="cc-os-card__icon" aria-hidden="true">🪟</div>
+        <div class="cc-os-card__name">Windows</div>
+        <div class="cc-os-card__sub">Install with npm in PowerShell</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP B: terminal stage -->
+  <div id="stage" class="cc-stage" style="display:none;">
+    <div id="term-mount"></div>
+    <button id="switch" class="cc-switch">Chose the wrong OS? Switch and restart this step.</button>
+    <div id="done" class="cc-done">
+      <strong>Claude Code is installed.</strong> In the next lesson you will sign in to your Anthropic account.
+    </div>
+  </div>
+
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "Lesson 1, Install. The learner confirms Node with node -v, then installs Claude Code using npm install -g @anthropic-ai/claude-code, on Mac or Windows.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var pick   = document.getElementById("pick");
+  var stage  = document.getElementById("stage");
+  var mount  = document.getElementById("term-mount");
+  var done   = document.getElementById("done");
+  var sw     = document.getElementById("switch");
+
+  // If they already picked in a previous embed, skip straight to the terminal.
+  var saved = CCTerminal.getOS();
+
+  function scriptFor(os) {
+    var isWin = os === "windows";
+    var nodeCheck = isWin
+      ? [{t:"ok", s:"v20.11.1"}]
+      : [{t:"ok", s:"v20.11.1"}];
+    return [
+      { type:"output", lines:[
+        {t:"dim", s:"# First, confirm Node.js is installed. Claude Code needs Node 18 or newer."}
+      ]},
+      { type:"prompt",
+        accept:["node -v","node --version"],
+        placeholder:"check your node version",
+        hint:"Type  node -v  and press Enter.",
+        success:[].concat(nodeCheck, [
+          {t:"dim", s:"# Good. Node is ready. Now install Claude Code globally with npm."}
+        ])
+      },
+      { type:"prompt",
+        accept:["npm install -g @anthropic-ai/claude-code","npm i -g @anthropic-ai/claude-code"],
+        placeholder:"install claude code",
+        hint:"Type  npm install -g @anthropic-ai/claude-code  and press Enter.",
+        onWrong:{
+          "claude":[{t:"err", s:(isWin?"'claude' is not recognized as an internal or external command.":"command not found: claude")},
+                    {t:"dim", s:"Claude Code is not installed yet. Install it first."}],
+          "_default":[{t:"err", s:"That is not the install command. Use npm to install the package globally."}]
+        },
+        success:[
+          {t:"spinner", s:"Downloading @anthropic-ai/claude-code", ms:1600},
+          {t:"dim", s:"added 1 package in 3s"},
+          {t:"ok",  s:"\u2713 installed @anthropic-ai/claude-code"},
+          "",
+          {t:"dim", s:"# Verify the install by checking the version."}
+        ]
+      },
+      { type:"prompt",
+        accept:["claude --version","claude -v","claude --help","claude"],
+        placeholder:"verify the install",
+        hint:"Type  claude --version  and press Enter.",
+        success:[
+          {t:"ok", s:"claude-code/1.0.0  node-v20.11.1"},
+          "",
+          {t:"box", title:"Claude Code is installed", lines:[
+            "Run  claude  inside any project folder to start.",
+            "Next lesson: signing in."
+          ]}
+        ]
+      }
+    ];
+  }
+
+  function launch(os) {
+    CCTerminal.setOS(os);
+    pick.style.display = "none";
+    stage.style.display = "block";
+    mount.innerHTML = "";
+    var term = new CCTerminal(mount, {
+      os: os,
+      onComplete: function () { done.style.display = "block"; done.scrollIntoView({behavior:"smooth", block:"nearest"}); }
+    });
+    term.run(scriptFor(os));
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".cc-os-card"), function (b) {
+    b.addEventListener("click", function () { launch(b.getAttribute("data-os")); });
+  });
+
+  sw.addEventListener("click", function () {
+    done.style.display = "none";
+    stage.style.display = "none";
+    pick.style.display = "block";
+    pick.scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+
+  // Auto-resume if OS already chosen earlier in the course.
+  if (saved === "mac" || saved === "windows") { launch(saved); }
+})();
+</script>
+
+
+<link rel="stylesheet" href="../../mighty/mighty-additional-fonts.css"><link rel="stylesheet" href="../../mighty/mighty-global-styles.css"><link rel="stylesheet" href="../../mighty/mighty-interactive-body-font.css"></body></html>

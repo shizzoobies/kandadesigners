@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<style id="mighty-reset-css">/* Basic reset - lowest priority */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</style><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Recap</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-hero { text-align:center; padding:6px 4px 2px; }
+  .cc-mark {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:54px; height:54px; border-radius:16px; background:var(--cc-green);
+    color:#fff; font-size:1.7rem; margin-bottom:12px; box-shadow:var(--cc-shadow);
+  }
+  .cc-hero h1 { font-size:2rem; margin:0 0 8px; }
+  .cc-hero p { max-width:580px; margin:0 auto; color:var(--cc-ink-soft); }
+  .cc-stage { margin-top:18px; }
+  .cc-sub { font-family:var(--cc-font-display); font-size:1.15rem; color:var(--cc-ink); margin:22px 0 4px; }
+  .cc-skills { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:12px; }
+  @media (max-width:560px){ .cc-skills { grid-template-columns:1fr; } }
+  .cc-skill {
+    display:flex; gap:11px; align-items:flex-start;
+    background:var(--cc-paper-2); border:1px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius-sm); padding:12px 14px;
+  }
+  .cc-skill__c { flex:none; color:var(--cc-green); font-weight:700; }
+  .cc-skill__t { color:var(--cc-ink); font-size:.92rem; }
+  .cc-next {
+    margin-top:18px; padding:16px 18px; border-radius:var(--cc-radius);
+    background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft); color:var(--cc-ink-soft);
+  }
+  .cc-next h3 { margin:0 0 6px; }
+  .cc-next p { margin:0 0 8px; }
+  .cc-next code {
+    font-family:var(--cc-font-mono); font-size:.85em;
+    background:var(--cc-paper-3); padding:2px 7px; border-radius:5px; color:var(--cc-ink);
+  }
+  .cc-close { margin-top:14px; text-align:center; color:var(--cc-ink-faint); font-size:.9rem; display:none; }
+  .cc-guide { margin-top:14px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    padding:15px 18px; border-radius:var(--cc-radius); background:var(--cc-paper-2); border:1px solid var(--cc-paper-3); }
+  .cc-guide__t { font-weight:600; color:var(--cc-ink); }
+  .cc-guide__d { font-size:.85rem; color:var(--cc-ink-faint); margin-top:2px; }
+
+  /* ask-a-question tutor chat */
+  .cc-msg { max-width:88%; padding:10px 13px; border-radius:14px; font-size:.9rem; line-height:1.45; }
+  .cc-msg--me { align-self:flex-end; background:var(--cc-accent); color:#fff; border-bottom-right-radius:5px; }
+  .cc-msg--ai { align-self:flex-start; background:var(--cc-paper); border:1px solid var(--cc-paper-3); color:var(--cc-ink); border-bottom-left-radius:5px; }
+  .cc-trychat { margin-top:10px; background:var(--cc-paper-2); border:1px solid var(--cc-paper-3); border-radius:var(--cc-radius); overflow:hidden; }
+  .cc-chatlog { padding:14px; display:flex; flex-direction:column; gap:9px; max-height:240px; overflow-y:auto; }
+  .cc-chatform { display:flex; gap:8px; padding:10px 12px; border-top:1px solid var(--cc-paper-3); background:var(--cc-paper); }
+  .cc-chatform input { flex:1; font-family:var(--cc-font-ui); font-size:.92rem; padding:9px 14px; border:1px solid var(--cc-paper-3); border-radius:999px; background:var(--cc-paper-2); color:var(--cc-ink); }
+  .cc-chatform input:focus { outline:2px solid var(--cc-accent); border-color:var(--cc-accent); }
+  .cc-chatsend { flex:none; width:38px; height:38px; border-radius:50%; border:none; background:var(--cc-accent); color:#fff; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; transition:background .15s, transform .12s; }
+  .cc-chatsend:active { transform:scale(.94); }
+  .cc-chatsend:hover { background:var(--cc-accent-deep); }
+  .cc-chatsend:disabled { opacity:.5; cursor:not-allowed; }
+  .cc-chatnote { padding:0 14px 12px; font-size:.78rem; color:var(--cc-ink-faint); }
+  .cc-typing { font-style:italic; color:var(--cc-ink-faint); }
+  .cc-aistatus { display:inline-flex; align-items:center; gap:7px; font-family:var(--cc-font-ui); font-size:.76rem; font-weight:600; padding:4px 11px; border-radius:999px; border:1px solid var(--cc-paper-3); background:var(--cc-paper-2); color:var(--cc-ink-faint); }
+  .cc-aistatus .dot { width:8px; height:8px; border-radius:50%; background:#9b978a; flex:none; }
+  .cc-aistatus--checking .dot { background:var(--cc-yellow); }
+  .cc-aistatus--live { color:#2e7d32; border-color:#bfe0b4; background:#eef6ec; }
+  .cc-aistatus--live .dot { background:#2e7d32; }
+  .cc-aistatus--offline { color:var(--cc-accent-deep); border-color:var(--cc-accent-soft); background:var(--cc-accent-wash); }
+  .cc-aistatus--offline .dot { background:var(--cc-accent-deep); }
+</style>
+<script id="mighty-interactive-sdk" src="../../mighty/sdk/v1/mighty-interactive-sdk.min.js"></script></head>
+<body>
+<div class="cc-root">
+
+  <div class="cc-hero">
+    <div class="cc-mark" aria-hidden="true">✓</div>
+    <h1>Course complete</h1>
+    <p>You went from a blank terminal to building real things by describing them. That is the whole skill. Here is what you covered.</p>
+  </div>
+
+  <div class="cc-stage">
+    <div id="term-mount"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:10px"><span id="aistatus" class="cc-aistatus cc-aistatus--checking" title="Live AI status"><span class="dot"></span><span class="txt">Checking live AI…</span></span></div>
+
+  <div class="cc-sub">What you can do now</div>
+  <div class="cc-skills">
+    <div class="cc-skill"><span class="cc-skill__c" aria-hidden="true">✓</span><span class="cc-skill__t">Install Claude Code and verify it.</span></div>
+    <div class="cc-skill"><span class="cc-skill__c" aria-hidden="true">✓</span><span class="cc-skill__t">Sign in to your Anthropic account.</span></div>
+    <div class="cc-skill"><span class="cc-skill__c" aria-hidden="true">✓</span><span class="cc-skill__t">Make requests in plain English and review diffs.</span></div>
+    <div class="cc-skill"><span class="cc-skill__c" aria-hidden="true">✓</span><span class="cc-skill__t">Add a connector with MCP and watch a tool call.</span></div>
+    <div class="cc-skill"><span class="cc-skill__c" aria-hidden="true">✓</span><span class="cc-skill__t">Build a website by describing it.</span></div>
+    <div class="cc-skill"><span class="cc-skill__c" aria-hidden="true">✓</span><span class="cc-skill__t">Assemble a SCORM package for Rise.</span></div>
+  </div>
+
+  <div class="cc-next">
+    <h3>Now use the Claude app, with eyes open</h3>
+    <p>Most of your day to day will happen in the Claude desktop app on macOS or Windows, not the terminal. You just saw what it does underneath, so its requests will make sense: you ask in plain English, it reads and edits real files, you review the change.</p>
+    <p>When you have a Claude account or license, sign in, ask for something small, and watch the loop you now know by heart.</p>
+  </div>
+
+  <div class="cc-sub">One more thing: ask Claude anything</div>
+  <div class="cc-trychat">
+    <div id="chatlog" class="cc-chatlog">
+      <div class="cc-msg cc-msg--ai" id="chat-hello">Before you go, ask me anything about Claude Code or how to start using it.</div>
+    </div>
+    <form id="chatform" class="cc-chatform">
+      <input id="chatinput" type="text" placeholder="Ask Claude something…" autocomplete="off" aria-label="Ask Claude a question">
+      <button id="chatsend" class="cc-chatsend" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg></button>
+    </form>
+    <div class="cc-chatnote">A safe practice chat using the same Claude you will use in the app.</div>
+  </div>
+
+  <div class="cc-guide">
+    <div>
+      <div class="cc-guide__t">Take the guide with you</div>
+      <div class="cc-guide__d">A short printable PDF with the steps, the loop, and all the download links.</div>
+    </div>
+    <button id="dlguide" class="cc-btn" type="button">Download the guide (PDF)</button>
+  </div>
+
+  <div id="close" class="cc-close">Nicely done. Close this lesson whenever you are ready.</div>
+
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "The recap page. It wraps up the course and links a downloadable PDF guide.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var mount = document.getElementById("term-mount");
+  var close = document.getElementById("close");
+  var os = (CCTerminal.getOS && CCTerminal.getOS()) || "mac";
+
+  var fn = CCTerminal.firstName ? CCTerminal.firstName() : null;
+  if (fn) {
+    close.textContent = "Nicely done, " + fn + ". Close this lesson whenever you are ready.";
+    var hp = document.querySelector(".cc-hero p");
+    if (hp) hp.textContent = "Nice work, " + fn + ". You went from a blank terminal to building real things by describing them. That is the whole skill. Here is what you covered.";
+  }
+
+  var script = [
+    { type:"output", lines:[
+      {t:"dim", s:"# Session recap"},
+      ""
+    ]},
+    { type:"output", lines:[
+      {t:"ok", s:"✓ Installed Claude Code with npm"},
+      {t:"ok", s:"✓ Signed in through the browser"},
+      {t:"ok", s:"✓ Made your first request and reviewed a diff"},
+      {t:"ok", s:"✓ Connected Adobe Creative with MCP"},
+      {t:"ok", s:"✓ Built a live website from a sentence"},
+      {t:"ok", s:"✓ Assembled a SCORM package for Rise"},
+      ""
+    ]},
+    { type:"pause", ms:400 },
+    { type:"output", lines:[
+      {t:"box", title:"You know the loop", lines:[
+        "Ask in plain English. It reads and edits real files.",
+        "You review the change. Refine. Repeat.",
+        "The Claude app you will use runs on exactly this loop."
+      ]}
+    ]}
+  ];
+
+  var term = new CCTerminal(mount, {
+    os: os,
+    onComplete: function () { close.style.display = "block"; }
+  });
+  term.run(script);
+})();
+</script>
+<script>
+(function () {
+  var b64 = "JVBERi0xLjMKJf////8KMTMgMCBvYmoKPDwKL1MgL1VSSQovVVJJIChodHRwczovL2NsYXVkZS5haS9hcGkvZGVza3RvcC9kYXJ3aW4vdW5pdmVyc2FsL2RtZy9sYXRlc3QvcmVkaXJlY3QpCj4+CmVuZG9iagoxNCAwIG9iago8PAovU3VidHlwZSAvTGluawovQSAxMyAwIFIKL1R5cGUgL0Fubm90Ci9SZWN0IFsxNDYuNjQ1NDk2IDY1NS45MDI1IDQ3MC4zMzk0ODMgNjY1LjYxNV0KL0JvcmRlciBbMCAwIDBdCi9GIDQKPj4KZW5kb2JqCjE1IDAgb2JqCjw8Ci9TIC9VUkkKL1VSSSAoaHR0cHM6Ly9jbGF1ZGUuYWkvYXBpL2Rlc2t0b3Avd2luMzIveDY0L3NldHVwL2xhdGVzdC9yZWRpcmVjdCkKPj4KZW5kb2JqCjE2IDAgb2JqCjw8Ci9TdWJ0eXBlIC9MaW5rCi9BIDE1IDAgUgovVHlwZSAvQW5ub3QKL1JlY3QgWzE1NC4wNjg5OTYgNjM4LjQwNzUgNDUwLjUwNDk4NiA2NDguMTJdCi9Cb3JkZXIgWzAgMCAwXQovRiA0Cj4+CmVuZG9iagoxNyAwIG9iago8PAovUyAvVVJJCi9VUkkgKGh0dHBzOi8vY2xhdWRlLmNvbS9kb3dubG9hZCkKPj4KZW5kb2JqCjE4IDAgb2JqCjw8Ci9TdWJ0eXBlIC9MaW5rCi9BIDE3IDAgUgovVHlwZSAvQW5ub3QKL1JlY3QgWzI1Mi4yNTQ0OTQgNjIwLjkxMjUgMzk2Ljc4Njk4NyA2MzAuNjI1XQovQm9yZGVyIFswIDAgMF0KL0YgNAo+PgplbmRvYmoKMjYgMCBvYmoKPDwKL1MgL1VSSQovVVJJIChodHRwczovL2NsYXVkZS5jb20vZG93bmxvYWQpCj4+CmVuZG9iagoyNyAwIG9iago8PAovU3VidHlwZSAvTGluawovQSAyNiAwIFIKL1R5cGUgL0Fubm90Ci9SZWN0IFsxOTYuMzk0NDk3IDY4OS4xNzg1IDM0MC45MjY5OTEgNjk4Ljg5MV0KL0JvcmRlciBbMCAwIDBdCi9GIDQKPj4KZW5kb2JqCjI4IDAgb2JqCjw8Ci9TIC9VUkkKL1VSSSAoaHR0cHM6Ly9jbGF1ZGUuYWkpCj4+CmVuZG9iagoyOSAwIG9iago8PAovU3VidHlwZSAvTGluawovQSAyOCAwIFIKL1R5cGUgL0Fubm90Ci9SZWN0IFsyMjYuNzkxOTk0IDY3MS42ODM1IDMwNi43Mjg0OTEgNjgxLjM5Nl0KL0JvcmRlciBbMCAwIDBdCi9GIDQKPj4KZW5kb2JqCjMwIDAgb2JqCjw8Ci9TIC9VUkkKL1VSSSAoaHR0cHM6Ly9jb25zb2xlLmFudGhyb3BpYy5jb20pCj4+CmVuZG9iagozMSAwIG9iago8PAovU3VidHlwZSAvTGluawovQSAzMCAwIFIKL1R5cGUgL0Fubm90Ci9SZWN0IFsyMzcuMzU0OTk0IDY1NC4xODg1IDM4Ny4yOTQ5ODkgNjYzLjkwMV0KL0JvcmRlciBbMCAwIDBdCi9GIDQKPj4KZW5kb2JqCjMyIDAgb2JqCjw8Ci9TIC9VUkkKL1VSSSAoaHR0cHM6Ly9kb2NzLmNsYXVkZS5jb20pCj4+CmVuZG9iagozMyAwIG9iago8PAovU3VidHlwZSAvTGluawovQSAzMiAwIFIKL1R5cGUgL0Fubm90Ci9SZWN0IFsxNDIuODQ0NDk4IDYzNi42OTM1IDI2My4wMzc5OTQgNjQ2LjQwNl0KL0JvcmRlciBbMCAwIDBdCi9GIDQKPj4KZW5kb2JqCjcgMCBvYmoKPDwKL1R5cGUgL1BhZ2UKL1BhcmVudCAxIDAgUgovTWVkaWFCb3ggWzAgMCA2MTIgNzkyXQovQ29udGVudHMgNSAwIFIKL1Jlc291cmNlcyA2IDAgUgovVXNlclVuaXQgMQo+PgplbmRvYmoKNiAwIG9iago8PAovUHJvY1NldCBbL1BERiAvVGV4dCAvSW1hZ2VCIC9JbWFnZUMgL0ltYWdlSV0KL0ZvbnQgPDwKL0YyIDggMCBSCi9GMSA5IDAgUgo+PgovQ29sb3JTcGFjZSA8PAo+Pgo+PgplbmRvYmoKNSAwIG9iago8PAovTGVuZ3RoIDEwNjAKL0ZpbHRlciAvRmxhdGVEZWNvZGUKPj4Kc3RyZWFtCniczVjJjhs3EL33V/AHTFcVWVUkMNDBzgLkECAZ3YIcolY3EMBjwDGQ/H5QJHuT2rJ8MDRzmebSzVevtkehAwfuDTpwmsn1L92nzmYEySGD+2fo3v4w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L1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDEgMCBSCi9OYW1lcyAyIDAgUgo+PgplbmRvYmoKMSAwIG9iago8PAovVHlwZSAvUGFnZXMKL0NvdW50IDQKL0tpZHMgWzcgMCBSIDEyIDAgUiAyMiAwIFIgMjUgMCBSXQo+PgplbmRvYmoKMiAwIG9iago8PAovRGVzdHMgPDwKICAvTmFtZXMgWwpdCj4+Cj4+CmVuZG9iagp4cmVmCjAgNDAKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDA5MDUxIDAwMDAwIG4gCjAwMDAwMDkxMjkgMDAwMDAgbiAKMDAwMDAwODk4OSAwMDAwMCBuIAowMDAwMDA4OTY4IDAwMDAwIG4gCjAwMDAwMDE2NTkgMDAwMDAgbiAKMDAwMDAwMTU0MiAwMDAwMCBuIAowMDAwMDAxNDI2IDAwMDAwIG4gCjAwMDAwMDg3NzAgMDAwMDAgbiAKMDAwMDAwODY3MyAwMDAwMCBuIAowMDAwMDAzMDcxIDAwMDAwIG4gCjAwMDAwMDI5NDIgMDAwMDAgbiAKMDAwMDAwMjc5MiAwMDAwMCBuIAowMDAwMDAwMDE1IDAwMDAwIG4gCjAwMDAwMDAxMTkgMDAwMDAgbiAKMDAwMDAwMDI0NyAwMDAwMCBuIAowMDAwMDAwMzQ2IDAwMDAwIG4gCjAwMDAwMDA0NzMgMDAwMDAgbiAKMDAwMDAwMDUzOCAwMDAwMCBuIAowMDAwMDA4ODcyIDAwMDAwIG4gCjAwMDAwMDUwNTQgMDAwMDAgbiAKMDAwMDAwNDkyNSAwMDAwMCBuIAowMDAwMDA0ODA2IDAwMDAwIG4gCjAwMDAwMDcwMDEgMDAwMDAgbiAKMDAwMDAwNjg4MyAwMDAwMCBuIAowMDAwMDA2NzI2IDAwMDAwIG4gCjAwMDAwMDA2NjYgMDAwMDAgbiAKMDAwMDAwMDczMSAwMDAwMCBuIAowMDAwMDAwODU5IDAwMDAwIG4gCjAwMDAwMDA5MTQgMDAwMDAgbiAKMDAwMDAwMTA0MiAwMDAwMCBuIAowMDAwMDAxMTA5IDAwMDAwIG4gCjAwMDAwMDEyMzcgMDAwMDAgbiAKMDAwMDAwMTI5OCAwMDAwMCBuIAowMDAwMDA4NTY4IDAwMDAwIG4gCjAwMDAwMDg0MDIgMDAwMDAgbiAKMDAwMDAwODQyNyAwMDAwMCBuIAowMDAwMDA4NDUyIDAwMDAwIG4gCjAwMDAwMDg0ODggMDAwMDAgbiAKMDAwMDAwODUzMSAwMDAwMCBuIAp0cmFpbGVyCjw8Ci9TaXplIDQwCi9Sb290IDMgMCBSCi9JbmZvIDM0IDAgUgovSUQgWzwxNWE5NDVmMTA4NWEyYmM5MTI0ZTllYjkyZWZkNDczMj4gPDE1YTk0NWYxMDg1YTJiYzkxMjRlOWViOTJlZmQ0NzMyPl0KPj4Kc3RhcnR4cmVmCjkxNzYKJSVFT0YK";
+  var btn = document.getElementById("dlguide");
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    try {
+      var bin = atob(b64), len = bin.length, arr = new Uint8Array(len);
+      for (var i = 0; i < len; i++) arr[i] = bin.charCodeAt(i);
+      var url = URL.createObjectURL(new Blob([arr], { type: "application/pdf" }));
+      var a = document.createElement("a");
+      a.href = url; a.download = "Claude-Code-Course-Guide.pdf";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+    } catch (e) {
+      window.open("data:application/pdf;base64," + b64, "_blank");
+    }
+  });
+})();
+</script>
+<script>
+(function () {
+  var CONFIG = { workerUrl: "https://cc-course-proxy.tgqhg6kf4g.workers.dev" };
+
+  /* ---- live AI status badge (free health check, no token cost) ---- */
+  (function () {
+    var el = document.getElementById("aistatus"); if (!el) return;
+    function set(state, txt){ el.className = "cc-aistatus cc-aistatus--"+state; el.querySelector(".txt").textContent = txt; }
+    if (!CONFIG.workerUrl){ set("offline", "Built-in mode (no proxy)"); return; }
+    set("checking", "Checking live AI…");
+    var ctrl = new AbortController(); var to = setTimeout(function(){ ctrl.abort(); }, 8000);
+    fetch(CONFIG.workerUrl, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ kind:"ping" }), signal: ctrl.signal })
+      .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
+      .then(function(res){ clearTimeout(to); if (res.ok && res.d && res.d.pong) set("live", "Live AI connected"); else set("offline", "Live AI unavailable"); })
+      .catch(function(err){ clearTimeout(to); set("offline", "Live AI not reachable"); try { console.warn("Course: live AI proxy not reachable.", err && err.message); } catch(e){} });
+  })();
+  var chatlog = document.getElementById("chatlog");
+  var chatform = document.getElementById("chatform");
+  var chatinput = document.getElementById("chatinput");
+  var chatsend = document.getElementById("chatsend");
+  if (!chatform) return;
+  var history = [];
+  var fn = CCTerminal.firstName ? CCTerminal.firstName() : null;
+  if (fn) { var hello = document.getElementById("chat-hello"); if (hello) hello.textContent = "Before you go, " + fn + ", ask me anything about Claude Code or how to start using it."; }
+  function addMsg(role, text) {
+    var d = document.createElement("div");
+    d.className = "cc-msg " + (role === "me" ? "cc-msg--me" : "cc-msg--ai");
+    d.textContent = text;
+    chatlog.appendChild(d); chatlog.scrollTop = chatlog.scrollHeight;
+    return d;
+  }
+  async function sendChat(text) {
+    addMsg("me", text); history.push({ role: "user", text: text });
+    chatinput.value = ""; chatsend.disabled = true;
+    var bubble = addMsg("ai", "…"); bubble.classList.add("cc-typing");
+    if (!CONFIG.workerUrl) { bubble.classList.remove("cc-typing"); bubble.textContent = "The live chat is offline here, but in the real app this is where Claude replies."; chatsend.disabled = false; return; }
+    try {
+      var ctrl = new AbortController(); var to = setTimeout(function () { ctrl.abort(); }, 20000);
+      var res = await fetch(CONFIG.workerUrl, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: "chat", prompt: text, history: history.slice(0, -1),
+          name: (CCTerminal.getName && CCTerminal.getName()) || null, role: (CCTerminal.getRole && CCTerminal.getRole()) || null }), signal: ctrl.signal });
+      clearTimeout(to);
+      var data = await res.json(); bubble.classList.remove("cc-typing");
+      if (res.ok && data && data.text) { bubble.textContent = data.text; history.push({ role: "assistant", text: data.text }); }
+      else if (data && data.error && data.error.indexOf("rate limit") >= 0) { bubble.textContent = "We have hit today's practice limit. Try again tomorrow, or head to the app."; }
+      else { bubble.textContent = "Something hiccuped. In the real app, Claude would answer here. Try again in a moment."; }
+    } catch (e) { bubble.classList.remove("cc-typing"); bubble.textContent = "Could not reach Claude just now. In the real app this is where the reply appears."; }
+    chatsend.disabled = false; chatinput.focus();
+  }
+  chatform.addEventListener("submit", function (e) { e.preventDefault(); var v = chatinput.value.trim(); if (v) sendChat(v); });
+})();
+</script>
+
+
+<link rel="stylesheet" href="../../mighty/mighty-additional-fonts.css"><link rel="stylesheet" href="../../mighty/mighty-global-styles.css"><link rel="stylesheet" href="../../mighty/mighty-interactive-body-font.css"></body></html>

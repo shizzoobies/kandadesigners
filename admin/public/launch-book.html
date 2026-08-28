@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K&A Launch Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDF0F3; --card:#FBFCFD; --ink:#101821; --soft:#5A6875;
+  --rule:#C9D2DA; --signal:#1E43D8; --signal-deep:#122B8F;
+  --moss:#3F6B47; --amber:#8A5A12; --danger:#9B2C2C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"Instrument Sans",system-ui,sans-serif;font-size:15px;line-height:1.5}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+h1,h2,h3{font-family:"Bricolage Grotesque",sans-serif;letter-spacing:-0.02em;font-weight:800}
+h1{font-size:1.5rem}
+h2{font-size:1.1rem;font-weight:600;margin-bottom:12px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--rule);padding:20px 0;background:var(--card)}
+header .row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.sub{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--signal)}
+
+nav{display:flex;gap:4px;border-bottom:1px solid var(--rule);background:var(--card);overflow-x:auto}
+nav button{
+  background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;
+  font-family:inherit;font-size:.9rem;font-weight:500;color:var(--soft);
+  padding:12px 16px;white-space:nowrap;
+}
+nav button:hover{color:var(--ink)}
+nav button[aria-selected="true"]{color:var(--signal);border-bottom-color:var(--signal)}
+:focus-visible{outline:2.5px solid var(--signal);outline-offset:2px}
+
+main{padding:26px 0 70px}
+.panel[hidden]{display:none}
+
+.cards{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:26px}
+@media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}}
+.card{background:var(--card);padding:16px 18px}
+.card .lbl{font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.card .val{font-family:"Bricolage Grotesque",sans-serif;font-size:1.6rem;font-weight:800;letter-spacing:-.03em;margin-top:5px}
+.card .note{font-size:.76rem;color:var(--soft);margin-top:2px}
+.card.owed .val{color:var(--signal)}
+.card.clear .val{color:var(--moss)}
+
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--rule);font-size:.88rem}
+th{text-align:left;font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);font-weight:500;padding:10px 12px;border-bottom:1px solid var(--rule)}
+td{padding:10px 12px;border-bottom:1px solid #E4E9EE;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right;font-family:"JetBrains Mono",monospace}
+.tblwrap{overflow-x:auto}
+
+.tag{font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;white-space:nowrap}
+.tag.syn{background:#E1E7FB;color:var(--signal-deep)}
+.tag.dir{background:#E6EAEE;color:var(--soft)}
+.tag.active{background:#E2EDE4;color:var(--moss)}
+.tag.completed{background:#EDE7DA;color:var(--amber)}
+.tag.churned{background:#F2E2E2;color:var(--danger)}
+
+form.box{background:var(--card);border:1px solid var(--rule);padding:18px;margin-bottom:22px}
+.grid{display:grid;gap:12px}
+@media(min-width:640px){.grid.g3{grid-template-columns:repeat(3,1fr)}.grid.g4{grid-template-columns:repeat(4,1fr)}}
+label{display:block;font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-bottom:5px}
+input,select,textarea{width:100%;font-family:inherit;font-size:.9rem;padding:9px 10px;border:1px solid var(--rule);border-radius:2px;background:#fff;color:var(--ink)}
+textarea{min-height:60px;resize:vertical}
+
+button.btn{background:var(--signal);color:#fff;border:none;border-radius:2px;font-family:inherit;font-weight:600;font-size:.88rem;padding:10px 18px;cursor:pointer}
+button.btn:hover{background:var(--signal-deep)}
+button.btn.ghost{background:none;color:var(--signal);border:1px solid var(--signal)}
+button.btn.ghost:hover{background:var(--signal);color:#fff}
+button.btn.quiet{background:none;color:var(--soft);border:1px solid var(--rule)}
+button.btn.quiet:hover{background:#E6EAEE;color:var(--ink)}
+button.btn.warn{background:none;color:var(--danger);border:1px solid var(--danger)}
+button.btn.warn:hover{background:var(--danger);color:#fff}
+.linkbtn{background:none;border:none;color:var(--signal);font-family:inherit;font-size:.82rem;cursor:pointer;padding:2px 4px}
+.linkbtn.del{color:var(--danger)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+
+.empty{background:var(--card);border:1px dashed var(--rule);padding:30px;text-align:center;color:var(--soft);font-size:.9rem}
+.hint{font-size:.8rem;color:var(--soft);margin-top:8px}
+.statement{background:var(--card);border:1px solid var(--rule);padding:20px;margin-top:18px}
+.stmt-total{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--ink);margin-top:14px;padding-top:12px}
+.stmt-total .v{font-family:"Bricolage Grotesque",sans-serif;font-size:1.7rem;font-weight:800;letter-spacing:-.03em}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:3px;font-size:.86rem;transition:transform .25s ease;z-index:50}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.loading{padding:40px;text-align:center;color:var(--soft);font-size:.9rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap row">
+    <div>
+      <span class="sub">K&amp;A Performance</span>
+      <h1>Launch Book</h1>
+    </div>
+    <div style="display:flex;gap:10px;align-items:flex-end">
+      <div>
+        <label for="period">Statement month</label>
+        <input type="month" id="period">
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="wrap" role="tablist">
+  <button role="tab" data-tab="overview" aria-selected="true">Overview</button>
+  <button role="tab" data-tab="clients" aria-selected="false">Clients</button>
+  <button role="tab" data-tab="payments" aria-selected="false">Payments</button>
+  <button role="tab" data-tab="statement" aria-selected="false">Hannah's statement</button>
+</nav>
+
+<main class="wrap">
+  <div id="boot" class="loading">Loading the book…</div>
+
+  <!-- OVERVIEW -->
+  <section class="panel" id="p-overview" hidden>
+    <div class="cards">
+      <div class="card"><div class="lbl">Collected this month</div><div class="val" id="m-collected">$0</div><div class="note" id="m-collected-n">no payments logged</div></div>
+      <div class="card owed"><div class="lbl">Commission owed</div><div class="val" id="m-owed">$0</div><div class="note" id="m-owed-n">20% of Synovial revenue</div></div>
+      <div class="card"><div class="lbl">Recurring / month</div><div class="val" id="m-mrr">$0</div><div class="note" id="m-mrr-n">active memberships</div></div>
+      <div class="card"><div class="lbl">Roster</div><div class="val" id="m-roster">0</div><div class="note" id="m-roster-n">of 48 seats</div></div>
+    </div>
+
+    <h2>Capacity</h2>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>Line</th><th class="num">Active</th><th class="num">Cap</th><th>Status</th></tr></thead>
+        <tbody id="cap-body"></tbody>
+      </table>
+    </div>
+
+    <h2 style="margin-top:28px">Recent payments</h2>
+    <div id="recent"></div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="panel" id="p-clients" hidden>
+    <form class="box" id="client-form">
+      <h2 id="client-form-title">Add a client</h2>
+      <input type="hidden" id="c-id">
+      <div class="grid g3">
+        <div><label for="c-name">Contact name</label><input id="c-name" required></div>
+        <div><label for="c-business">Business</label><input id="c-business" required></div>
+        <div><label for="c-start">Start date</label><input type="date" id="c-start" required></div>
+      </div>
+      <div class="grid g3" style="margin-top:12px">
+        <div><label for="c-tier">Tier</label><select id="c-tier">
+          <option value="launch">90-Day Launch &mdash; $2,000</option>
+          <option value="launch_site">Launch + Site &mdash; $3,999</option>
+          <option value="core">Core membership &mdash; $350/mo</option>
+          <option value="advisory">Advisory membership &mdash; $999/mo</option>
+        </select></div>
+        <div><label for="c-source">Source</label><select id="c-source">
+          <option value="synovial">Synovial (commissionable)</option>
+          <option value="direct">Direct</option>
+        </select></div>
+        <div><label for="c-status">Status</label><select id="c-status">
+          <option value="active">Active</option>
+          <option value="completed">Completed</option>
+          <option value="churned">Churned</option>
+        </select></div>
+      </div>
+      <div style="margin-top:12px"><label for="c-notes">Notes</label><textarea id="c-notes" placeholder="Payment plan, what they're building, anything you'll forget"></textarea></div>
+      <div class="actions">
+        <button type="submit" class="btn">Save client</button>
+        <button type="button" class="btn quiet" id="c-cancel" hidden>Cancel edit</button>
+      </div>
+    </form>
+    <div id="client-list"></div>
+  </section>
+
+  <!-- PAYMENTS -->
+  <section class="panel" id="p-payments" hidden>
+    <form class="box" id="pay-form">
+      <h2>Log a payment</h2>
+      <div class="grid g4">
+        <div><label for="p-client">Client</label><select id="p-client" required></select></div>
+        <div><label for="p-date">Date received</label><input type="date" id="p-date" required></div>
+        <div><label for="p-amount">Amount</label><input type="number" id="p-amount" min="0" step="0.01" required></div>
+        <div><label for="p-memo">Memo</label><input id="p-memo" placeholder="e.g. Launch 1 of 3"></div>
+      </div>
+      <div class="actions"><button type="submit" class="btn">Record payment</button></div>
+      <p class="hint">Commission is earned on cash collected, not on signed contracts. Only log it once the money has actually landed.</p>
+    </form>
+    <div id="pay-list"></div>
+  </section>
+
+  <!-- STATEMENT -->
+  <section class="panel" id="p-statement" hidden>
+    <h2 id="stmt-title">Statement</h2>
+    <p class="hint">20% of everything collected from Synovial-sourced clients. Due to Hannah by the 10th of the following month.</p>
+    <div class="statement" id="stmt-body"></div>
+    <div class="actions">
+      <button class="btn" id="stmt-copy">Copy statement</button>
+      <button class="btn ghost" id="stmt-toggle">Mark as paid</button>
+    </div>
+    <div style="margin-top:44px;border-top:1px solid var(--rule);padding-top:20px">
+      <h2>Danger zone</h2>
+      <p class="hint" style="margin-bottom:12px">Wipes every client and payment in this book. There is no undo.</p>
+      <button class="btn warn" id="reset">Erase all data</button>
+    </div>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const KEY = 'kap:launchbook';
+const RATE = 0.20;
+const CAPS = { core: 40, advisory: 8 };
+const TIERS = {
+  launch:      { label: '90-Day Launch',   amount: 2000, recurring: false },
+  launch_site: { label: 'Launch + Site',   amount: 3999, recurring: false },
+  core:        { label: 'Core',            amount: 350,  recurring: true  },
+  advisory:    { label: 'Advisory',        amount: 999,  recurring: true  }
+};
+
+let book = { clients: [], payments: [], statements: {} };
+let editingId = null;
+
+const $ = s => document.querySelector(s);
+const money = n => '$' + (Math.round(n * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const monthOf = d => (d || '').slice(0, 7);
+const prettyMonth = p => {
+  if (!p) return '';
+  const [y, m] = p.split('-');
+  return new Date(+y, +m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+};
+const clientById = id => book.clients.find(c => c.id === id);
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+async function load() {
+  try {
+    const res = await window.storage.get(KEY);
+    if (res && res.value) {
+      const parsed = JSON.parse(res.value);
+      book = { clients: parsed.clients || [], payments: parsed.payments || [], statements: parsed.statements || {} };
+    }
+  } catch (e) {
+    console.log('No saved book yet, starting fresh.');
+  }
+}
+
+async function save() {
+  try {
+    const res = await window.storage.set(KEY, JSON.stringify(book));
+    if (!res) toast('Could not save. Your last change may not stick.');
+  } catch (e) {
+    console.error(e);
+    toast('Could not save. Your last change may not stick.');
+  }
+}
+
+/* ---------- derived ---------- */
+function paymentsIn(period) {
+  return book.payments.filter(p => monthOf(p.date) === period);
+}
+function commissionable(period) {
+  return paymentsIn(period).filter(p => {
+    const c = clientById(p.clientId);
+    return c && c.source === 'synovial';
+  });
+}
+function mrr() {
+  return book.clients
+    .filter(c => c.status === 'active' && TIERS[c.tier].recurring)
+    .reduce((s, c) => s + TIERS[c.tier].amount, 0);
+}
+function activeCount(tier) {
+  return book.clients.filter(c => c.status === 'active' && c.tier === tier).length;
+}
+function lifetime(clientId) {
+  const paid = book.payments.filter(p => p.clientId === clientId).reduce((s, p) => s + p.amount, 0);
+  return { paid, comm: paid * RATE };
+}
+
+/* ---------- render ---------- */
+function renderOverview() {
+  const period = $('#period').value;
+  const pays = paymentsIn(period);
+  const collected = pays.reduce((s, p) => s + p.amount, 0);
+  const owed = commissionable(period).reduce((s, p) => s + p.amount, 0) * RATE;
+
+  $('#m-collected').textContent = money(collected);
+  $('#m-collected-n').textContent = pays.length ? pays.length + ' payment' + (pays.length > 1 ? 's' : '') + ' in ' + prettyMonth(period) : 'nothing logged in ' + prettyMonth(period);
+  $('#m-owed').textContent = money(owed);
+  const st = book.statements[period];
+  $('#m-owed-n').textContent = owed === 0 ? 'nothing commissionable' : (st && st.paid ? 'paid ' + st.paidOn : 'unpaid');
+  $('#m-mrr').textContent = money(mrr());
+  const memberCount = book.clients.filter(c => c.status === 'active' && TIERS[c.tier].recurring).length;
+  $('#m-mrr-n').textContent = memberCount + ' active member' + (memberCount === 1 ? '' : 's');
+  const activeAll = book.clients.filter(c => c.status === 'active').length;
+  $('#m-roster').textContent = activeAll;
+  $('#m-roster-n').textContent = activeCount('launch_site') + ' site build' + (activeCount('launch_site') === 1 ? '' : 's') + ' in flight';
+
+  const rows = [
+    ['Core members', activeCount('core'), CAPS.core],
+    ['Advisory members', activeCount('advisory'), CAPS.advisory],
+    ['Launch + Site in flight', activeCount('launch_site'), 2]
+  ];
+  $('#cap-body').innerHTML = rows.map(([label, n, cap]) => {
+    let cls = 'active', txt = 'room to sell';
+    if (n >= cap) { cls = 'churned'; txt = 'full, stop selling'; }
+    else if (n >= cap * 0.8) { cls = 'completed'; txt = 'nearly full'; }
+    return `<tr><td>${label}</td><td class="num">${n}</td><td class="num">${cap}</td><td><span class="tag ${cls}">${txt}</span></td></tr>`;
+  }).join('');
+
+  const recent = [...book.payments].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
+  $('#recent').innerHTML = recent.length ? payTable(recent, false) : '<div class="empty">No payments logged yet.</div>';
+}
+
+function payTable(list, withDelete) {
+  return '<div class="tblwrap"><table><thead><tr><th>Date</th><th>Client</th><th>Memo</th><th class="num">Amount</th><th class="num">Hannah</th>' +
+    (withDelete ? '<th></th>' : '') + '</tr></thead><tbody>' +
+    list.map(p => {
+      const c = clientById(p.clientId);
+      const comm = c && c.source === 'synovial' ? p.amount * RATE : 0;
+      return `<tr>
+        <td class="mono" style="font-size:.8rem">${esc(p.date)}</td>
+        <td>${c ? esc(c.business) : '<em>deleted client</em>'} ${c ? `<span class="tag ${c.source === 'synovial' ? 'syn' : 'dir'}">${c.source === 'synovial' ? 'SYN' : 'DIR'}</span>` : ''}</td>
+        <td style="color:var(--soft)">${esc(p.memo || '')}</td>
+        <td class="num">${money(p.amount)}</td>
+        <td class="num" style="color:${comm ? 'var(--signal)' : 'var(--soft)'}">${comm ? money(comm) : '&mdash;'}</td>
+        ${withDelete ? `<td class="num"><button class="linkbtn del" data-delpay="${p.id}">Delete</button></td>` : ''}
+      </tr>`;
+    }).join('') + '</tbody></table></div>';
+}
+
+function renderClients() {
+  const sel = $('#p-client');
+  sel.innerHTML = book.clients.length
+    ? book.clients.map(c => `<option value="${c.id}">${esc(c.business)} — ${TIERS[c.tier].label}</option>`).join('')
+    : '<option value="">Add a client first</option>';
+
+  if (!book.clients.length) {
+    $('#client-list').innerHTML = '<div class="empty">No clients yet. Add the first one above.</div>';
+    return;
+  }
+  $('#client-list').innerHTML = '<div class="tblwrap"><table><thead><tr>' +
+    '<th>Business</th><th>Contact</th><th>Tier</th><th>Source</th><th>Status</th><th class="num">Collected</th><th class="num">Hannah</th><th></th>' +
+    '</tr></thead><tbody>' +
+    book.clients.map(c => {
+      const lt = lifetime(c.id);
+      return `<tr>
+        <td><strong>${esc(c.business)}</strong><div style="font-size:.76rem;color:var(--soft)">since ${esc(c.start)}</div></td>
+        <td>${esc(c.name)}</td>
+        <td>${TIERS[c.tier].label}</td>
+        <td><span class="tag ${c.source === 'synovial' ? 'syn' : 'dir'}">${c.source === 'synovial' ? 'Synovial' : 'Direct'}</span></td>
+        <td><span class="tag ${c.status}">${c.status}</span></td>
+        <td class="num">${money(lt.paid)}</td>
+        <td class="num" style="color:${c.source === 'synovial' ? 'var(--signal)' : 'var(--soft)'}">${c.source === 'synovial' ? money(lt.comm) : '&mdash;'}</td>
+        <td class="num"><button class="linkbtn" data-edit="${c.id}">Edit</button><button class="linkbtn del" data-delclient="${c.id}">Delete</button></td>
+      </tr>`;
+    }).join('') + '</tbody></table></div>';
+}
+
+function renderPayments() {
+  const list = [...book.payments].sort((a, b) => b.date.localeCompare(a.date));
+  $('#pay-list').innerHTML = list.length ? payTable(list, true) : '<div class="empty">No payments logged yet.</div>';
+}
+
+function renderStatement() {
+  const period = $('#period').value;
+  const rows = commissionable(period).sort((a, b) => a.date.localeCompare(b.date));
+  const total = rows.reduce((s, p) => s + p.amount, 0);
+  const owed = total * RATE;
+  const st = book.statements[period];
+
+  $('#stmt-title').textContent = 'Statement — ' + prettyMonth(period);
+  $('#stmt-toggle').textContent = st && st.paid ? 'Mark as unpaid' : 'Mark as paid';
+
+  if (!rows.length) {
+    $('#stmt-body').innerHTML = '<div style="color:var(--soft)">Nothing commissionable collected in ' + prettyMonth(period) + '.</div>';
+    return;
+  }
+  $('#stmt-body').innerHTML =
+    (st && st.paid ? `<div class="tag active" style="display:inline-block;margin-bottom:12px">Paid ${esc(st.paidOn)}</div>` : '') +
+    '<div class="tblwrap"><table><thead><tr><th>Date</th><th>Client</th><th>Memo</th><th class="num">Collected</th><th class="num">20%</th></tr></thead><tbody>' +
+    rows.map(p => {
+      const c = clientById(p.clientId);
+      return `<tr><td class="mono" style="font-size:.8rem">${esc(p.date)}</td><td>${c ? esc(c.business) : '—'}</td><td style="color:var(--soft)">${esc(p.memo || '')}</td><td class="num">${money(p.amount)}</td><td class="num">${money(p.amount * RATE)}</td></tr>`;
+    }).join('') +
+    '</tbody></table></div>' +
+    `<div class="stmt-total"><div><div class="lbl mono" style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)">Owed to Synovial</div><div style="font-size:.8rem;color:var(--soft)">on ${money(total)} collected</div></div><div class="v">${money(owed)}</div></div>`;
+}
+
+function statementText() {
+  const period = $('#period').value;
+  const rows = commissionable(period).sort((a, b) => a.date.localeCompare(b.date));
+  const total = rows.reduce((s, p) => s + p.amount, 0);
+  const lines = [
+    'Synovial Marketing — commission statement',
+    prettyMonth(period),
+    '',
+    ...rows.map(p => {
+      const c = clientById(p.clientId);
+      return `${p.date}  ${c ? c.business : 'unknown'}${p.memo ? ' (' + p.memo + ')' : ''}  ${money(p.amount)}  →  ${money(p.amount * RATE)}`;
+    }),
+    '',
+    `Collected: ${money(total)}`,
+    `Commission at 20%: ${money(total * RATE)}`,
+    '',
+    'Paid on cash collected. K&A Performance LLC.'
+  ];
+  return lines.join('\n');
+}
+
+function renderAll() {
+  renderOverview();
+  renderClients();
+  renderPayments();
+  renderStatement();
+}
+
+/* ---------- events ---------- */
+document.querySelectorAll('nav button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('nav button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    document.querySelectorAll('.panel').forEach(p => p.hidden = p.id !== 'p-' + b.dataset.tab);
+  });
+});
+
+$('#period').addEventListener('change', () => { renderOverview(); renderStatement(); });
+
+$('#client-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const data = {
+    name: $('#c-name').value.trim(),
+    business: $('#c-business').value.trim(),
+    start: $('#c-start').value,
+    tier: $('#c-tier').value,
+    source: $('#c-source').value,
+    status: $('#c-status').value,
+    notes: $('#c-notes').value.trim()
+  };
+  if (editingId) {
+    Object.assign(clientById(editingId), data);
+    toast('Client updated');
+  } else {
+    book.clients.push({ id: uid(), ...data });
+    toast('Client added');
+  }
+  resetClientForm();
+  await save();
+  renderAll();
+});
+
+$('#c-cancel').addEventListener('click', resetClientForm);
+
+function resetClientForm() {
+  editingId = null;
+  $('#client-form').reset();
+  $('#c-start').value = new Date().toISOString().slice(0, 10);
+  $('#client-form-title').textContent = 'Add a client';
+  $('#c-cancel').hidden = true;
+}
+
+$('#client-list').addEventListener('click', async e => {
+  const ed = e.target.dataset.edit, del = e.target.dataset.delclient;
+  if (ed) {
+    const c = clientById(ed);
+    editingId = ed;
+    $('#c-name').value = c.name; $('#c-business').value = c.business; $('#c-start').value = c.start;
+    $('#c-tier').value = c.tier; $('#c-source').value = c.source; $('#c-status').value = c.status;
+    $('#c-notes').value = c.notes || '';
+    $('#client-form-title').textContent = 'Editing ' + c.business;
+    $('#c-cancel').hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  if (del) {
+    const c = clientById(del);
+    const n = book.payments.filter(p => p.clientId === del).length;
+    if (!confirm(`Delete ${c.business}? ${n} payment${n === 1 ? '' : 's'} will be deleted with them.`)) return;
+    book.clients = book.clients.filter(x => x.id !== del);
+    book.payments = book.payments.filter(p => p.clientId !== del);
+    await save();
+    renderAll();
+    toast('Client deleted');
+  }
+});
+
+$('#p-client').addEventListener('change', () => {
+  const c = clientById($('#p-client').value);
+  if (c && !$('#p-amount').value) $('#p-amount').value = TIERS[c.tier].amount;
+});
+
+$('#pay-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const clientId = $('#p-client').value;
+  if (!clientId) { toast('Add a client first'); return; }
+  book.payments.push({
+    id: uid(), clientId,
+    date: $('#p-date').value,
+    amount: parseFloat($('#p-amount').value),
+    memo: $('#p-memo').value.trim()
+  });
+  $('#pay-form').reset();
+  $('#p-date').value = new Date().toISOString().slice(0, 10);
+  await save();
+  renderAll();
+  toast('Payment recorded');
+});
+
+$('#pay-list').addEventListener('click', async e => {
+  const id = e.target.dataset.delpay;
+  if (!id) return;
+  if (!confirm('Delete this payment?')) return;
+  book.payments = book.payments.filter(p => p.id !== id);
+  await save();
+  renderAll();
+  toast('Payment deleted');
+});
+
+$('#stmt-copy').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(statementText());
+    toast('Statement copied');
+  } catch (err) {
+    toast('Copy blocked by the browser');
+  }
+});
+
+$('#stmt-toggle').addEventListener('click', async () => {
+  const period = $('#period').value;
+  const st = book.statements[period];
+  if (st && st.paid) delete book.statements[period];
+  else book.statements[period] = { paid: true, paidOn: new Date().toISOString().slice(0, 10) };
+  await save();
+  renderOverview();
+  renderStatement();
+});
+
+$('#reset').addEventListener('click', async () => {
+  if (!confirm('Erase every client and payment in this book?')) return;
+  if (!confirm('Last check. This cannot be undone.')) return;
+  book = { clients: [], payments: [], statements: {} };
+  try { await window.storage.delete(KEY); } catch (e) { await save(); }
+  renderAll();
+  toast('Book erased');
+});
+
+/* ---------- boot ---------- */
+(async function init() {
+  const today = new Date().toISOString().slice(0, 10);
+  $('#period').value = today.slice(0, 7);
+  $('#c-start').value = today;
+  $('#p-date').value = today;
+  await load();
+  $('#boot').remove();
+  $('#p-overview').hidden = false;
+  renderAll();
+})();
+</script>
+</body>
+</html>

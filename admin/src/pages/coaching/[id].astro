@@ -1,0 +1,277 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { getMember, listSessions, listResources } from '../../lib/db.js';
+import { humanDate, todayInEastern } from '../../lib/format.js';
+import { TIER_LABELS, TIERS, ARC_TIERS, currentWeek } from '../../lib/coaching.js';
+
+const db = Astro.locals.runtime.env.DB;
+const today = todayInEastern();
+
+const id = Number(Astro.params.id);
+const member = id ? await getMember(db, id) : null;
+if (!member) return Astro.redirect('/coaching?error=member', 303);
+
+const [sessions, resources] = await Promise.all([
+  listSessions(db, member.id),
+  listResources(db, member.id),
+]);
+
+const isArc = ARC_TIERS.includes(member.tier);
+const wk = currentWeek(member.started_on, today);
+const weekTenDue = isArc && member.status === 'active' && wk >= 10 && !member.week10_offered_on;
+
+const saved = Astro.url.searchParams.get('saved');
+const error = Astro.url.searchParams.get('error');
+const ERRORS = {
+  tier: 'Pick a tier. Nothing was saved.',
+  status: 'Pick a status. Nothing was saved.',
+  date: 'A date could not be read. Use YYYY-MM-DD, or leave it blank. Nothing was saved.',
+  week: 'Week must be a number from 1 to 12, or blank. Nothing was saved.',
+  label: 'A resource needs a label. Nothing was saved.',
+  url: 'That link could not be read. It needs to start with http or https. Nothing was saved.',
+  email: 'That email could not be read. Nothing was saved.',
+  intent: 'Unrecognised action. Nothing was saved.',
+};
+
+// The four fixed milestones of the arc, rendered as a block form.
+const MILESTONES = [
+  { text: 'quickWin', textVal: member.quick_win, date: 'quickWinOn', dateVal: member.quick_win_on, label: 'Quick win, session one' },
+  { text: 'mainWorkflow', textVal: member.main_workflow, date: 'workflowShippedOn', dateVal: member.workflow_shipped_on, label: 'Main workflow, weeks 3 to 8' },
+  { text: 'ownBuild', textVal: member.own_build, date: 'ownBuildOn', dateVal: member.own_build_on, label: 'Their own build, weeks 9 to 12' },
+];
+const here = `/coaching/${member.id}`;
+// Precomputed: `<` comparisons inside template expressions break the Astro
+// compiler, which reads them as tag openings.
+const weekDefault = wk >= 1 && wk <= 12 ? String(wk) : '';
+---
+<Shell title={member.client_name} active="coaching">
+  {saved && <p class="notice">Saved.</p>}
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was saved.'}</p>}
+
+  <div class="groupline">
+    {TIER_LABELS[member.tier]} · {member.status}
+    {isArc && wk > 0 && ` · week ${Math.min(wk, 12)} of 12${wk > 12 ? ', overran' : ''}`}
+    {' · started '}{humanDate(member.started_on)}
+    {' · '}<a href={`/clients/${member.client_id}`}>client record</a>
+  </div>
+
+  {weekTenDue && (
+    <div class="rows">
+      <div class="row s-money">
+        <div class="tag">Week {String(Math.min(wk, 12)).padStart(2, '0')}</div>
+        <div class="what">
+          <b>Offer the membership</b>
+          <span>they can now see what they would lose by stopping; that is the moment the plan picked</span>
+        </div>
+        <div class="amt">
+          <em>
+            <form method="POST" action="/api/coaching" style="display:inline">
+              <input type="hidden" name="intent" value="week10-offered" />
+              <input type="hidden" name="memberId" value={member.id} />
+              <input type="hidden" name="returnTo" value={here} />
+              <button class="danger" type="submit">mark offered</button>
+            </form>
+          </em>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- State of play: the one-pager read before every call. -->
+  <div class="grid">
+    <section class="panel warn">
+      <h3>State of play</h3>
+      <p class="empty-state">
+        {member.state_updated_at
+          ? `Updated ${humanDate(member.state_updated_at.slice(0, 10))}. Rewrite it after every call.`
+          : 'Empty. Write it after the first call, then rewrite it after every call.'}
+      </p>
+      <form method="POST" action="/api/coaching">
+        <input type="hidden" name="intent" value="state" />
+        <input type="hidden" name="memberId" value={member.id} />
+        <input type="hidden" name="returnTo" value={here} />
+        <div class="field">
+          <label for="body">Where this member stands, one page, current</label>
+          <textarea id="body" name="body" rows="10">{member.state_of_play}</textarea>
+        </div>
+        <div class="actions"><button class="btn" type="submit">Save state of play</button></div>
+      </form>
+    </section>
+
+    <section class="panel calm">
+      <h3>The arc</h3>
+      <form method="POST" action="/api/coaching">
+        <input type="hidden" name="intent" value="milestones" />
+        <input type="hidden" name="memberId" value={member.id} />
+        <input type="hidden" name="returnTo" value={here} />
+        {MILESTONES.map((m) => (
+          <>
+            <div class="field">
+              <label for={m.text}>{m.label}</label>
+              <input id={m.text} name={m.text} value={m.textVal} autocomplete="off" />
+            </div>
+            <div class="field">
+              <label for={m.date}>Shipped on</label>
+              <input id={m.date} name={m.date} type="date" value={m.dateVal ?? ''} />
+            </div>
+          </>
+        ))}
+        <div class="field">
+          <label for="handoffSentOn">Handoff doc sent</label>
+          <input id="handoffSentOn" name="handoffSentOn" type="date" value={member.handoff_sent_on ?? ''} />
+        </div>
+        <div class="actions"><button class="btn" type="submit">Save milestones</button></div>
+      </form>
+    </section>
+  </div>
+
+  <!-- Session log -->
+  <div class="groupline">Sessions</div>
+  {sessions.length === 0 ? (
+    <p class="empty-state">No sessions logged. The log is what makes week ten arrive with receipts.</p>
+  ) : (
+    <div class="rows">
+      {sessions.map((s) => (
+        <div class="row s-quiet">
+          <div class="tag">{s.week_no ? `Wk ${String(s.week_no).padStart(2, '0')}` : humanDate(s.held_on).slice(0, 6)}</div>
+          <div class="what">
+            <b>{humanDate(s.held_on)}</b>
+            <span>{s.summary || 'no summary'}{s.next_plan ? ` · next: ${s.next_plan}` : ''}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <details class="adder">
+    <summary>Log a session</summary>
+    <form method="POST" action="/api/coaching">
+      <input type="hidden" name="intent" value="session-add" />
+      <input type="hidden" name="memberId" value={member.id} />
+      <input type="hidden" name="returnTo" value={here} />
+      <div class="field">
+        <label for="heldOn">Held on</label>
+        <input id="heldOn" name="heldOn" type="date" required value={today} />
+      </div>
+      {isArc && (
+        <div class="field">
+          <label for="weekNo">Program week, 1 to 12, blank if none</label>
+          <input id="weekNo" name="weekNo" inputmode="numeric" value={weekDefault} autocomplete="off" />
+        </div>
+      )}
+      <div class="field">
+        <label for="summary">What happened</label>
+        <textarea id="summary" name="summary" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label for="nextPlan">Next session's plan</label>
+        <input id="nextPlan" name="nextPlan" autocomplete="off" />
+      </div>
+      <div class="actions"><button class="btn" type="submit">Log session</button></div>
+    </form>
+  </details>
+
+  <!-- Member-facing resources: exactly what their portal page lists. -->
+  <div class="groupline">Portal resources</div>
+  {resources.length === 0 ? (
+    <p class="empty-state">Nothing shared yet. Recordings and resources added here appear on the member's portal page.</p>
+  ) : (
+    <div class="rows">
+      {resources.map((r) => (
+        <div class="row s-quiet">
+          <div class="tag">{r.kind}</div>
+          <div class="what">
+            <b><a href={r.url} rel="noopener">{r.label}</a></b>
+            <span>added {humanDate(r.created_at.slice(0, 10))}</span>
+          </div>
+          <div class="amt">
+            <em>
+              <form method="POST" action="/api/coaching" style="display:inline">
+                <input type="hidden" name="intent" value="resource-delete" />
+                <input type="hidden" name="memberId" value={member.id} />
+                <input type="hidden" name="resourceId" value={r.id} />
+                <input type="hidden" name="returnTo" value={here} />
+                <button class="danger" type="submit">remove</button>
+              </form>
+            </em>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <details class="adder">
+    <summary>Share a resource</summary>
+    <form method="POST" action="/api/coaching">
+      <input type="hidden" name="intent" value="resource-add" />
+      <input type="hidden" name="memberId" value={member.id} />
+      <input type="hidden" name="returnTo" value={here} />
+      <div class="field">
+        <label for="label">Label</label>
+        <input id="label" name="label" required autocomplete="off" placeholder="Week 3 session recording" />
+      </div>
+      <div class="field">
+        <label for="url">Link</label>
+        <input id="url" name="url" required autocomplete="off" placeholder="https://" />
+      </div>
+      <div class="field">
+        <label for="kind">Kind</label>
+        <select id="kind" name="kind">
+          <option value="recording">Recording</option>
+          <option value="resource" selected>Resource</option>
+          <option value="homework">Homework</option>
+        </select>
+      </div>
+      <div class="actions"><button class="btn" type="submit">Share</button></div>
+    </form>
+  </details>
+
+  <!-- Program admin -->
+  <details class="adder">
+    <summary>Program settings</summary>
+    <form method="POST" action="/api/coaching">
+      <input type="hidden" name="intent" value="update" />
+      <input type="hidden" name="memberId" value={member.id} />
+      <input type="hidden" name="returnTo" value={here} />
+      <div class="field">
+        <label for="tier">Tier</label>
+        <select id="tier" name="tier">
+          {TIERS.map((t) => <option value={t} selected={t === member.tier}>{TIER_LABELS[t]}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          {['active', 'paused', 'completed', 'ended'].map((s) => (
+            <option value={s} selected={s === member.status}>{s}</option>
+          ))}
+        </select>
+      </div>
+      <div class="field">
+        <label for="startedOn">Week one started</label>
+        <input id="startedOn" name="startedOn" type="date" value={member.started_on} />
+      </div>
+      <div class="actions"><button class="btn" type="submit">Save settings</button></div>
+    </form>
+  </details>
+
+  <details class="adder">
+    <summary>Portal access</summary>
+    <form method="POST" action="/api/coaching">
+      <input type="hidden" name="intent" value="portal-access" />
+      <input type="hidden" name="memberId" value={member.id} />
+      <input type="hidden" name="returnTo" value={here} />
+      <div class="field">
+        <label for="email">Login email, must match the one added to the Access policy</label>
+        <input id="email" name="email" type="email" required value={member.client_email ?? ''} autocomplete="off" />
+      </div>
+      <p class="empty-state">
+        Two steps, both required: grant here, then add the same email to the
+        Zero Trust Access policy in the Cloudflare dashboard. Access decides
+        who gets in the door, this grant decides what they see: the members
+        area only.
+      </p>
+      <div class="actions"><button class="btn" type="submit">Grant portal access</button></div>
+    </form>
+  </details>
+</Shell>

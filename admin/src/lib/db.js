@@ -461,3 +461,131 @@ export async function reopenFollowup(db, id) {
 export async function deleteFollowup(db, id) {
   await db.prepare('DELETE FROM followups WHERE id = ?').bind(id).run();
 }
+
+// ── Coaching ──────────────────────────────
+
+// last_session_on rides along on every member row: the roster line, the
+// stale-member rule, and the detail header all want it, and a correlated
+// MAX on an indexed column is cheaper than a second round trip.
+const MEMBER_SELECT = `SELECT m.id, m.client_id, m.tier, m.status, m.started_on,
+       m.state_of_play, m.state_updated_at,
+       m.quick_win, m.quick_win_on, m.main_workflow, m.workflow_shipped_on,
+       m.own_build, m.own_build_on, m.handoff_sent_on, m.week10_offered_on,
+       m.created_at, m.updated_at,
+       c.name AS client_name, c.company AS client_company, c.email AS client_email,
+       (SELECT MAX(s.held_on) FROM coaching_sessions s WHERE s.member_id = m.id) AS last_session_on
+  FROM members m
+  JOIN clients c ON c.id = m.client_id`;
+
+export async function listMembers(db, filter = 'active') {
+  const where = {
+    active: "m.status IN ('active', 'paused')",
+    completed: "m.status IN ('completed', 'ended')",
+    all: '1 = 1',
+  }[filter] ?? "m.status IN ('active', 'paused')";
+
+  const { results } = await db.prepare(
+    `${MEMBER_SELECT} WHERE ${where} ORDER BY m.status = 'active' DESC, m.started_on, c.name`
+  ).all();
+  return results ?? [];
+}
+
+export async function getMember(db, id) {
+  return db.prepare(`${MEMBER_SELECT} WHERE m.id = ?`).bind(id).first();
+}
+
+export async function createMember(db, { clientId, tier, startedOn, now }) {
+  const r = await db.prepare(
+    `INSERT INTO members (client_id, tier, status, started_on, created_at, updated_at)
+     VALUES (?, ?, 'active', ?, ?, ?) RETURNING id`
+  ).bind(clientId, tier, startedOn, now, now).first();
+  return r?.id;
+}
+
+export async function updateMember(db, id, { tier, status, startedOn, now }) {
+  await db.prepare(
+    `UPDATE members SET tier = ?, status = ?, started_on = ?, updated_at = ? WHERE id = ?`
+  ).bind(tier, status, startedOn, now, id).run();
+}
+
+// The state of play is replaced wholesale, never appended: it is the
+// one-pager read before every call, so history would be noise. The session
+// log is where history lives.
+export async function updateStateOfPlay(db, id, { body, now }) {
+  await db.prepare(
+    `UPDATE members SET state_of_play = ?, state_updated_at = ?, updated_at = ? WHERE id = ?`
+  ).bind(body, now, now, id).run();
+}
+
+// Milestones update as a block: the form posts all six fields together, so
+// partial writes cannot leave a milestone date without its description.
+export async function updateMilestones(db, id, m) {
+  await db.prepare(
+    `UPDATE members SET quick_win = ?, quick_win_on = ?, main_workflow = ?,
+       workflow_shipped_on = ?, own_build = ?, own_build_on = ?, handoff_sent_on = ?,
+       updated_at = ? WHERE id = ?`
+  ).bind(
+    m.quickWin, m.quickWinOn, m.mainWorkflow, m.workflowShippedOn,
+    m.ownBuild, m.ownBuildOn, m.handoffSentOn, m.now, id
+  ).run();
+}
+
+export async function markWeekTenOffered(db, id, { today, now }) {
+  await db.prepare(
+    `UPDATE members SET week10_offered_on = ?, updated_at = ? WHERE id = ?`
+  ).bind(today, now, id).run();
+}
+
+export async function listSessions(db, memberId) {
+  const { results } = await db.prepare(
+    `SELECT id, member_id, held_on, week_no, summary, next_plan, created_at
+       FROM coaching_sessions WHERE member_id = ? ORDER BY held_on DESC, id DESC`
+  ).bind(memberId).all();
+  return results ?? [];
+}
+
+export async function createSession(db, { memberId, heldOn, weekNo, summary, nextPlan, now }) {
+  await db.prepare(
+    `INSERT INTO coaching_sessions (member_id, held_on, week_no, summary, next_plan, created_at)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  ).bind(memberId, heldOn, weekNo, summary, nextPlan, now).run();
+}
+
+export async function listResources(db, memberId) {
+  const { results } = await db.prepare(
+    `SELECT id, member_id, label, url, kind, sort_order, created_at
+       FROM member_resources WHERE member_id = ? ORDER BY sort_order, created_at`
+  ).bind(memberId).all();
+  return results ?? [];
+}
+
+export async function createResource(db, { memberId, label, url, kind, now }) {
+  await db.prepare(
+    `INSERT INTO member_resources (member_id, label, url, kind, created_at)
+     VALUES (?, ?, ?, ?, ?)`
+  ).bind(memberId, label, url, kind, now).run();
+}
+
+export async function deleteResource(db, id) {
+  await db.prepare('DELETE FROM member_resources WHERE id = ?').bind(id).run();
+}
+
+// The member portal's whole read: the signed-in client's enrollment. A
+// client with several enrollments (a Launch that rolled into Core) sees the
+// newest; the portal shows current state, not history.
+export async function getMemberByClientId(db, clientId) {
+  return db.prepare(
+    `${MEMBER_SELECT} WHERE m.client_id = ? ORDER BY m.created_at DESC LIMIT 1`
+  ).bind(clientId).first();
+}
+
+// Grants portal access: an active users row with role client. Idempotent by
+// email; re-granting reactivates and repoints rather than duplicating.
+export async function grantPortalAccess(db, { email, name, clientId, now }) {
+  await db.prepare(
+    `INSERT INTO users (email, name, role, client_id, active, created_at)
+     VALUES (?, ?, 'client', ?, 1, ?)
+     ON CONFLICT(email) DO UPDATE SET name = excluded.name,
+       role = 'client', client_id = excluded.client_id, active = 1`
+  ).bind(email, name, clientId, now).run();
+}

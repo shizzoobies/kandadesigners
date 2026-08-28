@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<style id="mighty-reset-css">/* Basic reset - lowest priority */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</style><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Meet the Claude App</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-hero { text-align:center; padding:6px 4px 2px; }
+  .cc-mark {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:54px; height:54px; border-radius:16px; background:var(--cc-accent);
+    color:#fff; font-size:1.6rem; margin-bottom:12px; box-shadow:var(--cc-shadow);
+  }
+  .cc-hero h1 { font-size:2rem; margin:0 0 8px; }
+  .cc-hero p { max-width:600px; margin:0 auto; color:var(--cc-ink-soft); }
+
+  .cc-bridge { display:flex; gap:14px; align-items:stretch; margin-top:18px; }
+  @media (max-width:760px){ .cc-bridge { flex-direction:column; } }
+  .cc-col { flex:1 1 50%; min-width:0; display:flex; flex-direction:column; }
+  .cc-collabel { font-size:.78rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--cc-ink-faint); margin-bottom:8px; }
+
+  /* fake app chat */
+  .cc-app {
+    flex:1; background:var(--cc-paper-2); border:1px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius-term); overflow:hidden; box-shadow:var(--cc-shadow); display:flex; flex-direction:column;
+  }
+  .cc-app__bar { display:flex; align-items:center; gap:8px; padding:10px 13px; background:var(--cc-paper); border-bottom:1px solid var(--cc-paper-3); }
+  .cc-app__logo { width:20px; height:20px; border-radius:6px; background:var(--cc-accent); color:#fff; font-size:.8rem; display:flex; align-items:center; justify-content:center; }
+  .cc-app__title { font-size:.82rem; color:var(--cc-ink-soft); font-weight:600; }
+  .cc-app__body { padding:14px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .cc-msg { max-width:88%; padding:10px 13px; border-radius:14px; font-size:.9rem; line-height:1.45; }
+  .cc-msg--me { align-self:flex-end; background:var(--cc-accent); color:#fff; border-bottom-right-radius:5px; }
+  .cc-msg--ai { align-self:flex-start; background:var(--cc-paper); border:1px solid var(--cc-paper-3); color:var(--cc-ink); border-bottom-left-radius:5px; }
+  .cc-app__input {
+    margin:0 13px 13px; display:flex; align-items:center; gap:8px;
+    border:1px solid var(--cc-paper-3); border-radius:999px; padding:8px 14px; background:var(--cc-paper); color:var(--cc-ink-faint); font-size:.85rem;
+  }
+  .cc-app__send { margin-left:auto; width:24px; height:24px; border-radius:50%; background:var(--cc-accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.8rem; }
+
+  .cc-cap { text-align:center; font-family:var(--cc-font-ui); font-size:.84rem; color:var(--cc-ink-faint); margin:14px 0 2px; }
+  .cc-cap strong { color:var(--cc-accent-deep); }
+
+  .cc-sub { font-family:var(--cc-font-display); font-size:1.15rem; color:var(--cc-ink); margin:24px 0 4px; }
+  .cc-cols { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px; }
+  @media (max-width:560px){ .cc-cols { grid-template-columns:1fr; } }
+  .cc-panel { background:var(--cc-paper-2); border:1px solid var(--cc-paper-3); border-radius:var(--cc-radius); padding:16px 18px; }
+  .cc-panel h3 { font-size:1rem; margin:0 0 10px; }
+  .cc-panel ul { margin:0; padding-left:18px; }
+  .cc-panel li { color:var(--cc-ink-soft); font-size:.9rem; margin-bottom:6px; }
+  .cc-panel--same h3 { color:var(--cc-accent-deep); }
+
+  .cc-get { margin-top:18px; padding:16px 18px; border-radius:var(--cc-radius);
+    background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft); color:var(--cc-ink); display:none; }
+  .cc-get h3 { margin:0 0 6px; }
+  .cc-get p { margin:0 0 6px; color:var(--cc-ink-soft); }
+  .cc-os { display:flex; gap:10px; margin-top:10px; flex-wrap:wrap; }
+  .cc-dl { display:inline-flex; align-items:center; gap:7px; text-decoration:none; font-family:var(--cc-font-ui); font-weight:600; font-size:.9rem; color:#fff; background:var(--cc-accent); border-radius:var(--cc-radius-sm); padding:10px 16px; transition:background .15s, transform .05s; }
+  .cc-dl:hover { background:var(--cc-accent-deep); }
+  .cc-dl:active { transform:translateY(1px); }
+  .cc-dlnote { font-size:.8rem; color:var(--cc-ink-faint); margin-top:9px; }
+  .cc-dlnote a { color:var(--cc-accent-deep); }
+
+  /* live "try it" chat */
+  .cc-trychat { margin-top:10px; background:var(--cc-paper-2); border:1px solid var(--cc-paper-3); border-radius:var(--cc-radius); overflow:hidden; }
+  .cc-chatlog { padding:14px; display:flex; flex-direction:column; gap:9px; max-height:250px; overflow-y:auto; }
+  .cc-chatform { display:flex; gap:8px; padding:10px 12px; border-top:1px solid var(--cc-paper-3); background:var(--cc-paper); }
+  .cc-chatform input { flex:1; font-family:var(--cc-font-ui); font-size:.92rem; padding:9px 14px; border:1px solid var(--cc-paper-3); border-radius:999px; background:var(--cc-paper-2); color:var(--cc-ink); }
+  .cc-chatform input:focus { outline:2px solid var(--cc-accent); border-color:var(--cc-accent); }
+  .cc-chatsend { flex:none; width:38px; height:38px; border-radius:50%; border:none; background:var(--cc-accent); color:#fff; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; transition:background .15s, transform .12s; }
+  .cc-chatsend:active { transform:scale(.94); }
+  .cc-chatsend:hover { background:var(--cc-accent-deep); }
+  .cc-chatsend:disabled { opacity:.5; cursor:not-allowed; }
+  .cc-chatnote { padding:0 14px 12px; font-size:.78rem; color:var(--cc-ink-faint); }
+  .cc-typing { font-style:italic; color:var(--cc-ink-faint); }
+  .cc-aistatus { display:inline-flex; align-items:center; gap:7px; font-family:var(--cc-font-ui); font-size:.76rem; font-weight:600; padding:4px 11px; border-radius:999px; border:1px solid var(--cc-paper-3); background:var(--cc-paper-2); color:var(--cc-ink-faint); }
+  .cc-aistatus .dot { width:8px; height:8px; border-radius:50%; background:#9b978a; flex:none; }
+  .cc-aistatus--checking .dot { background:var(--cc-yellow); }
+  .cc-aistatus--live { color:#2e7d32; border-color:#bfe0b4; background:#eef6ec; }
+  .cc-aistatus--live .dot { background:#2e7d32; }
+  .cc-aistatus--offline { color:var(--cc-accent-deep); border-color:var(--cc-accent-soft); background:var(--cc-accent-wash); }
+  .cc-aistatus--offline .dot { background:var(--cc-accent-deep); }
+</style>
+<script id="mighty-interactive-sdk" src="../../mighty/sdk/v1/mighty-interactive-sdk.min.js"></script></head>
+<body>
+<div class="cc-root">
+
+  <div class="cc-hero">
+    <div class="cc-mark" aria-hidden="true">💬</div>
+    <h1>Meet the Claude app</h1>
+    <p>You just spent the last few lessons watching what happens under the hood: the sign-in, the commands, the connectors, the read-edit-review loop. Most of your real work will happen in the Claude desktop app instead. It is the same engine with a friendlier front door, and because you have seen the machinery, you will understand exactly what your requests are doing.</p>
+  </div>
+
+  <div style="text-align:center;margin-top:8px"><span id="aistatus" class="cc-aistatus cc-aistatus--checking" title="Live AI status"><span class="dot"></span><span class="txt">Checking live AI…</span></span></div>
+
+  <div class="cc-bridge">
+    <div class="cc-col">
+      <div class="cc-collabel">In the app, you type</div>
+      <div class="cc-app">
+        <div class="cc-app__bar"><span class="cc-app__logo" aria-hidden="true">✱</span><span class="cc-app__title">Claude</span></div>
+        <div class="cc-app__body">
+          <div class="cc-msg cc-msg--me">Add a friendly welcome heading to the home page.</div>
+          <div class="cc-msg cc-msg--ai" id="ai-msg">Done. I read index.html, added the heading, and you can review the change. Want me to tweak the wording?</div>
+        </div>
+        <div class="cc-app__input">Message Claude…<span class="cc-app__send" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg></span></div>
+      </div>
+    </div>
+    <div class="cc-col">
+      <div class="cc-collabel">Behind the scenes, that becomes</div>
+      <div id="term-mount"></div>
+    </div>
+  </div>
+
+  <div class="cc-cap">The plain English you type in the app turns into the <strong>same loop you just learned.</strong> Same requests, same review, you simply see less of the plumbing.</div>
+
+  <div class="cc-sub">Same skills, new front door</div>
+  <div class="cc-cols">
+    <div class="cc-panel cc-panel--same">
+      <h3>What stays the same</h3>
+      <ul>
+        <li>You sign in once with your Anthropic account.</li>
+        <li>You ask in plain English.</li>
+        <li>It reads and edits your real files.</li>
+        <li>You review every change before it sticks.</li>
+        <li>Connectors are still MCP, added once.</li>
+      </ul>
+    </div>
+    <div class="cc-panel">
+      <h3>What is new</h3>
+      <ul>
+        <li>A window instead of a terminal.</li>
+        <li>Click and scroll instead of typing commands.</li>
+        <li>Drag files in to share them.</li>
+        <li>Your chats and projects are saved for you.</li>
+        <li>Switch models and settings with a menu.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cc-sub">Try it yourself</div>
+  <div class="cc-trychat">
+    <div id="chatlog" class="cc-chatlog">
+      <div class="cc-msg cc-msg--ai" id="chat-hello">Ask me anything about Claude Code, or how you would use it for your work.</div>
+    </div>
+    <form id="chatform" class="cc-chatform">
+      <input id="chatinput" type="text" placeholder="Ask Claude something…" autocomplete="off" aria-label="Ask Claude a question">
+      <button id="chatsend" class="cc-chatsend" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg></button>
+    </form>
+    <div class="cc-chatnote">A safe practice chat using the same Claude you will use in the app. Keep it to a few questions.</div>
+  </div>
+
+  <div id="get" class="cc-get">
+    <h3 id="get-title">You are ready for the app</h3>
+    <p>Download the Claude desktop app below. When you have a Claude account or license, sign in and start with a plain request. Everything you just learned is waiting underneath.</p>
+    <div class="cc-os">
+      <a class="cc-dl" href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener">🍎 Download for macOS</a>
+      <a class="cc-dl" href="https://claude.ai/api/desktop/win32/x64/setup/latest/redirect" target="_blank" rel="noopener">🪟 Download for Windows</a>
+    </div>
+    <p class="cc-dlnote">Windows on ARM, or enterprise installers: <a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download</a></p>
+  </div>
+
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "The Meet the Claude app page. It introduces the Claude desktop app for Mac and Windows after the terminal lessons.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var mount = document.getElementById("term-mount");
+  var get = document.getElementById("get");
+  var os = (CCTerminal.getOS && CCTerminal.getOS()) || "mac";
+
+  var fn = CCTerminal.firstName ? CCTerminal.firstName() : null;
+  if (fn) {
+    var aimsg = document.getElementById("ai-msg");
+    if (aimsg) aimsg.textContent = "Done, " + fn + ". I read index.html, added the heading, and you can review the change. Want me to tweak the wording?";
+    var gt = document.getElementById("get-title");
+    if (gt) gt.textContent = "You are ready, " + fn;
+  }
+
+  /* ---- live "try it yourself" chat (real Claude via the Worker) ---- */
+  var CONFIG = { workerUrl: "https://cc-course-proxy.tgqhg6kf4g.workers.dev" };
+
+  /* ---- live AI status badge (free health check, no token cost) ---- */
+  function checkAI(workerUrl){
+    var el = document.getElementById("aistatus"); if (!el) return;
+    function set(state, txt){ el.className = "cc-aistatus cc-aistatus--"+state; el.querySelector(".txt").textContent = txt; }
+    if (!workerUrl){ set("offline", "Built-in mode (no proxy)"); return; }
+    set("checking", "Checking live AI…");
+    var ctrl = new AbortController(); var to = setTimeout(function(){ ctrl.abort(); }, 8000);
+    fetch(workerUrl, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ kind:"ping" }), signal: ctrl.signal })
+      .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
+      .then(function(res){ clearTimeout(to); if (res.ok && res.d && res.d.pong) set("live", "Live AI connected"); else set("offline", "Live AI unavailable"); })
+      .catch(function(err){ clearTimeout(to); set("offline", "Live AI not reachable"); try { console.warn("Course: live AI proxy not reachable.", err && err.message); } catch(e){} });
+  }
+  checkAI(CONFIG.workerUrl);
+  var chatlog = document.getElementById("chatlog");
+  var chatform = document.getElementById("chatform");
+  var chatinput = document.getElementById("chatinput");
+  var chatsend = document.getElementById("chatsend");
+  var history = [];
+  if (fn) { var hello = document.getElementById("chat-hello"); if (hello) hello.textContent = "Hi " + fn + ". Ask me anything about Claude Code, or how you would use it for your work."; }
+
+  function addMsg(role, text) {
+    var d = document.createElement("div");
+    d.className = "cc-msg " + (role === "me" ? "cc-msg--me" : "cc-msg--ai");
+    d.textContent = text;
+    chatlog.appendChild(d); chatlog.scrollTop = chatlog.scrollHeight;
+    return d;
+  }
+  async function sendChat(text) {
+    addMsg("me", text);
+    history.push({ role: "user", text: text });
+    chatinput.value = ""; chatsend.disabled = true;
+    var bubble = addMsg("ai", "…"); bubble.classList.add("cc-typing");
+    if (!CONFIG.workerUrl) {
+      bubble.classList.remove("cc-typing");
+      bubble.textContent = "The live chat is offline here, but in the real app this is exactly where Claude replies.";
+      chatsend.disabled = false; return;
+    }
+    try {
+      var ctrl = new AbortController(); var to = setTimeout(function () { ctrl.abort(); }, 20000);
+      var res = await fetch(CONFIG.workerUrl, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind: "chat", prompt: text, history: history.slice(0, -1),
+          name: (CCTerminal.getName && CCTerminal.getName()) || null,
+          role: (CCTerminal.getRole && CCTerminal.getRole()) || null }),
+        signal: ctrl.signal });
+      clearTimeout(to);
+      var data = await res.json();
+      bubble.classList.remove("cc-typing");
+      if (res.ok && data && data.text) { bubble.textContent = data.text; history.push({ role: "assistant", text: data.text }); }
+      else if (data && data.error && data.error.indexOf("rate limit") >= 0) { bubble.textContent = "We have hit today's practice limit. Try again tomorrow, or head to the app."; }
+      else { bubble.textContent = "Something hiccuped. In the real app, Claude would answer here. Try again in a moment."; }
+    } catch (e) {
+      bubble.classList.remove("cc-typing");
+      bubble.textContent = "Could not reach Claude just now. In the real app this is where the reply appears.";
+    }
+    chatsend.disabled = false; chatinput.focus();
+  }
+  if (chatform) chatform.addEventListener("submit", function (e) { e.preventDefault(); var v = chatinput.value.trim(); if (v) sendChat(v); });
+
+  var script = [
+    { type:"output", lines:[
+      {t:"dim", s:"# Your message becomes the same request you watched in the terminal."}
+    ]},
+    { type:"pause", ms:300 },
+    { type:"output", lines:[
+      {t:"spinner", s:"Reading files", ms:900},
+      {t:"tool", s:"Read", arg:"index.html"},
+      {t:"spinner", s:"Editing", ms:1000},
+      {t:"tool", s:"Update", arg:"index.html"},
+      {t:"diff", del:["<h1></h1>"], add:["<h1>Welcome to the demo</h1>"]},
+      {t:"ok", s:"Updated index.html. You review, then keep or refine."}
+    ]}
+  ];
+
+  var term = new CCTerminal(mount, {
+    os: os,
+    onComplete: function () { get.style.display = "block"; }
+  });
+  term.run(script);
+})();
+</script>
+
+
+<link rel="stylesheet" href="../../mighty/mighty-additional-fonts.css"><link rel="stylesheet" href="../../mighty/mighty-global-styles.css"><link rel="stylesheet" href="../../mighty/mighty-interactive-body-font.css"></body></html>

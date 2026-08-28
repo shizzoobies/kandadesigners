@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<style id="mighty-reset-css">/* Basic reset - lowest priority */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</style><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Welcome</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-hero { text-align:center; padding:6px 4px 2px; }
+  .cc-mark {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:54px; height:54px; border-radius:16px; background:var(--cc-accent);
+    color:#fff; font-size:1.7rem; margin-bottom:12px; box-shadow:var(--cc-shadow);
+  }
+  .cc-hero h1 { font-size:2rem; margin:0 0 8px; }
+  .cc-hero p { max-width:580px; margin:0 auto; color:var(--cc-ink-soft); }
+  .cc-stage { margin-top:18px; }
+  .cc-sub { font-family:var(--cc-font-display); font-size:1.15rem; color:var(--cc-ink); margin:22px 0 4px; }
+  .cc-steps { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:12px; }
+  @media (max-width:560px){ .cc-steps { grid-template-columns:1fr; } }
+  .cc-step {
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--cc-paper-2); border:1px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius-sm); padding:13px 15px;
+  }
+  .cc-step__n {
+    flex:none; width:26px; height:26px; border-radius:50%; background:var(--cc-accent);
+    color:#fff; font-weight:600; font-size:.8rem; display:flex; align-items:center;
+    justify-content:center; font-family:var(--cc-font-ui);
+  }
+  .cc-step__t { font-weight:600; color:var(--cc-ink); font-size:.95rem; }
+  .cc-step__d { color:var(--cc-ink-faint); font-size:.82rem; margin-top:1px; }
+  .cc-promise {
+    margin-top:16px; padding:13px 16px; border-radius:var(--cc-radius);
+    background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft); color:var(--cc-ink-soft);
+    font-size:.92rem;
+  }
+  .cc-promise strong { color:var(--cc-accent-deep); }
+  .cc-start { margin-top:16px; padding:14px 18px; border-radius:var(--cc-radius);
+    background:var(--cc-paper-2); border:1px solid var(--cc-paper-3); color:var(--cc-ink); display:none; }
+  .cc-start strong { color:var(--cc-accent-deep); }
+
+  /* name modal */
+  .cc-namebd { position:fixed; inset:0; background:rgba(31,30,27,.5); display:none; align-items:center; justify-content:center; padding:20px; z-index:60; }
+  .cc-namebd.is-open { display:flex; }
+  .cc-namecard { width:100%; max-width:400px; background:var(--cc-paper); border:1px solid var(--cc-paper-3); border-radius:var(--cc-radius); padding:26px 24px; text-align:center; box-shadow:0 24px 70px rgba(31,30,27,.34); }
+  .cc-namecard .cc-mark { margin:0 auto 12px; }
+  .cc-namecard h2 { font-size:1.3rem; margin:0 0 6px; }
+  .cc-namecard p { color:var(--cc-ink-soft); font-size:.92rem; margin:0 0 16px; }
+  .cc-nameinput { width:100%; font-family:var(--cc-font-ui); font-size:1rem; padding:11px 14px; border:1px solid var(--cc-paper-3); border-radius:var(--cc-radius-sm); background:var(--cc-paper-2); color:var(--cc-ink); margin-bottom:14px; }
+  .cc-nameinput:focus { outline:2px solid var(--cc-accent); border-color:var(--cc-accent); }
+  .cc-namecard .cc-btn { width:100%; }
+  .cc-namelink { display:block; margin:10px auto 0; background:none; border:none; color:var(--cc-ink-faint); font-family:var(--cc-font-ui); font-size:.85rem; text-decoration:underline; cursor:pointer; }
+  .cc-oschoose { text-align:left; margin:0 0 14px; }
+  .cc-oslabel { font-size:.82rem; color:var(--cc-ink-soft); margin-bottom:7px; font-family:var(--cc-font-ui); }
+  .cc-osrow { display:flex; gap:10px; }
+  .cc-osbtn { flex:1; display:flex; flex-direction:column; gap:1px; align-items:flex-start; padding:10px 13px; border:1.5px solid var(--cc-paper-3); border-radius:var(--cc-radius-sm); background:var(--cc-paper-2); color:var(--cc-ink); font-family:var(--cc-font-ui); font-weight:600; font-size:.92rem; cursor:pointer; }
+  .cc-osbtn span { font-weight:400; font-size:.74rem; color:var(--cc-ink-faint); }
+  .cc-osbtn:hover { border-color:var(--cc-accent); }
+  .cc-osbtn.is-sel { border-color:var(--cc-accent); background:var(--cc-accent-wash); box-shadow:0 0 0 1px var(--cc-accent) inset; }
+</style>
+<script id="mighty-interactive-sdk" src="../../mighty/sdk/v1/mighty-interactive-sdk.min.js"></script></head>
+<body>
+
+<div id="namemodal" class="cc-namebd" role="dialog" aria-modal="true" aria-labelledby="nm-title">
+  <div class="cc-namecard">
+    <div class="cc-mark" aria-hidden="true">✱</div>
+    <h2 id="nm-title">Welcome! What should we call you?</h2>
+    <p>We will use your name and role as we go, so the examples feel like yours.</p>
+    <input id="nm-input" class="cc-nameinput" type="text" placeholder="Your first name" aria-label="Your first name" maxlength="40" autocomplete="given-name">
+    <input id="nm-role" class="cc-nameinput" type="text" placeholder="Your role at work (optional)" aria-label="Your role at work" maxlength="60" autocomplete="organization-title">
+    <div class="cc-oschoose">
+      <div class="cc-oslabel">Which computer do you use? We will match the terminal to it.</div>
+      <div class="cc-osrow" role="group" aria-label="Operating system">
+        <button id="os-mac" class="cc-osbtn" type="button">macOS<span>Terminal, zsh</span></button>
+        <button id="os-win" class="cc-osbtn" type="button">Windows<span>PowerShell</span></button>
+      </div>
+    </div>
+    <button id="nm-go" class="cc-btn" type="button">Start the course</button>
+    <button id="nm-skip" class="cc-namelink" type="button">Skip for now</button>
+  </div>
+</div>
+
+<div class="cc-root">
+
+  <div class="cc-hero">
+    <div class="cc-mark" aria-hidden="true">✱</div>
+    <h1>Welcome to Claude Code</h1>
+    <p>This short course gets you comfortable with Claude Code, the AI pair programmer that works in your terminal. You will type the real commands and see realistic output in a safe sandbox, then walk away ready to use the real thing.</p>
+  </div>
+
+  <div class="cc-stage">
+    <div id="term-mount"></div>
+  </div>
+
+  <div class="cc-promise">
+    <strong>A safe sandbox.</strong> You do not have a license yet, and you do not need one here. Nothing installs on your machine, no account is charged, and you cannot break anything. Just follow along and build the muscle memory.
+  </div>
+
+  <div class="cc-sub">What you will do</div>
+  <div class="cc-steps">
+    <div class="cc-step"><div class="cc-step__n">1</div><div><div class="cc-step__t">Install</div><div class="cc-step__d">Get Claude Code running with npm.</div></div></div>
+    <div class="cc-step"><div class="cc-step__n">2</div><div><div class="cc-step__t">Sign in</div><div class="cc-step__d">Authorize once in your browser.</div></div></div>
+    <div class="cc-step"><div class="cc-step__n">3</div><div><div class="cc-step__t">Your first request</div><div class="cc-step__d">Edit a file in plain English and review the diff.</div></div></div>
+    <div class="cc-step"><div class="cc-step__n">4</div><div><div class="cc-step__t">Connect a tool</div><div class="cc-step__d">Add Adobe Creative with MCP.</div></div></div>
+    <div class="cc-step"><div class="cc-step__n">5</div><div><div class="cc-step__t">Build a website</div><div class="cc-step__d">Describe it and watch a live preview appear.</div></div></div>
+    <div class="cc-step"><div class="cc-step__n">6</div><div><div class="cc-step__t">Build a SCORM</div><div class="cc-step__d">Package an interaction for Rise.</div></div></div>
+  </div>
+
+  <div id="start" class="cc-start">
+    <strong>You are ready.</strong> Use the course menu to begin with Install. Each lesson takes a few minutes and remembers your choices as you go.
+  </div>
+
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "The welcome and intro page of the Claude Code course. The learner is getting started and may enter their name.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var mount = document.getElementById("term-mount");
+  var start = document.getElementById("start");
+  var modal = document.getElementById("namemodal");
+  var input = document.getElementById("nm-input");
+  var os = (CCTerminal.getOS && CCTerminal.getOS()) || "mac";
+
+  function buildScript() {
+    var fn = CCTerminal.firstName();
+    var greet = fn
+      ? "# Hi " + fn + ". You describe what you want. Claude reads and edits real files."
+      : "# You describe what you want. Claude reads and edits real files.";
+    return [
+      { type:"output", lines:[
+        {t:"dim", s:greet},
+        {t:"dim", s:"# You review every change. That is the whole idea."},
+        ""
+      ]},
+      { type:"pause", ms:400 },
+      { type:"output", lines:[
+        {t:"box", title:"Welcome to Claude Code", lines:[
+          "An AI pair programmer that lives in your terminal.",
+          "Plain English in. Reviewed, working code out.",
+          "No new app to learn. It meets you where you work."
+        ]}
+      ]},
+      { type:"pause", ms:350 },
+      { type:"output", lines:[
+        {t:"dim", s:"# A quick look at the loop you will learn:"}
+      ]},
+      { type:"output", lines:[
+        {t:"spinner", s:"Reading files", ms:900},
+        {t:"tool", s:"Read", arg:"index.html"},
+        {t:"spinner", s:"Editing", ms:1000},
+        {t:"tool", s:"Update", arg:"index.html"},
+        {t:"diff", del:["<h1></h1>"], add:["<h1>Welcome to the demo</h1>"]},
+        {t:"ok", s:"You describe. Claude edits. You review. Repeat."}
+      ]}
+    ];
+  }
+
+  function run() {
+    var curOs = (CCTerminal.getOS && CCTerminal.getOS()) || "mac";
+    var term = new CCTerminal(mount, {
+      os: curOs,
+      onComplete: function () { start.style.display = "block"; }
+    });
+    term.run(buildScript());
+  }
+
+  // OS picker: default to a saved choice, else macOS. Persisted on continue
+  // so every lesson and the welcome terminal match the learner's computer.
+  var selOs = (CCTerminal.getOS && CCTerminal.getOS()) || "mac";
+  var osMac = document.getElementById("os-mac"), osWin = document.getElementById("os-win");
+  function paintOs(){ if (osMac) osMac.classList.toggle("is-sel", selOs==="mac"); if (osWin) osWin.classList.toggle("is-sel", selOs==="windows"); }
+  if (osMac) osMac.addEventListener("click", function(){ selOs="mac"; paintOs(); });
+  if (osWin) osWin.addEventListener("click", function(){ selOs="windows"; paintOs(); });
+  paintOs();
+
+  function go() { try { if (CCTerminal.setOS) CCTerminal.setOS(selOs); } catch(e){} modal.classList.remove("is-open"); run(); }
+  function submitName() {
+    var v = input.value.trim();
+    if (v) CCTerminal.setName(v);
+    var roleEl = document.getElementById("nm-role");
+    var rv = roleEl ? roleEl.value.trim() : "";
+    if (rv) CCTerminal.setRole(rv);
+    go();
+  }
+  document.getElementById("nm-go").addEventListener("click", submitName);
+  document.getElementById("nm-skip").addEventListener("click", go);
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter") submitName(); });
+
+  // Ask for the name every time the course is started, even for a returning
+  // learner. The field starts empty so it is a fresh ask; whatever they enter
+  // is saved for the rest of this run (lessons and the assistant read it).
+  input.value = "";
+  modal.classList.add("is-open");
+  setTimeout(function () { input.focus(); }, 60);
+})();
+</script>
+
+
+<link rel="stylesheet" href="../../mighty/mighty-additional-fonts.css"><link rel="stylesheet" href="../../mighty/mighty-global-styles.css"><link rel="stylesheet" href="../../mighty/mighty-interactive-body-font.css"></body></html>

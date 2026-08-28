@@ -1,0 +1,121 @@
+/* ============================================================
+   Claude Code Course - Shared Design Tokens
+   Copied verbatim into every section folder. Do not rely on a
+   shared link; each Mighty embed is standalone, so each section
+   ships its own copy of this file.
+   ============================================================ */
+
+:root {
+  /* --- Paper / light surfaces (Rise-side UI chrome) --- */
+  --cc-paper:        #FAF9F5;  /* page background */
+  --cc-paper-2:      #F0EEE6;  /* raised cards, panels */
+  --cc-paper-3:      #E8E6DC;  /* borders, dividers on paper */
+  --cc-ink:          #1F1E1B;  /* primary text on paper */
+  --cc-ink-soft:     #43423D;  /* secondary text */
+  --cc-ink-faint:    #6E6C64;  /* captions, hints */
+
+  /* --- Terracotta accent (the Claude coral) --- */
+  --cc-accent:       #D97757;
+  --cc-accent-deep:  #BE5D40;
+  --cc-accent-soft:  #F2C9B8;
+  --cc-accent-wash:  #F7E9E2;
+
+  /* --- Terminal (dark surface) --- */
+  --cc-term-bg:      #1A1915;  /* terminal body */
+  --cc-term-bg-2:    #211F1A;  /* terminal header bar / input frame */
+  --cc-term-border:  #34322B;
+  --cc-term-text:    #E7E4DA;  /* default terminal text */
+  --cc-term-dim:     #9B978A;  /* muted terminal text */
+  --cc-term-prompt:  #D97757;  /* the > glyph */
+  --cc-term-cursor:  #E7E4DA;
+
+  /* --- Semantic terminal colors --- */
+  --cc-green:        #7FB069;  /* success, additions */
+  --cc-green-bg:     #1E2A1A;  /* added-line background in diffs */
+  --cc-red:          #D9706B;  /* errors, deletions */
+  --cc-red-bg:       #2A1A1A;  /* removed-line background in diffs */
+  --cc-yellow:       #E0B341;  /* warnings, spinners */
+  --cc-blue:         #6FA8C7;  /* file paths, links */
+  --cc-purple:       #B08CC7;  /* tool names */
+
+  /* --- Type --- */
+  --cc-font-display: "Lora", "Iowan Old Style", Georgia, serif;
+  --cc-font-ui:      "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --cc-font-mono:    "JetBrains Mono", "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  /* --- Spacing / shape --- */
+  --cc-radius:       12px;
+  --cc-radius-sm:    8px;
+  --cc-radius-term:  10px;
+  --cc-shadow:       0 1px 2px rgba(31,30,27,.06), 0 8px 24px rgba(31,30,27,.08);
+  --cc-shadow-term:  0 12px 40px rgba(0,0,0,.28);
+  --cc-maxw:         860px;
+}
+
+/* Reset within the embed only; never style the global body since the
+   Mighty iframe may share context in preview. Scope everything under
+   .cc-root. */
+.cc-root, .cc-root * { box-sizing: border-box; }
+.cc-root {
+  font-family: var(--cc-font-ui);
+  color: var(--cc-ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  max-width: var(--cc-maxw);
+  margin: 0 auto;
+  padding: 4px;
+}
+
+.cc-root h1, .cc-root h2, .cc-root h3 { font-family: var(--cc-font-display); font-weight: 600; color: var(--cc-ink); line-height: 1.2; }
+.cc-root h2 { font-size: 1.5rem; margin: 0 0 .35em; }
+.cc-root h3 { font-size: 1.15rem; margin: 0 0 .3em; }
+.cc-root p  { margin: 0 0 .8em; color: var(--cc-ink-soft); }
+.cc-root strong { color: var(--cc-ink); font-weight: 600; }
+
+/* Lead card that introduces an interaction */
+.cc-card {
+  background: var(--cc-paper-2);
+  border: 1px solid var(--cc-paper-3);
+  border-radius: var(--cc-radius);
+  padding: 18px 20px;
+  box-shadow: var(--cc-shadow);
+}
+
+/* Primary button (Claude coral) */
+.cc-btn {
+  font-family: var(--cc-font-ui);
+  font-weight: 600;
+  font-size: .95rem;
+  color: #fff;
+  background: var(--cc-accent);
+  border: none;
+  border-radius: var(--cc-radius-sm);
+  padding: 11px 20px;
+  cursor: pointer;
+  transition: background .15s ease, transform .05s ease;
+}
+.cc-btn:hover { background: var(--cc-accent-deep); }
+.cc-btn:active { transform: translateY(1px); }
+.cc-btn:disabled { opacity: .45; cursor: not-allowed; }
+.cc-btn--ghost {
+  background: transparent;
+  color: var(--cc-accent-deep);
+  border: 1px solid var(--cc-accent-soft);
+}
+.cc-btn--ghost:hover { background: var(--cc-accent-wash); }
+
+/* Accessibility: visible focus ring everywhere */
+.cc-root :focus-visible {
+  outline: 2px solid var(--cc-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.cc-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-root * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}

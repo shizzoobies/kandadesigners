@@ -1,0 +1,802 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<style id="mighty-reset-css">/* Basic reset - lowest priority */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</style><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Section 6: Build a SCORM Package</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-os-pick { display:flex; gap:14px; margin-top:14px; flex-wrap:wrap; }
+  .cc-os-card {
+    flex:1; min-width:200px; cursor:pointer; text-align:left;
+    background:var(--cc-paper-2); border:1.5px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius); padding:18px 20px;
+    transition:border-color .15s, transform .05s, box-shadow .15s; font-family:var(--cc-font-ui);
+  }
+  .cc-os-card:hover { border-color:var(--cc-accent); box-shadow:var(--cc-shadow); }
+  .cc-os-card__icon { font-size:1.6rem; }
+  .cc-os-card__name { font-weight:600; font-size:1.05rem; margin:6px 0 2px; color:var(--cc-ink); }
+  .cc-os-card__sub  { font-size:.85rem; color:var(--cc-ink-faint); }
+  .cc-nudge { font-size:.85rem; color:var(--cc-accent-deep); margin-top:6px; }
+  .cc-card code { font-family:var(--cc-font-mono); font-size:.85em; background:var(--cc-paper-3); padding:1px 5px; border-radius:4px; color:var(--cc-ink); }
+
+  .cc-panes { display:flex; gap:16px; margin-top:16px; align-items:flex-start; }
+  .cc-pane-term { flex:1 1 50%; min-width:0; }
+  .cc-pane-prev { flex:1 1 50%; min-width:0; }
+  @media (max-width:760px){ .cc-panes { flex-direction:column; } .cc-pane-term,.cc-pane-prev{ flex:1 1 auto; width:100%; } }
+
+  .cc-rt { border:1px solid var(--cc-paper-3); border-radius:var(--cc-radius-term); overflow:hidden; background:var(--cc-paper); box-shadow:var(--cc-shadow); display:none; }
+  .cc-rt.is-on { display:block; }
+  .cc-tabs { display:flex; gap:4px; padding:8px 8px 0; background:var(--cc-paper-2); border-bottom:1px solid var(--cc-paper-3); }
+  .cc-tab {
+    font-family:var(--cc-font-ui); font-size:.85rem; cursor:pointer; border:none; background:none;
+    padding:9px 16px; border-radius:8px 8px 0 0; color:var(--cc-ink-faint); font-weight:600;
+  }
+  .cc-tab.is-active { background:var(--cc-paper); color:var(--cc-ink); box-shadow:0 -1px 0 var(--cc-accent) inset; }
+  .cc-tabpanel { display:none; }
+  .cc-tabpanel.is-active { display:block; }
+
+  /* files tree */
+  .cc-tree { padding:14px 16px; font-family:var(--cc-font-mono); font-size:13px; min-height:300px; }
+  .cc-pkgline { color:var(--cc-ink-soft); margin-bottom:6px; }
+  .cc-frow {
+    display:flex; gap:10px; align-items:baseline; padding:7px 8px; border-radius:8px; cursor:pointer;
+    border:1px solid transparent;
+  }
+  .cc-frow:hover { background:var(--cc-paper-2); border-color:var(--cc-paper-3); }
+  .cc-frow.is-sel { background:var(--cc-accent-wash); border-color:var(--cc-accent-soft); }
+  .cc-fname { color:var(--cc-accent-deep); font-weight:500; min-width:140px; }
+  .cc-fnote { color:var(--cc-ink-faint); font-family:var(--cc-font-ui); font-size:12px; }
+  .cc-snippet {
+    margin:10px 16px 16px; background:var(--cc-term-bg); border:1px solid var(--cc-term-border);
+    border-radius:8px; padding:12px 14px; font-family:var(--cc-font-mono); font-size:12px;
+    color:var(--cc-term-text); white-space:pre; overflow-x:auto; display:none;
+  }
+  .cc-snippet.is-on { display:block; }
+  .cc-snippet .sc { color:var(--cc-term-dim); }
+
+  /* preview tab */
+  .cc-prev-chrome { display:flex; align-items:center; gap:8px; padding:8px 11px; background:var(--cc-paper-2); border-bottom:1px solid var(--cc-paper-3); }
+  .cc-prev-dots { display:flex; gap:6px; } .cc-prev-dot { width:9px; height:9px; border-radius:50%; background:#cfccc0; }
+  .cc-prev-bar { flex:1; background:var(--cc-paper); border:1px solid var(--cc-paper-3); border-radius:999px; padding:4px 11px; font-family:var(--cc-font-ui); font-size:12px; color:var(--cc-ink-soft); }
+  .cc-prev-iframe { width:100%; height:420px; border:0; display:block; background:#fff; }
+  .cc-prev-expand { margin-left:auto; flex:none; border:1px solid var(--cc-paper-3); background:var(--cc-paper); color:var(--cc-ink-soft); font-family:var(--cc-font-ui); font-size:.72rem; font-weight:600; border-radius:7px; padding:4px 10px; cursor:pointer; }
+  .cc-prev-expand:hover { border-color:var(--cc-accent); color:var(--cc-accent-deep); }
+  .cc-pvmodal { position:fixed; inset:0; background:rgba(31,30,27,.55); display:none; align-items:center; justify-content:center; padding:24px; z-index:80; }
+  .cc-pvmodal.is-open { display:flex; }
+  .cc-pvmodal__card { width:100%; max-width:1100px; height:90vh; background:var(--cc-paper); border:1px solid var(--cc-paper-3); border-radius:14px; box-shadow:0 30px 80px rgba(31,30,27,.4); display:flex; flex-direction:column; overflow:hidden; }
+  .cc-pvmodal__bar { display:flex; align-items:center; justify-content:space-between; padding:11px 16px; background:var(--cc-paper-2); border-bottom:1px solid var(--cc-paper-3); }
+  .cc-pvmodal__title { font-family:var(--cc-font-ui); font-weight:600; font-size:.92rem; color:var(--cc-ink); }
+  .cc-pvmodal__close { border:none; background:transparent; color:var(--cc-ink-soft); font-size:24px; line-height:1; cursor:pointer; padding:0 6px; border-radius:6px; }
+  .cc-pvmodal__close:hover { color:var(--cc-ink); }
+  .cc-pvmodal__frame { flex:1; width:100%; border:0; background:#fff; }
+
+  .cc-followups { margin-top:14px; display:none; }
+  .cc-followups.is-on { display:block; }
+  .cc-fu-label { font-size:.85rem; color:var(--cc-ink-faint); margin-bottom:8px; }
+  .cc-chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .cc-chip { font-family:var(--cc-font-ui); font-size:.85rem; cursor:pointer; background:var(--cc-paper-2); border:1px solid var(--cc-paper-3); color:var(--cc-ink-soft); border-radius:999px; padding:7px 14px; }
+  .cc-chip:hover { border-color:var(--cc-accent); color:var(--cc-ink); background:var(--cc-accent-wash); }
+  .cc-fu-actions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .cc-fb { margin-top:14px; padding:14px 16px; border-radius:var(--cc-radius); background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft); display:none; }
+  .cc-fb.is-on { display:block; }
+  .cc-fb__t { font-weight:600; color:var(--cc-accent-deep); margin-bottom:4px; font-size:.9rem; }
+  .cc-fb__body { color:var(--cc-ink-soft); font-size:.92rem; line-height:1.5; }
+  .cc-aistatus { display:inline-flex; align-items:center; gap:7px; font-family:var(--cc-font-ui); font-size:.76rem; font-weight:600; padding:4px 11px; border-radius:999px; border:1px solid var(--cc-paper-3); background:var(--cc-paper-2); color:var(--cc-ink-faint); }
+  .cc-aistatus .dot { width:8px; height:8px; border-radius:50%; background:#9b978a; flex:none; }
+  .cc-aistatus--checking .dot { background:var(--cc-yellow); }
+  .cc-aistatus--live { color:#2e7d32; border-color:#bfe0b4; background:#eef6ec; }
+  .cc-aistatus--live .dot { background:#2e7d32; }
+  .cc-aistatus--offline { color:var(--cc-accent-deep); border-color:var(--cc-accent-soft); background:var(--cc-accent-wash); }
+  .cc-aistatus--offline .dot { background:var(--cc-accent-deep); }
+
+  .cc-done { margin-top:16px; padding:16px 18px; border-radius:var(--cc-radius); background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft); color:var(--cc-ink); display:none; }
+  .cc-done h3 { margin:0 0 6px; } .cc-done p { margin:0 0 6px; }
+  .cc-done .quiet { font-size:.82rem; color:var(--cc-ink-faint); }
+  .cc-realsteps { margin:0 0 8px; padding-left:22px; }
+  .cc-realsteps li { margin:0 0 4px; padding-left:2px; }
+</style>
+<script id="mighty-interactive-sdk" src="../../mighty/sdk/v1/mighty-interactive-sdk.min.js"></script></head>
+<body>
+<div class="cc-root">
+
+  <!-- inline OS picker fallback -->
+  <div id="pick" class="cc-card" style="display:none;">
+    <h2>Build an interaction for your course</h2>
+    <p>Quick check before we start. Which operating system are you on?</p>
+    <div class="cc-os-pick">
+      <button class="cc-os-card" data-os="mac"><div class="cc-os-card__icon" aria-hidden="true">🍎</div><div class="cc-os-card__name">macOS</div><div class="cc-os-card__sub">zsh in the Terminal app</div></button>
+      <button class="cc-os-card" data-os="windows"><div class="cc-os-card__icon" aria-hidden="true">🪟</div><div class="cc-os-card__name">Windows</div><div class="cc-os-card__sub">PowerShell</div></button>
+    </div>
+  </div>
+
+  <!-- lead -->
+  <div id="lead" class="cc-card" style="display:none;">
+    <h2>Build an interaction for your course</h2>
+    <p>Describe an interaction and Claude builds the content for it: a small, self-contained bundle with the page, the styling, and the interactive logic. In your real workflow you build one of these per lesson, drop each into a block in Rise 360, and Rise combines them into a single SCORM file when you publish. So Claude builds the content; Rise produces the SCORM. Inspect the files, then try it in the preview.</p>
+    <div id="nudge" class="cc-nudge" style="display:none;">You chose to build an interaction earlier. Here it is.</div>
+    <div style="margin-top:12px"><span id="aistatus" class="cc-aistatus cc-aistatus--checking" title="Live AI status"><span class="dot"></span><span class="txt">Checking live AI…</span></span></div>
+  </div>
+
+  <!-- two-pane stage -->
+  <div id="stage" style="display:none;">
+    <div class="cc-panes">
+      <div class="cc-pane-term"><div id="term-mount"></div></div>
+      <div class="cc-pane-prev">
+        <div id="rt" class="cc-rt">
+          <div class="cc-tabs">
+            <button id="tabFiles" class="cc-tab is-active" type="button">Files</button>
+            <button id="tabPrev" class="cc-tab" type="button">Preview</button>
+          </div>
+          <div id="panelFiles" class="cc-tabpanel is-active">
+            <div class="cc-tree">
+              <div class="cc-pkgline" id="pkgRoot">interaction/</div>
+              <div id="tree"></div>
+            </div>
+            <pre id="snippet" class="cc-snippet"></pre>
+          </div>
+          <div id="panelPrev" class="cc-tabpanel">
+            <div class="cc-prev-chrome">
+              <div class="cc-prev-dots"><span class="cc-prev-dot"></span><span class="cc-prev-dot"></span><span class="cc-prev-dot"></span></div>
+              <div class="cc-prev-bar">scorm-player · index.html</div>
+              <button id="pvExpand" class="cc-prev-expand" type="button" aria-label="View the preview full size">⤢ Full size</button>
+            </div>
+            <iframe id="prevFrame" class="cc-prev-iframe" title="SCORM interaction preview"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="followups" class="cc-followups">
+      <div class="cc-fu-label">Refine the interaction. Click a suggestion to fill the prompt, or type your own above.</div>
+      <div id="chips" class="cc-chips"></div>
+      <div class="cc-fu-actions">
+        <button id="fbBtn" class="cc-btn cc-btn--ghost">Get Claude's take</button>
+        <button id="resetBtn" class="cc-btn cc-btn--ghost">Reset build</button>
+        <button id="doneBtn" class="cc-btn">I am done</button>
+      </div>
+      <div id="fbPanel" class="cc-fb"></div>
+    </div>
+
+    <div id="done" class="cc-done">
+      <h3>You built an interaction, from a sentence.</h3>
+      <p>The page, the styling, and the interactive logic. The same describe, build, review loop you used for the website. Here is how that fits the way we actually ship a course:</p>
+      <ol class="cc-realsteps">
+        <li>Claude Code helps you build the content for each lesson, like the piece you just made.</li>
+        <li>You add each one into its own block in Rise 360.</li>
+        <li>You publish the whole Rise course one time, and Rise combines them into a single SCORM file.</li>
+        <li>You upload that SCORM file to Reach.</li>
+      </ol>
+      <p class="quiet">So Claude builds the content and Rise produces the SCORM. Rise adds the manifest and the LMS reporting when it publishes. What you saw here is a simplified teaching model, not a validated production package.</p>
+    </div>
+  </div>
+
+</div>
+
+<div id="pvModal" class="cc-pvmodal" role="dialog" aria-modal="true" aria-label="Full size preview">
+  <div class="cc-pvmodal__card">
+    <div class="cc-pvmodal__bar">
+      <span class="cc-pvmodal__title">Preview, full size</span>
+      <button id="pvClose" class="cc-pvmodal__close" type="button" aria-label="Close the full size preview">×</button>
+    </div>
+    <iframe id="pvBig" class="cc-pvmodal__frame" title="SCORM interaction full size preview"></iframe>
+  </div>
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "Lesson 6, Build a SCORM interaction. The learner describes an interaction (quiz, drag and drop, matching, sequencing, or flashcards) and Claude assembles it; the preview lets them try it. This content goes into a Rise block and Rise exports the SCORM.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var pick=document.getElementById("pick"), lead=document.getElementById("lead"), stage=document.getElementById("stage"),
+      mount=document.getElementById("term-mount"), rt=document.getElementById("rt"), tree=document.getElementById("tree"),
+      snippet=document.getElementById("snippet"), prevFrame=document.getElementById("prevFrame"),
+      followups=document.getElementById("followups"), chips=document.getElementById("chips"),
+      resetBtn=document.getElementById("resetBtn"), doneBtn=document.getElementById("doneBtn"),
+      done=document.getElementById("done"), nudge=document.getElementById("nudge"),
+      tabFiles=document.getElementById("tabFiles"), tabPrev=document.getElementById("tabPrev"),
+      panelFiles=document.getElementById("panelFiles"), panelPrev=document.getElementById("panelPrev");
+  var reduce = CCTerminal.reduceMotion;
+  var term=null, model=null, pendingGen=null;
+
+  // Paste your deployed Cloudflare Worker URL between the quotes to turn on real
+  // generation. Empty string = deterministic output (the default). See _worker/README.md.
+  var CONFIG = { workerUrl: "https://cc-course-proxy.tgqhg6kf4g.workers.dev" };
+
+  /* ---- live AI status badge (free health check, no token cost) ---- */
+  function checkAI(workerUrl){
+    var el = document.getElementById("aistatus"); if (!el) return;
+    function set(state, txt){ el.className = "cc-aistatus cc-aistatus--"+state; el.querySelector(".txt").textContent = txt; }
+    if (!workerUrl){ set("offline", "Built-in mode (no proxy)"); return; }
+    set("checking", "Checking live AI…");
+    var ctrl = new AbortController(); var to = setTimeout(function(){ ctrl.abort(); }, 8000);
+    fetch(workerUrl, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ kind:"ping" }), signal: ctrl.signal })
+      .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
+      .then(function(res){ clearTimeout(to); if (res.ok && res.d && res.d.pong) set("live", "Live AI connected"); else set("offline", "Live AI unavailable"); })
+      .catch(function(err){ clearTimeout(to); set("offline", "Live AI not reachable"); try { console.warn("Course: live AI proxy not reachable.", err && err.message); } catch(e){} });
+  }
+  checkAI(CONFIG.workerUrl);
+
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+  function sleep(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
+  function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+  function clampStr(s,n){ return (typeof s==="string") ? s.slice(0,n) : ""; }
+
+  /* ============ HYBRID GENERATION (optional Worker, deterministic fallback) ============ */
+  function coerceScorm(raw, prev){
+    var INT={quiz:1,dragdrop:1,matching:1,sequencing:1,flashcards:1};
+    var base = prev ? JSON.parse(JSON.stringify(prev)) : {};
+    var m = {};
+    m.interaction = (raw && INT[raw.interaction]) ? raw.interaction : (base.interaction || "quiz");
+    m.topic = clampStr(raw && raw.topic, 60) || base.topic || "your topic";
+    m.title = clampStr(raw && raw.title, 80) || base.title || "";
+    m.instructions = clampStr(raw && raw.instructions, 160) || base.instructions || "";
+    m.reports = (raw && raw.reports === "score") ? "score" : (raw && raw.reports === "completion" ? "completion" : (base.reports || "completion"));
+    var p = (raw && typeof raw.passing === "number") ? raw.passing : null;
+    m.passing = (p && p>=1 && p<=100) ? Math.round(p) : (base.passing != null ? base.passing : null);
+    // quiz
+    if (raw && Array.isArray(raw.questions) && raw.questions.length){
+      m.questions = raw.questions.slice(0,8).map(function(q){
+        var opts = (q && Array.isArray(q.options) ? q.options : []).slice(0,6).map(function(o){ return clampStr(o,120); });
+        while (opts.length < 2) opts.push("Option");
+        var ans = (q && typeof q.answer === "number" && q.answer>=0 && q.answer<opts.length) ? Math.floor(q.answer) : 0;
+        return { q: clampStr(q && q.q, 200), options: opts, answer: ans };
+      }).filter(function(q){ return q.q; });
+    } else { m.questions = base.questions || null; }
+    // dragdrop
+    if (raw && Array.isArray(raw.buckets) && raw.buckets.length>=2 && Array.isArray(raw.items) && raw.items.length){
+      m.buckets = raw.buckets.slice(0,4).map(function(b){ return clampStr(b,40)||"Group"; });
+      m.items = raw.items.slice(0,10).map(function(it){ var bi=(it && typeof it.bucket==="number")?Math.floor(it.bucket):0; if(bi<0||bi>=m.buckets.length)bi=0; return { text:clampStr(it&&it.text,80), bucket:bi }; }).filter(function(it){ return it.text; });
+    } else { m.buckets = base.buckets || null; m.items = base.items || null; }
+    // matching
+    if (raw && Array.isArray(raw.pairs) && raw.pairs.length){
+      m.pairs = raw.pairs.slice(0,8).map(function(pp){ return { left:clampStr(pp&&pp.left,80), right:clampStr(pp&&pp.right,80) }; }).filter(function(pp){ return pp.left && pp.right; });
+    } else { m.pairs = base.pairs || null; }
+    // sequencing
+    if (raw && Array.isArray(raw.steps) && raw.steps.length){
+      m.steps = raw.steps.slice(0,8).map(function(s){ return clampStr(s,160); }).filter(Boolean);
+    } else { m.steps = base.steps || null; }
+    // flashcards
+    if (raw && Array.isArray(raw.cards) && raw.cards.length){
+      m.cards = raw.cards.slice(0,10).map(function(c){ return { front:clampStr(c&&c.front,120), back:clampStr(c&&c.back,180) }; }).filter(function(c){ return c.front && c.back; });
+    } else { m.cards = base.cards || null; }
+    m.count = (m.questions && m.questions.length) ? m.questions.length : (base.count || 3);
+    return m;
+  }
+  async function generate(prompt, prev){
+    if (!CONFIG.workerUrl) return parseScorm(prompt, prev);
+    try {
+      var ctrl = new AbortController();
+      var to = setTimeout(function(){ ctrl.abort(); }, 12000);
+      var res = await fetch(CONFIG.workerUrl, { method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ kind:"scorm", prompt: prompt, prev: prev || null, role: (CCTerminal.getRole && CCTerminal.getRole()) || null }), signal: ctrl.signal });
+      clearTimeout(to);
+      if (!res.ok) throw new Error("status "+res.status);
+      var data = await res.json();
+      if (!data || !data.model) throw new Error("no model");
+      return coerceScorm(data.model, prev);
+    } catch(e){
+      return parseScorm(prompt, prev); // graceful: offline, error, or rate limited
+    }
+  }
+
+  /* ============ PARSER ============ */
+  function parseScorm(text, prev){
+    var raw = String(text||""); var t = raw.toLowerCase();
+    var m = prev ? JSON.parse(JSON.stringify(prev)) : { interaction:"quiz", topic:"your topic", count:3, reports:"completion", passing:null };
+
+    if (/drag|drop|sort|categor|bucket|which group/.test(t)) m.interaction = "dragdrop";
+    else if (/match|pair|connect/.test(t)) m.interaction = "matching";
+    else if (/sequenc|in order|right order|arrange|reorder|timeline|steps of|the process/.test(t)) m.interaction = "sequencing";
+    else if (/flashcard|flip card|flip|study card/.test(t)) m.interaction = "flashcards";
+    else if (/quiz|question|multiple choice|knowledge check|test|assessment/.test(t)) m.interaction = "quiz";
+
+    // topic detection: try explicit "topic/switch to X" first, then "on/about/for X"
+    var topicPatterns = [
+      /\b(?:topic|subject)\s+(?:to|on|about|of|is)\s+([a-z0-9][a-z0-9 &'-]{2,40}?)(?:\s+(?:that|which|with|and|quiz)\b|[.,]|$)/i,
+      /\bswitch(?:\s+(?:it|the\s+topic|the\s+subject))?\s+to\s+([a-z0-9][a-z0-9 &'-]{2,40}?)(?:\s+(?:that|which|with|and|quiz)\b|[.,]|$)/i,
+      /\b(?:on|about|covering|regarding)\s+([a-z0-9][a-z0-9 &'-]{2,40}?)(?:\s+(?:that|which|with|and|quiz|to)\b|[.,]|$)/i,
+      /\bfor\s+([a-z0-9][a-z0-9 &'-]{2,40}?)(?:\s+(?:that|which|with|and|quiz|to)\b|[.,]|$)/i
+    ];
+    for (var ti=0; ti<topicPatterns.length; ti++){ var tmm = raw.match(topicPatterns[ti]); if (tmm){ m.topic = tmm[1].trim(); break; } }
+
+    if (/score|grade|graded|pass|mastery/.test(t)) m.reports = "score";
+
+    // passing score: explicit "passing/mastery/pass mark ... N" or "N%". Parsed BEFORE the
+    // bare count so "passing score to 10" is not misread as a 10-question quiz.
+    var pm = t.match(/(?:passing(?:\s+score)?|mastery(?:\s+score)?|pass\s+mark)\s*(?:of|to|at|is|=|:)?\s*(\d{1,3})/) || t.match(/(\d{1,3})\s*%/);
+    if (pm){ var pv = parseInt(pm[1],10); if (pv>=1 && pv<=100){ m.passing = pv; m.reports = "score"; } }
+
+    // question count: prefer "N questions/items/cards", else a bare 1..10 that is not the passing number
+    var cm = t.match(/(\d{1,2})\s*(?:questions?|items?|cards?)/);
+    if (!cm){ var bare = t.match(/\b(\d{1,2})\b/); if (bare && !(m.passing != null && parseInt(bare[1],10) === m.passing)) cm = bare; }
+    if (cm){ var n = parseInt(cm[1],10); if (n>=1 && n<=10) m.count = n; }
+
+    // completion-only overrides any score signal above
+    if (/completion only|only completion|just completion|no score|without a score|completion status/.test(t)){ m.reports = "completion"; m.passing = null; }
+
+    // offline fallback content per type. The live Worker provides real content;
+    // this only keeps the preview working when the proxy is off or unreachable.
+    if (m.interaction==="dragdrop" && !(m.buckets && m.items)){
+      m.buckets=["Recommended","Avoid"];
+      m.items=[{text:"A good practice for "+m.topic,bucket:0},{text:"Another good habit",bucket:0},{text:"A common mistake",bucket:1},{text:"Something to avoid",bucket:1}];
+    }
+    if (m.interaction==="matching" && !m.pairs){
+      m.pairs=[{left:"Term one",right:"Its meaning"},{left:"Term two",right:"Its meaning"},{left:"Term three",right:"Its meaning"}];
+    }
+    if (m.interaction==="sequencing" && !m.steps){
+      m.steps=["First, get ready","Next, do the main step","Then, check your work","Finally, finish up"];
+    }
+    if (m.interaction==="flashcards" && !m.cards){
+      m.cards=[{front:"A key term in "+m.topic,back:"What it means"},{front:"Another key term",back:"What it means"},{front:"A third term",back:"What it means"}];
+    }
+
+    return m;
+  }
+
+  /* ============ FILE SNIPPETS ============ */
+  function titleFromTopic(){
+    if (model.title) return clampStr(model.title,80);
+    var kind={quiz:"Knowledge Check",dragdrop:"Sorting Activity",matching:"Matching Activity",sequencing:"Sequence",flashcards:"Flashcards"}[model.interaction]||"Activity";
+    return cap(model.topic)+" "+kind;
+  }
+  function snippets(){
+    var title = titleFromTopic();
+    var resultLine = model.reports === "score"
+      ? '// when this rides inside a Rise SCORM, your score is sent to the LMS\nvar result = "score";'
+        + (model.passing!=null ? ('\nvar passing = '+model.passing+';') : '')
+      : '// when this rides inside a Rise SCORM, completion is sent to the LMS\nvar result = "completion";';
+    return {
+      "index.html":
+        '<!doctype html>\n<html>\n<head><title>'+esc(title)+'</title>\n<link rel="stylesheet" href="styles.css">\n<script src="app.js"><\/script></head>\n<body>\n  <!-- the interaction learners see -->\n  <main id="activity"></main>\n<link rel="stylesheet" href="../../mighty/mighty-additional-fonts.css"><link rel="stylesheet" href="../../mighty/mighty-global-styles.css"><link rel="stylesheet" href="../../mighty/mighty-interactive-body-font.css"></body>\n</html>',
+      "styles.css":
+        '/* presentation for the interaction */\n.q { margin: 0 0 18px; }\n.opt { display:block; padding:10px 12px; border:1px solid #ddd; border-radius:8px; }\n.opt.correct { border-color:#2e7d32; }\n.result { font-weight:600; }',
+      "app.js":
+        '// the interactive logic for this activity\nfunction render(){ /* draws the interaction */ }\nfunction check(){ /* grades and shows the result */ }\n\n'+resultLine
+    };
+  }
+  var FILE_NOTES = {
+    "index.html":"the interactive page learners see",
+    "styles.css":"presentation",
+    "app.js":"the interactive logic, plus the result Rise hands to the LMS"
+  };
+
+  /* ============ FILES TREE ============ */
+  var selectedFile = null;
+  function selectFile(name){
+    selectedFile = name;
+    Array.prototype.forEach.call(tree.querySelectorAll(".cc-frow"), function(r){ r.classList.toggle("is-sel", r.getAttribute("data-file")===name); });
+    snippet.textContent = snippets()[name] || "";
+    snippet.classList.add("is-on");
+  }
+  function addFileRow(name){
+    var note = FILE_NOTES[name].replace("REPORTS", model.reports==="score"?"the score":"completion");
+    var row = document.createElement("div");
+    row.className = "cc-frow"; row.setAttribute("data-file", name); row.setAttribute("role","button"); row.tabIndex = 0;
+    row.innerHTML = '<span class="cc-fname">'+esc(name)+'</span><span class="cc-fnote">'+esc(note)+'</span>';
+    row.addEventListener("click", function(){ selectFile(name); });
+    row.addEventListener("keydown", function(e){ if (e.key==="Enter"||e.key===" "){ e.preventDefault(); selectFile(name); } });
+    tree.appendChild(row);
+  }
+  async function populateTree(){
+    tree.innerHTML = ""; snippet.classList.remove("is-on");
+    var files = ["index.html","styles.css","app.js"];
+    for (var i=0;i<files.length;i++){ addFileRow(files[i]); await sleep(260); }
+  }
+
+  /* ============ PREVIEW (quiz) ============ */
+  var BANK = {
+    safety: [
+      ["What should you do first when you discover a fire?",["Alert others and activate the alarm","Collect your belongings","Finish your task","Open all the windows"],0],
+      ["Knowing where the exits are matters:",["Before an emergency happens","Only during a drill","After the all-clear","Only if asked"],0],
+      ["A wet floor sign means:",["Slip hazard, take care","The floor is clean","Do not ever enter","Mopping is finished"],0],
+      ["Damaged equipment should be:",["Tagged and reported","Used carefully anyway","Ignored if minor","Repaired by anyone"],0],
+      ["Protective equipment should be:",["Worn whenever the task requires it","Optional on busy days","Shared without cleaning","Skipped to save time"],0]
+    ],
+    privacy: [
+      ["Personal data should be:",["Collected only for a clear purpose","Shared freely with anyone","Kept forever by default","Stored on personal devices"],0],
+      ["A strong password is:",["Long and unique per account","Your pet's name","Reused everywhere","On a sticky note"],0],
+      ["A suspicious email should be:",["Reported, with no links clicked","Forwarded to the team","Opened to investigate","Replied to with details"],0],
+      ["Access to sensitive records should be:",["Limited to those who need it","Open to all staff","Posted in shared drives","Emailed on request"],0],
+      ["If you spot a data breach you should:",["Report it immediately","Wait and see","Fix it quietly","Delete the evidence"],0]
+    ],
+    conduct: [
+      ["Respectful workplace behaviour means:",["Treating colleagues with courtesy","Speaking over others","Ignoring concerns","Keeping issues secret"],0],
+      ["If you witness harassment you should:",["Report it through the proper channel","Pretend you did not see it","Join in","Confront the person alone"],0],
+      ["A conflict of interest should be:",["Disclosed promptly","Hidden if small","Handled privately","Ignored"],0]
+    ]
+  };
+  function questionsFor(topic, count){
+    var t = topic.toLowerCase(); var set;
+    if (/safety|fire|hazard|emergency/.test(t)) set = BANK.safety;
+    else if (/privacy|data|security|gdpr|password|phishing/.test(t)) set = BANK.privacy;
+    else if (/harass|conduct|ethic|respect|workplace/.test(t)) set = BANK.conduct;
+    else set = null;
+    var out = [];
+    for (var i=0;i<count;i++){
+      if (set) out.push(set[i % set.length]);
+      else out.push(["Question "+(i+1)+": which statement about "+topic+" is correct?",
+        ["The recommended best practice","A common misconception","An outdated approach","None of the above"],0]);
+    }
+    return out;
+  }
+  function renderQuiz(){
+    var title = esc(titleFromTopic());
+    var qs = (model.questions && model.questions.length)
+      ? model.questions.map(function(q){ return [q.q, q.options, q.answer]; })
+      : questionsFor(model.topic, model.count);
+    var reportScore = model.reports === "score";
+    var mastery = model.passing != null ? model.passing : (reportScore ? 80 : null);
+    var qhtml = qs.map(function(q,qi){
+      var opts = q[1].map(function(o,oi){
+        return '<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"> '+esc(o)+'</label>';
+      }).join("");
+      return '<div class="q"><p class="qt">'+(qi+1)+'. '+esc(q[0])+'</p>'+opts+'</div>';
+    }).join("");
+    var answers = JSON.stringify(qs.map(function(q){ return q[2]; }));
+    var subline = reportScore ? ("Reports a score to the LMS"+(mastery!=null?(", passing at "+mastery+"%"):"")) : "Reports completion to the LMS";
+    var doc =
+      '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+
+      '*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;padding:20px;color:#1f1e1b;background:#fbfaf7}'+
+      'h1{font-size:1.2rem;margin:0 0 4px}.sub{color:#6e6c64;font-size:.85rem;margin:0 0 16px}'+
+      '.q{margin:0 0 16px}.qt{font-weight:600;margin:0 0 8px}'+
+      '.opt{display:block;padding:9px 12px;border:1px solid #e3e1d8;border-radius:8px;margin:6px 0;cursor:pointer;font-size:.92rem}'+
+      '.opt input{margin-right:8px}'+
+      '.opt:hover{border-color:#D97757}.opt.correct{border-color:#2e7d32;background:#eef6ec}.opt.wrong{border-color:#c0392b;background:#fbeceb}'+
+      '.bar{display:flex;align-items:center;gap:14px;margin-top:4px}.prog{color:#6e6c64;font-size:.82rem}'+
+      '.btn{background:#D97757;color:#fff;border:none;border-radius:9px;padding:11px 20px;font-weight:600;cursor:pointer}'+
+      '.btn:disabled{opacity:.45;cursor:not-allowed}.btn.ghost{background:#fff;color:#be5d40;border:1px solid #f2c9b8;margin-top:14px}'+
+      '.card{display:none;margin-top:16px;padding:18px;border-radius:12px;border:1px solid #e3e1d8;background:#fff;text-align:center}.card.show{display:block}'+
+      '.scorebig{font-size:2.1rem;font-weight:700}'+
+      '.badge{display:inline-block;padding:4px 13px;border-radius:999px;font-size:.78rem;font-weight:700;margin:6px 0}.badge.pass{background:#eef6ec;color:#2e7d32}.badge.fail{background:#fbeceb;color:#c0392b}'+
+      '.cmsg{color:#6e6c64;font-size:.88rem}'+
+      '.toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#1f1e1b;color:#fff;padding:9px 16px;border-radius:999px;font-size:.82rem;opacity:0;transition:opacity .25s}.toast.show{opacity:1}'+
+      '</style></head><body>'+
+      '<h1>'+title+'</h1><div class="sub">'+subline+'</div>'+
+      '<form id="f">'+qhtml+'</form>'+
+      '<div class="bar"><span class="prog" id="prog">0 of '+qs.length+' answered</span>'+
+        '<button class="btn" id="submit" type="button" disabled>Submit</button></div>'+
+      '<div class="card" id="card"><div class="scorebig" id="scorebig"></div><div class="badge" id="badge"></div><div class="cmsg" id="cmsg"></div>'+
+        '<button class="btn ghost" id="retry" type="button">Try again</button></div>'+
+      '<div class="toast" id="toast"></div>'+
+      '<script>'+
+      'var ANS='+answers+',MASTERY='+(mastery==null?'null':mastery)+',SCORE='+(reportScore?'true':'false')+',N=ANS.length;'+
+      'var form=document.getElementById("f"),submit=document.getElementById("submit"),prog=document.getElementById("prog");'+
+      'function answered(){var c=0;for(var i=0;i<N;i++){if(document.querySelector("input[name=q"+i+"]:checked"))c++;}return c;}'+
+      'form.addEventListener("change",function(){var a=answered();prog.textContent=a+" of "+N+" answered";submit.disabled=a<N;});'+
+      'function toast(m){var tt=document.getElementById("toast");tt.textContent=m;tt.classList.add("show");setTimeout(function(){tt.classList.remove("show");},2400);}'+
+      'submit.onclick=function(){var correct=0;for(var i=0;i<N;i++){var chosen=document.querySelector("input[name=q"+i+"]:checked");var opts=document.getElementsByName("q"+i);for(var j=0;j<opts.length;j++){opts[j].disabled=true;if(j===ANS[i])opts[j].parentNode.classList.add("correct");}if(chosen){var ci=parseInt(chosen.value,10);if(ci===ANS[i])correct++;else chosen.parentNode.classList.add("wrong");}}'+
+      'var pct=Math.round(correct/N*100);var passed=MASTERY==null?true:pct>=MASTERY;'+
+      'document.getElementById("scorebig").textContent=SCORE?(pct+"%"):(correct+"/"+N);'+
+      'var badge=document.getElementById("badge");badge.className="badge "+(passed?"pass":"fail");badge.textContent=MASTERY!=null?(passed?"Passed":"Below "+MASTERY+"%"):"Complete";'+
+      'document.getElementById("cmsg").textContent=(SCORE?("You scored "+correct+" of "+N+". "):("Completed. "))+"Green marks the correct answer.";'+
+      'document.getElementById("card").classList.add("show");submit.style.display="none";prog.style.display="none";'+
+      'toast(SCORE?("Reporting score "+pct+"% to LMS\\u2026"):"Reporting completion to LMS\\u2026");'+
+      'document.getElementById("card").scrollIntoView({block:"nearest"});};'+
+      'document.getElementById("retry").onclick=function(){for(var i=0;i<N;i++){var opts=document.getElementsByName("q"+i);for(var j=0;j<opts.length;j++){opts[j].disabled=false;opts[j].checked=false;opts[j].parentNode.classList.remove("correct","wrong");}}document.getElementById("card").classList.remove("show");submit.style.display="";prog.style.display="";prog.textContent="0 of "+N+" answered";submit.disabled=true;window.scrollTo(0,0);};'+
+      '<\/script></body></html>';
+    prevFrame.srcdoc = doc;
+  }
+
+  /* ============ PREVIEW: shared scaffold for the interactive types ============ */
+  function j(o){ return JSON.stringify(o).replace(/<\//g, "<\\/"); }
+  var SHARED_CSS =
+    "*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:20px;color:#1f1e1b;background:#fbfaf7}"+
+    "h1{font-size:1.2rem;margin:0 0 4px}.sub{color:#6e6c64;font-size:.85rem;margin:0 0 16px}"+
+    ".btn{background:#D97757;color:#fff;border:none;border-radius:9px;padding:11px 20px;font-weight:600;cursor:pointer;font-size:.92rem}"+
+    ".btn:disabled{opacity:.45;cursor:not-allowed}.btn.ghost{background:#fff;color:#be5d40;border:1px solid #f2c9b8;margin-top:14px}"+
+    ".bar{display:flex;align-items:center;gap:14px;margin-top:12px}.prog{color:#6e6c64;font-size:.82rem}"+
+    ".card{display:none;margin-top:16px;padding:18px;border-radius:12px;border:1px solid #e3e1d8;background:#fff;text-align:center}.card.show{display:block}"+
+    ".scorebig{font-size:2.1rem;font-weight:700}.badge{display:inline-block;padding:4px 13px;border-radius:999px;font-size:.78rem;font-weight:700;margin:6px 0}"+
+    ".badge.pass{background:#eef6ec;color:#2e7d32}.badge.fail{background:#fbeceb;color:#c0392b}.cmsg{color:#6e6c64;font-size:.88rem}"+
+    ".toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#1f1e1b;color:#fff;padding:9px 16px;border-radius:999px;font-size:.82rem;opacity:0;transition:opacity .25s;z-index:50}.toast.show{opacity:1}"+
+    ".pool{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;padding:10px;border:1px dashed #d8d5c8;border-radius:10px;background:#fff;margin-bottom:14px}.pool.over{border-color:#D97757;background:#fdf3ee}"+
+    ".chip{display:inline-block;padding:8px 12px;border:1px solid #e3e1d8;border-radius:8px;background:#f7f5ef;font-size:.88rem;cursor:grab;user-select:none}"+
+    ".chip.sel{border-color:#D97757;box-shadow:0 0 0 2px rgba(217,119,87,.25)}.chip.ok{border-color:#2e7d32;background:#eef6ec}.chip.bad{border-color:#c0392b;background:#fbeceb}"+
+    ".buckets{display:flex;gap:10px;flex-wrap:wrap}.bucket{flex:1;min-width:130px;border:1px solid #e3e1d8;border-radius:10px;background:#fbfaf7;padding:10px}.bucket h4{margin:0 0 8px;font-size:.8rem;color:#43423d;text-align:center}"+
+    ".drop{display:flex;flex-direction:column;gap:6px;min-height:48px;border-radius:8px;padding:2px}.drop.over{outline:2px dashed #D97757}"+
+    ".mwrap{display:flex;flex-direction:column;gap:8px}.mrow{display:flex;align-items:center;gap:10px}.mlabel{flex:1;padding:9px 12px;border:1px solid #e3e1d8;border-radius:8px;background:#f7f5ef;font-size:.88rem}"+
+    ".slot{flex:1;min-height:42px;border:1px dashed #d8d5c8;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:4px;background:#fff}.slot.over{border-color:#D97757;background:#fdf3ee}.slot .ph{color:#b3afa4;font-size:.8rem}"+
+    ".mrow.ok .slot{border-style:solid;border-color:#2e7d32;background:#eef6ec}.mrow.bad .slot{border-style:solid;border-color:#c0392b;background:#fbeceb}"+
+    ".tray{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;padding:10px;border:1px dashed #d8d5c8;border-radius:10px;background:#fff;min-height:48px}.tray.over{border-color:#D97757;background:#fdf3ee}"+
+    ".rchip{padding:8px 12px;border:1px solid #e3e1d8;border-radius:8px;background:#f7f5ef;font-size:.86rem;cursor:grab;user-select:none}.rchip.sel{border-color:#D97757;box-shadow:0 0 0 2px rgba(217,119,87,.25)}"+
+    ".seq{display:flex;flex-direction:column;gap:8px}.srow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e3e1d8;border-radius:9px;background:#fff}.srow.ok{border-color:#2e7d32;background:#eef6ec}.srow.bad{border-color:#c0392b;background:#fbeceb}"+
+    ".snum{flex:none;width:24px;height:24px;border-radius:50%;background:#f0eee6;color:#43423d;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center}.stext{flex:1;font-size:.88rem}"+
+    ".smove{display:flex;flex-direction:column;gap:3px}.smove button{border:1px solid #e3e1d8;background:#f7f5ef;border-radius:6px;width:28px;height:20px;cursor:pointer;line-height:1;font-size:.7rem;color:#43423d;padding:0}.smove button:disabled{opacity:.3;cursor:not-allowed}"+
+    ".fcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}.fc{perspective:900px;height:122px;cursor:pointer;outline:none}.fc:focus-visible .fc-inner{box-shadow:0 0 0 2px #D97757}"+
+    ".fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}.fc.flip .fc-inner{transform:rotateY(180deg)}"+
+    ".fc-face{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;border:1px solid #e3e1d8;border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;background:#fff}"+
+    ".fc-front{font-weight:600}.fc-back{background:#fdf3ee;color:#43423d;transform:rotateY(180deg)}.fc.viewed .fc-front{border-color:#cdbfb4;background:#faf7f3}"+
+    "@media (prefers-reduced-motion:reduce){.fc-inner,.toast{transition:none}}";
+
+  function wrapDoc(title, sub, body, js, reportScore, mastery){
+    return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>'+SHARED_CSS+'</style></head><body>'+
+      '<h1>'+title+'</h1><div class="sub">'+sub+'</div>'+body+
+      '<div class="card" id="rescard"><div class="scorebig" id="scorebig"></div><div class="badge" id="resbadge"></div><div class="cmsg" id="resmsg"></div><button class="btn ghost" id="retry" type="button">Try again</button></div>'+
+      '<div class="toast" id="toast"></div>'+
+      '<script>'+
+      'function toast(m){var tt=document.getElementById("toast");tt.textContent=m;tt.classList.add("show");setTimeout(function(){tt.classList.remove("show");},2600);}'+
+      'function shuffle(a){for(var i=a.length-1;i>0;i--){var k=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[k];a[k]=t;}return a;}'+
+      'var SCOREMODE='+(reportScore?'true':'false')+',MASTERY='+(mastery==null?'null':mastery)+';'+
+      'function grade(correct,total){var pct=Math.round(correct/total*100);var passed=MASTERY==null?true:pct>=MASTERY;'+
+      'document.getElementById("scorebig").textContent=SCOREMODE?(pct+"%"):(correct+"/"+total);'+
+      'var b=document.getElementById("resbadge");b.className="badge "+(passed?"pass":"fail");b.textContent=MASTERY!=null?(passed?"Passed":"Below "+MASTERY+"%"):"Complete";'+
+      'document.getElementById("resmsg").textContent=(SCOREMODE?("You got "+correct+" of "+total+" right. "):("Done. "))+"Green marks correct.";'+
+      'document.getElementById("rescard").classList.add("show");'+
+      'toast(SCOREMODE?("Reporting score "+pct+"% to LMS…"):"Reporting completion to LMS…");'+
+      'document.getElementById("rescard").scrollIntoView({block:"nearest"});}'+
+      'document.getElementById("retry").onclick=function(){location.reload();};'+
+      js+
+      '<\/script></body></html>';
+  }
+
+  /* ---- drag and drop: sort items into buckets ---- */
+  function renderDragDrop(){
+    var title=esc(titleFromTopic()), sub=esc(model.instructions||"Drag each item into the correct group. You can also tap an item, then tap a group.");
+    var buckets=(model.buckets||[]).map(function(b){return clampStr(b,40);});
+    var items=(model.items||[]).map(function(it){return {text:clampStr(it.text,80),bucket:it.bucket};});
+    var reportScore=model.reports==="score", mastery=model.passing!=null?model.passing:(reportScore?80:null);
+    var body='<div class="pool" id="pool" data-b="-1"></div><div class="buckets" id="buckets"></div>'+
+      '<div class="bar"><span class="prog" id="prog"></span><button class="btn" id="submit" type="button" disabled>Check</button></div>';
+    var js=
+      'var D='+j({buckets:buckets,items:items})+';var place=D.items.map(function(){return -1;});var sel=-1;var graded=false;'+
+      'var pool=document.getElementById("pool"),bk=document.getElementById("buckets");'+
+      'function zones(){return [pool].concat(Array.prototype.slice.call(bk.querySelectorAll(".drop")));}'+
+      'function build(){bk.innerHTML="";D.buckets.forEach(function(name,bi){var col=document.createElement("div");col.className="bucket";var h=document.createElement("h4");h.textContent=name;var dz=document.createElement("div");dz.className="drop";dz.setAttribute("data-b",bi);col.appendChild(h);col.appendChild(dz);bk.appendChild(col);});attach();render();}'+
+      'function render(){pool.querySelectorAll(".chip").forEach(function(n){n.remove();});Array.prototype.forEach.call(bk.querySelectorAll(".drop"),function(d){d.innerHTML="";});'+
+      'D.items.forEach(function(it,id){var host=place[id]<0?pool:bk.querySelectorAll(".drop")[place[id]];var ch=document.createElement("div");ch.className="chip"+(sel===id?" sel":"")+(graded?(place[id]===it.bucket?" ok":" bad"):"");ch.textContent=it.text;ch.setAttribute("data-id",id);ch.setAttribute("draggable",graded?"false":"true");'+
+      'if(!graded){ch.addEventListener("dragstart",function(e){e.dataTransfer.setData("text",String(id));sel=-1;});ch.addEventListener("click",function(e){e.stopPropagation();sel=(sel===id?-1:id);render();});}host.appendChild(ch);});'+
+      'var placed=place.filter(function(p){return p>=0;}).length;document.getElementById("prog").textContent=placed+" of "+D.items.length+" placed";document.getElementById("submit").disabled=graded||placed<D.items.length;}'+
+      'function moveTo(id,b){if(graded||id<0)return;place[id]=b;sel=-1;render();}'+
+      'function attach(){zones().forEach(function(z){var b=parseInt(z.getAttribute("data-b"),10);z.addEventListener("dragover",function(e){e.preventDefault();z.classList.add("over");});z.addEventListener("dragleave",function(){z.classList.remove("over");});z.addEventListener("drop",function(e){e.preventDefault();z.classList.remove("over");var id=parseInt(e.dataTransfer.getData("text"),10);if(!isNaN(id))moveTo(id,b);});z.addEventListener("click",function(){if(sel>=0)moveTo(sel,b);});});}'+
+      'build();document.getElementById("submit").onclick=function(){graded=true;var c=0;D.items.forEach(function(it,id){if(place[id]===it.bucket)c++;});render();grade(c,D.items.length);};';
+    prevFrame.srcdoc=wrapDoc(title,sub,body,js,reportScore,mastery);
+  }
+
+  /* ---- matching: drag answers onto their items ---- */
+  function renderMatching(){
+    var title=esc(titleFromTopic()), sub=esc(model.instructions||"Drag each answer onto the item it matches. You can also tap an answer, then tap a slot.");
+    var pairs=(model.pairs||[]).map(function(p){return {left:clampStr(p.left,80),right:clampStr(p.right,80)};});
+    var reportScore=model.reports==="score", mastery=model.passing!=null?model.passing:(reportScore?80:null);
+    var body='<div class="tray" id="tray" data-slot="-1"></div><div class="mwrap" id="rows"></div>'+
+      '<div class="bar"><span class="prog" id="prog"></span><button class="btn" id="submit" type="button" disabled>Check</button></div>';
+    var js=
+      'var P='+j(pairs)+';var rights=P.map(function(p,i){return {id:i,text:p.right};});shuffle(rights);var assign=P.map(function(){return -1;});var sel=-1;var graded=false;'+
+      'var tray=document.getElementById("tray"),rows=document.getElementById("rows");'+
+      'function rtext(id){for(var i=0;i<rights.length;i++)if(rights[i].id===id)return rights[i].text;return "";}'+
+      'function build(){rows.innerHTML="";P.forEach(function(p,li){var row=document.createElement("div");row.className="mrow";var lab=document.createElement("div");lab.className="mlabel";lab.textContent=p.left;var slot=document.createElement("div");slot.className="slot";slot.setAttribute("data-slot",li);row.appendChild(lab);row.appendChild(slot);rows.appendChild(row);});attach();render();}'+
+      'function mkchip(r){var ch=document.createElement("div");ch.className="rchip"+(sel===r.id?" sel":"");ch.textContent=r.text;ch.setAttribute("draggable",graded?"false":"true");if(!graded){ch.addEventListener("dragstart",function(e){e.dataTransfer.setData("text",String(r.id));sel=-1;});ch.addEventListener("click",function(e){e.stopPropagation();sel=(sel===r.id?-1:r.id);render();});}return ch;}'+
+      'function render(){tray.querySelectorAll(".rchip").forEach(function(n){n.remove();});var slots=rows.querySelectorAll(".slot");Array.prototype.forEach.call(slots,function(s){s.innerHTML="";});'+
+      'rights.forEach(function(r){var li=assign.indexOf(r.id);(li<0?tray:slots[li]).appendChild(mkchip(r));});'+
+      'Array.prototype.forEach.call(slots,function(s){if(!s.querySelector(".rchip")){var ph=document.createElement("span");ph.className="ph";ph.textContent="drop here";s.appendChild(ph);}});'+
+      'var n=assign.filter(function(a){return a>=0;}).length;document.getElementById("prog").textContent=n+" of "+P.length+" matched";document.getElementById("submit").disabled=graded||n<P.length;}'+
+      'function moveTo(rid,li){if(graded)return;var cur=assign.indexOf(rid);if(cur>=0)assign[cur]=-1;if(li>=0){if(assign[li]>=0)assign[li]=-1;assign[li]=rid;}sel=-1;render();}'+
+      'function attach(){var zs=[tray].concat(Array.prototype.slice.call(rows.querySelectorAll(".slot")));zs.forEach(function(z){var li=parseInt(z.getAttribute("data-slot"),10);z.addEventListener("dragover",function(e){e.preventDefault();z.classList.add("over");});z.addEventListener("dragleave",function(){z.classList.remove("over");});z.addEventListener("drop",function(e){e.preventDefault();z.classList.remove("over");var rid=parseInt(e.dataTransfer.getData("text"),10);if(!isNaN(rid))moveTo(rid,li);});z.addEventListener("click",function(){if(sel>=0)moveTo(sel,li);});});}'+
+      'build();document.getElementById("submit").onclick=function(){graded=true;var c=0;var mrows=rows.querySelectorAll(".mrow");P.forEach(function(p,li){var ok=(assign[li]>=0&&rtext(assign[li])===p.right);if(ok)c++;mrows[li].classList.add(ok?"ok":"bad");});render();grade(c,P.length);};';
+    prevFrame.srcdoc=wrapDoc(title,sub,body,js,reportScore,mastery);
+  }
+
+  /* ---- sequencing: reorder steps ---- */
+  function renderSequencing(){
+    var title=esc(titleFromTopic()), sub=esc(model.instructions||"Put the steps in the correct order, then check.");
+    var steps=(model.steps||[]).map(function(s){return clampStr(s,160);});
+    var reportScore=model.reports==="score", mastery=model.passing!=null?model.passing:(reportScore?80:null);
+    var body='<div class="seq" id="seq"></div><div class="bar"><span class="prog" id="prog">Use the arrows to reorder</span><button class="btn" id="submit" type="button">Check order</button></div>';
+    var js=
+      'var S='+j(steps)+';var order=S.map(function(_,i){return i;});shuffle(order);if(order.length>1&&order.every(function(v,i){return v===i;}))order.push(order.shift());var graded=false;var seq=document.getElementById("seq");'+
+      'function render(){seq.innerHTML="";order.forEach(function(ci,pos){var row=document.createElement("div");row.className="srow"+(graded?(ci===pos?" ok":" bad"):"");'+
+      'var num=document.createElement("div");num.className="snum";num.textContent=(pos+1);var tx=document.createElement("div");tx.className="stext";tx.textContent=S[ci];'+
+      'var mv=document.createElement("div");mv.className="smove";var up=document.createElement("button");up.type="button";up.textContent="↑";up.setAttribute("aria-label","Move up");up.disabled=graded||pos===0;up.onclick=function(){var t=order[pos-1];order[pos-1]=order[pos];order[pos]=t;render();};'+
+      'var dn=document.createElement("button");dn.type="button";dn.textContent="↓";dn.setAttribute("aria-label","Move down");dn.disabled=graded||pos===order.length-1;dn.onclick=function(){var t=order[pos+1];order[pos+1]=order[pos];order[pos]=t;render();};'+
+      'mv.appendChild(up);mv.appendChild(dn);row.appendChild(num);row.appendChild(tx);row.appendChild(mv);seq.appendChild(row);});}'+
+      'render();document.getElementById("submit").onclick=function(){graded=true;var c=0;order.forEach(function(ci,pos){if(ci===pos)c++;});render();document.getElementById("submit").disabled=true;grade(c,S.length);};';
+    prevFrame.srcdoc=wrapDoc(title,sub,body,js,reportScore,mastery);
+  }
+
+  /* ---- flashcards: flip to study (reports completion) ---- */
+  function renderFlashcards(){
+    var title=esc(titleFromTopic()), sub=esc(model.instructions||"Tap each card to flip it. Review them all.");
+    var cards=(model.cards||[]).map(function(c){return {front:clampStr(c.front,120),back:clampStr(c.back,180)};});
+    var body='<div class="fcgrid" id="grid"></div><div class="bar"><span class="prog" id="prog"></span><button class="btn" id="done" type="button" disabled>Mark reviewed</button></div>';
+    var js=
+      'var C='+j(cards)+';var viewed={};var grid=document.getElementById("grid");'+
+      'C.forEach(function(c,i){var fc=document.createElement("div");fc.className="fc";fc.tabIndex=0;fc.setAttribute("role","button");fc.setAttribute("aria-label","Flashcard "+(i+1));'+
+      'var inner=document.createElement("div");inner.className="fc-inner";var f=document.createElement("div");f.className="fc-face fc-front";f.textContent=c.front;var b=document.createElement("div");b.className="fc-face fc-back";b.textContent=c.back;inner.appendChild(f);inner.appendChild(b);fc.appendChild(inner);'+
+      'function flip(){fc.classList.toggle("flip");if(!viewed[i]){viewed[i]=true;fc.classList.add("viewed");upd();}}'+
+      'fc.addEventListener("click",flip);fc.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();flip();}});grid.appendChild(fc);});'+
+      'function upd(){var n=Object.keys(viewed).length;document.getElementById("prog").textContent=n+" of "+C.length+" reviewed";document.getElementById("done").disabled=n<C.length;}'+
+      'upd();document.getElementById("done").onclick=function(){var b=document.getElementById("done");b.textContent="Reviewed";b.disabled=true;toast("Reporting completion to LMS…");};';
+    prevFrame.srcdoc=wrapDoc(title,sub,body,js,false,null);
+  }
+
+  /* ---- dispatcher: render the right interactive preview ---- */
+  function renderPreview(){
+    if (model.interaction==="dragdrop") renderDragDrop();
+    else if (model.interaction==="matching") renderMatching();
+    else if (model.interaction==="sequencing") renderSequencing();
+    else if (model.interaction==="flashcards") renderFlashcards();
+    else renderQuiz();
+    syncBig();
+  }
+
+  /* ============ tabs ============ */
+  function showTab(which){
+    var f = which==="files";
+    tabFiles.classList.toggle("is-active", f); tabPrev.classList.toggle("is-active", !f);
+    panelFiles.classList.toggle("is-active", f); panelPrev.classList.toggle("is-active", !f);
+  }
+  tabFiles.addEventListener("click", function(){ showTab("files"); });
+  tabPrev.addEventListener("click", function(){ showTab("prev"); });
+
+  /* ---- full-size preview modal: see a drag and drop (etc.) at real size ---- */
+  var pvModal=document.getElementById("pvModal"), pvBig=document.getElementById("pvBig"),
+      pvExpand=document.getElementById("pvExpand"), pvClose=document.getElementById("pvClose");
+  function bigOpen(){ return !!(pvModal && pvModal.classList.contains("is-open")); }
+  function syncBig(){ if (bigOpen() && pvBig) pvBig.srcdoc = prevFrame.srcdoc; }
+  function openBig(){ if(!pvModal) return; pvBig.srcdoc = prevFrame.srcdoc; pvModal.classList.add("is-open"); document.body.style.overflow="hidden"; setTimeout(function(){ if(pvClose) pvClose.focus(); },30); }
+  function closeBig(){ if(!pvModal) return; pvModal.classList.remove("is-open"); pvBig.srcdoc=""; document.body.style.overflow=""; if(pvExpand) pvExpand.focus(); }
+  if(pvExpand) pvExpand.addEventListener("click", openBig);
+  if(pvClose) pvClose.addEventListener("click", closeBig);
+  if(pvModal) pvModal.addEventListener("click", function(e){ if(e.target===pvModal) closeBig(); });
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape" && bigOpen()) closeBig(); });
+
+  /* ============ manual follow-up loop ============ */
+  var activeFrame=null;
+  function line(cls,txt){ var d=document.createElement("div"); d.className=cls; d.textContent=txt; term.body.appendChild(d); term.body.scrollTop=term.body.scrollHeight; return d; }
+  function toolLine(name,arg){ var d=document.createElement("div"); d.className="cc-line cc-line--tool";
+    d.innerHTML='<span class="cc-tool-dot">●</span> <span class="cc-tool-name">'+esc(name)+'</span><span class="cc-tool-paren">(</span><span class="cc-tool-arg">'+esc(arg)+'</span><span class="cc-tool-paren">)</span>';
+    term.body.appendChild(d); term.body.scrollTop=term.body.scrollHeight; }
+  function diffBlock(d){ var wrap=document.createElement("div"); wrap.className="cc-diff";
+    (d.del||[]).forEach(function(s){ var x=document.createElement("div"); x.className="cc-diff__del"; x.textContent="- "+s; wrap.appendChild(x); });
+    (d.add||[]).forEach(function(s){ var x=document.createElement("div"); x.className="cc-diff__add"; x.textContent="+ "+s; wrap.appendChild(x); });
+    term.body.appendChild(wrap); term.body.scrollTop=term.body.scrollHeight; }
+  function newFollowFrame(){
+    var frame=document.createElement("div"); frame.className="cc-cc-frame";
+    var glyph=document.createElement("span"); glyph.className="cc-cc-glyph"; glyph.textContent="›";
+    var input=document.createElement("input"); input.className="cc-cc-input"; input.type="text"; input.spellcheck=false;
+    input.placeholder="Refine the interaction, or pick a suggestion below"; input.setAttribute("aria-label","Refine the interaction");
+    frame.appendChild(glyph); frame.appendChild(input); term.body.appendChild(frame); term.body.scrollTop=term.body.scrollHeight;
+    input.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var v=input.value.trim(); if(v) submitFollow(v); } });
+    activeFrame={frame:frame,input:input}; setTimeout(function(){ input.focus(); },20);
+  }
+  async function submitFollow(text){
+    var f=activeFrame; activeFrame=null;
+    var echo=document.createElement("div"); echo.className="cc-cc-echo";
+    echo.innerHTML='<span class="cc-cc-glyph">›</span> '+esc(text); f.frame.replaceWith(echo);
+
+    var prevModel=JSON.parse(JSON.stringify(model)); model=await generate(text, model);
+
+    var d;
+    if (prevModel.reports !== model.reports){
+      d = (model.reports === "completion")
+        ? { file:"app.js", del:['var result = "score";'], add:['var result = "completion";'] }
+        : { file:"app.js", del:['var result = "completion";'], add:['var result = "score";'] };
+    } else if (prevModel.passing !== model.passing && model.passing != null){
+      d = { file:"app.js", del:['var passing = null;'], add:['var passing = '+model.passing+';'] };
+    } else if (prevModel.topic !== model.topic){
+      d = { file:"index.html", del:[], add:['<!-- interaction on '+esc(model.topic)+' -->'] };
+    } else if (prevModel.count !== model.count){
+      d = { file:"app.js", del:[], add:['// '+model.count+' items'] };
+    } else {
+      d = { file:"app.js", del:[], add:['// refined: '+esc(model.topic)] };
+    }
+
+    await sleep(220);
+    var w=line("cc-line cc-line--warn","⠋ Updating "+d.file+"…"); await sleep(reduce?0:700); w.remove();
+    toolLine("Update", d.file); diffBlock(d);
+    line("cc-line cc-line--ok","Updated "+d.file+".");
+    if (selectedFile) selectFile(selectedFile);
+    renderPreview();
+    newFollowFrame();
+  }
+
+  var CHIP_TEXTS = ["Make it a drag and drop","Turn it into flashcards","Make it a matching activity","Set a passing score of 80%"];
+  function buildChips(){
+    chips.innerHTML="";
+    CHIP_TEXTS.forEach(function(txt){
+      var b=document.createElement("button"); b.className="cc-chip"; b.type="button"; b.textContent=txt;
+      b.addEventListener("click", function(){ if(!activeFrame) return; activeFrame.input.value=txt; activeFrame.input.focus(); submitFollow(txt); });
+      chips.appendChild(b);
+    });
+  }
+
+  /* ============ engine script ============ */
+  function script(){
+    return [
+      { type:"output", lines:[ {t:"dim", s:"# Tell Claude what interaction you want to build."} ]},
+      { type:"claudePrompt",
+        accept:"*",
+        placeholder:"Describe any interaction: quiz, drag and drop, matching, sequence, or flashcards",
+        hint:"Try: a drag and drop that sorts recycling into the right bins, or flashcards for design terms",
+        parse:function(text){ var base = parseScorm(text, null); model = base; pendingGen = generate(text, null); return base; },
+        toolCalls:[
+          {name:"Write", arg:"index.html", working:"Building the interaction", ms:1000},
+          {name:"Write", arg:"styles.css", working:"Styling", ms:800},
+          {name:"Write", arg:"app.js", working:"Adding the interactive logic", ms:1000}
+        ],
+        success:function(p){
+          return [
+            {t:"ok",  s:"Created index.html, styles.css, app.js"},
+            {t:"dim", s:"Interaction: "+p.interaction+"   topic: "+p.topic+"   result: "+p.reports+(p.passing!=null?("   passing: "+p.passing+"%"):"")},
+            {t:"ok",  s:"Interaction built. This is the bundle you would drop into a Rise block."}
+          ];
+        }
+      }
+    ];
+  }
+
+  function launch(os){
+    CCTerminal.setOS(os);
+    pick.style.display="none"; lead.style.display="block"; stage.style.display="block"; mount.innerHTML="";
+    model=null; activeFrame=null; selectedFile=null;
+    rt.classList.remove("is-on"); followups.classList.remove("is-on"); done.style.display="none"; followups.style.display="block";
+    try { if (localStorage.getItem("cc_build_choice")==="scorm") nudge.style.display="block"; } catch(e){}
+    term = new CCTerminal(mount, {
+      os: os,
+      onComplete: async function(){
+        if (pendingGen){ try { model = await pendingGen; } catch(e){} pendingGen = null; }
+        rt.classList.add("is-on");
+        showTab("files");
+        await populateTree();
+        renderPreview();
+        followups.classList.add("is-on");
+        buildChips();
+        newFollowFrame();
+      }
+    });
+    window.__ccterm = term;
+    term.run(script());
+  }
+
+  doneBtn.addEventListener("click", function(){
+    if (activeFrame){ activeFrame.frame.remove(); activeFrame=null; }
+    followups.style.display="none"; done.style.display="block"; done.scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+  resetBtn.addEventListener("click", function(){ launch(CCTerminal.getOS() || "mac"); });
+
+  /* ---- "Get Claude's take": AI feedback on the interaction ---- */
+  var fbBtn = document.getElementById("fbBtn");
+  var fbPanel = document.getElementById("fbPanel");
+  function fbSet(title, body){
+    fbPanel.innerHTML = "";
+    var t = document.createElement("div"); t.className = "cc-fb__t"; t.textContent = title;
+    var b = document.createElement("div"); b.className = "cc-fb__body"; b.textContent = body;
+    fbPanel.appendChild(t); fbPanel.appendChild(b);
+    fbPanel.classList.add("is-on");
+  }
+  async function getFeedback(){
+    if (!model) return;
+    fbBtn.disabled = true;
+    fbSet("Claude's take", "Reading your interaction…");
+    if (!CONFIG.workerUrl) { fbSet("Claude's take", "Turn on the live proxy to get real feedback here. In the app, Claude can review your work and suggest improvements."); fbBtn.disabled = false; return; }
+    try {
+      var ctrl = new AbortController(); var to = setTimeout(function(){ ctrl.abort(); }, 20000);
+      var res = await fetch(CONFIG.workerUrl, { method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ kind:"feedback", target:"scorm", model: model,
+          name:(CCTerminal.getName&&CCTerminal.getName())||null, role:(CCTerminal.getRole&&CCTerminal.getRole())||null }), signal: ctrl.signal });
+      clearTimeout(to);
+      var data = await res.json();
+      if (res.ok && data && data.text) fbSet("Claude's take", data.text);
+      else if (data && data.error && data.error.indexOf("rate limit") >= 0) fbSet("Claude's take", "We have hit today's practice limit. Try again tomorrow.");
+      else fbSet("Claude's take", "Could not get feedback right now. Try again in a moment.");
+    } catch(e){ fbSet("Claude's take", "Could not reach Claude just now. Try again in a moment."); }
+    fbBtn.disabled = false;
+  }
+  if (fbBtn) fbBtn.addEventListener("click", getFeedback);
+
+  Array.prototype.forEach.call(document.querySelectorAll(".cc-os-card"), function(b){ b.addEventListener("click", function(){ launch(b.getAttribute("data-os")); }); });
+
+  var saved = CCTerminal.getOS();
+  if (saved==="mac"||saved==="windows") launch(saved);
+  else pick.style.display="block";
+})();
+</script>
+
+
+</body></html>

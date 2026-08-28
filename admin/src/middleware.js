@@ -34,5 +34,19 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // Fire and forget, so the write never delays the response.
   context.locals.runtime.ctx?.waitUntil?.(touchUser(env.DB, user.id, nowIso()));
 
+  // Role gate. Access decides who gets in the door; the role decides which
+  // door. A client-role user (a coaching member) sees only the members area,
+  // and everything else redirects there rather than 403ing, because a member
+  // who typed the bare hostname did nothing wrong. Owner and staff pass
+  // untouched, members area included, so Alex can see what a member sees.
+  // The course files under /course/ are static assets served before this
+  // middleware runs; Access is their gate, which is the accepted trade for
+  // content whose audience is exactly "everyone allowed through Access".
+  if (user.role === 'client') {
+    const path = context.url.pathname;
+    const allowed = path === '/members' || path.startsWith('/members/');
+    if (!allowed) return context.redirect('/members', 303);
+  }
+
   return next();
 });

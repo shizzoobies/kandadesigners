@@ -8,6 +8,8 @@
 // so this is testable and so both callers agree on what day it is.
 
 import { addDays, daysBetween } from './format.js';
+import { listMembers } from './db.js';
+import { TIER_LABELS, currentWeek, weekTenDue, staleMembers } from './coaching.js';
 
 const QUIET_DAYS = 14;
 
@@ -204,7 +206,7 @@ export async function getDashboard(db, today) {
   const period = today.slice(0, 7);
   const dayOfMonth = Number(today.slice(8, 10));
 
-  const [money, overdue, expectedDue, needsInv, nothingBilled, retainers, due, upcoming, undated, quiet] =
+  const [money, overdue, expectedDue, needsInv, nothingBilled, retainers, due, upcoming, undated, quiet, activeMembers] =
     await Promise.all([
       moneyTotals(db, today),
       overdueInvoices(db, today),
@@ -216,7 +218,14 @@ export async function getDashboard(db, today) {
       followupsUpcoming(db, today),
       followupsUndated(db),
       goneQuiet(db, today),
+      listMembers(db, 'active'),
     ]);
+
+  // Coaching rules are pure functions over the active roster (small by
+  // design: the caps sum to 48), so the week math stays testable and this
+  // module adds no coaching SQL of its own.
+  const offerDue = weekTenDue(activeMembers, today);
+  const coachingStale = staleMembers(activeMembers, today);
 
   // A retainer whose bill day has passed has arrived; one later this month has not.
   const retainersArrived = retainers.filter((r) => r.day_of_month <= dayOfMonth);
@@ -289,6 +298,31 @@ export async function getDashboard(db, today) {
       href: '/followups',
       sortKey: `5-${f.due_on}`,
       followupId: f.id,
+    })),
+    // Coaching: the week-10 offer is the single highest-value promise in the
+    // program (it is where the recurring revenue comes from), so it ranks
+    // with money-severity even though no invoice exists yet.
+    ...offerDue.map((m) => ({
+      group: 'promises',
+      severity: 'money',
+      tag: `Week ${String(Math.min(currentWeek(m.started_on, today), 12)).padStart(2, '0')}`,
+      title: m.client_name,
+      detail: `${TIER_LABELS[m.tier]}, offer the membership this week`,
+      amountCents: null,
+      note: 'make the offer',
+      href: `/coaching/${m.id}`,
+      sortKey: `5a-${m.started_on}`,
+    })),
+    ...coachingStale.map((m) => ({
+      group: 'promises',
+      severity: 'soon',
+      tag: `${m.days_quiet}d quiet`,
+      title: m.client_name,
+      detail: `${TIER_LABELS[m.tier]}, ${m.last_session_on ? `last session ${m.last_session_on}` : 'no session ever logged'}`,
+      amountCents: null,
+      note: 'book the session',
+      href: `/coaching/${m.id}`,
+      sortKey: `5b-${m.last_session_on ?? m.started_on}`,
     })),
   ].sort((a, b) => a.sortKey.localeCompare(b.sortKey));
 
