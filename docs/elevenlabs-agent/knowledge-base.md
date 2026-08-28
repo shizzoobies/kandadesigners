@@ -2,7 +2,7 @@
 
 ## The company
 
-K & A Performance (ka-performancefl.com) is a two-person web design and AI integration studio run by Alex and Kristina Anderson, based in Florida. Small on purpose: clients talk directly to the people doing the work, and every reply comes from Alex or Kristina personally, within 24 hours.
+K & A Performance (ka-performancefl.com) is a two-person web design and AI integration studio run by Alex and Kristina Anderson, based in Gainesville, Florida. Small on purpose: clients talk directly to the people doing the work, and every reply comes from Alex or Kristina personally, within 24 hours.
 
 Services:
 - Purpose-built websites (the primary offering): custom-designed sites built from the ground up — no templates, no compromise on speed. Built to load fast, feel alive, and do the job they exist to do.
@@ -17,9 +17,30 @@ Pricing: scoped per project — never a fixed menu price. Budget bands: under $2
 
 Hosting philosophy (an honest differentiator): most businesses don't need to pay monthly hosting fees. A well-built site runs on modern global infrastructure for little to nothing a month — that's how K & A ships every build. Businesses paying monthly for a site that rarely changes should ask about a one-time build.
 
-Recent work: FDAAF (Florida Disability Access and Awareness Foundation), MBS Medicine (veteran-owned telehealth), PB&J Strategic Accounting, Project Makeover (school-space nonprofit), FixAlways (AI-powered home-services directory), Fore Motion Golf (indoor golf, Jacksonville), Ellenton Family Practice Direct (direct primary care).
+Recent work: FDAAF (Florida Disability Access and Awareness Foundation), MBS Medicine (veteran-owned telehealth), PB&J Strategic Accounting, Project Makeover (school-space nonprofit), FixAlways (AI-powered home-services directory), Fore Motion Golf (indoor golf, Jacksonville), Ellenton Family Practice Direct (direct primary care), Southern Legacy Contractors, Synovial Marketing.
 
 Contact: ka-performancefl.com/contact/ — either scope a project with the AI assistant in minutes, or send a message directly. Alex and Kristina reply personally within 24 hours. Accessibility questions and requests go to help@ka-performancefl.com.
+
+## Where K & A works
+
+The studio is in Gainesville, Florida. Meeting in person is easy in Gainesville and the nearby towns: Alachua, Newberry, High Springs, and Ocala. Jacksonville, Orange Park, Fleming Island, and St. Augustine run remote, which is how most projects run anyway, and remote works everywhere else too. The site has dedicated pages at ka-performancefl.com/locations/gainesville/ and /locations/jacksonville/. Each service also has its own page: /services/web-design/, /services/ai-integration/, /services/seo-ai-search/, and /services/accessibility/.
+
+## The 90-Day AI Launch
+
+The newest offering, and the answer whenever someone wants to actually use AI themselves rather than have it built for them. Details at ka-performancefl.com/ai-launch/.
+
+- What it is: twelve weekly one-on-one working sessions with Alex, ending with one real AI workflow running in the client's business that was not there before. Weeks 1 to 2 map the business and ship a quick win in the first session. Weeks 3 to 8 build the highest-value workflow together on the client's real data. Weeks 9 to 12 the client builds one themselves with Alex watching, and finishes with a handoff doc, recorded walkthroughs, and a written plan for what comes next.
+- Price: $2,000 one time, or three payments of $700. Launch + Site is $3,999: the same twelve weeks with a full custom site built alongside it by K & A.
+- Ownership: everything is built in the client's own accounts. The client buys their own Claude subscription, roughly twenty dollars a month, paid to Anthropic on their own card. K & A never provides, includes, or shares accounts, seats, or logins. If the client walked away the day the program ended, everything would keep working.
+- Who it fits: owner-operators and small teams, roughly one to fifteen people, who can commit an hour a week. It is not a course and there is no certificate; the client's business is the curriculum.
+- The first call is twenty minutes and free, and Alex will say honestly if there is nothing worth building.
+- The page has a live demo: type what eats your week and Kai sketches the workflow the Launch would build, the first session's quick win, and what week nine looks like.
+
+Q: Do you teach AI or offer coaching or training?
+A: Yes, that is the 90-Day AI Launch: twelve weekly sessions with Alex, one real workflow built in your own account, $2,000 or $3,999 with a full custom site. Start at ka-performancefl.com/ai-launch/.
+
+Q: Do I need my own AI account for the Launch?
+A: Yes, and that is the point: you buy your own Claude subscription, about twenty dollars a month on your own card, and everything built in the program lives in accounts you own.
 
 ## The artists
 
