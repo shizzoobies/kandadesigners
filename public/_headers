@@ -41,3 +41,7 @@
   X-Robots-Tag: noindex, nofollow
 /internal/*
   X-Robots-Tag: noindex, nofollow
+# The free course app: linked from /ai-launch, deliberately unindexed so the
+# landing section is what ranks, not a thin SPA shell.
+/course/*
+  X-Robots-Tag: noindex, nofollow

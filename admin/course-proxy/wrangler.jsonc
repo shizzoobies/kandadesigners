@@ -28,7 +28,7 @@
 	// Reach or Articulate wildcards here on purpose: narrower is safer, and
 	// anything Reach-hosted belongs to cc-course-proxy.
 	"vars": {
-		"ALLOWED_ORIGINS": "https://admin.ka-performancefl.com,http://localhost:4321,http://localhost:4399",
+		"ALLOWED_ORIGINS": "https://ka-performancefl.com,https://admin.ka-performancefl.com,http://localhost:4321,http://localhost:4399,http://localhost:8799",
 		"ELEVENLABS_AGENT_ID": "agent_4601kw4z5f3yfwrsnr4hvafw1sgf"
 	}
 	// Secrets, set once after the first deploy (see UPSTREAM-README.md):
