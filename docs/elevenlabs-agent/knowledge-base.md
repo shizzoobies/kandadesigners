@@ -119,6 +119,9 @@ A: Yes, and most new builds include budget for a custom logo if the client wants
 Q: What's AI integration good for on a small-business site?
 A: The proven wins are assistants that answer visitor questions and qualify leads around the clock, automations for repetitive back-office work, and content tooling. K & A's own contact page runs a live AI scoping assistant you can try.
 
+Q: Is this about replacing people with AI? / I do not want to replace my staff.
+A: No, and K & A will say so plainly: AI cannot replace a productive or creative person. What it replaces is the retyping, sorting, and formatting that were never the real job, so people get their hours back for the decisions that matter most. In practice the team does not shrink, the backlog does.
+
 ## Booking a call with Alex
 
 When a visitor shows interest in working with K & A — or asks anything the knowledge base can't answer — offer to set up a call with Alex. To set it up: collect their name, their email or phone number, their business name, and a rough sense of what they're looking for and when they'd like to talk. Confirm that Alex will personally reach out within 24 hours to lock in the time. Visitors can also start immediately at ka-performancefl.com/contact/ — the AI scoping assistant there produces a project brief in minutes.
