@@ -1,0 +1,89 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { listSendableLeads, countCourseLeads, listNewsletters } from '../../lib/db.js';
+import { humanDate } from '../../lib/format.js';
+
+const db = Astro.locals.runtime.env.DB;
+const env = Astro.locals.runtime.env;
+const configured = Boolean(env.RESEND_API_KEY && env.NEWSLETTER_FROM);
+
+const [sendable, total, history] = await Promise.all([
+  listSendableLeads(db),
+  countCourseLeads(db),
+  listNewsletters(db, 10),
+]);
+const unsubscribed = total - sendable.length;
+
+// Failed sends round-trip the draft through the query string so nothing
+// typed is ever lost to an error.
+const q = Astro.url.searchParams;
+const draftSubject = q.get('subject') ?? '';
+const draftBody = q.get('body') ?? '';
+const sent = q.get('sent');
+const failedParam = q.get('failed');
+const tested = q.get('tested');
+const error = q.get('error');
+const ERRORS = {
+  unconfigured: 'Sending is not configured yet: the RESEND_API_KEY secret and NEWSLETTER_FROM variable need to be set on this worker. Nothing was sent.',
+  subject: 'It needs a subject. Nothing was sent.',
+  body: 'It needs a body. Nothing was sent.',
+  confirm: 'Type SEND in the confirm box to send for real. Nothing was sent.',
+  nobody: 'There is nobody to send to yet. Nothing was sent.',
+  testfail: 'The test send failed. Check the worker logs. Nothing was sent to the list.',
+  sendfail: 'The send failed entirely. Check the worker logs; the attempt was recorded.',
+  intent: 'Unrecognised action. Nothing was sent.',
+};
+---
+<Shell title="Newsletter" active="newsletter">
+  {sent && <p class="notice">Sent to {sent} {Number(sent) === 1 ? 'person' : 'people'}{failedParam ? `, ${failedParam} failed (logged)` : ''}.</p>}
+  {tested && <p class="notice">Test sent to your own inbox. Read it before the real thing.</p>}
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was sent.'}</p>}
+
+  <dl class="money">
+    <div><dt>Will receive it</dt><dd>{sendable.length}</dd></div>
+    <div><dt>Unsubscribed</dt><dd>{unsubscribed}</dd></div>
+    <div><dt>Sends so far</dt><dd>{history.length}</dd></div>
+  </dl>
+
+  <p class="empty-state">
+    Plain text: blank lines make paragraphs. Every message carries its own
+    unsubscribe link automatically. Test it to your own inbox first, then
+    type SEND to send for real.
+  </p>
+
+  <form method="POST" action="/api/newsletter">
+    <div class="field">
+      <label for="subject">Subject</label>
+      <input id="subject" name="subject" required autocomplete="off" value={draftSubject} placeholder="One useful thing this month" />
+    </div>
+    <div class="field">
+      <label for="body">Body</label>
+      <textarea id="body" name="body" rows="14" required>{draftBody}</textarea>
+    </div>
+    <div class="field">
+      <label for="confirm">Type SEND to send to everyone; leave blank for a test</label>
+      <input id="confirm" name="confirm" autocomplete="off" placeholder="" />
+    </div>
+    <div class="actions">
+      <button class="btn" type="submit" name="intent" value="test">Send a test to me</button>
+      <button class="danger" type="submit" name="intent" value="send">Send to {sendable.length}</button>
+    </div>
+  </form>
+
+  <div class="groupline">Past sends</div>
+  {history.length === 0 ? (
+    <p class="empty-state">Nothing sent yet.</p>
+  ) : (
+    <div class="rows">
+      {history.map((n) => (
+        <div class="row s-quiet">
+          <div class="tag">{humanDate(n.sent_at.slice(0, 10))}</div>
+          <div class="what">
+            <b>{n.subject}</b>
+            <span>to {n.sent_count}{n.fail_count ? ` · ${n.fail_count} failed` : ''} · by {n.sent_by}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</Shell>

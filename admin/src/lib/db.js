@@ -604,3 +604,28 @@ export async function countCourseLeads(db) {
   const r = await db.prepare('SELECT COUNT(*) AS n FROM course_leads').first();
   return r?.n ?? 0;
 }
+
+// ── Newsletter ────────────────────────────
+
+export async function listSendableLeads(db) {
+  const { results } = await db.prepare(
+    `SELECT email, unsubscribe_token FROM course_leads
+      WHERE unsubscribed_at IS NULL AND unsubscribe_token IS NOT NULL`
+  ).all();
+  return results ?? [];
+}
+
+export async function recordNewsletter(db, { subject, body, sentCount, failCount, sentBy, now }) {
+  await db.prepare(
+    `INSERT INTO newsletters (subject, body, sent_count, fail_count, sent_by, sent_at)
+     VALUES (?, ?, ?, ?, ?, ?)`
+  ).bind(subject, body, sentCount, failCount, sentBy, now).run();
+}
+
+export async function listNewsletters(db, limit = 10) {
+  const { results } = await db.prepare(
+    `SELECT id, subject, body, sent_count, fail_count, sent_by, sent_at
+       FROM newsletters ORDER BY sent_at DESC LIMIT ?`
+  ).bind(limit).all();
+  return results ?? [];
+}

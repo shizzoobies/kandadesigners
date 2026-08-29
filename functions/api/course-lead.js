@@ -48,14 +48,18 @@ export async function onRequestPost(context) {
     let stored = false;
     if (env.ADMIN_DB) {
       try {
+        // The unsubscribe token is minted here, at capture time, so every
+        // lead can leave the newsletter with one click. Conflict keeps the
+        // original token: links in already-sent emails must stay valid.
+        const token = crypto.randomUUID().replace(/-/g, '');
         await env.ADMIN_DB.prepare(
-          `INSERT INTO course_leads (name, email, source, created_at, last_seen_at)
-           VALUES (?, ?, ?, ?, ?)
+          `INSERT INTO course_leads (name, email, source, unsubscribe_token, created_at, last_seen_at)
+           VALUES (?, ?, ?, ?, ?, ?)
            ON CONFLICT(email) DO UPDATE SET
              name = CASE WHEN excluded.name != '' THEN excluded.name ELSE course_leads.name END,
              times = course_leads.times + 1,
              last_seen_at = excluded.last_seen_at`
-        ).bind(name, email, source, now, now).run();
+        ).bind(name, email, source, token, now, now).run();
         stored = true;
       } catch (e) {
         console.log('course_lead_db_error', String(e).slice(0, 120));
