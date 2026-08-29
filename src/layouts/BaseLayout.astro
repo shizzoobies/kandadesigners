@@ -67,6 +67,9 @@ const schema = {
         addressCountry: 'US',
       },
       hasMap: MAP_URL,
+      // Free-text by design; matches the public budget bands on the services
+      // pages and the Launch's published price, nothing invented.
+      priceRange: 'Under $2,000 to $10,000+',
       areaServed: CITIES_SERVED.map((name) => ({
         '@type': 'City',
         name,

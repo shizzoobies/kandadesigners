@@ -14,12 +14,25 @@ const serviceSchema = {
   '@type': 'Service',
   name: '90-Day AI Launch',
   serviceType: 'AI integration coaching and implementation',
+  description:
+    'Twelve weekly one-on-one working sessions ending with one real AI workflow running in the client’s own accounts, plus the ability to run it without us.',
   url: 'https://ka-performancefl.com/ai-launch/',
   provider: { '@id': 'https://ka-performancefl.com/#organization' },
-  areaServed: 'Gainesville, FL',
+  // Delivered over video from Gainesville; the page sells it remotely, so
+  // the schema claims the state rather than understating to one city.
+  areaServed: { '@type': 'State', name: 'Florida' },
   offers: [
     { '@type': 'Offer', name: '90-Day AI Launch', price: '2000', priceCurrency: 'USD' },
     { '@type': 'Offer', name: 'Launch + Site', price: '3999', priceCurrency: 'USD' },
+  ],
+};
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: '90-Day AI Launch', item: 'https://ka-performancefl.com/ai-launch/' },
   ],
 };
 
@@ -88,6 +101,7 @@ const answers = [
   ogImage="/images/og-ai-launch.png?v=1"
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
 
   <!-- Editorial hero: text beside a window sketching the before-and-after,
        same drawn language as the home page's act-0 and audit sketches. -->
@@ -284,7 +298,9 @@ const answers = [
     <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Built and shipped, not hypothetical</h2>
     <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
       Every workflow taught in the program is one Alex has already built and
-      runs. A few that are live right now:
+      runs, the same work our
+      <a href="/services/ai-integration/" class="text-accent underline underline-offset-4 hover:text-accent-hot">AI integration service</a>
+      ships for clients. A few that are live right now:
     </p>
     <div class="mt-12 grid gap-8 md:grid-cols-2">
       {outcomes.map((o) => (
@@ -367,7 +383,10 @@ const answers = [
       <p data-animate="type-settle" class="mt-12 border-t border-ink/10 pt-8 leading-relaxed text-muted">
         When the twelve weeks end, most people keep going on their own. Some
         keep a working session on the calendar. That conversation happens near
-        the end of the program, not in a pitch on this page.
+        the end of the program, not in a pitch on this page. Prefer to talk it
+        through first? The
+        <a href="/contact/" class="text-accent underline underline-offset-4 hover:text-accent-hot">contact page</a>
+        reaches us directly.
       </p>
     </div>
   </section>

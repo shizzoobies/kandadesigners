@@ -103,7 +103,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
               src={p.img}
               alt={`${p.title} website screenshot`}
               class="aspect-[16/10] w-full object-cover object-top"
-              loading="eager"
+              loading={i === 0 ? 'eager' : 'lazy'}
               fetchpriority={i === 0 ? 'high' : 'auto'}
             />
           </div>
@@ -135,7 +135,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
               src={e.img}
               alt=""
               class="aspect-[16/10] w-full object-cover object-top"
-              loading="eager"
+              loading="lazy"
               fetchpriority="low"
             />
           </div>
