@@ -629,3 +629,59 @@ export async function listNewsletters(db, limit = 10) {
   ).bind(limit).all();
   return results ?? [];
 }
+
+// ── Newsletter workbench (0005: draft-first lifecycle) ──
+
+const NEWSLETTER_SELECT = `SELECT id, status, subject, notes, body, sent_count,
+       fail_count, sent_by, created_at, updated_at, sent_at FROM newsletters`;
+
+export async function createDraft(db, { notes, now }) {
+  const r = await db.prepare(
+    `INSERT INTO newsletters (status, notes, created_at, updated_at)
+     VALUES ('draft', ?, ?, ?) RETURNING id`
+  ).bind(notes, now, now).first();
+  return r?.id;
+}
+
+export async function getNewsletter(db, id) {
+  return db.prepare(`${NEWSLETTER_SELECT} WHERE id = ?`).bind(id).first();
+}
+
+export async function updateDraft(db, id, { subject, notes, body, now }) {
+  await db.prepare(
+    `UPDATE newsletters SET subject = ?, notes = ?, body = ?, updated_at = ?
+      WHERE id = ? AND status = 'draft'`
+  ).bind(subject, notes, body, now, id).run();
+}
+
+export async function deleteDraft(db, id) {
+  await db.prepare(`DELETE FROM newsletters WHERE id = ? AND status = 'draft'`).bind(id).run();
+}
+
+export async function markSent(db, id, { sentCount, failCount, sentBy, now }) {
+  await db.prepare(
+    `UPDATE newsletters SET status = 'sent', sent_count = ?, fail_count = ?,
+       sent_by = ?, sent_at = ?, updated_at = ? WHERE id = ?`
+  ).bind(sentCount, failCount, sentBy, now, now, id).run();
+}
+
+export async function listNewslettersAll(db) {
+  const { results } = await db.prepare(
+    `${NEWSLETTER_SELECT} ORDER BY status = 'draft' DESC, COALESCE(sent_at, updated_at) DESC`
+  ).all();
+  return results ?? [];
+}
+
+// The whole mailing list, for the subscribers tab.
+export async function listAllLeads(db, filter = 'all') {
+  const where = {
+    subscribed: 'unsubscribed_at IS NULL',
+    unsubscribed: 'unsubscribed_at IS NOT NULL',
+    all: '1 = 1',
+  }[filter] ?? '1 = 1';
+  const { results } = await db.prepare(
+    `SELECT id, name, email, source, times, created_at, last_seen_at, unsubscribed_at
+       FROM course_leads WHERE ${where} ORDER BY created_at DESC`
+  ).all();
+  return results ?? [];
+}

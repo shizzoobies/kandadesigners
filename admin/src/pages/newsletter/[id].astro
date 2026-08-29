@@ -1,0 +1,103 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import { getNewsletter, listSendableLeads } from '../../lib/db.js';
+import { humanDate } from '../../lib/format.js';
+import { renderNewsletter } from '../../lib/newsletter.js';
+
+const db = Astro.locals.runtime.env.DB;
+const env = Astro.locals.runtime.env;
+
+const id = Number(Astro.params.id);
+const letter = id ? await getNewsletter(db, id) : null;
+if (!letter) return Astro.redirect('/newsletter?error=missing', 303);
+
+const isDraft = letter.status === 'draft';
+const sendable = isDraft ? await listSendableLeads(db) : [];
+const polishReady = Boolean(env.ANTHROPIC_API_KEY);
+
+// The preview is always the real renderer's output, in an iframe so email
+// styling cannot bleed into the admin shell. srcdoc wants entity-escaped
+// HTML; Astro's attribute escaping handles that for us.
+const preview = (letter.subject || letter.body)
+  ? renderNewsletter({ subject: letter.subject || '(no subject)', body: letter.body || 'Nothing written yet.', token: 'preview-token' }).html
+  : '';
+
+const q = Astro.url.searchParams;
+const sent = q.get('sent');
+const failedParam = q.get('failed');
+const notices = {
+  saved: 'Saved.',
+  polished: 'Polished. Read it like a skeptic before you trust it.',
+  tested: 'Test sent to your own inbox.',
+};
+const noticeKey = ['saved', 'polished', 'tested'].find((k) => q.get(k));
+const error = q.get('error');
+const ERRORS = {
+  sent: 'This one already went out; sent letters are read-only.',
+  nokey: 'The polish pass needs the ANTHROPIC_API_KEY secret on this worker. Nothing was lost; your draft is saved.',
+  polish: 'The polish pass failed; your draft is saved untouched. Check the worker logs.',
+  unconfigured: 'Sending is not configured: RESEND_API_KEY and NEWSLETTER_FROM are needed. Draft saved.',
+  incomplete: 'It needs a subject and a body before it can be sent. Draft saved.',
+  confirm: 'Type SEND in the confirm box to send for real. Draft saved.',
+  nobody: 'There is nobody subscribed to send to yet.',
+  testfail: 'The test send failed. Check the worker logs. Nothing went to the list.',
+  sendfail: 'The send failed entirely; the letter is still a draft. Check the worker logs.',
+  intent: 'Unrecognised action. Nothing changed.',
+};
+---
+<Shell title={letter.subject || 'New letter'} active="newsletter">
+  {sent && <p class="notice">Sent to {sent} {Number(sent) === 1 ? 'person' : 'people'}{failedParam ? `, ${failedParam} failed (logged)` : ''}. It is archived below.</p>}
+  {noticeKey && <p class="notice">{notices[noticeKey]}</p>}
+  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong.'}</p>}
+
+  <div class="groupline">
+    <a href="/newsletter">&larr; all letters</a>
+    {' · '}{isDraft ? 'draft' : `sent ${humanDate((letter.sent_at ?? letter.updated_at).slice(0, 10))} to ${letter.sent_count}${letter.fail_count ? `, ${letter.fail_count} failed` : ''}`}
+  </div>
+
+  {isDraft ? (
+    <form method="POST" action="/api/newsletter">
+      <input type="hidden" name="id" value={letter.id} />
+      <div class="field">
+        <label for="notes">Your notes: the idea in your words. The polish pass reads these first.</label>
+        <textarea id="notes" name="notes" rows="3">{letter.notes}</textarea>
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit" name="intent" value="polish" disabled={!polishReady}>
+          {polishReady ? 'Polish with Opus' : 'Polish needs the API key'}
+        </button>
+        <button class="btn" type="submit" name="intent" value="save">Save</button>
+      </div>
+      <div class="field">
+        <label for="subject">Subject</label>
+        <input id="subject" name="subject" autocomplete="off" value={letter.subject} placeholder="One useful thing" />
+      </div>
+      <div class="field">
+        <label for="body">Body: plain text, or the block JSON the polish pass writes. Either renders below.</label>
+        <textarea id="body" name="body" rows="12">{letter.body}</textarea>
+      </div>
+      <div class="field">
+        <label for="confirm">Type SEND to send to {sendable.length} subscriber{sendable.length === 1 ? '' : 's'}; leave blank otherwise</label>
+        <input id="confirm" name="confirm" autocomplete="off" />
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit" name="intent" value="test">Send a test to me</button>
+        <button class="danger" type="submit" name="intent" value="send">Send to {sendable.length}</button>
+        <button class="danger" type="submit" name="intent" value="delete">Delete draft</button>
+      </div>
+    </form>
+  ) : (
+    <p class="empty-state">Sent letters are read-only; what you see below is exactly what the list received.</p>
+  )}
+
+  <div class="groupline">Preview</div>
+  {preview ? (
+    <iframe
+      srcdoc={preview}
+      title="Newsletter preview"
+      style="width:100%;height:640px;border:1px solid var(--rule,#C9D2DA);background:#F8F5F2;"
+    ></iframe>
+  ) : (
+    <p class="empty-state">Nothing to preview yet. Save a subject or body first, or run the polish pass.</p>
+  )}
+</Shell>

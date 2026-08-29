@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { renderNewsletter, unsubscribeUrl } from '../src/lib/newsletter.js';
+import { renderNewsletter, unsubscribeUrl, parseBlocks, parsePolish } from '../src/lib/newsletter.js';
 
 describe('renderNewsletter', () => {
   const base = { subject: 'One useful thing', body: 'First paragraph.\n\nSecond one,\nwith a line break.', token: 'tok123abc' };
@@ -39,5 +39,59 @@ describe('renderNewsletter', () => {
     const { html, text } = renderNewsletter(base);
     expect(html).toContain('<!doctype html>');
     expect(text).toContain('First paragraph.');
+  });
+});
+
+describe('parseBlocks', () => {
+  it('treats plain text as paragraphs, the 0004 back-compat path', () => {
+    const b = parseBlocks('One.\n\nTwo.');
+    expect(b).toHaveLength(2);
+    expect(b[0]).toMatchObject({ type: 'paragraph', text: 'One.' });
+  });
+  it('parses block JSON and drops empty or alien types to paragraphs', () => {
+    const b = parseBlocks(JSON.stringify([
+      { type: 'heading', text: 'Hi' },
+      { type: 'button', text: 'Go', url: 'https://ka-performancefl.com/free-course/' },
+      { type: 'divider' },
+      { type: 'wat', text: 'odd' },
+      { type: 'paragraph', text: '' },
+    ]));
+    expect(b.map((x) => x.type)).toEqual(['heading', 'button', 'divider', 'paragraph']);
+  });
+  it('scrubs em dashes out of block text', () => {
+    const b = parseBlocks(JSON.stringify([{ type: 'paragraph', text: 'one—two' }]));
+    expect(b[0].text).toBe('one, two');
+  });
+  it('falls back to plain text when the JSON is broken', () => {
+    const b = parseBlocks('[not json at all');
+    expect(b[0].type).toBe('paragraph');
+  });
+});
+
+describe('parsePolish', () => {
+  it('accepts fenced JSON and normalizes it through parseBlocks', () => {
+    const fenced = '```json\n{"subject":"S—T","blocks":[{"type":"paragraph","text":"hi"}]}\n```';
+    const out = parsePolish(fenced);
+    expect(out.subject).toBe('S, T');
+    expect(JSON.parse(out.body)[0].text).toBe('hi');
+  });
+  it('throws on an empty or shapeless reply rather than saving junk', () => {
+    expect(() => parsePolish('{"subject":"","blocks":[]}')).toThrow();
+    expect(() => parsePolish('sure, here is your email!')).toThrow();
+  });
+});
+
+describe('renderNewsletter with blocks', () => {
+  it('renders heading, button and divider with the unsubscribe footer intact', () => {
+    const body = JSON.stringify([
+      { type: 'heading', text: 'The point' },
+      { type: 'button', text: 'Take the course', url: 'https://ka-performancefl.com/free-course/' },
+      { type: 'divider' },
+    ]);
+    const { html, text } = renderNewsletter({ subject: 'S', body, token: 'tk12345678' });
+    expect(html).toContain('<h2');
+    expect(html).toContain('border-radius:999px');
+    expect(html).toContain(unsubscribeUrl('tk12345678'));
+    expect(text).toContain('Take the course: https://ka-performancefl.com/free-course/');
   });
 });

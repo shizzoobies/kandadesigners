@@ -1,89 +1,117 @@
 ---
 import Shell from '../../layouts/Shell.astro';
-import { listSendableLeads, countCourseLeads, listNewsletters } from '../../lib/db.js';
+import { listNewslettersAll, listAllLeads, countCourseLeads } from '../../lib/db.js';
 import { humanDate } from '../../lib/format.js';
 
 const db = Astro.locals.runtime.env.DB;
-const env = Astro.locals.runtime.env;
-const configured = Boolean(env.RESEND_API_KEY && env.NEWSLETTER_FROM);
 
-const [sendable, total, history] = await Promise.all([
-  listSendableLeads(db),
+// Two tabs, money-page style: the letters themselves, and the list they
+// go to. The whole mailing list lives here; coaching keeps its recent-20.
+const TABS = [
+  { key: 'letters', label: 'Letters' },
+  { key: 'subscribers', label: 'Mailing list' },
+];
+const rawTab = Astro.url.searchParams.get('tab') ?? 'letters';
+const tab = TABS.some((t) => t.key === rawTab) ? rawTab : 'letters';
+
+const FILTERS = ['all', 'subscribed', 'unsubscribed'];
+const rawFilter = Astro.url.searchParams.get('filter') ?? 'all';
+const filter = FILTERS.includes(rawFilter) ? rawFilter : 'all';
+
+const [letters, leads, total] = await Promise.all([
+  listNewslettersAll(db),
+  tab === 'subscribers' ? listAllLeads(db, filter) : Promise.resolve([]),
   countCourseLeads(db),
-  listNewsletters(db, 10),
 ]);
-const unsubscribed = total - sendable.length;
+const drafts = letters.filter((n) => n.status === 'draft');
+const sentOnes = letters.filter((n) => n.status === 'sent');
 
-// Failed sends round-trip the draft through the query string so nothing
-// typed is ever lost to an error.
-const q = Astro.url.searchParams;
-const draftSubject = q.get('subject') ?? '';
-const draftBody = q.get('body') ?? '';
-const sent = q.get('sent');
-const failedParam = q.get('failed');
-const tested = q.get('tested');
-const error = q.get('error');
-const ERRORS = {
-  unconfigured: 'Sending is not configured yet: the RESEND_API_KEY secret and NEWSLETTER_FROM variable need to be set on this worker. Nothing was sent.',
-  subject: 'It needs a subject. Nothing was sent.',
-  body: 'It needs a body. Nothing was sent.',
-  confirm: 'Type SEND in the confirm box to send for real. Nothing was sent.',
-  nobody: 'There is nobody to send to yet. Nothing was sent.',
-  testfail: 'The test send failed. Check the worker logs. Nothing was sent to the list.',
-  sendfail: 'The send failed entirely. Check the worker logs; the attempt was recorded.',
-  intent: 'Unrecognised action. Nothing was sent.',
-};
+const deleted = Astro.url.searchParams.get('deleted');
+const error = Astro.url.searchParams.get('error');
 ---
 <Shell title="Newsletter" active="newsletter">
-  {sent && <p class="notice">Sent to {sent} {Number(sent) === 1 ? 'person' : 'people'}{failedParam ? `, ${failedParam} failed (logged)` : ''}.</p>}
-  {tested && <p class="notice">Test sent to your own inbox. Read it before the real thing.</p>}
-  {error && <p class="notice">{ERRORS[error] ?? 'Something went wrong. Nothing was sent.'}</p>}
+  {deleted && <p class="notice">Draft deleted.</p>}
+  {error === 'missing' && <p class="notice">That letter could not be found.</p>}
 
   <dl class="money">
-    <div><dt>Will receive it</dt><dd>{sendable.length}</dd></div>
-    <div><dt>Unsubscribed</dt><dd>{unsubscribed}</dd></div>
-    <div><dt>Sends so far</dt><dd>{history.length}</dd></div>
+    <div><dt>On the list</dt><dd>{total}</dd></div>
+    <div><dt>Drafts</dt><dd>{drafts.length}</dd></div>
+    <div><dt>Sent</dt><dd>{sentOnes.length}</dd></div>
   </dl>
 
-  <p class="empty-state">
-    Plain text: blank lines make paragraphs. Every message carries its own
-    unsubscribe link automatically. Test it to your own inbox first, then
-    type SEND to send for real.
-  </p>
+  <div class="groupline">
+    {TABS.map((t, i) => (
+      <>{i > 0 ? ' · ' : ''}<a
+        href={`/newsletter?tab=${t.key}`}
+        style={t.key === tab ? 'color:var(--ink);text-decoration:underline' : ''}
+      >{t.label}</a></>
+    ))}
+  </div>
 
-  <form method="POST" action="/api/newsletter">
-    <div class="field">
-      <label for="subject">Subject</label>
-      <input id="subject" name="subject" required autocomplete="off" value={draftSubject} placeholder="One useful thing this month" />
-    </div>
-    <div class="field">
-      <label for="body">Body</label>
-      <textarea id="body" name="body" rows="14" required>{draftBody}</textarea>
-    </div>
-    <div class="field">
-      <label for="confirm">Type SEND to send to everyone; leave blank for a test</label>
-      <input id="confirm" name="confirm" autocomplete="off" placeholder="" />
-    </div>
-    <div class="actions">
-      <button class="btn" type="submit" name="intent" value="test">Send a test to me</button>
-      <button class="danger" type="submit" name="intent" value="send">Send to {sendable.length}</button>
-    </div>
-  </form>
-
-  <div class="groupline">Past sends</div>
-  {history.length === 0 ? (
-    <p class="empty-state">Nothing sent yet.</p>
-  ) : (
-    <div class="rows">
-      {history.map((n) => (
-        <div class="row s-quiet">
-          <div class="tag">{humanDate(n.sent_at.slice(0, 10))}</div>
-          <div class="what">
-            <b>{n.subject}</b>
-            <span>to {n.sent_count}{n.fail_count ? ` · ${n.fail_count} failed` : ''} · by {n.sent_by}</span>
+  {tab === 'letters' ? (
+    <>
+      <details class="adder" open={letters.length === 0}>
+        <summary>Start a letter</summary>
+        <form method="POST" action="/api/newsletter">
+          <input type="hidden" name="intent" value="create" />
+          <div class="field">
+            <label for="notes">Jot the idea. Rough is fine; the polish pass does the writing.</label>
+            <textarea id="notes" name="notes" rows="4" placeholder="Tell the list about the free course update, mention the launch has 2 openings in October, keep it short"></textarea>
           </div>
+          <div class="actions"><button class="btn" type="submit">Create draft</button></div>
+        </form>
+      </details>
+
+      {letters.length === 0 ? (
+        <p class="empty-state">No letters yet. Jot an idea above and let the polish pass earn its keep.</p>
+      ) : (
+        <div class="rows">
+          {letters.map((n) => (
+            <div class={`row ${n.status === 'draft' ? 's-soon' : 's-quiet'}`}>
+              <div class="tag">{n.status === 'draft' ? 'Draft' : humanDate((n.sent_at ?? n.updated_at).slice(0, 10))}</div>
+              <div class="what">
+                <b><a href={`/newsletter/${n.id}`}>{n.subject || '(no subject yet)'}</a></b>
+                <span>
+                  {n.status === 'sent'
+                    ? `to ${n.sent_count}${n.fail_count ? ` · ${n.fail_count} failed` : ''} · by ${n.sent_by}`
+                    : `edited ${humanDate(n.updated_at.slice(0, 10))}`}
+                </span>
+              </div>
+              <div class="amt"><em><a href={`/newsletter/${n.id}`}>open</a></em></div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+    </>
+  ) : (
+    <>
+      <div class="groupline">
+        {FILTERS.map((f, i) => (
+          <>{i > 0 ? ' · ' : ''}<a
+            href={`/newsletter?tab=subscribers&filter=${f}`}
+            style={f === filter ? 'color:var(--ink);text-decoration:underline' : ''}
+          >{f}</a></>
+        ))}
+      </div>
+      {leads.length === 0 ? (
+        <p class="empty-state">Nobody {filter === 'all' ? 'on the list yet' : filter} yet.</p>
+      ) : (
+        <div class="rows">
+          {leads.map((l) => (
+            <div class={`row ${l.unsubscribed_at ? 's-quiet' : 's-soon'}`}>
+              <div class="tag">{l.unsubscribed_at ? 'Unsubbed' : l.source}</div>
+              <div class="what">
+                <b>{l.name || l.email}</b>
+                <span>
+                  {l.name ? `${l.email} · ` : ''}joined {humanDate(l.created_at.slice(0, 10))}
+                  {l.times > 1 ? ` · back ${l.times} times` : ''}
+                  {l.unsubscribed_at ? ` · left ${humanDate(l.unsubscribed_at.slice(0, 10))}` : ''}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
   )}
 </Shell>
