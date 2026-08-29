@@ -62,22 +62,28 @@ const phases = [
 
 // Real workflows, all shipped and running. No client names: nothing here has
 // written permission on file, so everything cited is our own operation.
+// Each carries a small line-drawn glyph in the site's sketch language;
+// the paths draw themselves in as the cards arrive.
 const outcomes = [
   {
     what: 'A scoping assistant that interviews a website visitor, asks what a first call would ask, and emails a working project brief.',
     where: 'Live on this site right now',
+    icon: 'M8 12 h20 a6 6 0 0 1 6 6 v8 a6 6 0 0 1 -6 6 h-10 l-8 7 v-7 h-2 a6 6 0 0 1 -6 -6 v-8 a6 6 0 0 1 6 -6 Z M12 22 h16 M12 27 h10',
   },
   {
     what: 'An operations dashboard tracking clients, projects, invoices and follow-ups, with a 7am digest email of what needs attention today.',
     where: 'Runs this studio every morning',
+    icon: 'M4 8 h32 v26 h-32 Z M4 15 h32 M13 15 v19 M17 21 h14 M17 26 h10 M7 11.5 h3',
   },
   {
     what: 'A voice assistant that answers customer questions in text or out loud, trained on the business it serves.',
     where: 'That is Kai. Hear the voice demo on our services page',
+    icon: 'M20 6 a5 5 0 0 1 5 5 v9 a5 5 0 0 1 -10 0 v-9 a5 5 0 0 1 5 -5 Z M10 20 a10 10 0 0 0 20 0 M20 30 v6 M14 36 h12',
   },
   {
     what: 'A daily content engine that drafts, files and scores creative output, so the good ideas stop dying in a notes app.',
     where: 'In daily use',
+    icon: 'M10 4 h16 l6 6 v26 h-22 Z M26 4 v6 h6 M15 18 h12 M15 23 h12 M15 28 h8 M29 29 l3 3 l5 -6',
   },
 ];
 
@@ -124,7 +130,7 @@ const answers = [
           before, and the ability to run it without us.
         </p>
         <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10 flex flex-wrap items-center gap-6">
-          <a href="#apply" class="btn-accent" data-pick="The Launch, $2,000">Book the first call</a>
+          <a href="#apply" class="btn-draw" data-pick="The Launch, $2,000">Book the first call</a>
           <p class="text-sm text-muted">$2,000 one time, or three payments of $700.<br class="sm:hidden" /> The first call is twenty minutes and free.</p>
         </div>
       </div>
@@ -310,6 +316,9 @@ const answers = [
     <div class="mt-12 grid gap-8 md:grid-cols-2">
       {outcomes.map((o) => (
         <div data-animate="frame-lift" class="glow-frame flex flex-col p-8">
+          <svg class="al-glyph mb-5 h-10 w-10 text-accent" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={o.icon} />
+          </svg>
           <p class="flex-1 text-lg leading-relaxed">{o.what}</p>
           <p class="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-accent">{o.where}</p>
         </div>
@@ -337,7 +346,7 @@ const answers = [
             reading what is working.
           </p>
           <div data-animate="type-settle" data-animate-delay="0.3" class="mt-8">
-            <a href="#apply" class="btn-accent" data-pick="Launch + Site, $3,999">Start Launch + Site</a>
+            <a href="#apply" class="btn-draw" data-pick="Launch + Site, $3,999">Start Launch + Site</a>
           </div>
         </div>
         <div data-animate="frame-lift" class="glow-frame self-start p-8 md:p-10">
@@ -354,63 +363,126 @@ const answers = [
     </div>
   </section>
 
-  <!-- The top rung, deliberately understated: the apprenticeship. Alex
-       still builds the site (the quality authorship never moves), but the
-       client is in the room for every decision and leaves able to extend
-       the thing themselves. Bottom of the offer stack by placement, top by
-       price, exactly as Alex wants it sold. -->
-  <section class="border-t border-ink/10">
-    <div class="mx-auto max-w-4xl px-6 py-20 md:py-24">
-      <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">For the few</p>
-      <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-3xl md:text-5xl">Build yours alongside Alex. <span class="text-accent">From $10,000.</span></h2>
-      <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-lg leading-relaxed text-muted">
-        The apprenticeship version. Alex builds your full custom AI-integrated
-        site to the studio standard, and you are there for all of it: every
-        working session, every decision, every integration. You learn to use
-        AI day to day, to build with it, and to wire in the APIs your business
-        runs on, on the real project instead of a toy.
-      </p>
-      <p data-animate="type-settle" data-animate-delay="0.3" class="mt-6 leading-relaxed text-muted">
-        You finish with the site, and with something rarer: you know how it
-        works, deep enough to extend it yourself. Everything lives in your own
-        accounts, same as always. From $10,000, scoped to what your build
-        actually is; the first call is where that number gets honest.
-      </p>
-      <div data-animate="type-settle" data-animate-delay="0.4" class="mt-8">
-        <a href="#apply" class="btn-ghost" data-pick="Build Alongside, from $10,000">Talk about building alongside</a>
+  <!-- The top rung: the apprenticeship, and the page's second dark moment.
+       Espresso rather than the teal of the ownership band, so the two dark
+       passages read as different rooms. Alex still builds the site (the
+       quality authorship never moves), but the client is in the room for
+       every decision. Bottom of the stack by placement, top by price. -->
+  <section class="al-espresso border-y border-ink/10">
+    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-16">
+        <div>
+          <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-amber">For the few</p>
+          <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-3xl md:text-5xl">Build yours alongside Alex. <span class="text-amber">From $10,000.</span></h2>
+          <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-lg leading-relaxed text-muted">
+            The apprenticeship version. Alex builds your full custom
+            AI-integrated site to the studio standard, and you are there for
+            all of it: every working session, every decision, every
+            integration. You learn to use AI day to day, to build with it,
+            and to wire in the APIs your business runs on, on the real
+            project instead of a toy.
+          </p>
+          <p data-animate="type-settle" data-animate-delay="0.3" class="mt-6 leading-relaxed text-muted">
+            You finish with the site, and with something rarer: you know how
+            it works, deep enough to extend it yourself. Everything lives in
+            your own accounts, same as always. From $10,000, scoped to what
+            your build actually is; the first call is where that number gets
+            honest.
+          </p>
+          <div data-animate="type-settle" data-animate-delay="0.4" class="mt-10">
+            <a href="#apply" class="btn-draw" data-pick="Build Alongside, from $10,000">Talk about building alongside</a>
+          </div>
+        </div>
+        <!-- Two terminals, one desk: the apprenticeship drawn in the site's
+             sketch line. Draws itself in as the band arrives. -->
+        <svg
+          id="al-desk-sketch"
+          class="hidden w-full text-[#8a7d6e] lg:block"
+          viewBox="0 0 640 400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <!-- the desk -->
+          <line x1="20" y1="330" x2="620" y2="330" />
+          <line x1="70" y1="330" x2="60" y2="392" />
+          <line x1="570" y1="330" x2="580" y2="392" />
+          <!-- Alex's terminal -->
+          <rect x="60" y="90" width="240" height="170" rx="10" />
+          <line x1="60" y1="124" x2="300" y2="124" />
+          <circle cx="80" cy="107" r="4" />
+          <circle cx="96" cy="107" r="4" />
+          <path d="M80 150 l16 12 l-16 12" class="text-amber" />
+          <line x1="106" y1="174" x2="150" y2="174" class="text-amber" />
+          <line x1="80" y1="196" x2="240" y2="196" />
+          <line x1="80" y1="214" x2="200" y2="214" />
+          <line x1="150" y1="260" x2="150" y2="330" />
+          <!-- the learner's terminal, angled toward the first -->
+          <rect x="340" y="90" width="240" height="170" rx="10" />
+          <line x1="340" y1="124" x2="580" y2="124" />
+          <circle cx="360" cy="107" r="4" />
+          <circle cx="376" cy="107" r="4" />
+          <path d="M360 150 l16 12 l-16 12" class="text-amber" />
+          <line x1="386" y1="174" x2="410" y2="174" class="text-amber" />
+          <line x1="360" y1="196" x2="470" y2="196" />
+          <line x1="470" y1="260" x2="470" y2="330" />
+          <!-- the thread between them -->
+          <path d="M300 175 c 14 -18 26 -18 40 0" class="text-amber" />
+          <!-- two mugs, because twelve weeks is a lot of coffee -->
+          <path d="M180 300 h30 v26 h-30 Z M210 306 h8 a6 6 0 0 1 0 12 h-8" />
+          <path d="M430 300 h30 v26 h-30 Z M460 306 h8 a6 6 0 0 1 0 12 h-8" />
+        </svg>
       </div>
     </div>
   </section>
 
   <!-- Qualify in both directions; every mismatch filtered here saves a call. -->
   <section class="mx-auto max-w-6xl px-6 py-24 md:py-32">
-    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
-      <div>
-        <h2 data-animate="type-settle" class="font-display text-3xl md:text-4xl">This is for you if</h2>
-        <ul data-animate="type-settle" data-animate-delay="0.1" class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
-          <li>You run a business, roughly one to fifteen people, and something in your week takes hours you know it should not.</li>
-          <li>You want one real thing working, not a survey of what AI can theoretically do.</li>
-          <li>You can commit an hour a week for twelve weeks.</li>
+    <div class="grid gap-8 md:grid-cols-2">
+      <div data-animate="frame-lift" class="glow-frame p-8 md:p-10">
+        <h2 class="font-display text-3xl md:text-4xl">This is <span class="text-accent">for you</span> if</h2>
+        <ul class="mt-8 space-y-5 text-lg leading-relaxed text-muted">
+          {[
+            'You run a business, roughly one to fifteen people, and something in your week takes hours you know it should not.',
+            'You want one real thing working, not a survey of what AI can theoretically do.',
+            'You can commit an hour a week for twelve weeks.',
+          ].map((t) => (
+            <li class="flex gap-4">
+              <svg class="al-glyph mt-1.5 h-4 w-4 shrink-0 text-accent" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 8.5 3.5 3.5 7-8.5"/></svg>
+              <span>{t}</span>
+            </li>
+          ))}
         </ul>
       </div>
-      <div>
-        <h2 data-animate="type-settle" class="font-display text-3xl md:text-4xl">It is not for you if</h2>
-        <ul data-animate="type-settle" data-animate-delay="0.1" class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
-          <li>You are shopping for a course or a certificate. There is no curriculum, there is your business.</li>
-          <li>You want to learn AI in the abstract. We build one thing that works, and that is the lesson.</li>
-          <li>An hour a week is not going to happen. Then neither is the workflow.</li>
+      <div data-animate="frame-lift" data-animate-delay="0.1" class="glow-frame p-8 md:p-10">
+        <h2 class="font-display text-3xl md:text-4xl">It is not for you if</h2>
+        <ul class="mt-8 space-y-5 text-lg leading-relaxed text-muted">
+          {[
+            'You are shopping for a course or a certificate. There is no curriculum, there is your business.',
+            'You want to learn AI in the abstract. We build one thing that works, and that is the lesson.',
+            'An hour a week is not going to happen. Then neither is the workflow.',
+          ].map((t) => (
+            <li class="flex gap-4">
+              <svg class="al-glyph mt-1.5 h-4 w-4 shrink-0 text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
+              <span>{t}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Straight answers -->
+  <!-- Straight answers: two columns and a rust rule per question, so the
+       tail of the page reads as structure instead of a wall. -->
   <section class="border-t border-ink/10 bg-surface">
-    <div class="mx-auto max-w-4xl px-6 py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
       <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Straight answers</h2>
-      <dl class="mt-12 space-y-10">
+      <dl class="mt-12 grid gap-x-16 gap-y-10 md:grid-cols-2">
         {answers.map((item) => (
-          <div data-animate="type-settle">
+          <div data-animate="type-settle" class="border-l-2 border-accent/60 pl-6">
             <dt class="font-heading text-xl font-semibold">{item.q}</dt>
             <dd class="mt-3 text-lg leading-relaxed text-muted">{item.a}</dd>
           </div>
@@ -442,6 +514,24 @@ const answers = [
             Two starts a month, so if your timing is tight, say so in the
             message and we will plan around it.
           </p>
+
+          <!-- What happens next, drawn: call, map, build. The last visual
+               beat before the ask. -->
+          <div data-animate="type-settle" data-animate-delay="0.3" class="mt-12 hidden gap-8 sm:grid sm:grid-cols-3">
+            {[
+              { label: 'The call', note: 'Twenty minutes, free', icon: 'M10 6 a4 4 0 0 1 4 -4 h4 l3 8 l-5 3 a18 18 0 0 0 9 9 l3 -5 l8 3 v4 a4 4 0 0 1 -4 4 A26 26 0 0 1 10 6 Z' },
+              { label: 'The map', note: 'Week one, yours to keep', icon: 'M4 8 l10 -4 l12 4 l10 -4 v24 l-10 4 l-12 -4 l-10 4 Z M14 4 v24 M26 8 v24' },
+              { label: 'The build', note: 'Live, on your real work', icon: 'M6 30 l8 -8 M10 34 l8 -8 M22 6 l8 8 l-14 14 l-8 -8 Z M26 2 l8 8' },
+            ].map((s) => (
+              <div>
+                <svg class="al-glyph h-9 w-9 text-accent" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={s.icon} />
+                </svg>
+                <p class="mt-3 font-heading text-sm font-semibold tracking-wide">{s.label}</p>
+                <p class="mt-1 text-sm text-muted">{s.note}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div data-animate="frame-lift" class="glow-frame p-8 md:p-10">
@@ -517,7 +607,7 @@ const answers = [
               </div>
             </div>
 
-            <button type="submit" id="al-submit" class="btn-accent w-full text-center">Request the call</button>
+            <button type="submit" id="al-submit" class="btn-draw w-full text-center">Request the call</button>
             <p id="al-status" class="sr-only" role="status" aria-live="polite"></p>
             <p id="al-error" tabindex="-1" class="hidden text-sm leading-relaxed text-muted" role="alert">
               Something went wrong sending that. Please email us directly at
@@ -586,6 +676,60 @@ const answers = [
     height: 1.4rem;
     background: var(--color-accent);
   }
+  /* The second dark moment: espresso, not teal, so the ownership band and
+     the apprenticeship read as different rooms. Amber is the accent that
+     survives on espresso; rust does not. */
+  .al-espresso {
+    --color-canvas: #221C15;
+    --color-surface: #2B241C;
+    --color-ink: #F5EFE7;
+    --color-muted: #B3A695;
+    --color-accent: #D97706;
+    --color-accent-hot: #F59E0B;
+    background: linear-gradient(180deg, #1D1710 0%, #2B241C 100%);
+    color: var(--color-ink);
+  }
+
+  /* The premium CTA: editorial rectangle, not a pill. A quiet border at
+     rest; on hover the amber sweeps in from the left and the text goes
+     espresso. Used only at the four lead-capture moments on this page. */
+  .btn-draw {
+    position: relative;
+    display: inline-block;
+    isolation: isolate;
+    overflow: hidden;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    border: 1.5px solid currentColor;
+    border-radius: 2px;
+    padding: 0.95rem 1.9rem;
+    transition: color var(--dur-fast) var(--ease-out-expo);
+  }
+  .btn-draw::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-amber, #D97706);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--dur-fast) var(--ease-out-expo);
+  }
+  .btn-draw:hover {
+    color: #221C15;
+    border-color: var(--color-amber, #D97706);
+  }
+  .btn-draw:hover::before {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-draw::before { transition: none; }
+  }
+
   /* The traveling dot rides the rail as the section scrolls through. Its
      authored resting place is week twelve, so reduced-motion and no-JS both
      read as a finished program rather than one stuck at the start. */
@@ -765,6 +909,28 @@ const answers = [
         delay: 0.3,
       });
     }
+
+    // Line-drawn glyphs and the desk sketch draw themselves in as they
+    // arrive. Same helper treatment as the hero: measure, offset, release.
+    const drawIn = (el: Element, delay = 0) => {
+      const strokes = [...el.querySelectorAll('path, line, rect, circle')];
+      strokes.forEach((s) => {
+        const len = (s as SVGGeometryElement).getTotalLength ? (s as SVGGeometryElement).getTotalLength() : 300;
+        (s as SVGElement).style.strokeDasharray = String(len);
+        (s as SVGElement).style.strokeDashoffset = String(len);
+      });
+      gsap.to(strokes, {
+        strokeDashoffset: 0,
+        duration: 0.9,
+        stagger: 0.06,
+        ease: 'power1.inOut',
+        delay,
+        scrollTrigger: { trigger: el, start: 'top 88%' },
+      });
+    };
+    document.querySelectorAll('.al-glyph').forEach((g) => drawIn(g));
+    const desk = document.getElementById('al-desk-sketch');
+    if (desk && isDesktop) drawIn(desk, 0.2);
 
     // The rail is scrubbed rather than one-shot: scroll draws the weeks in
     // and carries the dot from week one to week twelve, and scrolling back
