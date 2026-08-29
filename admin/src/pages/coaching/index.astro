@@ -1,6 +1,6 @@
 ---
 import Shell from '../../layouts/Shell.astro';
-import { listMembers, listClients } from '../../lib/db.js';
+import { listMembers, listClients, listCourseLeads, countCourseLeads } from '../../lib/db.js';
 import { humanDate, todayInEastern } from '../../lib/format.js';
 import { TIER_LABELS, TIERS, CAPS, ARC_TIERS, capCounts, currentWeek } from '../../lib/coaching.js';
 
@@ -11,10 +11,12 @@ const FILTERS = ['active', 'completed', 'all'];
 const raw = Astro.url.searchParams.get('filter') ?? 'active';
 const filter = FILTERS.includes(raw) ? raw : 'active';
 
-const [members, allMembers, clients] = await Promise.all([
+const [members, allMembers, clients, leads, leadCount] = await Promise.all([
   listMembers(db, filter),
   listMembers(db, 'all'),
   listClients(db),
+  listCourseLeads(db, 20),
+  countCourseLeads(db),
 ]);
 const caps = capCounts(allMembers);
 
@@ -95,6 +97,25 @@ function state(m) {
           </div>
         );
       })}
+    </div>
+  )}
+
+  <!-- The email list the free course builds. The site's /api/course-lead
+       writes it; this is where 'who is taking it' gets answered. -->
+  <div class="groupline">Course leads · {leadCount} total</div>
+  {leads.length === 0 ? (
+    <p class="empty-state">Nobody has taken the free course yet. The gate went up 2026-08-28; leads land here the moment someone trades an email for it.</p>
+  ) : (
+    <div class="rows">
+      {leads.map((l) => (
+        <div class="row s-quiet">
+          <div class="tag">{l.source}</div>
+          <div class="what">
+            <b>{l.name || l.email}</b>
+            <span>{l.name ? `${l.email} · ` : ''}first seen {humanDate(l.created_at.slice(0, 10))}{l.times > 1 ? ` · back ${l.times} times` : ''}</span>
+          </div>
+        </div>
+      ))}
     </div>
   )}
 

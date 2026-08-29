@@ -589,3 +589,18 @@ export async function grantPortalAccess(db, { email, name, clientId, now }) {
        role = 'client', client_id = excluded.client_id, active = 1`
   ).bind(email, name, clientId, now).run();
 }
+
+// ── Course leads (written by the public site's /api/course-lead) ──
+
+export async function listCourseLeads(db, limit = 25) {
+  const { results } = await db.prepare(
+    `SELECT id, name, email, source, times, created_at, last_seen_at
+       FROM course_leads ORDER BY last_seen_at DESC LIMIT ?`
+  ).bind(limit).all();
+  return results ?? [];
+}
+
+export async function countCourseLeads(db) {
+  const r = await db.prepare('SELECT COUNT(*) AS n FROM course_leads').first();
+  return r?.n ?? 0;
+}
