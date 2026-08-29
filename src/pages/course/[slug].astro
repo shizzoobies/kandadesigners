@@ -37,7 +37,7 @@ const next = i < chapters.length - 1 ? chapters[i + 1] : null;
          interactive scrolls inside its own document like it always did. -->
     <iframe
       id="chapter-frame"
-      src={`/course-app/assets/${chapter.dir}/index.html`}
+      src={`/course-app/assets/${chapter.dir}/`}
       title={chapter.title}
       class="glow-frame w-full"
       style="height: max(72vh, 640px); border: 0;"
