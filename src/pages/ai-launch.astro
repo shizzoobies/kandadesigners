@@ -124,7 +124,7 @@ const answers = [
           before, and the ability to run it without us.
         </p>
         <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10 flex flex-wrap items-center gap-6">
-          <a href="#apply" class="btn-accent">Book the first call</a>
+          <a href="#apply" class="btn-accent" data-pick="The Launch, $2,000">Book the first call</a>
           <p class="text-sm text-muted">$2,000 one time, or three payments of $700.<br class="sm:hidden" /> The first call is twenty minutes and free.</p>
         </div>
       </div>
@@ -336,6 +336,9 @@ const answers = [
             handling the inquiries the site brings in, writing new pages, and
             reading what is working.
           </p>
+          <div data-animate="type-settle" data-animate-delay="0.3" class="mt-8">
+            <a href="#apply" class="btn-accent" data-pick="Launch + Site, $3,999">Start Launch + Site</a>
+          </div>
         </div>
         <div data-animate="frame-lift" class="glow-frame self-start p-8 md:p-10">
           <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">What you finish with</p>
@@ -373,6 +376,9 @@ const answers = [
         accounts, same as always. From $10,000, scoped to what your build
         actually is; the first call is where that number gets honest.
       </p>
+      <div data-animate="type-settle" data-animate-delay="0.4" class="mt-8">
+        <a href="#apply" class="btn-ghost" data-pick="Build Alongside, from $10,000">Talk about building alongside</a>
+      </div>
     </div>
   </section>
 
@@ -479,6 +485,15 @@ const answers = [
             <div>
               <label for="al-week" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">What eats your week?</label>
               <textarea id="al-week" name="what_eats_your_week" required rows="4" placeholder="The thing that takes hours you know it shouldn't" class="field field-area"></textarea>
+            </div>
+
+            <!-- Only shown for the two site tiers: knowing what exists today
+                 is half of what makes the callback useful. -->
+            <div id="al-site-wrap" class="hidden">
+              <label for="al-site" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+                Current website <span class="tracking-normal normal-case">(if you have one)</span>
+              </label>
+              <input type="url" id="al-site" name="current_website" autocomplete="url" placeholder="https://yourbusiness.com" class="field" />
             </div>
 
             <div class="grid gap-6 sm:grid-cols-2">
@@ -611,6 +626,50 @@ const answers = [
 </script>
 
 <script>
+  // Product lead buttons: every tier's button carries data-pick with its
+  // exact select option. Clicking pre-selects the tier, reveals the
+  // current-website field for the two site tiers, and lands focus on the
+  // form. ?p=launch|bundle|alongside does the same for future ad links.
+  const PICKS: Record<string, string> = {
+    launch: 'The Launch, $2,000',
+    bundle: 'Launch + Site, $3,999',
+    alongside: 'Build Alongside, from $10,000',
+  };
+  const interestSel = document.getElementById('al-interest') as HTMLSelectElement | null;
+  const siteWrap = document.getElementById('al-site-wrap');
+
+  const syncSiteField = () => {
+    const v = interestSel?.value ?? '';
+    const wants = v.includes('Site') || v.includes('Alongside');
+    siteWrap?.classList.toggle('hidden', !wants);
+  };
+
+  const pick = (value: string, scroll: boolean) => {
+    if (interestSel && [...interestSel.options].some((o) => o.value === value || o.text === value)) {
+      interestSel.value = value;
+    }
+    syncSiteField();
+    if (scroll) {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById('apply')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      (document.getElementById('al-name') as HTMLInputElement | null)?.focus({ preventScroll: true });
+    }
+  };
+
+  document.querySelectorAll<HTMLAnchorElement>('[data-pick]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      pick(a.dataset.pick!, true);
+    });
+  });
+  interestSel?.addEventListener('change', syncSiteField);
+
+  const p = new URLSearchParams(location.search).get('p');
+  if (p && PICKS[p]) pick(PICKS[p], location.hash === '#apply');
+  syncSiteField();
+</script>
+
+<script>
   // Intake submit: same Web3Forms flow as the contact page.
   const form = document.getElementById('al-form') as HTMLFormElement | null;
   const successEl = document.getElementById('al-success');
@@ -638,6 +697,11 @@ const answers = [
       new FormData(form).forEach((value, key) => {
         data[key] = String(value);
       });
+      // The tier rides the subject line so the inbox triages itself:
+      // "New lead: Launch + Site, $3,999 | ka-performancefl.com".
+      if (data.interested_in && data.interested_in !== 'Not sure yet') {
+        data.subject = `New lead: ${data.interested_in} | ka-performancefl.com`;
+      }
 
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
