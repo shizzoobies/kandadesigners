@@ -19,7 +19,12 @@
   // team domain is public. Both are safe to commit.
   "vars": {
     "ACCESS_TEAM_DOMAIN": "kandaperformance.cloudflareaccess.com",
-    "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900"
+    "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900",
+    // Newsletter sender. The domain must be verified in Resend first (add
+    // mail.ka-performancefl.com there; its DNS records go on the subdomain,
+    // so Google Workspace's apex mail records stay untouched). The
+    // RESEND_API_KEY secret is set separately via secret bulk.
+    "NEWSLETTER_FROM": "K & A Performance <news@mail.ka-performancefl.com>"
   },
   // A Route, not a Custom Domain, and deliberately so.
   //
