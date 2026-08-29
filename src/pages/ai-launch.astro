@@ -523,19 +523,34 @@ const answers = [
     </div>
   </section>
 
-  <!-- Straight answers: two columns and a rust rule per question, so the
-       tail of the page reads as structure instead of a wall. -->
+  <!-- Straight answers: an accordion, one open at a time. Hover peeks a
+       question, click pins the one worth keeping, and each opens with the
+       rust rule drawing itself down the answer. Headers are real buttons,
+       so keyboard users pin with Enter like anyone else clicks. -->
   <section class="border-t border-ink/10 bg-surface">
-    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="mx-auto max-w-3xl px-6 py-24 md:py-32">
       <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Straight answers</h2>
-      <dl class="mt-12 grid gap-x-16 gap-y-10 md:grid-cols-2">
-        {answers.map((item) => (
-          <div data-animate="type-settle" class="border-l-2 border-accent/60 pl-6">
-            <dt class="font-heading text-xl font-semibold">{item.q}</dt>
-            <dd class="mt-3 text-lg leading-relaxed text-muted">{item.a}</dd>
+      <div id="al-acc" class="mt-10">
+        {answers.map((item, i) => (
+          <div class="al-acc-item border-b border-ink/10" data-animate="type-settle">
+            <h3>
+              <button type="button" class="al-acc-btn" aria-expanded="false" aria-controls={`al-acc-panel-${i}`} id={`al-acc-btn-${i}`}>
+                <span class="al-acc-q font-heading text-lg font-semibold md:text-xl">{item.q}</span>
+                <svg class="al-acc-ind" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <line x1="8" y1="2.5" x2="8" y2="13.5" />
+                  <line x1="2.5" y1="8" x2="13.5" y2="8" />
+                </svg>
+              </button>
+            </h3>
+            <div class="al-acc-panel" id={`al-acc-panel-${i}`} role="region" aria-labelledby={`al-acc-btn-${i}`}>
+              <div class="al-acc-body relative pb-7 pr-10">
+                <span class="al-acc-rule" aria-hidden="true"></span>
+                <p class="pl-6 text-lg leading-relaxed text-muted">{item.a}</p>
+              </div>
+            </div>
           </div>
         ))}
-      </dl>
+      </div>
       <p data-animate="type-settle" class="mt-12 border-t border-ink/10 pt-8 leading-relaxed text-muted">
         When the twelve weeks end, most people keep going on their own. Some
         keep a working session on the calendar. That conversation happens near
@@ -912,6 +927,60 @@ const answers = [
     .al-kai-dot { animation: none; }
   }
 
+  /* The straight-answers accordion. Panels are height-animated by the
+     script; these are the resting looks. The rule inside each answer is
+     drawn (scaleY) as its panel opens. */
+  .al-acc-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    text-align: left;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    color: var(--color-ink);
+    padding: 1.35rem 0.25rem;
+    transition: color var(--dur-fast) var(--ease-out-expo);
+  }
+  .al-acc-item.is-open .al-acc-btn,
+  .al-acc-btn:hover {
+    color: var(--color-accent);
+  }
+  .al-acc-ind {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    color: var(--color-accent);
+    transition: transform 0.45s var(--ease-out-expo);
+  }
+  .al-acc-item.is-open .al-acc-ind {
+    transform: rotate(135deg);
+  }
+  .al-acc-panel {
+    height: 0;
+    overflow: hidden;
+  }
+  .al-acc-rule {
+    position: absolute;
+    left: 0.25rem;
+    top: 0.2rem;
+    bottom: 1.9rem;
+    width: 2px;
+    background: var(--color-accent);
+    opacity: 0.6;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .al-acc-item.is-open .al-acc-rule {
+    transform: scaleY(1);
+    transition: transform 0.5s var(--ease-out-expo) 0.1s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .al-acc-ind, .al-acc-rule { transition: none; }
+  }
+
   /* The corner orb gets a brief nudge while the chat card points at it. */
   :global(#sg-open.sg-nudge) {
     animation: al-sg-nudge 0.9s ease-in-out 2;
@@ -1144,6 +1213,68 @@ const answers = [
   document.getElementById('al-kai-btn')?.addEventListener('click', () => {
     document.getElementById('sg-open')?.click();
   });
+
+  // Straight-answers accordion: exactly one open at a time. Hover peeks,
+  // click pins (that one survives the mouse leaving), Enter pins for
+  // keyboard users. Reduced motion gets instant open/close, no spring.
+  {
+    const acc = document.getElementById('al-acc');
+    const items = acc ? [...acc.querySelectorAll<HTMLElement>('.al-acc-item')] : [];
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let pinned: HTMLElement | null = null;
+    let current: HTMLElement | null = null;
+
+    const setOpen = (item: HTMLElement, open: boolean) => {
+      const panel = item.querySelector<HTMLElement>('.al-acc-panel')!;
+      const btn = item.querySelector<HTMLElement>('.al-acc-btn')!;
+      const body = item.querySelector<HTMLElement>('.al-acc-body')!;
+      item.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      if (still) {
+        panel.style.height = open ? 'auto' : '0px';
+        return;
+      }
+      gsap.killTweensOf([panel, body]);
+      if (open) {
+        gsap.fromTo(panel, { height: panel.offsetHeight }, {
+          height: body.offsetHeight,
+          duration: 0.5,
+          ease: 'power3.out',
+          onComplete: () => { panel.style.height = 'auto'; },
+        });
+        gsap.fromTo(body, { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: 'back.out(1.6)', delay: 0.08 });
+      } else {
+        gsap.to(panel, { height: 0, duration: 0.38, ease: 'power3.inOut' });
+      }
+    };
+
+    const show = (item: HTMLElement | null) => {
+      if (item === current) return;
+      if (current) setOpen(current, false);
+      current = item;
+      if (item) setOpen(item, true);
+    };
+
+    items.forEach((item) => {
+      const btn = item.querySelector<HTMLElement>('.al-acc-btn')!;
+      if (canHover) {
+        btn.addEventListener('mouseenter', () => show(item));
+      }
+      btn.addEventListener('click', () => {
+        if (pinned === item && current === item) {
+          pinned = null;
+          show(null);
+        } else {
+          pinned = item;
+          show(item);
+        }
+      });
+    });
+    acc?.addEventListener('mouseleave', () => {
+      if (current !== pinned) show(pinned);
+    });
+  }
 </script>
 
 <script>
