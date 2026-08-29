@@ -685,3 +685,31 @@ export async function listAllLeads(db, filter = 'all') {
   ).all();
   return results ?? [];
 }
+
+// ── Course analytics (0006) ──────────────
+
+// Chapter funnel: distinct people (tokens) who viewed and who finished
+// each chapter. Distinct-by-token so one enthusiast reloading does not
+// look like a crowd.
+export async function courseFunnel(db) {
+  const { results } = await db.prepare(
+    `SELECT chapter,
+            COUNT(DISTINCT CASE WHEN event = 'view' THEN token END) AS viewers,
+            COUNT(DISTINCT CASE WHEN event = 'done' THEN token END) AS finishers
+       FROM course_events GROUP BY chapter`
+  ).all();
+  return results ?? [];
+}
+
+// Recent activity with names when the token belongs to a lead.
+export async function recentCourseActivity(db, limit = 12) {
+  const { results } = await db.prepare(
+    `SELECT e.chapter, e.event, e.created_at,
+            COALESCE(NULLIF(l.name, ''), l.email,
+              CASE e.token WHEN 'member' THEN 'a member' ELSE 'anonymous' END) AS who
+       FROM course_events e
+       LEFT JOIN course_leads l ON l.unsubscribe_token = e.token
+      ORDER BY e.id DESC LIMIT ?`
+  ).bind(limit).all();
+  return results ?? [];
+}

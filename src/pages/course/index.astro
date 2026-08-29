@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { sections, chapters, chapterBySlug } from '../../data/course.js';
+
+// The course home: gated table of contents with per-chapter progress read
+// from localStorage. The _headers file keeps /course/* out of the index;
+// /free-course/ is the page that ranks and captures.
+---
+<BaseLayout
+  title="The Free Course | K & A Performance"
+  description="Nine hands-on chapters: install Claude Code, sign in, connect your tools, and build a website, a lesson, and an app. Free with your email."
+>
+  <section class="mx-auto max-w-4xl px-6 pt-36 pb-10 md:pt-44">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">The free course</p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.05]">
+      Getting to know <span class="text-accent">Claude Code</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Nine hands-on chapters. Go in order the first time; every chapter
+      remembers your name, your role, and your operating system, and the
+      assistant inside each one answers questions as you go.
+    </p>
+    <p id="course-resume" class="mt-4 hidden text-sm text-muted" aria-live="polite"></p>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 pb-32">
+    {sections.map((s) => (
+      <>
+        <div class="groupline mt-10 mb-4 font-mono text-xs uppercase tracking-[0.25em] text-muted">{s.title}</div>
+        <div class="flex flex-col gap-4">
+          {s.slugs.map((slug) => {
+            const c = chapterBySlug(slug);
+            const n = chapters.findIndex((x) => x.slug === slug) + 1;
+            return (
+              <a href={`/course/${c.slug}/`} data-chapter={c.slug} data-animate="frame-lift" class="glow-frame group flex items-center gap-5 p-6">
+                <span class="font-mono text-sm text-muted" data-num>{String(n).padStart(2, '0')}</span>
+                <span class="flex-1">
+                  <b class="font-heading text-lg tracking-wide transition-colors group-hover:text-accent">{c.title}</b>
+                  <span class="mt-1 block text-sm text-muted">{c.blurb}</span>
+                </span>
+                <span class="hidden font-mono text-xs uppercase tracking-[0.2em] text-accent" data-done-mark>Done</span>
+                <span class="inline-block text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+              </a>
+            );
+          })}
+        </div>
+      </>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .groupline { border-bottom: 1px solid rgb(34 28 21 / 0.1); padding-bottom: 0.5rem; }
+</style>
+
+<script>
+  // Gate: same speed bump as before, native now. ?pass keeps working for
+  // members arriving from the admin.
+  try {
+    const q = new URLSearchParams(location.search);
+    if (document.cookie.indexOf('ka_course=') !== -1 || q.has('pass')) {
+      document.cookie = 'ka_course=' + (document.cookie.match(/(?:^|;\s*)ka_course=([^;]+)/)?.[1] ?? (q.get('pass') || '1')) + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
+    } else {
+      location.replace('/free-course/');
+    }
+  } catch {}
+
+  // Progress: purely local, purely cosmetic. The server-side analytics are
+  // the beacons on the chapter pages, not this.
+  try {
+    const done: string[] = JSON.parse(localStorage.getItem('ka_course_done') ?? '[]');
+    let firstTodo: string | null = null;
+    document.querySelectorAll<HTMLAnchorElement>('[data-chapter]').forEach((a) => {
+      const slug = a.dataset.chapter!;
+      if (done.includes(slug)) {
+        a.querySelector('[data-done-mark]')?.classList.remove('hidden');
+        a.querySelector('[data-num]')?.classList.add('text-accent');
+      } else if (!firstTodo) {
+        firstTodo = slug;
+      }
+    });
+    if (done.length > 0 && firstTodo) {
+      const el = document.getElementById('course-resume');
+      const next = document.querySelector<HTMLAnchorElement>(`[data-chapter="${firstTodo}"]`);
+      if (el && next) {
+        el.innerHTML = '';
+        const link = document.createElement('a');
+        link.href = next.href;
+        link.className = 'font-semibold text-accent underline underline-offset-4';
+        link.textContent = 'Pick up where you left off';
+        el.append('You have finished ' + done.length + ' of 9. ', link, '.');
+        el.classList.remove('hidden');
+      }
+    }
+  } catch {}
+</script>

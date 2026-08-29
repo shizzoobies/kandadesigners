@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { chapters, chapterIndex } from '../../data/course.js';
+
+// One chapter: a slim course bar, the interactive filling the rest of the
+// viewport, and prev/next. The interactive is the original Mighty-block
+// page, iframed untouched; no Rise runtime, no frame-size ceiling.
+export function getStaticPaths() {
+  return chapters.map((c) => ({ params: { slug: c.slug }, props: { chapter: c } }));
+}
+
+const { chapter } = Astro.props;
+const i = chapterIndex(chapter.slug);
+const prev = i > 0 ? chapters[i - 1] : null;
+const next = i < chapters.length - 1 ? chapters[i + 1] : null;
+---
+<BaseLayout
+  title={`${chapter.title} | The Free Course | K & A Performance`}
+  description={chapter.blurb}
+>
+  <section class="mx-auto max-w-6xl px-6 pt-28 pb-16 md:pt-32">
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
+        <a href="/course/" class="transition-colors hover:text-accent">The free course</a>
+        <span class="text-accent" aria-hidden="true">&middot;</span>
+        Chapter {String(i + 1).padStart(2, '0')} of {String(chapters.length).padStart(2, '0')}
+      </p>
+      <div class="flex items-center gap-5">
+        {prev && <a href={`/course/${prev.slug}/`} class="font-heading text-sm font-semibold tracking-wide text-muted transition-colors hover:text-accent">&larr; {prev.title}</a>}
+        {next && <a id="next-link" href={`/course/${next.slug}/`} class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot">{next.title} &rarr;</a>}
+      </div>
+    </div>
+
+    <h1 class="sr-only">{chapter.title}</h1>
+
+    <!-- The chapter itself. min-height keeps short chapters honest; the
+         interactive scrolls inside its own document like it always did. -->
+    <iframe
+      id="chapter-frame"
+      src={`/course-app/assets/${chapter.dir}/index.html`}
+      title={chapter.title}
+      class="glow-frame w-full"
+      style="height: max(72vh, 640px); border: 0;"
+      allow="microphone"
+      loading="eager"
+    ></iframe>
+
+    <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
+      <p class="text-sm text-muted">{chapter.blurb}</p>
+      <button id="mark-done" type="button" class="btn-accent">
+        {next ? `Done, next: ${next.title}` : 'Finish the course'}
+      </button>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Gate first, everything else after.
+  try {
+    const q = new URLSearchParams(location.search);
+    if (document.cookie.indexOf('ka_course=') === -1 && !q.has('pass')) {
+      location.replace('/free-course/');
+    } else if (q.has('pass')) {
+      document.cookie = 'ka_course=' + (q.get('pass') || '1') + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
+    }
+  } catch {}
+
+  const slug = location.pathname.split('/').filter(Boolean).pop()!;
+
+  // Own analytics: one view beacon per load, one done beacon per click.
+  // sendBeacon so navigation is never delayed; failures are nobody's problem.
+  const beacon = (event: string) => {
+    try {
+      navigator.sendBeacon('/api/course-event', new Blob([JSON.stringify({ c: slug, e: event })], { type: 'application/json' }));
+    } catch {}
+  };
+  beacon('view');
+
+  const done = () => {
+    try {
+      const list: string[] = JSON.parse(localStorage.getItem('ka_course_done') ?? '[]');
+      if (!list.includes(slug)) {
+        list.push(slug);
+        localStorage.setItem('ka_course_done', JSON.stringify(list));
+        beacon('done');
+      }
+    } catch {}
+  };
+
+  document.getElementById('mark-done')?.addEventListener('click', () => {
+    done();
+    const next = document.getElementById('next-link') as HTMLAnchorElement | null;
+    location.href = next ? next.href : '/course/';
+  });
+</script>

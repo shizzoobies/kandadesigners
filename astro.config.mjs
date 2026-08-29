@@ -11,6 +11,8 @@ const NOINDEX = [
   '/chess', '/tdgame', '/sky-raider-blitz', '/mosslight-run',
   '/daily-songs-x7k2', '/voicecheck', '/interactives', '/portfolio',
   '/projects', '/mbsfeedback', '/tools', '/internal',
+  // The course is gated and noindexed; /free-course/ is the page that ranks.
+  '/course', '/course-app',
 ];
 
 export default defineConfig({

@@ -117,7 +117,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         const result = await res.json();
         if (res.ok && result.ok) {
           if (window.fbq) window.fbq('track', 'Lead');
-          document.cookie = 'ka_course=1; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
+          // The token ties this browser's course progress to the lead in
+          // the admin's analytics; '1' is the anonymous fallback.
+          document.cookie = 'ka_course=' + encodeURIComponent(result.t || '1') + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
           if (fcStatus) fcStatus.textContent = '';
           window.location.href = '/course/';
         } else {

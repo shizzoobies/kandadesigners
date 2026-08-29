@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Course - Section 3: Your First Request</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="terminal.css">
+<link rel="stylesheet" href="convai.css">
+<link rel="stylesheet" href="reveal.css">
+<style>
+  /* section-local styles */
+  .cc-os-pick { display:flex; gap:14px; margin-top:14px; flex-wrap:wrap; }
+  .cc-os-card {
+    flex:1; min-width:200px; cursor:pointer; text-align:left;
+    background:var(--cc-paper-2); border:1.5px solid var(--cc-paper-3);
+    border-radius:var(--cc-radius); padding:18px 20px;
+    transition:border-color .15s, transform .05s, box-shadow .15s;
+    font-family:var(--cc-font-ui);
+  }
+  .cc-os-card:hover { border-color:var(--cc-accent); box-shadow:var(--cc-shadow); }
+  .cc-os-card:active { transform:translateY(1px); }
+  .cc-os-card__icon { font-size:1.6rem; }
+  .cc-os-card__name { font-weight:600; font-size:1.05rem; margin:6px 0 2px; color:var(--cc-ink); }
+  .cc-os-card__sub  { font-size:.85rem; color:var(--cc-ink-faint); }
+  .cc-stage { margin-top:16px; }
+  .cc-done {
+    margin-top:16px; padding:16px 18px; border-radius:var(--cc-radius);
+    background:var(--cc-accent-wash); border:1px solid var(--cc-accent-soft);
+    color:var(--cc-ink); display:none;
+  }
+  .cc-done h3 { margin:0 0 6px; }
+  .cc-done p { margin:0 0 12px; }
+  .cc-choice { display:flex; gap:10px; flex-wrap:wrap; }
+  .cc-choice .cc-btn { flex:1; min-width:180px; }
+  .cc-choice .cc-btn--ghost { background:var(--cc-paper); }
+  .cc-chosen { font-size:.85rem; color:var(--cc-accent-deep); margin-top:10px; display:none; }
+</style>
+</head>
+<body>
+<div class="cc-root">
+
+  <!-- inline OS picker fallback (only if cc_course_os is unset) -->
+  <div id="pick" class="cc-card" style="display:none;">
+    <h2>Your first request</h2>
+    <p>Quick check before we start. Which operating system are you on? You only pick once and the rest of the course remembers it.</p>
+    <div class="cc-os-pick">
+      <button class="cc-os-card" data-os="mac">
+        <div class="cc-os-card__icon" aria-hidden="true">&#127822;</div>
+        <div class="cc-os-card__name">macOS</div>
+        <div class="cc-os-card__sub">zsh in the Terminal app</div>
+      </button>
+      <button class="cc-os-card" data-os="windows">
+        <div class="cc-os-card__icon" aria-hidden="true">&#129695;</div>
+        <div class="cc-os-card__name">Windows</div>
+        <div class="cc-os-card__sub">PowerShell</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- lead card -->
+  <div id="lead" class="cc-card" style="display:none;">
+    <h2>Your first request</h2>
+    <p>Claude Code works inside a project folder. You move into the folder, start Claude, then ask for what you want in plain English. It reads and edits the real files, and you review every change. Try the whole loop below.</p>
+  </div>
+
+  <!-- terminal stage -->
+  <div id="stage" class="cc-stage" style="display:none;">
+    <div id="term-mount"></div>
+    <div id="done" class="cc-done">
+      <h3>You know the loop now.</h3>
+      <p>You moved into a project, made a request in plain English, reviewed a diff, and met slash commands and plan mode. The next lesson lets you build something real. Which sounds more useful to you?</p>
+      <div class="cc-choice">
+        <button class="cc-btn" data-build="website">Build a website</button>
+        <button class="cc-btn cc-btn--ghost" data-build="scorm">Build a SCORM for Rise</button>
+      </div>
+      <div id="chosen" class="cc-chosen"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="terminal.js"></script>
+<script>window.CC_ASSIST_CONTEXT = "Lesson 3, First run. The learner opens a project, sends a first prompt, and tries slash commands.";</script>
+<script src="convai.js"></script>
+<script src="reveal.js"></script>
+<script>
+(function () {
+  var pick   = document.getElementById("pick");
+  var lead   = document.getElementById("lead");
+  var stage  = document.getElementById("stage");
+  var mount  = document.getElementById("term-mount");
+  var done   = document.getElementById("done");
+  var chosen = document.getElementById("chosen");
+
+  function script(os) {
+    var isWin = os === "windows";
+    var cdAccept = isWin
+      ? ["cd projects/demo","cd projects/demo/","cd ./projects/demo","cd projects\\demo","cd projects\\demo\\"]
+      : ["cd projects/demo","cd projects/demo/","cd ./projects/demo"];
+    var cdHint = isWin
+      ? "Change into the project:  cd projects\\demo"
+      : "Change into the project:  cd projects/demo";
+
+    return [
+      { type:"output", lines:[
+        {t:"dim", s:"# You are in your home folder. Move into the project Claude set up for you."}
+      ]},
+      { type:"prompt",
+        accept:cdAccept,
+        placeholder:"change into the project folder",
+        hint:cdHint,
+        onWrong:{ "_default":[
+          {t:"err", s:"That folder is not here. Move into projects/demo."}
+        ]},
+        success:[ {t:"dim", s:"# Good. List what is in here."} ]
+      },
+      { type:"prompt",
+        accept:["ls","dir","ls -la","ls -a"],
+        placeholder:"list the files",
+        hint:isWin ? "List the files:  dir  (ls works too)" : "List the files:  ls",
+        success:[
+          {t:"path", s:"index.html   styles.css   README.md"},
+          {t:"dim",  s:"# A tiny starter project. Now start Claude Code."}
+        ]
+      },
+      { type:"prompt",
+        accept:["claude"],
+        placeholder:"start claude code",
+        hint:"Start Claude Code:  claude",
+        success:[
+          {t:"box", title:"Claude Code", lines:[
+            "Model: claude (latest)",
+            "cwd: projects/demo",
+            "Type your request, or / for commands."
+          ]}
+        ]
+      },
+      { type:"claudePrompt",
+        accept:"*",
+        placeholder:"Ask Claude Code to do something with this project",
+        hint:"Try: add a friendly welcome heading to index.html",
+        toolCalls:[
+          {name:"Read",   arg:"index.html", working:"Reading files", ms:900},
+          {name:"Update", arg:"index.html", working:"Editing", ms:1100}
+        ],
+        success:[
+          {t:"diff", del:["<h1></h1>"], add:["<h1>Welcome to the demo</h1>"]},
+          {t:"ok",  s:"Updated index.html"},
+          {t:"dim", s:"That is the core loop: you describe, Claude edits, you review the diff."}
+        ]
+      },
+      { type:"output", lines:[
+        {t:"dim", s:"# Two things worth knowing before you build."}
+      ]},
+      { type:"claudePrompt",
+        accept:"*",
+        placeholder:"Type a slash command",
+        hint:"Type  /help  to see the commands.",
+        parse:function (text) {
+          var t = String(text).toLowerCase().trim();
+          return { help: t.indexOf("/help") === 0, slash: t.charAt(0) === "/" };
+        },
+        success:function (p) {
+          var box = {t:"box", title:"Slash commands", lines:[
+            "/help    show commands",
+            "/clear   reset the conversation",
+            "/model   switch model",
+            "/init    create a CLAUDE.md",
+            "/mcp     manage connectors"
+          ]};
+          if (p.help) return [ box ];
+          return [
+            {t:"dim", s:"Slash commands start with /. Type /help to list them. Here they are:"},
+            box
+          ];
+        }
+      },
+      { type:"output", lines:[
+        {t:"box", title:"Plan mode", lines:[
+          "Press Shift+Tab to toggle plan mode.",
+          "Claude proposes the steps and the files it will touch,",
+          "and waits for your OK before changing anything.",
+          "Use it for anything bigger than a one-line tweak."
+        ]},
+        {t:"dim", s:"You now know the loop, slash commands, and plan mode."}
+      ]}
+    ];
+  }
+
+  function launch(os) {
+    CCTerminal.setOS(os);
+    pick.style.display = "none";
+    lead.style.display = "block";
+    stage.style.display = "block";
+    mount.innerHTML = "";
+    var term = new CCTerminal(mount, {
+      os: os,
+      onComplete: function () { done.style.display = "block"; done.scrollIntoView({behavior:"smooth", block:"nearest"}); }
+    });
+    term.run(script(os));
+  }
+
+  // build-choice buttons (informational; persisted for s5/s6 nudge)
+  Array.prototype.forEach.call(done.querySelectorAll("[data-build]"), function (b) {
+    b.addEventListener("click", function () {
+      var v = b.getAttribute("data-build");
+      try { localStorage.setItem("cc_build_choice", v); } catch (e) {}
+      chosen.style.display = "block";
+      chosen.textContent = v === "website"
+        ? "Saved. The next lesson will build a website. Navigate to it in the course menu."
+        : "Saved. The next lesson will build a SCORM package. Navigate to it in the course menu.";
+    });
+  });
+
+  // OS picker fallback wiring
+  Array.prototype.forEach.call(document.querySelectorAll(".cc-os-card"), function (b) {
+    b.addEventListener("click", function () { launch(b.getAttribute("data-os")); });
+  });
+
+  var saved = CCTerminal.getOS();
+  if (saved === "mac" || saved === "windows") { launch(saved); }
+  else { pick.style.display = "block"; }
+})();
+</script>
+</body>
+</html>

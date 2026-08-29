@@ -42,6 +42,7 @@ export async function onRequestPost(context) {
     }
 
     const now = new Date().toISOString();
+    let leadToken = '';
 
     // The list itself. Missing binding degrades gracefully: the lead still
     // reaches the inbox, and the error message says exactly what to fix.
@@ -61,6 +62,12 @@ export async function onRequestPost(context) {
              last_seen_at = excluded.last_seen_at`
         ).bind(name, email, source, token, now, now).run();
         stored = true;
+        // Return the lead's actual token (the conflict path keeps the
+        // original), so the gate cookie ties course analytics to this lead.
+        const row = await env.ADMIN_DB.prepare(
+          'SELECT unsubscribe_token AS t FROM course_leads WHERE email = ?'
+        ).bind(email).first();
+        if (row?.t) leadToken = row.t;
       } catch (e) {
         console.log('course_lead_db_error', String(e).slice(0, 120));
       }
@@ -92,7 +99,7 @@ export async function onRequestPost(context) {
     if (!stored && !mailed) {
       return json({ error: 'Something went wrong. Email alex@ka-performancefl.com and we will send you the course link directly.' }, 502);
     }
-    return json({ ok: true });
+    return json(leadToken ? { ok: true, t: leadToken } : { ok: true });
   } catch {
     return json({ error: 'Bad request.' }, 400);
   }

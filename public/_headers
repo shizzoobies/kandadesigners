@@ -45,3 +45,5 @@
 # landing section is what ranks, not a thin SPA shell.
 /course/*
   X-Robots-Tag: noindex, nofollow
+/course-app/*
+  X-Robots-Tag: noindex, nofollow

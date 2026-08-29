@@ -1,6 +1,6 @@
 ---
 import Shell from '../../layouts/Shell.astro';
-import { listMembers, listClients, listCourseLeads, countCourseLeads } from '../../lib/db.js';
+import { listMembers, listClients, listCourseLeads, countCourseLeads, courseFunnel, recentCourseActivity } from '../../lib/db.js';
 import { humanDate, todayInEastern } from '../../lib/format.js';
 import { TIER_LABELS, TIERS, CAPS, ARC_TIERS, capCounts, currentWeek } from '../../lib/coaching.js';
 
@@ -11,13 +11,24 @@ const FILTERS = ['active', 'completed', 'all'];
 const raw = Astro.url.searchParams.get('filter') ?? 'active';
 const filter = FILTERS.includes(raw) ? raw : 'active';
 
-const [members, allMembers, clients, leads, leadCount] = await Promise.all([
+const [members, allMembers, clients, leads, leadCount, funnel, activity] = await Promise.all([
   listMembers(db, filter),
   listMembers(db, 'all'),
   listClients(db),
   listCourseLeads(db, 20),
   countCourseLeads(db),
+  courseFunnel(db),
+  recentCourseActivity(db, 12),
 ]);
+
+// The course's chapter order, for the funnel display. Mirrors
+// src/data/course.js on the site; a chapter that logs no events yet still
+// deserves its row, so the shape is fixed here rather than born from data.
+const CHAPTER_ORDER = [
+  'introduction', 'install', 'sign-in', 'first-request', 'connect',
+  'build-a-website', 'build-a-lesson', 'build-an-app', 'recap',
+];
+const funnelBy = Object.fromEntries(funnel.map((f) => [f.chapter, f]));
 const caps = capCounts(allMembers);
 
 const error = Astro.url.searchParams.get('error');
@@ -117,6 +128,40 @@ function state(m) {
         </div>
       ))}
     </div>
+  )}
+
+  <!-- Own analytics for the remastered course: who gets how far. -->
+  <div class="groupline">Course funnel · distinct people per chapter</div>
+  <div class="rows">
+    {CHAPTER_ORDER.map((slug, i) => {
+      const f = funnelBy[slug] ?? { viewers: 0, finishers: 0 };
+      return (
+        <div class="row s-quiet">
+          <div class="tag">{String(i + 1).padStart(2, '0')}</div>
+          <div class="what">
+            <b>{slug}</b>
+            <span>{f.viewers} viewed · {f.finishers} finished</span>
+          </div>
+          <div class="amt"><i>{f.viewers > 0 ? Math.round((f.finishers / f.viewers) * 100) + '%' : ''}</i></div>
+        </div>
+      );
+    })}
+  </div>
+  {activity.length > 0 && (
+    <>
+      <div class="groupline">Latest course activity</div>
+      <div class="rows">
+        {activity.map((a) => (
+          <div class="row s-quiet">
+            <div class="tag">{a.event === 'done' ? 'Done' : 'View'}</div>
+            <div class="what">
+              <b>{a.who}</b>
+              <span>{a.chapter} · {a.created_at.slice(0, 16).replace('T', ' ')} UTC</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   )}
 
   <details class="adder">
