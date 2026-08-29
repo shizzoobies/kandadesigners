@@ -313,14 +313,54 @@ const answers = [
       <a href="/services/ai-integration/" class="text-accent underline underline-offset-4 hover:text-accent-hot">AI integration service</a>
       ships for clients. A few that are live right now:
     </p>
+    <!-- Hover a card and it demonstrates itself: the chat card draws an
+         arrow to the real Kai in the corner, the dashboard and content
+         cards pop illustrated panels (numbers invented and labeled so),
+         and the voice card grows a button that actually opens Kai. -->
     <div class="mt-12 grid gap-8 md:grid-cols-2">
-      {outcomes.map((o) => (
-        <div data-animate="frame-lift" class="glow-frame flex flex-col p-8">
+      {outcomes.map((o, i) => (
+        <div data-animate="frame-lift" data-demo={['chat', 'dash', 'voice', 'content'][i]} class="al-card glow-frame relative flex flex-col p-8">
           <svg class="al-glyph mb-5 h-10 w-10 text-accent" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d={o.icon} />
           </svg>
           <p class="flex-1 text-lg leading-relaxed">{o.what}</p>
           <p class="mt-5 font-mono text-xs uppercase tracking-[0.2em] text-accent">{o.where}</p>
+
+          {i === 1 && (
+            <div class="al-pop" aria-hidden="true">
+              <p class="al-pop-kicker">Today &middot; example numbers</p>
+              <div class="al-pop-strip">
+                <span>Outstanding <b>$3,250</b></span>
+                <span>Overdue <b>$1,450</b></span>
+              </div>
+              <div class="al-pop-row al-pop-hot"><i>Overdue 12d</i><span>Riverside Clinic &middot; $1,450 &middot; chase it</span></div>
+              <div class="al-pop-row al-pop-warm"><i>Retainer</i><span>BlueOak Landscaping &middot; $600 arrived</span></div>
+              <div class="al-pop-row al-pop-warm"><i>Promise</i><span>Send the mockups &middot; due today</span></div>
+            </div>
+          )}
+
+          {i === 2 && (
+            <button type="button" id="al-kai-btn" class="al-kai-btn font-heading text-sm font-semibold tracking-wide">
+              <span class="al-kai-dot" aria-hidden="true"></span>
+              Click to chat with Kai
+            </button>
+          )}
+
+          {i === 3 && (
+            <div class="al-pop" aria-hidden="true">
+              <p class="al-pop-kicker">Newsletter &middot; example numbers</p>
+              <div class="al-pop-strip">
+                <span>Subscribers <b>145</b></span>
+                <span>Unsubscribed <b>8</b></span>
+                <span>Last signup <b>Aug 27</b></span>
+              </div>
+              <div class="al-pop-row al-pop-warm"><i>Sent</i><span>One useful thing about intake forms &middot; to 137</span></div>
+              <div class="al-pop-btns">
+                <span class="al-pop-cta">Compose</span>
+                <span class="al-pop-ghost">Past sends</span>
+              </div>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -730,6 +770,149 @@ const answers = [
     .btn-draw::before { transition: none; }
   }
 
+  /* Hover demonstrations on the outcome cards. Pointer devices only: on
+     touch the cards stay plain, which is the honest fallback. The mock
+     panels are labeled "example numbers" in their own kicker so an
+     illustration can never be mistaken for a record. */
+  /* glow-frame clips overflow for its media children; these cards hold
+     only text, and their popups need to escape the frame. */
+  .al-card {
+    overflow: visible;
+  }
+  .al-pop {
+    position: absolute;
+    right: 1rem;
+    bottom: calc(100% - 1.25rem);
+    z-index: 30;
+    width: 20rem;
+    max-width: calc(100% - 2rem);
+    background: var(--color-surface);
+    border: 1px solid rgb(34 28 21 / 0.14);
+    border-radius: 10px;
+    box-shadow: 0 18px 40px rgb(34 28 21 / 0.16);
+    padding: 1rem 1.1rem;
+    opacity: 0;
+    transform: translateY(10px) rotate(-1.5deg) scale(0.98);
+    pointer-events: none;
+    transition: opacity var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo);
+  }
+  @media (hover: hover) and (min-width: 768px) {
+    .al-card:hover .al-pop,
+    .al-card:focus-within .al-pop {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg) scale(1);
+    }
+  }
+  .al-pop-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .al-pop-strip {
+    display: flex;
+    gap: 1rem;
+    margin: 0.6rem 0 0.7rem;
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+  .al-pop-strip b {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--color-ink);
+  }
+  .al-pop-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    border-left: 2px solid var(--color-amber);
+    padding: 0.3rem 0 0.3rem 0.6rem;
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+  .al-pop-hot { border-left-color: var(--color-accent); }
+  .al-pop-row i {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+  .al-pop-btns { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+  .al-pop-cta {
+    background: var(--color-amber);
+    color: #221C15;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 3px;
+  }
+  .al-pop-ghost {
+    border: 1px solid rgb(34 28 21 / 0.2);
+    color: var(--color-muted);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 3px;
+  }
+
+  /* The Kai button on the voice card: rises in on hover or keyboard focus,
+     and genuinely opens the corner chat. */
+  .al-kai-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 1.1rem;
+    align-self: flex-start;
+    color: var(--color-accent);
+    border: 1.5px solid currentColor;
+    border-radius: 2px;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    background: none;
+    transition: opacity var(--dur-fast) var(--ease-out-expo), transform var(--dur-fast) var(--ease-out-expo), background var(--dur-fast) var(--ease-out-expo), color var(--dur-fast) var(--ease-out-expo);
+  }
+  .al-kai-btn:hover { background: var(--color-accent); color: #FFFDF9; }
+  .al-kai-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: currentColor;
+    animation: al-kai-breathe 2.2s ease-in-out infinite;
+  }
+  @media (hover: hover) and (min-width: 768px) {
+    .al-kai-btn { opacity: 0; transform: translateY(6px); }
+    .al-card:hover .al-kai-btn,
+    .al-kai-btn:focus-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes al-kai-breathe {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.35); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .al-pop, .al-kai-btn { transition: none; }
+    .al-kai-dot { animation: none; }
+  }
+
+  /* The corner orb gets a brief nudge while the chat card points at it. */
+  :global(#sg-open.sg-nudge) {
+    animation: al-sg-nudge 0.9s ease-in-out 2;
+  }
+  @keyframes al-sg-nudge {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.14); }
+  }
+
   /* The traveling dot rides the rail as the section scrolls through. Its
      authored resting place is week twelve, so reduced-motion and no-JS both
      read as a finished program rather than one stuck at the start. */
@@ -875,6 +1058,84 @@ const answers = [
       }
     });
   }
+</script>
+
+<script>
+  // The chat card's arrow: hover draws a sketch-line from the card to the
+  // real Kai orb in the corner, because the fastest proof the assistant
+  // exists is pointing at it. Pointer devices only; pure decoration, so
+  // keyboard users lose nothing.
+  import gsap from 'gsap';
+
+  const fine = window.matchMedia('(hover: hover) and (min-width: 768px)').matches;
+  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const chatCard = document.querySelector('[data-demo="chat"]');
+  const orb = document.getElementById('sg-open');
+
+  if (fine && chatCard && orb) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:45;opacity:0;';
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const head = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    for (const el of [path, head]) {
+      el.setAttribute('fill', 'none');
+      el.setAttribute('stroke', '#9A3412');
+      el.setAttribute('stroke-width', '1.75');
+      el.setAttribute('stroke-linecap', 'round');
+      el.setAttribute('stroke-linejoin', 'round');
+    }
+    svg.append(path, head);
+    document.body.appendChild(svg);
+
+    let tween: gsap.core.Tween | null = null;
+
+    chatCard.addEventListener('mouseenter', () => {
+      const c = chatCard.getBoundingClientRect();
+      const o = orb.getBoundingClientRect();
+      const sx = c.right - 24;
+      const sy = c.top + c.height * 0.55;
+      const ex = o.left - 14;
+      const ey = o.top + o.height * 0.3;
+      // one easy curve that swings low, like a hand gesturing "down there"
+      const mx = sx + (ex - sx) * 0.45;
+      const my = Math.max(sy, ey) + 60;
+      path.setAttribute('d', `M ${sx} ${sy} Q ${mx} ${my} ${ex} ${ey}`);
+      // arrowhead from the end tangent
+      const ang = Math.atan2(ey - my, ex - mx);
+      const a1 = ang + Math.PI * 0.82;
+      const a2 = ang - Math.PI * 0.82;
+      head.setAttribute('d', `M ${ex + Math.cos(a1) * 12} ${ey + Math.sin(a1) * 12} L ${ex} ${ey} L ${ex + Math.cos(a2) * 12} ${ey + Math.sin(a2) * 12}`);
+      svg.style.opacity = '1';
+      orb.classList.add('sg-nudge');
+      if (!noMotion) {
+        const len = path.getTotalLength();
+        path.style.strokeDasharray = String(len);
+        path.style.strokeDashoffset = String(len);
+        head.style.opacity = '0';
+        tween?.kill();
+        tween = gsap.to(path, {
+          strokeDashoffset: 0,
+          duration: 0.55,
+          ease: 'power2.out',
+          onComplete: () => gsap.to(head, { opacity: 1, duration: 0.15 }),
+        });
+      } else {
+        path.style.strokeDasharray = '';
+        head.style.opacity = '1';
+      }
+    });
+    chatCard.addEventListener('mouseleave', () => {
+      tween?.kill();
+      svg.style.opacity = '0';
+      orb.classList.remove('sg-nudge');
+    });
+  }
+
+  // The voice card's button opens the real corner chat.
+  document.getElementById('al-kai-btn')?.addEventListener('click', () => {
+    document.getElementById('sg-open')?.click();
+  });
 </script>
 
 <script>
