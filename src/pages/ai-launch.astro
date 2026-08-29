@@ -114,7 +114,10 @@ const answers = [
   },
   {
     q: 'Can I just have a one-time coaching session with Alex?',
-    a: 'Yes. Not everything needs twelve weeks. Reach out through the form below and tell us what you are working on, and we will customize the coaching to your individual needs, whether that is a single session or something in between.',
+    a: 'Yes. Not everything needs twelve weeks. Tell us what you are working on and we will customize the coaching to your individual needs, whether that is a single session or something in between.',
+    // The one answer with its own lead button: it pre-selects the session
+    // in the intake and reshapes the form prompt to fit the ask.
+    cta: { label: 'Ask about a session', pick: 'One session with Alex' },
   },
 ];
 ---
@@ -550,6 +553,9 @@ const answers = [
               <div class="al-acc-body relative pb-7 pr-10">
                 <span class="al-acc-rule" aria-hidden="true"></span>
                 <p class="pl-6 text-lg leading-relaxed text-muted">{item.a}</p>
+                {item.cta && (
+                  <a href="#apply" class="btn-draw ml-6 mt-5 inline-block" data-pick={item.cta.pick}>{item.cta.label}</a>
+                )}
               </div>
             </div>
           </div>
@@ -660,6 +666,7 @@ const answers = [
                   <option>The Launch, $2,000</option>
                   <option>Launch + Site, $3,999</option>
                   <option>Build Alongside, from $10,000</option>
+                  <option>One session with Alex</option>
                   <option selected>Not sure yet</option>
                 </select>
               </div>
@@ -1042,14 +1049,30 @@ const answers = [
     launch: 'The Launch, $2,000',
     bundle: 'Launch + Site, $3,999',
     alongside: 'Build Alongside, from $10,000',
+    session: 'One session with Alex',
   };
   const interestSel = document.getElementById('al-interest') as HTMLSelectElement | null;
   const siteWrap = document.getElementById('al-site-wrap');
+  const weekLabel = document.querySelector<HTMLLabelElement>('label[for="al-week"]');
+  const weekField = document.getElementById('al-week') as HTMLTextAreaElement | null;
+  const submitBtn = document.getElementById('al-submit');
 
   const syncSiteField = () => {
     const v = interestSel?.value ?? '';
     const wants = v.includes('Site') || v.includes('Alongside');
     siteWrap?.classList.toggle('hidden', !wants);
+    // A one-time session is a different ask than a twelve-week program,
+    // so the form's open question and button reshape to fit it.
+    const session = v.includes('One session');
+    if (weekLabel) weekLabel.textContent = session ? 'What do you want to work through?' : 'What eats your week?';
+    if (weekField) {
+      weekField.placeholder = session
+        ? 'The question, decision, or build you want an hour of straight answers on'
+        : "The thing that takes hours you know it shouldn't";
+    }
+    if (submitBtn && !submitBtn.hasAttribute('disabled')) {
+      submitBtn.textContent = session ? 'Ask about a session' : 'Request the call';
+    }
   };
 
   const pick = (value: string, scroll: boolean) => {
@@ -1086,10 +1109,11 @@ const answers = [
   const btn = document.getElementById('al-submit') as HTMLButtonElement | null;
 
   if (form && btn) {
-    const original = btn.textContent;
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      // Captured per submit, not at load: the picker script relabels this
+      // button for session leads, and a failed send must restore that label.
+      const original = btn.textContent;
 
       if (!form.checkValidity()) {
         form.reportValidity();
