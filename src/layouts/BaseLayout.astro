@@ -106,7 +106,12 @@ const schema = {
       '@type': 'WebSite',
       '@id': 'https://ka-performancefl.com/#website',
       url: 'https://ka-performancefl.com/',
+      // The WebSite node, not the Organization, is what Google's site-name
+      // feature reads. Without alternateName here Google was deriving the
+      // SERP site name from the domain ("Ka performancefl"). The name string
+      // must match the GBP exactly: "K & A Performance", spaces and all.
       name: 'K & A Performance',
+      alternateName: ['K&A Performance', 'KA Performance'],
       publisher: { '@id': ORG_ID },
       inLanguage: 'en-US',
     },
