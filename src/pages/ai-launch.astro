@@ -247,49 +247,15 @@ const answers = [
     </div>
   </section>
 
-  <!-- The hook: the program's onboarding course, free for an email. The
-       gate is honest and shallow: name and email in, straight into the
-       course, and the lead lands in the admin's list. -->
-  <section id="free-course" class="scroll-mt-28 border-t border-ink/10 bg-surface">
-    <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
-      <div class="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16 lg:items-center">
-        <div>
-          <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">The free course</p>
-          <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-3xl md:text-5xl">Start free. Keep it forever.</h2>
-          <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-lg leading-relaxed text-muted">
-            The full onboarding course from the program's first weeks. It walks
-            you through Claude Code from nothing: installing it, signing in,
-            connecting your tools, then actually building a website and an
-            interactive lesson with it. An assistant sits inside every chapter
-            to answer questions as you go.
-          </p>
-          <p data-animate="type-settle" data-animate-delay="0.3" class="mt-6 leading-relaxed text-muted">
-            Your email is the whole price. No trial clock, no card, and the
-            course stays yours. If you finish it and want the twelve weeks,
-            you already know exactly what working together feels like.
-          </p>
-          <form id="fc-form" data-animate="type-settle" data-animate-delay="0.4" class="mt-10 flex flex-col gap-4 sm:flex-row" novalidate>
-            <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
-            <label for="fc-name" class="sr-only">First name</label>
-            <input type="text" id="fc-name" name="name" autocomplete="given-name" placeholder="First name" class="field sm:max-w-[11rem]" />
-            <label for="fc-email" class="sr-only">Email</label>
-            <input type="email" id="fc-email" name="email" required autocomplete="email" placeholder="your@email.com" class="field flex-1" />
-            <button type="submit" id="fc-btn" class="btn-accent shrink-0">Get the free course</button>
-          </form>
-          <p id="fc-status" class="sr-only" role="status" aria-live="polite"></p>
-          <p id="fc-error" tabindex="-1" class="mt-4 hidden text-sm leading-relaxed text-muted" role="alert"></p>
-        </div>
-        <div data-animate="frame-lift" class="glow-frame self-start p-8 md:p-10">
-          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">Inside the course</p>
-          <ul class="mt-6 space-y-4 text-lg leading-relaxed">
-            <li>Install and sign in without a wrong turn</li>
-            <li>Connect it to the tools you already use</li>
-            <li>Build a real one-page website from a prompt</li>
-            <li>Build an interactive training exercise</li>
-            <li>A built-in assistant, on every chapter</li>
-          </ul>
-        </div>
-      </div>
+  <!-- Cousin, not funnel stage: the free course has its own front door at
+       /free-course/. One calm pointer here for the not-ready-yet. -->
+  <section class="border-t border-ink/10 bg-surface">
+    <div class="mx-auto max-w-4xl px-6 py-16 text-center md:py-20">
+      <p data-animate="type-settle" class="text-lg leading-relaxed text-muted">
+        Not ready for the twelve weeks? Our
+        <a href="/free-course/" class="font-semibold text-accent underline underline-offset-4 hover:text-accent-hot">free interactive course</a>
+        lets you experience building with AI first, for the price of an email.
+      </p>
     </div>
   </section>
 
@@ -702,67 +668,6 @@ const answers = [
   }
 </script>
 
-<script>
-  // Free course gate: name and email buy the cookie that /course/ checks.
-  // The lead goes to /api/course-lead, which writes the admin's list and
-  // the inbox; only then does the browser move on to the course.
-  const fcForm = document.getElementById('fc-form') as HTMLFormElement | null;
-  const fcName = document.getElementById('fc-name') as HTMLInputElement | null;
-  const fcEmail = document.getElementById('fc-email') as HTMLInputElement | null;
-  const fcBtn = document.getElementById('fc-btn') as HTMLButtonElement | null;
-  const fcStatus = document.getElementById('fc-status');
-  const fcError = document.getElementById('fc-error');
-
-  if (fcForm && fcEmail && fcBtn) {
-    const original = fcBtn.textContent;
-    fcForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!fcForm.checkValidity()) {
-        fcForm.reportValidity();
-        return;
-      }
-      fcError?.classList.add('hidden');
-      fcBtn.disabled = true;
-      fcBtn.textContent = 'One moment…';
-      if (fcStatus) fcStatus.textContent = 'Signing you up…';
-      try {
-        const data: Record<string, string> = {
-          name: fcName?.value.trim() ?? '',
-          email: fcEmail.value.trim(),
-        };
-        new FormData(fcForm).forEach((v, k) => {
-          if (k === 'botcheck') data[k] = String(v);
-        });
-        const res = await fetch('/api/course-lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
-        const result = await res.json();
-        if (res.ok && result.ok) {
-          if (window.fbq) window.fbq('track', 'Lead');
-          document.cookie = 'ka_course=1; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
-          if (fcStatus) fcStatus.textContent = '';
-          window.location.href = '/course/';
-        } else {
-          throw new Error(result.error || 'failed');
-        }
-      } catch (err) {
-        if (fcStatus) fcStatus.textContent = '';
-        if (fcError) {
-          fcError.textContent =
-            err instanceof Error && err.message !== 'failed' && err.message !== 'Failed to fetch'
-              ? err.message
-              : 'Something went wrong. Email alex@ka-performancefl.com and we will send you the course link directly.';
-          fcError.classList.remove('hidden');
-          fcError.focus();
-        }
-        fcBtn.disabled = false;
-        fcBtn.textContent = original;
-      }
-    });
-  }
-</script>
 
 <script>
   // Week-one demo: one question in, a three-line opportunity sketch out,

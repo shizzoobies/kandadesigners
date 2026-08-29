@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// The free course's own front door. Deliberately unhitched from the Launch:
+// this page is for the AI-curious who want to feel what building with AI is
+// like, and the only price anywhere on it is an email. Compliance rules
+// still apply: "Claude Code" appears as plain-text description of what the
+// course teaches, never in a K&A-owned page or product name.
+---
+<BaseLayout
+  title="Free AI Course | K & A Performance | Gainesville, FL"
+  description="AI curious? Take our free interactive course: install Claude Code, connect your tools, and build a real website and a training exercise with AI. The only price is your email."
+>
+  <!-- Editorial hero -->
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-16 md:pt-48 md:pb-20">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">The free course</p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-4xl font-display text-[clamp(2.6rem,7vw,5.25rem)] leading-[1.04]">
+      AI curious? <span class="text-accent">Start here.</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      A full interactive course on Claude Code, the tool we build with every
+      day. Not a video playlist: you install it, sign in, connect your tools,
+      and actually build things, with an assistant sitting inside every
+      chapter to answer questions as you go.
+    </p>
+  </section>
+
+  <!-- The gate: an email is the whole price. -->
+  <section id="signup" class="scroll-mt-28 border-t border-ink/10 bg-surface">
+    <div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+      <div class="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16 lg:items-center">
+        <div>
+          <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Free. Your email is the price.</h2>
+          <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+            No card, no trial clock, and the course stays yours. We send an
+            occasional note worth reading, and every one carries a one-click
+            unsubscribe.
+          </p>
+          <form id="fc-form" data-animate="type-settle" data-animate-delay="0.2" class="mt-10 flex flex-col gap-4 sm:flex-row" novalidate>
+            <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <label for="fc-name" class="sr-only">First name</label>
+            <input type="text" id="fc-name" name="name" autocomplete="given-name" placeholder="First name" class="field sm:max-w-[11rem]" />
+            <label for="fc-email" class="sr-only">Email</label>
+            <input type="email" id="fc-email" name="email" required autocomplete="email" placeholder="your@email.com" class="field flex-1" />
+            <button type="submit" id="fc-btn" class="btn-accent shrink-0">Start the course</button>
+          </form>
+          <p id="fc-status" class="sr-only" role="status" aria-live="polite"></p>
+          <p id="fc-error" tabindex="-1" class="mt-4 hidden text-sm leading-relaxed text-muted" role="alert"></p>
+        </div>
+        <div data-animate="frame-lift" class="glow-frame self-start p-8 md:p-10">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">Inside the course</p>
+          <ul class="mt-6 space-y-4 text-lg leading-relaxed">
+            <li>Install and sign in without a wrong turn</li>
+            <li>Connect it to the tools you already use</li>
+            <li>Build a real one-page website from a prompt</li>
+            <li>Build an interactive training exercise</li>
+            <li>A built-in assistant, on every chapter</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for: the AI-curious, no strings. -->
+  <section class="mx-auto max-w-4xl px-6 py-20 md:py-28">
+    <h2 data-animate="type-settle" class="font-display text-3xl md:text-4xl">Made for the AI-curious</h2>
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+      You do not need to be technical, and you do not need to be our client.
+      If you have been hearing about AI and wondering what it is actually
+      like to build something with it, this is a safe place to find out:
+      guided, hands-on, and honest about what the tools can and cannot do.
+    </p>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 leading-relaxed text-muted">
+      And if you finish it wanting AI running a real job inside your business,
+      that is a different thing we do:
+      <a href="/ai-launch/" class="text-accent underline underline-offset-4 hover:text-accent-hot">the 90-Day AI Launch</a>.
+      No pressure either way; the course is complete on its own.
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  // The gate: a captured lead buys the cookie that /course/ checks, then
+  // the browser goes straight in. Same endpoint the admin's lead list reads.
+  const fcForm = document.getElementById('fc-form') as HTMLFormElement | null;
+  const fcName = document.getElementById('fc-name') as HTMLInputElement | null;
+  const fcEmail = document.getElementById('fc-email') as HTMLInputElement | null;
+  const fcBtn = document.getElementById('fc-btn') as HTMLButtonElement | null;
+  const fcStatus = document.getElementById('fc-status');
+  const fcError = document.getElementById('fc-error');
+
+  if (fcForm && fcEmail && fcBtn) {
+    const original = fcBtn.textContent;
+    fcForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!fcForm.checkValidity()) {
+        fcForm.reportValidity();
+        return;
+      }
+      fcError?.classList.add('hidden');
+      fcBtn.disabled = true;
+      fcBtn.textContent = 'One moment…';
+      if (fcStatus) fcStatus.textContent = 'Signing you up…';
+      try {
+        const data: Record<string, string> = {
+          name: fcName?.value.trim() ?? '',
+          email: fcEmail.value.trim(),
+        };
+        new FormData(fcForm).forEach((v, k) => {
+          if (k === 'botcheck') data[k] = String(v);
+        });
+        const res = await fetch('/api/course-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (res.ok && result.ok) {
+          if (window.fbq) window.fbq('track', 'Lead');
+          document.cookie = 'ka_course=1; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
+          if (fcStatus) fcStatus.textContent = '';
+          window.location.href = '/course/';
+        } else {
+          throw new Error(result.error || 'failed');
+        }
+      } catch (err) {
+        if (fcStatus) fcStatus.textContent = '';
+        if (fcError) {
+          fcError.textContent =
+            err instanceof Error && err.message !== 'failed' && err.message !== 'Failed to fetch'
+              ? err.message
+              : 'Something went wrong. Email alex@ka-performancefl.com and we will send you the course link directly.';
+          fcError.classList.remove('hidden');
+          fcError.focus();
+        }
+        fcBtn.disabled = false;
+        fcBtn.textContent = original;
+      }
+    });
+  }
+</script>
