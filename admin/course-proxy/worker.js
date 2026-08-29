@@ -209,7 +209,7 @@ async function callClaude(env, system, schema, userText) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": env.ANTHROPIC_API_KEY,
+      "x-api-key": apiKey(env),
       "anthropic-version": "2023-06-01"
     },
     body: JSON.stringify(body)
@@ -225,11 +225,18 @@ async function callClaude(env, system, schema, userText) {
   return JSON.parse(textBlock.text);
 }
 
+function apiKey(env) {
+  // Secrets pasted through a terminal can pick up stray CR/LF or spaces;
+  // one control byte in a header makes the runtime reply with a synthetic
+  // empty-body 400 that masquerades as an Anthropic error (seen 2026-08-28).
+  return String(env.ANTHROPIC_API_KEY || "").replace(/[^!-~]/g, "");
+}
+
 /* ---- plain-text completion (chat + feedback) ---- */
 async function callClaudeText(env, system, messages, maxTokens) {
   const r = await fetch(ANTHROPIC_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-api-key": env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01" },
+    headers: { "Content-Type": "application/json", "x-api-key": apiKey(env), "anthropic-version": "2023-06-01" },
     body: JSON.stringify({ model: MODEL, max_tokens: maxTokens || 600, system: system, messages: messages })
   });
   if (!r.ok) { const detail = await r.text(); throw new Error("anthropic " + r.status + ": " + detail.slice(0, 300)); }
