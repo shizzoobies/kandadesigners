@@ -24,6 +24,11 @@ const serviceSchema = {
   offers: [
     { '@type': 'Offer', name: '90-Day AI Launch', price: '2000', priceCurrency: 'USD' },
     { '@type': 'Offer', name: 'Launch + Site', price: '3999', priceCurrency: 'USD' },
+    {
+      '@type': 'Offer',
+      name: 'Build Alongside',
+      priceSpecification: { '@type': 'PriceSpecification', minPrice: 10000, priceCurrency: 'USD' },
+    },
   ],
 };
 
@@ -346,6 +351,31 @@ const answers = [
     </div>
   </section>
 
+  <!-- The top rung, deliberately understated: the apprenticeship. Alex
+       still builds the site (the quality authorship never moves), but the
+       client is in the room for every decision and leaves able to extend
+       the thing themselves. Bottom of the offer stack by placement, top by
+       price, exactly as Alex wants it sold. -->
+  <section class="border-t border-ink/10">
+    <div class="mx-auto max-w-4xl px-6 py-20 md:py-24">
+      <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">For the few</p>
+      <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-3xl md:text-5xl">Build yours alongside Alex. <span class="text-accent">From $10,000.</span></h2>
+      <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 text-lg leading-relaxed text-muted">
+        The apprenticeship version. Alex builds your full custom AI-integrated
+        site to the studio standard, and you are there for all of it: every
+        working session, every decision, every integration. You learn to use
+        AI day to day, to build with it, and to wire in the APIs your business
+        runs on, on the real project instead of a toy.
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.3" class="mt-6 leading-relaxed text-muted">
+        You finish with the site, and with something rarer: you know how it
+        works, deep enough to extend it yourself. Everything lives in your own
+        accounts, same as always. From $10,000, scoped to what your build
+        actually is; the first call is where that number gets honest.
+      </p>
+    </div>
+  </section>
+
   <!-- Qualify in both directions; every mismatch filtered here saves a call. -->
   <section class="mx-auto max-w-6xl px-6 py-24 md:py-32">
     <div class="grid gap-12 md:grid-cols-2 md:gap-16">
@@ -457,6 +487,7 @@ const answers = [
                 <select id="al-interest" name="interested_in" class="field">
                   <option>The Launch, $2,000</option>
                   <option>Launch + Site, $3,999</option>
+                  <option>Build Alongside, from $10,000</option>
                   <option selected>Not sure yet</option>
                 </select>
               </div>

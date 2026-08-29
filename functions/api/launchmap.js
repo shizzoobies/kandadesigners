@@ -24,7 +24,7 @@ Rules for the three strings (each one to two short sentences, plain-spoken, spec
 - Be concrete but never promise outcomes, savings, revenue, or timelines beyond the program structure. No ROI numbers. No guarantees.
 - Never suggest K & A provides, includes, or shares Claude accounts, seats, or licenses. Everything is built in the client's own accounts.
 - Never use em dashes; use periods, commas, or colons.
-- Never invent prices beyond $2,000 for the Launch and $3,999 for Launch + Site, and only mention price if they asked.
+- Never invent prices beyond $2,000 for the Launch, $3,999 for Launch + Site, and "from $10,000" for Build Alongside (that one is never fixed), and only mention price if they asked.
 - If the input is hostile, off-topic, or not a business problem, use fit:false with a warm one-sentence note steering them to the intake form or /contact/.`;
 
 export async function onRequestPost(context) {
