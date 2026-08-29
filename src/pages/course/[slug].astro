@@ -18,12 +18,12 @@ const next = i < chapters.length - 1 ? chapters[i + 1] : null;
   title={`${chapter.title} | The Free Course | K & A Performance`}
   description={chapter.blurb}
 >
-  <section class="mx-auto max-w-6xl px-6 pt-28 pb-16 md:pt-32">
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-4">
-      <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
+  <section class="mx-auto max-w-7xl px-6 pt-28 pb-16 md:pt-32">
+    <div class="mb-3 flex flex-wrap items-center justify-between gap-4">
+      <p data-animate="type-settle" class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
         <a href="/course/" class="transition-colors hover:text-accent">The free course</a>
         <span class="text-accent" aria-hidden="true">&middot;</span>
-        Chapter {String(i + 1).padStart(2, '0')} of {String(chapters.length).padStart(2, '0')}
+        {chapter.title}
       </p>
       <div class="flex items-center gap-5">
         {prev && <a href={`/course/${prev.slug}/`} class="font-heading text-sm font-semibold tracking-wide text-muted transition-colors hover:text-accent">&larr; {prev.title}</a>}
@@ -31,22 +31,32 @@ const next = i < chapters.length - 1 ? chapters[i + 1] : null;
       </div>
     </div>
 
+    <!-- Position without numerals: nine segments, done in accent, this one
+         in amber, the rest quiet. Screen readers get the words instead. -->
+    <div class="mb-5 flex gap-1.5" role="img" aria-label={`${chapter.title}: chapter ${i + 1} of ${chapters.length}`} id="chapter-progress" data-current={chapter.slug}>
+      {chapters.map((c) => (
+        <span data-seg={c.slug} class:list={['h-1 flex-1 rounded-full transition-colors', c.slug === chapter.slug ? 'bg-amber' : 'bg-ink/10']}></span>
+      ))}
+    </div>
+
     <h1 class="sr-only">{chapter.title}</h1>
 
-    <!-- The chapter itself. min-height keeps short chapters honest; the
+    <!-- The chapter itself, wide now that Rise's column is gone. The
          interactive scrolls inside its own document like it always did. -->
-    <iframe
-      id="chapter-frame"
-      src={`/course-app/assets/${chapter.dir}/`}
-      title={chapter.title}
-      class="glow-frame w-full"
-      style="height: max(72vh, 640px); border: 0;"
-      allow="microphone"
-      loading="eager"
-    ></iframe>
+    <div data-animate="frame-lift">
+      <iframe
+        id="chapter-frame"
+        src={`/course-app/assets/${chapter.dir}/`}
+        title={chapter.title}
+        class="glow-frame w-full"
+        style="height: max(76vh, 680px); border: 0;"
+        allow="microphone"
+        loading="eager"
+      ></iframe>
+    </div>
 
     <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
-      <p class="text-sm text-muted">{chapter.blurb}</p>
+      <p data-animate="type-settle" class="text-sm text-muted">{chapter.blurb}</p>
       <button id="mark-done" type="button" class="btn-accent">
         {next ? `Done, next: ${next.title}` : 'Finish the course'}
       </button>
@@ -92,4 +102,19 @@ const next = i < chapters.length - 1 ? chapters[i + 1] : null;
     const next = document.getElementById('next-link') as HTMLAnchorElement | null;
     location.href = next ? next.href : '/course/';
   });
+
+  // Paint finished chapters into the progress segments. Accent for done,
+  // amber stays on the current one.
+  try {
+    const list: string[] = JSON.parse(localStorage.getItem('ka_course_done') ?? '[]');
+    const current = document.getElementById('chapter-progress')?.dataset.current;
+    list.forEach((s) => {
+      if (s === current) return;
+      const seg = document.querySelector(`[data-seg="${s}"]`);
+      if (seg) {
+        seg.classList.remove('bg-ink/10');
+        seg.classList.add('bg-accent');
+      }
+    });
+  } catch {}
 </script>

@@ -1,0 +1,7 @@
+/* Native-shell overrides, loaded after each chapter's own styles. The
+   interactives were built for Rise's 860px column; the native course has
+   no such ceiling, so the shared width token breathes. One file so all
+   nine chapters stay in lockstep. */
+:root {
+  --cc-maxw: 1040px;
+}

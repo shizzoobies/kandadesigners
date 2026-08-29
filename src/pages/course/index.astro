@@ -2,9 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { sections, chapters, chapterBySlug } from '../../data/course.js';
 
-// The course home: gated table of contents with per-chapter progress read
-// from localStorage. The _headers file keeps /course/* out of the index;
-// /free-course/ is the page that ranks and captures.
+// The course home: a gated table of contents drawn as a journey. One
+// vertical rail runs the length of the course; each chapter is a node on
+// it, filled with a check once done. No numbered kickers anywhere: the
+// rail IS the position. _headers keeps /course/* unindexed; /free-course/
+// is the page that ranks.
 ---
 <BaseLayout
   title="The Free Course | K & A Performance"
@@ -24,38 +26,53 @@ import { sections, chapters, chapterBySlug } from '../../data/course.js';
   </section>
 
   <section class="mx-auto max-w-4xl px-6 pb-32">
-    {sections.map((s) => (
-      <>
-        <div class="groupline mt-10 mb-4 font-mono text-xs uppercase tracking-[0.25em] text-muted">{s.title}</div>
-        <div class="flex flex-col gap-4">
-          {s.slugs.map((slug) => {
-            const c = chapterBySlug(slug);
-            const n = chapters.findIndex((x) => x.slug === slug) + 1;
-            return (
-              <a href={`/course/${c.slug}/`} data-chapter={c.slug} data-animate="frame-lift" class="glow-frame group flex items-center gap-5 p-6">
-                <span class="font-mono text-sm text-muted" data-num>{String(n).padStart(2, '0')}</span>
-                <span class="flex-1">
-                  <b class="font-heading text-lg tracking-wide transition-colors group-hover:text-accent">{c.title}</b>
-                  <span class="mt-1 block text-sm text-muted">{c.blurb}</span>
-                </span>
-                <span class="hidden font-mono text-xs uppercase tracking-[0.2em] text-accent" data-done-mark>Done</span>
-                <span class="inline-block text-accent transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
-              </a>
-            );
-          })}
+    <div id="course-path" class="relative">
+      <!-- the rail: drawn by scroll, sitting behind the nodes -->
+      <span id="course-rail" class="pointer-events-none absolute bottom-6 left-[1.05rem] top-2 w-px bg-ink/15" aria-hidden="true"></span>
+
+      {sections.map((s) => (
+        <div class="course-section">
+          <h2 data-animate="type-settle" class="relative mt-12 mb-6 pl-12 font-display text-2xl first:mt-0 md:text-3xl">{s.title}</h2>
+          <div class="flex flex-col gap-3">
+            {s.slugs.map((slug) => {
+              const c = chapterBySlug(slug);
+              return (
+                <a href={`/course/${c.slug}/`} data-chapter={c.slug} class="course-row group relative flex items-start gap-5 rounded-lg py-4 pl-12 pr-4 transition-colors hover:bg-surface">
+                  <!-- node: hollow until done, then accent with a drawn check -->
+                  <span class="course-node absolute left-2 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full border-2 border-ink/25 bg-canvas transition-colors" aria-hidden="true">
+                    <svg class="course-check hidden h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 6.5 2.5 2.5 4.5-5.5"/></svg>
+                  </span>
+                  <span class="flex-1">
+                    <b class="font-heading text-lg tracking-wide transition-colors group-hover:text-accent">{c.title}</b>
+                    <span class="mt-1 block text-sm text-muted">{c.blurb}</span>
+                  </span>
+                  <span class="course-state self-center font-mono text-xs uppercase tracking-[0.2em] text-muted transition-colors group-hover:text-accent" data-state>Start</span>
+                </a>
+              );
+            })}
+          </div>
         </div>
-      </>
-    ))}
+      ))}
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .groupline { border-bottom: 1px solid rgb(34 28 21 / 0.1); padding-bottom: 0.5rem; }
+  .course-row.is-done .course-node {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: #fffdf9;
+  }
+  .course-row.is-done .course-check {
+    display: block;
+  }
+  .course-row.is-next .course-node {
+    border-color: var(--color-amber);
+  }
 </style>
 
 <script>
-  // Gate: same speed bump as before, native now. ?pass keeps working for
-  // members arriving from the admin.
+  // Gate: same speed bump as always; ?pass keeps working for members.
   try {
     const q = new URLSearchParams(location.search);
     if (document.cookie.indexOf('ka_course=') !== -1 || q.has('pass')) {
@@ -65,27 +82,31 @@ import { sections, chapters, chapterBySlug } from '../../data/course.js';
     }
   } catch {}
 
-  // Progress: purely local, purely cosmetic. The server-side analytics are
-  // the beacons on the chapter pages, not this.
+  // Progress states on the path. Local and cosmetic; the beacons on the
+  // chapter pages are the real analytics.
   try {
     const done: string[] = JSON.parse(localStorage.getItem('ka_course_done') ?? '[]');
-    let firstTodo: string | null = null;
+    let firstTodo: HTMLAnchorElement | null = null;
     document.querySelectorAll<HTMLAnchorElement>('[data-chapter]').forEach((a) => {
       const slug = a.dataset.chapter!;
+      const state = a.querySelector('[data-state]');
       if (done.includes(slug)) {
-        a.querySelector('[data-done-mark]')?.classList.remove('hidden');
-        a.querySelector('[data-num]')?.classList.add('text-accent');
+        a.classList.add('is-done');
+        if (state) state.textContent = 'Done';
       } else if (!firstTodo) {
-        firstTodo = slug;
+        firstTodo = a;
+        a.classList.add('is-next');
+        if (state) state.textContent = done.length ? 'Next' : 'Start';
+      } else if (state) {
+        state.textContent = '';
       }
     });
     if (done.length > 0 && firstTodo) {
       const el = document.getElementById('course-resume');
-      const next = document.querySelector<HTMLAnchorElement>(`[data-chapter="${firstTodo}"]`);
-      if (el && next) {
+      if (el) {
         el.innerHTML = '';
         const link = document.createElement('a');
-        link.href = next.href;
+        link.href = (firstTodo as HTMLAnchorElement).href;
         link.className = 'font-semibold text-accent underline underline-offset-4';
         link.textContent = 'Pick up where you left off';
         el.append('You have finished ' + done.length + ' of 9. ', link, '.');
@@ -93,4 +114,43 @@ import { sections, chapters, chapterBySlug } from '../../data/course.js';
       }
     }
   } catch {}
+</script>
+
+<script>
+  // The rail draws with the scroll and the nodes arrive along it, the
+  // ai-launch track's language turned vertical. From-states only, gated on
+  // reduced motion, so the static page is always the finished one.
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const path = document.getElementById('course-path');
+
+  if (!reduced && path) {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from('#course-rail', {
+      scaleY: 0,
+      transformOrigin: 'top',
+      ease: 'none',
+      scrollTrigger: { trigger: path, start: 'top 78%', end: 'bottom 65%', scrub: 0.6 },
+    });
+    gsap.utils.toArray<HTMLElement>('.course-row').forEach((row) => {
+      gsap.from(row, {
+        x: -18,
+        opacity: 0,
+        duration: 0.55,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: row, start: 'top 88%' },
+      });
+      const node = row.querySelector('.course-node');
+      if (node) {
+        gsap.from(node, {
+          scale: 0,
+          duration: 0.4,
+          ease: 'back.out(2)',
+          scrollTrigger: { trigger: row, start: 'top 88%' },
+        });
+      }
+    });
+  }
 </script>
