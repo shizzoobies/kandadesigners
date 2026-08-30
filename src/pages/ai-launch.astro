@@ -572,10 +572,11 @@ const answers = [
     </div>
   </section>
 
-  <!-- Intake -->
+  <!-- Intake: the section is now just the invitation; the form itself lives
+       in the modal below so the page ends without a wall of fields. -->
   <section id="apply" class="scroll-mt-28 border-t border-ink/10">
     <div class="mx-auto max-w-6xl px-6 py-24 md:py-32">
-      <div class="grid gap-12 lg:grid-cols-[0.9fr_1fr] lg:gap-16">
+      <div class="grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
         <div>
           <h2 data-animate="type-settle" class="font-display text-3xl md:text-5xl">Start with a call</h2>
           <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
@@ -587,27 +588,58 @@ const answers = [
             Two starts a month, so if your timing is tight, say so in the
             message and we will plan around it.
           </p>
-
-          <!-- What happens next, drawn: call, map, build. The last visual
-               beat before the ask. -->
-          <div data-animate="type-settle" data-animate-delay="0.3" class="mt-12 hidden gap-8 sm:grid sm:grid-cols-3">
-            {[
-              { label: 'The call', note: 'Twenty minutes, free', icon: 'M10 6 a4 4 0 0 1 4 -4 h4 l3 8 l-5 3 a18 18 0 0 0 9 9 l3 -5 l8 3 v4 a4 4 0 0 1 -4 4 A26 26 0 0 1 10 6 Z' },
-              { label: 'The map', note: 'Week one, yours to keep', icon: 'M4 8 l10 -4 l12 4 l10 -4 v24 l-10 4 l-12 -4 l-10 4 Z M14 4 v24 M26 8 v24' },
-              { label: 'The build', note: 'Live, on your real work', icon: 'M6 30 l8 -8 M10 34 l8 -8 M22 6 l8 8 l-14 14 l-8 -8 Z M26 2 l8 8' },
-            ].map((s) => (
-              <div>
-                <svg class="al-glyph h-9 w-9 text-accent" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d={s.icon} />
-                </svg>
-                <p class="mt-3 font-heading text-sm font-semibold tracking-wide">{s.label}</p>
-                <p class="mt-1 text-sm text-muted">{s.note}</p>
-              </div>
-            ))}
+          <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10">
+            <button type="button" data-intake class="btn-draw">Request the call</button>
           </div>
+          <noscript>
+            <p class="mt-6 text-sm leading-relaxed text-muted">
+              The form needs JavaScript. Prefer email? Write to
+              <a href="mailto:alex@ka-performancefl.com" class="text-accent underline underline-offset-4">alex@ka-performancefl.com</a>
+              and we will set up the call.
+            </p>
+          </noscript>
         </div>
 
-        <div data-animate="frame-lift" class="glow-frame p-8 md:p-10">
+        <!-- What happens next, drawn: call, map, build. The last visual
+             beat before the ask, now full editorial rows instead of a
+             cramped icon strip. -->
+        <div data-animate="type-settle" data-animate-delay="0.2">
+          {[
+            { label: 'The call', note: 'Twenty minutes, free', icon: 'M10 6 a4 4 0 0 1 4 -4 h4 l3 8 l-5 3 a18 18 0 0 0 9 9 l3 -5 l8 3 v4 a4 4 0 0 1 -4 4 A26 26 0 0 1 10 6 Z' },
+            { label: 'The map', note: 'Week one, yours to keep', icon: 'M4 8 l10 -4 l12 4 l10 -4 v24 l-10 4 l-12 -4 l-10 4 Z M14 4 v24 M26 8 v24' },
+            { label: 'The build', note: 'Live, on your real work', icon: 'M4 27 h15 v9 h-15 Z M23 27 h13 v9 h-13 Z M13 16 h15 v9 h-15 Z M13 3 h15 v8 h-15 Z M17 13 v1.6 M24 13 v1.6' },
+          ].map((s, i) => (
+            <div class:list={['flex items-start gap-6 py-6', i > 0 && 'border-t border-ink/10']}>
+              <svg class="al-glyph mt-0.5 h-10 w-10 shrink-0 text-accent" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={s.icon} />
+              </svg>
+              <div>
+                <p class="font-heading text-base font-semibold tracking-wide">{s.label}</p>
+                <p class="mt-1 leading-relaxed text-muted">{s.note}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The intake modal. Every data-pick lead button and the data-intake CTA
+       open this; native dialog gives Esc and focus containment for free. -->
+  <dialog id="al-modal" class="al-modal" aria-labelledby="al-modal-title">
+    <div class="glow-frame p-8 md:p-10">
+      <div class="mb-8 flex items-start justify-between gap-6">
+        <div>
+          <h3 id="al-modal-title" class="font-display text-2xl md:text-3xl">Start with a call</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Alex calls back within one business day.</p>
+        </div>
+        <button type="button" id="al-modal-close" class="-m-2 p-2 text-muted transition-colors hover:text-ink" aria-label="Close">
+          <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <line x1="5" y1="5" x2="15" y2="15" />
+            <line x1="15" y1="5" x2="5" y2="15" />
+          </svg>
+        </button>
+      </div>
           <form id="al-form" class="flex flex-col gap-6" novalidate>
             <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
             <input type="hidden" name="subject" value="New AI Launch lead | ka-performancefl.com" />
@@ -690,7 +722,7 @@ const answers = [
             </p>
           </form>
 
-          <div id="al-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-col justify-center">
+          <div id="al-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-col justify-center py-10">
             <h3 class="font-display text-3xl leading-tight">Got it</h3>
             <p class="mt-6 text-lg leading-relaxed text-muted">
               Alex will call you back within one business day, usually the same
@@ -698,10 +730,8 @@ const answers = [
               there is something worth building, and honest advice either way.
             </p>
           </div>
-        </div>
-      </div>
     </div>
-  </section>
+  </dialog>
 </BaseLayout>
 
 <style>
@@ -992,6 +1022,41 @@ const answers = [
     .al-acc-ind, .al-acc-rule { transition: none; }
   }
 
+  /* The intake modal: a bare dialog shell so the glow-frame inside is the
+     only visible surface, floating on a blurred ink wash. */
+  .al-modal {
+    margin: auto;
+    width: min(34rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2.5rem);
+    overflow-y: auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 1rem;
+  }
+  .al-modal::backdrop {
+    background: rgb(34 28 21 / 0.45);
+    backdrop-filter: blur(5px);
+  }
+  .al-modal[open] {
+    animation: al-modal-in 0.45s var(--ease-out-expo);
+  }
+  .al-modal[open]::backdrop {
+    animation: al-modal-fade 0.3s ease;
+  }
+  @keyframes al-modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+  }
+  @keyframes al-modal-fade {
+    from { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .al-modal[open], .al-modal[open]::backdrop { animation: none; }
+  }
+
   /* The corner orb gets a brief nudge while the chat card points at it. */
   :global(#sg-open.sg-nudge) {
     animation: al-sg-nudge 0.9s ease-in-out 2;
@@ -1043,8 +1108,8 @@ const answers = [
 <script>
   // Product lead buttons: every tier's button carries data-pick with its
   // exact select option. Clicking pre-selects the tier, reveals the
-  // current-website field for the two site tiers, and lands focus on the
-  // form. ?p=launch|bundle|alongside does the same for future ad links.
+  // current-website field for the two site tiers, and opens the intake
+  // modal. ?p=launch|bundle|alongside|session does the same for ad links.
   const PICKS: Record<string, string> = {
     launch: 'The Launch, $2,000',
     bundle: 'Launch + Site, $3,999',
@@ -1075,16 +1140,33 @@ const answers = [
     }
   };
 
-  const pick = (value: string, scroll: boolean) => {
+  const modal = document.getElementById('al-modal') as HTMLDialogElement | null;
+
+  const openIntake = () => {
+    if (!modal) return;
+    if (!modal.open) modal.showModal();
+    // Native dialog does not lock the page behind it.
+    document.documentElement.style.overflow = 'hidden';
+    const nameEl = document.getElementById('al-name') as HTMLInputElement | null;
+    // Skip the focus grab when the form is hidden (post-success state).
+    if (nameEl && nameEl.offsetParent !== null) nameEl.focus({ preventScroll: true });
+  };
+
+  modal?.addEventListener('close', () => {
+    document.documentElement.style.overflow = '';
+  });
+  document.getElementById('al-modal-close')?.addEventListener('click', () => modal?.close());
+  // A click on the backdrop targets the dialog element itself.
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal.close();
+  });
+
+  const pick = (value: string, open: boolean) => {
     if (interestSel && [...interestSel.options].some((o) => o.value === value || o.text === value)) {
       interestSel.value = value;
     }
     syncSiteField();
-    if (scroll) {
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      document.getElementById('apply')?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
-      (document.getElementById('al-name') as HTMLInputElement | null)?.focus({ preventScroll: true });
-    }
+    if (open) openIntake();
   };
 
   document.querySelectorAll<HTMLAnchorElement>('[data-pick]').forEach((a) => {
@@ -1092,6 +1174,9 @@ const answers = [
       e.preventDefault();
       pick(a.dataset.pick!, true);
     });
+  });
+  document.querySelectorAll<HTMLElement>('[data-intake]').forEach((el) => {
+    el.addEventListener('click', () => openIntake());
   });
   interestSel?.addEventListener('change', syncSiteField);
 
