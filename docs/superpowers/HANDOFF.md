@@ -1,12 +1,14 @@
 # K&A Performance — Session Handoff
 
-**Date:** 2026-08-13 · **Branch: `main`** · **Status: LIVE at ka-performancefl.com, repo verified against production today.**
+**Date:** 2026-08-30 · **Branch: `main`** · **Status: LIVE and clean.**
 
-**NOTE (2026-08-13 afternoon): 11 commits pushed** (`18d7e19..ecb8840`) — the admin backend (spec, plan, Phases 0-1 in `admin/`) plus the daily-songs migration off Firebase. Site lockfile still byte-identical (md5 `1fc8960b5bed1a9256d72ec5c6620649`, 3 top-level `@emnapi` entries). **Push gotcha:** git credentials resolved to the `pmuf-code` GitHub account, which has no write access, so the push 403'd. Both accounts are in the `gh` keyring; the fix was `gh auth switch --hostname github.com --user shizzoobies`. If a push 403s again, check `gh auth status` before assuming it is the flaky-first-push described in the runbook.
+**Verified in production 2026-08-30:** working tree carries only the expected untracked source drops, `main` is level with `origin/main` (0 ahead, 0 behind), and `/`, `/ai-launch/`, `/free-course/`, `/course/`, `/services/`, `/contact/`, `/locations/gainesville/` all return 200. `admin.ka-performancefl.com/coaching` returns 302 to Cloudflare Access, which is the correct gated response.
 
-**Verified 2026-08-13 morning (the site baseline):** working tree clean, `main` level with `origin/main`, no unpushed or unpulled commits. Build clean at 16 pages. All 16 routes return 200 live and match the repo exactly, including the four `/services/*` children and both `/locations/*` pages. The newest commit's change is visible live (footer reads "Accessibility statement"). `sitemap-index.xml` and `robots.txt` 200; an unmatched path correctly returns 404; `ProfessionalService` schema, the Meta pixel and the domain-verification tag are all present; stylesheets serve `text/css` (the outage canary). **The emnapi lockfile entries are intact** (`@emnapi/core` and `@emnapi/runtime` present, 26 total refs) so it is safe to push. Only untracked dirs are the expected source drops (`Bobbie Images/`, `Jon Marc Images/`, `Nicole Images/`, `New Logo/`, `Logo Remake/`, `Google Profile Images/`, `Facebook Page Photos/`, `.wrangler/`).
+**What the 2026-08-28/29 run built (35 commits, `79df5ae..96e46b4`): an entire coaching business, end to end.** The 90-Day AI Launch offer and its marketing page, a free course funnel that captures leads, a newsletter system with an Opus writing assistant, a delivery cockpit and member portal in the admin, a native remaster of the course, and an SEO pass so the site itself performs while selling AI integration. **Read "The coaching business" section below before touching any of it.** Everything above that section predates the run and still holds.
 
-CI works: `git push origin main` auto-builds and deploys. Recent work (2026-08-09..11): **Meta pixel + domain verification + `/privacy/` page; the nav logo now draws itself on on the homepage; and a full local-SEO campaign shipped** — generated sitemap, ProfessionalService schema, services split into four child pages, and Gainesville/Jacksonville location pages, executed phase-by-phase from `docs/seo/LOCAL-SEO-PLAN.md`. A Facebook photo package (49 files) sits ready in `Facebook Page Photos/` (untracked). Earlier: artist-finished logo everywhere, all three artists live, `/accessibility/` + 404 + skip link, picture book on untexted art.
+**Push gotcha (2026-08-13, still live):** git credentials can resolve to the `pmuf-code` GitHub account, which has no write access, so the push 403s. Both accounts are in the `gh` keyring; the fix is `gh auth switch --hostname github.com --user shizzoobies`. If a push 403s, check `gh auth status` before assuming it is the flaky-first-push described in the runbook.
+
+CI works: `git push origin main` auto-builds and deploys in roughly 60 to 90 seconds. Verify with a cache-busted curl for a marker string from the change, never by sweeping bare asset URLs (see Process notes). Earlier work still standing: Meta pixel + domain verification + `/privacy/`, the self-drawing nav logo, the full local-SEO campaign from `docs/seo/LOCAL-SEO-PLAN.md`, the artist-finished logo, all three artists, `/accessibility/` + 404 + skip link.
 
 ## DEPLOY RUNBOOK (critical, read first)
 
@@ -130,7 +132,7 @@ Worst first: **`/api/scope`** runs `claude-sonnet-5` and accepts up to 24 messag
 
 The right primary fix is a **WAF rate-limiting rule**, because it blocks at the edge before the function runs (so the abusive request costs nothing) and it does not care about origin, so it cannot break an unknown caller. Rule spec is in the Open items.
 
-## Admin backend (2026-08-13) — NEW, separate app, live but not yet on its domain
+## Admin backend (2026-08-13) — separate app, LIVE and gated at admin.ka-performancefl.com
 
 An internal admin for clients, projects, invoices, retainers, follow-ups and notes, plus a 7am daily digest. **Spec:** `docs/superpowers/specs/2026-08-13-admin-backend-design.md` (read it first). **Plan for Phases 0-1:** `docs/superpowers/plans/2026-08-13-admin-phase-0-1.md`. **Layout mockup:** the HTML file beside the spec. It supersedes `public/internal/tracker.html`.
 
@@ -171,21 +173,78 @@ An internal admin for clients, projects, invoices, retainers, follow-ups and not
 - **A delta re-export at cutover was identical** (89/485/3), so nothing was written to Firestore during the window and no delta import was needed.
 - **Remaining:** Alex to confirm the logged-in app (History shows 89 entries, Bangers shows Cloud Turnstile / Annual Report / Stakeholder), then set the `daily-songs-89174` Firestore rules to `allow read, write: if false`, then delete that Firebase project when comfortable.
 
+## The coaching business (2026-08-28/29)
+
+Source docs live in `Coaching/` (business plan, `site-integration-handoff.md`, Synovial sell sheet, `assets/` program templates). **Read the handoff there before touching the offer.** Project memory: `ai-launch-2026-08`.
+
+### The offer, and the rules that are not negotiable
+
+Tiers, exactly as the site states them: **90-Day AI Launch $2,000** (or 3x$700), **Launch + Site $3,999**, **Build Alongside from $10,000** (an apprenticeship where the client builds their own AI-integrated site alongside Alex; **never quote it as a fixed price**), and **one-time sessions** (no price on the page, "contact and we customize"). Membership ($350 Core / $999 Advisory, caps 40 and 8) is offered in week 10 and is **deliberately not priced on the site**. Hannah at Synovial Marketing sells it for 20% of cash collected, forever; K&A is seller of record. The nav label for `/ai-launch/` is **"Mentorship"** (Alex's pick); the program keeps its own name on the page.
+
+**Compliance constraints, permanent and existential (Anthropic ToS, the whole account is at stake):**
+- **Never** suggest K&A provides Claude accounts, seats, or licenses. Clients pay Anthropic on their own card.
+- **No** Claude or Anthropic logos, and no "Claude" inside a K&A product or page name. Plain-text mentions in prose are fine.
+- **No** client names or testimonials without written permission. This is why every outcome example on the page cites only K&A's own operations.
+- **No** guaranteed outcomes or ROI figures.
+
+### The Launch page (`src/pages/ai-launch.astro`)
+
+The single hottest file in the repo. Structure, top to bottom: `Service` schema (three offers) plus `BreadcrumbList`; an editorial hero whose window sketch draws on load; the **twelve-week track** (`.al-rail` / `.al-dot` / `.al-week`, scrubbed by ScrollTrigger); a **live week-one demo** posting to `/api/launchmap`; a cross-link strip to the free course; the teal **"It is your account"** band; the **outcomes grid**, whose four cards demonstrate themselves on hover (`data-demo=chat|dash|voice|content`: an arrow draws to the real Kai orb and nudges it, a mock operations dashboard pops up, a "click to talk to Kai" button animates in, a newsletter panel mock unfolds); the espresso band (`.al-espresso`) selling Build Alongside; the fit cards; the **"Straight answers" accordion**; and the intake.
+
+Two interaction systems worth knowing before you edit:
+
+- **The accordion** (`#al-acc`): seven Q&As, exactly one open at a time. Hover peeks, click pins so it survives the mouse leaving, clicking a pinned row releases it, and `mouseleave` on the container restores the pinned one. Hover behavior is gated on `(hover:hover)`; keyboard pins with Enter; `aria-expanded` tracks state; reduced motion toggles instantly. The open animation is a gsap height spring with a `back.out(1.6)` settle on the copy plus a rust rule drawing down the answer.
+- **The intake is a modal** (`<dialog id="al-modal">`), not an inline form. **Every** lead path opens it: any `[data-pick]` button (each carries its exact `<select>` option string) and any `[data-intake]` button. Picking a tier preselects it, reveals the current-website field for the two site tiers, and for "One session with Alex" reshapes the question and the submit label. Esc, backdrop click, and the close mark all dismiss; page scroll locks while open; focus lands on the name field. `?p=launch|bundle|alongside|session` deep-links the same behavior for ad traffic. The form posts to **Web3Forms** (key in the markup) and **stamps the tier into the subject line** (`New lead: {tier} | ka-performancefl.com`) so the inbox triages itself. `sms_consent=No` is hardcoded because the promised follow-up is a phone call; **do not text these leads.**
+
+**Animation rule across the page:** gsap `data-animate` states are **from-states only**, so anything with reduced motion or no JS sees the finished layout, never a blank one.
+
+**Attribution:** `BaseLayout.astro` writes a sitewide first-touch **`ka_src` cookie** (90 days, never overwritten, defaults `direct`), which the intake reads into a hidden `source` field. Hannah's link is `https://ka-performancefl.com/ai-launch?src=synovial`.
+
+### The lead funnel (free course to email list)
+
+`/free-course/` is a gated landing page positioned for the "AI curious", deliberately **not** tied to the Launch. The gate posts to **`/api/course-lead`**, which upserts `course_leads` in the ka-admin D1 (the `ADMIN_DB` binding on the Pages project, so the public site writes to the admin database) and emails the inbox, then sets cookie **`ka_course=<unsubscribe_token>`**. Members bypass with `?pass=member`. Chapter pages beacon `/api/course-event` (view/done) into `course_events`, which renders as the funnel on the admin coaching page. See "The course (remastered native)" below for the course itself.
+
+### Newsletter (admin `/newsletter`)
+
+**Resend**, not Cloudflare Email Service, because that service forbids bulk marketing. Sender `news@ka-performancefl.com` (apex already verified in Resend). It is a draft/sent workbench: tabs for letters and the full mailing list, a per-letter page with an inline iframe preview, sends in batches of 100 with a `List-Unsubscribe` header and per-lead tokens hitting `/api/unsubscribe` on the site. The **Opus polish pass** (`claude-opus-5`, strict JSON blocks of `heading|paragraph|button|divider`, prompt forbids em dashes, invented URLs, and prices) turns Alex's rough notes into branded HTML. It runs on **ka-admin's own `ANTHROPIC_API_KEY`**, minted separately from the course proxy's so coaching costs are readable per key. The pattern came from Alex's Project Makeover admin.
+
+### Delivery (admin `/coaching` and `/members`)
+
+`/coaching` is the cockpit: roster, membership caps, state of play, the twelve-week arc, sessions, resources, a leads panel, the course funnel, and recent activity. `/members` is the client portal; `admin/src/middleware.js` redirects the `client` role away from everything else. **Portal access is two-key:** Alex adds the email to the Zero Trust Access policy **and** the cockpit's "Portal access" grant writes the `users` row. Pure arc logic (`currentWeek`, `capCounts`, `weekTenDue`, `staleMembers`) is isolated in `admin/src/lib/coaching.js`; the week-10 and stale-member rules also surface in the dashboard stream. Migrations `0002`-`0006` cover members, coaching sessions, member resources, course leads, newsletters, and course events. The Launch Book (commission/billing tracker) is parked at `/launch-book.html`, reskinned into the brand, and is **not** the current focus by Alex's call.
+
+### Gotchas this run paid for in real time
+
+- **Secrets: never paste into a terminal.** A control character from a PowerShell paste into `wrangler secret put` produced a **synthetic empty-body 400 from workerd** that looked exactly like a broken API key. The tell is a response carrying **no `cf-ray` and no `server` header**. Correct flow: write a **BOM-free `secrets.json` via node**, run `wrangler secret bulk secrets.json`, delete the file. `worker.js` now also sanitizes with `apiKey().replace(/[^\x21-\x7e]/g, '')`.
+- **PowerShell 5.1 `Set-Content -Encoding utf8` writes a BOM** that breaks `JSON.parse`. Write JSON through node. Also validate **silently**: a node error once echoed a live key into the transcript and forced a rotation.
+- **Never set a Worker `compatibility_date` to "today".** Local workerd refuses a future date. `ka-course-proxy` is pinned to `2026-01-01`.
+- **Astro compiler: a bare `<` or `<=` inside a template expression parses as a tag** and fails the build pointing at a misleading location. Precompute comparisons in frontmatter.
+- **`.glow-frame` sets `overflow: hidden`**, which clips hover popups. The outcome cards carry `.al-card { overflow: visible }` (they hold no media, so it is safe).
+- **Never author JS or regex through a bash heredoc on this repo.** Escaping mangled `\s` into `s` and broke template literals more than once. Use the Edit tool.
+- **KV namespace titles are global-ish:** the binding is `RATE_LIMIT` but the title had to be `KA_COURSE_RATE_LIMIT` (id `b16f981540374af5aa9e03cdfedefeb0`). Wrangler auto-added a second, wrongly-named binding plus a TODO; the config was corrected to one entry.
+- **Deploying the admin ahead of its migrations** gives `no such table` 500s on `/coaching` and `/newsletter`. Apply migrations first.
+- **Wrangler is allowlisted** in `.claude/settings.local.json` (`node ./node_modules/wrangler/bin/wrangler.js *` and the `../` form), so Claude runs deploys, migrations, and secret pushes directly now. It no longer needs to hand Alex commands for those.
+
 ## Open items
 
-_Status as of 2026-08-13. Active items first._
+_Refreshed 2026-08-30. Active items first._
 
 **ACTIVE — near-term, in rough priority order:**
 
-0. **ADMIN, Alex's four steps to finish Phase 0** (see the Admin backend section): (1) confirm the Access application's hostname is exactly `admin.ka-performancefl.com`, since a typo leaves it ungated while looking configured; (2) Workers & Pages → `ka-admin` → Settings → Domains & Routes → Add → Custom domain → `admin.ka-performancefl.com`; (3) load it **in incognito** and check the Identity row reads "resolved via **access**", not `dev`; (4) Workers & Pages → `ka-admin` → Metrics → CPU time after a dozen reloads, report median and p99. **Over ~8ms median means Workers Paid ($5/mo) before Phase 4** — free plan caps CPU at 10ms and Cloudflare puts SSR-plus-auth workloads at 10-20ms. Then set `workers_dev: false` and redeploy.
+A. **Hannah at Synovial, the first real sale motion.** She is on vacation and **Alex is deliberately not contacting her until she is back and they meet in person.** When that happens: send `https://ka-performancefl.com/ai-launch?src=synovial` plus the sell sheet in `Coaching/`, and she becomes member zero in the cockpit. Do not chase this; it is Alex's call on timing.
+B. **A written agreement with Synovial** before money moves. The 20%-of-cash-collected-forever arrangement currently exists only in the business plan.
+C. **Re-upload Kai's voice knowledge base.** `docs/elevenlabs-agent/knowledge-base.md` is already current in-repo (it now carries the free course, the Build Alongside tier, and the AI-replacement philosophy answers) but the **uploaded** doc is `o26Mt6pae3ddNZ5dRLrz` from 2026-08-29 and predates the newest Q&As. Needs an ElevenLabs key from Alex, which he supplies per job and rotates after. Follow `docs/elevenlabs-agent/README.md` and verify by reading the stored doc back. The account is shared with unrelated projects: **touch only K&A docs.**
+D. **"Two starts a month" on `/ai-launch/` has never been confirmed by Alex.** It came from the handoff as a placeholder and has been flagged repeatedly without an answer. It is a public capacity promise, so either confirm it or cut the sentence.
+E. **Watch for the Google site-name flip.** `BaseLayout` now declares `WebSite` with `alternateName: ['K&A Performance', 'KA Performance']` to fix the "Ka performancefl" SERP name. Google re-renders on its own schedule; check the brand query in a week or two.
+F. **Client-site footer backlinks** (Alex) — still the single biggest ranking lever left; list in the SEO section.
+G. **GBP Services + description paste** (Alex) — exact text in the SEO campaign section above.
+H. **GSC ranking check ~2026-09-06** — target queries in the SEO section. If nothing moved, investigate what Google actually indexed rather than adding more copy.
+I. **Facebook**: upload the `Facebook Page Photos/` package; artist posts need Jon Marc's and Bobbie's page handles (not recorded in repo) for credits.
+J. **`Lead` pixel on StartProjectModal** — HELD by Alex. One guarded line in its success path when he says go; until then Meta under-counts leads.
+K. **Socials into schema `sameAs`** when Alex supplies them (Instagram in progress). Never invent handles.
 
-A. **GSC Request Indexing** (Alex, ~10/day quota): the four `/services/*` child pages, then `/locations/gainesville/` + `/locations/jacksonville/`. Full URLs required (domain property). Then confirm `/artists/` finally indexes now that it has real copy.
-B. **GBP Services + description paste** (Alex) — exact text in the SEO campaign section above.
-C. **Client-site footer backlinks** (Alex) — the single biggest ranking lever left; list in the SEO section.
-D. **Facebook**: upload the `Facebook Page Photos/` package; artist posts need Jon Marc's and Bobbie's page handles (not recorded in repo) for credits.
-E. **GSC ranking checks** ~2026-08-23 and ~2026-09-06 — target queries in the SEO section. If nothing moved by the second check, investigate what Google actually indexed rather than adding more copy.
-F. **`Lead` pixel on StartProjectModal** — HELD by Alex. One guarded line in its success path when he says go; until then Meta under-counts leads.
-G. **Socials into schema `sameAs`** when Alex supplies them (Instagram in progress). Never invent handles.
+**Mentioned but not committed** (do not start these unprompted): a blog or resources section for SEO, a real Launch Book module inside the admin to replace the parked HTML, and adding one-time sessions as their own tier in the intake dropdown if they start converting.
+
+**CLOSED this run:** admin Phase 0 (live at `admin.ka-performancefl.com`, gated, verified 302); GSC request-indexing (Alex, done); `www` DNS plus 301 (verified live, preserves path and query); the WAF rate-limit rule (Alex set 5 requests per 10 seconds, the dashboard would not accept a 10-minute period).
 
 **STANDING / older:**
 
@@ -196,11 +255,11 @@ G. **Socials into schema `sameAs`** when Alex supplies them (Instagram in progre
 5. ~~`help@ka-performancefl.com` routing / skip-to-content link~~ — **DONE** (2026-08-01). `help@` is an alternate address on Alex's Google Workspace and reaches his inbox. The skip link shipped. **Cloudflare Email Address Obfuscation is ON for this zone**, which rewrites every `mailto:` into `/cdn-cgi/l/email-protection#…` with visible text `[email protected]`, restored by Cloudflare's JS at runtime. It renders correctly for anyone with JS, but breaks the contact route with JS off, and it is why grepping served HTML for an email address finds nothing. Alex was going to turn it off under Scrape Shield; if a future grep for `mailto:` on production comes back empty, this is why, not a broken build.
 6. On hold: **`Logo Remake/`** ("K & A Memories", separate brand) still in progress — do not touch/integrate/commit (memory: logo-remake-on-hold).
 7. **Nicole's 20 hotlinked tiles** still point at her Netlify build (see her entry). Those filenames are content hashes, so her next deploy blanks them. Also the only images left whose alt was written from a thumbnail rather than the source file, so re-check their alt text when the originals arrive.
-8. **WAF rate-limit rule for the AI endpoints** (Alex, dashboard only, Claude's token is zone-read). Cloudflare → ka-performancefl.com → Security → WAF → Rate limiting rules → Create. Expression:
+8. ~~**WAF rate-limit rule for the AI endpoints**~~ — **DONE 2026-08-29.** Alex created it in the dashboard. The plan's UI would not accept a 10-minute period and defaulted to 10 seconds, so the live rule is **5 requests per 10 seconds per IP**, which is stricter than the design below and fine. Keep the expression below current if endpoints are added. Original spec, for reference:
    `(http.request.method eq "POST" and http.request.uri.path in {"/api/scope" "/api/guide" "/api/chat" "/api/analysis" "/api/commentary" "/api/hint" "/api/planner" "/api/voiceanalyze" "/api/launchmap" "/api/course-lead" "/api/course-event"})`
    Characteristic: IP. Period: 1 minute. Requests: 30. Action: Block, mitigation 10 minutes. Thirty a minute is far above any real user (a full scoping chat is 4 to 6 turns) and far below anything that costs real money. If the plan allows a second rule, add one for `/api/scope` alone at 10 per minute. See the API cost exposure section above.
 9. ~~Delete `functions/api/chat.js`~~ — **DONE 2026-08-28.** Verified zero callers before removal.
-10. **Refresh Kai's KB** — content refresh **done in-repo 2026-08-28**: `docs/elevenlabs-agent/knowledge-base.md` now carries the Gainesville identity, service area and location pages, the four service children, the two new portfolio clients, and a full 90-Day AI Launch section with Q&As. The site-side prompts (`functions/api/guide.js`, `functions/api/scope.js`) were updated and deployed the same day. **ElevenLabs upload DONE 2026-08-28**: new doc `i4xv7xj525AkR5aaGAHV`, agent repointed, verified by reading the stored text back (all six spot-checks present), both stale docs deleted. Key was supplied for the job and rotated after, per policy.
+10. **Refresh Kai's KB** — content refresh **done in-repo 2026-08-28**: `docs/elevenlabs-agent/knowledge-base.md` now carries the Gainesville identity, service area and location pages, the four service children, the two new portfolio clients, and a full 90-Day AI Launch section with Q&As. The site-side prompts (`functions/api/guide.js`, `functions/api/scope.js`) were updated and deployed the same day. **ElevenLabs upload DONE 2026-08-28**: new doc `i4xv7xj525AkR5aaGAHV`, agent repointed, verified by reading the stored text back (all six spot-checks present), both stale docs deleted. **Superseded 2026-08-29** by doc `o26Mt6pae3ddNZ5dRLrz`, and the in-repo text has moved again since; see ACTIVE item C. Key was supplied for the job and rotated after, per policy.
 11. Nice-to-have: convert `New Logo/K&A Logo.ai` to SVG once a converter is available (crisper at any size, recolourable, animatable; the site currently ships the logo as a webp).
 
 ## The course (remastered native, 2026-08-29)
