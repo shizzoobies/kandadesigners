@@ -39,33 +39,13 @@ import ScopeChat from './ScopeChat.astro';
         <label for="sp-email" class="mb-2 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Email</label>
         <input type="email" id="sp-email" name="email" required autocomplete="email" placeholder="your@email.com" class="field" />
       </div>
-      <div>
-        <label for="sp-phone" class="mb-2 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
-          Mobile <span class="tracking-normal normal-case">(optional)</span>
-        </label>
-        <input type="tel" id="sp-phone" name="phone" autocomplete="tel" placeholder="(352) 555-0142" class="field" />
-      </div>
       <div class="flex flex-1 flex-col">
         <label for="sp-message" class="mb-2 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Message</label>
         <textarea id="sp-message" name="message" required rows="3" placeholder="What are you looking to build?" class="field field-area flex-1 min-h-[4.5rem]!"></textarea>
       </div>
 
-      <!-- SMS opt-in, mirroring the contact page. Legal links open in a new tab
-           so opening them does not close the dialog and lose the draft. -->
-      <div class="consent">
-        <input type="hidden" name="sms_consent" value="No" />
-        <input type="checkbox" id="sp-sms-consent" name="sms_consent" value="Yes - consented to customer care SMS" class="consent-box" />
-        <label for="sp-sms-consent" class="consent-label">
-          Text me about scheduling. By checking this box you agree to receive customer care text
-          messages from K &amp; A Performance at the number above: appointment scheduling,
-          confirmations and reminders, and replies about this enquiry, some sent by an automated
-          assistant. Message frequency varies. Message and data rates may apply. Reply STOP to opt
-          out or HELP for help. See our
-          <a href="/terms/#sms" target="_blank" rel="noopener">Terms &amp; Conditions</a> and
-          <a href="/privacy/#sms" target="_blank" rel="noopener">Privacy Policy</a>. Consent is not
-          a condition of purchase.
-        </label>
-      </div>
+      <!-- SMS opt-in pulled 2026-08-31 alongside the contact page's, when the
+           Twilio registration was paused. See the note there. -->
 
       <button type="submit" id="sp-submit" class="btn-accent w-full text-center">Send message</button>
       <p id="sp-status" class="sr-only" role="status" aria-live="polite"></p>

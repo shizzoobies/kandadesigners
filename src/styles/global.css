@@ -235,7 +235,10 @@ body {
     resize: vertical;
     min-height: 9rem;
   }
-  /* SMS opt-in consent row. The disclosure text has to sit next to the box and
+  /* PARKED 2026-08-31: no markup uses these while the Twilio registration is
+     paused. Kept because restoring the opt-in is then markup only, and because
+     any future consent row on this site should look exactly like this one.
+     SMS opt-in consent row. The disclosure text has to sit next to the box and
      stay readable — carriers reject opt-ins where the terms are hidden behind a
      link or shrunk out of sight — so it is a real paragraph, not fine print. */
   .consent {

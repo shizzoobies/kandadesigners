@@ -79,37 +79,16 @@ import ScopeChat from '../../components/ScopeChat.astro';
             <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com" class="field" />
           </div>
 
-          <div>
-            <label for="phone" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
-              Mobile <span class="tracking-normal normal-case">(optional)</span>
-            </label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(352) 555-0142" class="field" />
-          </div>
-
           <div class="flex flex-1 flex-col">
             <label for="message" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Message</label>
             <textarea id="message" name="message" required rows="5" placeholder="What are you looking to build?" class="field field-area flex-1"></textarea>
           </div>
 
-          <!-- SMS opt-in. Unchecked by default and never required: carrier
-               registration depends on consent being a deliberate act. -->
-          <div class="consent">
-            <!-- Unchecked boxes are absent from FormData; this default makes the
-                 emailed lead say "No" outright rather than say nothing, so the
-                 consent record is never ambiguous. Last key wins in the payload,
-                 so the checkbox below overrides it when ticked. -->
-            <input type="hidden" name="sms_consent" value="No" />
-            <input type="checkbox" id="sms-consent" name="sms_consent" value="Yes - consented to customer care SMS" class="consent-box" />
-            <label for="sms-consent" class="consent-label">
-              Text me about scheduling. By checking this box you agree to receive customer care text
-              messages from K &amp; A Performance at the number above: appointment
-              scheduling, confirmations and reminders, and replies about this enquiry, some sent by
-              an automated assistant. Message frequency varies. Message and data rates may apply.
-              Reply STOP to opt out or HELP for help. See our
-              <a href="/terms/#sms">Terms &amp; Conditions</a> and
-              <a href="/privacy/#sms">Privacy Policy</a>. Consent is not a condition of purchase.
-            </label>
-          </div>
+          <!-- SMS opt-in (mobile field + consent checkbox) lived here until
+               2026-08-31. Pulled when the Twilio registration was paused: an
+               opt-in nobody can act on is a promise the site cannot keep. The
+               `.consent` styles and the SMS sections on /terms/ and /privacy/
+               are parked, so restoring this is markup only. -->
 
           <button type="submit" id="contact-submit" class="btn-accent w-full text-center">Send message</button>
           <!-- Polite live region: announces the pending state without stealing focus. -->
