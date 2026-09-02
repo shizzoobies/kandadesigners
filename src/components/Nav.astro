@@ -10,7 +10,11 @@ const links = [
   { href: '/ai-launch/', label: 'Mentorship' },
   { href: '/free-course/', label: 'Free Course' },
   { href: '/artists/', label: 'Artists' },
-  { href: '/contact/', label: 'Contact' },
+  // Contact left the nav 2026-08-31: the "Start a project" CTA beside these
+  // links opens the same modal /contact/ hosts, so the two were one intent
+  // spending two slots in a six-link bar. The page is unchanged and still
+  // reachable from the footer's Studio column, which keeps it internally
+  // linked sitewide for search.
 ];
 ---
 <header data-nav class="fixed inset-x-0 top-0 z-50">
