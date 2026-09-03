@@ -1,0 +1,658 @@
+{
+  "_note": "Phase 4 context plates. quad is the screen corner order top-left, top-right, bottom-right, bottom-left in plate pixels, already expanded 2px outward. Written by scripts/plates.ts and scripts/find-quad.ts. Layer 5 glare is a no-op across this whole set: every panel measured a luma spread under 3 of 255, so glareOpacity is 0 everywhere.",
+  "generatedWith": {
+    "primaryModel": "gemini-3-pro-image",
+    "smokeModel": "gemini-3.1-flash-lite-image",
+    "aspectRatio": "9:16",
+    "resolution": "2K",
+    "baseSeed": 41127
+  },
+  "plates": [
+    {
+      "id": "plate-laptop-shoulder",
+      "file": "assets/plates/plate-laptop-shoulder-c01.png",
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph taken from directly behind a seated person, over their right shoulder. Their head and shoulder are a dark soft silhouette across the lower left, cropped so no face or profile is visible. An open laptop sits on a pale oak desk ahead of them, tilted slightly away, the closed dark screen filling the upper third of the frame and squarely facing the camera. One hand rests loosely on the desk beside the trackpad. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting.",
+      "seed": null,
+      "resolution": "2K",
+      "width": 1536,
+      "height": 2752,
+      "quad": [
+        [
+          512.91,
+          1030.79
+        ],
+        [
+          1408.73,
+          1076
+        ],
+        [
+          1353.05,
+          1694.77
+        ],
+        [
+          452.73,
+          1601.43
+        ]
+      ],
+      "glareOpacity": 0,
+      "notes": "Screen sits in the upper third as Section 4b asks. Quad is the panel only, not the bezel, so the bezel stays device. Keycap glyphs are present but small and soft; unreadable at 1080 delivery. Panel measured flat, so glareOpacity 0.",
+      "captureId": "fore-motion-golf-home-desktop",
+      "usedFor": "project 1"
+    },
+    {
+      "id": "plate-ipad-lap",
+      "file": "assets/plates/plate-ipad-lap-c01.png",
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet held at waist level by a person cropped at the chest so no face appears, seen slightly off axis from above. The tablet's dark blank screen faces up and toward the camera, filling the center of the frame at a gentle angle. One hand supports the tablet at the left edge of the frame, half out of frame. A pale oak table and a soft window beyond. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "resolution": "2K",
+      "width": 1536,
+      "height": 2752,
+      "quad": [
+        [
+          490.5,
+          1119.18
+        ],
+        [
+          1350.29,
+          1185.6
+        ],
+        [
+          1237.59,
+          1732.21
+        ],
+        [
+          322.22,
+          1710.92
+        ]
+      ],
+      "glareOpacity": 0,
+      "notes": "Largest usable panel in the set and the cleanest hands. Both hands grip the outer edges so the screen face is entirely free. Panel measured flat, so glareOpacity 0.",
+      "captureId": "southern-legacy-contractors-home-desktop",
+      "usedFor": "project 3"
+    },
+    {
+      "id": "plate-desktop-wide",
+      "file": "assets/plates/plate-desktop-wide-c01.png",
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a wider quiet studio room, empty of people, with a large widescreen monitor on a pale oak desk as the bright anchor of the frame. The monitor is turned squarely toward the camera and its dark blank screen sits in the upper middle of the frame. An empty chair is turned away at the left edge. Warm window light rakes across the desk. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "resolution": "2K",
+      "width": 1536,
+      "height": 2752,
+      "quad": [
+        [
+          452.79,
+          1030.96
+        ],
+        [
+          1435.71,
+          1027.96
+        ],
+        [
+          1425.15,
+          1658.62
+        ],
+        [
+          452.76,
+          1604.48
+        ]
+      ],
+      "glareOpacity": 0,
+      "notes": "Squarest panel in the set, which makes this the most forgiving homography. Person absent apart from a dark chair silhouette at the lower left. Panel measured flat, so glareOpacity 0.",
+      "captureId": "mbs-medicine-home-desktop",
+      "usedFor": "tour cut 1"
+    },
+    {
+      "id": "plate-handoff",
+      "file": "assets/plates/plate-handoff-c03.png",
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two people at a pale oak table, both seen from behind and cropped above the shoulder line so neither head nor face is in frame. The person on the left is turning an open laptop toward the person on the right, one hand on the laptop's edge. The laptop's dark blank screen is turned toward the camera in the upper middle of the frame. Warm window light, deep background blur. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "resolution": "2K",
+      "width": 1536,
+      "height": 2752,
+      "quad": [
+        [
+          310.29,
+          1039.96
+        ],
+        [
+          1116.1,
+          1017.3
+        ],
+        [
+          1168.74,
+          1545.99
+        ],
+        [
+          353.93,
+          1601.73
+        ]
+      ],
+      "glareOpacity": 0,
+      "notes": "The hardest plate in the set and it took three candidates. The first reproduced the style reference's own composition, the second read as one person typing. This one shows the handoff. The capture assigned to it is the Only Nails owner dashboard, which is a bright near-white page and therefore the brightest screen in the reel; that is worth checking against the surrounding shots when it enters the timeline. Panel measured flat, so glareOpacity 0.",
+      "captureId": "onlynails-dashboard-sitephotos-clean",
+      "usedFor": "tour cut 2"
+    },
+    {
+      "id": "plate-tablet-b",
+      "file": "assets/plates/plate-tablet-b-c03.png",
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet propped upright in a low stand on a pale oak table, turned squarely toward the camera with its dark blank screen in the middle of the frame. A single relaxed hand enters from the right edge of the frame and rests on the table beside it, fingers together. A coffee cup far out of focus in the foreground corner. Warm window light from the left. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "resolution": "2K",
+      "width": 1536,
+      "height": 2752,
+      "quad": [
+        [
+          241.34,
+          1200.38
+        ],
+        [
+          1055.85,
+          1158.03
+        ],
+        [
+          1204.74,
+          1802.49
+        ],
+        [
+          376.72,
+          1938.04
+        ]
+      ],
+      "glareOpacity": 0,
+      "notes": "The worst aspect mismatch in the set: a 4:3 tablet panel against a 16:10 desktop capture, so cover crops about a quarter of the page width. PlateComposite anchors the capture top left rather than centring it, which keeps the logo, nav and headline and takes the loss out of the right margin. Panel measured flat, so glareOpacity 0.",
+      "captureId": "pbj-strategic-accounting-home-desktop",
+      "usedFor": "tour cut 4"
+    },
+    {
+      "id": "plate-phone-hands-b",
+      "file": "assets/plates/plate-phone-hands-b-c03.png",
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of one hand holding a smartphone at a low angle near a bright window, the arm entering from the lower right, framed from the wrist down so no body and no face appear. The phone is tilted about fifteen degrees, its dark blank screen facing the camera in the upper right of the frame. A different room corner from earlier frames, with a linen curtain softly blurred behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "resolution": "2K",
+      "width": 1536,
+      "height": 2752,
+      "quad": [
+        [
+          734.85,
+          937.01
+        ],
+        [
+          1094.86,
+          990.04
+        ],
+        [
+          801.16,
+          1767.49
+        ],
+        [
+          433.59,
+          1679.92
+        ]
+      ],
+      "glareOpacity": 0,
+      "notes": "Deliberately a different grip, a different hand and a different corner of the room from plate-phone-hands: bright window at the left rather than the table. Panel measured flat, so glareOpacity 0.",
+      "captureId": "ellenton-family-practice-home-mobile",
+      "usedFor": "tour cut 3"
+    },
+    {
+      "id": "plate-phone-hands",
+      "file": "assets/plates/plate-phone-hands-c03.png",
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two hands holding a modern smartphone upright, angled about ten degrees away from the camera, framed from the forearms down so no body and no face appear. The dark blank screen faces the camera and fills the middle of the frame. Both thumbs rest on the phone's outer side rails below the screen, clear of the screen face. A softly blurred warm room behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "resolution": "2K",
+      "width": 1536,
+      "height": 2752,
+      "quad": [
+        [
+          700.06,
+          884.55
+        ],
+        [
+          1070.6,
+          898.33
+        ],
+        [
+          897.44,
+          1759.95
+        ],
+        [
+          520.87,
+          1717.65
+        ]
+      ],
+      "glareOpacity": 0,
+      "notes": "Third attempt for this plate. The first two put a thumb across the screen face, which the composite would have painted over. Regenerated after the shared prompt rules gained an explicit no finger crosses the screen face clause. Panel measured flat, so glareOpacity 0.",
+      "captureId": "project-makeover-home-mobile",
+      "usedFor": "project 2"
+    }
+  ],
+  "generations": [
+    {
+      "generationId": "dG3dMzjEum6SCmymJe5W",
+      "plateId": "plate-laptop-shoulder",
+      "candidate": 1,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph taken from directly behind a seated person, over their right shoulder. Their head and shoulder are a dark soft silhouette across the lower left, cropped so no face or profile is visible. An open laptop sits on a pale oak desk ahead of them, tilted slightly away, the closed dark screen filling the upper third of the frame and squarely facing the camera. One hand rests loosely on the desk beside the trackpad. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": null,
+      "referenceFile": null,
+      "file": "assets/plates/plate-laptop-shoulder-c01.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:29:48.660Z",
+      "status": "completed",
+      "creditCost": "1218 credits (usage endpoint delta)",
+      "accepted": true,
+      "verdict": "Over the shoulder as specified, screen in the upper third, dark shoulder silhouette frames the left. Screen off and evenly dark, no face, hand relaxed on the deck with correct anatomy, no finger on the screen face. Keycap glyphs exist but are small, soft and unreadable at delivery size."
+    },
+    {
+      "generationId": "KG47DVPV7y1AqpZiHRTk",
+      "plateId": "plate-laptop-shoulder",
+      "candidate": 2,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph taken from directly behind a seated person, over their right shoulder. Their head and shoulder are a dark soft silhouette across the lower left, cropped so no face or profile is visible. An open laptop sits on a pale oak desk ahead of them, tilted slightly away, the closed dark screen filling the upper third of the frame and squarely facing the camera. One hand rests loosely on the desk beside the trackpad. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": null,
+      "referenceFile": null,
+      "file": "assets/plates/plate-laptop-shoulder-c02.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:30:29.944Z",
+      "status": "completed",
+      "creditCost": "1218 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Clean, and kept as the alternate, but the screen sits lower and more central than Section 4b asks for and the keycap lettering is markedly more legible than in c01."
+    },
+    {
+      "generationId": "sGBOzVHQkdU7XE3dYnaq",
+      "plateId": "plate-phone-hands",
+      "candidate": 1,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two hands holding a modern smartphone upright, angled about ten degrees away from the camera, framed from the forearms down so no body and no face appear. The dark blank screen faces the camera and fills the middle of the frame. The right thumb rests near the lower edge of the phone, not on the screen. A softly blurred warm room behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-phone-hands-c01.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:31:47.363Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Right thumb lies across the lower screen face. The composite would paint the site over the thumb, so the hand would vanish behind the website."
+    },
+    {
+      "generationId": "RUaE1OfM2JM7nJ3Hm3qF",
+      "plateId": "plate-phone-hands",
+      "candidate": 2,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two hands holding a modern smartphone upright, angled about ten degrees away from the camera, framed from the forearms down so no body and no face appear. The dark blank screen faces the camera and fills the middle of the frame. The right thumb rests near the lower edge of the phone, not on the screen. A softly blurred warm room behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-phone-hands-c02.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:32:22.301Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Same thumb over the screen face as c01."
+    },
+    {
+      "generationId": "8p5v3byiR9IM0pgD9ZJA",
+      "plateId": "plate-ipad-lap",
+      "candidate": 1,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet held at waist level by a person cropped at the chest so no face appears, seen slightly off axis from above. The tablet's dark blank screen faces up and toward the camera, filling the center of the frame at a gentle angle. One hand supports the tablet at the left edge of the frame, half out of frame. A pale oak table and a soft window beyond. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-ipad-lap-c01.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:32:58.090Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": true,
+      "verdict": "Tablet held off axis by two hands gripping the outer edges, screen face clear, large clean panel, no face, correct anatomy. The strongest plate in the set for panel area."
+    },
+    {
+      "generationId": "9Cxl6eP4sIy9ng63zADF",
+      "plateId": "plate-ipad-lap",
+      "candidate": 2,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet held at waist level by a person cropped at the chest so no face appears, seen slightly off axis from above. The tablet's dark blank screen faces up and toward the camera, filling the center of the frame at a gentle angle. One hand supports the tablet at the left edge of the frame, half out of frame. A pale oak table and a soft window beyond. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-ipad-lap-c02.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:34:09.919Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Fingers spread flat across the screen face, which is the exact hand artifact tell Section 4b names, and the composite cannot cover a hand that is in front of the panel."
+    },
+    {
+      "generationId": "JqfiJChFy2KQKltkUwxn",
+      "plateId": "plate-desktop-wide",
+      "candidate": 1,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a wider quiet studio room, empty of people, with a large widescreen monitor on a pale oak desk as the bright anchor of the frame. The monitor is turned squarely toward the camera and its dark blank screen sits in the upper middle of the frame. An empty chair is turned away at the left edge. Warm window light rakes across the desk. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-desktop-wide-c01.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:34:55.028Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": true,
+      "verdict": "Monitor is the bright anchor, room reads wide, person absent apart from a dark chair silhouette at the lower left. Screen off, square to camera, largest and cleanest panel of the pair."
+    },
+    {
+      "generationId": "HS9dFVzUhYXuV1rLYOzf",
+      "plateId": "plate-desktop-wide",
+      "candidate": 2,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a wider quiet studio room, empty of people, with a large widescreen monitor on a pale oak desk as the bright anchor of the frame. The monitor is turned squarely toward the camera and its dark blank screen sits in the upper middle of the frame. An empty chair is turned away at the left edge. Warm window light rakes across the desk. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-desktop-wide-c02.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:35:34.413Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Clean, kept as the alternate. c01 has the better light rake across the desk and a slightly larger panel."
+    },
+    {
+      "generationId": "Y6nakb5DmanEilz4M7Hd",
+      "plateId": "plate-handoff",
+      "candidate": 1,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two people at a pale oak table, both seen from behind and cropped above the shoulder line so neither head nor face is in frame. The person on the left is turning an open laptop toward the person on the right, one hand on the laptop's edge. The laptop's dark blank screen is turned toward the camera in the upper middle of the frame. Warm window light, deep background blur. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-handoff-c01.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:36:15.908Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "The model reproduced the style reference's own composition: same room position, same laptop, same screen geometry as plate-laptop-shoulder-c01, with a second figure added. Repeating a setup is exactly what the plate set exists to avoid."
+    },
+    {
+      "generationId": "JsDOSqtIpY1LP3Xwnv7v",
+      "plateId": "plate-handoff",
+      "candidate": 2,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two people at a pale oak table, both seen from behind and cropped above the shoulder line so neither head nor face is in frame. The person on the left is turning an open laptop toward the person on the right, one hand on the laptop's edge. The laptop's dark blank screen is turned toward the camera in the upper middle of the frame. Warm window light, deep background blur. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-handoff-c02.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:36:53.903Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Two figures and no face, but the second person is a soft blur at the frame edge and nobody is turning the laptop, so it does not read as the handoff moment. Kept as the alternate."
+    },
+    {
+      "generationId": "8sI6u9YkcTDMs817S2XQ",
+      "plateId": "plate-handoff",
+      "candidate": 3,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two people at a pale oak table, both seen from behind and cropped above the shoulder line so neither head nor face is in frame. The person on the left is turning an open laptop toward the person on the right, one hand on the laptop's edge. The laptop's dark blank screen is turned toward the camera in the upper middle of the frame. Warm window light, deep background blur. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-handoff-c03.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:37:38.042Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": true,
+      "verdict": "Two people, both cropped above the shoulder line, one hand on the laptop turning it toward the other. No face, correct anatomy, screen off and square enough to the camera for a clean quad. The hardest plate in the set and this one landed."
+    },
+    {
+      "generationId": "oIc0qXWxC2af0uSfhR0z",
+      "plateId": "plate-phone-hands-b",
+      "candidate": 1,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of one hand holding a smartphone at a low angle near a bright window, the arm entering from the lower right, framed from the wrist down so no body and no face appear. The phone is tilted about fifteen degrees, its dark blank screen facing the camera in the upper right of the frame. A different room corner from earlier frames, with a linen curtain softly blurred behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-phone-hands-b-c01.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:38:23.099Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Clean and usable, kept as the alternate. Panel is smaller and further right than c03."
+    },
+    {
+      "generationId": "jCQsCFuT0W1vDTSSLz0X",
+      "plateId": "plate-tablet-b",
+      "candidate": 1,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet propped upright in a low stand on a pale oak table, turned squarely toward the camera with its dark blank screen in the middle of the frame. A single relaxed hand enters from the right edge of the frame and rests on the table beside it, fingers together. A coffee cup far out of focus in the foreground corner. Warm window light from the left. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-tablet-b-c01.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:39:19.992Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Good frame, but the tablet is portrait and dead on, which suits the desktop capture assigned to it poorly, and the detector could not separate the panel from the blown window behind it."
+    },
+    {
+      "generationId": "o4YtJ5wS2I2WSS8rK22U",
+      "plateId": "plate-tablet-b",
+      "candidate": 2,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet propped upright in a low stand on a pale oak table, turned squarely toward the camera with its dark blank screen in the middle of the frame. A single relaxed hand enters from the right edge of the frame and rests on the table beside it, fingers together. A coffee cup far out of focus in the foreground corner. Warm window light from the left. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-tablet-b-c02.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:39:59.463Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Portrait and flat on to the camera. Reads as a product mockup rather than a filmed plate."
+    },
+    {
+      "generationId": "jDWdwjcQMzNmL4KSODz9",
+      "plateId": "plate-tablet-b",
+      "candidate": 3,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet propped upright in a low stand on a pale oak table, turned squarely toward the camera with its dark blank screen in the middle of the frame. A single relaxed hand enters from the right edge of the frame and rests on the table beside it, fingers together. A coffee cup far out of focus in the foreground corner. Warm window light from the left. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-tablet-b-c03.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:41:25.197Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": true,
+      "verdict": "Landscape tablet propped off axis in a wood stand, hand entering from the right, coffee cup in the foreground. Largest and most angled panel of the four, which suits the desktop capture, and the off axis geometry is what makes the homography read as real."
+    },
+    {
+      "generationId": "IV9C6A80TCWBJE6ppfEG",
+      "plateId": "plate-tablet-b",
+      "candidate": 4,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of a tablet propped upright in a low stand on a pale oak table, turned squarely toward the camera with its dark blank screen in the middle of the frame. A single relaxed hand enters from the right edge of the frame and rests on the table beside it, fingers together. A coffee cup far out of focus in the foreground corner. Warm window light from the left. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-tablet-b-c04.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:42:01.409Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Clean but the smallest panel of the four and the flattest composition."
+    },
+    {
+      "generationId": "hS7I9ycGyVMI3JzWnm0R",
+      "plateId": "plate-phone-hands-b",
+      "candidate": 2,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of one hand holding a smartphone at a low angle near a bright window, the arm entering from the lower right, framed from the wrist down so no body and no face appear. The phone is tilted about fifteen degrees, its dark blank screen facing the camera in the upper right of the frame. A different room corner from earlier frames, with a linen curtain softly blurred behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-phone-hands-b-c02.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:42:57.234Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Clean but the least distinct of the three, and the panel is the smallest."
+    },
+    {
+      "generationId": "2wjJRs4Rvx864Upf8ijE",
+      "plateId": "plate-phone-hands-b",
+      "candidate": 3,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of one hand holding a smartphone at a low angle near a bright window, the arm entering from the lower right, framed from the wrist down so no body and no face appear. The phone is tilted about fifteen degrees, its dark blank screen facing the camera in the upper right of the frame. A different room corner from earlier frames, with a linen curtain softly blurred behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-phone-hands-b-c03.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:43:33.404Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": true,
+      "verdict": "Different hand, different grip and a different corner of the room from plate-phone-hands: bright window at the left instead of the table. Screen face clear, largest panel of the three."
+    },
+    {
+      "generationId": "9GDCeQs7YksL5ZynhkAz",
+      "plateId": "plate-phone-hands",
+      "candidate": 3,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two hands holding a modern smartphone upright, angled about ten degrees away from the camera, framed from the forearms down so no body and no face appear. The dark blank screen faces the camera and fills the middle of the frame. Both thumbs rest on the phone's outer side rails below the screen, clear of the screen face. A softly blurred warm room behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-phone-hands-c03.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:44:13.489Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": true,
+      "verdict": "Regenerated after the prompt gained an explicit no finger crosses the screen face rule. Both thumbs sit on the side rails, the screen face is completely unobstructed, screen off, no face, correct hand anatomy."
+    },
+    {
+      "generationId": "FMCzhNQPBljN2uTZYOCz",
+      "plateId": "plate-phone-hands",
+      "candidate": 4,
+      "model": "gemini-3-pro-image",
+      "prompt": "Vertical portrait photograph of two hands holding a modern smartphone upright, angled about ten degrees away from the camera, framed from the forearms down so no body and no face appear. The dark blank screen faces the camera and fills the middle of the frame. Both thumbs rest on the phone's outer side rails below the screen, clear of the screen face. A softly blurred warm room behind. Photograph. Soft natural window light from the left, late morning, warm and diffused. A calm uncluttered interior: cream and warm grey walls, pale oak surfaces, one small terracotta or rust colored object well out of focus. Muted warm neutral color grade, cream, rust and espresso brown. Shallow depth of field, wide aperture, the person soft and the device sharp. The device screen is completely off: a flat dark charcoal rectangle, evenly dark, showing no image, no interface, no icons, no windows, no wallpaper and no reflection of any content. No face is visible anywhere in the frame. Hands are relaxed with fingers together, partly out of frame or partly hidden behind the device, never spread flat against the screen. No finger and no thumb crosses, touches or rests on the front face of the screen: every finger grips the outer edge, the frame or the back of the device, and the whole screen face stays unobstructed. Exactly five fingers per hand, correct human anatomy. Device geometry straight and undistorted. No text anywhere in the frame, no writing, no numbers, no labels, no signage, no logos, no brand marks, no stickers. No overhead fluorescent light. Real photography, shot on a full frame camera with a 50mm lens. Not an illustration, not a 3D render, not a digital painting. Use the attached image as a style reference only. Match its room, its warm window light, its color grade, its depth of field and its lens character exactly, as if shot minutes later in the same space on the same camera. Do not copy its subject, its device or its composition. The framing described above is what to shoot.",
+      "seed": null,
+      "aspectRatio": "9:16",
+      "resolution": "2K",
+      "referenceGenerationId": "dG3dMzjEum6SCmymJe5W",
+      "referenceFile": null,
+      "file": "assets/plates/plate-phone-hands-c04.png",
+      "mimeType": "image/png",
+      "width": 1536,
+      "height": 2752,
+      "createdAt": "2026-09-03T16:45:02.112Z",
+      "status": "completed",
+      "creditCost": "1827 credits (usage endpoint delta)",
+      "accepted": false,
+      "verdict": "Also clean and kept as the alternate. c03 has the larger and better lit screen."
+    }
+  ]
+}
