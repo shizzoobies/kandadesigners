@@ -56,8 +56,8 @@
   "logo": {
     "svg": "assets/brand/logo/kandalogo2.0.svg",
     "svg_note": "2048x2048 with a full-canvas background path. Not transparent. Vector source of truth is New Logo/K&A Logo.ai. Owner to export a clean transparent SVG.",
-    "png": "assets/brand/logo/approved-logo-transparent.png",
-    "png_note": "1536x1024. Spec asks for 2400px. Fine for 1080 canvases but a 2400px export is preferred.",
+    "png": "assets/brand/logo/logo-lockup.webp",
+    "png_note": "The live site lockup, 800x303 webp. approved-logo-transparent.png is the retired gold K&A Designs crest and must not be used. A 2400px export from New Logo/K&A Logo.ai is still preferred for large canvases.",
     "lockup": "assets/brand/logo/logo-lockup.webp"
   }
 }

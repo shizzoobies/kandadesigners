@@ -26,15 +26,13 @@ const LOCKUP_IN = 14;
 const PHONE_IN = 22;
 
 /**
- * approved-logo-transparent.png is 1536x1024 with the mark occupying only
- * 510x448 at offset 512,260. Displaying the whole file makes the mark read at
- * a third of its box, so the transparent padding is cropped here rather than by
- * writing a new asset. Measured from the alpha channel on 2026-09-03.
+ * logo-lockup.webp is the live site's lockup (K & A with the rust ampersand,
+ * PERFORMANCE beneath, inside the sketched browser window). 800x303, no
+ * padding to crop. The gold "K&A Designs" crest in approved-logo-transparent
+ * is the retired brand and must not appear.
  */
-const LOGO_FILE = { width: 1536, height: 1024 };
-const LOGO_CONTENT = { x: 512, y: 260, width: 510, height: 448 };
-const LOGO_TARGET_WIDTH = 460;
-const LOGO_SCALE = LOGO_TARGET_WIDTH / LOGO_CONTENT.width;
+const LOGO_TARGET_WIDTH = 720;
+const LOGO_ASPECT = 303 / 800;
 
 export const CallToAction: React.FC<CallToActionProps> = ({ format }) => {
   const frame = useCurrentFrame();
@@ -65,27 +63,14 @@ export const CallToAction: React.FC<CallToActionProps> = ({ format }) => {
           justifyContent: "center",
         }}
       >
-        <div
+        <Img
+          src={LOGO_PNG}
           style={{
             width: LOGO_TARGET_WIDTH,
-            height: Math.round(LOGO_CONTENT.height * LOGO_SCALE),
-            overflow: "hidden",
-            position: "relative",
+            height: Math.round(LOGO_TARGET_WIDTH * LOGO_ASPECT),
             transform: `translateY(${logoY}px) scale(${logoScale})`,
           }}
-        >
-          <Img
-            src={LOGO_PNG}
-            style={{
-              position: "absolute",
-              width: Math.round(LOGO_FILE.width * LOGO_SCALE),
-              height: Math.round(LOGO_FILE.height * LOGO_SCALE),
-              left: -Math.round(LOGO_CONTENT.x * LOGO_SCALE),
-              top: -Math.round(LOGO_CONTENT.y * LOGO_SCALE),
-              maxWidth: "none",
-            }}
-          />
-        </div>
+        />
 
         <div style={{ height: 40 }} />
 
