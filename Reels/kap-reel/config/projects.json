@@ -110,6 +110,23 @@
       "capture_routes": [
         "/"
       ]
+    },
+    {
+      "id": "onlynails",
+      "display_name": "Only Nails Beauty",
+      "url": "https://onlynailsfl.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Gainesville nail studio. Owner dashboard for staff, photos, and access, behind Cloudflare Zero Trust.",
+      "proof_points": [
+        "Owner dashboard: edit staff, photos, and access",
+        "Cloudflare Zero Trust login",
+        "Site by K&A credit in footer"
+      ],
+      "capture_routes": [
+        "/"
+      ],
+      "dashboard_note": "Owner dashboard at /owner sits behind Cloudflare Access. Alex screen-recorded it 2026-09-03 (Jam). Every client, staff, and owner name, email, and photo in that recording must be blurred or recreated before it appears in the reel."
     }
   ],
   "excluded_do_not_show": [
@@ -118,5 +135,14 @@
     "Any prospect or spec demo that never became a paying client",
     "FDAAF (not selected 2026-09-03)",
     "FixAlways (not selected 2026-09-03)"
-  ]
+  ],
+  "_decisions": {
+    "2026-09-03": [
+      "Alex confirmed the URLs for Ellenton, Southern Legacy, and Synovial.",
+      "Payments montage cut dropped. Checkout is in progress on two client sites and not live yet.",
+      "Yours to edit montage cut will use the OnlyNails client dashboard (staff and photo editing behind Cloudflare Zero Trust). OnlyNails is not yet in approved because its URL and recording approach are pending.",
+      "15 second cut features fore-motion-golf, project-makeover, southern-legacy-contractors (Claude recommendation, pending the grey render review). All seven feed the 45 second cut.",
+      "Alex cleared Only Nails Beauty (onlynailsfl.com) and supplied a Jam recording of the owner dashboard. Personal data in it gets blurred or recreated, no emails in the reel."
+    ]
+  }
 }

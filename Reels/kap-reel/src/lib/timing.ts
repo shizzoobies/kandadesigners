@@ -34,12 +34,18 @@ export const PROJECT_BEAT_SHOTS = {
 /** Length in frames of the plate shot within a project beat. Keep at or under this. */
 export const PLATE_SHOT_MAX_FRAMES = 24;
 
-/** Capability montage: four cuts at 15 frames each, relative to CAPABILITY_MONTAGE.start. */
+/**
+ * Capability montage, relative to CAPABILITY_MONTAGE.start.
+ *
+ * Section 6 specified four cuts at 15 frames. The Payments cut was dropped on
+ * 2026-09-03 (see the _decisions block in config/projects.json) because
+ * checkout is not live on any cleared site, so the remaining three cuts run
+ * 20 frames each and the montage still ends on frame 384.
+ */
 export const CAPABILITY_MONTAGE_CUTS: FrameRange[] = [
-  { start: 0, end: 15 }, // Booking
-  { start: 15, end: 30 }, // Payments
-  { start: 30, end: 45 }, // AI
-  { start: 45, end: 60 }, // Yours to edit
+  { start: 0, end: 20 }, // Booking
+  { start: 20, end: 40 }, // AI
+  { start: 40, end: 60 }, // Yours to edit
 ];
 
 /** Minimum frames the finished CTA card must hold so a screenshot is readable. */

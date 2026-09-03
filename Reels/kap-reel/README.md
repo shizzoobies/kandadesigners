@@ -51,5 +51,10 @@ If you must run from the real path, invoke the CLI directly:
 
 ## Render time log
 
-(leave empty until the first real render, then log date, composition,
-duration rendered, and wall-clock render time here)
+| Date | Composition | Output | Rendered | Wall clock |
+|---|---|---|---|---|
+| 2026-09-03 | ReelVertical | `out/greyrender.mp4` (Phase 2 grey render) | 450 frames, 1080x1920, 30fps, 15.0s | 12.8s |
+
+Note on the 12.8s: the webpack bundle was already warm from the still-frame
+checks run immediately before. A cold render adds roughly 25 to 30 seconds of
+bundling plus about 20 seconds of copying the 272 MB public dir (`assets/`).

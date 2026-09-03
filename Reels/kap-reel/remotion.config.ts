@@ -6,9 +6,13 @@
  */
 
 import { Config } from "@remotion/cli/config";
-import { enableTailwind } from '@remotion/tailwind-v4';
+import { enableTailwind } from "@remotion/tailwind-v4";
 
 Config.setRspack(true);
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
 Config.overrideBundlerConfig(enableTailwind);
+
+// Media lives in assets/, not public/. staticFile("captures/...") and
+// staticFile("brand/...") resolve against this directory.
+Config.setPublicDir("./assets");

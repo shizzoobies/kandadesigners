@@ -54,7 +54,7 @@ Site captures are recorded from live public sites listed in
 config/projects.json with cleared_for_public_showcase true. Permission grantor
 and date per project:
 
-(none yet)
+| Only Nails Beauty owner dashboard | Screen recording made by Alex Anderson (K&A) 2026-09-03, shared via Jam. K&A built the dashboard. Only the Gallery and Site photos segment is used. All account, staff, and client data covered or excluded. | Alex Anderson, 2026-09-03 |
 
 ## Provenance
 
