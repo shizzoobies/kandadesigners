@@ -1,5 +1,5 @@
 import { AbsoluteFill, Sequence } from "remotion";
-import { PlatePlaceholder } from "../components/PlatePlaceholder";
+import { PlateShot } from "../components/PlateShot";
 import { COLORS, DISPLAY_STACK, projectAccent } from "../lib/brand";
 import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
 import { SURFACES_TOUR_CUTS } from "../lib/timing";
@@ -15,6 +15,16 @@ export type TourCut = {
   plateId: string;
   /** The one word of copy over this cut. */
   word: string;
+  /**
+   * Source frame the capture starts on. Nonzero everywhere, and different per
+   * cut, so no two surfaces are caught at the same point in their scroll.
+   */
+  captureFrameOffset: number;
+  /**
+   * Seed for the handheld drift. One per cut, so four hard cuts do not share
+   * one camera wobble.
+   */
+  driftSeed: string;
 };
 
 /**
@@ -23,30 +33,38 @@ export type TourCut = {
  * replacing the capability montage: the point is that one studio ships across
  * four surfaces, not that four features exist.
  *
- * Every cut is a grey PlatePlaceholder until Phase 4 lands. When it does, the
- * placeholder line below becomes a PlateComposite line and nothing else in
- * this file moves.
+ * Each cut is a finished context plate with that cut's capture composited into
+ * the device screen, cropped to the current canvas by PlateShot. Hard cuts
+ * throughout: no transition, no fade, the word held for the whole 15 frames.
  */
 const CUTS: TourCut[] = [
   {
     captureId: "mbs-medicine-home-desktop",
     plateId: "plate-desktop-wide",
     word: "Booking",
+    captureFrameOffset: 24,
+    driftSeed: "surfaces-booking",
   },
   {
     captureId: "onlynails-dashboard-sitephotos-clean",
     plateId: "plate-handoff",
     word: "Yours to edit",
+    captureFrameOffset: 42,
+    driftSeed: "surfaces-yours-to-edit",
   },
   {
     captureId: "ellenton-family-practice-home-mobile",
     plateId: "plate-phone-hands-b",
     word: "Memberships",
+    captureFrameOffset: 60,
+    driftSeed: "surfaces-memberships",
   },
   {
     captureId: "pbj-strategic-accounting-home-desktop",
     plateId: "plate-tablet-b",
     word: "Booking a call",
+    captureFrameOffset: 78,
+    driftSeed: "surfaces-booking-a-call",
   },
 ];
 
@@ -75,8 +93,12 @@ export const SurfacesTour: React.FC<SurfacesTourProps> = ({ format }) => {
             name={`surface ${cut.word}`}
             layout="none"
           >
-            {/* Phase 4 swap point: one line per cut. */}
-            <PlatePlaceholder plateId={cut.plateId} note={cut.captureId} />
+            <PlateShot
+              plateId={cut.plateId}
+              captureId={cut.captureId}
+              captureFrameOffset={cut.captureFrameOffset}
+              driftSeed={cut.driftSeed}
+            />
 
             <AbsoluteFill>
               <div

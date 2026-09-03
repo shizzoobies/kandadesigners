@@ -55,10 +55,18 @@ If you must run from the real path, invoke the CLI directly:
 |---|---|---|---|---|
 | 2026-09-03 | ReelVertical | `out/greyrender.mp4` (Phase 2 grey render) | 450 frames, 1080x1920, 30fps, 15.0s | 12.8s |
 | 2026-09-03 | ReelVertical | `out/phase3-vertical.mp4` (Phase 3, real copy) | 450 frames, 1080x1920, 30fps, 15.0s, 18.2 MB | 13.3s |
+| 2026-09-03 | ReelVertical | `out/phase4-vertical.mp4` (Phase 4, plates composited) | 450 frames, 1080x1920, 30fps, 15.0s, 21.9 MB | 26.6s |
+| 2026-09-03 | ReelLandscape | `out/phase4-landscape.mp4` (Phase 4, plates composited) | 450 frames, 1920x1080, 30fps, 15.0s, 11.8 MB | 31.6s |
 
-Note on both numbers: the bundle was already warm from the still-frame checks
-run immediately before. A cold render adds roughly 25 to 30 seconds of bundling
-plus about 20 seconds of copying the public dir (`assets/`, now 317 MB).
+Note on the Phase 2 and Phase 3 numbers: the bundle was already warm from the
+still-frame checks run immediately before. A cold render adds roughly 25 to 30
+seconds of bundling plus about 20 seconds of copying the public dir.
+
+The two Phase 4 numbers are cold, start to finish: bundle, public dir copy,
+render and encode, from `npx remotion render src/index.ts ...`. The public dir
+is now 529 MB with the plates in it, and copying it is most of the difference
+between these numbers and the Phase 3 one. Frame throughput itself did not
+change much: the plate composite is only on screen for 132 of the 450 frames.
 
 ## Formats
 

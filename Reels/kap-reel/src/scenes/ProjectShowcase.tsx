@@ -10,7 +10,7 @@ import {
 import { ClaimLine, CLAIM_FONT_SIZE } from "../components/ClaimLine";
 import { DeviceFrame } from "../components/DeviceFrame";
 import { KineticText } from "../components/KineticText";
-import { PlatePlaceholder } from "../components/PlatePlaceholder";
+import { PlateShot } from "../components/PlateShot";
 import { COLORS, DISPLAY_STACK } from "../lib/brand";
 import { captureSrc, getHomeCapture } from "../lib/captures";
 import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
@@ -24,6 +24,29 @@ const CLAIM_IN = 36;
 
 /** Where the clean capture starts inside its own source, see Hook.tsx. */
 const TRIM_BEFORE = 54;
+
+/** Length of the plate shot, in frames. Section 6b caps this at 24. */
+const PLATE_SHOT_FRAMES =
+  PROJECT_BEAT_SHOTS.plate.end - PROJECT_BEAT_SHOTS.plate.start;
+
+/**
+ * Where the capture inside the plate starts, so the cut at relative frame 24
+ * reads as a camera move rather than a restart.
+ *
+ * Section 6b asks for the scroll direction and rough velocity to match across
+ * the cut. Both shots play their source forward at rate 1, so the velocity
+ * matches for free and the position is arithmetic: start the plate's capture
+ * this many frames before TRIM_BEFORE and it arrives at exactly TRIM_BEFORE on
+ * the frame the clean capture takes over. The site is already 30 percent of
+ * the way down the page and moving when the plate cuts in, which is what
+ * Section 4b asks of a plate as well.
+ *
+ * Two of the three plates carry the desktop capture of the same site while the
+ * clean shot is the mobile one, so the match is a fraction of the page rather
+ * than an identical pixel. Both are the same 180 frame scripted scroll of the
+ * same page, so the same source frame is the same point in that scroll.
+ */
+const PLATE_CAPTURE_OFFSET = TRIM_BEFORE - PLATE_SHOT_FRAMES;
 
 const BEAT_LENGTH =
   PROJECT_BEAT_SHOTS.cleanCapture.end - PROJECT_BEAT_SHOTS.plate.start;
@@ -196,16 +219,23 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         transform: `translateX(${translateX}px) scaleX(${scaleX})`,
       }}
     >
-      {/* Shot A: grey placeholder standing in for the Phase 4 context plate. */}
+      {/* Shot A: the context plate, with this project's capture composited
+          into the device screen. Which capture that is comes from the plate's
+          own captureId in config/plates.json, which pairs laptop-shoulder with
+          the Fore Motion desktop scroll, phone-hands with the Project Makeover
+          mobile scroll, and ipad-lap with the Southern Legacy desktop scroll.
+          PlateShot crops the 9:16 composite to whatever canvas is rendering. */}
       <Sequence
         from={PROJECT_BEAT_SHOTS.plate.start}
-        durationInFrames={
-          PROJECT_BEAT_SHOTS.plate.end - PROJECT_BEAT_SHOTS.plate.start
-        }
+        durationInFrames={PLATE_SHOT_FRAMES}
         name={`${projectId} plate`}
         layout="none"
       >
-        <PlatePlaceholder plateId={plateId} />
+        <PlateShot
+          plateId={plateId}
+          captureFrameOffset={PLATE_CAPTURE_OFFSET}
+          scrollPlaybackRate={1}
+        />
       </Sequence>
 
       {/* Shot B: hard cut to the clean capture, straight on, scrolling. The
