@@ -39,3 +39,6 @@ db/songs/generated/
 # Working source drops (originals kept locally, web-ready copies live in images/)
 public/images/New Images/
 fonts-drop/
+
+# Training service line handoff: contracts with real names and a confidential rate sheet. Never committed.
+TAAS/

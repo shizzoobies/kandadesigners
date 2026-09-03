@@ -1,0 +1,515 @@
+/* The RFI that gets answered.
+   Self-contained styling for a packaged microlearning piece: no CDN, no
+   build step, no images. Site faces are loaded by absolute URL when the
+   piece is served from ka-performancefl.com, and every family falls back to
+   a system stack so the same folder still looks right inside an LMS where
+   /fonts/ does not resolve. */
+
+@font-face {
+  font-family: "KA Display";
+  src: url("/fonts/Schibsted-VF.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KA Body";
+  src: url("/fonts/AtkinsonNext-VF.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KA Mono";
+  src: url("/fonts/LeniaMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --canvas: #F8F5F2;
+  --surface: #FFFDF9;
+  --ink: #221C15;
+  --muted: #6C635A;
+  --accent: #9A3412;
+  --accent-hot: #7C2D12;
+  --amber: #D97706;
+  --line: rgb(34 28 21 / 0.12);
+  --line-soft: rgb(34 28 21 / 0.08);
+
+  --font-display: "KA Display", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  --font-body: "KA Body", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  --font-mono: "KA Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--canvas);
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+/* One focus treatment everywhere: 2px accent, 3px offset. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.wrap {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 2.5rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- header and progress ---------- */
+
+.piece-head {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1.25rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 5vw, 2.15rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.progress {
+  margin-top: 1.1rem;
+}
+
+.bar {
+  height: 4px;
+  border-radius: 999px;
+  background: rgb(34 28 21 / 0.1);
+  overflow: hidden;
+}
+
+.bar > span {
+  display: block;
+  height: 100%;
+  width: 12.5%;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-text {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- screens ---------- */
+
+.screen {
+  padding-top: 1.75rem;
+  animation: screen-in 0.28s ease both;
+}
+
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+h2 {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 4.2vw, 1.8rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h2:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+h3 {
+  margin: 1.6rem 0 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.02rem;
+  line-height: 1.4;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+.lead {
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+
+.note,
+.setup {
+  border-left: 3px solid var(--accent);
+  padding: 0.65rem 0 0.65rem 0.9rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.setup {
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+ul,
+ol {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+li::marker {
+  color: var(--accent);
+}
+
+.reasons > li,
+.parts > li {
+  margin-bottom: 1rem;
+}
+
+.parts > li > p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+/* ---------- choices ---------- */
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 0 0 1rem;
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.choice:hover {
+  border-color: var(--accent);
+}
+
+.choice[aria-pressed="true"] {
+  border-color: var(--accent);
+  border-width: 2px;
+  padding: calc(0.9rem - 1px) calc(1rem - 1px);
+  background: rgb(154 52 18 / 0.05);
+}
+
+.choice-tag {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.choice-body {
+  display: block;
+  line-height: 1.6;
+}
+
+.qblock {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.qblock:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.qblock h3 {
+  margin-top: 0;
+}
+
+/* ---------- sorter ---------- */
+
+.sorter {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+
+.sorter > li {
+  border-top: 1px solid var(--line-soft);
+  padding: 1.1rem 0;
+  margin: 0;
+}
+
+.frag {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+}
+
+.sort-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sort {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.sort:hover {
+  border-color: var(--accent);
+}
+
+.sort[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: rgb(154 52 18 / 0.08);
+  color: var(--accent-hot);
+}
+
+/* ---------- feedback ---------- */
+
+.feedback {
+  margin: 0.75rem 0 0;
+  min-height: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.feedback:empty {
+  margin: 0;
+}
+
+.feedback .glyph {
+  display: inline-flex;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.15em;
+  margin-right: 0.4em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.feedback .verdict {
+  font-weight: 700;
+  color: var(--accent-hot);
+}
+
+.score {
+  margin-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- job aid ---------- */
+
+.jobaid {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.jobaid-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.jobaid ol {
+  margin: 0;
+}
+
+.jobaid-foot {
+  margin: 0.9rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line-soft);
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+/* ---------- pager ---------- */
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.btn-ghost,
+.btn-amber {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 0.7rem 1.4rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-ghost {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid rgb(34 28 21 / 0.25);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+}
+
+.btn-amber {
+  color: var(--ink);
+  background: var(--amber);
+  border: 1px solid var(--amber);
+}
+
+.btn-amber:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--surface);
+}
+
+button[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+button[disabled]:hover {
+  border-color: rgb(34 28 21 / 0.25);
+  background: transparent;
+  color: var(--ink);
+}
+
+/* ---------- footer ---------- */
+
+.piece-foot {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.piece-foot p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- reflow ---------- */
+
+@media (max-width: 24rem) {
+  .wrap {
+    padding: 1.25rem 0.9rem 2rem;
+  }
+  .sort {
+    width: 100%;
+  }
+  .pager {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .pager button {
+    width: 100%;
+  }
+}
+
+/* ---------- reduced motion: every transition becomes an instant swap ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

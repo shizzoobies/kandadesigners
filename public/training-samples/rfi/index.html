@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The RFI that gets answered: a six minute microlearning</title>
+<meta name="description" content="A short interactive lesson on writing a construction request for information that a design team can answer in one pass." />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <header class="piece-head">
+    <p class="eyebrow">Microlearning &middot; Construction and trades</p>
+    <h1>The RFI that gets answered</h1>
+    <div class="progress">
+      <div class="bar" aria-hidden="true"><span id="bar-fill"></span></div>
+      <p class="progress-text" id="progress-text" aria-live="polite" role="status">Screen 1 of 8</p>
+    </div>
+  </header>
+
+  <main id="piece">
+
+    <!-- 1 -->
+    <section class="screen" id="screen-1">
+      <h2 tabindex="-1">Before you start</h2>
+      <p class="lead">By the end of this piece you will be able to write a request for information, an RFI, that a design team can answer in one pass, without a phone call to work out what you meant.</p>
+      <p>An RFI that comes back in two days and an RFI that comes back in three weeks usually differ by about forty words. This is about those forty words.</p>
+      <h3>What you will do</h3>
+      <ul>
+        <li>Read what an RFI is, and the four parts of one that gets answered.</li>
+        <li>Judge two versions of the same question, and see why one stalls.</li>
+        <li>Sort six fragments into what belongs in an RFI and what does not.</li>
+        <li>Make three decisions and see how they scored.</li>
+      </ul>
+      <p class="note">Everything here works with the keyboard alone. Tab moves between controls, Enter or Space chooses. Nothing is timed and there is no sound.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="screen" id="screen-2" hidden>
+      <h2 tabindex="-1">What an RFI actually is</h2>
+      <p>An RFI is a written question from the field to the design team about the contract documents. It exists because drawings and specifications are made by people, and people leave gaps: a dimension that does not close, a detail that contradicts the section it points to, a product that is no longer manufactured.</p>
+      <p>It is also a contract document in its own right. It gets logged, it gets a number, and it gets read months later by somebody deciding who owed what. Write it for that reader as well as for the one answering it this week.</p>
+      <h3>What an RFI is not</h3>
+      <ul>
+        <li>A change order. It may lead to one. It is not one.</li>
+        <li>A complaint about the drawings.</li>
+        <li>A request for the design team to design something new.</li>
+        <li>A place to argue about schedule or fault.</li>
+      </ul>
+    </section>
+
+    <!-- 3 -->
+    <section class="screen" id="screen-3" hidden>
+      <h2 tabindex="-1">Why RFIs come back slow, or come back wrong</h2>
+      <p>Almost every stalled RFI fails in one of four ways, and all four are fixable in the writing, before it leaves your desk.</p>
+      <ol class="reasons">
+        <li><b>It is not actually a question.</b> A statement that something does not match leaves the reviewer guessing at what you want ruled on.</li>
+        <li><b>The reference is missing.</b> The reviewer has to hunt for the conflict before they can rule on it, and hunting is what gets an RFI put down and picked up later.</li>
+        <li><b>Nobody said what it is holding.</b> With no consequence attached, it sits behind whatever does have a date on it.</li>
+        <li><b>There is no proposed answer.</b> The reviewer starts from a blank page instead of from a yes or a correction.</li>
+      </ol>
+    </section>
+
+    <!-- 4 -->
+    <section class="screen" id="screen-4" hidden>
+      <h2 tabindex="-1">The four parts of an RFI that gets answered</h2>
+      <ol class="parts">
+        <li>
+          <b>The specific question.</b>
+          <p>One question, asked so it can be answered yes, no, or with a dimension. If you have three questions, write three RFIs. A single reply cannot be partially approved.</p>
+        </li>
+        <li>
+          <b>The exact reference.</b>
+          <p>Drawing sheet and detail number, or specification section and paragraph. Name both sources when two documents disagree. "See the plans" is not a reference.</p>
+        </li>
+        <li>
+          <b>The impact and the needed by date.</b>
+          <p>What is held, who is standing by, and the date after which the answer costs money or time. State the effect, not your frustration.</p>
+        </li>
+        <li>
+          <b>The proposed answer.</b>
+          <p>What you believe is correct, and why. A reviewer who agrees can answer in one line. This is the part most people leave out, and the one that moves response time the most.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 5 -->
+    <section class="screen" id="screen-5" hidden>
+      <h2 tabindex="-1">Two ways to ask the same thing</h2>
+      <p class="setup">You are the field engineer on a mid-size commercial build, a three story medical office shell. Structural drawings show a 6 inch slab on grade at the loading dock. The approved dock leveler submittal calls for 8 inches with added reinforcing under the pit. Concrete for that area is scheduled in nine days.</p>
+      <p><b>Which RFI do you send?</b></p>
+
+      <div class="options" role="group" aria-labelledby="scenario-q">
+        <p class="visually-hidden" id="scenario-q">Choose the RFI you would send</p>
+
+        <button type="button" class="choice" data-q="scenario" data-correct="false" aria-pressed="false">
+          <span class="choice-tag">Option A</span>
+          <span class="choice-body">"Slab thickness at the dock does not match. Please advise."</span>
+        </button>
+
+        <button type="button" class="choice" data-q="scenario" data-correct="true" aria-pressed="false">
+          <span class="choice-tag">Option B</span>
+          <span class="choice-body">"Structural sheet S-2.1, detail 4, shows a 6 inch slab on grade at the loading dock. The approved dock leveler submittal, specification section 11 13 19, requires 8 inches with number 5 bars at 12 inches each way under the pit. Please confirm which governs. Placement is scheduled for the 19th and we need a response by the 16th to hold it. We propose thickening the slab to 8 inches across the 12 foot by 14 foot area behind the dock face, per the submittal, with no change to the placement date."</span>
+        </button>
+      </div>
+
+      <p class="feedback" id="fb-scenario" aria-live="polite"></p>
+    </section>
+
+    <!-- 6 -->
+    <section class="screen" id="screen-6" hidden>
+      <h2 tabindex="-1">Belongs in the RFI, or leave it out</h2>
+      <p>Six fragments from a draft RFI on the same job. Decide where each one goes. Choose with the mouse or with the keyboard; there is nothing to drag.</p>
+
+      <ul class="sorter">
+        <li>
+          <p class="frag" id="frag-1">"Structural sheet S-2.1, detail 4."</p>
+          <div class="sort-btns" role="group" aria-labelledby="frag-1">
+            <button type="button" class="sort" data-q="s1" data-correct="true" aria-pressed="false">Belongs in the RFI</button>
+            <button type="button" class="sort" data-q="s1" data-correct="false" aria-pressed="false">Leave it out</button>
+          </div>
+          <p class="feedback" id="fb-s1" aria-live="polite"></p>
+        </li>
+        <li>
+          <p class="frag" id="frag-2">"This is the third time the drawings have contradicted themselves on this building."</p>
+          <div class="sort-btns" role="group" aria-labelledby="frag-2">
+            <button type="button" class="sort" data-q="s2" data-correct="false" aria-pressed="false">Belongs in the RFI</button>
+            <button type="button" class="sort" data-q="s2" data-correct="true" aria-pressed="false">Leave it out</button>
+          </div>
+          <p class="feedback" id="fb-s2" aria-live="polite"></p>
+        </li>
+        <li>
+          <p class="frag" id="frag-3">"We need a response by the 16th to hold the placement on the 19th."</p>
+          <div class="sort-btns" role="group" aria-labelledby="frag-3">
+            <button type="button" class="sort" data-q="s3" data-correct="true" aria-pressed="false">Belongs in the RFI</button>
+            <button type="button" class="sort" data-q="s3" data-correct="false" aria-pressed="false">Leave it out</button>
+          </div>
+          <p class="feedback" id="fb-s3" aria-live="polite"></p>
+        </li>
+        <li>
+          <p class="frag" id="frag-4">"Please advise at your earliest convenience."</p>
+          <div class="sort-btns" role="group" aria-labelledby="frag-4">
+            <button type="button" class="sort" data-q="s4" data-correct="false" aria-pressed="false">Belongs in the RFI</button>
+            <button type="button" class="sort" data-q="s4" data-correct="true" aria-pressed="false">Leave it out</button>
+          </div>
+          <p class="feedback" id="fb-s4" aria-live="polite"></p>
+        </li>
+        <li>
+          <p class="frag" id="frag-5">"We propose the 8 inch slab per the approved submittal."</p>
+          <div class="sort-btns" role="group" aria-labelledby="frag-5">
+            <button type="button" class="sort" data-q="s5" data-correct="true" aria-pressed="false">Belongs in the RFI</button>
+            <button type="button" class="sort" data-q="s5" data-correct="false" aria-pressed="false">Leave it out</button>
+          </div>
+          <p class="feedback" id="fb-s5" aria-live="polite"></p>
+        </li>
+        <li>
+          <p class="frag" id="frag-6">"Also, can you confirm the paint color in the lobby?"</p>
+          <div class="sort-btns" role="group" aria-labelledby="frag-6">
+            <button type="button" class="sort" data-q="s6" data-correct="false" aria-pressed="false">Belongs in the RFI</button>
+            <button type="button" class="sort" data-q="s6" data-correct="true" aria-pressed="false">Leave it out</button>
+          </div>
+          <p class="feedback" id="fb-s6" aria-live="polite"></p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section class="screen" id="screen-7" hidden>
+      <h2 tabindex="-1">Three decisions</h2>
+      <p>Same job, three moments. Each one scores the decision, not the definition.</p>
+
+      <div class="qblock">
+        <h3 id="kc1">1. A subcontractor hands you a note: the duct will not fit above the ceiling in corridor 2. What do you do first?</h3>
+        <div class="options" role="group" aria-labelledby="kc1">
+          <button type="button" class="choice" data-q="k1" data-correct="false" aria-pressed="false"><span class="choice-body">Forward the note as the RFI so the clock starts today.</span></button>
+          <button type="button" class="choice" data-q="k1" data-correct="true" aria-pressed="false"><span class="choice-body">Find the sheet and section that show the conflict, measure the depth actually available, then write the question.</span></button>
+          <button type="button" class="choice" data-q="k1" data-correct="false" aria-pressed="false"><span class="choice-body">Call the design team and ask somebody to take a look at it.</span></button>
+        </div>
+        <p class="feedback" id="fb-k1" aria-live="polite"></p>
+      </div>
+
+      <div class="qblock">
+        <h3 id="kc2">2. You have four related questions about the same wall assembly, all on sheet A-6.1. How do you submit them?</h3>
+        <div class="options" role="group" aria-labelledby="kc2">
+          <button type="button" class="choice" data-q="k2" data-correct="false" aria-pressed="false"><span class="choice-body">One RFI listing all four, since they share a sheet.</span></button>
+          <button type="button" class="choice" data-q="k2" data-correct="true" aria-pressed="false"><span class="choice-body">Four RFIs, one question each, cross referenced to one another.</span></button>
+          <button type="button" class="choice" data-q="k2" data-correct="false" aria-pressed="false"><span class="choice-body">Hold all four until you understand the whole assembly, then send the best one.</span></button>
+        </div>
+        <p class="feedback" id="fb-k2" aria-live="polite"></p>
+      </div>
+
+      <div class="qblock">
+        <h3 id="kc3">3. The mechanical crew is standing by and you are fairly sure the answer is a 4 inch drop in the corridor soffit. Nobody asked your opinion. What goes in the RFI?</h3>
+        <div class="options" role="group" aria-labelledby="kc3">
+          <button type="button" class="choice" data-q="k3" data-correct="false" aria-pressed="false"><span class="choice-body">Nothing. Offering an answer looks presumptuous and could be used against you later.</span></button>
+          <button type="button" class="choice" data-q="k3" data-correct="true" aria-pressed="false"><span class="choice-body">The proposed 4 inch soffit drop, stated as a proposal with the reasoning, so the reviewer can confirm or correct it.</span></button>
+          <button type="button" class="choice" data-q="k3" data-correct="false" aria-pressed="false"><span class="choice-body">Nothing yet. Wait to see whether the design team asks what you would do.</span></button>
+        </div>
+        <p class="feedback" id="fb-k3" aria-live="polite"></p>
+      </div>
+
+      <p class="score" id="score-line" aria-live="polite" role="status">Answered 0 of 3.</p>
+    </section>
+
+    <!-- 8 -->
+    <section class="screen" id="screen-8" hidden>
+      <h2 tabindex="-1">The four part checklist</h2>
+      <p id="final-score" class="score">You finished the piece.</p>
+      <p>Keep this next to the RFI log. If a draft is missing one of these four, it is not ready to send.</p>
+
+      <div class="jobaid">
+        <p class="jobaid-title">Before you send</p>
+        <ol>
+          <li><b>One question.</b> Answerable yes, no, or with a number. More than one question means more than one RFI.</li>
+          <li><b>The exact reference.</b> Sheet and detail, or specification section and paragraph. Both sources when two documents disagree.</li>
+          <li><b>The impact and the needed by date.</b> What is held, who is standing by, and a date tied to a real activity rather than a wish.</li>
+          <li><b>The proposed answer.</b> What you believe is correct and why, written so a reviewer who agrees can reply in one line.</li>
+        </ol>
+        <p class="jobaid-foot">Then read it once as the reviewer: could you answer this without opening anything you were not given, and without calling anybody?</p>
+      </div>
+
+      <p><button type="button" class="btn-ghost" id="restart">Start over</button></p>
+    </section>
+
+    <nav class="pager" aria-label="Screen navigation">
+      <button type="button" class="btn-ghost" id="prev">Back</button>
+      <button type="button" class="btn-amber" id="next">Next</button>
+    </nav>
+
+  </main>
+
+  <footer class="piece-foot">
+    <p>Demonstration sample by K &amp; A Performance.</p>
+  </footer>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

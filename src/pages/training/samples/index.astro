@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TrainingSubnav from '../../../components/TrainingSubnav.astro';
+import { liveSamples, plannedSamples } from '../../../data/training.js';
+
+// The samples grid. Everything on this page comes out of src/data/training.js,
+// which is the only file allowed to decide what is publishable: 'live' gets a
+// card and a viewer page, 'planned' gets a placeholder with no link, and
+// 'audit' never reaches this file at all. Nothing here carries a price, a
+// person's name, a throughput figure, or a client name, per the business brief.
+
+const SITE = 'https://ka-performancefl.com';
+const PAGE_URL = SITE + '/training/samples/';
+
+const cards = liveSamples.map((s) => ({
+  ...s,
+  href: '/training/samples/' + s.slug + '/',
+  minutesLabel: 'About ' + s.minutes + ' minutes',
+  iso: 'PT' + s.minutes + 'M',
+  meta: s.kind + ' · ' + s.vertical,
+}));
+
+const placeholders = plannedSamples.map((s) => ({
+  ...s,
+  meta: s.kind + ' · ' + s.vertical,
+}));
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: SITE + '/services/' },
+    { '@type': 'ListItem', position: 3, name: 'Training content', item: SITE + '/training/' },
+    { '@type': 'ListItem', position: 4, name: 'Samples', item: PAGE_URL },
+  ],
+};
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': PAGE_URL + '#collection',
+  url: PAGE_URL,
+  name: 'Training content samples',
+  description:
+    'Original interactive training samples from K & A Performance, playable in the browser, each with the technique it demonstrates and the accessibility standard it meets.',
+  inLanguage: 'en-US',
+  hasPart: cards.map((s) => ({
+    '@type': 'CreativeWork',
+    name: s.title,
+    url: SITE + s.href,
+    description: s.what,
+    learningResourceType: s.kind,
+    timeRequired: s.iso,
+  })),
+};
+---
+<BaseLayout
+  title="Training Content Samples | K & A Performance"
+  description="Play our original training samples in the browser. Each one says what it is, what it demonstrates, the technique behind it, and the accessibility standard it meets."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(collectionSchema)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      <a href="/training/" class="transition-colors hover:text-accent">Training content</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span> Samples
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      Samples you can <span class="text-accent">actually play</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Not screenshots, not a download wall, not a form standing between you and
+      a demo. Each sample runs in the browser, and each one comes with the same
+      four things: what it is, what it demonstrates, the technique behind it,
+      and the accessibility standard it meets.
+    </p>
+  </section>
+
+  <TrainingSubnav />
+
+  <section class="mx-auto max-w-6xl px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-4xl">Where this stands today</h2>
+    <p data-animate="type-settle" class="mt-6 max-w-3xl leading-relaxed text-muted">
+      This section is new, and we would rather say so than pad it. The first
+      original is live and playable below. Three more are in production, and
+      they are listed here unfinished so you can see what is coming rather
+      than what we wish we had. Everything shown on this page is original
+      K &amp; A work, built for this page. Work produced for an employer or a
+      client belongs to them and does not appear here.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <ul class="grid list-none gap-8 p-0 md:grid-cols-2">
+      {cards.map((s) => (
+        <li>
+          <a href={s.href} data-animate="frame-lift" class="glow-frame group flex h-full flex-col p-7">
+            <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">{s.meta}</p>
+            <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
+            <p class="mt-4 flex-1 leading-relaxed text-muted">{s.what}</p>
+            <p class="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-muted">{s.minutesLabel}</p>
+            <p class="mt-2 font-heading text-sm font-semibold tracking-wide text-accent">
+              Play the sample <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+            </p>
+          </a>
+        </li>
+      ))}
+
+      {placeholders.map((s) => (
+        <li>
+          <div data-animate="frame-lift" class="flex h-full flex-col rounded-xl border border-dashed border-ink/20 p-7">
+            <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">In production</p>
+            <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
+            <p class="mt-4 flex-1 leading-relaxed text-muted">{s.what}</p>
+            <p class="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-muted">{s.meta}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
+          Want one of these <span class="text-accent">for your content</span>
+        </h2>
+        <p data-animate="type-settle" class="mt-6 max-w-xl leading-relaxed text-muted">
+          Tell us the topic, the audience, and what your LMS accepts. We will
+          tell you what shape the piece should take and what it takes to build
+          it, before anybody commits to anything.
+        </p>
+      </div>
+      <div data-animate="type-settle" data-animate-delay="0.1" class="flex flex-wrap items-center gap-6">
+        <a href="/training/?inquire=1" class="btn-draw">Ask about a project</a>
+        <a href="/training/team/" class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">
+          Meet the bench
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

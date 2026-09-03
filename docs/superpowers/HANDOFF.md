@@ -231,9 +231,40 @@ Two interaction systems worth knowing before you edit:
 - **Deploying the admin ahead of its migrations** gives `no such table` 500s on `/coaching` and `/newsletter`. Apply migrations first.
 - **Wrangler is allowlisted** in `.claude/settings.local.json` (`node ./node_modules/wrangler/bin/wrangler.js *` and the `../` form), so Claude runs deploys, migrations, and secret pushes directly now. It no longer needs to hand Alex commands for those.
 
+## The training content service line (2026-09-03)
+
+The second new business line, built from `TAAS/ka-training-service-handoff.zip` (extracted to `TAAS/extracted/ka-handoff/`; the whole folder is gitignored because it holds contracts with real names and a confidential rate sheet). **Read `05-website-build/BRIEF.md` and `README-HANDOFF.md` there before touching it. Never copy anything from `03-internal-confidential/` into a committed file; never publish a name from `01-contracts-ready-to-send/`.** Plan: `docs/superpowers/plans/2026-09-03-training-section.md`.
+
+**What it is:** K&A sells and manages, a bench of four senior instructional designers builds, two subject matter experts (a CPA, a construction PM) validate. Content is custom HTML packaged for SCORM/xAPI into the client's own LMS; K&A never hosts and never receives learner data. Construction and trades is the lead vertical.
+
+**The four hard constraints, enforced in one file:** (1) no pricing anywhere, not even "starting at", engagement models by shape only; (2) no unaudited portfolio work, since anything built for a former employer belongs to them; (3) no names without a signed marketing-use election, and the three designers already public on `/artists/` do NOT carry that permission over, so nothing links them; (4) accessibility is acceptance criteria. All four live in **`src/data/training.js`**, which every `/training/*` page reads: `samples[].status` gates rendering (`live` renders with a viewer, `planned` is a marked placeholder, `audit` renders nowhere), `bench[].named` and `smes[].named` default false with both template branches already written, `combinedYears` is 60 per the handoff README and renders as "roughly sixty" pending Alex's confirmation. Never write the former employers' names into the repo, comments included.
+
+**Pages:** `/training/` (anchor: hero, verticals, what we build, the teal "Your LMS, your data" band, the six-stage pipeline, accessibility, AI transparency, three engagement models, and the inquiry modal `#tr-modal`, opened by every `[data-inquire]` and by `?inquire=1`; Web3Forms with subject `New training inquiry | ka-performancefl.com` and the launch checklist's intake questionnaire as optional fields). `/training/samples/` (one live original, three dashed "In production" placeholders). `/training/samples/<slug>/` (iframe viewer with a `.tr-skip` "skip past the sample" link and an open-in-new-tab alternative, which is the brief's named keyboard-trap risk). `/training/team/` (bench and SMEs as placeholders, plus the required non-endorsement sentence). `/training/capabilities/` (print source of the PDF, noindexed). `src/components/TrainingSubnav.astro` ties them together. **Nav: "Training" replaced "Free Course"** by Alex's call; the course stays in the footer and on the Mentorship page. The services hub got a featured band and the footer a "Training content" link. `.btn-draw` was promoted from `/ai-launch` into `global.css` for this.
+
+**The original sample** `public/training-samples/rfi/` ("The RFI that gets answered", eight screens on an invented mid-size commercial build) is self-contained HTML/CSS/JS with no dependencies: readable with JS off, focus moved to each screen's heading, live regions for progress and feedback, `aria-pressed` single-select with choices never disabled, one `postMessage` on completion. Its `@font-face` families are renamed so a packaged copy in an LMS falls back cleanly.
+
+**The PDF** `public/downloads/KA-Performance-Training-Capabilities.pdf` is generated, never hand-edited: build, then `node scripts/capabilities-pdf.mjs` renders `/training/capabilities/` with Playwright to a **tagged, one-page, titled, `/Lang en`** PDF (structure tree verified: Document, H2s, real lists; definition lists were swapped for `ul` because Chromium drops `dl` out of the tag tree). Regenerate whenever `training.js` changes. Print scale knob: `10.4pt` on `.cap`; 10.8 spills to two pages.
+
+**Verification scripts, committed, zero new dependencies:** `scripts/a11y-check.mjs` (axe-core WCAG 2.x A/AA, structure, and a full keyboard walk checking visible focus and iframe entry/exit; cycle detection is by element identity, not label, because pages legitimately repeat link text) and `scripts/lighthouse-check.mjs`. Both load Playwright, axe, Lighthouse and chrome-launcher from **`D:/kap-reel/node_modules`** (a junction to `Reels/kap-reel`) through `createRequire`, because `npm install` in this repo strips lockfile entries. Reports land in `docs/accessibility/reports/`. **Run them from Git Bash with `MSYS_NO_PATHCONV=1`**, or every `/path` argument arrives as `C:/Program Files/Git/path` (the scripts strip that defensively too). `scripts/lib/serve-dist.mjs` normalizes its root because a forward-slash root once made its own escape guard 403 every request.
+
+**Results at ship (2026-09-03):** all five training pages, the raw sample, and the updated hub pages: axe 0 violations, Lighthouse accessibility 100 and SEO 100, mobile performance 81 to 86 (LCP ~3.4s, same as the rest of the site), no horizontal overflow at 320px, full keyboard walks of 27 to 41 stops all with visible focus, the sample's frame entered and exited cleanly. **Best practices is 77 on every page of the site**, new and old, for one reason: the Meta pixel's third-party cookies. The brief's "best practices 100" is blocked by a marketing decision, not code (Open items T1). Fixed in passing: the footer logo link's `aria-label` did not contain its visible descriptor text (WCAG 2.5.3), which Lighthouse had been flagging on every page.
+
+**Provenance audit list for Alex:** the eleven interactives already parked unlinked and noindexed under `public/interactives/` (sources in `public/HTML Builds/`) are listed as `status: 'audit'` in `training.js`. No employer string appears inside any of them, which is not the same as provenance. The free course came from the `UHU Stuff` folder and needs the same answer.
+
 ## Open items
 
-_Refreshed 2026-08-31. Active items first._
+_Refreshed 2026-09-03. Active items first._
+
+**TRAINING SECTION (built 2026-09-03; see "The training content service line" below), needed from Alex before it is "launched". Built around, not blocked on:**
+
+T1. **Decide the Meta pixel on `/training/*`.** Lighthouse best practices cannot reach 100 while the pixel loads (third-party cookies), and the brief asks for 100. Options: accept 77 sitewide; or skip the pixel on the training pages, whose audience is B2B procurement rather than the consumer web-design leads the pixel targets, a one-line pathname condition in `BaseLayout.astro`. Recommendation: skip it there.
+T2. **Provenance answers** for the eleven `public/interactives/` pieces and for the free course. Flip survivors to `status: 'live'` in `src/data/training.js` with `dir`, `what`, `demonstrates`, `technique`, `accessibility`, `built`.
+T3. **Marketing-use elections** for the four designers and two SMEs, plus approved bios and headshots or declines. Flip `named: true`, fill the fields, regenerate the PDF.
+T4. **Confirm the combined-years figure** (`combinedYears = 60`, rendered "roughly sixty").
+T5. **The three planned originals**; each replaces a `planned` placeholder in `training.js`.
+T6. **A live screen-reader session** on the training section with a person at the keyboard. The accessibility statement says this is next; make it true, then update the statement.
+T7. Project Makeover naming permission (not used anywhere yet).
+T8. Optional wording: `engagementModels[0].shape` says "a fixed price agreed before work starts". No number, so it passes the rule, but the word "price" is on the forwardable PDF; "a fixed cost" is a one-word swap if preferred.
 
 **ACTIVE — near-term, in rough priority order:**
 

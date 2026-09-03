@@ -47,3 +47,12 @@
   X-Robots-Tag: noindex, nofollow
 /course-app/*
   X-Robots-Tag: noindex, nofollow
+
+# Training samples: the raw interactive builds live here and are iframed by
+# /training/samples/<slug>/, which is the page that should rank. The
+# capabilities page is the print source of the one-pager PDF and duplicates
+# /training/, so it stays out of the index too; the PDF itself is the asset.
+/training-samples/*
+  X-Robots-Tag: noindex, nofollow
+/training/capabilities/*
+  X-Robots-Tag: noindex

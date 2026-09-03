@@ -15,6 +15,7 @@ const columns = [
       { href: '/services/ai-integration/', label: 'AI integration' },
       { href: '/services/seo-ai-search/', label: 'SEO & AI search' },
       { href: '/services/accessibility/', label: 'Accessibility audits' },
+      { href: '/training/', label: 'Training content' },
     ],
   },
   {
@@ -47,7 +48,10 @@ const columns = [
   <div class="mx-auto max-w-6xl px-6 py-16">
     <div class="flex flex-col gap-12 md:flex-row md:items-start md:justify-between md:gap-16">
       <div class="flex flex-col gap-4 md:max-w-xs">
-        <a href="/" class="self-start text-[2.75rem]" aria-label="K & A Performance home">
+        {/* The accessible name must contain the lockup's visible descriptor
+            text (WCAG 2.5.3, Label in Name), which Lighthouse flagged on every
+            page until 2026-09-03. Voice control users say what they see. */}
+        <a href="/" class="self-start text-[2.75rem]" aria-label="K & A Performance home. Web Design & AI Integration">
           <LogoLockup variant="full" />
         </a>
         <p class="text-sm text-muted">

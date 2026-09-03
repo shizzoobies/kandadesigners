@@ -1,0 +1,630 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TrainingSubnav from '../../components/TrainingSubnav.astro';
+import {
+  section,
+  verticals,
+  deliverables,
+  delivery,
+  pipeline,
+  accessibility,
+  aiTransparency,
+  engagementModels,
+  inquiryFields,
+} from '../../data/training.js';
+
+// The anchor page of the training content service line. Every fact on this
+// page comes from src/data/training.js, which carries the four hard
+// constraints from the business brief: no pricing, no unaudited portfolio
+// work, no names without permission, no throughput numbers. Nothing is
+// duplicated here, so when Alex's answers arrive that file is the whole edit.
+//
+// House rules that apply everywhere on this page: no em dashes, no pill or
+// chip UI, no numbered kickers, tokens only for color.
+
+const PAGE_URL = 'https://ka-performancefl.com/training/';
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://ka-performancefl.com/services/' },
+    { '@type': 'ListItem', position: 3, name: 'Training content', item: PAGE_URL },
+  ],
+};
+
+// Service schema. The offer catalog lists the three engagement models by
+// shape only: no price, no priceRange, no priceSpecification anywhere, which
+// is the brief's first hard constraint applied to structured data as well as
+// to copy.
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Training and eLearning content development',
+  url: PAGE_URL,
+  serviceType: deliverables.map((d) => d.title),
+  description:
+    "Custom eLearning and training content development: full courses, standard modules, microlearning, job aids, assessments, conversion, and accessibility remediation, delivered as SCORM, xAPI, or plain HTML into the client's own LMS.",
+  provider: {
+    '@type': 'ProfessionalService',
+    name: 'K & A Performance',
+    url: 'https://ka-performancefl.com/',
+  },
+  areaServed: { '@type': 'Country', name: 'United States' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Engagement models',
+    itemListElement: engagementModels.map((m) => ({
+      '@type': 'Offer',
+      name: m.title,
+      description: m.shape,
+    })),
+  },
+};
+
+// One drawn glyph per deliverable, in the site's sketch line. Decorative:
+// the title beside each one carries the meaning, so they are hidden from
+// assistive technology. Order matches `deliverables` exactly.
+const glyphs = [
+  // Full courses: stacked modules
+  'M5 12 l15 -7 l15 7 l-15 7 Z M5 20 l15 7 l15 -7 M5 27 l15 7 l15 -7',
+  // Standard modules: one screen taught properly
+  'M7 7 h26 v26 h-26 Z M12 14 h16 M12 20 h16 M12 26 h10',
+  // Microlearning: minutes on one thing
+  'M20 6 a14 14 0 1 1 -0.01 0 M20 12 v8 l6 4',
+  // Job aids: the checklist that lives next to the work
+  'M13 8 h14 v4 h-14 Z M13 10 h-5 v25 h24 v-25 h-5 M13 21 l3 3 l6 -7 M13 29 h14',
+  // Assessments: the check that measures the decision
+  'M20 6 a14 14 0 1 1 -0.01 0 M13 20 l5 5 l9 -11',
+  // Conversion and refresh: the loop
+  'M8 20 a12 12 0 0 1 20 -8 M28 6 v6 h-6 M32 20 a12 12 0 0 1 -20 8 M12 34 v-6 h6',
+  // Accessibility remediation: the figure
+  'M20 6 a3 3 0 1 1 -0.01 0 M8 15 h24 M20 15 v9 M20 24 l-6 10 M20 24 l6 10',
+];
+
+// The two doors out of this page, plus the asset enterprise buyers forward
+// internally. The bench stays deliberately unnamed here: the marketing-use
+// elections are not back.
+const doors = [
+  {
+    href: '/training/samples/',
+    title: 'Play a working sample',
+    blurb: 'Real content running in a browser, keyboard operable, not a screenshot and not a download wall.',
+  },
+  {
+    href: '/training/team/',
+    title: 'Meet the bench',
+    blurb: 'Senior instructional designers and subject matter experts, described by focus and depth rather than by resume.',
+  },
+];
+---
+<BaseLayout
+  title="Custom eLearning and Training Content Development | K & A Performance"
+  description="Custom eLearning development and instructional design: SCORM and xAPI course development, accessibility remediation for training, and construction and trades content, delivered into your own LMS."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      <a href="/services/" class="transition-colors hover:text-accent">Services</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span> Training content
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      Training content built <span class="text-accent">without the wait</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Senior instructional designers plus an AI-assisted production pipeline
+      compress timelines that normally run months. We are never the bottleneck.
+      Your review cycles set the schedule, and we write the review turnarounds
+      into the statement of work so the timeline is honest before anyone
+      commits to it.
+    </p>
+    <p data-animate="type-settle" data-animate-delay="0.3" class="mt-5 max-w-2xl leading-relaxed text-muted">
+      Built for learning and development teams, HR, and training managers who
+      have a backlog, a deadline, and a subject matter expert with about an
+      hour to spare.
+    </p>
+    <div data-animate="type-settle" data-animate-delay="0.4" class="mt-10 flex flex-wrap items-center gap-6">
+      <button type="button" data-inquire class="btn-draw">Start an inquiry</button>
+      <a href="/training/samples/" class="btn-ghost">See a working sample</a>
+    </div>
+  </section>
+
+  <TrainingSubnav />
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Where we are deepest</h2>
+    <div class="mt-10 grid gap-10 md:grid-cols-3 md:gap-12">
+      {verticals.map((v, i) => (
+        <div data-animate="type-settle" data-animate-delay={i * 0.1} class="border-t border-ink/10 pt-6">
+          <h3 class="font-heading text-lg font-semibold tracking-wide">{v.title}</h3>
+          <p class="mt-3 leading-relaxed text-muted">{v.blurb}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What we build</h2>
+    <div class="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
+      {deliverables.map((d, i) => (
+        <div data-animate="type-settle" class="flex items-start gap-5">
+          <svg class="mt-1 h-9 w-9 shrink-0 text-accent" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d={glyphs[i]} />
+          </svg>
+          <div>
+            <h3 class="font-heading text-lg font-semibold tracking-wide">{d.title}</h3>
+            <p class="mt-2 leading-relaxed text-muted">{d.blurb}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- The one dark moment on this page. It earns it: the hosting and
+       learner-data lines are the sentences that close procurement's file. -->
+  <section class="dark-band border-y border-ink/10">
+    <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
+      <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
+        Your LMS, <span class="text-accent">your data</span>
+      </h2>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+        Content ships in the package your system already accepts. Tell us the
+        LMS and the version, and the build is tested inside it before you see
+        the invoice for it.
+      </p>
+
+      <ul data-animate="type-settle" data-animate-delay="0.2" class="mt-12 grid gap-x-10 gap-y-6 sm:grid-cols-2 md:grid-cols-4">
+        {delivery.formats.map((f) => (
+          <li class="border-t border-ink/25 pt-4 font-heading text-lg font-semibold tracking-wide">{f}</li>
+        ))}
+      </ul>
+
+      <div class="mt-14 grid gap-8 md:grid-cols-3">
+        {delivery.notes.map((n, i) => (
+          <p data-animate="type-settle" data-animate-delay={0.1 + i * 0.1} class="leading-relaxed text-muted">{n}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">How we work</h2>
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Six stages, in this order, on every project. You always know which one
+      you are in and what you owe us before the next one starts.
+    </p>
+
+    <div class="relative mt-12">
+      <!-- Decorative rail joining the six stages on wide screens. The list
+           below is the content; at phone width this draws nothing. -->
+      <div class="absolute inset-x-0 top-3 hidden h-px bg-ink/15 lg:block" aria-hidden="true"></div>
+      <ol class="grid gap-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6">
+        {pipeline.map((step, i) => (
+          <li data-animate="type-settle" data-animate-delay={i * 0.06} class="relative">
+            <span class="mb-5 hidden h-1.5 w-1.5 rounded-full bg-accent lg:block lg:translate-y-[0.15rem]" aria-hidden="true"></span>
+            <h3 class="font-heading text-base font-semibold tracking-wide lg:mt-0">{step.label}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{step.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="grid gap-12 md:grid-cols-[1fr_1fr] md:gap-16">
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Accessibility, tested</h2>
+        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
+          Client content is built and delivered to {accessibility.standard}.
+          Not claimed against it, tested against it, by a person, in the place
+          your learners will actually open it.
+        </p>
+        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 leading-relaxed text-muted">
+          We audit websites too. Our
+          <a href="/services/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility audit service</a>
+          applies the same passes to the site your training sits behind, and
+          this site publishes
+          <a href="/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">its own accessibility statement</a>
+          so you can read what we hold ourselves to before you hire us to hold
+          anything else to it. The owner is pursuing IAAP CPACC certification.
+        </p>
+      </div>
+      <div>
+        <h3 data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.25em] text-muted">Every build gets these five passes</h3>
+        <ul data-animate="type-settle" data-animate-delay="0.1" class="mt-6 flex list-disc list-outside flex-col gap-4 pl-5 leading-relaxed text-muted marker:text-accent">
+          {accessibility.tests.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
+      Yes, we use AI. <span class="text-accent">Here is exactly how.</span>
+    </h2>
+    <div class="mt-10 flex flex-col gap-6">
+      {aiTransparency.map((line, i) => (
+        <p data-animate="type-settle" data-animate-delay={i * 0.1} class="border-t border-ink/10 pt-6 text-lg leading-relaxed text-muted">{line}</p>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Three ways to work together</h2>
+    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Which one fits is a conversation about your backlog and your calendar,
+      not a menu you pick from cold.
+    </p>
+    <div class="mt-12 grid gap-8 md:grid-cols-3">
+      {engagementModels.map((m, i) => (
+        <div data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame flex flex-col p-8">
+          <h3 class="font-display text-2xl">{m.title}</h3>
+          <p class="mt-4 flex-1 leading-relaxed text-muted">{m.shape}</p>
+          <div class="mt-8">
+            <button type="button" data-inquire class="btn-ghost">Ask about this</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">See the work</h2>
+    <div class="mt-12 grid gap-8 md:grid-cols-2">
+      {doors.map((d, i) => (
+        <a href={d.href} data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame group flex flex-col p-8">
+          <h3 class="font-display text-2xl">{d.title}</h3>
+          <p class="mt-4 flex-1 leading-relaxed text-muted">{d.blurb}</p>
+          <p class="mt-6 font-heading text-sm font-semibold tracking-wide text-accent">
+            Take a look <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
+          </p>
+        </a>
+      ))}
+    </div>
+    <p data-animate="type-settle" class="mt-10 leading-relaxed text-muted">
+      Need something to forward internally? Our
+      <a href={section.pdf} download class="text-accent underline underline-offset-4 hover:text-accent-hot">capabilities one-pager (PDF)</a>
+      covers what we build, how it ships, the accessibility standard, and how
+      to reach us.
+    </p>
+  </section>
+
+  <section id="inquire" class="scroll-mt-28 border-t border-ink/10 px-6 py-24 md:py-32">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Tell us what you need <span class="text-accent">built</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        The form asks the questions a first call would ask, so the reply is
+        useful instead of a request for more information. Alex reads every
+        inquiry himself and answers within one business day.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <button type="button" data-inquire class="btn-draw">Start an inquiry</button>
+      </div>
+      <noscript>
+        <p class="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-muted">
+          The form needs JavaScript. Prefer email? Write to
+          <a href={'mailto:' + section.email} class="text-accent underline underline-offset-4">{section.email}</a>
+          with what you need built, who takes it, and when you need it, and we
+          will pick it up from there.
+        </p>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- The inquiry modal. Every [data-inquire] button on the page opens it;
+       the native dialog gives Esc, focus containment, and a real backdrop
+       without a line of trap-management code. -->
+  <dialog id="tr-modal" class="tr-modal" aria-labelledby="tr-modal-title">
+    <div class="glow-frame p-8 md:p-10">
+      <div class="mb-8 flex items-start justify-between gap-6">
+        <div>
+          <h2 id="tr-modal-title" class="font-display text-2xl md:text-3xl">Training inquiry</h2>
+          <p class="mt-2 text-sm leading-relaxed text-muted">Four questions are required. The rest just make the reply better.</p>
+        </div>
+        <button type="button" id="tr-modal-close" class="-m-2 p-2 text-muted transition-colors hover:text-ink" aria-label="Close">
+          <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <line x1="5" y1="5" x2="15" y2="15" />
+            <line x1="15" y1="5" x2="5" y2="15" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="tr-form" class="flex flex-col gap-6" novalidate>
+        <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
+        <input type="hidden" name="subject" value="New training inquiry | ka-performancefl.com" />
+        <input type="hidden" name="from_name" value="K & A Performance Website" />
+        <!-- Attribution: filled from the first-touch cookie by the script
+             below. Defaults to direct, so no JS means no false attribution. -->
+        <input type="hidden" id="tr-source" name="source" value="direct" />
+        <!-- No SMS opt-in on purpose: the promised follow-up here is email.
+             The explicit "No" keeps every emailed lead carrying an
+             unambiguous consent record. Do not text these leads. -->
+        <input type="hidden" name="sms_consent" value="No" />
+        <!-- Honeypot: hidden from humans, bots fill it and get filtered. -->
+        <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="tr-name" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Name</label>
+            <input type="text" id="tr-name" name="name" required autocomplete="name" placeholder="Your name" class="field" />
+          </div>
+          <div>
+            <label for="tr-organization" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Organization</label>
+            <input type="text" id="tr-organization" name="organization" required autocomplete="organization" placeholder="Your organization" class="field" />
+          </div>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="tr-email" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Email</label>
+            <input type="email" id="tr-email" name="email" required autocomplete="email" placeholder="you@organization.com" class="field" />
+          </div>
+          <div>
+            <label for="tr-phone" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Phone <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <input type="tel" id="tr-phone" name="phone" autocomplete="tel" placeholder="(352) 555-0142" class="field" />
+          </div>
+        </div>
+
+        <div>
+          <label for="tr-need" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">What training do you need?</label>
+          <textarea id="tr-need" name="need" required rows="4" placeholder="The topic, the problem it solves, and what happens if it does not get built" class="field field-area"></textarea>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="tr-role" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Your role <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <input type="text" id="tr-role" name="role" placeholder="Training manager, HR, operations" class="field" />
+          </div>
+          <div>
+            <label for="tr-deadline" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Deadline <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <input type="text" id="tr-deadline" name="deadline" placeholder="A date, a quarter, or the event it has to beat" class="field" />
+          </div>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="tr-audience" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Audience <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <input type="text" id="tr-audience" name="audience" placeholder="Who takes this, and how many of them" class="field" />
+          </div>
+          <div>
+            <label for="tr-scope" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Scope or seat time <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <input type="text" id="tr-scope" name="scope" placeholder="Modules, topics, or minutes in the seat" class="field" />
+          </div>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="tr-lms" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              LMS and version <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <input type="text" id="tr-lms" name="lms" placeholder="What it has to load into" class="field" />
+          </div>
+          <div>
+            <label for="tr-readiness" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Source content readiness <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <select id="tr-readiness" name="source_readiness" class="field">
+              <option value="">Select one</option>
+              {inquiryFields.sourceReadiness.map((o) => <option>{o}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="tr-sme" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Subject matter expert availability <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <select id="tr-sme" name="sme_availability" class="field">
+              <option value="">Select one</option>
+              {inquiryFields.smeAvailability.map((o) => <option>{o}</option>)}
+            </select>
+          </div>
+          <div>
+            <label for="tr-accessibility" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+              Accessibility requirement <span class="tracking-normal normal-case">(optional)</span>
+            </label>
+            <select id="tr-accessibility" name="accessibility_requirement" class="field">
+              <option value="">Select one</option>
+              {inquiryFields.accessibilityRequirement.map((o) => <option>{o}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="tr-heard" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">
+            How did you hear about us? <span class="tracking-normal normal-case">(optional)</span>
+          </label>
+          <select id="tr-heard" name="how_did_you_hear" class="field">
+            {inquiryFields.heardFrom.map((o) => (
+              <option selected={o === 'Other' ? true : undefined}>{o}</option>
+            ))}
+          </select>
+        </div>
+
+        <button type="submit" id="tr-submit" class="btn-draw w-full text-center">Send the inquiry</button>
+        <p id="tr-status" class="sr-only" role="status" aria-live="polite"></p>
+        <p id="tr-error" tabindex="-1" class="hidden text-sm leading-relaxed text-muted" role="alert">
+          Something went wrong sending that. Please email us directly at
+          <a href={'mailto:' + section.email} class="text-accent underline transition-colors hover:text-accent-hot">{section.email}</a>
+          and we will pick it up.
+        </p>
+      </form>
+
+      <div id="tr-success" tabindex="-1" role="status" aria-live="polite" class="hidden flex-col justify-center py-10">
+        <h3 class="font-display text-3xl leading-tight">Got it</h3>
+        <p class="mt-6 text-lg leading-relaxed text-muted">
+          Alex reads every one of these himself and will answer within one
+          business day. If anything you sent needs a conversation rather than
+          a reply, he will say so and offer a time.
+        </p>
+      </div>
+    </div>
+  </dialog>
+</BaseLayout>
+
+<style>
+  /* The inquiry modal: a bare dialog shell so the glow-frame inside is the
+     only visible surface, floating on a blurred ink wash. Same treatment as
+     the intake modal on /ai-launch/. */
+  .tr-modal {
+    margin: auto;
+    width: min(34rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2.5rem);
+    overflow-y: auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 1rem;
+  }
+  .tr-modal::backdrop {
+    background: rgb(34 28 21 / 0.45);
+    backdrop-filter: blur(5px);
+  }
+  .tr-modal[open] {
+    animation: tr-modal-in 0.45s var(--ease-out-expo);
+  }
+  .tr-modal[open]::backdrop {
+    animation: tr-modal-fade 0.3s ease;
+  }
+  @keyframes tr-modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+  }
+  @keyframes tr-modal-fade {
+    from { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tr-modal[open], .tr-modal[open]::backdrop { animation: none; }
+  }
+</style>
+
+<script>
+  // Attribution read. The write happens sitewide in BaseLayout (first touch
+  // wins there, whatever page the ?src= link landed on); this page only
+  // copies the stored value into the hidden field. Fully guarded: a malformed
+  // cookie must never take the form's submit handler down with it.
+  try {
+    const raw =
+      document.cookie.match(/(?:^|;\s*)ka_src=([^;]+)/)?.[1] ??
+      new URLSearchParams(location.search).get('src');
+    let src = raw;
+    try {
+      src = raw ? decodeURIComponent(raw) : raw;
+    } catch {
+      /* keep the raw value */
+    }
+    const sourceField = document.getElementById('tr-source') as HTMLInputElement | null;
+    if (src && sourceField) sourceField.value = src;
+  } catch {
+    /* attribution is best-effort; the form must work regardless */
+  }
+</script>
+
+<script>
+  // Modal wiring. Native dialog handles Esc and focus containment; this adds
+  // the page scroll lock, the backdrop click, and the close button.
+  const modal = document.getElementById('tr-modal') as HTMLDialogElement | null;
+
+  const openInquiry = () => {
+    if (!modal) return;
+    if (!modal.open) modal.showModal();
+    // Native dialog does not lock the page behind it.
+    document.documentElement.style.overflow = 'hidden';
+    const nameEl = document.getElementById('tr-name') as HTMLInputElement | null;
+    // Skip the focus grab when the form is hidden (post-success state).
+    if (nameEl && nameEl.offsetParent !== null) nameEl.focus({ preventScroll: true });
+  };
+
+  modal?.addEventListener('close', () => {
+    document.documentElement.style.overflow = '';
+  });
+  document.getElementById('tr-modal-close')?.addEventListener('click', () => modal?.close());
+  // A click on the backdrop targets the dialog element itself.
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal.close();
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-inquire]').forEach((el) => {
+    el.addEventListener('click', () => openInquiry());
+  });
+
+  // ?inquire=1 opens the form on load, for links that exist to do exactly that.
+  if (new URLSearchParams(location.search).get('inquire')) openInquiry();
+</script>
+
+<script>
+  // Inquiry submit: the same Web3Forms flow as the contact page and the
+  // AI Launch intake.
+  const form = document.getElementById('tr-form') as HTMLFormElement | null;
+  const successEl = document.getElementById('tr-success');
+  const errorEl = document.getElementById('tr-error');
+  const statusEl = document.getElementById('tr-status');
+  const btn = document.getElementById('tr-submit') as HTMLButtonElement | null;
+
+  if (form && btn) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const original = btn.textContent;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      errorEl?.classList.add('hidden');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      if (statusEl) statusEl.textContent = 'Sending your inquiry…';
+
+      const data: Record<string, string> = {};
+      new FormData(form).forEach((value, key) => {
+        data[key] = String(value);
+      });
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          // Success path only; guarded because ad blockers stop fbq existing.
+          if (window.fbq) window.fbq('track', 'Lead');
+          if (statusEl) statusEl.textContent = '';
+          form.classList.add('hidden');
+          successEl?.classList.remove('hidden');
+          successEl?.classList.add('flex');
+          (successEl as HTMLElement | null)?.focus();
+        } else {
+          throw new Error(result.message || 'Submission failed');
+        }
+      } catch {
+        if (statusEl) statusEl.textContent = '';
+        errorEl?.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = original;
+        (errorEl as HTMLElement | null)?.focus();
+      }
+    });
+  }
+</script>

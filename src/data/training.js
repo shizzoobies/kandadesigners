@@ -1,0 +1,289 @@
+// The training content service line: one file every /training/* page reads.
+//
+// This is deliberately the ONLY place the section's facts live, because the
+// business brief (TAAS/extracted/ka-handoff/05-website-build/BRIEF.md) puts
+// hard limits on what may be published, and a single file is auditable in a
+// way that copy scattered across five pages is not:
+//
+//   1. NO PRICING. No rates, fees, ranges, or "starting at". Engagement models
+//      are described by shape only. Nothing in this file may carry a dollar
+//      figure, and nothing rendered from it may either.
+//   2. NO UNAUDITED PORTFOLIO WORK. Anything built for a former employer
+//      belongs to that employer. A sample renders only when `status` is
+//      'live', and 'live' is set by a person who has confirmed provenance,
+//      never by inference.
+//   3. NO NAMES WITHOUT PERMISSION. The four instructional designers and two
+//      subject matter experts have a marketing-use election in their
+//      Schedule A that is not filled in yet. Cards stay placeholders until
+//      Alex flips `named` to true per person and supplies the approved text.
+//   4. NO THROUGHPUT NUMBERS. Never state courses per week or per month. The
+//      claim is "never the bottleneck", not a count.
+//
+// When Alex's answers arrive, this file is the whole edit.
+
+// Roughly sixty combined years across the bench, per the handoff README.
+// FLAGGED FOR CONFIRMATION: the brief lists this figure among the things
+// Alex must confirm before launch. Render it as "roughly", never as exact.
+export const combinedYears = 60;
+
+export const section = {
+  name: 'Training content',
+  href: '/training/',
+  email: 'alex@ka-performancefl.com',
+  pdf: '/downloads/KA-Performance-Training-Capabilities.pdf',
+  pdfName: 'KA-Performance-Training-Capabilities.pdf',
+};
+
+// The section's own navigation, rendered by TrainingSubnav.astro on every
+// training page so the four surfaces read as one place.
+export const sectionLinks = [
+  { href: '/training/', label: 'Overview' },
+  { href: '/training/samples/', label: 'Samples' },
+  { href: '/training/team/', label: 'The bench' },
+  { href: section.pdf, label: 'Capabilities (PDF)', download: true },
+];
+
+// What we build. Order is roughly "biggest to smallest", then the two
+// services that act on content a client already has.
+export const deliverables = [
+  {
+    title: 'Full courses',
+    blurb: 'Multi-module programs with a learning path, practice, and assessment, built to run in your LMS on day one.',
+  },
+  {
+    title: 'Standard modules',
+    blurb: 'A single topic taught properly: objectives, teaching, practice, check. The unit most training libraries are actually made of.',
+  },
+  {
+    title: 'Microlearning',
+    blurb: 'Five to ten minutes on one thing, built for the moment someone needs it rather than the quarter they are assigned it.',
+  },
+  {
+    title: 'Job aids and performance support',
+    blurb: 'Checklists, decision trees, and reference pieces that live next to the work instead of in a course catalog.',
+  },
+  {
+    title: 'Assessments',
+    blurb: 'Scenario-based checks that measure whether someone can do the thing, not whether they can recognize the sentence about it.',
+  },
+  {
+    title: 'Conversion and refresh',
+    blurb: 'Existing slide decks, PDFs, and aging modules rebuilt as current, interactive, trackable content.',
+  },
+  {
+    title: 'Accessibility remediation',
+    blurb: 'Training you already own, brought up to WCAG 2.1 AA and tested in a real LMS rather than an authoring preview.',
+  },
+];
+
+// How it ships. The point of listing these plainly is procurement: the
+// hosting and learner-data lines remove an objection before it is raised.
+export const delivery = {
+  formats: ['SCORM 1.2', 'SCORM 2004', 'xAPI', 'Plain HTML'],
+  notes: [
+    'Delivered into your own LMS. We do not host your content.',
+    'We never receive learner data. Completion, scores, and identities stay in your system.',
+    'Standard blocks stay editable by your team. Custom interactive components come back to us, and we say which is which before the project starts.',
+  ],
+};
+
+// The production pipeline, shown as a visible process because buyers ask
+// what the process is and showing it signals experience.
+export const pipeline = [
+  {
+    label: 'Discovery',
+    note: 'Audience, objective, constraints, and what your LMS actually supports. We leave with a scope we can both point at.',
+  },
+  {
+    label: 'Outline',
+    note: 'Objectives mapped to content, in the order a learner needs them. Your subject matter expert signs off here, before anything expensive happens.',
+  },
+  {
+    label: 'Storyboard',
+    note: 'Every screen, every interaction, every assessment item, in writing and in wireframe. Changes are cheap at this stage and we say so.',
+  },
+  {
+    label: 'Alpha',
+    note: 'The working build, reviewed by our instructional designer and your reviewer against the storyboard.',
+  },
+  {
+    label: 'Beta and LMS testing',
+    note: 'Loaded into your real LMS, on real accounts, tested for tracking, completion, keyboard, and screen reader. Not in an authoring preview.',
+  },
+  {
+    label: 'Final delivery',
+    note: 'The package, the source, and a written note of anything your team can and cannot edit later.',
+  },
+];
+
+// Engagement models, by shape only. The brief is explicit: never a number.
+export const engagementModels = [
+  {
+    title: 'Fixed project',
+    shape: 'Defined deliverables, defined scope, a fixed price agreed before work starts. Best when you know what you need and when you need it.',
+  },
+  {
+    title: 'Monthly pod',
+    shape: 'Dedicated capacity for a defined period. Best for a team with a backlog that never quite gets to the top of anyone\'s week.',
+  },
+  {
+    title: 'Retainer bench',
+    shape: 'On-call capacity for overflow and rush work. Best when the volume is unpredictable but the deadlines are not.',
+  },
+];
+
+// Accessibility, as a section rather than a footnote. The delivery standard
+// for client content is 2.1 AA (what procurement asks for); this site itself
+// aims at 2.2 AA, see /accessibility/.
+export const accessibility = {
+  standard: 'WCAG 2.1 AA',
+  tests: [
+    'Keyboard alone: every interaction reachable and operable, in a sensible order, with a focus indicator you can see.',
+    'Screen reader: read through with a real screen reader, not a checker, so labels and reading order make sense out loud.',
+    'Contrast: measured, not eyeballed, across text, controls, and states.',
+    'Motion: reduced-motion preferences respected in every animation.',
+    'In the LMS: all of the above verified inside your actual LMS, because authoring previews lie.',
+  ],
+};
+
+// AI transparency. Short and confident; volunteering this reads as maturity.
+export const aiTransparency = [
+  'AI-assisted authoring, with a human instructional designer reviewing and validating every output before it reaches you.',
+  'Your confidential material is never entered into a tool that trains on submitted content.',
+  'Any restriction you need, from specific tools to no AI at all, is written into the statement of work.',
+];
+
+// The instructional design bench. Placeholders until marketing-use elections
+// come back. When one does: set `named: true`, fill `name`, `focus`, `years`,
+// `background` from the APPROVED wording, and add `photo` only if a headshot
+// was supplied. Three of the four are already public on /artists/ in a
+// different capacity; that permission does not transfer, so do not link them.
+export const bench = [
+  { named: false, focus: 'Curriculum architecture and assessment design', years: null, background: '', photo: null },
+  { named: false, focus: 'Visual design and illustrated learning', years: null, background: '', photo: null },
+  { named: false, focus: 'Interactive and scenario-based learning', years: null, background: '', photo: null },
+  { named: false, focus: 'Technical and compliance training', years: null, background: '', photo: null },
+];
+
+// Subject matter experts. Credential-forward, and deliberately NOT framed as
+// endorsement: the SME agreements bar representing that an SME endorses a
+// client or provides professional services through K&A. They validate
+// content; they do not advise your business.
+export const smes = [
+  {
+    named: false,
+    field: 'Accounting and finance',
+    credentialLine: 'Licensed CPA',
+    bio: '',
+    photo: null,
+  },
+  {
+    named: false,
+    field: 'Construction and industrial project management',
+    credentialLine: 'Working construction project manager',
+    bio: '',
+    photo: null,
+  },
+];
+
+// Verticals we lead with. Construction first: Alex's prior years building
+// training for the trades and a construction PM on the SME bench make it the
+// deepest claim.
+export const verticals = [
+  {
+    title: 'Construction and skilled trades',
+    blurb: 'Safety, process, and craft training written by people who know a jobsite is not a classroom, validated by a working project manager.',
+  },
+  {
+    title: 'Finance and accounting',
+    blurb: 'Technical content reviewed by a licensed CPA, with the rigor that regulated topics and continuing education demand.',
+  },
+  {
+    title: 'Everyone else with a backlog',
+    blurb: 'Onboarding, compliance, systems training, and the fifty-slide deck that should have been a module years ago.',
+  },
+];
+
+// Samples. `status` gates rendering:
+//   'live'    renders in the grid and has a viewer page. Provenance CONFIRMED.
+//   'planned' renders as a clearly marked placeholder card, no viewer page.
+//   'audit'   renders NOWHERE. Listed so the provenance audit has a checklist.
+//
+// The viewer iframes `dir` (a self-contained HTML build under
+// public/training-samples/). Each live sample owes a frame: what it is, what
+// it demonstrates, the technique, and the accessibility standard it meets.
+export const samples = [
+  {
+    slug: 'rfi-that-gets-answered',
+    status: 'live',
+    title: 'The RFI that gets answered',
+    dir: '/training-samples/rfi/',
+    kind: 'Microlearning',
+    vertical: 'Construction and trades',
+    minutes: 6,
+    what: 'A six-minute microlearning on writing a request for information that a design team can actually act on.',
+    demonstrates: 'Built as an original demonstration piece for this page. No client, no employer material; the scenario is invented.',
+    technique: 'Scenario branching with immediate feedback, a drag-free sorting activity, and a knowledge check that scores the decision rather than the recall.',
+    accessibility: 'Keyboard operable end to end, screen reader tested, reduced motion respected, WCAG 2.1 AA.',
+    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
+  },
+  {
+    slug: 'planned-construction',
+    status: 'planned',
+    title: 'Construction and trades module',
+    kind: 'Standard module',
+    vertical: 'Construction and trades',
+    what: 'A full standard module with practice and assessment, validated by our construction project management SME.',
+  },
+  {
+    slug: 'planned-finance',
+    status: 'planned',
+    title: 'Finance and accounting module',
+    kind: 'Standard module',
+    vertical: 'Finance and accounting',
+    what: 'A technical accounting topic built to continuing-education rigor, reviewed by our CPA.',
+  },
+  {
+    slug: 'planned-remediation',
+    status: 'planned',
+    title: 'Accessibility remediation, before and after',
+    kind: 'Remediation',
+    vertical: 'Any',
+    what: 'An inaccessible legacy module and its remediated twin, side by side, with the audit findings that drove each change.',
+  },
+
+  // PROVENANCE AUDIT LIST. These eleven interactives already sit unlinked and
+  // noindexed under public/interactives/ (sources in public/HTML Builds/).
+  // Nothing in them names an employer, but that is not provenance. Each one
+  // needs Alex to answer "built for a former employer, on their time, or from
+  // their template?" before it can move to 'live'. Until then they render
+  // nowhere.
+  { slug: 'audit-welcome', status: 'audit', title: 'Welcome', dir: '/interactives/welcome/' },
+  { slug: 'audit-the-why', status: 'audit', title: 'The why', dir: '/interactives/the-why/' },
+  { slug: 'audit-learner-customer', status: 'audit', title: 'The learner is the customer', dir: '/interactives/the-learner-is-the-customer/' },
+  { slug: 'audit-teaching-purpose', status: 'audit', title: 'Teaching with a purpose', dir: '/interactives/teaching-with-a-purpose/' },
+  { slug: 'audit-success-measurable', status: 'audit', title: 'Success must be measurable', dir: '/interactives/success-must-be-measurable/' },
+  { slug: 'audit-ideas-measure', status: 'audit', title: 'Ideas of things to measure', dir: '/interactives/ideas-to-measure/' },
+  { slug: 'audit-strategy-design-1', status: 'audit', title: 'From strategy to design 1', dir: '/interactives/from-strategy-to-design-1/' },
+  { slug: 'audit-strategy-design-2', status: 'audit', title: 'From strategy to design 2', dir: '/interactives/from-strategy-to-design-2/' },
+  { slug: 'audit-check-in-1', status: 'audit', title: 'Check in 1', dir: '/interactives/check-in-1/' },
+  { slug: 'audit-check-in-2', status: 'audit', title: 'Check in 2', dir: '/interactives/check-in-2/' },
+  { slug: 'audit-phishing', status: 'audit', title: 'Phishing scenarios', dir: '/interactives/phishing-scenarios/' },
+];
+
+export const liveSamples = samples.filter((s) => s.status === 'live');
+export const plannedSamples = samples.filter((s) => s.status === 'planned');
+export const sampleBySlug = (slug) => liveSamples.find((s) => s.slug === slug);
+
+// The inquiry form. This is the intake questionnaire from the launch
+// checklist, so a lead arrives with what Alex needs to quote instead of
+// what he needs to ask. Only the first four are required; the rest are
+// optional and the labels say so. Posted to Web3Forms with the subject
+// "New training inquiry | ka-performancefl.com".
+export const inquiryFields = {
+  required: ['name', 'organization', 'email', 'need'],
+  sourceReadiness: ['Nothing yet, starting from scratch', 'Rough notes and slides', 'A complete existing course or document', 'Not sure'],
+  smeAvailability: ['Yes, we have someone', 'Partly, limited hours', 'No, we would need yours', 'Not sure'],
+  accessibilityRequirement: ['Required, WCAG 2.1 AA or similar', 'Preferred but not required', 'Not required', 'Not sure'],
+  heardFrom: ['Referral', 'Search', 'LinkedIn', 'Other'],
+};

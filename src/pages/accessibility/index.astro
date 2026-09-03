@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 // Keep this date current whenever the substance of the statement changes.
-const lastUpdated = 'August 1, 2026';
+const lastUpdated = 'September 3, 2026';
 const a11yEmail = 'help@ka-performancefl.com';
 ---
 <BaseLayout
@@ -87,11 +87,44 @@ const a11yEmail = 'help@ka-performancefl.com';
       </div>
 
       <div>
+        <h2 class="font-display text-2xl md:text-3xl">How we test</h2>
+        <p class="mt-5 leading-relaxed text-muted">
+          Automated tools catch roughly a third of real accessibility problems, so we treat them as
+          the floor rather than the audit. Every page of this site is checked with axe-core against
+          the WCAG 2.0, 2.1, and 2.2 A and AA rule sets, and with Lighthouse. On top of that, a
+          scripted keyboard pass walks the entire tab order of every page and checks that each stop
+          is reachable, in a sensible order, and shows a visible focus indicator. Where axe cannot
+          decide, usually contrast on an element whose background is animated or overlapping, we
+          measure it by hand.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          The training section, added in September 2026, went through all of that plus a read of
+          each page's accessibility tree as a screen reader would present it, and a full keyboard
+          play-through of the embedded sample confirming that focus enters the frame, moves through
+          it, and hands back to the page rather than getting stuck. The scripts that do this live in
+          the site's repository and run before every deploy that touches those pages, so the
+          statement stays true rather than aspirational.
+        </p>
+      </div>
+
+      <div>
         <h2 class="font-display text-2xl md:text-3xl">Known limitations</h2>
         <p class="mt-5 leading-relaxed text-muted">
           The home page leans on scroll-driven animation. The content is built to be understandable
           without the motion, and the sequence stops entirely when reduced motion is requested. We
           are continuing to simplify the interaction for people who keep motion enabled.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          The training samples run inside a frame on the samples pages. Frames are the most common
+          place for keyboard focus to get trapped, so each viewer page has a "skip past the sample"
+          link that appears when you tab to it, and every sample can also be opened on its own in a
+          new tab, full screen and with no frame at all. The samples themselves are built to be
+          operable with the keyboard alone, with no timing and no sound.
+        </p>
+        <p class="mt-5 leading-relaxed text-muted">
+          The training section has not yet had a live session with a person driving a screen
+          reader end to end, as opposed to our review of what the screen reader would be given.
+          That session is next on our list, and this page will say so when it has happened.
         </p>
       </div>
 

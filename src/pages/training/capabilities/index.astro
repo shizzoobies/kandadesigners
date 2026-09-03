@@ -1,0 +1,453 @@
+---
+// The capabilities one-pager. This page IS the source of the PDF: everything
+// on it is read from src/data/training.js, and scripts/capabilities-pdf.mjs
+// renders this URL with print media to public/downloads/. Edit the data file,
+// rebuild, rerun the script; never hand-edit the PDF.
+//
+// The business brief (TAAS/extracted/ka-handoff/05-website-build/BRIEF.md)
+// forbids four things on this asset, and enterprise buyers forward it, so the
+// rules bind harder here than anywhere else on the site:
+//   1. No pricing of any kind. Engagement models by shape only.
+//   2. No names, of the bench or the subject matter experts. Structure and
+//      credential lines only, until the marketing-use elections come back.
+//   3. No throughput numbers. "Never the bottleneck", never a count.
+//   4. No client or employer names.
+//
+// This page is a leaf: TrainingSubnav is deliberately NOT rendered here, both
+// because the section nav would follow you into a dead end and because the
+// PDF has no use for it.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import {
+  section,
+  combinedYears,
+  deliverables,
+  delivery,
+  pipeline,
+  engagementModels,
+  accessibility,
+  aiTransparency,
+  bench,
+  smes,
+  verticals,
+} from '../../../data/training.js';
+
+// The brief flags the combined-years figure as "confirm before launch", so it
+// is rendered as a word and hedged with "roughly", never as a hard number.
+const YEAR_WORDS = { 60: 'sixty', 50: 'fifty', 70: 'seventy', 80: 'eighty' };
+const yearsWord = YEAR_WORDS[combinedYears] ?? String(combinedYears);
+
+// Each accessibility test string is written as "Label: what we actually do".
+// The one-pager has room for the labels; the /training/ page carries the rest.
+const testLabels = accessibility.tests.map((t) => t.split(':')[0].trim());
+
+const pipelineLabels = pipeline.map((p) => p.label);
+const benchFocus = bench.map((b) => b.focus);
+const verticalTitles = verticals.map((v) => v.title);
+
+const SITE_LABEL = 'ka-performancefl.com/training';
+---
+<BaseLayout
+  title="Training Content Capabilities | K & A Performance"
+  description="A one-page capabilities summary for K & A Performance training content: what we build, the bench, subject matter experts, SCORM and xAPI delivery, WCAG 2.1 AA, and engagement models. Downloadable as a PDF."
+>
+  <!-- On-screen framing. All of this is hidden in print; the PDF starts at
+       the article below. -->
+  <section class="cap-screen mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      <a href={section.href} class="transition-colors hover:text-accent">Training content</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span> Capabilities
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      The capabilities <span class="text-accent">one-pager</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Everything a buyer needs to circulate internally, on one page: what we
+      build, who builds it, how it reaches your LMS, and the accessibility
+      standard it is tested against. The page below is the document. The
+      download is the same page, printed.
+    </p>
+    <p data-animate="type-settle" data-animate-delay="0.3" class="mt-8">
+      <a class="btn-draw cap-download" href={section.pdf} download>Download the one-pager (PDF)</a>
+    </p>
+  </section>
+
+  <div class="cap-shell mx-auto max-w-5xl px-6 pb-24">
+    <article id="capabilities" class="cap glow-frame">
+      <header class="cap-masthead">
+        <div class="cap-ident">
+          {/* alt="" on purpose: the studio name sits next to the mark as real
+              text, so describing the artwork would announce it twice. */}
+          <img class="cap-logo" src="/images/logo-lockup.webp?v=1" alt="" width="800" height="303" />
+          <div>
+            <p class="cap-name">K &amp; A Performance</p>
+            <p class="cap-tagline">Training and eLearning content development</p>
+          </div>
+        </div>
+        <div class="cap-contact-top">
+          <p>{SITE_LABEL}</p>
+          <p>{section.email}</p>
+        </div>
+      </header>
+
+      <div class="cap-body">
+        <div class="cap-col">
+          <section class="cap-block">
+            <h2 class="cap-h">What we do</h2>
+            <p class="cap-lede">
+              Senior instructional designers running an AI-assisted production
+              pipeline, so training content is never the bottleneck, delivered
+              finished into your own LMS.
+            </p>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">What we build</h2>
+            <ul class="cap-list cap-two">
+              {deliverables.map((d) => <li>{d.title}</li>)}
+            </ul>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">The bench</h2>
+            <p class="cap-p">
+              A bench of senior instructional designers with roughly {yearsWord} years
+              of combined experience, working under written agreement; K&amp;A is
+              responsible for the work product.
+            </p>
+            <ul class="cap-list cap-two">
+              {benchFocus.map((f) => <li>{f}</li>)}
+            </ul>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">Subject matter experts</h2>
+            {/* A list rather than a definition list on purpose: Chromium
+                drops dl/dt/dd into untagged NonStruct elements when it writes
+                the PDF, and a studio that sells accessibility cannot ship a
+                capability statement whose structure tree has holes in it. A
+                list of label-plus-line items reads correctly in both. */}
+            <ul class="cap-dl">
+              {smes.map((s) => (
+                <li>
+                  <span class="cap-term">{s.field}</span>
+                  <span class="cap-def">{s.credentialLine}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="cap-p cap-fine">
+              Subject matter experts validate content accuracy. They do not
+              provide professional services to our clients and do not endorse
+              them.
+            </p>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">Where we go deepest</h2>
+            <p class="cap-p">{verticalTitles.join(' · ')}</p>
+          </section>
+        </div>
+
+        <div class="cap-col">
+          <section class="cap-block">
+            <h2 class="cap-h">How we deliver</h2>
+            <p class="cap-formats">{delivery.formats.join(' · ')}</p>
+            <ul class="cap-list">
+              {delivery.notes.map((n) => <li>{n}</li>)}
+            </ul>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">How we work</h2>
+            <p class="cap-p cap-pipeline">{pipelineLabels.join(' · ')}</p>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">Accessibility</h2>
+            <p class="cap-p">
+              <span class="cap-strong">{accessibility.standard}</span>, on every
+              deliverable, tested five ways:
+            </p>
+            <p class="cap-p cap-pipeline">{testLabels.join(' · ')}</p>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">AI transparency</h2>
+            <ul class="cap-list">
+              {aiTransparency.map((a) => <li>{a}</li>)}
+            </ul>
+          </section>
+
+          <section class="cap-block">
+            <h2 class="cap-h">Engagement models</h2>
+            <ul class="cap-dl">
+              {engagementModels.map((m) => (
+                <li>
+                  <span class="cap-term">{m.title}</span>
+                  <span class="cap-def">{m.shape}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </div>
+
+      <footer class="cap-foot">
+        <h2 class="cap-h cap-h-foot">Contact</h2>
+        <p>
+          <span>{section.email}</span>
+          <span class="cap-sep" aria-hidden="true">&middot;</span>
+          <span>{SITE_LABEL}</span>
+          <span class="cap-sep" aria-hidden="true">&middot;</span>
+          <span>Gainesville, Florida</span>
+        </p>
+      </footer>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  /* The article is sized off one knob: its own font-size. Everything inside
+     is em-relative, so fitting the PDF onto exactly one US Letter page is a
+     single number change in the print block below rather than a sweep. */
+  .cap {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--color-ink);
+    padding: 2.4em;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .cap-masthead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5em;
+    flex-wrap: wrap;
+    padding-bottom: 0.7em;
+    border-bottom: 2px solid var(--color-accent);
+  }
+  .cap-ident {
+    display: flex;
+    align-items: center;
+    gap: 0.9em;
+  }
+  .cap-logo {
+    width: 7.2em;
+    height: auto;
+    flex: none;
+  }
+  .cap-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: 1.55em;
+    line-height: 1.1;
+  }
+  .cap-tagline {
+    font-family: var(--font-heading);
+    font-size: 0.92em;
+    color: var(--color-muted);
+    margin-top: 0.15em;
+  }
+  .cap-contact-top {
+    font-family: var(--font-mono);
+    font-size: 0.72em;
+    letter-spacing: 0.06em;
+    text-align: right;
+    color: var(--color-accent);
+    line-height: 1.5;
+  }
+
+  .cap-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.6em;
+    margin-top: 1.4em;
+  }
+  @media (min-width: 48rem) {
+    .cap-body {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4em 2.2em;
+    }
+  }
+  .cap-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15em;
+  }
+
+  .cap-h {
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.45em;
+  }
+
+  /* Every run of body copy stays at 1em. The article's font-size is the only
+     type knob, which is what lets the print scale drop without any line of
+     reading text falling under the 9pt legibility floor. Only the mono
+     labels and kickers, which are not body copy, size down from it. */
+  .cap-p,
+  .cap-lede {
+    font-size: 1em;
+    line-height: 1.42;
+  }
+  .cap-strong {
+    font-weight: 700;
+  }
+  .cap-fine {
+    color: var(--color-muted);
+    margin-top: 0.4em;
+  }
+  .cap-pipeline {
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+  .cap-formats {
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    letter-spacing: 0.08em;
+    padding-bottom: 0.45em;
+    margin-bottom: 0.45em;
+    border-bottom: 1px solid rgb(34 28 21 / 0.15);
+  }
+
+  .cap-list {
+    line-height: 1.38;
+    display: grid;
+    gap: 0.22em;
+  }
+  .cap-list li {
+    padding-left: 0.85em;
+    position: relative;
+  }
+  .cap-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.52em;
+    width: 0.28em;
+    height: 0.28em;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+  .cap-two {
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 30rem) {
+    .cap-two {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1.1em;
+    }
+  }
+
+  .cap-dl {
+    line-height: 1.38;
+    display: grid;
+    gap: 0.4em;
+  }
+  .cap-term {
+    display: block;
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+  .cap-def {
+    display: block;
+    color: var(--color-muted);
+  }
+
+  .cap-foot {
+    margin-top: 1.5em;
+    padding-top: 0.7em;
+    border-top: 1px solid rgb(34 28 21 / 0.15);
+    font-family: var(--font-heading);
+  }
+  .cap-h-foot {
+    margin-bottom: 0.3em;
+  }
+  .cap-sep {
+    color: var(--color-accent);
+    padding: 0 0.5em;
+  }
+
+  /* ---------------------------------------------------------------- print
+     The PDF is this article alone on one US Letter page. Everything the
+     browser puts around it is layout chrome and gets hidden: the fixed nav,
+     the footer, Kai's chat orb, the start-a-project dialog, the skip link,
+     the ambient blobs, the on-screen hero, and the download button (a
+     download link inside a downloaded file is noise).
+
+     :global() is required for the chrome, which is rendered by BaseLayout and
+     its components rather than by this file, so Astro's scoping would
+     otherwise rewrite the selectors into nothing. */
+  @media print {
+    @page {
+      size: Letter;
+      margin: 0.55in;
+    }
+
+    :global(html),
+    :global(body) {
+      background: #fff !important;
+    }
+    :global(header[data-nav]),
+    :global(body > footer),
+    :global(#sg-root),
+    :global(#sp-modal),
+    :global(.skip-link),
+    :global(.bg-ambient),
+    :global(nav[aria-label="Training section"]) {
+      display: none !important;
+    }
+    /* Astro's scoping does reach these, but the rule has to outrank the
+       screen layout, hence the explicit block. */
+    .cap-screen,
+    .cap-download {
+      display: none !important;
+    }
+
+    :global(main) {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .cap-shell {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* THE KNOB. Every run of body copy is 1em, so this value IS the body
+       text size and must never drop below the 9pt legibility floor. Raise to
+       fill the page, lower if the PDF spills to two, and if 9pt still spills,
+       cut content rather than the type. Verified at exactly one page by
+       scripts/capabilities-pdf.mjs, which exits non-zero if it is not. */
+    .cap {
+      font-size: 10.4pt;
+      line-height: 1.4;
+      padding: 0;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      background: #fff !important;
+      overflow: visible;
+    }
+    .cap-body {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2em 2em;
+      margin-top: 1.1em;
+    }
+    .cap-two {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 1em;
+    }
+    .cap-block,
+    .cap-dl li,
+    .cap-list li {
+      break-inside: avoid;
+    }
+  }
+</style>

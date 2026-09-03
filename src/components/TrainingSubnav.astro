@@ -1,0 +1,29 @@
+---
+// The training section's own navigation: Overview, Samples, The bench, and
+// the capabilities PDF. Rendered under the hero on every /training/* page so
+// the four surfaces read as one place. Current page is marked for assistive
+// technology with aria-current, and visually in accent.
+import { sectionLinks } from '../data/training.js';
+
+const path = Astro.url.pathname;
+const isCurrent = (href) => !href.endsWith('.pdf') && path === href;
+---
+<nav aria-label="Training section" class="mx-auto max-w-6xl px-6">
+  <ul class="flex flex-wrap items-center gap-x-8 gap-y-3 border-y border-ink/10 py-4">
+    {sectionLinks.map((l) => (
+      <li>
+        <a
+          href={l.href}
+          download={l.download ? '' : undefined}
+          aria-current={isCurrent(l.href) ? 'page' : undefined}
+          class:list={[
+            'font-heading text-sm font-semibold tracking-wide transition-colors',
+            isCurrent(l.href) ? 'text-accent' : 'text-ink/80 hover:text-accent',
+          ]}
+        >
+          {l.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

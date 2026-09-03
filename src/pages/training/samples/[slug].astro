@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { liveSamples } from '../../../data/training.js';
+
+// One sample viewer. Same idiom as the course chapter page: slim bar, the
+// interactive filling the viewport in an iframe, prev/next underneath. The
+// difference is the escape hatch. The business brief names an embedded
+// sample viewer as the most likely keyboard trap on the whole section, so
+// there is a skip link immediately before the frame and a plain sentence
+// telling keyboard and screen reader users what the frame will do.
+//
+// getStaticPaths runs over liveSamples only. A 'planned' or 'audit' entry
+// has no page here, by design, and never gets one by accident.
+
+export function getStaticPaths() {
+  return liveSamples.map((s) => ({ params: { slug: s.slug }, props: { sample: s } }));
+}
+
+const { sample } = Astro.props;
+
+const SITE = 'https://ka-performancefl.com';
+const PAGE_URL = SITE + '/training/samples/' + sample.slug + '/';
+
+const index = liveSamples.findIndex((s) => s.slug === sample.slug);
+const prev = index > 0 ? liveSamples[index - 1] : null;
+const next = index >= 0 && index + 1 < liveSamples.length ? liveSamples[index + 1] : null;
+const hasSiblings = liveSamples.length > 1;
+
+const frame = [
+  { term: 'What it is', detail: sample.what },
+  { term: 'What it demonstrates', detail: sample.demonstrates },
+  { term: 'Technique', detail: sample.technique },
+  { term: 'Accessibility', detail: sample.accessibility },
+  { term: 'Built with', detail: sample.built },
+];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: SITE + '/services/' },
+    { '@type': 'ListItem', position: 3, name: 'Training content', item: SITE + '/training/' },
+    { '@type': 'ListItem', position: 4, name: 'Samples', item: SITE + '/training/samples/' },
+    { '@type': 'ListItem', position: 5, name: sample.title, item: PAGE_URL },
+  ],
+};
+
+const workSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['CreativeWork', 'LearningResource'],
+  '@id': PAGE_URL + '#sample',
+  url: PAGE_URL,
+  name: sample.title,
+  description: sample.what,
+  learningResourceType: sample.kind,
+  timeRequired: 'PT' + sample.minutes + 'M',
+  inLanguage: 'en-US',
+  isAccessibleForFree: true,
+  accessMode: ['textual', 'visual'],
+  accessModeSufficient: ['textual'],
+  accessibilityFeature: [
+    'fullKeyboardControl',
+    'alternativeText',
+    'readingOrder',
+    'structuralNavigation',
+    'highContrastDisplay',
+  ],
+  accessibilityHazard: ['noFlashingHazard', 'noMotionSimulationHazard', 'noSoundHazard'],
+  accessibilityControl: ['fullKeyboardControl', 'fullMouseControl', 'fullTouchControl'],
+};
+---
+<BaseLayout
+  title={sample.title + ' | Training Samples | K & A Performance'}
+  description={sample.what}
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(workSchema)} />
+
+  <section class="mx-auto max-w-7xl px-6 pt-28 pb-16 md:pt-32">
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
+        <a href="/training/samples/" class="transition-colors hover:text-accent">Samples</a>
+        <span class="text-accent" aria-hidden="true">&middot;</span>
+        {sample.title}
+      </p>
+      <a
+        href={sample.dir}
+        target="_blank"
+        rel="noopener"
+        class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot"
+      >
+        Open in a new tab<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+
+    <h1 class="font-display text-3xl leading-tight md:text-5xl">{sample.title}</h1>
+    <p class="mt-4 max-w-3xl text-lg leading-relaxed text-muted">{sample.what}</p>
+
+    <p class="mt-8 max-w-3xl text-sm leading-relaxed text-muted">
+      The sample runs inside a frame. Tab moves through it; when you reach the
+      end it hands focus back to this page. Prefer it full screen?
+      <a href={sample.dir} target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">
+        Open it in a new tab<span class="sr-only"> (opens in a new tab)</span></a>.
+    </p>
+
+    <!-- The escape hatch. Off-screen until focused, then it lands in the
+         top-left of the viewport like the sitewide skip link, so a keyboard
+         user who does not want to page through the whole sample can leave it
+         in one keystroke. #after-sample carries tabindex="-1" so activating
+         this actually moves focus rather than only scrolling. -->
+    <a class="tr-skip" href="#after-sample">Skip past the sample</a>
+
+    <div class="mt-6">
+      <iframe
+        src={sample.dir}
+        title={'Interactive sample: ' + sample.title}
+        class="glow-frame w-full"
+        style="height: max(76vh, 680px); border: 0;"
+        loading="eager"
+      ></iframe>
+    </div>
+
+    <div id="after-sample" tabindex="-1" class="scroll-mt-28"></div>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-4xl">About this sample</h2>
+    <dl class="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-[14rem_1fr]">
+      {frame.map((row) => (
+        <>
+          <dt class="font-mono text-xs uppercase tracking-[0.22em] text-accent md:pt-1">{row.term}</dt>
+          <dd class="m-0 leading-relaxed text-muted">{row.detail}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  {hasSiblings && (
+    <nav aria-label="Other samples" class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-12">
+      <div class="flex flex-wrap items-center justify-between gap-6">
+        {prev ? (
+          <a href={'/training/samples/' + prev.slug + '/'} class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">
+            <span aria-hidden="true">&larr;</span> {prev.title}
+          </a>
+        ) : <span></span>}
+        {next ? (
+          <a href={'/training/samples/' + next.slug + '/'} class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">
+            {next.title} <span aria-hidden="true">&rarr;</span>
+          </a>
+        ) : <span></span>}
+      </div>
+    </nav>
+  )}
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <div>
+        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
+          Ask about something <span class="text-accent">like this</span>
+        </h2>
+        <p data-animate="type-settle" class="mt-6 max-w-xl leading-relaxed text-muted">
+          Tell us the topic, the audience, and what your LMS accepts. We will
+          come back with the shape the piece should take and what building it
+          involves.
+        </p>
+      </div>
+      <div data-animate="type-settle" data-animate-delay="0.1" class="flex flex-wrap items-center gap-6">
+        <a href="/training/?inquire=1" class="btn-draw">Ask about a project like this</a>
+        <a href="/training/samples/" class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">
+          All samples
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Same show-on-focus behaviour as the sitewide .skip-link, kept as its own
+     class so the two never fight over position. Moved with a transform
+     rather than display, which would drop it out of the tab order. */
+  .tr-skip {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    transform: translateY(calc(-100% - 1.5rem));
+    transition: transform var(--dur-fast) ease;
+    background: var(--color-accent);
+    color: #fffdf9;
+    font-family: var(--font-heading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.7rem 1.25rem;
+    border-radius: 9999px;
+    box-shadow: 0 12px 30px -12px rgb(34 28 21 / 0.45);
+  }
+  .tr-skip:focus {
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tr-skip {
+      transition: none;
+    }
+  }
+</style>

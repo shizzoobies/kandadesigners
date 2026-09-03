@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-03T21:22:30.964Z",
+  "origin": "http://127.0.0.1:51426",
+  "pages": [
+    {
+      "path": "/accessibility/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 86,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3453,
+      "cls": 0.001,
+      "tbtMs": 106
+    },
+    {
+      "path": "/training/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 84,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3453,
+      "cls": 0,
+      "tbtMs": 157
+    }
+  ]
+}
