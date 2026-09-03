@@ -86,3 +86,69 @@ export function safeArea(format: FormatKey): SafeAreaBounds {
     height: bottom - top,
   };
 }
+
+/**
+ * How a project beat arranges the clean capture against its lower third.
+ *
+ * "overlay" is the vertical master: the phone frame runs nearly the full
+ * canvas height and the band sits on top of its lower part.
+ * "stack" is the feed and square crops: the phone frame shrinks to fit the
+ * space above a full width band, so no text ever lands on the capture.
+ * "split" is landscape: the phone frame sits left of center and the lower
+ * third becomes a panel beside it, because a 9:16 phone at full height plus a
+ * band underneath cannot both fit in 1080 pixels of canvas height.
+ */
+export type ShowcaseMode = "overlay" | "stack" | "split";
+
+export type FormatMetrics = {
+  /**
+   * Multiplier on every type size and padding authored against a 1080 wide
+   * canvas. Section 7's "48px minimum at 1080 width" is a relative rule, so
+   * landscape scales up rather than rendering visually smaller type.
+   */
+  typeScale: number;
+  /**
+   * Distance from the canvas bottom to the bottom edge of a bottom-anchored
+   * band. Clears the reserved bottom zone plus a margin proportional to the
+   * safe area, so no band ever sits flush against the reserved edge.
+   */
+  bandBottom: number;
+  showcase: ShowcaseMode;
+  /**
+   * Viewport the full-bleed hook capture uses in this crop. A 780x1688 mobile
+   * capture cropped to fill a 16:9 canvas throws away most of the page, so the
+   * wide crops take the desktop capture instead. Both cover, neither letterboxes.
+   */
+  hookViewport: "mobile" | "desktop";
+};
+
+const SHOWCASE_MODES: Record<FormatKey, ShowcaseMode> = {
+  vertical: "overlay",
+  feedVertical: "stack",
+  square: "stack",
+  landscape: "split",
+};
+
+const HOOK_VIEWPORTS: Record<FormatKey, "mobile" | "desktop"> = {
+  vertical: "mobile",
+  feedVertical: "mobile",
+  square: "desktop",
+  landscape: "desktop",
+};
+
+/**
+ * The per-format numbers every scene lays out from. Nothing in src/scenes may
+ * hardcode a pixel position: it comes from here or from safeArea().
+ */
+export function formatMetrics(format: FormatKey): FormatMetrics {
+  const spec = SAFE_ZONES[format];
+  const safe = safeArea(format);
+
+  return {
+    typeScale: spec.width / 1080,
+    bandBottom:
+      spec.height - safe.bottom + Math.round(safe.height * 0.06),
+    showcase: SHOWCASE_MODES[format],
+    hookViewport: HOOK_VIEWPORTS[format],
+  };
+}

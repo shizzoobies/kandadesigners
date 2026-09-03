@@ -8,9 +8,7 @@ export type PlatePlaceholderProps = {
    * self-documenting.
    */
   plateId?: string;
-  /** Optional single word for the capability montage cuts. */
-  word?: string;
-  /** Optional note under the label. */
+  /** Optional note under the label, usually the capture id going into it. */
   note?: string;
 };
 
@@ -18,12 +16,11 @@ const MID_GREY = "#8C8C8C";
 
 /**
  * A flat mid grey rectangle standing in for content that does not exist yet:
- * the AI context plates in each project beat, and the interaction captures in
- * the capability montage. Nothing here survives into Phase 4.
+ * the AI context plates in each project beat and in the surfaces tour. Nothing
+ * here survives into Phase 4.
  */
 export const PlatePlaceholder: React.FC<PlatePlaceholderProps> = ({
   plateId,
-  word,
   note,
 }) => {
   return (
@@ -35,21 +32,6 @@ export const PlatePlaceholder: React.FC<PlatePlaceholderProps> = ({
         padding: 72,
       }}
     >
-      {word ? (
-        <div
-          style={{
-            fontFamily: BODY_STACK,
-            fontSize: 112,
-            fontWeight: 700,
-            color: "#141414",
-            letterSpacing: -1,
-            textAlign: "center",
-            maxWidth: 864,
-          }}
-        >
-          {word}
-        </div>
-      ) : null}
       {plateId ? (
         <div
           style={{

@@ -63,13 +63,18 @@ export const KineticText: React.FC<KineticTextProps> = ({
   );
 
   return (
-    <div style={style}>
+    // pre-wrap, not a non-breaking space. A hidden span still occupies its
+    // box, so a plain space keeps the reveal from reflowing on its own, and it
+    // leaves the only break opportunity a long project name has. With a
+    // non-breaking space "Southern Legacy Contractors" ran straight through the
+    // reserved right zone in the landscape crop rather than wrapping.
+    <div style={{ whiteSpace: "pre-wrap", ...style }}>
       {text.split("").map((char, i) => (
         <span
           key={`${char}-${i}`}
           style={{ visibility: i < shown ? "visible" : "hidden" }}
         >
-          {char === " " ? " " : char}
+          {char}
         </span>
       ))}
     </div>

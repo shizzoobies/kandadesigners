@@ -15,7 +15,7 @@ export const HOOK: FrameRange = { start: 0, end: 36 };
 export const PROJECT_1: FrameRange = { start: 36, end: 132 };
 export const PROJECT_2: FrameRange = { start: 132, end: 228 };
 export const PROJECT_3: FrameRange = { start: 228, end: 324 };
-export const CAPABILITY_MONTAGE: FrameRange = { start: 324, end: 384 };
+export const SURFACES_TOUR: FrameRange = { start: 324, end: 384 };
 export const CALL_TO_ACTION: FrameRange = { start: 384, end: 450 };
 
 export const PROJECT_BEATS: FrameRange[] = [PROJECT_1, PROJECT_2, PROJECT_3];
@@ -35,17 +35,25 @@ export const PROJECT_BEAT_SHOTS = {
 export const PLATE_SHOT_MAX_FRAMES = 24;
 
 /**
- * Capability montage, relative to CAPABILITY_MONTAGE.start.
+ * Surfaces tour cuts, relative to SURFACES_TOUR.start.
  *
- * Section 6 specified four cuts at 15 frames. The Payments cut was dropped on
- * 2026-09-03 (see the _decisions block in config/projects.json) because
- * checkout is not live on any cleared site, so the remaining three cuts run
- * 20 frames each and the montage still ends on frame 384.
+ * Owner decision 2026-09-03: the capability montage is replaced by a surfaces
+ * tour. The 324 to 384 slot stays where it is, but instead of three interaction
+ * clips it now carries four cuts of 15 frames. Each cut is a different cleared
+ * site, on a different device, held by a different person, with one word of
+ * copy over it. The argument moves from "here are features" to "here is one
+ * studio across four surfaces". The Payments cut stays dropped because
+ * checkout is not live on any cleared site.
+ *
+ * Section 7 asks for a 24 frame minimum hold per line and these cuts hold 15.
+ * Section 6 specified 15 frame montage cuts from the start, and the owner chose
+ * the four-cut structure with that tradeoff in front of them, so 15 stands.
  */
-export const CAPABILITY_MONTAGE_CUTS: FrameRange[] = [
-  { start: 0, end: 20 }, // Booking
-  { start: 20, end: 40 }, // AI
-  { start: 40, end: 60 }, // Yours to edit
+export const SURFACES_TOUR_CUTS: FrameRange[] = [
+  { start: 0, end: 15 }, // Booking
+  { start: 15, end: 30 }, // Yours to edit
+  { start: 30, end: 45 }, // Memberships
+  { start: 45, end: 60 }, // Booking a call
 ];
 
 /** Minimum frames the finished CTA card must hold so a screenshot is readable. */
