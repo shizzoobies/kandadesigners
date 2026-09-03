@@ -18,7 +18,13 @@ assets/plates/*.zoom-*.png
 # The API smoke test frame. It proved the response shape and appears nowhere.
 assets/plates/smoke/
 
-# Generated plate PNGs are 10 to 15 MB each and live on disk, not in git.
-# config/plates.json holds the prompt, model, and quad for every one, so a
-# plate can be regenerated or restored from backup. Back this folder up.
+# Only the seven accepted plates are tracked (about 5 MB each). Rejected
+# candidates stay on disk; config/plates.json records every generation.
 assets/plates/*.png
+!assets/plates/plate-laptop-shoulder-c01.png
+!assets/plates/plate-ipad-lap-c01.png
+!assets/plates/plate-desktop-wide-c01.png
+!assets/plates/plate-handoff-c03.png
+!assets/plates/plate-tablet-b-c03.png
+!assets/plates/plate-phone-hands-b-c03.png
+!assets/plates/plate-phone-hands-c03.png
