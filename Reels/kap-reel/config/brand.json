@@ -1,0 +1,63 @@
+{
+  "_status": "Pre-filled from the live site repo (src/styles/global.css and docs/superpowers/HANDOFF.md) on 2026-09-03. Owner to confirm before Phase 3.",
+  "business_name": "K&A Performance",
+  "url": "ka-performancefl.com",
+  "phone": "904-210-1071",
+  "phone_note": "The live site deliberately publishes no phone number. Kickoff doc asks for this number in the CTA. Owner to confirm it goes on screen.",
+  "city": "Gainesville, FL",
+  "tagline": "Web Design & AI Integration",
+  "footer_line": "Built in Gainesville, FL. Performing everywhere.",
+  "colors": {
+    "canvas": "#F8F5F2",
+    "surface": "#FFFDF9",
+    "ink": "#221C15",
+    "muted": "#6C635A",
+    "accent": "#9A3412",
+    "accent_hot": "#7C2D12",
+    "amber": "#D97706",
+    "dark_canvas": "#0B302D",
+    "dark_surface": "#134E4A",
+    "dark_ink": "#F0F7F5",
+    "dark_muted": "#9FBEB8",
+    "dark_accent": "#5EEAD4",
+    "dark_accent_hot": "#99F6E4"
+  },
+  "color_notes": {
+    "amber": "Buttons and highlights only. Fails AA as text on canvas.",
+    "project_accents": "Per-project accent rotation for Section 6: rust #9A3412, amber #D97706, teal #5EEAD4 on the dark band."
+  },
+  "fonts": {
+    "display": {
+      "family": "Schibsted Grotesk",
+      "file": "assets/brand/fonts/Schibsted-VF.woff2",
+      "weights": "400-900 variable",
+      "license": "OFL"
+    },
+    "body": {
+      "family": "Atkinson Hyperlegible Next",
+      "file": "assets/brand/fonts/AtkinsonNext-VF.woff2",
+      "italic_file": "assets/brand/fonts/AtkinsonNext-Italic-VF.woff2",
+      "weights": "200-800 variable",
+      "license": "OFL"
+    },
+    "mono": {
+      "family": "Lenia Mono",
+      "file": "assets/brand/fonts/LeniaMono-Regular.ttf",
+      "semibold_file": "assets/brand/fonts/LeniaMono-SemiBold.ttf",
+      "license": "FILL_IN (source not recorded in site docs)"
+    },
+    "logo_serif": {
+      "family": "Fraunces",
+      "file": "assets/brand/fonts/Fraunces-VF.woff2",
+      "note": "Logo lockup only. Not a UI font on the live site.",
+      "license": "OFL"
+    }
+  },
+  "logo": {
+    "svg": "assets/brand/logo/kandalogo2.0.svg",
+    "svg_note": "2048x2048 with a full-canvas background path. Not transparent. Vector source of truth is New Logo/K&A Logo.ai. Owner to export a clean transparent SVG.",
+    "png": "assets/brand/logo/approved-logo-transparent.png",
+    "png_note": "1536x1024. Spec asks for 2400px. Fine for 1080 canvases but a 2400px export is preferred.",
+    "lockup": "assets/brand/logo/logo-lockup.webp"
+  }
+}

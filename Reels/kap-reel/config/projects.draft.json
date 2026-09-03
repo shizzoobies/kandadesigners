@@ -1,0 +1,96 @@
+{
+  "_status": "DRAFT candidate list built from src/data/work.js on 2026-09-03. Every entry is cleared_for_public_showcase false until the owner copies it into projects.json and sets it true. The reel never reads this file.",
+  "candidates": [
+    {
+      "id": "fore-motion-golf",
+      "display_name": "Fore Motion Golf",
+      "url": "https://foremotiongolf.com",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Indoor golf in Jacksonville. Founding membership waitlist and an AI caddie.",
+      "proof_points": ["Founding-membership waitlist capture", "AI Robo Caddie assistant", "Custom code, no page builder"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "fdaaf",
+      "display_name": "FDAAF",
+      "url": "https://fdaaf.org",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Disability access nonprofit. Donation and volunteer paths front and center.",
+      "proof_points": ["Accessibility built in from the start", "Donation and volunteer flows", "Site by K&A credit in footer"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "mbs-medicine",
+      "display_name": "MBS Medicine",
+      "url": "https://mbsdoc.com",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Veteran-owned telehealth clinic. Same-week booking and a patient portal.",
+      "proof_points": ["Booking built in", "Patient portal handoff", "Site by K&A credit in footer"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "pbj-strategic-accounting",
+      "display_name": "PB&J Strategic Accounting",
+      "url": "https://pbjsa.com",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Accounting for growing businesses. Clear services and a free-call booking flow.",
+      "proof_points": ["Free-call booking flow", "Site by K&A credit in footer"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "project-makeover",
+      "display_name": "Project Makeover",
+      "url": "https://projectmakeover.org",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "School-space nonprofit. Gallery-driven with donation paths.",
+      "proof_points": ["Donation flow", "Gallery-driven showcase", "Site by K&A credit in footer"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "fixalways",
+      "display_name": "FixAlways",
+      "url": "https://fixalways.com",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Florida home-services directory. AI search that finds the right pro.",
+      "proof_points": ["AI-powered search", "Google Places integration", "Site by K&A credit in footer"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "ellenton-family-practice",
+      "display_name": "Ellenton Family Practice Direct",
+      "url": "FILL_IN",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Direct primary care in Ellenton. Built around membership signups.",
+      "proof_points": ["Membership signup flow"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "southern-legacy-contractors",
+      "display_name": "Southern Legacy Contractors",
+      "url": "FILL_IN",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Concrete across Northeast Florida. Dark, photo-led, quote one tap away.",
+      "proof_points": ["Free quote flow", "Click-to-call phone"],
+      "capture_routes": ["/"]
+    },
+    {
+      "id": "synovial-marketing",
+      "display_name": "Synovial Marketing",
+      "url": "FILL_IN",
+      "cleared_for_public_showcase": false,
+      "credit_allowed": false,
+      "one_liner": "Jacksonville marketing team. Editorial site built around booking a discovery call.",
+      "proof_points": ["Discovery call booking", "Client work showcase"],
+      "capture_routes": ["/"],
+      "note": "Business partner and reseller relationship. Confirm the showcase is welcome on both sides."
+    }
+  ]
+}
