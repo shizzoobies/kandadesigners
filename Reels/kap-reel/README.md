@@ -127,3 +127,47 @@ crushed the url and phone underneath it.
 The device frame and the site capture are allowed to run into a reserved zone,
 because a platform overlay covering part of a screenshot costs nothing. Text and
 the logo are not.
+
+## Audio
+
+`scripts/audio.ts` generates the music beds and sound effects with the
+ElevenLabs API and builds the preview mixes with FFmpeg. It never touches
+Remotion. FFmpeg and FFprobe must be on `PATH`, and `ELEVENLABS_API_KEY` must be
+in `.env`.
+
+```
+npx tsx scripts/audio.ts music --variant a|b|c --length 20|50
+npx tsx scripts/audio.ts sfx --name whoosh-transition|ui-click|impact-low
+npx tsx scripts/audio.ts all
+npx tsx scripts/audio.ts mix [--variant a|b|c]
+npx tsx scripts/audio.ts usage
+```
+
+`music` regenerates once by itself if the take fails Section 9's first second
+energy test, which compares the mean volume of the first 1000 ms against the
+mean volume of the whole track and rejects anything more than 6 dB down. `sfx`
+regenerates once if a take comes back silent or distorted. `usage` prints the
+current ElevenLabs credit spend per product bucket.
+
+Every billable call is logged to `config/audio.json`, including the rejected
+ones, with the full prompt, the model, the length and the credits it actually
+cost. Credits are measured as a before and after delta on the usage endpoint
+because neither audio endpoint reports a cost. Two guards are wired in: a hard
+cap of 12 generations per phase, and a stop if any single generation costs more
+than 5,000 credits. The cap is real and it fired once during Phase 5.
+
+`mix` builds `assets/audio/preview-{a,b,c}.mp4`, which is
+`out/phase4-vertical.mp4` with the finished audio muxed in, plus
+`assets/audio/mix-{a,b,c}-15s.wav`, the bare 48 kHz stereo mix ready for
+Remotion. It trims the bed to 15.0s with a 400 ms fade at the tail, places the
+sound effects on the beat map frames from `src/lib/timing.ts` at 15 dB under the
+bed peak, then normalises to -14 LUFS integrated with true peak at -1 dBFS using
+a two pass loudnorm. A limiter sits between the mix and loudnorm with a ceiling
+solved per variant: loudnorm caps its own gain to protect the peak ceiling and
+will silently miss the loudness target rather than say so, which it did on two
+of the three variants before the limiter was added. The delivered file is then
+measured again, so the numbers reported are measurements and not loudnorm's
+prediction.
+
+Licensing, the exact commercial rights wording, the credit spend and the one
+open eligibility question are all in `LICENSING.md`.

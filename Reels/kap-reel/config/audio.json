@@ -1,0 +1,333 @@
+{
+  "_note": "Phase 5 audio. Every billable ElevenLabs call in this phase is logged in generations, including the ones that were rejected and regenerated. creditsMeasured is a before and after delta on /v1/usage/character-stats?breakdown_type=product_type, not an estimate. Written by scripts/audio.ts.",
+  "api": {
+    "music": "POST /v1/music, body { prompt, music_length_ms, model_id, output_format, force_instrumental }, returns audio bytes",
+    "sfx": "POST /v1/sound-generation?output_format=..., body { text, duration_seconds, prompt_influence, model_id }, returns audio bytes",
+    "cost": "neither endpoint reports a cost, so cost is measured from the usage endpoint"
+  },
+  "generations": [
+    {
+      "kind": "music",
+      "id": "music-a-20s",
+      "file": "assets/audio/raw/music-a-20s.mp3",
+      "prompt": "Warm analog electronic at about 118 bpm. A round, slightly detuned analog saw pulse on steady eighth notes carries the whole track, with a warm soft sub underneath it. Light percussion: a gentle kick, a soft closed hat, a quiet rim click. Warm tape saturation and gentle sidechain breathing. Optimistic and grounded. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 20000,
+      "creditsMeasured": 547,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:26:48.215Z",
+      "accepted": true,
+      "notes": "Warm analog synth pulse, about 118 bpm. Measured duration 20.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -20.2,
+        "wholeTrackMeanDb": -20.6,
+        "deficitDb": -0.4,
+        "toleranceDb": 6,
+        "pass": true
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-b-20s",
+      "file": "assets/audio/raw/music-b-20s.mp3",
+      "prompt": "Crisp percussive minimal electronic at about 124 bpm. A tight dry drum machine kit: clean short kick, crisp closed hats, a light shaker, a single clap on the backbeat. A bright plucked synth lead repeats a simple four note motif over it. Dry and modern with very little reverb, lots of space between the elements. Precise and purposeful. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 20000,
+      "creditsMeasured": 547,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:27:14.647Z",
+      "accepted": true,
+      "notes": "Crisp percussive minimal, about 124 bpm, bright plucked lead. Measured duration 20.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -25.3,
+        "wholeTrackMeanDb": -26.4,
+        "deficitDb": -1.1,
+        "toleranceDb": 6,
+        "pass": true
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-c-20s",
+      "file": "assets/audio/raw/music-c-20s.mp3",
+      "prompt": "Softer cinematic electronic at about 110 bpm. Wide slowly evolving synth pads under a gentle bell like arpeggio, with a light restrained beat: soft kick, brushed snare texture, quiet hat. Spacious, warm and hopeful, cinematic rather than dancefloor. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 20000,
+      "creditsMeasured": 547,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:27:32.419Z",
+      "accepted": false,
+      "notes": "Cinematic pad driven with a light beat, about 110 bpm. Rejected on the first-second energy test, deficit 12.5 dB.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -31.2,
+        "wholeTrackMeanDb": -18.7,
+        "deficitDb": 12.5,
+        "toleranceDb": 6,
+        "pass": false
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-c-20s-take2",
+      "file": "assets/audio/raw/music-c-20s-take2.mp3",
+      "prompt": "Softer cinematic electronic at about 110 bpm. Wide slowly evolving synth pads under a gentle bell like arpeggio, with a light restrained beat: soft kick, brushed snare texture, quiet hat. Spacious, warm and hopeful, cinematic rather than dancefloor. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 20000,
+      "creditsMeasured": 547,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:27:40.469Z",
+      "accepted": true,
+      "notes": "Cinematic pad driven with a light beat, about 110 bpm. Measured duration 20.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -18.1,
+        "wholeTrackMeanDb": -18.6,
+        "deficitDb": -0.5,
+        "toleranceDb": 6,
+        "pass": true
+      }
+    },
+    {
+      "kind": "sfx",
+      "id": "sfx-whoosh-transition",
+      "file": "assets/audio/raw/sfx-whoosh-transition.mp3",
+      "prompt": "fast clean air whoosh, short, no tail, for a video cut",
+      "model": "eleven_text_to_sound_v2",
+      "lengthMs": 600,
+      "creditsMeasured": 6,
+      "creditsBucket": "Sound Effects",
+      "outputFormat": "mp3_44100_192",
+      "createdAt": "2026-09-03T17:27:58.364Z",
+      "accepted": true,
+      "notes": "scene transitions at frames 36, 132, 228, 324. Measured duration 0.60s, mean -11.5 dB, max 0.0 dB. First judged rejected by a clipping check that failed anything at max_volume 0.0 dB. Re-measured after the clipping check was corrected: astats flat factor 0.000000, so no samples are pinned at full scale and nothing is distorted. The sound effects endpoint delivers every effect peak normalized to 0 dBFS, which is the normal shape of a one shot. Accepted. Kept as the usable alternate: take2 is the one in the mix because its mean sits 1.3 dB higher."
+    },
+    {
+      "kind": "sfx",
+      "id": "sfx-whoosh-transition-take2",
+      "file": "assets/audio/raw/sfx-whoosh-transition-take2.mp3",
+      "prompt": "fast clean air whoosh, short, no tail, for a video cut",
+      "model": "eleven_text_to_sound_v2",
+      "lengthMs": 600,
+      "creditsMeasured": 6,
+      "creditsBucket": "Sound Effects",
+      "outputFormat": "mp3_44100_192",
+      "createdAt": "2026-09-03T17:28:02.598Z",
+      "accepted": true,
+      "notes": "scene transitions at frames 36, 132, 228, 324. Measured duration 0.60s, mean -10.2 dB, max 0.0 dB. Generated only because the first take was wrongly rejected. Re-measured after the clipping check was corrected: astats flat factor 0.000000, so no samples are pinned at full scale and nothing is distorted. The sound effects endpoint delivers every effect peak normalized to 0 dBFS, which is the normal shape of a one shot. Accepted. This is the take used in the mix."
+    },
+    {
+      "kind": "sfx",
+      "id": "sfx-impact-low",
+      "file": "assets/audio/raw/sfx-impact-low.mp3",
+      "prompt": "low soft cinematic thump impact, short, muted, no reverb tail",
+      "model": "eleven_text_to_sound_v2",
+      "lengthMs": 800,
+      "creditsMeasured": 8,
+      "creditsBucket": "Sound Effects",
+      "outputFormat": "mp3_44100_192",
+      "createdAt": "2026-09-03T17:28:08.950Z",
+      "accepted": true,
+      "notes": "hook text slam at frame 0. Measured duration 0.80s, max -6.1 dB."
+    },
+    {
+      "kind": "sfx",
+      "id": "sfx-ui-click",
+      "file": "assets/audio/raw/sfx-ui-click.mp3",
+      "prompt": "soft UI tap click, subtle, clean, no tail",
+      "model": "eleven_text_to_sound_v2",
+      "lengthMs": 500,
+      "creditsMeasured": 5,
+      "creditsBucket": "Sound Effects",
+      "outputFormat": "mp3_44100_192",
+      "createdAt": "2026-09-03T17:28:59.234Z",
+      "accepted": true,
+      "notes": "claim chip appearances at 72, 168, 264 and tour cuts at 339, 354, 369. Measured duration 0.48s, max -32.9 dB. Requested 0.5s: the brief asked for 0.3s but the API floor is 0.5 and a 0.3s request is refused with invalid_generation_settings before anything is charged. That refused call cost 0 credits and is not logged as a generation."
+    },
+    {
+      "kind": "music",
+      "id": "music-a-50s",
+      "file": "assets/audio/raw/music-a-50s.mp3",
+      "prompt": "Warm analog electronic at about 118 bpm. A round, slightly detuned analog saw pulse on steady eighth notes carries the whole track, with a warm soft sub underneath it. Light percussion: a gentle kick, a soft closed hat, a quiet rim click. Warm tape saturation and gentle sidechain breathing. Optimistic and grounded. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 50000,
+      "creditsMeasured": 1368,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:35:12.326Z",
+      "accepted": true,
+      "notes": "Warm analog synth pulse, about 118 bpm. Measured duration 50.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -14.5,
+        "wholeTrackMeanDb": -14.7,
+        "deficitDb": -0.2,
+        "toleranceDb": 6,
+        "pass": true
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-b-50s",
+      "file": "assets/audio/raw/music-b-50s.mp3",
+      "prompt": "Crisp percussive minimal electronic at about 124 bpm. A tight dry drum machine kit: clean short kick, crisp closed hats, a light shaker, a single clap on the backbeat. A bright plucked synth lead repeats a simple four note motif over it. Dry and modern with very little reverb, lots of space between the elements. Precise and purposeful. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 50000,
+      "creditsMeasured": 1368,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:35:30.663Z",
+      "accepted": false,
+      "notes": "Crisp percussive minimal, about 124 bpm, bright plucked lead. Rejected on the first-second energy test, deficit 16 dB.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -33,
+        "wholeTrackMeanDb": -17,
+        "deficitDb": 16,
+        "toleranceDb": 6,
+        "pass": false
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-b-50s-take2",
+      "file": "assets/audio/raw/music-b-50s-take2.mp3",
+      "prompt": "Crisp percussive minimal electronic at about 124 bpm. A tight dry drum machine kit: clean short kick, crisp closed hats, a light shaker, a single clap on the backbeat. A bright plucked synth lead repeats a simple four note motif over it. Dry and modern with very little reverb, lots of space between the elements. Precise and purposeful. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 50000,
+      "creditsMeasured": 1368,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:35:41.417Z",
+      "accepted": true,
+      "notes": "Crisp percussive minimal, about 124 bpm, bright plucked lead. Measured duration 50.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -17.3,
+        "wholeTrackMeanDb": -19.4,
+        "deficitDb": -2.1,
+        "toleranceDb": 6,
+        "pass": true
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-c-50s",
+      "file": "assets/audio/raw/music-c-50s.mp3",
+      "prompt": "Softer cinematic electronic at about 110 bpm. Wide slowly evolving synth pads under a gentle bell like arpeggio, with a light restrained beat: soft kick, brushed snare texture, quiet hat. Spacious, warm and hopeful, cinematic rather than dancefloor. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble. Even confident energy the whole way through so any fifteen second window stands on its own. Modern product launch film, not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 50000,
+      "creditsMeasured": 1368,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-03T17:36:08.472Z",
+      "accepted": false,
+      "notes": "Cinematic pad driven with a light beat, about 110 bpm. Measured duration 50.04s. Rejected on the first-second energy test as generated: it fades in over about two seconds, deficit 30.1 dB. Salvageable without another generation. Measured per second it is at full level by 2.0s (-17.8 dB against a whole-track -17.4 dB), and from 2.0s the first-second deficit is -0.6 dB, a pass. Trim the first 2.0s and 48.04s remain, which covers the 45 second LinkedIn cut with room at both ends exactly as Section 9 intended. The generation cap of 12 was reached at this point so no retry was made.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -47.5,
+        "wholeTrackMeanDb": -17.4,
+        "deficitDb": 30.1,
+        "toleranceDb": 6,
+        "pass": false
+      },
+      "usableFromSeconds": 2
+    }
+  ],
+  "mixes": [
+    {
+      "variant": "a",
+      "picture": "out/phase4-vertical.mp4",
+      "wav": "assets/audio/mix-a-15s.wav",
+      "preview": "assets/audio/preview-a.mp4",
+      "musicSource": "assets/audio/raw/music-a-20s.mp3",
+      "sfxDuckDb": 15,
+      "limiterCeilingDbfs": -7.31,
+      "levels": {
+        "bedPeakDbfs": -1.3,
+        "bedMeanDbfs": -19.6,
+        "gainsDb": {
+          "impact-low": -10.2,
+          "whoosh-transition": -16.3,
+          "ui-click": 16.6
+        },
+        "sfxPeakAfterGainDbfs": {
+          "impact-low": -16.3,
+          "whoosh-transition": -16.3,
+          "ui-click": -16.3
+        }
+      },
+      "measuredIntegratedLufs": -14.04,
+      "measuredTruePeakDbfs": -1.06,
+      "measuredLra": 0.6,
+      "loudnormPredicted": {
+        "integratedLufs": -14.01,
+        "truePeakDbtp": -1.06,
+        "lra": 0.3
+      },
+      "createdAt": "2026-09-03T17:39:41.127Z"
+    },
+    {
+      "variant": "b",
+      "picture": "out/phase4-vertical.mp4",
+      "wav": "assets/audio/mix-b-15s.wav",
+      "preview": "assets/audio/preview-b.mp4",
+      "musicSource": "assets/audio/raw/music-b-20s.mp3",
+      "sfxDuckDb": 15,
+      "limiterCeilingDbfs": -13.96,
+      "levels": {
+        "bedPeakDbfs": -0.4,
+        "bedMeanDbfs": -25.4,
+        "gainsDb": {
+          "impact-low": -9.3,
+          "whoosh-transition": -15.4,
+          "ui-click": 17.5
+        },
+        "sfxPeakAfterGainDbfs": {
+          "impact-low": -15.4,
+          "whoosh-transition": -15.4,
+          "ui-click": -15.4
+        }
+      },
+      "measuredIntegratedLufs": -14.14,
+      "measuredTruePeakDbfs": -0.99,
+      "measuredLra": 0.7,
+      "loudnormPredicted": {
+        "integratedLufs": -14.07,
+        "truePeakDbtp": -1,
+        "lra": 0.4
+      },
+      "createdAt": "2026-09-03T17:34:25.145Z"
+    },
+    {
+      "variant": "c",
+      "picture": "out/phase4-vertical.mp4",
+      "wav": "assets/audio/mix-c-15s.wav",
+      "preview": "assets/audio/preview-c.mp4",
+      "musicSource": "assets/audio/raw/music-c-20s-take2.mp3",
+      "sfxDuckDb": 15,
+      "limiterCeilingDbfs": -4.97,
+      "levels": {
+        "bedPeakDbfs": -1.4,
+        "bedMeanDbfs": -18.7,
+        "gainsDb": {
+          "impact-low": -10.3,
+          "whoosh-transition": -16.4,
+          "ui-click": 16.5
+        },
+        "sfxPeakAfterGainDbfs": {
+          "impact-low": -16.4,
+          "whoosh-transition": -16.4,
+          "ui-click": -16.4
+        }
+      },
+      "measuredIntegratedLufs": -14.06,
+      "measuredTruePeakDbfs": -1.46,
+      "measuredLra": 0.9,
+      "loudnormPredicted": {
+        "integratedLufs": -14,
+        "truePeakDbtp": -1.46,
+        "lra": 0.7
+      },
+      "createdAt": "2026-09-03T17:34:27.346Z"
+    }
+  ]
+}
