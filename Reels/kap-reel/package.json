@@ -21,16 +21,21 @@
     "@remotion/eslint-config-flat": "4.0.520",
     "@types/react": "19.2.7",
     "@types/web": "0.0.166",
+    "chrome-launcher": "^1.2.1",
     "eslint": "9.19.0",
+    "lighthouse": "^13.4.1",
     "playwright": "^1.62.1",
     "prettier": "3.8.1",
+    "tsx": "^4.23.13",
     "typescript": "5.9.3"
   },
   "scripts": {
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "capture": "tsx scripts/capture.ts",
+    "measure": "tsx scripts/measure.ts"
   },
   "sideEffects": [
     "*.css"

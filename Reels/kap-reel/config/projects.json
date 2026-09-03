@@ -1,21 +1,122 @@
 {
+  "_cleared_by": "Alex Anderson, in session 2026-09-03. FDAAF and FixAlways were not selected and stay out. URLs for Ellenton, Southern Legacy, and Synovial were looked up by Claude and are pending Alex's confirmation at the Phase 1 gate.",
   "approved": [
     {
-      "id": "FILL_IN",
-      "display_name": "FILL_IN",
-      "url": "FILL_IN",
-      "cleared_for_public_showcase": false,
-      "credit_allowed": false,
-      "one_liner": "FILL_IN",
+      "id": "fore-motion-golf",
+      "display_name": "Fore Motion Golf",
+      "url": "https://foremotiongolf.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Indoor golf in Jacksonville. Founding membership waitlist and an AI caddie.",
       "proof_points": [
-        "FILL_IN"
+        "Founding-membership waitlist capture",
+        "AI Robo Caddie assistant",
+        "Custom code, no page builder"
       ],
-      "capture_routes": ["FILL_IN"]
+      "capture_routes": [
+        "/"
+      ],
+      "settle_ms": 6000,
+      "capture_note": "Launch page. Document is locked; scrolling happens inside div.soon__scroll. Hero arc animation takes about 5s to finish drawing."
+    },
+    {
+      "id": "mbs-medicine",
+      "display_name": "MBS Medicine",
+      "url": "https://mbsdoc.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Veteran-owned telehealth clinic. Same-week booking and a patient portal.",
+      "proof_points": [
+        "Booking built in",
+        "Patient portal handoff",
+        "Site by K&A credit in footer"
+      ],
+      "capture_routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "pbj-strategic-accounting",
+      "display_name": "PB&J Strategic Accounting",
+      "url": "https://pbjsa.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Accounting for growing businesses. Clear services and a free-call booking flow.",
+      "proof_points": [
+        "Free-call booking flow",
+        "Site by K&A credit in footer"
+      ],
+      "capture_routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "project-makeover",
+      "display_name": "Project Makeover",
+      "url": "https://projectmakeover.org",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "School-space nonprofit. Gallery-driven with donation paths.",
+      "proof_points": [
+        "Donation flow",
+        "Gallery-driven showcase",
+        "Site by K&A credit in footer"
+      ],
+      "capture_routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "ellenton-family-practice",
+      "display_name": "Ellenton Family Practice Direct",
+      "url": "https://familypracticedirect.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Direct primary care in Ellenton. Built around membership signups.",
+      "proof_points": [
+        "Membership signup flow",
+        "Site by K&A credit in footer"
+      ],
+      "capture_routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "southern-legacy-contractors",
+      "display_name": "Southern Legacy Contractors",
+      "url": "https://southernlegacycontractors.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Concrete across Northeast Florida. Dark, photo-led, quote one tap away.",
+      "proof_points": [
+        "Free quote flow",
+        "Click-to-call phone"
+      ],
+      "capture_routes": [
+        "/"
+      ]
+    },
+    {
+      "id": "synovial-marketing",
+      "display_name": "Synovial Marketing",
+      "url": "https://www.synovialmarketing.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Jacksonville marketing team. Editorial site built around booking a discovery call.",
+      "proof_points": [
+        "Discovery call booking",
+        "Client work showcase"
+      ],
+      "capture_routes": [
+        "/"
+      ]
     }
   ],
   "excluded_do_not_show": [
     "Any site built under a white-label or silent-partner agreement",
     "Any former client where the engagement ended",
-    "Any prospect or spec demo that never became a paying client"
+    "Any prospect or spec demo that never became a paying client",
+    "FDAAF (not selected 2026-09-03)",
+    "FixAlways (not selected 2026-09-03)"
   ]
 }

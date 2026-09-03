@@ -1,0 +1,103 @@
+{
+  "measuredAt": "2026-09-03T15:47:15.392Z",
+  "results": [
+    {
+      "project": "fore-motion-golf",
+      "url": "https://foremotiongolf.com",
+      "runs": 3,
+      "performance": 75,
+      "accessibility": 98,
+      "lcpMs": 5657,
+      "cls": 0.083,
+      "tbtMs": 7,
+      "worthShowing": {
+        "performance": false,
+        "accessibility": true
+      }
+    },
+    {
+      "project": "mbs-medicine",
+      "url": "https://mbsdoc.com",
+      "runs": 3,
+      "performance": 55,
+      "accessibility": 96,
+      "lcpMs": 101794,
+      "cls": 0,
+      "tbtMs": 257,
+      "worthShowing": {
+        "performance": false,
+        "accessibility": true
+      }
+    },
+    {
+      "project": "pbj-strategic-accounting",
+      "url": "https://pbjsa.com",
+      "runs": 3,
+      "performance": 73,
+      "accessibility": 100,
+      "lcpMs": 5397,
+      "cls": 0,
+      "tbtMs": 23,
+      "worthShowing": {
+        "performance": false,
+        "accessibility": true
+      }
+    },
+    {
+      "project": "project-makeover",
+      "url": "https://projectmakeover.org",
+      "runs": 3,
+      "performance": 95,
+      "accessibility": 100,
+      "lcpMs": 2671,
+      "cls": 0.0024,
+      "tbtMs": 0,
+      "worthShowing": {
+        "performance": true,
+        "accessibility": true
+      }
+    },
+    {
+      "project": "ellenton-family-practice",
+      "url": "https://familypracticedirect.com",
+      "runs": 3,
+      "performance": 92,
+      "accessibility": 100,
+      "lcpMs": 1734,
+      "cls": 0.1812,
+      "tbtMs": 0,
+      "worthShowing": {
+        "performance": true,
+        "accessibility": true
+      }
+    },
+    {
+      "project": "southern-legacy-contractors",
+      "url": "https://southernlegacycontractors.com",
+      "runs": 3,
+      "performance": 74,
+      "accessibility": 100,
+      "lcpMs": 5264,
+      "cls": 0.0027,
+      "tbtMs": 0,
+      "worthShowing": {
+        "performance": false,
+        "accessibility": true
+      }
+    },
+    {
+      "project": "synovial-marketing",
+      "url": "https://www.synovialmarketing.com",
+      "runs": 3,
+      "performance": 67,
+      "accessibility": 100,
+      "lcpMs": 5490,
+      "cls": 0,
+      "tbtMs": 0,
+      "worthShowing": {
+        "performance": false,
+        "accessibility": true
+      }
+    }
+  ]
+}

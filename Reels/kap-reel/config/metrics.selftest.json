@@ -1,0 +1,19 @@
+{
+  "measuredAt": "2026-09-03T15:29:43.750Z",
+  "results": [
+    {
+      "project": "ka-performance",
+      "url": "https://ka-performancefl.com",
+      "runs": 3,
+      "performance": 92,
+      "accessibility": 95,
+      "lcpMs": 3326,
+      "cls": 0.0011,
+      "tbtMs": 74,
+      "worthShowing": {
+        "performance": true,
+        "accessibility": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "//": "Scopes scripts/ to ESM without making the whole Remotion project ESM. Without this, tsx compiles these files as CommonJS, which forces it to re-transform ESM dependencies such as lighthouse through esbuild with keepNames on. That injects __name() calls into the helper functions Lighthouse ships into the browser page, where __name does not exist, and every Lighthouse run dies with 'ReferenceError: __name is not defined'.",
+  "type": "module"
+}
