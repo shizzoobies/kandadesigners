@@ -3,6 +3,53 @@
 Every asset that appears in the reel is logged here. This exists because the
 video is a commercial promotion for a business carrying E&O coverage.
 
+## Summary
+
+Closed at final delivery, 2026-09-03.
+
+**Credits spent: 43,213 total.**
+
+| Bucket | Credits | Source |
+|---|---|---|
+| Image generation (context plates, Phase 4) | 35,528 | ElevenLabs usage endpoint, 21 generations |
+| Music (Phase 5) | 7,660 | ElevenLabs usage endpoint, 8 generations |
+| Sound effects (Phase 5) | 25 | ElevenLabs usage endpoint, 4 generations |
+| **Total** | **43,213** | |
+
+Two figures worth reconciling. `config/plates.json` logs 20 image generations
+totalling 35,322 credits; the usage endpoint reads 35,528 across 21, and the
+206 credit difference is the one `gemini-3.1-flash-lite-image` smoke test run
+before the real set. The endpoint figure is the one billed and the one used
+above. `config/audio.json` logs 7,685 credits of measured audio spend, which is
+the 7,660 of music plus the 25 of sound effects.
+
+**Model per plate.** Every plate that ships was produced by
+`gemini-3-pro-image` through the ElevenLabs Image & Video API, at 9:16, 2K, base
+seed 41127. The per-plate spend below counts every candidate generated for that
+plate, accepted and rejected.
+
+| Plate | Model | Credits | Where it appears |
+|---|---|---|---|
+| `plate-laptop-shoulder` | gemini-3-pro-image | 2,436 | Fore Motion Golf plate, both cuts |
+| `plate-phone-hands` | gemini-3-pro-image | 7,308 | Project Makeover plate, both cuts; Synovial tour cut, 45s only |
+| `plate-ipad-lap` | gemini-3-pro-image | 3,654 | Southern Legacy Contractors plate, 45s cut only |
+| `plate-desktop-wide` | gemini-3-pro-image | 3,654 | MBS Medicine: "Booking" tour cut in the 15s cut, project plate in the 45s |
+| `plate-handoff` | gemini-3-pro-image | 5,481 | Only Nails Beauty dashboard, "Yours to edit" tour cut, both cuts |
+| `plate-tablet-b` | gemini-3-pro-image | 7,308 | "No page builder" tour cut in the 15s cut, "Booking a call" in the 45s |
+| `plate-phone-hands-b` | gemini-3-pro-image | 5,481 | Ellenton Family Practice, "Memberships" tour cut, 45s cut only |
+
+`gemini-3.1-flash-lite-image` produced the smoke test only. Nothing it generated
+appears in either cut.
+
+**Music variant chosen: A**, the warm analog synth pulse at about 118 bpm.
+`assets/audio/raw/music-a-20s.mp3` is the bed for the 15 second cut and
+`music-a-50s.mp3` for the 45 second cut. Variants B and C were generated,
+logged, and not used.
+
+**Sound effects: generated, not used in the final mixes, owner decision
+2026-09-03.** All three takes are logged below and remain on disk. See the
+"Sound effects" section.
+
 ## ElevenLabs
 
 - Plan tier: Pro (owner-confirmed 2026-09-03).
@@ -292,15 +339,22 @@ commercial grant quoted in the Music section above, under the general Terms of
 Use rather than the Music Model-Specific Terms, since sound effects are not
 Eleven Music output.
 
-| File | Prompt | Duration | Placement |
-|---|---|---|---|
-| assets/audio/raw/sfx-impact-low.mp3 | low soft cinematic thump impact, short, muted, no reverb tail | 0.8s | Frame 0, the hook text slam |
-| assets/audio/raw/sfx-whoosh-transition-take2.mp3 | fast clean air whoosh, short, no tail, for a video cut | 0.6s | Frames 36, 132, 228, 324, the scene transitions |
-| assets/audio/raw/sfx-ui-click.mp3 | soft UI tap click, subtle, clean, no tail | 0.5s | Frames 72, 168, 264 for the claim chip appearances, and 339, 354, 369 for the surfaces tour cuts |
-| assets/audio/raw/sfx-whoosh-transition.mp3 | fast clean air whoosh, short, no tail, for a video cut | 0.6s | Not used. Kept as a usable alternate |
+**Status: generated, not used in the final mixes, owner decision 2026-09-03.**
+The owner listened to a mix carrying all three and did not want any of them, so
+both delivered mixes are the music bed alone. The takes are logged here in full
+because the credits were spent, the files are still on disk, and the cue sheets
+that would place them are still in the comments in `scripts/audio.ts` and
+`scripts/deliver.ts`. Nothing in this section reaches a delivered file.
 
-Nothing plays over the CTA from frame 384. Section 9 asks for the music to
-resolve there on its own and it does.
+| File | Prompt | Duration | Status |
+|---|---|---|---|
+| assets/audio/raw/sfx-impact-low.mp3 | low soft cinematic thump impact, short, muted, no reverb tail | 0.8s | Generated, not used in the final mixes, owner decision 2026-09-03 |
+| assets/audio/raw/sfx-whoosh-transition-take2.mp3 | fast clean air whoosh, short, no tail, for a video cut | 0.6s | Generated, not used in the final mixes, owner decision 2026-09-03 |
+| assets/audio/raw/sfx-ui-click.mp3 | soft UI tap click, subtle, clean, no tail | 0.5s | Generated, not used in the final mixes, owner decision 2026-09-03 |
+| assets/audio/raw/sfx-whoosh-transition.mp3 | fast clean air whoosh, short, no tail, for a video cut | 0.6s | Generated, superseded by take2 before the owner's decision, not used |
+
+Section 9 asks for the music to resolve alone over the CTA. With no effects
+anywhere it now resolves alone over the whole cut.
 
 Two notes on what happened during generation, both recorded because the record
 is meant to be true rather than tidy:
@@ -359,22 +413,69 @@ much limiting.
 | Schibsted Grotesk | Google Fonts, self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
 | Atkinson Hyperlegible Next | Braille Institute, self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
 | Fraunces | Google Fonts, self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
-| Lenia Mono | FILL_IN (source not recorded in site docs) | FILL_IN | FILL_IN |
+| Lenia Mono | Not established. Not sourced for this deliverable. | Not established. Not exercised here, no glyph is rendered into any frame. | Not applicable, see below |
+
+Checked at Phase 6 delivery: `src/lib/fonts.ts` registers exactly two families,
+Schibsted Grotesk and Atkinson Hyperlegible Next, both OFL and both cleared for
+embedding. Nothing in `src/scenes` or `src/components` asks for any other
+family, so Fraunces and Lenia Mono sit in `config/brand.json` as a record of
+the site's type system and neither one ships inside the video.
+
+That closes the Lenia Mono question for this deliverable: an unknown license
+cannot reach the reel, because no glyph of it is rendered into a frame. It is
+still an open question for the live site, where the font is used and its source
+was never recorded, and the owner still has to answer it there. It is recorded
+as "not established" above rather than left as a placeholder, because for this
+video the honest answer is that the question does not arise.
 
 ## Envato Elements
 
+No Envato Elements assets were used in this deliverable, so there is no item,
+URL, license ID or download date to record.
+
+Section 2 lists Envato as the fallback for two things and neither fallback was
+needed. Music: the ElevenLabs paid plan commercial grant covers this use, as
+established in the ElevenLabs section above, so no Envato track was licensed.
+Context plates: the generated set came out clean and seven plates were accepted,
+so no Envato device frame or stock plate was licensed either. Fonts came from
+Google Fonts and the Braille Institute under OFL, not from Envato.
+
 | Item | URL | License ID | Date |
 |---|---|---|---|
+| None | | | |
 
 ## Client assets
 
 Site captures are recorded from live public sites listed in
-config/projects.json with cleared_for_public_showcase true. Permission grantor
-and date per project:
+`config/projects.json` with `cleared_for_public_showcase: true`. The owner of
+K&A Performance is the grantor for every one of them: K&A built each site, and
+Alex Anderson confirmed each entry in that file on 2026-09-03. The `_decisions`
+block in `config/projects.json` carries the confirmations in his own words.
 
-| Only Nails Beauty owner dashboard | Screen recording made by Alex Anderson (K&A) 2026-09-03, shared via Jam. K&A built the dashboard. Only the Gallery and Site photos segment is used. All account, staff, and client data covered or excluded. | Alex Anderson, 2026-09-03 |
+| Asset | Site | Permission | Grantor and date |
+|---|---|---|---|
+| Home page capture, mobile and desktop | Fore Motion Golf, foremotiongolf.com | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Home page capture, mobile and desktop | MBS Medicine, mbsdoc.com | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Home page capture, mobile and desktop | PB&J Strategic Accounting, pbjsa.com | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Home page capture, mobile and desktop | Project Makeover, projectmakeover.org | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Home page capture, mobile and desktop | Ellenton Family Practice Direct, familypracticedirect.com | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Home page capture, mobile and desktop | Southern Legacy Contractors, southernlegacycontractors.com | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Home page capture, mobile and desktop | Synovial Marketing, www.synovialmarketing.com | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Home page capture, mobile and desktop | Only Nails Beauty, onlynailsfl.com | cleared_for_public_showcase, credit_allowed | Alex Anderson, 2026-09-03 |
+| Owner dashboard screen recording | Only Nails Beauty | Screen recording made by Alex Anderson (K&A) and shared via Jam. K&A built the dashboard. Only the Gallery and Site photos segment is used. All account, staff and client data covered or excluded. | Alex Anderson, 2026-09-03 |
+| `logo-lockup.webp` brand mark | K&A Performance | Owner's own mark, used on the CTA card and composited into both thumbnails | Alex Anderson, 2026-09-03 |
 
 ## Provenance
 
 Generated assets are never stripped of C2PA or IPTC metadata on purpose.
 FFmpeg transcodes may drop it as a side effect; noted per asset above.
+
+Confirmed on a delivered file at Phase 6. `out/kap-reel-vertical-15s.mp4` was
+scanned byte for byte for a `c2pa`, `caBX` or `jumb` marker and carries none,
+which is the incidental loss the plate section predicted: the plate PNG is
+decoded into a browser by Remotion, re-encoded to H.264, then re-encoded again
+by `scripts/encode.sh` for delivery, and nothing in that chain carries a JUMBF
+box across. The container tags that do survive are the encoder string and
+Remotion's own comment. No step in `scripts/encode.sh` removes metadata: there
+is no `-map_metadata -1` anywhere in it, and the source PNGs in `assets/plates`
+keep their credentials permanently.

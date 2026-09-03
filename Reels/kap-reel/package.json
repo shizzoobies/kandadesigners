@@ -38,7 +38,10 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "capture": "tsx scripts/capture.ts",
-    "measure": "tsx scripts/measure.ts"
+    "measure": "tsx scripts/measure.ts",
+    "srt": "tsx scripts/srt.ts",
+    "encode": "bash scripts/encode.sh",
+    "deliver": "tsx scripts/deliver.ts"
   },
   "sideEffects": [
     "*.css",

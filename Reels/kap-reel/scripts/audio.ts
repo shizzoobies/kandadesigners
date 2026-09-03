@@ -107,18 +107,29 @@ const MUSIC_FADE_OUT_SECONDS = 0.4;
 /**
  * SFX cue sheet in frames.
  *
- * impact-low  frame 0                   hook text slam
- * whoosh      36, 132, 228, 324         the four scene transitions
- * ui-click    72, 168, 264              claim chip appearance, 36 frames into each project beat
- *             339, 354, 369             the second, third and fourth surfaces tour cuts
+ * Owner decision 2026-09-03: empty. The owner watched the mix with the whoosh
+ * on each cut, the click on each claim and the impact on the hook slam, and did
+ * not like any of them. The 15 second mix is now the music bed alone.
  *
- * Nothing lands on the CTA at 384. Section 9 asks for the music to resolve alone there.
+ * The cue sheet the owner rejected, kept here so the decision is legible and so
+ * restoring it is a one line edit rather than a re-derivation. Frames are from
+ * the re-paced beat map in src/lib/timing.ts:
+ *
+ *   impact-low  0                   hook text slam
+ *   whoosh      54, 194, 334        the three scene transitions
+ *   ui-click    90, 230             claim in, CLAIM_IN 36 into each project beat
+ *               352, 370            the second and third surfaces tour cuts
+ *
+ * Section 9 asks for a whoosh, a click and an impact, so this is a departure
+ * from the brief made deliberately by the person the brief is for. The takes
+ * are still generated, still logged in config/audio.json and still recorded in
+ * LICENSING.md, because the credits were spent whether or not they ship.
+ *
+ * Section 9's other audio rules are untouched: the bed is still trimmed to
+ * 15.0s with the 400 ms fade and still normalised to -14 LUFS with a -1 dBTP
+ * true peak, measured off the delivered file.
  */
-const SFX_CUES: { name: SfxName; frames: number[] }[] = [
-  { name: "impact-low", frames: [0] },
-  { name: "whoosh-transition", frames: [36, 132, 228, 324] },
-  { name: "ui-click", frames: [72, 168, 264, 339, 354, 369] },
-];
+const SFX_CUES: { name: SfxName; frames: number[] }[] = [];
 
 // ---------------------------------------------------------------------------
 // Prompts
@@ -190,7 +201,8 @@ const SFX_SPECS: {
     text: "fast clean air whoosh, short, no tail, for a video cut",
     durationSeconds: 0.6,
     promptInfluence: 0.5,
-    usedFor: "scene transitions at frames 36, 132, 228, 324",
+    usedFor:
+      "generated, not used in the final mixes, owner decision 2026-09-03",
   },
   {
     // The brief asked for 0.3s. The API floor is 0.5 and a 0.3 request is
@@ -202,14 +214,15 @@ const SFX_SPECS: {
     durationSeconds: 0.5,
     promptInfluence: 0.5,
     usedFor:
-      "claim chip appearances at 72, 168, 264 and tour cuts at 339, 354, 369",
+      "generated, not used in the final mixes, owner decision 2026-09-03",
   },
   {
     id: "impact-low",
     text: "low soft cinematic thump impact, short, muted, no reverb tail",
     durationSeconds: 0.8,
     promptInfluence: 0.5,
-    usedFor: "hook text slam at frame 0",
+    usedFor:
+      "generated, not used in the final mixes, owner decision 2026-09-03",
   },
 ];
 
@@ -942,7 +955,27 @@ function limiter(ceilingDb: number): string {
 const MAX_LIMITING_DB = -14;
 
 const TARGET_LUFS = -14;
-const TARGET_TRUE_PEAK = -1;
+
+/**
+ * True peak Section 9 and Section 11 want on the file that ships.
+ */
+const DELIVERED_TRUE_PEAK = -1;
+
+/**
+ * Headroom left in the wav for the AAC encode's own true peak overshoot.
+ *
+ * Measured 2026-09-03: a wav normalised to -1.01 dBTP came back out of
+ * `scripts/encode.sh` at -0.88 dBTP in the delivered MP4, and the 45 second
+ * mix moved 0.19 dB the same way. Lossy encoding reconstructs a slightly
+ * different waveform, so it does not preserve a true peak ceiling, and
+ * normalising the intermediate to exactly -1 puts the thing that actually
+ * ships over the line. Half a decibel covers the largest movement seen with
+ * room to spare and costs nothing audible: the loudness target is unchanged
+ * and only the peaks sit lower.
+ */
+const ENCODE_TRUE_PEAK_HEADROOM_DB = 0.5;
+
+const TARGET_TRUE_PEAK = DELIVERED_TRUE_PEAK - ENCODE_TRUE_PEAK_HEADROOM_DB;
 
 /**
  * The mix graph. Input 0 is the music, inputs 1..n are one SFX instance each.
@@ -969,9 +1002,15 @@ function buildFilter(
     );
     labels.push(`[${label}]`);
   });
-  parts.push(
-    `${labels.join("")}amix=inputs=${labels.length}:duration=first:normalize=0[premix]`,
-  );
+  // With the cue sheet empty the bed is the whole mix, and amix over a single
+  // input is a no-op that still costs a filter. Feed the limiter directly.
+  if (labels.length > 1) {
+    parts.push(
+      `${labels.join("")}amix=inputs=${labels.length}:duration=first:normalize=0[premix]`,
+    );
+  } else {
+    parts.push(`[bed]anull[premix]`);
+  }
   parts.push(`[premix]${limiter(ceilingDb)}[mixed]`);
   return parts.join(";");
 }
@@ -1056,7 +1095,7 @@ function parseLoudnorm(stderr: string): LoudnormMeasurement {
   return JSON.parse(stderr.slice(start, end + 1)) as LoudnormMeasurement;
 }
 
-const LOUDNORM_TARGET = "I=-14:TP=-1:LRA=11";
+const LOUDNORM_TARGET = `I=${TARGET_LUFS}:TP=${TARGET_TRUE_PEAK}:LRA=11`;
 
 /**
  * Reads the true integrated loudness and true peak of a finished file by

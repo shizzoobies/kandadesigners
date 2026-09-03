@@ -9,15 +9,27 @@ export type HookProps = {
   format: FormatKey;
 };
 
-/** Frames 0 to 36. Site capture at 2x, full bleed, hook line slammed on top. */
+/**
+ * Frames 0 to 54 in the 15 second cut, 0 to 36 in the 45 second one. Site
+ * capture at 2x, full bleed, hook line slammed on top.
+ */
 const HOOK_CAPTURE_ID = "fore-motion-golf";
 
 /**
  * The capture scroll is eased in and out across 180 frames, so source frame 0
  * is stationary and Section 6 demands the first frame already be moving.
  * Frame 54 is about 30 percent in, where the ease already carries real
- * velocity, and 36 output frames at 2x consume source frames 54 to 126, which
- * straddles peak scroll speed.
+ * velocity. At 2x the 45 second cut's 36 frames consume source 54 to 126 and
+ * the re-paced 15 second cut's 54 frames consume source 54 to 162, both
+ * straddling peak scroll speed and both inside the 180 frame source.
+ *
+ * The longer hook does decelerate into its cut: the ease derivative at source
+ * 162 is about 4 percent of its peak, against 35 percent at 126. It is still
+ * moving, it is a full bleed background under a text slam rather than the shot
+ * that has to be read, and Section 6 asks only that the first frame already be
+ * moving, which it emphatically is. Left at 2x rather than re-timed, because
+ * the alternatives either slow the opening frame or slow the whole shot, and
+ * the opening frame is the one Section 6 cares about.
  */
 const TRIM_BEFORE = 54;
 
@@ -80,6 +92,11 @@ export const Hook: React.FC<HookProps> = ({ format }) => {
             // Clears the reserved right zone in the vertical crop, and is more
             // conservative than it has to be in the other three.
             paddingRight: Math.round(108 * scale),
+            // Owner decision 2026-09-03: the hook is centred. The padding stays
+            // asymmetric, so the line centres between the left margin and the
+            // reserved right strip rather than on the canvas. That is what
+            // keeps it clear of the platform UI in the vertical crop.
+            textAlign: "center",
           }}
         >
           {/* Section 6 calls this one kinetic line, so both halves slam together. */}
@@ -88,6 +105,7 @@ export const Hook: React.FC<HookProps> = ({ format }) => {
               text={HOOK_LINE_ONE}
               mode="slam"
               startFrame={0}
+              align="center"
               style={{ ...hookLineStyle, color: COLORS.canvas }}
             />
           </div>
@@ -96,6 +114,7 @@ export const Hook: React.FC<HookProps> = ({ format }) => {
               text={HOOK_LINE_TWO}
               mode="slam"
               startFrame={0}
+              align="center"
               style={{ ...hookLineStyle, color: COLORS.amber }}
             />
           </div>

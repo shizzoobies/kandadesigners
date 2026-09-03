@@ -240,30 +240,22 @@
       "preview": "assets/audio/preview-a.mp4",
       "musicSource": "assets/audio/raw/music-a-20s.mp3",
       "sfxDuckDb": 15,
-      "limiterCeilingDbfs": -7.31,
+      "limiterCeilingDbfs": -8.04,
       "levels": {
         "bedPeakDbfs": -1.3,
         "bedMeanDbfs": -19.6,
-        "gainsDb": {
-          "impact-low": -10.2,
-          "whoosh-transition": -16.3,
-          "ui-click": 16.6
-        },
-        "sfxPeakAfterGainDbfs": {
-          "impact-low": -16.3,
-          "whoosh-transition": -16.3,
-          "ui-click": -16.3
-        }
+        "gainsDb": {},
+        "sfxPeakAfterGainDbfs": {}
       },
-      "measuredIntegratedLufs": -14.04,
-      "measuredTruePeakDbfs": -1.06,
+      "measuredIntegratedLufs": -14.03,
+      "measuredTruePeakDbfs": -1.5,
       "measuredLra": 0.6,
       "loudnormPredicted": {
-        "integratedLufs": -14.01,
-        "truePeakDbtp": -1.06,
-        "lra": 0.3
+        "integratedLufs": -14,
+        "truePeakDbtp": -1.5,
+        "lra": 0.4
       },
-      "createdAt": "2026-09-03T17:39:41.127Z"
+      "createdAt": "2026-09-03T18:41:21.997Z"
     },
     {
       "variant": "b",

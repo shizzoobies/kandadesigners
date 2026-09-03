@@ -7,46 +7,49 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { ClaimLine, CLAIM_FONT_SIZE } from "../components/ClaimLine";
+import {
+  ClaimLine,
+  CLAIM_FONT_SIZE,
+  CLAIM_RULE_BLOCK,
+} from "../components/ClaimLine";
 import { DeviceFrame } from "../components/DeviceFrame";
 import { KineticText } from "../components/KineticText";
 import { PlateShot } from "../components/PlateShot";
-import { COLORS, DISPLAY_STACK } from "../lib/brand";
+import { BODY_STACK, COLORS, DISPLAY_STACK } from "../lib/brand";
 import { captureSrc, getHomeCapture } from "../lib/captures";
 import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
-import { PROJECT_BEAT_SHOTS } from "../lib/timing";
+import { LINKEDIN_PROJECT_COPY, PROJECT_BEAT_SHOTS } from "../lib/timing";
 
 /** Length of the whip between project beats, in frames. */
 export const WHIP_FRAMES = 6;
 
-/** Relative frame at which the one claim line cuts in and holds to the cut. */
+/**
+ * Relative frame at which the one claim line cuts in and holds to the cut.
+ *
+ * Unchanged by the 2026-09-03 re-pace, per the owner's note: twelve frames
+ * after the hard cut to the clean capture at relative 24, so the viewer has
+ * landed in the new shot before a second thing arrives. In the re-paced 140
+ * frame beat it now holds 104 frames instead of 60.
+ */
 const CLAIM_IN = 36;
 
-/** Where the clean capture starts inside its own source, see Hook.tsx. */
+/**
+ * Frames the LinkedIn context sentence takes to type on. It starts revealing
+ * on the cut to the clean capture at relative frame 24 and is fully on screen
+ * at LINKEDIN_PROJECT_COPY.contextIn.
+ */
+const CONTEXT_REVEAL_FRAMES = 16;
+
+/**
+ * Fallback source frame for the clean capture, see Hook.tsx. Both cuts pass
+ * their own value from src/lib/timing.ts, so this only applies to a caller
+ * that supplies neither, such as a Studio preview of the component alone.
+ */
 const TRIM_BEFORE = 54;
 
 /** Length of the plate shot, in frames. Section 6b caps this at 24. */
 const PLATE_SHOT_FRAMES =
   PROJECT_BEAT_SHOTS.plate.end - PROJECT_BEAT_SHOTS.plate.start;
-
-/**
- * Where the capture inside the plate starts, so the cut at relative frame 24
- * reads as a camera move rather than a restart.
- *
- * Section 6b asks for the scroll direction and rough velocity to match across
- * the cut. Both shots play their source forward at rate 1, so the velocity
- * matches for free and the position is arithmetic: start the plate's capture
- * this many frames before TRIM_BEFORE and it arrives at exactly TRIM_BEFORE on
- * the frame the clean capture takes over. The site is already 30 percent of
- * the way down the page and moving when the plate cuts in, which is what
- * Section 4b asks of a plate as well.
- *
- * Two of the three plates carry the desktop capture of the same site while the
- * clean shot is the mobile one, so the match is a fraction of the page rather
- * than an identical pixel. Both are the same 180 frame scripted scroll of the
- * same page, so the same source frame is the same point in that scroll.
- */
-const PLATE_CAPTURE_OFFSET = TRIM_BEFORE - PLATE_SHOT_FRAMES;
 
 const BEAT_LENGTH =
   PROJECT_BEAT_SHOTS.cleanCapture.end - PROJECT_BEAT_SHOTS.plate.start;
@@ -59,20 +62,35 @@ const BAND_PAD_LEFT = 72;
 const BAND_PAD_RIGHT = 108;
 const BAND_GAP = 18;
 
+/** Height of one line in the copy slot below the project name, at 1080 width. */
+const COPY_LINE_HEIGHT = CLAIM_FONT_SIZE * 1.15;
+
 /**
  * How much vertical room the lower third needs for one name line, the gap, and
- * one claim line. Used to size the device frame in the stacked crops before
+ * the copy slot. Used to size the device frame in the stacked crops before
  * the band has laid itself out. A claim that wraps to two lines eats into the
  * gap below the device rather than pushing into the reserved bottom, because
  * the band is anchored to its bottom edge.
+ *
+ * `copyLines` is 1 in the 15 second cut, where the slot only ever holds the
+ * claim, and 2 in the LinkedIn cut, where the same slot also has to hold a
+ * context sentence that wraps to two lines in every crop.
+ *
+ * Since the 2026-09-03 centring the claim carries its rule above the text
+ * rather than beside it, so the claim is CLAIM_RULE_BLOCK taller than a plain
+ * body line. In the 15 second cut that is what sets the slot height; in the
+ * LinkedIn cut two body lines are still taller, so the claim fits inside the
+ * slot the context sentence already reserved and the band does not move.
  */
-const BAND_HEIGHT = Math.round(
-  BAND_PAD_TOP +
-    NAME_FONT_SIZE * 1.1 +
-    BAND_GAP +
-    CLAIM_FONT_SIZE * 1.15 +
-    BAND_PAD_BOTTOM,
-);
+function bandHeight(copyLines: number): number {
+  const slot = Math.max(
+    COPY_LINE_HEIGHT * copyLines,
+    CLAIM_RULE_BLOCK + COPY_LINE_HEIGHT,
+  );
+  return Math.round(
+    BAND_PAD_TOP + NAME_FONT_SIZE * 1.1 + BAND_GAP + slot + BAND_PAD_BOTTOM,
+  );
+}
 
 /** Device frame geometry at native capture size. */
 const BEZEL = 20;
@@ -98,12 +116,39 @@ export type ProjectShowcaseProps = {
   whipIn: boolean;
   /** Whip out to the left over the WHIP_FRAMES frames after the beat ends. */
   whipOut: boolean;
+  /**
+   * One sentence on what the business needed, LinkedIn cut only. Shares the
+   * copy slot with the claim and is cut off before the claim arrives, so the
+   * two are never on screen together.
+   */
+  contextLine?: string;
+  /**
+   * Length of this beat in frames. Defaults to the 140 frame beat of the 15
+   * second cut; the LinkedIn cut passes 210. Only the clean capture stretches:
+   * the plate stays at the Section 6b cap of 24 frames either way.
+   */
+  durationInFrames?: number;
+  /** Source frame the clean capture starts on. */
+  cleanTrimBefore?: number;
+  /**
+   * Playback rate for both the plate's capture and the clean capture. One rate
+   * for both so the scroll velocity matches across the cut at frame 24, which
+   * is what Section 6b asks for.
+   */
+  scrollPlaybackRate?: number;
+  /**
+   * Overrides the capture bound to the plate in config/plates.json. Passed
+   * explicitly where the spec names the capture rather than relying on the
+   * default binding.
+   */
+  plateCaptureId?: string;
 };
 
 /**
- * One 96 frame project beat, split per Section 6b: a grey plate placeholder for
- * 24 frames with the project name typing on, then a hard cut to the clean
- * mobile capture in a device frame with one claim line held to the cut.
+ * One project beat, split per Section 6b: the context plate for 24 frames with
+ * the project name typing on, then a hard cut to the clean mobile capture in a
+ * device frame with one claim line held to the cut. 140 frames in the 15
+ * second cut, 210 in the 45 second one.
  *
  * The beat lays out three ways, chosen by formatMetrics().showcase. See
  * src/lib/layout.ts for what each mode means and why.
@@ -117,6 +162,11 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   accent,
   whipIn,
   whipOut,
+  contextLine,
+  durationInFrames,
+  cleanTrimBefore = TRIM_BEFORE,
+  scrollPlaybackRate = 1,
+  plateCaptureId,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -125,8 +175,36 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   const scale = metrics.typeScale;
   const capture = getHomeCapture(projectId, "mobile");
 
-  const bandHeight = Math.round(BAND_HEIGHT * scale);
-  const bandTop = height - metrics.bandBottom - bandHeight;
+  const beatLength = durationInFrames ?? BEAT_LENGTH;
+
+  /**
+   * Where the capture inside the plate starts, so the cut at relative frame 24
+   * reads as a camera move rather than a restart.
+   *
+   * Section 6b asks for the scroll direction and rough velocity to match across
+   * the cut. Both shots play their source at scrollPlaybackRate, so the
+   * velocity matches for free and the position is arithmetic: start the plate's
+   * capture this many frames before cleanTrimBefore and it arrives at exactly
+   * cleanTrimBefore on the frame the clean capture takes over. The site is
+   * already well down the page and moving when the plate cuts in, which is what
+   * Section 4b asks of a plate as well.
+   *
+   * Most plates carry the desktop capture of the same site while the clean shot
+   * is the mobile one, so the match is a fraction of the page rather than an
+   * identical pixel. Both are the same 180 frame scripted scroll of the same
+   * page, so the same source frame is the same point in that scroll.
+   */
+  const plateCaptureOffset =
+    cleanTrimBefore - Math.round(PLATE_SHOT_FRAMES * scrollPlaybackRate);
+
+  const copySlotHeight = Math.round(
+    Math.max(
+      COPY_LINE_HEIGHT * (contextLine ? 2 : 1),
+      CLAIM_RULE_BLOCK + COPY_LINE_HEIGHT,
+    ) * scale,
+  );
+  const bandHeightPx = Math.round(bandHeight(contextLine ? 2 : 1) * scale);
+  const bandTop = height - metrics.bandBottom - bandHeightPx;
 
   // Box the device frame has to fit inside. The device is not text, so it is
   // allowed to run into a reserved zone. Text is not.
@@ -168,16 +246,16 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   if (whipIn && frame < WHIP_FRAMES) {
     translateX = interpolate(frame, [0, WHIP_FRAMES], [width, 0]);
     scaleX = interpolate(frame, [0, WHIP_FRAMES], [1.08, 1]);
-  } else if (whipOut && frame >= BEAT_LENGTH) {
+  } else if (whipOut && frame >= beatLength) {
     translateX = interpolate(
       frame,
-      [BEAT_LENGTH, BEAT_LENGTH + WHIP_FRAMES],
+      [beatLength, beatLength + WHIP_FRAMES],
       [0, -width],
       { extrapolateRight: "clamp" },
     );
     scaleX = interpolate(
       frame,
-      [BEAT_LENGTH, BEAT_LENGTH + WHIP_FRAMES],
+      [beatLength, beatLength + WHIP_FRAMES],
       [1, 1.08],
       { extrapolateRight: "clamp" },
     );
@@ -190,6 +268,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         mode="type"
         startFrame={2}
         revealFrames={16}
+        align="center"
         style={{
           fontFamily: DISPLAY_STACK,
           fontSize: Math.round(NAME_FONT_SIZE * scale),
@@ -201,15 +280,64 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
         }}
       />
       <div style={{ height: Math.round(BAND_GAP * scale) }} />
-      {/* ClaimLine lays itself out from frame 0 and only toggles visibility,
-          so the scrim is already the right height when the claim cuts in
-          and a claim that wraps to two lines cannot overflow the band. */}
-      <ClaimLine
-        text={claim}
-        accent={accent}
-        startFrame={CLAIM_IN}
-        scale={scale}
-      />
+      {contextLine ? (
+        // The LinkedIn cut runs one context sentence and then the claim through
+        // the same slot. The slot reserves two body lines up front, so the
+        // scrim height does not change when one swaps for the other and the
+        // band never jumps. minHeight rather than a fixed height: if a context
+        // sentence ever wraps to three lines the band grows upward instead of
+        // clipping the third line.
+        <div
+          style={{
+            minHeight: copySlotHeight,
+            display: "flex",
+            flexDirection: "column",
+            // A two line context sentence fills the slot; the one line claim
+            // that replaces it sits on the slot's optical centre rather than
+            // hanging off its top edge.
+            justifyContent: "center",
+          }}
+        >
+          {frame < LINKEDIN_PROJECT_COPY.contextOut ? (
+            <KineticText
+              text={contextLine}
+              mode="type"
+              // Starts revealing on the cut to the clean capture and is fully
+              // on screen by contextIn. Cut, not faded, at contextOut.
+              startFrame={
+                LINKEDIN_PROJECT_COPY.contextIn - CONTEXT_REVEAL_FRAMES
+              }
+              revealFrames={CONTEXT_REVEAL_FRAMES}
+              align="center"
+              style={{
+                fontFamily: BODY_STACK,
+                fontSize: Math.round(CLAIM_FONT_SIZE * scale),
+                fontWeight: 500,
+                letterSpacing: 0.2 * scale,
+                lineHeight: 1.15,
+                color: COLORS.canvas,
+              }}
+            />
+          ) : (
+            <ClaimLine
+              text={claim}
+              accent={accent}
+              startFrame={LINKEDIN_PROJECT_COPY.claimIn}
+              scale={scale}
+            />
+          )}
+        </div>
+      ) : (
+        // ClaimLine lays itself out from frame 0 and only toggles visibility,
+        // so the scrim is already the right height when the claim cuts in
+        // and a claim that wraps to two lines cannot overflow the band.
+        <ClaimLine
+          text={claim}
+          accent={accent}
+          startFrame={CLAIM_IN}
+          scale={scale}
+        />
+      )}
     </>
   );
 
@@ -233,8 +361,9 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
       >
         <PlateShot
           plateId={plateId}
-          captureFrameOffset={PLATE_CAPTURE_OFFSET}
-          scrollPlaybackRate={1}
+          captureId={plateCaptureId}
+          captureFrameOffset={plateCaptureOffset}
+          scrollPlaybackRate={scrollPlaybackRate}
         />
       </Sequence>
 
@@ -262,7 +391,8 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
             >
               <OffthreadVideo
                 src={captureSrc(capture)}
-                trimBefore={TRIM_BEFORE}
+                trimBefore={cleanTrimBefore}
+                playbackRate={scrollPlaybackRate}
                 muted
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
@@ -293,6 +423,10 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               style={{
                 backgroundColor: SCRIM,
                 borderLeft: `${Math.round(6 * scale)}px solid ${accent}`,
+                // Owner decision 2026-09-03: copy is centred. In the split
+                // layout that means centred inside this panel, between its
+                // left padding and the safe right edge, not on the canvas.
+                textAlign: "center",
                 paddingTop: Math.round(BAND_PAD_TOP * scale),
                 paddingBottom: Math.round(BAND_PAD_BOTTOM * scale),
                 paddingLeft: Math.round(48 * scale),
@@ -316,6 +450,12 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               bottom: metrics.bandBottom,
               backgroundColor: SCRIM,
               borderTop: `${Math.round(6 * scale)}px solid ${accent}`,
+              // Owner decision 2026-09-03: copy is centred. The band keeps its
+              // asymmetric padding, so the copy centres between the left
+              // margin and the reserved right strip rather than on the canvas,
+              // which is what keeps it inside the safe area in the vertical
+              // crop.
+              textAlign: "center",
               paddingTop: Math.round(BAND_PAD_TOP * scale),
               paddingBottom: Math.round(BAND_PAD_BOTTOM * scale),
               paddingLeft: Math.round(BAND_PAD_LEFT * scale),

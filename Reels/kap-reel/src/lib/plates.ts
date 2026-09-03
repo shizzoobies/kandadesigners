@@ -93,6 +93,7 @@ const CAPTURE_TINTS: Record<string, [number, number, number]> = {
   "onlynails-dashboard-sitephotos-clean": [219, 217, 215],
   "ellenton-family-practice-home-mobile": [215, 216, 212],
   "pbj-strategic-accounting-home-desktop": [138, 131, 128],
+  "synovial-marketing-home-mobile": [221, 213, 204],
 };
 
 /** Neutral mid grey, for a capture that has not been measured yet. */
