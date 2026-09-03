@@ -1,10 +1,17 @@
 # K&A Performance — Session Handoff
 
-**Date:** 2026-08-30 · **Branch: `main`** · **Status: LIVE and clean.**
+**Date:** 2026-08-31 · **Branch: `main`** · **Status: LIVE and clean.**
 
-**Verified in production 2026-08-30:** working tree carries only the expected untracked source drops, `main` is level with `origin/main` (0 ahead, 0 behind), and `/`, `/ai-launch/`, `/free-course/`, `/course/`, `/services/`, `/contact/`, `/locations/gainesville/` all return 200. `admin.ka-performancefl.com/coaching` returns 302 to Cloudflare Access, which is the correct gated response.
+**Verified in production 2026-08-31:** working tree carries only the expected untracked source drops, `main` is level with `origin/main` (0 ahead, 0 behind), and `/`, `/ai-launch/`, `/free-course/`, `/course/`, `/services/`, `/contact/`, `/terms/`, `/privacy/`, `/accessibility/`, `/artists/`, `/locations/gainesville/` all return 200. `admin.ka-performancefl.com/coaching` returns 302 to Cloudflare Access, which is the correct gated response.
 
 **What the 2026-08-28/29 run built (35 commits, `79df5ae..96e46b4`): an entire coaching business, end to end.** The 90-Day AI Launch offer and its marketing page, a free course funnel that captures leads, a newsletter system with an Opus writing assistant, a delivery cockpit and member portal in the admin, a native remaster of the course, and an SEO pass so the site itself performs while selling AI integration. **Read "The coaching business" section below before touching any of it.** Everything above that section predates the run and still holds.
+
+**What the 2026-08-31 session did (2 commits, `0a0599b..a8f0897`):** brought two things back into true, nothing structural.
+
+1. **The SMS opt-in came off both forms.** The mobile field and consent checkbox on `/contact/` and in `StartProjectModal` were collecting opt-ins for a scheduling agent whose Twilio registration was paused before it was ever filed. `/terms/` and the SMS sections on both legal pages stay, reworded so opt-in is by written request only. Full story and the resume steps are in the **PAUSED — SMS / Twilio** entry under Open items.
+2. **Contact left the primary nav.** "Start a project" opens the modal that `/contact/` hosts, tabs and all, so the two were one intent holding two slots in a six-link bar. The bar is now **Home · Services · Mentorship · Free Course · Artists** plus the CTA. The page is untouched, and the footer's Studio column still links it from every page, which is what keeps it internally linked for search. **Note the pre-existing quirk this relies on:** `/contact/` deliberately renders no `StartProjectModal` (`BaseLayout` gates it on `!onContactPage`), so the CTA there falls through to a plain link to `#scope` and scrolls to the Kai panel. That is correct behaviour, not a bug to "fix".
+
+**The footer is data-driven now** (since 2026-08-24, commit `dfb0347`). `Footer.astro` builds four grouped columns — Services, Locations, Studio, Legal — from a `columns` array in its frontmatter, rather than a flat list of anchors: two columns on a phone, a natural-width row above `sm`. **Adding a link means adding a line to that array, not markup**, and picking the column it belongs in. The columns size to content on purpose; equal grid tracks wrapped "Accessibility statement" onto two lines.
 
 **Push gotcha (2026-08-13, still live):** git credentials can resolve to the `pmuf-code` GitHub account, which has no write access, so the push 403s. Both accounts are in the `gh` keyring; the fix is `gh auth switch --hostname github.com --user shizzoobies`. If a push 403s, check `gh auth status` before assuming it is the flaky-first-push described in the runbook.
 
@@ -226,7 +233,7 @@ Two interaction systems worth knowing before you edit:
 
 ## Open items
 
-_Refreshed 2026-08-30. Active items first._
+_Refreshed 2026-08-31. Active items first._
 
 **ACTIVE — near-term, in rough priority order:**
 
