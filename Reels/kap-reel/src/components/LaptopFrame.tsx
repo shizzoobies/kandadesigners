@@ -8,6 +8,24 @@ import type { CSSProperties, ReactNode } from "react";
 export const LAPTOP_BEZEL_RATIO = 0.018;
 export const LAPTOP_BEZEL_MIN = 8;
 
+/**
+ * The screen is always 16:10, whatever is inside it.
+ *
+ * A laptop is not a container that takes the shape of its contents. It has one
+ * shape, and on a 1440x900 deck that shape is 16:10. The zoom regions in
+ * src/reels/training.ts were once wide strips, one of them 2145x695, and
+ * ProjectShowcase sized the screen to whatever region it was handed: the frame
+ * then drew an 885x287 screen, which is nearly 3:1, and the owner read the
+ * result as a letterbox with a hinge rather than as a laptop.
+ *
+ * Since 2026-09-04 the region and the screen are two separate decisions. The
+ * screen is this ratio and is sized by width against the box it has to fit.
+ * The region only says what is centred in it and how tight the crop is, which
+ * is what ZoomShot's cover already did. Regions are authored 16:10 as well, so
+ * cover throws nothing away, but nothing here depends on that.
+ */
+export const LAPTOP_SCREEN_ASPECT = 16 / 10;
+
 /** Outer corner radius of the lid, as a fraction of the screen width. */
 export const LAPTOP_RADIUS_RATIO = 0.016;
 export const LAPTOP_RADIUS_MIN = 10;

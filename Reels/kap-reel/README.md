@@ -974,30 +974,87 @@ anything more is noise.
 shrink rather than restating the ratios, which is what the browser window's
 geometry did and what made it two hand-written passes.
 
-**Screen widths, measured on the delivered stills.** The lid is the screen plus
+### The screen is 16:10, whatever is on it, 2026-09-04
+
+The first laptop took its screen's shape from the zoom region it was handed, and
+the regions were wide strips: hero-to-zones was 2145 x 695, close to 3:1. The
+frame then drew an 885 x 287 screen, and the owner read the result as a
+letterbox with a hinge rather than as a laptop. A laptop is not a container that
+takes the shape of its contents.
+
+`LAPTOP_SCREEN_ASPECT` in `src/components/LaptopFrame.tsx` is 16:10 and
+`ProjectShowcase` sizes every laptop screen against it, so the region and the
+screen are now two separate decisions:
+
+- **the box decides the shape.** The screen is 16:10 and is solved by width
+  against the box the device has to fit, the same proportional shrink as before.
+- **the region decides what is in it.** `ZoomShot` already covers the box with
+  the region, so the region says what is centred on the screen and how tight the
+  crop is, and nothing else.
+
+The four regions in `src/reels/training.ts` are authored 16:10 as well, so cover
+throws nothing away and the numbers in that file are exactly what a viewer sees.
+Nothing depends on that: hand the frame a 4:3 region and it still draws a 16:10
+screen, with the region covering it.
+
+**Screen sizes, measured on the delivered stills** with `out/_1610/measure.mjs`,
+which finds the body colour and reads the hole in it. The lid is the screen plus
 two bezels and the base is six percent wider than the lid; both are centred on
 the same axis.
 
-| Format | Box the device fits | Screen | Lid | Base |
-|---|---|---|---|---|
-| `TrainingVertical` | 864 x 841 | 786 x 255 | 814 | 863 |
-| `TrainingFeed` | 972 x 852 | 885 x 287 | 917 | 972 |
-| `TrainingSquare` | 972 x 700 | 885 x 287 | 917 | 972 |
-| `TrainingLinkedIn` | 972 x 703 | 885 x 287 | 917 | 972 |
-| `TrainingLandscape` | 576 x 869 | 525 x 170 | 543 | 576 |
-| `TrainingLinkedInLandscape` | 576 x 869 | 525 x 170 | 543 | 576 |
+| Format | Box the device fits | Screen | Ratio | Lid | Base | Frame |
+|---|---|---|---|---|---|---|
+| `TrainingVertical` | 864 x 843 | 786 x 491 | 1.6008 | 814 x 519 | 863 x 22 | 863 x 541 |
+| `TrainingFeed` | 972 x 736 | 885 x 553 | 1.6004 | 917 x 585 | 972 x 25 | 972 x 610 |
+| `TrainingSquare` | 972 x 584 | 847 x 529 | 1.6011 | 877 x 559 | 930 x 24 | 930 x 583 |
+| `TrainingLinkedIn` | 972 x 703 | 885 x 553 | 1.6004 | 917 x 585 | 972 x 25 | 972 x 610 |
+| `TrainingLandscape` | 576 x 869 | 525 x 328 | 1.6006 | 543 x 346 | 576 x 15 | 576 x 361 |
+| `TrainingLinkedInLandscape` | 576 x 869 | 525 x 328 | 1.6006 | 543 x 346 | 576 x 15 | 576 x 361 |
 
-Every one of the three 1080 wide crops is width limited, so the laptop is as
-wide as the symmetric safe box allows and the band sits under it. Nothing had to
-be reduced for the band: the tallest laptop is 332 pixels in square, against a
-700 pixel box that already reserves the safe top above it and 24 below it. The
-LinkedIn cut's hazard hunt beat is a 16:9 region rather than a 3:1 one, so its
-screen is the same 885 wide and 504 tall, and its frame is 559 of the same 703
-pixel box.
+Every ratio is within 0.07 percent of 1.6, which is under half a pixel at these
+sizes: the height is `round(screenWidth / 1.6)` and the rounding is the whole of
+the error. Vertical, feed and LinkedIn are still width limited, so the screen is
+as wide as the symmetric safe box allows.
 
-The numbers above are for the hero-to-zones region, 2145 x 695. The other zoom
-regions differ only in the height they take, because every one of them is width
-limited in every crop.
+**Square is the one crop the taller screen cost something.** Its box is 972 x
+584: the safe top above it, the band below it, and the 24 pixel gap the stacked
+arrangement always keeps. A 16:10 screen at the full 885 width needs a 610 pixel
+frame, which does not fit, so the shrink loop reduces the width until it does
+and the screen lands at 847 x 529 in a 583 pixel frame. That leaves 25 pixels
+clear between the deck and the band, one more than the 24 the box reserves. It
+is 4 percent narrower than the other 1080 wide crops and nothing else changed.
+
+The loop measures the screen it is going to draw, not a screen half a pixel away
+from it: both the loop and the final frame use the rounded width and the height
+solved from that rounded width. Solving the height from the unrounded width put
+the drawn frame one pixel taller than the frame the loop had just accepted,
+which in square is one pixel out of the band's gap.
+
+**The four regions, re-cut 16:10 on the same subjects.** All four decks lay one
+content column across a 2880 x 1800 page, and in every one of them that column
+is about 2080 capture pixels wide: cropping narrower cuts words out of a card, a
+list item or a statement row. So the width is not negotiable, it is the width
+that fixes the height at 1340, and every region starts at capture row 0 because
+the content on all four decks sits in the top three quarters of the page.
+
+| Beat | Region | What it holds |
+|---|---|---|
+| hero to zones | 369, 0, 2144 x 1340 | Module header, the tab row, the intro sentence, all four zone cards. From row 0 the LinkedIn cut's first second is the whole hero screen rather than a band of a paragraph. |
+| hazard hunt | 369, 0, 2144 x 1340 | The illustration, the found counter, all six spot cards and the feedback panel. The old region was the illustration alone, and the claim on this beat is about the list. |
+| P&L simulator | 368, 0, 2144 x 1340 | The four levers, the statement rows, the gross margin and operating income figures, the prompt tabs and the prompt line. |
+| RFI branch | 362, 0, 2144 x 1340 | The sheet header, the scenario, both option cards side by side and the verdict panel. |
+
+No beat fell back to the full 2880 x 1800 deck. 2144 is a third more
+magnification than the whole page, and at an 885 pixel screen that is a scale of
+0.41, which puts the module's body type near eight canvas pixels. Hero to zones
+is unchanged on that count, because it was already 2145 wide and the width is
+what sets the scale; only its height moved, from 695 to 1340.
+
+Every laptop clean shot still ends on a frame that moves. Measured with ffmpeg
+psnr on the new region, the last consecutive source pair of each beat is 16.1 dB
+for hero to zones (99 to 100), 17.1 dB for the hazard hunt (131 to 132), 32.0 dB
+for the P&L simulator (159 to 160) and 21.7 dB for the RFI branch (89 to 90).
+The Section 6b line is 40 dB.
 
 ### Training reel stand-ins
 
@@ -1047,6 +1104,20 @@ badly chosen crop. `ZoomShot` sets `maxWidth: none` for exactly this reason.
 | 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` (laptop frame) | 1350 frames, 1080x1350, 30fps, 45.0s | 53.0s |
 | 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` (laptop frame) | 1350 frames, 1920x1080, 30fps, 45.0s | 61.7s |
 | 2026-09-04 | sheet | `out/final-training/vertical-sheet.png` (laptop frame) | 4x3 tile of 12 frames, ffmpeg | under 1s |
+| 2026-09-04 | bundle | `out/bundle` (16:10 laptop screen) | rspack bundle, public dir linked not copied | 14.4s cold, 2.2s warm |
+| 2026-09-04 | Training stills | `out/_1610/stills` | 22 stills, six crops plus six debug twins | 52.4s |
+| 2026-09-04 | TrainingVertical | `out/render-training-vertical-15s.mp4` (16:10 screen) | 450 frames, 1080x1920, 30fps, 15.0s | 20.8s |
+| 2026-09-04 | TrainingFeed | `out/render-training-feed-15s.mp4` (16:10 screen) | 450 frames, 1080x1350, 30fps, 15.0s | 18.7s |
+| 2026-09-04 | TrainingSquare | `out/render-training-square-15s.mp4` (16:10 screen) | 450 frames, 1080x1080, 30fps, 15.0s | 17.8s |
+| 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` (16:10 screen) | 1350 frames, 1080x1350, 30fps, 45.0s | 52.5s |
+| 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` (16:10 screen) | 1350 frames, 1920x1080, 30fps, 45.0s | 58.8s |
+| 2026-09-04 | deliver | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 36.7s |
+| 2026-09-04 | sheet | `out/final-training/vertical-sheet.png` (16:10 screen) | 4x3 tile of 12 frames, ffmpeg | 0.4s |
+| 2026-09-04 | **Training re-delivered, 16:10 laptop screen** | **the 16:10 screen rule and the four re-cut zoom regions** | **warm bundle + five renders + delivery + sheet** | **207.9s (3m 28s)** |
+
+The 16:10 re-delivery touched the training reel only. The web reel has no beat
+with `cleanFrame: "laptop"`, so nothing in it changed and its five delivered
+MP4s were not re-rendered or re-encoded.
 
 Section 14 item 9 for the training reel: **231.9 seconds**, which is
 2.4 + 2.6 + 184.9 + 42.0. It is the sum of the nine "final build" rows above and

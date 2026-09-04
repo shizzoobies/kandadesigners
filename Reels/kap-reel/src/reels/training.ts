@@ -40,14 +40,54 @@ import type { FeaturedBeat, ReelContent, TourCut, ZoomRegion } from "./types";
  */
 
 /**
- * Measured off training-safety-hazard-hunt-desktop. The illustration, the part
- * of the screen the learner clicks, sits at 435,546 to 1485,1134 in capture
- * pixels. Rounded to a 16:9 rectangle around it, which is close enough to a
- * laptop screen's own shape that the screen does not read as letterboxed, and
- * at a screen width of about 885 canvas pixels it renders at very nearly one to
- * one, so nothing is softened.
+ * THE 16:10 RULE, 2026-09-04.
+ *
+ * Every region a laptop beat uses is 16:10, because the laptop screen is 16:10
+ * and nothing else. Before this the regions were wide strips, one of them
+ * 2145x695, and ProjectShowcase sized the screen to the strip: the frame drew
+ * an 885x287 screen, close to 3:1, which the owner read as a letterbox with a
+ * hinge rather than as a laptop. The screen's shape is now fixed in
+ * LAPTOP_SCREEN_ASPECT and the region only decides what is centred in it.
+ *
+ * Regions are authored 16:10 anyway, so ZoomShot's cover throws nothing away
+ * and the numbers below are exactly what the viewer sees.
+ *
+ * All four decks lay one content column across the page, and in every one of
+ * them the column is about 2080 capture pixels wide. Cropping narrower cuts
+ * words out of a card, a list item or a statement row, so the width is not
+ * negotiable and it is the width that fixes the height at 1340. That is wider
+ * than a tight crop would be, and the trade is deliberate: 2144 against the
+ * full 2880 deck is still a third more magnification than showing the whole
+ * page, and no beat here fell back to the full deck.
+ *
+ * Every region starts at capture row 0. The content on all four decks sits in
+ * the top three quarters of the page, and 1340 rows from the top holds the
+ * module header, the interaction and its feedback, while the rows below hold
+ * the page footer and empty card.
  */
-const ZOOM_SAFETY_HAZARD_HUNT: ZoomRegion = { x: 435, y: 540, w: 1055, h: 600 };
+
+/** Content column width plus a small margin, and its 16:10 height. */
+const LAPTOP_REGION_W = 2144;
+const LAPTOP_REGION_H = 1340;
+
+/**
+ * Measured off training-safety-hazard-hunt-desktop, on source frames 92 and
+ * 132, which are the states with three and with six spots found.
+ *
+ * The illustration the learner clicks sits at 405,592 to 1518,1218, and the six
+ * spot cards are a two column list from 1550 to 2480 with the feedback panel
+ * under them ending at 1212. The old region was the illustration alone, 1055
+ * wide, which showed the picture and none of the argument: the claim on this
+ * beat is "hotspots read aloud as a list", and the list was outside the frame.
+ * The full column holds both, plus the counter and the instruction sentence,
+ * and the picture still fills the left half of the screen.
+ */
+const ZOOM_SAFETY_HAZARD_HUNT: ZoomRegion = {
+  x: 369,
+  y: 0,
+  w: LAPTOP_REGION_W,
+  h: LAPTOP_REGION_H,
+};
 
 /**
  * Measured off training-safety-stop-or-go-mobile, 780x1688.
@@ -84,52 +124,74 @@ const ZOOM_SAFETY_STOP_OR_GO_MOBILE: ZoomRegion = {
 };
 
 /**
- * Measured off training-safety-hero-to-zones-desktop, on source frame 100.
+ * Measured off training-safety-hero-to-zones-desktop, on source frames 0, 60
+ * and 100: the hero screen the clip opens on, and the two tabs of the zones
+ * screen it clicks between.
  *
- * The region Section 6b's readable shot has to hold is the tab row at 320, the
- * intro sentence, and the four zone cards, which end at 958. The content column
- * runs 399 to 2483, and neither the page margins outside it nor the empty card
- * below the four zones is worth a pixel of a shot this short.
+ * The region holds the tab row at 320, the intro sentence, and the four zone
+ * cards, which end at 958. The content column runs 399 to 2483 and the two card
+ * columns run the whole of it, so cropping narrower cuts words in half. At a
+ * screen width of about 885 canvas pixels that is a scale of 0.41, which puts
+ * the card body type near eight canvas pixels: the same magnification the
+ * 2145 wide strip had, since the width is unchanged and the width is what sets
+ * the scale. All that changed is the height, from 695 to 1340.
  *
- * The width is not negotiable and it is what fixes the scale: the two card
- * columns and the sentence above them run the full content column, so cropping
- * narrower cuts words in half. At a laptop screen width of about 885 canvas
- * pixels that is 0.41, which puts the card body type near eight canvas pixels
- * against six and a half for the same shot at full frame. Trimming the dead
- * height is what the crop is really for: without it the screen is half empty
- * card and the beat looks like it is showing a page rather than a lesson.
- *
- * Checked against the second tab as well, which the shot cuts to on source
- * frame 60: its content ends at 799, comfortably inside the same box.
+ * Starting at row 0 rather than at 295 is what the extra height bought. The
+ * LinkedIn cut plays this clip from source frame 0, and its first second is the
+ * hero screen: through a window cropped to a tab row that was a band of a
+ * paragraph, and through this one it is the whole "what you will do" screen.
+ * The second tab, on source 60, ends at 799 and sits comfortably inside.
  */
-const ZOOM_SAFETY_HERO_TO_ZONES: ZoomRegion = { x: 370, y: 295, w: 2145, h: 695 };
+const ZOOM_SAFETY_HERO_TO_ZONES: ZoomRegion = {
+  x: 369,
+  y: 0,
+  w: LAPTOP_REGION_W,
+  h: LAPTOP_REGION_H,
+};
 
 /**
  * Measured off training-rfi-scenario-branch-desktop, on source frames 30 and
  * 90, which are the two states the beat shows: option A chosen and marked not
  * quite, then option B chosen and marked correct.
  *
- * The two option cards sit at 439 to 864 and the feedback panel under them runs
- * to 1037 in the longer of the two states. The scenario paragraph above is
- * eleven lines of setup that no viewer is going to read in seven seconds, and
- * the sheet below the feedback is blueprint paper. So the shot is the two
- * options and the verdict, which is the whole argument of the beat: the claim
- * on screen is "scores the decision, not the recall".
+ * The two option cards sit at 445 to 862 and the feedback panel under them runs
+ * to 1030 in the longer of the two states. Option A ends at 1260 and option B
+ * starts at 1292, so the pair needs the whole sheet width of 405 to 2462: the
+ * beat is the comparison, and a crop that holds one card is not one.
+ *
+ * The sheet below the feedback is blueprint paper and the page footer is under
+ * that, so the region stops at 1340 and the shot is the sheet header, the
+ * scenario, both options and the verdict. The claim on screen is "scores the
+ * decision, not the recall", and the decision is all of that.
  */
-const ZOOM_RFI_OPTIONS: ZoomRegion = { x: 420, y: 414, w: 2040, h: 655 };
+const ZOOM_RFI_OPTIONS: ZoomRegion = {
+  x: 362,
+  y: 0,
+  w: LAPTOP_REGION_W,
+  h: LAPTOP_REGION_H,
+};
 
 /**
- * Measured off training-finance-pnl-simulator-desktop. The "Move the levers"
- * band: the four sliders on the left, the statement in the middle, and the
- * gross margin and operating income figures on the right, from 330 down to
- * about 1140. Below that the folio is ruled paper and nothing else.
+ * Measured off training-finance-pnl-simulator-desktop, on source frames 100 and
+ * 160, which are inside the third and the fourth slider drag.
  *
- * The beat's context line is "Move a slider. Watch the margin move.", so the
- * crop has to hold the sliders and the margin in the same frame. That fixes
- * the width at the full content column and the magnification at about a third,
- * the same trade the safety crops make.
+ * The "Move the levers" band is three columns: the four sliders from 405 to
+ * about 1270, the statement rows from 1325 to 2012, and the gross margin and
+ * operating income figures from 2060 to 2475. The beat's context line is "Move
+ * a slider. Watch the margin move.", so the crop has to hold the far left and
+ * the far right of that band in one frame, which fixes the width at the full
+ * content column.
+ *
+ * 1340 rows from the top take the folio header, the whole band, the two prompt
+ * tabs and the prompt sentence under them. Below that the folio is ruled paper
+ * and the page footer.
  */
-const ZOOM_FINANCE_SLIDERS: ZoomRegion = { x: 375, y: 330, w: 2130, h: 810 };
+const ZOOM_FINANCE_SLIDERS: ZoomRegion = {
+  x: 368,
+  y: 0,
+  w: LAPTOP_REGION_W,
+  h: LAPTOP_REGION_H,
+};
 
 /**
  * The 15 second cut's two project beats, both on the safety module.
@@ -149,9 +211,9 @@ const FEATURED: FeaturedBeat[] = [
     plateId: "t-laptop-shoulder",
     plateCaptureId: "training-safety-hero-to-zones-desktop",
     cleanCaptureId: "training-safety-hero-to-zones-desktop",
-    // A 16:10 module screen on a laptop, cropped to the tab row and the four
-    // zone cards. The spec allows this beat either way; the tabs and the cards
-    // do read better pushed in.
+    // A 16:10 module screen on a 16:10 laptop screen, pushed in on the content
+    // column so the tab row and the four zone cards fill it. The spec allows
+    // this beat either way; the tabs and the cards do read better pushed in.
     cleanFrame: "laptop",
     zoom: ZOOM_SAFETY_HERO_TO_ZONES,
     // Source 33 to 100 across 108 output frames, which is rate 0.629.

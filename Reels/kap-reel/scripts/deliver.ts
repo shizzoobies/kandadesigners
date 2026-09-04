@@ -833,11 +833,11 @@ const CAROUSEL_FRAMES: Record<ReelKey, CarouselFrame[]> = {
     { frame: 440, slug: "6-call-to-action", note: "CTA card, drawn lockup and contact" },
   ],
   // Same beat map, so the same frames are the right frames. Four distinct
-  // surfaces across the six: the walk-through in a browser window, the same
+  // surfaces across the six: the walk-through on a 16:10 laptop, the same
   // course being answered on a phone, the P&L simulator on a tablet in hands,
   // and the RFI microlearning on a desk.
   training: [
-    { frame: 130, slug: "1-safety-walkthrough", note: "browser window, claim on screen" },
+    { frame: 130, slug: "1-safety-walkthrough", note: "laptop, claim on screen" },
     { frame: 262, slug: "2-safety-stop-or-go", note: "phone, stop or go, claim on screen" },
     { frame: 328, slug: "3-surfaces-finance", note: "tour cut, Finance, P&L simulator" },
     {

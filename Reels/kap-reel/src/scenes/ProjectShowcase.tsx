@@ -13,7 +13,11 @@ import {
   CLAIM_RULE_BLOCK,
 } from "../components/ClaimLine";
 import { DeviceFrame } from "../components/DeviceFrame";
-import { LaptopFrame, laptopGeometry } from "../components/LaptopFrame";
+import {
+  LaptopFrame,
+  laptopGeometry,
+  LAPTOP_SCREEN_ASPECT,
+} from "../components/LaptopFrame";
 import { KineticText } from "../components/KineticText";
 import { PlateShot } from "../components/PlateShot";
 import { StandIn } from "../components/StandIn";
@@ -307,7 +311,8 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
    * the vertical crop the shot spans the safe width and the lower third sits
    * under it rather than across it.
    */
-  const shotWiderThanCanvas = shotWidth / shotHeight > width / height;
+  const shotWiderThanCanvas =
+    (laptop ? LAPTOP_SCREEN_ASPECT : shotWidth / shotHeight) > width / height;
   const showcase =
     metrics.showcase === "overlay" && shotWiderThanCanvas
       ? "stack"
@@ -356,24 +361,44 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
      * the screen except the three minimums, so a proportional shrink converges
      * in a couple of passes and the loop is cheaper than restating the ratios
      * here, which is the mistake the browser window's geometry made.
+     *
+     * The aspect is the laptop's, not the shot's. A laptop screen is 16:10
+     * whatever is playing on it; sizing it to the zoom region drew a 3:1 screen
+     * for a 3:1 strip, which reads as a letterbox with a hinge rather than as a
+     * device. See LAPTOP_SCREEN_ASPECT. The region still decides what the
+     * viewer sees, because ZoomShot covers the box with it.
      */
-    const aspect = shotWidth / shotHeight;
+    const aspect = LAPTOP_SCREEN_ASPECT;
+    /**
+     * The screen the loop measures is the screen that gets drawn: both are the
+     * rounded width and the height solved from that rounded width. Solving the
+     * height from the unrounded width instead put the drawn frame one pixel
+     * taller than the frame the loop had just accepted, which in the square
+     * crop is one pixel of the gap the band relies on.
+     */
+    const screenFor = (w: number) => {
+      const sw2 = Math.round(w);
+      const sh2 = Math.round(sw2 / aspect);
+      return { sw2, sh2, g: laptopGeometry(sw2, sh2) };
+    };
+
     // Never upscale past the shot's own pixels, the same rule the phone frame
     // follows.
     let sw = Math.min(boxWidth, shotWidth);
-    let g = laptopGeometry(Math.round(sw), Math.round(sw / aspect));
+    let solved = screenFor(sw);
     for (let pass = 0; pass < 6; pass += 1) {
       const fit = Math.min(
-        boxWidth / g.frameWidth,
-        boxHeight / g.frameHeight,
+        boxWidth / solved.g.frameWidth,
+        boxHeight / solved.g.frameHeight,
       );
       if (fit >= 1) break;
       sw *= fit;
-      g = laptopGeometry(Math.round(sw), Math.round(sw / aspect));
+      solved = screenFor(sw);
     }
 
-    screenWidth = Math.round(sw);
-    screenHeight = Math.round(sw / aspect);
+    const g = solved.g;
+    screenWidth = solved.sw2;
+    screenHeight = solved.sh2;
     bezel = g.bezel;
     radius = g.radius;
     frameWidth = g.frameWidth;
