@@ -107,6 +107,11 @@ logged, and not used.
 | 2026-09-03 | Sound Effects | Phase 5 SFX total, 4 generations | | 25 | 4 accepted |
 | 2026-09-03 | Phase 5 total, 12 generations | | | 7,685 | |
 | 2026-09-03 | Running total, phases 4 and 5, 33 generations | | | 43,213 | Cross-checked against the usage endpoint on 2026-09-03: Image Generation 35,528, Music 7,660, Sound Effects 25 |
+| 2026-09-04 | Music | music_v2 | music-t-a-20s, second showcase reel (training content), acoustic-leaning felt keys over a light electronic pulse about 108 bpm, 20s instrumental | 547 | Accepted, candidate bed for out/gate-t5/preview-t-a.mp3 |
+| 2026-09-04 | Music | music_v2 | music-t-b-20s, second showcase reel (training content), warm analog synth chords with a gentle four-on-the-floor about 116 bpm and a plucked motif, 20s instrumental | 547 | Accepted, candidate bed for out/gate-t5/preview-t-b.mp3 |
+| 2026-09-04 | Music | music_v2 | music-t-c-20s, second showcase reel (training content), organic marimba/mallets over a soft bass about 112 bpm, 20s instrumental | 547 | Accepted, candidate bed for out/gate-t5/preview-t-c.mp3. Credit figure corrected from a contaminated live measurement, see the Music section below |
+| 2026-09-04 | Music | Second reel, training-set total, 3 generations | | 1,641 | 3 accepted, 0 rejected, all pass the first-second energy test on the first take |
+| 2026-09-04 | Running total, phases 4 and 5 plus the second reel's training set, 36 generations | | | 44,854 | Cross-checked against the usage endpoint on 2026-09-04: Image Generation 37,964, Music 9,301, Sound Effects 25. The Image Generation bucket moved from 35,528 to 37,964 since 2026-09-03 from a concurrent agent's plate work on the second reel, which is outside this log's scope and is not this row's total; Music moved by exactly 1,641, matching the three rows above |
 
 Unit costs measured on this workspace: gemini-3-pro-image at 2K 9:16 costs
 1,218 credits with no reference image and 1,827 with one, so attaching a style
@@ -329,6 +334,80 @@ MP3 at 192 kbps on every music generation. The sample rate honoured the request
 and the bitrate did not, which is recorded here rather than assumed away. This
 is well above what survives the final AAC encode and nothing was regenerated
 over it.
+
+### Second reel: training content variants (2026-09-04)
+
+A second showcase reel, about instructional design and training content, needs
+its own music candidates: the first reel's brief (a product launch feel) does
+not fit. Three new 20 second instrumentals were generated the same way as
+Phase 5's, through POST /v1/music, model `music_v2`, prompt mode,
+`force_instrumental: true`, `output_format: mp3_48000_320` requested. The API
+again delivered 48 kHz stereo MP3 at 192 kbps rather than 320, the same gap
+Phase 5 recorded above. No third party music was used. The commercial rights
+established earlier in this section apply unchanged: same account, same Pro
+plan, same `music_v2` model, so the Media Rights grant and the open Eligibility
+Restrictions question below it cover these three the same way. Nothing here
+resolves that open question; it still needs the owner's answer before either
+reel publishes.
+
+The brief for this reel is warm, steady, confident and unhurried but still
+moving: a bright morning workshop rather than a product launch. All three
+share that character and the same hard requirement Section 9 set for reel one,
+that the track start at full energy on the very first beat with no intro
+build and no fade in, because the 15 second cut cuts in hard on frame 0. Each
+prompt states that explicitly. Full prompts for every generation are stored
+verbatim in `config/audio.json` under `generations`, filtered to
+`"set": "training"`.
+
+| File | Variant | Character | First second test | Candidate for |
+|---|---|---|---|---|
+| assets/audio/raw/music-t-a-20s.mp3 | t-a, acoustic-leaning felt keys over a light electronic pulse, about 108 bpm | Warm, steady, unhurried | Pass, first second 2.5 dB above the track mean | out/gate-t5/preview-t-a.mp3 |
+| assets/audio/raw/music-t-b-20s.mp3 | t-b, warm analog synth chords, gentle four-on-the-floor, about 116 bpm, plucked motif | Warm, steady, confident | Pass, 1.9 dB below, inside the 6 dB tolerance | out/gate-t5/preview-t-b.mp3 |
+| assets/audio/raw/music-t-c-20s.mp3 | t-c, organic marimba/mallets over a soft bass, about 112 bpm | Warm, unhurried, organic | Pass, 0.5 dB below, inside the 6 dB tolerance | out/gate-t5/preview-t-c.mp3 |
+
+All three passed Section 9's first-second energy test on the first take, so no
+retake was needed for any of them; the hard cap for this run was 6 generations
+(2 attempts per variant) and only 3 were used.
+
+**Credit measurement note on music-t-c-20s.** Two other agents were generating
+images against the same ElevenLabs account at the same time (captures and
+plates work for this same second reel). The live before/after usage snapshot
+this script takes around every call assumes no concurrent spend, which did not
+hold for this one call: it read a delta of 1,765 credits attributed to the
+Image Generation bucket, not Music, because that concurrent image work moved
+more in the polling window than this music call did. `config/audio.json` and
+the credit spend table above record the corrected figure instead: reading the
+Music bucket total directly before this run (8,754, from Phase 5's 7,660 plus
+547 each for music-t-a-20s and music-t-b-20s) against the Music bucket total
+after (9,301, GET /v1/usage/character-stats, checked 2026-09-04) gives a clean
+delta of exactly 547, matching every other 20 second `music_v2` generation
+measured on this project. music-t-a-20s and music-t-b-20s were each measured
+cleanly at 547 credits under the Music bucket with no such collision.
+
+### Second reel: 15 second previews (2026-09-04)
+
+Three audio-only preview mixes were built with ffmpeg for the owner to choose
+from, no picture involved yet: `out/gate-t5/preview-t-a.mp3`,
+`preview-t-b.mp3` and `preview-t-c.mp3`, each the 20 second take trimmed to
+15.000s with a 400 ms fade at the tail. The same bare mix is also written to
+`assets/audio/mix-t-a-15s.wav`, `mix-t-b-15s.wav` and `mix-t-c-15s.wav`, 48 kHz
+stereo PCM, music only (no sound effects, per the same owner decision recorded
+for reel one on 2026-09-03), ready to drop into the reel once a variant is
+picked. Levels use the same limiter-then-two-pass-loudnorm chain reel one's
+mixes use: -14 LUFS integrated target, -1.5 dBTP ceiling (the same -1 dBTP
+delivered ceiling minus the 0.5 dB AAC encode headroom Section 11 established),
+measured off the delivered file rather than read from loudnorm's own
+prediction.
+
+| Variant | Integrated | True peak | LRA |
+|---|---|---|---|
+| t-a | -13.71 LUFS | -1.84 dBTP | 2.9 |
+| t-b | -14.09 LUFS | -2.31 dBTP | 0.8 |
+| t-c | -14.00 LUFS | -2.23 dBTP | 0.6 |
+
+All three land within 0.4 LU of the -14 LUFS target and well clear of the
+-1.5 dBTP ceiling. t-a is the furthest off target at -13.71, 0.29 LU hot; still
+closer than reel one's variant B was to its own target.
 
 ## Sound effects
 

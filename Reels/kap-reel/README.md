@@ -436,6 +436,37 @@ Delivered, measured off the five MP4s with loudnorm in analysis mode:
 Licensing, the exact commercial rights wording, the credit spend and the one
 open eligibility question are all in `LICENSING.md`.
 
+### Second reel: training content variants
+
+The second showcase reel, about instructional design and training content,
+needed its own music brief instead of reel one's product launch feel: warm,
+steady, confident, unhurried but still moving, a bright morning workshop. It
+shares the same hard requirement that the track start at full energy with no
+intro build or fade in, since the 15 second cut still cuts in hard on frame 0.
+
+```
+npx tsx scripts/audio.ts music --variant t-a|t-b|t-c --length 20 --set training
+npx tsx scripts/audio.ts mix --set training [--variant t-a|t-b|t-c]
+```
+
+`--set training` is additive: it does not change what `music` or `mix` do
+without it. It routes the new `t-a`, `t-b` and `t-c` variant ids to the
+training brief instead of reel one's, and it counts generations against their
+own six-generation cap in `config/audio.json` (keyed `"set": "training"`)
+rather than the original 12-generation cap Phase 5 already reached, so this
+run is not blocked by that earlier cap.
+
+`mix --set training` has no picture to mux against yet, since the owner has
+not picked a variant, so it writes an audio-only preview instead of
+`preview-{variant}.mp4`: `out/gate-t5/preview-{t-a,t-b,t-c}.mp3`, each the 20
+second take trimmed to 15.0s with the same 400 ms tail fade, limiter and
+two-pass loudnorm to -14 LUFS at a -1.5 dBTP ceiling that `mix` uses for reel
+one. It also writes the same bare wav `mix` always writes,
+`assets/audio/mix-t-{a,b,c}-15s.wav`, music only, ready to drop into the reel
+once a variant is chosen. All three variants passed the first-second energy
+test on the first take. Full prompts, the energy test results and the
+measured credits are in `config/audio.json` and `LICENSING.md`.
+
 ## Delivery
 
 Phase 6 lives in three files. `scripts/deliver.ts` is the one to run.

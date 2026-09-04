@@ -1,15 +1,25 @@
 /**
  * scripts/plates.ts
  *
- * Phase 4 context plate generation for the K&A Performance showcase reel.
+ * Context plate generation for the K&A Performance reels.
  * See kap-reel-handoff.md Section 4b and 9b.
  *
  * Run:
  *   npx tsx scripts/plates.ts smoke [--model <id>]
  *   npx tsx scripts/plates.ts generate --plate <id> --count N [--model <id>]
+ *                                      [--set showcase|training]
  *                                      [--ref <path>] [--ref-gen <generationId>]
  *                                      [--resolution 1K|2K] [--seed N]
- *   npx tsx scripts/plates.ts list
+ *   npx tsx scripts/plates.ts list [--set showcase|training]
+ *
+ * Plate sets. A set is one shoot: one room, one light, one cast. The showcase
+ * set is the original seven plates for the projects reel. The training set is a
+ * second seven for the training content reel, deliberately a different room and
+ * a different day so the two reels never look like the same afternoon. The two
+ * sets share the RULES block and the model, and nothing else. Everything the
+ * set changes lives in PLATE_SETS, so adding a third shoot is one entry there
+ * plus its framings. --set defaults to showcase, which is what every command
+ * written before the training set did.
  *
  * API contract, confirmed against the live docs on 2026-09-03:
  *
@@ -95,9 +105,14 @@ const BASE_SEED = 41127;
 // ---------------------------------------------------------------------------
 
 /**
- * Every prompt is STYLE + framing + RULES. The shared halves are what make the
+ * Every prompt is framing + STYLE + RULES. The shared halves are what make the
  * seven plates read as one shoot rather than seven stock photos. The rules
  * half is Section 4b verbatim in prompt form and is not negotiable.
+ *
+ * STYLE is per set: it is the room, the light and the grade, which is exactly
+ * what has to differ between one shoot and the next. RULES is shared, because
+ * the screen-off, no-face, no-finger-on-the-panel constraints come from
+ * Section 4b and apply to every plate this pipeline will ever produce.
  */
 const STYLE =
   "Photograph. Soft natural window light from the left, late morning, warm and " +
@@ -121,12 +136,50 @@ const RULES =
   "fluorescent light. Real photography, shot on a full frame camera with a 50mm " +
   "lens. Not an illustration, not a 3D render, not a digital painting.";
 
+/**
+ * The training set's own room. A different building, a different day, a
+ * different cast: overcast north light through a big window on the RIGHT
+ * instead of warm sun from the left, pale grey and light oak instead of cream
+ * and rust, one plant for the only colour. Set beside the showcase plates it
+ * has to read as a second shoot, not a second angle on the first one.
+ */
+const TRAINING_STYLE =
+  "Photograph. Flat cool overcast daylight through a large window on the " +
+  "right, soft and directionless, an ordinary grey afternoon. A calm " +
+  "uncluttered workspace: pale grey walls, light oak surfaces, the leaves of " +
+  "one green plant well out of focus. Cool neutral color grade, pale grey, " +
+  "light oak and muted green, no warm cast and no golden light. Shallow depth " +
+  "of field, wide aperture, the person soft and the device sharp.";
+
+/**
+ * Extra rules for the training set only. The training reel sells course
+ * content for construction teams, and a generated hard hat or a generated job
+ * site would be a generated claim about a real place, which Section 9b
+ * prohibits outright. The room in these plates is an ordinary office and
+ * nothing in it may suggest otherwise.
+ */
+const TRAINING_EXTRA_RULES =
+  "No hard hat, no safety vest, no high visibility clothing, no tools, no " +
+  "machinery, no construction or industrial props and no vehicle anywhere in " +
+  "the frame. The room is an ordinary quiet office or home workspace and must " +
+  "not read as a specific business, venue, site office or job site. No " +
+  "clutter: the surfaces are close to bare.";
+
+export type PlateSetName = "showcase" | "training";
+
 type PlateSpec = {
   id: string;
   framing: string;
   /** Which capture goes in the screen, for the gate stills. */
   captureId: string;
   usedFor: string;
+  /** Which shoot this plate belongs to. Selects the STYLE and extra rules. */
+  set: PlateSetName;
+};
+
+const PLATE_SETS: Record<PlateSetName, { style: string; extraRules: string }> = {
+  showcase: { style: STYLE, extraRules: "" },
+  training: { style: TRAINING_STYLE, extraRules: TRAINING_EXTRA_RULES },
 };
 
 const PLATE_SPECS: PlateSpec[] = [
@@ -142,6 +195,7 @@ const PLATE_SPECS: PlateSpec[] = [
       "beside the trackpad.",
     captureId: "fore-motion-golf-home-desktop",
     usedFor: "project 1",
+    set: "showcase",
   },
   {
     id: "plate-phone-hands",
@@ -154,6 +208,7 @@ const PLATE_SPECS: PlateSpec[] = [
       "softly blurred warm room behind.",
     captureId: "project-makeover-home-mobile",
     usedFor: "project 2",
+    set: "showcase",
   },
   {
     id: "plate-ipad-lap",
@@ -166,6 +221,7 @@ const PLATE_SPECS: PlateSpec[] = [
       "and a soft window beyond.",
     captureId: "southern-legacy-contractors-home-desktop",
     usedFor: "project 3",
+    set: "showcase",
   },
   {
     id: "plate-desktop-wide",
@@ -178,6 +234,7 @@ const PLATE_SPECS: PlateSpec[] = [
       "desk.",
     captureId: "mbs-medicine-home-desktop",
     usedFor: "tour cut 1",
+    set: "showcase",
   },
   {
     id: "plate-handoff",
@@ -190,6 +247,7 @@ const PLATE_SPECS: PlateSpec[] = [
       "frame. Warm window light, deep background blur.",
     captureId: "onlynails-dashboard-sitephotos-clean",
     usedFor: "tour cut 2",
+    set: "showcase",
   },
   {
     id: "plate-phone-hands-b",
@@ -202,6 +260,7 @@ const PLATE_SPECS: PlateSpec[] = [
       "with a linen curtain softly blurred behind.",
     captureId: "ellenton-family-practice-home-mobile",
     usedFor: "tour cut 3",
+    set: "showcase",
   },
   {
     id: "plate-tablet-b",
@@ -214,24 +273,164 @@ const PLATE_SPECS: PlateSpec[] = [
       "Warm window light from the left.",
     captureId: "pbj-strategic-accounting-home-desktop",
     usedFor: "tour cut 4",
+    set: "showcase",
   },
 ];
+
+/**
+ * The training reel's seven. Same seven jobs as the showcase set does for the
+ * projects reel, shot in the training room instead: window on the right, flat
+ * overcast light, and a cast with different sleeves and different hair from
+ * the first shoot so the two reels never look cast from the same afternoon.
+ *
+ * Two framings are new rather than restaged. t-laptop-two replaces the
+ * showcase handoff with a pointing gesture, which is the harder ask because a
+ * pointing finger wants to land on the panel, and the composite would paint
+ * the site straight over it. t-laptop-cafe-free has no person at all, which
+ * makes it the safest plate in the set and the one to fall back on.
+ */
+const TRAINING_PLATE_SPECS: PlateSpec[] = [
+  {
+    id: "t-laptop-shoulder",
+    framing:
+      "Vertical portrait photograph taken from directly behind a seated " +
+      "person, over their left shoulder. Their head and shoulder are a soft " +
+      "out of focus shape across the lower right, cropped so no face and no " +
+      "profile is visible. They wear a light grey marl knit sleeve and have " +
+      "short sandy blond hair. An open laptop sits on a light oak desk ahead " +
+      "of them, tilted slightly away, its dark blank screen filling the upper " +
+      "third of the frame and squarely facing the camera. One hand rests " +
+      "loosely on the desk beside the trackpad.",
+    captureId: "training-safety-hero-to-zones-desktop",
+    usedFor: "safety beat 1",
+    set: "training",
+  },
+  {
+    id: "t-phone-hands",
+    framing:
+      "Vertical portrait photograph of two hands holding a modern smartphone " +
+      "upright, angled about eight degrees away from the camera, framed from " +
+      "the forearms down so no body and no face appear. The cuffs are a soft " +
+      "sage green sweatshirt. The dark blank screen faces the camera and " +
+      "fills the middle of the frame. Both thumbs rest on the phone's outer " +
+      "side rails below the screen, well clear of the screen face. A cool " +
+      "grey room softly blurred behind.",
+    captureId: "training-safety-hierarchy-sorter-mobile",
+    usedFor: "safety beat 2",
+    set: "training",
+  },
+  {
+    id: "t-tablet-desk",
+    framing:
+      "Vertical portrait photograph looking down at a shallow angle onto a " +
+      "tablet lying nearly flat on a light oak desk, raised at a low angle on " +
+      "a slim stand so its dark blank screen tilts up and toward the camera " +
+      "and fills the middle of the frame at a gentle off axis angle. One hand " +
+      "rests on the desk at the outer left edge of the tablet, fingers " +
+      "together and flat on the desk beside the device, a navy shirt cuff at " +
+      "the wrist. No other object on the desk.",
+    captureId: "training-finance-pnl-simulator-desktop",
+    usedFor: "tour: finance",
+    set: "training",
+  },
+  {
+    id: "t-desktop-wide",
+    framing:
+      "Vertical portrait photograph of a wider quiet office room with a large " +
+      "widescreen monitor on a light oak desk anchoring the frame, the " +
+      "monitor turned squarely toward the camera and its dark blank screen " +
+      "sitting in the upper middle of the frame. One person stands at the far " +
+      "right edge of the frame in a charcoal grey shirt, turned away and cut " +
+      "off by the edge of the frame at chest height so no head, no hair and " +
+      "no face is anywhere in the picture. A tall green plant is softly out " +
+      "of focus at the left.",
+    captureId: "training-rfi-scenario-branch-desktop",
+    usedFor: "tour: rfi",
+    set: "training",
+  },
+  {
+    id: "t-laptop-two",
+    framing:
+      "Vertical portrait photograph of two people sitting side by side at a " +
+      "light oak table, both seen from behind and cropped above the shoulder " +
+      "line so neither head, neither hairline nor either face is in frame. " +
+      "One wears a light grey sweatshirt, the other a sage green shirt. An " +
+      "open laptop sits on the table between them with its dark blank screen " +
+      "turned toward the camera in the upper middle of the frame. The person " +
+      "on the right gestures toward the laptop with a relaxed open hand that " +
+      "stays low and near, resting in the air just above the table in front " +
+      "of the laptop with the fingertips well below the bottom edge of the " +
+      "screen. The hand is entirely outside the outline of the screen and " +
+      "never overlaps it from the camera's point of view. Deep background " +
+      "blur.",
+    captureId: "training-safety-walkthrough-card-desktop",
+    usedFor: "tour: safety card",
+    set: "training",
+  },
+  {
+    id: "t-laptop-cafe-free",
+    framing:
+      "Vertical portrait photograph of an open laptop alone on a plain light " +
+      "oak table beside a large window, with no person and no hand anywhere " +
+      "in the frame. The laptop is turned squarely toward the camera and its " +
+      "dark blank screen fills the upper middle of the frame. A plain " +
+      "unmarked stoneware mug sits at the near left edge of the table, softly " +
+      "out of focus. A pale grey wall beyond.",
+    captureId: "training-finance-waterfall-desktop",
+    usedFor: "45s spare",
+    set: "training",
+  },
+  {
+    id: "t-phone-hands-b",
+    framing:
+      "Vertical portrait photograph of one hand holding a smartphone from " +
+      "below at a low angle, the forearm entering from the lower left, framed " +
+      "from the wrist down so no body and no face appear, a cream ribbed cuff " +
+      "at the wrist. The phone is tilted about twelve degrees, its dark blank " +
+      "screen facing the camera in the upper middle of the frame. The fingers " +
+      "are behind the phone supporting it and the thumb is on the left side " +
+      "rail. A different corner of the room, with the leaves of a green plant " +
+      "softly blurred behind.",
+    captureId: "training-rfi-hero-mobile",
+    usedFor: "45s spare",
+    set: "training",
+  },
+];
+
+/** Every spec across every set, for lookups that do not care which shoot. */
+export function allSpecs(): PlateSpec[] {
+  return [...PLATE_SPECS, ...TRAINING_PLATE_SPECS];
+}
+
+export function specsForSet(set: PlateSetName): PlateSpec[] {
+  return allSpecs().filter((s) => s.set === set);
+}
 
 /**
  * Appended when a reference image is attached. Without it Nano Banana Pro
  * treats a reference as content to reproduce and hands back a near copy of the
  * anchor plate. The set needs its room and its light, not its subject.
+ *
+ * The light adjective is per set. The showcase wording is left exactly as it
+ * was sent, so the prompts already logged in config/plates.json stay
+ * reproducible from this file; "warm window light" in a training prompt would
+ * pull the training room back toward the shoot it is supposed to differ from.
  */
-const REFERENCE_CLAUSE =
-  "Use the attached image as a style reference only. Match its room, its warm " +
-  "window light, its color grade, its depth of field and its lens character " +
-  "exactly, as if shot minutes later in the same space on the same camera. Do " +
-  "not copy its subject, its device or its composition. The framing described " +
-  "above is what to shoot.";
+function referenceClauseFor(set: PlateSetName): string {
+  const light = set === "training" ? "its cool overcast window light" : "its warm window light";
+  return (
+    `Use the attached image as a style reference only. Match its room, ${light}, ` +
+    "its color grade, its depth of field and its lens character " +
+    "exactly, as if shot minutes later in the same space on the same camera. Do " +
+    "not copy its subject, its device or its composition. The framing described " +
+    "above is what to shoot."
+  );
+}
 
 export function promptFor(spec: PlateSpec, withReference = false): string {
-  const base = `${spec.framing} ${STYLE} ${RULES}`;
-  return withReference ? `${base} ${REFERENCE_CLAUSE}` : base;
+  const { style, extraRules } = PLATE_SETS[spec.set];
+  const base = `${spec.framing} ${style} ${RULES}${extraRules ? ` ${extraRules}` : ""}`;
+  return withReference ? `${base} ${referenceClauseFor(spec.set)}` : base;
 }
 
 // ---------------------------------------------------------------------------
@@ -247,6 +446,8 @@ export type Quad = [
 
 export type PlateRecord = {
   id: string;
+  /** Which shoot. Absent on the seven showcase records written before sets. */
+  set?: PlateSetName;
   file: string;
   model: string;
   prompt: string;
@@ -264,6 +465,8 @@ export type PlateRecord = {
 export type GenerationRecord = {
   generationId: string;
   plateId: string;
+  /** Which shoot. Absent on the showcase records written before sets. */
+  set?: PlateSetName;
   candidate: number;
   model: string;
   prompt: string;
@@ -573,6 +776,13 @@ function parseArgs(argv: string[]): Record<string, string | true> {
   return out;
 }
 
+/** --set, defaulting to the original shoot so old command lines still work. */
+function parseSet(value: string | true | undefined): PlateSetName {
+  if (value === undefined) return "showcase";
+  if (value === "showcase" || value === "training") return value;
+  throw new Error(`--set must be showcase or training, got "${String(value)}".`);
+}
+
 async function cmdSmoke(args: Record<string, string | true>): Promise<void> {
   const key = loadApiKey();
   const model = typeof args.model === "string" ? args.model : SMOKE_MODEL;
@@ -651,11 +861,14 @@ function indent(text: string, n: number): string {
 }
 
 async function cmdGenerate(args: Record<string, string | true>): Promise<void> {
+  const setName = parseSet(args.set);
   const plateId = typeof args.plate === "string" ? args.plate : "";
-  const spec = PLATE_SPECS.find((p) => p.id === plateId);
+  const pool = specsForSet(setName);
+  const spec = pool.find((p) => p.id === plateId);
   if (!spec) {
     throw new Error(
-      `--plate is required and must be one of: ${PLATE_SPECS.map((p) => p.id).join(", ")}`,
+      `--plate is required and must be one of the ${setName} set: ` +
+        `${pool.map((p) => p.id).join(", ")}`,
     );
   }
 
@@ -723,6 +936,7 @@ async function cmdGenerate(args: Record<string, string | true>): Promise<void> {
     const record: GenerationRecord = {
       generationId: created.id,
       plateId,
+      set: spec.set,
       candidate,
       model,
       prompt,
@@ -789,9 +1003,13 @@ async function cmdGenerate(args: Record<string, string | true>): Promise<void> {
     writePlatesFile(data);
   }
 
-  const total = data.generations.length;
-  console.log(`\nTotal generations logged for this phase: ${total}`);
-  if (total > 45) console.log("WARNING: over the 45 image hard cap for Phase 4.");
+  // Each shoot carries its own cap, because each was budgeted on its own:
+  // 45 for the showcase set, 40 for the training set.
+  const setIds = new Set(pool.map((p) => p.id));
+  const inSet = data.generations.filter((g) => setIds.has(g.plateId)).length;
+  const cap = setName === "training" ? 40 : 45;
+  console.log(`\nGenerations logged for the ${setName} set: ${inSet} of a ${cap} cap.`);
+  if (inSet > cap) console.log(`WARNING: over the ${cap} image hard cap for the ${setName} set.`);
 }
 
 /**
@@ -823,10 +1041,17 @@ function cmdGrade(args: Record<string, string | true>): void {
   console.log(`${file}: ${accepted ? "ACCEPTED" : "rejected"} - ${why}`);
 }
 
-function cmdList(): void {
+function cmdList(args: Record<string, string | true>): void {
   const data = readPlatesFile();
-  console.log("Plate specs:");
-  for (const spec of PLATE_SPECS) {
+  const only = args.set === undefined ? null : parseSet(args.set);
+  const specs = only ? specsForSet(only) : allSpecs();
+
+  let shown: string | null = null;
+  for (const spec of specs) {
+    if (spec.set !== shown) {
+      shown = spec.set;
+      console.log(`\n${spec.set} set:`);
+    }
     const gens = data.generations.filter((g) => g.plateId === spec.id);
     const accepted = gens.filter((g) => g.accepted === true).length;
     const rejected = gens.filter((g) => g.accepted === false).length;
@@ -837,11 +1062,30 @@ function cmdList(): void {
         `plate ${plate ? plate.file : "none"}  capture ${spec.captureId}`,
     );
   }
-  console.log(`\nTotal generations: ${data.generations.length} of a 45 hard cap.`);
-  console.log(`Plates finalised: ${data.plates.length} of ${PLATE_SPECS.length}.`);
+
+  for (const set of ["showcase", "training"] as PlateSetName[]) {
+    if (only && only !== set) continue;
+    const ids = new Set(specsForSet(set).map((s) => s.id));
+    const gens = data.generations.filter((g) => ids.has(g.plateId));
+    const plates = data.plates.filter((p) => ids.has(p.id));
+    console.log(
+      `\n${set}: ${gens.length} generations, ` +
+        `${plates.length} of ${ids.size} plates finalised.`,
+    );
+  }
+  console.log(`\nAll sets: ${data.generations.length} generations logged.`);
 }
 
-export { PLATE_SPECS, PRIMARY_MODEL, SMOKE_MODEL, BASE_SEED, ROOT, PLATES_DIR, PLATES_JSON };
+export {
+  PLATE_SPECS,
+  TRAINING_PLATE_SPECS,
+  PRIMARY_MODEL,
+  SMOKE_MODEL,
+  BASE_SEED,
+  ROOT,
+  PLATES_DIR,
+  PLATES_JSON,
+};
 
 async function main(): Promise<void> {
   const [, , cmd, ...rest] = process.argv;
@@ -857,15 +1101,16 @@ async function main(): Promise<void> {
       cmdGrade(args);
       break;
     case "list":
-      cmdList();
+      cmdList(args);
       break;
     default:
       console.log("Usage: npx tsx scripts/plates.ts <smoke|generate|grade|list> [flags]");
       console.log("  smoke    [--model id]");
-      console.log("  generate --plate <id> --count N [--model id] [--ref path] [--ref-gen id]");
+      console.log("  generate --plate <id> --count N [--set showcase|training]");
+      console.log("           [--model id] [--ref path] [--ref-gen id]");
       console.log("           [--resolution 1K|2K] [--seed N]");
       console.log('  grade    --file <path> --accept|--reject --why "reason"');
-      console.log("  list");
+      console.log("  list     [--set showcase|training]");
       process.exitCode = 1;
   }
 }

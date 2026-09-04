@@ -17,6 +17,8 @@
  *                       binding in scripts/plates.ts.
  *   --write             Write the plate entry into config/plates.json.
  *   --all               Analyse every accepted generation in plates.json.
+ *   --set <name>        With --all, restrict to one plate set (showcase or
+ *                       training). Without it --all touches every set.
  *   --floor N           Luma floor, 0 to 255. Default 32.
  *   --threshold N       Luma ceiling, 0 to 255. Default 110.
  *   --open N            Morphological opening radius in working px. Default 6.
@@ -47,7 +49,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
-import { PLATE_SPECS } from "./plates.js";
+import { allSpecs } from "./plates.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");
@@ -384,6 +386,7 @@ export async function writeDebugPng(file: string, quad: Quad, width: number, hei
 type GenerationRecord = {
   generationId: string;
   plateId: string;
+  set?: string;
   model: string;
   prompt: string;
   seed: number | null;
@@ -396,6 +399,7 @@ type GenerationRecord = {
 
 type PlateRecord = {
   id: string;
+  set?: string;
   file: string;
   model: string;
   prompt: string;
@@ -475,9 +479,10 @@ async function handleOne(
   if (args.write) {
     const gen = data.generations.find((g) => g.file === relFile);
     const existing = data.plates.find((p) => p.id === plateId);
-    const spec = PLATE_SPECS.find((s) => s.id === plateId);
+    const spec = allSpecs().find((s) => s.id === plateId);
     const record: PlateRecord = {
       id: plateId,
+      ...(spec?.set ? { set: spec.set } : existing?.set ? { set: existing.set } : {}),
       file: relFile,
       model: gen?.model ?? existing?.model ?? "unknown",
       prompt: gen?.prompt ?? existing?.prompt ?? "",
@@ -546,9 +551,20 @@ async function main(): Promise<void> {
   const data = readPlates();
 
   if (args.all) {
-    const accepted = data.generations.filter((g) => g.accepted === true && g.file);
+    // --set keeps a rerun off the other shoot's plates. Detection is not
+    // perfectly stable across parameter changes, and the showcase quads are
+    // already checked by eye and in the delivered reel, so there is no reason
+    // to let a training run rewrite them.
+    const onlySet = typeof args.set === "string" ? args.set : null;
+    const accepted = data.generations.filter(
+      (g) => g.accepted === true && g.file && (!onlySet || g.set === onlySet),
+    );
     if (!accepted.length) {
-      console.log("No generation in config/plates.json is marked accepted true yet.");
+      console.log(
+        onlySet
+          ? `No accepted generation in config/plates.json belongs to set "${onlySet}".`
+          : "No generation in config/plates.json is marked accepted true yet.",
+      );
       return;
     }
     for (const gen of accepted) {

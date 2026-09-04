@@ -127,6 +127,61 @@
         "/"
       ],
       "dashboard_note": "Owner dashboard at /owner sits behind Cloudflare Access. Alex screen-recorded it 2026-09-03 (Jam). Every client, staff, and owner name, email, and photo in that recording must be blurred or recreated before it appears in the reel."
+    },
+    {
+      "id": "training-safety",
+      "display_name": "Spot it before it hurts someone",
+      "url": "https://ka-performancefl.com/training-samples/safety/",
+      "kind": "training-sample",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Nine minute hazard recognition module. Original K&A demonstration piece, hi-vis industrial identity.",
+      "proof_points": [
+        "Keyboard operable end to end",
+        "Hotspots exposed as a list for screen readers",
+        "WCAG 2.1 AA",
+        "Custom HTML, packaged for SCORM"
+      ],
+      "capture_routes": [
+        "/"
+      ],
+      "capture_mode": "interaction"
+    },
+    {
+      "id": "training-rfi",
+      "display_name": "The RFI that gets answered",
+      "url": "https://ka-performancefl.com/training-samples/rfi/",
+      "kind": "training-sample",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Six minute microlearning on writing an RFI a design team can act on. Original K&A demonstration piece.",
+      "proof_points": [
+        "Scenario branching with feedback",
+        "Knowledge check scores the decision",
+        "WCAG 2.1 AA"
+      ],
+      "capture_routes": [
+        "/"
+      ],
+      "capture_mode": "interaction"
+    },
+    {
+      "id": "training-finance",
+      "display_name": "The P&L, read like an owner",
+      "url": "https://ka-performancefl.com/training-samples/finance/",
+      "kind": "training-sample",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Eight minute module for non-finance managers with a live P&L simulator. Original K&A demonstration piece.",
+      "proof_points": [
+        "Live P&L simulator with sliders",
+        "Profit versus cash scenario",
+        "WCAG 2.1 AA"
+      ],
+      "capture_routes": [
+        "/"
+      ],
+      "capture_mode": "interaction"
     }
   ],
   "excluded_do_not_show": [
@@ -143,6 +198,11 @@
       "Yours to edit montage cut will use the OnlyNails client dashboard (staff and photo editing behind Cloudflare Zero Trust). OnlyNails is not yet in approved because its URL and recording approach are pending.",
       "15 second cut features fore-motion-golf, project-makeover, southern-legacy-contractors (Claude recommendation, pending the grey render review). All seven feed the 45 second cut.",
       "Alex cleared Only Nails Beauty (onlynailsfl.com) and supplied a Jam recording of the owner dashboard. Personal data in it gets blurred or recreated, no emails in the reel."
+    ],
+    "2026-09-04": [
+      "Reel 2 (training) started. Alex chose: safety module leads, RFI and P&L in the surfaces tour; NEW plates and NEW music (fresh credits); hook \"One designer. Or a whole team.\"; original-sample disclosure lives in the post copy only.",
+      "The three training samples are K&A originals per src/data/training.js (no client or employer material), so they are cleared by Alex in session. Brief constraints carried into the reel: no pricing, no throughput counts, no bench or SME names, do not show the sixty combined years figure.",
+      "Local edits to the samples dated 2026-09-04 are not deployed. Captures use the live builds per the spec unless Alex pushes first."
     ]
   }
 }

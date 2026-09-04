@@ -26,6 +26,11 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, type Browser, type Page } from "playwright";
+// Interaction recorder for the training reel, paused 2026-09-04 while Alex
+// finishes the courses. The beat scripts live in scripts/interactions/ and
+// these imports come back when recordInteraction is wired up.
+// import { beatsFor } from "./interactions/index";
+// import type { Beat, Step } from "./interactions/types";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");

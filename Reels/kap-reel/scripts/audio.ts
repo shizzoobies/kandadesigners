@@ -11,6 +11,16 @@
  *   npx tsx scripts/audio.ts mix [--variant a|b|c]
  *   npx tsx scripts/audio.ts usage
  *
+ * Second reel, instructional design and training content (--set training):
+ *   npx tsx scripts/audio.ts music --variant t-a|t-b|t-c --length 20 --set training
+ *   npx tsx scripts/audio.ts mix --set training [--variant t-a|t-b|t-c]
+ * These share every code path above except the prompt instruction text and
+ * the generation cap, which counts separately per --set (SET_CAPS) so this
+ * run is not blocked by the original 12-generation cap Phase 5 already used
+ * up. mix --set training writes an audio-only mp3 preview to
+ * out/gate-t5/preview-{id}.mp3 instead of muxing against a picture, because
+ * the owner has not chosen a variant yet.
+ *
  * API contract, confirmed against the live docs on 2026-09-03:
  *
  *   POST https://api.elevenlabs.io/v1/music
@@ -90,6 +100,17 @@ const SFX_FORMAT = "mp3_44100_192";
 const GENERATION_CAP = 12;
 const CREDIT_ALARM = 5000;
 
+/**
+ * Per-set generation caps for later, more narrowly scoped runs than the
+ * original Phase 5 budget above. Keyed by the --set label passed on the CLI.
+ * A generation made with --set counts against its own cap here instead of the
+ * legacy GENERATION_CAP, which is already exhausted from Phase 5 and is left
+ * alone so runs without --set keep behaving exactly as they did before.
+ */
+const SET_CAPS: Record<string, number> = {
+  training: 6,
+};
+
 /** Reject a music take whose first second sits more than this far under the whole-track mean. */
 const FIRST_SECOND_TOLERANCE_DB = 6;
 
@@ -153,7 +174,7 @@ const MUSIC_INSTRUCTION =
   "stands on its own. Modern product launch film, not a nightclub. Clean " +
   "modern production, plenty of headroom, nothing distorted.";
 
-type VariantId = "a" | "b" | "c";
+type VariantId = "a" | "b" | "c" | "t-a" | "t-b" | "t-c";
 
 const MUSIC_VARIANTS: { id: VariantId; feel: string; note: string }[] = [
   {
@@ -186,6 +207,62 @@ const MUSIC_VARIANTS: { id: VariantId; feel: string; note: string }[] = [
     note: "Cinematic pad driven with a light beat, about 110 bpm",
   },
 ];
+
+/**
+ * Second showcase reel, instructional design and training content. Same hard
+ * requirement as MUSIC_INSTRUCTION above (must start at full energy with no
+ * intro build, because the 15 second cut has no room for a ramp), but the
+ * character brief differs: a bright morning workshop rather than a product
+ * launch, and cinematic swells are explicitly out as well as drops and vocals.
+ */
+const TRAINING_MUSIC_INSTRUCTION =
+  "Starts immediately at full energy on the very first beat: no intro build, " +
+  "no fade in, no silence or near silence at the start, no ramp. Fully " +
+  "instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No " +
+  "heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble, no " +
+  "cinematic swell. Even confident energy the whole way through so any " +
+  "fifteen second window stands on its own. A bright morning training " +
+  "workshop, not a product launch and not a nightclub. Clean modern " +
+  "production, plenty of headroom, nothing distorted.";
+
+/**
+ * Training reel variants, generated with --set training. Kept in a separate
+ * array from MUSIC_VARIANTS so the reel one ids (a, b, c) and their prompt
+ * text are untouched; generateMusic looks them up alongside MUSIC_VARIANTS.
+ */
+const TRAINING_MUSIC_VARIANTS: { id: VariantId; feel: string; note: string }[] =
+  [
+    {
+      id: "t-a",
+      feel:
+        "Acoustic-leaning instrumental at about 108 bpm. Soft piano or felt " +
+        "keys carry the main melodic motif over a light, unobtrusive " +
+        "electronic pulse underneath. Warm, steady, confident, unhurried but " +
+        "still moving forward, like a bright morning workshop rather than a " +
+        "product launch.",
+      note: "Acoustic-leaning felt keys over a light electronic pulse, about 108 bpm",
+    },
+    {
+      id: "t-b",
+      feel:
+        "Warm analog synth instrumental at about 116 bpm. Warm analog synth " +
+        "chords carry the harmony, with a gentle four-on-the-floor kick and a " +
+        "plucked synth motif threaded through. Warm, steady, confident, " +
+        "unhurried but still moving forward, like a bright morning workshop " +
+        "rather than a product launch.",
+      note: "Warm analog synth chords, gentle four-on-the-floor, about 116 bpm, plucked motif",
+    },
+    {
+      id: "t-c",
+      feel:
+        "Organic instrumental at about 112 bpm. Marimba or mallet melodies " +
+        "carry the main line over a soft, warm bass and light organic " +
+        "percussion. Warm, steady, confident, unhurried but still moving " +
+        "forward, like a bright morning workshop rather than a product " +
+        "launch.",
+      note: "Organic marimba/mallets over a soft bass, about 112 bpm",
+    },
+  ];
 
 type SfxName = "whoosh-transition" | "ui-click" | "impact-low";
 
@@ -556,11 +633,14 @@ type GenerationRecord = {
   accepted: boolean;
   notes: string;
   firstSecondTest?: FirstSecondTest;
+  /** The --set label this generation was made under, if any. Absent for every Phase 5 record. */
+  set?: string;
 };
 
 type MixRecord = {
   variant: VariantId;
-  picture: string;
+  /** Absent for an audio-only preview built with no picture, e.g. mixTrainingVariant. */
+  picture?: string;
   wav: string;
   preview: string;
   musicSource: string;
@@ -577,6 +657,8 @@ type MixRecord = {
     lra: number;
   };
   createdAt: string;
+  /** The --set label this mix was made under, if any. Absent for every Phase 5 record. */
+  set?: string;
 };
 
 type AudioConfig = {
@@ -631,7 +713,27 @@ function generationCount(): number {
   return loadConfig().generations.length;
 }
 
-function assertUnderCap(): void {
+/**
+ * With no setLabel this is exactly the original Phase 5 check: total
+ * generations logged in config/audio.json against GENERATION_CAP. Passing a
+ * setLabel that has an entry in SET_CAPS instead counts only that set's own
+ * generations against its own cap, so a later, separately scoped run is not
+ * blocked by a legacy cap that earlier work already reached.
+ */
+function assertUnderCap(setLabel?: string): void {
+  if (setLabel && SET_CAPS[setLabel] !== undefined) {
+    const cap = SET_CAPS[setLabel];
+    const used = loadConfig().generations.filter(
+      (g) => g.set === setLabel,
+    ).length;
+    if (used >= cap) {
+      throw new Error(
+        `Generation cap reached: ${used} of ${cap} "${setLabel}" generations already logged ` +
+          `in config/audio.json. Stopping rather than spending more.`,
+      );
+    }
+    return;
+  }
   const used = generationCount();
   if (used >= GENERATION_CAP) {
     throw new Error(
@@ -663,13 +765,17 @@ async function generateMusic(
   variantId: VariantId,
   lengthSeconds: number,
   attempt = 1,
+  setLabel?: string,
 ): Promise<{ file: string; test: FirstSecondTest; credits: number | null }> {
-  assertUnderCap();
-  const variant = MUSIC_VARIANTS.find((v) => v.id === variantId);
-  if (!variant)
-    throw new Error(`Unknown music variant "${variantId}". Use a, b or c.`);
+  assertUnderCap(setLabel);
+  const variant =
+    MUSIC_VARIANTS.find((v) => v.id === variantId) ??
+    TRAINING_MUSIC_VARIANTS.find((v) => v.id === variantId);
+  if (!variant) throw new Error(`Unknown music variant "${variantId}".`);
 
-  const prompt = `${variant.feel} ${MUSIC_INSTRUCTION}`;
+  const instruction =
+    setLabel === "training" ? TRAINING_MUSIC_INSTRUCTION : MUSIC_INSTRUCTION;
+  const prompt = `${variant.feel} ${instruction}`;
   const lengthMs = Math.round(lengthSeconds * 1000);
   const suffix = attempt > 1 ? `-take${attempt}` : "";
   const id = `music-${variantId}-${lengthSeconds}s${suffix}`;
@@ -723,6 +829,7 @@ async function generateMusic(
       ? `${variant.note}. Measured duration ${duration.toFixed(2)}s.`
       : `${variant.note}. Rejected on the first-second energy test, deficit ${test.deficitDb} dB.`,
     firstSecondTest: test,
+    set: setLabel,
   });
 
   return { file, test, credits };
@@ -733,13 +840,14 @@ async function generateMusicWithRetry(
   key: string,
   variantId: VariantId,
   lengthSeconds: number,
+  setLabel?: string,
 ): Promise<string> {
-  const first = await generateMusic(key, variantId, lengthSeconds, 1);
+  const first = await generateMusic(key, variantId, lengthSeconds, 1, setLabel);
   if (first.test.pass) return first.file;
   console.log(
     `  regenerating variant ${variantId} once, the first second was too quiet`,
   );
-  const second = await generateMusic(key, variantId, lengthSeconds, 2);
+  const second = await generateMusic(key, variantId, lengthSeconds, 2, setLabel);
   if (!second.test.pass) {
     console.log(
       `  variant ${variantId} failed the first-second test twice. Keeping the better take and ` +
@@ -1268,6 +1376,128 @@ async function mixVariant(variantId: VariantId): Promise<MixRecord> {
   return record;
 }
 
+/** Where the training-set audio-only previews land, gate t5 of the second reel. */
+const TRAINING_PREVIEW_DIR = path.join(OUT_DIR, "gate-t5");
+
+/**
+ * Audio-only counterpart to mixVariant for the training-set variants (t-a,
+ * t-b, t-c). No picture is muxed in: the owner has not chosen a variant yet,
+ * so this produces an mp3 to listen to (out/gate-t5/preview-{id}.mp3) and the
+ * same bare wav mixVariant writes (assets/audio/mix-{id}-15s.wav) so either
+ * can drop straight into the reel later. The trim, fade, limiter and two-pass
+ * loudnorm are identical to mixVariant's, reusing the same helpers, so the
+ * delivered levels match Section 9's targets the same way. SFX_CUES is empty,
+ * so flattenCues() returns nothing here exactly as it does for mixVariant:
+ * both are music-only mixes, per the owner's 2026-09-03 decision.
+ */
+async function mixTrainingVariant(variantId: VariantId): Promise<MixRecord> {
+  const musicFile = musicTakeFor(variantId, 20);
+  const cues = flattenCues();
+  const levels = sfxLevels(musicFile, cues);
+  const inputs = mixInputs(musicFile, cues);
+
+  console.log(`\n[mix ${variantId}] (training set, audio-only preview)`);
+  console.log(`  music   ${rel(musicFile)}`);
+  console.log(
+    `  bed peak ${levels.bedPeakDbfs} dBFS, mean ${levels.bedMeanDbfs} dBFS`,
+  );
+
+  const { ceilingDb, measurement: measured } = headroomCeilingDb(
+    inputs,
+    cues,
+    levels.gainsDb,
+  );
+  const filter = buildFilter(cues, levels.gainsDb, ceilingDb);
+  console.log(
+    `  limiter ceiling ${ceilingDb} dBFS, solved for the gain loudnorm needs`,
+  );
+  console.log(
+    `  pass 1: I ${measured.input_i} LUFS, TP ${measured.input_tp} dBTP, LRA ${measured.input_lra}`,
+  );
+
+  fs.mkdirSync(AUDIO_DIR, { recursive: true });
+  const wav = path.join(AUDIO_DIR, `mix-${variantId}-15s.wav`);
+  const pass2Filter =
+    `${filter};[mixed]loudnorm=${LOUDNORM_TARGET}:measured_I=${measured.input_i}:` +
+    `measured_TP=${measured.input_tp}:measured_LRA=${measured.input_lra}:` +
+    `measured_thresh=${measured.input_thresh}:offset=${measured.target_offset}:` +
+    `linear=false:print_format=json[norm];[norm]${AFORMAT}[out]`;
+  const pass2 = ffmpeg([
+    ...inputs,
+    "-filter_complex",
+    pass2Filter,
+    "-map",
+    "[out]",
+    "-c:a",
+    "pcm_s16le",
+    "-ar",
+    "48000",
+    "-ac",
+    "2",
+    "-y",
+    wav,
+  ]);
+  if (pass2.code !== 0)
+    throw new Error(`loudnorm pass 2 failed:\n${pass2.stderr.slice(-3000)}`);
+  const corrected = parseLoudnorm(pass2.stderr);
+  console.log(
+    `  pass 2 predicted: I ${corrected.output_i} LUFS, TP ${corrected.output_tp} dBTP, ` +
+      `LRA ${corrected.output_lra}`,
+  );
+  const verified = verifyLoudness(wav);
+  console.log(
+    `  pass 2 verified:  I ${verified.integrated} LUFS, TP ${verified.truePeak} dBTP, ` +
+      `LRA ${verified.lra}`,
+  );
+  console.log(`  wrote ${rel(wav)}`);
+
+  fs.mkdirSync(TRAINING_PREVIEW_DIR, { recursive: true });
+  const preview = path.join(TRAINING_PREVIEW_DIR, `preview-${variantId}.mp3`);
+  const enc = ffmpeg([
+    "-i",
+    wav,
+    "-c:a",
+    "libmp3lame",
+    "-b:a",
+    "320k",
+    "-ar",
+    "48000",
+    "-ac",
+    "2",
+    "-y",
+    preview,
+  ]);
+  if (enc.code !== 0)
+    throw new Error(`mp3 preview encode failed:\n${enc.stderr.slice(-3000)}`);
+  console.log(`  wrote ${rel(preview)}`);
+
+  const record: MixRecord = {
+    variant: variantId,
+    wav: rel(wav),
+    preview: rel(preview),
+    musicSource: rel(musicFile),
+    sfxDuckDb: SFX_DUCK_DB,
+    limiterCeilingDbfs: ceilingDb,
+    levels,
+    measuredIntegratedLufs: verified.integrated,
+    measuredTruePeakDbfs: verified.truePeak,
+    measuredLra: verified.lra,
+    loudnormPredicted: {
+      integratedLufs: Number(corrected.output_i),
+      truePeakDbtp: Number(corrected.output_tp),
+      lra: Number(corrected.output_lra),
+    },
+    createdAt: new Date().toISOString(),
+    set: "training",
+  };
+  const config = loadConfig();
+  config.mixes = config.mixes.filter((m) => m.variant !== variantId);
+  config.mixes.push(record);
+  config.mixes.sort((a, b) => a.variant.localeCompare(b.variant));
+  saveConfig(config);
+  return record;
+}
+
 // ---------------------------------------------------------------------------
 // CLI
 // ---------------------------------------------------------------------------
@@ -1292,7 +1522,8 @@ async function main(): Promise<void> {
     const key = readApiKey();
     const variant = (flag(argv, "variant") ?? "a") as VariantId;
     const length = Number(flag(argv, "length") ?? 20);
-    await generateMusicWithRetry(key, variant, length);
+    const setLabel = flag(argv, "set");
+    await generateMusicWithRetry(key, variant, length, setLabel);
     return;
   }
 
@@ -1321,7 +1552,22 @@ async function main(): Promise<void> {
   }
 
   if (command === "mix") {
+    const setLabel = flag(argv, "set");
     const only = flag(argv, "variant") as VariantId | undefined;
+    if (setLabel === "training") {
+      const variants = only ? [only] : (["t-a", "t-b", "t-c"] as VariantId[]);
+      const results: MixRecord[] = [];
+      for (const variant of variants)
+        results.push(await mixTrainingVariant(variant));
+      console.log("\nmix results (training set, audio-only preview)");
+      for (const r of results) {
+        console.log(
+          `  ${r.variant}: I ${r.measuredIntegratedLufs} LUFS, TP ${r.measuredTruePeakDbfs} dBTP, ` +
+            `LRA ${r.measuredLra}  ${r.preview}`,
+        );
+      }
+      return;
+    }
     const variants = only ? [only] : (["a", "b", "c"] as VariantId[]);
     const results: MixRecord[] = [];
     for (const variant of variants) results.push(await mixVariant(variant));
@@ -1339,9 +1585,11 @@ async function main(): Promise<void> {
     [
       "Usage:",
       "  npx tsx scripts/audio.ts music --variant a|b|c --length 20|50",
+      "  npx tsx scripts/audio.ts music --variant t-a|t-b|t-c --length 20 --set training",
       "  npx tsx scripts/audio.ts sfx --name whoosh-transition|ui-click|impact-low",
       "  npx tsx scripts/audio.ts all",
       "  npx tsx scripts/audio.ts mix [--variant a|b|c]",
+      "  npx tsx scripts/audio.ts mix --set training [--variant t-a|t-b|t-c]",
       "  npx tsx scripts/audio.ts usage",
     ].join("\n"),
   );
