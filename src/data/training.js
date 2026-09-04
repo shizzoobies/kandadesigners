@@ -159,10 +159,10 @@ export const aiTransparency = [
 // was supplied. Three of the four are already public on /artists/ in a
 // different capacity; that permission does not transfer, so do not link them.
 export const bench = [
-  { named: false, focus: 'Curriculum architecture and assessment design', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-curriculum.jpg?v=1' },
-  { named: false, focus: 'Visual design and illustrated learning', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-visual.jpg?v=1' },
-  { named: false, focus: 'Interactive and scenario-based learning', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-interactive.jpg?v=1' },
-  { named: false, focus: 'Technical and compliance training', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-technical.jpg?v=1' },
+  { named: false, focus: 'Curriculum architecture and assessment design', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-curriculum.jpg?v=2' },
+  { named: false, focus: 'Visual design and illustrated learning', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-visual.jpg?v=2' },
+  { named: false, focus: 'Interactive and scenario-based learning', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-interactive.jpg?v=2' },
+  { named: false, focus: 'Technical and compliance training', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-technical.jpg?v=2' },
 ];
 
 // Subject matter experts. Credential-forward, and deliberately NOT framed as
@@ -176,7 +176,7 @@ export const smes = [
     credentialLine: 'Licensed CPA',
     bio: '',
     photo: null,
-    backdrop: '/images/training/backdrops/sme-accounting.jpg?v=1',
+    backdrop: '/images/training/backdrops/sme-accounting.jpg?v=2',
   },
   {
     named: false,
@@ -184,7 +184,7 @@ export const smes = [
     credentialLine: 'Working construction project manager',
     bio: '',
     photo: null,
-    backdrop: '/images/training/backdrops/sme-construction.jpg?v=1',
+    backdrop: '/images/training/backdrops/sme-construction.jpg?v=2',
   },
 ];
 
@@ -220,7 +220,7 @@ export const samples = [
     status: 'live',
     title: 'The RFI that gets answered',
     dir: '/training-samples/rfi/',
-    backdrop: '/images/training/backdrops/sample-rfi.jpg?v=1',
+    backdrop: '/images/training/backdrops/sample-rfi.jpg?v=2',
     kind: 'Microlearning',
     vertical: 'Construction and trades',
     minutes: 6,
@@ -241,7 +241,7 @@ export const samples = [
     status: 'live',
     title: 'Spot it before it hurts someone',
     dir: '/training-samples/safety/',
-    backdrop: '/images/training/backdrops/sample-safety.jpg?v=1',
+    backdrop: '/images/training/backdrops/sample-safety.jpg?v=2',
     kind: 'Short module',
     vertical: 'Construction and trades',
     minutes: 9,
@@ -256,7 +256,7 @@ export const samples = [
     status: 'live',
     title: 'The P&L, read like an owner',
     dir: '/training-samples/finance/',
-    backdrop: '/images/training/backdrops/sample-finance.jpg?v=1',
+    backdrop: '/images/training/backdrops/sample-finance.jpg?v=2',
     kind: 'Short module',
     vertical: 'Finance and accounting',
     minutes: 8,
