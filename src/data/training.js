@@ -227,21 +227,39 @@ export const samples = [
     accessibility: 'Keyboard operable end to end, screen reader tested, reduced motion respected, WCAG 2.1 AA.',
     built: 'Custom HTML, no framework, packaged for SCORM without changes.',
   },
+  // The two originals that replaced the construction and finance placeholders
+  // on 2026-09-03. Each has its own visual identity on purpose: a buyer
+  // should see three pieces that look like three different clients, not
+  // three pages of this website. Fonts and photography are licensed from
+  // Envato Elements and live inside each sample's folder so the package is
+  // self-contained for an LMS.
   {
-    slug: 'planned-construction',
-    status: 'planned',
-    title: 'Construction and trades module',
-    kind: 'Standard module',
+    slug: 'hazard-recognition',
+    status: 'live',
+    title: 'Spot it before it hurts someone',
+    dir: '/training-samples/safety/',
+    kind: 'Short module',
     vertical: 'Construction and trades',
-    what: 'A full standard module with practice and assessment, validated by our construction project management SME.',
+    minutes: 9,
+    what: 'A nine-minute module on jobsite hazard recognition: a walk-through method, a hazard hunt, and the hierarchy of controls.',
+    demonstrates: 'An original demonstration piece with a high-visibility industrial identity. No client, no employer material; the jobsite is invented. It is a teaching sample, not a substitute for a site-specific safety program.',
+    technique: 'An illustrated hazard hunt with hotspots that also work as a keyboard list, a drag-free hierarchy-of-controls sorter, rapid stop-or-go decisions with feedback, and a walk-through checklist the learner assembles.',
+    accessibility: 'Keyboard operable end to end, hotspots exposed as a list for screen readers, reduced motion respected, WCAG 2.1 AA.',
+    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
   },
   {
-    slug: 'planned-finance',
-    status: 'planned',
-    title: 'Finance and accounting module',
-    kind: 'Standard module',
+    slug: 'reading-the-pnl',
+    status: 'live',
+    title: 'The P&L, read like an owner',
+    dir: '/training-samples/finance/',
+    kind: 'Short module',
     vertical: 'Finance and accounting',
-    what: 'A technical accounting topic built to continuing-education rigor, reviewed by our CPA.',
+    minutes: 8,
+    what: 'An eight-minute module for non-finance managers: what each line of a profit and loss statement means, why margin is the number that matters, and why profit is not cash.',
+    demonstrates: 'An original demonstration piece with an editorial finance identity. No client, no real figures; the business is invented. Reviewed for a general audience, not a substitute for advice from your accountant.',
+    technique: 'A live profit and loss simulator with sliders and animated figures, a classify-the-line-item sorter, a profit-versus-cash scenario, and a margin check with a drawn waterfall chart.',
+    accessibility: 'Keyboard operable end to end, sliders with accessible names and live value announcements, charts with text equivalents, reduced motion respected, WCAG 2.1 AA.',
+    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
   },
   {
     slug: 'planned-remediation',

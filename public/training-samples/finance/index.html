@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reading a profit and loss statement: an eight minute module</title>
+<meta name="description" content="An interactive eight minute module for non-finance managers on reading a profit and loss statement line by line, why gross margin is the number to watch, and why profit is not cash." />
+<link rel="stylesheet" href="style.css" />
+<script>document.documentElement.className += " js";</script>
+</head>
+<body>
+
+<div class="frame">
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <p class="eyebrow">Finance literacy for managers</p>
+      <h1>The profit and loss statement, read like an owner</h1>
+      <div class="progress">
+        <div class="track" aria-hidden="true"><span id="bar-fill"></span></div>
+        <p class="progress-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 8</p>
+      </div>
+    </div>
+  </header>
+
+  <main id="module">
+
+    <!-- ============================= 1 ============================= -->
+    <section class="screen is-current" id="screen-1">
+      <div class="spread spread-hero">
+        <div class="col-main">
+          <h2 tabindex="-1">Before you start</h2>
+          <p class="lead">By the end of this module you will be able to read a profit and loss statement from the top line to the bottom line, say in plain words what each line means, name the one number worth watching month to month, and explain why a profitable month can still leave the bank account empty.</p>
+          <p>Everything here uses one invented business: a small bakery with two locations. The figures are made up and deliberately round, so the arithmetic never gets in the way of the idea.</p>
+
+          <h3>What you will do</h3>
+          <ul class="ticks">
+            <li>Read a month of the bakery&rsquo;s statement, line by line, with a plain English note behind every line.</li>
+            <li>Work out gross margin, and see why it beats the raw profit figure for comparing anything.</li>
+            <li>Move four levers in a live statement and watch the bottom line answer.</li>
+            <li>Sort ten items into where they land, including three that are not on the statement at all.</li>
+            <li>Make the call an owner has to make, and read the month off a chart.</li>
+          </ul>
+
+          <p class="note">Everything works with the keyboard alone. Tab moves between controls, Enter or Space chooses, and the arrow keys move the sliders. Nothing is timed, and there is no sound.</p>
+          <p class="disclaimer">This is a teaching demonstration and not a substitute for advice from your accountant.</p>
+        </div>
+
+        <div class="col-side">
+          <div class="photo photo-hero" role="presentation"></div>
+          <dl class="factbox">
+            <div><dt>Runtime</dt><dd>About eight minutes</dd></div>
+            <div><dt>Audience</dt><dd>Managers without a finance background</dd></div>
+            <div><dt>Business</dt><dd>An invented two location bakery</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 2 ============================= -->
+    <section class="screen" id="screen-2">
+      <div class="spread">
+        <div class="col-main">
+          <h2 tabindex="-1">The statement, top to bottom</h2>
+          <p class="lead">A profit and loss statement is one long subtraction. Money came in at the top. Costs come off in a fixed order. What survives is at the bottom.</p>
+          <p>The order is not arbitrary. Each subtraction answers a different question, and stopping at the wrong line is how managers reach the wrong conclusion. Open any line below to see what it is telling you.</p>
+
+          <div class="table-wrap" tabindex="0" role="group" aria-label="Monthly profit and loss statement, scrollable">
+            <table class="pnl" id="pnl-static">
+              <caption id="pnl-cap">One month at the bakery, both locations combined. Figures are invented and rounded.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Line</th>
+                  <th scope="col" class="num">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="row-line" data-row="1">
+                  <th scope="row">
+                    Revenue
+                    <button type="button" class="why" aria-expanded="false" aria-controls="ex-1"><span class="why-label">What this means</span></button>
+                  </th>
+                  <td class="num">$80,000</td>
+                </tr>
+                <tr class="explain" id="ex-1" hidden>
+                  <td colspan="2">Everything the bakery sold this month, before a single cost comes off: counter sales at both shops, plus the wholesale bread that goes to two cafes. Also called the top line. It says how much business you did, and nothing at all about whether you kept any of it.</td>
+                </tr>
+
+                <tr class="row-line" data-row="2">
+                  <th scope="row">
+                    Less cost of goods sold
+                    <button type="button" class="why" aria-expanded="false" aria-controls="ex-2"><span class="why-label">What this means</span></button>
+                  </th>
+                  <td class="num"><span class="sr-only">negative </span>&#8722;$32,000</td>
+                </tr>
+                <tr class="explain" id="ex-2" hidden>
+                  <td colspan="2">The cost of making the thing you sold: flour, butter, sugar, packaging, and the hourly wages of the people actually baking. It moves up and down with volume. Bake nothing, and most of this disappears. Businesses differ on whether production wages belong here or below; what matters is picking one treatment and keeping it, so this month can be compared with last month.</td>
+                </tr>
+
+                <tr class="row-line row-sub" data-row="3">
+                  <th scope="row">
+                    Gross profit
+                    <button type="button" class="why" aria-expanded="false" aria-controls="ex-3"><span class="why-label">What this means</span></button>
+                  </th>
+                  <td class="num">$48,000</td>
+                </tr>
+                <tr class="explain" id="ex-3" hidden>
+                  <td colspan="2">What the product itself earns, before any of the cost of being open. This is the first honest number on the page. Divide it by revenue and you have gross margin, which is the subject of the next screen.</td>
+                </tr>
+
+                <tr class="row-line row-group" data-row="4">
+                  <th scope="row">
+                    Less operating expenses
+                    <button type="button" class="why" aria-expanded="false" aria-controls="ex-4"><span class="why-label">What this means</span></button>
+                  </th>
+                  <td class="num"><span class="sr-only">negative </span>&#8722;$43,000</td>
+                </tr>
+                <tr class="explain" id="ex-4" hidden>
+                  <td colspan="2">The cost of keeping the doors open whether or not one more loaf sells. These are broken out below. They are the lines a manager usually has the most direct control over, and the lines that quietly grow.</td>
+                </tr>
+
+                <tr class="row-line row-indent" data-row="5">
+                  <th scope="row">Rent and utilities, both locations</th>
+                  <td class="num">$14,000</td>
+                </tr>
+                <tr class="row-line row-indent" data-row="6">
+                  <th scope="row">Salaries and payroll taxes, counter and management</th>
+                  <td class="num">$22,000</td>
+                </tr>
+                <tr class="row-line row-indent" data-row="7">
+                  <th scope="row">Marketing and delivery</th>
+                  <td class="num">$3,000</td>
+                </tr>
+                <tr class="row-line row-indent" data-row="8">
+                  <th scope="row">Insurance, repairs, and supplies</th>
+                  <td class="num">$4,000</td>
+                </tr>
+
+                <tr class="row-line row-sub" data-row="9">
+                  <th scope="row">
+                    Operating income
+                    <button type="button" class="why" aria-expanded="false" aria-controls="ex-9"><span class="why-label">What this means</span></button>
+                  </th>
+                  <td class="num"><span class="fig pos">$5,000 <span class="tag">profit</span></span></td>
+                </tr>
+                <tr class="explain" id="ex-9" hidden>
+                  <td colspan="2">The business itself, judged on its own trade, before anything to do with borrowing or one off events. If you only ever look at two numbers, look at gross margin and this one. A business can post a positive bottom line on a lucky sale of equipment while this line is negative, and that business is in trouble.</td>
+                </tr>
+
+                <tr class="row-line" data-row="10">
+                  <th scope="row">
+                    Other income and expense: interest on the oven loan
+                    <button type="button" class="why" aria-expanded="false" aria-controls="ex-10"><span class="why-label">What this means</span></button>
+                  </th>
+                  <td class="num"><span class="sr-only">negative </span>&#8722;$900</td>
+                </tr>
+                <tr class="explain" id="ex-10" hidden>
+                  <td colspan="2">Costs and gains that are not the trade: interest charged on borrowing, or a gain on selling off an old mixer. Only the interest on a loan appears here. The repayment of the amount borrowed is not a cost at all, and does not appear anywhere on this statement. That one comes back on screen five.</td>
+                </tr>
+
+                <tr class="row-line row-total" data-row="11">
+                  <th scope="row">
+                    Net income
+                    <button type="button" class="why" aria-expanded="false" aria-controls="ex-11"><span class="why-label">What this means</span></button>
+                  </th>
+                  <td class="num"><span class="fig pos">$4,100 <span class="tag">profit</span></span></td>
+                </tr>
+                <tr class="explain" id="ex-11" hidden>
+                  <td colspan="2">The bottom line, and the most over quoted number in business. It is what the month earned on paper. It is not what landed in the bank, and screen six is about the gap between the two.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="aside">Read across the four subtractions and you have the whole shape of it: revenue, then what the product cost, then what the business cost, then what the borrowing cost.</p>
+        </div>
+
+        <div class="col-side">
+          <div class="photo photo-ledger" role="presentation"></div>
+          <p class="caption">Four subtractions, in a fixed order. Stopping at the wrong one is how managers reach the wrong conclusion.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 3 ============================= -->
+    <section class="screen" id="screen-3">
+      <div class="spread">
+        <div class="col-main">
+          <h2 tabindex="-1">Margin is the number</h2>
+          <p class="lead">Gross margin is gross profit divided by revenue, written as a percent. At the bakery this month: $48,000 divided by $80,000 is sixty percent.</p>
+          <p>It is worth more than the raw profit figure for one reason. Dollars only compare to dollars of the same size. A percent compares anything to anything: this month against last, one location against the other, the wholesale bread against the counter croissant.</p>
+
+          <h3>The worked example</h3>
+          <p>Take two months at the bakery, side by side. In the second month a large wholesale order lands, so revenue climbs from $80,000 to $92,000. Gross profit climbs too, from $48,000 to $50,600. A manager reading only the dollars reports a good month, because $2,600 more is $2,600 more.</p>
+          <p>Now the percent. Sixty percent in the first month. In the second, $50,600 divided by $92,000 is fifty five percent. Five points of margin gone. The wholesale order sells at a discount, so every extra dollar of it brought less profit with it than the counter dollars did. Sell enough of it and the business gets busier and poorer at the same time.</p>
+
+          <figure class="chart-figure">
+            <svg class="chart" viewBox="0 0 640 190" role="presentation" aria-hidden="true" focusable="false">
+              <g class="axis">
+                <line x1="196" y1="20" x2="196" y2="160" />
+                <line x1="196" y1="160" x2="620" y2="160" />
+              </g>
+              <text class="bar-name" x="186" y="52" text-anchor="end">Month one</text>
+              <rect class="bar bar-a" data-w="254" x="196" y="34" width="0" height="30" rx="1" />
+              <text class="bar-val" x="462" y="55" data-x="462">60%</text>
+
+              <text class="bar-name" x="186" y="116" text-anchor="end">Month two</text>
+              <rect class="bar bar-b" data-w="233" x="196" y="98" width="0" height="30" rx="1" />
+              <text class="bar-val" x="441" y="119" data-x="441">55%</text>
+
+              <text class="axis-label" x="196" y="180">0%</text>
+              <text class="axis-label" x="620" y="180" text-anchor="end">100% of revenue</text>
+            </svg>
+            <figcaption>Gross margin, month one against month two. The figures are in the table below.</figcaption>
+          </figure>
+
+          <div class="table-wrap" tabindex="0" role="group" aria-label="Two month margin comparison, scrollable">
+            <table class="pnl compact">
+              <caption>The same two months as figures.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Month</th>
+                  <th scope="col" class="num">Revenue</th>
+                  <th scope="col" class="num">Gross profit</th>
+                  <th scope="col" class="num">Gross margin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Month one</th><td class="num">$80,000</td><td class="num">$48,000</td><td class="num">60.0%</td></tr>
+                <tr><th scope="row">Month two</th><td class="num">$92,000</td><td class="num">$50,600</td><td class="num">55.0%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="aside">One month of margin tells you very little. Six months of margin tells you what kind of business you are running, and which direction it is going.</p>
+        </div>
+
+        <div class="col-side">
+          <div class="photo photo-storefront" role="presentation"></div>
+          <div class="pullquote">
+            <p>Revenue up, gross profit up, margin down. All three at once, in the same month.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 4 ============================= -->
+    <section class="screen" id="screen-4">
+      <h2 tabindex="-1">Move the levers</h2>
+      <p class="lead">Four things drive this statement. Move them and watch the whole page answer. The sliders take arrow keys, Home, and End.</p>
+
+      <div class="sim">
+        <div class="sim-controls">
+          <p class="panel-title">The four levers</p>
+
+          <div class="slider">
+            <div class="slider-head">
+              <label for="s-price">Average price per item</label>
+              <output for="s-price" id="out-price" aria-live="off">$8.00</output>
+            </div>
+            <input type="range" id="s-price" min="4" max="12" step="0.25" value="8" aria-valuetext="$8.00" />
+            <p class="slider-hint">What the average ticket item sells for.</p>
+          </div>
+
+          <div class="slider">
+            <div class="slider-head">
+              <label for="s-units">Items sold per month</label>
+              <output for="s-units" id="out-units" aria-live="off">10,000</output>
+            </div>
+            <input type="range" id="s-units" min="4000" max="16000" step="250" value="10000" aria-valuetext="10,000 items" />
+            <p class="slider-hint">Both locations combined, counter and wholesale.</p>
+          </div>
+
+          <div class="slider">
+            <div class="slider-head">
+              <label for="s-cogs">Cost of goods, as a percent of revenue</label>
+              <output for="s-cogs" id="out-cogs" aria-live="off">40%</output>
+            </div>
+            <input type="range" id="s-cogs" min="25" max="60" step="1" value="40" aria-valuetext="40 percent of revenue" />
+            <p class="slider-hint">Ingredients, packaging, and baking wages.</p>
+          </div>
+
+          <div class="slider">
+            <div class="slider-head">
+              <label for="s-opex">Monthly operating expenses</label>
+              <output for="s-opex" id="out-opex" aria-live="off">$43,000</output>
+            </div>
+            <input type="range" id="s-opex" min="20000" max="60000" step="1000" value="43000" aria-valuetext="$43,000 per month" />
+            <p class="slider-hint">Rent, salaries, marketing, insurance, repairs.</p>
+          </div>
+
+          <p><button type="button" class="btn-quiet" id="sim-reset">Reset the levers</button></p>
+        </div>
+
+        <div class="sim-out">
+          <div class="table-wrap" tabindex="0" role="group" aria-label="Live profit and loss statement, scrollable">
+            <table class="pnl">
+              <caption>The statement as you have set it.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Line</th>
+                  <th scope="col" class="num">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Revenue</th><td class="num" id="v-rev">$80,000</td></tr>
+                <tr><th scope="row">Less cost of goods sold</th><td class="num" id="v-cogs">&#8722;$32,000</td></tr>
+                <tr class="row-sub"><th scope="row">Gross profit</th><td class="num" id="v-gp">$48,000</td></tr>
+                <tr><th scope="row">Less operating expenses</th><td class="num" id="v-opex">&#8722;$43,000</td></tr>
+                <tr class="row-total"><th scope="row">Operating income</th><td class="num" id="v-oi">$5,000</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bigfigs">
+            <div class="bigfig">
+              <p class="bigfig-label">Gross margin</p>
+              <p class="bigfig-value" id="v-gm">60.0%</p>
+              <p class="bigfig-note" id="v-gm-note">Sixty cents of every dollar survives the baking.</p>
+            </div>
+            <div class="bigfig">
+              <p class="bigfig-label">Operating income</p>
+              <p class="bigfig-value" id="v-oi-big">$5,000</p>
+              <p class="bigfig-note" id="v-oi-note"><span class="fig pos">Profit</span> for the month.</p>
+            </div>
+          </div>
+
+          <p class="sr-only" id="sim-live" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="prompts">
+        <div class="prompt">
+          <h3 id="p1-h">Prompt one: find a price and a volume that pay for the month</h3>
+          <p>Leave the two cost levers where they are and work the top of the statement. Operating income has to clear zero on price and volume alone.</p>
+          <p><button type="button" class="btn-solid" id="check-1" aria-describedby="p1-h">Check where I am</button></p>
+          <p class="feedback" id="fb-p1" role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="prompt">
+          <h3 id="p2-h">Prompt two: move cost of goods by five points</h3>
+          <p>Set the cost of goods slider anywhere, then check. You will get the same statement five points worse and five points better, side by side, so you can see what five points is actually worth in dollars.</p>
+          <p><button type="button" class="btn-solid" id="check-2" aria-describedby="p2-h">Check where I am</button></p>
+          <p class="feedback" id="fb-p2" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 5 ============================= -->
+    <section class="screen" id="screen-5">
+      <h2 tabindex="-1">Classify the line</h2>
+      <p class="lead">Ten things that happen at the bakery in a month. Decide where each one lands. Three of them never touch this statement at all, and those three are the ones worth the argument.</p>
+      <p class="note">Choose with the mouse or the keyboard. Nothing locks, so you can change an answer.</p>
+
+      <ul class="sorter" id="sorter">
+
+        <li>
+          <p class="item" id="c1-t">Flour, butter, and the bakery boxes</p>
+          <div class="sort-btns" role="group" aria-labelledby="c1-t">
+            <button type="button" class="sort" data-q="c1" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c1" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c1" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c1" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c1" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c2-t">The store manager&rsquo;s salary</p>
+          <div class="sort-btns" role="group" aria-labelledby="c2-t">
+            <button type="button" class="sort" data-q="c2" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c2" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c2" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c2" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c2" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c3-t">A new deck oven, bought outright for $18,000</p>
+          <div class="sort-btns" role="group" aria-labelledby="c3-t">
+            <button type="button" class="sort" data-q="c3" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c3" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c3" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c3" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c3" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c4-t">Rent on the second location</p>
+          <div class="sort-btns" role="group" aria-labelledby="c4-t">
+            <button type="button" class="sort" data-q="c4" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c4" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c4" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c4" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c4" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c5-t">Paying back $1,400 of the amount borrowed for the oven</p>
+          <div class="sort-btns" role="group" aria-labelledby="c5-t">
+            <button type="button" class="sort" data-q="c5" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c5" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c5" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c5" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c5" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c6-t">The owner taking $3,000 out of the business for herself</p>
+          <div class="sort-btns" role="group" aria-labelledby="c6-t">
+            <button type="button" class="sort" data-q="c6" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c6" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c6" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c6" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c6" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c7-t">Fuel for the van that runs bread to the wholesale accounts</p>
+          <div class="sort-btns" role="group" aria-labelledby="c7-t">
+            <button type="button" class="sort" data-q="c7" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c7" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c7" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c7" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c7" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c8-t">Everything rung up at the counter on a Saturday</p>
+          <div class="sort-btns" role="group" aria-labelledby="c8-t">
+            <button type="button" class="sort" data-q="c8" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c8" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c8" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c8" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c8" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c9-t">The card processor&rsquo;s fee on every counter sale</p>
+          <div class="sort-btns" role="group" aria-labelledby="c9-t">
+            <button type="button" class="sort" data-q="c9" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c9" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c9" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c9" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c9" role="status" aria-live="polite"></p>
+        </li>
+
+        <li>
+          <p class="item" id="c10-t">The bread still on the shelf when the month ends</p>
+          <div class="sort-btns" role="group" aria-labelledby="c10-t">
+            <button type="button" class="sort" data-q="c10" data-a="rev" aria-pressed="false">Revenue</button>
+            <button type="button" class="sort" data-q="c10" data-a="cogs" aria-pressed="false">Cost of goods sold</button>
+            <button type="button" class="sort" data-q="c10" data-a="opex" aria-pressed="false">Operating expense</button>
+            <button type="button" class="sort" data-q="c10" data-a="off" aria-pressed="false">Not on the statement</button>
+          </div>
+          <p class="feedback" id="fb-c10" role="status" aria-live="polite"></p>
+        </li>
+
+      </ul>
+
+      <p class="score" id="score-classify" role="status" aria-live="polite">Answered 0 of 10.</p>
+    </section>
+
+    <!-- ============================= 6 ============================= -->
+    <section class="screen" id="screen-6">
+      <div class="spread">
+        <div class="col-main">
+          <h2 tabindex="-1">Profit is not cash</h2>
+          <p class="lead">The month you just read showed $4,100 of net income. In the same month the bakery&rsquo;s bank balance fell, and the owner could not make payroll without dipping into savings. Both of those things are true, and neither is an error.</p>
+          <p>The statement records a sale when the sale happens and a cost when the cost is incurred, not when the money moves. Money moves on its own schedule. Three gaps do most of the damage, and all three are timing, not trickery.</p>
+
+          <h3>One: a customer who pays in forty five days</h3>
+          <p>A cafe takes $9,000 of wholesale bread on the fifth. The sale is revenue in this month&rsquo;s statement, in full, that same day. The cash arrives seven weeks later. Every dollar of that sale is profit on the page and nothing in the account.</p>
+          <figure class="timeline-figure">
+            <svg class="timeline" viewBox="0 0 620 96" role="presentation" aria-hidden="true" focusable="false">
+              <line class="tl-axis" x1="30" y1="58" x2="590" y2="58" />
+              <g class="tl-mark" data-x="70">
+                <line x1="70" y1="40" x2="70" y2="76" />
+                <circle cx="70" cy="58" r="6" />
+                <text x="30" y="26" text-anchor="start">Bread delivered, sale recorded</text>
+                <text class="tl-sub" x="70" y="92" text-anchor="middle">Day 5</text>
+              </g>
+              <g class="tl-mark tl-cash" data-x="500">
+                <line x1="500" y1="40" x2="500" y2="76" />
+                <circle cx="500" cy="58" r="6" />
+                <text x="500" y="26" text-anchor="middle">$9,000 cash arrives</text>
+                <text class="tl-sub" x="500" y="92" text-anchor="middle">Day 50</text>
+              </g>
+            </svg>
+            <figcaption>In words: the sale is recorded on day five and counts in this month&rsquo;s profit. The $9,000 in cash does not arrive until day fifty, in the following month.</figcaption>
+          </figure>
+
+          <h3>Two: flour sitting in the storeroom</h3>
+          <p>The owner buys $6,000 of flour at a bulk price on the twentieth. The cash leaves that day. On the statement, none of it is a cost yet. Flour is inventory, an asset, until it becomes bread that somebody buys. Its cost lands in cost of goods sold over the next two or three months, in pieces, as it is baked and sold.</p>
+          <figure class="timeline-figure">
+            <svg class="timeline" viewBox="0 0 620 96" role="presentation" aria-hidden="true" focusable="false">
+              <line class="tl-axis" x1="30" y1="58" x2="590" y2="58" />
+              <g class="tl-mark tl-cash" data-x="120">
+                <line x1="120" y1="40" x2="120" y2="76" />
+                <circle cx="120" cy="58" r="6" />
+                <text x="30" y="26" text-anchor="start">$6,000 cash out for flour</text>
+                <text class="tl-sub" x="120" y="92" text-anchor="middle">Day 20</text>
+              </g>
+              <g class="tl-mark" data-x="300">
+                <line x1="300" y1="46" x2="300" y2="70" />
+                <circle cx="300" cy="58" r="5" />
+                <text class="tl-sub" x="300" y="92" text-anchor="middle">Month 2</text>
+              </g>
+              <g class="tl-mark" data-x="420">
+                <line x1="420" y1="46" x2="420" y2="70" />
+                <circle cx="420" cy="58" r="5" />
+                <text x="420" y="26" text-anchor="middle">Cost recognized as it is baked and sold</text>
+                <text class="tl-sub" x="420" y="92" text-anchor="middle">Month 3</text>
+              </g>
+              <g class="tl-mark" data-x="540">
+                <line x1="540" y1="46" x2="540" y2="70" />
+                <circle cx="540" cy="58" r="5" />
+                <text class="tl-sub" x="540" y="92" text-anchor="middle">Month 4</text>
+              </g>
+            </svg>
+            <figcaption>In words: all $6,000 of cash leaves on day twenty. The cost appears on the statement in pieces across the following three months, as the flour is baked and sold.</figcaption>
+          </figure>
+
+          <h3>Three: a year of insurance paid in one month</h3>
+          <p>The annual premium is $7,200, and the insurer wants all of it in March. Cash out, $7,200, in one month. On the statement it is $600 a month for twelve months, because that is the period the cover applies to. In March the bakery pays $7,200 and expenses $600.</p>
+          <figure class="timeline-figure">
+            <svg class="timeline" viewBox="0 0 620 96" role="presentation" aria-hidden="true" focusable="false">
+              <line class="tl-axis" x1="30" y1="58" x2="590" y2="58" />
+              <g class="tl-mark tl-cash" data-x="80">
+                <line x1="80" y1="40" x2="80" y2="76" />
+                <circle cx="80" cy="58" r="6" />
+                <text x="30" y="26" text-anchor="start">$7,200 paid up front</text>
+                <text class="tl-sub" x="80" y="92" text-anchor="middle">March</text>
+              </g>
+              <g class="tl-spread" data-x="80">
+                <rect x="80" y="52" width="490" height="12" rx="2" />
+                <text x="325" y="92" text-anchor="middle">$600 a month for twelve months</text>
+              </g>
+            </svg>
+            <figcaption>In words: the whole $7,200 leaves the bank in March. The statement carries $600 of insurance expense in each of the twelve months the cover runs.</figcaption>
+          </figure>
+
+          <h3>Add the three together</h3>
+          <p>$9,000 sold and not collected, $6,000 of flour bought and not yet baked, $6,600 of insurance paid ahead of the months it covers. Against $4,100 of profit. The month was genuinely profitable and the account genuinely went down, and the statement is the wrong document to have asked. That question belongs to a cash flow statement, which is a different page in the same set of books.</p>
+        </div>
+
+        <div class="col-side">
+          <div class="photo photo-owner" role="presentation"></div>
+          <div class="pullquote">
+            <p>Profit is an opinion about timing. Cash is a fact about a bank balance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 7 ============================= -->
+    <section class="screen" id="screen-7">
+      <h2 tabindex="-1">The decision</h2>
+      <p class="setup">The owner has read the month, seen $4,100 of net income, and wants to sign a lease on a third location next week. The reason given, in full, is that we made money last month. A build out will take about $60,000, most of it in the first sixty days. You are the manager she is asking.</p>
+      <p><strong>What do you tell her?</strong></p>
+
+      <div class="options" role="group" aria-labelledby="dec-q">
+        <p class="sr-only" id="dec-q">Choose what you would tell the owner</p>
+
+        <button type="button" class="choice" data-q="dec" data-opt="go" data-correct="false" aria-pressed="false">
+          <span class="choice-tag">Option A</span>
+          <span class="choice-body">Sign it. A profitable month is a profitable month, and the third location will make its own money.</span>
+        </button>
+
+        <button type="button" class="choice" data-q="dec" data-opt="wait" data-correct="true" aria-pressed="false">
+          <span class="choice-tag">Option B</span>
+          <span class="choice-body">Not yet. Wait until the receivables land and the flour works through, and look at gross margin across three months by location first. Then ask what the build out needs in cash, month by month.</span>
+        </button>
+
+        <button type="button" class="choice" data-q="dec" data-opt="cut" data-correct="false" aria-pressed="false">
+          <span class="choice-tag">Option C</span>
+          <span class="choice-body">Cut costs first. Take $8,000 a month out of operating expenses, then the build out pays for itself.</span>
+        </button>
+
+        <button type="button" class="choice" data-q="dec" data-opt="price" data-correct="false" aria-pressed="false">
+          <span class="choice-tag">Option D</span>
+          <span class="choice-body">Raise prices first. Margin is the number, so put five percent on the counter list and the build out is funded.</span>
+        </button>
+      </div>
+
+      <p class="feedback" id="fb-dec" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- ============================= 8 ============================= -->
+    <section class="screen" id="screen-8">
+      <h2 tabindex="-1">The margin check</h2>
+      <p class="lead">One last look at the month, drawn to scale. Every bar is the same month you started with, and the scale is honest, which is the lesson.</p>
+
+      <figure class="chart-figure waterfall-figure">
+        <svg class="waterfall" viewBox="0 0 700 330" role="presentation" aria-hidden="true" focusable="false">
+          <line class="wf-base" x1="16" y1="250" x2="684" y2="250" />
+
+          <g class="wf-bar" data-i="0">
+            <rect class="bar-navy" x="24" y="50" width="66" height="200" data-y="50" data-h="200" />
+            <text class="wf-val" x="57" y="42" text-anchor="middle">$80,000</text>
+            <text class="wf-name" x="57" y="272" text-anchor="middle">Revenue</text>
+          </g>
+          <g class="wf-bar" data-i="1">
+            <rect class="bar-red" x="116" y="50" width="66" height="80" data-y="50" data-h="80" />
+            <text class="wf-val" x="149" y="42" text-anchor="middle">&#8722;$32,000</text>
+            <text class="wf-name" x="149" y="272" text-anchor="middle">Cost of<tspan x="149" dy="15">goods sold</tspan></text>
+          </g>
+          <g class="wf-bar" data-i="2">
+            <rect class="bar-slate" x="208" y="130" width="66" height="120" data-y="130" data-h="120" />
+            <text class="wf-val" x="241" y="122" text-anchor="middle">$48,000</text>
+            <text class="wf-name" x="241" y="272" text-anchor="middle">Gross<tspan x="241" dy="15">profit</tspan></text>
+          </g>
+          <g class="wf-bar" data-i="3">
+            <rect class="bar-red" x="300" y="130" width="66" height="107.5" data-y="130" data-h="107.5" />
+            <text class="wf-val" x="333" y="122" text-anchor="middle">&#8722;$43,000</text>
+            <text class="wf-name" x="333" y="272" text-anchor="middle">Operating<tspan x="333" dy="15">expenses</tspan></text>
+          </g>
+          <g class="wf-bar" data-i="4">
+            <rect class="bar-green" x="392" y="237.5" width="66" height="12.5" data-y="237.5" data-h="12.5" />
+            <text class="wf-val" x="425" y="230" text-anchor="middle">$5,000</text>
+            <text class="wf-name" x="425" y="272" text-anchor="middle">Operating<tspan x="425" dy="15">income</tspan></text>
+          </g>
+          <g class="wf-bar" data-i="5">
+            <rect class="bar-red" x="484" y="237.5" width="66" height="2.25" data-y="237.5" data-h="2.25" />
+            <text class="wf-val" x="517" y="230" text-anchor="middle">&#8722;$900</text>
+            <text class="wf-name" x="517" y="272" text-anchor="middle">Other:<tspan x="517" dy="15">loan interest</tspan></text>
+          </g>
+          <g class="wf-bar" data-i="6">
+            <rect class="bar-green" x="576" y="239.75" width="66" height="10.25" data-y="239.75" data-h="10.25" />
+            <text class="wf-val" x="609" y="232" text-anchor="middle">$4,100</text>
+            <text class="wf-name" x="609" y="272" text-anchor="middle">Net<tspan x="609" dy="15">income</tspan></text>
+          </g>
+
+          <text class="wf-foot" x="16" y="316">Drawn to scale. The last two bars really are that small.</text>
+        </svg>
+        <figcaption>
+          The month as a chart. The figures behind it are in the table below.
+          <button type="button" class="btn-quiet" id="wf-toggle" aria-expanded="false" aria-controls="wf-table">Show the figures as a table</button>
+        </figcaption>
+      </figure>
+
+      <div class="table-wrap sr-only" id="wf-table" tabindex="0" role="group" aria-label="The figures behind the chart, scrollable">
+        <table class="pnl compact">
+          <caption>The figures behind the chart.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Step</th>
+              <th scope="col" class="num">Change</th>
+              <th scope="col" class="num">Running total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Revenue</th><td class="num">$80,000</td><td class="num">$80,000</td></tr>
+            <tr><th scope="row">Cost of goods sold</th><td class="num"><span class="sr-only">negative </span>&#8722;$32,000</td><td class="num">$48,000</td></tr>
+            <tr><th scope="row">Gross profit</th><td class="num nochange">no change</td><td class="num">$48,000</td></tr>
+            <tr><th scope="row">Operating expenses</th><td class="num"><span class="sr-only">negative </span>&#8722;$43,000</td><td class="num">$5,000</td></tr>
+            <tr><th scope="row">Operating income</th><td class="num nochange">no change</td><td class="num">$5,000</td></tr>
+            <tr><th scope="row">Other: interest on the oven loan</th><td class="num"><span class="sr-only">negative </span>&#8722;$900</td><td class="num">$4,100</td></tr>
+            <tr><th scope="row">Net income</th><td class="num nochange">no change</td><td class="num">$4,100</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Three quick reads</h3>
+
+      <div class="qblock">
+        <h4 id="q1-h">1. What is the gross margin on this month?</h4>
+        <div class="options tight" role="group" aria-labelledby="q1-h">
+          <button type="button" class="choice" data-q="q1" data-correct="false" aria-pressed="false"><span class="choice-body">Forty percent</span></button>
+          <button type="button" class="choice" data-q="q1" data-correct="true" aria-pressed="false"><span class="choice-body">Sixty percent</span></button>
+          <button type="button" class="choice" data-q="q1" data-correct="false" aria-pressed="false"><span class="choice-body">Five percent</span></button>
+        </div>
+        <p class="feedback" id="fb-q1" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="qblock">
+        <h4 id="q2-h">2. Which single bar takes the most away from revenue?</h4>
+        <div class="options tight" role="group" aria-labelledby="q2-h">
+          <button type="button" class="choice" data-q="q2" data-correct="false" aria-pressed="false"><span class="choice-body">Cost of goods sold</span></button>
+          <button type="button" class="choice" data-q="q2" data-correct="true" aria-pressed="false"><span class="choice-body">Operating expenses</span></button>
+          <button type="button" class="choice" data-q="q2" data-correct="false" aria-pressed="false"><span class="choice-body">Interest on the oven loan</span></button>
+        </div>
+        <p class="feedback" id="fb-q2" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="qblock">
+        <h4 id="q3-h">3. Cost of goods rises five points, to forty five percent of revenue. Nothing else moves. What happens to operating income?</h4>
+        <div class="options tight" role="group" aria-labelledby="q3-h">
+          <button type="button" class="choice" data-q="q3" data-correct="false" aria-pressed="false"><span class="choice-body">It rises to $9,000</span></button>
+          <button type="button" class="choice" data-q="q3" data-correct="true" aria-pressed="false"><span class="choice-body">It falls to $1,000</span></button>
+          <button type="button" class="choice" data-q="q3" data-correct="false" aria-pressed="false"><span class="choice-body">It does not move, because cost of goods sits above gross profit</span></button>
+        </div>
+        <p class="feedback" id="fb-q3" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="takeaway">
+        <p class="panel-title">Five things to look at first, on any statement</p>
+        <ol class="takeaway-list">
+          <li><strong>Revenue, and whether this is one month or a trend.</strong> One month is an anecdote. Three is a direction.</li>
+          <li><strong>Gross margin as a percent, not gross profit in dollars.</strong> The percent is the only figure that compares across months, locations, and products.</li>
+          <li><strong>The two or three largest operating expense lines, each as a percent of revenue.</strong> That is where the money quietly goes, and where a manager can actually act.</li>
+          <li><strong>Operating income, not net income.</strong> It judges the trade on its own, before borrowing and one off items flatter or spoil the picture.</li>
+          <li><strong>The cash question the statement cannot answer.</strong> What is sitting in receivables, in inventory, and in costs paid ahead. Then go and read the cash flow statement.</li>
+        </ol>
+        <p class="takeaway-foot">And one habit worth more than all five: before you accept any figure, ask what period it covers and what is included in it.</p>
+      </div>
+
+      <div class="scorecard">
+        <p class="panel-title">Where you landed</p>
+        <ul class="scorelist">
+          <li id="final-classify">Classify the line: not answered yet.</li>
+          <li id="final-dec">The decision: not answered yet.</li>
+          <li id="final-reads">Three quick reads: not answered yet.</li>
+        </ul>
+      </div>
+
+      <p><button type="button" class="btn-quiet" id="restart">Start over</button></p>
+    </section>
+
+    <nav class="pager" aria-label="Screen navigation">
+      <button type="button" class="btn-quiet" id="prev">Back</button>
+      <button type="button" class="btn-solid" id="next">Next</button>
+    </nav>
+
+  </main>
+
+  <footer class="module-foot">
+    <p>Demonstration sample by K &amp; A Performance.</p>
+  </footer>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

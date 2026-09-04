@@ -1,0 +1,1395 @@
+/* ============================================================
+   The profit and loss statement, read like an owner.
+
+   A self-contained editorial finance identity. No CDN, no build
+   step, no network. Two families only:
+
+     Quinela      licensed display serif, shipped in assets/fonts
+     Site Sans    Neufilla, the licensed body grotesque, shipped as WOFF
+                  version 1. The rules are still written so the fallback
+                  stack reads as a deliberate choice: the sans is only ever
+                  asked to be plain, and all the character lives in the
+                  serif.
+
+   Color discipline worth knowing before editing:
+     Gold is decorative only. Against paper it measures 2.13:1, so it
+     never carries text and never carries meaning. It carries hairlines.
+     Green (#1F7A4D) measures 4.71:1 on paper and 4.41:1 on even a
+     three percent navy tint, so anything set in green sits on the
+     bare paper ground and nowhere else. That is why the feedback
+     blocks and the figure panels are untinted.
+   ============================================================ */
+
+@font-face {
+  font-family: 'Quinela';
+  src: url('assets/fonts/Quinela-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quinela';
+  src: url('assets/fonts/Quinela-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quinela';
+  src: url('assets/fonts/Quinela-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quinela';
+  src: url('assets/fonts/Quinela-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* The body grotesque. Shipped as WOFF version 1, not WOFF2, so there is one
+   src per face and no woff2 fallback to list. The middle weight is the
+   family's semibold, mapped at 600, and the rules below ask for 600 rather
+   than 500 so the file is actually used instead of being synthesized. */
+@font-face {
+  font-family: 'Site Sans';
+  src: url('assets/fonts/sans-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Sans';
+  src: url('assets/fonts/sans-medium.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Sans';
+  src: url('assets/fonts/sans-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --navy: #0F1B2D;
+  --paper: #F4F1EA;
+  --gold: #C8A24A;
+  --slate: #4A5568;
+  --green: #1F7A4D;
+  --oxblood: #8B2635;
+
+  --hair: rgb(15 27 45 / 0.16);
+  --hair-soft: rgb(15 27 45 / 0.09);
+  --hair-gold: rgb(200 162 74 / 0.55);
+
+  --serif: 'Quinela', Georgia, 'Times New Roman', serif;
+  --sans: 'Site Sans', 'Helvetica Neue', Arial, system-ui, sans-serif;
+
+  /* Figures in a money column, and only there. Neufilla as delivered has an
+     empty GSUB and GPOS feature list, so there is no tnum for
+     font-variant-numeric to switch on and its digits are proportional: at
+     60px the 1 measures 16.75px against 37.5px for the 4. Down a column of
+     money that shows up as thousands separators that do not line up, which
+     is the one piece of craft this genre is actually judged on. So amount
+     cells use the first face here that has monospaced digits by
+     construction. It reaches digits, currency signs and separators inside
+     td.num and nothing else: every word on the page, column headings
+     included, stays in the licensed family. When Neufilla ships with
+     tabular figures, delete the font-family line from td.num and the
+     licensed face takes the column back. */
+  --figures: 'Helvetica Neue', Arial, system-ui, sans-serif;
+
+  --measure: 36rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+
+/* One focus treatment: 2px navy, 3px offset. Inverted on the navy band. */
+:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 3px;
+}
+
+.masthead :focus-visible {
+  outline-color: var(--paper);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------------------------------------------- masthead */
+
+.masthead {
+  background: var(--navy);
+  color: var(--paper);
+  border-bottom: 3px solid var(--gold);
+}
+
+.masthead-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 1.6rem 1.5rem 1.35rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+h1 {
+  margin: 0.5rem 0 0;
+  max-width: 22ch;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(1.7rem, 4.2vw, 2.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  color: var(--paper);
+}
+
+.progress {
+  margin-top: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.track {
+  flex: 1 1 auto;
+  height: 2px;
+  background: rgb(244 241 234 / 0.28);
+}
+
+.track > span {
+  display: block;
+  height: 100%;
+  width: 12.5%;
+  background: var(--gold);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.progress-text {
+  flex: 0 0 auto;
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+/* ---------------------------------------------- shell */
+
+.frame {
+  min-height: 100%;
+}
+
+#module {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 2.25rem 1.5rem 0;
+}
+
+.screen {
+  padding-bottom: 1rem;
+}
+
+.js .screen {
+  display: none;
+}
+
+.js .screen.is-current {
+  display: block;
+}
+
+/* ---------------------------------------------- editorial grid */
+
+.spread {
+  display: grid;
+  gap: 2.25rem;
+  align-items: start;
+}
+
+/* Grid items default to min-width:auto, which means a track sizes itself to
+   the widest thing inside it. One 24rem table then pushes the whole page
+   past 320px and the body scrolls sideways, which is the failure this
+   overrides. Tables still scroll inside their own wrapper; the page does not. */
+.spread > *,
+.sim > *,
+.bigfigs > *,
+.prompts > * {
+  min-width: 0;
+}
+
+@media (min-width: 62rem) {
+  .spread {
+    grid-template-columns: minmax(0, 1fr) 17.5rem;
+    gap: 3rem;
+  }
+  .spread-hero {
+    grid-template-columns: minmax(0, 1fr) 19rem;
+  }
+  .col-side {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+.col-main > *:first-child {
+  margin-top: 0;
+}
+
+/* ---------------------------------------------- type */
+
+h2 {
+  margin: 0 0 1rem;
+  max-width: 20ch;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  position: relative;
+  padding-top: 1.1rem;
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3.5rem;
+  height: 3px;
+  background: var(--gold);
+  transform-origin: left center;
+  animation: rule-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes rule-in {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+h3 {
+  margin: 2.2rem 0 0.7rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+h4 {
+  margin: 0 0 0.8rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.02rem;
+  line-height: 1.45;
+  color: var(--navy);
+}
+
+p {
+  margin: 0 0 1.05rem;
+  max-width: var(--measure);
+}
+
+.lead {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+  line-height: 1.48;
+  color: var(--navy);
+  max-width: 34rem;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+ul,
+ol {
+  max-width: var(--measure);
+  margin: 0 0 1.05rem;
+  padding-left: 1.3rem;
+}
+
+li {
+  margin-bottom: 0.55rem;
+}
+
+li::marker {
+  color: var(--slate);
+}
+
+.ticks {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ticks > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.ticks > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.7rem;
+  height: 1px;
+  background: var(--gold);
+}
+
+.note,
+.setup,
+.aside,
+.disclaimer {
+  max-width: var(--measure);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.note {
+  border-left: 2px solid var(--hair);
+  padding: 0.1rem 0 0.1rem 0.95rem;
+  color: var(--slate);
+}
+
+.setup {
+  border-left: 3px solid var(--navy);
+  padding: 0.25rem 0 0.25rem 1rem;
+  font-size: 1rem;
+  color: var(--navy);
+}
+
+.aside {
+  margin-top: 1.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hair-gold);
+  color: var(--slate);
+  font-style: italic;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+}
+
+.disclaimer {
+  margin-top: 1.4rem;
+  color: var(--slate);
+  font-size: 0.86rem;
+}
+
+.caption,
+figcaption {
+  max-width: var(--measure);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--slate);
+}
+
+/* ---------------------------------------------- side column furniture */
+
+.photo {
+  background-color: rgb(15 27 45 / 0.05);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid var(--hair-gold);
+  margin-bottom: 1.1rem;
+}
+
+/* Each panel carries the aspect ratio of the file that sits in it, so cover
+   crops the edges rather than half the frame. Change the file, change the
+   ratio. The variety of shapes down the side column is deliberate. */
+
+.photo-hero {
+  aspect-ratio: 16 / 11;
+  background-image:
+    linear-gradient(160deg, rgb(15 27 45 / 0.58), rgb(15 27 45 / 0.88)),
+    url('assets/img/hero.jpg');
+  background-blend-mode: multiply, normal;
+}
+
+.photo-ledger { aspect-ratio: 3 / 2; background-image: url('assets/img/ledger.jpg'); }
+.photo-owner { aspect-ratio: 3 / 2; background-image: url('assets/img/owner.jpg'); }
+.photo-storefront { aspect-ratio: 2 / 3; background-image: url('assets/img/storefront.jpg'); }
+
+.factbox {
+  margin: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.factbox > div {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--hair-soft);
+}
+
+.factbox dt {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--slate);
+  padding-top: 0.15rem;
+}
+
+.factbox dd {
+  margin: 0;
+  text-align: right;
+  font-size: 0.88rem;
+  color: var(--navy);
+}
+
+.pullquote {
+  border-top: 3px solid var(--gold);
+  padding-top: 0.9rem;
+}
+
+.pullquote p {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.18rem;
+  line-height: 1.28;
+  color: var(--navy);
+}
+
+/* ---------------------------------------------- tables */
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-top: 2px solid var(--navy);
+}
+
+.table-wrap:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+table {
+  width: 100%;
+  min-width: 24rem;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
+}
+
+caption {
+  caption-side: bottom;
+  padding-top: 0.7rem;
+  text-align: left;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--slate);
+}
+
+thead th {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--hair);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--slate);
+  text-align: left;
+  vertical-align: bottom;
+}
+
+tbody th {
+  text-align: left;
+  font-weight: 400;
+  color: var(--navy);
+}
+
+td,
+tbody th {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--hair-soft);
+  vertical-align: top;
+}
+
+th:first-child,
+td:first-child {
+  padding-left: 0;
+}
+
+th:last-child,
+td:last-child {
+  padding-right: 0;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+td.num {
+  font-family: var(--figures);
+}
+
+/* A subtotal row has no change of its own. That is a word, not a dash: a
+   dash in a figure column is read aloud as nothing at all. */
+td.nochange {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--slate);
+}
+
+.pnl .row-indent th {
+  padding-left: 1.4rem;
+  color: var(--slate);
+  font-size: 0.9rem;
+}
+
+.pnl .row-indent td {
+  color: var(--slate);
+  font-size: 0.9rem;
+}
+
+.pnl .row-sub th,
+.pnl .row-sub td,
+.pnl .row-total th,
+.pnl .row-total td {
+  font-weight: 700;
+  border-top: 1px solid var(--navy);
+  border-bottom-color: var(--hair);
+}
+
+.pnl .row-total th,
+.pnl .row-total td {
+  border-top: 2px solid var(--navy);
+  font-size: 1.05rem;
+}
+
+.pnl .row-group th {
+  font-weight: 700;
+}
+
+.compact td,
+.compact tbody th {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* row entry animation, one after another */
+.animate-rows .row-line {
+  animation: row-in 0.34s ease both;
+}
+
+@keyframes row-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------- signed figures */
+
+.fig {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.fig.pos { color: var(--green); }
+.fig.neg { color: var(--oxblood); }
+
+.fig .tag {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------- the "what this means" toggles */
+
+.why {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0.15rem 0.5rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate);
+  background: transparent;
+  border: 1px solid var(--hair);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.why:hover {
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.why::after {
+  content: ' +';
+}
+
+.why[aria-expanded="true"] {
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.why[aria-expanded="true"]::after {
+  content: ' \2212';
+}
+
+.explain td {
+  padding: 0 0 1rem;
+  max-width: 40rem;
+  font-size: 0.93rem;
+  line-height: 1.62;
+  color: var(--slate);
+  border-bottom: 1px solid var(--hair-soft);
+  border-left: 2px solid var(--gold);
+  padding-left: 0.95rem;
+}
+
+/* ---------------------------------------------- charts */
+
+.chart-figure {
+  margin: 1.75rem 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hair-gold);
+}
+
+.chart-figure figcaption {
+  margin-top: 0.8rem;
+}
+
+.chart .axis line {
+  stroke: var(--hair);
+  stroke-width: 1;
+}
+
+.chart .bar {
+  fill: var(--navy);
+  transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chart .bar-b {
+  fill: var(--slate);
+}
+
+.chart .bar-name {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--navy);
+}
+
+.chart .bar-val {
+  font-family: var(--figures);
+  font-size: 15px;
+  font-weight: 700;
+  fill: var(--navy);
+  font-variant-numeric: tabular-nums;
+  opacity: 1;
+  transition: opacity 0.4s ease 0.3s;
+}
+
+.chart .axis-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  fill: var(--slate);
+}
+
+.timeline-figure {
+  margin: 1.25rem 0 2rem;
+}
+
+.timeline .tl-axis {
+  stroke: var(--hair);
+  stroke-width: 2;
+}
+
+.timeline .tl-mark line {
+  stroke: var(--navy);
+  stroke-width: 2;
+}
+
+.timeline .tl-mark circle {
+  fill: var(--paper);
+  stroke: var(--navy);
+  stroke-width: 2;
+}
+
+.timeline .tl-cash line {
+  stroke: var(--oxblood);
+}
+
+.timeline .tl-cash circle {
+  stroke: var(--oxblood);
+  fill: var(--oxblood);
+}
+
+.timeline text {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--navy);
+}
+
+.timeline .tl-sub {
+  font-weight: 400;
+  font-size: 11px;
+  fill: var(--slate);
+}
+
+.timeline .tl-spread rect {
+  fill: rgb(15 27 45 / 0.14);
+}
+
+.waterfall-figure {
+  border-top: 2px solid var(--navy);
+}
+
+/* Left to fill 68rem the chart scales up by half again and the bars turn
+   into slabs. Capped at the measure the rest of this screen uses. */
+.waterfall {
+  max-width: 46rem;
+}
+
+.waterfall .wf-base {
+  stroke: var(--navy);
+  stroke-width: 1;
+}
+
+.waterfall rect {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+.bar-navy { fill: var(--navy); }
+.bar-slate { fill: var(--slate); }
+.bar-red { fill: var(--oxblood); }
+.bar-green { fill: var(--green); }
+
+.waterfall .wf-val {
+  font-family: var(--figures);
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.waterfall .wf-name {
+  font-family: var(--sans);
+  font-size: 12px;
+  fill: var(--slate);
+}
+
+.waterfall .wf-foot {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-style: italic;
+  fill: var(--slate);
+}
+
+.animate-wf .wf-bar {
+  animation: wf-grow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes wf-grow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-wf .wf-bar rect {
+  animation: wf-rise 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes wf-rise {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+/* ---------------------------------------------- the simulator */
+
+.sim {
+  display: grid;
+  gap: 2rem;
+  margin: 1.75rem 0 0;
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .sim {
+    grid-template-columns: 20rem minmax(0, 1fr);
+    gap: 3rem;
+  }
+}
+
+.panel-title {
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--navy);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.slider {
+  margin-bottom: 1.5rem;
+}
+
+.slider-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.slider label {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.86rem;
+  line-height: 1.35;
+  color: var(--navy);
+}
+
+.slider output {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--navy);
+  cursor: pointer;
+}
+
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 4px;
+}
+
+.slider-hint {
+  margin: 0.3rem 0 0;
+  font-size: 0.8rem;
+  color: var(--slate);
+}
+
+.bigfigs {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+@media (min-width: 34rem) {
+  .bigfigs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.bigfig {
+  border-top: 3px solid var(--gold);
+  padding-top: 0.8rem;
+}
+
+.bigfig-label {
+  margin: 0;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.bigfig-value {
+  margin: 0.2rem 0 0.35rem;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(1.9rem, 5.5vw, 2.7rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy);
+}
+
+.bigfig-note {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--slate);
+}
+
+.prompts {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hair-gold);
+}
+
+@media (min-width: 48rem) {
+  .prompts {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.prompt h3 {
+  margin-top: 0;
+}
+
+.prompt p {
+  max-width: none;
+}
+
+/* ---------------------------------------------- choices */
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 1.25rem 0;
+  max-width: 46rem;
+}
+
+.options.tight {
+  gap: 0.5rem;
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--navy);
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-left: 3px solid var(--hair);
+  border-radius: 0;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.choice:hover {
+  border-color: var(--slate);
+  border-left-color: var(--navy);
+}
+
+.choice[aria-pressed="true"] {
+  border-color: var(--navy);
+  border-left-width: 3px;
+  border-left-color: var(--navy);
+  background: rgb(15 27 45 / 0.045);
+}
+
+.choice-tag {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.choice-body {
+  display: block;
+  line-height: 1.6;
+}
+
+.qblock {
+  margin: 1.5rem 0;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--hair-soft);
+  max-width: 46rem;
+}
+
+/* ---------------------------------------------- the sorter */
+
+.sorter {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  max-width: 46rem;
+  border-top: 2px solid var(--navy);
+}
+
+.sorter > li {
+  margin: 0;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--hair-soft);
+}
+
+.item {
+  margin: 0 0 0.7rem;
+  max-width: none;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1.3;
+  color: var(--navy);
+}
+
+.sort-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.sort {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  border-radius: 0;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.sort:hover {
+  border-color: var(--navy);
+}
+
+.sort[aria-pressed="true"] {
+  border-color: var(--navy);
+  border-width: 2px;
+  padding: calc(0.45rem - 1px) calc(0.8rem - 1px);
+  background: rgb(15 27 45 / 0.045);
+}
+
+/* ---------------------------------------------- feedback */
+
+/* Untinted on purpose: green measures 4.71:1 on bare paper and drops
+   below 4.5:1 over even a light tint. */
+.feedback {
+  margin: 0.85rem 0 0;
+  max-width: 46rem;
+  font-size: 0.93rem;
+  line-height: 1.62;
+  color: var(--navy);
+}
+
+.feedback:empty {
+  margin: 0;
+}
+
+.feedback:not(:empty) {
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--slate);
+}
+
+.feedback.is-right:not(:empty) { border-left-color: var(--green); }
+.feedback.is-wrong:not(:empty) { border-left-color: var(--oxblood); }
+
+.feedback .glyph {
+  display: inline-flex;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.16em;
+  margin-right: 0.35em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.feedback .verdict {
+  font-weight: 700;
+}
+
+.feedback.is-right .glyph,
+.feedback.is-right .verdict { color: var(--green); }
+
+.feedback.is-wrong .glyph,
+.feedback.is-wrong .verdict { color: var(--oxblood); }
+
+.feedback .fb-note {
+  display: block;
+  margin-top: 0.4rem;
+  color: var(--slate);
+  font-size: 0.9rem;
+}
+
+.score {
+  margin-top: 1.75rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--hair-gold);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+/* ---------------------------------------------- takeaway */
+
+.takeaway,
+.scorecard {
+  margin: 2.25rem 0;
+  padding: 1.5rem 1.6rem 1.2rem;
+  border: 1px solid var(--hair);
+  border-top: 3px solid var(--gold);
+  max-width: 46rem;
+}
+
+.takeaway-list {
+  max-width: none;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.takeaway-list > li {
+  margin-bottom: 0.85rem;
+  line-height: 1.6;
+}
+
+.takeaway-foot {
+  margin: 1.1rem 0 0;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--hair-soft);
+  max-width: none;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--slate);
+}
+
+.scorelist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+
+.scorelist > li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--hair-soft);
+  font-size: 0.95rem;
+}
+
+.scorelist > li:last-child {
+  border-bottom: 0;
+}
+
+/* ---------------------------------------------- buttons */
+
+.btn-solid,
+.btn-quiet {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 0.72rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.btn-solid {
+  color: var(--paper);
+  background: var(--navy);
+  border: 1px solid var(--navy);
+}
+
+.btn-solid:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.btn-quiet {
+  color: var(--navy);
+  background: transparent;
+  border: 1px solid var(--navy);
+}
+
+.btn-quiet:hover {
+  background: var(--navy);
+  color: var(--paper);
+}
+
+figcaption .btn-quiet {
+  margin-top: 0.6rem;
+  font-size: 0.66rem;
+  padding: 0.5rem 1rem;
+}
+
+button[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+button[disabled]:hover {
+  background: transparent;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+/* ---------------------------------------------- pager and footer */
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding-top: 1.35rem;
+  border-top: 2px solid var(--navy);
+}
+
+.module-foot {
+  max-width: 68rem;
+  margin: 2.5rem auto 0;
+  padding: 1.1rem 1.5rem 1.6rem;
+  border-top: 1px solid var(--hair-soft);
+}
+
+.module-foot p {
+  margin: 0;
+  max-width: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+/* ---------------------------------------------- reflow to 320px */
+
+@media (max-width: 26rem) {
+  .masthead-inner,
+  #module,
+  .module-foot {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .progress {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .track {
+    width: 100%;
+  }
+  .sort,
+  .pager button,
+  .prompt .btn-solid {
+    width: 100%;
+  }
+  .pager {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .slider-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+  .takeaway,
+  .scorecard {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* ---------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------- print, for the job aid */
+
+@media print {
+  .pager,
+  .masthead .progress {
+    display: none;
+  }
+  .js .screen {
+    display: block;
+  }
+}

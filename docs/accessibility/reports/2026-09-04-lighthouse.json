@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-04T00:10:10.772Z",
+  "origin": "http://127.0.0.1:62311",
+  "pages": [
+    {
+      "path": "/training/samples/hazard-recognition/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 72,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 5552,
+      "cls": 0,
+      "tbtMs": 102
+    },
+    {
+      "path": "/training/samples/reading-the-pnl/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 79,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3903,
+      "cls": 0.006,
+      "tbtMs": 97
+    }
+  ]
+}

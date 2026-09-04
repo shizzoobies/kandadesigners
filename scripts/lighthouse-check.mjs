@@ -22,6 +22,8 @@ const DEFAULT_PAGES = [
   '/training/',
   '/training/samples/',
   '/training/samples/rfi-that-gets-answered/',
+  '/training/samples/hazard-recognition/',
+  '/training/samples/reading-the-pnl/',
   '/training/team/',
   '/training/capabilities/',
   '/services/',
