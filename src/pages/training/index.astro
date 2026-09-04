@@ -91,11 +91,13 @@ const doors = [
     href: '/training/samples/',
     title: 'Play a working sample',
     blurb: 'Real content running in a browser, keyboard operable, not a screenshot and not a download wall.',
+    backdrop: '/images/training/backdrops/overview-samples.jpg?v=1',
   },
   {
     href: '/training/team/',
     title: 'Meet the bench',
     blurb: 'Senior instructional designers and subject matter experts, described by focus and depth rather than by resume.',
+    backdrop: '/images/training/backdrops/overview-bench.jpg?v=1',
   },
 ];
 ---
@@ -275,7 +277,7 @@ const doors = [
     <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">See the work</h2>
     <div class="mt-12 grid gap-8 md:grid-cols-2">
       {doors.map((d, i) => (
-        <a href={d.href} data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame group flex flex-col p-8">
+        <a href={d.href} data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame backdrop-card group flex min-h-[14rem] flex-col p-8" style={`--bd: url('${d.backdrop}')`}>
           <h3 class="font-display text-2xl">{d.title}</h3>
           <p class="mt-4 flex-1 leading-relaxed text-muted">{d.blurb}</p>
           <p class="mt-6 font-heading text-sm font-semibold tracking-wide text-accent">

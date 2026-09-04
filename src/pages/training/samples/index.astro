@@ -98,7 +98,7 @@ const collectionSchema = {
     <ul class="grid list-none gap-8 p-0 md:grid-cols-2">
       {cards.map((s) => (
         <li>
-          <a href={s.href} data-animate="frame-lift" class="glow-frame group flex h-full flex-col p-7">
+          <a href={s.href} data-animate="frame-lift" class="glow-frame backdrop-card group flex h-full flex-col p-7" style={`--bd: url('${s.backdrop}')`}>
             <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">{s.meta}</p>
             <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
             <p class="mt-4 flex-1 leading-relaxed text-muted">{s.what}</p>

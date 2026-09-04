@@ -579,3 +579,59 @@ body {
     .btn-draw::before { transition: none; }
   }
 }
+
+/* Card backdrops for the training section (2026-09-04). A card sets --bd to
+   an image of our own work. The copy keeps the left of the card, where the
+   wash is near solid, and the image owns the right third, where the wash
+   thins to let it through. At the text boundary (about 62% across) the wash
+   is still 0.95, which keeps muted copy above 4.5:1 even over a black pixel.
+   On narrow screens the copy spans the card, so the wash turns vertical and
+   the image sits at the foot. */
+/* Unlayered on purpose: .glow-frame sets a background shorthand outside any
+   layer, and a layered rule would lose to it however late it came. */
+.backdrop-card {
+    position: relative;
+    background-color: var(--color-surface);
+    background-image:
+      linear-gradient(
+        to right,
+        rgb(255 253 249 / 0.985) 0%,
+        rgb(255 253 249 / 0.985) 56%,
+        rgb(255 253 249 / 0.93) 66%,
+        rgb(255 253 249 / 0.62) 80%,
+        rgb(255 253 249 / 0.22) 100%
+      ),
+      var(--bd);
+    background-size: cover, cover;
+    background-position: center, right center;
+    background-repeat: no-repeat;
+    transition: background-size var(--dur-fast) var(--ease-out-expo);
+  }
+  .backdrop-card > * {
+    max-width: 62%;
+  }
+  .backdrop-card:hover {
+    background-size: cover, 108% auto;
+  }
+  @media (max-width: 640px) {
+    .backdrop-card {
+      background-image:
+        linear-gradient(
+          to bottom,
+          rgb(255 253 249 / 0.985) 0%,
+          rgb(255 253 249 / 0.95) 62%,
+          rgb(255 253 249 / 0.55) 100%
+        ),
+        var(--bd);
+      background-position: center, center bottom;
+      padding-bottom: 5.5rem;
+    }
+    .backdrop-card > * {
+      max-width: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .backdrop-card { transition: none; }
+    .backdrop-card:hover { background-size: cover, cover; }
+  }
+
