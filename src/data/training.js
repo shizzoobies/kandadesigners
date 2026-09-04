@@ -177,7 +177,7 @@ export const team = {
       role: 'Managing member, design and development',
       line: 'Lead Learning Experience Designer',
       bio: 'Alex does the design and the development, so whoever storyboards your module is the one who builds it. He leads every training engagement personally, brings prior years of building training for the construction and skilled trades, and is pursuing IAAP CPACC certification in accessibility.',
-      photo: '/images/Alex-Image.webp',
+      photo: '/images/training/portraits/alex.webp?v=1',
       link: null,
     },
     {
@@ -185,7 +185,7 @@ export const team = {
       role: 'Strategy and content',
       line: 'Lead Curriculum Specialist',
       bio: 'Kristina runs strategy and content. In practice she is the one asking why a module exists at all and what it is supposed to make somebody do once they have taken it, which is the question most training never gets asked.',
-      photo: '/images/Kristina-Image.webp',
+      photo: '/images/training/portraits/kristina.webp?v=1',
       link: null,
     },
   ],
@@ -195,7 +195,7 @@ export const team = {
       role: 'Instructional designer',
       line: 'Illustration and visual learning',
       bio: 'Bobbie draws for a living, and it shows: hand-lettered logotypes, character work, and full picture books, all built line by line rather than assembled from parts. On the bench she carries the illustrated and visual side of a course, the scenes and characters a scenario is built around.',
-      photo: '/images/art/bb-portrait.webp',
+      photo: '/images/training/portraits/bobbie.webp?v=1',
       link: '/artists/bobbie/',
     },
     {
@@ -203,7 +203,7 @@ export const team = {
       role: 'Instructional designer',
       line: 'Graphic design and visual identity',
       bio: 'Jon Marc designs logotypes, campaign art, and full identity systems that scale from a single mark to a whole season of screens. On the bench he is the reason a course looks like the client it was built for rather than like an authoring tool.',
-      photo: '/images/art/jm-portrait.jpg',
+      photo: '/images/training/portraits/jon-marc.webp?v=1',
       link: '/artists/jon-marc/',
     },
     {
@@ -211,7 +211,7 @@ export const team = {
       role: 'Instructional designer',
       line: 'Brand identity and print-ready design',
       bio: 'Nicole designs identities for teams, events, and small businesses, work built to survive being worn, handed out, and kept. On the bench she carries job aids and reference pieces, the parts of a course that have to hold up on a wall or in a pocket.',
-      photo: '/images/art/nc-portrait.webp?v=1',
+      photo: '/images/training/portraits/nicole.webp?v=1',
       link: '/artists/nicole/',
     },
     {
