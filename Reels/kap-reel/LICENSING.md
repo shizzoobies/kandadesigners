@@ -335,7 +335,8 @@ Every music bed in this reel was generated with ElevenLabs Eleven Music on
 `force_instrumental: true`. No third party music, no sample libraries, no
 Envato track. Section 9 called for an Envato fallback if the rights were
 unclear; the rights are clear on the Media Rights question, so no fallback was
-needed. See the one open eligibility question below before publishing.
+needed. The eligibility question raised below was resolved by the owner on
+2026-09-04: commercial use on the Pro plan is confirmed for both reels.
 
 ### Commercial rights: the exact wording
 
@@ -427,11 +428,12 @@ credits."
 
 Generation proceeded on the strength of the Media Rights cell, which is the
 cell that governs how Output may be used, and because the account is a single
-operator. Before this reel is published, the owner should either get written
-confirmation from ElevenLabs that a sole operator publishing under a business
-name counts as individual use on Pro, or move to the Scale music plan, whose
-eligibility cell covers organizations under 10 employees and whose Media Rights
-cell is identical. This is the only unresolved licensing question in the build.
+operator.
+
+Resolved 2026-09-04. Alex Anderson confirmed that the account's Pro plan
+permits commercial use of the generated music, and that confirmation applies to
+every bed in both the web reel and the training reel. No move to the Scale plan
+is required. There are no unresolved licensing questions in either build.
 
 ### Generations
 
