@@ -1,53 +1,82 @@
 /* The RFI that gets answered.
-   Self-contained styling for a packaged microlearning piece: no CDN, no
-   build step, no images. Site faces are loaded by absolute URL when the
-   piece is served from ka-performancefl.com, and every family falls back to
-   a system stack so the same folder still looks right inside an LMS where
-   /fonts/ does not resolve.
+   The world is a drawing set. The lesson is about citing a sheet and a
+   detail, so the piece is dressed as the thing it teaches you to cite: a
+   drafting sheet with a title block, a drawing border with corner ticks,
+   revision tabs, detail callouts, red-pen revision clouds, and an approval
+   stamp at the end.
 
-   Layout model: a fixed height stage. The masthead is pinned at the top,
+   Self-contained: no CDN, no build step, no network call. Every asset this
+   file names is relative and lives in assets/ beside it. The display face
+   is being licensed and is not here yet; the fallback stack is uppercased
+   and tracked so the sheet still reads as a sheet without it. The four
+   photographs are not here yet either; each slot paints the drafting grid
+   under a blue wash, so an absent file reads as a finished blue plate.
+
+   Layout model: a fixed height stage. The title block is pinned at the top,
    the pager at the bottom, and one screen fills the space between them.
    Nothing scrolls at 900px by 640px or larger. Below that only the screen
    body scrolls, never the document. Everything under html.js is the
    enhanced layout; with scripting off the piece falls back to one ordinary
    scrolling document with every screen and every panel open in order. */
 
+/* The architect's technical hand-lettering face, licensed by the owner and
+   sitting in the folder as two weights of woff2. It sets the title block,
+   the headings, the tab labels, the callouts and the stamp.
+
+   Each weight also names a truetype and an opentype source after the woff2,
+   so a later drop-in under lettering.ttf or lettering.otf takes over with no
+   code change. Those two are only ever fetched if the woff2 fails, which is
+   why an absent .ttf costs nothing today. */
 @font-face {
-  font-family: "KA Display";
-  src: url("/fonts/Schibsted-VF.woff2") format("woff2-variations");
-  font-weight: 400 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "KA Body";
-  src: url("/fonts/AtkinsonNext-VF.woff2") format("woff2-variations");
-  font-weight: 200 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "KA Mono";
-  src: url("/fonts/LeniaMono-Regular.ttf") format("truetype");
+  font-family: 'Sheet Lettering';
+  src: url('assets/fonts/lettering.woff2') format('woff2'),
+       url('assets/fonts/lettering.ttf') format('truetype'),
+       url('assets/fonts/lettering.otf') format('opentype');
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sheet Lettering';
+  src: url('assets/fonts/lettering-bold.woff2') format('woff2'),
+       url('assets/fonts/lettering-bold.ttf') format('truetype'),
+       url('assets/fonts/lettering-bold.otf') format('opentype');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --canvas: #F8F5F2;
-  --surface: #FFFDF9;
-  --ink: #221C15;
-  --muted: #6C635A;
-  --accent: #9A3412;
-  --accent-hot: #7C2D12;
-  --amber: #D97706;
-  --line: rgb(34 28 21 / 0.12);
-  --line-soft: rgb(34 28 21 / 0.08);
+  --sheet: #F7F6F2;        /* sheet white, the ground */
+  --paper: #FFFFFF;        /* the paste-ups: panels, cards, choices */
+  --linework: #1C4E9A;     /* cyanotype blue, rules and drawn things */
+  --deep: #0E2F63;         /* title block, stamp, primary button */
+  --ink: #1F2328;          /* graphite, body copy */
+  --pencil: #5D6675;       /* pencil gray, secondary copy */
+  --rule: #B9C7DD;         /* light rule, hairlines */
+  --marker: #C8102E;       /* the reviewer's red pen */
+  --highlight: #F5E663;    /* highlighter, one phrase only */
 
-  --font-display: "KA Display", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-  --font-body: "KA Body", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-  --font-mono: "KA Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --focus: var(--deep);
+
+  --font-display: 'Sheet Lettering', 'Segoe UI', 'Trebuchet MS', 'DejaVu Sans', sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Courier New', ui-monospace, monospace;
+
+  /* The drafting grid: a fine 8px field with a heavier line every fifth,
+     both far enough down in opacity to sit under type without touching it. */
+  --grid-fine:
+    repeating-linear-gradient(90deg, rgb(28 78 154 / 0.055) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(0deg, rgb(28 78 154 / 0.055) 0 1px, transparent 1px 8px);
+  --grid:
+    repeating-linear-gradient(90deg, rgb(28 78 154 / 0.10) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(0deg, rgb(28 78 154 / 0.10) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(90deg, rgb(28 78 154 / 0.05) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(0deg, rgb(28 78 154 / 0.05) 0 1px, transparent 1px 8px);
+
+  /* The duotone that turns any photograph into a blueprint, and paints the
+     plate on its own when the photograph is not there. */
+  --duotone: linear-gradient(158deg, rgb(28 78 154 / 0.62) 0%, rgb(14 47 99 / 0.86) 100%);
 }
 
 *,
@@ -61,12 +90,13 @@
 }
 
 html {
-  background: var(--canvas);
+  background-color: var(--sheet);
+  background-image: var(--grid);
 }
 
 body {
   margin: 0;
-  background: var(--canvas);
+  background: transparent;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1rem;
@@ -75,11 +105,13 @@ body {
   overflow-wrap: break-word;
 }
 
-/* One focus treatment everywhere: 2px accent, 3px offset. */
+/* One focus treatment everywhere: 3px, 2px offset, square like everything
+   else on a drawing. The cover sheet swaps the colour for the highlighter,
+   because deep blue on deep blue is no ring at all. */
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 2px;
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 0;
 }
 
 .visually-hidden {
@@ -98,9 +130,9 @@ body {
 /* ---------- the stage ---------- */
 
 .stage {
-  max-width: 64rem;
+  max-width: 66rem;
   margin: 0 auto;
-  padding: 0.9rem 1.25rem 0.8rem;
+  padding: 0.8rem 1.1rem 0.7rem;
 }
 
 html.js,
@@ -116,43 +148,110 @@ html.js .stage {
   flex-direction: column;
 }
 
-/* ---------- masthead ---------- */
+/* ---------- the title block ----------
+   Two rows of labelled cells and the progress rule. Deep blue ground, sheet
+   white lettering, hairline cell divisions: the block off the corner of a
+   real sheet, kept to about seventy pixels so the drawing gets the rest. */
 
-.piece-head {
+.titleblock {
   flex: 0 0 auto;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.6rem;
+  background: var(--deep);
+  border: 2px solid var(--deep);
+  color: var(--sheet);
 }
 
-.head-row {
+.tb-row {
+  display: grid;
+  align-items: stretch;
+}
+
+.tb-row-top {
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  border-bottom: 1px solid rgb(203 215 232 / 0.45);
+}
+
+.tb-row-main {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.tb-cell {
+  min-width: 0;
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem;
+  padding: 0.14rem 0.6rem 0.18rem;
+  border-left: 1px solid rgb(203 215 232 / 0.45);
 }
 
-.eyebrow {
-  margin: 0;
+.tb-row > .tb-cell:first-child {
+  border-left: 0;
+}
+
+.tb-cell-sm {
+  white-space: nowrap;
+}
+
+.tb-label {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #CBD7E8;
+}
+
+.tb-val {
+  min-width: 0;
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--sheet);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tb-cell-title {
+  align-items: center;
+  padding-block: 0.2rem 0.28rem;
+}
+
+.tb-cell-count {
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0;
+  padding-block: 0.16rem 0.2rem;
 }
 
 h1 {
-  margin: 0.3rem 0 0.5rem;
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.15rem, 2.7vw, 1.55rem);
+  line-height: 1.06;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  color: var(--sheet);
 }
 
+.progress-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sheet);
+  white-space: nowrap;
+}
+
+/* The progress bar is the rule that closes the block. */
 .bar {
   height: 4px;
-  border-radius: 999px;
-  background: rgb(34 28 21 / 0.1);
+  background: rgb(203 215 232 / 0.35);
   overflow: hidden;
 }
 
@@ -160,22 +259,11 @@ h1 {
   display: block;
   height: 100%;
   width: 12.5%;
-  border-radius: 999px;
-  background: var(--accent);
+  background: var(--highlight);
   transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.progress-text {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-/* ---------- screens ---------- */
+/* ---------- screens, each inside a drawing border ---------- */
 
 html.js #piece {
   flex: 1 1 auto;
@@ -186,7 +274,49 @@ html.js #piece {
 }
 
 .screen {
-  padding-top: 0.65rem;
+  position: relative;
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.8rem 0.6rem;
+  border: 1px solid var(--linework);
+}
+
+/* The second rule of the double border, inset, and the corner ticks. Both
+   are decoration on pseudo elements, so neither is in the tab order or the
+   accessibility tree, and neither can catch a click. */
+.screen::before,
+.screen::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.screen::before {
+  inset: 4px;
+  border: 1px solid var(--rule);
+}
+
+.screen::after {
+  inset: 0;
+  background-image:
+    linear-gradient(var(--linework), var(--linework)),
+    linear-gradient(var(--linework), var(--linework)),
+    linear-gradient(var(--linework), var(--linework)),
+    linear-gradient(var(--linework), var(--linework)),
+    linear-gradient(var(--linework), var(--linework)),
+    linear-gradient(var(--linework), var(--linework)),
+    linear-gradient(var(--linework), var(--linework)),
+    linear-gradient(var(--linework), var(--linework));
+  background-repeat: no-repeat;
+  background-size:
+    16px 2px, 2px 16px,
+    16px 2px, 2px 16px,
+    16px 2px, 2px 16px,
+    16px 2px, 2px 16px;
+  background-position:
+    0 0, 0 0,
+    100% 0, 100% 0,
+    0 100%, 0 100%,
+    100% 100%, 100% 100%;
 }
 
 /* With scripting on, exactly one screen is laid out; the rest are display
@@ -200,12 +330,6 @@ html.js .screen.on {
   flex-direction: column;
   flex: 1 1 auto;
   min-height: 0;
-  animation: screen-in 0.28s ease both;
-}
-
-@keyframes screen-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: none; }
 }
 
 html.js .screen-body {
@@ -214,7 +338,7 @@ html.js .screen-body {
   overflow: auto;
   display: flex;
   flex-direction: column;
-  padding: 0.15rem 0.4rem 0.15rem 0.15rem;
+  padding: 0.1rem 0.35rem 0.1rem 0.1rem;
 }
 
 html.js .screen-body > * {
@@ -227,17 +351,14 @@ html.js .screen-body > * {
 
 h2 {
   flex: 0 0 auto;
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.5rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.2rem, 2.6vw, 1.55rem);
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
-
-h2:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 1.12;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--deep);
 }
 
 h3 {
@@ -246,10 +367,11 @@ h3 {
   font-weight: 700;
   font-size: 1.02rem;
   line-height: 1.35;
+  color: var(--ink);
 }
 
 p {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.7rem;
 }
 
 .lead {
@@ -259,44 +381,114 @@ p {
 
 .note,
 .setup {
-  border-left: 3px solid var(--accent);
-  padding: 0.4rem 0 0.4rem 0.85rem;
-  color: var(--muted);
+  border-left: 3px solid var(--linework);
+  padding: 0.35rem 0 0.35rem 0.8rem;
+  color: var(--pencil);
   font-size: 0.95rem;
 }
 
 .setup {
   color: var(--ink);
   font-size: 1rem;
-  padding-block: 0.25rem;
+  padding-block: 0.2rem;
   margin-bottom: 0.45rem;
+}
+
+/* The one highlighter phrase in the piece: a marker swipe, not a filled box,
+   so the graphite still sits on the wash rather than in a chip. */
+.hi {
+  background-image: linear-gradient(var(--highlight), var(--highlight));
+  background-repeat: no-repeat;
+  background-size: 100% 0.95em;
+  background-position: 0 0.62em;
+  padding: 0 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Sheet numbers, detail numbers and specification sections read as drawing
+   text, not as prose. */
+.ref {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95em;
+  letter-spacing: 0.02em;
+  color: var(--deep);
+  white-space: nowrap;
 }
 
 ul,
 ol {
-  margin: 0 0 0.75rem;
-  padding-left: 1.3rem;
+  margin: 0 0 0.7rem;
+  padding-left: 1.25rem;
 }
 
 li {
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.3rem;
 }
 
 li::marker {
-  color: var(--accent);
+  color: var(--linework);
 }
 
 .claim {
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.3rem;
   font-weight: 700;
 }
 
-/* ---------- two column screens ---------- */
+/* ---------- the cover sheet ----------
+   Screen 1 is the cover: the title block colour carried down over the hero
+   photograph, under a wash heavy enough that a pure white pixel in the photo
+   still leaves sheet white at 7:1 and the muted blue at 4.9:1. Every colour
+   token is redefined here rather than every rule being restated. */
+
+.screen-cover {
+  --sheet: #0E2F63;
+  --paper: rgb(203 215 232 / 0.10);
+  --ink: #F7F6F2;
+  --pencil: #CBD7E8;
+  --linework: #CBD7E8;
+  --rule: rgb(203 215 232 / 0.4);
+  --deep: #F7F6F2;
+  --focus: var(--highlight);
+
+  /* Restated so the redefined token actually reaches the paragraphs: they
+     inherit colour from body, which resolved --ink before this block. */
+  color: var(--ink);
+
+  background-color: #0E2F63;
+  background-image:
+    linear-gradient(168deg, rgb(14 47 99 / 0.82) 0%, rgb(14 47 99 / 0.94) 100%),
+    url('assets/img/hero.jpg'),
+    var(--grid-fine);
+  background-size: cover, cover, 8px 8px;
+  background-position: center, center, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
+  border-color: #CBD7E8;
+}
+
+.screen-cover::after {
+  background-image:
+    linear-gradient(var(--highlight), var(--highlight)),
+    linear-gradient(var(--highlight), var(--highlight)),
+    linear-gradient(var(--highlight), var(--highlight)),
+    linear-gradient(var(--highlight), var(--highlight)),
+    linear-gradient(var(--highlight), var(--highlight)),
+    linear-gradient(var(--highlight), var(--highlight)),
+    linear-gradient(var(--highlight), var(--highlight)),
+    linear-gradient(var(--highlight), var(--highlight));
+}
+
+.screen-cover li::marker {
+  color: var(--highlight);
+}
+
+/* ---------- two column screens and the photo plates ---------- */
 
 .cols2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem 2rem;
+  gap: 0.5rem 1.9rem;
   align-items: start;
 }
 
@@ -306,13 +498,73 @@ li::marker {
 
 .col-head {
   margin-top: 0.15rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--deep);
+}
+
+/* Teaching screen plus its plate. The row takes the whole sheet so the plate
+   runs the full height of the drawing border, while the teaching column
+   stays at its own height and keeps its top: a two line panel stretched to
+   fill 400px reads as a mistake, and a photograph that stops halfway down
+   the sheet reads as one too. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 10.5rem;
+  gap: 0.9rem;
+  align-items: stretch;
+}
+
+html.js .screen-body > .split {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.split > .parts,
+.split > .tabs {
+  align-self: start;
+}
+
+.plate {
+  min-height: 8rem;
+  border: 1px solid var(--linework);
+  box-shadow: inset 0 0 0 1px rgb(247 246 242 / 0.5);
+  background-color: #16386F;
+  background-image: var(--duotone), var(--grid-fine);
+  background-size: cover, 8px 8px;
+  background-position: center, 0 0;
+  background-repeat: no-repeat, repeat;
+}
+
+.plate-detail {
+  background-image: var(--duotone), url('assets/img/detail.jpg'), var(--grid-fine);
+  background-size: cover, cover, 8px 8px;
+  background-position: center, center, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
+}
+
+.plate-review {
+  background-image: var(--duotone), url('assets/img/review.jpg'), var(--grid-fine);
+  background-size: cover, cover, 8px 8px;
+  background-position: center, center, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
+}
+
+.plate-rolls {
+  background-image: var(--duotone), url('assets/img/rolls.jpg'), var(--grid-fine);
+  background-size: cover, cover, 8px 8px;
+  background-position: center, center, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
 }
 
 /* The four parts, two by two. */
 .parts {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
+  gap: 0.7rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -320,81 +572,103 @@ li::marker {
 
 .parts > li {
   margin: 0;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 0.9rem 1.1rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--linework);
+  padding: 0.7rem 0.9rem;
 }
 
 .parts > li > b {
-  color: var(--accent-hot);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--deep);
 }
 
 .parts > li > p {
   margin: 0.3rem 0 0;
-  color: var(--muted);
+  color: var(--pencil);
 }
 
 /* One sorted fragment and its verdict, paired two to a step. */
 .fragblock {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 0.85rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--linework);
+  padding: 0.7rem 0.85rem;
 }
 
 .fragblock > :last-child {
   margin-bottom: 0;
 }
 
-.fragblock .sort {
-  background: var(--canvas);
-}
-
 .step .cols2 {
   gap: 0.9rem;
 }
 
-/* ---------- tabs ---------- */
+/* ---------- revision tabs ----------
+   Clipped to the top edge of the panel, each one carrying the drawing
+   delta. The selected one fills deep blue and joins the panel below it. */
 
 .tablist {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0 0 0.7rem;
+  align-items: flex-end;
+  gap: 0.25rem;
+  margin: 0;
 }
 
 .tab {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--muted);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 0.4rem 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--deep);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-bottom: 2px solid var(--linework);
+  border-radius: 0;
+  margin-bottom: -2px;
+  padding: 0.32rem 0.8rem 0.34rem;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+/* The revision delta. */
+.tab::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 0.6em;
+  height: 0.54em;
+  background: currentColor;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
 .tab:hover {
-  border-color: var(--accent);
-  color: var(--ink);
+  border-color: var(--linework);
+  border-bottom-color: var(--linework);
+  background: #EDF2FA;
 }
 
 .tab[aria-selected="true"] {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--surface);
+  background: var(--deep);
+  border-color: var(--deep);
+  color: var(--sheet);
 }
 
-/* Panels are cards of a shared minimum height, so switching tabs does not
+/* Panels are plates of a shared minimum height, so switching tabs does not
    make the block under the tab strip jump. */
 .tabsec {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 1.25rem 1.4rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--linework);
+  padding: 0.95rem 1.1rem;
 }
 
 html.js .tabsec {
@@ -409,10 +683,25 @@ html.js .tabsec {
   margin-bottom: 0;
 }
 
-/* ---------- sub-steps ---------- */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ---------- sub-steps as detail callouts ---------- */
 
 .step > :last-child {
   margin-bottom: 0;
+}
+
+.step-head {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--deep);
 }
 
 .substep-bar {
@@ -420,37 +709,67 @@ html.js .tabsec {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: 0.6rem;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--line-soft);
+  gap: 1.1rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--rule);
 }
 
+/* A detail callout: the count in a drawn bubble with a leader line running
+   out of each side, the way a detail number is called out on a sheet. */
 .substep-count {
+  position: relative;
   margin: 0;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
+  padding: 0.14rem 0.85rem 0.16rem;
+  border: 2px solid var(--linework);
+  border-radius: 999px;
+  background: var(--sheet);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--deep);
+  white-space: nowrap;
+}
+
+.substep-count::before,
+.substep-count::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 0.55rem;
+  height: 2px;
+  background: var(--linework);
+}
+
+.substep-count::before {
+  right: 100%;
+}
+
+.substep-count::after {
+  left: 100%;
 }
 
 .btn-mini {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--deep);
   background: transparent;
-  border: 1px solid rgb(34 28 21 / 0.25);
-  border-radius: 999px;
-  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--rule);
+  border-radius: 0;
+  padding: 0.3rem 0.85rem;
   cursor: pointer;
   white-space: nowrap;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.18s ease, background 0.18s ease;
 }
 
 .btn-mini:hover:not([disabled]) {
-  border-color: var(--accent);
+  border-color: var(--linework);
+  background: #EDF2FA;
 }
 
 /* ---------- choices ---------- */
@@ -458,8 +777,8 @@ html.js .tabsec {
 .options {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  margin: 0 0 0.75rem;
+  gap: 0.5rem;
+  margin: 0 0 0.7rem;
 }
 
 /* The two RFIs sit side by side, but they are nothing like the same length:
@@ -468,11 +787,12 @@ html.js .tabsec {
 .options-2 {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: 0.85rem;
+  gap: 0.8rem;
   align-items: stretch;
 }
 
 .choice {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -480,33 +800,47 @@ html.js .tabsec {
   text-align: left;
   font: inherit;
   color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 0.7rem 0.9rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 0.6rem 0.85rem;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.18s ease, background 0.18s ease;
 }
 
 .choice:hover {
-  border-color: var(--accent);
+  border-color: var(--linework);
 }
 
 .choice[aria-pressed="true"] {
-  border-color: var(--accent);
+  border-color: var(--deep);
   border-width: 2px;
-  padding: calc(0.7rem - 1px) calc(0.9rem - 1px);
-  background: rgb(154 52 18 / 0.05);
+  padding: calc(0.6rem - 1px) calc(0.85rem - 1px);
+  background: #EDF2FA;
+}
+
+/* A drawn tick in the corner of the chosen note, the way a reviewer marks
+   the option they went with. */
+.choice[aria-pressed="true"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-top: 12px solid var(--deep);
+  border-left: 12px solid transparent;
 }
 
 .choice-tag {
   display: block;
-  margin-bottom: 0.3rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--linework);
 }
 
 .choice-body {
@@ -517,51 +851,96 @@ html.js .tabsec {
 /* ---------- sorter ---------- */
 
 .frag {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.55rem;
   font-size: 1rem;
 }
 
 .sort-btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .sort {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--ink);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 0.5rem 1rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--deep);
+  background: var(--sheet);
+  border: 2px solid var(--rule);
+  border-radius: 0;
+  padding: 0.34rem 0.75rem;
   cursor: pointer;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
 
 .sort:hover {
-  border-color: var(--accent);
+  border-color: var(--linework);
+  background: #EDF2FA;
 }
 
 .sort[aria-pressed="true"] {
-  border-color: var(--accent);
-  background: rgb(154 52 18 / 0.08);
-  color: var(--accent-hot);
+  border-color: var(--deep);
+  background: var(--deep);
+  color: var(--sheet);
 }
 
-/* ---------- feedback ---------- */
+/* ---------- feedback, as a red pen markup ----------
+   A revision cloud drawn around the note and a drawing symbol beside the
+   verdict word. The cloud is four masked SVG arc tiles, so it is decoration
+   with no DOM node and no place in the accessibility tree, and correctness
+   is still carried by the word "Correct." or "Not quite." first, the shape
+   of the symbol second, and colour never. */
 
 .feedback {
-  margin: 0.65rem 0 0;
+  position: relative;
+  margin: 0.75rem 0 0.2rem;
+  padding: 0.4rem 0.65rem;
   min-height: 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 0.94rem;
+  line-height: 1.5;
   color: var(--ink);
+  background: var(--sheet);
 }
 
 .feedback:empty {
   margin: 0;
+  padding: 0;
+  background: none;
+}
+
+.feedback[data-mark]::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  pointer-events: none;
+  background-color: var(--mark, var(--marker));
+  -webkit-mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='9' viewBox='0 0 18 9'%3E%3Cpath d='M0 8.2Q9-2 18 8.2' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='9' viewBox='0 0 18 9'%3E%3Cpath d='M0 .8Q9 11 18 .8' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M8.2 0Q-2 9 8.2 18' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M.8 0Q11 9 .8 18' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='9' viewBox='0 0 18 9'%3E%3Cpath d='M0 8.2Q9-2 18 8.2' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='9' viewBox='0 0 18 9'%3E%3Cpath d='M0 .8Q9 11 18 .8' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M8.2 0Q-2 9 8.2 18' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M.8 0Q11 9 .8 18' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  mask-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  -webkit-mask-position: 0 0, 0 100%, 0 0, 100% 0;
+  mask-position: 0 0, 0 100%, 0 0, 100% 0;
+  -webkit-mask-size: 18px 9px, 18px 9px, 9px 18px, 9px 18px;
+  mask-size: 18px 9px, 18px 9px, 9px 18px, 9px 18px;
+}
+
+.feedback[data-mark="ok"] {
+  --mark: var(--linework);
+}
+
+.feedback[data-mark="no"] {
+  --mark: var(--marker);
 }
 
 .feedback .glyph {
@@ -571,24 +950,28 @@ html.js .tabsec {
   vertical-align: -0.15em;
   margin-right: 0.4em;
   fill: none;
-  stroke: currentColor;
-  stroke-width: 2.4;
+  stroke: var(--mark, var(--linework));
+  stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .feedback .verdict {
+  font-family: var(--font-display);
   font-weight: 700;
-  color: var(--accent-hot);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mark, var(--deep));
 }
 
 .score {
-  margin: 0.9rem 0 0;
+  margin: 0.75rem 0 0;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--pencil);
 }
 
 #final-score {
@@ -598,19 +981,20 @@ html.js .tabsec {
 /* ---------- job aid ---------- */
 
 .jobaid {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 1rem 1.15rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 2px solid var(--linework);
+  padding: 0.85rem 1rem;
 }
 
 .jobaid-title {
-  margin: 0 0 0.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--deep);
 }
 
 .jobaid ol {
@@ -618,13 +1002,13 @@ html.js .tabsec {
 }
 
 .jobaid-foot {
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--line-soft);
-  color: var(--muted);
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--rule);
+  color: var(--pencil);
   font-size: 0.93rem;
 }
 
-/* ---------- pinned foot: credit and pager ---------- */
+/* ---------- pinned foot: sheet note and pager ---------- */
 
 .stage-foot {
   flex: 0 0 auto;
@@ -632,49 +1016,50 @@ html.js .tabsec {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 0.55rem;
-  padding-top: 0.55rem;
-  border-top: 1px solid var(--line);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid var(--linework);
 }
 
 .pager {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
 }
 
 .btn-ghost,
-.btn-amber {
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  border-radius: 999px;
-  padding: 0.6rem 1.3rem;
+.btn-ink {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 0;
+  padding: 0.48rem 1.25rem;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
 .btn-ghost {
-  color: var(--ink);
+  color: var(--deep);
   background: transparent;
-  border: 1px solid rgb(34 28 21 / 0.25);
+  border: 2px solid var(--rule);
 }
 
 .btn-ghost:hover {
-  border-color: var(--accent);
+  border-color: var(--linework);
+  background: #EDF2FA;
 }
 
-.btn-amber {
-  color: var(--ink);
-  background: var(--amber);
-  border: 1px solid var(--amber);
+.btn-ink {
+  color: var(--sheet);
+  background: var(--deep);
+  border: 2px solid var(--deep);
 }
 
-.btn-amber:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--surface);
+.btn-ink:hover {
+  background: var(--linework);
+  border-color: var(--linework);
 }
 
 button[disabled] {
@@ -683,9 +1068,9 @@ button[disabled] {
 }
 
 button[disabled]:hover {
-  border-color: rgb(34 28 21 / 0.25);
+  border-color: var(--rule);
   background: transparent;
-  color: var(--ink);
+  color: var(--deep);
 }
 
 .piece-foot {
@@ -695,21 +1080,22 @@ button[disabled]:hover {
 .piece-foot p {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.64rem;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--pencil);
 }
 
-/* ---------- the ending ----------
+/* ---------- the ending, as an approval stamp ----------
    A native modal dialog. Closed it is display none, so with scripting off it
    is simply not there and the checklist screen is the end of the piece. The
-   dialog element itself is stripped back to nothing and the card inside it
-   carries the surface, so a click that lands on the dialog box is a click on
+   dialog element itself is stripped back to nothing and the stamp inside it
+   carries the frame, so a click that lands on the dialog box is a click on
    the backdrop and can close it. */
 
 #done {
-  width: min(44rem, calc(100vw - 2rem));
+  width: min(41rem, calc(100vw - 2.5rem));
   max-width: none;
   margin: auto;
   padding: 0;
@@ -720,44 +1106,57 @@ button[disabled]:hover {
 }
 
 #done::backdrop {
-  background: rgb(248 245 242 / 0.86);
+  background: rgb(233 238 246 / 0.9);
 }
 
+/* The stamp: a double blue frame, a slight roll off square the way a hand
+   stamp lands, and the fields of an approval block inside it. The rotation
+   is a static transform, not motion, so it survives a reduced motion
+   preference; only the landing is animated. */
 .done-card {
   position: relative;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 1.35rem 1.6rem 1.4rem;
-  box-shadow: 0 26px 64px rgb(34 28 21 / 0.22), 0 2px 6px rgb(34 28 21 / 0.07);
+  background: var(--paper);
+  border: 3px solid var(--deep);
+  padding: 1rem 1.3rem 1.1rem;
+  transform: rotate(-1.5deg);
+  box-shadow: 0 18px 40px rgb(14 47 99 / 0.22);
+}
+
+/* The second rule of the stamp frame, the same double line the sheets use. */
+.done-card::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--linework);
+  pointer-events: none;
 }
 
 .done-x {
   position: absolute;
-  top: 0.7rem;
-  right: 0.7rem;
+  top: 0.6rem;
+  right: 0.6rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 1.9rem;
+  height: 1.9rem;
   padding: 0;
-  color: var(--muted);
+  color: var(--deep);
   background: transparent;
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  border: 2px solid var(--rule);
+  border-radius: 0;
   cursor: pointer;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: border-color 0.18s ease, background 0.18s ease;
 }
 
 .done-x:hover {
-  border-color: var(--accent);
-  color: var(--accent-hot);
+  border-color: var(--marker);
+  color: var(--marker);
 }
 
 .done-x svg {
-  width: 0.85rem;
-  height: 0.85rem;
+  width: 0.8rem;
+  height: 0.8rem;
   fill: none;
   stroke: currentColor;
   stroke-width: 2.2;
@@ -765,86 +1164,96 @@ button[disabled]:hover {
 }
 
 .done-kicker {
-  margin: 0 0 0.45rem;
+  margin: 0 0 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.64rem;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--pencil);
 }
 
 .done-title {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.45rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.5rem, 3.4vw, 1.95rem);
-  line-height: 1.1;
-  letter-spacing: -0.015em;
+  font-size: clamp(1.7rem, 4.2vw, 2.35rem);
+  line-height: 1.02;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--deep);
 }
 
 .done-rule {
-  width: 4.5rem;
+  width: 100%;
   height: 3px;
-  margin: 0 0 0.85rem;
-  border-radius: 999px;
-  background: var(--accent);
+  margin: 0 0 0.75rem;
+  background: var(--linework);
   transform-origin: left center;
 }
 
 .done-line {
-  margin: 0 0 0.9rem;
-  font-size: 1.02rem;
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
   color: var(--ink);
 }
 
+/* The score fields of a stamp: a label, a dotted leader, and the figure. */
 .done-scores {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.7rem;
-  margin: 0 0 0.95rem;
+  gap: 0.6rem 1.2rem;
+  margin: 0 0 0.85rem;
 }
 
 .done-score {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
   margin: 0;
-  padding: 0.6rem 0.85rem;
-  background: var(--canvas);
-  border: 1px solid var(--line-soft);
-  border-radius: 10px;
+  padding: 0 0 0.2rem;
+  border-bottom: 2px dotted var(--rule);
 }
 
 .done-score-label {
-  display: block;
   font-family: var(--font-mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.16em;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--pencil);
 }
 
 .done-score b {
-  display: block;
-  margin-top: 0.15rem;
+  flex: 0 0 auto;
+  font-family: var(--font-display);
   font-size: 1.05rem;
-  color: var(--accent-hot);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--deep);
+  white-space: nowrap;
 }
 
 .done-aid-title {
-  margin: 0 0 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--deep);
 }
 
 .done-aid {
-  margin: 0 0 1rem;
-  padding-left: 1.25rem;
+  margin: 0 0 0.9rem;
+  padding-left: 1.2rem;
 }
 
 .done-aid li {
-  margin-bottom: 0.25rem;
-  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+  font-size: 0.93rem;
 }
 
 .done-aid li:last-child {
@@ -854,23 +1263,61 @@ button[disabled]:hover {
 .done-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.55rem;
 }
 
-/* Motion only where it is welcome: the card rises and settles, the rust rule
-   draws from the left. No opacity keyframes on any text. */
+/* ---------- motion, only where it is welcome ----------
+   The drawing border draws itself in, the corner ticks follow, and the
+   stamp lands. No opacity keyframes on any text. */
+
 @media (prefers-reduced-motion: no-preference) {
+  html.js .screen.on {
+    animation: screen-in 0.26s ease both;
+  }
+
+  html.js .screen.on::before {
+    animation: rule-draw 0.5s 0.06s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  html.js .screen.on::after {
+    animation: ticks-in 0.4s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .feedback[data-mark]::before {
+    animation: cloud-draw 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
   #done[open]::backdrop {
-    animation: done-wash 0.26s ease both;
+    animation: done-wash 0.24s ease both;
   }
 
   #done[open] .done-card {
-    animation: done-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: stamp-land 0.32s cubic-bezier(0.2, 1.1, 0.3, 1) both;
   }
 
   #done[open] .done-rule {
-    animation: done-draw 0.5s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: done-draw 0.5s 0.14s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
+}
+
+@keyframes screen-in {
+  from { transform: translateY(8px); }
+  to { transform: none; }
+}
+
+@keyframes rule-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes ticks-in {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes cloud-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
 
 @keyframes done-wash {
@@ -878,9 +1325,9 @@ button[disabled]:hover {
   to { opacity: 1; }
 }
 
-@keyframes done-rise {
-  from { transform: translateY(14px); }
-  to { transform: none; }
+@keyframes stamp-land {
+  from { transform: rotate(-5deg) scale(1.07); }
+  to { transform: rotate(-1.5deg) scale(1); }
 }
 
 @keyframes done-draw {
@@ -890,23 +1337,31 @@ button[disabled]:hover {
 
 /* ---------- reflow ---------- */
 
-/* Under the fixed stage threshold the columns stack and the screen body
-   takes over the scrolling. The masthead and the pager stay pinned. */
+/* Under the fixed stage threshold the columns stack, the plates step out of
+   the way, and the screen body takes over the scrolling. The title block and
+   the pager stay pinned. */
 @media (max-width: 899px), (max-height: 639px) {
   .cols2,
   .options-2,
-  .parts {
+  .parts,
+  .split {
     grid-template-columns: 1fr;
+  }
+
+  .plate {
+    display: none;
   }
 }
 
 @media (max-width: 34em) {
   .stage {
-    padding: 0.75rem 0.9rem 0.7rem;
+    padding: 0.65rem 0.75rem 0.6rem;
   }
-  .head-row {
-    flex-wrap: wrap;
-    gap: 0.15rem 1rem;
+  .tb-row-top {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+  .tb-row-top > .tb-cell:nth-child(4) {
+    display: none;
   }
   .stage-foot {
     flex-wrap: wrap;
@@ -925,8 +1380,13 @@ button[disabled]:hover {
   .btn-mini {
     flex: 1 1 auto;
   }
+  .substep-count::before,
+  .substep-count::after {
+    display: none;
+  }
   .done-card {
-    padding: 1.1rem 1.15rem 1.2rem;
+    padding: 0.85rem 0.95rem 1rem;
+    transform: none;
   }
   .done-scores {
     grid-template-columns: 1fr;

@@ -54,8 +54,10 @@
 
   /* ---------- feedback copy ---------- */
 
+  // Drawing symbols, drawn in the reviewer's pen: a check for a correct
+  // answer, the revision delta for one that needs another pass.
   var CHECK = 'm4 10.5 4 4 8-9';
-  var CROSS = 'M5.5 5.5 14.5 14.5M14.5 5.5 5.5 14.5';
+  var DELTA = 'M10 3.6 17.2 16.4H2.8Z';
 
   var FEEDBACK = {
     scenario: {
@@ -104,12 +106,15 @@
 
   function glyph(ok) {
     return '<svg class="glyph" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="' +
-      (ok ? CHECK : CROSS) + '"/></svg>';
+      (ok ? CHECK : DELTA) + '"/></svg>';
   }
 
   function renderFeedback(node, ok, text) {
     // Correctness is carried by the word first and the glyph second, never
     // by colour: the verdict word is readable with the stylesheet turned off.
+    // data-mark is the only hook the skin needs: it draws the revision cloud
+    // around the note and picks the pen colour. Nothing depends on it here.
+    node.setAttribute('data-mark', ok ? 'ok' : 'no');
     node.innerHTML = glyph(ok) +
       '<span class="verdict">' + (ok ? 'Correct.' : 'Not quite.') + '</span> ' + text;
   }
@@ -442,7 +447,8 @@
       section.classList.toggle('on', on);
     });
 
-    progressText.textContent = 'Screen ' + current + ' of ' + TOTAL;
+    // "Sheet", not "Screen": the counter is a cell in the title block.
+    progressText.textContent = 'Sheet ' + current + ' of ' + TOTAL;
     barFill.style.width = ((current / TOTAL) * 100) + '%';
 
     prevBtn.disabled = current === 1;
@@ -513,6 +519,7 @@
     });
     Array.prototype.forEach.call(document.querySelectorAll('.feedback'), function (p) {
       p.textContent = '';
+      p.removeAttribute('data-mark');
     });
     resetters.forEach(function (reset) {
       reset();

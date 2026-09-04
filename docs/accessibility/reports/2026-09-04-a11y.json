@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-04T12:03:00.472Z",
-  "origin": "http://127.0.0.1:60079",
+  "date": "2026-09-04T12:36:31.060Z",
+  "origin": "http://127.0.0.1:59981",
   "pages": [
     {
       "path": "/training/",
@@ -800,7 +800,7 @@
           },
           {
             "level": 2,
-            "text": "You are done"
+            "text": "RFI answered"
           }
         ],
         "skips": [],
@@ -812,7 +812,12 @@
       },
       "axe": {
         "violations": [],
-        "incomplete": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 10
+          }
+        ],
         "passes": 21
       },
       "keyboard": {
@@ -1085,7 +1090,7 @@
           },
           {
             "level": 2,
-            "text": "Module complete"
+            "text": "Books closed"
           }
         ],
         "skips": [],
@@ -1097,7 +1102,12 @@
       },
       "axe": {
         "violations": [],
-        "incomplete": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 18
+          }
+        ],
         "passes": 24
       },
       "keyboard": {

@@ -15,12 +15,14 @@
   <header class="masthead">
     <div class="masthead-inner">
       <div class="mast-title">
-        <p class="eyebrow">Finance literacy for managers</p>
-        <h1>The profit and loss statement, read like an owner</h1>
+        <div class="cover-label">
+          <p class="eyebrow">The ledger book, finance for managers</p>
+          <h1>The profit and loss statement, read like an owner</h1>
+        </div>
       </div>
       <div class="progress">
         <div class="track" aria-hidden="true"><span id="bar-fill"></span></div>
-        <p class="progress-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 8</p>
+        <p class="progress-text" id="progress-text" role="status" aria-live="polite">Folio 1 of 8</p>
       </div>
     </div>
   </header>
@@ -95,7 +97,7 @@
                     Less cost of goods sold
                     <button type="button" class="why" aria-expanded="false" aria-controls="ex-2"><span class="why-label">What this means</span></button>
                   </th>
-                  <td class="num"><span class="sr-only">negative </span>&#8722;$32,000</td>
+                  <td class="num less"><span class="sr-only">negative </span>&#8722;$32,000</td>
                 </tr>
 
                 <tr class="row-line row-sub" data-row="3">
@@ -111,7 +113,7 @@
                     Less operating expenses
                     <button type="button" class="why" aria-expanded="false" aria-controls="ex-4"><span class="why-label">What this means</span></button>
                   </th>
-                  <td class="num"><span class="sr-only">negative </span>&#8722;$43,000</td>
+                  <td class="num less"><span class="sr-only">negative </span>&#8722;$43,000</td>
                 </tr>
 
                 <tr class="row-line row-indent" data-row="5">
@@ -144,7 +146,7 @@
                     Other income and expense: interest on the oven loan
                     <button type="button" class="why" aria-expanded="false" aria-controls="ex-10"><span class="why-label">What this means</span></button>
                   </th>
-                  <td class="num"><span class="sr-only">negative </span>&#8722;$900</td>
+                  <td class="num less"><span class="sr-only">negative </span>&#8722;$900</td>
                 </tr>
 
                 <tr class="row-line row-total" data-row="11">
@@ -177,7 +179,7 @@
 
               <div class="note-body" id="ex-3">
                 <p class="note-line">Gross profit</p>
-                <p>What the product itself earns, before any of the cost of being open. This is the first honest number on the page. Divide it by revenue and you have gross margin, which is the subject of the next screen.</p>
+                <p>What the product itself earns, before any of the cost of being open. This is the first honest number on the page. Divide it by revenue and you have gross margin, which is the subject of the next folio.</p>
               </div>
 
               <div class="note-body" id="ex-4">
@@ -197,7 +199,7 @@
 
               <div class="note-body" id="ex-11">
                 <p class="note-line">Net income</p>
-                <p>The bottom line, and the most over quoted number in business. It is what the month earned on paper. It is not what landed in the bank, and screen six is about the gap between the two.</p>
+                <p>The bottom line, and the most over quoted number in business. It is what the month earned on paper. It is not what landed in the bank, and folio six is about the gap between the two.</p>
               </div>
             </div>
           </div>
@@ -636,6 +638,10 @@
           <div class="pullquote">
             <p>Profit is an opinion about timing. Cash is a fact about a bank balance.</p>
           </div>
+          <!-- The fifth slot, waiting on assets/img/ledger-book.jpg. Empty it
+               holds ruled cream and requests nothing; see .photo-book in the
+               stylesheet for the two lines that fill it. -->
+          <div class="photo photo-book" role="presentation"></div>
         </div>
       </div>
     </section>
@@ -760,11 +766,11 @@
                 </thead>
                 <tbody>
                   <tr><th scope="row">Revenue</th><td class="num">$80,000</td><td class="num">$80,000</td></tr>
-                  <tr><th scope="row">Cost of goods sold</th><td class="num"><span class="sr-only">negative </span>&#8722;$32,000</td><td class="num">$48,000</td></tr>
+                  <tr><th scope="row">Cost of goods sold</th><td class="num less"><span class="sr-only">negative </span>&#8722;$32,000</td><td class="num">$48,000</td></tr>
                   <tr><th scope="row">Gross profit</th><td class="num nochange">no change</td><td class="num">$48,000</td></tr>
-                  <tr><th scope="row">Operating expenses</th><td class="num"><span class="sr-only">negative </span>&#8722;$43,000</td><td class="num">$5,000</td></tr>
+                  <tr><th scope="row">Operating expenses</th><td class="num less"><span class="sr-only">negative </span>&#8722;$43,000</td><td class="num">$5,000</td></tr>
                   <tr><th scope="row">Operating income</th><td class="num nochange">no change</td><td class="num">$5,000</td></tr>
-                  <tr><th scope="row">Other: interest on the oven loan</th><td class="num"><span class="sr-only">negative </span>&#8722;$900</td><td class="num">$4,100</td></tr>
+                  <tr><th scope="row">Other: interest on the oven loan</th><td class="num less"><span class="sr-only">negative </span>&#8722;$900</td><td class="num">$4,100</td></tr>
                   <tr><th scope="row">Net income</th><td class="num nochange">no change</td><td class="num">$4,100</td></tr>
                 </tbody>
               </table>
@@ -853,7 +859,7 @@
   </main>
 
   <div class="stage-foot">
-    <nav class="pager" aria-label="Screen navigation">
+    <nav class="pager" aria-label="Folio navigation">
       <button type="button" class="btn-quiet" id="prev">Back</button>
       <button type="button" class="btn-solid" id="next">Next</button>
     </nav>
@@ -869,11 +875,20 @@
      instead. -->
 <dialog id="done" aria-labelledby="done-title">
   <div class="done-card">
-    <p class="done-eyebrow">The profit and loss statement, read like an owner</p>
-    <h2 id="done-title" tabindex="-1">Module complete</h2>
+    <div class="done-crest">
+      <svg class="seal" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <path class="seal-wax" d="M32.00 2.50L35.73 6.07L40.31 3.69L42.88 8.17L47.95 7.18L49.16 12.20L54.29 12.68L54.04 17.84L58.83 19.75L57.14 24.62L61.20 27.80L58.20 32.00L61.20 36.20L57.14 39.38L58.83 44.25L54.04 46.16L54.29 51.32L49.16 51.80L47.95 56.82L42.88 55.83L40.31 60.31L35.73 57.93L32.00 61.50L28.27 57.93L23.69 60.31L21.12 55.83L16.05 56.82L14.84 51.80L9.71 51.32L9.96 46.16L5.17 44.25L6.86 39.38L2.80 36.20L5.80 32.00L2.80 27.80L6.86 24.62L5.17 19.75L9.96 17.84L9.71 12.68L14.84 12.20L16.05 7.18L21.12 8.17L23.69 3.69L28.27 6.07Z" />
+        <circle class="seal-ring" cx="32" cy="32" r="22.5" />
+        <path class="seal-mark" d="M20.5 33.5 28 41.5 44 22" />
+      </svg>
+      <div>
+        <p class="done-eyebrow">The profit and loss statement, read like an owner</p>
+        <h2 id="done-title" tabindex="-1">Books closed</h2>
+      </div>
+    </div>
     <p class="done-say">You have taken a month apart from the top line to the bottom, and you know which number to carry into the next one.</p>
 
-    <p class="panel-title done-heading">Where you landed</p>
+    <p class="panel-title done-heading">The closing entry</p>
     <dl class="done-figures">
       <div><dt>Classify the line</dt><dd id="done-classify">0 of 10</dd></div>
       <div><dt>The decision</dt><dd id="done-dec">Not answered</dd></div>

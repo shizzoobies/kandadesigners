@@ -808,7 +808,12 @@
       section.hidden = !isCurrent;
     });
 
-    progressText.textContent = 'Screen ' + current + ' of ' + TOTAL;
+    // The counter is a folio, the way a bound ledger numbers its pages, and
+    // it turns like a page corner on every move. The animation lives in CSS
+    // and only runs where motion is welcome; restart is what re-triggers it,
+    // because setting textContent alone would not.
+    progressText.textContent = 'Folio ' + current + ' of ' + TOTAL;
+    restart(progressText);
     barFill.style.width = ((current / TOTAL) * 100) + '%';
 
     prevBtn.disabled = current === 1;

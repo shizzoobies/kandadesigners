@@ -1,25 +1,44 @@
 /* ============================================================
+   THE LEDGER BOOK
    The profit and loss statement, read like an owner.
 
-   A self-contained editorial finance identity. No CDN, no build
-   step, no network. Two families only:
+   The module is a bound ledger. The masthead is the book's spine and
+   its pasted cover label. Every screen is a ruled page, with a red
+   margin rule down the left and pale green ruling across it. The
+   counter is a folio. Tab strips are the thumb tabs cut into the
+   fore-edge. Statements are ledger columns: a faint vertical rule
+   between the description and the money, totals closed with a double
+   rule. The ending is a closing entry with a wax seal on it.
 
-     Quinela      licensed display serif, shipped in assets/fonts
-     Site Sans    Neufilla, the licensed body grotesque, shipped as WOFF
-                  version 1. The rules are still written so the fallback
-                  stack reads as a deliberate choice: the sans is only ever
-                  asked to be plain, and all the character lives in the
-                  serif.
+   Self contained: no CDN, no build step, no network. Two families:
+
+     Quinela      licensed display serif, shipped in assets/fonts.
+                  It carries the cover label, the screen headings, the
+                  oversized figures and the item lines.
+     Site Sans    Neufilla, the licensed body grotesque, shipped as
+                  WOFF version 1. Asked only ever to be plain.
 
    Color discipline worth knowing before editing:
-     Gold is decorative only. Against paper it measures 2.13:1, so it
-     never carries text and never carries meaning. It carries hairlines.
-     Green (#1F7A4D) measures 4.71:1 on paper and 4.41:1 on even a
-     three percent navy tint, so anything set in green sits on the
-     bare paper ground and nowhere else. That is why the feedback
-     blocks and the figure panels are untinted.
 
-   Layout discipline, added when this became a slide deck:
+     ink      #1A1A18 on cream #F3EBD9      14.7:1
+     cream    #F3EBD9 on bottle green       10.2:1
+     bottle   #123D2B on cream              10.2:1
+     pencil   #5C5A52 on cream               5.8:1
+     red      #B3261E on cream               5.5:1
+     brass    #8A6A1F on cream               4.2:1  <- never text
+
+   Brass is the one accent and it carries rules only: it fails 4.5:1
+   on cream, so no word is ever set in it. Red carries negatives and
+   the margin rule, and a negative figure never arrives without the
+   minus glyph or the word beside it.
+
+   The ruling is the green rule color at 0.6 alpha. That is not
+   decoration hedging: at full strength the ruling would blend to a
+   ground where red measures 4.39:1, and red figures sit on top of it.
+   At 0.6 the worst case blend is #DAE0CC, where red measures 4.83:1,
+   pencil 5.1:1 and ink 12.9:1. Do not raise the alpha.
+
+   Layout discipline, unchanged from the navy build:
      The whole module is one fixed height stage. The document never
      scrolls at any size. The masthead is pinned at the top, the pager
      at the bottom, and the screen sits between them. At 900px wide by
@@ -85,16 +104,19 @@
 }
 
 :root {
-  --navy: #0F1B2D;
-  --paper: #F4F1EA;
-  --gold: #C8A24A;
-  --slate: #4A5568;
-  --green: #1F7A4D;
-  --oxblood: #8B2635;
+  --cream: #F3EBD9;
+  --cream-2: #EBE1CC;
+  --rule: #C9D8C4;
+  --red: #B3261E;
+  --bottle: #123D2B;
+  --ink: #1A1A18;
+  --pencil: #5C5A52;
+  --brass: #8A6A1F;
 
-  --hair: rgb(15 27 45 / 0.16);
-  --hair-soft: rgb(15 27 45 / 0.09);
-  --hair-gold: rgb(200 162 74 / 0.55);
+  --hair: rgb(26 26 24 / 0.18);
+  --hair-soft: rgb(26 26 24 / 0.10);
+  --hair-brass: rgb(138 106 31 / 0.6);
+  --hair-green: rgb(18 61 43 / 0.3);
 
   --serif: 'Quinela', Georgia, 'Times New Roman', serif;
   --sans: 'Site Sans', 'Helvetica Neue', Arial, system-ui, sans-serif;
@@ -120,6 +142,21 @@
   --pad-x: clamp(1rem, 2.2vw, 1.6rem);
   --gap-v: clamp(0.5rem, 1.4vh, 1rem);
   --gap-h: clamp(1.1rem, 2.4vw, 2.4rem);
+
+  /* The ruling. One line per line of body copy, so the page reads as ruled
+     paper rather than as a texture. Redeclared wherever the leading changes. */
+  --ruling-step: 1.62rem;
+  --ruling: rgb(201 216 196 / 0.6);
+  --ruling-bg: repeating-linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0) 0,
+    rgb(0 0 0 / 0) calc(var(--ruling-step) - 1px),
+    var(--ruling) calc(var(--ruling-step) - 1px),
+    var(--ruling) var(--ruling-step)
+  );
+
+  /* The spine down the left of the cover. */
+  --spine-w: clamp(0.7rem, 1.5vw, 1.05rem);
 }
 
 *,
@@ -134,14 +171,14 @@ body {
 }
 
 html {
-  background: var(--paper);
+  background: var(--cream);
 }
 
 body {
   margin: 0;
   overflow: hidden;
-  background: var(--paper);
-  color: var(--navy);
+  background: var(--cream);
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.62;
@@ -150,14 +187,14 @@ body {
   overflow-wrap: break-word;
 }
 
-/* One focus treatment: 2px navy, 3px offset. Inverted on the navy band. */
+/* One focus treatment: 2px bottle green, 3px offset. Inverted on the cover. */
 :focus-visible {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--bottle);
   outline-offset: 3px;
 }
 
 .masthead :focus-visible {
-  outline-color: var(--paper);
+  outline-color: var(--cream);
 }
 
 .sr-only {
@@ -189,6 +226,7 @@ svg {
 }
 
 #module {
+  position: relative;
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
@@ -198,6 +236,19 @@ svg {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+/* The margin rule. One red line down the left of the book block, inside the
+   gutter, so no content moves to make room for it. */
+#module::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--pad-x) * 0.4);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--red);
+  pointer-events: none;
 }
 
 /* Without JS every screen is simply printed in order down the page, and the
@@ -211,7 +262,22 @@ svg {
 }
 
 .screen {
+  position: relative;
+  isolation: isolate;
   padding-bottom: 1rem;
+}
+
+/* The ruling itself, laid behind the page and nothing else. Sitting on a
+   pseudo element rather than on the screen's own background is what lets it
+   draw in from the margin on entry without touching a single measurement. */
+.screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--ruling-bg);
+  transform-origin: left center;
+  pointer-events: none;
 }
 
 .js .screen {
@@ -229,19 +295,39 @@ svg {
   padding-bottom: var(--gap-v);
 }
 
-/* ---------------------------------------------- masthead */
+/* ---------------------------------------------- masthead: spine and label */
 
 .masthead {
+  position: relative;
   flex: 0 0 auto;
-  background: var(--navy);
-  color: var(--paper);
-  border-bottom: 3px solid var(--gold);
+  background: var(--bottle);
+  color: var(--cream);
+  border-bottom: 3px solid var(--brass);
+}
+
+/* The spine: a darker band of cloth with a line of brass stitching down it. */
+.masthead::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--spine-w);
+  background-image:
+    linear-gradient(90deg, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0) 78%),
+    repeating-linear-gradient(to bottom, var(--brass) 0 5px, rgb(0 0 0 / 0) 5px 13px);
+  background-size: 100% 100%, 2px 100%;
+  background-position: 0 0, right 3px top 0;
+  background-repeat: no-repeat, no-repeat;
+  pointer-events: none;
 }
 
 .masthead-inner {
   max-width: 68rem;
   margin: 0 auto;
-  padding: clamp(0.5rem, 1.3vh, 0.95rem) var(--pad-x);
+  padding: clamp(0.35rem, 0.95vh, 0.72rem) var(--pad-x)
+           clamp(0.35rem, 0.95vh, 0.72rem)
+           calc(var(--pad-x) + var(--spine-w));
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -253,26 +339,41 @@ svg {
   min-width: 0;
 }
 
+/* The cover label: a cream card pasted onto the board, squared off, with a
+   brass keyline and the shadow of a real label under it. */
+.cover-label {
+  display: inline-block;
+  max-width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--hair-brass);
+  box-shadow: 0 1px 0 0 rgb(0 0 0 / 0.35);
+  padding: clamp(0.2rem, 0.6vh, 0.36rem) clamp(0.6rem, 1.3vw, 0.95rem)
+           clamp(0.24rem, 0.7vh, 0.42rem);
+}
+
 .eyebrow {
   margin: 0;
+  max-width: none;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--bottle);
 }
 
 h1 {
-  margin: 0.15rem 0 0;
+  margin: 0.1rem 0 0;
   max-width: 60ch;
   font-family: var(--serif);
   font-weight: 900;
-  font-size: clamp(1.1rem, 1.9vw, 1.55rem);
-  line-height: 1.12;
-  letter-spacing: -0.012em;
-  color: var(--paper);
+  font-size: clamp(1.15rem, 2.05vw, 1.7rem);
+  line-height: 1.08;
+  letter-spacing: -0.014em;
+  color: var(--ink);
 }
+
+/* ---------------------------------------------- the folio */
 
 .progress {
   flex: 0 1 20rem;
@@ -284,15 +385,15 @@ h1 {
 
 .track {
   flex: 1 1 auto;
-  height: 2px;
-  background: rgb(244 241 234 / 0.28);
+  height: 3px;
+  background: rgb(243 235 217 / 0.9);
 }
 
 .track > span {
   display: block;
   height: 100%;
   width: 12.5%;
-  background: var(--gold);
+  background: var(--brass);
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -301,22 +402,24 @@ h1 {
   margin: 0;
   max-width: none;
   font-family: var(--sans);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.66rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--paper);
+  color: var(--cream);
+  transform-origin: top center;
 }
 
 /* ---------------------------------------------- pager and footer */
 
+/* The book closes on a double rule, the way a total does. */
 .stage-foot {
   flex: 0 0 auto;
   width: 100%;
   max-width: 68rem;
   margin: 0 auto;
   padding: clamp(0.45rem, 1.1vh, 0.8rem) var(--pad-x) clamp(0.5rem, 1.3vh, 0.9rem);
-  border-top: 2px solid var(--navy);
+  border-top: 4px double var(--bottle);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -343,7 +446,7 @@ h1 {
   font-size: 0.62rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 /* ---------------------------------------------- screen head and columns */
@@ -366,23 +469,24 @@ h2 {
   margin: 0 0 0.8rem;
   max-width: 20ch;
   font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(1.4rem, 2.7vw, 2rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  color: var(--navy);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.014em;
+  color: var(--bottle);
   position: relative;
   padding-top: 1rem;
 }
 
+/* The one brass rule on the page, opening every screen. */
 h2::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 3.5rem;
+  width: 4rem;
   height: 3px;
-  background: var(--gold);
+  background: var(--brass);
   transform-origin: left center;
   animation: rule-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -399,7 +503,7 @@ h3 {
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .col > h3:first-child,
@@ -417,7 +521,7 @@ h3 {
   line-height: 1.4;
   letter-spacing: 0;
   text-transform: none;
-  color: var(--navy);
+  color: var(--ink);
 }
 
 /* Present only for the no-JS reading order: with JS the tab itself carries
@@ -436,7 +540,7 @@ p {
   font-weight: 400;
   font-size: clamp(1.02rem, 1.5vw, 1.2rem);
   line-height: 1.42;
-  color: var(--navy);
+  color: var(--ink);
   max-width: 44rem;
 }
 
@@ -457,7 +561,7 @@ li {
 }
 
 li::marker {
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .ticks {
@@ -470,14 +574,17 @@ li::marker {
   padding-left: 1.5rem;
 }
 
+/* A ledger tick, not a rule: a short horizontal line in this position reads
+   as a dash, and this house does not set dashes. */
 .ticks > li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.72em;
-  width: 0.7rem;
-  height: 1px;
-  background: var(--gold);
+  top: 0.5em;
+  width: 0.8rem;
+  height: 0.8rem;
+  background: var(--brass);
+  clip-path: polygon(18% 48%, 8% 60%, 40% 90%, 92% 22%, 80% 12%, 38% 66%);
 }
 
 .note,
@@ -491,24 +598,24 @@ li::marker {
 }
 
 .note {
-  border-left: 2px solid var(--hair);
+  border-left: 2px solid var(--rule);
   padding: 0.1rem 0 0.1rem 0.95rem;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .setup {
-  border-left: 3px solid var(--navy);
+  border-left: 3px solid var(--red);
   padding: 0.2rem 0 0.2rem 0.95rem;
   font-size: 0.98rem;
-  color: var(--navy);
+  color: var(--ink);
   max-width: 44rem;
 }
 
 .aside {
   margin-top: 1rem;
   padding-top: 0.85rem;
-  border-top: 1px solid var(--hair-gold);
-  color: var(--slate);
+  border-top: 1px solid var(--hair-brass);
+  color: var(--pencil);
   font-style: italic;
   font-family: var(--serif);
   font-size: 1.02rem;
@@ -516,7 +623,7 @@ li::marker {
 
 .disclaimer {
   margin-top: 0.9rem;
-  color: var(--slate);
+  color: var(--pencil);
   font-size: 0.86rem;
 }
 
@@ -529,17 +636,20 @@ figcaption {
   max-width: var(--measure);
   font-size: 0.84rem;
   line-height: 1.5;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 /* ---------------------------------------------- side column furniture */
 
+/* A photograph pasted onto the page: a cream mount inside a brass keyline,
+   and the picture itself pulled toward the bottle green of the binding. */
 .photo {
-  background-color: rgb(15 27 45 / 0.05);
+  background-color: var(--cream);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  border: 1px solid var(--hair-gold);
+  border: 1px solid var(--hair-brass);
+  box-shadow: inset 0 0 0 5px var(--cream);
   margin-bottom: 0.9rem;
 }
 
@@ -551,18 +661,68 @@ figcaption {
 .photo-hero {
   aspect-ratio: 16 / 11;
   background-image:
-    linear-gradient(160deg, rgb(15 27 45 / 0.58), rgb(15 27 45 / 0.88)),
+    linear-gradient(160deg, rgb(18 61 43 / 0.6), rgb(18 61 43 / 0.9)),
     url('assets/img/hero.jpg');
   background-blend-mode: multiply, normal;
 }
 
-.photo-ledger { aspect-ratio: 3 / 2; background-image: url('assets/img/ledger.jpg'); }
-.photo-owner { aspect-ratio: 3 / 2; background-image: url('assets/img/owner.jpg'); }
-.photo-storefront { aspect-ratio: 2 / 3; background-image: url('assets/img/storefront.jpg'); }
+.photo-ledger,
+.photo-owner,
+.photo-storefront {
+  background-blend-mode: multiply, normal;
+}
+
+.photo-ledger {
+  aspect-ratio: 3 / 2;
+  background-image:
+    linear-gradient(155deg, rgb(18 61 43 / 0.4), rgb(18 61 43 / 0.72)),
+    url('assets/img/ledger.jpg');
+}
+
+.photo-owner {
+  aspect-ratio: 3 / 2;
+  background-image:
+    linear-gradient(155deg, rgb(18 61 43 / 0.4), rgb(18 61 43 / 0.72)),
+    url('assets/img/owner.jpg');
+}
+
+.photo-storefront {
+  aspect-ratio: 2 / 3;
+  background-image:
+    linear-gradient(160deg, rgb(18 61 43 / 0.4), rgb(18 61 43 / 0.72)),
+    url('assets/img/storefront.jpg');
+}
+
+/* The fifth slot, on screen six, waiting for a photograph of the book itself.
+   Two edits fill it and no others: point --book-img at the file, and raise
+   --book-tone to 0.4 and 0.72 so the picture takes the same green duotone as
+   the other four.
+
+   The image is named through a custom property rather than written into the
+   url() directly so that an empty slot asks the network for nothing: a bare
+   url() to a file that is not there yet would put a 404 in the console every
+   time a learner reached this screen. Empty, the slot is ruled cream, which
+   is what a blank page in this book looks like. */
+.photo-book {
+  --book-img: none;
+  --book-tone-a: 0.06;
+  --book-tone-b: 0.14;
+  aspect-ratio: 3 / 2;
+  background-image:
+    linear-gradient(155deg,
+      rgb(18 61 43 / var(--book-tone-a)),
+      rgb(18 61 43 / var(--book-tone-b))),
+    var(--book-img),
+    var(--ruling-bg);
+  background-size: cover, cover, auto;
+  background-position: center, center, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-blend-mode: multiply, normal, normal;
+}
 
 .factbox {
   margin: 0;
-  border-top: 1px solid var(--hair);
+  border-top: 1px solid var(--bottle);
 }
 
 .factbox > div {
@@ -579,7 +739,7 @@ figcaption {
   font-size: 0.64rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
   padding-top: 0.15rem;
 }
 
@@ -588,11 +748,11 @@ figcaption {
   text-align: right;
   font-size: 0.86rem;
   line-height: 1.4;
-  color: var(--navy);
+  color: var(--ink);
 }
 
 .pullquote {
-  border-top: 3px solid var(--gold);
+  border-top: 3px solid var(--brass);
   padding-top: 0.75rem;
   margin-bottom: 0.9rem;
 }
@@ -603,19 +763,19 @@ figcaption {
   font-weight: 700;
   font-size: 1.12rem;
   line-height: 1.26;
-  color: var(--navy);
+  color: var(--bottle);
 }
 
-/* ---------------------------------------------- tables */
+/* ---------------------------------------------- ledger columns */
 
 .table-wrap {
   overflow-x: auto;
   margin: 0 0 var(--gap-v);
-  border-top: 2px solid var(--navy);
+  border-top: 2px solid var(--bottle);
 }
 
 .table-wrap:focus-visible {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--bottle);
   outline-offset: 2px;
 }
 
@@ -635,7 +795,7 @@ caption {
   text-align: left;
   font-size: 0.82rem;
   line-height: 1.45;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 thead th {
@@ -646,7 +806,7 @@ thead th {
   font-size: 0.64rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
   text-align: left;
   vertical-align: bottom;
 }
@@ -654,7 +814,7 @@ thead th {
 tbody th {
   text-align: left;
   font-weight: 400;
-  color: var(--navy);
+  color: var(--ink);
 }
 
 td,
@@ -681,6 +841,14 @@ td:last-child {
   white-space: nowrap;
 }
 
+/* The ledger's vertical rule: description on one side of it, money on the
+   other, one rule per money column. */
+.pnl th.num,
+.pnl td.num {
+  border-left: 1px solid var(--rule);
+  padding-left: 0.85rem;
+}
+
 /* Figures must not break. Column headings must, or a four column table
    holds itself wider than the stage gives it and scrolls sideways for the
    sake of two words. */
@@ -692,42 +860,57 @@ td.num {
   font-family: var(--figures);
 }
 
+/* A negative in a money column is red, and never on its own: the row header
+   says "Less", the cell carries the true minus sign, and a hidden word says
+   "negative" to anyone reading the column aloud. */
+td.less,
+#v-cogs,
+#v-opex {
+  color: var(--red);
+  font-weight: 700;
+}
+
 /* A subtotal row has no change of its own. That is a word, not a dash: a
    dash in a figure column is read aloud as nothing at all. */
 td.nochange {
   font-family: var(--sans);
   font-size: 0.85rem;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .pnl .row-indent th {
   padding-left: 1.4rem;
-  color: var(--slate);
+  color: var(--pencil);
   font-size: 0.89rem;
 }
 
 .pnl .row-indent td {
-  color: var(--slate);
+  color: var(--pencil);
   font-size: 0.89rem;
 }
 
+/* A subtotal is ruled off above. A total is closed with the double rule
+   underneath it, which is the one piece of punctuation every ledger in the
+   world agrees on. */
 .pnl .row-sub th,
 .pnl .row-sub td,
-.pnl .row-total th,
-.pnl .row-total td {
+.pnl .row-group th,
+.pnl .row-group td {
   font-weight: 700;
-  border-top: 1px solid var(--navy);
+}
+
+.pnl .row-sub th,
+.pnl .row-sub td {
+  border-top: 1px solid var(--ink);
   border-bottom-color: var(--hair);
 }
 
 .pnl .row-total th,
 .pnl .row-total td {
-  border-top: 2px solid var(--navy);
-  font-size: 1.02rem;
-}
-
-.pnl .row-group th {
   font-weight: 700;
+  border-top: 1px solid var(--ink);
+  border-bottom: 4px double var(--ink);
+  font-size: 1.02rem;
 }
 
 #screen-3 table,
@@ -741,14 +924,15 @@ td.nochange {
   padding-bottom: 0.38rem;
 }
 
-/* row entry animation, one after another */
+/* row entry animation, one after another. Transform only: a fade would drop
+   every figure below its contrast ratio on the way in. */
 .animate-rows .row-line {
-  animation: row-in 0.34s ease both;
+  animation: row-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes row-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: none; }
+  from { transform: translateX(-10px); }
+  to { transform: none; }
 }
 
 /* ---------------------------------------------- signed figures */
@@ -758,8 +942,30 @@ td.nochange {
   font-weight: 700;
 }
 
-.fig.pos { color: var(--green); }
-.fig.neg { color: var(--oxblood); }
+.fig.pos { color: var(--bottle); }
+.fig.neg { color: var(--red); }
+
+/* Color is the third signal, never the first. The word is first, this glyph
+   is second, and it is decoration as far as the accessibility tree is
+   concerned because the word beside it already says the same thing. */
+.fig.pos::before,
+.fig.neg::before {
+  content: '';
+  display: inline-block;
+  width: 0.66em;
+  height: 0.66em;
+  margin-right: 0.34em;
+  vertical-align: -0.02em;
+  background: currentColor;
+}
+
+.fig.pos::before {
+  clip-path: polygon(18% 48%, 8% 60%, 40% 90%, 92% 22%, 80% 12%, 38% 66%);
+}
+
+.fig.neg::before {
+  clip-path: polygon(4% 40%, 96% 40%, 96% 60%, 4% 60%);
+}
 
 .fig .tag {
   font-family: var(--sans);
@@ -780,17 +986,17 @@ td.nochange {
   font-size: 0.6rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
   background: transparent;
   border: 1px solid var(--hair);
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.18s ease, border-color 0.18s ease;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 
 .why:hover {
-  color: var(--navy);
-  border-color: var(--navy);
+  color: var(--bottle);
+  border-color: var(--bottle);
 }
 
 .why::after {
@@ -798,9 +1004,9 @@ td.nochange {
 }
 
 .why[aria-expanded="true"] {
-  color: var(--navy);
-  border-color: var(--navy);
-  background: rgb(15 27 45 / 0.05);
+  color: var(--cream);
+  border-color: var(--bottle);
+  background: var(--bottle);
 }
 
 .why[aria-expanded="true"]::after {
@@ -811,7 +1017,7 @@ td.nochange {
    opening one never pushes the statement off the stage. */
 
 .notes-panel {
-  border-top: 2px solid var(--navy);
+  border-top: 2px solid var(--bottle);
   padding-top: 0.7rem;
   margin-bottom: 0.9rem;
 }
@@ -827,11 +1033,11 @@ td.nochange {
   max-width: none;
   font-size: 0.88rem;
   line-height: 1.5;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .note-body {
-  border-left: 2px solid var(--gold);
+  border-left: 3px solid var(--brass);
   padding-left: 0.9rem;
 }
 
@@ -840,7 +1046,7 @@ td.nochange {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.55;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .note-line {
@@ -849,7 +1055,7 @@ td.nochange {
   font-size: 0.66rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--navy) !important;
+  color: var(--bottle) !important;
   margin-bottom: 0.35rem !important;
 }
 
@@ -863,7 +1069,7 @@ td.nochange {
 .chart-figure {
   margin: 0 0 var(--gap-v);
   padding-top: 0.85rem;
-  border-top: 1px solid var(--hair-gold);
+  border-top: 1px solid var(--hair-brass);
 }
 
 .chart-figure figcaption {
@@ -876,35 +1082,33 @@ td.nochange {
 }
 
 .chart .bar {
-  fill: var(--navy);
+  fill: var(--bottle);
   transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .chart .bar-b {
-  fill: var(--slate);
+  fill: rgb(18 61 43 / 0.55);
 }
 
 .chart .bar-name {
   font-family: var(--sans);
   font-size: 14px;
   font-weight: 700;
-  fill: var(--navy);
+  fill: var(--ink);
 }
 
 .chart .bar-val {
   font-family: var(--figures);
   font-size: 15px;
   font-weight: 700;
-  fill: var(--navy);
+  fill: var(--ink);
   font-variant-numeric: tabular-nums;
-  opacity: 1;
-  transition: opacity 0.4s ease 0.3s;
 }
 
 .chart .axis-label {
   font-family: var(--sans);
   font-size: 12px;
-  fill: var(--slate);
+  fill: var(--pencil);
 }
 
 .timeline-figure {
@@ -917,44 +1121,44 @@ td.nochange {
 }
 
 .timeline .tl-mark line {
-  stroke: var(--navy);
+  stroke: var(--bottle);
   stroke-width: 2;
 }
 
 .timeline .tl-mark circle {
-  fill: var(--paper);
-  stroke: var(--navy);
+  fill: var(--cream);
+  stroke: var(--bottle);
   stroke-width: 2;
 }
 
 .timeline .tl-cash line {
-  stroke: var(--oxblood);
+  stroke: var(--red);
 }
 
 .timeline .tl-cash circle {
-  stroke: var(--oxblood);
-  fill: var(--oxblood);
+  stroke: var(--red);
+  fill: var(--red);
 }
 
 .timeline text {
   font-family: var(--sans);
   font-size: 12px;
   font-weight: 700;
-  fill: var(--navy);
+  fill: var(--ink);
 }
 
 .timeline .tl-sub {
   font-weight: 400;
   font-size: 11px;
-  fill: var(--slate);
+  fill: var(--pencil);
 }
 
 .timeline .tl-spread rect {
-  fill: rgb(15 27 45 / 0.14);
+  fill: rgb(18 61 43 / 0.2);
 }
 
 .waterfall-figure {
-  border-top: 2px solid var(--navy);
+  border-top: 2px solid var(--bottle);
 }
 
 /* Left to fill the column the chart scales up and the bars turn into slabs.
@@ -968,7 +1172,7 @@ td.nochange {
 }
 
 .waterfall .wf-base {
-  stroke: var(--navy);
+  stroke: var(--bottle);
   stroke-width: 1;
 }
 
@@ -977,39 +1181,33 @@ td.nochange {
   transform-origin: center bottom;
 }
 
-.bar-navy { fill: var(--navy); }
-.bar-slate { fill: var(--slate); }
-.bar-red { fill: var(--oxblood); }
-.bar-green { fill: var(--green); }
+/* Green is money the business keeps, red is money that leaves, and the
+   subtotal is the same green held back. Every bar is labeled in words and
+   repeated in the table, so no meaning rests on the color alone. */
+.bar-navy { fill: var(--bottle); }
+.bar-slate { fill: rgb(18 61 43 / 0.55); }
+.bar-red { fill: var(--red); }
+.bar-green { fill: var(--bottle); }
 
 .waterfall .wf-val {
   font-family: var(--figures);
   font-size: 13px;
   font-weight: 700;
-  fill: var(--navy);
+  fill: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
 .waterfall .wf-name {
   font-family: var(--sans);
   font-size: 12px;
-  fill: var(--slate);
+  fill: var(--pencil);
 }
 
 .waterfall .wf-foot {
   font-family: var(--sans);
   font-size: 12px;
   font-style: italic;
-  fill: var(--slate);
-}
-
-.animate-wf .wf-bar {
-  animation: wf-grow 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes wf-grow {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  fill: var(--pencil);
 }
 
 .animate-wf .wf-bar rect {
@@ -1035,7 +1233,7 @@ td.nochange {
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem 1rem;
-  border-bottom: 2px solid var(--navy);
+  border-bottom: 2px solid var(--bottle);
   margin-bottom: 0.8rem;
   padding-bottom: 0.4rem;
 }
@@ -1049,13 +1247,13 @@ td.nochange {
 .panel-title {
   margin: 0 0 0.9rem;
   padding-bottom: 0.4rem;
-  border-bottom: 2px solid var(--navy);
+  border-bottom: 2px solid var(--bottle);
   font-family: var(--sans);
   font-weight: 700;
   font-size: 0.66rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--navy);
+  color: var(--bottle);
   max-width: none;
 }
 
@@ -1077,27 +1275,27 @@ td.nochange {
   font-weight: 700;
   font-size: 0.82rem;
   line-height: 1.3;
-  color: var(--navy);
+  color: var(--ink);
 }
 
 .slider output {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: 1.08rem;
+  font-size: 1.14rem;
   font-variant-numeric: tabular-nums;
-  color: var(--navy);
+  color: var(--bottle);
   white-space: nowrap;
 }
 
 input[type="range"] {
   width: 100%;
   margin: 0;
-  accent-color: var(--navy);
+  accent-color: var(--bottle);
   cursor: pointer;
 }
 
 input[type="range"]:focus-visible {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--bottle);
   outline-offset: 4px;
 }
 
@@ -1106,7 +1304,7 @@ input[type="range"]:focus-visible {
   max-width: none;
   font-size: 0.78rem;
   line-height: 1.35;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .bigfigs {
@@ -1122,7 +1320,7 @@ input[type="range"]:focus-visible {
 }
 
 .bigfig {
-  border-top: 3px solid var(--gold);
+  border-top: 3px solid var(--brass);
   padding-top: 0.55rem;
 }
 
@@ -1134,19 +1332,21 @@ input[type="range"]:focus-visible {
   font-size: 0.64rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
+/* The two figures the whole screen is about, set in the display face at the
+   size a ledger writes a total. */
 .bigfig-value {
-  margin: 0.1rem 0 0.25rem;
+  margin: 0.06rem 0 0.22rem;
   max-width: none;
   font-family: var(--serif);
   font-weight: 900;
-  font-size: clamp(1.6rem, 3.4vw, 2.3rem);
-  line-height: 1;
-  letter-spacing: -0.015em;
+  font-size: clamp(1.75rem, 3.7vw, 2.55rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
-  color: var(--navy);
+  color: var(--bottle);
 }
 
 .bigfig-note {
@@ -1154,7 +1354,7 @@ input[type="range"]:focus-visible {
   max-width: none;
   font-size: 0.82rem;
   line-height: 1.4;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 /* The instruction and its button share a line, so the verdict underneath
@@ -1175,13 +1375,18 @@ input[type="range"]:focus-visible {
   grid-column: 1 / -1;
 }
 
-/* ---------------------------------------------- tabs */
+/* ---------------------------------------------- index tabs
+
+   The thumb tabs cut into the fore-edge of a real ledger: squared, butted up
+   against the edge of the block, alternating a shade the way a printer
+   alternates board stock so the eye can count them. The one you are on is
+   inked. */
 
 .tabstrip {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
-  border-bottom: 2px solid var(--navy);
+  gap: 0.3rem;
+  border-bottom: 2px solid var(--bottle);
 }
 
 /* With JS off there is nothing for a tab to do, so the strip goes and every
@@ -1200,9 +1405,9 @@ input[type="range"]:focus-visible {
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--slate);
-  background: transparent;
-  border: 1px solid transparent;
+  color: var(--pencil);
+  background: var(--cream);
+  border: 1px solid var(--hair);
   border-bottom: 0;
   border-radius: 0;
   padding: 0.42rem 0.75rem;
@@ -1211,15 +1416,21 @@ input[type="range"]:focus-visible {
   transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
 }
 
-.tab:hover {
-  color: var(--navy);
+.tabstrip .tab:nth-child(even) {
+  background: var(--cream-2);
 }
 
-.tab[aria-selected="true"] {
-  color: var(--navy);
-  background: rgb(15 27 45 / 0.05);
-  border-color: var(--hair);
-  border-bottom: 2px solid var(--paper);
+.tab:hover {
+  color: var(--bottle);
+  border-color: var(--bottle);
+}
+
+.tab[aria-selected="true"],
+.tabstrip .tab[aria-selected="true"]:nth-child(even) {
+  color: var(--cream);
+  background: var(--bottle);
+  border-color: var(--bottle);
+  border-bottom: 2px solid var(--bottle);
 }
 
 .tabpanel {
@@ -1227,7 +1438,7 @@ input[type="range"]:focus-visible {
 }
 
 .tabpanel:focus-visible {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--bottle);
   outline-offset: 2px;
 }
 
@@ -1236,7 +1447,7 @@ input[type="range"]:focus-visible {
 .steps-nav {
   margin-top: 0.7rem;
   padding-top: 0.6rem;
-  border-top: 1px solid var(--hair-gold);
+  border-top: 1px solid var(--hair-brass);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1267,7 +1478,7 @@ input[type="range"]:focus-visible {
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .step + .step {
@@ -1308,10 +1519,10 @@ input[type="range"]:focus-visible {
   width: 100%;
   text-align: left;
   font: inherit;
-  color: var(--navy);
-  background: var(--paper);
+  color: var(--ink);
+  background: var(--cream);
   border: 1px solid var(--hair);
-  border-left: 3px solid var(--hair);
+  border-left: 3px solid var(--rule);
   border-radius: 0;
   padding: 0.65rem 0.9rem;
   cursor: pointer;
@@ -1319,15 +1530,15 @@ input[type="range"]:focus-visible {
 }
 
 .choice:hover {
-  border-color: var(--slate);
-  border-left-color: var(--navy);
+  border-color: var(--pencil);
+  border-left-color: var(--bottle);
 }
 
 .choice[aria-pressed="true"] {
-  border-color: var(--navy);
+  border-color: var(--bottle);
   border-left-width: 3px;
-  border-left-color: var(--navy);
-  background: rgb(15 27 45 / 0.045);
+  border-left-color: var(--bottle);
+  background: var(--cream-2);
 }
 
 .choice-tag {
@@ -1338,7 +1549,7 @@ input[type="range"]:focus-visible {
   font-size: 0.62rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .choice-body {
@@ -1357,7 +1568,7 @@ input[type="range"]:focus-visible {
   line-height: 1.24;
   letter-spacing: 0;
   text-transform: none;
-  color: var(--navy);
+  color: var(--ink);
 }
 
 .sort-btns {
@@ -1370,36 +1581,41 @@ input[type="range"]:focus-visible {
   font-family: var(--sans);
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--navy);
-  background: var(--paper);
+  color: var(--ink);
+  background: var(--cream);
   border: 1px solid var(--hair);
   border-radius: 0;
   padding: 0.45rem 0.8rem;
   cursor: pointer;
-  transition: border-color 0.18s ease, background 0.18s ease;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
 
 .sort:hover {
-  border-color: var(--navy);
+  border-color: var(--bottle);
+  background: var(--cream-2);
 }
 
+/* An answered item is stamped: the ledger's own ink, filled. */
 .sort[aria-pressed="true"] {
-  border-color: var(--navy);
+  color: var(--cream);
+  background: var(--bottle);
+  border-color: var(--bottle);
   border-width: 2px;
   padding: calc(0.45rem - 1px) calc(0.8rem - 1px);
-  background: rgb(15 27 45 / 0.045);
+}
+
+.sort[aria-pressed="true"]:hover {
+  background: var(--bottle);
 }
 
 /* ---------------------------------------------- feedback */
 
-/* Untinted on purpose: green measures 4.71:1 on bare paper and drops
-   below 4.5:1 over even a light tint. */
 .feedback {
   margin: 0.55rem 0 0;
   max-width: 46rem;
   font-size: 0.92rem;
   line-height: 1.55;
-  color: var(--navy);
+  color: var(--ink);
 }
 
 .feedback:empty {
@@ -1408,11 +1624,11 @@ input[type="range"]:focus-visible {
 
 .feedback:not(:empty) {
   padding-left: 0.85rem;
-  border-left: 3px solid var(--slate);
+  border-left: 3px solid var(--pencil);
 }
 
-.feedback.is-right:not(:empty) { border-left-color: var(--green); }
-.feedback.is-wrong:not(:empty) { border-left-color: var(--oxblood); }
+.feedback.is-right:not(:empty) { border-left-color: var(--bottle); }
+.feedback.is-wrong:not(:empty) { border-left-color: var(--red); }
 
 .feedback .glyph {
   display: inline-flex;
@@ -1432,15 +1648,15 @@ input[type="range"]:focus-visible {
 }
 
 .feedback.is-right .glyph,
-.feedback.is-right .verdict { color: var(--green); }
+.feedback.is-right .verdict { color: var(--bottle); }
 
 .feedback.is-wrong .glyph,
-.feedback.is-wrong .verdict { color: var(--oxblood); }
+.feedback.is-wrong .verdict { color: var(--red); }
 
 .feedback .fb-note {
   display: block;
   margin-top: 0.35rem;
-  color: var(--slate);
+  color: var(--pencil);
   font-size: 0.88rem;
 }
 
@@ -1452,7 +1668,7 @@ input[type="range"]:focus-visible {
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 /* ---------------------------------------------- takeaway */
@@ -1462,7 +1678,7 @@ input[type="range"]:focus-visible {
   margin: 0 0 var(--gap-v);
   padding: 0.9rem 1.1rem 0.8rem;
   border: 1px solid var(--hair);
-  border-top: 3px solid var(--gold);
+  border-top: 3px solid var(--brass);
   max-width: 46rem;
 }
 
@@ -1487,7 +1703,7 @@ input[type="range"]:focus-visible {
   font-style: italic;
   font-size: 1rem;
   line-height: 1.45;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .scorelist {
@@ -1534,27 +1750,30 @@ input[type="range"]:focus-visible {
   letter-spacing: 0.12em;
 }
 
+/* The one place brass carries weight rather than a word: a hairline of it
+   under the primary button, the way a total is underlined. */
 .btn-solid {
-  color: var(--paper);
-  background: var(--navy);
-  border: 1px solid var(--navy);
+  color: var(--cream);
+  background: var(--bottle);
+  border: 1px solid var(--bottle);
+  box-shadow: 0 2px 0 0 var(--brass);
 }
 
 .btn-solid:hover {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: var(--navy);
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
 }
 
 .btn-quiet {
-  color: var(--navy);
+  color: var(--bottle);
   background: transparent;
-  border: 1px solid var(--navy);
+  border: 1px solid var(--bottle);
 }
 
 .btn-quiet:hover {
-  background: var(--navy);
-  color: var(--paper);
+  background: var(--bottle);
+  color: var(--cream);
 }
 
 figcaption .btn-quiet {
@@ -1568,16 +1787,21 @@ button[disabled] {
 
 button[disabled]:hover {
   background: transparent;
-  color: var(--navy);
-  border-color: var(--navy);
+  color: var(--bottle);
+  border-color: var(--bottle);
 }
 
-/* ---------------------------------------------- the ending
+.btn-solid[disabled]:hover {
+  background: var(--bottle);
+  color: var(--cream);
+}
 
-   A paper card on a navy ground. The heading is an ordinary h2, so it
-   arrives with the same gold rule that opens every screen, drawn the same
-   way. Gold stays a hairline here as everywhere: every word in the card is
-   ink or slate on paper.
+/* ---------------------------------------------- the closing entry
+
+   The ending is the last page of the book: ruled cream with the red margin
+   rule down it, the scores set as a closing entry, the takeaway sitting
+   under a double rule where a total sits, a brass rule under that, and the
+   wax seal pressed beside the heading.
 
    The dialog itself is only a positioning box, with no padding of its own,
    so a click that lands on it is a click on the backdrop and nothing else.
@@ -1590,19 +1814,58 @@ button[disabled]:hover {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--navy);
+  color: var(--ink);
   overflow: auto;
 }
 
 #done::backdrop {
-  background: rgb(15 27 45 / 0.86);
+  background: rgb(18 61 43 / 0.88);
 }
 
 .done-card {
-  background: var(--paper);
+  position: relative;
+  background-color: var(--cream);
+  background-image: var(--ruling-bg);
   border: 1px solid var(--hair);
-  padding: clamp(0.95rem, 2.4vh, 1.5rem) clamp(1.1rem, 2.6vw, 1.8rem) clamp(0.85rem, 2vh, 1.3rem);
+  border-top: 4px solid var(--bottle);
+  padding: clamp(0.95rem, 2.4vh, 1.5rem) clamp(1.1rem, 2.6vw, 1.8rem)
+           clamp(0.85rem, 2vh, 1.3rem) clamp(1.5rem, 3.4vw, 2.4rem);
 }
+
+.done-card::before {
+  content: '';
+  position: absolute;
+  left: clamp(0.6rem, 1.3vw, 0.95rem);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--red);
+  pointer-events: none;
+}
+
+/* The seal and the heading share a line, the way a stamp sits beside a
+   signature. */
+.done-crest {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.6rem, 1.8vw, 1rem);
+  margin-bottom: 0.55rem;
+}
+
+.done-crest > div {
+  min-width: 0;
+}
+
+.seal {
+  flex: 0 0 auto;
+  width: clamp(2.5rem, 6.5vw, 3.5rem);
+  height: auto;
+  transform-origin: center;
+}
+
+.seal-wax { fill: var(--bottle); }
+.seal-ring { fill: none; stroke: var(--cream); stroke-width: 1.4; opacity: 0.75; }
+.seal-mark { fill: none; stroke: var(--cream); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
 
 .done-eyebrow {
   margin: 0;
@@ -1613,13 +1876,20 @@ button[disabled]:hover {
   letter-spacing: 0.22em;
   line-height: 1.4;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 #done h2 {
-  margin: 0.55rem 0 0.55rem;
+  margin: 0.3rem 0 0;
   max-width: none;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  padding-top: 0;
+  font-size: clamp(1.6rem, 3.2vw, 2.15rem);
+}
+
+/* The heading inside the card does not repeat the brass rule: the seal is
+   the mark on this page. */
+#done h2::before {
+  display: none;
 }
 
 .done-say {
@@ -1628,7 +1898,7 @@ button[disabled]:hover {
   font-family: var(--serif);
   font-size: 1.02rem;
   line-height: 1.42;
-  color: var(--navy);
+  color: var(--ink);
 }
 
 .done-heading {
@@ -1637,10 +1907,10 @@ button[disabled]:hover {
   border-bottom: 0;
 }
 
-/* A small statement: label left, figure right, ruled like the real one. */
+/* A closing entry: label left, figure right, ruled like the real one. */
 .done-figures {
   margin: 0;
-  border-top: 2px solid var(--navy);
+  border-top: 2px solid var(--bottle);
 }
 
 .done-figures > div {
@@ -1659,7 +1929,7 @@ button[disabled]:hover {
   letter-spacing: 0.16em;
   line-height: 1.4;
   text-transform: uppercase;
-  color: var(--slate);
+  color: var(--pencil);
 }
 
 .done-figures dd {
@@ -1670,20 +1940,21 @@ button[disabled]:hover {
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1.4;
-  color: var(--navy);
+  color: var(--ink);
   white-space: nowrap;
 }
 
-/* The takeaway sits where a total sits, under the heavier rule. */
+/* The takeaway sits where a total sits: single rule above, double rule below. */
 .done-figures .done-watch {
-  border-top: 2px solid var(--navy);
-  border-bottom: 0;
-  padding-bottom: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 4px double var(--ink);
+  padding-bottom: 0.38rem;
 }
 
 .done-figures .done-watch dd {
   font-family: var(--serif);
-  font-size: 1.05rem;
+  font-size: 1.12rem;
+  color: var(--bottle);
 }
 
 .done-note {
@@ -1697,18 +1968,7 @@ button[disabled]:hover {
   gap: 0.55rem;
   margin-top: 0.85rem;
   padding-top: 0.8rem;
-  border-top: 1px solid var(--hair-gold);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  #done[open] .done-card {
-    animation: done-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-}
-
-@keyframes done-rise {
-  from { transform: translateY(12px); }
-  to { transform: none; }
+  border-top: 2px solid var(--brass);
 }
 
 /* ============================================================
@@ -1857,7 +2117,7 @@ button[disabled]:hover {
   #screen-4 .prompts {
     min-height: 0;
     padding-top: 0.25rem;
-    border-top: 1px solid var(--hair-gold);
+    border-top: 1px solid var(--hair-brass);
   }
 
   #screen-4 .sim .table-wrap {
@@ -1896,7 +2156,7 @@ button[disabled]:hover {
   }
 
   #screen-5 .step {
-    border-top: 2px solid var(--navy);
+    border-top: 4px double var(--bottle);
     padding-top: 1rem;
   }
 
@@ -1939,7 +2199,7 @@ button[disabled]:hover {
   }
 
   #screen-7 .col-verdict {
-    border-left: 1px solid var(--hair-gold);
+    border-left: 1px solid var(--hair-brass);
     padding-left: var(--gap-h);
   }
 
@@ -1999,6 +2259,10 @@ button[disabled]:hover {
    material still lands on one stage. Set to bite below 680 so the 700px
    embed keeps its air. */
 @media (min-width: 900px) and (max-height: 679px) {
+  :root {
+    --ruling-step: 1.5rem;
+  }
+
   body {
     line-height: 1.5;
   }
@@ -2144,6 +2408,10 @@ button[disabled]:hover {
 
 /* A little more air once the frame is genuinely tall. */
 @media (min-width: 900px) and (min-height: 780px) {
+  :root {
+    --ruling-step: 1.66rem;
+  }
+
   .lead {
     font-size: clamp(1.08rem, 1.6vw, 1.28rem);
   }
@@ -2161,6 +2429,9 @@ button[disabled]:hover {
   .stage-foot {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  .masthead-inner {
+    padding-left: calc(1rem + var(--spine-w));
   }
   .progress {
     flex: 1 1 100%;
@@ -2184,6 +2455,53 @@ button[disabled]:hover {
   .steps-move {
     flex-wrap: wrap;
   }
+}
+
+/* ---------------------------------------------- motion
+
+   Everything here is transform only. Nothing on this page fades: a fade
+   takes text through a stretch of frames where it does not meet its
+   contrast ratio, and there is nothing these movements need it for. */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The ruling draws itself across the page from the margin rule. */
+  .js .screen.is-current::before {
+    animation: ruling-draw 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* The folio turns like the corner of a page. */
+  .js .progress-text {
+    animation: folio-turn 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* The seal settles onto the closing entry. */
+  #done[open] .seal {
+    animation: seal-set 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  #done[open] .done-card {
+    animation: done-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes ruling-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes folio-turn {
+  from { transform: perspective(320px) rotateX(-74deg); }
+  to { transform: none; }
+}
+
+@keyframes seal-set {
+  from { transform: scale(1.22) rotate(-7deg); }
+  to { transform: none; }
+}
+
+@keyframes done-rise {
+  from { transform: translateY(12px); }
+  to { transform: none; }
 }
 
 /* ---------------------------------------------- reduced motion */
@@ -2211,6 +2529,10 @@ button[disabled]:hover {
     height: auto;
     overflow: visible;
     display: block;
+  }
+  #module::before,
+  .screen::before {
+    display: none;
   }
   .stage-foot,
   .masthead .progress,
