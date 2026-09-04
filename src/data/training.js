@@ -217,7 +217,7 @@ export const team = {
     {
       name: 'James Hayes',
       role: 'Instructional designer',
-      line: 'Curriculum and assessment',
+      line: 'Digital & Print Design',
       bio: '',
       photo: null,
       link: null,
