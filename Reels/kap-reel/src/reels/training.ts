@@ -271,7 +271,15 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
   },
   {
     projectId: "training-finance",
-    plateId: "t-tablet-desk",
+    // Was t-tablet-desk, retired on 2026-09-04 for the reason recorded above
+    // SHORT_CUTS. t-laptop-two takes it: a 16:10 panel for a 16:10 desktop
+    // capture, and the only other training plate with a clear screen that the
+    // four project beats were not already using. It appears once more in this
+    // cut, on tour cut 3 at frame 1036, which is 250 frames and a different
+    // sample later, so the two do not read as the same shot. The alternative
+    // was t-laptop-cafe-free, and that one does read as the same shot: the
+    // tour's finance cut is already on it.
+    plateId: "t-laptop-two",
     plateCaptureId: "training-finance-pnl-simulator-desktop",
     cleanCaptureId: "training-finance-pnl-simulator-desktop",
     cleanFrame: "browser",
@@ -319,19 +327,32 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
  * scroll the web reel uses, so every offset is 0: there is no eased ramp to
  * start inside, and starting late would cut into an interaction that is only a
  * few seconds long. The drift seeds still differ, so three hard cuts do not
- * share one camera wobble.
+ * share one camera wobble, and none of them repeats a seed used in the 45
+ * second tour, where two of these three plates appear again.
+ *
+ * Owner decision 2026-09-04: t-tablet-desk is out of this tour and out of the
+ * reel. The plate's hand rests on the desk across the panel's bottom left
+ * corner, and PlateComposite paints the warped page over the whole quad, so the
+ * composite laid the P&L simulator over the fingers and the page read as if it
+ * were spilling off the tablet. A hand mask was ruled out: the fix is a plate
+ * whose panel is clear. So the finance cut moves to t-laptop-cafe-free, which
+ * is the only training plate with no person in it at all, and the microlearning
+ * cut moves from the desktop RFI branch on t-desktop-wide to the mobile RFI
+ * hero on t-phone-hands-b, which also keeps a phone in a three cut tour that
+ * would otherwise be three landscape screens in a row. The record for
+ * t-tablet-desk stays in config/plates.json marked retired.
  */
 const SHORT_CUTS: TourCut[] = [
   {
     captureId: "training-finance-pnl-simulator-desktop",
-    plateId: "t-tablet-desk",
+    plateId: "t-laptop-cafe-free",
     word: "Finance",
     captureFrameOffset: 0,
     driftSeed: "training-surfaces-finance",
   },
   {
-    captureId: "training-rfi-scenario-branch-desktop",
-    plateId: "t-desktop-wide",
+    captureId: "training-rfi-hero-mobile",
+    plateId: "t-phone-hands-b",
     word: "Microlearning",
     captureFrameOffset: 0,
     driftSeed: "training-surfaces-microlearning",
@@ -346,9 +367,12 @@ const SHORT_CUTS: TourCut[] = [
 ];
 
 /**
- * Four cuts of 20 frames. Every plate here is one the four project beats did
- * not use, except t-desktop-wide on the last cut, which is 30 seconds after the
- * RFI beat used it and carries a different sample.
+ * Four cuts of 20 frames. Two plates here are also project beat plates:
+ * t-laptop-two on cut 3, which the finance beat took when t-tablet-desk was
+ * retired and which is 250 frames earlier on a different sample, and
+ * t-desktop-wide on cut 4, which is 30 seconds after the RFI beat used it and
+ * also carries a different sample. Every one of the four has its own drift
+ * seed, so no repeat shares a camera wobble either.
  *
  * "Your LMS, not ours" is the closing argument of the tour: K&A never hosts the
  * content and never sees the learner data, which is in the post copy at length

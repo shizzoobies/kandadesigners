@@ -32,6 +32,15 @@ export type PlateEntry = {
   /** Which captures.json clip belongs in this screen. */
   captureId: string;
   usedFor: string;
+  /**
+   * True when a plate has been rejected and no composition may reference it.
+   * The record stays in config/plates.json rather than being deleted, because
+   * the generations behind it are logged in LICENSING.md and removing it would
+   * orphan those entries.
+   */
+  retired?: boolean;
+  /** Why it was retired, and when. Only set when retired is true. */
+  retiredNote?: string;
 };
 
 type PlatesFile = {

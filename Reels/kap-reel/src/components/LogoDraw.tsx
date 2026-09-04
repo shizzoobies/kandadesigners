@@ -17,6 +17,10 @@
 //   - the path length and the tip position come from @remotion/paths rather
 //     than from SVGPathElement.getTotalLength(), so nothing is measured from
 //     the DOM at render time. The two agree to within about 0.1 percent.
+//   - `startT`, which lets a caller begin the clock part way into the authored
+//     seven seconds. The site starts at 0 and fades the whole thing up over a
+//     page that is already on screen; a video cuts to it, and T 0 is an empty
+//     canvas. See the prop's own note.
 //   - the site multiplies its scale by a BUMP of 1.12 so the drawn linework
 //     reads at the same visual weight as the static mark it sits on top of.
 //     There is no static mark underneath here, and BUMP is a uniform scale, so
@@ -134,12 +138,31 @@ const enter = (T: number, start: number, duration = 0.7) => {
 
 export type LogoDrawProps = {
   /**
-   * Frames the authored seven second choreography is compressed into. The
-   * whole piece is scaled uniformly: T = frame / durationFrames * 7.
+   * Frames the authored choreography is compressed into. The piece is scaled
+   * uniformly: T = startT + frame / durationFrames * (7 - startT), so frame 0
+   * is startT and frame durationFrames is the finished lockup either way.
    */
   durationFrames: number;
   /** Rendered width of the stage in canvas pixels. Aspect is 1340:548. */
   width: number;
+  /**
+   * Where on the authored seven second clock frame 0 starts, in seconds.
+   * Defaults to 0, which is the piece as authored.
+   *
+   * The reason it exists: at T 0 the path has zero length and the mouse is at
+   * opacity 0, because `mouseIn` ramps over T 0 to 0.35. On the site that is
+   * correct, because the animation fades up over a page that is already there.
+   * In a video the cut from the previous beat lands on that frame, and an empty
+   * canvas is what the viewer sees. Starting the clock at 0.35 puts the mouse
+   * fully in on frame 0, sitting at the head of the path, and compresses the
+   * remaining 6.65 seconds into the same `durationFrames`.
+   *
+   * Every cue in the piece therefore lands about one and a half percent
+   * earlier: the wordmark's T 5.2 moves from frame 0.743 of the draw to 0.729
+   * of it. See CTA_TIMING in src/scenes/CallToAction.tsx for what that is worth
+   * in frames and why the copy cue did not have to move with it.
+   */
+  startT?: number;
   /**
    * Frame at which the clock freezes. Defaults to `durationFrames`, which is
    * the finished lockup, so any frame past the draw holds it. Set it lower to
@@ -158,16 +181,18 @@ export const LogoDraw: React.FC<LogoDrawProps> = ({
   durationFrames,
   width,
   holdFromFrame,
+  startT = 0,
   style,
 }) => {
   const frame = useCurrentFrame();
 
   const holdFrame = holdFromFrame ?? durationFrames;
   const clockFrame = Math.min(frame, holdFrame);
+  const from = Math.max(0, Math.min(END, startT));
   const T =
     durationFrames <= 0
       ? END
-      : Math.min(END, (clockFrame / durationFrames) * END);
+      : Math.min(END, from + (clockFrame / durationFrames) * (END - from));
 
   const scale = width / STAGE_W;
 

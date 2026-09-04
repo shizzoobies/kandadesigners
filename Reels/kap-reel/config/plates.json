@@ -1,5 +1,5 @@
 {
-  "_note": "Context plates for both reels. quad is the screen corner order top-left, top-right, bottom-right, bottom-left in plate pixels, already expanded outward. Written by scripts/plates.ts and scripts/find-quad.ts, and by hand where a record says so. set is showcase or training; the seven showcase records predate sets and carry no set field. Layer 5 glare is a no-op on thirteen of the fourteen plates, because their panels measured a luma spread under 3.5 of 255. t-tablet-desk is the exception at 56: that panel carries a real window reflection, and it is also the only plate whose quad had to be typed by hand.",
+  "_note": "Context plates for both reels. quad is the screen corner order top-left, top-right, bottom-right, bottom-left in plate pixels, already expanded outward. Written by scripts/plates.ts and scripts/find-quad.ts, and by hand where a record says so. set is showcase or training; the seven showcase records predate sets and carry no set field. Layer 5 glare is a no-op on thirteen of the fourteen plates, because their panels measured a luma spread under 3.5 of 255. t-tablet-desk is the exception at 56: that panel carries a real window reflection, and it is also the only plate whose quad had to be typed by hand. A record carrying retired true is out of the reel and must not be referenced by any composition; t-tablet-desk is the only one, retired 2026-09-04.",
   "generatedWith": {
     "primaryModel": "gemini-3-pro-image",
     "smokeModel": "gemini-3.1-flash-lite-image",
@@ -327,9 +327,11 @@
         ]
       ],
       "glareOpacity": 0.25,
-      "notes": "Quad typed by hand, not detected. scripts/find-quad.ts stops the panel short on the left: the window reflection lifts the left third of this screen above the mask ceiling, so the blob it finds is only the darker right part and its left edge comes back at slope -3.2 instead of the true -0.96. The composite rendered with the detected quad left a wedge of generated grey panel visible between the tablet edge and the site. Corners here were read off a 1.57x crop of the plate against the same region of the failed composite, then pushed 4px outward from the centroid. TL and TR and BR agree with the detector to within 11px; BL is the corner it got wrong, and it moves from 617,1730 to 468,1638.",
+      "retired": true,
+      "retiredNote": "hand occludes the panel corner, rejected by the owner 2026-09-04",
+      "notes": "Retired 2026-09-04. The hand on the desk overlaps the panel's bottom left corner, and PlateComposite paints the warped page over the whole quad, so the composite laid the page over the fingers and the page read as if it were spilling off the tablet. A hand mask was ruled out by the owner. No composition references this plate any more, and the record is kept rather than deleted because the two generations behind it are logged in LICENSING.md. Quad typed by hand, not detected. scripts/find-quad.ts stops the panel short on the left: the window reflection lifts the left third of this screen above the mask ceiling, so the blob it finds is only the darker right part and its left edge comes back at slope -3.2 instead of the true -0.96. The composite rendered with the detected quad left a wedge of generated grey panel visible between the tablet edge and the site. Corners here were read off a 1.57x crop of the plate against the same region of the failed composite, then pushed 4px outward from the centroid. TL and TR and BR agree with the detector to within 11px; BL is the corner it got wrong, and it moves from 617,1730 to 468,1638.",
       "captureId": "training-finance-pnl-simulator-desktop",
-      "usedFor": "tour: finance"
+      "usedFor": "retired, was tour: finance"
     },
     {
       "id": "t-laptop-cafe-free",
@@ -362,7 +364,7 @@
       "glareOpacity": 0,
       "notes": "",
       "captureId": "training-finance-waterfall-desktop",
-      "usedFor": "45s spare"
+      "usedFor": "tour: finance, both cuts"
     },
     {
       "id": "t-phone-hands-b",
@@ -395,7 +397,7 @@
       "glareOpacity": 0,
       "notes": "",
       "captureId": "training-rfi-hero-mobile",
-      "usedFor": "45s spare"
+      "usedFor": "tour: microlearning, both cuts"
     },
     {
       "id": "t-laptop-two",
@@ -428,7 +430,7 @@
       "glareOpacity": 0,
       "notes": "",
       "captureId": "training-safety-walkthrough-card-desktop",
-      "usedFor": "tour: safety card"
+      "usedFor": "tour: safety card, and the 45s finance beat"
     },
     {
       "id": "t-desktop-wide",
