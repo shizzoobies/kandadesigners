@@ -1238,6 +1238,76 @@ function verifyLoudness(file: string): {
   };
 }
 
+/**
+ * How far off target the measured file has to be before the corrective pass
+ * below does anything.
+ *
+ * Everything in this project already treats loudnorm's pass 2 output as a
+ * prediction rather than a measurement, and 0.15 dB is roughly the size of the
+ * prediction error on a bed that behaves. Under that, correcting costs a second
+ * encode of the wav and buys a number that no meter and no ear can tell apart.
+ * Over it, the file is not at the target it claims to be at.
+ */
+const LOUDNESS_CORRECTION_DEADBAND_DB = 0.15;
+
+/**
+ * A third, corrective pass: measure the finished wav, and if it is not at the
+ * target, shift the whole file by the measured difference.
+ *
+ * loudnorm in dynamic mode misses on some material and does not say so. On the
+ * training reel's t-a bed it predicted -13.98 LUFS and delivered -13.71, which
+ * is inside the 0.5 dB warning this script already prints but well outside what
+ * the rest of the reel measures. A flat gain is the right instrument for the
+ * residual: it is linear, so integrated loudness and true peak both move by
+ * exactly the amount applied, and there is nothing left for a limiter to do.
+ *
+ * The correction is refused, loudly, if it would push the true peak over the
+ * ceiling. That only happens when the file is quiet and peaky, and in that case
+ * a gain is the wrong answer and the limiter ceiling upstream is the thing to
+ * look at.
+ */
+function correctLoudness(
+  wav: string,
+  measured: { integrated: number; truePeak: number; lra: number },
+): { integrated: number; truePeak: number; lra: number } {
+  const delta = TARGET_LUFS - measured.integrated;
+  if (Math.abs(delta) < LOUDNESS_CORRECTION_DEADBAND_DB) return measured;
+
+  const projectedPeak = measured.truePeak + delta;
+  if (projectedPeak > TARGET_TRUE_PEAK) {
+    console.log(
+      `  correction skipped: ${delta.toFixed(2)} dB would put the true peak at ` +
+        `${projectedPeak.toFixed(2)} dBTP, over the ${TARGET_TRUE_PEAK} ceiling.`,
+    );
+    return measured;
+  }
+
+  const temp = `${wav}.correct.wav`;
+  const res = ffmpeg([
+    "-i",
+    wav,
+    "-af",
+    `volume=${delta.toFixed(3)}dB,${AFORMAT}`,
+    "-c:a",
+    "pcm_s16le",
+    "-ar",
+    "48000",
+    "-ac",
+    "2",
+    "-y",
+    temp,
+  ]);
+  if (res.code !== 0)
+    throw new Error(`loudness correction failed:\n${res.stderr.slice(-3000)}`);
+  fs.renameSync(temp, wav);
+  const corrected = verifyLoudness(wav);
+  console.log(
+    `  pass 3 corrected: ${delta > 0 ? "+" : ""}${delta.toFixed(2)} dB, now ` +
+      `I ${corrected.integrated} LUFS, TP ${corrected.truePeak} dBTP, LRA ${corrected.lra}`,
+  );
+  return corrected;
+}
+
 async function mixVariant(variantId: VariantId): Promise<MixRecord> {
   const picture = pictureFile();
   const musicFile = musicTakeFor(variantId, 20);
@@ -1444,11 +1514,15 @@ async function mixTrainingVariant(variantId: VariantId): Promise<MixRecord> {
     `  pass 2 predicted: I ${corrected.output_i} LUFS, TP ${corrected.output_tp} dBTP, ` +
       `LRA ${corrected.output_lra}`,
   );
-  const verified = verifyLoudness(wav);
+  const afterPass2 = verifyLoudness(wav);
   console.log(
-    `  pass 2 verified:  I ${verified.integrated} LUFS, TP ${verified.truePeak} dBTP, ` +
-      `LRA ${verified.lra}`,
+    `  pass 2 verified:  I ${afterPass2.integrated} LUFS, TP ${afterPass2.truePeak} dBTP, ` +
+      `LRA ${afterPass2.lra}`,
   );
+  // The training beds needed this and reel one's did not, which is why it is
+  // here and not in mixVariant above: correcting a file that is already inside
+  // the deadband would rewrite reel one's delivered mixes for no gain.
+  const verified = correctLoudness(wav, afterPass2);
   console.log(`  wrote ${rel(wav)}`);
 
   fs.mkdirSync(TRAINING_PREVIEW_DIR, { recursive: true });

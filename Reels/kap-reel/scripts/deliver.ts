@@ -20,10 +20,24 @@
  * so this is runnable the moment the first render lands.
  *
  * Flags:
- *   --variant a|b|c   which music bed was chosen. Required.
- *   --remix           rebuild the 45 second mix even if it exists.
- *   --skip-encode     checks, captions and stills only.
- *   --only <name>     encode a single target, by format key.
+ *   --reel web|training  which reel to deliver. Defaults to web, so every
+ *                        command that worked before this flag existed still
+ *                        does exactly what it did.
+ *   --variant a|b|c      which music bed was chosen. Required. The training
+ *                        reel's beds are t-a, t-b and t-c.
+ *   --remix              rebuild the 45 second mix even if it exists.
+ *   --skip-encode        checks, captions and stills only.
+ *   --only <name>        encode a single target, by format key.
+ *
+ * The training reel, added 2026-09-04:
+ *
+ *   npx tsx scripts/deliver.ts --reel training --variant t-a
+ *
+ * It is the same pipeline over a different set of names. Renders come from
+ * out/render-training-{format}-{duration}.mp4, deliveries go to
+ * out/kap-reel-training-{format}-{duration}.mp4 with matching SRTs, thumbnails
+ * are out/thumbnail-training-{vertical,landscape}.jpg and the carousel stills
+ * land in out/frames-training/. Nothing about the web reel's names moved.
  */
 
 import { spawnSync } from "node:child_process";
@@ -32,7 +46,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
-import { SRT_TARGETS, srtFileName, validateAll, writeSrtFiles } from "./srt.js";
+import {
+  srtFileName,
+  targetsFor,
+  validateAll,
+  writeSrtFiles,
+  type ReelKey,
+  type SrtTarget,
+} from "./srt.js";
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -62,7 +83,6 @@ function projectRoot(): string {
 
 const ROOT = projectRoot();
 const OUT_DIR = path.join(ROOT, "out");
-const FRAMES_DIR = path.join(OUT_DIR, "frames");
 const AUDIO_DIR = path.join(ROOT, "assets", "audio");
 const RAW_AUDIO_DIR = path.join(AUDIO_DIR, "raw");
 const CONFIG_DIR = path.join(ROOT, "config");
@@ -168,48 +188,51 @@ export type DeliveryTarget = {
   canvas: string;
 };
 
-const TARGETS: DeliveryTarget[] = [
-  {
-    format: "vertical",
-    duration: "15s",
-    input: "out/render-vertical-15s.mp4",
-    output: "out/kap-reel-vertical-15s.mp4",
-    frames: 450,
-    canvas: "1080x1920",
-  },
-  {
-    format: "feed",
-    duration: "15s",
-    input: "out/render-feed-15s.mp4",
-    output: "out/kap-reel-feed-15s.mp4",
-    frames: 450,
-    canvas: "1080x1350",
-  },
-  {
-    format: "square",
-    duration: "15s",
-    input: "out/render-square-15s.mp4",
-    output: "out/kap-reel-square-15s.mp4",
-    frames: 450,
-    canvas: "1080x1080",
-  },
-  {
-    format: "linkedin",
-    duration: "45s",
-    input: "out/render-linkedin-45s.mp4",
-    output: "out/kap-reel-linkedin-45s.mp4",
-    frames: 1350,
-    canvas: "1080x1350",
-  },
-  {
-    format: "landscape",
-    duration: "45s",
-    input: "out/render-landscape-45s.mp4",
-    output: "out/kap-reel-landscape-45s.mp4",
-    frames: 1350,
-    canvas: "1920x1080",
-  },
+/** The five crops, before either reel's names are applied to them. */
+const SHAPES: { format: string; duration: "15s" | "45s"; frames: number; canvas: string }[] = [
+  { format: "vertical", duration: "15s", frames: 450, canvas: "1080x1920" },
+  { format: "feed", duration: "15s", frames: 450, canvas: "1080x1350" },
+  { format: "square", duration: "15s", frames: 450, canvas: "1080x1080" },
+  { format: "linkedin", duration: "45s", frames: 1350, canvas: "1080x1350" },
+  { format: "landscape", duration: "45s", frames: 1350, canvas: "1920x1080" },
 ];
+
+/**
+ * Everything a reel names differently. The web reel's names are the Section 11
+ * ones and must not move; the training reel takes a "training" segment in the
+ * same places, which keeps both reels' outputs in one out/ directory without
+ * either being able to overwrite the other.
+ */
+type ReelNames = {
+  /** Segment inserted into render, delivery, thumbnail and caption names. */
+  infix: string;
+  /** Directory the six carousel stills go in. */
+  framesDir: string;
+  /** The content config the manifest check reads project ids out of. */
+  contentFile: string;
+};
+
+const REEL_NAMES: Record<ReelKey, ReelNames> = {
+  web: {
+    infix: "",
+    framesDir: "out/frames",
+    contentFile: "src/reels/web.ts",
+  },
+  training: {
+    infix: "-training",
+    framesDir: "out/frames-training",
+    contentFile: "src/reels/training.ts",
+  },
+};
+
+function targets(reel: ReelKey): DeliveryTarget[] {
+  const { infix } = REEL_NAMES[reel];
+  return SHAPES.map((shape) => ({
+    ...shape,
+    input: `out/render${infix}-${shape.format}-${shape.duration}.mp4`,
+    output: `out/kap-reel${infix}-${shape.format}-${shape.duration}.mp4`,
+  }));
+}
 
 // ---------------------------------------------------------------------------
 // The 45 second mix
@@ -425,6 +448,56 @@ function verifyLoudness(file: string) {
   };
 }
 
+/**
+ * Deadband and corrective pass, the twin of the one in scripts/audio.ts. Same
+ * argument: loudnorm's pass 2 is a prediction, this project measures the file
+ * instead, and where the file is not at the target a flat gain is what puts it
+ * there. Inside the deadband nothing happens, which is what keeps a rebuild of
+ * reel one's 45 second mix byte for byte what it was.
+ */
+const LOUDNESS_CORRECTION_DEADBAND_DB = 0.15;
+
+function correctLoudness(
+  wav: string,
+  measured: { integrated: number; truePeak: number; lra: number },
+): { integrated: number; truePeak: number; lra: number } {
+  const delta = TARGET_LUFS - measured.integrated;
+  if (Math.abs(delta) < LOUDNESS_CORRECTION_DEADBAND_DB) return measured;
+
+  const projectedPeak = measured.truePeak + delta;
+  if (projectedPeak > TARGET_TRUE_PEAK) {
+    console.log(
+      `  correction skipped: ${delta.toFixed(2)} dB would put the true peak at ` +
+        `${projectedPeak.toFixed(2)} dBTP, over the ${TARGET_TRUE_PEAK} ceiling.`,
+    );
+    return measured;
+  }
+
+  const temp = `${wav}.correct.wav`;
+  const res = ffmpeg([
+    "-i",
+    wav,
+    "-af",
+    `volume=${delta.toFixed(3)}dB,${AFORMAT}`,
+    "-c:a",
+    "pcm_s16le",
+    "-ar",
+    "48000",
+    "-ac",
+    "2",
+    "-y",
+    temp,
+  ]);
+  if (res.code !== 0) throw new Error(`loudness correction failed:\n${res.stderr.slice(-3000)}`);
+  fs.renameSync(temp, wav);
+  const corrected = verifyLoudness(wav);
+  console.log(
+    `  pass 3 corrected: ${delta > 0 ? "+" : ""}${delta.toFixed(2)} dB, now ` +
+      `I ${corrected.integrated} LUFS, TP ${corrected.truePeak} dBTP, LRA ${corrected.lra}`,
+  );
+  return corrected;
+}
+
 export function build45sMix(variant: string, force: boolean): string {
   const wav = path.join(AUDIO_DIR, `mix-${variant}-45s.wav`);
   if (fs.existsSync(wav) && !force) {
@@ -511,11 +584,12 @@ export function build45sMix(variant: string, force: boolean): string {
   ]);
   if (pass2.code !== 0) throw new Error(`loudnorm pass 2 failed:\n${pass2.stderr.slice(-3000)}`);
 
-  const verified = verifyLoudness(wav);
+  const afterPass2 = verifyLoudness(wav);
   console.log(
-    `  pass 2 verified: I ${verified.integrated} LUFS, TP ${verified.truePeak} dBTP, ` +
-      `LRA ${verified.lra}`,
+    `  pass 2 verified: I ${afterPass2.integrated} LUFS, TP ${afterPass2.truePeak} dBTP, ` +
+      `LRA ${afterPass2.lra}`,
   );
+  const verified = correctLoudness(wav, afterPass2);
   if (Math.abs(verified.integrated - TARGET_LUFS) > 0.5) {
     console.log(
       `  WARNING: integrated loudness is ${verified.integrated} LUFS, more than 0.5 off target.`,
@@ -725,27 +799,48 @@ async function thumbnail(
  * are sampled well inside their clean captures with the claim up; the two tour
  * frames are sampled mid cut.
  */
-const CAROUSEL_FRAMES: { frame: number; slug: string; note: string }[] = [
-  // PROJECT_1 54 to 194, clean capture from 78, claim in at 90.
-  { frame: 120, slug: "1-fore-motion-golf", note: "clean capture, claim on screen" },
-  // PROJECT_2 194 to 334, clean capture from 218, claim in at 230.
-  { frame: 260, slug: "2-project-makeover", note: "clean capture, claim on screen" },
-  // SURFACES_TOUR cuts at 334, 352 and 370.
-  { frame: 344, slug: "3-surfaces-booking", note: "tour cut, Booking, MBS Medicine" },
-  {
-    frame: 380,
-    slug: "4-surfaces-no-page-builder",
-    note: "tour cut, No page builder, Southern Legacy Contractors",
-  },
-  // The Project Makeover plate runs 194 to 218 and the project name finishes
-  // typing on at 212, so 214 is inside that plate with the band not caught
-  // mid word.
-  { frame: 214, slug: "5-context-plate", note: "plate composite, phone in hands" },
-  // CALL_TO_ACTION 388 to 450, everything landed by 410.
-  { frame: 430, slug: "6-call-to-action", note: "CTA card, lockup and contact" },
-];
+type CarouselFrame = { frame: number; slug: string; note: string };
 
-function carouselStills(input: string): string[] {
+const CAROUSEL_FRAMES: Record<ReelKey, CarouselFrame[]> = {
+  web: [
+    // PROJECT_1 54 to 194, clean capture from 78, claim in at 90.
+    { frame: 120, slug: "1-fore-motion-golf", note: "clean capture, claim on screen" },
+    // PROJECT_2 194 to 334, clean capture from 218, claim in at 230.
+    { frame: 260, slug: "2-project-makeover", note: "clean capture, claim on screen" },
+    // SURFACES_TOUR cuts at 334, 352 and 370.
+    { frame: 344, slug: "3-surfaces-booking", note: "tour cut, Booking, MBS Medicine" },
+    {
+      frame: 380,
+      slug: "4-surfaces-no-page-builder",
+      note: "tour cut, No page builder, Southern Legacy Contractors",
+    },
+    // The Project Makeover plate runs 194 to 218 and the project name finishes
+    // typing on at 212, so 214 is inside that plate with the band not caught
+    // mid word.
+    { frame: 214, slug: "5-context-plate", note: "plate composite, phone in hands" },
+    // CALL_TO_ACTION 388 to 450, everything landed by 410.
+    { frame: 430, slug: "6-call-to-action", note: "CTA card, lockup and contact" },
+  ],
+  // Same beat map, so the same frames are the right frames. Four distinct
+  // surfaces across the six: the walk-through in a browser window, the same
+  // course being answered on a phone, the P&L simulator on a tablet in hands,
+  // and the RFI microlearning on a desk.
+  training: [
+    { frame: 130, slug: "1-safety-walkthrough", note: "browser window, claim on screen" },
+    { frame: 270, slug: "2-safety-stop-or-go", note: "phone, stop or go, claim on screen" },
+    { frame: 344, slug: "3-surfaces-finance", note: "tour cut, Finance, P&L simulator" },
+    {
+      frame: 380,
+      slug: "4-surfaces-scorm-xapi",
+      note: "tour cut, SCORM and xAPI, walk-through card",
+    },
+    { frame: 214, slug: "5-context-plate", note: "plate composite, phone in hands" },
+    { frame: 430, slug: "6-call-to-action", note: "CTA card, lockup and contact" },
+  ],
+};
+
+function carouselStills(input: string, framesDir: string, frames: CarouselFrame[]): string[] {
+  const FRAMES_DIR = path.join(ROOT, framesDir);
   fs.mkdirSync(FRAMES_DIR, { recursive: true });
   const cropWidth = 1080;
   const cropHeight = 1350;
@@ -753,7 +848,7 @@ function carouselStills(input: string): string[] {
   let y = centre - Math.round(cropHeight / 2);
   y = Math.max(0, Math.min(y, 1920 - cropHeight));
   const written: string[] = [];
-  for (const still of CAROUSEL_FRAMES) {
+  for (const still of frames) {
     const dest = path.join(FRAMES_DIR, `carousel-${still.slug}.jpg`);
     extractFrame(input, still.frame, dest, `crop=${cropWidth}:${cropHeight}:0:${y}`);
     console.log(`  ${rel(dest)}: frame ${still.frame}, ${still.note}`);
@@ -777,7 +872,17 @@ type CheckResult = { id: number; title: string; verdict: "PASS" | "FAIL" | "MANU
 type Project = { id: string; display_name: string; cleared_for_public_showcase: boolean };
 type Capture = { id: string; project: string };
 
-function checkProjectClearance(): CheckResult {
+/**
+ * Item 1, over the content config for the reel being delivered.
+ *
+ * Until 2026-09-04 this read src/Reel.tsx and src/scenes/SurfacesTour.tsx,
+ * because that is where the ids lived. The content lift moved every project id,
+ * plate id and capture id into src/reels/{web,training}.ts, and a check that
+ * greps a file no longer containing any ids passes by finding nothing, which is
+ * worse than failing. So it reads the config for this reel, and it fails when
+ * that config yields no ids at all.
+ */
+function checkProjectClearance(reel: ReelKey): CheckResult {
   const lines: string[] = [];
   const projects = readJson<{ approved: Project[] }>(
     path.join(CONFIG_DIR, "projects.json"),
@@ -790,35 +895,36 @@ function checkProjectClearance(): CheckResult {
   const captureList = Array.isArray(captures) ? captures : captures.captures;
   const captureProject = new Map(captureList.map((c) => [c.id, c.project]));
 
-  const reel = fs.readFileSync(path.join(ROOT, "src", "Reel.tsx"), "utf8");
-  const tour = fs.readFileSync(path.join(ROOT, "src", "scenes", "SurfacesTour.tsx"), "utf8");
+  const where = REEL_NAMES[reel].contentFile;
+  const content = fs.readFileSync(path.join(ROOT, where), "utf8");
 
   const referenced = new Map<string, string>();
-  for (const m of reel.matchAll(/projectId:\s*"([^"]+)"/g)) {
-    referenced.set(m[1], "src/Reel.tsx");
+  // Project beats name their project outright.
+  for (const m of content.matchAll(/projectId:\s*"([^"]+)"/g)) {
+    referenced.set(m[1], `${where} projectId`);
   }
-  // The tour names captures, not projects, so each one is resolved back to the
-  // project it belongs to before the clearance is checked.
-  for (const m of tour.matchAll(/captureId:\s*"([^"]+)"/g)) {
+  // Every other shot names a capture, so each one is resolved back to the
+  // project it belongs to before the clearance is checked. That covers the
+  // surfaces tour, the hook, and any beat overriding the plate's own binding.
+  for (const m of content.matchAll(/[cC]aptureId:\s*"([^"]+)"/g)) {
     const project = captureProject.get(m[1]);
     if (!project) {
-      referenced.set(`${m[1]} (unresolved capture)`, "src/scenes/SurfacesTour.tsx");
+      referenced.set(`${m[1]} (unresolved capture)`, `${where} captureId`);
       continue;
     }
-    if (!referenced.has(project)) {
-      referenced.set(project, "src/scenes/SurfacesTour.tsx");
-    }
+    if (!referenced.has(project)) referenced.set(project, `${where} captureId`);
   }
 
-  let ok = true;
-  for (const [id, where] of [...referenced].sort()) {
+  let ok = referenced.size > 0;
+  if (!ok) lines.push(`  BAD  no project or capture ids found in ${where}`);
+  for (const [id, source] of [...referenced].sort()) {
     const state = cleared.get(id);
     if (state === true) {
-      lines.push(`  ok   ${id} (${where}) cleared`);
+      lines.push(`  ok   ${id} (${source}) cleared`);
     } else {
       ok = false;
       lines.push(
-        `  BAD  ${id} (${where}) ${state === undefined ? "not in projects.json" : "not cleared"}`,
+        `  BAD  ${id} (${source}) ${state === undefined ? "not in projects.json" : "not cleared"}`,
       );
     }
   }
@@ -836,13 +942,20 @@ function checkProjectClearance(): CheckResult {
  * The rule is that an on-screen number has to trace to a measurement. Three
  * things are numbers on screen that are not measurements and are allowed by
  * name rather than by pattern: the phone number, a year, and the version of a
- * published standard. WCAG 2.2 is the only standard designation in the copy,
- * and it is matched as the phrase rather than as a bare 2.2, so a stray 2.2
- * somewhere else would still be caught.
+ * published standard. WCAG is the only standard designation in either reel's
+ * copy, at 2.2 in the web reel and 2.1 in the training one, and it is matched
+ * as the phrase rather than as a bare version, so a stray 2.1 or 2.2 somewhere
+ * else would still be caught.
+ *
+ * Note for the training reel: the P&L figures a viewer can read in the finance
+ * beat are course content inside the capture, not a caption and not a claim.
+ * They are fictional teaching numbers in a K&A original sample, the owner
+ * decided on 2026-09-04 to keep the shot, and nothing in the caption files or
+ * the post copy repeats them. This check reads captions, so it never sees them.
  */
 const STANDARD_DESIGNATIONS = [/WCAG\s+\d+(?:\.\d+)?/g];
 
-function checkNumbers(): CheckResult {
+function checkNumbers(srtTargets: SrtTarget[]): CheckResult {
   const lines: string[] = [];
   const metricsRaw = fs.readFileSync(path.join(CONFIG_DIR, "metrics.json"), "utf8");
   const metricValues = new Set(
@@ -853,7 +966,7 @@ function checkNumbers(): CheckResult {
   const found = new Map<string, { verdict: string; where: Set<string> }>();
   let ok = true;
 
-  for (const target of SRT_TARGETS) {
+  for (const target of srtTargets) {
     const file = path.join(OUT_DIR, srtFileName(target));
     if (!fs.existsSync(file)) {
       lines.push(`  BAD  ${srtFileName(target)} was not written`);
@@ -910,10 +1023,10 @@ function checkNumbers(): CheckResult {
   };
 }
 
-function checkFrameCounts(): CheckResult {
+function checkFrameCounts(deliveries: DeliveryTarget[]): CheckResult {
   const lines: string[] = [];
   let ok = true;
-  for (const target of TARGETS) {
+  for (const target of deliveries) {
     const file = path.join(ROOT, target.output);
     if (!fs.existsSync(file)) {
       lines.push(`  BAD  ${target.output} not delivered yet`);
@@ -1058,14 +1171,16 @@ function checkLicensing(): CheckResult {
   };
 }
 
-function manualChecks(): CheckResult[] {
+function manualChecks(reel: ReelKey): CheckResult[] {
+  const infix = REEL_NAMES[reel].infix;
+  const prefix = reel === "training" ? "Training" : "Reel";
   return [
     {
       id: 3,
       title: "The vertical cut is comprehensible with audio muted",
       verdict: "MANUAL",
       lines: [
-        "  Watch out/kap-reel-vertical-15s.mp4 with the sound off, start to finish.",
+        `  Watch out/kap-reel${infix}-vertical-15s.mp4 with the sound off, start to finish.`,
         "  Every claim is burned in, so this is a judgement about pace, not about",
         "  whether the text exists. Nothing here can decide it.",
       ],
@@ -1075,9 +1190,9 @@ function manualChecks(): CheckResult[] {
       title: "No text or logo intrudes into a reserved safe zone",
       verdict: "MANUAL",
       lines: [
-        "  Done in Phase 3 against the four Debug compositions, which draw the",
-        "  reserved zones. Re-render a Debug still after any scene change:",
-        "  npx remotion still src/index.ts ReelVerticalDebug out/safe.png --frame=N",
+        "  Checked against the Debug compositions, which draw the reserved zones.",
+        "  Re-render a Debug still after any scene change:",
+        `  npx remotion still out/bundle ${prefix}VerticalDebug out/safe.png --frame=N`,
       ],
     },
     {
@@ -1085,9 +1200,12 @@ function manualChecks(): CheckResult[] {
       title: "Every plate composite inspected full size",
       verdict: "MANUAL",
       lines: [
-        "  Done in Phase 4. Full size stills are in out/gate4. Re-inspect any plate",
-        "  whose capture or composite changed: no visible face, no hand artifact, no",
-        "  warped device, no generated text or screen content at the quad edges.",
+        reel === "training"
+          ? "  Done at the reel two plate gate. Full size stills are in out/gate-t4."
+          : "  Done in Phase 4. Full size stills are in out/gate4.",
+        "  Re-inspect any plate whose capture or composite changed: no visible face,",
+        "  no hand artifact, no warped device, no generated text or screen content",
+        "  at the quad edges.",
       ],
     },
     {
@@ -1102,13 +1220,17 @@ function manualChecks(): CheckResult[] {
   ];
 }
 
-function runAcceptance(): number {
-  console.log("\n=== Section 14 acceptance ===\n");
+function runAcceptance(
+  reel: ReelKey,
+  deliveries: DeliveryTarget[],
+  srtTargets: SrtTarget[],
+): number {
+  console.log(`\n=== Section 14 acceptance, ${reel} reel ===\n`);
   const results = [
-    checkProjectClearance(),
-    checkNumbers(),
-    ...manualChecks(),
-    checkFrameCounts(),
+    checkProjectClearance(reel),
+    checkNumbers(srtTargets),
+    ...manualChecks(reel),
+    checkFrameCounts(deliveries),
     checkEmDashes(),
     checkLicensing(),
   ].sort((a, b) => a.id - b.id);
@@ -1135,10 +1257,25 @@ function flag(argv: string[], name: string): string | undefined {
   return i === -1 ? undefined : argv[i + 1];
 }
 
+const VARIANTS: Record<ReelKey, string[]> = {
+  web: ["a", "b", "c"],
+  training: ["t-a", "t-b", "t-c"],
+};
+
 async function main(argv: string[]): Promise<void> {
+  const reelArg = flag(argv, "reel") ?? "web";
+  if (reelArg !== "web" && reelArg !== "training") {
+    console.error(`deliver: unknown reel "${reelArg}". Use web or training.`);
+    process.exit(2);
+  }
+  const reel: ReelKey = reelArg;
+  const names = REEL_NAMES[reel];
+  const TARGETS = targets(reel);
+  const srtTargets = targetsFor(reel);
+
   const variant = flag(argv, "variant");
-  if (!variant || !["a", "b", "c"].includes(variant)) {
-    console.error("deliver: --variant a|b|c is required.");
+  if (!variant || !VARIANTS[reel].includes(variant)) {
+    console.error(`deliver: --variant ${VARIANTS[reel].join("|")} is required for the ${reel} reel.`);
     process.exit(2);
   }
   const only = flag(argv, "only");
@@ -1149,15 +1286,16 @@ async function main(argv: string[]): Promise<void> {
   const scratch = path.join(OUT_DIR, ".deliver-scratch.png");
 
   const mix15 = path.join(AUDIO_DIR, `mix-${variant}-15s.wav`);
-  console.log(`=== Phase 6 delivery, music variant ${variant} ===\n`);
+  console.log(`=== Phase 6 delivery, ${reel} reel, music variant ${variant} ===\n`);
 
   // 1. Audio.
   let mix45: string | null = null;
   if (!skipEncode) {
     if (!fs.existsSync(mix15)) {
+      const set = reel === "training" ? " --set training" : "";
       console.log(
         `[warn] ${rel(mix15)} does not exist. The 15 second files will keep the ` +
-          `render's own audio. Run: npx tsx scripts/audio.ts mix --variant ${variant}`,
+          `render's own audio. Run: npx tsx scripts/audio.ts mix --variant ${variant}${set}`,
       );
     }
     if (!fs.existsSync(RAW_AUDIO_DIR)) {
@@ -1184,11 +1322,11 @@ async function main(argv: string[]): Promise<void> {
 
   // 3. Captions.
   console.log("=== Captions ===\n");
-  const problems = validateAll();
+  const problems = validateAll(srtTargets);
   if (problems.length > 0) {
     for (const p of problems) console.log(`  BAD  ${p.target}: ${p.message}`);
   } else {
-    for (const written of writeSrtFiles(OUT_DIR)) {
+    for (const written of writeSrtFiles(OUT_DIR, srtTargets)) {
       console.log(`  wrote ${rel(written.file)} (${written.cues} cues)`);
     }
   }
@@ -1196,24 +1334,26 @@ async function main(argv: string[]): Promise<void> {
 
   // 4. Thumbnails.
   console.log("=== Thumbnails ===\n");
-  const verticalRender = path.join(ROOT, "out/render-vertical-15s.mp4");
-  const landscapeRender = path.join(ROOT, "out/render-landscape-45s.mp4");
+  const verticalInput = `out/render${names.infix}-vertical-15s.mp4`;
+  const landscapeInput = `out/render${names.infix}-landscape-45s.mp4`;
+  const verticalRender = path.join(ROOT, verticalInput);
+  const landscapeRender = path.join(ROOT, landscapeInput);
   if (fs.existsSync(verticalRender)) {
-    // Frame 75 is inside the Fore Motion Golf plate of the re-paced cut, which
-    // runs 54 to 78: a real site on a real laptop over a real shoulder, with
-    // the project name fully typed on at 72.
+    // Frame 75 is inside the first project's plate, which runs 54 to 78: a real
+    // site on a real laptop over a real shoulder, with the project name fully
+    // typed on at 72. Both reels share the beat map, so both take frame 75.
     await thumbnail(
       verticalRender,
       75,
       SAFE_VERTICAL,
-      path.join(OUT_DIR, "thumbnail-vertical.jpg"),
+      path.join(OUT_DIR, `thumbnail${names.infix}-vertical.jpg`),
       scratch,
     );
   } else {
-    console.log("  [skip] thumbnail-vertical.jpg: out/render-vertical-15s.mp4 does not exist yet.");
+    console.log(`  [skip] thumbnail${names.infix}-vertical.jpg: ${verticalInput} does not exist yet.`);
   }
   if (fs.existsSync(landscapeRender)) {
-    // Frame 387 is inside the Project Makeover plate of the 45 second cut,
+    // Frame 387 is inside the second project's plate in the 45 second cut,
     // which runs 366 to 390. The name types on from beat+2 over 16 frames and
     // is complete at 384, so this is the only part of that plate where the
     // panel is not caught mid word. The old 380 was, and it showed.
@@ -1221,12 +1361,12 @@ async function main(argv: string[]): Promise<void> {
       landscapeRender,
       387,
       SAFE_LANDSCAPE,
-      path.join(OUT_DIR, "thumbnail-landscape.jpg"),
+      path.join(OUT_DIR, `thumbnail${names.infix}-landscape.jpg`),
       scratch,
     );
   } else {
     console.log(
-      "  [skip] thumbnail-landscape.jpg: out/render-landscape-45s.mp4 does not exist yet.",
+      `  [skip] thumbnail${names.infix}-landscape.jpg: ${landscapeInput} does not exist yet.`,
     );
   }
   if (fs.existsSync(scratch)) fs.unlinkSync(scratch);
@@ -1235,16 +1375,17 @@ async function main(argv: string[]): Promise<void> {
   // 5. Carousel stills.
   console.log("=== Carousel stills ===\n");
   if (fs.existsSync(verticalRender)) {
-    carouselStills(verticalRender);
+    carouselStills(verticalRender, names.framesDir, CAROUSEL_FRAMES[reel]);
   } else {
-    console.log("  [skip] out/frames: out/render-vertical-15s.mp4 does not exist yet.");
+    console.log(`  [skip] ${names.framesDir}: ${verticalInput} does not exist yet.`);
   }
 
   // 6. Acceptance.
-  const failures = runAcceptance();
+  const failures = runAcceptance(reel, TARGETS, srtTargets);
+  const postCopy = reel === "training" ? "out/post-copy-training.md" : "out/post-copy.md";
   console.log(
     failures === 0
-      ? "\nNothing published. Review out/post-copy.md and post it yourself."
+      ? `\nNothing published. Review ${postCopy} and post it yourself.`
       : `\n${failures} acceptance item(s) failed. Nothing published.`,
   );
 }

@@ -715,9 +715,259 @@ badly chosen crop. `ZoomShot` sets `maxWidth: none` for exactly this reason.
 | 2026-09-04 | Training*Debug | `out/gate-t2/dbg-*.png` | 6 stills, three crops at two frames | 11.0s |
 | 2026-09-04 | TrainingVertical | `out/training-grey-vertical.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 6.9 MB | 26.1s |
 | 2026-09-04 | sheet | `out/gate-t2/training-vertical-sheet.png` | 4x3 tile of 12 frames, ffmpeg | under 1s |
+| 2026-09-04 | bundle | `out/bundle` (final build) | rspack bundle, public dir linked not copied | 2.4s |
+| 2026-09-04 | mix 15s | `assets/audio/mix-t-a-15s.wav` (final build, music only) | 15.0s, 48 kHz stereo | 2.6s |
+| 2026-09-04 | TrainingVertical | `out/render-training-vertical-15s.mp4` (final build) | 450 frames, 1080x1920, 30fps, 15.0s | 22.9s |
+| 2026-09-04 | TrainingFeed | `out/render-training-feed-15s.mp4` (final build) | 450 frames, 1080x1350, 30fps, 15.0s | 21.1s |
+| 2026-09-04 | TrainingSquare | `out/render-training-square-15s.mp4` (final build) | 450 frames, 1080x1080, 30fps, 15.0s | 20.0s |
+| 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` (final build) | 1350 frames, 1080x1350, 30fps, 45.0s | 54.8s |
+| 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` (final build) | 1350 frames, 1920x1080, 30fps, 45.0s | 66.1s |
+| 2026-09-04 | deliver | five MP4s, five SRTs, two thumbnails, six stills, the 45s mix, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 42.0s |
+| 2026-09-04 | **Training full rebuild** | **everything in the final build rows above** | **bundle + 15s mix + five renders + delivery** | **231.9s (3m 52s)** |
 
-The 26.1 second render sits between the web reel's Phase 4 and final numbers.
-Every capture and plate landed while this was being built, so the whole cut is
-a real composite: two plate shots, three tour plate composites, and two zoomed
-browser shots. There is no audio on it and no delivery step, which is the rest
-of the web reel's 20.3.
+Section 14 item 9 for the training reel: **231.9 seconds**, which is
+2.4 + 2.6 + 184.9 + 42.0. It is the sum of the nine "final build" rows above and
+it assumes `node_modules` is installed and `assets/captures` and `assets/plates`
+are already on disk. It does not include capture, plate generation or any
+ElevenLabs call, none of which a rebuild repeats, and it does not include the
+72.9 seconds the twenty eight safe zone debug stills take, which is a review
+step rather than part of the build.
+
+It is 41 seconds longer than the web reel's 190.7, and all of the difference is
+in the two 45 second renders. Every training project beat is a zoomed shot, so
+each frame lays a 2880x1800 video out at scale inside a clipping box rather than
+scaling one to fit, and the 45 second cut spends 744 of its 1350 frames doing
+that. The 15 second renders are within two seconds of the web reel's.
+
+The rebuild is reproducible: rerunning the 15 second mix produces a byte
+identical wav, which was checked rather than assumed, because the corrective
+loudness pass described under Audio would be worth nothing if it were not.
+
+The 26.1 second grey render row above sits between the web reel's Phase 4 and
+final numbers. Every capture and plate landed while this was being built, so the
+whole cut is a real composite: two plate shots, three tour plate composites, and
+two zoomed browser shots. There is no audio on it and no delivery step, which is
+the rest of the web reel's 20.3.
+
+### The final training timeline
+
+Rebuilt 2026-09-04 after the grey render review. Five things changed, all of
+them in `src/reels/training.ts` except the one noted.
+
+**The hook is the mobile hazard hunt, full bleed.** It was the desktop clip
+pushed in on the illustration, and that did not read: a desktop module screen is
+a content column inside wide dark margins, so a 9:16 crop of a region of it kept
+half a sentence cut off at both edges and an empty grey rectangle where the
+picture was. The mobile capture is the same lesson laid out for a 390 wide
+screen, so the heading, the instructions, the found counter and the whole
+illustration all sit inside the crop. Vertical and feed keep almost the entire
+page, square keeps the counter and the picture, and landscape keeps a band of it
+either side of the hook band, which is all a 16:9 hook was ever going to show of
+a phone. It plays from source frame 0 at rate 1 and stops short of source 57,
+where a second hazard is found, the first list item wraps, and the item under it
+is clipped by the page's own bottom rule on the live build.
+
+Because the mobile clip reads, the `hook.bandPosition` field the fallback plan
+called for was not added. The band is where it always was, 28 percent down the
+safe area, in both reels. If the hook shot is ever changed to something that
+needs the band lower, that field is the way to do it and not a hardcoded
+position in `Hook.tsx`.
+
+**Beat 1 is the walk-through in a browser window**, pushed in on the tab row and
+the four zone cards, and it starts on source frame 33 rather than 0. The clip is
+named for what it does: it opens on the hero screen and scrolls to the zones
+over source 20 to 32. Starting at 0 put the hero screen behind a zoom region
+measured on the zones, and frame 100 of the cut showed learning objectives
+through a window cropped for a tab row. The scroll is not lost, because the
+plate shot runs at the same rate and `ProjectShowcase` backs its capture up by
+`round(24 * rate)` frames, so the plate plays source 19 to 33 and hands over on
+the exact frame the scroll finishes. Section 6b's "cut on the scroll", for free.
+
+**Beat 2 is the same course on a phone**, so the two safety beats are two
+surfaces rather than the same browser window twice. It is the stop-or-go
+decision: the call counter, the prompt, the STOP and GO buttons and the feedback
+paragraph under them.
+
+That beat needed one change outside the content config. At the phone's native
+780x1688 the vertical crop's lower third cuts the shot at capture row 1039,
+which is the top edge of the STOP button, so the buttons and the whole feedback
+line sit behind the scrim. That is arithmetic rather than tuning: the device is
+centred on the canvas, the band is anchored near the bottom of it, so an
+overlaid band always covers the lower third or so of the device, and this clip
+keeps the thing worth seeing exactly there. A 9:16 site capture can afford it
+because what is behind the band is page it has already scrolled past.
+
+So the beat declares a zoom region, 780 by 1040 with the decision centred in it,
+and `ProjectShowcase` now picks the stacked arrangement for any shot wider than
+the canvas rather than only for a browser window. The rule already existed and
+already said the right thing about browser windows; it was written as
+`cleanFrame === "browser"` and is now written as the aspect test it always
+meant. Nothing in the web reel changes: its clean shots are 780x1688 mobile
+captures at 0.462, narrower than the vertical canvas at 0.5625, so they still
+overlay. The other half of the trade is that at 780 by 1040 the shot renders one
+to one in the vertical crop, so the module's own body type is the size it is on
+a real phone rather than two thirds of it.
+
+**Playback is per beat, not per cut.** `FeaturedBeat.cleanPlayback` is new and
+every training project beat sets it. See the next section.
+
+**The RFI beat in the 45 second cut is pushed in** on the two option cards and
+the feedback panel. At full frame it is a wall of blueprint paper with two
+paragraphs on it, and the claim underneath says the module scores the decision.
+
+### Keeping five different interaction clips moving
+
+The web reel's clean shots are all the same thing: a 180 frame easeInOutCubic
+scroll of a home page. One trim and one rate per cut is correct for all of them,
+because the motion curve is identical and only the page behind it changes.
+
+The training reel's are five different interaction recordings of four different
+lengths, and each one is a person doing something, pausing, and doing the next
+thing. Where the motion sits is a property of the clip. Every clip was measured
+frame by frame, by running ffmpeg's `psnr` filter over the clip against itself
+delayed one frame, which gives the difference between every pair of consecutive
+source frames. The last frame that moves is source 100 for hero-to-zones, 132
+for hazard-hunt, 160 for the P&L simulator, 90 for the RFI branch, and past 145
+for stop-or-go. A single rate per cut cannot land five different numbers, and a
+shot that overruns its clip's last movement does not merely look slow: it stops,
+and the cut lands on a photograph.
+
+So `FeaturedBeat.cleanPlayback` overrides the cut's default per beat. Every rate
+below was solved to put the shot's last output frame on the clip's last moving
+source frame. All five trims are 0, because an interaction recording has no
+eased ramp to start inside and starting late would cut into an interaction only
+a few seconds long, except beat 1 of the 15 second cut for the reason above.
+
+| Cut | Beat | Clip | Trim | Rate | Last source frame |
+|---|---|---|---|---|---|
+| 15s | 1 | hero-to-zones | 33 | 0.587 | 100, the second tab click |
+| 15s | 2 | stop-or-go mobile | 0 | 1 | 115, the next prompt arriving |
+| 45s | 1 | hero-to-zones | 0 | 0.543 | 100, the second tab click |
+| 45s | 2 | hazard-hunt desktop | 0 | 0.716 | 132, the sixth hazard found |
+| 45s | 3 | P&L simulator | 0 | 0.867 | 160, inside the fourth slider drag |
+| 45s | 4 | RFI branch | 0 | 0.489 | 90, option B marked correct |
+
+Verified by measuring PSNR between the last two frames of each clean shot in the
+delivered renders, the same test the web reel used:
+
+| Shot | Frames | PSNR |
+|---|---|---|
+| 15s beat 1 | 192 to 193 | 22.7 dB |
+| 15s beat 2 | 332 to 333 | 33.2 dB |
+| 45s beat 1 | 364 to 365 | 20.7 dB |
+| 45s beat 2 | 574 to 575 | 18.9 dB |
+| 45s beat 3 | 784 to 785 | 35.9 dB |
+| 45s beat 4 | 994 to 995 | 25.3 dB |
+| 15s CTA card, static control | 440 to 441 | 80.1 dB |
+| 45s CTA card, static control | 1340 to 1341 | 88.5 dB |
+
+All six shots are far under the 40 dB line that would mean a frozen shot, and
+the two static controls at 80 and 88 dB show the metric is reading real motion
+rather than encoder noise.
+
+One number worth recording because it looks like a failure and is not. Frames
+191 to 192 of the 15 second cut measure 47.3 dB, over the line, and they are
+consecutive frames inside beat 1. At rate 0.587 the source index advances on
+roughly three output frames in five, so some consecutive output pairs carry the
+same source frame and differ only by the shot's three percent push in. That is
+the documented cost of any rate under 1, the same cost the web reel's LinkedIn
+cut pays at 0.6. The test that matters is the last pair before the cut, because
+a shot that is still moving when it is cut cannot read as frozen, and every one
+of those is under 36 dB.
+
+### Delivering the training reel
+
+`scripts/deliver.ts` takes a `--reel` flag. It defaults to `web`, so every
+command that worked before the flag existed still does exactly what it did.
+
+```
+npx tsx scripts/deliver.ts --reel training --variant t-a
+```
+
+Same pipeline over a different set of names. Renders come from
+`out/render-training-{format}-{duration}.mp4`, deliveries go to
+`out/kap-reel-training-{format}-{duration}.mp4` with matching SRTs, thumbnails
+are `out/thumbnail-training-{vertical,landscape}.jpg`, and the six carousel
+stills land in `out/frames-training/`. Both reels' outputs sit in one `out/`
+directory and neither can overwrite the other.
+
+The music variants are `t-a`, `t-b` and `t-c` for this reel and `a`, `b` and `c`
+for the web one, and passing the wrong reel's variant is refused rather than
+silently muxing the wrong bed.
+
+`scripts/srt.ts` gained the same flag and a second pair of tables,
+`CUE_ROWS_TRAINING_15S` and `CUE_ROWS_TRAINING_45S`, written the same way as the
+web ones: one row per on-screen line, with the absolute frames it appears and
+disappears and a comment naming the scene those frames were read from. Both
+reels share the beat map from `src/lib/timing.ts`, so the frame arithmetic is
+identical and only the lines differ.
+
+```
+npx tsx scripts/srt.ts --reel training           write all five
+npx tsx scripts/srt.ts --reel training --check   validate without writing
+```
+
+**The web reel's captions were checked rather than assumed.** All five web SRTs
+were hashed before the change and after it and are byte identical, as are its
+two thumbnails and its six carousel stills, which a `--skip-encode` run
+regenerates from the same renders.
+
+One acceptance check had to be fixed on the way through. Item 1, the manifest,
+read project ids out of `src/Reel.tsx` and capture ids out of
+`src/scenes/SurfacesTour.tsx`. The 2026-09-04 content lift moved every id into
+`src/reels/{web,training}.ts`, so it had been greping two files that no longer
+contain any ids and passing by finding nothing, which is worse than failing. It
+now reads the content config for the reel being delivered, resolves each capture
+id back to its project, and fails when a config yields no ids at all.
+
+### Audio for the training reel
+
+The owner chose variant t-a. The 15 second bed is the 20 second take trimmed to
+15.0s; the 45 second bed is a 50 second take of the same prompt, generated on
+2026-09-04 and logged in `config/audio.json` and `LICENSING.md` with its
+measured cost of 1,368 credits. It passed Section 9's first second energy test
+on the first generation, so exactly one billable call was made.
+
+Both mixes are music alone, per the owner's 2026-09-03 decision carried across
+from reel one. No sound effects were generated for this reel.
+
+**A third loudness pass was added.** loudnorm's pass 2 output is a prediction,
+which this project already knew and already worked around by measuring the
+finished file. On the t-a bed it predicted -13.98 LUFS and the file measured
+-13.71, a 0.27 dB error on the one bed of the six with real dynamic range in it,
+LRA 2.9 against 0.6 to 0.8 for the rest. `correctLoudness` in `scripts/audio.ts`
+and its twin in `scripts/deliver.ts` measure the file and shift the whole thing
+by the difference. A flat gain is the right instrument for a residual: it is
+linear, so integrated loudness and true peak move by exactly the amount applied
+and there is nothing left for a limiter to do. It has a 0.15 dB deadband so a
+file already on target is never re-encoded, which is what keeps reel one's mixes
+untouched, and it refuses rather than breach the true peak ceiling. Applied here
+at -0.29 dB, which moved the true peak from -1.84 to -2.13 dBTP, further inside
+the ceiling rather than nearer it.
+
+Delivered, measured off the five MP4s with loudnorm in analysis mode:
+
+| File | Integrated | True peak | LRA |
+|---|---|---|---|
+| `kap-reel-training-vertical-15s.mp4` | -14.01 LUFS | -2.14 dBTP | 2.90 |
+| `kap-reel-training-feed-15s.mp4` | -14.01 LUFS | -2.14 dBTP | 2.90 |
+| `kap-reel-training-square-15s.mp4` | -14.01 LUFS | -2.14 dBTP | 2.90 |
+| `kap-reel-training-linkedin-45s.mp4` | -14.06 LUFS | -2.17 dBTP | 1.70 |
+| `kap-reel-training-landscape-45s.mp4` | -14.06 LUFS | -2.17 dBTP | 1.70 |
+
+### Training reel gates
+
+- Safe zones: `out/gate-t7/`. Debug stills at 20, 120, 350 and 440 for
+  `TrainingVerticalDebug`, `TrainingFeedDebug`, `TrainingSquareDebug` and
+  `TrainingLandscapeDebug`, and at 100, 300, 700, 1030, 1150 and 1300 for
+  `TrainingLinkedInDebug` and `TrainingLinkedInLandscapeDebug`. Twenty eight
+  stills, plus six contact sheets built from them. No text and no logo enters a
+  red zone in any of them. Captures and device frames do, which Section 8
+  allows.
+- Shot checks: `out/gate-t6/`, including the source frames every zoom region was
+  measured off.
+- Frame sheets of the delivered files: `out/final-training/vertical-sheet.png`,
+  4x3 every 40 frames, and `linkedin-sheet.png` and `landscape-sheet.png`, 4x4
+  every 84 frames. 1350 frames sampled every 84 gives 17 frames and a 4x4 holds
+  16, so the sheets run 0 to 1260 and the last sample at 1344 is dropped. Frame
+  1260 is inside the CTA beat, so nothing in the cut goes unrepresented.

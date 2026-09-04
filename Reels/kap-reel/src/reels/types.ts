@@ -73,6 +73,16 @@ export type HookContent = {
   shot: HookShot;
 };
 
+/**
+ * How the clean capture inside a project beat is played. Tuned per cut against
+ * the source clip's own motion, and per beat where the clips differ; see the
+ * long notes in src/lib/timing.ts and src/reels/training.ts.
+ */
+export type CapturePlayback = {
+  trimBefore: number;
+  scrollPlaybackRate: number;
+};
+
 /** One project beat, in either cut. */
 export type FeaturedBeat = {
   /** Project id in config/projects.json. Must be cleared_for_public_showcase. */
@@ -95,6 +105,18 @@ export type FeaturedBeat = {
    * capture: a 16:10 module screen shown whole is not readable on a phone.
    */
   zoom?: ZoomRegion;
+  /**
+   * Trim and playback rate for this beat's clean shot, overriding the cut's own
+   * default in `cleanCapture`.
+   *
+   * The web reel does not need this: every one of its clean shots is the same
+   * 180 frame scripted scroll, so one rate per cut is right for all of them.
+   * The training reel's clean shots are interaction recordings of different
+   * lengths, each with its own idle stretches, and Section 6b's "nothing may be
+   * frozen at the cut" has to be solved against the clip that is actually on
+   * screen. See the per-beat notes in src/reels/training.ts.
+   */
+  cleanPlayback?: CapturePlayback;
   /** Lower third headline. Section 7 caps a text card at six words. */
   name: string;
   /**
@@ -126,15 +148,6 @@ export type TourCut = {
   captureFrameOffset: number;
   /** Seed for the handheld drift. One per cut, so hard cuts do not share a wobble. */
   driftSeed: string;
-};
-
-/**
- * How the clean capture inside a project beat is played. Tuned per cut against
- * the source clip's own motion; see the long notes in src/lib/timing.ts.
- */
-export type CapturePlayback = {
-  trimBefore: number;
-  scrollPlaybackRate: number;
 };
 
 /**

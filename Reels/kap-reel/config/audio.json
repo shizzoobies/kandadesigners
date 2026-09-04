@@ -296,6 +296,28 @@
         "pass": true
       },
       "set": "training"
+    },
+    {
+      "kind": "music",
+      "id": "music-t-a-50s",
+      "file": "assets/audio/raw/music-t-a-50s.mp3",
+      "prompt": "Acoustic-leaning instrumental at about 108 bpm. Soft piano or felt keys carry the main melodic motif over a light, unobtrusive electronic pulse underneath. Warm, steady, confident, unhurried but still moving forward, like a bright morning workshop rather than a product launch. Starts immediately at full energy on the very first beat: no intro build, no fade in, no silence or near silence at the start, no ramp. Fully instrumental, no vocals, no vocal chops, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no sub bass wobble, no cinematic swell. Even confident energy the whole way through so any fifteen second window stands on its own. A bright morning training workshop, not a product launch and not a nightclub. Clean modern production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 50000,
+      "creditsMeasured": 1368,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-04T16:41:20.850Z",
+      "accepted": true,
+      "notes": "Acoustic-leaning felt keys over a light electronic pulse, about 108 bpm. Measured duration 50.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -13.6,
+        "wholeTrackMeanDb": -14.2,
+        "deficitDb": -0.6,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "training"
     }
   ],
   "mixes": [
@@ -400,15 +422,15 @@
         "gainsDb": {},
         "sfxPeakAfterGainDbfs": {}
       },
-      "measuredIntegratedLufs": -13.71,
-      "measuredTruePeakDbfs": -1.84,
+      "measuredIntegratedLufs": -13.99,
+      "measuredTruePeakDbfs": -2.13,
       "measuredLra": 2.9,
       "loudnormPredicted": {
         "integratedLufs": -13.98,
         "truePeakDbtp": -1.84,
         "lra": 2.9
       },
-      "createdAt": "2026-09-04T12:05:53.073Z",
+      "createdAt": "2026-09-04T17:12:30.856Z",
       "set": "training"
     },
     {

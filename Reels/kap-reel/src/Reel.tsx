@@ -94,6 +94,9 @@ export const Reel: React.FC<ReelProps> = ({
 
       {featured.map((project, i) => {
         const beat = beats.projects[i];
+        // The cut's playback is the default; a beat overrides it where its own
+        // clip needs a different window. See FeaturedBeat.cleanPlayback.
+        const playback = project.cleanPlayback ?? cleanCapture;
         // Every beat but the last runs six frames long so the incoming beat can
         // whip across it. Later siblings paint on top, so the outgoing beat
         // slides out underneath the one arriving.
@@ -122,8 +125,8 @@ export const Reel: React.FC<ReelProps> = ({
               whipIn={i > 0}
               whipOut={whipOut}
               durationInFrames={linkedin ? LINKEDIN_BEAT_FRAMES : undefined}
-              cleanTrimBefore={cleanCapture.trimBefore}
-              scrollPlaybackRate={cleanCapture.scrollPlaybackRate}
+              cleanTrimBefore={playback.trimBefore}
+              scrollPlaybackRate={playback.scrollPlaybackRate}
             />
           </Sequence>
         );

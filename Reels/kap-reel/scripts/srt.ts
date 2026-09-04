@@ -185,8 +185,238 @@ export const CUE_ROWS_45S: CueRow[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// Timing tables, training reel
+// ---------------------------------------------------------------------------
+
+/**
+ * The training reel's 15 second cut. Covers vertical, feed and square.
+ *
+ * Same beat map as the web reel, because both reels render the same scene tree
+ * from src/lib/timing.ts, so every frame number below is the same arithmetic
+ * against the same offsets. Only the lines differ, and they come from
+ * src/reels/training.ts.
+ *
+ * Nothing here carries a number except the phone on the CTA card, which is read
+ * from config/brand.json. That is deliberate and it is the first of the four
+ * limits at the top of the live site's src/data/training.js: no pricing, no
+ * throughput count, no bench or SME name, and never the sixty years figure. The
+ * P&L figures a viewer can see in the finance beat are course content inside
+ * the capture, not a caption and not a claim, so they are not rows here.
+ */
+export const CUE_ROWS_TRAINING_15S: CueRow[] = [
+  // src/scenes/Hook.tsx. HOOK 0 to 54. Both halves slam on frame 0 and hold.
+  { text: "One designer.", start: 0, end: 54, source: "Hook.tsx" },
+  { text: "Or a whole team.", start: 0, end: 54, source: "Hook.tsx" },
+
+  // src/scenes/ProjectShowcase.tsx. PROJECT_1 54 to 194.
+  // Name types on at beat+2, claim cuts in at beat+CLAIM_IN (36).
+  {
+    text: "Spot it before it hurts someone",
+    start: 56,
+    end: 194,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "Keyboard and screen reader tested",
+    start: 90,
+    end: 194,
+    source: "ProjectShowcase.tsx",
+  },
+
+  // PROJECT_2 194 to 334. Same module, the phone surface.
+  {
+    text: "Hazard recognition module",
+    start: 196,
+    end: 334,
+    source: "ProjectShowcase.tsx",
+  },
+  { text: "Built for your LMS", start: 230, end: 334, source: "ProjectShowcase.tsx" },
+
+  // src/scenes/SurfacesTour.tsx. SURFACES_TOUR 334 to 388, SURFACES_TOUR_CUTS
+  // three cuts of 18. Each word is held for the whole cut.
+  { text: "Finance", start: 334, end: 352, source: "SurfacesTour.tsx", shortHold: true },
+  {
+    text: "Microlearning",
+    start: 352,
+    end: 370,
+    source: "SurfacesTour.tsx",
+    shortHold: true,
+  },
+  {
+    text: "SCORM and xAPI",
+    start: 370,
+    end: 388,
+    source: "SurfacesTour.tsx",
+    shortHold: true,
+  },
+
+  // src/scenes/CallToAction.tsx. CALL_TO_ACTION 388 to 450.
+  // The closing line and the url both arrive at URL_IN 14, the phone at
+  // PHONE_IN 22. The lockup is a mark, not a line, so it gets no cue.
+  { text: "Never the bottleneck.", start: 402, end: 450, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 402, end: 450, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 410, end: 450, source: "CallToAction.tsx" },
+];
+
+/**
+ * The training reel's 45 second cut. Covers linkedin and landscape.
+ *
+ * "WCAG 2.1 AA" is the only number on screen apart from the phone, and it is a
+ * standard designation rather than a measurement: the web reel says 2.2 because
+ * its client sites were measured against 2.2, and these samples were written to
+ * 2.1. Unlike the web reel, this cut's accessibility beat derives nothing from
+ * config/metrics.json, because a count of anything would breach limit 2.
+ */
+export const CUE_ROWS_TRAINING_45S: CueRow[] = [
+  // src/scenes/Hook.tsx. LINKEDIN_HOOK 0 to 36.
+  { text: "One designer.", start: 0, end: 36, source: "Hook.tsx" },
+  { text: "Or a whole team.", start: 0, end: 36, source: "Hook.tsx" },
+
+  // src/scenes/HowWeWork.tsx. LINKEDIN_HOW_WE_WORK 36 to 156, lines at
+  // beat+0, +30, +60. All three hold to the cut.
+  { text: "One designer for a module.", start: 36, end: 156, source: "HowWeWork.tsx" },
+  {
+    text: "A full bench for a curriculum.",
+    start: 66,
+    end: 156,
+    source: "HowWeWork.tsx",
+  },
+  { text: "Never the bottleneck.", start: 96, end: 156, source: "HowWeWork.tsx" },
+
+  // src/scenes/ProjectShowcase.tsx. LINKEDIN_PROJECT_1 156 to 366.
+  // Name at beat+2, context line beat+40 to beat+120, claim beat+126 to cut.
+  {
+    text: "Spot it before it hurts someone",
+    start: 158,
+    end: 366,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "A jobsite walk-through you can tab through.",
+    start: 196,
+    end: 276,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "Keyboard and screen reader tested",
+    start: 282,
+    end: 366,
+    source: "ProjectShowcase.tsx",
+  },
+
+  // LINKEDIN_PROJECT_2 366 to 576.
+  {
+    text: "Hazard recognition module",
+    start: 368,
+    end: 576,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "Six hazards. Click them or list them.",
+    start: 406,
+    end: 486,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "Hotspots read aloud as a list",
+    start: 492,
+    end: 576,
+    source: "ProjectShowcase.tsx",
+  },
+
+  // LINKEDIN_PROJECT_3 576 to 786.
+  {
+    text: "The P&L, read like an owner",
+    start: 578,
+    end: 786,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "Move a slider. Watch the margin move.",
+    start: 616,
+    end: 696,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "Built for non-finance managers",
+    start: 702,
+    end: 786,
+    source: "ProjectShowcase.tsx",
+  },
+
+  // LINKEDIN_PROJECT_4 786 to 996. The RFI microlearning, this cut only.
+  {
+    text: "The RFI that gets answered",
+    start: 788,
+    end: 996,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "A six minute microlearning for the trades.",
+    start: 826,
+    end: 906,
+    source: "ProjectShowcase.tsx",
+  },
+  {
+    text: "Scores the decision, not the recall",
+    start: 912,
+    end: 996,
+    source: "ProjectShowcase.tsx",
+  },
+
+  // src/scenes/SurfacesTour.tsx. LINKEDIN_SURFACES_TOUR 996 to 1076,
+  // LINKEDIN_SURFACES_TOUR_CUTS four cuts of 20.
+  { text: "Finance", start: 996, end: 1016, source: "SurfacesTour.tsx", shortHold: true },
+  {
+    text: "Microlearning",
+    start: 1016,
+    end: 1036,
+    source: "SurfacesTour.tsx",
+    shortHold: true,
+  },
+  {
+    text: "SCORM and xAPI",
+    start: 1036,
+    end: 1056,
+    source: "SurfacesTour.tsx",
+    shortHold: true,
+  },
+  {
+    text: "Your LMS, not ours",
+    start: 1056,
+    end: 1076,
+    source: "SurfacesTour.tsx",
+    shortHold: true,
+  },
+
+  // src/scenes/AccessibilityBeat.tsx. LINKEDIN_ACCESSIBILITY 1076 to 1226,
+  // lines at beat+0, +45, +90.
+  { text: "Built to WCAG 2.1 AA.", start: 1076, end: 1226, source: "AccessibilityBeat.tsx" },
+  {
+    text: "Tested with a keyboard and a screen reader.",
+    start: 1121,
+    end: 1226,
+    source: "AccessibilityBeat.tsx",
+  },
+  {
+    text: "In your LMS, not a preview.",
+    start: 1166,
+    end: 1226,
+    source: "AccessibilityBeat.tsx",
+  },
+
+  // src/scenes/CallToAction.tsx. LINKEDIN_CALL_TO_ACTION 1226 to 1350.
+  { text: "Taking new projects.", start: 1240, end: 1350, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 1240, end: 1350, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 1248, end: 1350, source: "CallToAction.tsx" },
+];
+
+// ---------------------------------------------------------------------------
 // Targets
 // ---------------------------------------------------------------------------
+
+/** Which reel a set of targets belongs to. */
+export type ReelKey = "web" | "training";
 
 export type SrtTarget = {
   /** {format} in the Section 10 filename. */
@@ -196,18 +426,68 @@ export type SrtTarget = {
   rows: CueRow[];
   /** Frames the matching MP4 runs, so a cue can never outlive the picture. */
   totalFrames: number;
+  /**
+   * Which reel this target captions. The web reel keeps the Section 10 name
+   * exactly; the training reel takes a "training" segment after the stem, the
+   * same way its renders and deliveries do.
+   */
+  reel: ReelKey;
 };
 
 export const SRT_TARGETS: SrtTarget[] = [
-  { format: "vertical", duration: "15s", rows: CUE_ROWS_15S, totalFrames: 450 },
-  { format: "feed", duration: "15s", rows: CUE_ROWS_15S, totalFrames: 450 },
-  { format: "square", duration: "15s", rows: CUE_ROWS_15S, totalFrames: 450 },
-  { format: "linkedin", duration: "45s", rows: CUE_ROWS_45S, totalFrames: 1350 },
-  { format: "landscape", duration: "45s", rows: CUE_ROWS_45S, totalFrames: 1350 },
+  { format: "vertical", duration: "15s", rows: CUE_ROWS_15S, totalFrames: 450, reel: "web" },
+  { format: "feed", duration: "15s", rows: CUE_ROWS_15S, totalFrames: 450, reel: "web" },
+  { format: "square", duration: "15s", rows: CUE_ROWS_15S, totalFrames: 450, reel: "web" },
+  { format: "linkedin", duration: "45s", rows: CUE_ROWS_45S, totalFrames: 1350, reel: "web" },
+  { format: "landscape", duration: "45s", rows: CUE_ROWS_45S, totalFrames: 1350, reel: "web" },
 ];
 
+export const TRAINING_SRT_TARGETS: SrtTarget[] = [
+  {
+    format: "vertical",
+    duration: "15s",
+    rows: CUE_ROWS_TRAINING_15S,
+    totalFrames: 450,
+    reel: "training",
+  },
+  {
+    format: "feed",
+    duration: "15s",
+    rows: CUE_ROWS_TRAINING_15S,
+    totalFrames: 450,
+    reel: "training",
+  },
+  {
+    format: "square",
+    duration: "15s",
+    rows: CUE_ROWS_TRAINING_15S,
+    totalFrames: 450,
+    reel: "training",
+  },
+  {
+    format: "linkedin",
+    duration: "45s",
+    rows: CUE_ROWS_TRAINING_45S,
+    totalFrames: 1350,
+    reel: "training",
+  },
+  {
+    format: "landscape",
+    duration: "45s",
+    rows: CUE_ROWS_TRAINING_45S,
+    totalFrames: 1350,
+    reel: "training",
+  },
+];
+
+/** The five targets for one reel. */
+export function targetsFor(reel: ReelKey): SrtTarget[] {
+  return reel === "training" ? TRAINING_SRT_TARGETS : SRT_TARGETS;
+}
+
 export function srtFileName(target: SrtTarget): string {
-  return `kap-reel-${target.format}-${target.duration}.srt`;
+  const stem = target.reel === "training" ? "kap-reel-training" : "kap-reel";
+  return `${stem}-${target.format}-${target.duration}.srt`;
 }
 
 // ---------------------------------------------------------------------------
@@ -392,8 +672,8 @@ export function validateTarget(target: SrtTarget): Problem[] {
   return problems;
 }
 
-export function validateAll(): Problem[] {
-  return SRT_TARGETS.flatMap(validateTarget);
+export function validateAll(targets: SrtTarget[] = SRT_TARGETS): Problem[] {
+  return targets.flatMap(validateTarget);
 }
 
 // ---------------------------------------------------------------------------
@@ -402,9 +682,12 @@ export function validateAll(): Problem[] {
 
 export type WrittenSrt = { file: string; cues: number; target: SrtTarget };
 
-export function writeSrtFiles(outDir: string = OUT_DIR): WrittenSrt[] {
+export function writeSrtFiles(
+  outDir: string = OUT_DIR,
+  targets: SrtTarget[] = SRT_TARGETS,
+): WrittenSrt[] {
   fs.mkdirSync(outDir, { recursive: true });
-  return SRT_TARGETS.map((target) => {
+  return targets.map((target) => {
     const file = path.join(outDir, srtFileName(target));
     fs.writeFileSync(file, renderSrt(target.rows), "utf8");
     return { file, cues: buildCues(target.rows).length, target };
@@ -416,14 +699,22 @@ export function writeSrtFiles(outDir: string = OUT_DIR): WrittenSrt[] {
 // ---------------------------------------------------------------------------
 
 function main(argv: string[]): void {
+  const reelIndex = argv.indexOf("--reel");
+  const reelArg = reelIndex === -1 ? "web" : argv[reelIndex + 1];
+  if (reelArg !== "web" && reelArg !== "training") {
+    console.error(`srt: unknown reel "${reelArg}". Use web or training.`);
+    process.exit(2);
+  }
+  const targets = targetsFor(reelArg);
+
   const printIndex = argv.indexOf("--print");
   if (printIndex !== -1) {
     const key = argv[printIndex + 1];
-    const target = SRT_TARGETS.find((t) => `${t.format}-${t.duration}` === key);
+    const target = targets.find((t) => `${t.format}-${t.duration}` === key);
     if (!target) {
       console.error(
         `srt: unknown target "${key}". Try one of ` +
-          SRT_TARGETS.map((t) => `${t.format}-${t.duration}`).join(", "),
+          targets.map((t) => `${t.format}-${t.duration}`).join(", "),
       );
       process.exit(2);
     }
@@ -431,11 +722,13 @@ function main(argv: string[]): void {
     return;
   }
 
-  const problems = validateAll();
+  const problems = validateAll(targets);
   for (const p of problems) console.error(`  ${p.target}: ${p.message}`);
 
   if (argv.includes("--check")) {
-    if (problems.length === 0) console.log("srt: all five tables validate.");
+    if (problems.length === 0) {
+      console.log(`srt: all five ${reelArg} tables validate.`);
+    }
     process.exit(problems.length === 0 ? 0 : 1);
   }
 
@@ -444,7 +737,7 @@ function main(argv: string[]): void {
     process.exit(1);
   }
 
-  for (const written of writeSrtFiles()) {
+  for (const written of writeSrtFiles(OUT_DIR, targets)) {
     console.log(
       `srt: wrote ${path.relative(ROOT, written.file).replace(/\\/g, "/")} ` +
         `(${written.cues} cues, ${written.target.rows.length} lines)`,

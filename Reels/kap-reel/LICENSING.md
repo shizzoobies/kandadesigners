@@ -50,6 +50,64 @@ logged, and not used.
 2026-09-03.** All three takes are logged below and remain on disk. See the
 "Sound effects" section.
 
+## Summary: training content reel
+
+Closed at final delivery, 2026-09-04. The second reel is a second content
+configuration of the same scene tree, so it shares this file, the same
+ElevenLabs account and the same Pro plan, and every rights statement below
+applies to it unchanged. What it does not share is a single generated asset:
+the plates were shot fresh and the music was written fresh, on the owner's
+2026-09-04 decision to spend new credits rather than reuse reel one's.
+
+**Credits spent on this reel: 38,331 total.**
+
+| Bucket | Credits | Source |
+|---|---|---|
+| Image generation, training context plates | 35,322 | `config/plates.json`, 20 generations tagged `"set": "training"` |
+| Music, three 20 second candidates | 1,641 | `config/audio.json`, 3 generations at 547 each |
+| Music, the chosen 50 second bed | 1,368 | `config/audio.json`, `music-t-a-50s` |
+| **Total** | **38,331** | |
+
+Both reels together come to 81,544 credits.
+
+**Model per plate.** Every training plate that ships was produced by
+`gemini-3-pro-image` through the ElevenLabs Image & Video API, at 9:16, 2K. The
+per-plate spend counts every candidate generated for that plate, accepted and
+rejected.
+
+| Plate | Model | Credits | Candidates | Where it appears |
+|---|---|---|---|---|
+| `t-laptop-shoulder` | gemini-3-pro-image | 2,436 | 2 | Safety walk-through plate, both cuts |
+| `t-phone-hands` | gemini-3-pro-image | 3,654 | 2 | Hazard recognition plate, both cuts |
+| `t-tablet-desk` | gemini-3-pro-image | 3,654 | 2 | "Finance" tour cut in the 15s cut, P&L plate in the 45s |
+| `t-desktop-wide` | gemini-3-pro-image | 9,135 | 5 | "Microlearning" tour cut in the 15s cut, RFI plate and "Your LMS, not ours" in the 45s |
+| `t-laptop-cafe-free` | gemini-3-pro-image | 3,654 | 2 | "Finance" tour cut, 45s cut only |
+| `t-phone-hands-b` | gemini-3-pro-image | 3,654 | 2 | "Microlearning" tour cut, 45s cut only |
+| `t-laptop-two` | gemini-3-pro-image | 9,135 | 5 | "SCORM and xAPI" tour cut, both cuts |
+
+`t-desktop-wide` and `t-laptop-two` each needed five candidates rather than two,
+which is where the extra spend went. `t-tablet-desk` is the one plate in this
+set whose screen quad had to be typed by hand, because it is also the only one
+carrying a real window reflection and the detector could not separate the panel
+from it; the quad in `config/plates.json` records that.
+
+**Music variant chosen: t-a**, the acoustic-leaning felt keys over a light
+electronic pulse at about 108 bpm. `assets/audio/raw/music-t-a-20s.mp3` is the
+bed for the 15 second cut and `music-t-a-50s.mp3` for the 45 second cut.
+Variants t-b and t-c were generated, logged, and not used.
+
+**Sound effects: none, and none generated for this reel.** The owner's
+2026-09-03 decision that both reel one mixes are the music bed alone was carried
+into this reel on 2026-09-04, so no new sound effect credits were spent. The
+three reel one takes remain on disk and unused.
+
+**Original samples.** The three training modules shown are K&A originals built
+to demonstrate the service line, not client or former employer material, so
+there is no third party clearance to hold for any of them. That is recorded in
+`config/projects.json` under `_decisions` for 2026-09-04, and the disclosure
+that they are samples appears in the post copy at `out/post-copy-training.md`
+rather than on screen, which is the owner's decision of the same date.
+
 ## ElevenLabs
 
 - Plan tier: Pro (owner-confirmed 2026-09-03).
@@ -469,6 +527,36 @@ delta of exactly 547, matching every other 20 second `music_v2` generation
 measured on this project. music-t-a-20s and music-t-b-20s were each measured
 cleanly at 547 credits under the Music bucket with no such collision.
 
+### Second reel: the chosen 50 second bed (2026-09-04)
+
+The owner picked variant t-a from the three previews, so the 45 second cut
+needed a 50 second take of the same track: the 20 second candidate cannot be
+looped to cover 45 seconds without the seam being audible, and Section 9 asks
+for trim room at both ends.
+
+| Field | Value |
+|---|---|
+| File | `assets/audio/raw/music-t-a-50s.mp3` |
+| Endpoint | POST /v1/music, prompt mode |
+| Model | `music_v2` |
+| Length requested | 50,000 ms |
+| Measured duration | 50.04 s |
+| Output format | `mp3_48000_320` requested, 48 kHz stereo delivered |
+| `force_instrumental` | true |
+| Credits | 1,368, measured as a usage endpoint delta on the Music bucket |
+| First second test | Pass. First second at -13.6 dB against a whole track mean of -14.2 dB, so 0.6 dB above the mean rather than below it |
+| Generated | 2026-09-04 |
+
+The prompt is byte for byte the one that produced `music-t-a-20s.mp3`, stored
+verbatim in `config/audio.json`: same feel text, same instruction half, same
+"starts immediately at full energy" requirement. Only `music_length_ms` differs.
+Prompt mode takes no seed, so this is a different performance of the same brief
+rather than an extension of the same take, which is why the first second test
+was run again on it rather than inherited.
+
+It passed on the first generation, so exactly one billable call was made. Four
+of this set's six permitted generations are now used.
+
 ### Second reel: 15 second previews (2026-09-04)
 
 Three audio-only preview mixes were built with ffmpeg for the owner to choose
@@ -486,13 +574,24 @@ prediction.
 
 | Variant | Integrated | True peak | LRA |
 |---|---|---|---|
-| t-a | -13.71 LUFS | -1.84 dBTP | 2.9 |
+| t-a | -13.99 LUFS | -2.13 dBTP | 2.9 |
 | t-b | -14.09 LUFS | -2.31 dBTP | 0.8 |
 | t-c | -14.00 LUFS | -2.23 dBTP | 0.6 |
 
-All three land within 0.4 LU of the -14 LUFS target and well clear of the
--1.5 dBTP ceiling. t-a is the furthest off target at -13.71, 0.29 LU hot; still
-closer than reel one's variant B was to its own target.
+All three land within 0.1 LU of the -14 LUFS target and well clear of the
+-1.5 dBTP ceiling.
+
+t-a took a third pass to get there, and it is worth recording why. Its two pass
+loudnorm predicted -13.98 LUFS and the finished file measured -13.71, a 0.27 dB
+prediction error on the one bed of the six with real dynamic range in it, LRA
+2.9 against 0.6 to 0.8 for the rest. This project already treats loudnorm's pass
+2 output as a prediction and measures the file instead, so the answer is the
+obvious one: measure, then shift the whole file by the difference.
+`correctLoudness` in `scripts/audio.ts` does that, with a 0.15 dB deadband so a
+file already on target is never re-encoded, and it refuses the correction rather
+than breach the true peak ceiling. Applied here at -0.29 dB, which moved the
+true peak from -1.84 to -2.13 dBTP, further inside the ceiling rather than
+nearer it. Reel one's mixes all sit inside the deadband and are untouched.
 
 ## Sound effects
 

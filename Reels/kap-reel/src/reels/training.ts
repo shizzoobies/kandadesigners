@@ -50,39 +50,73 @@ import type { FeaturedBeat, ReelContent, TourCut, ZoomRegion } from "./types";
 const ZOOM_SAFETY_HAZARD_HUNT: ZoomRegion = { x: 435, y: 540, w: 1055, h: 600 };
 
 /**
- * Measured, and sized for a full bleed 9:16 frame rather than for a window.
+ * Measured off training-safety-stop-or-go-mobile, 780x1688.
  *
- * The hook has no device frame around it, so its region is cover cropped to
- * whatever canvas is rendering, and a 9:16 canvas keeps only the middle 1080 of
- * whatever width the region has. A tight box on the illustration would
- * therefore show a narrow vertical slice of it at three times scale. This
- * rectangle is wide and tall enough to survive that crop: the vertical crop
- * lands on capture x 538 to 1382, which is most of the illustration at 1.28x,
- * and the wider crops keep the list beside it as well.
+ * The interaction is the bottom two thirds of the phone screen: the call
+ * counter at 620, the answered tally, the prompt sentence, the STOP and GO
+ * buttons at 1066 to 1170, and the feedback paragraph under them ending at
+ * 1324. Everything above 590 is the module header and the standing
+ * instructions, which the beat before it already showed, and everything below
+ * 1360 is empty card.
+ *
+ * The region is the full capture width, so no word is ever cut horizontally,
+ * and 1040 tall with the interaction centred inside it. The height is what the
+ * geometry needs rather than what the content needs: at 780 by 1040 the shot is
+ * wider than a 9:16 canvas, so ProjectShowcase gives it the stacked
+ * arrangement, the device sits above the lower third instead of under it, and
+ * every part of the decision is visible. At the phone's native 780 by 1688 the
+ * vertical crop's band would cut the shot at capture row 1039, which is the top
+ * edge of the STOP button: the buttons and the whole feedback line would be
+ * behind the scrim. That is not a tuning problem, it is arithmetic. The device
+ * is centred on the canvas and the band is anchored near the bottom of it, so
+ * an overlaid band always covers the lower third of the device, and this clip
+ * keeps the thing worth seeing exactly there.
+ *
+ * The other half of the trade is that at 780 by 1040 the shot renders one to
+ * one in the vertical crop, so the module's own body type is the size it is on
+ * a real phone rather than two thirds of it.
  */
-const ZOOM_HOOK_HAZARD_HUNT: ZoomRegion = { x: 110, y: 150, w: 1700, h: 1500 };
+const ZOOM_SAFETY_STOP_OR_GO_MOBILE: ZoomRegion = {
+  x: 0,
+  y: 452,
+  w: 780,
+  h: 1040,
+};
 
 /**
- * Measured off training-safety-stop-or-go-desktop. The decision sits in a band
- * across the top of the content card: the call counter, the prompt sentence,
- * the STOP and GO buttons, and the feedback under them, from 430 down to about
- * 1330. Everything below that is empty card.
+ * Measured off training-safety-hero-to-zones-desktop, on source frame 100.
  *
- * The prompt and the feedback run the full width of the card, so the region
- * cannot be narrowed without cutting words in half, and the magnification is
- * therefore only about a third. What the crop buys is the dead lower half of
- * the screen: the same shot at full frame spends half its height on nothing.
+ * The region Section 6b's readable shot has to hold is the tab row at 320, the
+ * intro sentence, and the four zone cards, which end at 958. The content column
+ * runs 399 to 2483, and neither the page margins outside it nor the empty card
+ * below the four zones is worth a pixel of a shot this short.
+ *
+ * The width is not negotiable and it is what fixes the scale: the two card
+ * columns and the sentence above them run the full content column, so cropping
+ * narrower cuts words in half. At a browser width of about 967 canvas pixels
+ * that is 0.45, which puts the card body type near nine canvas pixels against
+ * six and a half for the same shot at full frame. Trimming the dead height is
+ * what the crop is really for: without it the window is half empty card and the
+ * beat looks like it is showing a page rather than a lesson.
+ *
+ * Checked against the second tab as well, which the shot cuts to on source
+ * frame 60: its content ends at 799, comfortably inside the same box.
  */
-const ZOOM_SAFETY_STOP_OR_GO: ZoomRegion = { x: 370, y: 430, w: 2170, h: 1050 };
+const ZOOM_SAFETY_HERO_TO_ZONES: ZoomRegion = { x: 370, y: 295, w: 2145, h: 695 };
 
 /**
- * Measured off training-safety-hero-to-zones-desktop. Same shape of crop and
- * for the same reason: the header, the two zone tabs, the intro sentence and
- * the four zone cards all sit above 1150, and the rest of the screen is empty.
- * Section 6b's readable shot is the one that has to earn its 116 frames, and a
- * third more type is the difference between reading it on a phone and not.
+ * Measured off training-rfi-scenario-branch-desktop, on source frames 30 and
+ * 90, which are the two states the beat shows: option A chosen and marked not
+ * quite, then option B chosen and marked correct.
+ *
+ * The two option cards sit at 439 to 864 and the feedback panel under them runs
+ * to 1037 in the longer of the two states. The scenario paragraph above is
+ * eleven lines of setup that no viewer is going to read in seven seconds, and
+ * the sheet below the feedback is blueprint paper. So the shot is the two
+ * options and the verdict, which is the whole argument of the beat: the claim
+ * on screen is "scores the decision, not the recall".
  */
-const ZOOM_SAFETY_HERO_TO_ZONES: ZoomRegion = { x: 345, y: 150, w: 2190, h: 1000 };
+const ZOOM_RFI_OPTIONS: ZoomRegion = { x: 420, y: 414, w: 2040, h: 655 };
 
 /**
  * Measured off training-finance-pnl-simulator-desktop. The "Move the levers"
@@ -115,11 +149,32 @@ const FEATURED: FeaturedBeat[] = [
     plateId: "t-laptop-shoulder",
     plateCaptureId: "training-safety-hero-to-zones-desktop",
     cleanCaptureId: "training-safety-hero-to-zones-desktop",
-    // A 16:10 module screen in a browser window, cropped to the half of the
-    // screen the content is actually on. The spec allows this beat either way;
-    // the tabs and the four zone cards do read better pushed in.
+    // A 16:10 module screen in a browser window, cropped to the tab row and the
+    // four zone cards. The spec allows this beat either way; the tabs and the
+    // cards do read better pushed in.
     cleanFrame: "browser",
     zoom: ZOOM_SAFETY_HERO_TO_ZONES,
+    // Source 33 to 100 across 116 output frames, which is rate 0.587.
+    //
+    // The clip is named for what it does: it opens on the module's hero screen,
+    // scrolls to the zones screen over source 20 to 32, then sits on the zones
+    // with a tab click on source 60 and another on 100. Measured frame by frame
+    // with ffmpeg psnr, those are the only three places anything moves, and
+    // after 100 it is a still page.
+    //
+    // So the shot starts at 33, the frame the scroll lands on. Starting at 0
+    // was the first attempt and it put the hero screen behind a zoom region
+    // measured on the zones: frame 100 of the cut showed learning objectives
+    // through a window cropped for a tab row. The 15 second cut has 3.9 seconds
+    // for this beat and cannot spend the first second arriving.
+    //
+    // The scroll is not lost. The plate shot runs at the same rate and
+    // ProjectShowcase backs its capture up by round(24 * 0.587) frames, so the
+    // plate plays source 19 to 33 and hands over on the exact frame the scroll
+    // finishes. That is Section 6b's "cut on the scroll", and here it is free.
+    //
+    // The last output frame is source 100, the second tab click, at 21.6 dB.
+    cleanPlayback: { trimBefore: 33, scrollPlaybackRate: 0.587 },
     name: "Spot it before it hurts someone",
     nameLines: 2,
     claim: "Keyboard and screen reader tested",
@@ -132,9 +187,20 @@ const FEATURED: FeaturedBeat[] = [
     // back to t-laptop-two with training-safety-hierarchy-sorter-desktop.
     plateId: "t-phone-hands",
     plateCaptureId: "training-safety-hierarchy-sorter-mobile",
-    cleanCaptureId: "training-safety-stop-or-go-desktop",
-    cleanFrame: "browser",
-    zoom: ZOOM_SAFETY_STOP_OR_GO,
+    // The phone, deliberately, so the two safety beats are two surfaces rather
+    // than the same browser window twice: a laptop walk-through, then the same
+    // course being answered on a phone. Pushed in on the decision itself, see
+    // ZOOM_SAFETY_STOP_OR_GO_MOBILE for why the region is shaped the way it is.
+    cleanCaptureId: "training-safety-stop-or-go-mobile",
+    cleanFrame: "phone",
+    zoom: ZOOM_SAFETY_STOP_OR_GO_MOBILE,
+    // Rate 1 from source frame 0. This clip is answered calls one after
+    // another and never sits still for long: the worst consecutive frame pair
+    // anywhere in the 116 frame window measures 39 dB and most sit near 34.
+    // The last output frame is source 115, where the next prompt is sliding in
+    // at 34.85 dB, so nothing is frozen at the cut and nothing is stepped
+    // either, because the source plays at its own speed.
+    cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 1 },
     name: "Hazard recognition module",
     nameLines: 2,
     claim: "Built for your LMS",
@@ -155,6 +221,13 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     cleanCaptureId: "training-safety-hero-to-zones-desktop",
     cleanFrame: "browser",
     zoom: ZOOM_SAFETY_HERO_TO_ZONES,
+    // Same window as the 15 second cut, over 186 output frames instead of 116,
+    // so the rate has to come down to land the last frame on the same source
+    // frame 100. 185 * 0.543 is 100.5. The cost is the one the web reel's
+    // LinkedIn cut pays: the source index advances on about one output frame in
+    // two, so the two tab switches step rather than cut. On a still page with
+    // two clicks in it that is much less visible than it is on a scroll.
+    cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 0.543 },
     name: "Spot it before it hurts someone",
     nameLines: 2,
     contextLine: "A jobsite walk-through you can tab through.",
@@ -167,6 +240,12 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     cleanCaptureId: "training-safety-hazard-hunt-desktop",
     cleanFrame: "browser",
     zoom: ZOOM_SAFETY_HAZARD_HUNT,
+    // Four hotspot clicks, on source frames 22, 57, 92 and 132, with the page
+    // still between them. 185 * 0.716 is 132.5, so the shot plays all four and
+    // its last frame is the fourth, which is also the frame the counter reads
+    // six of six and the module opens the next screen. That is the best ending
+    // this clip has. Everything past 133 is a finished page.
+    cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 0.716 },
     name: "Hazard recognition module",
     nameLines: 2,
     contextLine: "Six hazards. Click them or list them.",
@@ -179,6 +258,13 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     cleanCaptureId: "training-finance-pnl-simulator-desktop",
     cleanFrame: "browser",
     zoom: ZOOM_FINANCE_SLIDERS,
+    // The only training clip with continuous motion in it: four slider drags,
+    // over source 27 to 40, 67 to 80, 107 to 120 and 147 to 160, each of them
+    // thirteen frames of the statement and the margin figure moving together.
+    // 185 * 0.867 is 160.4, so the shot ends inside the fourth drag rather than
+    // in the pause after it. Measured 37.6 dB between the last two source
+    // frames, which is motion by the Section 6b test with room to spare.
+    cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 0.867 },
     name: "The P&L, read like an owner",
     nameLines: 2,
     contextLine: "Move a slider. Watch the margin move.",
@@ -190,6 +276,16 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     plateCaptureId: "training-rfi-scenario-branch-desktop",
     cleanCaptureId: "training-rfi-scenario-branch-desktop",
     cleanFrame: "browser",
+    // Pushed in on the two option cards and the feedback panel. At full frame
+    // this beat is a wall of blueprint paper with two paragraphs on it, and the
+    // claim underneath says the module scores the decision: the decision is the
+    // part that has to be on screen.
+    zoom: ZOOM_RFI_OPTIONS,
+    // The shortest clip in the reel at 150 frames, and only the first 91 of
+    // them carry anything: option A is chosen on source 28, option B on 90, and
+    // the rest is the finished sheet. 185 * 0.489 is 90.5, so the last frame is
+    // the moment option B is marked correct, which is the beat's own punchline.
+    cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 0.489 },
     name: "The RFI that gets answered",
     nameLines: 2,
     contextLine: "A six minute microlearning for the trades.",
@@ -281,15 +377,39 @@ export const TRAINING_REEL: ReelContent = {
      * way. It states no count and no price, so it clears limits 1 and 2.
      */
     lines: ["One designer.", "Or a whole team."],
+    /**
+     * The mobile hazard hunt, full bleed, exactly the way the web reel hooks on
+     * a mobile capture: no device frame, no push in, the clip cover cropped to
+     * whatever canvas is rendering.
+     *
+     * It replaced the desktop clip pushed in on the illustration, which was the
+     * first attempt and did not read. A desktop module screen is a content
+     * column inside wide dark margins, and a 9:16 crop of a region of it keeps
+     * only the middle: the first still showed half a sentence cut off at both
+     * edges and an empty grey rectangle where the picture was. The mobile
+     * capture is the same lesson laid out for a 390 wide screen, so the
+     * heading, the instructions, the found counter and the whole illustration
+     * are stacked inside the crop instead of falling out of the sides of it,
+     * and the vertical and feed crops keep almost the entire page. The square
+     * crop keeps the counter and the picture, and landscape keeps a band of it
+     * either side of the hook band, which is all a 16:9 hook was ever going to
+     * show of a phone.
+     *
+     * An interaction recording, not the eased 180 frame scroll the web reel
+     * hooks on, so it plays from its first frame at native speed: the clip is
+     * already moving on frame 0 because a person is working in it, which is
+     * what Section 6 asks of the first frame. 54 output frames consume source 0
+     * to 53 in the 15 second cut and 0 to 35 in the 45 second one. Both stop
+     * short of source 57, where the second hazard is found, the first list item
+     * wraps to two lines, and the item under it is clipped by the page's own
+     * bottom rule on the live build. That clipping is the site's, not the
+     * reel's, and the fix is to not be there.
+     */
     shot: {
       kind: "capture",
-      captureId: "training-safety-hazard-hunt-desktop",
-      // An interaction recording, not the eased 180 frame scroll the web reel
-      // hooks on, so it plays from its first frame at speed: the clip is
-      // already moving because a person is clicking in it.
+      captureId: "training-safety-hazard-hunt-mobile",
       trimBefore: 0,
       playbackRate: 1,
-      zoom: ZOOM_HOOK_HAZARD_HUNT,
     },
   },
   featured: {
@@ -301,21 +421,29 @@ export const TRAINING_REEL: ReelContent = {
     linkedin: LINKEDIN_CUTS,
   },
   /**
-   * Interaction captures play from their first frame: there is no eased ramp to
-   * start inside, and the clip is already moving because a person is clicking
-   * in it.
+   * The fallback for a beat that does not name its own playback. Every project
+   * beat in this reel does, in `cleanPlayback` above, and the reason is worth
+   * writing down because it is the one structural difference between the two
+   * reels' shots.
    *
-   * The 15 second cut plays them at native speed. Its clean shot is 116 frames
-   * and the shortest clip behind one is 150, so nothing runs out.
+   * The web reel's clean shots are all the same thing: a 180 frame
+   * easeInOutCubic scroll of a home page. One trim and one rate per cut is
+   * correct for all of them, because the motion curve is identical and only the
+   * page behind it changes.
    *
-   * The 45 second cut cannot. Its clean shot is 186 frames and the interaction
-   * clips run 120 to 180, so at rate 1 every one of them would reach its last
-   * frame and freeze there for the rest of the beat. Rate 0.8 consumes 148.8
-   * source frames, which fits inside the shortest clip a project beat uses
-   * (training-rfi-scenario-branch-desktop, 150 frames) with a frame to spare.
-   * The cost is the same one the web reel pays at 0.8: the source index
-   * advances on four output frames in five, so the motion steps at about 24Hz
-   * rather than 30, and it reads as what it is, a screen recording.
+   * The training reel's are five different interaction recordings of four
+   * different lengths, and each one is a person doing something, pausing, and
+   * doing the next thing. Where the motion sits is a property of the clip, not
+   * of the cut. Measured frame by frame with ffmpeg psnr, the last frame that
+   * moves is source 100 for hero-to-zones, 132 for hazard-hunt, 160 for the
+   * P&L simulator, 90 for the RFI branch, and 145 for stop-or-go. A single rate
+   * per cut cannot land five different numbers, and a shot that overruns its
+   * clip's last movement does not merely look slow: it stops, and the cut lands
+   * on a photograph.
+   *
+   * Interaction captures all play from their first frame, so trimBefore is 0
+   * everywhere: there is no eased ramp to start inside, and starting late would
+   * cut into an interaction only a few seconds long.
    */
   cleanCapture: {
     short: { trimBefore: 0, scrollPlaybackRate: 1 },

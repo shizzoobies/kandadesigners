@@ -271,20 +271,33 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
 
   const browser = cleanFrame === "browser";
 
-  /**
-   * A 16:10 browser window cannot run the full canvas height the way a 9:16
-   * phone can, so in the vertical crop a browser beat takes the stacked
-   * arrangement instead of the overlay one: the window spans the safe width and
-   * the lower third sits under it rather than across it.
-   */
-  const showcase =
-    browser && metrics.showcase === "overlay" ? "stack" : metrics.showcase;
-
   // What the frame has to fit. Where there is a zoom region, that region is the
   // shot: it is the rectangle the viewer ends up seeing.
   const shotNative = capture ?? STAND_IN_SHOT[cleanFrame];
   const shotWidth = zoom ? zoom.w : shotNative.width;
   const shotHeight = zoom ? zoom.h : shotNative.height;
+
+  /**
+   * The overlay arrangement only works for a shot at least as tall and narrow
+   * as the canvas. The lower third is anchored near the bottom of a canvas the
+   * device is centred on, so it always covers the lower third or so of the
+   * device, and a 9:16 mobile capture can spend that on page it has already
+   * scrolled past. A shot wider than the canvas cannot: it has run out of
+   * height long before the band, so the band lands across the middle of the
+   * thing the shot exists to show.
+   *
+   * Every browser window is wider than it is tall and so always lands here,
+   * which is what this rule originally said. A phone shot pushed in on one
+   * region of itself can be wider than the canvas too, which is what the
+   * stop-or-go beat of the training reel is, and it needs the same answer: in
+   * the vertical crop the shot spans the safe width and the lower third sits
+   * under it rather than across it.
+   */
+  const shotWiderThanCanvas = shotWidth / shotHeight > width / height;
+  const showcase =
+    metrics.showcase === "overlay" && shotWiderThanCanvas
+      ? "stack"
+      : metrics.showcase;
 
   // Box the device frame has to fit inside. The device is not text, so it is
   // allowed to run into a reserved zone. Text is not.
