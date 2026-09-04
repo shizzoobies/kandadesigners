@@ -6,14 +6,17 @@
 <title>Spot it before it hurts someone: a nine minute hazard recognition module</title>
 <meta name="description" content="A short interactive module on recognizing common jobsite hazards during a walk-through and matching each one to the right level of control." />
 <link rel="stylesheet" href="style.css" />
+<script>document.documentElement.className += ' js';</script>
 </head>
 <body>
 <div class="rig">
 
   <header class="rig-head">
     <div class="rig-head-inner">
-      <p class="kicker">Site safety &middot; Construction and trades</p>
-      <h1>Spot it before it hurts someone</h1>
+      <div class="head-id">
+        <p class="kicker">Site safety &middot; Construction and trades</p>
+        <h1>Spot it before it hurts someone</h1>
+      </div>
       <div class="meter">
         <div class="meter-track" aria-hidden="true"><span class="meter-fill" id="bar-fill"></span></div>
         <p class="meter-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 9</p>
@@ -28,91 +31,114 @@
     <section class="screen screen-hero" id="screen-1">
       <p class="stamp" aria-hidden="true">01</p>
       <h2 tabindex="-1">Before you walk the site</h2>
-      <p class="lead">By the end of this module you will be able to walk a jobsite on a fixed route, name the common hazards you find, and match each one to the strongest control that is realistic in the situation.</p>
-      <p>Most people can point at a hazard once it is pointed out to them. The hard part is seeing it on the fourteenth morning, in the same doorway you have walked past thirteen times. That is what a method is for.</p>
-
-      <h3>What you will do</h3>
-      <ul class="ticklist">
-        <li>Learn a four zone walk-through route and why the order matters.</li>
-        <li>Read the common findings in each zone.</li>
-        <li>Hunt six hazards in an illustrated site scene.</li>
-        <li>Pick the strongest realistic control for six situations.</li>
-        <li>Make eight stop or go calls.</li>
-        <li>Build a walk-through card you can carry.</li>
-      </ul>
-
-      <p class="note"><b>Keyboard.</b> Everything here works with the keyboard alone. Tab moves between controls, Enter or Space chooses, and the hazard hunt has a full list of its spots as buttons underneath the picture. Nothing is timed and there is no sound.</p>
-
-      <p class="disclaimer">This is a teaching demonstration. It is not a substitute for a site-specific safety program, a competent person on site, or the training your project actually requires.</p>
+      <div class="screen-body cols2">
+        <div class="col">
+          <p class="lead">By the end of this module you will be able to walk a jobsite on a fixed route, name the common hazards you find, and match each one to the strongest control that is realistic in the situation.</p>
+          <p>Most people can point at a hazard once it is pointed out to them. The hard part is seeing it on the fourteenth morning, in the same doorway you have walked past thirteen times. That is what a method is for.</p>
+          <p class="note"><b>Keyboard.</b> Tab moves between controls, Enter or Space chooses, and left and right arrows move between tabs. The hazard hunt lists every spot as a button beside the picture. Nothing is timed and there is no sound.</p>
+        </div>
+        <div class="col">
+          <h3>What you will do</h3>
+          <ul class="ticklist">
+            <li>Learn a four zone walk-through route and why the order matters.</li>
+            <li>Read the common findings in each zone.</li>
+            <li>Hunt six hazards in an illustrated site scene.</li>
+            <li>Pick the strongest realistic control for six situations.</li>
+            <li>Make eight stop or go calls.</li>
+            <li>Build a walk-through card you can carry.</li>
+          </ul>
+          <p class="disclaimer">This is a teaching demonstration. It is not a substitute for a site-specific safety program, a competent person on site, or the training your project actually requires.</p>
+        </div>
+      </div>
     </section>
 
     <!-- ============ 2 ============ -->
     <section class="screen" id="screen-2">
       <p class="stamp" aria-hidden="true">02</p>
       <h2 tabindex="-1">The walk-through method</h2>
-      <p class="lead">Walk the same four zones in the same order, every time. A route beats a wander, because a wander only finds what is already bothering you.</p>
+      <div class="screen-body">
+       <div class="tabs tabs-wide" data-tabs>
+        <div class="tablist" role="tablist" aria-label="The walk-through method">
+          <button type="button" role="tab" id="tab-2a" aria-controls="pan-2a">The four zones</button>
+          <button type="button" role="tab" id="tab-2b" aria-controls="pan-2b">Why a fixed route works</button>
+        </div>
 
-      <ol class="zones">
-        <li>
-          <span class="zone-num" aria-hidden="true">1</span>
-          <b>Access and egress.</b>
-          <p>How people get in, how they move, and how they would get out in a hurry. Gates, stairs, ladders, walkways, exits.</p>
-        </li>
-        <li>
-          <span class="zone-num" aria-hidden="true">2</span>
-          <b>Work at height.</b>
-          <p>Every edge, every opening, every platform, and everything that could fall off one onto somebody below.</p>
-        </li>
-        <li>
-          <span class="zone-num" aria-hidden="true">3</span>
-          <b>Energy and equipment.</b>
-          <p>Temporary power, cords, panels, fuel, pressure, and anything that turns, lifts, or holds a load.</p>
-        </li>
-        <li>
-          <span class="zone-num" aria-hidden="true">4</span>
-          <b>Housekeeping and materials.</b>
-          <p>Debris, staged material, trip hazards, and the protective equipment that is either being worn or is sitting in a truck.</p>
-        </li>
-      </ol>
+        <div class="tabpanel" role="tabpanel" id="pan-2a" aria-labelledby="tab-2a" tabindex="0">
+        <p class="lead">Walk the same four zones in the same order, every time. A route beats a wander, because a wander only finds what is already bothering you.</p>
 
-      <h3>Why a fixed route works</h3>
-      <ul>
-        <li><b>You stop seeing what you walk past.</b> Familiar ground goes invisible in about a week. A route forces you to look at the doorway you always cut through.</li>
-        <li><b>It survives a bad morning.</b> When the day is already sideways, a habit still runs. Judgment on its own does not.</li>
-        <li><b>It produces a comparable record.</b> The same four zones every day means today's list can be read against last Tuesday's.</li>
-        <li><b>It is teachable.</b> A new foreman can run your route on day one. Nobody can run your intuition.</li>
-      </ul>
-      <p class="note">Walk it at the start of the shift, and again after any change: a delivery, a new trade on site, weather, or a crew working late.</p>
+        <ol class="zones">
+          <li>
+            <span class="zone-num" aria-hidden="true">1</span>
+            <b>Access and egress.</b>
+            <p>How people get in, how they move, and how they would get out in a hurry. Gates, stairs, ladders, walkways, exits.</p>
+          </li>
+          <li>
+            <span class="zone-num" aria-hidden="true">2</span>
+            <b>Work at height.</b>
+            <p>Every edge, every opening, every platform, and everything that could fall off one onto somebody below.</p>
+          </li>
+          <li>
+            <span class="zone-num" aria-hidden="true">3</span>
+            <b>Energy and equipment.</b>
+            <p>Temporary power, cords, panels, fuel, pressure, and anything that turns, lifts, or holds a load.</p>
+          </li>
+          <li>
+            <span class="zone-num" aria-hidden="true">4</span>
+            <b>Housekeeping and materials.</b>
+            <p>Debris, staged material, trip hazards, and the protective equipment that is either being worn or is sitting in a truck.</p>
+          </li>
+        </ol>
+        </div>
+
+        <div class="tabpanel" role="tabpanel" id="pan-2b" aria-labelledby="tab-2b" tabindex="0">
+          <ul class="why">
+            <li><b>You stop seeing what you walk past.</b> Familiar ground goes invisible in about a week. A route forces you to look at the doorway you always cut through.</li>
+            <li><b>It survives a bad morning.</b> When the day is already sideways, a habit still runs. Judgment on its own does not.</li>
+            <li><b>It produces a comparable record.</b> The same four zones every day means today's list can be read against last Tuesday's.</li>
+            <li><b>It is teachable.</b> A new foreman can run your route on day one. Nobody can run your intuition.</li>
+          </ul>
+          <p class="note">Walk it at the start of the shift, and again after any change: a delivery, a new trade on site, weather, or a crew working late.</p>
+        </div>
+       </div>
+      </div>
     </section>
 
     <!-- ============ 3 ============ -->
     <section class="screen" id="screen-3">
       <p class="stamp" aria-hidden="true">03</p>
       <h2 tabindex="-1">Zone one: access and egress</h2>
-      <div class="split">
+      <div class="screen-body split">
         <div class="split-text">
           <p class="lead">Start where people start. If the way in is wrong, everything after it happens to people who are already off balance.</p>
 
-          <h3>Ladders</h3>
-          <ul>
-            <li>Set on firm, level ground, at roughly a one to four angle, with the base secured against kicking out.</li>
-            <li>Tied off at the top, and extended well above the landing so there is something to hold while stepping off.</li>
-            <li>Rungs clean and dry, no missing or repaired parts, no standing on the top cap.</li>
-            <li>Used for access, not as a work platform for anything that needs two hands and a reach.</li>
-          </ul>
-
-          <h3>Stairs and walkways</h3>
-          <ul>
-            <li>Clear full width, with no material staged in the path and no cords crossing it.</li>
-            <li>Handrails in place, including on temporary stair towers.</li>
-            <li>Lit well enough to see the tread edge, including in the stairwell nobody uses until the fire alarm goes off.</li>
-          </ul>
-
-          <h3>Exits</h3>
-          <ul>
-            <li>Marked, unlocked, and clear on both sides of the door.</li>
-            <li>Never the convenient place to set a pallet, because it is always the convenient place to set a pallet.</li>
-          </ul>
+          <div class="tabs" data-tabs>
+            <div class="tablist" role="tablist" aria-label="Access and egress topics">
+              <button type="button" role="tab" id="tab-3a" aria-controls="pan-3a">Ladders</button>
+              <button type="button" role="tab" id="tab-3b" aria-controls="pan-3b">Stairs and walkways</button>
+              <button type="button" role="tab" id="tab-3c" aria-controls="pan-3c">Exits</button>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-3a" aria-labelledby="tab-3a" tabindex="0">
+              <ul>
+                <li>Set on firm, level ground, at roughly a one to four angle, with the base secured against kicking out.</li>
+                <li>Tied off at the top, and extended well above the landing so there is something to hold while stepping off.</li>
+                <li>Rungs clean and dry, no missing or repaired parts, no standing on the top cap.</li>
+                <li>Used for access, not as a work platform for anything that needs two hands and a reach.</li>
+              </ul>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-3b" aria-labelledby="tab-3b" tabindex="0">
+              <ul>
+                <li>Clear full width, with no material staged in the path and no cords crossing it.</li>
+                <li>Handrails in place, including on temporary stair towers.</li>
+                <li>Lit well enough to see the tread edge, including in the stairwell nobody uses until the fire alarm goes off.</li>
+              </ul>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-3c" aria-labelledby="tab-3c" tabindex="0">
+              <ul>
+                <li>Marked, unlocked, and clear on both sides of the door.</li>
+                <li>Never the convenient place to set a pallet, because it is always the convenient place to set a pallet.</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="split-media media-scaffold" aria-hidden="true"></div>
       </div>
@@ -122,33 +148,41 @@
     <section class="screen" id="screen-4">
       <p class="stamp" aria-hidden="true">04</p>
       <h2 tabindex="-1">Zones two and three: height and energy</h2>
-      <div class="split">
+      <div class="screen-body split">
         <div class="split-text">
           <p class="lead">Two zones that share a habit: the hazard is usually created by somebody doing the right thing badly, or doing the right thing and not putting it back.</p>
 
-          <h3>Fall exposure</h3>
-          <ul>
-            <li>Walk every leading edge, every stair opening, every shaft, and every place a guardrail was taken out to land material.</li>
-            <li>Guardrails: top rail, mid rail, and a toe board where anything could be kicked off onto people below.</li>
-            <li>Floor openings covered with something that cannot slide, cannot be mistaken for scrap, and is marked so it reads as a cover.</li>
-            <li>If a rail comes out, it goes back the same shift, and somebody owns that. A rail removed at ten and remembered at four is an open edge for six hours.</li>
-          </ul>
-
-          <h3>Temporary power and cords</h3>
-          <ul>
-            <li>Cords out of walkways and up off wet ground. If a cord has to cross a path, it gets a ramp or it goes overhead.</li>
-            <li>Ground fault protection on temporary circuits, checked rather than assumed.</li>
-            <li>No damaged jackets, no missing ground pins, no daisy chain of strips feeding a heater.</li>
-            <li>Panels closed, labeled, and not being used as a shelf.</li>
-          </ul>
-
-          <h3>Locking out, in plain terms</h3>
-          <ul>
-            <li>Before anyone works on equipment, its energy gets shut off, released, and physically locked so it cannot come back on.</li>
-            <li>The person doing the work puts their own lock and tag on it, and only that person takes it off.</li>
-            <li>Stored energy counts too: springs, raised loads, pressure, and capacitors do not care that the breaker is off.</li>
-            <li>If you find a machine open with no lock on it, that is a stop, not a note for later.</li>
-          </ul>
+          <div class="tabs" data-tabs>
+            <div class="tablist" role="tablist" aria-label="Height and energy topics">
+              <button type="button" role="tab" id="tab-4a" aria-controls="pan-4a">Fall exposure</button>
+              <button type="button" role="tab" id="tab-4b" aria-controls="pan-4b">Temporary power and cords</button>
+              <button type="button" role="tab" id="tab-4c" aria-controls="pan-4c">Locking out</button>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-4a" aria-labelledby="tab-4a" tabindex="0">
+              <ul>
+                <li>Walk every leading edge, every stair opening, every shaft, and every place a guardrail was taken out to land material.</li>
+                <li>Guardrails: top rail, mid rail, and a toe board where anything could be kicked off onto people below.</li>
+                <li>Floor openings covered with something that cannot slide, cannot be mistaken for scrap, and is marked so it reads as a cover.</li>
+                <li>If a rail comes out, it goes back the same shift, and somebody owns that. A rail removed at ten and remembered at four is an open edge for six hours.</li>
+              </ul>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-4b" aria-labelledby="tab-4b" tabindex="0">
+              <ul>
+                <li>Cords out of walkways and up off wet ground. If a cord has to cross a path, it gets a ramp or it goes overhead.</li>
+                <li>Ground fault protection on temporary circuits, checked rather than assumed.</li>
+                <li>No damaged jackets, no missing ground pins, no daisy chain of strips feeding a heater.</li>
+                <li>Panels closed, labeled, and not being used as a shelf.</li>
+              </ul>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-4c" aria-labelledby="tab-4c" tabindex="0">
+              <ul>
+                <li>Before anyone works on equipment, its energy gets shut off, released, and physically locked so it cannot come back on.</li>
+                <li>The person doing the work puts their own lock and tag on it, and only that person takes it off.</li>
+                <li>Stored energy counts too: springs, raised loads, pressure, and capacitors do not care that the breaker is off.</li>
+                <li>If you find a machine open with no lock on it, that is a stop, not a note for later.</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="split-media media-electrical" aria-hidden="true"></div>
       </div>
@@ -158,32 +192,40 @@
     <section class="screen" id="screen-5">
       <p class="stamp" aria-hidden="true">05</p>
       <h2 tabindex="-1">Zone four: housekeeping and protective equipment</h2>
-      <div class="split">
+      <div class="screen-body split">
         <div class="split-text">
           <p class="lead">Housekeeping is the zone people skip because it feels like tidiness. It is not tidiness. Most of the injuries that put someone in a truck to the clinic start with a floor.</p>
 
-          <h3>Debris and trip hazards</h3>
-          <ul>
-            <li>Cut offs, banding, strapping and packaging cleared as the work makes them, not at the end of the week.</li>
-            <li>Bins where the work is. A can forty feet away is a can nobody walks to.</li>
-            <li>Standing water tracked back to its source, because the puddle is a slip and often an electrical problem wearing a disguise.</li>
-            <li>Protruding rebar and fasteners capped or bent over, including the ones at shin height nobody can see.</li>
-          </ul>
-
-          <h3>Material staging</h3>
-          <ul>
-            <li>Staged out of walkways, off exits, and away from edges and openings.</li>
-            <li>Stacked on level ground, bound or blocked, and not higher than the stack can hold itself.</li>
-            <li>Loads checked for weight on the deck before they go up, not after somebody notices the deflection.</li>
-          </ul>
-
-          <h3>Protective equipment</h3>
-          <ul>
-            <li>Present is not the same as worn. Look at heads, eyes, feet, hands and ears, not at the box by the gate.</li>
-            <li>Fitted and in usable condition: a cracked shell, a scratched lens or a torn glove is decoration.</li>
-            <li>Matched to what is actually happening right now, including work happening overhead by somebody else.</li>
-            <li>Protective equipment is the last layer, not the plan. If it is your only answer, look at the four levels above it.</li>
-          </ul>
+          <div class="tabs" data-tabs>
+            <div class="tablist" role="tablist" aria-label="Housekeeping and protective equipment topics">
+              <button type="button" role="tab" id="tab-5a" aria-controls="pan-5a">Debris and trip hazards</button>
+              <button type="button" role="tab" id="tab-5b" aria-controls="pan-5b">Material staging</button>
+              <button type="button" role="tab" id="tab-5c" aria-controls="pan-5c">Protective equipment</button>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-5a" aria-labelledby="tab-5a" tabindex="0">
+              <ul>
+                <li>Cut offs, banding, strapping and packaging cleared as the work makes them, not at the end of the week.</li>
+                <li>Bins where the work is. A can forty feet away is a can nobody walks to.</li>
+                <li>Standing water tracked back to its source, because the puddle is a slip and often an electrical problem wearing a disguise.</li>
+                <li>Protruding rebar and fasteners capped or bent over, including the ones at shin height nobody can see.</li>
+              </ul>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-5b" aria-labelledby="tab-5b" tabindex="0">
+              <ul>
+                <li>Staged out of walkways, off exits, and away from edges and openings.</li>
+                <li>Stacked on level ground, bound or blocked, and not higher than the stack can hold itself.</li>
+                <li>Loads checked for weight on the deck before they go up, not after somebody notices the deflection.</li>
+              </ul>
+            </div>
+            <div class="tabpanel" role="tabpanel" id="pan-5c" aria-labelledby="tab-5c" tabindex="0">
+              <ul>
+                <li>Present is not the same as worn. Look at heads, eyes, feet, hands and ears, not at the box by the gate.</li>
+                <li>Fitted and in usable condition: a cracked shell, a scratched lens or a torn glove is decoration.</li>
+                <li>Matched to what is actually happening right now, including work happening overhead by somebody else.</li>
+                <li>Protective equipment is the last layer, not the plan. If it is your only answer, look at the four levels above it.</li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="split-media media-stack" aria-hidden="true"><span class="media-housekeeping"></span><span class="media-ppe"></span></div>
       </div>
@@ -193,397 +235,497 @@
     <section class="screen" id="screen-6">
       <p class="stamp" aria-hidden="true">06</p>
       <h2 tabindex="-1">Hazard hunt</h2>
-      <p class="lead">Six hazards are in this scene. Select a spot to check it. Every spot in the picture is also a button in the list underneath, so you can work through it with the keyboard or a screen reader without hunting by pointer.</p>
+      <div class="screen-body hunt">
+        <p class="lead">Six hazards are in this scene. Select a spot to check it. Every spot in the picture is also a button in the list beside it, so you can work through it with the keyboard or a screen reader without hunting by pointer.</p>
 
-      <p class="counter" id="hunt-counter" role="status" aria-live="polite">Found 0 of 6.</p>
+        <div class="hunt-row">
+          <div class="hunt-left">
+            <div class="hunt-head">
+              <p class="counter" id="hunt-counter" role="status" aria-live="polite">Found 0 of 6.</p>
+              <button type="button" class="btn-ghost btn-mini" id="reveal" hidden>Show me the ones I missed</button>
+              <p class="quiet" id="hunt-gate">Find all six to move on. If you get stuck, a button appears here that opens the rest.</p>
+            </div>
 
-      <div class="scene" id="scene">
-        <svg class="scene-art" viewBox="0 0 1000 560" role="img" aria-label="An illustrated jobsite: a partially built two story structure with a scaffold on the left, a walkway across the front, an open second floor deck, a doorway on the ground floor, a marked exit door on the right, and a ladder leaning against the right hand wall.">
-          <rect x="0" y="0" width="1000" height="560" fill="#16181A" />
-          <rect x="0" y="428" width="1000" height="44" fill="#33373A" />
-          <rect x="0" y="470" width="1000" height="90" fill="#26292C" />
-          <rect x="60" y="478" width="880" height="58" fill="#2F3336" />
+            <div class="scene-fit">
+             <div class="scene" id="scene">
+              <svg class="scene-art" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="An illustrated jobsite: a partially built two story structure with a scaffold on the left, a walkway across the front, an open second floor deck, a doorway on the ground floor, a marked exit door on the right, and a ladder leaning against the right hand wall.">
+                <rect x="0" y="0" width="1000" height="560" fill="#16181A" />
+                <rect x="0" y="428" width="1000" height="44" fill="#33373A" />
+                <rect x="0" y="470" width="1000" height="90" fill="#26292C" />
+                <rect x="60" y="478" width="880" height="58" fill="#2F3336" />
 
-          <!-- scaffold -->
-          <g stroke="#6E7275" stroke-width="7" fill="none">
-            <path d="M198 176V470M288 176V470" />
-            <path d="M198 300H288M198 190H288M198 400H288" />
-            <path d="M198 300 288 190M288 300 198 190M198 470 288 400M288 470 198 400" />
-          </g>
-          <rect x="188" y="292" width="110" height="12" fill="#8A8E90" />
-          <rect x="188" y="182" width="110" height="12" fill="#8A8E90" />
-          <rect x="188" y="146" width="110" height="8" fill="#FFD100" />
+                <!-- scaffold -->
+                <g stroke="#6E7275" stroke-width="7" fill="none">
+                  <path d="M198 176V470M288 176V470" />
+                  <path d="M198 300H288M198 190H288M198 400H288" />
+                  <path d="M198 300 288 190M288 300 198 190M198 470 288 400M288 470 198 400" />
+                </g>
+                <rect x="188" y="292" width="110" height="12" fill="#8A8E90" />
+                <rect x="188" y="182" width="110" height="12" fill="#8A8E90" />
+                <rect x="188" y="146" width="110" height="8" fill="#FFD100" />
 
-          <!-- worker on the scaffold, wearing head protection -->
-          <g>
-            <rect x="232" y="228" width="22" height="64" fill="#FF6A13" />
-            <rect x="234" y="250" width="18" height="8" fill="#1B1D1F" />
-            <circle cx="243" cy="214" r="13" fill="#C9C9C4" />
-            <path d="M228 212a15 15 0 0 1 30 0z" fill="#FFD100" />
-            <rect x="226" y="210" width="34" height="5" fill="#FFD100" />
-          </g>
+                <!-- worker on the scaffold, wearing head protection -->
+                <g>
+                  <rect x="232" y="228" width="22" height="64" fill="#FF6A13" />
+                  <rect x="234" y="250" width="18" height="8" fill="#1B1D1F" />
+                  <circle cx="243" cy="214" r="13" fill="#C9C9C4" />
+                  <path d="M228 212a15 15 0 0 1 30 0z" fill="#FFD100" />
+                  <rect x="226" y="210" width="34" height="5" fill="#FFD100" />
+                </g>
 
-          <!-- building frame -->
-          <rect x="292" y="118" width="500" height="14" fill="#5F6367" />
-          <rect x="292" y="290" width="500" height="14" fill="#5F6367" />
-          <g fill="#4A4E52">
-            <rect x="296" y="132" width="14" height="158" />
-            <rect x="380" y="132" width="14" height="158" />
-            <rect x="464" y="132" width="14" height="158" />
-            <rect x="548" y="132" width="14" height="158" />
-            <rect x="632" y="132" width="14" height="158" />
-            <rect x="716" y="132" width="14" height="158" />
-            <rect x="778" y="132" width="14" height="158" />
-            <rect x="296" y="304" width="14" height="166" />
-            <rect x="778" y="304" width="14" height="166" />
-          </g>
+                <!-- building frame -->
+                <rect x="292" y="118" width="500" height="14" fill="#5F6367" />
+                <rect x="292" y="290" width="500" height="14" fill="#5F6367" />
+                <g fill="#4A4E52">
+                  <rect x="296" y="132" width="14" height="158" />
+                  <rect x="380" y="132" width="14" height="158" />
+                  <rect x="464" y="132" width="14" height="158" />
+                  <rect x="548" y="132" width="14" height="158" />
+                  <rect x="632" y="132" width="14" height="158" />
+                  <rect x="716" y="132" width="14" height="158" />
+                  <rect x="778" y="132" width="14" height="158" />
+                  <rect x="296" y="304" width="14" height="166" />
+                  <rect x="778" y="304" width="14" height="166" />
+                </g>
 
-          <!-- sheathed ground floor wall on the left half -->
-          <rect x="310" y="304" width="160" height="166" fill="#34383B" />
-          <rect x="470" y="304" width="308" height="166" fill="#2B2F32" />
+                <!-- sheathed ground floor wall on the left half -->
+                <rect x="310" y="304" width="160" height="166" fill="#34383B" />
+                <rect x="470" y="304" width="308" height="166" fill="#2B2F32" />
 
-          <!-- guardrail on the left part of the deck, then nothing -->
-          <g>
-            <rect x="300" y="238" width="264" height="10" fill="#FFD100" />
-            <rect x="300" y="266" width="264" height="8" fill="#FFD100" />
-            <rect x="304" y="238" width="9" height="52" fill="#8A8E90" />
-            <rect x="388" y="238" width="9" height="52" fill="#8A8E90" />
-            <rect x="472" y="238" width="9" height="52" fill="#8A8E90" />
-            <rect x="556" y="238" width="9" height="52" fill="#8A8E90" />
-          </g>
-          <rect x="566" y="284" width="226" height="8" fill="#7A7E81" />
+                <!-- guardrail on the left part of the deck, then nothing -->
+                <g>
+                  <rect x="300" y="238" width="264" height="10" fill="#FFD100" />
+                  <rect x="300" y="266" width="264" height="8" fill="#FFD100" />
+                  <rect x="304" y="238" width="9" height="52" fill="#8A8E90" />
+                  <rect x="388" y="238" width="9" height="52" fill="#8A8E90" />
+                  <rect x="472" y="238" width="9" height="52" fill="#8A8E90" />
+                  <rect x="556" y="238" width="9" height="52" fill="#8A8E90" />
+                </g>
+                <rect x="566" y="284" width="226" height="8" fill="#7A7E81" />
 
-          <!-- interior doorway with a debris pile in the opening -->
-          <rect x="380" y="344" width="70" height="126" fill="#131517" />
-          <rect x="376" y="340" width="78" height="8" fill="#6E7275" />
-          <g fill="#6B6E70">
-            <path d="M368 470l24-40 22 40z" />
-            <path d="M396 470l30-52 28 52z" />
-            <path d="M430 470l20-30 18 30z" />
-          </g>
-          <g stroke="#8A8E90" stroke-width="5">
-            <path d="M372 462 424 444M406 470 462 452" />
-          </g>
+                <!-- interior doorway with a debris pile in the opening -->
+                <rect x="380" y="344" width="70" height="126" fill="#131517" />
+                <rect x="376" y="340" width="78" height="8" fill="#6E7275" />
+                <g fill="#6B6E70">
+                  <path d="M368 470l24-40 22 40z" />
+                  <path d="M396 470l30-52 28 52z" />
+                  <path d="M430 470l20-30 18 30z" />
+                </g>
+                <g stroke="#8A8E90" stroke-width="5">
+                  <path d="M372 462 424 444M406 470 462 452" />
+                </g>
 
-          <!-- worker on the ground floor with no head protection -->
-          <g>
-            <rect x="496" y="386" width="24" height="66" fill="#FF6A13" />
-            <rect x="498" y="410" width="20" height="8" fill="#1B1D1F" />
-            <rect x="497" y="450" width="9" height="20" fill="#3A3E41" />
-            <rect x="511" y="450" width="9" height="20" fill="#3A3E41" />
-            <circle cx="508" cy="370" r="14" fill="#C9C9C4" />
-            <path d="M520 388l26 14" stroke="#C9C9C4" stroke-width="8" />
-          </g>
+                <!-- worker on the ground floor with no head protection -->
+                <g>
+                  <rect x="496" y="386" width="24" height="66" fill="#FF6A13" />
+                  <rect x="498" y="410" width="20" height="8" fill="#1B1D1F" />
+                  <rect x="497" y="450" width="9" height="20" fill="#3A3E41" />
+                  <rect x="511" y="450" width="9" height="20" fill="#3A3E41" />
+                  <circle cx="508" cy="370" r="14" fill="#C9C9C4" />
+                  <path d="M520 388l26 14" stroke="#C9C9C4" stroke-width="8" />
+                </g>
 
-          <!-- marked exit door with material stacked in front of it -->
-          <rect x="676" y="330" width="86" height="140" fill="#1F2225" />
-          <rect x="676" y="330" width="86" height="8" fill="#8A8E90" />
-          <rect x="686" y="300" width="66" height="24" fill="#111214" />
-          <text x="719" y="318" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-size="17" font-weight="700" fill="#FFD100">EXIT</text>
-          <g fill="#7A7D80" stroke="#4A4E52" stroke-width="3">
-            <rect x="668" y="418" width="52" height="26" />
-            <rect x="720" y="418" width="52" height="26" />
-            <rect x="668" y="444" width="52" height="26" />
-            <rect x="720" y="444" width="52" height="26" />
-            <rect x="694" y="392" width="52" height="26" />
-          </g>
+                <!-- marked exit door with material stacked in front of it -->
+                <rect x="676" y="330" width="86" height="140" fill="#1F2225" />
+                <rect x="676" y="330" width="86" height="8" fill="#8A8E90" />
+                <rect x="686" y="300" width="66" height="24" fill="#111214" />
+                <text x="719" y="318" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-size="17" font-weight="700" fill="#FFD100">EXIT</text>
+                <g fill="#7A7D80" stroke="#4A4E52" stroke-width="3">
+                  <rect x="668" y="418" width="52" height="26" />
+                  <rect x="720" y="418" width="52" height="26" />
+                  <rect x="668" y="444" width="52" height="26" />
+                  <rect x="720" y="444" width="52" height="26" />
+                  <rect x="694" y="392" width="52" height="26" />
+                </g>
 
-          <!-- ladder leaning on the right wall, top level with the deck -->
-          <g stroke="#B9BCBE" stroke-width="8" stroke-linecap="round">
-            <path d="M852 470 800 300M886 470 834 300" />
-          </g>
-          <g stroke="#B9BCBE" stroke-width="6" stroke-linecap="round">
-            <path d="M810 336 844 336M817 360 851 360M824 384 858 384M831 408 865 408M838 432 872 432M845 456 879 456" />
-          </g>
+                <!-- ladder leaning on the right wall, top level with the deck -->
+                <g stroke="#B9BCBE" stroke-width="8" stroke-linecap="round">
+                  <path d="M852 470 800 300M886 470 834 300" />
+                </g>
+                <g stroke="#B9BCBE" stroke-width="6" stroke-linecap="round">
+                  <path d="M810 336 844 336M817 360 851 360M824 384 858 384M831 408 865 408M838 432 872 432M845 456 879 456" />
+                </g>
 
-          <!-- extension cord across the walkway, through standing water -->
-          <ellipse cx="230" cy="512" rx="86" ry="19" fill="#3D4A52" />
-          <ellipse cx="230" cy="509" rx="62" ry="12" fill="#47575F" />
-          <path d="M96 534C160 496 236 540 300 500 352 468 372 486 470 470" fill="none" stroke="#FF6A13" stroke-width="8" stroke-linecap="round" />
-          <rect x="86" y="524" width="26" height="20" fill="#1B1D1F" stroke="#8A8E90" stroke-width="3" />
-        </svg>
+                <!-- extension cord across the walkway, through standing water -->
+                <ellipse cx="230" cy="512" rx="86" ry="19" fill="#3D4A52" />
+                <ellipse cx="230" cy="509" rx="62" ry="12" fill="#47575F" />
+                <path d="M96 534C160 496 236 540 300 500 352 468 372 486 470 470" fill="none" stroke="#FF6A13" stroke-width="8" stroke-linecap="round" />
+                <rect x="86" y="524" width="26" height="20" fill="#1B1D1F" stroke="#8A8E90" stroke-width="3" />
+              </svg>
 
-        <button type="button" class="hot hot-ladder" data-spot="ladder">
-          <span class="hot-ring" aria-hidden="true"></span>
-          <span class="visually-hidden">Check the ladder against the right hand wall</span>
-        </button>
-        <button type="button" class="hot hot-edge" data-spot="edge">
-          <span class="hot-ring" aria-hidden="true"></span>
-          <span class="visually-hidden">Check the front of the second floor deck</span>
-        </button>
-        <button type="button" class="hot hot-cord" data-spot="cord">
-          <span class="hot-ring" aria-hidden="true"></span>
-          <span class="visually-hidden">Check the walkway in front of the scaffold</span>
-        </button>
-        <button type="button" class="hot hot-door" data-spot="door">
-          <span class="hot-ring" aria-hidden="true"></span>
-          <span class="visually-hidden">Check the interior doorway on the ground floor</span>
-        </button>
-        <button type="button" class="hot hot-worker" data-spot="worker">
-          <span class="hot-ring" aria-hidden="true"></span>
-          <span class="visually-hidden">Check the worker standing on the ground floor</span>
-        </button>
-        <button type="button" class="hot hot-exit" data-spot="exit">
-          <span class="hot-ring" aria-hidden="true"></span>
-          <span class="visually-hidden">Check the marked exit door on the right</span>
-        </button>
+              <button type="button" class="hot hot-ladder" data-spot="ladder">
+                <span class="hot-ring" aria-hidden="true"></span>
+                <span class="visually-hidden">Check the ladder against the right hand wall</span>
+              </button>
+              <button type="button" class="hot hot-edge" data-spot="edge">
+                <span class="hot-ring" aria-hidden="true"></span>
+                <span class="visually-hidden">Check the front of the second floor deck</span>
+              </button>
+              <button type="button" class="hot hot-cord" data-spot="cord">
+                <span class="hot-ring" aria-hidden="true"></span>
+                <span class="visually-hidden">Check the walkway in front of the scaffold</span>
+              </button>
+              <button type="button" class="hot hot-door" data-spot="door">
+                <span class="hot-ring" aria-hidden="true"></span>
+                <span class="visually-hidden">Check the interior doorway on the ground floor</span>
+              </button>
+              <button type="button" class="hot hot-worker" data-spot="worker">
+                <span class="hot-ring" aria-hidden="true"></span>
+                <span class="visually-hidden">Check the worker standing on the ground floor</span>
+              </button>
+              <button type="button" class="hot hot-exit" data-spot="exit">
+                <span class="hot-ring" aria-hidden="true"></span>
+                <span class="visually-hidden">Check the marked exit door on the right</span>
+              </button>
+             </div>
+            </div>
+          </div>
+
+          <div class="hunt-right">
+            <h3 id="spot-list-head">Check this spot</h3>
+            <ul class="spotlist" aria-labelledby="spot-list-head">
+              <li><button type="button" class="spot" data-spot="ladder"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The ladder against the right hand wall</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="edge"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The front of the second floor deck</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="cord"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The walkway in front of the scaffold</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="door"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The interior doorway on the ground floor</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="worker"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The worker standing on the ground floor</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="exit"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The marked exit door on the right</span><span class="spot-state"></span></button></li>
+            </ul>
+
+            <div class="verdict" id="hunt-verdict" role="status" aria-live="polite"></div>
+          </div>
+        </div>
       </div>
-
-      <div class="verdict" id="hunt-verdict" role="status" aria-live="polite"></div>
-
-      <h3 id="spot-list-head">Check this spot</h3>
-      <p class="quiet">The same six spots, as a list. Nothing here is a duplicate of a hazard you have to find twice.</p>
-      <ul class="spotlist" aria-labelledby="spot-list-head">
-        <li><button type="button" class="spot" data-spot="ladder"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The ladder against the right hand wall</span><span class="spot-state"></span></button></li>
-        <li><button type="button" class="spot" data-spot="edge"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The front of the second floor deck</span><span class="spot-state"></span></button></li>
-        <li><button type="button" class="spot" data-spot="cord"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The walkway in front of the scaffold</span><span class="spot-state"></span></button></li>
-        <li><button type="button" class="spot" data-spot="door"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The interior doorway on the ground floor</span><span class="spot-state"></span></button></li>
-        <li><button type="button" class="spot" data-spot="worker"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The worker standing on the ground floor</span><span class="spot-state"></span></button></li>
-        <li><button type="button" class="spot" data-spot="exit"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The marked exit door on the right</span><span class="spot-state"></span></button></li>
-      </ul>
-
-      <p><button type="button" class="btn-ghost" id="reveal" hidden>Show me the ones I missed</button></p>
-      <p class="quiet" id="hunt-gate">Find all six to move on. If you get stuck, a button appears here that opens the rest.</p>
     </section>
 
     <!-- ============ 7 ============ -->
     <section class="screen" id="screen-7">
       <p class="stamp" aria-hidden="true">07</p>
       <h2 tabindex="-1">The hierarchy of controls</h2>
-      <p class="lead">Finding a hazard is half the job. The other half is choosing a control, and controls are not equal. Work down this list and stop at the strongest one that is realistic in the situation.</p>
+      <div class="screen-body">
+        <div class="tabs tabs-wide" data-tabs>
+          <div class="tablist" role="tablist" aria-label="Hierarchy of controls">
+            <button type="button" role="tab" id="tab-7a" aria-controls="pan-7a">The five levels</button>
+            <button type="button" role="tab" id="tab-7b" aria-controls="pan-7b">Six situations</button>
+          </div>
 
-      <ol class="hoc">
-        <li><b>Elimination.</b> Remove the hazard. The task does not happen, or it happens somewhere it cannot hurt anyone.</li>
-        <li><b>Substitution.</b> Swap in something less harmful that does the same job.</li>
-        <li><b>Engineering controls.</b> Change the physical setup so the hazard cannot reach people: guardrails, covers, ventilation, water on the blade, a barrier.</li>
-        <li><b>Administrative controls.</b> Change how people work around it: sequencing, permits, training, signs, limits on who goes where and when.</li>
-        <li><b>Protective equipment.</b> The last layer, worn by the person, protecting only that person, only while it is on and fitted.</li>
-      </ol>
-      <p class="note">The top two remove the hazard. The middle one contains it. The bottom two depend on people behaving exactly as intended, every time, which is why they sit at the bottom.</p>
+          <div class="tabpanel" role="tabpanel" id="pan-7a" aria-labelledby="tab-7a" tabindex="0">
+            <p class="lead">Finding a hazard is half the job. The other half is choosing a control, and controls are not equal. Work down this list and stop at the strongest one that is realistic in the situation.</p>
+            <ol class="hoc">
+              <li><b>Elimination.</b> Remove the hazard. The task does not happen, or it happens somewhere it cannot hurt anyone.</li>
+              <li><b>Substitution.</b> Swap in something less harmful that does the same job.</li>
+              <li><b>Engineering controls.</b> Change the physical setup so the hazard cannot reach people: guardrails, covers, ventilation, water on the blade, a barrier.</li>
+              <li><b>Administrative controls.</b> Change how people work around it: sequencing, permits, training, signs, limits on who goes where and when.</li>
+              <li><b>Protective equipment.</b> The last layer, worn by the person, protecting only that person, only while it is on and fitted.</li>
+            </ol>
+            <p class="note">The top two remove the hazard. The middle one contains it. The bottom two depend on people behaving exactly as intended, every time, which is why they sit at the bottom.</p>
+          </div>
 
-      <h3>Six situations</h3>
-      <p>For each one, pick the strongest control that is actually realistic. You can change an answer at any time.</p>
+          <div class="tabpanel" role="tabpanel" id="pan-7b" aria-labelledby="tab-7b">
+            <p class="sub-intro">For each situation, pick the strongest control that is actually realistic. You can change an answer at any time, and nothing here is timed.</p>
 
-      <div class="qcard">
-        <p class="qtext" id="h1q"><span class="qnum" aria-hidden="true">1</span> A trench has to be cut through a finished slab to reach a drain line. The design team confirms the line can be rerouted overhead instead, on the same schedule and with the same result.</p>
-        <div class="hoc-btns" role="group" aria-labelledby="h1q">
-          <button type="button" class="lvl" data-q="h1" data-correct="true" aria-pressed="false">Elimination</button>
-          <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Substitution</button>
-          <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Engineering</button>
-          <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Administrative</button>
-          <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Protective equipment</button>
+            <div class="substeps" data-substeps data-sub-label="Situation">
+              <div class="sub-bar">
+                <h3 class="sub-head" tabindex="-1" data-sub-head>Situation 1 of 6</h3>
+                <p class="counter" id="hoc-score" role="status" aria-live="polite">Answered 0 of 6.</p>
+                <div class="sub-nav">
+                  <button type="button" class="btn-mini" data-sub="prev">Previous</button>
+                  <button type="button" class="btn-mini" data-sub="next">Next</button>
+                </div>
+              </div>
+              <p class="visually-hidden" role="status" aria-live="polite" data-sub-live></p>
+
+              <div class="substep" data-substep>
+                <div class="qcard">
+                  <p class="qtext" id="h1q">A trench has to be cut through a finished slab to reach a drain line. The design team confirms the line can be rerouted overhead instead, on the same schedule and with the same result.</p>
+                  <div class="hoc-btns" role="group" aria-labelledby="h1q">
+                    <button type="button" class="lvl" data-q="h1" data-correct="true" aria-pressed="false">Elimination</button>
+                    <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Substitution</button>
+                    <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Engineering</button>
+                    <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Administrative</button>
+                    <button type="button" class="lvl" data-q="h1" data-correct="false" aria-pressed="false">Protective equipment</button>
+                  </div>
+                  <p class="feedback" id="fb-h1" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <div class="substep" data-substep>
+                <div class="qcard">
+                  <p class="qtext" id="h2q">A crew cleans tools with a strong solvent in a small room with one door. A water based cleaner on the shelf does the same job on the same tools.</p>
+                  <div class="hoc-btns" role="group" aria-labelledby="h2q">
+                    <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Elimination</button>
+                    <button type="button" class="lvl" data-q="h2" data-correct="true" aria-pressed="false">Substitution</button>
+                    <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Engineering</button>
+                    <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Administrative</button>
+                    <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Protective equipment</button>
+                  </div>
+                  <p class="feedback" id="fb-h2" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <div class="substep" data-substep>
+                <div class="qcard">
+                  <p class="qtext" id="h3q">Workers are cutting concrete block indoors and dust is filling the room. The cuts are field fits, so the pieces cannot be ordered pre-cut.</p>
+                  <div class="hoc-btns" role="group" aria-labelledby="h3q">
+                    <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Elimination</button>
+                    <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Substitution</button>
+                    <button type="button" class="lvl" data-q="h3" data-correct="true" aria-pressed="false">Engineering</button>
+                    <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Administrative</button>
+                    <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Protective equipment</button>
+                  </div>
+                  <p class="feedback" id="fb-h3" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <div class="substep" data-substep>
+                <div class="qcard">
+                  <p class="qtext" id="h4q">An open edge runs along the second floor where crews cross all day. The edge is part of the building and it is going to be there for the next three months.</p>
+                  <div class="hoc-btns" role="group" aria-labelledby="h4q">
+                    <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Elimination</button>
+                    <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Substitution</button>
+                    <button type="button" class="lvl" data-q="h4" data-correct="true" aria-pressed="false">Engineering</button>
+                    <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Administrative</button>
+                    <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Protective equipment</button>
+                  </div>
+                  <p class="feedback" id="fb-h4" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <div class="substep" data-substep>
+                <div class="qcard">
+                  <p class="qtext" id="h5q">Two crews need the same stairwell: one running conduit overhead from a platform, one carrying material up. The stairwell is the only route and neither crew can move.</p>
+                  <div class="hoc-btns" role="group" aria-labelledby="h5q">
+                    <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Elimination</button>
+                    <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Substitution</button>
+                    <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Engineering</button>
+                    <button type="button" class="lvl" data-q="h5" data-correct="true" aria-pressed="false">Administrative</button>
+                    <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Protective equipment</button>
+                  </div>
+                  <p class="feedback" id="fb-h5" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <div class="substep" data-substep>
+                <div class="qcard">
+                  <p class="qtext" id="h6q">A welder is grinding in a screened bay with local exhaust running and nobody else in the area. The sparks and the noise are as contained as the setup can make them.</p>
+                  <div class="hoc-btns" role="group" aria-labelledby="h6q">
+                    <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Elimination</button>
+                    <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Substitution</button>
+                    <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Engineering</button>
+                    <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Administrative</button>
+                    <button type="button" class="lvl" data-q="h6" data-correct="true" aria-pressed="false">Protective equipment</button>
+                  </div>
+                  <p class="feedback" id="fb-h6" aria-live="polite"></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="feedback" id="fb-h1" aria-live="polite"></p>
       </div>
-
-      <div class="qcard">
-        <p class="qtext" id="h2q"><span class="qnum" aria-hidden="true">2</span> A crew cleans tools with a strong solvent in a small room with one door. A water based cleaner on the shelf does the same job on the same tools.</p>
-        <div class="hoc-btns" role="group" aria-labelledby="h2q">
-          <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Elimination</button>
-          <button type="button" class="lvl" data-q="h2" data-correct="true" aria-pressed="false">Substitution</button>
-          <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Engineering</button>
-          <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Administrative</button>
-          <button type="button" class="lvl" data-q="h2" data-correct="false" aria-pressed="false">Protective equipment</button>
-        </div>
-        <p class="feedback" id="fb-h2" aria-live="polite"></p>
-      </div>
-
-      <div class="qcard">
-        <p class="qtext" id="h3q"><span class="qnum" aria-hidden="true">3</span> Workers are cutting concrete block indoors and dust is filling the room. The cuts are field fits, so the pieces cannot be ordered pre-cut.</p>
-        <div class="hoc-btns" role="group" aria-labelledby="h3q">
-          <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Elimination</button>
-          <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Substitution</button>
-          <button type="button" class="lvl" data-q="h3" data-correct="true" aria-pressed="false">Engineering</button>
-          <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Administrative</button>
-          <button type="button" class="lvl" data-q="h3" data-correct="false" aria-pressed="false">Protective equipment</button>
-        </div>
-        <p class="feedback" id="fb-h3" aria-live="polite"></p>
-      </div>
-
-      <div class="qcard">
-        <p class="qtext" id="h4q"><span class="qnum" aria-hidden="true">4</span> An open edge runs along the second floor where crews cross all day. The edge is part of the building and it is going to be there for the next three months.</p>
-        <div class="hoc-btns" role="group" aria-labelledby="h4q">
-          <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Elimination</button>
-          <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Substitution</button>
-          <button type="button" class="lvl" data-q="h4" data-correct="true" aria-pressed="false">Engineering</button>
-          <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Administrative</button>
-          <button type="button" class="lvl" data-q="h4" data-correct="false" aria-pressed="false">Protective equipment</button>
-        </div>
-        <p class="feedback" id="fb-h4" aria-live="polite"></p>
-      </div>
-
-      <div class="qcard">
-        <p class="qtext" id="h5q"><span class="qnum" aria-hidden="true">5</span> Two crews need the same stairwell: one running conduit overhead from a platform, one carrying material up. The stairwell is the only route and neither crew can move.</p>
-        <div class="hoc-btns" role="group" aria-labelledby="h5q">
-          <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Elimination</button>
-          <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Substitution</button>
-          <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Engineering</button>
-          <button type="button" class="lvl" data-q="h5" data-correct="true" aria-pressed="false">Administrative</button>
-          <button type="button" class="lvl" data-q="h5" data-correct="false" aria-pressed="false">Protective equipment</button>
-        </div>
-        <p class="feedback" id="fb-h5" aria-live="polite"></p>
-      </div>
-
-      <div class="qcard">
-        <p class="qtext" id="h6q"><span class="qnum" aria-hidden="true">6</span> A welder is grinding in a screened bay with local exhaust running and nobody else in the area. The sparks and the noise are as contained as the setup can make them.</p>
-        <div class="hoc-btns" role="group" aria-labelledby="h6q">
-          <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Elimination</button>
-          <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Substitution</button>
-          <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Engineering</button>
-          <button type="button" class="lvl" data-q="h6" data-correct="false" aria-pressed="false">Administrative</button>
-          <button type="button" class="lvl" data-q="h6" data-correct="true" aria-pressed="false">Protective equipment</button>
-        </div>
-        <p class="feedback" id="fb-h6" aria-live="polite"></p>
-      </div>
-
-      <p class="counter" id="hoc-score" role="status" aria-live="polite">Answered 0 of 6.</p>
     </section>
 
     <!-- ============ 8 ============ -->
     <section class="screen" id="screen-8">
       <p class="stamp" aria-hidden="true">08</p>
       <h2 tabindex="-1">Stop or go</h2>
-      <p class="lead">Eight things you see on the walk. For each one, decide whether the work continues or the work stops until it is fixed. Nothing here is timed, and you can change an answer.</p>
-      <p class="counter" id="sg-score" role="status" aria-live="polite">Answered 0 of 8.</p>
+      <div class="screen-body">
+        <p class="lead">Eight things you see on the walk. For each one, decide whether the work continues or the work stops until it is fixed. Nothing here is timed, and you can change an answer.</p>
 
-      <ol class="sg">
-        <li class="sg-item">
-          <p class="sg-text" id="g1q">The ladder up to the second floor landing is tied off at the top and extends three rungs above the landing.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g1q">
-            <button type="button" class="call call-stop" data-q="g1" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g1" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+        <div class="substeps sg" data-substeps data-sub-label="Call">
+          <div class="sub-bar">
+            <h3 class="sub-head" tabindex="-1" data-sub-head>Call 1 of 8</h3>
+            <p class="counter" id="sg-score" role="status" aria-live="polite">Answered 0 of 8.</p>
+            <div class="sub-nav">
+              <button type="button" class="btn-mini" data-sub="prev">Previous</button>
+              <button type="button" class="btn-mini" data-sub="next">Next</button>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g1" aria-live="polite"></p>
-        </li>
-        <li class="sg-item">
-          <p class="sg-text" id="g2q">A cord feeding a work light runs across the main walkway and sits in the puddle at the low spot.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g2q">
-            <button type="button" class="call call-stop" data-q="g2" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g2" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+          <p class="visually-hidden" role="status" aria-live="polite" data-sub-live></p>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g1q">The ladder up to the second floor landing is tied off at the top and extends three rungs above the landing.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g1q">
+                <button type="button" class="call call-stop" data-q="g1" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g1" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g1" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g2" aria-live="polite"></p>
-        </li>
-        <li class="sg-item">
-          <p class="sg-text" id="g3q">A floor opening is covered with plywood that is screwed down and marked in large letters.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g3q">
-            <button type="button" class="call call-stop" data-q="g3" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g3" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g2q">A cord feeding a work light runs across the main walkway and sits in the puddle at the low spot.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g2q">
+                <button type="button" class="call call-stop" data-q="g2" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g2" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g2" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g3" aria-live="polite"></p>
-        </li>
-        <li class="sg-item">
-          <p class="sg-text" id="g4q">A guardrail section was taken out to land material, and the crew left for lunch with the edge open.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g4q">
-            <button type="button" class="call call-stop" data-q="g4" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g4" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g3q">A floor opening is covered with plywood that is screwed down and marked in large letters.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g3q">
+                <button type="button" class="call call-stop" data-q="g3" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g3" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g3" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g4" aria-live="polite"></p>
-        </li>
-        <li class="sg-item">
-          <p class="sg-text" id="g5q">A worker is grinding overhead in eye protection while another crosses underneath with nothing on their head.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g5q">
-            <button type="button" class="call call-stop" data-q="g5" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g5" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g4q">A guardrail section was taken out to land material, and the crew left for lunch with the edge open.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g4q">
+                <button type="button" class="call call-stop" data-q="g4" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g4" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g4" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g5" aria-live="polite"></p>
-        </li>
-        <li class="sg-item">
-          <p class="sg-text" id="g6q">Bins are set at each work area and the walkways were swept at the end of the last shift.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g6q">
-            <button type="button" class="call call-stop" data-q="g6" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g6" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g5q">A worker is grinding overhead in eye protection while another crosses underneath with nothing on their head.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g5q">
+                <button type="button" class="call call-stop" data-q="g5" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g5" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g5" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g6" aria-live="polite"></p>
-        </li>
-        <li class="sg-item">
-          <p class="sg-text" id="g7q">A panel is being worked on with the breaker off, and a lock and tag applied by the person doing the work.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g7q">
-            <button type="button" class="call call-stop" data-q="g7" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g7" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g6q">Bins are set at each work area and the walkways were swept at the end of the last shift.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g6q">
+                <button type="button" class="call call-stop" data-q="g6" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g6" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g6" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g7" aria-live="polite"></p>
-        </li>
-        <li class="sg-item">
-          <p class="sg-text" id="g8q">Block is stacked chest high on the walkway, directly in front of the marked exit door.</p>
-          <div class="sg-btns" role="group" aria-labelledby="g8q">
-            <button type="button" class="call call-stop" data-q="g8" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
-            <button type="button" class="call call-go" data-q="g8" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g7q">A panel is being worked on with the breaker off, and a lock and tag applied by the person doing the work.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g7q">
+                <button type="button" class="call call-stop" data-q="g7" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g7" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g7" aria-live="polite"></p>
+            </div>
           </div>
-          <p class="feedback slam" id="fb-g8" aria-live="polite"></p>
-        </li>
-      </ol>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <p class="sg-text" id="g8q">Block is stacked chest high on the walkway, directly in front of the marked exit door.</p>
+              <div class="sg-btns" role="group" aria-labelledby="g8q">
+                <button type="button" class="call call-stop" data-q="g8" data-correct="true" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" /></svg><span class="call-word">Stop</span></button>
+                <button type="button" class="call call-go" data-q="g8" data-correct="false" aria-pressed="false"><svg class="call-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h14M12 5l7 7-7 7" /></svg><span class="call-word">Go</span></button>
+              </div>
+              <p class="feedback slam" id="fb-g8" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ============ 9 ============ -->
     <section class="screen" id="screen-9">
       <p class="stamp" aria-hidden="true">09</p>
       <h2 tabindex="-1">Your walk-through card</h2>
-      <p class="lead">Tick what you will check on your route. The card builds itself underneath, and it is yours to copy onto whatever you actually carry.</p>
-      <p class="counter" id="card-count" role="status" aria-live="polite">0 items on your card.</p>
+      <div class="screen-body">
+        <div class="tabs tabs-wide" data-tabs>
+          <div class="tab-row">
+            <div class="tablist" role="tablist" aria-label="Walk-through card">
+              <button type="button" role="tab" id="tab-9a" aria-controls="pan-9a">Choose your checks</button>
+              <button type="button" role="tab" id="tab-9b" aria-controls="pan-9b">My card</button>
+              <button type="button" role="tab" id="tab-9c" aria-controls="pan-9c">Where you landed</button>
+            </div>
+            <p class="counter" id="card-count" role="status" aria-live="polite">0 items on your card.</p>
+          </div>
 
-      <form class="picker" id="picker">
-        <fieldset>
-          <legend>Zone 1: access and egress</legend>
-          <label><input type="checkbox" data-zone="Access and egress" value="Ladders set at the right angle, secured at the base, tied at the top, extended above the landing" /> <span>Ladders set at the right angle, secured at the base, tied at the top, extended above the landing</span></label>
-          <label><input type="checkbox" data-zone="Access and egress" value="Stairs and walkways clear full width, handrails in place, tread edges lit" /> <span>Stairs and walkways clear full width, handrails in place, tread edges lit</span></label>
-          <label><input type="checkbox" data-zone="Access and egress" value="Exits marked, unlocked and clear on both sides" /> <span>Exits marked, unlocked and clear on both sides</span></label>
-          <label><input type="checkbox" data-zone="Access and egress" value="Gates and delivery routes separated from the way people walk in" /> <span>Gates and delivery routes separated from the way people walk in</span></label>
-        </fieldset>
+          <div class="tabpanel" role="tabpanel" id="pan-9a" aria-labelledby="tab-9a">
+            <p class="sub-intro">Tick what you will check on your route. Open a zone, choose the checks you will actually make, and the card fills itself in.</p>
 
-        <fieldset>
-          <legend>Zone 2: work at height</legend>
-          <label><input type="checkbox" data-zone="Work at height" value="Every leading edge and opening walked, not scanned from across the floor" /> <span>Every leading edge and opening walked, not scanned from across the floor</span></label>
-          <label><input type="checkbox" data-zone="Work at height" value="Guardrails complete: top rail, mid rail, toe board where anything can fall" /> <span>Guardrails complete: top rail, mid rail, toe board where anything can fall</span></label>
-          <label><input type="checkbox" data-zone="Work at height" value="Floor openings covered with something secured and marked as a cover" /> <span>Floor openings covered with something secured and marked as a cover</span></label>
-          <label><input type="checkbox" data-zone="Work at height" value="Any rail removed to land material has a name and a time attached to putting it back" /> <span>Any rail removed to land material has a name and a time attached to putting it back</span></label>
-        </fieldset>
+            <form class="picker accordion" id="picker" data-accordion>
+              <div class="acc-sec">
+                <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-1" aria-controls="accp-1"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">Zone 1: access and egress</span></button></h3>
+                <div class="acc-panel" id="accp-1" role="region" aria-labelledby="accb-1">
+                  <label><input type="checkbox" data-zone="Access and egress" data-short="Ladders: angle, base, tie, extension" value="Ladders set at the right angle, secured at the base, tied at the top, extended above the landing" /> <span>Ladders set at the right angle, secured at the base, tied at the top, extended above the landing</span></label>
+                  <label><input type="checkbox" data-zone="Access and egress" data-short="Stairs and walkways clear, rails on, lit" value="Stairs and walkways clear full width, handrails in place, tread edges lit" /> <span>Stairs and walkways clear full width, handrails in place, tread edges lit</span></label>
+                  <label><input type="checkbox" data-zone="Access and egress" data-short="Exits marked, unlocked, clear both sides" value="Exits marked, unlocked and clear on both sides" /> <span>Exits marked, unlocked and clear on both sides</span></label>
+                  <label><input type="checkbox" data-zone="Access and egress" data-short="Delivery routes off the walking route" value="Gates and delivery routes separated from the way people walk in" /> <span>Gates and delivery routes separated from the way people walk in</span></label>
+                </div>
+              </div>
 
-        <fieldset>
-          <legend>Zone 3: energy and equipment</legend>
-          <label><input type="checkbox" data-zone="Energy and equipment" value="Cords out of walkways, off wet ground, jackets and ground pins intact" /> <span>Cords out of walkways, off wet ground, jackets and ground pins intact</span></label>
-          <label><input type="checkbox" data-zone="Energy and equipment" value="Ground fault protection on temporary circuits, checked rather than assumed" /> <span>Ground fault protection on temporary circuits, checked rather than assumed</span></label>
-          <label><input type="checkbox" data-zone="Energy and equipment" value="Panels closed and labeled, nothing stored on or against them" /> <span>Panels closed and labeled, nothing stored on or against them</span></label>
-          <label><input type="checkbox" data-zone="Energy and equipment" value="Anything being worked on is off, released, locked and tagged by the person doing the work" /> <span>Anything being worked on is off, released, locked and tagged by the person doing the work</span></label>
-        </fieldset>
+              <div class="acc-sec">
+                <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-2" aria-controls="accp-2"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">Zone 2: work at height</span></button></h3>
+                <div class="acc-panel" id="accp-2" role="region" aria-labelledby="accb-2">
+                  <label><input type="checkbox" data-zone="Work at height" data-short="Every edge and opening walked" value="Every leading edge and opening walked, not scanned from across the floor" /> <span>Every leading edge and opening walked, not scanned from across the floor</span></label>
+                  <label><input type="checkbox" data-zone="Work at height" data-short="Top rail, mid rail, toe board" value="Guardrails complete: top rail, mid rail, toe board where anything can fall" /> <span>Guardrails complete: top rail, mid rail, toe board where anything can fall</span></label>
+                  <label><input type="checkbox" data-zone="Work at height" data-short="Floor openings covered and marked" value="Floor openings covered with something secured and marked as a cover" /> <span>Floor openings covered with something secured and marked as a cover</span></label>
+                  <label><input type="checkbox" data-zone="Work at height" data-short="Rails removed have a name and a time" value="Any rail removed to land material has a name and a time attached to putting it back" /> <span>Any rail removed to land material has a name and a time attached to putting it back</span></label>
+                </div>
+              </div>
 
-        <fieldset>
-          <legend>Zone 4: housekeeping and materials</legend>
-          <label><input type="checkbox" data-zone="Housekeeping and materials" value="Debris cleared as the work makes it, with bins where the work is" /> <span>Debris cleared as the work makes it, with bins where the work is</span></label>
-          <label><input type="checkbox" data-zone="Housekeeping and materials" value="Standing water traced back to its source, not just walked around" /> <span>Standing water traced back to its source, not just walked around</span></label>
-          <label><input type="checkbox" data-zone="Housekeeping and materials" value="Material staged level, bound or blocked, clear of walkways, exits and edges" /> <span>Material staged level, bound or blocked, clear of walkways, exits and edges</span></label>
-          <label><input type="checkbox" data-zone="Housekeeping and materials" value="Protective equipment worn and fitted, matched to the work happening overhead too" /> <span>Protective equipment worn and fitted, matched to the work happening overhead too</span></label>
-        </fieldset>
-      </form>
+              <div class="acc-sec">
+                <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-3" aria-controls="accp-3"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">Zone 3: energy and equipment</span></button></h3>
+                <div class="acc-panel" id="accp-3" role="region" aria-labelledby="accb-3">
+                  <label><input type="checkbox" data-zone="Energy and equipment" data-short="Cords out of walkways, off wet ground" value="Cords out of walkways, off wet ground, jackets and ground pins intact" /> <span>Cords out of walkways, off wet ground, jackets and ground pins intact</span></label>
+                  <label><input type="checkbox" data-zone="Energy and equipment" data-short="Ground fault protection checked" value="Ground fault protection on temporary circuits, checked rather than assumed" /> <span>Ground fault protection on temporary circuits, checked rather than assumed</span></label>
+                  <label><input type="checkbox" data-zone="Energy and equipment" data-short="Panels closed, labeled, clear" value="Panels closed and labeled, nothing stored on or against them" /> <span>Panels closed and labeled, nothing stored on or against them</span></label>
+                  <label><input type="checkbox" data-zone="Energy and equipment" data-short="Locked and tagged by the person working" value="Anything being worked on is off, released, locked and tagged by the person doing the work" /> <span>Anything being worked on is off, released, locked and tagged by the person doing the work</span></label>
+                </div>
+              </div>
 
-      <div class="card" id="card">
-        <p class="card-title">My walk-through card</p>
-        <div id="card-body"><p class="quiet">Nothing ticked yet. Choose the checks you will actually make, then this card fills in.</p></div>
-        <p class="card-foot">Walk the four zones in order. Walk them again after any change: a delivery, a new trade, weather, or a crew working late.</p>
+              <div class="acc-sec">
+                <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-4" aria-controls="accp-4"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">Zone 4: housekeeping and materials</span></button></h3>
+                <div class="acc-panel" id="accp-4" role="region" aria-labelledby="accb-4">
+                  <label><input type="checkbox" data-zone="Housekeeping and materials" data-short="Debris cleared as the work makes it" value="Debris cleared as the work makes it, with bins where the work is" /> <span>Debris cleared as the work makes it, with bins where the work is</span></label>
+                  <label><input type="checkbox" data-zone="Housekeeping and materials" data-short="Standing water traced to its source" value="Standing water traced back to its source, not just walked around" /> <span>Standing water traced back to its source, not just walked around</span></label>
+                  <label><input type="checkbox" data-zone="Housekeeping and materials" data-short="Material staged level, bound, clear" value="Material staged level, bound or blocked, clear of walkways, exits and edges" /> <span>Material staged level, bound or blocked, clear of walkways, exits and edges</span></label>
+                  <label><input type="checkbox" data-zone="Housekeeping and materials" data-short="Protective equipment worn and fitted" value="Protective equipment worn and fitted, matched to the work happening overhead too" /> <span>Protective equipment worn and fitted, matched to the work happening overhead too</span></label>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="tabpanel" role="tabpanel" id="pan-9b" aria-labelledby="tab-9b" tabindex="0">
+            <div class="card" id="card">
+              <p class="card-title">My walk-through card</p>
+              <div id="card-body"><p class="quiet">Nothing ticked yet. Open the first tab, choose the checks you will actually make, then this card fills in.</p></div>
+              <p class="card-foot">Walk the four zones in order. Walk them again after any change: a delivery, a new trade, weather, or a crew working late.</p>
+            </div>
+          </div>
+
+          <div class="tabpanel" role="tabpanel" id="pan-9c" aria-labelledby="tab-9c">
+            <div class="results" id="results">
+              <p class="card-title">Where you landed</p>
+              <ul id="results-list">
+                <li>Hierarchy of controls: not attempted.</li>
+                <li>Stop or go: not attempted.</li>
+              </ul>
+            </div>
+            <p class="disclaimer">This module is a teaching demonstration and not a substitute for a site-specific safety program.</p>
+            <p><button type="button" class="btn-ghost" id="restart">Start over</button></p>
+          </div>
+        </div>
       </div>
-
-      <div class="results" id="results">
-        <p class="card-title">Where you landed</p>
-        <ul id="results-list">
-          <li>Hierarchy of controls: not attempted.</li>
-          <li>Stop or go: not attempted.</li>
-        </ul>
-      </div>
-
-      <p class="disclaimer">This module is a teaching demonstration and not a substitute for a site-specific safety program.</p>
-
-      <p><button type="button" class="btn-ghost" id="restart">Start over</button></p>
     </section>
-
-    <nav class="pager" aria-label="Screen navigation">
-      <button type="button" class="btn-ghost" id="prev">Back</button>
-      <button type="button" class="btn-hi" id="next">Next</button>
-    </nav>
 
   </main>
 
   <footer class="rig-foot">
     <div class="stripe stripe-foot" aria-hidden="true"></div>
-    <p>Demonstration sample by K &amp; A Performance.</p>
+    <nav class="pager" aria-label="Screen navigation">
+      <button type="button" class="btn-ghost" id="prev">Back</button>
+      <p class="foot-note">Demonstration sample by K &amp; A Performance.</p>
+      <button type="button" class="btn-hi" id="next">Next</button>
+    </nav>
   </footer>
 
 </div>

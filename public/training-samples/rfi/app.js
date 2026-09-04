@@ -1,8 +1,15 @@
 /* The RFI that gets answered.
-   Plain DOM, no framework, no network. Three jobs only:
+   Plain DOM, no framework, no network. Five jobs only:
      1. show one screen at a time and move focus to its heading,
-     2. answer the choice buttons with visible, announced feedback,
-     3. keep a score for the three decisions.
+     2. enhance the marked up sections into WAI-ARIA tab sets,
+     3. enhance the marked up sections into in-screen sub-steps,
+     4. answer the choice buttons with visible, announced feedback,
+     5. keep a score for the three decisions.
+
+   Tab sets and sub-steps are built here rather than written into the HTML
+   so that with scripting off every panel and every step renders open, in
+   order, inside one ordinary scrolling document. Nothing is removed from
+   the DOM; inactive panels carry the hidden attribute and come back.
 
    Deliberately absent: focus looping. The piece runs inside an iframe on the
    site, and trapping Tab at the end of the last screen would turn the
@@ -28,6 +35,12 @@
   var scoreLine = document.getElementById('score-line');
   var finalScore = document.getElementById('final-score');
   var restartBtn = document.getElementById('restart');
+
+  var resetters = [];
+
+  function list(nodes) {
+    return Array.prototype.slice.call(nodes);
+  }
 
   /* ---------- feedback copy ---------- */
 
@@ -144,13 +157,196 @@
     }
   }
 
+  /* ---------- tab sets ----------
+     Automatic activation, roving tabindex, Left, Right, Home and End, per
+     the WAI-ARIA authoring practices. Panels are focusable because none of
+     them contains a control of its own. */
+
+  function buildTabs() {
+    list(document.querySelectorAll('[data-tabs]')).forEach(function (group, gi) {
+      var panels = list(group.children).filter(function (el) {
+        return el.classList.contains('tabsec');
+      });
+      if (panels.length < 2) {
+        return;
+      }
+
+      var tablist = document.createElement('div');
+      tablist.className = 'tablist';
+      tablist.setAttribute('role', 'tablist');
+      tablist.setAttribute('aria-label', group.getAttribute('data-tabs-label') || 'Sections');
+
+      var tabs = [];
+
+      panels.forEach(function (panel, index) {
+        var heading = panel.querySelector('h3');
+        var label = heading ? heading.textContent : 'Part ' + (index + 1);
+        var tabId = 'tg' + gi + '-tab-' + index;
+        var panelId = 'tg' + gi + '-panel-' + index;
+
+        if (heading) {
+          // The tab button now carries this text as its label.
+          heading.hidden = true;
+        }
+
+        var tab = document.createElement('button');
+        tab.type = 'button';
+        tab.className = 'tab';
+        tab.id = tabId;
+        tab.setAttribute('role', 'tab');
+        tab.setAttribute('aria-controls', panelId);
+        tab.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+        tab.tabIndex = index === 0 ? 0 : -1;
+        tab.textContent = label;
+        tablist.appendChild(tab);
+        tabs.push(tab);
+
+        panel.id = panelId;
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', tabId);
+        panel.tabIndex = 0;
+        panel.hidden = index !== 0;
+      });
+
+      group.insertBefore(tablist, group.firstChild);
+
+      function select(index, focus) {
+        tabs.forEach(function (tab, i) {
+          var on = i === index;
+          tab.setAttribute('aria-selected', on ? 'true' : 'false');
+          tab.tabIndex = on ? 0 : -1;
+          panels[i].hidden = !on;
+        });
+        if (focus) {
+          tabs[index].focus();
+        }
+      }
+
+      tabs.forEach(function (tab, index) {
+        tab.addEventListener('click', function () {
+          select(index, true);
+        });
+      });
+
+      tablist.addEventListener('keydown', function (event) {
+        var from = tabs.indexOf(document.activeElement);
+        if (from < 0) {
+          return;
+        }
+        var to = -1;
+        if (event.key === 'ArrowRight') {
+          to = (from + 1) % tabs.length;
+        } else if (event.key === 'ArrowLeft') {
+          to = (from - 1 + tabs.length) % tabs.length;
+        } else if (event.key === 'Home') {
+          to = 0;
+        } else if (event.key === 'End') {
+          to = tabs.length - 1;
+        }
+        if (to >= 0) {
+          event.preventDefault();
+          select(to, true);
+        }
+      });
+
+      resetters.push(function () {
+        select(0, false);
+      });
+    });
+  }
+
+  /* ---------- sub-steps ----------
+     A small pager inside the screen, pinned under the screen body, with its
+     own polite count. The outer "Screen N of 8" count is untouched. */
+
+  function buildSteps() {
+    list(document.querySelectorAll('[data-substeps]')).forEach(function (group) {
+      var steps = list(group.children).filter(function (el) {
+        return el.classList.contains('step');
+      });
+      if (steps.length < 2) {
+        return;
+      }
+
+      var noun = group.getAttribute('data-step-noun') || 'step';
+      var title = noun.charAt(0).toUpperCase() + noun.slice(1);
+      var at = 0;
+
+      steps.forEach(function (step, index) {
+        var heading = step.querySelector('h3');
+        if (heading) {
+          heading.tabIndex = -1;
+        }
+        step.hidden = index !== 0;
+      });
+
+      var bar = document.createElement('div');
+      bar.className = 'substep-bar';
+
+      var back = document.createElement('button');
+      back.type = 'button';
+      back.className = 'btn-mini';
+      back.textContent = 'Previous ' + noun;
+
+      var count = document.createElement('p');
+      count.className = 'substep-count';
+      count.setAttribute('role', 'status');
+      count.setAttribute('aria-live', 'polite');
+      count.textContent = title + ' 1 of ' + steps.length;
+
+      var forward = document.createElement('button');
+      forward.type = 'button';
+      forward.className = 'btn-mini';
+      forward.textContent = 'Next ' + noun;
+
+      bar.appendChild(back);
+      bar.appendChild(count);
+      bar.appendChild(forward);
+
+      var screen = group.closest('.screen');
+      (screen || group.parentNode).appendChild(bar);
+
+      function go(index, moveFocus) {
+        at = Math.min(Math.max(index, 0), steps.length - 1);
+        steps.forEach(function (step, i) {
+          step.hidden = i !== at;
+        });
+        back.disabled = at === 0;
+        forward.disabled = at === steps.length - 1;
+        count.textContent = title + ' ' + (at + 1) + ' of ' + steps.length;
+        if (moveFocus) {
+          var target = steps[at].querySelector('h3') ||
+            steps[at].querySelector('button, [href], input, select, textarea');
+          if (target) {
+            target.focus();
+          }
+        }
+      }
+
+      back.addEventListener('click', function () {
+        go(at - 1, true);
+      });
+      forward.addEventListener('click', function () {
+        go(at + 1, true);
+      });
+
+      go(0, false);
+
+      resetters.push(function () {
+        go(0, false);
+      });
+    });
+  }
+
   /* ---------- screen movement ---------- */
 
   function show(n, moveFocus) {
     current = Math.min(Math.max(n, 1), TOTAL);
 
     screens.forEach(function (section, index) {
-      section.hidden = index + 1 !== current;
+      var on = index + 1 === current;
+      section.hidden = !on;
+      section.classList.toggle('on', on);
     });
 
     progressText.textContent = 'Screen ' + current + ' of ' + TOTAL;
@@ -220,12 +416,18 @@
       Array.prototype.forEach.call(document.querySelectorAll('.feedback'), function (p) {
         p.textContent = '';
       });
+      resetters.forEach(function (reset) {
+        reset();
+      });
       updateScoreLine();
       show(1, true);
     });
   }
 
   /* ---------- start ---------- */
+
+  buildTabs();
+  buildSteps();
 
   // No focus grab on load: the piece is embedded, and stealing focus would
   // yank the host page down to the frame before anyone asked it to.

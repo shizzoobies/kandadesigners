@@ -1,10 +1,16 @@
 /* Spot it before it hurts someone.
-   Plain DOM, no framework, no network. Five jobs:
+   Plain DOM, no framework, no network. Seven jobs:
      1. show one screen at a time and move focus to its heading,
-     2. run the hazard hunt from either the picture or the list,
-     3. answer the hierarchy and the stop or go calls, with announced feedback,
-     4. assemble the walk-through card from the ticked items,
-     5. report the two scores on the last screen.
+     2. run the tab sets on the teaching screens,
+     3. run the accordion on the walk-through card,
+     4. run the sub-steps inside the two question screens,
+     5. run the hazard hunt from either the picture or the list,
+     6. answer the hierarchy and the stop or go calls, with announced feedback,
+     7. assemble the walk-through card and report the two scores.
+
+   Every panel, sub-step and accordion section is open in the markup and closed
+   here, so a visitor with scripting off gets the whole module in order rather
+   than a stack of empty boxes.
 
    Deliberately absent: focus looping. The module runs inside an iframe on the
    studio site, and trapping Tab on the last screen would turn the embed into a
@@ -49,6 +55,10 @@
   var cardBody = document.getElementById('card-body');
   var cardCount = document.getElementById('card-count');
   var resultsList = document.getElementById('results-list');
+
+  function each(list, fn) {
+    Array.prototype.forEach.call(list, fn);
+  }
 
   /* ---------- copy ---------- */
 
@@ -146,6 +156,148 @@
   var HOC_KEYS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
   var SG_KEYS = ['g1', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7', 'g8'];
 
+  /* ---------- tab sets ---------- */
+
+  var tabSets = [];
+
+  function selectTab(set, index, moveFocus) {
+    set.index = index;
+    each(set.tabs, function (tab, i) {
+      var on = i === index;
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+      set.panels[i].hidden = !on;
+    });
+    if (moveFocus) {
+      set.tabs[index].focus();
+    }
+  }
+
+  function initTabs() {
+    each(document.querySelectorAll('[data-tabs]'), function (group) {
+      var set = {
+        tabs: group.querySelectorAll('[role="tab"]'),
+        panels: [],
+        index: 0
+      };
+
+      each(set.tabs, function (tab) {
+        set.panels.push(document.getElementById(tab.getAttribute('aria-controls')));
+      });
+
+      each(set.tabs, function (tab, i) {
+        tab.addEventListener('click', function () {
+          selectTab(set, i, false);
+        });
+        tab.addEventListener('keydown', function (event) {
+          var last = set.tabs.length - 1;
+          var to = -1;
+          if (event.key === 'ArrowRight') {
+            to = i === last ? 0 : i + 1;
+          } else if (event.key === 'ArrowLeft') {
+            to = i === 0 ? last : i - 1;
+          } else if (event.key === 'Home') {
+            to = 0;
+          } else if (event.key === 'End') {
+            to = last;
+          }
+          if (to !== -1) {
+            event.preventDefault();
+            // Automatic activation: the panel follows the focused tab.
+            selectTab(set, to, true);
+          }
+        });
+      });
+
+      tabSets.push(set);
+      selectTab(set, 0, false);
+    });
+  }
+
+  /* ---------- accordion ---------- */
+
+  var accordions = [];
+
+  function openSection(acc, index) {
+    acc.index = index;
+    each(acc.buttons, function (btn, i) {
+      var on = i === index;
+      btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+      acc.panels[i].hidden = !on;
+    });
+  }
+
+  function initAccordions() {
+    each(document.querySelectorAll('[data-accordion]'), function (group) {
+      var acc = {
+        buttons: group.querySelectorAll('.acc-btn'),
+        panels: [],
+        index: 0
+      };
+
+      each(acc.buttons, function (btn) {
+        acc.panels.push(document.getElementById(btn.getAttribute('aria-controls')));
+      });
+
+      each(acc.buttons, function (btn, i) {
+        btn.addEventListener('click', function () {
+          // One section open at a time: four zones of checks only fit the
+          // stage one zone at a time, and the card shows the whole answer.
+          openSection(acc, acc.index === i ? -1 : i);
+        });
+      });
+
+      accordions.push(acc);
+      openSection(acc, 0);
+    });
+  }
+
+  /* ---------- sub-steps ---------- */
+
+  var subRuns = [];
+
+  function showStep(run, index, moveFocus) {
+    run.index = Math.min(Math.max(index, 0), run.steps.length - 1);
+
+    each(run.steps, function (step, i) {
+      step.hidden = i !== run.index;
+    });
+
+    var text = run.label + ' ' + (run.index + 1) + ' of ' + run.steps.length;
+    run.head.textContent = text;
+    run.prev.disabled = run.index === 0;
+    run.next.disabled = run.index === run.steps.length - 1;
+
+    if (moveFocus) {
+      run.live.textContent = text + '.';
+      run.head.focus();
+    }
+  }
+
+  function initSubsteps() {
+    each(document.querySelectorAll('[data-substeps]'), function (group) {
+      var run = {
+        steps: group.querySelectorAll('[data-substep]'),
+        head: group.querySelector('[data-sub-head]'),
+        live: group.querySelector('[data-sub-live]'),
+        prev: group.querySelector('[data-sub="prev"]'),
+        next: group.querySelector('[data-sub="next"]'),
+        label: group.getAttribute('data-sub-label') || 'Step',
+        index: 0
+      };
+
+      run.prev.addEventListener('click', function () {
+        showStep(run, run.index - 1, true);
+      });
+      run.next.addEventListener('click', function () {
+        showStep(run, run.index + 1, true);
+      });
+
+      subRuns.push(run);
+      showStep(run, 0, false);
+    });
+  }
+
   /* ---------- helpers ---------- */
 
   function glyph(ok) {
@@ -208,16 +360,13 @@
   /* ---------- hazard hunt ---------- */
 
   function markSpot(key) {
-    Array.prototype.forEach.call(
-      document.querySelectorAll('[data-spot="' + key + '"]'),
-      function (btn) {
-        btn.setAttribute('aria-pressed', 'true');
-        var state = btn.querySelector('.spot-state');
-        if (state) {
-          state.textContent = 'Found';
-        }
+    each(document.querySelectorAll('[data-spot="' + key + '"]'), function (btn) {
+      btn.setAttribute('aria-pressed', 'true');
+      var state = btn.querySelector('.spot-state');
+      if (state) {
+        state.textContent = 'Found';
       }
-    );
+    });
   }
 
   function updateHunt() {
@@ -229,7 +378,7 @@
     } else {
       huntGate.textContent = 'Find all six to move on. ' + (revealBtn.hidden
         ? 'If you get stuck, a button appears here that opens the rest.'
-        : 'Use the button above if you would rather be shown the rest.');
+        : 'Use the button beside this if you would rather be shown the rest.');
     }
 
     if (current === HUNT_SCREEN) {
@@ -262,15 +411,18 @@
     });
 
     if (missed.length) {
-      var html = '<p class="verdict-head">The ones you had not checked</p><ul class="card-list">';
       missed.forEach(function (key) {
         found[key] = true;
         foundCount += 1;
         markSpot(key);
-        html += '<li><b>' + SPOTS[key].head.replace('Found: ', '') + '.</b> ' + SPOTS[key].why + '</li>';
       });
-      html += '</ul>';
-      huntVerdict.innerHTML = html;
+
+      // The rest are marked rather than dumped into one long block: every
+      // spot is still a button, and selecting one reads out what is wrong
+      // with it, which is the same explanation in the same place as before.
+      huntVerdict.innerHTML =
+        '<p class="verdict-head">The rest are marked for you</p>' +
+        '<p class="verdict-why">There were ' + missed.length + ' you had not checked. Select any spot, in the picture or in the list, to read what is wrong with it.</p>';
     }
 
     updateHunt();
@@ -284,7 +436,7 @@
     var byZone = {};
     var n = 0;
 
-    Array.prototype.forEach.call(boxes, function (box) {
+    each(boxes, function (box) {
       if (!box.checked) {
         return;
       }
@@ -294,13 +446,13 @@
         byZone[zone] = [];
         zones.push(zone);
       }
-      byZone[zone].push(box.value);
+      byZone[zone].push(box.getAttribute('data-short') || box.value);
     });
 
     cardCount.textContent = n === 1 ? '1 item on your card.' : n + ' items on your card.';
 
     if (!n) {
-      cardBody.innerHTML = '<p class="quiet">Nothing ticked yet. Choose the checks you will actually make, then this card fills in.</p>';
+      cardBody.innerHTML = '<p class="quiet">Nothing ticked yet. Open the first tab, choose the checks you will actually make, then this card fills in.</p>';
       return;
     }
 
@@ -342,7 +494,7 @@
   /* ---------- screen movement ---------- */
 
   function replayStripes() {
-    Array.prototype.forEach.call(document.querySelectorAll('.stripe'), function (el) {
+    each(document.querySelectorAll('.stripe'), function (el) {
       el.style.animation = 'none';
       void el.offsetWidth;
       el.style.animation = '';
@@ -392,6 +544,10 @@
 
   picker.addEventListener('change', buildCard);
 
+  picker.addEventListener('submit', function (event) {
+    event.preventDefault();
+  });
+
   document.addEventListener('click', function (event) {
     var target = event.target;
     if (!target || !target.closest) {
@@ -414,12 +570,9 @@
 
     // One selection per question, and nothing is ever disabled, so a wrong
     // first guess never locks anybody out of changing their mind.
-    Array.prototype.forEach.call(
-      document.querySelectorAll('[data-q="' + key + '"]'),
-      function (other) {
-        other.setAttribute('aria-pressed', other === btn ? 'true' : 'false');
-      }
-    );
+    each(document.querySelectorAll('[data-q="' + key + '"]'), function (other) {
+      other.setAttribute('aria-pressed', other === btn ? 'true' : 'false');
+    });
 
     var node = document.getElementById('fb-' + key);
     var copy = FEEDBACK[key];
@@ -436,21 +589,21 @@
 
   if (restartBtn) {
     restartBtn.addEventListener('click', function () {
-      Array.prototype.forEach.call(document.querySelectorAll('[data-q]'), function (btn) {
+      each(document.querySelectorAll('[data-q]'), function (btn) {
         btn.setAttribute('aria-pressed', 'false');
       });
-      Array.prototype.forEach.call(document.querySelectorAll('[data-spot]'), function (btn) {
+      each(document.querySelectorAll('[data-spot]'), function (btn) {
         btn.setAttribute('aria-pressed', 'false');
         var state = btn.querySelector('.spot-state');
         if (state) {
           state.textContent = '';
         }
       });
-      Array.prototype.forEach.call(document.querySelectorAll('.feedback'), function (p) {
+      each(document.querySelectorAll('.feedback'), function (p) {
         p.textContent = '';
         p.classList.remove('is-in');
       });
-      Array.prototype.forEach.call(picker.querySelectorAll('input[type="checkbox"]'), function (box) {
+      each(picker.querySelectorAll('input[type="checkbox"]'), function (box) {
         box.checked = false;
       });
 
@@ -459,6 +612,16 @@
       attempts = 0;
       revealBtn.hidden = true;
       huntVerdict.innerHTML = '';
+
+      tabSets.forEach(function (set) {
+        selectTab(set, 0, false);
+      });
+      accordions.forEach(function (acc) {
+        openSection(acc, 0);
+      });
+      subRuns.forEach(function (run) {
+        showStep(run, 0, false);
+      });
 
       updateHunt();
       updateHocScore();
@@ -473,7 +636,11 @@
 
   // No focus grab on load: the module is embedded, and stealing focus would
   // yank the host page down to the frame before anybody asked it to.
-  Array.prototype.forEach.call(document.querySelectorAll('[data-spot]'), function (btn) {
+  initTabs();
+  initAccordions();
+  initSubsteps();
+
+  each(document.querySelectorAll('[data-spot]'), function (btn) {
     btn.setAttribute('aria-pressed', 'false');
   });
   updateHunt();

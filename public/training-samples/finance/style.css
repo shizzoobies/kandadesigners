@@ -18,6 +18,15 @@
      three percent navy tint, so anything set in green sits on the
      bare paper ground and nowhere else. That is why the feedback
      blocks and the figure panels are untinted.
+
+   Layout discipline, added when this became a slide deck:
+     The whole module is one fixed height stage. The document never
+     scrolls at any size. The masthead is pinned at the top, the pager
+     at the bottom, and the screen sits between them. At 900px wide by
+     640px tall and up, nothing scrolls vertically at all: every screen
+     restructures itself into columns, tabs, or sub-steps so that it
+     fits. Below that, the masthead and pager stay put and only the
+     screen scrolls. Tables may still scroll sideways in their wrapper.
    ============================================================ */
 
 @font-face {
@@ -105,6 +114,12 @@
   --figures: 'Helvetica Neue', Arial, system-ui, sans-serif;
 
   --measure: 36rem;
+
+  /* Stage spacing. Every one of these shrinks with the viewport so a 640px
+     tall frame gives its height to the content and not to the gutters. */
+  --pad-x: clamp(1rem, 2.2vw, 1.6rem);
+  --gap-v: clamp(0.5rem, 1.4vh, 1rem);
+  --gap-h: clamp(1.1rem, 2.4vw, 2.4rem);
 }
 
 *,
@@ -113,17 +128,23 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 html {
   background: var(--paper);
 }
 
 body {
   margin: 0;
+  overflow: hidden;
   background: var(--paper);
   color: var(--navy);
   font-family: var(--sans);
   font-size: 1rem;
-  line-height: 1.68;
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-wrap: break-word;
@@ -158,9 +179,60 @@ svg {
   height: auto;
 }
 
+/* ---------------------------------------------- the stage shell */
+
+.frame {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#module {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: var(--gap-v) var(--pad-x) 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Without JS every screen is simply printed in order down the page, and the
+   one thing allowed to scroll is main. */
+#module {
+  overflow-y: auto;
+}
+
+.js #module {
+  overflow: hidden;
+}
+
+.screen {
+  padding-bottom: 1rem;
+}
+
+.js .screen {
+  display: none;
+}
+
+/* The current screen fills whatever the masthead and the pager leave, and
+   scrolls inside itself only when the frame is too small for the deck rules
+   to hold. */
+.js .screen.is-current {
+  display: block;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: var(--gap-v);
+}
+
 /* ---------------------------------------------- masthead */
 
 .masthead {
+  flex: 0 0 auto;
   background: var(--navy);
   color: var(--paper);
   border-bottom: 3px solid var(--gold);
@@ -169,35 +241,45 @@ svg {
 .masthead-inner {
   max-width: 68rem;
   margin: 0 auto;
-  padding: 1.6rem 1.5rem 1.35rem;
+  padding: clamp(0.5rem, 1.3vh, 0.95rem) var(--pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 2rem;
+}
+
+.mast-title {
+  min-width: 0;
 }
 
 .eyebrow {
   margin: 0;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.68rem;
-  letter-spacing: 0.26em;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--gold);
 }
 
 h1 {
-  margin: 0.5rem 0 0;
-  max-width: 22ch;
+  margin: 0.15rem 0 0;
+  max-width: 60ch;
   font-family: var(--serif);
   font-weight: 900;
-  font-size: clamp(1.7rem, 4.2vw, 2.9rem);
-  line-height: 1.04;
+  font-size: clamp(1.1rem, 1.9vw, 1.55rem);
+  line-height: 1.12;
   letter-spacing: -0.012em;
   color: var(--paper);
 }
 
 .progress {
-  margin-top: 1.15rem;
+  flex: 0 1 20rem;
+  min-width: 11rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.9rem;
 }
 
 .track {
@@ -217,88 +299,80 @@ h1 {
 .progress-text {
   flex: 0 0 auto;
   margin: 0;
+  max-width: none;
   font-family: var(--sans);
   font-weight: 600;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--paper);
 }
 
-/* ---------------------------------------------- shell */
+/* ---------------------------------------------- pager and footer */
 
-.frame {
-  min-height: 100%;
-}
-
-#module {
+.stage-foot {
+  flex: 0 0 auto;
+  width: 100%;
   max-width: 68rem;
   margin: 0 auto;
-  padding: 2.25rem 1.5rem 0;
+  padding: clamp(0.45rem, 1.1vh, 0.8rem) var(--pad-x) clamp(0.5rem, 1.3vh, 0.9rem);
+  border-top: 2px solid var(--navy);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
 }
 
-.screen {
-  padding-bottom: 1rem;
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
 }
 
-.js .screen {
-  display: none;
+.pager .btn-solid,
+.pager .btn-quiet {
+  padding: 0.5rem 1.25rem;
 }
 
-.js .screen.is-current {
-  display: block;
+.module-foot p {
+  margin: 0;
+  max-width: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate);
 }
 
-/* ---------------------------------------------- editorial grid */
+/* ---------------------------------------------- screen head and columns */
 
-.spread {
-  display: grid;
-  gap: 2.25rem;
-  align-items: start;
+.screen-head > *:last-child {
+  margin-bottom: 0;
 }
 
-/* Grid items default to min-width:auto, which means a track sizes itself to
-   the widest thing inside it. One 24rem table then pushes the whole page
-   past 320px and the body scrolls sideways, which is the failure this
-   overrides. Tables still scroll inside their own wrapper; the page does not. */
-.spread > *,
-.sim > *,
-.bigfigs > *,
-.prompts > * {
+.screen-body > * {
   min-width: 0;
 }
 
-@media (min-width: 62rem) {
-  .spread {
-    grid-template-columns: minmax(0, 1fr) 17.5rem;
-    gap: 3rem;
-  }
-  .spread-hero {
-    grid-template-columns: minmax(0, 1fr) 19rem;
-  }
-  .col-side {
-    position: sticky;
-    top: 1.5rem;
-  }
-}
-
-.col-main > *:first-child {
-  margin-top: 0;
+.col {
+  min-width: 0;
 }
 
 /* ---------------------------------------------- type */
 
 h2 {
-  margin: 0 0 1rem;
+  margin: 0 0 0.8rem;
   max-width: 20ch;
   font-family: var(--serif);
   font-weight: 700;
-  font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+  font-size: clamp(1.4rem, 2.7vw, 2rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
   color: var(--navy);
   position: relative;
-  padding-top: 1.1rem;
+  padding-top: 1rem;
 }
 
 h2::before {
@@ -319,36 +393,51 @@ h2::before {
 }
 
 h3 {
-  margin: 2.2rem 0 0.7rem;
+  margin: 1.4rem 0 0.55rem;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--slate);
 }
 
-h4 {
-  margin: 0 0 0.8rem;
+.col > h3:first-child,
+.tabpanel > h3:first-child {
+  margin-top: 0;
+}
+
+/* The two headings that are questions rather than labels: they keep the
+   sentence case and the size of running text. */
+.qh {
+  margin: 0 0 0.75rem;
   font-family: var(--sans);
   font-weight: 700;
   font-size: 1.02rem;
-  line-height: 1.45;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--navy);
 }
 
+/* Present only for the no-JS reading order: with JS the tab itself carries
+   the label, and repeating it inside the panel wastes a line of the stage. */
+.js .nojs-h {
+  display: none;
+}
+
 p {
-  margin: 0 0 1.05rem;
+  margin: 0 0 var(--gap-v);
   max-width: var(--measure);
 }
 
 .lead {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(1.1rem, 2.2vw, 1.3rem);
-  line-height: 1.48;
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  line-height: 1.42;
   color: var(--navy);
-  max-width: 34rem;
+  max-width: 44rem;
 }
 
 strong,
@@ -359,12 +448,12 @@ b {
 ul,
 ol {
   max-width: var(--measure);
-  margin: 0 0 1.05rem;
+  margin: 0 0 var(--gap-v);
   padding-left: 1.3rem;
 }
 
 li {
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.45rem;
 }
 
 li::marker {
@@ -394,10 +483,11 @@ li::marker {
 .note,
 .setup,
 .aside,
-.disclaimer {
+.disclaimer,
+.intro {
   max-width: var(--measure);
   font-size: 0.94rem;
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
 .note {
@@ -408,14 +498,15 @@ li::marker {
 
 .setup {
   border-left: 3px solid var(--navy);
-  padding: 0.25rem 0 0.25rem 1rem;
-  font-size: 1rem;
+  padding: 0.2rem 0 0.2rem 0.95rem;
+  font-size: 0.98rem;
   color: var(--navy);
+  max-width: 44rem;
 }
 
 .aside {
-  margin-top: 1.6rem;
-  padding-top: 1.1rem;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
   border-top: 1px solid var(--hair-gold);
   color: var(--slate);
   font-style: italic;
@@ -424,16 +515,20 @@ li::marker {
 }
 
 .disclaimer {
-  margin-top: 1.4rem;
+  margin-top: 0.9rem;
   color: var(--slate);
   font-size: 0.86rem;
+}
+
+.ask {
+  margin-bottom: 0.6rem;
 }
 
 .caption,
 figcaption {
   max-width: var(--measure);
-  font-size: 0.86rem;
-  line-height: 1.55;
+  font-size: 0.84rem;
+  line-height: 1.5;
   color: var(--slate);
 }
 
@@ -445,12 +540,13 @@ figcaption {
   background-size: cover;
   background-repeat: no-repeat;
   border: 1px solid var(--hair-gold);
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.9rem;
 }
 
 /* Each panel carries the aspect ratio of the file that sits in it, so cover
    crops the edges rather than half the frame. Change the file, change the
-   ratio. The variety of shapes down the side column is deliberate. */
+   ratio. On the stage the ratio gives way: the photo becomes the one thing
+   in a side column that flexes, so a long note never pushes anything off. */
 
 .photo-hero {
   aspect-ratio: 16 / 11;
@@ -473,14 +569,14 @@ figcaption {
   display: flex;
   gap: 1rem;
   justify-content: space-between;
-  padding: 0.6rem 0;
+  padding: 0.45rem 0;
   border-bottom: 1px solid var(--hair-soft);
 }
 
 .factbox dt {
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--slate);
@@ -490,21 +586,23 @@ figcaption {
 .factbox dd {
   margin: 0;
   text-align: right;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
+  line-height: 1.4;
   color: var(--navy);
 }
 
 .pullquote {
   border-top: 3px solid var(--gold);
-  padding-top: 0.9rem;
+  padding-top: 0.75rem;
+  margin-bottom: 0.9rem;
 }
 
 .pullquote p {
   margin: 0;
   font-family: var(--serif);
   font-weight: 700;
-  font-size: 1.18rem;
-  line-height: 1.28;
+  font-size: 1.12rem;
+  line-height: 1.26;
   color: var(--navy);
 }
 
@@ -512,7 +610,7 @@ figcaption {
 
 .table-wrap {
   overflow-x: auto;
-  margin: 1.5rem 0;
+  margin: 0 0 var(--gap-v);
   border-top: 2px solid var(--navy);
 }
 
@@ -521,9 +619,11 @@ figcaption {
   outline-offset: 2px;
 }
 
+/* Two column statements read fine narrow; the three and four column
+   tables need more before the headings start stacking. */
 table {
   width: 100%;
-  min-width: 24rem;
+  min-width: 18rem;
   border-collapse: collapse;
   font-variant-numeric: tabular-nums;
   font-size: 0.95rem;
@@ -531,19 +631,19 @@ table {
 
 caption {
   caption-side: bottom;
-  padding-top: 0.7rem;
+  padding-top: 0.55rem;
   text-align: left;
-  font-size: 0.84rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.45;
   color: var(--slate);
 }
 
 thead th {
-  padding: 0.55rem 0.75rem;
+  padding: 0.4rem 0.7rem;
   border-bottom: 1px solid var(--hair);
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--slate);
@@ -559,9 +659,10 @@ tbody th {
 
 td,
 tbody th {
-  padding: 0.6rem 0.75rem;
+  padding: 0.42rem 0.7rem;
   border-bottom: 1px solid var(--hair-soft);
   vertical-align: top;
+  line-height: 1.4;
 }
 
 th:first-child,
@@ -580,6 +681,13 @@ td:last-child {
   white-space: nowrap;
 }
 
+/* Figures must not break. Column headings must, or a four column table
+   holds itself wider than the stage gives it and scrolls sideways for the
+   sake of two words. */
+thead th.num {
+  white-space: normal;
+}
+
 td.num {
   font-family: var(--figures);
 }
@@ -595,12 +703,12 @@ td.nochange {
 .pnl .row-indent th {
   padding-left: 1.4rem;
   color: var(--slate);
-  font-size: 0.9rem;
+  font-size: 0.89rem;
 }
 
 .pnl .row-indent td {
   color: var(--slate);
-  font-size: 0.9rem;
+  font-size: 0.89rem;
 }
 
 .pnl .row-sub th,
@@ -615,17 +723,22 @@ td.nochange {
 .pnl .row-total th,
 .pnl .row-total td {
   border-top: 2px solid var(--navy);
-  font-size: 1.05rem;
+  font-size: 1.02rem;
 }
 
 .pnl .row-group th {
   font-weight: 700;
 }
 
+#screen-3 table,
+#wf-table table {
+  min-width: 20rem;
+}
+
 .compact td,
 .compact tbody th {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.38rem;
+  padding-bottom: 0.38rem;
 }
 
 /* row entry animation, one after another */
@@ -651,7 +764,7 @@ td.nochange {
 .fig .tag {
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -660,12 +773,12 @@ td.nochange {
 
 .why {
   display: inline-block;
-  margin-left: 0.6rem;
-  padding: 0.15rem 0.5rem;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.45rem;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--slate);
   background: transparent;
@@ -687,33 +800,74 @@ td.nochange {
 .why[aria-expanded="true"] {
   color: var(--navy);
   border-color: var(--navy);
+  background: rgb(15 27 45 / 0.05);
 }
 
 .why[aria-expanded="true"]::after {
   content: ' \2212';
 }
 
-.explain td {
-  padding: 0 0 1rem;
-  max-width: 40rem;
-  font-size: 0.93rem;
-  line-height: 1.62;
+/* The notes panel: one line's explanation at a time, off to the side, so
+   opening one never pushes the statement off the stage. */
+
+.notes-panel {
+  border-top: 2px solid var(--navy);
+  padding-top: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.notes-panel .panel-title {
+  margin-bottom: 0.7rem;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.panel-hint {
+  margin: 0;
+  max-width: none;
+  font-size: 0.88rem;
+  line-height: 1.5;
   color: var(--slate);
-  border-bottom: 1px solid var(--hair-soft);
+}
+
+.note-body {
   border-left: 2px solid var(--gold);
-  padding-left: 0.95rem;
+  padding-left: 0.9rem;
+}
+
+.note-body p {
+  max-width: none;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--slate);
+}
+
+.note-line {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--navy) !important;
+  margin-bottom: 0.35rem !important;
+}
+
+/* no-JS: every note is printed under the statement, in order */
+.note-body + .note-body {
+  margin-top: 0.9rem;
 }
 
 /* ---------------------------------------------- charts */
 
 .chart-figure {
-  margin: 1.75rem 0;
-  padding-top: 1.1rem;
+  margin: 0 0 var(--gap-v);
+  padding-top: 0.85rem;
   border-top: 1px solid var(--hair-gold);
 }
 
 .chart-figure figcaption {
-  margin-top: 0.8rem;
+  margin-top: 0.6rem;
 }
 
 .chart .axis line {
@@ -754,7 +908,7 @@ td.nochange {
 }
 
 .timeline-figure {
-  margin: 1.25rem 0 2rem;
+  margin: 0.5rem 0 0;
 }
 
 .timeline .tl-axis {
@@ -803,10 +957,14 @@ td.nochange {
   border-top: 2px solid var(--navy);
 }
 
-/* Left to fill 68rem the chart scales up by half again and the bars turn
-   into slabs. Capped at the measure the rest of this screen uses. */
+/* Left to fill the column the chart scales up and the bars turn into slabs.
+   Capped on both axes: the height cap is what keeps the last screen on the
+   stage at 640px. */
 .waterfall {
-  max-width: 46rem;
+  width: auto;
+  max-width: min(100%, 44rem);
+  max-height: min(21rem, 40vh);
+  margin: 0 auto;
 }
 
 .waterfall .wf-base {
@@ -867,54 +1025,65 @@ td.nochange {
 
 .sim {
   display: grid;
-  gap: 2rem;
-  margin: 1.75rem 0 0;
+  gap: var(--gap-h);
   align-items: start;
 }
 
-@media (min-width: 62rem) {
-  .sim {
-    grid-template-columns: 20rem minmax(0, 1fr);
-    gap: 3rem;
-  }
+.panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  border-bottom: 2px solid var(--navy);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+}
+
+.panel-head .panel-title {
+  margin: 0;
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 .panel-title {
-  margin: 0 0 1.1rem;
-  padding-bottom: 0.5rem;
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.4rem;
   border-bottom: 2px solid var(--navy);
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--navy);
+  max-width: none;
 }
 
-.slider {
-  margin-bottom: 1.5rem;
+.slider-grid {
+  display: grid;
+  gap: 0.7rem 1.5rem;
 }
 
 .slider-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.35rem;
+  gap: 0.6rem;
+  margin-bottom: 0.2rem;
 }
 
 .slider label {
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.86rem;
-  line-height: 1.35;
+  font-size: 0.82rem;
+  line-height: 1.3;
   color: var(--navy);
 }
 
 .slider output {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.08rem;
   font-variant-numeric: tabular-nums;
   color: var(--navy);
   white-space: nowrap;
@@ -933,15 +1102,17 @@ input[type="range"]:focus-visible {
 }
 
 .slider-hint {
-  margin: 0.3rem 0 0;
-  font-size: 0.8rem;
+  margin: 0.15rem 0 0;
+  max-width: none;
+  font-size: 0.78rem;
+  line-height: 1.35;
   color: var(--slate);
 }
 
 .bigfigs {
   display: grid;
-  gap: 1.5rem;
-  margin-top: 1.75rem;
+  gap: 0.8rem 1.4rem;
+  margin-top: 0.6rem;
 }
 
 @media (min-width: 34rem) {
@@ -952,24 +1123,26 @@ input[type="range"]:focus-visible {
 
 .bigfig {
   border-top: 3px solid var(--gold);
-  padding-top: 0.8rem;
+  padding-top: 0.55rem;
 }
 
 .bigfig-label {
   margin: 0;
+  max-width: none;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--slate);
 }
 
 .bigfig-value {
-  margin: 0.2rem 0 0.35rem;
+  margin: 0.1rem 0 0.25rem;
+  max-width: none;
   font-family: var(--serif);
   font-weight: 900;
-  font-size: clamp(1.9rem, 5.5vw, 2.7rem);
+  font-size: clamp(1.6rem, 3.4vw, 2.3rem);
   line-height: 1;
   letter-spacing: -0.015em;
   font-variant-numeric: tabular-nums;
@@ -978,32 +1151,129 @@ input[type="range"]:focus-visible {
 
 .bigfig-note {
   margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  max-width: none;
+  font-size: 0.82rem;
+  line-height: 1.4;
   color: var(--slate);
 }
 
-.prompts {
+/* The instruction and its button share a line, so the verdict underneath
+   gets the height it needs without the panel growing. */
+.prompt {
   display: grid;
-  gap: 2rem;
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--hair-gold);
-}
-
-@media (min-width: 48rem) {
-  .prompts {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
-}
-
-.prompt h3 {
-  margin-top: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0 1.2rem;
+  align-items: start;
 }
 
 .prompt p {
   max-width: none;
+  margin-bottom: 0;
+}
+
+.prompt .feedback {
+  grid-column: 1 / -1;
+}
+
+/* ---------------------------------------------- tabs */
+
+.tabstrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  border-bottom: 2px solid var(--navy);
+}
+
+/* With JS off there is nothing for a tab to do, so the strip goes and every
+   panel prints in order with its own heading. */
+.tabstrip {
+  display: none;
+}
+
+.js .tabstrip {
+  display: flex;
+}
+
+.tab {
+  font-family: var(--sans);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--slate);
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 0;
+  padding: 0.42rem 0.75rem;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.tab:hover {
+  color: var(--navy);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--navy);
+  background: rgb(15 27 45 / 0.05);
+  border-color: var(--hair);
+  border-bottom: 2px solid var(--paper);
+}
+
+.tabpanel {
+  padding-top: 0.6rem;
+}
+
+.tabpanel:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------- sub-steps */
+
+.steps-nav {
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--hair-gold);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1.2rem;
+}
+
+/* With JS off every item is on the page already, so the pager would lie. */
+.steps-nav {
+  display: none;
+}
+
+.js .steps-nav {
+  display: flex;
+}
+
+.steps-move {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.steps-count {
+  margin: 0;
+  max-width: none;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.step + .step {
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--hair-soft);
 }
 
 /* ---------------------------------------------- choices */
@@ -1011,13 +1281,26 @@ input[type="range"]:focus-visible {
 .options {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  margin: 1.25rem 0;
+  gap: 0.55rem;
+  margin: 0 0 var(--gap-v);
   max-width: 46rem;
 }
 
 .options.tight {
-  gap: 0.5rem;
+  gap: 0.45rem;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+  max-width: none;
+}
+
+@media (min-width: 40rem) {
+  .options-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .choice {
@@ -1030,7 +1313,7 @@ input[type="range"]:focus-visible {
   border: 1px solid var(--hair);
   border-left: 3px solid var(--hair);
   border-radius: 0;
-  padding: 0.85rem 1rem;
+  padding: 0.65rem 0.9rem;
   cursor: pointer;
   transition: border-color 0.18s ease, background 0.18s ease;
 }
@@ -1049,10 +1332,10 @@ input[type="range"]:focus-visible {
 
 .choice-tag {
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--slate);
@@ -1060,46 +1343,27 @@ input[type="range"]:focus-visible {
 
 .choice-body {
   display: block;
-  line-height: 1.6;
-}
-
-.qblock {
-  margin: 1.5rem 0;
-  padding-top: 1.35rem;
-  border-top: 1px solid var(--hair-soft);
-  max-width: 46rem;
+  line-height: 1.5;
 }
 
 /* ---------------------------------------------- the sorter */
 
-.sorter {
-  list-style: none;
-  margin: 1.75rem 0 0;
-  padding: 0;
-  max-width: 46rem;
-  border-top: 2px solid var(--navy);
-}
-
-.sorter > li {
-  margin: 0;
-  padding: 1.15rem 0;
-  border-bottom: 1px solid var(--hair-soft);
-}
-
 .item {
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.6rem;
   max-width: none;
   font-family: var(--serif);
   font-weight: 700;
-  font-size: 1.12rem;
-  line-height: 1.3;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  line-height: 1.24;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--navy);
 }
 
 .sort-btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .sort {
@@ -1131,10 +1395,10 @@ input[type="range"]:focus-visible {
 /* Untinted on purpose: green measures 4.71:1 on bare paper and drops
    below 4.5:1 over even a light tint. */
 .feedback {
-  margin: 0.85rem 0 0;
+  margin: 0.55rem 0 0;
   max-width: 46rem;
-  font-size: 0.93rem;
-  line-height: 1.62;
+  font-size: 0.92rem;
+  line-height: 1.55;
   color: var(--navy);
 }
 
@@ -1143,7 +1407,7 @@ input[type="range"]:focus-visible {
 }
 
 .feedback:not(:empty) {
-  padding-left: 0.9rem;
+  padding-left: 0.85rem;
   border-left: 3px solid var(--slate);
 }
 
@@ -1175,19 +1439,18 @@ input[type="range"]:focus-visible {
 
 .feedback .fb-note {
   display: block;
-  margin-top: 0.4rem;
+  margin-top: 0.35rem;
   color: var(--slate);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .score {
-  margin-top: 1.75rem;
-  padding-top: 0.85rem;
-  border-top: 1px solid var(--hair-gold);
+  margin: 0;
+  max-width: none;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--slate);
 }
@@ -1196,8 +1459,8 @@ input[type="range"]:focus-visible {
 
 .takeaway,
 .scorecard {
-  margin: 2.25rem 0;
-  padding: 1.5rem 1.6rem 1.2rem;
+  margin: 0 0 var(--gap-v);
+  padding: 0.9rem 1.1rem 0.8rem;
   border: 1px solid var(--hair);
   border-top: 3px solid var(--gold);
   max-width: 46rem;
@@ -1206,22 +1469,24 @@ input[type="range"]:focus-visible {
 .takeaway-list {
   max-width: none;
   margin: 0;
-  padding-left: 1.2rem;
+  padding-left: 1.15rem;
 }
 
 .takeaway-list > li {
-  margin-bottom: 0.85rem;
-  line-height: 1.6;
+  margin-bottom: 0.55rem;
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
 .takeaway-foot {
-  margin: 1.1rem 0 0;
-  padding-top: 0.95rem;
+  margin: 0.75rem 0 0;
+  padding-top: 0.7rem;
   border-top: 1px solid var(--hair-soft);
   max-width: none;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.02rem;
+  font-size: 1rem;
+  line-height: 1.45;
   color: var(--slate);
 }
 
@@ -1233,13 +1498,18 @@ input[type="range"]:focus-visible {
 }
 
 .scorelist > li {
-  padding: 0.55rem 0;
+  padding: 0.45rem 0;
   border-bottom: 1px solid var(--hair-soft);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
 .scorelist > li:last-child {
   border-bottom: 0;
+}
+
+.restart-row {
+  margin: 0;
 }
 
 /* ---------------------------------------------- buttons */
@@ -1248,14 +1518,20 @@ input[type="range"]:focus-visible {
 .btn-quiet {
   display: inline-block;
   font-family: var(--sans);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   border-radius: 0;
-  padding: 0.72rem 1.5rem;
+  padding: 0.6rem 1.3rem;
   cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.btn-small {
+  font-size: 0.68rem;
+  padding: 0.45rem 0.95rem;
+  letter-spacing: 0.12em;
 }
 
 .btn-solid {
@@ -1282,9 +1558,7 @@ input[type="range"]:focus-visible {
 }
 
 figcaption .btn-quiet {
-  margin-top: 0.6rem;
-  font-size: 0.66rem;
-  padding: 0.5rem 1rem;
+  margin-top: 0.45rem;
 }
 
 button[disabled] {
@@ -1298,35 +1572,446 @@ button[disabled]:hover {
   border-color: var(--navy);
 }
 
-/* ---------------------------------------------- pager and footer */
+/* ============================================================
+   THE STAGE
+   At 900 by 640 and up nothing scrolls vertically. Each screen
+   becomes a grid of columns, tabs, or sub-steps that fits the
+   space the masthead and the pager leave behind.
+   ============================================================ */
 
-.pager {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2.5rem;
-  padding-top: 1.35rem;
-  border-top: 2px solid var(--navy);
+@media (min-width: 900px) and (min-height: 640px) {
+
+  .js .screen.is-current {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--gap-v);
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+
+  .screen-head {
+    display: grid;
+    grid-template-columns: minmax(11rem, 19rem) minmax(0, 1fr);
+    gap: 0 var(--gap-h);
+    align-items: start;
+  }
+
+  .screen-head h2 {
+    margin-bottom: 0;
+  }
+
+  .screen-head .lead,
+  .screen-head .setup {
+    margin-bottom: 0;
+    padding-top: 1rem;
+    max-width: none;
+  }
+
+  .screen-body {
+    min-height: 0;
+    overflow: hidden;
+    display: grid;
+    gap: var(--gap-h);
+    align-items: stretch;
+  }
+
+  /* A column is a stack that does not shrink its own contents. The photo is
+     the one member allowed to give up height, so a long note or a tall table
+     takes the space from the picture and from nothing else. */
+  .col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .col > * {
+    flex: 0 0 auto;
+  }
+
+  .col > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .photo {
+    flex: 1 1 0;
+    min-height: 2.5rem;
+    aspect-ratio: auto;
+  }
+
+  .tabs {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .col > .tabs {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* The :not([hidden]) matters: a bare .tabpanel rule that sets display
+     beats the user agent's [hidden] rule on specificity, and every panel
+     would stay on the stage at once. */
+  .tabpanel:not([hidden]) {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tabpanel > * {
+    flex: 0 0 auto;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 0;
+  }
+
+  .steps-body {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .step {
+    min-height: 0;
+  }
+
+  /* ---- screen one: text, the promise, the facts */
+  #screen-1 .screen-body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(0, 15rem);
+  }
+
+  /* ---- screen two: the statement, with its notes off to the side */
+  #screen-2 .screen-body {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  }
+
+  #screen-2 .table-wrap {
+    margin-bottom: 0;
+  }
+
+  /* ---- screen three: the argument, the chart, the aside */
+  #screen-3 .screen-body {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 13rem);
+  }
+
+  /* ---- screen four: levers beside the statement, prompts underneath */
+  #screen-4 .screen-body {
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: var(--gap-v);
+  }
+
+  /* Levers, statement, and the two figures as one band. The band is what
+     leaves the guided prompts underneath room for a full verdict. */
+  #screen-4 .sim {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 20rem) minmax(0, 11rem);
+    gap: var(--gap-v) var(--gap-h);
+  }
+
+  #screen-4 .slider-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #screen-4 .prompts {
+    min-height: 0;
+    padding-top: 0.25rem;
+    border-top: 1px solid var(--hair-gold);
+  }
+
+  #screen-4 .sim .table-wrap {
+    margin-bottom: 0;
+  }
+
+  #screen-4 .sim-controls { grid-column: 1; grid-row: 1; }
+  #screen-4 .sim-table { grid-column: 2; grid-row: 1; }
+  #screen-4 .bigfigs {
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 0;
+    align-content: start;
+  }
+
+  /* ---- screen five: one item at a time */
+  #screen-5 .screen-body {
+    grid-template-columns: minmax(0, 52rem);
+    justify-content: center;
+  }
+
+  #screen-5 .steps {
+    min-height: 0;
+  }
+
+  /* One item on a stage of its own, sitting on the optical centre line and
+     given the weight of a slide rather than a list row. */
+  #screen-5 .screen-body {
+    grid-template-columns: minmax(0, 46rem);
+  }
+
+  #screen-5 .steps-body {
+    display: grid;
+    align-content: center;
+  }
+
+  #screen-5 .step {
+    border-top: 2px solid var(--navy);
+    padding-top: 1rem;
+  }
+
+  #screen-5 .item {
+    font-size: clamp(1.3rem, 2.6vw, 1.75rem);
+    margin-bottom: 0.85rem;
+  }
+
+  #screen-5 .sort {
+    font-size: 0.84rem;
+    padding: 0.5rem 0.95rem;
+  }
+
+  #screen-5 .sort[aria-pressed="true"] {
+    padding: calc(0.5rem - 1px) calc(0.95rem - 1px);
+  }
+
+  /* ---- screen six: three timing gaps as tabs */
+  #screen-6 .screen-body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 14rem);
+  }
+
+  /* ---- screen seven: the four options, and the verdict beside them */
+  #screen-7 .screen-body {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+
+  /* Four panels of equal weight, filling the stage: the shape of the choice
+     is part of the question. */
+  #screen-7 .options-grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  #screen-7 .choice {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #screen-7 .col-verdict {
+    border-left: 1px solid var(--hair-gold);
+    padding-left: var(--gap-h);
+  }
+
+  #screen-7 .feedback:not(:empty) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  #screen-7 .feedback.is-right,
+  #screen-7 .feedback.is-wrong {
+    margin-top: 0;
+  }
+
+  /* ---- screen eight: chart, reads, takeaway */
+  #screen-8 .screen-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The chart alone sits in the middle of the stage. With the table open the
+     two share the width, and the chart gives up size rather than height. */
+  #screen-8 .wf-panel:not(.is-split) {
+    justify-content: center;
+  }
+
+  #screen-8 .wf-panel.is-split:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+    gap: var(--gap-h);
+    align-items: center;
+    align-content: center;
+  }
+
+  #screen-6 .tabpanel:not([hidden]) {
+    justify-content: center;
+  }
+
+  #screen-8 .takeaway-panel:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: var(--gap-h);
+    align-items: start;
+  }
+
+  #screen-8 .takeaway,
+  #screen-8 .scorecard {
+    max-width: none;
+    margin-bottom: 0;
+  }
+
+  #screen-8 .restart-row {
+    margin-top: var(--gap-v);
+  }
 }
 
-.module-foot {
-  max-width: 68rem;
-  margin: 2.5rem auto 0;
-  padding: 1.1rem 1.5rem 1.6rem;
-  border-top: 1px solid var(--hair-soft);
+/* Shorter than the frame this was drawn for. Nothing loses a step, but the
+   leading, the row padding and the panel padding all come in so the same
+   material still lands on one stage. Set to bite below 680 so the 700px
+   embed keeps its air. */
+@media (min-width: 900px) and (max-height: 679px) {
+  body {
+    line-height: 1.5;
+  }
+
+  td,
+  tbody th {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+
+  .compact td,
+  .compact tbody th {
+    padding-top: 0.26rem;
+    padding-bottom: 0.26rem;
+  }
+
+  caption {
+    padding-top: 0.4rem;
+  }
+
+  .takeaway,
+  .scorecard {
+    padding: 0.7rem 0.9rem 0.6rem;
+  }
+
+  .takeaway-list > li {
+    margin-bottom: 0.3rem;
+    line-height: 1.42;
+  }
+
+  .takeaway-foot {
+    margin-top: 0.55rem;
+    padding-top: 0.5rem;
+  }
+
+  .scorelist > li {
+    padding: 0.35rem 0;
+  }
+
+  .slider-hint {
+    line-height: 1.3;
+  }
+
+  .aside {
+    margin-top: 0.7rem;
+    padding-top: 0.6rem;
+  }
+
+  .panel-head {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.3rem;
+  }
+
+  .slider-grid {
+    gap: 0.5rem 1.2rem;
+  }
+
+  .slider label {
+    line-height: 1.22;
+  }
+
+  .slider-hint {
+    line-height: 1.25;
+  }
+
+  .tabpanel {
+    padding-top: 0.4rem;
+  }
+
+  .tab {
+    padding: 0.32rem 0.7rem;
+  }
+
+  .feedback {
+    margin-top: 0.3rem;
+    line-height: 1.46;
+  }
+
+  .feedback .fb-note {
+    margin-top: 0.2rem;
+  }
+
+  #screen-4 .prompts {
+    padding-top: 0.1rem;
+  }
+
+  .waterfall {
+    max-height: 32vh;
+  }
 }
 
-.module-foot p {
-  margin: 0;
-  max-width: none;
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 0.66rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--slate);
+/* Between 900 and 1050 the middle column of screen three has to give the
+   argument more measure than the chart, or the paragraphs run long. */
+@media (min-width: 900px) and (max-width: 1049px) and (min-height: 640px) {
+  #screen-3 .screen-body {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 10rem);
+    gap: var(--gap-v);
+  }
+
+  #screen-3 table {
+    min-width: 0;
+  }
+
+  #screen-3 .chart {
+    max-width: 20rem;
+  }
+
+  /* The lever column is narrow here, so the value drops under its label
+     rather than fighting it for the line. */
+  #screen-4 .slider-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  #screen-4 .slider output {
+    font-size: 1rem;
+  }
+
+  #screen-4 .bigfig-value {
+    font-size: 1.7rem;
+  }
+}
+
+/* Wide enough for the simulator to run as a single band: levers, statement,
+   and the two figures side by side, which is what leaves the guided prompts
+   room for a full verdict underneath. */
+@media (min-width: 1050px) and (min-height: 640px) {
+  #screen-4 .sim {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 21rem) minmax(0, 12.5rem);
+  }
+
+  #screen-4 .sim-controls { grid-column: 1; grid-row: 1; }
+  #screen-4 .sim-table { grid-column: 2; grid-row: 1; }
+  #screen-4 .bigfigs {
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 0;
+    align-content: start;
+  }
+}
+
+/* A little more air once the frame is genuinely tall. */
+@media (min-width: 900px) and (min-height: 780px) {
+  .lead {
+    font-size: clamp(1.08rem, 1.6vw, 1.28rem);
+  }
+
+  body {
+    line-height: 1.66;
+  }
 }
 
 /* ---------------------------------------------- reflow to 320px */
@@ -1334,36 +2019,31 @@ button[disabled]:hover {
 @media (max-width: 26rem) {
   .masthead-inner,
   #module,
-  .module-foot {
+  .stage-foot {
     padding-left: 1rem;
     padding-right: 1rem;
   }
   .progress {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
-  }
-  .track {
-    width: 100%;
+    flex: 1 1 100%;
   }
   .sort,
-  .pager button,
   .prompt .btn-solid {
     width: 100%;
   }
   .pager {
-    flex-direction: column-reverse;
-    align-items: stretch;
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+  .pager button {
+    flex: 1 1 0;
   }
   .slider-head {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.1rem;
   }
-  .takeaway,
-  .scorecard {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .steps-move {
+    flex-wrap: wrap;
   }
 }
 
@@ -1385,11 +2065,29 @@ button[disabled]:hover {
 /* ---------------------------------------------- print, for the job aid */
 
 @media print {
-  .pager,
-  .masthead .progress {
+  html,
+  body,
+  .frame,
+  #module {
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+  .stage-foot,
+  .masthead .progress,
+  .tabstrip,
+  .steps-nav {
     display: none;
   }
-  .js .screen {
+  .js .screen,
+  .js .screen.is-current {
     display: block;
+    overflow: visible;
+  }
+  .js .nojs-h {
+    display: block;
+  }
+  [hidden] {
+    display: block !important;
   }
 }

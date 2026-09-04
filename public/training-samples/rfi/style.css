@@ -3,7 +3,14 @@
    build step, no images. Site faces are loaded by absolute URL when the
    piece is served from ka-performancefl.com, and every family falls back to
    a system stack so the same folder still looks right inside an LMS where
-   /fonts/ does not resolve. */
+   /fonts/ does not resolve.
+
+   Layout model: a fixed height stage. The masthead is pinned at the top,
+   the pager at the bottom, and one screen fills the space between them.
+   Nothing scrolls at 900px by 640px or larger. Below that only the screen
+   body scrolls, never the document. Everything under html.js is the
+   enhanced layout; with scripting off the piece falls back to one ordinary
+   scrolling document with every screen and every panel open in order. */
 
 @font-face {
   font-family: "KA Display";
@@ -49,6 +56,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   background: var(--canvas);
 }
@@ -59,7 +70,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-wrap: break-word;
 }
@@ -69,12 +80,6 @@ body {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
-}
-
-.wrap {
-  max-width: 46rem;
-  margin: 0 auto;
-  padding: 1.75rem 1.25rem 2.5rem;
 }
 
 .visually-hidden {
@@ -90,33 +95,58 @@ body {
   border: 0;
 }
 
-/* ---------- header and progress ---------- */
+/* ---------- the stage ---------- */
+
+.stage {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0.9rem 1.25rem 0.8rem;
+}
+
+html.js,
+html.js body {
+  height: 100%;
+  overflow: hidden;
+}
+
+html.js .stage {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- masthead ---------- */
 
 .piece-head {
+  flex: 0 0 auto;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+}
+
+.head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .eyebrow {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
 h1 {
-  margin: 0.6rem 0 0;
+  margin: 0.3rem 0 0.5rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.5rem, 5vw, 2.15rem);
-  line-height: 1.12;
+  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+  line-height: 1.1;
   letter-spacing: -0.01em;
-}
-
-.progress {
-  margin-top: 1.1rem;
 }
 
 .bar {
@@ -136,18 +166,40 @@ h1 {
 }
 
 .progress-text {
-  margin: 0.5rem 0 0;
+  margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
+  white-space: nowrap;
 }
 
 /* ---------- screens ---------- */
 
+html.js #piece {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .screen {
-  padding-top: 1.75rem;
+  padding-top: 0.65rem;
+}
+
+/* With scripting on, exactly one screen is laid out; the rest are display
+   none as well as hidden, so nothing flashes before app.js runs. */
+html.js .screen {
+  display: none;
+}
+
+html.js .screen.on {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
   animation: screen-in 0.28s ease both;
 }
 
@@ -156,11 +208,29 @@ h1 {
   to { opacity: 1; transform: none; }
 }
 
+html.js .screen-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0.15rem 0.4rem 0.15rem 0.15rem;
+}
+
+html.js .screen-body > * {
+  flex: 0 0 auto;
+}
+
+/* Content sits under the title and the space left over falls at the bottom.
+   Nothing stretches to fill it: a two line panel blown up to 400px reads as
+   a mistake, and a title floated away from its own content reads as worse. */
+
 h2 {
-  margin: 0 0 0.9rem;
+  flex: 0 0 auto;
+  margin: 0 0 0.55rem;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.3rem, 4.2vw, 1.8rem);
+  font-size: clamp(1.2rem, 2.6vw, 1.55rem);
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
@@ -171,26 +241,26 @@ h2:focus-visible {
 }
 
 h3 {
-  margin: 1.6rem 0 0.6rem;
+  margin: 0 0 0.5rem;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 1.02rem;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 p {
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
 }
 
 .lead {
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   color: var(--ink);
 }
 
 .note,
 .setup {
   border-left: 3px solid var(--accent);
-  padding: 0.65rem 0 0.65rem 0.9rem;
+  padding: 0.4rem 0 0.4rem 0.85rem;
   color: var(--muted);
   font-size: 0.95rem;
 }
@@ -198,30 +268,189 @@ p {
 .setup {
   color: var(--ink);
   font-size: 1rem;
+  padding-block: 0.25rem;
+  margin-bottom: 0.45rem;
 }
 
 ul,
 ol {
-  margin: 0 0 1rem;
-  padding-left: 1.35rem;
+  margin: 0 0 0.75rem;
+  padding-left: 1.3rem;
 }
 
 li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 li::marker {
   color: var(--accent);
 }
 
-.reasons > li,
+.claim {
+  margin: 0 0 0.35rem;
+  font-weight: 700;
+}
+
+/* ---------- two column screens ---------- */
+
+.cols2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 2rem;
+  align-items: start;
+}
+
+.cols2 > div > :last-child {
+  margin-bottom: 0;
+}
+
+.col-head {
+  margin-top: 0.15rem;
+}
+
+/* The four parts, two by two. */
+.parts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .parts > li {
-  margin-bottom: 1rem;
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+}
+
+.parts > li > b {
+  color: var(--accent-hot);
 }
 
 .parts > li > p {
-  margin: 0.25rem 0 0;
+  margin: 0.3rem 0 0;
   color: var(--muted);
+}
+
+/* One sorted fragment and its verdict, paired two to a step. */
+.fragblock {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.fragblock > :last-child {
+  margin-bottom: 0;
+}
+
+.fragblock .sort {
+  background: var(--canvas);
+}
+
+.step .cols2 {
+  gap: 0.9rem;
+}
+
+/* ---------- tabs ---------- */
+
+.tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.7rem;
+}
+
+.tab {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.4rem 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.tab:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--surface);
+}
+
+/* Panels are cards of a shared minimum height, so switching tabs does not
+   make the block under the tab strip jump. */
+.tabsec {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+}
+
+html.js .tabsec {
+  min-height: 8rem;
+}
+
+.tabsec + .tabsec {
+  margin-top: 0.6rem;
+}
+
+.tabsec > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- sub-steps ---------- */
+
+.step > :last-child {
+  margin-bottom: 0;
+}
+
+.substep-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--line-soft);
+}
+
+.substep-count {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.btn-mini {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid rgb(34 28 21 / 0.25);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s ease;
+}
+
+.btn-mini:hover:not([disabled]) {
+  border-color: var(--accent);
 }
 
 /* ---------- choices ---------- */
@@ -229,12 +458,24 @@ li::marker {
 .options {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  margin: 0 0 1rem;
+  gap: 0.6rem;
+  margin: 0 0 0.75rem;
+}
+
+/* The two RFIs sit side by side, but they are nothing like the same length:
+   the weak one is a sentence and the strong one is a paragraph. The wider
+   second column keeps the long option from turning into a narrow ribbon. */
+.options-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 0.85rem;
+  align-items: stretch;
 }
 
 .choice {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   width: 100%;
   text-align: left;
   font: inherit;
@@ -242,7 +483,7 @@ li::marker {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 10px;
-  padding: 0.9rem 1rem;
+  padding: 0.7rem 0.9rem;
   cursor: pointer;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
@@ -254,7 +495,7 @@ li::marker {
 .choice[aria-pressed="true"] {
   border-color: var(--accent);
   border-width: 2px;
-  padding: calc(0.9rem - 1px) calc(1rem - 1px);
+  padding: calc(0.7rem - 1px) calc(0.9rem - 1px);
   background: rgb(154 52 18 / 0.05);
 }
 
@@ -270,40 +511,13 @@ li::marker {
 
 .choice-body {
   display: block;
-  line-height: 1.6;
-}
-
-.qblock {
-  border-top: 1px solid var(--line-soft);
-  padding-top: 1.2rem;
-  margin-top: 1.2rem;
-}
-
-.qblock:first-of-type {
-  border-top: 0;
-  padding-top: 0;
-}
-
-.qblock h3 {
-  margin-top: 0;
+  line-height: 1.5;
 }
 
 /* ---------- sorter ---------- */
 
-.sorter {
-  list-style: none;
-  margin: 1.25rem 0 0;
-  padding: 0;
-}
-
-.sorter > li {
-  border-top: 1px solid var(--line-soft);
-  padding: 1.1rem 0;
-  margin: 0;
-}
-
 .frag {
-  margin: 0 0 0.65rem;
+  margin: 0 0 0.6rem;
   font-size: 1rem;
 }
 
@@ -339,10 +553,10 @@ li::marker {
 /* ---------- feedback ---------- */
 
 .feedback {
-  margin: 0.75rem 0 0;
+  margin: 0.65rem 0 0;
   min-height: 0;
   font-size: 0.95rem;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--ink);
 }
 
@@ -369,12 +583,16 @@ li::marker {
 }
 
 .score {
-  margin-top: 1.5rem;
+  margin: 0.9rem 0 0;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+#final-score {
+  margin-top: 0.15rem;
 }
 
 /* ---------- job aid ---------- */
@@ -383,12 +601,11 @@ li::marker {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 12px;
-  padding: 1.25rem 1.35rem 1rem;
-  margin: 0 0 1.5rem;
+  padding: 1rem 1.15rem;
 }
 
 .jobaid-title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.2em;
@@ -401,24 +618,29 @@ li::marker {
 }
 
 .jobaid-foot {
-  margin: 0.9rem 0 0;
-  padding-top: 0.9rem;
+  padding-top: 0.7rem;
   border-top: 1px solid var(--line-soft);
   color: var(--muted);
   font-size: 0.93rem;
 }
 
-/* ---------- pager ---------- */
+/* ---------- pinned foot: credit and pager ---------- */
+
+.stage-foot {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+}
 
 .pager {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: space-between;
   align-items: center;
-  margin-top: 2.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
+  gap: 0.6rem;
 }
 
 .btn-ghost,
@@ -428,7 +650,7 @@ li::marker {
   font-weight: 600;
   letter-spacing: 0.04em;
   border-radius: 999px;
-  padding: 0.7rem 1.4rem;
+  padding: 0.6rem 1.3rem;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -466,38 +688,55 @@ button[disabled]:hover {
   color: var(--ink);
 }
 
-/* ---------- footer ---------- */
-
 .piece-foot {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line-soft);
+  min-width: 0;
 }
 
 .piece-foot p {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
 /* ---------- reflow ---------- */
 
-@media (max-width: 24rem) {
-  .wrap {
-    padding: 1.25rem 0.9rem 2rem;
+/* Under the fixed stage threshold the columns stack and the screen body
+   takes over the scrolling. The masthead and the pager stay pinned. */
+@media (max-width: 899px), (max-height: 639px) {
+  .cols2,
+  .options-2,
+  .parts {
+    grid-template-columns: 1fr;
   }
-  .sort {
-    width: 100%;
+}
+
+@media (max-width: 34em) {
+  .stage {
+    padding: 0.75rem 0.9rem 0.7rem;
+  }
+  .head-row {
+    flex-wrap: wrap;
+    gap: 0.15rem 1rem;
+  }
+  .stage-foot {
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
   .pager {
-    flex-direction: column-reverse;
-    align-items: stretch;
-  }
-  .pager button {
+    order: -1;
     width: 100%;
+    justify-content: space-between;
+  }
+  .piece-foot {
+    width: 100%;
+    text-align: center;
+  }
+  .sort,
+  .btn-mini {
+    flex: 1 1 auto;
   }
 }
 

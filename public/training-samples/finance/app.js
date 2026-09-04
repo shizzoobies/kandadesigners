@@ -2,12 +2,19 @@
    The profit and loss statement, read like an owner.
 
    Plain DOM. No framework, no network, no timers that expire.
-   Five jobs:
+   Seven jobs:
      1. show one screen at a time and move focus to its heading,
-     2. run the four lever simulator and announce it without chattering,
-     3. answer the sorter, the decision, and the three reads in text,
-     4. draw the entry motion, or skip all of it under reduced motion,
-     5. send exactly one completion message to a parent that may not exist.
+     2. run the tab sets and the sub-step pagers that keep each screen on
+        the stage, moving focus the same way the outer pager does,
+     3. put one statement line's explanation in the side panel at a time,
+     4. run the four lever simulator and announce it without chattering,
+     5. answer the sorter, the decision, and the three reads in text,
+     6. draw the entry motion, or skip all of it under reduced motion,
+     7. send exactly one completion message to a parent that may not exist.
+
+   Everything this file hides is visible without it. Nothing ships with a
+   hidden attribute in the markup: with JS off every tab panel, every
+   sub-step, and every explanation prints in order down the page.
 
    Deliberately absent: focus looping. The module runs in an iframe and
    trapping Tab at the end of the last screen would make the embed a
@@ -135,17 +142,133 @@
   }
 
   /* ============================================================
-     Screen two: the "what this means" toggles
+     Tab sets, to the APG pattern: roving tabindex, arrows and
+     Home and End, automatic activation.
      ============================================================ */
 
-  Array.prototype.forEach.call(document.querySelectorAll('.why'), function (btn) {
+  var tabSets = [];
+
+  function initTabs(root) {
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) { return null; }
+
+    var panels = tabs.map(function (tab) {
+      return document.getElementById(tab.getAttribute('aria-controls'));
+    });
+
+    function select(index, moveFocus) {
+      tabs.forEach(function (tab, i) {
+        var on = i === index;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.tabIndex = on ? 0 : -1;
+        if (panels[i]) { panels[i].hidden = !on; }
+      });
+      if (moveFocus) { tabs[index].focus(); }
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(i, false); });
+      tab.addEventListener('keydown', function (event) {
+        var last = tabs.length - 1;
+        var target = -1;
+        if (event.key === 'ArrowRight' || event.key === 'Right') { target = i === last ? 0 : i + 1; }
+        else if (event.key === 'ArrowLeft' || event.key === 'Left') { target = i === 0 ? last : i - 1; }
+        else if (event.key === 'Home') { target = 0; }
+        else if (event.key === 'End') { target = last; }
+        if (target < 0) { return; }
+        event.preventDefault();
+        select(target, true);
+      });
+    });
+
+    select(0, false);
+    return { select: select };
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-tabs]'), function (root) {
+    var set = initTabs(root);
+    if (set) { tabSets.push(set); }
+  });
+
+  /* ============================================================
+     Sub-steps: one item, or one question, at a time, inside a
+     screen. The outer screen count does not change; this pager
+     has its own count and its own announcement, and focus lands
+     on the step heading exactly as it lands on a screen heading.
+     ============================================================ */
+
+  var stepSets = [];
+
+  function initSteps(root) {
+    var steps = Array.prototype.slice.call(root.querySelectorAll('[data-step]'));
+    if (!steps.length) { return null; }
+
+    var prev = root.querySelector('[data-step-prev]');
+    var next = root.querySelector('[data-step-next]');
+    var count = root.querySelector('[data-step-count]');
+    var label = root.getAttribute('data-step-label') || 'Step';
+    var at = 0;
+
+    function paint(moveFocus) {
+      steps.forEach(function (step, i) { step.hidden = i !== at; });
+      if (count) {
+        count.textContent = label + ' ' + (at + 1) + ' of ' + steps.length;
+      }
+      if (prev) { prev.disabled = at === 0; }
+      if (next) { next.disabled = at === steps.length - 1; }
+      if (moveFocus) {
+        var focusTarget = steps[at].querySelector('[data-step-focus]');
+        if (focusTarget) { focusTarget.focus(); }
+      }
+    }
+
+    function go(n) {
+      at = Math.min(Math.max(n, 0), steps.length - 1);
+      paint(true);
+    }
+
+    if (prev) { prev.addEventListener('click', function () { go(at - 1); }); }
+    if (next) { next.addEventListener('click', function () { go(at + 1); }); }
+
+    paint(false);
+    return { reset: function () { at = 0; paint(false); } };
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-steps]'), function (root) {
+    var set = initSteps(root);
+    if (set) { stepSets.push(set); }
+  });
+
+  /* ============================================================
+     Screen two: one statement line's explanation at a time, in
+     the panel beside the table. The note is a long piece of
+     prose, so the panel is a polite live region: pressing the
+     button is a request to be told, and being told is the point.
+     ============================================================ */
+
+  var whyButtons = Array.prototype.slice.call(document.querySelectorAll('.why'));
+  var notesHint = document.getElementById('notes-hint');
+
+  function closeAllNotes() {
+    whyButtons.forEach(function (btn) {
+      btn.setAttribute('aria-expanded', 'false');
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (panel) { panel.hidden = true; }
+    });
+    if (notesHint) { notesHint.hidden = false; }
+  }
+
+  whyButtons.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var id = btn.getAttribute('aria-controls');
-      var row = document.getElementById(id);
-      if (!row) { return; }
-      var open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
-      row.hidden = open;
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if (!panel) { return; }
+      var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+      closeAllNotes();
+      if (!wasOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+        if (notesHint) { notesHint.hidden = true; }
+      }
     });
   });
 
@@ -522,11 +645,20 @@
   var wfToggle = document.getElementById('wf-toggle');
   var wfTable = document.getElementById('wf-table');
 
+  var wfPanel = document.getElementById('panel-w1');
+
+  function setWaterfallTable(open) {
+    wfToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    wfTable.classList.toggle('sr-only', !open);
+    // Shown, the table takes the right half of the panel and the chart
+    // gives up the width. Stacked, the two together are taller than the
+    // stage allows.
+    if (wfPanel) { wfPanel.classList.toggle('is-split', open); }
+    wfToggle.textContent = open ? 'Hide the table' : 'Show the figures as a table';
+  }
+
   wfToggle.addEventListener('click', function () {
-    var open = wfToggle.getAttribute('aria-expanded') === 'true';
-    wfToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
-    wfTable.classList.toggle('sr-only', open);
-    wfToggle.textContent = open ? 'Show the figures as a table' : 'Hide the table';
+    setWaterfallTable(wfToggle.getAttribute('aria-expanded') !== 'true');
   });
 
   var finalClassify = document.getElementById('final-classify');
@@ -671,11 +803,10 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-q]'), function (btn) {
       btn.setAttribute('aria-pressed', 'false');
     });
-    Array.prototype.forEach.call(document.querySelectorAll('.why'), function (btn) {
-      btn.setAttribute('aria-expanded', 'false');
-      var row = document.getElementById(btn.getAttribute('aria-controls'));
-      if (row) { row.hidden = true; }
-    });
+    closeAllNotes();
+    tabSets.forEach(function (set) { set.select(0, false); });
+    stepSets.forEach(function (set) { set.reset(); });
+    setWaterfallTable(false);
     clearFeedback();
     paintClassifyScore();
     sPrice.value = DEFAULTS.price;
@@ -689,6 +820,7 @@
 
   /* ---------------------------------------------- start */
 
+  closeAllNotes();
   paintSim(false);
   paintClassifyScore();
   // No focus grab on load: the module is embedded, and stealing focus would
