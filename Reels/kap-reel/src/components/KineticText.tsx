@@ -37,6 +37,12 @@ export type KineticTextProps = {
    *
    * The slam punch also has to know: scaling about the left edge on a centred
    * line pushes it off centre for the four frames the punch lasts.
+   *
+   * Owner decision 2026-09-04: a centred line centres on its containing box,
+   * and every box that holds one is now centred on the canvas by
+   * centeredPadding() or centeredBox() in src/lib/layout.ts. The line's own box
+   * is forced to the full width of that container so the axis is the
+   * container's axis in every context, flex parents included.
    */
   align?: "left" | "center";
   style?: CSSProperties;
@@ -74,6 +80,7 @@ export const KineticText: React.FC<KineticTextProps> = ({
       <div
         style={{
           textAlign: align,
+          width: centered ? "100%" : undefined,
           ...style,
           transform: `scale(${punch})`,
           transformOrigin: centered ? "center center" : "left center",
@@ -100,7 +107,14 @@ export const KineticText: React.FC<KineticTextProps> = ({
     // leaves the only break opportunity a long project name has. With a
     // non-breaking space "Southern Legacy Contractors" ran straight through the
     // reserved right zone in the landscape crop rather than wrapping.
-    <div style={{ whiteSpace: "pre-wrap", textAlign: align, ...style }}>
+    <div
+      style={{
+        whiteSpace: "pre-wrap",
+        textAlign: align,
+        width: centered ? "100%" : undefined,
+        ...style,
+      }}
+    >
       {text.split("").map((char, i) => (
         <span
           key={`${char}-${i}`}

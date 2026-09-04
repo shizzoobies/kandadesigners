@@ -1,7 +1,7 @@
 import { AbsoluteFill, Sequence } from "remotion";
 import { PlateShot } from "../components/PlateShot";
 import { COLORS, DISPLAY_STACK } from "../lib/brand";
-import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
+import { centeredPadding, formatMetrics, type FormatKey } from "../lib/layout";
 import {
   LINKEDIN_SURFACES_TOUR_CUTS,
   SURFACES_TOUR_CUTS,
@@ -43,7 +43,6 @@ export const SurfacesTour: React.FC<SurfacesTourProps> = ({
   cuts,
   accents,
 }) => {
-  const safe = safeArea(format);
   const metrics = formatMetrics(format);
   const scale = metrics.typeScale;
 
@@ -82,15 +81,15 @@ export const SurfacesTour: React.FC<SurfacesTourProps> = ({
                   borderTop: `${Math.round(8 * scale)}px solid ${accent}`,
                   paddingTop: Math.round(36 * scale),
                   paddingBottom: Math.round(42 * scale),
-                  paddingLeft: Math.round(72 * scale),
-                  // Clears the reserved right zone in the vertical crop.
-                  paddingRight: Math.round(108 * scale),
+                  // Symmetric, so the word centres on the canvas. See
+                  // centeredPadding() in src/lib/layout.ts.
+                  paddingLeft: centeredPadding(format, scale),
+                  paddingRight: centeredPadding(format, scale),
                 }}
               >
                 {/* Cut, not fade, and held for the whole cut. Owner decision
-                    2026-09-03: centred. maxWidth still caps the column, so the
-                    auto margins are what centre that column inside the band's
-                    asymmetric padding rather than leaving it hung left. */}
+                    2026-09-04: centred on the canvas. The padded box is already
+                    the column, so the word needs no maxWidth of its own. */}
                 <div
                   style={{
                     fontFamily: DISPLAY_STACK,
@@ -99,9 +98,6 @@ export const SurfacesTour: React.FC<SurfacesTourProps> = ({
                     letterSpacing: -2 * scale,
                     lineHeight: 1.05,
                     color: COLORS.canvas,
-                    maxWidth: safe.right - Math.round(180 * scale),
-                    marginLeft: "auto",
-                    marginRight: "auto",
                     textAlign: "center",
                   }}
                 >

@@ -7,7 +7,14 @@ import {
   useVideoConfig,
 } from "remotion";
 import { BODY_STACK, brand, COLORS, LOGO_PNG } from "../lib/brand";
-import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
+import {
+  centeredBox,
+  centeredPadding,
+  formatMetrics,
+  safeArea,
+  SAFE_ZONES,
+  type FormatKey,
+} from "../lib/layout";
 
 export type CallToActionProps = {
   format: FormatKey;
@@ -47,7 +54,13 @@ const LOGO_ASPECT = 303 / 800;
  * Owner decision 2026-09-03: the "K&A Performance" text line comes out. The
  * lockup already reads the business name, so setting it again underneath was
  * saying the same thing twice and pushed the url and the phone off center. The
- * card is now lockup, url, phone, and the block is centered on the safe area.
+ * card is now lockup, url, phone.
+ *
+ * Owner decision 2026-09-04: the card is centered on the CANVAS. It used to be
+ * centered on the safe area, which put it 54 pixels left of the canvas centre
+ * in the vertical crop, and that is what the owner was seeing. The card box is
+ * centeredBox() over the canvas width less symmetric padding, so the lockup,
+ * the closing line, the url and the phone all sit on the canvas axis.
  */
 export const CallToAction: React.FC<CallToActionProps> = ({
   format,
@@ -76,11 +89,18 @@ export const CallToAction: React.FC<CallToActionProps> = ({
   // pushed the whole centred block past the safe area and put the top of the
   // lockup inside the reserved top zone. A four element card gets a smaller
   // share of the safe height than a three element one.
+  const card = centeredBox(
+    format,
+    SAFE_ZONES[format].width - centeredPadding(format, scale) * 2,
+  );
+
   const logoHeightShare = closingLine ? 0.32 : 0.4;
   const logoWidth = Math.round(
     Math.min(
       LOGO_TARGET_WIDTH * scale,
-      safe.width * 0.74,
+      // Five sixths of the card, so the card still reads as a lockup over a
+      // block of copy rather than as a logo with captions under it.
+      card.width * 0.83,
       (safe.height * logoHeightShare) / LOGO_ASPECT,
     ),
   );
@@ -90,10 +110,8 @@ export const CallToAction: React.FC<CallToActionProps> = ({
       <div
         style={{
           position: "absolute",
-          left: 0,
-          // Centered on the safe area, not the canvas, so the reserved right
-          // strip does not pull the card off axis.
-          width: safe.right,
+          left: card.left,
+          width: card.width,
           top: safe.top,
           height: safe.height,
           display: "flex",

@@ -1,7 +1,14 @@
 import { AbsoluteFill, Img } from "remotion";
 import { KineticText } from "../components/KineticText";
 import { COLORS, DISPLAY_STACK, LOGO_PNG } from "../lib/brand";
-import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
+import {
+  centeredBox,
+  centeredPadding,
+  formatMetrics,
+  safeArea,
+  SAFE_ZONES,
+  type FormatKey,
+} from "../lib/layout";
 import { LINKEDIN_HOW_WE_WORK_LINES } from "../lib/timing";
 
 /**
@@ -37,15 +44,19 @@ const LINE_HEIGHT = 1.08;
 const AVG_ADVANCE = 0.52;
 
 /**
- * The lockup sits small in the top left of the safe area, not centred. A
- * centred logo on a text card reads as a title card and this beat is not a
- * title. Section 15 also caps logo animation at one second, so it does not
- * animate at all here: it is present from the first frame and it holds.
+ * The lockup sits small at the top of the column. Section 15 caps logo
+ * animation at one second, so it does not animate at all here: it is present
+ * from the first frame and it holds.
  *
  * It gets its own row rather than being absolutely positioned over the copy.
  * The first version floated it and centred the three lines on the whole safe
  * area, and in landscape, where the type scale is 1.778, the block grew tall
  * enough to run its accent rule straight through the lockup.
+ *
+ * Owner decision 2026-09-04: the lockup centres on the canvas like everything
+ * else. It used to hang off the left of the column, which put the frame's ink
+ * 62 pixels left of the canvas centre even with the copy centred, and that is
+ * what the owner was measuring.
  */
 const LOGO_WIDTH = 240;
 const LOGO_ASPECT = 303 / 800;
@@ -55,7 +66,11 @@ export const HowWeWork: React.FC<HowWeWorkProps> = ({ format, lines }) => {
   const metrics = formatMetrics(format);
   const scale = metrics.typeScale;
 
-  const padLeft = Math.round(72 * scale);
+  // The column, centred on the canvas rather than on the safe area.
+  const column = centeredBox(
+    format,
+    SAFE_ZONES[format].width - centeredPadding(format, scale) * 2,
+  );
   const lineGap = Math.round(26 * scale);
   const ruleHeight = Math.round(8 * scale);
   const ruleGap = Math.round(44 * scale);
@@ -76,9 +91,8 @@ export const HowWeWork: React.FC<HowWeWorkProps> = ({ format, lines }) => {
   // from frame 0 and would double the block's height against a layout that
   // reserved three lines. AVG_ADVANCE is the average character width of the
   // display face in a mixed-case sentence, as a fraction of the type size.
-  const columnWidth = safe.right - safe.left - padLeft * 2;
   const longest = Math.max(...lines.map((line) => line.length), 1);
-  const widthCap = Math.floor(columnWidth / (longest * AVG_ADVANCE));
+  const widthCap = Math.floor(column.width / (longest * AVG_ADVANCE));
 
   const fontSize = Math.max(
     Math.round(48 * scale),
@@ -94,9 +108,8 @@ export const HowWeWork: React.FC<HowWeWorkProps> = ({ format, lines }) => {
       <div
         style={{
           position: "absolute",
-          left: safe.left + padLeft,
-          // Stops well short of the reserved right strip in every crop.
-          width: safe.right - safe.left - padLeft * 2,
+          left: column.left,
+          width: column.width,
           top: safe.top,
           height: safe.height,
           display: "flex",
@@ -108,6 +121,8 @@ export const HowWeWork: React.FC<HowWeWorkProps> = ({ format, lines }) => {
             src={LOGO_PNG}
             style={{
               marginTop: Math.round(24 * scale),
+              marginLeft: "auto",
+              marginRight: "auto",
               width: logoWidth,
               height: logoHeight,
               display: "block",

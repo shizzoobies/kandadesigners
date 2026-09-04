@@ -5,7 +5,12 @@ import { StandIn } from "../components/StandIn";
 import { ZoomShot } from "../components/ZoomShot";
 import { COLORS, DISPLAY_STACK } from "../lib/brand";
 import { captureSrc, findCapture, getHomeCapture } from "../lib/captures";
-import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
+import {
+  centeredPadding,
+  formatMetrics,
+  safeArea,
+  type FormatKey,
+} from "../lib/layout";
 import type { HookContent } from "../reels/types";
 
 export type HookProps = {
@@ -105,14 +110,12 @@ export const Hook: React.FC<HookProps> = ({ format, content }) => {
             borderTop: `${Math.round(8 * scale)}px solid ${COLORS.accent}`,
             paddingTop: Math.round(44 * scale),
             paddingBottom: Math.round(52 * scale),
-            paddingLeft: Math.round(72 * scale),
-            // Clears the reserved right zone in the vertical crop, and is more
-            // conservative than it has to be in the other three.
-            paddingRight: Math.round(108 * scale),
-            // Owner decision 2026-09-03: the hook is centred. The padding stays
-            // asymmetric, so the line centres between the left margin and the
-            // reserved right strip rather than on the canvas. That is what
-            // keeps it clear of the platform UI in the vertical crop.
+            // Owner decision 2026-09-04: symmetric, so the line centres on the
+            // canvas. The scrim still runs edge to edge; only the copy box
+            // inside it is centred, and centeredPadding() sizes that box so its
+            // right edge stops on safe.right in the vertical crop.
+            paddingLeft: centeredPadding(format, scale),
+            paddingRight: centeredPadding(format, scale),
             textAlign: "center",
           }}
         >

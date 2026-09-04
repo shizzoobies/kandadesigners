@@ -20,7 +20,12 @@ import { StandIn } from "../components/StandIn";
 import { ZoomShot } from "../components/ZoomShot";
 import { BODY_STACK, COLORS, DISPLAY_STACK } from "../lib/brand";
 import { captureSrc, findCapture, getHomeCapture } from "../lib/captures";
-import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
+import {
+  centeredPadding,
+  formatMetrics,
+  safeArea,
+  type FormatKey,
+} from "../lib/layout";
 import { LINKEDIN_PROJECT_COPY, PROJECT_BEAT_SHOTS } from "../lib/timing";
 import type { CleanFrame, ZoomRegion } from "../reels/types";
 
@@ -62,9 +67,15 @@ const BEAT_LENGTH =
 const NAME_FONT_SIZE = 62;
 const BAND_PAD_TOP = 34;
 const BAND_PAD_BOTTOM = 40;
-const BAND_PAD_LEFT = 72;
-const BAND_PAD_RIGHT = 108;
 const BAND_GAP = 18;
+
+/**
+ * Side padding inside the landscape copy panel, at 1080 canvas width. The panel
+ * bleeds off the canvas right edge, so the right padding is this plus the width
+ * of the reserved strip: that is what makes the copy box symmetric inside the
+ * strip of panel the viewer can actually see, rather than hung to its left.
+ */
+const PANEL_PAD_X = 48;
 
 /** Height of one line in the copy slot below the project name, at 1080 width. */
 const COPY_LINE_HEIGHT = CLAIM_FONT_SIZE * 1.15;
@@ -608,16 +619,18 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               style={{
                 backgroundColor: SCRIM,
                 borderLeft: `${Math.round(6 * scale)}px solid ${accent}`,
-                // Owner decision 2026-09-03: copy is centred. In the split
-                // layout that means centred inside this panel, between its
-                // left padding and the safe right edge, not on the canvas.
+                // Owner decision 2026-09-03, unchanged on 2026-09-04: in the
+                // split layout the copy centres inside this panel rather than
+                // on the canvas, because the canvas is shared with the device.
+                // What did change is the left bias: the panel bleeds off the
+                // canvas right edge, so the right padding absorbs the reserved
+                // strip and then matches the left, which puts the copy box
+                // exactly in the middle of the visible panel.
                 textAlign: "center",
                 paddingTop: Math.round(BAND_PAD_TOP * scale),
                 paddingBottom: Math.round(BAND_PAD_BOTTOM * scale),
-                paddingLeft: Math.round(48 * scale),
-                // Panel bleeds off the canvas right edge, so the padding has
-                // to absorb the reserved strip and still leave a margin.
-                paddingRight: width - safe.right + Math.round(40 * scale),
+                paddingLeft: Math.round(PANEL_PAD_X * scale),
+                paddingRight: width - safe.right + Math.round(PANEL_PAD_X * scale),
               }}
             >
               {copy}
@@ -635,16 +648,17 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               bottom: metrics.bandBottom,
               backgroundColor: SCRIM,
               borderTop: `${Math.round(6 * scale)}px solid ${accent}`,
-              // Owner decision 2026-09-03: copy is centred. The band keeps its
-              // asymmetric padding, so the copy centres between the left
-              // margin and the reserved right strip rather than on the canvas,
-              // which is what keeps it inside the safe area in the vertical
-              // crop.
+              // Owner decision 2026-09-04: the copy centres on the canvas. The
+              // scrim still runs edge to edge; the padding inside it is
+              // symmetric, and centeredPadding() makes that box the widest one
+              // that is both on the canvas axis and clear of the reserved right
+              // strip. A name too long for it wraps inside the box, which is
+              // what nameLines already sizes the band for.
               textAlign: "center",
               paddingTop: Math.round(BAND_PAD_TOP * scale),
               paddingBottom: Math.round(BAND_PAD_BOTTOM * scale),
-              paddingLeft: Math.round(BAND_PAD_LEFT * scale),
-              paddingRight: Math.round(BAND_PAD_RIGHT * scale),
+              paddingLeft: centeredPadding(format, scale),
+              paddingRight: centeredPadding(format, scale),
             }}
           >
             {copy}

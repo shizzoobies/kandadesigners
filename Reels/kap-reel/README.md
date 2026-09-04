@@ -68,6 +68,20 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-03 | ReelLinkedInLandscape | `out/render-landscape-45s.mp4` (final build) | 1350 frames, 1920x1080, 30fps, 45.0s | 48.3s |
 | 2026-09-03 | deliver | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --variant a --remix` | 42.1s |
 | 2026-09-03 | **Full rebuild** | **everything above from a warm node_modules** | **bundle + mix + five renders + delivery** | **190.7s (3m 11s)** |
+| 2026-09-04 | bundle | `out/bundle` (canvas centring rebuild) | webpack bundle, public dir linked not copied | 2.4s |
+| 2026-09-04 | ReelVertical | `out/render-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 22.2s |
+| 2026-09-04 | ReelFeed | `out/render-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 19.9s |
+| 2026-09-04 | ReelSquare | `out/render-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s | 20.7s |
+| 2026-09-04 | ReelLinkedIn | `out/render-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s | 38.3s |
+| 2026-09-04 | ReelLinkedInLandscape | `out/render-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 54.0s |
+| 2026-09-04 | TrainingVertical | `out/render-training-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 22.4s |
+| 2026-09-04 | TrainingFeed | `out/render-training-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 24.6s |
+| 2026-09-04 | TrainingSquare | `out/render-training-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s | 21.4s |
+| 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s | 53.6s |
+| 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 62.5s |
+| 2026-09-04 | deliver web | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel web --variant a` | 40.5s |
+| 2026-09-04 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 38.6s |
+| 2026-09-04 | **Both reels re-delivered** | **the canvas centring fix, everything above** | **bundle + ten renders + two deliveries** | **421.1s (7m 1s)** |
 
 Section 14 item 9, the full rebuild number: **190.7 seconds**, which is
 2.1 + 2.8 + 143.7 + 42.1. It is the sum of the seven "final build" rows above
@@ -76,6 +90,12 @@ and it assumes `node_modules` is installed and `assets/captures` and
 measurement, or any ElevenLabs generation, none of which a rebuild repeats, and
 it does not include the 50.8 seconds the twenty four Gate 7 debug stills take,
 which is a review step rather than part of the build.
+
+The 2026-09-04 number, **421.1 seconds**, is the same measurement for both reels
+at once after the canvas centring fix: one bundle, ten renders and two
+deliveries. It does not include the music mixes, which were already on disk and
+did not change, or the 36 seconds the 56 alignment stills take, which is a
+review step rather than part of the build.
 
 Two things make this much faster than the Phase 4 numbers suggest. Rendering
 from a prebuilt bundle rather than from `src/index.ts` skips the public dir copy
@@ -149,6 +169,17 @@ crop. The lower third and the surfaces tour word are anchored to
 `formatMetrics().bandBottom`, which clears the reserved bottom plus 6 percent of
 the safe height.
 
+**Horizontal centring.** Everything centred is centred on the CANVAS, not on
+the safe area and not inside an asymmetric band. The scrims still run edge to
+edge; the copy box inside them takes the symmetric padding
+`centeredPadding(format, scale)` returns, which is the larger of the authored 72
+and the width of the reserved right strip. Where a box has a width of its own,
+`centeredBox(format, boxWidth)` centres it and then, if its right edge would
+pass `safe.right`, shifts it left by exactly that overflow and no further than
+`safe.left`. Both are in `src/lib/layout.ts` and nothing in `src/scenes` is
+allowed to centre by hand. See "Centred on the canvas" below for the
+measurements.
+
 **The CTA lockup** is capped against the safe area in both axes, not just by
 type scale. At 1.778 the lockup filled the landscape safe area top to bottom and
 crushed the url and phone underneath it.
@@ -214,7 +245,7 @@ the 18Hz the LinkedIn cut pays at rate 0.6.
 ## Centred copy
 
 Owner decision 2026-09-03: the left hung copy read badly, so every line in the
-reel is centred horizontally, in all six compositions and both cuts.
+reel is centred horizontally, in every composition and both cuts.
 
 - `src/components/KineticText.tsx` takes an `align` prop. Centring is safe with
   the type-on because the reveal hides characters with `visibility` rather than
@@ -222,7 +253,9 @@ reel is centred horizontally, in all six compositions and both cuts.
   line is centred once, as a finished line, and characters appear from the left
   of that fixed box rather than the box sliding as each one lands. Slam mode
   also swaps its `transformOrigin` to centre, or the punch would push a centred
-  line sideways for four frames.
+  line sideways for four frames. A centred line centres on its containing box,
+  and that box is forced to the container's full width, so the axis is always
+  the container's axis.
 - `src/components/ClaimLine.tsx` moved its rule from beside the text to a short
   centred bar above it. A dash hung off the left of a centred line reads as a
   stray mark, and a rule to the left of centred text pulls the optical centre
@@ -234,18 +267,67 @@ reel is centred horizontally, in all six compositions and both cuts.
   The `HowWeWork` and `AccessibilityBeat` rules are centred over their blocks
   with auto margins.
 
-The bands keep their asymmetric padding, 72 on the left and 108 on the right at
-1080 width, so copy centres between the left margin and the reserved right strip
-rather than on the canvas. That is deliberate: centring on the canvas would push
-the right edge of a long line into the platform UI zone in the vertical crop.
-The `HowWeWork` lockup stays in the top left of its own row, because it is a
-brand mark rather than a line, and centring it would make that beat read as a
-title card.
+That first pass centred every block on the safe area and left the bands their
+asymmetric padding, 72 on the left and 108 on the right at 1080 width. Both of
+those centre a line left of the canvas, and the errors add: the reserved right
+strip puts the safe area's middle 54 pixels left of the canvas middle in the
+vertical crop and 27 in the others, and the asymmetric padding takes another 18.
+Measured on rendered stills, every text block in the reel sat 15 to 54 pixels
+left of centre, and the `HowWeWork` beat sat as much as 152 left because its
+lockup hung off the left of the column. The owner saw it, because it was there.
 
-Re-verified after the change against all six Debug compositions. Stills in
-`out/gate7/`: frames 20, 120, 350 and 440 for the four short crops, and 100,
-300, 1150 and 1300 for the two LinkedIn ones. No text and no logo enters a red
-zone in any of the twenty four.
+### Centred on the canvas, 2026-09-04
+
+The rule now, everywhere anything is horizontally centred: **centre on the
+canvas.** The reserved strip still matters, so after centring, a box whose right
+edge would pass `safe.right` shifts left by exactly that overflow, and never
+past `safe.left`. Both halves of that live in `src/lib/layout.ts`:
+
+- `centeredPadding(format, scale)` is the symmetric side padding a full width
+  band or column takes: the larger of the authored 72 and the reserved strip's
+  own width. That makes the copy box the widest box that is both on the canvas
+  axis and clear of the strip. In the vertical crop it is exactly 108 to 972,
+  whose right edge is `safe.right`, so a line too long for it wraps inside the
+  box instead of running into the platform UI. `Hook`, `SurfacesTour` and the
+  `ProjectShowcase` lower third use it, and `BAND_PAD_LEFT` and
+  `BAND_PAD_RIGHT` are gone.
+- `centeredBox(format, boxWidth)` centres a box of a known width on the canvas
+  and applies the shift left rule. The CTA card and the `HowWeWork` and
+  `AccessibilityBeat` columns are laid out with it.
+
+The clamp did not engage anywhere in either delivered reel. The widest ink
+measured is 895 pixels, the training lower third at 1080 width, against a 972
+wide copy box in the feed and square crops; the vertical crop's 864 wide box
+wraps that project name to the two lines its `nameLines` already reserved.
+
+Two things changed shape. The `HowWeWork` lockup is centred over the column
+instead of hanging off its left, which is both what the owner asked for and what
+the frame measurement needs. The landscape split panel still centres its copy
+inside the panel rather than on the canvas, because there the canvas is shared
+with the device, but its padding is now symmetric inside the visible panel: the
+right padding absorbs the reserved strip and then matches the left, so the copy
+sits in the middle of the panel rather than 6 pixels right of it.
+
+Verified by measurement rather than by eye, on 56 rendered stills covering all
+twelve delivery compositions: frames 20, 120, 350 and 440 for the eight short
+crops, and 100, 300, 700, 1030, 1150 and 1300 for the four LinkedIn ones. The
+ink bounding box of every text block is now within 3 pixels of the canvas centre
+in the six 1080 wide compositions and within 5 in landscape. The two frames that
+measure over 4, both the surfaces tour word in landscape at +5 and +4.5, are the
+type's own side bearings and the trailing letter space of a negative tracking,
+not the layout: that word measured +5 against its own box before the change and
++5 after it, and the offset scales with the 1.778 type scale.
+
+Safe zones re-checked on Debug stills for all twelve compositions at frames 120
+and 440, or 120 and 1300 for the LinkedIn cuts. No text and no logo enters a red
+zone. Captures, device frames and the landscape panel's scrim do, which Section
+8 allows. The closest any text now comes to the reserved strip is 17 pixels, the
+training hook line in the vertical crop.
+
+The stills and the numbers behind all of that are in `out/_align/`: `before/`
+and `after/` hold the 56 frames each with a `measurements.json`, `debug/` holds
+the 24 safe zone stills, and the two throwaway scripts that produced them are
+beside those. `out/` is ignored, so none of it is tracked.
 
 ## The 45 second LinkedIn cut
 

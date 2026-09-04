@@ -1,7 +1,14 @@
 import { AbsoluteFill } from "remotion";
 import { KineticText } from "../components/KineticText";
 import { COLORS, DISPLAY_STACK } from "../lib/brand";
-import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
+import {
+  centeredBox,
+  centeredPadding,
+  formatMetrics,
+  safeArea,
+  SAFE_ZONES,
+  type FormatKey,
+} from "../lib/layout";
 import { LINKEDIN_ACCESSIBILITY_LINES } from "../lib/timing";
 
 export type AccessibilityBeatProps = {
@@ -42,16 +49,19 @@ export const AccessibilityBeat: React.FC<AccessibilityBeatProps> = ({
   const scale = metrics.typeScale;
 
   const fontSize = Math.round(LINE_FONT_SIZE * scale);
-  const padLeft = Math.round(72 * scale);
+  // The column, centred on the canvas rather than on the safe area.
+  const column = centeredBox(
+    format,
+    SAFE_ZONES[format].width - centeredPadding(format, scale) * 2,
+  );
 
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.dark_canvas }}>
       <div
         style={{
           position: "absolute",
-          left: safe.left + padLeft,
-          // Stops short of the reserved right strip in every crop.
-          width: safe.right - safe.left - padLeft * 2,
+          left: column.left,
+          width: column.width,
           top: safe.top,
           height: safe.height,
           display: "flex",

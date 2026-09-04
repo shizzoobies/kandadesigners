@@ -88,6 +88,65 @@ export function safeArea(format: FormatKey): SafeAreaBounds {
 }
 
 /**
+ * Side padding a full width band is authored with at 1080 canvas width, before
+ * the reserved right strip is taken into account. See centeredPadding().
+ */
+const BAND_PAD = 72;
+
+/**
+ * Symmetric side padding for a full width band or column, so the content box
+ * inside it is centred on the CANVAS rather than on the safe area.
+ *
+ * Owner decision 2026-09-04: everything horizontally centred centres on the
+ * canvas. A band that pads 72 on the left and 108 on the right centres its copy
+ * 18 pixels left of the canvas centre, and the copy centred on the safe area
+ * was another 54 left of that in the vertical crop. Both read as a layout that
+ * is off axis, because it is.
+ *
+ * The reserved right strip still matters, so the padding is the larger of the
+ * authored margin and the strip's own width. That makes the content box the
+ * widest box that is both centred on the canvas and clear of the strip: in the
+ * vertical crop it is exactly 108 to 972, whose right edge is safe.right. A
+ * line too wide for that box wraps inside it rather than running into the
+ * platform UI, and every line, wrapped or not, centres on the canvas.
+ */
+export function centeredPadding(format: FormatKey, scale: number): number {
+  const spec = SAFE_ZONES[format];
+  const safe = safeArea(format);
+  return Math.max(Math.round(BAND_PAD * scale), spec.width - safe.right);
+}
+
+/**
+ * A box of a known width, centred on the canvas and then pulled back inside the
+ * reserved right strip.
+ *
+ * The rule, in order:
+ *   1. Centre the box on the canvas.
+ *   2. If its right edge would pass safe.right, shift it left by exactly that
+ *      overflow, so it ends on safe.right and not a pixel further.
+ *   3. Never shift it past safe.left.
+ *
+ * Step 2 only engages for a box wider than twice the distance from the canvas
+ * centre to safe.right, which is 864 pixels in the vertical crop and wider than
+ * anything the reel draws. Where it does engage the box is no longer centred,
+ * which is the trade the owner asked for: clear of the platform UI first,
+ * centred second.
+ */
+export function centeredBox(
+  format: FormatKey,
+  boxWidth: number,
+): { left: number; width: number } {
+  const spec = SAFE_ZONES[format];
+  const safe = safeArea(format);
+  const width = Math.min(Math.round(boxWidth), spec.width);
+  let left = Math.round((spec.width - width) / 2);
+  const overflow = left + width - safe.right;
+  if (overflow > 0) left -= overflow;
+  if (left < safe.left) left = safe.left;
+  return { left, width };
+}
+
+/**
  * How a project beat arranges the clean capture against its lower third.
  *
  * "overlay" is the vertical master: the phone frame runs nearly the full
