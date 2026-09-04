@@ -1,26 +1,53 @@
 ---
-// The bench: /training/team/. Placeholder-structure roster page for the
-// training content service line. See src/data/training.js for why every
-// designer and SME entry renders as a placeholder (`named: false`) and for
-// the combined-years figure this page is not allowed to state as an exact
-// number. Do not add names, photos, throughput numbers, or dollar signs here;
-// see the file header in training.js and the build brief for the full list
-// of hard constraints this page must satisfy.
+// Meet the team: /training/team/. The two owners, the instructional design
+// bench, and the subject matter experts, each with a portrait that opens a
+// bio dialog. People and copy come from src/data/training.js (`team`); the
+// bench's four focus areas come from `bench`. A person with no photo shows
+// the drawn placeholder, and an empty bio shows the "to follow" line, so the
+// layout is final while headshots and approved wording are still arriving.
+//
+// House rules: no em dashes, no pills, no numbered kickers, no employer
+// names, no pricing, no throughput numbers. Never name an SME's employer.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import TrainingSubnav from '../../../components/TrainingSubnav.astro';
-import { bench, smes, combinedYears } from '../../../data/training.js';
+import { team, bench, combinedYears } from '../../../data/training.js';
 
 const PAGE_URL = 'https://ka-performancefl.com/training/team/';
+const PLACEHOLDER = '/images/training/sme-placeholder.svg';
 
-// FLAGGED FOR CONFIRMATION (see training.js): combinedYears must render as a
-// rounded, spelled-out figure, never the precise number. Extend this map if
-// the figure in training.js ever changes.
+// Rendered as a rounded, spelled-out figure, never the precise number.
 const YEARS_AS_WORDS = { 60: 'sixty' };
 const combinedYearsWord = YEARS_AS_WORDS[combinedYears] ?? String(combinedYears);
 
-// Card backdrops come from training.js (`backdrop` on each bench and SME
-// entry): images of our own courses and their licensed photography, washed
-// into the surface by the global .backdrop-card utility. Decorative only.
+const groups = [
+  {
+    id: 'owners',
+    heading: 'The owners',
+    intro: 'Two people, and you deal with both of them. One leads every engagement and builds the work; the other makes sure the work is for something.',
+    people: team.owners,
+  },
+  {
+    id: 'designers',
+    heading: 'The instructional designers',
+    intro: `A bench with roughly ${combinedYearsWord} years of combined experience, working under written agreement. Three of them are also the studio's artists, which is why the courses look drawn rather than assembled.`,
+    people: team.designers,
+  },
+  {
+    id: 'smes',
+    heading: 'Subject matter experts',
+    intro: 'A separate bench on purpose. Their job is not to write the course, it is to confirm that what the course teaches is technically correct in their field.',
+    people: team.smes,
+  },
+];
+
+// One flat list so every dialog gets a stable index.
+const people = groups.flatMap((g) => g.people.map((p) => ({ ...p, group: g.id })));
+const indexOf = (p) => people.findIndex((x) => x.name === p.name);
+
+const bioFor = (p) =>
+  p.bio ||
+  'The approved bio goes here once this person has signed off on the wording. It will cover their field, what they carry on a K & A project, and the work they are proudest of.';
+
 const breadcrumb = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -28,143 +55,245 @@ const breadcrumb = {
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
     { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://ka-performancefl.com/services/' },
     { '@type': 'ListItem', position: 3, name: 'Training content', item: 'https://ka-performancefl.com/training/' },
-    { '@type': 'ListItem', position: 4, name: 'The bench', item: PAGE_URL },
+    { '@type': 'ListItem', position: 4, name: 'Meet the team', item: PAGE_URL },
   ],
 };
 ---
 <BaseLayout
-  title="The Instructional Design Bench | K & A Performance"
-  description="A bench of senior instructional designers and two credentialed subject matter experts, working under written agreement with a single point of contact."
+  title="Meet the Training Team | K & A Performance"
+  description="The people behind K & A's training content: the two owners, the instructional design bench, and the credentialed subject matter experts who check the field details."
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
 
   <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
     <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
       <a href="/training/" class="transition-colors hover:text-accent">Training content</a>
-      <span class="text-accent" aria-hidden="true">&middot;</span> The bench
+      <span class="text-accent" aria-hidden="true">&middot;</span> Meet the team
     </p>
     <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
-      Senior instructional designers, <span class="text-accent">roughly {combinedYearsWord} years combined</span>
+      The people who <span class="text-accent">actually build it</span>
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
       Every project runs under a written agreement, with a named lead and a
-      single point of contact from the first call to final delivery. The
-      roster itself is not the differentiator. Senior judgment, a
-      subject matter expert validating the field details, and a production
-      pipeline behind all of it are.
+      single point of contact from the first call to final delivery. Here is
+      who that is, who builds alongside them, and who checks the field details
+      before anything ships.
     </p>
   </section>
 
   <TrainingSubnav />
 
-  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">How the bench works</h2>
-    <ul data-animate="type-settle" class="mt-6 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
-      <li>We sell, scope, and manage the engagement. You are never handed off to someone you have not agreed to work with.</li>
-      <li>A senior instructional designer builds the course, from outline through final delivery, not a rotating pool of contractors.</li>
-      <li>A subject matter expert validates that the content is correct in the field before it ships.</li>
-      <li>Every project has a named lead and a written scope, so there is one person accountable for the work.</li>
-      <li>The designer who storyboards a module is the same one who builds it. Your team never has to manage a freelancer directly.</li>
-    </ul>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">The instructional designers</h2>
-    <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">
-      Four designers, each carrying a distinct part of the build so a project
-      never waits on a single specialty.
-    </p>
-    <div class="mt-10 grid gap-8 sm:grid-cols-2">
-      {bench.map((designer) => (
-        <div data-animate="frame-lift" class="glow-frame backdrop-card flex min-h-[15rem] flex-col p-8" style={`--bd: url('${designer.backdrop}')`}>
-          {designer.named ? (
-            <>
-              <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{designer.focus}</p>
-              <h3 class="mt-2 font-display text-2xl leading-tight">{designer.name}</h3>
-              <p class="mt-3 font-heading text-sm font-semibold tracking-wide text-ink/80">{designer.years} years</p>
-              <p class="mt-3 leading-relaxed text-muted">{designer.background}</p>
-              {designer.photo && (
-                <img src={designer.photo} alt={designer.name} class="mt-5 rounded-lg" />
-              )}
-            </>
-          ) : (
-            <>
-              <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">Instructional designer</p>
-              <h3 class="mt-2 max-w-[22ch] font-display text-2xl leading-tight">{designer.focus}</h3>
-              <p class="mt-4 leading-relaxed text-muted">Name and background to follow.</p>
-              <p class="mt-2 leading-relaxed text-muted">Years of experience to follow.</p>
-            </>
-          )}
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Subject matter experts</h2>
-    <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">
-      This is a separate bench from the instructional designers on purpose.
-      Their job is not to write the course, it is to confirm that what the
-      course teaches is technically correct in their field, so credentials
-      matter here more than design background.
-    </p>
-    <div class="mt-10 grid gap-8 sm:grid-cols-2">
-      {smes.map((sme) => (
-        <div data-animate="frame-lift" class="glow-frame backdrop-card flex min-h-[13rem] flex-col p-8" style={`--bd: url('${sme.backdrop}')`}>
-          {sme.named ? (
-            <>
-              <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{sme.field}</p>
-              <h3 class="mt-2 font-display text-2xl leading-tight">{sme.name}</h3>
-              <p class="mt-3 font-heading text-sm font-semibold tracking-wide text-ink/80">{sme.credentialLine}</p>
-              <p class="mt-3 leading-relaxed text-muted">{sme.bio}</p>
-              {sme.photo && (
-                <img src={sme.photo} alt={sme.name} class="mt-5 rounded-lg" />
-              )}
-            </>
-          ) : (
-            <>
-              <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{sme.field}</p>
-              <h3 class="mt-2 max-w-[22ch] font-display text-2xl leading-tight">{sme.credentialLine}</h3>
-              <p class="mt-4 leading-relaxed text-muted">Name and bio to follow.</p>
-            </>
-          )}
-        </div>
-      ))}
-    </div>
-    <p data-animate="type-settle" class="mt-10 max-w-2xl leading-relaxed text-muted">
-      Subject matter experts validate the accuracy of content. They do not
-      advise your business, provide professional services to your
-      organization, or endorse it.
-    </p>
-  </section>
-
-  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Who runs the engagement</h2>
-    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
-      The studio owner leads every engagement personally, with prior
-      experience building training for the construction and skilled trades
-      sector and a working understanding of what a jobsite audience actually
-      needs from a course. They are currently pursuing IAAP CPACC
-      certification in accessibility.
-    </p>
-  </section>
-
-  <section class="px-6 pb-40 pt-16 md:pt-24">
-    <div class="mx-auto max-w-4xl text-center">
-      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
-        Talk to the person who will <span class="text-accent">actually run your project</span>
-      </p>
-      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-        No account manager relaying to a contractor you never meet. Tell us
-        what you need built, and see the samples first if you want proof
-        before you ask.
-      </p>
-      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10 flex flex-wrap items-center justify-center gap-6">
-        <a href="/training/?inquire=1" class="btn-draw">Ask about a project</a>
-        <a href="/training/samples/" class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">
-          See the samples <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
-        </a>
+  {groups.map((g, gi) => (
+    <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24" aria-labelledby={`group-${g.id}`}>
+      <h2 id={`group-${g.id}`} data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">{g.heading}</h2>
+      <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">{g.intro}</p>
+      <div class:list={['mt-10 grid gap-8', gi === 1 ? 'sm:grid-cols-2' : 'sm:grid-cols-2']}>
+        {g.people.map((p) => {
+          const i = indexOf(p);
+          return (
+            <div data-animate="frame-lift" class="glow-frame person-card flex gap-6 p-6 md:p-7">
+              <button type="button" class="person-portrait" data-person-open={i} aria-haspopup="dialog" aria-controls={`person-bio-${i}`} aria-label={`Read the bio: ${p.name}`}>
+                <img src={p.photo || PLACEHOLDER} alt="" width="400" height="500" loading="lazy" />
+              </button>
+              <div class="min-w-0 flex-1">
+                <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{p.role}</p>
+                <h3 class="mt-2 font-display text-2xl leading-tight">{p.name}</h3>
+                <p class="mt-2 font-heading text-sm font-semibold tracking-wide text-ink/80">{p.line}</p>
+                <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+                  <button type="button" class="inline-flex items-center gap-2 font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot" data-person-open={i} aria-haspopup="dialog" aria-controls={`person-bio-${i}`}>
+                    Read the bio <span aria-hidden="true">&rarr;</span>
+                  </button>
+                  {p.link && (
+                    <a href={p.link} class="font-heading text-sm font-semibold tracking-wide text-muted underline underline-offset-4 hover:text-accent">See their art</a>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
+      {g.id === 'smes' && (
+        <p data-animate="type-settle" class="mt-10 max-w-2xl leading-relaxed text-muted">
+          Subject matter experts validate the accuracy of content. They do not
+          advise your business, provide professional services to your
+          organization, or endorse it.
+        </p>
+      )}
+    </section>
+  ))}
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What the bench covers</h2>
+    <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">
+      Four kinds of work, each carried by someone who does it first, so a
+      project never waits on a single specialty.
+    </p>
+    <div class="mt-10 grid gap-8 sm:grid-cols-2">
+      {bench.map((b) => (
+        <div data-animate="frame-lift" class="glow-frame backdrop-card flex min-h-[11rem] flex-col justify-end p-8" style={`--bd: url('${b.backdrop}')`}>
+          <h3 class="max-w-[22ch] font-display text-2xl leading-tight">{b.focus}</h3>
+        </div>
+      ))}
     </div>
   </section>
+
+  <section class="mx-auto max-w-3xl px-6 pb-32 pt-8 text-center md:pb-40">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
+      Talk to the person who will <span class="text-accent">actually run your project</span>
+    </h2>
+    <p data-animate="type-settle" class="mx-auto mt-6 max-w-xl leading-relaxed text-muted">
+      No account manager relaying to a contractor you never meet. Tell us what
+      you need built, and see the samples first if you want proof before you ask.
+    </p>
+    <div data-animate="type-settle" class="mt-10 flex flex-wrap items-center justify-center gap-6">
+      <a href="/training/?inquire=1" class="btn-draw">Ask about a project</a>
+      <a href="/training/samples/" class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">See the samples <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+
+  {people.map((p, i) => (
+    <dialog id={`person-bio-${i}`} class="person-dialog" aria-labelledby={`person-bio-title-${i}`}>
+      <div class="glow-frame person-dialog-card">
+        <button type="button" class="person-dialog-close" data-person-close aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="15" y2="15" /><line x1="15" y1="5" x2="5" y2="15" /></svg>
+        </button>
+        <div class="person-dialog-grid">
+          <img src={p.photo || PLACEHOLDER} alt="" width="400" height="500" class="person-dialog-photo" />
+          <div>
+            <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{p.role}</p>
+            <h3 id={`person-bio-title-${i}`} tabindex="-1" class="mt-2 font-display text-3xl leading-tight">{p.name}</h3>
+            <p class="mt-2 font-heading text-sm font-semibold tracking-wide text-ink/80">{p.line}</p>
+            <p class="mt-5 leading-relaxed text-muted">{bioFor(p)}</p>
+            {p.link && (
+              <p class="mt-5"><a href={p.link} class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">See their art</a></p>
+            )}
+            {p.group === 'smes' && (
+              <p class="mt-5 border-t border-ink/10 pt-4 text-sm leading-relaxed text-muted">
+                Subject matter experts validate the accuracy of course content. They do not advise K &amp; A clients, provide professional services to them, or endorse them.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </dialog>
+  ))}
 </BaseLayout>
+
+<style>
+  .person-portrait {
+    flex: 0 0 auto;
+    width: 6.5rem;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgb(34 28 21 / 0.1);
+    background: var(--color-canvas);
+    padding: 0;
+    cursor: pointer;
+    transition: transform var(--dur-fast) var(--ease-out-expo), box-shadow var(--dur-fast) var(--ease-out-expo);
+  }
+  .person-portrait img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .person-portrait:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -14px rgb(34 28 21 / 0.35);
+  }
+  @media (max-width: 480px) {
+    .person-card { flex-direction: column; }
+    .person-portrait { width: 8rem; }
+  }
+
+  .person-dialog {
+    margin: auto;
+    width: min(44rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2.5rem);
+    overflow-y: auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 1rem;
+  }
+  .person-dialog::backdrop {
+    background: rgb(34 28 21 / 0.45);
+    backdrop-filter: blur(5px);
+  }
+  .person-dialog-card {
+    position: relative;
+    padding: 2rem;
+  }
+  .person-dialog-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    color: var(--color-muted);
+    transition: color var(--dur-fast) var(--ease-out-expo);
+  }
+  .person-dialog-close:hover { color: var(--color-ink); }
+  .person-dialog-grid {
+    display: grid;
+    gap: 1.75rem;
+    grid-template-columns: 10rem 1fr;
+    align-items: start;
+  }
+  .person-dialog-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgb(34 28 21 / 0.1);
+  }
+  @media (max-width: 560px) {
+    .person-dialog-grid { grid-template-columns: 1fr; }
+    .person-dialog-photo { width: 9rem; }
+  }
+  .person-dialog[open] {
+    animation: person-in 0.4s var(--ease-out-expo);
+  }
+  .person-dialog[open]::backdrop {
+    animation: person-fade 0.3s ease;
+  }
+  @keyframes person-in {
+    from { transform: translateY(14px) scale(0.985); }
+  }
+  @keyframes person-fade {
+    from { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .person-portrait { transition: none; }
+    .person-dialog[open], .person-dialog[open]::backdrop { animation: none; }
+  }
+</style>
+
+<script>
+  // Bio dialogs: native <dialog> gives Esc and focus containment. Focus goes
+  // to the heading on open and back to the opener on close; a click on the
+  // backdrop targets the dialog element itself.
+  let opener: HTMLElement | null = null;
+  const lockScroll = (on: boolean) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
+
+  document.querySelectorAll<HTMLElement>('[data-person-open]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const d = document.getElementById('person-bio-' + btn.dataset.personOpen) as HTMLDialogElement | null;
+      if (!d) return;
+      opener = btn;
+      d.showModal();
+      lockScroll(true);
+      (d.querySelector('h3[tabindex="-1"]') as HTMLElement | null)?.focus();
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('dialog.person-dialog').forEach((d) => {
+    d.querySelector('[data-person-close]')?.addEventListener('click', () => d.close());
+    d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+    d.addEventListener('close', () => {
+      lockScroll(false);
+      opener?.focus();
+      opener = null;
+    });
+  });
+</script>

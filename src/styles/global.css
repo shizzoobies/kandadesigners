@@ -635,3 +635,27 @@ body {
     .backdrop-card:hover { background-size: cover, cover; }
   }
 
+
+/* Training section tab arrivals (see the head script in BaseLayout and the
+   scripts in TrainingSubnav). Leaving: main fades out. Arriving: main starts
+   invisible, the page is scrolled so the tabs sit where they were, then main
+   fades in. Reduced motion keeps the placement and drops the fades. */
+html.tr-leave main {
+  opacity: 0;
+  transition: opacity 0.16s ease-out;
+}
+html.tr-arrive main {
+  opacity: 0;
+}
+html.tr-arrive.tr-arrive-in main {
+  opacity: 1;
+  transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.tr-leave main,
+  html.tr-arrive main,
+  html.tr-arrive.tr-arrive-in main {
+    opacity: 1;
+    transition: none;
+  }
+}

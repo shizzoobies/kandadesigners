@@ -39,7 +39,7 @@ export const section = {
 export const sectionLinks = [
   { href: '/training/', label: 'Overview' },
   { href: '/training/samples/', label: 'Samples' },
-  { href: '/training/team/', label: 'The bench' },
+  { href: '/training/team/', label: 'Meet the team' },
   { href: section.pdf, label: 'Capabilities (PDF)', download: true },
 ];
 
@@ -153,40 +153,102 @@ export const aiTransparency = [
   'Any restriction you need, from specific tools to no AI at all, is written into the statement of work.',
 ];
 
-// The instructional design bench. Placeholders until marketing-use elections
-// come back. When one does: set `named: true`, fill `name`, `focus`, `years`,
-// `background` from the APPROVED wording, and add `photo` only if a headshot
-// was supplied. Three of the four are already public on /artists/ in a
-// different capacity; that permission does not transfer, so do not link them.
+// The bench's four focus areas. Rendered on the capabilities one-pager and
+// as the "what the bench covers" list on the team page. The people themselves
+// are in `team` below.
 export const bench = [
-  { named: false, focus: 'Curriculum architecture and assessment design', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-curriculum.jpg?v=2' },
-  { named: false, focus: 'Visual design and illustrated learning', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-visual.jpg?v=2' },
-  { named: false, focus: 'Interactive and scenario-based learning', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-interactive.jpg?v=2' },
-  { named: false, focus: 'Technical and compliance training', years: null, background: '', photo: null , backdrop: '/images/training/backdrops/bench-technical.jpg?v=2' },
+  { focus: 'Curriculum architecture and assessment design', backdrop: '/images/training/backdrops/bench-curriculum.jpg?v=2' },
+  { focus: 'Visual design and illustrated learning', backdrop: '/images/training/backdrops/bench-visual.jpg?v=2' },
+  { focus: 'Interactive and scenario-based learning', backdrop: '/images/training/backdrops/bench-interactive.jpg?v=2' },
+  { focus: 'Technical and compliance training', backdrop: '/images/training/backdrops/bench-technical.jpg?v=2' },
 ];
 
-// Subject matter experts. Credential-forward, and deliberately NOT framed as
-// endorsement: the SME agreements bar representing that an SME endorses a
-// client or provides professional services through K&A. They validate
-// content; they do not advise your business.
-export const smes = [
-  {
-    named: false,
-    field: 'Accounting and finance',
-    credentialLine: 'Licensed CPA',
-    bio: '',
-    photo: null,
-    backdrop: '/images/training/backdrops/sme-accounting.jpg?v=2',
-  },
-  {
-    named: false,
-    field: 'Construction and industrial project management',
-    credentialLine: 'Working construction project manager',
-    bio: '',
-    photo: null,
-    backdrop: '/images/training/backdrops/sme-construction.jpg?v=2',
-  },
-];
+// The team, by Alex's call on 2026-09-04: the two owners, the instructional
+// designers (three of whom are also the studio's artists), and the subject
+// matter experts. A null `photo` renders the drawn placeholder portrait; an
+// empty `bio` renders the "approved bio to follow" line. No employer is ever
+// named for anyone. Owners and artists are already public on this site; the
+// three newest people are here on Alex's instruction, pending their signed
+// marketing-use elections and approved wording.
+export const team = {
+  owners: [
+    {
+      name: 'Alex Anderson',
+      role: 'Managing member, design and development',
+      line: 'Leads every training engagement',
+      bio: 'Alex does the design and the development, so whoever storyboards your module is the one who builds it. He leads every training engagement personally, brings prior years of building training for the construction and skilled trades, and is pursuing IAAP CPACC certification in accessibility.',
+      photo: '/images/Alex-Image.webp',
+      link: null,
+    },
+    {
+      name: 'Kristina Anderson',
+      role: 'Strategy and content',
+      line: 'The one asking what a module is for',
+      bio: 'Kristina runs strategy and content. In practice she is the one asking why a module exists at all and what it is supposed to make somebody do once they have taken it, which is the question most training never gets asked.',
+      photo: '/images/Kristina-Image.webp',
+      link: null,
+    },
+  ],
+  designers: [
+    {
+      name: 'Bobbie Connor',
+      role: 'Instructional designer',
+      line: 'Illustration and visual learning',
+      bio: 'Bobbie draws for a living, and it shows: hand-lettered logotypes, character work, and full picture books, all built line by line rather than assembled from parts. On the bench she carries the illustrated and visual side of a course, the scenes and characters a scenario is built around.',
+      photo: '/images/art/bb-portrait.webp',
+      link: '/artists/bobbie/',
+    },
+    {
+      name: 'Jon Marc Ostrom',
+      role: 'Instructional designer',
+      line: 'Graphic design and visual identity',
+      bio: 'Jon Marc designs logotypes, campaign art, and full identity systems that scale from a single mark to a whole season of screens. On the bench he is the reason a course looks like the client it was built for rather than like an authoring tool.',
+      photo: '/images/art/jm-portrait.jpg',
+      link: '/artists/jon-marc/',
+    },
+    {
+      name: 'Nicole Cruz',
+      role: 'Instructional designer',
+      line: 'Brand identity and print-ready design',
+      bio: 'Nicole designs identities for teams, events, and small businesses, work built to survive being worn, handed out, and kept. On the bench she carries job aids and reference pieces, the parts of a course that have to hold up on a wall or in a pocket.',
+      photo: '/images/art/nc-portrait.webp?v=1',
+      link: '/artists/nicole/',
+    },
+    {
+      name: 'James Hayes',
+      role: 'Instructional designer',
+      line: 'Curriculum and assessment',
+      bio: '',
+      photo: null,
+      link: null,
+    },
+  ],
+  smes: [
+    {
+      name: 'Brittany Ferguson, CPA',
+      role: 'Subject matter expert',
+      field: 'Accounting and finance',
+      credentialLine: 'Licensed CPA',
+      line: 'Licensed CPA',
+      bio: '',
+      photo: null,
+      link: null,
+    },
+    {
+      name: 'Coty Jones',
+      role: 'Subject matter expert',
+      field: 'Construction and industrial project management',
+      credentialLine: 'Working construction project manager',
+      line: 'Working construction project manager',
+      bio: '',
+      photo: null,
+      link: null,
+    },
+  ],
+};
+
+// The capabilities one-pager reads the SME fields from here.
+export const smes = team.smes;
 
 // Verticals we lead with. Construction first: Alex's prior years building
 // training for the trades and a construction PM on the SME bench make it the

@@ -179,6 +179,22 @@ const schema = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+    <!-- Section-tab arrivals. A training sub-nav click stores a flag before
+         navigating; this runs before first paint so the new page can arrive
+         faded out and be placed with the tabs where they were, instead of
+         snapping to the top. The flag is consumed here no matter what, and a
+         timer reveals the page even if no sub-nav script runs. -->
+    <script is:inline>
+      try {
+        if (sessionStorage.getItem('tr-arrive')) {
+          sessionStorage.removeItem('tr-arrive');
+          if (location.pathname.indexOf('/training/') === 0) {
+            document.documentElement.classList.add('tr-arrive');
+            setTimeout(function () { document.documentElement.classList.add('tr-arrive-in'); }, 350);
+          }
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>

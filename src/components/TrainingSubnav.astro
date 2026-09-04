@@ -33,6 +33,69 @@ const isCurrent = (href) => !href.endsWith('.pdf') && path === href;
   </ul>
 </nav>
 
+<script is:inline>
+  // Arrival half: runs as soon as this nav is parsed, before first paint of
+  // anything below it. If the previous page was a training tab, place the
+  // tabs at the exact viewport position they had when clicked, then reveal.
+  (function () {
+    var html = document.documentElement;
+    if (!html.classList.contains('tr-arrive')) return;
+    var top = parseFloat(sessionStorage.getItem('tr-top') || '');
+    sessionStorage.removeItem('tr-top');
+    // The document is not scrollable until the whole body has parsed, so
+    // the placement waits for DOMContentLoaded (main is still invisible),
+    // then reveals. Lenis, if it has started, is told the same position so
+    // it does not ease back toward wherever it woke up.
+    var place = function () {
+      var nav = document.querySelector('.tr-subnav');
+      if (nav && !isNaN(top)) {
+        var y = Math.max(0, nav.getBoundingClientRect().top + window.pageYOffset - top);
+        window.scrollTo(0, y);
+        try {
+          var lenis = window.__motion && window.__motion.lenis;
+          if (lenis && lenis.scrollTo) lenis.scrollTo(y, { immediate: true, force: true });
+        } catch (e) {}
+      }
+    };
+    var reveal = function () {
+      place();
+      requestAnimationFrame(function () { html.classList.add('tr-arrive-in'); });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', reveal);
+    else reveal();
+    // Fonts and images can still shift the hero height a little after the
+    // reveal; settle once more on load unless the reader has scrolled.
+    var startY = null;
+    window.addEventListener('load', function () {
+      if (startY === null || Math.abs(window.pageYOffset - startY) < 2) place();
+    });
+    document.addEventListener('DOMContentLoaded', function () { startY = window.pageYOffset; });
+  })();
+</script>
+
+<script>
+  // Departure half: on a tab click, remember where the tabs sit on screen,
+  // fade the page out, then navigate. Modified clicks and the PDF download
+  // are left to the browser.
+  const nav = document.querySelector('.tr-subnav');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  nav?.querySelectorAll<HTMLAnchorElement>('a.tr-stop').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      if (a.hasAttribute('download') || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (a.getAttribute('aria-current') === 'page') { e.preventDefault(); return; }
+      e.preventDefault();
+      try {
+        sessionStorage.setItem('tr-arrive', '1');
+        sessionStorage.setItem('tr-top', String(nav.getBoundingClientRect().top));
+      } catch {}
+      const go = () => { location.href = a.href; };
+      if (reduced) return go();
+      document.documentElement.classList.add('tr-leave');
+      setTimeout(go, 170);
+    });
+  });
+</script>
+
 <style>
   .tr-subnav-list {
     display: flex;
