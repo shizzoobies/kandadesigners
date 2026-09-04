@@ -20,8 +20,8 @@ export type StandInProps = {
  * and what id will fill it. A stand-in that looked plausible would be worse
  * than a blank frame, because it would get signed off.
  *
- * It fills its parent, so it can drop into a device frame, a browser window or
- * a full bleed shot without knowing which it is in.
+ * It fills its parent, so it can drop into a phone frame, a laptop frame or a
+ * full bleed shot without knowing which it is in.
  */
 export const StandIn: React.FC<StandInProps> = ({
   kind,

@@ -12,8 +12,8 @@ import {
   CLAIM_FONT_SIZE,
   CLAIM_RULE_BLOCK,
 } from "../components/ClaimLine";
-import { BrowserFrame } from "../components/BrowserFrame";
 import { DeviceFrame } from "../components/DeviceFrame";
+import { LaptopFrame, laptopGeometry } from "../components/LaptopFrame";
 import { KineticText } from "../components/KineticText";
 import { PlateShot } from "../components/PlateShot";
 import { StandIn } from "../components/StandIn";
@@ -21,6 +21,7 @@ import { ZoomShot } from "../components/ZoomShot";
 import { BODY_STACK, COLORS, DISPLAY_STACK } from "../lib/brand";
 import { captureSrc, findCapture, getHomeCapture } from "../lib/captures";
 import {
+  centeredBox,
   centeredPadding,
   formatMetrics,
   safeArea,
@@ -115,21 +116,10 @@ function bandHeight(copyLines: number, nameLines: number): number {
 const BEZEL = 20;
 const RADIUS = 64;
 
-/**
- * Size of a browser window's chrome, as fractions of its screen width. The
- * numbers match BrowserFrame's own defaults; they are restated here because the
- * window has to be fitted into a box before it is rendered, and a window is
- * taller and a hair wider than the screen inside it.
- */
-const BROWSER_BAR = 0.05;
-const BROWSER_BAR_MIN = 24;
-const BROWSER_LINE = 0.0026;
-const BROWSER_LINE_MIN = 2;
-
 /** Native pixel size of a shot whose capture has not been recorded yet. */
 const STAND_IN_SHOT = {
   phone: { width: 780, height: 1688 },
-  browser: { width: 2880, height: 1800 },
+  laptop: { width: 2880, height: 1800 },
 };
 
 /**
@@ -185,9 +175,9 @@ export type ProjectShowcaseProps = {
   cleanCaptureId?: string;
   /**
    * Which device the clean shot sits inside. "phone" is the web reel's dark
-   * slab around a 780x1688 mobile capture. "browser" is the sketched window
-   * around a 2880x1800 desktop capture, which is the only sensible container
-   * for a 16:10 training module screen.
+   * slab around a 780x1688 mobile capture. "laptop" is the same body with a
+   * hinge and a deck under it, around a 2880x1800 desktop capture, which is the
+   * only sensible container for a 16:10 training module screen.
    */
   cleanFrame?: CleanFrame;
   /**
@@ -280,7 +270,20 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   );
   const bandTop = height - metrics.bandBottom - bandHeightPx;
 
-  const browser = cleanFrame === "browser";
+  const laptop = cleanFrame === "laptop";
+
+  /**
+   * The widest box that is both centred on the canvas axis and clear of the
+   * platform's reserved right strip: the canvas minus that strip on BOTH sides.
+   *
+   * This is the same box centeredPadding() gives the lower third's copy, so in
+   * the stacked and overlay arrangements the device and the band's text are the
+   * same width and share one centre line. Taking safe.right as the box width
+   * instead, which is what this did before 2026-09-04, makes a box that is
+   * centred on the safe area: 27 pixels left of the canvas centre in the feed
+   * and square crops and 54 in the vertical one, which is what the owner saw.
+   */
+  const symmetricSafeWidth = width - 2 * (width - safe.right);
 
   // What the frame has to fit. Where there is a zoom region, that region is the
   // shot: it is the rectangle the viewer ends up seeing.
@@ -297,7 +300,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
    * height long before the band, so the band lands across the middle of the
    * thing the shot exists to show.
    *
-   * Every browser window is wider than it is tall and so always lands here,
+   * Every laptop screen is wider than it is tall and so always lands here,
    * which is what this rule originally said. A phone shot pushed in on one
    * region of itself can be wider than the canvas too, which is what the
    * stop-or-go beat of the training reel is, and it needs the same answer: in
@@ -314,24 +317,26 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   // allowed to run into a reserved zone. Text is not.
   let boxLeft = 0;
   let boxTop = 0;
-  let boxWidth = safe.right;
+  let boxWidth = symmetricSafeWidth;
   let boxHeight = height;
 
   if (showcase === "stack") {
     // Everything above the band, with a gap so the device does not kiss it.
     boxHeight = bandTop - Math.round(24 * scale);
-    if (browser) {
-      // A wide short window centres in whatever is left, so the box has to
-      // start at the safe top or the window centres up into the platform's UI.
+    if (laptop) {
+      // A wide short device centres in whatever is left, so the box has to
+      // start at the safe top or the laptop centres up into the platform's UI.
       boxTop = safe.top;
       boxHeight -= safe.top;
     }
   } else if (showcase === "split") {
-    // Landscape. The strip left of the copy panel is the axis a 16:10 window
-    // runs out of first, where a 9:16 phone runs out of height, so a browser
-    // beat gets a wider strip.
-    boxLeft = Math.round(width * (browser ? 0.025 : 0.06));
-    boxWidth = Math.round(width * (browser ? 0.3 : 0.23));
+    // Landscape. The device sits left of the copy panel rather than on the
+    // canvas centre, because in this arrangement the canvas is shared: centring
+    // it would put it behind the panel. The strip left of the panel is the axis
+    // a 16:10 laptop runs out of first, where a 9:16 phone runs out of height,
+    // so a laptop beat gets a wider strip.
+    boxLeft = Math.round(width * (laptop ? 0.025 : 0.06));
+    boxWidth = Math.round(width * (laptop ? 0.3 : 0.23));
     boxTop = safe.top;
     boxHeight = safe.height - Math.round(40 * scale);
   }
@@ -342,40 +347,37 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   let frameHeight: number;
   let bezel = 0;
   let radius = 0;
-  let browserBar = 0;
-  let browserLine = 0;
 
-  if (browser) {
-    // A window is BROWSER_BAR taller and two hairlines wider than its screen,
-    // so the screen is solved against the box rather than fitted to it. The
-    // minimums on the bar and the hairline are what make this two passes: solve
-    // proportionally, take the minimums, and give the height back if they bit.
+  if (laptop) {
+    /**
+     * A laptop is taller than its screen by two bezels plus the deck, and wider
+     * than its lid by the deck's overhang, so the screen is solved against the
+     * box rather than fitted to it. Everything in laptopGeometry() scales with
+     * the screen except the three minimums, so a proportional shrink converges
+     * in a couple of passes and the loop is cheaper than restating the ratios
+     * here, which is the mistake the browser window's geometry made.
+     */
     const aspect = shotWidth / shotHeight;
-    let sw = Math.min(
-      boxWidth / (1 + 2 * BROWSER_LINE),
-      boxHeight / (1 / aspect + BROWSER_BAR + 2 * BROWSER_LINE),
-      // Never upscale past the capture's own pixels, the same rule the phone
-      // frame follows.
-      shotWidth,
-    );
-    let bar = Math.max(BROWSER_BAR_MIN, Math.round(sw * BROWSER_BAR));
-    let line = Math.max(BROWSER_LINE_MIN, Math.round(sw * BROWSER_LINE));
-    let sh = sw / aspect;
-
-    if (sh + bar + line * 2 > boxHeight) {
-      sh = boxHeight - bar - line * 2;
-      sw = sh * aspect;
-      bar = Math.max(BROWSER_BAR_MIN, Math.round(sw * BROWSER_BAR));
-      line = Math.max(BROWSER_LINE_MIN, Math.round(sw * BROWSER_LINE));
-      sh = Math.min(sh, boxHeight - bar - line * 2);
+    // Never upscale past the shot's own pixels, the same rule the phone frame
+    // follows.
+    let sw = Math.min(boxWidth, shotWidth);
+    let g = laptopGeometry(Math.round(sw), Math.round(sw / aspect));
+    for (let pass = 0; pass < 6; pass += 1) {
+      const fit = Math.min(
+        boxWidth / g.frameWidth,
+        boxHeight / g.frameHeight,
+      );
+      if (fit >= 1) break;
+      sw *= fit;
+      g = laptopGeometry(Math.round(sw), Math.round(sw / aspect));
     }
 
     screenWidth = Math.round(sw);
-    screenHeight = Math.round(sh);
-    browserBar = bar;
-    browserLine = line;
-    frameWidth = screenWidth + line * 2;
-    frameHeight = screenHeight + bar + line * 2;
+    screenHeight = Math.round(sw / aspect);
+    bezel = g.bezel;
+    radius = g.radius;
+    frameWidth = g.frameWidth;
+    frameHeight = g.frameHeight;
   } else {
     const nativeWidth = shotWidth + BEZEL * 2;
     const nativeHeight = shotHeight + BEZEL * 2;
@@ -392,7 +394,17 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
     frameHeight = screenHeight + bezel * 2;
   }
 
-  const deviceLeft = boxLeft + Math.round((boxWidth - frameWidth) / 2);
+  /**
+   * Owner decision 2026-09-04: the device centres on the CANVAS, the same rule
+   * the copy follows, with the same clamp. centeredBox() centres the frame and
+   * then shifts it left only if its right edge would pass safe.right. Landscape
+   * is the exception the arrangement itself demands: there the device is placed
+   * inside the strip left of the copy panel, and it centres in that.
+   */
+  const deviceLeft =
+    showcase === "split"
+      ? boxLeft + Math.round((boxWidth - frameWidth) / 2)
+      : centeredBox(format, frameWidth).left;
   const deviceTop = boxTop + Math.round((boxHeight - frameHeight) / 2);
 
   /**
@@ -574,15 +586,15 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               top: deviceTop,
             }}
           >
-            {browser ? (
-              <BrowserFrame
+            {laptop ? (
+              <LaptopFrame
                 screenWidth={screenWidth}
                 screenHeight={screenHeight}
-                chrome={browserBar}
-                border={browserLine}
+                bezel={bezel}
+                radius={radius}
               >
                 {cleanShot}
-              </BrowserFrame>
+              </LaptopFrame>
             ) : (
               <DeviceFrame
                 screenWidth={screenWidth}

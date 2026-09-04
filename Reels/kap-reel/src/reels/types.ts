@@ -37,8 +37,13 @@ export type ZoomRegion = {
   h: number;
 };
 
-/** Which device the clean shot of a project beat sits inside. */
-export type CleanFrame = "phone" | "browser";
+/**
+ * Which device the clean shot of a project beat sits inside. Both are drawn
+ * devices in the same family: the phone is DeviceFrame, the laptop is
+ * LaptopFrame. The third value this used to have, "browser", was a sketched
+ * window with no device around it and was retired on 2026-09-04.
+ */
+export type CleanFrame = "phone" | "laptop";
 
 /**
  * The full bleed shot behind the hook lines.

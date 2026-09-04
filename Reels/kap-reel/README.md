@@ -96,6 +96,19 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | deliver web | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel web --variant a` | 40.7s |
 | 2026-09-04 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 39.1s |
 | 2026-09-04 | **Both reels re-delivered, drawn end card** | **the 2026-09-04 end card and the 15 second re-time** | **bundle + ten renders + two deliveries** | **409.6s (6m 50s)** |
+| 2026-09-04 | bundle | `out/bundle` (laptop frame rebuild) | rspack bundle, public dir linked not copied | 2.4s |
+| 2026-09-04 | ReelVertical | `out/render-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 20.9s |
+| 2026-09-04 | ReelFeed | `out/render-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 19.0s |
+| 2026-09-04 | ReelSquare | `out/render-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s | 20.5s |
+| 2026-09-04 | ReelLinkedIn | `out/render-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s | 40.3s |
+| 2026-09-04 | ReelLinkedInLandscape | `out/render-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 52.1s |
+| 2026-09-04 | TrainingVertical | `out/render-training-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 21.3s |
+| 2026-09-04 | TrainingFeed | `out/render-training-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 18.9s |
+| 2026-09-04 | TrainingSquare | `out/render-training-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s | 18.1s |
+| 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s | 53.0s |
+| 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 61.7s |
+| 2026-09-04 | deliver web and training | ten MP4s, ten SRTs, four thumbnails, twelve stills, both acceptance runs | `--reel web --variant a` then `--reel training --variant t-a` | 77.1s |
+| 2026-09-04 | **Both reels re-delivered, laptop frame** | **the laptop frame and the centred device box** | **bundle + ten renders + two deliveries** | **405.3s (6m 45s)** |
 
 Section 14 item 9, the full rebuild number: **190.7 seconds**, which is
 2.1 + 2.8 + 143.7 + 42.1. It is the sum of the seven "final build" rows above
@@ -186,6 +199,21 @@ nothing is ever letterboxed.
   both fit in 1080 pixels, so the phone sits left of center and the lower third
   becomes a panel beside it, bleeding off the right edge with its text stopping
   at `safe.right`.
+
+A beat whose shot is wider than the canvas takes `stack` even where the format
+asks for `overlay`, because an overlaid band would land across the middle of the
+thing the shot exists to show. Every laptop beat is wider than the canvas, and
+so is the training reel's stop-or-go phone beat, which is pushed in on a region
+780 by 1040.
+
+**The device box.** In `overlay` and `stack` the device is centred on the
+CANVAS with `centeredBox(format, frameWidth)`, the same function and the same
+shift-left clamp the copy uses. Its box is the canvas minus the reserved right
+strip on both sides, which is the same box `centeredPadding()` gives the lower
+third's copy, so the device and the text under it share one centre line and one
+width. In `split` the device is placed inside the strip left of the copy panel
+instead: there the canvas is shared, and centring on it would put the device
+behind the panel.
 
 **Bands.** The hook band is anchored 28 percent down the safe area in every
 crop. The lower third and the surfaces tour word are anchored to
@@ -429,6 +457,39 @@ The stills and the numbers behind all of that are in `out/_align/`: `before/`
 and `after/` hold the 56 frames each with a `measurements.json`, `debug/` holds
 the 24 safe zone stills, and the two throwaway scripts that produced them are
 beside those. `out/` is ignored, so none of it is tracked.
+
+### The device box, 2026-09-04
+
+The copy moved onto the canvas axis on 2026-09-04 and the device did not, which
+is what the owner saw next: the training reel's laptop sat left of the copy
+under it. The device box was `[0, safe.right]`, so the device centred on the
+safe area, and the safe area is not centred on the canvas.
+
+It now takes the same box the copy does, `width - 2 * (width - safe.right)`, and
+the same `centeredBox()` clamp. The clamp does not engage anywhere: the widest
+device in either reel is 972, which is exactly the box in the feed, square and
+LinkedIn crops.
+
+`ProjectShowcase` is shared, so this moved the web reel's phone as well and both
+reels were re-rendered and re-delivered. Measured on the device's own ink
+against the brand ink ground, in the rows above the lower third:
+
+| Still | Before | After |
+|---|---|---|
+| `TrainingVertical` 100, 130, 180 | -54 | +0.5 |
+| `TrainingFeed` 100, 130 | -27 | 0 |
+| `TrainingSquare` 100, 130 | -27 | 0 |
+| `TrainingLinkedIn` 250, 700, 900 | -27 | 0 |
+| `TrainingLinkedIn` 500 | -27 | -0.5 |
+| `ReelVertical` 100 | -54.5 | -0.5 |
+| `ReelFeed` 100 | -27.5 | -0.5 |
+
+Landscape is the exception and stays one: the device is inside the strip left of
+the copy panel, at 65 to 607 against a canvas centre of 960. It moved 3 pixels
+right of where the browser window sat, because the laptop is 24 pixels narrower
+in that strip, and it centres in the same place the phone does.
+
+The stills, the measurements and the throwaway script are in `out/_laptop/`.
 
 ## The 45 second LinkedIn cut
 
@@ -826,7 +887,7 @@ scenes and moved into `src/reels/`.
 
 A `FeaturedBeat` is `{ projectId, plateId, plateCaptureId?, cleanCaptureId?,
 cleanFrame, zoom?, name, nameLines?, contextLine?, claim }`. `cleanFrame` is
-`"phone"` or `"browser"`. `zoom` is a rectangle in the capture's own pixels.
+`"phone"` or `"laptop"`. `zoom` is a rectangle in the capture's own pixels.
 `nameLines` only tells the lower third how tall to expect to be, so the device
 above it is sized against the right box; it defaults to 1, which is what every
 web reel name assumes.
@@ -853,18 +914,15 @@ Plus `TrainingVerticalDebug` and the other five.
 
 ### Two rendering additions
 
-`src/components/BrowserFrame.tsx` is the desktop twin of `DeviceFrame`: a thin
-sketched window in the manner of the K&A lockup, with a hairline ink border on
-canvas and three small dots top left in rust, teal and ink. The training
-captures are 2880x1800 module screens and have nowhere sensible to sit inside a
-phone body. Every dimension is derived from the screen width, so the window
-looks like the same drawing at 970 canvas pixels wide in the vertical crop and
-at 1500 in landscape.
+`src/components/LaptopFrame.tsx` is the desktop twin of `DeviceFrame`. The
+training captures are 2880x1800 module screens and have nowhere sensible to sit
+inside a phone body, so they sit on a laptop instead. See "The laptop frame"
+below for what it draws and what it replaced.
 
-A 16:10 window cannot run the full canvas height the way a 9:16 phone can, so
-in the vertical crop a browser beat takes the stacked arrangement instead of
-the overlay one: the window spans the safe width and the lower third sits under
-it rather than across it. In landscape it takes a wider strip left of the copy
+A 16:10 screen cannot run the full canvas height the way a 9:16 phone can, so
+in the vertical crop a laptop beat takes the stacked arrangement instead of the
+overlay one: the laptop spans the safe width and the lower third sits under it
+rather than across it. In landscape it takes a wider strip left of the copy
 panel than a phone does, because width rather than height is the axis it runs
 out of.
 
@@ -875,6 +933,71 @@ picks the scale that makes that region cover its box, lays the whole capture
 out at that scale, translates so the region's centre lands on the box's centre,
 and pushes in three percent across the shot with the transform origin at the
 box centre. No new dependency, and it never reaches for the video's own pixels.
+
+### The laptop frame, 2026-09-04
+
+`cleanFrame: "laptop"` replaced `cleanFrame: "browser"` after the owner watched
+the training reel's first project beat: "it's off to the left and it's just a
+floating mac browser, no device or anything with it like the others, seems very
+out of place." Two faults in one shot, and both of them real.
+
+`BrowserFrame` drew a sketched window, which is the K&A lockup's drawing at
+video scale: a hairline ink border on canvas with three dots top left. That is
+the right drawing for the end card, where a mouse builds the lockup, and the
+wrong one for a project beat, where every other shot in both reels is a device.
+The web reel's clean shots sit in `DeviceFrame`'s dark phone body, the plates
+are photographs of real hardware, and in the middle of that a line drawing of a
+window with nothing behind it reads as a missing asset rather than as a style.
+`BrowserFrame.tsx` is deleted; nothing imports it.
+
+`src/components/LaptopFrame.tsx` is the replacement, and it is deliberately the
+phone with a hinge rather than a new idea:
+
+- the same `#100D0A` body and the same `0 40px 90px rgba(0, 0, 0, 0.45)` drop
+  shadow as `DeviceFrame`;
+- a bezel of 1.8 percent of the screen width, a floor of 8, around a screen with
+  a small corner radius, so the lid is a thin frame rather than a slab;
+- a hairline lighter edge along the top of the lid, stopping short of the
+  corners, which is the only lighting in the drawing;
+- a camera dot of about a quarter of the bezel, centred in the top bezel;
+- a base under the lid: a flat rounded slab 4.5 percent of the screen height and
+  6 percent wider than the lid, in the same body tone, with a hairline highlight
+  along its top edge for the hinge. Rounded harder on its bottom corners than
+  its top ones, which is what makes it read as a deck seen head on rather than
+  as a second panel.
+
+No branding, no text, no keyboard detail, no gloss. At the sizes these render,
+anything more is noise.
+
+`laptopGeometry(screenWidth, screenHeight)` returns the outer size, and
+`ProjectShowcase` solves its screen width against that with a proportional
+shrink rather than restating the ratios, which is what the browser window's
+geometry did and what made it two hand-written passes.
+
+**Screen widths, measured on the delivered stills.** The lid is the screen plus
+two bezels and the base is six percent wider than the lid; both are centred on
+the same axis.
+
+| Format | Box the device fits | Screen | Lid | Base |
+|---|---|---|---|---|
+| `TrainingVertical` | 864 x 841 | 786 x 255 | 814 | 863 |
+| `TrainingFeed` | 972 x 852 | 885 x 287 | 917 | 972 |
+| `TrainingSquare` | 972 x 700 | 885 x 287 | 917 | 972 |
+| `TrainingLinkedIn` | 972 x 703 | 885 x 287 | 917 | 972 |
+| `TrainingLandscape` | 576 x 869 | 525 x 170 | 543 | 576 |
+| `TrainingLinkedInLandscape` | 576 x 869 | 525 x 170 | 543 | 576 |
+
+Every one of the three 1080 wide crops is width limited, so the laptop is as
+wide as the symmetric safe box allows and the band sits under it. Nothing had to
+be reduced for the band: the tallest laptop is 332 pixels in square, against a
+700 pixel box that already reserves the safe top above it and 24 below it. The
+LinkedIn cut's hazard hunt beat is a 16:9 region rather than a 3:1 one, so its
+screen is the same 885 wide and 504 tall, and its frame is 559 of the same 703
+pixel box.
+
+The numbers above are for the hero-to-zones region, 2145 x 695. The other zoom
+regions differ only in the height they take, because every one of them is width
+limited in every crop.
 
 ### Training reel stand-ins
 
@@ -916,6 +1039,14 @@ badly chosen crop. `ZoomShot` sets `maxWidth: none` for exactly this reason.
 | 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` (final build) | 1350 frames, 1920x1080, 30fps, 45.0s | 66.1s |
 | 2026-09-04 | deliver | five MP4s, five SRTs, two thumbnails, six stills, the 45s mix, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 42.0s |
 | 2026-09-04 | **Training full rebuild** | **everything in the final build rows above** | **bundle + 15s mix + five renders + delivery** | **231.9s (3m 52s)** |
+| 2026-09-04 | stills | `out/_laptop/before` and `out/_laptop/after` | 17 stills each, six crops of both reels | 15.4s per set |
+| 2026-09-04 | Training*Debug | `out/_laptop/debug` | 8 safe zone stills, six crops | 7.1s |
+| 2026-09-04 | TrainingVertical | `out/render-training-vertical-15s.mp4` (laptop frame) | 450 frames, 1080x1920, 30fps, 15.0s | 21.3s |
+| 2026-09-04 | TrainingFeed | `out/render-training-feed-15s.mp4` (laptop frame) | 450 frames, 1080x1350, 30fps, 15.0s | 18.9s |
+| 2026-09-04 | TrainingSquare | `out/render-training-square-15s.mp4` (laptop frame) | 450 frames, 1080x1080, 30fps, 15.0s | 18.1s |
+| 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` (laptop frame) | 1350 frames, 1080x1350, 30fps, 45.0s | 53.0s |
+| 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` (laptop frame) | 1350 frames, 1920x1080, 30fps, 45.0s | 61.7s |
+| 2026-09-04 | sheet | `out/final-training/vertical-sheet.png` (laptop frame) | 4x3 tile of 12 frames, ffmpeg | under 1s |
 
 Section 14 item 9 for the training reel: **231.9 seconds**, which is
 2.4 + 2.6 + 184.9 + 42.0. It is the sum of the nine "final build" rows above and
@@ -938,7 +1069,7 @@ loudness pass described under Audio would be worth nothing if it were not.
 The 26.1 second grey render row above sits between the web reel's Phase 4 and
 final numbers. Every capture and plate landed while this was being built, so the
 whole cut is a real composite: two plate shots, three tour plate composites, and
-two zoomed browser shots. There is no audio on it and no delivery step, which is
+two zoomed laptop shots. There is no audio on it and no delivery step, which is
 the rest of the web reel's 20.3.
 
 ### The final training timeline
@@ -965,18 +1096,18 @@ safe area, in both reels. If the hook shot is ever changed to something that
 needs the band lower, that field is the way to do it and not a hardcoded
 position in `Hook.tsx`.
 
-**Beat 1 is the walk-through in a browser window**, pushed in on the tab row and
+**Beat 1 is the walk-through on a laptop**, pushed in on the tab row and
 the four zone cards, and it starts on source frame 33 rather than 0. The clip is
 named for what it does: it opens on the hero screen and scrolls to the zones
 over source 20 to 32. Starting at 0 put the hero screen behind a zoom region
 measured on the zones, and frame 100 of the cut showed learning objectives
-through a window cropped for a tab row. The scroll is not lost, because the
+through a screen cropped for a tab row. The scroll is not lost, because the
 plate shot runs at the same rate and `ProjectShowcase` backs its capture up by
 `round(24 * rate)` frames, so the plate plays source 19 to 33 and hands over on
 the exact frame the scroll finishes. Section 6b's "cut on the scroll", for free.
 
 **Beat 2 is the same course on a phone**, so the two safety beats are two
-surfaces rather than the same browser window twice. It is the stop-or-go
+surfaces rather than the same laptop twice. It is the stop-or-go
 decision: the call counter, the prompt, the STOP and GO buttons and the feedback
 paragraph under them.
 
@@ -991,8 +1122,8 @@ because what is behind the band is page it has already scrolled past.
 
 So the beat declares a zoom region, 780 by 1040 with the decision centred in it,
 and `ProjectShowcase` now picks the stacked arrangement for any shot wider than
-the canvas rather than only for a browser window. The rule already existed and
-already said the right thing about browser windows; it was written as
+the canvas rather than only for a laptop. The rule already existed and
+already said the right thing about laptop screens; it was written as
 `cleanFrame === "browser"` and is now written as the aspect test it always
 meant. Nothing in the web reel changes: its clean shots are 780x1688 mobile
 captures at 0.462, narrower than the vertical canvas at 0.5625, so they still

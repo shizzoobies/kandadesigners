@@ -43,9 +43,9 @@ import type { FeaturedBeat, ReelContent, TourCut, ZoomRegion } from "./types";
  * Measured off training-safety-hazard-hunt-desktop. The illustration, the part
  * of the screen the learner clicks, sits at 435,546 to 1485,1134 in capture
  * pixels. Rounded to a 16:9 rectangle around it, which is close enough to a
- * browser window's own shape that the window does not read as letterboxed, and
- * at a browser width of about 970 canvas pixels it renders at very nearly one
- * to one, so nothing is softened.
+ * laptop screen's own shape that the screen does not read as letterboxed, and
+ * at a screen width of about 885 canvas pixels it renders at very nearly one to
+ * one, so nothing is softened.
  */
 const ZOOM_SAFETY_HAZARD_HUNT: ZoomRegion = { x: 435, y: 540, w: 1055, h: 600 };
 
@@ -93,11 +93,11 @@ const ZOOM_SAFETY_STOP_OR_GO_MOBILE: ZoomRegion = {
  *
  * The width is not negotiable and it is what fixes the scale: the two card
  * columns and the sentence above them run the full content column, so cropping
- * narrower cuts words in half. At a browser width of about 967 canvas pixels
- * that is 0.45, which puts the card body type near nine canvas pixels against
- * six and a half for the same shot at full frame. Trimming the dead height is
- * what the crop is really for: without it the window is half empty card and the
- * beat looks like it is showing a page rather than a lesson.
+ * narrower cuts words in half. At a laptop screen width of about 885 canvas
+ * pixels that is 0.41, which puts the card body type near eight canvas pixels
+ * against six and a half for the same shot at full frame. Trimming the dead
+ * height is what the crop is really for: without it the screen is half empty
+ * card and the beat looks like it is showing a page rather than a lesson.
  *
  * Checked against the second tab as well, which the shot cuts to on source
  * frame 60: its content ends at 799, comfortably inside the same box.
@@ -149,10 +149,10 @@ const FEATURED: FeaturedBeat[] = [
     plateId: "t-laptop-shoulder",
     plateCaptureId: "training-safety-hero-to-zones-desktop",
     cleanCaptureId: "training-safety-hero-to-zones-desktop",
-    // A 16:10 module screen in a browser window, cropped to the tab row and the
-    // four zone cards. The spec allows this beat either way; the tabs and the
-    // cards do read better pushed in.
-    cleanFrame: "browser",
+    // A 16:10 module screen on a laptop, cropped to the tab row and the four
+    // zone cards. The spec allows this beat either way; the tabs and the cards
+    // do read better pushed in.
+    cleanFrame: "laptop",
     zoom: ZOOM_SAFETY_HERO_TO_ZONES,
     // Source 33 to 100 across 108 output frames, which is rate 0.629.
     //
@@ -199,8 +199,8 @@ const FEATURED: FeaturedBeat[] = [
     plateId: "t-phone-hands",
     plateCaptureId: "training-safety-hierarchy-sorter-mobile",
     // The phone, deliberately, so the two safety beats are two surfaces rather
-    // than the same browser window twice: a laptop walk-through, then the same
-    // course being answered on a phone. Pushed in on the decision itself, see
+    // than the same laptop twice: a laptop walk-through, then the same course
+    // being answered on a phone. Pushed in on the decision itself, see
     // ZOOM_SAFETY_STOP_OR_GO_MOBILE for why the region is shaped the way it is.
     cleanCaptureId: "training-safety-stop-or-go-mobile",
     cleanFrame: "phone",
@@ -237,7 +237,7 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     plateId: "t-laptop-shoulder",
     plateCaptureId: "training-safety-hero-to-zones-desktop",
     cleanCaptureId: "training-safety-hero-to-zones-desktop",
-    cleanFrame: "browser",
+    cleanFrame: "laptop",
     zoom: ZOOM_SAFETY_HERO_TO_ZONES,
     // Same window as the 15 second cut, over 186 output frames instead of 116,
     // so the rate has to come down to land the last frame on the same source
@@ -256,7 +256,7 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     plateId: "t-phone-hands",
     plateCaptureId: "training-safety-hierarchy-sorter-mobile",
     cleanCaptureId: "training-safety-hazard-hunt-desktop",
-    cleanFrame: "browser",
+    cleanFrame: "laptop",
     zoom: ZOOM_SAFETY_HAZARD_HUNT,
     // Four hotspot clicks, on source frames 22, 57, 92 and 132, with the page
     // still between them. 185 * 0.716 is 132.5, so the shot plays all four and
@@ -282,7 +282,7 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     plateId: "t-laptop-two",
     plateCaptureId: "training-finance-pnl-simulator-desktop",
     cleanCaptureId: "training-finance-pnl-simulator-desktop",
-    cleanFrame: "browser",
+    cleanFrame: "laptop",
     zoom: ZOOM_FINANCE_SLIDERS,
     // The only training clip with continuous motion in it: four slider drags,
     // over source 27 to 40, 67 to 80, 107 to 120 and 147 to 160, each of them
@@ -301,7 +301,7 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     plateId: "t-desktop-wide",
     plateCaptureId: "training-rfi-scenario-branch-desktop",
     cleanCaptureId: "training-rfi-scenario-branch-desktop",
-    cleanFrame: "browser",
+    cleanFrame: "laptop",
     // Pushed in on the two option cards and the feedback panel. At full frame
     // this beat is a wall of blueprint paper with two paragraphs on it, and the
     // claim underneath says the module scores the decision: the decision is the
