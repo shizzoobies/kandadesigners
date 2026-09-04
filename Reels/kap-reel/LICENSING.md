@@ -678,13 +678,26 @@ much limiting.
 | Schibsted Grotesk | Google Fonts, self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
 | Atkinson Hyperlegible Next | Braille Institute, self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
 | Fraunces | Google Fonts, self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
+| "KA Playfair" regular 500 (`assets/brand/fonts/ka-playfair-500.woff2`) | Playfair Display, Google Fonts, subset and self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
+| "KA Playfair" italic 600 (`assets/brand/fonts/ka-playfair-italic-600.woff2`) | Playfair Display, Google Fonts, subset and self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
+| "KA Poppins" regular 500 (`assets/brand/fonts/ka-poppins-500.woff2`) | Poppins, Google Fonts, subset and self-hosted on ka-performancefl.com | SIL OFL 1.1 | Permitted |
 | Lenia Mono | Not established. Not sourced for this deliverable. | Not established. Not exercised here, no glyph is rendered into any frame. | Not applicable, see below |
 
-Checked at Phase 6 delivery: `src/lib/fonts.ts` registers exactly two families,
-Schibsted Grotesk and Atkinson Hyperlegible Next, both OFL and both cleared for
-embedding. Nothing in `src/scenes` or `src/components` asks for any other
-family, so Fraunces and Lenia Mono sit in `config/brand.json` as a record of
-the site's type system and neither one ships inside the video.
+The three subset faces arrived on 2026-09-04 with the drawn end card. They are
+copies of the live site's own subsets, cut to the glyphs K A & P E R F O M N C,
+which is every character `src/components/LogoDraw.tsx` draws and nothing else,
+so all three files together are 6KB. Subsetting is explicitly allowed by the
+OFL, and the family names are the site's own reserved-free names rather than
+"Playfair Display" or "Poppins", which is what the OFL asks of a modified copy.
+The originals are Google Fonts releases under SIL OFL 1.1, which permits
+embedding in a video.
+
+Checked at Phase 6 delivery and re-checked on 2026-09-04: `src/lib/fonts.ts`
+registers four families, Schibsted Grotesk, Atkinson Hyperlegible Next, "KA
+Playfair" in two styles and "KA Poppins", all of them OFL and all of them
+cleared for embedding. Nothing in `src/scenes` or `src/components` asks for any
+other family, so Fraunces and Lenia Mono sit in `config/brand.json` as a record
+of the site's type system and neither one ships inside the video.
 
 That closes the Lenia Mono question for this deliverable: an unknown license
 cannot reach the reel, because no glyph of it is rendered into a frame. It is

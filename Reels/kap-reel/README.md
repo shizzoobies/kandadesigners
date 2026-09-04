@@ -82,6 +82,20 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | deliver web | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel web --variant a` | 40.5s |
 | 2026-09-04 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 38.6s |
 | 2026-09-04 | **Both reels re-delivered** | **the canvas centring fix, everything above** | **bundle + ten renders + two deliveries** | **421.1s (7m 1s)** |
+| 2026-09-04 | bundle | `out/bundle` (drawn end card rebuild) | rspack bundle, public dir linked not copied | 2.3s |
+| 2026-09-04 | ReelVertical | `out/render-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 20.6s |
+| 2026-09-04 | ReelFeed | `out/render-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 19.3s |
+| 2026-09-04 | ReelSquare | `out/render-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s | 20.7s |
+| 2026-09-04 | ReelLinkedIn | `out/render-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s | 38.6s |
+| 2026-09-04 | ReelLinkedInLandscape | `out/render-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 50.1s |
+| 2026-09-04 | TrainingVertical | `out/render-training-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 22.0s |
+| 2026-09-04 | TrainingFeed | `out/render-training-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 20.7s |
+| 2026-09-04 | TrainingSquare | `out/render-training-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s | 19.6s |
+| 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s | 53.5s |
+| 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 62.4s |
+| 2026-09-04 | deliver web | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel web --variant a` | 40.7s |
+| 2026-09-04 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 39.1s |
+| 2026-09-04 | **Both reels re-delivered, drawn end card** | **the 2026-09-04 end card and the 15 second re-time** | **bundle + ten renders + two deliveries** | **409.6s (6m 50s)** |
 
 Section 14 item 9, the full rebuild number: **190.7 seconds**, which is
 2.1 + 2.8 + 143.7 + 42.1. It is the sum of the seven "final build" rows above
@@ -91,11 +105,20 @@ measurement, or any ElevenLabs generation, none of which a rebuild repeats, and
 it does not include the 50.8 seconds the twenty four Gate 7 debug stills take,
 which is a review step rather than part of the build.
 
-The 2026-09-04 number, **421.1 seconds**, is the same measurement for both reels
-at once after the canvas centring fix: one bundle, ten renders and two
+The first 2026-09-04 number, **421.1 seconds**, is the same measurement for both
+reels at once after the canvas centring fix: one bundle, ten renders and two
 deliveries. It does not include the music mixes, which were already on disk and
 did not change, or the 36 seconds the 56 alignment stills take, which is a
 review step rather than part of the build.
+
+The second, **409.6 seconds**, is the same measurement again after the drawn end
+card and the 15 second re-time: one bundle at 2.3s, ten renders totalling 327.5s
+and two deliveries at 40.7s and 39.1s. Again no music mixes, which did not
+change, and it does not include the ten CTA safe zone debug stills or the six
+frame sheets, both review steps. It is eleven seconds faster than the run before
+it, which is run to run noise rather than the end card being cheaper to draw
+than to composite: the draw is vector work on a flat canvas and costs less per
+frame than the webp did, but only 78 frames of 450 are the end card.
 
 Two things make this much faster than the Phase 4 numbers suggest. Rendering
 from a prebuilt bundle rather than from `src/index.ts` skips the public dir copy
@@ -182,7 +205,9 @@ measurements.
 
 **The CTA lockup** is capped against the safe area in both axes, not just by
 type scale. At 1.778 the lockup filled the landscape safe area top to bottom and
-crushed the url and phone underneath it.
+crushed the url and phone underneath it. Since 2026-09-04 the lockup draws
+itself rather than being an image, but the box it draws inside is sized by the
+same three caps. See "The drawn end card".
 
 The device frame and the site capture are allowed to run into a reserved zone,
 because a platform overlay covering part of a screenshot costs nothing. Text and
@@ -195,52 +220,128 @@ plus a four cut tour meant eight hard cuts in fifteen seconds and nothing held
 long enough to read. The fix keeps the fifteen seconds and spends them on fewer
 things. The beat map lives in `src/lib/timing.ts`.
 
+Re-timed again on 2026-09-04 for the drawn end card. See "The drawn end card"
+below for what that is and why it needs 78 frames.
+
 | Frames | Length | Beat |
 |---|---|---|
 | 0-54 | 1.8s | Hook. Both halves of the line slam on frame 0 and hold to the cut. |
-| 54-194 | 4.7s | Fore Motion Golf. Plate 54-78, clean capture 78-194. |
-| 194-334 | 4.7s | Project Makeover. Plate 194-218, clean capture 218-334. |
-| 334-388 | 1.8s | Surfaces tour. Three cuts of 18 frames. |
-| 388-450 | 2.1s | Call to action. |
+| 54-186 | 4.4s | Fore Motion Golf. Plate 54-78, clean capture 78-186. |
+| 186-318 | 4.4s | Project Makeover. Plate 186-210, clean capture 210-318. |
+| 318-372 | 1.8s | Surfaces tour. Three cuts of 18 frames. |
+| 372-450 | 2.6s | Call to action. The lockup draws itself. |
 
-**What changed, and why.** The hook went from 36 frames to 54. The project
-beats went from 96 to 140, all of the extra going to the clean capture, so the
-claim holds 104 frames instead of 60. The tour went from four cuts of 15 to
-three of 18. Southern Legacy Contractors left the featured list in this cut and
-took the third tour slot instead, so its site and its "No page builder" line are
-both still on screen. The 45 second cut was not re-paced and is unchanged.
+**What changed on 2026-09-03, and why.** The hook went from 36 frames to 54.
+The project beats went from 96 to 140, all of the extra going to the clean
+capture. The tour went from four cuts of 15 to three of 18. Southern Legacy
+Contractors left the featured list in this cut and took the third tour slot
+instead, so its site and its "No page builder" line are both still on screen.
 
-The CTA beat lost four frames, from 66 to 62, so it was checked against Section
-6's 36 frame minimum hold: the phone is the last thing to arrive at relative
-frame 22, which leaves 40 frames of finished card. `LOGO_SETTLE_FRAMES`,
-`URL_IN` and `PHONE_IN` did not have to move.
+**What changed on 2026-09-04, and why.** The end card went from 62 frames to
+78, and the sixteen frames came out of the two project beats, eight from each,
+so they are 132 frames rather than 140 and the claim holds 96 frames rather than
+104. The hook was left alone, because the hook is the beat the 2026-09-03
+re-pace existed to fix, and the tour was left alone at three cuts of 18, because
+18 is already under the Section 7 minimum and taking anything off it would make
+that worse. The tour simply starts sixteen frames earlier. The 45 second cut has
+never been re-paced and its beat map is still the original one.
 
-### Keeping the clean capture moving for 116 frames
+### Keeping the clean capture moving for 108 frames
 
 Same problem as the LinkedIn cut and a gentler answer. The captures are 180
 source frames of an easeInOutCubic scroll, so both ends are nearly stationary.
 Rate 1 from source frame 54, which is what the old 72 frame shot used, would run
-to source 170 across 116 output frames, where the ease derivative is about one
-percent of its peak and the page has stopped.
+deep into the ease-out tail across a shot this long, where the ease derivative
+is a few percent of its peak and the page has stopped.
 
-The shot plays at rate 0.8 from source frame 40, which consumes 92.8 source
-frames and ends on source 132.8. Normalised that is t 0.22 to 0.74, straddling
-the midpoint of the ease: it opens at about 20 percent of peak speed, runs
-through the peak, and still carries about 26 percent at the cut. The plate shot
-runs at the same rate from source frame 21, so it arrives at source 40 on the
-frame the clean capture takes over and the scroll velocity matches across the
-cut.
+The shot plays at rate 0.8 from source frame 40, which across 108 output frames
+consumes 85.6 source frames and ends on source 125. Normalised that is t 0.22 to
+0.70, straddling the midpoint of the ease: it opens at about 20 percent of peak
+speed, runs through the peak, and still carries about 36 percent at the cut. The
+plate shot runs at the same rate from source frame 21, so it arrives at source
+40 on the frame the clean capture takes over and the scroll velocity matches
+across the cut.
 
-Verified by measuring PSNR between consecutive frames at the end of each clean
-shot in `out/render-vertical-15s.mp4`. Frames 191 to 192 differ at 16.6 dB, 192
-to 193 at 16.7, 331 to 332 at 19.2 and 332 to 333 at 19.0. Two static frames of
-the CTA card, 440 to 441, measure 78.1 dB for comparison, so the metric is
-reading real motion and not encoder noise. Everything is far under the 40 dB
-line that would mean a frozen shot.
+The 2026-09-04 re-time did not move either number. Eight fewer output frames at
+the same trim and the same rate simply stop the shot seven source frames
+earlier, which is further from the tail and therefore faster at the cut, not
+slower.
+
+Verified twice. On the captures themselves, the last two source frames of the
+shot differ at 13.3 dB for Fore Motion Golf and 15.9 dB for Project Makeover. On
+the delivered picture, PSNR between consecutive frames at the end of each clean
+shot in `out/render-vertical-15s.mp4` reads 15.6 dB at frames 184 to 185 and
+18.7 dB at 316 to 317, which are the last pair of each beat. Two static frames
+of the finished CTA card, 440 to 441, measure 91.3 dB for comparison, so the
+metric is reading real motion and not encoder noise. Both shots are far under
+the 40 dB line that would mean a frozen shot.
 
 At rate 0.8 the source index advances on four output frames in five, so the
 scroll steps at about 24Hz rather than 30. That is a much smaller penalty than
-the 18Hz the LinkedIn cut pays at rate 0.6.
+the 18Hz the LinkedIn cut pays at rate 0.6. It also means some consecutive
+output pairs carry the same source frame: 183 to 184 measures 56.5 dB and 315 to
+316 measures 63.0 dB for that reason, which is the documented cost of any rate
+under 1 and not a frozen shot. The pair that decides whether the cut lands on a
+photograph is the last one, and those are the two above.
+
+## The drawn end card
+
+Owner decision 2026-09-04: the K&A lockup on the end card of both reels and both
+cuts draws itself instead of fading in as a finished picture.
+
+`src/components/LogoDraw.tsx` is the live site's intro animation ported frame
+for frame off the same `render(T)` function, driven by Remotion's frame rather
+than by a GSAP clock. A mouse drags the browser frame into being, the three
+window dots pop as the pointer passes them, K and A land, the ampersand scales
+in, and only then does PERFORMANCE type on underneath. The authored piece is
+seven seconds and compresses uniformly: `durationFrames` is how many frames that
+seven seconds is squeezed into. The gate at `out/gate-logo` established where
+that stops working. At 36 frames it strobes, 72 is the floor at which it still
+reads as a sweep, and 144 is comfortable.
+
+| | 15 second cut | 45 second cut |
+|---|---|---|
+| Beat | 372-450, 78 frames | 1226-1350, 124 frames |
+| Draw | 66 frames | 84 frames |
+| Wordmark starts, T 5.2 | relative 49 | relative 62 |
+| Copy arrives | relative 50, absolute 422 | relative 64, absolute 1290 |
+| Last movement, the final glyph | relative 60 | relative 77 |
+| Frozen finished card | relative 61 to 78, 17 frames | relative 78 to 124, 46 frames |
+
+The 15 second cut breaks `CTA_HOLD_MIN_FRAMES`, and the owner took that trade
+with the number in front of them. Section 6 asks for 36 frames of finished card
+so a screenshot of the end frame reads. This card gives 22 frames from the
+moment every element is on screen, 17 of them completely static. The argument
+for allowing it is that the minimum was written for a card that cuts in: a
+viewer who has watched a mark assemble for two seconds has already read it by
+the time it finishes, where a viewer shown a finished card needs the whole hold.
+The 45 second cut clears the minimum without a note.
+
+Everything else about the card is unchanged. It is centred on the canvas by
+`centeredBox()`, the logo box is the 720 at 1080 width the static lockup used
+and is still capped against the safe area in both axes, and the closing line,
+the url and the phone are still the same three lines in the same order.
+
+Two things did change underneath. The logo box's aspect is now LogoDraw's
+authored stage, 1340 by 548 or 0.409, where `logo-lockup.webp` was 800 by 303 or
+0.379, so in landscape, where the height cap is the one that binds, the box
+lands at the same height and takes the difference out of its width: 735 pixels
+rather than 793. And the phone no longer trails the url by eight frames, because
+the draw is the card's stagger now and a third arrival after it would have eaten
+most of a 22 frame hold.
+
+The drawn artwork inside that 1340 by 548 stage measures 1243 by 467 units,
+which is 0.376 and therefore the same shape the webp always was, sitting very
+nearly on the stage's own centre: 44 units of padding left against 52 right, 42
+above against 38 below. That is why the column needs no manual re-balance to
+stay vertically centred in the safe area. It centres the box, and the box
+centres the mark. The one visible consequence is that the mark reads about seven
+percent smaller than the webp did at the same box width, because the webp was
+cropped tight and the stage is not.
+
+The three subset faces the drawn lockup sets its letters in, "KA Playfair" in
+two styles and "KA Poppins", are registered in `src/lib/fonts.ts` and recorded
+in `LICENSING.md`.
 
 ## Centred copy
 
@@ -667,6 +768,15 @@ across the six. The 4:5 crop is centred on the safe area rather than on the
 canvas, so the reserved strips are what gets thrown away and every band survives
 intact.
 
+Five of the six moved on 2026-09-04 with the re-timed cut, keeping the visual
+moment rather than the frame number: 260 to 252 and 214 to 206 inside beats that
+shifted eight and sixteen frames, 344 to 328 and 380 to 364 for the tour, and
+430 to 440 for the CTA card, which now has to be sampled after the drawn
+lockup's last wordmark glyph lands at 432 rather than after a twelve frame
+settle. Frame 120 did not move, because the first project beat did not. Neither
+thumbnail moved: frame 75 is inside the first project's plate, which still runs
+54 to 78, and frame 387 is in the 45 second cut, which was not re-timed.
+
 ### The 45 second mix
 
 The 15 second mixes come from `scripts/audio.ts`. `deliver.ts` builds the 45
@@ -920,42 +1030,67 @@ source frame. All five trims are 0, because an interaction recording has no
 eased ramp to start inside and starting late would cut into an interaction only
 a few seconds long, except beat 1 of the 15 second cut for the reason above.
 
+The two 15 second rates were re-solved on 2026-09-04, when the drawn end card
+took each project beat from 140 frames to 132 and each clean shot from 116
+output frames to 108. Beat 1's rate had to come up to land its last output frame
+on source 100 again; beat 2 plays at rate 1, so its window simply ends eight
+frames earlier. The 45 second cut was not re-timed and none of its four rates
+moved.
+
 | Cut | Beat | Clip | Trim | Rate | Last source frame |
 |---|---|---|---|---|---|
-| 15s | 1 | hero-to-zones | 33 | 0.587 | 100, the second tab click |
-| 15s | 2 | stop-or-go mobile | 0 | 1 | 115, the next prompt arriving |
+| 15s | 1 | hero-to-zones | 33 | 0.629 | 100, the second tab click |
+| 15s | 2 | stop-or-go mobile | 0 | 1 | 107, mid answer |
 | 45s | 1 | hero-to-zones | 0 | 0.543 | 100, the second tab click |
 | 45s | 2 | hazard-hunt desktop | 0 | 0.716 | 132, the sixth hazard found |
 | 45s | 3 | P&L simulator | 0 | 0.867 | 160, inside the fourth slider drag |
 | 45s | 4 | RFI branch | 0 | 0.489 | 90, option B marked correct |
+
+Beat 1's rate is solved rather than rounded. `33 + 107 * 0.629` is 100.3 and
+`33 + 106 * 0.629` is 99.7, so the last two output frames sit on source 99 and
+source 100, which is the tab click itself. Anything from 0.627 to 0.632 lands
+that pair and 0.629 is the middle of the interval, so no rounding inside the
+player can push either frame onto the wrong source frame.
 
 Verified by measuring PSNR between the last two frames of each clean shot in the
 delivered renders, the same test the web reel used:
 
 | Shot | Frames | PSNR |
 |---|---|---|
-| 15s beat 1 | 192 to 193 | 22.7 dB |
-| 15s beat 2 | 332 to 333 | 33.2 dB |
+| 15s beat 1 | 184 to 185 | 22.7 dB |
+| 15s beat 2 | 316 to 317 | 25.1 dB |
 | 45s beat 1 | 364 to 365 | 20.7 dB |
 | 45s beat 2 | 574 to 575 | 18.9 dB |
 | 45s beat 3 | 784 to 785 | 35.9 dB |
 | 45s beat 4 | 994 to 995 | 25.3 dB |
-| 15s CTA card, static control | 440 to 441 | 80.1 dB |
-| 45s CTA card, static control | 1340 to 1341 | 88.5 dB |
+| 15s CTA card, static control | 440 to 441 | 87.6 dB |
+| 45s CTA card, static control | 1340 to 1341 | 79.2 dB |
 
 All six shots are far under the 40 dB line that would mean a frozen shot, and
-the two static controls at 80 and 88 dB show the metric is reading real motion
-rather than encoder noise.
+the two static controls at 88 and 79 dB show the metric is reading real motion
+rather than encoder noise. The same pairs measured on the captures themselves,
+before any encode and through each beat's own zoom region, read 13.3 dB for
+hero-to-zones at source 99 to 100 and 20.4 dB for stop-or-go at source 106 to
+107.
 
 One number worth recording because it looks like a failure and is not. Frames
-191 to 192 of the 15 second cut measure 47.3 dB, over the line, and they are
-consecutive frames inside beat 1. At rate 0.587 the source index advances on
-roughly three output frames in five, so some consecutive output pairs carry the
+183 to 184 of the 15 second cut measure 46.2 dB, over the line, and they are
+consecutive frames inside beat 1. At rate 0.629 the source index advances on
+roughly two output frames in three, so some consecutive output pairs carry the
 same source frame and differ only by the shot's three percent push in. That is
 the documented cost of any rate under 1, the same cost the web reel's LinkedIn
-cut pays at 0.6. The test that matters is the last pair before the cut, because
-a shot that is still moving when it is cut cannot read as frozen, and every one
-of those is under 36 dB.
+cut pays at 0.6 and the same one its 15 second cut pays at 0.8, where frames 183
+to 184 measure 56.5 dB for exactly the same reason. The test that matters is the
+last pair before the cut, because a shot that is still moving when it is cut
+cannot read as frozen, and every one of those is under 36 dB.
+
+Also worth recording: the stop-or-go clip is not continuous motion. Measured
+across all 107 consecutive pairs of its 108 frame window on its zoom region, 32
+of them sit above 40 dB. Those are the beats where a learner is reading a prompt
+before answering, which is a person taking a moment rather than a shot that has
+stopped, and the shot's own three percent push in is running under all of them.
+What the Section 6b test asks is that the cut does not land on a photograph, and
+that is about the last pair, which is 20.4 dB.
 
 ### Delivering the training reel
 

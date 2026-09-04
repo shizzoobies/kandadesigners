@@ -22,10 +22,10 @@ export type FrameRange = {
  * - The hook holds 54 frames instead of 36. The line still slams on frame 0,
  *   so Section 6's "first frame already moving" is intact, but 1.8s is enough
  *   to read five words rather than daring the viewer to.
- * - Two featured projects instead of three, at 140 frames each instead of 96.
- *   The plate stays at the Section 6b cap of 24 frames, so the whole extra 44
+ * - Two featured projects instead of three, at 132 frames each instead of 96.
+ *   The plate stays at the Section 6b cap of 24 frames, so the whole extra 36
  *   frames goes to the clean capture, which is the shot that has to be
- *   readable. The claim now holds 104 frames instead of 60.
+ *   readable. The claim now holds 96 frames instead of 60.
  * - Three tour cuts of 18 frames instead of four of 15. Still under the
  *   Section 7 minimum, still the deliberate exception Section 6 wrote in, but
  *   three cuts of 18 read as three glances rather than four flickers.
@@ -33,46 +33,64 @@ export type FrameRange = {
  *   keeps its site on screen as the third tour cut, and it is unchanged in the
  *   45 second cut, which still features all four projects.
  *
- * Total is still 450 frames: 54 + 140 + 140 + 54 + 62.
+ * Re-timed again on 2026-09-04, when the drawn K&A lockup replaced the static
+ * one on the end card. The draw is a choreography rather than a settle: the
+ * browser frame is drawn, the letters land, the ampersand pops, and only then
+ * does the wordmark type on. Compressed below about 66 frames it strobes, so
+ * the end card needs 78 frames rather than 62. Owner decision 2026-09-04: the
+ * sixteen frames come out of the two project beats, eight from each. The hook
+ * keeps its 54 frames, because the hook is the beat the previous re-pace was
+ * fixing, and the tour keeps its three cuts of 18, because 18 is already under
+ * the Section 7 minimum and taking anything off it would make that worse. The
+ * tour simply starts sixteen frames earlier, at 318.
+ *
+ * Total is still 450 frames: 54 + 132 + 132 + 54 + 78.
  */
 export const HOOK: FrameRange = { start: 0, end: 54 };
-export const PROJECT_1: FrameRange = { start: 54, end: 194 };
-export const PROJECT_2: FrameRange = { start: 194, end: 334 };
-export const SURFACES_TOUR: FrameRange = { start: 334, end: 388 };
-export const CALL_TO_ACTION: FrameRange = { start: 388, end: 450 };
+export const PROJECT_1: FrameRange = { start: 54, end: 186 };
+export const PROJECT_2: FrameRange = { start: 186, end: 318 };
+export const SURFACES_TOUR: FrameRange = { start: 318, end: 372 };
+export const CALL_TO_ACTION: FrameRange = { start: 372, end: 450 };
 
 export const PROJECT_BEATS: FrameRange[] = [PROJECT_1, PROJECT_2];
 
 /**
- * Shot structure inside each 140-frame project beat, from Section 6b.
+ * Shot structure inside each 132-frame project beat, from Section 6b.
  * Frames are relative to the start of the project beat.
  */
 export const PROJECT_BEAT_SHOTS = {
   /** Human context plate. Real person, real device, screen not expected to be readable. */
   plate: { start: 0, end: 24 } as FrameRange,
   /** Clean capture, straight on, site scrolling. The claim chip appears here. */
-  cleanCapture: { start: 24, end: 140 } as FrameRange,
+  cleanCapture: { start: 24, end: 132 } as FrameRange,
 };
 
 /**
- * How the clean capture is played across the 116 frame shot of a re-paced
- * project beat.
+ * How the clean capture is played across the 108 frame shot of a project beat.
  *
  * The captures are 180 source frames of an easeInOutCubic scroll over indices
  * 0 to 179, so both ends are nearly stationary and only the middle carries real
  * velocity. The old 72 frame shot played rate 1 from source frame 54 and ended
  * on source 126, comfortably inside the moving part. Keeping rate 1 from 54
- * across 116 frames would run to source 170, which is deep in the ease-out
- * tail: the derivative there is about one percent of its peak, so the page has
- * visibly stopped before the cut.
+ * across a shot this long would run deep into the ease-out tail, where the
+ * derivative is a few percent of its peak and the page has visibly stopped
+ * before the cut.
  *
- * Rate 0.8 from source frame 40 consumes 92.8 source frames and puts the last
- * output frame on source 132.8. Normalised that is t 0.22 to 0.74, which
+ * Rate 0.8 from source frame 40 consumes 85.6 source frames and puts the last
+ * output frame on source 125. Normalised that is t 0.22 to 0.70, which
  * straddles the midpoint of the ease, so the shot opens at about 20 percent of
  * the ease's peak speed, runs through the peak in the middle, and still carries
- * about 26 percent of peak at the cut. In pixels that is roughly 6 source
- * pixels per source frame at the open, near 31 in the middle and about 8 at the
- * cut. Nothing freezes and nothing loops.
+ * about 36 percent of peak at the cut. In pixels that is roughly 6 source
+ * pixels per source frame at the open, near 31 in the middle and about 11 at
+ * the cut. Nothing freezes and nothing loops.
+ *
+ * The 2026-09-04 end card re-time took eight frames off each project beat, so
+ * this window simply got shorter at the same trim and the same rate: the shot
+ * now stops at source 125 rather than 132, which is further from the tail and
+ * therefore faster at the cut, not slower. Measured with ffmpeg psnr on the
+ * captures themselves, the last two source frames of the shot differ at 13.3 dB
+ * for Fore Motion Golf and 15.9 dB for Project Makeover, both far under the
+ * 40 dB line that would mean a frozen shot.
  *
  * The plate shot runs at the same rate, so ProjectShowcase starts its capture
  * at 40 minus round(24 * 0.8) = source frame 21 and it arrives at source 40 on
@@ -114,7 +132,17 @@ export const SURFACES_TOUR_CUTS: FrameRange[] = [
   { start: 36, end: 54 }, // No page builder
 ];
 
-/** Minimum frames the finished CTA card must hold so a screenshot is readable. */
+/**
+ * Minimum frames the finished CTA card must hold so a screenshot is readable.
+ *
+ * Owner decision 2026-09-04: the 15 second cut is allowed to break this. The
+ * drawn lockup needs 66 frames not to strobe and the contact block arrives at
+ * relative frame 50, which leaves 22 frames of finished card in a 78 frame
+ * beat rather than 36. The owner took that trade with the number in front of
+ * them: a 0.7 second hold on a card the viewer has been watching assemble for
+ * two seconds reads differently from a 0.7 second hold on a card that cut in.
+ * The 45 second cut still clears the minimum with 60 frames.
+ */
 export const CTA_HOLD_MIN_FRAMES = 36;
 
 // ---------------------------------------------------------------------------

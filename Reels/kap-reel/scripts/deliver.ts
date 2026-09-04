@@ -798,28 +798,39 @@ async function thumbnail(
  * cleared sites, one context plate and the CTA card. The two featured projects
  * are sampled well inside their clean captures with the claim up; the two tour
  * frames are sampled mid cut.
+ *
+ * Re-read again on 2026-09-04, when the drawn end card moved every beat after
+ * the first project. Each still keeps the visual moment it had rather than the
+ * frame number it had: the two that sat inside beats that only shifted moved by
+ * the same sixteen or eight frames, and the CTA still moved to sit inside the
+ * finished card rather than during the draw.
  */
 type CarouselFrame = { frame: number; slug: string; note: string };
 
 const CAROUSEL_FRAMES: Record<ReelKey, CarouselFrame[]> = {
   web: [
-    // PROJECT_1 54 to 194, clean capture from 78, claim in at 90.
+    // PROJECT_1 54 to 186, clean capture from 78, claim in at 90. The beat did
+    // not move, so neither did this.
     { frame: 120, slug: "1-fore-motion-golf", note: "clean capture, claim on screen" },
-    // PROJECT_2 194 to 334, clean capture from 218, claim in at 230.
-    { frame: 260, slug: "2-project-makeover", note: "clean capture, claim on screen" },
-    // SURFACES_TOUR cuts at 334, 352 and 370.
-    { frame: 344, slug: "3-surfaces-booking", note: "tour cut, Booking, MBS Medicine" },
+    // PROJECT_2 186 to 318, clean capture from 210, claim in at 222. Was 260 in
+    // a beat that started at 194, so the same relative frame 66 is now 252.
+    { frame: 252, slug: "2-project-makeover", note: "clean capture, claim on screen" },
+    // SURFACES_TOUR cuts at 318, 336 and 354. Ten frames into the first.
+    { frame: 328, slug: "3-surfaces-booking", note: "tour cut, Booking, MBS Medicine" },
     {
-      frame: 380,
+      // Ten frames into the third cut.
+      frame: 364,
       slug: "4-surfaces-no-page-builder",
       note: "tour cut, No page builder, Southern Legacy Contractors",
     },
-    // The Project Makeover plate runs 194 to 218 and the project name finishes
-    // typing on at 212, so 214 is inside that plate with the band not caught
-    // mid word.
-    { frame: 214, slug: "5-context-plate", note: "plate composite, phone in hands" },
-    // CALL_TO_ACTION 388 to 450, everything landed by 410.
-    { frame: 430, slug: "6-call-to-action", note: "CTA card, lockup and contact" },
+    // The Project Makeover plate now runs 186 to 210 and the project name
+    // finishes typing on at 204, so 206 is inside that plate with the band not
+    // caught mid word.
+    { frame: 206, slug: "5-context-plate", note: "plate composite, phone in hands" },
+    // CALL_TO_ACTION 372 to 450. The contact block lands at 422 and the drawn
+    // lockup's last wordmark glyph finishes at 432, so 440 is the finished
+    // card, frozen, with eight frames of margin either side of it.
+    { frame: 440, slug: "6-call-to-action", note: "CTA card, drawn lockup and contact" },
   ],
   // Same beat map, so the same frames are the right frames. Four distinct
   // surfaces across the six: the walk-through in a browser window, the same
@@ -827,15 +838,15 @@ const CAROUSEL_FRAMES: Record<ReelKey, CarouselFrame[]> = {
   // and the RFI microlearning on a desk.
   training: [
     { frame: 130, slug: "1-safety-walkthrough", note: "browser window, claim on screen" },
-    { frame: 270, slug: "2-safety-stop-or-go", note: "phone, stop or go, claim on screen" },
-    { frame: 344, slug: "3-surfaces-finance", note: "tour cut, Finance, P&L simulator" },
+    { frame: 262, slug: "2-safety-stop-or-go", note: "phone, stop or go, claim on screen" },
+    { frame: 328, slug: "3-surfaces-finance", note: "tour cut, Finance, P&L simulator" },
     {
-      frame: 380,
+      frame: 364,
       slug: "4-surfaces-scorm-xapi",
       note: "tour cut, SCORM and xAPI, walk-through card",
     },
-    { frame: 214, slug: "5-context-plate", note: "plate composite, phone in hands" },
-    { frame: 430, slug: "6-call-to-action", note: "CTA card, lockup and contact" },
+    { frame: 206, slug: "5-context-plate", note: "plate composite, phone in hands" },
+    { frame: 440, slug: "6-call-to-action", note: "CTA card, drawn lockup and contact" },
   ],
 };
 

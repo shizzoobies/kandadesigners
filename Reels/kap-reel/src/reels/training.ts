@@ -154,7 +154,7 @@ const FEATURED: FeaturedBeat[] = [
     // cards do read better pushed in.
     cleanFrame: "browser",
     zoom: ZOOM_SAFETY_HERO_TO_ZONES,
-    // Source 33 to 100 across 116 output frames, which is rate 0.587.
+    // Source 33 to 100 across 108 output frames, which is rate 0.629.
     //
     // The clip is named for what it does: it opens on the module's hero screen,
     // scrolls to the zones screen over source 20 to 32, then sits on the zones
@@ -165,16 +165,27 @@ const FEATURED: FeaturedBeat[] = [
     // So the shot starts at 33, the frame the scroll lands on. Starting at 0
     // was the first attempt and it put the hero screen behind a zoom region
     // measured on the zones: frame 100 of the cut showed learning objectives
-    // through a window cropped for a tab row. The 15 second cut has 3.9 seconds
+    // through a window cropped for a tab row. The 15 second cut has 3.6 seconds
     // for this beat and cannot spend the first second arriving.
     //
+    // Re-solved on 2026-09-04, when the drawn end card took eight frames off
+    // every project beat: the clean shot is 108 output frames rather than 116
+    // and the rate has to come up to land the last one on source 100 again.
+    // 33 + 107 * 0.629 is 100.3 and 33 + 106 * 0.629 is 99.7, so the last two
+    // output frames are source 99 and source 100, which is the tab click
+    // itself. Rate is solved rather than rounded: anything from 0.627 to 0.632
+    // lands that pair, and 0.629 sits in the middle of it, so no rounding in
+    // the player can push either frame onto the wrong source frame.
+    //
     // The scroll is not lost. The plate shot runs at the same rate and
-    // ProjectShowcase backs its capture up by round(24 * 0.587) frames, so the
-    // plate plays source 19 to 33 and hands over on the exact frame the scroll
+    // ProjectShowcase backs its capture up by round(24 * 0.629) frames, so the
+    // plate plays source 18 to 32 and hands over on the exact frame the scroll
     // finishes. That is Section 6b's "cut on the scroll", and here it is free.
     //
-    // The last output frame is source 100, the second tab click, at 21.6 dB.
-    cleanPlayback: { trimBefore: 33, scrollPlaybackRate: 0.587 },
+    // The last output frame is source 100, the second tab click. Measured on
+    // the zoom region with ffmpeg psnr, source 99 to 100 is 13.3 dB, against
+    // 34.4 dB for the still pair before it.
+    cleanPlayback: { trimBefore: 33, scrollPlaybackRate: 0.629 },
     name: "Spot it before it hurts someone",
     nameLines: 2,
     claim: "Keyboard and screen reader tested",
@@ -194,12 +205,19 @@ const FEATURED: FeaturedBeat[] = [
     cleanCaptureId: "training-safety-stop-or-go-mobile",
     cleanFrame: "phone",
     zoom: ZOOM_SAFETY_STOP_OR_GO_MOBILE,
-    // Rate 1 from source frame 0. This clip is answered calls one after
-    // another and never sits still for long: the worst consecutive frame pair
-    // anywhere in the 116 frame window measures 39 dB and most sit near 34.
-    // The last output frame is source 115, where the next prompt is sliding in
-    // at 34.85 dB, so nothing is frozen at the cut and nothing is stepped
-    // either, because the source plays at its own speed.
+    // Rate 1 from source frame 0, unchanged by the 2026-09-04 end card
+    // re-time: the shot is 108 output frames rather than 116, so the window
+    // simply ends eight frames earlier on source 107 rather than source 115.
+    //
+    // This clip is answered calls one after another, so the shot is a run of
+    // decisions with a beat of reading between each. Measured on the zoom
+    // region with ffmpeg psnr across all 107 consecutive pairs of the window,
+    // the moving pairs run from 16.8 dB up, and about a third of the window is
+    // a viewer reading a prompt, which is a person taking a moment rather than
+    // a shot that has stopped. What matters at the cut is the last pair, and
+    // source 106 to 107 measures 20.4 dB, well under the 40 dB line. Nothing is
+    // stepped either, because at rate 1 the source plays at its own speed, and
+    // ZoomShot's three percent push in is running under all of it.
     cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 1 },
     name: "Hazard recognition module",
     nameLines: 2,

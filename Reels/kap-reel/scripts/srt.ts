@@ -16,8 +16,12 @@
  * cue per distinct set of lines that is on screen. That keeps the file legal
  * and keeps the table one row per line.
  *
- * The 15 second table was rewritten on 2026-09-03 for the re-paced master. The
- * 45 second table is unchanged: that cut was not re-paced.
+ * The 15 second table was rewritten on 2026-09-03 for the re-paced master, and
+ * again on 2026-09-04 when the drawn lockup took the end card from 62 frames to
+ * 78 and moved both project beats and the tour eight and sixteen frames earlier.
+ * Both 45 second tables changed on 2026-09-04 too, in one place: the end card's
+ * three lines now arrive together at the beat's copy cue rather than staggered
+ * behind a logo settle.
  *
  *   npx tsx scripts/srt.ts            write all five
  *   npx tsx scripts/srt.ts --check    validate without writing
@@ -71,27 +75,29 @@ export const CUE_ROWS_15S: CueRow[] = [
   { text: "Custom built.", start: 0, end: 54, source: "Hook.tsx" },
   { text: "Not a template.", start: 0, end: 54, source: "Hook.tsx" },
 
-  // src/scenes/ProjectShowcase.tsx. PROJECT_1 54 to 194.
+  // src/scenes/ProjectShowcase.tsx. PROJECT_1 54 to 186.
   // Name types on at beat+2, claim cuts in at beat+CLAIM_IN (36).
-  { text: "Fore Motion Golf", start: 56, end: 194, source: "ProjectShowcase.tsx" },
-  { text: "AI caddie built in", start: 90, end: 194, source: "ProjectShowcase.tsx" },
+  { text: "Fore Motion Golf", start: 56, end: 186, source: "ProjectShowcase.tsx" },
+  { text: "AI caddie built in", start: 90, end: 186, source: "ProjectShowcase.tsx" },
 
-  // PROJECT_2 194 to 334.
-  { text: "Project Makeover", start: 196, end: 334, source: "ProjectShowcase.tsx" },
-  { text: "Accessibility score 100", start: 230, end: 334, source: "ProjectShowcase.tsx" },
+  // PROJECT_2 186 to 318.
+  { text: "Project Makeover", start: 188, end: 318, source: "ProjectShowcase.tsx" },
+  { text: "Accessibility score 100", start: 222, end: 318, source: "ProjectShowcase.tsx" },
 
-  // src/scenes/SurfacesTour.tsx. SURFACES_TOUR 334 to 388, SURFACES_TOUR_CUTS
+  // src/scenes/SurfacesTour.tsx. SURFACES_TOUR 318 to 372, SURFACES_TOUR_CUTS
   // three cuts of 18. Each word is held for the whole cut. Southern Legacy
   // Contractors left the featured list in this cut and keeps its site here.
-  { text: "Booking", start: 334, end: 352, source: "SurfacesTour.tsx", shortHold: true },
-  { text: "Yours to edit", start: 352, end: 370, source: "SurfacesTour.tsx", shortHold: true },
-  { text: "No page builder", start: 370, end: 388, source: "SurfacesTour.tsx", shortHold: true },
+  { text: "Booking", start: 318, end: 336, source: "SurfacesTour.tsx", shortHold: true },
+  { text: "Yours to edit", start: 336, end: 354, source: "SurfacesTour.tsx", shortHold: true },
+  { text: "No page builder", start: 354, end: 372, source: "SurfacesTour.tsx", shortHold: true },
 
-  // src/scenes/CallToAction.tsx. CALL_TO_ACTION 388 to 450.
-  // URL_IN 14 and PHONE_IN 22, relative to the beat. The lockup is a mark, not
-  // a line, so it gets no cue.
-  { text: "ka-performancefl.com", start: 402, end: 450, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 410, end: 450, source: "CallToAction.tsx" },
+  // src/scenes/CallToAction.tsx. CALL_TO_ACTION 372 to 450, re-timed on
+  // 2026-09-04 for the drawn lockup. The url and the phone both arrive at the
+  // beat's copy cue, relative frame 50, one frame after the wordmark starts to
+  // type on inside the mark. The lockup is a mark, not a line, so the draw
+  // itself gets no cue.
+  { text: "ka-performancefl.com", start: 422, end: 450, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 422, end: 450, source: "CallToAction.tsx" },
 ];
 
 /**
@@ -176,12 +182,13 @@ export const CUE_ROWS_45S: CueRow[] = [
   },
   { text: "Measured, not promised.", start: 1166, end: 1226, source: "AccessibilityBeat.tsx" },
 
-  // src/scenes/CallToAction.tsx. LINKEDIN_CALL_TO_ACTION 1226 to 1350.
-  // The closing line and the url both arrive at URL_IN 14, the phone at
-  // PHONE_IN 22.
-  { text: "Taking new projects.", start: 1240, end: 1350, source: "CallToAction.tsx" },
-  { text: "ka-performancefl.com", start: 1240, end: 1350, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 1248, end: 1350, source: "CallToAction.tsx" },
+  // src/scenes/CallToAction.tsx. LINKEDIN_CALL_TO_ACTION 1226 to 1350, beat
+  // length unchanged by the 2026-09-04 end card work. The closing line, the url
+  // and the phone all arrive together at the beat's copy cue, relative frame
+  // 64, which is where the drawn lockup's wordmark starts to type on.
+  { text: "Taking new projects.", start: 1290, end: 1350, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 1290, end: 1350, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 1290, end: 1350, source: "CallToAction.tsx" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -208,54 +215,55 @@ export const CUE_ROWS_TRAINING_15S: CueRow[] = [
   { text: "One designer.", start: 0, end: 54, source: "Hook.tsx" },
   { text: "Or a whole team.", start: 0, end: 54, source: "Hook.tsx" },
 
-  // src/scenes/ProjectShowcase.tsx. PROJECT_1 54 to 194.
+  // src/scenes/ProjectShowcase.tsx. PROJECT_1 54 to 186.
   // Name types on at beat+2, claim cuts in at beat+CLAIM_IN (36).
   {
     text: "Spot it before it hurts someone",
     start: 56,
-    end: 194,
+    end: 186,
     source: "ProjectShowcase.tsx",
   },
   {
     text: "Keyboard and screen reader tested",
     start: 90,
-    end: 194,
+    end: 186,
     source: "ProjectShowcase.tsx",
   },
 
-  // PROJECT_2 194 to 334. Same module, the phone surface.
+  // PROJECT_2 186 to 318. Same module, the phone surface.
   {
     text: "Hazard recognition module",
-    start: 196,
-    end: 334,
+    start: 188,
+    end: 318,
     source: "ProjectShowcase.tsx",
   },
-  { text: "Built for your LMS", start: 230, end: 334, source: "ProjectShowcase.tsx" },
+  { text: "Built for your LMS", start: 222, end: 318, source: "ProjectShowcase.tsx" },
 
-  // src/scenes/SurfacesTour.tsx. SURFACES_TOUR 334 to 388, SURFACES_TOUR_CUTS
+  // src/scenes/SurfacesTour.tsx. SURFACES_TOUR 318 to 372, SURFACES_TOUR_CUTS
   // three cuts of 18. Each word is held for the whole cut.
-  { text: "Finance", start: 334, end: 352, source: "SurfacesTour.tsx", shortHold: true },
+  { text: "Finance", start: 318, end: 336, source: "SurfacesTour.tsx", shortHold: true },
   {
     text: "Microlearning",
-    start: 352,
-    end: 370,
+    start: 336,
+    end: 354,
     source: "SurfacesTour.tsx",
     shortHold: true,
   },
   {
     text: "SCORM and xAPI",
-    start: 370,
-    end: 388,
+    start: 354,
+    end: 372,
     source: "SurfacesTour.tsx",
     shortHold: true,
   },
 
-  // src/scenes/CallToAction.tsx. CALL_TO_ACTION 388 to 450.
-  // The closing line and the url both arrive at URL_IN 14, the phone at
-  // PHONE_IN 22. The lockup is a mark, not a line, so it gets no cue.
-  { text: "Never the bottleneck.", start: 402, end: 450, source: "CallToAction.tsx" },
-  { text: "ka-performancefl.com", start: 402, end: 450, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 410, end: 450, source: "CallToAction.tsx" },
+  // src/scenes/CallToAction.tsx. CALL_TO_ACTION 372 to 450, re-timed on
+  // 2026-09-04 for the drawn lockup. The closing line, the url and the phone
+  // all arrive together at the beat's copy cue, relative frame 50. The lockup
+  // is a mark, not a line, so the draw itself gets no cue.
+  { text: "Never the bottleneck.", start: 422, end: 450, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 422, end: 450, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 422, end: 450, source: "CallToAction.tsx" },
 ];
 
 /**
@@ -405,10 +413,11 @@ export const CUE_ROWS_TRAINING_45S: CueRow[] = [
     source: "AccessibilityBeat.tsx",
   },
 
-  // src/scenes/CallToAction.tsx. LINKEDIN_CALL_TO_ACTION 1226 to 1350.
-  { text: "Taking new projects.", start: 1240, end: 1350, source: "CallToAction.tsx" },
-  { text: "ka-performancefl.com", start: 1240, end: 1350, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 1248, end: 1350, source: "CallToAction.tsx" },
+  // src/scenes/CallToAction.tsx. LINKEDIN_CALL_TO_ACTION 1226 to 1350, all
+  // three lines at the beat's copy cue, relative frame 64.
+  { text: "Taking new projects.", start: 1290, end: 1350, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 1290, end: 1350, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 1290, end: 1350, source: "CallToAction.tsx" },
 ];
 
 // ---------------------------------------------------------------------------

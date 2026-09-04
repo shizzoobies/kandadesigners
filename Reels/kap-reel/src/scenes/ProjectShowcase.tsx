@@ -37,8 +37,8 @@ export const WHIP_FRAMES = 6;
  *
  * Unchanged by the 2026-09-03 re-pace, per the owner's note: twelve frames
  * after the hard cut to the clean capture at relative 24, so the viewer has
- * landed in the new shot before a second thing arrives. In the re-paced 140
- * frame beat it now holds 104 frames instead of 60.
+ * landed in the new shot before a second thing arrives. In the 132 frame beat
+ * the 2026-09-04 end card re-time left, it holds 96 frames instead of 60.
  */
 const CLAIM_IN = 36;
 
@@ -159,7 +159,7 @@ export type ProjectShowcaseProps = {
    */
   contextLine?: string;
   /**
-   * Length of this beat in frames. Defaults to the 140 frame beat of the 15
+   * Length of this beat in frames. Defaults to the 132 frame beat of the 15
    * second cut; the LinkedIn cut passes 210. Only the clean capture stretches:
    * the plate stays at the Section 6b cap of 24 frames either way.
    */
@@ -206,7 +206,7 @@ export type ProjectShowcaseProps = {
 /**
  * One project beat, split per Section 6b: the context plate for 24 frames with
  * the project name typing on, then a hard cut to the clean mobile capture in a
- * device frame with one claim line held to the cut. 140 frames in the 15
+ * device frame with one claim line held to the cut. 132 frames in the 15
  * second cut, 210 in the 45 second one.
  *
  * The beat lays out three ways, chosen by formatMetrics().showcase. See

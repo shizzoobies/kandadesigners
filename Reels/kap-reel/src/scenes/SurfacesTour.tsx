@@ -10,7 +10,7 @@ import {
 import type { ReelCut, TourCut } from "../reels/types";
 
 /**
- * Frames 334 to 388 in the 15 second cut, 996 to 1076 in the 45 second one.
+ * Frames 318 to 372 in the 15 second cut, 996 to 1076 in the 45 second one.
  * Three cuts of 18 frames or four of 20, one surface each, each on a different
  * device held by a different person. Owner decision 2026-09-03, replacing the
  * capability montage: the point is that one studio ships across these surfaces,

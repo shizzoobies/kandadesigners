@@ -1,12 +1,6 @@
-import {
-  AbsoluteFill,
-  Img,
-  interpolate,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
-import { BODY_STACK, brand, COLORS, LOGO_PNG } from "../lib/brand";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { LogoDraw } from "../components/LogoDraw";
+import { BODY_STACK, brand, COLORS } from "../lib/brand";
 import {
   centeredBox,
   centeredPadding,
@@ -15,40 +9,74 @@ import {
   SAFE_ZONES,
   type FormatKey,
 } from "../lib/layout";
+import type { ReelCut } from "../reels/types";
 
 export type CallToActionProps = {
   format: FormatKey;
+  /** Which cut this card is closing. Sets the draw length and the copy cue. */
+  cut: ReelCut;
   /**
-   * One line above the url, LinkedIn cut only. Section 6 asks that cut to close
-   * on "Taking new projects." rather than a hard sales line, which is a
-   * statement of availability rather than an ask, and reads correctly on a
-   * company page where the viewer is a peer rather than a customer.
+   * One line above the url. The LinkedIn cut of both reels closes on "Taking
+   * new projects." rather than a hard sales line, which is a statement of
+   * availability rather than an ask, and reads correctly on a company page
+   * where the viewer is a peer rather than a customer. The training reel's 15
+   * second cut closes on "Never the bottleneck.".
    */
   closingLine?: string;
 };
 
-/** Frames the logo takes to settle. Section 15 bans logo animations over a second. */
-const LOGO_SETTLE_FRAMES = 12;
-/** The url arrives once the logo has landed, the phone eight frames later. */
-const URL_IN = 14;
-const PHONE_IN = 22;
-
-// Checked against the re-paced 15 second cut, 2026-09-03. That cut shortened
-// the CTA beat from 66 frames to 62, and Section 6 wants the finished card held
-// for at least CTA_HOLD_MIN_FRAMES (36) so a screenshot of the end frame reads.
-// The last thing to arrive is the phone at PHONE_IN 22 and the settle is done
-// at LOGO_SETTLE_FRAMES 12, so the card is finished on frame 22 and holds 40.
-// That clears the minimum with room, so none of the three numbers above had to
-// move. The 45 second cut's 124 frame beat is unaffected either way.
+/**
+ * The end card, per the owner's 2026-09-04 decision: the K&A lockup draws
+ * itself rather than fading in as a finished picture.
+ *
+ * `LogoDraw` is the live site's intro animation ported frame for frame, and it
+ * is a choreography rather than a settle: a mouse drags the browser frame into
+ * being, the three window dots pop as the pointer passes them, K and A land,
+ * the ampersand scales in, and only then does PERFORMANCE type on underneath.
+ * The authored piece is seven seconds and compresses uniformly, and the gate at
+ * out/gate-logo established where that stops working: at 36 frames it strobes,
+ * 72 is the floor at which it still reads as a sweep, and 144 is comfortable.
+ *
+ * So each cut gets the longest draw its beat can pay for.
+ *
+ * 15 second cut. CALL_TO_ACTION is 78 frames, up from 62, which cost each
+ * project beat eight frames. The draw takes 66 of them, a hair under the 72
+ * floor and accepted by the owner because this end card is the one place in the
+ * reel where the viewer is not being asked to read anything while it happens.
+ * The contact block arrives at frame 50, one frame after the wordmark starts at
+ * T 5.2, so the last thing the lockup does and the first thing the copy does
+ * are the same gesture. Everything is on screen from 56; the last wordmark
+ * glyph finishes its ease at 60 and nothing moves after that, so the card is
+ * frozen for the final 18 frames. That is under CTA_HOLD_MIN_FRAMES and the
+ * owner took the trade with the number in front of them.
+ *
+ * 45 second cut. LINKEDIN_CALL_TO_ACTION is 124 frames and did not have to
+ * change. The draw takes 84, the copy arrives at 64, and the finished card is
+ * frozen from frame 79 to the end, which is 45 frames and clears the minimum.
+ */
+const CTA_TIMING: Record<ReelCut, { drawFrames: number; copyIn: number }> = {
+  short: { drawFrames: 66, copyIn: 50 },
+  linkedin: { drawFrames: 84, copyIn: 64 },
+};
 
 /**
- * logo-lockup.webp is the live site's lockup (K & A with the rust ampersand,
- * PERFORMANCE beneath, inside the sketched browser window). 800x303, no
- * padding to crop. The gold "K&A Designs" crest in approved-logo-transparent
- * is the retired brand and must not appear.
+ * Rendered width of the logo box at 1080 canvas width, and the box's aspect.
+ *
+ * The width is the one the static lockup used, so the card's proportions are
+ * the ones the owner already approved. The aspect is not: LogoDraw's authored
+ * stage is 1340x548 (0.409) where logo-lockup.webp was 800x303 (0.379), because
+ * the stage carries a little padding the webp was cropped out of. The drawn
+ * artwork inside that stage measures 1243 by 467 units, which is 0.376, so the
+ * mark itself is the same shape it always was and sits very nearly on the
+ * stage's own centre: 44 units of padding on the left against 52 on the right,
+ * 42 above against 38 below. That is why the column below needs no manual
+ * nudge to stay balanced. It centres the box, and the box centres the mark.
+ *
+ * The gold "K&A Designs" crest in approved-logo-transparent is the retired
+ * brand and must not appear.
  */
 const LOGO_TARGET_WIDTH = 720;
-const LOGO_ASPECT = 303 / 800;
+const LOGO_ASPECT = 548 / 1340;
 
 /**
  * Owner decision 2026-09-03: the "K&A Performance" text line comes out. The
@@ -64,21 +92,13 @@ const LOGO_ASPECT = 303 / 800;
  */
 export const CallToAction: React.FC<CallToActionProps> = ({
   format,
+  cut,
   closingLine,
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
   const safe = safeArea(format);
   const scale = formatMetrics(format).typeScale;
-
-  const settle = spring({
-    frame,
-    fps,
-    durationInFrames: LOGO_SETTLE_FRAMES,
-    config: { damping: 200 },
-  });
-  const logoY = interpolate(settle, [0, 1], [-44 * scale, 0]);
-  const logoScale = interpolate(settle, [0, 1], [0.92, 1]);
+  const timing = CTA_TIMING[cut];
 
   // Scaling the lockup by type scale alone overshoots in landscape, where the
   // canvas is only 1080 tall: at 1280 wide it filled the safe area top to
@@ -101,6 +121,9 @@ export const CallToAction: React.FC<CallToActionProps> = ({
       // Five sixths of the card, so the card still reads as a lockup over a
       // block of copy rather than as a logo with captions under it.
       card.width * 0.83,
+      // The height cap is the one that bites in landscape, and it binds on the
+      // box height, so the drawn box lands at the same height the webp did and
+      // takes its extra aspect out of the width instead.
       (safe.height * logoHeightShare) / LOGO_ASPECT,
     ),
   );
@@ -120,14 +143,7 @@ export const CallToAction: React.FC<CallToActionProps> = ({
           justifyContent: "center",
         }}
       >
-        <Img
-          src={LOGO_PNG}
-          style={{
-            width: logoWidth,
-            height: Math.round(logoWidth * LOGO_ASPECT),
-            transform: `translateY(${logoY}px) scale(${logoScale})`,
-          }}
-        />
+        <LogoDraw durationFrames={timing.drawFrames} width={logoWidth} />
 
         {/* Arrives with the url rather than before it, so the card still
             resolves in two moves and the hold is not eaten by a third. */}
@@ -135,7 +151,7 @@ export const CallToAction: React.FC<CallToActionProps> = ({
           <div
             style={{
               marginTop: Math.round(44 * scale),
-              visibility: frame >= URL_IN ? "visible" : "hidden",
+              visibility: frame >= timing.copyIn ? "visible" : "hidden",
               fontFamily: BODY_STACK,
               fontSize: Math.round(52 * scale),
               fontWeight: 500,
@@ -152,7 +168,7 @@ export const CallToAction: React.FC<CallToActionProps> = ({
         <div
           style={{
             marginTop: Math.round((closingLine ? 20 : 44) * scale),
-            visibility: frame >= URL_IN ? "visible" : "hidden",
+            visibility: frame >= timing.copyIn ? "visible" : "hidden",
             fontFamily: BODY_STACK,
             fontSize: Math.round(60 * scale),
             fontWeight: 600,
@@ -164,10 +180,13 @@ export const CallToAction: React.FC<CallToActionProps> = ({
           {brand.url}
         </div>
 
+        {/* Owner decision 2026-09-04: the phone no longer trails the url by
+            eight frames. The draw is the card's stagger now, and a third
+            arrival after it would have eaten most of a 22 frame hold. */}
         <div
           style={{
             marginTop: Math.round(26 * scale),
-            visibility: frame >= PHONE_IN ? "visible" : "hidden",
+            visibility: frame >= timing.copyIn ? "visible" : "hidden",
             fontFamily: BODY_STACK,
             fontSize: Math.round(52 * scale),
             fontWeight: 500,

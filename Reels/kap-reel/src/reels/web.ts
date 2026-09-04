@@ -91,7 +91,7 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
 ];
 
 /**
- * Frames 334 to 388. Three cuts of 18 frames, one cleared site each, each on a
+ * Frames 318 to 372. Three cuts of 18 frames, one cleared site each, each on a
  * different device held by a different person. Owner decision 2026-09-03,
  * replacing the capability montage: the point is that one studio ships across
  * these surfaces, not that a list of features exists.

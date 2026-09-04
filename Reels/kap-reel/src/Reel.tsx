@@ -171,6 +171,7 @@ export const Reel: React.FC<ReelProps> = ({
       >
         <CallToAction
           format={format}
+          cut={cut}
           closingLine={content.ctaClosingLine[cut]}
         />
       </Sequence>
