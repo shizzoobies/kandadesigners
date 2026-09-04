@@ -102,6 +102,7 @@ const doors = [
 ];
 ---
 <BaseLayout
+  clientRouter
   title="Custom eLearning and Training Content Development | K & A Performance"
   description="Custom eLearning development and instructional design: SCORM and xAPI course development, accessibility remediation for training, and construction and trades content, delivered into your own LMS."
 >
@@ -262,7 +263,7 @@ const doors = [
     </p>
     <div class="mt-12 grid gap-8 md:grid-cols-3">
       {engagementModels.map((m, i) => (
-        <div data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame flex flex-col p-8">
+        <div data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame tr-frame flex flex-col p-8">
           <h3 class="font-display text-2xl">{m.title}</h3>
           <p class="mt-4 flex-1 leading-relaxed text-muted">{m.shape}</p>
           <div class="mt-8">
@@ -277,7 +278,7 @@ const doors = [
     <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">See the work</h2>
     <div class="mt-12 grid gap-8 md:grid-cols-2">
       {doors.map((d, i) => (
-        <a href={d.href} data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame backdrop-card group flex min-h-[14rem] flex-col p-8" style={`--bd: url('${d.backdrop}')`}>
+        <a href={d.href} data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame tr-frame backdrop-card group flex min-h-[14rem] flex-col p-8" style={`--bd: url('${d.backdrop}')`}>
           <h3 class="font-display text-2xl">{d.title}</h3>
           <p class="mt-4 flex-1 leading-relaxed text-muted">{d.blurb}</p>
           <p class="mt-6 font-heading text-sm font-semibold tracking-wide text-accent">
@@ -322,7 +323,7 @@ const doors = [
        the native dialog gives Esc, focus containment, and a real backdrop
        without a line of trap-management code. -->
   <dialog id="tr-modal" class="tr-modal" aria-labelledby="tr-modal-title">
-    <div class="glow-frame p-8 md:p-10">
+    <div class="glow-frame tr-frame p-8 md:p-10">
       <div class="mb-8 flex items-start justify-between gap-6">
         <div>
           <h2 id="tr-modal-title" class="font-display text-2xl md:text-3xl">Training inquiry</h2>
@@ -519,114 +520,144 @@ const doors = [
 </style>
 
 <script>
-  // Attribution read. The write happens sitewide in BaseLayout (first touch
-  // wins there, whatever page the ?src= link landed on); this page only
-  // copies the stored value into the hidden field. Fully guarded: a malformed
-  // cookie must never take the form's submit handler down with it.
-  try {
-    const raw =
-      document.cookie.match(/(?:^|;\s*)ka_src=([^;]+)/)?.[1] ??
-      new URLSearchParams(location.search).get('src');
-    let src = raw;
+  // Re-run after every client-side navigation (ClientRouter). astro:page-load
+  // also fires on the initial load, after this has run once, so the init
+  // marks the root it wires and skips a DOM it has already seen.
+  const trInit1 = () => {
+    const root = document.getElementById("tr-modal") || document.body;
+    if ((root as HTMLElement).dataset["trInit1"]) return;
+    (root as HTMLElement).dataset["trInit1"] = "1";
+    // Attribution read. The write happens sitewide in BaseLayout (first touch
+    // wins there, whatever page the ?src= link landed on); this page only
+    // copies the stored value into the hidden field. Fully guarded: a malformed
+    // cookie must never take the form's submit handler down with it.
     try {
-      src = raw ? decodeURIComponent(raw) : raw;
-    } catch {
-      /* keep the raw value */
-    }
-    const sourceField = document.getElementById('tr-source') as HTMLInputElement | null;
-    if (src && sourceField) sourceField.value = src;
-  } catch {
-    /* attribution is best-effort; the form must work regardless */
-  }
-</script>
-
-<script>
-  // Modal wiring. Native dialog handles Esc and focus containment; this adds
-  // the page scroll lock, the backdrop click, and the close button.
-  const modal = document.getElementById('tr-modal') as HTMLDialogElement | null;
-
-  const openInquiry = () => {
-    if (!modal) return;
-    if (!modal.open) modal.showModal();
-    // Native dialog does not lock the page behind it.
-    document.documentElement.style.overflow = 'hidden';
-    const nameEl = document.getElementById('tr-name') as HTMLInputElement | null;
-    // Skip the focus grab when the form is hidden (post-success state).
-    if (nameEl && nameEl.offsetParent !== null) nameEl.focus({ preventScroll: true });
-  };
-
-  modal?.addEventListener('close', () => {
-    document.documentElement.style.overflow = '';
-  });
-  document.getElementById('tr-modal-close')?.addEventListener('click', () => modal?.close());
-  // A click on the backdrop targets the dialog element itself.
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) modal.close();
-  });
-
-  document.querySelectorAll<HTMLElement>('[data-inquire]').forEach((el) => {
-    el.addEventListener('click', () => openInquiry());
-  });
-
-  // ?inquire=1 opens the form on load, for links that exist to do exactly that.
-  if (new URLSearchParams(location.search).get('inquire')) openInquiry();
-</script>
-
-<script>
-  // Inquiry submit: the same Web3Forms flow as the contact page and the
-  // AI Launch intake.
-  const form = document.getElementById('tr-form') as HTMLFormElement | null;
-  const successEl = document.getElementById('tr-success');
-  const errorEl = document.getElementById('tr-error');
-  const statusEl = document.getElementById('tr-status');
-  const btn = document.getElementById('tr-submit') as HTMLButtonElement | null;
-
-  if (form && btn) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const original = btn.textContent;
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      errorEl?.classList.add('hidden');
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      if (statusEl) statusEl.textContent = 'Sending your inquiry…';
-
-      const data: Record<string, string> = {};
-      new FormData(form).forEach((value, key) => {
-        data[key] = String(value);
-      });
-
+      const raw =
+        document.cookie.match(/(?:^|;\s*)ka_src=([^;]+)/)?.[1] ??
+        new URLSearchParams(location.search).get('src');
+      let src = raw;
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(data),
-        });
-        const result = await res.json();
-
-        if (result.success) {
-          // Success path only; guarded because ad blockers stop fbq existing.
-          if (window.fbq) window.fbq('track', 'Lead');
-          if (statusEl) statusEl.textContent = '';
-          form.classList.add('hidden');
-          successEl?.classList.remove('hidden');
-          successEl?.classList.add('flex');
-          (successEl as HTMLElement | null)?.focus();
-        } else {
-          throw new Error(result.message || 'Submission failed');
-        }
+        src = raw ? decodeURIComponent(raw) : raw;
       } catch {
-        if (statusEl) statusEl.textContent = '';
-        errorEl?.classList.remove('hidden');
-        btn.disabled = false;
-        btn.textContent = original;
-        (errorEl as HTMLElement | null)?.focus();
+        /* keep the raw value */
       }
+      const sourceField = document.getElementById('tr-source') as HTMLInputElement | null;
+      if (src && sourceField) sourceField.value = src;
+    } catch {
+      /* attribution is best-effort; the form must work regardless */
+    }
+  };
+  trInit1();
+  document.addEventListener("astro:page-load", trInit1);
+</script>
+
+<script>
+  // Re-run after every client-side navigation (ClientRouter). astro:page-load
+  // also fires on the initial load, after this has run once, so the init
+  // marks the root it wires and skips a DOM it has already seen.
+  const trInit2 = () => {
+    const root = document.getElementById("tr-modal") || document.body;
+    if ((root as HTMLElement).dataset["trInit2"]) return;
+    (root as HTMLElement).dataset["trInit2"] = "1";
+    // Modal wiring. Native dialog handles Esc and focus containment; this adds
+    // the page scroll lock, the backdrop click, and the close button.
+    const modal = document.getElementById('tr-modal') as HTMLDialogElement | null;
+
+    const openInquiry = () => {
+      if (!modal) return;
+      if (!modal.open) modal.showModal();
+      // Native dialog does not lock the page behind it.
+      document.documentElement.style.overflow = 'hidden';
+      const nameEl = document.getElementById('tr-name') as HTMLInputElement | null;
+      // Skip the focus grab when the form is hidden (post-success state).
+      if (nameEl && nameEl.offsetParent !== null) nameEl.focus({ preventScroll: true });
+    };
+
+    modal?.addEventListener('close', () => {
+      document.documentElement.style.overflow = '';
     });
-  }
+    document.getElementById('tr-modal-close')?.addEventListener('click', () => modal?.close());
+    // A click on the backdrop targets the dialog element itself.
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) modal.close();
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-inquire]').forEach((el) => {
+      el.addEventListener('click', () => openInquiry());
+    });
+
+    // ?inquire=1 opens the form on load, for links that exist to do exactly that.
+    if (new URLSearchParams(location.search).get('inquire')) openInquiry();
+  };
+  trInit2();
+  document.addEventListener("astro:page-load", trInit2);
+</script>
+
+<script>
+  // Re-run after every client-side navigation (ClientRouter). astro:page-load
+  // also fires on the initial load, after this has run once, so the init
+  // marks the root it wires and skips a DOM it has already seen.
+  const trInit3 = () => {
+    const root = document.getElementById("tr-modal") || document.body;
+    if ((root as HTMLElement).dataset["trInit3"]) return;
+    (root as HTMLElement).dataset["trInit3"] = "1";
+    // Inquiry submit: the same Web3Forms flow as the contact page and the
+    // AI Launch intake.
+    const form = document.getElementById('tr-form') as HTMLFormElement | null;
+    const successEl = document.getElementById('tr-success');
+    const errorEl = document.getElementById('tr-error');
+    const statusEl = document.getElementById('tr-status');
+    const btn = document.getElementById('tr-submit') as HTMLButtonElement | null;
+
+    if (form && btn) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const original = btn.textContent;
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        errorEl?.classList.add('hidden');
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        if (statusEl) statusEl.textContent = 'Sending your inquiry…';
+
+        const data: Record<string, string> = {};
+        new FormData(form).forEach((value, key) => {
+          data[key] = String(value);
+        });
+
+        try {
+          const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(data),
+          });
+          const result = await res.json();
+
+          if (result.success) {
+            // Success path only; guarded because ad blockers stop fbq existing.
+            if (window.fbq) window.fbq('track', 'Lead');
+            if (statusEl) statusEl.textContent = '';
+            form.classList.add('hidden');
+            successEl?.classList.remove('hidden');
+            successEl?.classList.add('flex');
+            (successEl as HTMLElement | null)?.focus();
+          } else {
+            throw new Error(result.message || 'Submission failed');
+          }
+        } catch {
+          if (statusEl) statusEl.textContent = '';
+          errorEl?.classList.remove('hidden');
+          btn.disabled = false;
+          btn.textContent = original;
+          (errorEl as HTMLElement | null)?.focus();
+        }
+      });
+    }
+  };
+  trInit3();
+  document.addEventListener("astro:page-load", trInit3);
 </script>

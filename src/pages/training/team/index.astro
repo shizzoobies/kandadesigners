@@ -1,10 +1,11 @@
 ---
-// Meet the team: /training/team/. The two owners, the instructional design
-// bench, and the subject matter experts, each with a portrait that opens a
-// bio dialog. People and copy come from src/data/training.js (`team`); the
-// bench's four focus areas come from `bench`. A person with no photo shows
-// the drawn placeholder, and an empty bio shows the "to follow" line, so the
-// layout is final while headshots and approved wording are still arriving.
+// Meet the team: /training/team/. One org chart: the two owners on top,
+// the instructional design bench below them, the subject matter experts
+// below that. Every person is a round portrait with a name and a title,
+// and opens a bio dialog. People come from src/data/training.js (`team`);
+// the bench's four focus areas come from `bench`. A person with no photo
+// shows the drawn placeholder and an empty bio shows the "to follow" line,
+// so the layout is final while headshots and approved wording arrive.
 //
 // House rules: no em dashes, no pills, no numbered kickers, no employer
 // names, no pricing, no throughput numbers. Never name an SME's employer.
@@ -19,29 +20,14 @@ const PLACEHOLDER = '/images/training/sme-placeholder.svg';
 const YEARS_AS_WORDS = { 60: 'sixty' };
 const combinedYearsWord = YEARS_AS_WORDS[combinedYears] ?? String(combinedYears);
 
-const groups = [
-  {
-    id: 'owners',
-    heading: 'The owners',
-    intro: 'Two people, and you deal with both of them. One leads every engagement and builds the work; the other makes sure the work is for something.',
-    people: team.owners,
-  },
-  {
-    id: 'designers',
-    heading: 'The instructional designers',
-    intro: `A bench with roughly ${combinedYearsWord} years of combined experience, working under written agreement. Three of them are also the studio's artists, which is why the courses look drawn rather than assembled.`,
-    people: team.designers,
-  },
-  {
-    id: 'smes',
-    heading: 'Subject matter experts',
-    intro: 'A separate bench on purpose. Their job is not to write the course, it is to confirm that what the course teaches is technically correct in their field.',
-    people: team.smes,
-  },
+const tiers = [
+  { id: 'owners', label: 'Owners', people: team.owners, size: 'lg' },
+  { id: 'designers', label: 'Instructional designers', people: team.designers, size: 'md' },
+  { id: 'smes', label: 'Subject matter experts', people: team.smes, size: 'md' },
 ];
 
 // One flat list so every dialog gets a stable index.
-const people = groups.flatMap((g) => g.people.map((p) => ({ ...p, group: g.id })));
+const people = tiers.flatMap((t) => t.people.map((p) => ({ ...p, tier: t.id })));
 const indexOf = (p) => people.findIndex((x) => x.name === p.name);
 
 const bioFor = (p) =>
@@ -60,6 +46,7 @@ const breadcrumb = {
 };
 ---
 <BaseLayout
+  clientRouter
   title="Meet the Training Team | K & A Performance"
   description="The people behind K & A's training content: the two owners, the instructional design bench, and the credentialed subject matter experts who check the field details."
 >
@@ -75,52 +62,48 @@ const breadcrumb = {
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
       Every project runs under a written agreement, with a named lead and a
-      single point of contact from the first call to final delivery. Here is
-      who that is, who builds alongside them, and who checks the field details
-      before anything ships.
+      single point of contact from the first call to final delivery. Two owners
+      you deal with directly, a bench with roughly {combinedYearsWord} years of
+      combined experience behind them, and the experts who check the field
+      details before anything ships. Select anyone to read their bio.
     </p>
   </section>
 
   <TrainingSubnav />
 
-  {groups.map((g, gi) => (
-    <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24" aria-labelledby={`group-${g.id}`}>
-      <h2 id={`group-${g.id}`} data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">{g.heading}</h2>
-      <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">{g.intro}</p>
-      <div class:list={['mt-10 grid gap-8', gi === 1 ? 'sm:grid-cols-2' : 'sm:grid-cols-2']}>
-        {g.people.map((p) => {
-          const i = indexOf(p);
-          return (
-            <div data-animate="frame-lift" class="glow-frame person-card flex gap-6 p-6 md:p-7">
-              <button type="button" class="person-portrait" data-person-open={i} aria-haspopup="dialog" aria-controls={`person-bio-${i}`} aria-label={`Read the bio: ${p.name}`}>
-                <img src={p.photo || PLACEHOLDER} alt="" width="400" height="500" loading="lazy" />
-              </button>
-              <div class="min-w-0 flex-1">
-                <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{p.role}</p>
-                <h3 class="mt-2 font-display text-2xl leading-tight">{p.name}</h3>
-                <p class="mt-2 font-heading text-sm font-semibold tracking-wide text-ink/80">{p.line}</p>
-                <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
-                  <button type="button" class="inline-flex items-center gap-2 font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot" data-person-open={i} aria-haspopup="dialog" aria-controls={`person-bio-${i}`}>
-                    Read the bio <span aria-hidden="true">&rarr;</span>
+  <!-- The org chart. Connector rules are decorative and drawn with CSS on
+       the tier rows; the structure itself is three labelled lists. -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24" aria-labelledby="team-heading">
+    <h2 id="team-heading" class="sr-only">The team</h2>
+    <div class="org" data-animate="type-settle">
+      {tiers.map((t, ti) => (
+        <div class:list={['org-tier', `org-tier-${t.size}`, { 'org-tier-first': ti === 0 }]} style={`--n: ${t.people.length}`}>
+          <p class="org-label" id={`tier-${t.id}`}>{t.label}</p>
+          <ul class="org-row" aria-labelledby={`tier-${t.id}`}>
+            {t.people.map((p) => {
+              const i = indexOf(p);
+              return (
+                <li class="org-node">
+                  <button type="button" class="org-person" data-person-open={i} aria-haspopup="dialog" aria-controls={`person-bio-${i}`}>
+                    <span class="org-portrait">
+                      <img src={p.photo || PLACEHOLDER} alt="" width="400" height="500" loading="lazy" />
+                    </span>
+                    <span class="org-name">{p.name}</span>
+                    <span class="org-title">{p.line}</span>
                   </button>
-                  {p.link && (
-                    <a href={p.link} class="font-heading text-sm font-semibold tracking-wide text-muted underline underline-offset-4 hover:text-accent">See their art</a>
-                  )}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      {g.id === 'smes' && (
-        <p data-animate="type-settle" class="mt-10 max-w-2xl leading-relaxed text-muted">
-          Subject matter experts validate the accuracy of content. They do not
-          advise your business, provide professional services to your
-          organization, or endorse it.
-        </p>
-      )}
-    </section>
-  ))}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p data-animate="type-settle" class="mx-auto mt-14 max-w-2xl text-center text-sm leading-relaxed text-muted">
+      Subject matter experts validate the accuracy of content. They do not
+      advise your business, provide professional services to your
+      organization, or endorse it.
+    </p>
+  </section>
 
   <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
     <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What the bench covers</h2>
@@ -130,7 +113,7 @@ const breadcrumb = {
     </p>
     <div class="mt-10 grid gap-8 sm:grid-cols-2">
       {bench.map((b) => (
-        <div data-animate="frame-lift" class="glow-frame backdrop-card flex min-h-[11rem] flex-col justify-end p-8" style={`--bd: url('${b.backdrop}')`}>
+        <div data-animate="frame-lift" class="glow-frame tr-frame backdrop-card flex min-h-[11rem] flex-col justify-end p-8" style={`--bd: url('${b.backdrop}')`}>
           <h3 class="max-w-[22ch] font-display text-2xl leading-tight">{b.focus}</h3>
         </div>
       ))}
@@ -153,7 +136,7 @@ const breadcrumb = {
 
   {people.map((p, i) => (
     <dialog id={`person-bio-${i}`} class="person-dialog" aria-labelledby={`person-bio-title-${i}`}>
-      <div class="glow-frame person-dialog-card">
+      <div class="glow-frame tr-frame person-dialog-card">
         <button type="button" class="person-dialog-close" data-person-close aria-label="Close">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="15" y2="15" /><line x1="15" y1="5" x2="5" y2="15" /></svg>
         </button>
@@ -165,9 +148,9 @@ const breadcrumb = {
             <p class="mt-2 font-heading text-sm font-semibold tracking-wide text-ink/80">{p.line}</p>
             <p class="mt-5 leading-relaxed text-muted">{bioFor(p)}</p>
             {p.link && (
-              <p class="mt-5"><a href={p.link} class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">See their art</a></p>
+              <p class="mt-5"><a href={p.link} data-astro-reload class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">See their art</a></p>
             )}
-            {p.group === 'smes' && (
+            {p.tier === 'smes' && (
               <p class="mt-5 border-t border-ink/10 pt-4 text-sm leading-relaxed text-muted">
                 Subject matter experts validate the accuracy of course content. They do not advise K &amp; A clients, provide professional services to them, or endorse them.
               </p>
@@ -180,33 +163,171 @@ const breadcrumb = {
 </BaseLayout>
 
 <style>
-  .person-portrait {
-    flex: 0 0 auto;
-    width: 6.5rem;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid rgb(34 28 21 / 0.1);
-    background: var(--color-canvas);
-    padding: 0;
+  /* ---------- the org chart ---------- */
+  .org {
+    --line: rgb(34 28 21 / 0.16);
+    --stub: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .org-tier {
+    position: relative;
+    padding-top: calc(var(--stub) + 1.6rem);
+  }
+  .org-tier-first {
+    padding-top: 0;
+  }
+  /* A vertical drop from the tier above into this tier's rail. */
+  .org-tier:not(.org-tier-first)::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: var(--stub);
+    background: var(--line);
+  }
+  .org-label {
+    position: relative;
+    margin: 0 0 1.6rem;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .org-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    gap: 1rem;
+    margin: 0 auto;
+    padding: var(--stub) 0 0;
+    list-style: none;
+    width: min(100%, calc(var(--n) * 15rem));
+  }
+  .org-tier-lg .org-row {
+    width: min(100%, calc(var(--n) * 17rem));
+  }
+  /* The rail across the row, from the first node's centre to the last's. */
+  .org-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: calc(50% / var(--n));
+    right: calc(50% / var(--n));
+    height: 1px;
+    background: var(--line);
+  }
+  /* Each node's stub up to the rail. */
+  .org-node {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .org-node::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(-1 * var(--stub));
+    width: 1px;
+    height: var(--stub);
+    background: var(--line);
+  }
+  /* A single-node row has no rail to speak of; the stub alone connects it. */
+  .org-row[style*='--n: 1']::before {
+    display: none;
+  }
+
+  .org-person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    padding: 0.75rem 0.5rem 0.5rem;
+    background: none;
+    border: 0;
+    border-radius: 12px;
+    text-align: center;
     cursor: pointer;
+    color: var(--color-ink);
+  }
+  .org-portrait {
+    position: relative;
+    display: block;
+    width: 7.25rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--color-canvas);
+    box-shadow:
+      0 0 0 3px var(--color-surface),
+      0 0 0 4px rgb(34 28 21 / 0.12),
+      0 14px 30px -16px rgb(34 28 21 / 0.35);
     transition: transform var(--dur-fast) var(--ease-out-expo), box-shadow var(--dur-fast) var(--ease-out-expo);
   }
-  .person-portrait img {
+  .org-tier-lg .org-portrait {
+    width: 9.5rem;
+  }
+  .org-portrait img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .person-portrait:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px -14px rgb(34 28 21 / 0.35);
+  .org-person:hover .org-portrait,
+  .org-person:focus-visible .org-portrait {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 0 3px var(--color-surface),
+      0 0 0 5px var(--color-accent),
+      0 18px 34px -16px rgb(34 28 21 / 0.4);
   }
-  @media (max-width: 480px) {
-    .person-card { flex-direction: column; }
-    .person-portrait { width: 8rem; }
+  .org-name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.15;
+  }
+  .org-tier-lg .org-name {
+    font-size: 1.45rem;
+  }
+  .org-title {
+    display: block;
+    margin-top: 0.15rem;
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-muted);
+    max-width: 16ch;
   }
 
+  /* Narrow screens: rows wrap two across and the rail no longer lines up
+     with the nodes, so the connectors go and the labels carry the tiers. */
+  @media (max-width: 640px) {
+    .org-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 100%;
+      padding-top: 0;
+    }
+    .org-row::before,
+    .org-node::before,
+    .org-tier::before {
+      display: none;
+    }
+    .org-tier {
+      padding-top: 2.5rem;
+    }
+    .org-portrait { width: 6.25rem; }
+    .org-tier-lg .org-portrait { width: 7.5rem; }
+  }
+
+  /* ---------- the bio dialog ---------- */
   .person-dialog {
     margin: auto;
     width: min(44rem, calc(100vw - 2rem));
@@ -237,19 +358,19 @@ const breadcrumb = {
   .person-dialog-grid {
     display: grid;
     gap: 1.75rem;
-    grid-template-columns: 10rem 1fr;
+    grid-template-columns: 9rem 1fr;
     align-items: start;
   }
   .person-dialog-photo {
-    width: 100%;
-    aspect-ratio: 4 / 5;
+    width: 9rem;
+    aspect-ratio: 1;
     object-fit: cover;
-    border-radius: 10px;
-    border: 1px solid rgb(34 28 21 / 0.1);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 4px rgb(34 28 21 / 0.12);
   }
   @media (max-width: 560px) {
     .person-dialog-grid { grid-template-columns: 1fr; }
-    .person-dialog-photo { width: 9rem; }
+    .person-dialog-photo { width: 7.5rem; }
   }
   .person-dialog[open] {
     animation: person-in 0.4s var(--ease-out-expo);
@@ -264,7 +385,7 @@ const breadcrumb = {
     from { opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .person-portrait { transition: none; }
+    .org-portrait { transition: none; }
     .person-dialog[open], .person-dialog[open]::backdrop { animation: none; }
   }
 </style>
@@ -272,28 +393,37 @@ const breadcrumb = {
 <script>
   // Bio dialogs: native <dialog> gives Esc and focus containment. Focus goes
   // to the heading on open and back to the opener on close; a click on the
-  // backdrop targets the dialog element itself.
-  let opener: HTMLElement | null = null;
-  const lockScroll = (on: boolean) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
+  // backdrop targets the dialog element itself. Re-run after every
+  // client-side navigation; the data-bound guard skips a DOM already wired.
+  const initTeam = () => {
+    const root = document.querySelector('.org') as HTMLElement | null;
+    if (!root || root.dataset.bound) return;
+    root.dataset.bound = '1';
 
-  document.querySelectorAll<HTMLElement>('[data-person-open]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const d = document.getElementById('person-bio-' + btn.dataset.personOpen) as HTMLDialogElement | null;
-      if (!d) return;
-      opener = btn;
-      d.showModal();
-      lockScroll(true);
-      (d.querySelector('h3[tabindex="-1"]') as HTMLElement | null)?.focus();
-    });
-  });
+    let opener: HTMLElement | null = null;
+    const lockScroll = (on: boolean) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
 
-  document.querySelectorAll<HTMLDialogElement>('dialog.person-dialog').forEach((d) => {
-    d.querySelector('[data-person-close]')?.addEventListener('click', () => d.close());
-    d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
-    d.addEventListener('close', () => {
-      lockScroll(false);
-      opener?.focus();
-      opener = null;
+    document.querySelectorAll<HTMLElement>('[data-person-open]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const d = document.getElementById('person-bio-' + btn.dataset.personOpen) as HTMLDialogElement | null;
+        if (!d) return;
+        opener = btn;
+        d.showModal();
+        lockScroll(true);
+        (d.querySelector('h3[tabindex="-1"]') as HTMLElement | null)?.focus();
+      });
     });
-  });
+
+    document.querySelectorAll<HTMLDialogElement>('dialog.person-dialog').forEach((d) => {
+      d.querySelector('[data-person-close]')?.addEventListener('click', () => d.close());
+      d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+      d.addEventListener('close', () => {
+        lockScroll(false);
+        opener?.focus();
+        opener = null;
+      });
+    });
+  };
+  initTeam();
+  document.addEventListener('astro:page-load', initTeam);
 </script>

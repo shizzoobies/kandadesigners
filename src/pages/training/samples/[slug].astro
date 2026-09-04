@@ -71,6 +71,7 @@ const workSchema = {
 };
 ---
 <BaseLayout
+  clientRouter
   title={sample.title + ' | Training Samples | K & A Performance'}
   description={sample.what}
 >
@@ -115,7 +116,7 @@ const workSchema = {
       <iframe
         src={sample.dir}
         title={'Interactive sample: ' + sample.title}
-        class="glow-frame w-full"
+        class="glow-frame tr-frame w-full"
         style="height: clamp(700px, 84vh, 900px); border: 0;"
         loading="eager"
       ></iframe>

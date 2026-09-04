@@ -5,7 +5,7 @@
 // every page except /contact/ (which has both inline).
 import ScopeChat from './ScopeChat.astro';
 ---
-<dialog id="sp-modal" class="sp-modal" aria-label="Start a project">
+<dialog id="sp-modal" class="sp-modal" aria-label="Start a project" transition:persist="start-project">
   <div class="sp-head">
     <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Start a <span class="text-accent">project</span></p>
     <button type="button" id="sp-close" class="sp-close" aria-label="Close start a project">

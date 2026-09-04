@@ -47,6 +47,7 @@ const verticalTitles = verticals.map((v) => v.title);
 const SITE_LABEL = 'ka-performancefl.com/training';
 ---
 <BaseLayout
+  clientRouter
   title="Training Content Capabilities | K & A Performance"
   description="A one-page capabilities summary for K & A Performance training content: what we build, the bench, subject matter experts, SCORM and xAPI delivery, WCAG 2.1 AA, and engagement models. Downloadable as a PDF."
 >
@@ -72,7 +73,7 @@ const SITE_LABEL = 'ka-performancefl.com/training';
   </section>
 
   <div class="cap-shell mx-auto max-w-5xl px-6 pb-24">
-    <article id="capabilities" class="cap glow-frame">
+    <article id="capabilities" class="cap glow-frame tr-frame">
       <header class="cap-masthead">
         <div class="cap-ident">
           {/* alt="" on purpose: the studio name sits next to the mark as real

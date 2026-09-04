@@ -1,22 +1,28 @@
 ---
-// The training section's own navigation: Overview, Samples, The bench, and
-// the capabilities PDF. Centered under the hero of every /training/* page.
-// Each stop is a mono kicker with a rust rule that draws in underneath on
-// hover; the current page's rule is already drawn and carries a small
-// square marker, the same drawn language as the services process rail.
-// aria-current does the work for assistive technology.
+// The training section's own navigation: Overview, Samples, Meet the team,
+// and the capabilities PDF. Centered under the hero of every /training/*
+// page. Each stop is a mono kicker with a rust rule that draws in underneath
+// on hover; the current page's rule is already drawn and carries a small
+// square marker. aria-current does the work for assistive technology.
+//
+// The training pages use Astro's ClientRouter, so a tab click swaps content
+// in place. The script below keeps the tabs at the same spot on screen
+// across the swap, so the hero above and the content below change while
+// the tabs hold still. transition:name lets the view transition morph the
+// strip rather than fade it.
 import { sectionLinks } from '../data/training.js';
 
 const path = Astro.url.pathname;
 const isCurrent = (href) => !href.endsWith('.pdf') && path === href;
 ---
-<nav aria-label="Training section" class="tr-subnav mx-auto max-w-6xl px-6">
+<nav aria-label="Training section" class="tr-subnav mx-auto max-w-6xl px-6" transition:name="training-tabs">
   <ul class="tr-subnav-list">
     {sectionLinks.map((l) => (
       <li>
         <a
           href={l.href}
           download={l.download ? '' : undefined}
+          data-astro-reload={l.download ? '' : undefined}
           aria-current={isCurrent(l.href) ? 'page' : undefined}
           class:list={['tr-stop', { 'is-current': isCurrent(l.href), 'is-file': l.download }]}
         >
@@ -33,67 +39,60 @@ const isCurrent = (href) => !href.endsWith('.pdf') && path === href;
   </ul>
 </nav>
 
-<script is:inline>
-  // Arrival half: runs as soon as this nav is parsed, before first paint of
-  // anything below it. If the previous page was a training tab, place the
-  // tabs at the exact viewport position they had when clicked, then reveal.
-  (function () {
-    var html = document.documentElement;
-    if (!html.classList.contains('tr-arrive')) return;
-    var top = parseFloat(sessionStorage.getItem('tr-top') || '');
-    sessionStorage.removeItem('tr-top');
-    // The document is not scrollable until the whole body has parsed, so
-    // the placement waits for DOMContentLoaded (main is still invisible),
-    // then reveals. Lenis, if it has started, is told the same position so
-    // it does not ease back toward wherever it woke up.
-    var place = function () {
-      var nav = document.querySelector('.tr-subnav');
-      if (nav && !isNaN(top)) {
-        var y = Math.max(0, nav.getBoundingClientRect().top + window.pageYOffset - top);
-        window.scrollTo(0, y);
-        try {
-          var lenis = window.__motion && window.__motion.lenis;
-          if (lenis && lenis.scrollTo) lenis.scrollTo(y, { immediate: true, force: true });
-        } catch (e) {}
-      }
-    };
-    var reveal = function () {
-      place();
-      requestAnimationFrame(function () { html.classList.add('tr-arrive-in'); });
-    };
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', reveal);
-    else reveal();
-    // Fonts and images can still shift the hero height a little after the
-    // reveal; settle once more on load unless the reader has scrolled.
-    var startY = null;
-    window.addEventListener('load', function () {
-      if (startY === null || Math.abs(window.pageYOffset - startY) < 2) place();
-    });
-    document.addEventListener('DOMContentLoaded', function () { startY = window.pageYOffset; });
-  })();
-</script>
-
 <script>
-  // Departure half: on a tab click, remember where the tabs sit on screen,
-  // fade the page out, then navigate. Modified clicks and the PDF download
-  // are left to the browser.
-  const nav = document.querySelector('.tr-subnav');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  nav?.querySelectorAll<HTMLAnchorElement>('a.tr-stop').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      if (a.hasAttribute('download') || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-      if (a.getAttribute('aria-current') === 'page') { e.preventDefault(); return; }
-      e.preventDefault();
-      try {
-        sessionStorage.setItem('tr-arrive', '1');
-        sessionStorage.setItem('tr-top', String(nav.getBoundingClientRect().top));
-      } catch {}
-      const go = () => { location.href = a.href; };
-      if (reduced) return go();
-      document.documentElement.classList.add('tr-leave');
-      setTimeout(go, 170);
+  // Keep the tabs where they were across a client-side swap. Before Astro
+  // prepares the next page we note the strip's viewport offset if the click
+  // came from a tab. After the swap, and for the first moments after
+  // astro:page-load, we re-measure every frame and scroll so the new strip
+  // sits at that offset: the hero above it is still settling its entrance
+  // animation, so a single measurement lands a few pixels off. The loop
+  // stops early the moment the reader scrolls. Lenis is told the same number
+  // so it does not ease back. Document-level listeners survive swaps; the
+  // guard keeps a second module evaluation from doubling them.
+  const w = window as any;
+  if (!w.__trTabsBound) {
+    w.__trTabsBound = true;
+    let keepTop: number | null = null;
+    let settling = 0;
+
+    document.addEventListener('astro:before-preparation', (e: any) => {
+      const from = e.sourceElement as Element | null;
+      const fromTab = from?.closest?.('.tr-subnav a.tr-stop');
+      const strip = document.querySelector('.tr-subnav');
+      keepTop = fromTab && strip ? strip.getBoundingClientRect().top : null;
     });
-  });
+
+    const place = () => {
+      if (keepTop === null) return false;
+      const strip = document.querySelector('.tr-subnav');
+      if (!strip) return false;
+      const delta = strip.getBoundingClientRect().top - keepTop;
+      if (Math.abs(delta) < 1) return true;
+      const y = Math.max(0, window.pageYOffset + delta);
+      window.scrollTo(0, y);
+      try {
+        const lenis = w.__motion?.lenis;
+        if (lenis?.scrollTo) lenis.scrollTo(y, { immediate: true, force: true });
+      } catch {}
+      return true;
+    };
+
+    const stop = () => { settling = 0; keepTop = null; };
+    ['wheel', 'touchstart', 'keydown'].forEach((ev) => document.addEventListener(ev, stop, { passive: true }));
+
+    document.addEventListener('astro:after-swap', () => { place(); });
+    document.addEventListener('astro:page-load', () => {
+      const token = ++settling;
+      const started = performance.now();
+      const tick = () => {
+        if (settling !== token) return;
+        place();
+        if (performance.now() - started < 900) requestAnimationFrame(tick);
+        else stop();
+      };
+      tick();
+    });
+  }
 </script>
 
 <style>
@@ -133,8 +132,6 @@ const isCurrent = (href) => !href.endsWith('.pdf') && path === href;
     width: 0.9rem;
     height: 0.9rem;
   }
-  /* The rule: drawn from the left on hover, already drawn for the current
-     stop, which also gets the square marker at its head. */
   .tr-stop-rule {
     position: absolute;
     left: 0;

@@ -635,27 +635,48 @@ body {
     .backdrop-card:hover { background-size: cover, cover; }
   }
 
-
-/* Training section tab arrivals (see the head script in BaseLayout and the
-   scripts in TrainingSubnav). Leaving: main fades out. Arriving: main starts
-   invisible, the page is scrolled so the tabs sit where they were, then main
-   fades in. Reduced motion keeps the placement and drops the fades. */
-html.tr-leave main {
-  opacity: 0;
-  transition: opacity 0.16s ease-out;
+/* The training section's panel frame (2026-09-04): one rule for every
+   panel so they read as a set whatever sits inside them. A thin rust outer
+   rule with an inset hairline, the same drawn language as .btn-draw. Sits
+   on top of any backdrop image (the hairline is a pseudo-element above the
+   background). Unlayered for the same reason as .backdrop-card. */
+.tr-frame {
+  position: relative;
+  border: 1px solid rgb(154 52 18 / 0.32);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 2px rgb(34 28 21 / 0.05),
+    0 14px 34px -14px rgb(154 52 18 / 0.18),
+    0 24px 64px -32px rgb(19 78 74 / 0.2);
+  transition: border-color var(--dur-fast) var(--ease-out-expo), box-shadow var(--dur-fast) var(--ease-out-expo);
 }
-html.tr-arrive main {
-  opacity: 0;
+.tr-frame::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgb(154 52 18 / 0.14);
+  border-radius: 8px;
+  pointer-events: none;
 }
-html.tr-arrive.tr-arrive-in main {
-  opacity: 1;
-  transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+.tr-frame:hover,
+a.tr-frame:focus-visible {
+  border-color: rgb(154 52 18 / 0.6);
+  box-shadow:
+    0 1px 2px rgb(34 28 21 / 0.05),
+    0 18px 40px -14px rgb(154 52 18 / 0.28),
+    0 24px 64px -32px rgb(19 78 74 / 0.2);
 }
 @media (prefers-reduced-motion: reduce) {
-  html.tr-leave main,
-  html.tr-arrive main,
-  html.tr-arrive.tr-arrive-in main {
-    opacity: 1;
-    transition: none;
-  }
+  .tr-frame { transition: none; }
+}
+.tr-frame-planned {
+  border-style: dashed;
+  border-color: rgb(154 52 18 / 0.28);
+  box-shadow: none;
+}
+.tr-frame-planned::after { display: none; }
+.tr-frame-planned:hover { border-color: rgb(154 52 18 / 0.28); box-shadow: none; }
+@media print {
+  .tr-frame { border: 0; box-shadow: none; }
+  .tr-frame::after { display: none; }
 }

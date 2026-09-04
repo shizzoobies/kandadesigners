@@ -56,6 +56,7 @@ const collectionSchema = {
 };
 ---
 <BaseLayout
+  clientRouter
   title="Training Content Samples | K & A Performance"
   description="Play our original training samples in the browser. Each one says what it is, what it demonstrates, the technique behind it, and the accessibility standard it meets."
 >
@@ -98,7 +99,7 @@ const collectionSchema = {
     <ul class="grid list-none gap-8 p-0 md:grid-cols-2">
       {cards.map((s) => (
         <li>
-          <a href={s.href} data-animate="frame-lift" class="glow-frame backdrop-card group flex h-full flex-col p-7" style={`--bd: url('${s.backdrop}')`}>
+          <a href={s.href} data-animate="frame-lift" class="glow-frame tr-frame backdrop-card group flex h-full flex-col p-7" style={`--bd: url('${s.backdrop}')`}>
             <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">{s.meta}</p>
             <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
             <p class="mt-4 flex-1 leading-relaxed text-muted">{s.what}</p>
@@ -112,7 +113,7 @@ const collectionSchema = {
 
       {placeholders.map((s) => (
         <li>
-          <div data-animate="frame-lift" class="flex h-full flex-col rounded-xl border border-dashed border-ink/20 p-7">
+          <div data-animate="frame-lift" class="tr-frame tr-frame-planned flex h-full flex-col p-7">
             <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">In production</p>
             <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
             <p class="mt-4 flex-1 leading-relaxed text-muted">{s.what}</p>
@@ -138,7 +139,7 @@ const collectionSchema = {
       <div data-animate="type-settle" data-animate-delay="0.1" class="flex flex-wrap items-center gap-6">
         <a href="/training/?inquire=1" class="btn-draw">Ask about a project</a>
         <a href="/training/team/" class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">
-          Meet the bench
+          Meet the team
         </a>
       </div>
     </div>
