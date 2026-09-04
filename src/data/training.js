@@ -175,7 +175,7 @@ export const team = {
     {
       name: 'Alex Anderson',
       role: 'Managing member, design and development',
-      line: 'Leads every training engagement',
+      line: 'Lead Learning Experience Designer',
       bio: 'Alex does the design and the development, so whoever storyboards your module is the one who builds it. He leads every training engagement personally, brings prior years of building training for the construction and skilled trades, and is pursuing IAAP CPACC certification in accessibility.',
       photo: '/images/Alex-Image.webp',
       link: null,
@@ -183,7 +183,7 @@ export const team = {
     {
       name: 'Kristina Anderson',
       role: 'Strategy and content',
-      line: 'The one asking what a module is for',
+      line: 'Instructional Designer and Accessibility Specialist',
       bio: 'Kristina runs strategy and content. In practice she is the one asking why a module exists at all and what it is supposed to make somebody do once they have taken it, which is the question most training never gets asked.',
       photo: '/images/Kristina-Image.webp',
       link: null,
