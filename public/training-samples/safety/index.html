@@ -728,6 +728,33 @@
     </nav>
   </footer>
 
+  <!-- The ending. Closed in the markup, so with scripting off it never renders
+       and the last screen's summary is the end of the module. -->
+  <dialog class="done" id="done" aria-labelledby="done-title">
+    <div class="done-inner">
+      <div class="stripe done-stripe" aria-hidden="true"></div>
+      <div class="done-body">
+        <h2 class="done-h" id="done-title" tabindex="-1">Walk-through done</h2>
+        <p class="done-sub">Spot it before it hurts someone</p>
+
+        <ul class="done-scores">
+          <li><span class="done-label">Hazards found</span> <span class="done-val" id="done-hunt">0 of 6</span></li>
+          <li><span class="done-label">Hierarchy of controls</span> <span class="done-val" id="done-controls">0 of 6</span></li>
+          <li><span class="done-label">Stop or go</span> <span class="done-val" id="done-calls">0 of 8</span></li>
+          <li><span class="done-label">Checks on your card</span> <span class="done-val" id="done-checks">0</span></li>
+        </ul>
+
+        <p class="done-line">You have a route, an order to work it in, and a card you can carry. Walk it tomorrow, the same four zones, and it starts doing the work for you.</p>
+
+        <div class="done-actions">
+          <button type="button" class="btn-hi" id="done-review">Review my card</button>
+          <button type="button" class="btn-ghost" id="done-restart">Start over</button>
+          <button type="button" class="btn-ghost btn-mini" id="done-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
 </div>
 <script src="app.js"></script>
 </body>

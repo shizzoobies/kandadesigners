@@ -864,6 +864,33 @@
 
 </div>
 
+<!-- The ending. With JS off a dialog without the open attribute never
+     renders, and the takeaway panel below the statement is the ending
+     instead. -->
+<dialog id="done" aria-labelledby="done-title">
+  <div class="done-card">
+    <p class="done-eyebrow">The profit and loss statement, read like an owner</p>
+    <h2 id="done-title" tabindex="-1">Module complete</h2>
+    <p class="done-say">You have taken a month apart from the top line to the bottom, and you know which number to carry into the next one.</p>
+
+    <p class="panel-title done-heading">Where you landed</p>
+    <dl class="done-figures">
+      <div><dt>Classify the line</dt><dd id="done-classify">0 of 10</dd></div>
+      <div><dt>The decision</dt><dd id="done-dec">Not answered</dd></div>
+      <div><dt>Three quick reads</dt><dd id="done-reads">0 of 3</dd></div>
+      <div class="done-watch"><dt>The one number to watch</dt><dd>Gross margin</dd></div>
+    </dl>
+
+    <p class="disclaimer done-note">This is a teaching demonstration and not a substitute for advice from your accountant.</p>
+
+    <div class="done-actions">
+      <button type="button" class="btn-solid btn-small" id="done-takeaway">Review the takeaway</button>
+      <button type="button" class="btn-quiet btn-small" id="done-restart">Start over</button>
+      <button type="button" class="btn-quiet btn-small" id="done-close">Close</button>
+    </div>
+  </div>
+</dialog>
+
 <script src="app.js"></script>
 </body>
 </html>

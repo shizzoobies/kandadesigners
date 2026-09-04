@@ -1304,6 +1304,96 @@ html.js .screen-body > .substeps {
   margin: 0;
 }
 
+/* ---------- the ending ---------- */
+
+/* A native dialog: closed it is display:none from the user agent sheet, so a
+   visitor with scripting off never meets it, and open it sits in the top layer
+   where the stage behind it is inert to pointer and keyboard. */
+.done {
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 3px solid var(--yellow);
+  background: var(--panel);
+  color: var(--chalk);
+  box-shadow: 8px 8px 0 0 rgb(255 106 19 / 0.75);
+}
+
+.done::backdrop {
+  background: rgb(9 10 11 / 0.84);
+}
+
+.done-body {
+  padding: 1rem 1.3rem 1.2rem;
+}
+
+.done-h {
+  margin: 0 0 0.2rem;
+  padding-right: 0;
+  font-size: clamp(2rem, 4.6vw, 2.7rem);
+  line-height: 0.98;
+}
+
+.done-sub {
+  margin: 0 0 0.9rem;
+  font-weight: 700;
+  font-size: 0.86rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--concrete);
+}
+
+.done-scores {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.done-scores > li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  background: var(--raise);
+  border-left: 5px solid var(--orange);
+}
+
+.done-label {
+  color: var(--concrete);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.done-val {
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  color: var(--yellow);
+  white-space: nowrap;
+}
+
+.done-line {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.7rem;
+}
+
 /* ---------- pager ---------- */
 
 .rig-foot {
@@ -1539,6 +1629,16 @@ button[disabled]:hover {
     padding-top: 0.45rem;
   }
 
+  .done-body {
+    padding: 0.8rem 1rem 0.9rem;
+  }
+
+  .done-sub,
+  .done-scores,
+  .done-line {
+    margin-bottom: 0.65rem;
+  }
+
   .spotlist {
     margin-bottom: 0.4rem;
   }
@@ -1620,6 +1720,10 @@ button[disabled]:hover {
   .sub-bar {
     gap: 0.5rem;
   }
+
+  .done-scores {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ---------- motion, only when the visitor has not asked for less ---------- */
@@ -1648,6 +1752,12 @@ button[disabled]:hover {
 
   .card-list > li {
     animation: tick-in 0.3s ease both;
+  }
+
+  /* The ending stamps itself down. The stripe band inside it sweeps on its own,
+     because opening the dialog builds the box fresh and .stripe restarts. */
+  .done[open] {
+    animation: done-in 0.32s cubic-bezier(0.2, 1.15, 0.3, 1) both;
   }
 
   @keyframes stripe-sweep {
@@ -1681,6 +1791,11 @@ button[disabled]:hover {
 
   @keyframes tick-in {
     from { transform: translateX(-8px); }
+    to { transform: none; }
+  }
+
+  @keyframes done-in {
+    from { transform: scale(1.06) rotate(-1.2deg); }
     to { transform: none; }
   }
 }

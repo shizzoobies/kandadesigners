@@ -6,7 +6,8 @@
      4. run the sub-steps inside the two question screens,
      5. run the hazard hunt from either the picture or the list,
      6. answer the hierarchy and the stop or go calls, with announced feedback,
-     7. assemble the walk-through card and report the two scores.
+     7. assemble the walk-through card and report the two scores,
+     8. end the module: the pager's last button opens a completion dialog.
 
    Every panel, sub-step and accordion section is open in the markup and closed
    here, so a visitor with scripting off gets the whole module in order rather
@@ -55,6 +56,17 @@
   var cardBody = document.getElementById('card-body');
   var cardCount = document.getElementById('card-count');
   var resultsList = document.getElementById('results-list');
+
+  var doneDialog = document.getElementById('done');
+  var doneTitle = document.getElementById('done-title');
+  var doneHunt = document.getElementById('done-hunt');
+  var doneControls = document.getElementById('done-controls');
+  var doneCalls = document.getElementById('done-calls');
+  var doneChecks = document.getElementById('done-checks');
+  var doneReviewBtn = document.getElementById('done-review');
+  var doneRestartBtn = document.getElementById('done-restart');
+  var doneCloseBtn = document.getElementById('done-close');
+  var focusAfterDone = null;
 
   function each(list, fn) {
     Array.prototype.forEach.call(list, fn);
@@ -473,9 +485,24 @@
       '<li>' + scoreSentence('Stop or go', SG_KEYS) + '</li>';
   }
 
-  /* ---------- completion ---------- */
+  /* ---------- the ending ---------- */
 
-  function announceCompletion() {
+  function scorePhrase(keys) {
+    var s = tally(keys);
+    return s.right + ' of ' + s.total;
+  }
+
+  function checkedCount() {
+    var n = 0;
+    each(picker.querySelectorAll('input[type="checkbox"]'), function (box) {
+      if (box.checked) {
+        n += 1;
+      }
+    });
+    return n;
+  }
+
+  function announceCompletion(scores) {
     if (completedSent) {
       return;
     }
@@ -484,10 +511,46 @@
     // packaged into an LMS has no parent worth talking to.
     try {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: 'ka-sample-complete', slug: 'hazard-recognition' }, '*');
+        window.parent.postMessage({
+          type: 'ka-sample-complete',
+          slug: 'hazard-recognition',
+          scores: scores
+        }, '*');
       }
     } catch (err) {
       /* nothing depends on this */
+    }
+  }
+
+  function openDone() {
+    if (!doneDialog || typeof doneDialog.showModal !== 'function') {
+      return;
+    }
+
+    var scores = {
+      hunt: foundCount + ' of ' + SPOT_COUNT,
+      controls: scorePhrase(HOC_KEYS),
+      calls: scorePhrase(SG_KEYS)
+    };
+    var checks = checkedCount();
+
+    doneHunt.textContent = scores.hunt;
+    doneControls.textContent = scores.controls;
+    doneCalls.textContent = scores.calls;
+    doneChecks.textContent = String(checks);
+
+    // The ping goes out on the first Finish, not on merely landing here.
+    announceCompletion(scores);
+
+    focusAfterDone = nextBtn;
+    doneDialog.showModal();
+    doneTitle.focus();
+  }
+
+  function closeDone(focusTarget) {
+    focusAfterDone = focusTarget || null;
+    if (doneDialog && doneDialog.open) {
+      doneDialog.close();
     }
   }
 
@@ -512,12 +575,13 @@
     barFill.style.width = ((current / TOTAL) * 100) + '%';
 
     prevBtn.disabled = current === 1;
-    nextBtn.disabled = current === TOTAL || (current === HUNT_SCREEN && foundCount < SPOT_COUNT);
-    nextBtn.textContent = current === TOTAL - 1 ? 'Finish' : 'Next';
+    // The last screen keeps a live button: reaching it earns Finish, which is
+    // the ending, rather than a greyed out Next with nothing behind it.
+    nextBtn.disabled = current === HUNT_SCREEN && foundCount < SPOT_COUNT;
+    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
 
     if (current === TOTAL) {
       updateResults();
-      announceCompletion();
     }
 
     replayStripes();
@@ -537,6 +601,10 @@
   });
 
   nextBtn.addEventListener('click', function () {
+    if (current === TOTAL) {
+      openDone();
+      return;
+    }
     show(current + 1, true);
   });
 
@@ -587,48 +655,85 @@
     }
   });
 
+  function resetModule() {
+    each(document.querySelectorAll('[data-q]'), function (btn) {
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    each(document.querySelectorAll('[data-spot]'), function (btn) {
+      btn.setAttribute('aria-pressed', 'false');
+      var state = btn.querySelector('.spot-state');
+      if (state) {
+        state.textContent = '';
+      }
+    });
+    each(document.querySelectorAll('.feedback'), function (p) {
+      p.textContent = '';
+      p.classList.remove('is-in');
+    });
+    each(picker.querySelectorAll('input[type="checkbox"]'), function (box) {
+      box.checked = false;
+    });
+
+    found = {};
+    foundCount = 0;
+    attempts = 0;
+    revealBtn.hidden = true;
+    huntVerdict.innerHTML = '';
+
+    tabSets.forEach(function (set) {
+      selectTab(set, 0, false);
+    });
+    accordions.forEach(function (acc) {
+      openSection(acc, 0);
+    });
+    subRuns.forEach(function (run) {
+      showStep(run, 0, false);
+    });
+
+    updateHunt();
+    updateHocScore();
+    updateSgScore();
+    buildCard();
+    updateResults();
+    show(1, true);
+  }
+
   if (restartBtn) {
-    restartBtn.addEventListener('click', function () {
-      each(document.querySelectorAll('[data-q]'), function (btn) {
-        btn.setAttribute('aria-pressed', 'false');
-      });
-      each(document.querySelectorAll('[data-spot]'), function (btn) {
-        btn.setAttribute('aria-pressed', 'false');
-        var state = btn.querySelector('.spot-state');
-        if (state) {
-          state.textContent = '';
-        }
-      });
-      each(document.querySelectorAll('.feedback'), function (p) {
-        p.textContent = '';
-        p.classList.remove('is-in');
-      });
-      each(picker.querySelectorAll('input[type="checkbox"]'), function (box) {
-        box.checked = false;
-      });
+    restartBtn.addEventListener('click', resetModule);
+  }
 
-      found = {};
-      foundCount = 0;
-      attempts = 0;
-      revealBtn.hidden = true;
-      huntVerdict.innerHTML = '';
+  if (doneDialog) {
+    doneDialog.addEventListener('close', function () {
+      var target = focusAfterDone;
+      focusAfterDone = null;
+      if (target && target.focus) {
+        target.focus();
+      }
+    });
 
-      tabSets.forEach(function (set) {
-        selectTab(set, 0, false);
-      });
-      accordions.forEach(function (acc) {
-        openSection(acc, 0);
-      });
-      subRuns.forEach(function (run) {
-        showStep(run, 0, false);
-      });
+    // A press on the dialog itself is a press on the backdrop: the padding
+    // lives on the inner box, so nothing else can be the target.
+    doneDialog.addEventListener('click', function (event) {
+      if (event.target === doneDialog) {
+        closeDone(nextBtn);
+      }
+    });
 
-      updateHunt();
-      updateHocScore();
-      updateSgScore();
-      buildCard();
-      updateResults();
-      show(1, true);
+    doneCloseBtn.addEventListener('click', function () {
+      closeDone(nextBtn);
+    });
+
+    doneReviewBtn.addEventListener('click', function () {
+      var cardTab = document.getElementById('tab-9b');
+      if (cardTab) {
+        cardTab.click();
+      }
+      closeDone(screens[TOTAL - 1].querySelector('h2'));
+    });
+
+    doneRestartBtn.addEventListener('click', function () {
+      closeDone(null);
+      resetModule();
     });
   }
 

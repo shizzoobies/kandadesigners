@@ -122,6 +122,26 @@ const workSchema = {
     </div>
 
     <div id="after-sample" tabindex="-1" class="scroll-mt-28"></div>
+
+    <!-- The sample posts one ka-sample-complete message when the learner
+         presses Finish inside it. This note answers it from the page side:
+         a polite live region, so the completion is announced without taking
+         focus away from the sample's own completion dialog. -->
+    <div id="sample-done" hidden class="mt-6 glow-frame flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between md:p-8" role="status" aria-live="polite">
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">Sample complete</p>
+        <p class="mt-2 font-heading text-lg font-semibold">You finished {sample.title}.</p>
+        <p class="mt-1 text-muted">Everything you just used, from the pacing to the keyboard path, is how we build for clients.</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-6">
+        {next ? (
+          <a href={'/training/samples/' + next.slug + '/'} class="btn-draw">Next sample: {next.title}</a>
+        ) : (
+          <a href="/training/samples/" class="btn-draw">All samples</a>
+        )}
+        <a href="/training/?inquire=1" class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">Ask about a project like this</a>
+      </div>
+    </div>
   </section>
 
   <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
@@ -174,6 +194,18 @@ const workSchema = {
     </div>
   </section>
 </BaseLayout>
+
+<script define:vars={{ slug: sample.slug }}>
+  // Listen for the sample's completion message. Origin is the same site,
+  // but the check is on the message shape and slug, never on trusting the
+  // payload for anything beyond showing the note.
+  window.addEventListener('message', (e) => {
+    const d = e && e.data;
+    if (!d || d.type !== 'ka-sample-complete' || d.slug !== slug) return;
+    const note = document.getElementById('sample-done');
+    if (note) note.hidden = false;
+  });
+</script>
 
 <style>
   /* Same show-on-focus behaviour as the sitewide .skip-link, kept as its own

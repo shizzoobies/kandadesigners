@@ -10,7 +10,8 @@
      4. run the four lever simulator and announce it without chattering,
      5. answer the sorter, the decision, and the three reads in text,
      6. draw the entry motion, or skip all of it under reduced motion,
-     7. send exactly one completion message to a parent that may not exist.
+     7. end the module on purpose: Finish opens a completion dialog and
+        sends exactly one message to a parent that may not exist.
 
    Everything this file hides is visible without it. Nothing ships with a
    hidden attribute in the markup: with JS off every tab panel, every
@@ -182,12 +183,21 @@
     });
 
     select(0, false);
-    return { select: select };
+    return { root: root, select: select };
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-tabs]'), function (root) {
     var set = initTabs(root);
     if (set) { tabSets.push(set); }
+  });
+
+  // The last screen's tab set, found by the tab it contains rather than by
+  // its position in the document, so adding a tab set anywhere cannot
+  // silently point the ending at the wrong panel.
+  var takeawayTab = document.getElementById('tab-w3');
+  var takeawaySet = null;
+  tabSets.forEach(function (set) {
+    if (takeawayTab && set.root.contains(takeawayTab)) { takeawaySet = set; }
   });
 
   /* ============================================================
@@ -665,22 +675,38 @@
   var finalDec = document.getElementById('final-dec');
   var finalReads = document.getElementById('final-reads');
 
+  // One reading of the decision, used by the scorecard, the ending card, and
+  // the message that leaves the frame, so the three can never disagree.
+  function decisionSummary() {
+    var chosen = document.querySelector('[data-q="dec"][aria-pressed="true"]');
+    if (!chosen) {
+      return { answered: false, label: 'Not answered', tag: '', kind: '', message: 'not answered' };
+    }
+    var tagEl = chosen.querySelector('.choice-tag');
+    var label = tagEl ? tagEl.textContent : 'An option';
+    var right = chosen.getAttribute('data-opt') === 'wait';
+    return {
+      answered: true,
+      label: label,
+      tag: right ? 'strongest' : 'not the call',
+      kind: right ? 'pos' : 'neg',
+      message: label + (right ? ', the strongest read' : ', not the strongest read')
+    };
+  }
+
   function paintScorecard() {
     var c = classifyTally();
     finalClassify.textContent = c.answered === 0
       ? 'Classify the line: not answered yet. Screen five is still there if you want it.'
       : 'Classify the line: ' + c.right + ' of ' + c.answered + ' placed correctly, out of ten items.';
 
-    var chosen = document.querySelector('[data-q="dec"][aria-pressed="true"]');
-    if (!chosen) {
+    var d = decisionSummary();
+    if (!d.answered) {
       finalDec.textContent = 'The decision: not answered yet.';
     } else {
-      var opt = chosen.getAttribute('data-opt');
-      var tag = chosen.querySelector('.choice-tag');
-      var label = tag ? tag.textContent : 'an option';
-      finalDec.textContent = opt === 'wait'
-        ? 'The decision: you chose ' + label + ', the strongest read of the month.'
-        : 'The decision: you chose ' + label + '. The strongest read was Option B, which separates the margin question from the cash question.';
+      finalDec.textContent = d.kind === 'pos'
+        ? 'The decision: you chose ' + d.label + ', the strongest read of the month.'
+        : 'The decision: you chose ' + d.label + '. The strongest read was Option B, which separates the margin question from the cash question.';
     }
 
     var r = readsTally();
@@ -747,14 +773,26 @@
      Screen movement
      ============================================================ */
 
+  // Sent on the first press of Finish and never again, because finishing is
+  // an act and not a side effect of arriving on the last screen. Best effort:
+  // the host is not required to listen, and a packaged copy inside an LMS has
+  // no parent worth talking to.
   function announceCompletion() {
     if (completedSent) { return; }
     completedSent = true;
-    // Best effort. The host is not required to listen, and a packaged copy
-    // inside an LMS has no parent worth talking to.
     try {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: 'ka-sample-complete', slug: 'reading-the-pnl' }, '*');
+        var c = classifyTally();
+        var r = readsTally();
+        window.parent.postMessage({
+          type: 'ka-sample-complete',
+          slug: 'reading-the-pnl',
+          scores: {
+            classify: c.right + ' of 10',
+            decision: decisionSummary().message,
+            reads: r.right + ' of 3'
+          }
+        }, '*');
       }
     } catch (err) {
       /* nothing depends on this */
@@ -774,8 +812,10 @@
     barFill.style.width = ((current / TOTAL) * 100) + '%';
 
     prevBtn.disabled = current === 1;
-    nextBtn.disabled = current === TOTAL;
-    nextBtn.textContent = current >= TOTAL - 1 ? 'Finish' : 'Next';
+    // The last button is never a dead control. On the last screen it stops
+    // being a pager and becomes the thing that ends the module.
+    nextBtn.disabled = false;
+    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
 
     var heading = screens[current - 1].querySelector('h2');
     if (heading) { restart(heading); }
@@ -790,16 +830,12 @@
     if (current === 8) {
       animateWaterfall();
       paintScorecard();
-      announceCompletion();
     }
 
     if (moveFocus && heading) { heading.focus(); }
   }
 
-  prevBtn.addEventListener('click', function () { show(current - 1, true); });
-  nextBtn.addEventListener('click', function () { show(current + 1, true); });
-
-  document.getElementById('restart').addEventListener('click', function () {
+  function resetAll() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-q]'), function (btn) {
       btn.setAttribute('aria-pressed', 'false');
     });
@@ -816,7 +852,96 @@
     paintSim(false);
     simLive.textContent = '';
     show(1, true);
+  }
+
+  /* ============================================================
+     The ending: a modal that says the module is over, in the
+     same paper and ink as the module itself. Esc, the close
+     button, and the backdrop all dismiss it, and focus goes back
+     to the button that opened it unless an action asks for it
+     somewhere better.
+     ============================================================ */
+
+  var doneDialog = document.getElementById('done');
+  var doneTitle = document.getElementById('done-title');
+  var doneClassify = document.getElementById('done-classify');
+  var doneDec = document.getElementById('done-dec');
+  var doneReads = document.getElementById('done-reads');
+  var focusAfterClose = null;
+
+  function goToTakeaway() {
+    if (takeawaySet) { takeawaySet.select(2, true); }
+  }
+
+  function paintDone() {
+    var c = classifyTally();
+    var r = readsTally();
+    var d = decisionSummary();
+
+    doneDec.innerHTML = d.answered
+      ? '<span class="fig ' + d.kind + '">' + d.label +
+        ' <span class="tag">' + d.tag + '</span></span>'
+      : d.label;
+
+    // Counted from zero each time the card opens, and only once per opening.
+    doneClassify._val = 0;
+    doneReads._val = 0;
+    tween(doneClassify, c.right, function (v) { return Math.round(v) + ' of 10'; });
+    tween(doneReads, r.right, function (v) { return Math.round(v) + ' of 3'; });
+  }
+
+  function openDone() {
+    paintScorecard();
+    announceCompletion();
+
+    // No dialog support means no modal. The takeaway panel is the ending in
+    // that case, exactly as it is with JS off.
+    if (typeof doneDialog.showModal !== 'function') {
+      goToTakeaway();
+      return;
+    }
+
+    focusAfterClose = null;
+    paintDone();
+    doneDialog.showModal();
+    doneTitle.focus();
+  }
+
+  doneDialog.addEventListener('close', function () {
+    var next = focusAfterClose;
+    focusAfterClose = null;
+    if (next) { next(); return; }
+    nextBtn.focus();
   });
+
+  // A click that reaches the dialog itself landed on the backdrop: the card
+  // inside carries all the padding.
+  doneDialog.addEventListener('click', function (event) {
+    if (event.target === doneDialog) { doneDialog.close(); }
+  });
+
+  document.getElementById('done-close').addEventListener('click', function () {
+    doneDialog.close();
+  });
+
+  document.getElementById('done-takeaway').addEventListener('click', function () {
+    focusAfterClose = goToTakeaway;
+    doneDialog.close();
+  });
+
+  document.getElementById('done-restart').addEventListener('click', function () {
+    focusAfterClose = resetAll;
+    doneDialog.close();
+  });
+
+  prevBtn.addEventListener('click', function () { show(current - 1, true); });
+
+  nextBtn.addEventListener('click', function () {
+    if (current === TOTAL) { openDone(); return; }
+    show(current + 1, true);
+  });
+
+  document.getElementById('restart').addEventListener('click', resetAll);
 
   /* ---------------------------------------------- start */
 

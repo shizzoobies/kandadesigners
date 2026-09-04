@@ -701,6 +701,193 @@ button[disabled]:hover {
   color: var(--muted);
 }
 
+/* ---------- the ending ----------
+   A native modal dialog. Closed it is display none, so with scripting off it
+   is simply not there and the checklist screen is the end of the piece. The
+   dialog element itself is stripped back to nothing and the card inside it
+   carries the surface, so a click that lands on the dialog box is a click on
+   the backdrop and can close it. */
+
+#done {
+  width: min(44rem, calc(100vw - 2rem));
+  max-width: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+#done::backdrop {
+  background: rgb(248 245 242 / 0.86);
+}
+
+.done-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.35rem 1.6rem 1.4rem;
+  box-shadow: 0 26px 64px rgb(34 28 21 / 0.22), 0 2px 6px rgb(34 28 21 / 0.07);
+}
+
+.done-x {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.done-x:hover {
+  border-color: var(--accent);
+  color: var(--accent-hot);
+}
+
+.done-x svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.done-kicker {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.done-title {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.4vw, 1.95rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.done-rule {
+  width: 4.5rem;
+  height: 3px;
+  margin: 0 0 0.85rem;
+  border-radius: 999px;
+  background: var(--accent);
+  transform-origin: left center;
+}
+
+.done-line {
+  margin: 0 0 0.9rem;
+  font-size: 1.02rem;
+  color: var(--ink);
+}
+
+.done-scores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin: 0 0 0.95rem;
+}
+
+.done-score {
+  margin: 0;
+  padding: 0.6rem 0.85rem;
+  background: var(--canvas);
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+}
+
+.done-score-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.done-score b {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 1.05rem;
+  color: var(--accent-hot);
+}
+
+.done-aid-title {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.done-aid {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.done-aid li {
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.done-aid li:last-child {
+  margin-bottom: 0;
+}
+
+.done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* Motion only where it is welcome: the card rises and settles, the rust rule
+   draws from the left. No opacity keyframes on any text. */
+@media (prefers-reduced-motion: no-preference) {
+  #done[open]::backdrop {
+    animation: done-wash 0.26s ease both;
+  }
+
+  #done[open] .done-card {
+    animation: done-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  #done[open] .done-rule {
+    animation: done-draw 0.5s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes done-wash {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes done-rise {
+  from { transform: translateY(14px); }
+  to { transform: none; }
+}
+
+@keyframes done-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
 /* ---------- reflow ---------- */
 
 /* Under the fixed stage threshold the columns stack and the screen body
@@ -736,6 +923,15 @@ button[disabled]:hover {
   }
   .sort,
   .btn-mini {
+    flex: 1 1 auto;
+  }
+  .done-card {
+    padding: 1.1rem 1.15rem 1.2rem;
+  }
+  .done-scores {
+    grid-template-columns: 1fr;
+  }
+  .done-actions > * {
     flex: 1 1 auto;
   }
 }

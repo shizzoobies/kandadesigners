@@ -1,10 +1,11 @@
 /* The RFI that gets answered.
-   Plain DOM, no framework, no network. Five jobs only:
+   Plain DOM, no framework, no network. Six jobs only:
      1. show one screen at a time and move focus to its heading,
      2. enhance the marked up sections into WAI-ARIA tab sets,
      3. enhance the marked up sections into in-screen sub-steps,
      4. answer the choice buttons with visible, announced feedback,
-     5. keep a score for the three decisions.
+     5. keep a score for the three decisions and the six fragments,
+     6. end the piece on Finish with a native modal dialog that says so.
 
    Tab sets and sub-steps are built here rather than written into the HTML
    so that with scripting off every panel and every step renders open, in
@@ -35,6 +36,15 @@
   var scoreLine = document.getElementById('score-line');
   var finalScore = document.getElementById('final-score');
   var restartBtn = document.getElementById('restart');
+
+  var doneDialog = document.getElementById('done');
+  var doneTitle = document.getElementById('done-title');
+  var doneCloseBtn = document.getElementById('done-close');
+  var doneReviewBtn = document.getElementById('done-review');
+  var doneRestartBtn = document.getElementById('done-restart');
+  var doneDecisions = document.getElementById('done-decisions');
+  var doneSorter = document.getElementById('done-sorter');
+  var returnFocusTo = null;
 
   var resetters = [];
 
@@ -104,10 +114,10 @@
       '<span class="verdict">' + (ok ? 'Correct.' : 'Not quite.') + '</span> ' + text;
   }
 
-  function scoreDecisions() {
+  function tally(keys) {
     var answered = 0;
     var right = 0;
-    ['k1', 'k2', 'k3'].forEach(function (key) {
+    keys.forEach(function (key) {
       var chosen = document.querySelector('[data-q="' + key + '"][aria-pressed="true"]');
       if (chosen) {
         answered += 1;
@@ -117,6 +127,14 @@
       }
     });
     return { answered: answered, right: right };
+  }
+
+  function scoreDecisions() {
+    return tally(['k1', 'k2', 'k3']);
+  }
+
+  function scoreSorter() {
+    return tally(['s1', 's2', 's3', 's4', 's5', 's6']);
   }
 
   function updateScoreLine() {
@@ -141,6 +159,8 @@
     }
   }
 
+  // Sent on the first press of Finish, never on merely arriving at the last
+  // screen: reaching the checklist is not the same as saying you are done.
   function announceCompletion() {
     if (completedSent) {
       return;
@@ -150,11 +170,84 @@
     // packaged copy inside an LMS has no parent worth talking to.
     try {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ type: 'ka-sample-complete', slug: 'rfi-that-gets-answered' }, '*');
+        window.parent.postMessage({
+          type: 'ka-sample-complete',
+          slug: 'rfi-that-gets-answered',
+          scores: {
+            decisions: scoreDecisions().right + ' of 3',
+            sorter: scoreSorter().right + ' of 6'
+          }
+        }, '*');
       }
     } catch (err) {
       /* nothing depends on this */
     }
+  }
+
+  /* ---------- the ending ----------
+     A native modal dialog. Esc, the close button and a click on the backdrop
+     all close it; whatever closed it decides where focus lands, and the
+     default is back on the Finish button that opened it. No focus trap of our
+     own: showModal already scopes the tab ring to the dialog. */
+
+  function fillDone() {
+    var d = scoreDecisions();
+    var s = scoreSorter();
+    if (doneDecisions) {
+      doneDecisions.textContent = d.right + ' of 3';
+    }
+    if (doneSorter) {
+      doneSorter.textContent = s.right + ' of 6 correct';
+    }
+  }
+
+  function openDone() {
+    if (!doneDialog || typeof doneDialog.showModal !== 'function') {
+      // No dialog support: the checklist screen is the ending, so leave the
+      // learner on it rather than doing nothing visible at all.
+      var heading = screens[TOTAL - 1].querySelector('h2');
+      if (heading) {
+        heading.focus();
+      }
+      return;
+    }
+    fillDone();
+    returnFocusTo = nextBtn;
+    doneDialog.showModal();
+    if (doneTitle) {
+      doneTitle.focus();
+    }
+  }
+
+  if (doneDialog) {
+    doneDialog.addEventListener('close', function () {
+      var target = returnFocusTo || nextBtn;
+      returnFocusTo = null;
+      if (target) {
+        target.focus();
+      }
+    });
+
+    // A click that lands on the dialog box itself is a click on the backdrop:
+    // the card fills the box, so anything inside it has a different target.
+    doneDialog.addEventListener('click', function (event) {
+      if (event.target === doneDialog) {
+        doneDialog.close();
+      }
+    });
+  }
+
+  if (doneCloseBtn) {
+    doneCloseBtn.addEventListener('click', function () {
+      doneDialog.close();
+    });
+  }
+
+  if (doneReviewBtn) {
+    doneReviewBtn.addEventListener('click', function () {
+      returnFocusTo = screens[TOTAL - 1].querySelector('h2');
+      doneDialog.close();
+    });
   }
 
   /* ---------- tab sets ----------
@@ -353,12 +446,13 @@
     barFill.style.width = ((current / TOTAL) * 100) + '%';
 
     prevBtn.disabled = current === 1;
-    nextBtn.disabled = current === TOTAL;
-    nextBtn.textContent = current >= TOTAL - 1 ? 'Finish' : 'Next';
+    // The last screen is where the piece ends, so the pager ends with a live
+    // Finish rather than a greyed out Next.
+    nextBtn.disabled = false;
+    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
 
     if (current === TOTAL) {
       updateFinalScore();
-      announceCompletion();
     }
 
     if (moveFocus) {
@@ -374,6 +468,11 @@
   });
 
   nextBtn.addEventListener('click', function () {
+    if (current === TOTAL) {
+      announceCompletion();
+      openDone();
+      return;
+    }
     show(current + 1, true);
   });
 
@@ -408,19 +507,32 @@
 
   /* ---------- restart ---------- */
 
+  function resetAll() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-q]'), function (btn) {
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.feedback'), function (p) {
+      p.textContent = '';
+    });
+    resetters.forEach(function (reset) {
+      reset();
+    });
+    updateScoreLine();
+  }
+
   if (restartBtn) {
     restartBtn.addEventListener('click', function () {
-      Array.prototype.forEach.call(document.querySelectorAll('[data-q]'), function (btn) {
-        btn.setAttribute('aria-pressed', 'false');
-      });
-      Array.prototype.forEach.call(document.querySelectorAll('.feedback'), function (p) {
-        p.textContent = '';
-      });
-      resetters.forEach(function (reset) {
-        reset();
-      });
-      updateScoreLine();
+      resetAll();
       show(1, true);
+    });
+  }
+
+  if (doneRestartBtn) {
+    doneRestartBtn.addEventListener('click', function () {
+      resetAll();
+      show(1, false);
+      returnFocusTo = screens[0].querySelector('h2');
+      doneDialog.close();
     });
   }
 

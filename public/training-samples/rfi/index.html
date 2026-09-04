@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The RFI that gets answered: a six minute microlearning</title>
+<title>The RFI that gets answered: writing a request for information (RFI) a design team can act on</title>
 <meta name="description" content="A short interactive lesson on writing a construction request for information that a design team can answer in one pass." />
 <link rel="stylesheet" href="style.css" />
 <script>document.documentElement.className = 'js';</script>
@@ -13,7 +13,7 @@
 
   <header class="piece-head">
     <div class="head-row">
-      <p class="eyebrow">Microlearning &middot; Construction and trades</p>
+      <p class="eyebrow">Request for information (RFI) &middot; Construction and trades</p>
       <p class="progress-text" id="progress-text" aria-live="polite" role="status">Screen 1 of 8</p>
     </div>
     <h1>The RFI that gets answered</h1>
@@ -28,7 +28,7 @@
       <div class="screen-body">
         <div class="cols2">
           <div>
-            <p class="lead">By the end of this piece you will be able to write a request for information, an RFI, that a design team can answer in one pass, without a phone call to work out what you meant.</p>
+            <p class="lead">By the end of this piece you will be able to write a request for information (RFI) that a design team can answer in one pass, without a phone call to work out what you meant.</p>
             <p>An RFI that comes back in two days and an RFI that comes back in three weeks usually differ by about forty words. This is about those forty words.</p>
             <p class="note">Everything here works with the keyboard alone. Tab moves between controls, Enter or Space chooses. Nothing is timed and there is no sound.</p>
           </div>
@@ -52,7 +52,7 @@
         <div class="tabs" data-tabs data-tabs-label="What an RFI is">
           <section class="tabsec">
             <h3>What it is</h3>
-            <p>An RFI is a written question from the field to the design team about the contract documents. It exists because drawings and specifications are made by people, and people leave gaps: a dimension that does not close, a detail that contradicts the section it points to, a product that is no longer manufactured.</p>
+            <p>A request for information, an RFI, is a written question from the field to the design team about the contract documents. It exists because drawings and specifications are made by people, and people leave gaps: a dimension that does not close, a detail that contradicts the section it points to, a product that is no longer manufactured.</p>
           </section>
           <section class="tabsec">
             <h3>A contract document</h3>
@@ -308,6 +308,47 @@
   </div>
 
 </div>
+
+<!-- The ending. Closed by default, so with scripting off it never renders and
+     the checklist screen is the end of the document. -->
+<dialog id="done" aria-labelledby="done-title">
+  <div class="done-card">
+    <button type="button" class="done-x" id="done-close" aria-label="Close this summary">
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5.5 5.5 14.5 14.5M14.5 5.5 5.5 14.5"/></svg>
+    </button>
+
+    <p class="done-kicker">The RFI that gets answered</p>
+    <h2 class="done-title" id="done-title" tabindex="-1">You are done</h2>
+    <div class="done-rule" aria-hidden="true"></div>
+
+    <p class="done-line">That is the whole method: four parts, and a draft missing any one of them is not ready to send.</p>
+
+    <div class="done-scores">
+      <p class="done-score">
+        <span class="done-score-label">Three decisions</span>
+        <b id="done-decisions">0 of 3</b>
+      </p>
+      <p class="done-score">
+        <span class="done-score-label">Fragment sorter</span>
+        <b id="done-sorter">0 of 6 correct</b>
+      </p>
+    </div>
+
+    <p class="done-aid-title">Before you send</p>
+    <ol class="done-aid">
+      <li><b>One question.</b> Answerable yes, no, or with a number.</li>
+      <li><b>The exact reference.</b> Sheet and detail, or section and paragraph.</li>
+      <li><b>The impact and the needed by date.</b> What is held, and by when.</li>
+      <li><b>The proposed answer.</b> What you believe is correct, and why.</li>
+    </ol>
+
+    <div class="done-actions">
+      <button type="button" class="btn-ghost" id="done-review">Review the checklist</button>
+      <button type="button" class="btn-amber" id="done-restart">Start over</button>
+    </div>
+  </div>
+</dialog>
+
 <script src="app.js"></script>
 </body>
 </html>

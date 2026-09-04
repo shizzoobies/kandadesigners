@@ -1572,6 +1572,145 @@ button[disabled]:hover {
   border-color: var(--navy);
 }
 
+/* ---------------------------------------------- the ending
+
+   A paper card on a navy ground. The heading is an ordinary h2, so it
+   arrives with the same gold rule that opens every screen, drawn the same
+   way. Gold stays a hairline here as everywhere: every word in the card is
+   ink or slate on paper.
+
+   The dialog itself is only a positioning box, with no padding of its own,
+   so a click that lands on it is a click on the backdrop and nothing else.
+   ------------------------------------------------------------ */
+
+#done {
+  width: min(34rem, calc(100vw - 2.5rem));
+  max-height: calc(100vh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--navy);
+  overflow: auto;
+}
+
+#done::backdrop {
+  background: rgb(15 27 45 / 0.86);
+}
+
+.done-card {
+  background: var(--paper);
+  border: 1px solid var(--hair);
+  padding: clamp(0.95rem, 2.4vh, 1.5rem) clamp(1.1rem, 2.6vw, 1.8rem) clamp(0.85rem, 2vh, 1.3rem);
+}
+
+.done-eyebrow {
+  margin: 0;
+  max-width: none;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+#done h2 {
+  margin: 0.55rem 0 0.55rem;
+  max-width: none;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.done-say {
+  margin: 0 0 0.85rem;
+  max-width: none;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.42;
+  color: var(--navy);
+}
+
+.done-heading {
+  margin-bottom: 0;
+  padding-bottom: 0.35rem;
+  border-bottom: 0;
+}
+
+/* A small statement: label left, figure right, ruled like the real one. */
+.done-figures {
+  margin: 0;
+  border-top: 2px solid var(--navy);
+}
+
+.done-figures > div {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.38rem 0;
+  border-bottom: 1px solid var(--hair-soft);
+}
+
+.done-figures dt {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.done-figures dd {
+  margin: 0;
+  text-align: right;
+  font-family: var(--figures);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+/* The takeaway sits where a total sits, under the heavier rule. */
+.done-figures .done-watch {
+  border-top: 2px solid var(--navy);
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.done-figures .done-watch dd {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+}
+
+.done-note {
+  margin: 0.8rem 0 0;
+  max-width: none;
+}
+
+.done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--hair-gold);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #done[open] .done-card {
+    animation: done-rise 0.34s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes done-rise {
+  from { transform: translateY(12px); }
+  to { transform: none; }
+}
+
 /* ============================================================
    THE STAGE
    At 900 by 640 and up nothing scrolls vertically. Each screen
