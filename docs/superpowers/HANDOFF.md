@@ -170,6 +170,8 @@ An internal admin for clients, projects, invoices, retainers, follow-ups and not
 
 ## daily-songs is off Firebase, on D1 (2026-08-13)
 
+**Login gotcha (2026-09-04):** the app lives unlinked at `/daily-songs-x7k2/` and gates on the Pages secret `APP_PASSPHRASE` (exact, case-sensitive match in `functions/api/auth.js`). **A secret edited in the Pages dashboard only takes effect on the next deployment**, so after changing it you must redeploy (an empty commit pushed to `main` is enough, or Retry deployment in the dashboard). Alex hit "Wrong passphrase" after saving a new value for exactly this reason. The README's "no redeploy needed" line about `MODEL_NAME` is wrong for the same reason.
+
 **Plan:** `docs/superpowers/plans/2026-08-13-daily-songs-off-firebase.md`. **Data export:** `docs/exports/daily-songs-firestore-2026-08-13.json` (the pre-migration source of truth, 89 generations / 485 songs / 3 bangers).
 
 - **Why:** `public/daily-songs-x7k2/app.js` talked to Firestore project `daily-songs-89174` directly from the browser under rules that allowed **anonymous reads**, so that data was readable by anyone who found the project id in the public JS file. It is now behind the same signed cookie as `/api/generate`.
