@@ -183,7 +183,7 @@ export const team = {
     {
       name: 'Kristina Anderson',
       role: 'Strategy and content',
-      line: 'Instructional Designer and Accessibility Specialist',
+      line: 'Lead Curriculum Specialist',
       bio: 'Kristina runs strategy and content. In practice she is the one asking why a module exists at all and what it is supposed to make somebody do once they have taken it, which is the question most training never gets asked.',
       photo: '/images/Kristina-Image.webp',
       link: null,
