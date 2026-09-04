@@ -146,13 +146,26 @@ const schema = {
       /* is:inline is required. Without it Astro hands this to Vite, which bundles it
          as a deferred ES module and the pixel fails to initialise. Do not remove it,
          and do not convert this to an imported module or component. */
-      !function(f,b,e,v,n,t,s)
+      /* Deferred on 2026-09-04: the stub queue is created immediately, so
+         fbq('init') and fbq('track', ...) calls anywhere on the page still
+         queue as before, but the 106 KB fbevents.js itself is fetched only
+         after the page has loaded and the browser is idle (or on the first
+         interaction, or after four seconds, whichever comes first). Every
+         queued event replays the moment it arrives, so nothing is lost; it
+         just stops competing with fonts, images, and scripts for the first
+         paint. */
+      !function(f,b,e,v,n,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
       if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      n.queue=[];var d=!1,go=function(){if(d)return;d=!0;
+      var t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)};
+      var idle=function(){(f.requestIdleCallback||function(c){setTimeout(c,200)})(go)};
+      if(b.readyState==='complete')idle();else f.addEventListener('load',idle);
+      ['pointerdown','keydown','touchstart','scroll'].forEach(function(ev){
+      f.addEventListener(ev,go,{once:!0,passive:!0})});
+      setTimeout(go,4000)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '1584105763055085');
       fbq('track', 'PageView');

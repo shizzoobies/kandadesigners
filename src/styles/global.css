@@ -44,14 +44,14 @@
 }
 @font-face {
   font-family: "Lenia Mono";
-  src: url("/fonts/LeniaMono-Regular.ttf") format("truetype");
+  src: url("/fonts/LeniaMono-Regular.woff") format("woff"), url("/fonts/LeniaMono-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lenia Mono";
-  src: url("/fonts/LeniaMono-SemiBold.ttf") format("truetype");
+  src: url("/fonts/LeniaMono-SemiBold.woff") format("woff"), url("/fonts/LeniaMono-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;

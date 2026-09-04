@@ -30,6 +30,12 @@ Manual deploy (fallback only):
 
 Local preview: `npx wrangler pages dev dist --port 8788 --compatibility-date=2026-06-18`. NOTE: these background dev servers on this machine get externally terminated after a while (exit 1, clean log) — just restart, it's not a code problem. No `.dev.vars` → AI endpoints 503 locally; production has all secrets.
 
+## Page weight notes (2026-09-04)
+
+- **Lenia Mono ships as WOFF** (`public/fonts/LeniaMono-*.woff`, about half the TTF), converted with the dependency-free `scripts/ttf-to-woff.mjs` (WOFF v1: SFNT directory plus deflated tables; WOFF2 would need Brotli and table transforms). The `@font-face` rules list the WOFF first and keep the TTF as a fallback. Every other face was already WOFF2.
+- **The Meta pixel is deferred.** The `fbq` stub and queue are created immediately in `BaseLayout` (so `fbq('track', 'Lead')` calls anywhere still queue), but the 106 KB `fbevents.js` is fetched only after `load` plus idle, or on the first pointer/key/touch/scroll, or after four seconds, whichever is first. Queued events replay on arrival. Verified: the script requests after the load event and `fbq.callMethod` is present afterwards.
+- **Team portraits** are dedicated 400x400 WebPs under `public/images/training/portraits/`; the full-size originals stay for the artist and contact pages. That change alone took the team page's load from about 3 s to a quarter second.
+
 ## Design system (Alex's hard rules in memory: design-tastes-alex)
 
 - **Palette "Earthen Sophisticate":** canvas `#F8F5F2`, ink `#221C15`, muted `#6C635A`, accent rust `#9A3412` (hot `#7C2D12`), amber `#D97706` = buttons/highlights ONLY with espresso text (amber fails AA as text on light). Dark band = teal (`#0B302D→#134E4A`, light-teal `#5EEAD4` accent). Tokens in `src/styles/global.css` `@theme`.
