@@ -16,8 +16,10 @@
 
 import { AbsoluteFill, useVideoConfig } from "remotion";
 import { PlateComposite, type PlateCompositeProps } from "./PlateComposite";
+import { StandIn } from "./StandIn";
 import { COLORS } from "../lib/brand";
-import { getPlate, quadBounds, type PlateEntry } from "../lib/plates";
+import { findCapture } from "../lib/captures";
+import { listPlates, quadBounds, type PlateEntry } from "../lib/plates";
 
 /**
  * Headroom over the exact coverage scale. PlateComposite drifts the plate a
@@ -90,7 +92,30 @@ export function plateCrop(
 
 export const PlateShot: React.FC<PlateShotProps> = (props) => {
   const { width, height } = useVideoConfig();
-  const crop = plateCrop(getPlate(props.plateId), width, height);
+
+  // The training reel names plates and interaction captures that two other
+  // agents are still producing. Neither getPlate() nor getCapture() tolerates a
+  // missing id, and they should not: a web reel shot with a typo in it has to
+  // fail. So the absence is caught here instead, and the shot renders a
+  // labelled grey stand-in that no reviewer can mistake for finished work.
+  const plate = listPlates().find((p) => p.id === props.plateId) ?? null;
+  const missingCaptureId = plate
+    ? [props.captureId ?? plate.captureId].find((id) => !findCapture(id))
+    : undefined;
+
+  if (!plate || missingCaptureId) {
+    return (
+      <AbsoluteFill>
+        <StandIn
+          kind={plate ? "plate capture" : "plate"}
+          id={plate ? (missingCaptureId as string) : props.plateId}
+          fontSize={Math.round(width * 0.032)}
+        />
+      </AbsoluteFill>
+    );
+  }
+
+  const crop = plateCrop(plate, width, height);
 
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.ink, overflow: "hidden" }}>

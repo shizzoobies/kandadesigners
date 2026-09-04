@@ -2,11 +2,18 @@ import { AbsoluteFill } from "remotion";
 import { KineticText } from "../components/KineticText";
 import { COLORS, DISPLAY_STACK } from "../lib/brand";
 import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
-import { numberWord, perfectAccessibilityCount } from "../lib/metrics";
 import { LINKEDIN_ACCESSIBILITY_LINES } from "../lib/timing";
 
 export type AccessibilityBeatProps = {
   format: FormatKey;
+  /**
+   * The lines, from the reel's content config. An empty string is a slot that
+   * is deliberately not rendered: the web reel drops its measured count when
+   * too few sites score 100, and Section 0 forbids dressing two up as a
+   * pattern. The slots keep their index either way, so each line keeps its own
+   * arrival frame in LINKEDIN_ACCESSIBILITY_LINES.
+   */
+  lines: string[];
 };
 
 /**
@@ -26,35 +33,13 @@ const LINE_FONT_SIZE = 68;
 /** Frames each line takes to type on. Section 7 bans fades, so nothing fades. */
 const REVEAL_FRAMES = 16;
 
-/**
- * Below this many perfect scores the middle line does not go on screen at all.
- * Two sites is not a pattern and Section 0 forbids dressing one up as one.
- */
-const MIN_PERFECT_SCORES = 3;
-
 export const AccessibilityBeat: React.FC<AccessibilityBeatProps> = ({
   format,
+  lines,
 }) => {
   const safe = safeArea(format);
   const metrics = formatMetrics(format);
   const scale = metrics.typeScale;
-
-  // Section 14 item 2: every on-screen number traces to config/metrics.json.
-  // The count of perfect accessibility scores is derived from the measured
-  // Lighthouse results at build time, never typed as a literal, so a
-  // re-measure that drops a site below 100 changes this line rather than
-  // leaving a stale claim in the video. Below MIN_PERFECT_SCORES the line is
-  // not rendered at all.
-  const perfect = perfectAccessibilityCount();
-  const showCount = perfect >= MIN_PERFECT_SCORES;
-
-  const lines: string[] = [
-    "Built to WCAG 2.2 AA.",
-    showCount
-      ? `${numberWord(perfect)} of these sites score 100 on accessibility.`
-      : "",
-    "Measured, not promised.",
-  ];
 
   const fontSize = Math.round(LINE_FONT_SIZE * scale);
   const padLeft = Math.round(72 * scale);

@@ -12,13 +12,17 @@ import {
   CLAIM_FONT_SIZE,
   CLAIM_RULE_BLOCK,
 } from "../components/ClaimLine";
+import { BrowserFrame } from "../components/BrowserFrame";
 import { DeviceFrame } from "../components/DeviceFrame";
 import { KineticText } from "../components/KineticText";
 import { PlateShot } from "../components/PlateShot";
+import { StandIn } from "../components/StandIn";
+import { ZoomShot } from "../components/ZoomShot";
 import { BODY_STACK, COLORS, DISPLAY_STACK } from "../lib/brand";
-import { captureSrc, getHomeCapture } from "../lib/captures";
+import { captureSrc, findCapture, getHomeCapture } from "../lib/captures";
 import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
 import { LINKEDIN_PROJECT_COPY, PROJECT_BEAT_SHOTS } from "../lib/timing";
+import type { CleanFrame, ZoomRegion } from "../reels/types";
 
 /** Length of the whip between project beats, in frames. */
 export const WHIP_FRAMES = 6;
@@ -82,19 +86,40 @@ const COPY_LINE_HEIGHT = CLAIM_FONT_SIZE * 1.15;
  * LinkedIn cut two body lines are still taller, so the claim fits inside the
  * slot the context sentence already reserved and the band does not move.
  */
-function bandHeight(copyLines: number): number {
+function bandHeight(copyLines: number, nameLines: number): number {
   const slot = Math.max(
     COPY_LINE_HEIGHT * copyLines,
     CLAIM_RULE_BLOCK + COPY_LINE_HEIGHT,
   );
   return Math.round(
-    BAND_PAD_TOP + NAME_FONT_SIZE * 1.1 + BAND_GAP + slot + BAND_PAD_BOTTOM,
+    BAND_PAD_TOP +
+      NAME_FONT_SIZE * 1.1 * nameLines +
+      BAND_GAP +
+      slot +
+      BAND_PAD_BOTTOM,
   );
 }
 
 /** Device frame geometry at native capture size. */
 const BEZEL = 20;
 const RADIUS = 64;
+
+/**
+ * Size of a browser window's chrome, as fractions of its screen width. The
+ * numbers match BrowserFrame's own defaults; they are restated here because the
+ * window has to be fitted into a box before it is rendered, and a window is
+ * taller and a hair wider than the screen inside it.
+ */
+const BROWSER_BAR = 0.05;
+const BROWSER_BAR_MIN = 24;
+const BROWSER_LINE = 0.0026;
+const BROWSER_LINE_MIN = 2;
+
+/** Native pixel size of a shot whose capture has not been recorded yet. */
+const STAND_IN_SHOT = {
+  phone: { width: 780, height: 1688 },
+  browser: { width: 2880, height: 1800 },
+};
 
 /**
  * The lower third scrim is opaque, not translucent. At 94 percent the white
@@ -142,6 +167,29 @@ export type ProjectShowcaseProps = {
    * default binding.
    */
   plateCaptureId?: string;
+  /**
+   * Capture for the clean shot. Omitted falls back to the project's mobile
+   * home page capture, which is what every web reel beat uses.
+   */
+  cleanCaptureId?: string;
+  /**
+   * Which device the clean shot sits inside. "phone" is the web reel's dark
+   * slab around a 780x1688 mobile capture. "browser" is the sketched window
+   * around a 2880x1800 desktop capture, which is the only sensible container
+   * for a 16:10 training module screen.
+   */
+  cleanFrame?: CleanFrame;
+  /**
+   * Region of the clean capture to push in on, in capture pixels. A desktop
+   * module screen shown whole renders its body text about four pixels tall in a
+   * 1080 wide frame, which proves nothing; a region of it is readable.
+   */
+  zoom?: ZoomRegion;
+  /**
+   * How many lines the name wraps to at 1080 width. Only used to predict the
+   * band's height so the device above it is sized against the right box.
+   */
+  nameLines?: number;
 };
 
 /**
@@ -167,13 +215,22 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
   cleanTrimBefore = TRIM_BEFORE,
   scrollPlaybackRate = 1,
   plateCaptureId,
+  cleanCaptureId,
+  cleanFrame = "phone",
+  zoom,
+  nameLines = 1,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   const safe = safeArea(format);
   const metrics = formatMetrics(format);
   const scale = metrics.typeScale;
-  const capture = getHomeCapture(projectId, "mobile");
+  // A named clip may not be recorded yet, and then the shot is a stand-in. A
+  // project's own home page capture always exists, because the project would
+  // not be in the reel otherwise.
+  const capture = cleanCaptureId
+    ? findCapture(cleanCaptureId)
+    : getHomeCapture(projectId, "mobile");
 
   const beatLength = durationInFrames ?? BEAT_LENGTH;
 
@@ -194,8 +251,12 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
    * identical pixel. Both are the same 180 frame scripted scroll of the same
    * page, so the same source frame is the same point in that scroll.
    */
-  const plateCaptureOffset =
-    cleanTrimBefore - Math.round(PLATE_SHOT_FRAMES * scrollPlaybackRate);
+  // Clamped at zero: a capture that plays from its own first frame, which is
+  // what an interaction recording does, has nothing before it to back into.
+  const plateCaptureOffset = Math.max(
+    0,
+    cleanTrimBefore - Math.round(PLATE_SHOT_FRAMES * scrollPlaybackRate),
+  );
 
   const copySlotHeight = Math.round(
     Math.max(
@@ -203,41 +264,147 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
       CLAIM_RULE_BLOCK + COPY_LINE_HEIGHT,
     ) * scale,
   );
-  const bandHeightPx = Math.round(bandHeight(contextLine ? 2 : 1) * scale);
+  const bandHeightPx = Math.round(
+    bandHeight(contextLine ? 2 : 1, nameLines) * scale,
+  );
   const bandTop = height - metrics.bandBottom - bandHeightPx;
+
+  const browser = cleanFrame === "browser";
+
+  /**
+   * A 16:10 browser window cannot run the full canvas height the way a 9:16
+   * phone can, so in the vertical crop a browser beat takes the stacked
+   * arrangement instead of the overlay one: the window spans the safe width and
+   * the lower third sits under it rather than across it.
+   */
+  const showcase =
+    browser && metrics.showcase === "overlay" ? "stack" : metrics.showcase;
+
+  // What the frame has to fit. Where there is a zoom region, that region is the
+  // shot: it is the rectangle the viewer ends up seeing.
+  const shotNative = capture ?? STAND_IN_SHOT[cleanFrame];
+  const shotWidth = zoom ? zoom.w : shotNative.width;
+  const shotHeight = zoom ? zoom.h : shotNative.height;
 
   // Box the device frame has to fit inside. The device is not text, so it is
   // allowed to run into a reserved zone. Text is not.
-  const nativeWidth = capture.width + BEZEL * 2;
-  const nativeHeight = capture.height + BEZEL * 2;
   let boxLeft = 0;
   let boxTop = 0;
   let boxWidth = safe.right;
   let boxHeight = height;
 
-  if (metrics.showcase === "stack") {
-    // Everything above the band, with a gap so the phone does not kiss it.
+  if (showcase === "stack") {
+    // Everything above the band, with a gap so the device does not kiss it.
     boxHeight = bandTop - Math.round(24 * scale);
-  } else if (metrics.showcase === "split") {
-    boxLeft = Math.round(width * 0.06);
-    boxWidth = Math.round(width * 0.23);
+    if (browser) {
+      // A wide short window centres in whatever is left, so the box has to
+      // start at the safe top or the window centres up into the platform's UI.
+      boxTop = safe.top;
+      boxHeight -= safe.top;
+    }
+  } else if (showcase === "split") {
+    // Landscape. The strip left of the copy panel is the axis a 16:10 window
+    // runs out of first, where a 9:16 phone runs out of height, so a browser
+    // beat gets a wider strip.
+    boxLeft = Math.round(width * (browser ? 0.025 : 0.06));
+    boxWidth = Math.round(width * (browser ? 0.3 : 0.23));
     boxTop = safe.top;
     boxHeight = safe.height - Math.round(40 * scale);
   }
 
-  const deviceScale = Math.min(
-    1,
-    boxWidth / nativeWidth,
-    boxHeight / nativeHeight,
-  );
-  const screenWidth = Math.round(capture.width * deviceScale);
-  const screenHeight = Math.round(capture.height * deviceScale);
-  const bezel = Math.max(8, Math.round(BEZEL * deviceScale));
-  const radius = Math.max(16, Math.round(RADIUS * deviceScale));
-  const deviceLeft =
-    boxLeft + Math.round((boxWidth - (screenWidth + bezel * 2)) / 2);
-  const deviceTop =
-    boxTop + Math.round((boxHeight - (screenHeight + bezel * 2)) / 2);
+  let screenWidth: number;
+  let screenHeight: number;
+  let frameWidth: number;
+  let frameHeight: number;
+  let bezel = 0;
+  let radius = 0;
+  let browserBar = 0;
+  let browserLine = 0;
+
+  if (browser) {
+    // A window is BROWSER_BAR taller and two hairlines wider than its screen,
+    // so the screen is solved against the box rather than fitted to it. The
+    // minimums on the bar and the hairline are what make this two passes: solve
+    // proportionally, take the minimums, and give the height back if they bit.
+    const aspect = shotWidth / shotHeight;
+    let sw = Math.min(
+      boxWidth / (1 + 2 * BROWSER_LINE),
+      boxHeight / (1 / aspect + BROWSER_BAR + 2 * BROWSER_LINE),
+      // Never upscale past the capture's own pixels, the same rule the phone
+      // frame follows.
+      shotWidth,
+    );
+    let bar = Math.max(BROWSER_BAR_MIN, Math.round(sw * BROWSER_BAR));
+    let line = Math.max(BROWSER_LINE_MIN, Math.round(sw * BROWSER_LINE));
+    let sh = sw / aspect;
+
+    if (sh + bar + line * 2 > boxHeight) {
+      sh = boxHeight - bar - line * 2;
+      sw = sh * aspect;
+      bar = Math.max(BROWSER_BAR_MIN, Math.round(sw * BROWSER_BAR));
+      line = Math.max(BROWSER_LINE_MIN, Math.round(sw * BROWSER_LINE));
+      sh = Math.min(sh, boxHeight - bar - line * 2);
+    }
+
+    screenWidth = Math.round(sw);
+    screenHeight = Math.round(sh);
+    browserBar = bar;
+    browserLine = line;
+    frameWidth = screenWidth + line * 2;
+    frameHeight = screenHeight + bar + line * 2;
+  } else {
+    const nativeWidth = shotWidth + BEZEL * 2;
+    const nativeHeight = shotHeight + BEZEL * 2;
+    const deviceScale = Math.min(
+      1,
+      boxWidth / nativeWidth,
+      boxHeight / nativeHeight,
+    );
+    screenWidth = Math.round(shotWidth * deviceScale);
+    screenHeight = Math.round(shotHeight * deviceScale);
+    bezel = Math.max(8, Math.round(BEZEL * deviceScale));
+    radius = Math.max(16, Math.round(RADIUS * deviceScale));
+    frameWidth = screenWidth + bezel * 2;
+    frameHeight = screenHeight + bezel * 2;
+  }
+
+  const deviceLeft = boxLeft + Math.round((boxWidth - frameWidth) / 2);
+  const deviceTop = boxTop + Math.round((boxHeight - frameHeight) / 2);
+
+  /**
+   * What goes inside the frame: the capture, the same capture pushed in on one
+   * region of itself, or a labelled grey stand-in where the clip has not been
+   * recorded yet.
+   */
+  const cleanShotFrames = beatLength - PROJECT_BEAT_SHOTS.cleanCapture.start;
+  const cleanShot =
+    capture === null ? (
+      <StandIn
+        kind="capture"
+        id={cleanCaptureId ?? `${projectId}-home-mobile`}
+        fontSize={Math.round(screenWidth * 0.045)}
+      />
+    ) : zoom ? (
+      <ZoomShot
+        src={captureSrc(capture)}
+        captureWidth={capture.width}
+        captureHeight={capture.height}
+        zoom={zoom}
+        width={screenWidth}
+        height={screenHeight}
+        trimBefore={cleanTrimBefore}
+        playbackRate={scrollPlaybackRate}
+        pushInFrames={cleanShotFrames}
+      />
+    ) : (
+      <OffthreadVideo
+        src={captureSrc(capture)}
+        trimBefore={cleanTrimBefore}
+        playbackRate={scrollPlaybackRate}
+        muted
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      />
+    );
 
   // Fast horizontal whip. The slight horizontal stretch stands in for motion
   // blur without paying for a real blur pass.
@@ -383,20 +550,25 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({
               top: deviceTop,
             }}
           >
-            <DeviceFrame
-              screenWidth={screenWidth}
-              screenHeight={screenHeight}
-              bezel={bezel}
-              radius={radius}
-            >
-              <OffthreadVideo
-                src={captureSrc(capture)}
-                trimBefore={cleanTrimBefore}
-                playbackRate={scrollPlaybackRate}
-                muted
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            </DeviceFrame>
+            {browser ? (
+              <BrowserFrame
+                screenWidth={screenWidth}
+                screenHeight={screenHeight}
+                chrome={browserBar}
+                border={browserLine}
+              >
+                {cleanShot}
+              </BrowserFrame>
+            ) : (
+              <DeviceFrame
+                screenWidth={screenWidth}
+                screenHeight={screenHeight}
+                bezel={bezel}
+                radius={radius}
+              >
+                {cleanShot}
+              </DeviceFrame>
+            )}
           </div>
         </AbsoluteFill>
       </Sequence>

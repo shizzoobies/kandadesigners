@@ -13,9 +13,15 @@
  *   - Screens 7 and 8 nest sub-steps behind [data-sub="prev"|"next"].
  *   - Answers are [data-q][data-correct] buttons; feedback is written into
  *     #fb-<key> and, on screen 8, replayed with a .slam CSS animation.
+ *   - #reveal starts hidden and takeSpot() only un-hides it once three spots
+ *     have been tried, which is why hazard-hunt clicks three hotspots first.
+ *   - Screen 9's picker is an accordion with zone 1 open on arrival, so the
+ *     four labels in #accp-1 are clickable without opening anything.
  *
- * Live versus local: the live build is the one captured. It carries the same
- * ids as the 2026-09-04 local edit for everything used here.
+ * Live versus local: the live build is the one captured, and on 2026-09-04 it
+ * matched the local file for everything used here. Nine screens, the meter
+ * reads "Screen N of 9", sixteen tabs, six .hot[data-spot] hotspots with a
+ * matching .spot list, and #reveal, #next and #prev where this file expects.
  */
 
 import type { InteractionScript } from "./types";
@@ -72,12 +78,17 @@ const script: InteractionScript = {
         ...advance(6),
         { at: 0, click: "#tab-7b" },
       ],
+      // Timing set off the first gate sheet. The earlier pass answered at 22,
+      // 82 and 132, which left the 50 and 75 percent sample frames sitting on a
+      // freshly stepped, unanswered situation: three cells of the sheet showing
+      // a question nobody had touched. Answers now land early in each third so
+      // the verdict is on screen for most of the clip.
       steps: [
-        { at: 22, click: '#screen-7 [data-q="h1"][data-correct="true"]' },
-        { at: 55, click: '#screen-7 [data-sub="next"]' },
-        { at: 82, click: '#screen-7 [data-q="h2"][data-correct="true"]' },
-        { at: 110, click: '#screen-7 [data-sub="next"]' },
-        { at: 132, click: '#screen-7 [data-q="h3"][data-correct="true"]' },
+        { at: 20, click: '#screen-7 [data-q="h1"][data-correct="true"]' },
+        { at: 46, click: '#screen-7 [data-sub="next"]' },
+        { at: 64, click: '#screen-7 [data-q="h2"][data-correct="true"]' },
+        { at: 90, click: '#screen-7 [data-sub="next"]' },
+        { at: 108, click: '#screen-7 [data-q="h3"][data-correct="true"]' },
       ],
     },
     {
@@ -104,11 +115,14 @@ const script: InteractionScript = {
       durationFrames: 120,
       note: "Screen 9. Three checks ticked in zone 1, then the card tab, which fills in from the ticks.",
       preroll: [{ at: 0, eval: CLEAR_HUNT_GATE }, ...advance(8)],
+      // The card is the payoff, so it has to be on screen for the last third
+      // rather than the last twenty frames: the first gate sheet sampled at 90
+      // and still had the picker showing.
       steps: [
         { at: 18, click: "#accp-1 label:nth-of-type(1)" },
-        { at: 42, click: "#accp-1 label:nth-of-type(2)" },
-        { at: 66, click: "#accp-1 label:nth-of-type(3)" },
-        { at: 96, click: "#tab-9b" },
+        { at: 40, click: "#accp-1 label:nth-of-type(2)" },
+        { at: 62, click: "#accp-1 label:nth-of-type(3)" },
+        { at: 84, click: "#tab-9b" },
       ],
     },
   ],

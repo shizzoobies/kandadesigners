@@ -607,3 +607,117 @@ The run ends with the Section 14 checklist. Items 1, 2, 5, 6 and 8 are checked
 mechanically and print PASS or FAIL with the evidence. Items 3, 4, 7 and 9 are
 human judgements or already closed in an earlier phase and print MANUAL with a
 note on what to do.
+
+## The training content reel
+
+Added 2026-09-04. The second reel is a second content configuration of this
+same scene tree, not a fork. Section 6 of the handoff says the two cuts of one
+reel are separate compositions sharing scene components; the same argument
+applies to two reels, so the strings and ids came out of `src/Reel.tsx` and the
+scenes and moved into `src/reels/`.
+
+### The content config
+
+`src/reels/types.ts` is the contract. A `ReelContent` carries:
+
+| Field | What it is |
+|---|---|
+| `id` | Short identifier, for Sequence names and debugging. |
+| `hook` | Two slammed halves of one line, plus the full bleed shot behind them. The shot is either a project's home page capture (the crop picks mobile or desktop) or one named clip, optionally with a zoom region. |
+| `featured` | Project beats, keyed by cut: two in `short`, four in `linkedin`. |
+| `tour` | Surfaces tour cuts, keyed by cut: three of 18 frames in `short`, four of 20 in `linkedin`. |
+| `cleanCapture` | Trim and playback rate of the clean shot, keyed by cut. |
+| `howWeWorkLines` | The three lines of the LinkedIn-only "how we work" beat. |
+| `accessibilityLines` | The three lines of the LinkedIn-only accessibility beat. An empty string is a slot deliberately left unrendered. |
+| `ctaClosingLine` | The line above the url, keyed by cut. Undefined means no line. |
+| `accents` | Accent rotation across project beats and tour cuts. |
+
+A `FeaturedBeat` is `{ projectId, plateId, plateCaptureId?, cleanCaptureId?,
+cleanFrame, zoom?, name, nameLines?, contextLine?, claim }`. `cleanFrame` is
+`"phone"` or `"browser"`. `zoom` is a rectangle in the capture's own pixels.
+`nameLines` only tells the lower third how tall to expect to be, so the device
+above it is sized against the right box; it defaults to 1, which is what every
+web reel name assumes.
+
+`src/reels/web.ts` is the web design showcase reel, moved across verbatim.
+`src/reels/training.ts` is the training content line. `src/Reel.tsx` takes a
+`content` prop and defaults to the web reel, so nothing that rendered before
+the lift renders differently after it.
+
+### Compositions
+
+`src/Root.tsx` registers both reels from one function. Twelve ids per reel:
+four crops of the 15 second cut, two of the 45 second cut, and a safe-zone
+debug twin of each.
+
+| 15 second cut | 45 second cut |
+|---|---|
+| `TrainingVertical` 1080x1920 | `TrainingLinkedIn` 1080x1350 |
+| `TrainingFeed` 1080x1350 | `TrainingLinkedInLandscape` 1920x1080 |
+| `TrainingSquare` 1080x1080 | |
+| `TrainingLandscape` 1920x1080 | |
+
+Plus `TrainingVerticalDebug` and the other five.
+
+### Two rendering additions
+
+`src/components/BrowserFrame.tsx` is the desktop twin of `DeviceFrame`: a thin
+sketched window in the manner of the K&A lockup, with a hairline ink border on
+canvas and three small dots top left in rust, teal and ink. The training
+captures are 2880x1800 module screens and have nowhere sensible to sit inside a
+phone body. Every dimension is derived from the screen width, so the window
+looks like the same drawing at 970 canvas pixels wide in the vertical crop and
+at 1500 in landscape.
+
+A 16:10 window cannot run the full canvas height the way a 9:16 phone can, so
+in the vertical crop a browser beat takes the stacked arrangement instead of
+the overlay one: the window spans the safe width and the lower third sits under
+it rather than across it. In landscape it takes a wider strip left of the copy
+panel than a phone does, because width rather than height is the axis it runs
+out of.
+
+`src/components/ZoomShot.tsx` is the zoom mode. A 2880x1800 module screen
+scaled into a 1080 wide frame renders its body text about four pixels tall,
+which proves only that a page exists. Where a beat declares a `zoom`, the shot
+picks the scale that makes that region cover its box, lays the whole capture
+out at that scale, translates so the region's centre lands on the box's centre,
+and pushes in three percent across the shot with the transform origin at the
+box centre. No new dependency, and it never reaches for the video's own pixels.
+
+### Training reel stand-ins
+
+Interaction captures and training plates are produced by two other agents. Any
+capture id not in `assets/captures/captures.json` and any plate id not in
+`config/plates.json` renders a labelled grey stand-in (`src/components/StandIn.tsx`)
+instead of the shot. Filling in the real asset is the only change needed.
+
+Every capture and plate the training reel names had landed by the last render,
+so nothing in it currently renders a stand-in. Every zoom region in
+`src/reels/training.ts` was measured off the clip itself. If a clip is
+re-recorded at a different scroll position, its region is the only thing that
+has to change.
+
+One trap, recorded because it cost a render to find. Tailwind's preflight sets
+`video { max-width: 100% }`, which silently clamps a zoomed video's width to its
+box and leaves the height alone. The video then shows the wrong part of the
+capture at the wrong scale, and it does not look like a bug, it looks like a
+badly chosen crop. `ZoomShot` sets `maxWidth: none` for exactly this reason.
+
+### Render time log, training reel
+
+| Date | Composition | Output | Rendered | Wall clock |
+|---|---|---|---|---|
+| 2026-09-04 | bundle | `out/bundle` (cold, after the content lift) | rspack bundle, public dir linked not copied | 17.7s |
+| 2026-09-04 | bundle | `out/bundle` (warm rebuild) | same | 2.3s |
+| 2026-09-04 | ReelVertical | `out/psnr-before` and `out/psnr-after`, frames 60, 250, 350, 440 | 4 stills each, 1080x1920 | 8.9s per set |
+| 2026-09-04 | TrainingVertical | `out/gate-t2/tv-*.png` | 9 stills, 1080x1920 | 19.3s |
+| 2026-09-04 | TrainingLinkedIn | `out/gate-t2/tl-*.png` | 8 stills, 1080x1350 | 15.9s |
+| 2026-09-04 | Training*Debug | `out/gate-t2/dbg-*.png` | 6 stills, three crops at two frames | 11.0s |
+| 2026-09-04 | TrainingVertical | `out/training-grey-vertical.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 6.9 MB | 26.1s |
+| 2026-09-04 | sheet | `out/gate-t2/training-vertical-sheet.png` | 4x3 tile of 12 frames, ffmpeg | under 1s |
+
+The 26.1 second render sits between the web reel's Phase 4 and final numbers.
+Every capture and plate landed while this was being built, so the whole cut is
+a real composite: two plate shots, three tour plate composites, and two zoomed
+browser shots. There is no audio on it and no delivery step, which is the rest
+of the web reel's 20.3.

@@ -4,21 +4,21 @@ import { COLORS, DISPLAY_STACK, LOGO_PNG } from "../lib/brand";
 import { formatMetrics, safeArea, type FormatKey } from "../lib/layout";
 import { LINKEDIN_HOW_WE_WORK_LINES } from "../lib/timing";
 
-export type HowWeWorkProps = {
-  format: FormatKey;
-};
-
 /**
  * Frames 36 to 156 of the LinkedIn cut, 120 frames. The Section 6 insert: how
  * the studio actually works, said in three short sentences on the brand canvas.
  *
  * This is the one beat with no site capture in it, which is the point. It sits
- * directly after the hook so the claim "there is a real person on the phone"
- * lands before the work does. Section 15 bans slow fades, so the lines type on
- * and then hold: each arrives 30 frames after the one above it and all three
- * are still on screen at the cut.
+ * directly after the hook so the claim about how the studio works lands before
+ * the work does. Section 15 bans slow fades, so the lines type on and then
+ * hold: each arrives 30 frames after the one above it and all three are still
+ * on screen at the cut.
  */
-const LINES = ["A real person.", "A direct number.", "No ticket queue."];
+export type HowWeWorkProps = {
+  format: FormatKey;
+  /** The three lines, from the reel's content config. */
+  lines: string[];
+};
 
 /** Type size at 1080 canvas width. Well over the Section 7 body minimum of 48. */
 const LINE_FONT_SIZE = 84;
@@ -27,6 +27,14 @@ const LINE_FONT_SIZE = 84;
 const REVEAL_FRAMES = 14;
 
 const LINE_HEIGHT = 1.08;
+
+/**
+ * Average character advance of the display face in a mixed-case sentence, as a
+ * fraction of the type size. Measured off Schibsted Grotesk at weight 700, and
+ * only ever used to decide whether a line would wrap, never to position
+ * anything, so an approximation is the right tool.
+ */
+const AVG_ADVANCE = 0.52;
 
 /**
  * The lockup sits small in the top left of the safe area, not centred. A
@@ -42,7 +50,7 @@ const LINE_HEIGHT = 1.08;
 const LOGO_WIDTH = 240;
 const LOGO_ASPECT = 303 / 800;
 
-export const HowWeWork: React.FC<HowWeWorkProps> = ({ format }) => {
+export const HowWeWork: React.FC<HowWeWorkProps> = ({ format, lines }) => {
   const safe = safeArea(format);
   const metrics = formatMetrics(format);
   const scale = metrics.typeScale;
@@ -61,11 +69,23 @@ export const HowWeWork: React.FC<HowWeWorkProps> = ({ format }) => {
   // 1.778 scale plus the rule is most of that.
   const bodyHeight = safe.height - headerHeight;
   const roomForLines = bodyHeight - ruleHeight - ruleGap - lineGap * 2;
+
+  // And cap it against the column's width, so a longer set of lines stays one
+  // line each rather than silently wrapping to six. The reveal hides characters
+  // with visibility rather than slicing the string, so a wrap would be there
+  // from frame 0 and would double the block's height against a layout that
+  // reserved three lines. AVG_ADVANCE is the average character width of the
+  // display face in a mixed-case sentence, as a fraction of the type size.
+  const columnWidth = safe.right - safe.left - padLeft * 2;
+  const longest = Math.max(...lines.map((line) => line.length), 1);
+  const widthCap = Math.floor(columnWidth / (longest * AVG_ADVANCE));
+
   const fontSize = Math.max(
     Math.round(48 * scale),
     Math.min(
       Math.round(LINE_FONT_SIZE * scale),
-      Math.floor(roomForLines / (LINES.length * LINE_HEIGHT)),
+      Math.floor(roomForLines / (lines.length * LINE_HEIGHT)),
+      widthCap,
     ),
   );
 
@@ -118,10 +138,10 @@ export const HowWeWork: React.FC<HowWeWorkProps> = ({ format }) => {
             }}
           />
 
-          {LINES.map((line, i) => (
+          {lines.map((line, i) => (
             <div
               key={line}
-              style={{ marginBottom: i < LINES.length - 1 ? lineGap : 0 }}
+              style={{ marginBottom: i < lines.length - 1 ? lineGap : 0 }}
             >
               <KineticText
                 text={line}

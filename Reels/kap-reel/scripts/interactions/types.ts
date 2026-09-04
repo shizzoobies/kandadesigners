@@ -8,16 +8,21 @@
  * Between steps the recorder keeps stepping frames, so CSS transitions and the
  * module's own animations are captured rather than skipped over.
  *
- * Timing model: the recorder does NOT use wall-clock time. Playwright's clock
- * is installed and paused, and each frame advances it by exactly 33.333ms,
- * along with every running CSS animation and transition on the page. A 400ms
- * count-up therefore reads as 12 recorded frames whatever the screenshot
- * actually costs. Real time is available behind --realtime as an escape hatch.
+ * Timing model: real time. Each frame is a state change, a fixed 33ms wait, and
+ * a screenshot, so one recorded frame costs 80 to 130ms of wall clock depending
+ * on the viewport. Left alone that would compress a 400ms CSS transition into
+ * three frames, so the recorder measures the real frame cost and sets the CDP
+ * animation playback rate to the ratio between the two. CSS animations and
+ * transitions then land on the number of frames their author intended. JS tweens
+ * on requestAnimationFrame are not slowed by that, which is why the finance
+ * simulator is driven by a drag spread across frames rather than by one jump
+ * and its 400ms count-up.
  *
  * Pointer steps (click, hover, drag) get an approach window that ENDS on their
- * `at` frame: the synthetic cursor eases in over the preceding frames, so `at`
- * is the frame the press happens on, not the frame the cursor starts moving.
- * Leave at least 20 frames between a pointer step and whatever came before it.
+ * `at` frame: the synthetic cursor eases in over the preceding 12 frames, so
+ * `at` is the frame the press happens on, not the frame the cursor starts
+ * moving. Leave at least 20 frames between a pointer step and whatever came
+ * before it.
  */
 
 /** One scripted action. Exactly one verb per step. */

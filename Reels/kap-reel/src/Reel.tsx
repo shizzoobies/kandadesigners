@@ -6,15 +6,11 @@ import { Hook } from "./scenes/Hook";
 import { HowWeWork } from "./scenes/HowWeWork";
 import { ProjectShowcase, WHIP_FRAMES } from "./scenes/ProjectShowcase";
 import { SurfacesTour } from "./scenes/SurfacesTour";
-import { COLORS, projectAccent } from "./lib/brand";
+import { COLORS } from "./lib/brand";
 import { type FormatKey } from "./lib/layout";
-import {
-  LINKEDIN_BEATS,
-  LINKEDIN_CLEAN_CAPTURE,
-  LINKEDIN_PROJECT_BEAT_SHOTS,
-  SHORT_BEATS,
-  SHORT_CLEAN_CAPTURE,
-} from "./lib/timing";
+import { LINKEDIN_BEATS, LINKEDIN_PROJECT_BEAT_SHOTS, SHORT_BEATS } from "./lib/timing";
+import { contentAccent, type ReelContent, type ReelCut } from "./reels/types";
+import { WEB_REEL } from "./reels/web";
 
 /**
  * Which cut this scene tree is rendering.
@@ -29,11 +25,11 @@ import {
  * scene components, not a fork, so everything below branches on this prop and
  * nothing below is duplicated per cut.
  */
-export type ReelCut = "short" | "linkedin";
+export type { ReelCut };
 
 export type ReelProps = {
   /**
-   * Which crop this scene tree is rendering. All twelve registered compositions
+   * Which crop this scene tree is rendering. All the registered compositions
    * share this tree; every scene lays itself out from safeArea(format) and
    * formatMetrics(format) rather than from fixed pixel positions.
    */
@@ -44,92 +40,16 @@ export type ReelProps = {
    */
   debugSafeZones?: boolean;
   cut?: ReelCut;
+  /**
+   * Which reel's content this tree is rendering: the web design showcase or the
+   * training content line. Added 2026-09-04, when the second reel arrived. The
+   * same argument Section 6 makes about the two cuts applies to the two reels:
+   * one scene tree, two content configs, never a fork. Everything that differs
+   * between them lives in src/reels; everything that does not is here and in
+   * src/scenes.
+   */
+  content?: ReelContent;
 };
-
-type FeaturedProject = {
-  projectId: string;
-  displayName: string;
-  plateId: string;
-  claim: string;
-  /** Named explicitly where the spec names it, rather than left to plates.json. */
-  plateCaptureId?: string;
-  /** One line on what the business needed. LinkedIn cut only. */
-  contextLine?: string;
-};
-
-/** The project beats both cuts draw from. Neither cut uses all of them. */
-const FORE_MOTION_GOLF: FeaturedProject = {
-  projectId: "fore-motion-golf",
-  displayName: "Fore Motion Golf",
-  plateId: "plate-laptop-shoulder",
-  claim: "AI caddie built in",
-};
-
-const PROJECT_MAKEOVER: FeaturedProject = {
-  projectId: "project-makeover",
-  displayName: "Project Makeover",
-  plateId: "plate-phone-hands",
-  claim: "Accessibility score 100",
-};
-
-const SOUTHERN_LEGACY: FeaturedProject = {
-  // Owner decision 2026-09-03: the claim shortens to "No page builder."
-  // "Custom code." was doing the hook line's job a second time.
-  projectId: "southern-legacy-contractors",
-  displayName: "Southern Legacy Contractors",
-  plateId: "plate-ipad-lap",
-  claim: "No page builder.",
-};
-
-const MBS_MEDICINE: FeaturedProject = {
-  projectId: "mbs-medicine",
-  displayName: "MBS Medicine",
-  plateId: "plate-desktop-wide",
-  plateCaptureId: "mbs-medicine-home-desktop",
-  claim: "Booking built in",
-};
-
-/**
- * The projects featured in the 15 second cut, in order, with the plate that
- * fills each one's first shot. Ids must exist in config/projects.json with
- * cleared_for_public_showcase true.
- *
- * Owner decision 2026-09-03: two, not three. See the re-pace note at the top of
- * src/lib/timing.ts. Southern Legacy Contractors keeps its site on screen as
- * the third surfaces tour cut, so no cleared project drops out of the cut
- * entirely, and nothing changes for it in the 45 second cut below.
- */
-const FEATURED: FeaturedProject[] = [FORE_MOTION_GOLF, PROJECT_MAKEOVER];
-
-/**
- * The four projects in the 45 second cut, unchanged by the 15 second re-pace.
- * The first three are the ones the master used to carry, plus a context line
- * each. MBS Medicine is the fourth, which the 15 second cut has never had room
- * for: it takes plate-desktop-wide, whose screen carries the MBS desktop
- * scroll, and cuts to the MBS mobile capture.
- *
- * Every context line says what the business needed before the site existed,
- * which is the question a LinkedIn viewer is actually asking. None of them
- * claims a result, so none of them needs a measurement behind it.
- */
-const FEATURED_LINKEDIN: FeaturedProject[] = [
-  {
-    ...FORE_MOTION_GOLF,
-    contextLine: "Needed a waitlist before the doors opened.",
-  },
-  {
-    ...PROJECT_MAKEOVER,
-    contextLine: "Needed donations and a gallery that grows.",
-  },
-  {
-    ...SOUTHERN_LEGACY,
-    contextLine: "Needed quotes from a phone on a job site.",
-  },
-  {
-    ...MBS_MEDICINE,
-    contextLine: "Needed same-week booking and a patient portal.",
-  },
-];
 
 /** Length of a LinkedIn project beat, in frames. Seven seconds at 30fps. */
 const LINKEDIN_BEAT_FRAMES =
@@ -140,10 +60,12 @@ export const Reel: React.FC<ReelProps> = ({
   format = "vertical",
   debugSafeZones = false,
   cut = "short",
+  content = WEB_REEL,
 }) => {
   const linkedin = cut === "linkedin";
   const beats = linkedin ? LINKEDIN_BEATS : SHORT_BEATS;
-  const featured = linkedin ? FEATURED_LINKEDIN : FEATURED;
+  const featured = content.featured[cut];
+  const cleanCapture = content.cleanCapture[cut];
 
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.ink }}>
@@ -153,7 +75,7 @@ export const Reel: React.FC<ReelProps> = ({
         name="Hook"
         layout="none"
       >
-        <Hook format={format} />
+        <Hook format={format} content={content.hook} />
       </Sequence>
 
       {/* LinkedIn only: four seconds on how the studio works, before any work
@@ -166,7 +88,7 @@ export const Reel: React.FC<ReelProps> = ({
           name="How we work"
           layout="none"
         >
-          <HowWeWork format={format} />
+          <HowWeWork format={format} lines={content.howWeWorkLines} />
         </Sequence>
       ) : null}
 
@@ -178,32 +100,30 @@ export const Reel: React.FC<ReelProps> = ({
         const whipOut = i < featured.length - 1;
         return (
           <Sequence
-            key={project.projectId}
+            key={`${project.projectId}-${i}`}
             from={beat.start}
             durationInFrames={beat.end - beat.start + (whipOut ? WHIP_FRAMES : 0)}
-            name={project.displayName}
+            name={project.name}
             layout="none"
           >
             <ProjectShowcase
               format={format}
               projectId={project.projectId}
-              displayName={project.displayName}
+              displayName={project.name}
               plateId={project.plateId}
               plateCaptureId={project.plateCaptureId}
+              cleanCaptureId={project.cleanCaptureId}
+              cleanFrame={project.cleanFrame}
+              zoom={project.zoom}
+              nameLines={project.nameLines}
               claim={project.claim}
               contextLine={project.contextLine}
-              accent={projectAccent(i)}
+              accent={contentAccent(content, i)}
               whipIn={i > 0}
               whipOut={whipOut}
               durationInFrames={linkedin ? LINKEDIN_BEAT_FRAMES : undefined}
-              cleanTrimBefore={
-                (linkedin ? LINKEDIN_CLEAN_CAPTURE : SHORT_CLEAN_CAPTURE)
-                  .trimBefore
-              }
-              scrollPlaybackRate={
-                (linkedin ? LINKEDIN_CLEAN_CAPTURE : SHORT_CLEAN_CAPTURE)
-                  .scrollPlaybackRate
-              }
+              cleanTrimBefore={cleanCapture.trimBefore}
+              scrollPlaybackRate={cleanCapture.scrollPlaybackRate}
             />
           </Sequence>
         );
@@ -215,7 +135,12 @@ export const Reel: React.FC<ReelProps> = ({
         name="Surfaces tour"
         layout="none"
       >
-        <SurfacesTour format={format} cut={cut} />
+        <SurfacesTour
+          format={format}
+          cut={cut}
+          cuts={content.tour[cut]}
+          accents={content.accents}
+        />
       </Sequence>
 
       {/* LinkedIn only: five seconds on the dark teal band, before the CTA. */}
@@ -228,7 +153,10 @@ export const Reel: React.FC<ReelProps> = ({
           name="Accessibility"
           layout="none"
         >
-          <AccessibilityBeat format={format} />
+          <AccessibilityBeat
+            format={format}
+            lines={content.accessibilityLines}
+          />
         </Sequence>
       ) : null}
 
@@ -240,7 +168,7 @@ export const Reel: React.FC<ReelProps> = ({
       >
         <CallToAction
           format={format}
-          closingLine={linkedin ? "Taking new projects." : undefined}
+          closingLine={content.ctaClosingLine[cut]}
         />
       </Sequence>
 

@@ -32,6 +32,18 @@ export function captureSrc(entry: CaptureEntry): string {
   return staticFile(entry.path.replace(/^assets\//, ""));
 }
 
+/**
+ * Looks a capture up by id and returns null if it is not there yet.
+ *
+ * Added 2026-09-04 for the training reel, whose interaction captures are being
+ * recorded by another agent while this reel is being built. A scene that can
+ * see the absence renders a labelled grey stand-in; getCapture() below still
+ * throws, because a scene that cannot handle the absence should fail loudly.
+ */
+export function findCapture(id: string): CaptureEntry | null {
+  return CAPTURES.find((c) => c.id === id) ?? null;
+}
+
 /** Looks a capture up by id. Throws if the id is not in captures.json. */
 export function getCapture(id: string): CaptureEntry {
   const found = CAPTURES.find((c) => c.id === id);

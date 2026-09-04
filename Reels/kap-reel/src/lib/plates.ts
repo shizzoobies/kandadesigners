@@ -94,6 +94,19 @@ const CAPTURE_TINTS: Record<string, [number, number, number]> = {
   "ellenton-family-practice-home-mobile": [215, 216, 212],
   "pbj-strategic-accounting-home-desktop": [138, 131, 128],
   "synovial-marketing-home-mobile": [221, 213, 204],
+
+  // Training set, measured 2026-09-04 the same way, one entry per clip the
+  // seven training plates bind to. The spread across them is the widest in
+  // this table and it is real: the safety pages open on a near black hero, so
+  // those screens spill almost nothing, while the finance and rfi samples are
+  // cream and paper white and spill a warm light the way a document page does.
+  "training-safety-hero-to-zones-desktop": [38, 32, 31],
+  "training-safety-hierarchy-sorter-mobile": [63, 55, 38],
+  "training-safety-walkthrough-card-desktop": [40, 35, 33],
+  "training-finance-pnl-simulator-desktop": [226, 220, 207],
+  "training-finance-waterfall-desktop": [226, 218, 206],
+  "training-rfi-scenario-branch-desktop": [230, 230, 234],
+  "training-rfi-hero-mobile": [65, 86, 127],
 };
 
 /** Neutral mid grey, for a capture that has not been measured yet. */

@@ -335,34 +335,58 @@ const TRAINING_PLATE_SPECS: PlateSpec[] = [
   },
   {
     id: "t-desktop-wide",
+    // Second framing. The first one put a person at the right edge and asked
+    // for them to be cut off below the head, and the model read that as
+    // permission to include the head: c02 came back with a lit profile at the
+    // top right corner, which is the one thing this set can never ship. c01
+    // failed differently, with a hand gripping the panel and a thumb on the
+    // screen face. So the person is now reduced to a forearm entering from
+    // outside the frame, and the hand is given somewhere to be that is not the
+    // monitor.
     framing:
       "Vertical portrait photograph of a wider quiet office room with a large " +
-      "widescreen monitor on a light oak desk anchoring the frame, the " +
-      "monitor turned squarely toward the camera and its dark blank screen " +
-      "sitting in the upper middle of the frame. One person stands at the far " +
-      "right edge of the frame in a charcoal grey shirt, turned away and cut " +
-      "off by the edge of the frame at chest height so no head, no hair and " +
-      "no face is anywhere in the picture. A tall green plant is softly out " +
-      "of focus at the left.",
+      "widescreen monitor standing on its own stand on a light oak desk and " +
+      "anchoring the frame, the monitor turned squarely toward the camera and " +
+      "its dark blank screen sitting in the upper middle of the frame, the " +
+      "stand clearly joined to the panel and resting on the desk. No person " +
+      "is in the frame except one forearm in a charcoal grey sleeve that " +
+      "enters from the right edge at desk height, ending in a relaxed hand " +
+      "that rests flat on the desk well to the right of the monitor and never " +
+      "touches the monitor. The rest of that person, all of their head, hair, " +
+      "face, neck and shoulders, is entirely outside the frame and no part of " +
+      "a head appears anywhere in the picture, including in the corners and " +
+      "including any reflection. A tall green plant is softly out of focus at " +
+      "the left.",
     captureId: "training-rfi-scenario-branch-desktop",
     usedFor: "tour: rfi",
     set: "training",
   },
   {
     id: "t-laptop-two",
+    // Second framing. Both first candidates failed the same two ways: the
+    // gesturing hand was raised into the air and its fingers crossed the lower
+    // screen, and one candidate put a lit profile at the top left. Asking for
+    // a hand "in the air just above the table" was the mistake, because the
+    // model reads a raised open hand as the gesture and a raised hand in this
+    // camera position lands in front of the panel. So the hand is now on the
+    // table, and the crop is described by what is in the frame rather than by
+    // where the cut falls.
     framing:
       "Vertical portrait photograph of two people sitting side by side at a " +
-      "light oak table, both seen from behind and cropped above the shoulder " +
-      "line so neither head, neither hairline nor either face is in frame. " +
-      "One wears a light grey sweatshirt, the other a sage green shirt. An " +
-      "open laptop sits on the table between them with its dark blank screen " +
-      "turned toward the camera in the upper middle of the frame. The person " +
-      "on the right gestures toward the laptop with a relaxed open hand that " +
-      "stays low and near, resting in the air just above the table in front " +
-      "of the laptop with the fingertips well below the bottom edge of the " +
-      "screen. The hand is entirely outside the outline of the screen and " +
-      "never overlaps it from the camera's point of view. Deep background " +
-      "blur.",
+      "light oak table, both seen from behind. Only their shoulders, upper " +
+      "backs and arms are in the picture, entering along the bottom left and " +
+      "bottom right corners. No head, no hair, no ear, no neck, no profile " +
+      "and no face of either person is anywhere in the frame, and neither is " +
+      "reflected in the screen or the window. One wears a light grey " +
+      "sweatshirt, the other a sage green shirt. An open laptop sits on the " +
+      "table between them with its dark blank screen turned toward the camera " +
+      "in the upper middle of the frame, the whole screen clear and " +
+      "unobstructed. The person on the right rests a relaxed open hand palm " +
+      "down on the table top in front of the laptop, angled toward it, the " +
+      "whole hand flat on the table and lower in the frame than the laptop " +
+      "keyboard. No finger is raised and no part of either hand appears in " +
+      "front of the screen or overlaps its outline from the camera's point of " +
+      "view. Deep background blur.",
     captureId: "training-safety-walkthrough-card-desktop",
     usedFor: "tour: safety card",
     set: "training",

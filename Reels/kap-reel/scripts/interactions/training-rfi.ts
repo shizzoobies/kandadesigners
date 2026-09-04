@@ -15,9 +15,10 @@
  *     and "Next <noun>". Target them positionally inside the screen.
  *   - Answers are [data-q][data-correct] buttons writing into #fb-<key>.
  *
- * Live versus local: the live build is older than the local file (435 lines of
- * app.js against 547) but carries the same screens, the same #screen-5
- * scenario, and the same #screen-7 knowledge check used here.
+ * Live versus local: re-read off the live page on 2026-09-04 and unchanged from
+ * what the local file describes. Eight sheets, the meter reads "Sheet N of 8",
+ * seven generated tabs across four [data-tabs] wrappers, the #screen-5 scenario
+ * and the #screen-7 knowledge check both where this file expects them.
  */
 
 import type { InteractionScript } from "./types";
@@ -38,10 +39,16 @@ const script: InteractionScript = {
     },
     {
       id: "scenario-branch",
-      viewport: "both",
+      // Desktop only, on the evidence of the first gate sheet. At 390 wide the
+      // two option cards fill the whole 844px box, so #fb-scenario renders
+      // below the cut with the document locked and neither verdict is ever on
+      // camera. The clip would show two cards being selected and nothing said
+      // about either, which is this beat with its point removed. Evidence
+      // still: assets/captures/stills/training-rfi-scenario-branch-mobile-evidence.png
+      viewport: "desktop",
       durationFrames: 150,
       note:
-        "Screen 5. The thin RFI is chosen first so the corrective feedback plays, " +
+        "Sheet 5. The thin RFI is chosen first so the corrective feedback plays, " +
         "then the specific one, so the panel swaps to the right answer on camera.",
       preroll: advance(4),
       steps: [
@@ -51,14 +58,24 @@ const script: InteractionScript = {
     },
     {
       id: "knowledge-check",
-      viewport: "both",
+      // Desktop only, and not because the questions do not fit: they do. The
+      // generated .substep-bar is a three-across row the 390 wide layout never
+      // wraps, so "Next decision" sits at x=378 with 139px of width and runs
+      // off the right edge of a 390px viewport with the document locked. The
+      // second decision cannot be reached by pointer on a phone at all.
+      // Evidence still:
+      // assets/captures/stills/training-rfi-knowledge-check-mobile-evidence.png
+      viewport: "desktop",
       durationFrames: 120,
-      note: "Screen 7. Two of the three decisions answered, stepping the generated sub-step bar between them.",
+      note: "Sheet 7. Two of the three decisions answered, stepping the generated sub-step bar between them.",
       preroll: advance(6),
+      // The second answer at 84 rather than 92: at 92 the 75 percent sample
+      // frame landed two frames short of it, so the gate sheet showed decision
+      // two sitting untouched.
       steps: [
         { at: 22, click: '#screen-7 .choice[data-q="k1"][data-correct="true"]' },
-        { at: 62, click: "#screen-7 .substep-bar button:last-of-type" },
-        { at: 92, click: '#screen-7 .choice[data-q="k2"][data-correct="true"]' },
+        { at: 58, click: "#screen-7 .substep-bar button:last-of-type" },
+        { at: 84, click: '#screen-7 .choice[data-q="k2"][data-correct="true"]' },
       ],
     },
   ],
