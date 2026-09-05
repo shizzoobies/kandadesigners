@@ -78,10 +78,14 @@ export const CTA_MIN_FRAMES: Record<TutorialCut, number> = {
  * before a single credit is spent, and every estimated beat is named in a
  * console warning when the bundle first evaluates the timeline.
  *
- * It is conservative, and measurably so. The draft pass on 2026-09-04 read the
- * 22 beats of both tutorials at about 3.9 words a second on
- * eleven_multilingual_v2 at speed 1.0, so 2.6 overstates every beat by roughly
- * half. That is the right direction to be wrong in for a placeholder, because
+ * It is conservative, and measurably so. Both draft passes on
+ * eleven_multilingual_v2 at speed 1.0 read the 23 beats of both tutorials at
+ * about 3.1 words a second, Eric's 2026-09-04 pass at 3.13 and Sarah's
+ * 2026-09-05 pass at 3.11, so 2.6 overstates every beat by roughly a fifth. An
+ * earlier version of this comment said 3.9, which was wrong: it was arrived at
+ * from the three shortest lines in the log, and short lines read faster per word
+ * than long ones. That is the right direction to be wrong in for a placeholder,
+ * because
  * an underestimate would put a line past its own picture, but it does mean the
  * estimated layout of a 15 second cut can exceed 450 frames on a fresh checkout.
  * tutorialTimeline() squeezes estimated beats back to their minFrames rather

@@ -190,6 +190,26 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | deliver tutorial-contrast | six MP4s, six SRTs, two thumbnails, five stills, acceptance | `npx tsx scripts/deliver.ts --reel tutorial-contrast` | 29.6s |
 | 2026-09-04 | deliver tutorial-hero | six MP4s, six SRTs, two thumbnails, five stills, acceptance | `npx tsx scripts/deliver.ts --reel tutorial-hero` | 29.8s |
 | 2026-09-04 | **Tutorial Phase C** | **both tutorials regenerated, rendered and delivered to `Reels/instructional reels/`** | **voice + two mixes + bundle + twelve renders + two deliveries** | **238.9s (3m 59s)** |
+| 2026-09-05 | audition | six `out/voice-samples/*.mp3` (the voice swap) | ElevenLabs `eleven_multilingual_v2`, 6 x 102 characters, 612 credits measured | not timed |
+| 2026-09-05 | voice | eleven mp3s in `assets/audio/voice/contrast/` (Sarah) | ElevenLabs `eleven_multilingual_v2`, 751 characters, 751 credits measured; nothing skipped, the new voice invalidated every hash | 39.1s |
+| 2026-09-05 | voice | twelve mp3s in `assets/audio/voice/hero/` (Sarah) | ElevenLabs `eleven_multilingual_v2`, 744 characters, 744 credits measured | 42.3s |
+| 2026-09-05 | mix tutorial | four `assets/audio/mix-tut-*.wav` (Sarah) | I -14.08 to -13.87 LUFS, TP -1.76 to -1.50 dBTP, 9.0 to 10.0 dB of duck | 16.8s |
+| 2026-09-05 | bundle | `out/bundle` (the voice swap) | rspack bundle, public dir linked not copied | 15.3s cold, 1.6s warm |
+| 2026-09-05 | TutorialContrastVertical | `out/render-tutorial-contrast-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 1.1 MB | 8.7s |
+| 2026-09-05 | TutorialContrastFeed | `out/render-tutorial-contrast-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s, 1.2 MB | 7.3s |
+| 2026-09-05 | TutorialContrastSquare | `out/render-tutorial-contrast-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s, 1.1 MB | 6.6s |
+| 2026-09-05 | TutorialContrastLandscape | `out/render-tutorial-contrast-landscape-15s.mp4` | 450 frames, 1920x1080, 30fps, 15.0s, 1.5 MB | 8.5s |
+| 2026-09-05 | TutorialContrastLinkedIn | `out/render-tutorial-contrast-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s, 3.3 MB | 24.2s |
+| 2026-09-05 | TutorialContrastLinkedInLandscape | `out/render-tutorial-contrast-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s, 3.8 MB | 27.7s |
+| 2026-09-05 | TutorialHeroVertical | `out/render-tutorial-hero-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 0.9 MB | 8.6s |
+| 2026-09-05 | TutorialHeroFeed | `out/render-tutorial-hero-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s, 1.0 MB | 7.2s |
+| 2026-09-05 | TutorialHeroSquare | `out/render-tutorial-hero-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s, 0.9 MB | 6.8s |
+| 2026-09-05 | TutorialHeroLandscape | `out/render-tutorial-hero-landscape-15s.mp4` | 450 frames, 1920x1080, 30fps, 15.0s, 1.0 MB | 8.6s |
+| 2026-09-05 | TutorialHeroLinkedIn | `out/render-tutorial-hero-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s, 2.9 MB | 17.7s |
+| 2026-09-05 | TutorialHeroLinkedInLandscape | `out/render-tutorial-hero-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s, 3.2 MB | 20.7s |
+| 2026-09-05 | deliver tutorial-contrast | six MP4s, six SRTs, two thumbnails, five stills, acceptance | `npx tsx scripts/deliver.ts --reel tutorial-contrast` | 26.4s |
+| 2026-09-05 | deliver tutorial-hero | six MP4s, six SRTs, two thumbnails, five stills, acceptance | `npx tsx scripts/deliver.ts --reel tutorial-hero` | 26.5s |
+| 2026-09-05 | **Tutorial voice swap** | **both tutorials re-read in Sarah, rendered and re-delivered to `Reels/instructional reels/`** | **two voice runs + four mixes + bundle + twelve renders + two deliveries** | **305.3s (5m 5s)** |
 
 The tutorial number, **190.0 seconds**, is the Phase A foundation gate end to
 end: one bundle at 2.3s, the 23 voice generations at 87.2s, the four mixes at 18.9s,
@@ -201,6 +221,19 @@ credits rather than the generation itself. It is not a number a rebuild repeats:
 `voice.ts` skips any beat whose text, voice, model and settings hash already
 matches a file on disk, so a rebuild that changes no script pays 0 credits and no
 seconds. The renders are fast because the pictures are stand-ins.
+
+The voice swap number, **305.3 seconds**, is both tutorials from a one line
+change of voice id to the finals on disk: two voice runs at 39.1s and 42.3s, the
+four mixes at 16.8s, one warm bundle at 1.6s, twelve renders totalling 152.6s,
+and two deliveries at 26.4s and 26.5s. It is 66 seconds longer than Phase C
+because every one of the 23 beats was regenerated rather than three, and because
+all four mixes were rebuilt rather than two: a new voice invalidates every hash
+at once, which is the intended behaviour and the reason a voice change needs no
+other edit. The six auditions are not in the total. They are how the voice was
+chosen, not part of a rebuild, and a rebuild does not repeat them, exactly as it
+does not repeat any other ElevenLabs call. Renders came in ahead of Phase C's,
+which is run to run noise: the same pictures were drawn, and only their beat
+boundaries moved.
 
 The Phase C number, **238.9 seconds**, is both tutorials from a script edit to
 the finals on disk: three regenerated voice lines at 12.2s, the two contrast
@@ -1943,33 +1976,44 @@ the end card, and writes its measured duration into `config/voice.json`.
 
 A beat with no voice file yet is laid out from an estimate of 2.6 words a second
 and named in a console warning at bundle time, so a gray render exists before a
-credit is spent. The draft read measured nearer 3.9 words a second, so the
-estimate overstates every beat by about half; where that pushes a 15 second cut
+credit is spent. The draft reads measure nearer 3.1 words a second, so the
+estimate overstates every beat by about a fifth; where that pushes a 15 second cut
 past 450 frames the estimated beats are squeezed back to their own `minFrames`
 rather than failing, and the warning already says the timing is provisional.
 
-Where the four cuts landed, all measured:
+Where the four cuts landed, all measured. These are the 2026-09-05 numbers, laid
+out from Sarah's read; the stretch beat is in bold:
 
 | Cut | Beats, frames each | Slack to the stretch beat |
 |---|---|---|
-| contrast 15s | hook 54, fine 64, fails 89, **fix 165**, cta 78 | 55 to `fix` |
-| contrast 45s | hook 53, real 325, **inspect 378**, fix 355, rule 104, cta 135 | 216 to `inspect` |
-| hero 15s | hook 71, weak 74, **promise 167**, real 60, cta 78 | 89 to `promise` |
-| hero 45s | hook 72, fold 283, rewrite 177, **real 597**, rule 71, cta 150 | 327 to `real` |
+| contrast 15s | hook 58, fine 67, fails 96, **fix 151**, cta 78 | 24 to `fix` |
+| contrast 45s | hook 60, real 281, **inspect 402**, fix 330, rule 110, cta 167 | 225 to `inspect` |
+| hero 15s | hook 77, weak 77, **promise 158**, real 60, cta 78 | 72 to `promise` |
+| hero 45s | hook 75, fold 258, rewrite 175, test 157, **real 439**, rule 84, cta 162 | 169 to `real` |
 
-The hero 45 second cut is the one to watch. Its script is 491 characters of
-narration for 45 seconds, which lays out to 1023 frames and leaves 327 of slack,
-so the `real` beat runs 597 frames: three client heroes at about 6.6 seconds each
-rather than the three the spec sketches. That is readable, and arguably right for
-a headline the viewer is being asked to read, but it is a lot of screen time for
-one beat and it is there because the script under-fills the cut rather than
-because anyone chose it. Either a beat is added or Phase B holds each phone
-longer on purpose.
+Against the same table under Eric's read, which was contrast 15s 54/64/89/164/79,
+contrast 45s 53/325/378/355/104/135, hero 15s 71/74/167/60/78 and hero 45s
+72/283/177/149/448/71/150. Seven beats moved by more than twelve frames and none
+of them by more than a second and a half: contrast 15s `fix` down 13, contrast
+45s `real` down 44, `inspect` up 24, `fix` down 25 and `cta` up 32, hero 45s
+`fold` down 25 and `rule` up 13. Nothing else moved by more than twelve. The two
+45 second cuts moved most in both directions because they hold the long lines,
+where a small difference in reading rate compounds, and because the slack that
+absorbs it lands on a single stretch beat.
+
+The 15 second contrast cut is the one to watch. It lays out to 426 frames of 450,
+so 24 frames of slack go to `fix`, down from 54 under the previous read. It still
+fits, and it fits with the same 12 frame tail on every beat that every other cut
+gets, but there is not much room left in it. A line added to that script, or a
+noticeably slower voice, would put it over 450 and the timeline would hard-error
+rather than squeeze, which is the intended behaviour: the answer is to shorten a
+line, and the speed of the read is never adjusted to make a script fit.
 
 ### Voice and mix
 
 ```
 npx tsx scripts/voice.ts voices [--search calm]
+npx tsx scripts/voice.ts audition
 npx tsx scripts/voice.ts --reel contrast|hero|both --cut short|linkedin|both [--dry-run]
 npx tsx scripts/voice.ts --mix --reel both --cut both
 npx tsx scripts/voice.ts usage
@@ -1985,19 +2029,38 @@ anything was regenerated. The same page notes multilingual v2 "can better
 generalize the reading out of numbers", which is the whole subject of the
 contrast tutorial. The full argument is at the top of `scripts/voice.ts`.
 
-Draft voice is the premade library voice "Eric", a smooth tenor from a man in his
-40s, American, at stability 0.5, similarity 0.75, style 0, speed 1.0. Kai's voice
-id replaces it for the final pass; every beat regenerates on its own when it
-does, because the voice is part of the hash a skip is decided on.
+Draft voice, since 2026-09-05, is the premade library voice "Sarah", listed
+"Mature, Reassuring, Confident", American, at stability 0.5, similarity 0.75,
+style 0, speed 1.0. It replaced the premade voice "Eric", who carried the
+2026-09-04 drafts. It is still a draft pending Alex's sign-off; whatever replaces
+it, every beat regenerates on its own, because the voice is part of the hash a
+skip is decided on. Changing `DRAFT_VOICE` at the top of `scripts/voice.ts` is
+the whole of changing the voice.
+
+`voice.ts audition` is how the voice was chosen. It reads one line, the contrast
+tutorial's own first three beats run together, in every candidate at the exact
+settings the tutorials use, writes `out/voice-samples/<name>.mp3`, and logs the
+spend in the `auditions` array of `config/voice.json`. On 2026-09-05 it read all
+five premade voices `GET /v1/voices` returns as female and American, plus Eric as
+a control, for 102 credits each. Sarah won on pace: 6.873 seconds against Eric's
+6.827 on the same line, where nothing else in the set was within three percent,
+which is what kept the four timelines close. `out/voice-samples/README.md` has
+the measurements and the ranking. The control was worth its 102 credits on its
+own: summing three of Eric's separate beat files had made him look twenty percent
+faster than he is, and it is what corrected the 3.9 words a second in this file
+to 3.1.
 
 Every call is logged in `config/voice.json` with the exact text, the settings,
 the measured duration and the credits measured as a before and after delta on the
-usage endpoint, the same way `config/audio.json` logs the music. The draft pass
-cost **1406 credits**: contrast 189 and 565, hero 168 and 484. The hero 45 second
-"real" line was then re-cut when the spec changed its three example sites on
-2026-09-04, which cost another **118 credits** and regenerated that one beat and
-nothing else, because the hash a skip is decided on covers the text. **1524
-credits** in total.
+usage endpoint, the same way `config/audio.json` logs the music. Eric's draft
+cost **1806 credits** across 27 generations: 1406 for the first pass, 118 for the
+hero 45 second "real" re-cut, 85 for the hero "test" beat Phase B added, and 197
+for the three contrast lines Phase C re-read in US spelling. The six auditions
+cost **612**. The
+swap to Sarah regenerated all 23 beats at once, because a new voice invalidates
+every hash at the same time, for **1495 credits**: contrast 188 and 563, hero 168
+and 576. **3913 credits** in total, cumulative, and `LICENSING.md` carries the
+same figure broken out.
 
 `--mix` builds `assets/audio/mix-tut-<id>-<15|45>s.wav`: the music take named in
 the content file, gained so it sits 8 dB under the voice peak, then sidechained
@@ -2007,12 +2070,26 @@ threshold is solved rather than guessed: the bed is measured with the duck
 bypassed and again with it in, over a window inside the longest line, and the
 threshold is refined until the reduction lands on 10 dB. Delivered:
 
-| Mix | Integrated | True peak | Bed under the voice while it speaks |
-|---|---|---|---|
-| `mix-tut-contrast-15s.wav` | -13.90 LUFS | -1.52 dBTP | 17.4 dB |
-| `mix-tut-contrast-45s.wav` | -14.02 LUFS | -1.96 dBTP | 15.9 dB |
-| `mix-tut-hero-15s.wav` | -14.01 LUFS | -1.49 dBTP | 17.1 dB |
-| `mix-tut-hero-45s.wav` | -13.99 LUFS | -1.81 dBTP | 17.3 dB |
+| Mix | Integrated | True peak | LRA | Bed under the voice while it speaks |
+|---|---|---|---|---|
+| `mix-tut-contrast-15s.wav` | -14.08 LUFS | -1.69 dBTP | 2.2 | 17.4 dB |
+| `mix-tut-contrast-45s.wav` | -13.92 LUFS | -1.63 dBTP | 5.7 | 17.0 dB |
+| `mix-tut-hero-15s.wav` | -13.87 LUFS | -1.50 dBTP | 3.1 | 18.0 dB |
+| `mix-tut-hero-45s.wav` | -13.91 LUFS | -1.76 dBTP | 5.6 | 17.4 dB |
+
+Rebuilt 2026-09-05 for the Sarah read. Every mix is inside the half decibel of
+-14 LUFS this project holds itself to, and the duck lands on 17.0 to 18.0 dB
+under the voice against the 18 the spec asks for, which is where it landed
+before. Two things did move. The bed sits higher before the duck, -7.9 to -9.1 dB
+against Eric's -10.6 to -13.2, because that offset is solved from the voice's
+measured peak and Sarah's stems peak lower than Eric's; the bed ends up in the
+same place relative to the voice either way, which is the point of solving it
+rather than fixing it. And the loudness range of the two 45 second mixes roughly
+doubled, 5.7 and 5.6 against 2.9 and 2.1. That is the read, not the mix: Sarah's
+sentence junctions are much shorter than Eric's, so the long lines have less
+near-silence in them and the gaps between beats stand out more against the
+speech. It is well inside any platform's tolerance and nothing is clipped, but it
+is the one measurable way the two voices produce a different picture.
 
 `Tutorial.tsx` also drops an `<Audio>` per beat so Studio and a bare render carry
 the narration, but the delivered audio comes from the muxed mix, exactly as it

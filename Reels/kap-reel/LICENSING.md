@@ -761,40 +761,73 @@ keep their credentials permanently.
 ## Narration (text to speech), tutorial reels
 
 Added 2026-09-04, for the two tutorial reels in `Reels/instructional reels/`.
+The voice changed on 2026-09-05 and this section was rewritten with it. Eric's
+spend is not removed: those credits were spent, and the record has to show it.
 
 - Product: ElevenLabs text to speech, on the same Pro plan recorded in the
   ElevenLabs section above (owner-confirmed 2026-09-03).
-- Voice: `Eric`, voice id `cjVigY5qzO86Huf0OWal`. A premade ElevenLabs library
-  voice, not a cloned or custom one, chosen on 2026-09-04 for a calm mid
-  register read. It is a draft. Kai's own voice id replaces it for the final
-  pass, and every line regenerates when it does, because the voice is part of
-  the regeneration hash in `config/voice.json`.
+- Voice, current: `Sarah`, voice id `EXAVITQu4vr4xnSDxMaL`. A premade
+  ElevenLabs library voice, not a cloned or custom one, listed as "Sarah -
+  Mature, Reassuring, Confident" and labelled female and American. Chosen on
+  2026-09-05 on the owner's call for a friendly female read, from the five
+  premade voices `GET /v1/voices` returns as female and American. All five were
+  auditioned on one line at these exact settings, with the outgoing voice read
+  as a control so the pace comparison was measured rather than estimated; the
+  six files and the ranking are in `out/voice-samples/`. It is a draft pending
+  Alex's sign-off. If the voice changes again every line regenerates on its own,
+  because the voice is part of the regeneration hash in `config/voice.json`.
+- Voice, previous: `Eric`, voice id `cjVigY5qzO86Huf0OWal`. Also a premade
+  library voice, chosen 2026-09-04 for a calm mid register read. It carried the
+  drafts delivered on 2026-09-04 and is no longer in any delivered file. Its
+  credits stay in the totals below as spent.
 - Model: `eleven_multilingual_v2`. Output format `mp3_44100_128`, default voice
   settings (stability 0.5, similarity_boost 0.75, style 0, speaker boost on,
-  speed 1).
-- Credits: 1,806 measured across 27 generations, which is every tutorial voice
-  generation to date. Text to speech is billed at one credit per character and
-  1,806 characters were sent, so the measured figure and the character count
-  agree exactly. Read from the `creditsMeasured` field of every entry in
-  `config/voice.json`, each of which is a before and after delta on
+  speed 1). Sarah carries no recommended settings of her own: `settings` is
+  `null` on `GET /v1/voices`, so nothing was changed for her.
+- Credits: 3,913 measured across 56 billable calls, which is every tutorial
+  voice generation and audition to date, cumulative. Text to speech is billed at
+  one credit per character and 3,913 characters were sent, so the measured
+  figure and the character count agree exactly. Read from the `creditsMeasured`
+  field of every entry in `config/voice.json`, each of which is a before and
+  after delta on
   GET /v1/usage/character-stats?breakdown_type=product_type, sampled around the
   call, the same way the music and sound effect figures above are measured.
 
+The narration in the delivered files, all of it Sarah, read 2026-09-05:
+
 | Tutorial | Cut | Generations | Credits |
 |---|---|---|---|
-| contrast | 15 second | 6 | 225 |
-| contrast | 45 second | 8 | 726 |
+| contrast | 15 second | 5 | 188 |
+| contrast | 45 second | 6 | 563 |
 | hero | 15 second | 5 | 168 |
-| hero | 45 second | 8 | 687 |
-| **All tutorial narration** | | **27** | **1,806** |
+| hero | 45 second | 7 | 576 |
+| **Delivered narration, Sarah** | | **23** | **1,495** |
 
-The four cuts carry 23 beats between them and the log holds 27 generations,
-because four lines were read twice. Three are the contrast lines that changed
-from British to US spelling on 2026-09-04: the 15 second end card, and the
-"inspect" and "rule" beats of the 45 second cut. The fourth is the hero 45
-second "real" line, re-read when its three named examples changed. Nothing is
-deleted from `config/voice.json` when a line is regenerated: the credits were
-spent either way, and the log has to show it.
+Twenty three generations for twenty three beats: every line in the swap was read
+exactly once, because changing the voice invalidated every hash at the same time
+and no script text moved with it.
+
+Everything else the tutorial narration has cost, kept because it was spent:
+
+| What | When | Calls | Credits |
+|---|---|---|---|
+| Eric, the first draft of all four cuts | 2026-09-04 | 27 | 1,806 |
+| Voice auditions, six voices on one line | 2026-09-05 | 6 | 612 |
+| Sarah, the delivered narration | 2026-09-05 | 23 | 1,495 |
+| **All tutorial narration to date** | | **56** | **3,913** |
+
+Eric's 27 generations cover 23 beats because four lines were read twice. Three
+are the contrast lines that changed from British to US spelling on 2026-09-04:
+the 15 second end card, and the "inspect" and "rule" beats of the 45 second cut.
+The fourth is the hero 45 second "real" line, re-read when its three named
+examples changed.
+
+The six auditions are one line of 102 characters read by Bella, Sarah, Matilda,
+Laura, Jessica and Eric, at the settings above, logged in the `auditions` array
+of `config/voice.json` and saved to `out/voice-samples/`. Eric is in that set as
+a control rather than as a candidate. Nothing is deleted from
+`config/voice.json` when a line is regenerated or a voice is replaced: the
+credits were spent either way, and the log has to show it.
 
 Music under the narration: no new music was generated for either tutorial. Both
 reels bed the existing `music-a` take, `music-a-20s.mp3` under the 15 second
@@ -815,5 +848,11 @@ to the plan. The Eleven Music terms transcribed above cover music and do not
 speak to speech. Check the text to speech and voice library terms, or ask
 ElevenLabs, before either tutorial is posted.
 
-This is moot if the final narration is Kai's own recorded voice rather than a
-library voice, which is the plan. It matters only if a draft ships.
+The 2026-09-05 voice swap does not change that. Sarah is a premade library
+voice exactly as Eric was, so it is the same open question against a different
+voice id, and it is still **to confirm**. It matters only if a draft ships. It
+would stop mattering if the final narration were a recorded human voice rather
+than a library one. Note also that only premade voices were auditioned: a voice
+from the ElevenLabs Voice Library, which the workspace's `GET /v1/voices` also
+returns under category `professional`, would add a second and different
+licensing question on top of this unanswered one.

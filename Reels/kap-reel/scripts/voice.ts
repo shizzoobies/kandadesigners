@@ -8,6 +8,7 @@
  *
  * Run:
  *   npx tsx scripts/voice.ts voices [--search calm]
+ *   npx tsx scripts/voice.ts audition
  *   npx tsx scripts/voice.ts usage
  *   npx tsx scripts/voice.ts --reel contrast|hero|both --cut short|linkedin|both
  *   npx tsx scripts/voice.ts --reel both --cut both --dry-run
@@ -116,6 +117,7 @@ import {
   mixFilePath,
   voiceFilePath,
   voiceHash,
+  type VoiceAudition,
   type VoiceGeneration,
   type VoiceLog,
   type VoiceMixRecord,
@@ -154,27 +156,43 @@ const OUTPUT_FORMAT = "mp3_44100_128";
  * fit: if a cut comes in long, the line is shortened. Leaving this at 1.0 means
  * the timeline is laid out against a read a person would actually give.
  *
- * The id and the reason are written into config/voice.json on the first
- * generation, so the choice is on the record next to the spend it caused. Kai's
- * voice id replaces this for the final pass; nothing else about the pipeline
- * changes when it does, because a different voice is a different hash and every
- * beat regenerates on its own.
+ * The id and the reason are written into config/voice.json on every generation,
+ * so the choice is on the record next to the spend it caused. This constant is
+ * the source of truth and the log is the record of it, not the other way round:
+ * changing the id here is the whole of changing the voice, because a different
+ * voice is a different hash and every beat regenerates on its own. That is what
+ * the 2026-09-05 swap from Eric to Sarah cost, and nothing else.
  */
 const DRAFT_VOICE = {
-  id: "cjVigY5qzO86Huf0OWal",
-  name: "Eric",
+  id: "EXAVITQu4vr4xnSDxMaL",
+  name: "Sarah",
   why:
-    "Premade library voice, listed as \"Eric - Smooth, Trustworthy\": " +
-    "\"A smooth tenor pitch from a man in his 40s\", American, middle aged. " +
-    "Chosen from GET /v1/voices on 2026-09-04 against the brief of a calm, " +
-    "clear, mid register read. Tenor is the middle of the range, which is what " +
-    "a tutorial that has to say a ratio out loud needs: a deep announcer " +
-    "(Brian) makes a measurement sound like an advertisement and a bright " +
-    "presenter (Liam, Laura) makes it sound like a pitch. River was the other " +
-    "candidate, listed calm and neutral, and lost only because these tutorials " +
-    "stand in for the owner's own read and a neutral voice does not. DRAFT " +
-    "only: Kai's voice id replaces this for the final pass, and every beat " +
-    "regenerates on its own when it does, because the voice is part of the hash.",
+    "Premade library voice, listed as \"Sarah - Mature, Reassuring, " +
+    "Confident\": \"Young adult woman with a confident and warm, mature " +
+    "quality and a reassuring, professional tone\", American. Chosen 2026-09-05 " +
+    "on Alex's call for a friendly female read, from the five premade voices " +
+    "GET /v1/voices returns as female and American. All five were auditioned " +
+    "on one line at these exact settings, with Eric read as a control so the " +
+    "pace comparison was measured rather than estimated; the files and the " +
+    "full ranking are in out/voice-samples/. She won on all three criteria in " +
+    "order. Clarity on numbers: she gives \"It measures two point nine to " +
+    "one\" 1.849 seconds, the most of the six and 21 percent more than Eric " +
+    "spends on it, and the ratio is the one thing a listener has to catch. " +
+    "Warmth without sounding like an advertisement: her sentence junctions are " +
+    "0.06, 0.06 and 0.15 seconds against Eric's half second, so sentences run " +
+    "into each other the way speech does, where Bella's metronomic 0.35 at " +
+    "every junction is the voiceover tell her own description calls a " +
+    "\"deliberate, rhythmic pace\". Pace: 6.873 seconds against Eric's 6.827, " +
+    "seven tenths of one percent, and nothing else in the set is within three " +
+    "percent, so the four timelines barely move and what gets signed off is " +
+    "the voice rather than a re-cut. Bella and Matilda are the alternates. " +
+    "Laura and Jessica were auditioned and not ranked: sassy, social media, " +
+    "cute and trendy are the advertisement read this rules out, and Laura " +
+    "being the fastest of the six did not save her. The voice carries no " +
+    "recommended settings of its own (settings is null on GET /v1/voices), so " +
+    "the settings below are unchanged from Eric's. DRAFT only, pending Alex's " +
+    "sign-off, and nothing about the pipeline changes when it is replaced " +
+    "again, because the voice is part of the hash.",
 };
 
 const SETTINGS: VoiceSettings = {
@@ -231,6 +249,7 @@ const EMPTY_LOG: VoiceLog = {
   },
   voice: null,
   generations: [],
+  auditions: [],
   mixes: [],
 };
 
@@ -244,6 +263,7 @@ function loadLog(): VoiceLog {
     ...parsed,
     voice: parsed.voice ?? null,
     generations: parsed.generations ?? [],
+    auditions: parsed.auditions ?? [],
     mixes: parsed.mixes ?? [],
   };
 }
@@ -309,21 +329,20 @@ function upToDate(log: VoiceLog, job: Job): VoiceGeneration | null {
 // Generation
 // ---------------------------------------------------------------------------
 
-async function generateBeat(
+/**
+ * One text to speech call, at this file's model, settings and output format.
+ *
+ * Shared by the beats and by the audition, so a candidate voice is heard on
+ * exactly the terms the tutorials will use it on: same model, same stability,
+ * same speed. An audition read under different settings would answer a
+ * question nobody asked.
+ */
+async function speak(
   key: string,
-  log: VoiceLog,
-  job: Job,
   voiceId: string,
-  voiceName: string,
-): Promise<VoiceGeneration> {
-  assertUnderCap(log);
-  const label = `${job.tutorial.id}/${job.cut}/${job.beat.id}`;
-  const text = job.beat.narration;
-
-  console.log(`\n[voice] ${label}`);
-  console.log(`  ${text.length} characters, ${MODEL}, ${OUTPUT_FORMAT}`);
-
-  const before = await usageSnapshot(key);
+  text: string,
+  label: string,
+): Promise<Buffer> {
   const res = await fetchRetry(
     `${API_BASE}/v1/text-to-speech/${voiceId}?output_format=${OUTPUT_FORMAT}`,
     {
@@ -350,6 +369,25 @@ async function generateBeat(
         redact(bytes.toString("utf8").slice(0, 500), key),
     );
   }
+  return bytes;
+}
+
+async function generateBeat(
+  key: string,
+  log: VoiceLog,
+  job: Job,
+  voiceId: string,
+  voiceName: string,
+): Promise<VoiceGeneration> {
+  assertUnderCap(log);
+  const label = `${job.tutorial.id}/${job.cut}/${job.beat.id}`;
+  const text = job.beat.narration;
+
+  console.log(`\n[voice] ${label}`);
+  console.log(`  ${text.length} characters, ${MODEL}, ${OUTPUT_FORMAT}`);
+
+  const before = await usageSnapshot(key);
+  const bytes = await speak(key, voiceId, text, label);
 
   fs.mkdirSync(path.dirname(job.file), { recursive: true });
   fs.writeFileSync(job.file, bytes);
@@ -405,8 +443,7 @@ function dryRun(content: TutorialContent, cut: TutorialCut, log: VoiceLog): {
   characters: number;
   toGenerate: number;
 } {
-  const voiceId = log.voice?.id ?? DRAFT_VOICE.id;
-  const jobs = jobsFor(content, cut, voiceId);
+  const jobs = jobsFor(content, cut, DRAFT_VOICE.id);
   const total = TUTORIAL_TOTAL_FRAMES[cut];
 
   console.log(`\n[dry run] ${content.id} ${cut} (${total} frames)`);
@@ -876,6 +913,191 @@ async function listVoices(key: string, search?: string): Promise<void> {
   console.log(`\n${shown} of ${voices.length} voices.`);
 }
 
+// ---------------------------------------------------------------------------
+// Audition
+// ---------------------------------------------------------------------------
+
+/**
+ * The line every candidate reads.
+ *
+ * It is the contrast tutorial's own first three beats run together, chosen
+ * because it is the hardest thing either tutorial asks of a voice: a flat
+ * assertion, a soft aside, and a number said out loud. A voice that keeps
+ * "two point nine to one" intelligible without leaning on it can carry both
+ * scripts.
+ */
+const AUDITION_TEXT =
+  "Contrast is not a vibe. This amber on cream looks fine. " +
+  "It measures two point nine to one. That fails.";
+
+/**
+ * The shortlist: every premade voice that GET /v1/voices returns as gender
+ * female and accent american, plus Eric as the control.
+ *
+ * It is the whole eligible set rather than a taste-filtered three because the
+ * binding constraint turned out to be pace, not tone. Every beat in every cut
+ * is laid out from a measured duration and the 15 second cuts carry 54 and 89
+ * frames of slack, so a candidate that reads ten percent slower than the voice
+ * it replaces can put a cut over its own frame count. That is a measurement,
+ * not a judgement, and it is only worth 102 credits a voice to have it.
+ *
+ * Eric is auditioned on the same line for the same reason. His logged beats are
+ * separate files with their own lead-ins and tails, so summing three of them
+ * answers a different question than one continuous read; the control makes the
+ * comparison exact.
+ */
+const AUDITION_SHORTLIST: { id: string; name: string; description: string }[] = [
+  {
+    id: "hpp4J3VqNfWAUOO0d1Us",
+    name: "Bella",
+    description:
+      "Bella - Professional, Bright, Warm: \"This voice is warm, bright, and " +
+      "professional, characterized by a Standard American accent and a " +
+      "polished, narrative quality. It features a medium-high pitch with " +
+      "crisp diction and a deliberate, rhythmic pace that makes it highly " +
+      "intelligible and engaging for long-form listening.\" " +
+      "female, american, professional, informative_educational, middle_aged",
+  },
+  {
+    id: "EXAVITQu4vr4xnSDxMaL",
+    name: "Sarah",
+    description:
+      "Sarah - Mature, Reassuring, Confident: \"Young adult woman with a " +
+      "confident and warm, mature quality and a reassuring, professional " +
+      "tone.\" female, american, professional, entertainment_tv, young",
+  },
+  {
+    id: "XrExE9yKIg1WjnnlVkGX",
+    name: "Matilda",
+    description:
+      "Matilda - Knowledgable, Professional: \"A professional woman with a " +
+      "pleasing alto pitch. Suitable for many use cases.\" " +
+      "female, american, upbeat, informative_educational, middle_aged",
+  },
+  {
+    id: "FGY2WhTYpPnrIDTdsKH5",
+    name: "Laura",
+    description:
+      "Laura - Enthusiast, Quirky Attitude: \"This young adult female voice " +
+      "delivers sunny enthusiasm with a quirky attitude.\" " +
+      "female, american, sassy, social_media, young",
+  },
+  {
+    id: "cgSgspJ2msm6clMCkdW9",
+    name: "Jessica",
+    description:
+      "Jessica - Playful, Bright, Warm: \"Young and popular, this playful " +
+      "American female voice is perfect for trendy content.\" " +
+      "female, american, cute, conversational, young",
+  },
+  {
+    id: "cjVigY5qzO86Huf0OWal",
+    name: "Eric",
+    description:
+      "Eric - Smooth, Trustworthy: \"A smooth tenor pitch from a man in his " +
+      "40s - perfect for agentic use cases.\" male, american, classy, " +
+      "conversational, middle_aged. The control: the voice being replaced, " +
+      "reading the same line, so the pace comparison is exact.",
+  },
+];
+
+const words = (text: string) => text.split(/\s+/).filter(Boolean).length;
+
+/**
+ * Reads AUDITION_TEXT in every shortlisted voice, into out/voice-samples/.
+ *
+ * The pace it prints is the number the choice turns on. Every beat in every cut
+ * is laid out from a measured duration, so a candidate that reads slower than
+ * the voice it replaces lengthens every beat at once, and a 15 second cut has
+ * only 54 frames of slack to absorb it. The auditions go into config/voice.json
+ * for the same reason the beats do: they were billed.
+ */
+async function auditionVoices(key: string): Promise<void> {
+  const dir = path.join(ROOT, "out", "voice-samples");
+  fs.mkdirSync(dir, { recursive: true });
+  const log = loadLog();
+  const results: VoiceAudition[] = [];
+  const fresh: VoiceAudition[] = [];
+
+  for (const candidate of AUDITION_SHORTLIST) {
+    const label = `audition/${candidate.name}`;
+    // Same skip rule the beats take, for the same reason: an audition already
+    // on disk for this voice and this line has already been paid for.
+    const already = (log.auditions ?? []).find(
+      (a) =>
+        a.voiceId === candidate.id &&
+        a.text === AUDITION_TEXT &&
+        a.model === MODEL &&
+        fs.existsSync(path.join(ROOT, a.file)),
+    );
+    if (already) {
+      console.log(
+        `[skip] audition/${candidate.name}: ${already.file} already on disk ` +
+          `(${already.durationSeconds.toFixed(2)}s, ${already.wordsPerSecond} words per second)`,
+      );
+      results.push(already);
+      continue;
+    }
+    console.log(`\n[audition] ${candidate.name} (${candidate.id})`);
+    console.log(
+      `  ${AUDITION_TEXT.length} characters, ${MODEL}, ${OUTPUT_FORMAT}`,
+    );
+    const before = await usageSnapshot(key);
+    const bytes = await speak(key, candidate.id, AUDITION_TEXT, label);
+    const file = path.join(dir, `${candidate.name.toLowerCase()}.mp3`);
+    fs.writeFileSync(file, bytes);
+    const durationSeconds = Number(probeDuration(file).toFixed(3));
+    const wordCount = words(AUDITION_TEXT);
+    const wordsPerSecond = Number((wordCount / durationSeconds).toFixed(2));
+    console.log(
+      `  wrote ${rel(file)} (${(bytes.length / 1024).toFixed(0)} KB, ` +
+        `${durationSeconds.toFixed(2)}s, ${wordsPerSecond} words per second)`,
+    );
+    const { credits, bucket } = await creditsSince(key, before);
+    console.log(
+      `  credits ${credits ?? "not reported"}${bucket ? ` (${bucket})` : ""}`,
+    );
+    assertUnderCreditAlarm(credits, label);
+    const record: VoiceAudition = {
+      voiceId: candidate.id,
+      voiceName: candidate.name,
+      description: candidate.description,
+      file: rel(file),
+      text: AUDITION_TEXT,
+      characters: AUDITION_TEXT.length,
+      words: wordCount,
+      model: MODEL,
+      settings: SETTINGS,
+      outputFormat: OUTPUT_FORMAT,
+      durationSeconds,
+      wordsPerSecond,
+      creditsMeasured: credits,
+      creditsBucket: bucket,
+      createdAt: new Date().toISOString(),
+    };
+    results.push(record);
+    fresh.push(record);
+    // Written after every call rather than once at the end, so an audition that
+    // was paid for is on the record even if the next one throws.
+    const onDisk = loadLog();
+    onDisk.auditions = [...(onDisk.auditions ?? []), record];
+    saveLog(onDisk);
+  }
+
+  const spent = fresh.reduce((sum, r) => sum + (r.creditsMeasured ?? 0), 0);
+  console.log("\naudition results");
+  for (const r of [...results].sort((a, b) => b.wordsPerSecond - a.wordsPerSecond)) {
+    console.log(
+      `  ${r.voiceName.padEnd(8)} ${r.durationSeconds.toFixed(2)}s  ` +
+        `${r.wordsPerSecond.toFixed(2)} words/s  ${r.creditsMeasured ?? "?"} credits  ${r.file}`,
+    );
+  }
+  console.log(
+    `  ${spent} credits measured on ${fresh.length} new auditions, ` +
+      `${results.length - fresh.length} already on disk.`,
+  );
+}
+
 async function main(): Promise<void> {
   const argv = process.argv.slice(2);
   const command = argv[0];
@@ -889,6 +1111,11 @@ async function main(): Promise<void> {
   if (command === "voices") {
     const key = readApiKey();
     await listVoices(key, flag(argv, "search"));
+    return;
+  }
+
+  if (command === "audition") {
+    await auditionVoices(readApiKey());
     return;
   }
 
@@ -932,7 +1159,7 @@ async function main(): Promise<void> {
   }
 
   const key = readApiKey();
-  const voiceId = flag(argv, "voice") ?? log.voice?.id ?? DRAFT_VOICE.id;
+  const voiceId = flag(argv, "voice") ?? DRAFT_VOICE.id;
   const voiceName = voiceId === DRAFT_VOICE.id ? DRAFT_VOICE.name : voiceId;
   const force = argv.includes("--force");
 
