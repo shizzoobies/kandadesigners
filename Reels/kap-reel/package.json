@@ -42,7 +42,10 @@
     "measure": "tsx scripts/measure.ts",
     "srt": "tsx scripts/srt.ts",
     "encode": "bash scripts/encode.sh",
-    "deliver": "tsx scripts/deliver.ts"
+    "deliver": "tsx scripts/deliver.ts",
+    "voice": "tsx scripts/voice.ts",
+    "qa:tutorial": "tsx scripts/qa/tutorial.ts",
+    "qa": "tsx scripts/qa.ts"
   },
   "sideEffects": [
     "*.css",

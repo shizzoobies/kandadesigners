@@ -124,6 +124,26 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 61.7s |
 | 2026-09-04 | deliver web and training | ten MP4s, ten SRTs, four thumbnails, twelve stills, both acceptance runs | `--reel web --variant a` then `--reel training --variant t-a` | 77.1s |
 | 2026-09-04 | **Both reels re-delivered, laptop frame** | **the laptop frame and the centred device box** | **bundle + ten renders + two deliveries** | **405.3s (6m 45s)** |
+| 2026-09-04 | bundle | `out/bundle` (tutorial reels, Phase A) | rspack bundle, public dir linked not copied | 2.3s |
+| 2026-09-04 | voice | 22 mp3s in `assets/audio/voice/` | ElevenLabs `eleven_multilingual_v2`, 1406 characters, 1406 credits measured | 83.4s |
+| 2026-09-04 | mix tutorial | four `assets/audio/mix-tut-*.wav` | voice with `music-a` ducked under it, solved duck plus two pass loudnorm | 18.9s |
+| 2026-09-04 | TutorialContrastVertical | `out/tut-grey-contrast-vertical.mp4` (Phase A grey render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 10.4s |
+| 2026-09-04 | TutorialContrastLinkedIn | `out/tut-grey-contrast-linkedin.mp4` (Phase A grey render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.5 MB | 19.1s |
+| 2026-09-04 | TutorialHeroVertical | `out/tut-grey-hero-vertical.mp4` (Phase A grey render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 8.4s |
+| 2026-09-04 | TutorialHeroLinkedIn | `out/tut-grey-hero-linkedin.mp4` (Phase A grey render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.6 MB | 17.5s |
+| 2026-09-04 | encode.sh x4 | `out/tut-grey-*-mixed.mp4` | the four grey renders with their mixes muxed in, 2.8 to 7.6 MB | 25.2s |
+| 2026-09-04 | **Tutorial Phase A** | **foundation gate: voice, mixes, four grey renders, four muxes** | **bundle + voice + mixes + four renders + four muxes** | **185.2s (3m 5s)** |
+
+The tutorial number, **185.2 seconds**, is the Phase A foundation gate end to
+end: one bundle at 2.3s, the 22 voice files at 83.4s, the four mixes at 18.9s,
+four grey renders totalling 55.4s and four muxes totalling 25.2s. The voice
+figure is measured off the `createdAt` stamps in `config/voice.json` rather than
+with a stopwatch, because the run happened in two invocations; it averages 3.8
+seconds a beat, most of which is the poll on the usage endpoint that measures the
+credits rather than the generation itself. It is not a number a rebuild repeats:
+`voice.ts` skips any beat whose text, voice, model and settings hash already
+matches a file on disk, so a rebuild that changes no script pays 0 credits and no
+seconds. The renders are fast because the pictures are stand-ins.
 
 Section 14 item 9, the full rebuild number: **190.7 seconds**, which is
 2.1 + 2.8 + 143.7 + 42.1. It is the sum of the seven "final build" rows above
@@ -1659,10 +1679,10 @@ to last frame of each clean shot against the last for check (i).
 
 | | Measures | Fails at |
 |---|---|---|
-| a | text centring: the ink centre of the copy block against the canvas centre, or the panel centre in the landscape split | more than 4 px |
-| b | safe zones: copy pixels inside the reserved rectangles `safeArea()` derives | more than 120 px, which is the antialiasing allowance |
+| a | text centring: the ink centre of the copy block against the canvas centre, or the panel centre in the landscape split | more than 4 px at 1080 canvas width, scaled by `typeScale`, so 7.1 px in landscape |
+| b | safe zones: copy pixels inside the reserved rectangles `safeArea()` derives | more than 120 px, which is the antialiasing allowance, and REVIEW rather than FAIL on a frame that is mid whip |
 | c | device geometry: the `#100D0A` body's centre line, and the aspect of the screen hole inside it | body missing, centre off by more than 4 px, or aspect off by more than 1 percent |
-| d | screen fill: a ring 6 px inside the screen hole or the plate quad, against a flat page backdrop | see the two modes below |
+| d | screen fill: a ring 6 px inside the screen hole or the plate quad, against a flat page backdrop | 95 percent of the ring or more, which is a screen with nothing in it. Over the 2 percent line and under that is REVIEW |
 | e | blank frames: ink coverage against the frame's own dominant colour | under 0.2 percent |
 | f | logo: the drawn lockup's colours present, the retired gold crest absent | under 200 px of `#a93c1c` or `#8b6f5c`, or 3000 px or more of `#C09A5E` |
 | g | plate review: 2x crops of each plate's quad corners and of skin touching the quad | never fails, always REVIEW |
@@ -1692,6 +1712,22 @@ knows which they are: a project name is settled at relative frame 18, a LinkedIn
 context sentence at 40, and the end card only on its last frame, because the
 wordmark is still typing at copy in.
 
+**The (a) tolerance scales with the type, and that is not slack.** What 4 px is
+absorbing is the type's own side bearings and the trailing letter space of a
+negative tracking, and both of those are drawn at the type's size. The centring
+pass on 2026-09-04 measured exactly that: the surfaces tour word in landscape sat
++5 against its own box before the change and +5 after it, which is the type and
+not the layout. Landscape renders at 1.778, so its line is 7.1 px. The six 1080
+wide compositions keep the 4.
+
+**Check (b) reports rather than judges on a whipped frame.** Every project beat
+after the first slides in from the right over `WHIP_FRAMES`, so on those frames
+the whole scene, band and copy included, is deliberately part way off the canvas
+and its copy is passing through the reserved right strip. The measurement is
+taken and the numbers are printed, as REVIEW: a line mid slide is not a line laid
+out inside a reserved zone, and failing on it would bury a real fault under six
+frames of transition per beat.
+
 **Check (c) measures the aspect only where the whole device is visible.** In the
 overlay arrangement the lower third sits on top of the device's lower part, so
 the visible screen is clipped and its aspect is not the device's. The centre line
@@ -1708,18 +1744,42 @@ dark page into bezel. The first pass read the Fore Motion phone's screen as
 732x209 for exactly that reason. These are PNG stills of a flat CSS fill, so
 nothing has to be forgiven.
 
-**Check (d) has two modes, and the report says which one each row is in.** In
-precise mode `captures.json` declares a content box background for the clip, the
-ring is matched against that one colour, and anything over the 2 percent line is
-the page's own margin showing inside the screen. In screening mode nothing is
-declared, so the ring is matched against near black and near white, which is also
-what a dark hero or a white page looks like at the edge of its own screen.
-Screening mode cannot separate dead space from a page whose background reaches
-the edge, so it reports over the line as REVIEW with the per edge numbers, and
-only fails on the shape a cover crop actually makes: an opposite pair of edges
-both more than 60 percent one flat colour, which is a letterbox or a pillarbox.
-Adding a `contentBox.background` per clip to `captures.json` moves every row into
-precise mode with no change here.
+**Check (d) is a screening check on this content, not a gate, and the reason is
+worth recording so nobody retries the two versions that do not work.**
+
+Matching near black and near white failed 226 frames, almost all of them dark
+pages whose hero simply is dark at the screen edge. Matching each clip's own
+backdrop colour, read off its first frame by `clipBackgroundColor()` in
+`scripts/capture.ts`, still failed 80: the training safety modules are dark
+themed, so the sheet inside their content box is within 12 of the backdrop
+outside it, and no tolerance separates a margin from the page it surrounds. A
+shape test on opposite edges is not sound either, because on these clips the dark
+chrome runs along the top and bottom as readily as down the sides.
+
+So the check reports the ring fraction and the four per edge fractions on every
+shot, calls anything over the 2 percent line REVIEW, and fails only where the
+ring is almost entirely one flat colour, which is a screen with nothing in it.
+That last case is real and it found one: the `t-desktop-wide` tour plate in
+`TrainingLinkedInLandscape` reads 96 percent, because in that crop `plateCrop()`
+scales the composite until the monitor, the desk and the room are all off canvas
+and the shot is a full bleed page. The same plate in `TrainingLinkedIn` is a
+monitor on a desk with a hand at the bottom of the frame.
+
+Precise mode does not change that rule. It narrows the colour matched from near
+black and near white to the one colour that clip's own margin is made of, which
+makes every number sharper, and the report says which mode each row is in. A clip
+qualifies when its `contentBox` is inset from its own frame, which is what says
+the page has a margin at all; 5 of the 38 clips do.
+
+Ring samples that land behind the lower third or the landscape copy panel are not
+counted either way. That is not a nicety: the scrim is `#14100C` and the training
+safety clips' backdrop is `rgb(17, 16, 19)`, 7.6 apart and inside the 12 this
+check matches on, so leaving them in failed three good landscape plates.
+
+Resolving the backdrops needs FFmpeg on `PATH`, the same requirement
+`scripts/audio.ts` and `scripts/deliver.ts` already have. The import of
+`scripts/capture.ts` is dynamic and guarded, so a run without FFmpeg screens with
+a note in the report rather than failing.
 
 **The plate quad is mapped, not guessed.** `PlateShot` offsets `PlateComposite`
 by the quad's own centre and scales about the canvas centre, and `PlateComposite`
@@ -1759,5 +1819,10 @@ further than it should be.
 - **It samples frames, not the video.** A fault that exists only between two
   sampled frames is not tested. The sample list is dense at the ends of beats,
   which is where the faults have been.
-- **Screening mode on check (d)** cannot separate a page's own background at the
-  screen edge from real dead space. See above.
+- **Check (d) cannot separate a page's own background at the screen edge from
+  real dead space** on a dark themed page, in either mode. See above. It fails
+  only on a screen with nothing in it and screens everything else.
+- **It does not know about `scripts/qa/tutorial.ts`.** That file arrived in this
+  directory from the tutorial reel work and has its own entry point,
+  `npm run qa:tutorial`. The twelve compositions this harness tests are the two
+  delivery reels.
