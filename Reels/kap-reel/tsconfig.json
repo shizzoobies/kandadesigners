@@ -13,5 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true
   },
-  "exclude": ["remotion.config.ts"]
+  "_exclude_note": "out/ is build output and is gitignored. It also collects throwaway measurement scripts beside the stills they produced (out/_align, out/_laptop, out/_sweep, out/gate-t4), which are written to be run once with tsx and are not part of the project. Typechecking them made `npx tsc --noEmit` fail on a file nobody was editing.",
+  "exclude": ["remotion.config.ts", "out"]
 }

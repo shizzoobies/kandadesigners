@@ -1,0 +1,5 @@
+{
+  "_note": "Jam screen recordings Alex supplies for the tutorial reels, as opposed to the scripted Playwright captures indexed in assets/captures/captures.json. A recording is a real person driving a real browser, so nothing here is reproducible by a script and nothing here is generated, which is why this manifest lives in config/ beside plates.json and projects.json rather than in assets/captures/, which is gitignored because everything in it is regenerable. The mp4s themselves go in assets/captures/jam/ and are not tracked. Add a row when one lands; src/tutorial/scenes/JamClip.tsx renders a labelled stand-in for any id that is not listed, which is what the tutorial compositions do until then.",
+  "_shape": "{ id, path (repo relative), width, height, trimBefore?, playbackRate? }",
+  "clips": []
+}

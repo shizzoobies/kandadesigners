@@ -8,6 +8,11 @@ import { FPS, LINKEDIN_TOTAL_FRAMES, TOTAL_FRAMES } from "./lib/timing";
 import type { ReelContent } from "./reels/types";
 import { TRAINING_REEL } from "./reels/training";
 import { WEB_REEL } from "./reels/web";
+import { Tutorial } from "./tutorial/Tutorial";
+import { TUTORIAL_TOTAL_FRAMES } from "./tutorial/timeline";
+import type { TutorialContent, TutorialCut } from "./tutorial/types";
+import { CONTRAST_TUTORIAL } from "./tutorial/reels/contrast";
+import { HERO_TUTORIAL } from "./tutorial/reels/hero";
 
 /**
  * The four delivery crops of a 15 second cut, plus a debug twin of each.
@@ -82,6 +87,62 @@ const ALL: Registration[] = [
   ...registrations("Training", TRAINING_REEL),
 ];
 
+// ---------------------------------------------------------------------------
+// Tutorial reels
+// ---------------------------------------------------------------------------
+
+type TutorialRegistration = {
+  id: string;
+  format: FormatKey;
+  cut: TutorialCut;
+  durationInFrames: number;
+  content: TutorialContent;
+};
+
+/**
+ * Every composition one tutorial registers, mirroring registrations() above:
+ * four crops of the 15 second cut, two of the 45 second cut, and a safe-zone
+ * debug twin of each.
+ *
+ * It is a second function rather than a generic one because the two trees take
+ * different props and different content types. The shapes and the argument for
+ * them are identical, which is why SHORT_FORMATS and LINKEDIN_FORMATS are
+ * shared: a tutorial delivers in exactly the shapes a showcase reel does.
+ */
+function tutorialRegistrations(
+  prefix: string,
+  content: TutorialContent,
+): TutorialRegistration[] {
+  const rows: TutorialRegistration[] = [];
+
+  for (const { suffix, format } of SHORT_FORMATS) {
+    rows.push({
+      id: `${prefix}${suffix}`,
+      format,
+      cut: "short",
+      durationInFrames: TUTORIAL_TOTAL_FRAMES.short,
+      content,
+    });
+  }
+
+  for (const { suffix, format } of LINKEDIN_FORMATS) {
+    rows.push({
+      id: `${prefix}${suffix}`,
+      format,
+      cut: "linkedin",
+      durationInFrames: TUTORIAL_TOTAL_FRAMES.linkedin,
+      content,
+    });
+  }
+
+  return rows;
+}
+
+const ALL_TUTORIALS: TutorialRegistration[] = [
+  ...tutorialRegistrations("TutorialContrast", CONTRAST_TUTORIAL),
+  ...tutorialRegistrations("TutorialHero", HERO_TUTORIAL),
+];
+
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -108,6 +169,42 @@ export const RemotionRoot: React.FC = () => {
           key={`${row.id}Debug`}
           id={`${row.id}Debug`}
           component={Reel}
+          durationInFrames={row.durationInFrames}
+          fps={FPS}
+          width={SAFE_ZONES[row.format].width}
+          height={SAFE_ZONES[row.format].height}
+          defaultProps={{
+            format: row.format,
+            debugSafeZones: true,
+            cut: row.cut,
+            content: row.content,
+          }}
+        />
+      ))}
+
+      {ALL_TUTORIALS.map((row) => (
+        <Composition
+          key={row.id}
+          id={row.id}
+          component={Tutorial}
+          durationInFrames={row.durationInFrames}
+          fps={FPS}
+          width={SAFE_ZONES[row.format].width}
+          height={SAFE_ZONES[row.format].height}
+          defaultProps={{
+            format: row.format,
+            debugSafeZones: false,
+            cut: row.cut,
+            content: row.content,
+          }}
+        />
+      ))}
+
+      {ALL_TUTORIALS.map((row) => (
+        <Composition
+          key={`${row.id}Debug`}
+          id={`${row.id}Debug`}
+          component={Tutorial}
           durationInFrames={row.durationInFrames}
           fps={FPS}
           width={SAFE_ZONES[row.format].width}

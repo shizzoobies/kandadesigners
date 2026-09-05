@@ -125,20 +125,20 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | deliver web and training | ten MP4s, ten SRTs, four thumbnails, twelve stills, both acceptance runs | `--reel web --variant a` then `--reel training --variant t-a` | 77.1s |
 | 2026-09-04 | **Both reels re-delivered, laptop frame** | **the laptop frame and the centred device box** | **bundle + ten renders + two deliveries** | **405.3s (6m 45s)** |
 | 2026-09-04 | bundle | `out/bundle` (tutorial reels, Phase A) | rspack bundle, public dir linked not copied | 2.3s |
-| 2026-09-04 | voice | 22 mp3s in `assets/audio/voice/` | ElevenLabs `eleven_multilingual_v2`, 1406 characters, 1406 credits measured | 83.4s |
+| 2026-09-04 | voice | 22 mp3s in `assets/audio/voice/`, 23 generations | ElevenLabs `eleven_multilingual_v2`, 1524 characters, 1524 credits measured | 87.2s |
 | 2026-09-04 | mix tutorial | four `assets/audio/mix-tut-*.wav` | voice with `music-a` ducked under it, solved duck plus two pass loudnorm | 18.9s |
 | 2026-09-04 | TutorialContrastVertical | `out/tut-grey-contrast-vertical.mp4` (Phase A grey render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 10.4s |
 | 2026-09-04 | TutorialContrastLinkedIn | `out/tut-grey-contrast-linkedin.mp4` (Phase A grey render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.5 MB | 19.1s |
 | 2026-09-04 | TutorialHeroVertical | `out/tut-grey-hero-vertical.mp4` (Phase A grey render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 8.4s |
-| 2026-09-04 | TutorialHeroLinkedIn | `out/tut-grey-hero-linkedin.mp4` (Phase A grey render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.6 MB | 17.5s |
-| 2026-09-04 | encode.sh x4 | `out/tut-grey-*-mixed.mp4` | the four grey renders with their mixes muxed in, 2.8 to 7.6 MB | 25.2s |
-| 2026-09-04 | **Tutorial Phase A** | **foundation gate: voice, mixes, four grey renders, four muxes** | **bundle + voice + mixes + four renders + four muxes** | **185.2s (3m 5s)** |
+| 2026-09-04 | TutorialHeroLinkedIn | `out/tut-grey-hero-linkedin.mp4` (Phase A grey render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.6 MB | 18.1s |
+| 2026-09-04 | encode.sh x4 | `out/tut-grey-*-mixed.mp4` | the four grey renders with their mixes muxed in, 2.8 to 7.6 MB | 25.6s |
+| 2026-09-04 | **Tutorial Phase A** | **foundation gate: voice, mixes, four grey renders, four muxes** | **bundle + voice + mixes + four renders + four muxes** | **190.0s (3m 10s)** |
 
-The tutorial number, **185.2 seconds**, is the Phase A foundation gate end to
-end: one bundle at 2.3s, the 22 voice files at 83.4s, the four mixes at 18.9s,
-four grey renders totalling 55.4s and four muxes totalling 25.2s. The voice
+The tutorial number, **190.0 seconds**, is the Phase A foundation gate end to
+end: one bundle at 2.3s, the 23 voice generations at 87.2s, the four mixes at 18.9s,
+four grey renders totalling 56.0s and four muxes totalling 25.6s. The voice
 figure is measured off the `createdAt` stamps in `config/voice.json` rather than
-with a stopwatch, because the run happened in two invocations; it averages 3.8
+with a stopwatch, because the run happened in three invocations; it averages 3.8
 seconds a beat, most of which is the poll on the usage endpoint that measures the
 credits rather than the generation itself. It is not a number a rebuild repeats:
 `voice.ts` skips any beat whose text, voice, model and settings hash already
@@ -1603,6 +1603,183 @@ Delivered, measured off the five MP4s with loudnorm in analysis mode:
   every 84 frames. 1350 frames sampled every 84 gives 17 frames and a 4x4 holds
   16, so the sheets run 0 to 1260 and the last sample at 1344 is dropped. Frame
   1260 is inside the CTA beat, so nothing in the cut goes unrepresented.
+
+## The tutorial reels
+
+Added 2026-09-04, Phase A. A third content line next to the two showcase reels:
+short narrated tutorials, each shipping as a 15 second Facebook cut and a 45
+second LinkedIn cut. The first two are `contrast` ("Contrast is not a vibe.") and
+`hero` ("Your hero is a promise, not a photo."). The design is in
+`../../docs/superpowers/specs/2026-09-04-tutorial-reels-design.md`.
+
+`Tutorial.tsx` is a separate scene tree from `Reel.tsx`, deliberately. A showcase
+reel is a fixed beat map in `src/lib/timing.ts` with content poured into it. A
+tutorial is a narration with a picture laid out around it, so its beat map is
+computed. Sharing one tree would have meant a beat map that is sometimes a
+constant and sometimes a function, which is a fork wearing a prop. Everything
+below the beat is shared: the drawn end card, the kinetic treatment, the device
+frames, `src/lib/layout.ts` and the brand.
+
+### The timeline is driven by the voice
+
+`scripts/voice.ts` generates one ElevenLabs file per beat, including the hook and
+the end card, and writes its measured duration into `config/voice.json`.
+`src/tutorial/timeline.ts` reads those durations and lays the cut out:
+
+- Each beat gets `max(minFrames, ceil(durationSec * 30) + 12)`, so the voice
+  never runs past its picture and there is a 12 frame tail before the next line.
+- The hook holds at least 54 frames in the short cut and 36 in the LinkedIn one,
+  the two numbers `src/lib/timing.ts` already uses. The end card holds at least
+  78 and 124, which is what its draw in `src/scenes/CallToAction.tsx` needs.
+- The total is exactly 450 or 1350. Slack goes to the one beat marked `stretch`.
+  An overrun on measured beats is a hard error naming every beat and its frames,
+  because the answer is to shorten a line: the speed of the read is never
+  adjusted to make a script fit.
+
+A beat with no voice file yet is laid out from an estimate of 2.6 words a second
+and named in a console warning at bundle time, so a grey render exists before a
+credit is spent. The draft read measured nearer 3.9 words a second, so the
+estimate overstates every beat by about half; where that pushes a 15 second cut
+past 450 frames the estimated beats are squeezed back to their own `minFrames`
+rather than failing, and the warning already says the timing is provisional.
+
+Where the four cuts landed, all measured:
+
+| Cut | Beats, frames each | Slack to the stretch beat |
+|---|---|---|
+| contrast 15s | hook 54, fine 64, fails 89, **fix 165**, cta 78 | 55 to `fix` |
+| contrast 45s | hook 53, real 325, **inspect 378**, fix 355, rule 104, cta 135 | 216 to `inspect` |
+| hero 15s | hook 71, weak 74, **promise 167**, real 60, cta 78 | 89 to `promise` |
+| hero 45s | hook 72, fold 283, rewrite 177, **real 597**, rule 71, cta 150 | 327 to `real` |
+
+The hero 45 second cut is the one to watch. Its script is 491 characters of
+narration for 45 seconds, which lays out to 1023 frames and leaves 327 of slack,
+so the `real` beat runs 597 frames: three client heroes at about 6.6 seconds each
+rather than the three the spec sketches. That is readable, and arguably right for
+a headline the viewer is being asked to read, but it is a lot of screen time for
+one beat and it is there because the script under-fills the cut rather than
+because anyone chose it. Either a beat is added or Phase B holds each phone
+longer on purpose.
+
+### Voice and mix
+
+```
+npx tsx scripts/voice.ts voices [--search calm]
+npx tsx scripts/voice.ts --reel contrast|hero|both --cut short|linkedin|both [--dry-run]
+npx tsx scripts/voice.ts --mix --reel both --cut both
+npx tsx scripts/voice.ts usage
+```
+
+Model `eleven_multilingual_v2`, not `eleven_v3`. v3 is on the API at the same one
+credit a character, but the ElevenLabs text to speech best practices page
+describes it as at a "research preview stage" and says its library voices "may
+produce more variable results compared to the v2 and v2.5 models". This timeline
+is laid out from the measured duration of each file, so a model that reads the
+same sentence differently on each call would move the picture every time
+anything was regenerated. The same page notes multilingual v2 "can better
+generalize the reading out of numbers", which is the whole subject of the
+contrast tutorial. The full argument is at the top of `scripts/voice.ts`.
+
+Draft voice is the premade library voice "Eric", a smooth tenor from a man in his
+40s, American, at stability 0.5, similarity 0.75, style 0, speed 1.0. Kai's voice
+id replaces it for the final pass; every beat regenerates on its own when it
+does, because the voice is part of the hash a skip is decided on.
+
+Every call is logged in `config/voice.json` with the exact text, the settings,
+the measured duration and the credits measured as a before and after delta on the
+usage endpoint, the same way `config/audio.json` logs the music. The draft pass
+cost **1406 credits**: contrast 189 and 565, hero 168 and 484. The hero 45 second
+"real" line was then re-cut when the spec changed its three example sites on
+2026-09-04, which cost another **118 credits** and regenerated that one beat and
+nothing else, because the hash a skip is decided on covers the text. **1524
+credits** in total.
+
+`--mix` builds `assets/audio/mix-tut-<id>-<15|45>s.wav`: the music take named in
+the content file, gained so it sits 8 dB under the voice peak, then sidechained
+under the voice bus, then through the same limiter and two pass loudnorm path
+`scripts/audio.ts` uses, and measured off the file afterwards. The sidechain
+threshold is solved rather than guessed: the bed is measured with the duck
+bypassed and again with it in, over a window inside the longest line, and the
+threshold is refined until the reduction lands on 10 dB. Delivered:
+
+| Mix | Integrated | True peak | Bed under the voice while it speaks |
+|---|---|---|---|
+| `mix-tut-contrast-15s.wav` | -13.90 LUFS | -1.52 dBTP | 17.4 dB |
+| `mix-tut-contrast-45s.wav` | -14.02 LUFS | -1.96 dBTP | 15.9 dB |
+| `mix-tut-hero-15s.wav` | -14.01 LUFS | -1.49 dBTP | 17.1 dB |
+| `mix-tut-hero-45s.wav` | -13.99 LUFS | -1.81 dBTP | 17.3 dB |
+
+`Tutorial.tsx` also drops an `<Audio>` per beat so Studio and a bare render carry
+the narration, but the delivered audio comes from the muxed mix, exactly as it
+does for the other two reels.
+
+### Scenes, and the Phase B split
+
+A beat names its scene with a string key that
+`src/tutorial/scenes/registry.ts` resolves. Nothing in `src/tutorial/types.ts` or
+`src/tutorial/reels/` imports React, which is what lets `voice.ts`, `srt.ts` and
+`deliver.ts` read a content file without pulling the bundle in, and what lets the
+two Phase B agents add their scenes by registering one key each rather than by
+editing a shared file.
+
+Phase A ships five shared scenes: `TutorialHook` (the showcase hook's kinetic
+treatment plus a flat teal or canvas field option, since neither of these
+tutorials opens on a capture), `Caption` (the burned in card, ink on canvas with
+an 8px radius, in the bottom safe area), `FlatDemo` (the canvas card a tutorial
+scene draws inside, phone shaped in the tall crops and laptop shaped in
+landscape), `JamClip` (a Jam recording in the laptop frame, `StandIn` when it is
+missing) and `Placeholder`, which is what both content files use until Phase B
+replaces them.
+
+Jam recordings are listed in `config/jam.json` and the mp4s live in
+`assets/captures/jam/`. The manifest is in `config/` rather than beside the files
+because `assets/captures/` is gitignored: everything in there is regenerated by
+`scripts/capture.ts`, and a hand kept list of recordings a person made is not.
+
+`src/lib/contrast.ts` computes WCAG 2.x contrast from two hex values. Nothing in
+a scene may carry a ratio as a literal: it reads `config/brand.json`, passes the
+hexes through the helper, and formats what comes back.
+`scripts/qa/tutorial.ts` asserts amber `#D97706` on canvas `#F8F5F2` at 2.933,
+rust `#9A3412` on canvas at 6.728, ink `#221C15` on amber at 5.295, and that
+every ratio quoted in a caption is one of those three.
+
+### Registration and delivery
+
+`Root.tsx` registers `TutorialContrast{Vertical,Feed,Square,Landscape,LinkedIn,LinkedInLandscape}`
+and the same six for `TutorialHero`, plus a Debug twin of each: twenty four
+compositions, through `tutorialRegistrations(prefix, content)`, which mirrors
+`registrations()`.
+
+```
+npx tsx scripts/qa/tutorial.ts                       120 checks, no picture needed
+npx tsx scripts/srt.ts --reel tutorial-contrast      five sidecars from the timeline
+npx tsx scripts/deliver.ts --reel tutorial-contrast  the usual pipeline
+```
+
+Renders are `out/render-tutorial-<id>-<format>-<duration>.mp4`, deliveries
+`out/kap-tut-<id>-<format>-<duration>.mp4`, with matching SRTs. Two things differ
+from the showcase pipeline. There is no `--variant`: a tutorial's mix is voice
+with a bed under it and is built by `voice.ts`, and which take beds it is a field
+in the content file. And the frames the thumbnails and carousel stills come from
+are derived from the timeline rather than hand picked, because a hand picked
+frame number would go stale the first time a line was regenerated.
+
+The SRT cues are generated too, one per beat, carrying the full narration rather
+than the burned in caption. The captions are deliberately shorter than the lines
+they caption, so a viewer reading rather than listening gets the whole thing.
+
+### Phase A gate
+
+`npx tsc --noEmit` and `npx eslint src` clean, all twenty four compositions list,
+`scripts/qa/tutorial.ts` 120 of 120, and four grey renders with the draft voice
+against the placeholders:
+
+| File | Canvas | Frames |
+|---|---|---|
+| `out/tut-grey-contrast-vertical-mixed.mp4` | 1080x1920 | 450 |
+| `out/tut-grey-contrast-linkedin-mixed.mp4` | 1080x1350 | 1350 |
+| `out/tut-grey-hero-vertical-mixed.mp4` | 1080x1920 | 450 |
+| `out/tut-grey-hero-linkedin-mixed.mp4` | 1080x1350 | 1350 |
 
 ## QA
 

@@ -174,7 +174,7 @@ const MUSIC_INSTRUCTION =
   "stands on its own. Modern product launch film, not a nightclub. Clean " +
   "modern production, plenty of headroom, nothing distorted.";
 
-type VariantId = "a" | "b" | "c" | "t-a" | "t-b" | "t-c";
+export type VariantId = "a" | "b" | "c" | "t-a" | "t-b" | "t-c";
 
 const MUSIC_VARIANTS: { id: VariantId; feel: string; note: string }[] = [
   {
@@ -307,7 +307,7 @@ const SFX_SPECS: {
 // Key handling
 // ---------------------------------------------------------------------------
 
-function readApiKey(): string {
+export function readApiKey(): string {
   if (fs.existsSync(ENV_FILE)) {
     for (const rawLine of fs.readFileSync(ENV_FILE, "utf8").split(/\r?\n/)) {
       const line = rawLine.trim();
@@ -330,7 +330,7 @@ function readApiKey(): string {
 }
 
 /** Strips anything that looks like the key out of text before it is printed. */
-function redact(text: string, key: string): string {
+export function redact(text: string, key: string): string {
   if (!key) return text;
   return text.split(key).join("<redacted>");
 }
@@ -343,7 +343,7 @@ function redact(text: string, key: string): string {
  * fetch with a small retry on transport errors only. An HTTP error status is
  * returned to the caller so a 4xx is never silently retried into extra spend.
  */
-async function fetchRetry(
+export async function fetchRetry(
   url: string,
   init: RequestInit,
   attempts = 4,
@@ -366,7 +366,7 @@ async function fetchRetry(
   throw lastError;
 }
 
-async function apiGetJson(
+export async function apiGetJson(
   key: string,
   route: string,
 ): Promise<{ status: number; json: unknown }> {
@@ -384,7 +384,7 @@ async function apiGetJson(
 }
 
 /** POST that expects raw audio bytes back. Throws with a redacted body on any error status. */
-async function apiPostAudio(
+export async function apiPostAudio(
   key: string,
   route: string,
   body: unknown,
@@ -415,7 +415,7 @@ async function apiPostAudio(
 // Credit measurement
 // ---------------------------------------------------------------------------
 
-type UsageSnapshot = { total: number; buckets: Record<string, number> };
+export type UsageSnapshot = { total: number; buckets: Record<string, number> };
 
 /**
  * Total credits spent per product bucket over a window wide enough to include
@@ -424,7 +424,7 @@ type UsageSnapshot = { total: number; buckets: Record<string, number> };
  * and the bucket names are not documented, so this reads every bucket and
  * reports which one moved.
  */
-async function usageSnapshot(key: string): Promise<UsageSnapshot | null> {
+export async function usageSnapshot(key: string): Promise<UsageSnapshot | null> {
   const end = Date.now() + 3_600_000;
   const start = end - 72 * 3_600_000;
   const { status, json } = await apiGetJson(
@@ -444,14 +444,14 @@ async function usageSnapshot(key: string): Promise<UsageSnapshot | null> {
   return { total, buckets };
 }
 
-type CreditResult = { credits: number | null; bucket: string | null };
+export type CreditResult = { credits: number | null; bucket: string | null };
 
 /**
  * Difference between a snapshot taken before a generation and the totals now.
  * The usage endpoint lags the generation by a few seconds, so this polls until
  * it moves or gives up and reports null rather than a wrong zero.
  */
-async function creditsSince(
+export async function creditsSince(
   key: string,
   before: UsageSnapshot | null,
 ): Promise<CreditResult> {
@@ -480,7 +480,7 @@ async function creditsSince(
 // ffmpeg helpers
 // ---------------------------------------------------------------------------
 
-function run(
+export function run(
   bin: string,
   args: string[],
 ): { code: number; stdout: string; stderr: string } {
@@ -496,7 +496,7 @@ function run(
   };
 }
 
-function ffmpeg(args: string[]): {
+export function ffmpeg(args: string[]): {
   code: number;
   stdout: string;
   stderr: string;
@@ -504,14 +504,14 @@ function ffmpeg(args: string[]): {
   return run("ffmpeg", ["-hide_banner", "-nostdin", ...args]);
 }
 
-type VolumeReading = { mean: number; max: number };
+export type VolumeReading = { mean: number; max: number };
 
 /**
  * mean_volume and max_volume in dBFS, optionally over a slice of the file.
  * volumedetect is the cheapest reliable level probe ffmpeg offers and is what
  * Section 9's first-second energy test needs.
  */
-function measureVolume(
+export function measureVolume(
   file: string,
   slice?: { start: number; duration: number },
 ): VolumeReading {
@@ -531,7 +531,7 @@ function measureVolume(
   return { mean, max };
 }
 
-function probeDuration(file: string): number {
+export function probeDuration(file: string): number {
   const { stdout } = run("ffprobe", [
     "-v",
     "error",
@@ -635,6 +635,11 @@ type GenerationRecord = {
   firstSecondTest?: FirstSecondTest;
   /** The --set label this generation was made under, if any. Absent for every Phase 5 record. */
   set?: string;
+  /**
+   * Seconds of unusable head on this take, hand recorded. Variant c's 50 second
+   * take fades in over two seconds, so anything cutting from it starts here.
+   */
+  usableFromSeconds?: number;
 };
 
 type MixRecord = {
@@ -743,7 +748,7 @@ function assertUnderCap(setLabel?: string): void {
   }
 }
 
-function assertUnderCreditAlarm(credits: number | null, label: string): void {
+export function assertUnderCreditAlarm(credits: number | null, label: string): void {
   if (credits !== null && credits > CREDIT_ALARM) {
     throw new Error(
       `STOP: ${label} cost ${credits} credits, over the ${CREDIT_ALARM} credit alarm for this phase. ` +
@@ -752,7 +757,7 @@ function assertUnderCreditAlarm(credits: number | null, label: string): void {
   }
 }
 
-function rel(file: string): string {
+export function rel(file: string): string {
   return path.relative(ROOT, file).split(path.sep).join("/");
 }
 
@@ -947,8 +952,23 @@ function pictureFile(): string {
   throw new Error(`No picture found. Expected ${phase4} or ${phase3}.`);
 }
 
-/** The accepted take for a music variant at a given length, newest wins. */
-function musicTakeFor(variantId: VariantId, lengthSeconds: number): string {
+/**
+ * The take to use for a music variant at a given length, with the trim logged
+ * against it.
+ *
+ * Accepted takes win, and the newest accepted take wins among those. Where none
+ * was accepted the newest take is used with whatever usableFromSeconds is
+ * recorded for it, which is the case for variant c: its 50 second take fades in
+ * over two seconds and config/audio.json records that trimming those two
+ * seconds leaves 48.04s, enough for a 45 second cut.
+ *
+ * Exported for scripts/voice.ts, which beds the same takes under the tutorial
+ * narration and needs the trim as well as the path.
+ */
+export function musicTake(
+  variantId: VariantId,
+  lengthSeconds: number,
+): { file: string; from: number; id: string } {
   const config = loadConfig();
   const matches = config.generations.filter(
     (g) =>
@@ -962,10 +982,18 @@ function musicTakeFor(variantId: VariantId, lengthSeconds: number): string {
     );
   }
   const accepted = matches.filter((g) => g.accepted);
-  const chosen = (accepted.length > 0 ? accepted : matches)[
-    (accepted.length > 0 ? accepted : matches).length - 1
-  ];
-  return path.join(ROOT, chosen.file);
+  const pool = accepted.length > 0 ? accepted : matches;
+  const chosen = pool[pool.length - 1];
+  return {
+    file: path.join(ROOT, chosen.file),
+    from: chosen.usableFromSeconds ?? 0,
+    id: chosen.id,
+  };
+}
+
+/** The take's path alone, which is all the 15 second music-only mixes need. */
+function musicTakeFor(variantId: VariantId, lengthSeconds: number): string {
+  return musicTake(variantId, lengthSeconds).file;
 }
 
 function sfxTakeFor(name: SfxName): string {
@@ -1030,7 +1058,7 @@ function sfxLevels(musicFile: string, cues: FlatCue[]): MixLevels {
   };
 }
 
-const AFORMAT =
+export const AFORMAT =
   "aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo";
 
 /**
@@ -1054,15 +1082,15 @@ const AFORMAT =
  * level=disabled stops alimiter applying makeup gain of its own, so the only
  * thing setting the final level is loudnorm.
  */
-function limiter(ceilingDb: number): string {
+export function limiter(ceilingDb: number): string {
   const limit = Math.min(1, 10 ** (ceilingDb / 20)).toFixed(6);
   return `alimiter=limit=${limit}:attack=5:release=50:level=disabled`;
 }
 
 /** Never limit harder than this. If a bed needs more, something is wrong with it. */
-const MAX_LIMITING_DB = -14;
+export const MAX_LIMITING_DB = -14;
 
-const TARGET_LUFS = -14;
+export const TARGET_LUFS = -14;
 
 /**
  * True peak Section 9 and Section 11 want on the file that ships.
@@ -1083,7 +1111,7 @@ const DELIVERED_TRUE_PEAK = -1;
  */
 const ENCODE_TRUE_PEAK_HEADROOM_DB = 0.5;
 
-const TARGET_TRUE_PEAK = DELIVERED_TRUE_PEAK - ENCODE_TRUE_PEAK_HEADROOM_DB;
+export const TARGET_TRUE_PEAK = DELIVERED_TRUE_PEAK - ENCODE_TRUE_PEAK_HEADROOM_DB;
 
 /**
  * The mix graph. Input 0 is the music, inputs 1..n are one SFX instance each.
@@ -1124,7 +1152,7 @@ function buildFilter(
 }
 
 /** Runs loudnorm in analysis mode over the mix graph at a given limiter ceiling. */
-function analyseMix(inputs: string[], filter: string): LoudnormMeasurement {
+export function analyseMix(inputs: string[], filter: string): LoudnormMeasurement {
   const res = ffmpeg([
     ...inputs,
     "-filter_complex",
@@ -1148,14 +1176,18 @@ function analyseMix(inputs: string[], filter: string): LoudnormMeasurement {
  * roughly (peak after limiting) + (target loudness - loudness after limiting).
  * Limiting lowers loudness as well as peaks, so the first estimate is refined
  * against a real measurement rather than trusted.
+ *
+ * It takes a filter factory rather than the cue sheet it used to, so
+ * scripts/voice.ts can solve the same ceiling over the tutorial mix graph,
+ * which is a voice bus and a sidechained bed rather than a bed and some one
+ * shots. The solver never looks inside the graph, so this costs nothing here.
  */
-function headroomCeilingDb(
+export function headroomCeilingDb(
   inputs: string[],
-  cues: FlatCue[],
-  gains: Record<string, number>,
+  makeFilter: (ceilingDb: number) => string,
 ): { ceilingDb: number; measurement: LoudnormMeasurement } {
   // Ceiling 0 is a no-op limiter, so this measures the raw mix.
-  const raw = analyseMix(inputs, buildFilter(cues, gains, 0));
+  const raw = analyseMix(inputs, makeFilter(0));
   let ceiling = Math.min(
     Number(raw.input_tp),
     TARGET_TRUE_PEAK - (TARGET_LUFS - Number(raw.input_i)) - 1.0,
@@ -1164,7 +1196,7 @@ function headroomCeilingDb(
 
   for (let attempt = 0; attempt < 4; attempt += 1) {
     ceiling = Math.max(ceiling, MAX_LIMITING_DB);
-    measurement = analyseMix(inputs, buildFilter(cues, gains, ceiling));
+    measurement = analyseMix(inputs, makeFilter(ceiling));
     const predictedPeak =
       Number(measurement.input_tp) +
       (TARGET_LUFS - Number(measurement.input_i));
@@ -1182,7 +1214,7 @@ function mixInputs(musicFile: string, cues: FlatCue[]): string[] {
   return args;
 }
 
-type LoudnormMeasurement = {
+export type LoudnormMeasurement = {
   input_i: string;
   input_tp: string;
   input_lra: string;
@@ -1193,7 +1225,7 @@ type LoudnormMeasurement = {
   output_lra?: string;
 };
 
-function parseLoudnorm(stderr: string): LoudnormMeasurement {
+export function parseLoudnorm(stderr: string): LoudnormMeasurement {
   const start = stderr.lastIndexOf("{");
   const end = stderr.lastIndexOf("}");
   if (start === -1 || end === -1)
@@ -1203,7 +1235,7 @@ function parseLoudnorm(stderr: string): LoudnormMeasurement {
   return JSON.parse(stderr.slice(start, end + 1)) as LoudnormMeasurement;
 }
 
-const LOUDNORM_TARGET = `I=${TARGET_LUFS}:TP=${TARGET_TRUE_PEAK}:LRA=11`;
+export const LOUDNORM_TARGET = `I=${TARGET_LUFS}:TP=${TARGET_TRUE_PEAK}:LRA=11`;
 
 /**
  * Reads the true integrated loudness and true peak of a finished file by
@@ -1214,7 +1246,7 @@ const LOUDNORM_TARGET = `I=${TARGET_LUFS}:TP=${TARGET_TRUE_PEAK}:LRA=11`;
  * the three variants reported numbers that did not match what came out.
  * Everything reported to the owner comes from this function instead.
  */
-function verifyLoudness(file: string): {
+export function verifyLoudness(file: string): {
   integrated: number;
   truePeak: number;
   lra: number;
@@ -1266,7 +1298,7 @@ const LOUDNESS_CORRECTION_DEADBAND_DB = 0.15;
  * a gain is the wrong answer and the limiter ceiling upstream is the thing to
  * look at.
  */
-function correctLoudness(
+export function correctLoudness(
   wav: string,
   measured: { integrated: number; truePeak: number; lra: number },
 ): { integrated: number; truePeak: number; lra: number } {
@@ -1329,10 +1361,8 @@ async function mixVariant(variantId: VariantId): Promise<MixRecord> {
   }
 
   // Pass 1: solve for the limiter ceiling, and measure the mix behind it.
-  const { ceilingDb, measurement: measured } = headroomCeilingDb(
-    inputs,
-    cues,
-    levels.gainsDb,
+  const { ceilingDb, measurement: measured } = headroomCeilingDb(inputs, (c) =>
+    buildFilter(cues, levels.gainsDb, c),
   );
   const filter = buildFilter(cues, levels.gainsDb, ceilingDb);
   console.log(
@@ -1472,10 +1502,8 @@ async function mixTrainingVariant(variantId: VariantId): Promise<MixRecord> {
     `  bed peak ${levels.bedPeakDbfs} dBFS, mean ${levels.bedMeanDbfs} dBFS`,
   );
 
-  const { ceilingDb, measurement: measured } = headroomCeilingDb(
-    inputs,
-    cues,
-    levels.gainsDb,
+  const { ceilingDb, measurement: measured } = headroomCeilingDb(inputs, (c) =>
+    buildFilter(cues, levels.gainsDb, c),
   );
   const filter = buildFilter(cues, levels.gainsDb, ceilingDb);
   console.log(
@@ -1669,7 +1697,36 @@ async function main(): Promise<void> {
   );
 }
 
-main().catch((err) => {
-  console.error(`\n${err instanceof Error ? err.message : String(err)}`);
-  process.exit(1);
-});
+/**
+ * True when this file is the entry point rather than an import.
+ *
+ * Added 2026-09-04, when scripts/voice.ts started importing this file's key
+ * reading, retry, usage snapshot and credit measurement functions rather than
+ * copying them. Without the guard, importing anything from here would run the
+ * CLI, which at best prints the usage block and at worst starts spending money.
+ *
+ * Compared through realpath because the project is normally run from the
+ * D:\kap-reel junction (see README): import.meta.url resolves the junction to
+ * the real path behind it and process.argv[1] does not, so the two strings do
+ * not match even when they are the same file. Same function as the one in
+ * scripts/srt.ts, for the same reason.
+ */
+function isEntryPoint(): boolean {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  const real = (p: string) => {
+    try {
+      return fs.realpathSync(p);
+    } catch {
+      return path.resolve(p);
+    }
+  };
+  return real(fileURLToPath(import.meta.url)) === real(entry);
+}
+
+if (isEntryPoint()) {
+  main().catch((err) => {
+    console.error(`\n${err instanceof Error ? err.message : String(err)}`);
+    process.exit(1);
+  });
+}

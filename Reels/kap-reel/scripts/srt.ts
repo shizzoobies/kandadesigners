@@ -26,11 +26,22 @@
  *   npx tsx scripts/srt.ts            write all five
  *   npx tsx scripts/srt.ts --check    validate without writing
  *   npx tsx scripts/srt.ts --print vertical-15s
+ *   npx tsx scripts/srt.ts --reel training|tutorial-contrast|tutorial-hero
+ *
+ * The two tutorial reels, added 2026-09-04, have no table here: their cues are
+ * generated from src/tutorial/timeline.ts, because their beat map is computed
+ * from the measured length of the narration rather than fixed in
+ * src/lib/timing.ts. See tutorialRows() below.
  */
 
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+
+import { CONTRAST_TUTORIAL } from "../src/tutorial/reels/contrast.js";
+import { HERO_TUTORIAL } from "../src/tutorial/reels/hero.js";
+import { tutorialTimeline } from "../src/tutorial/timeline.js";
+import type { TutorialContent, TutorialCut } from "../src/tutorial/types.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");
@@ -424,8 +435,18 @@ export const CUE_ROWS_TRAINING_45S: CueRow[] = [
 // Targets
 // ---------------------------------------------------------------------------
 
-/** Which reel a set of targets belongs to. */
-export type ReelKey = "web" | "training";
+/**
+ * Which reel a set of targets belongs to.
+ *
+ * The two tutorials joined on 2026-09-04. They are keyed by name rather than by
+ * a single "tutorial" key because each one is its own delivery with its own
+ * cues, exactly as the two showcase reels are.
+ */
+export type ReelKey =
+  | "web"
+  | "training"
+  | "tutorial-contrast"
+  | "tutorial-hero";
 
 export type SrtTarget = {
   /** {format} in the Section 10 filename. */
@@ -489,13 +510,81 @@ export const TRAINING_SRT_TARGETS: SrtTarget[] = [
   },
 ];
 
-/** The five targets for one reel. */
-export function targetsFor(reel: ReelKey): SrtTarget[] {
-  return reel === "training" ? TRAINING_SRT_TARGETS : SRT_TARGETS;
+// ---------------------------------------------------------------------------
+// Timing tables, tutorial reels
+// ---------------------------------------------------------------------------
+
+/**
+ * The tutorials do not have a table.
+ *
+ * The two showcase reels' cues are hand written because their beat map is a
+ * constant: the frames are in src/lib/timing.ts and the lines are in the
+ * scenes, and the table is where the two are reconciled. A tutorial's beat map
+ * is computed from the measured length of its narration, so a hand written
+ * table would be a copy of a derived number and would go stale the first time a
+ * line was regenerated. These rows are generated from
+ * src/tutorial/timeline.ts instead: one cue per beat, the beat's own frames,
+ * and the narration exactly as it was sent to the voice model.
+ *
+ * That also makes the sidecar the accessible version of the audio rather than a
+ * transcript of the burned in captions, which are deliberately shorter than the
+ * narration. A viewer reading rather than listening gets the whole line.
+ */
+function tutorialRows(content: TutorialContent, cut: TutorialCut): CueRow[] {
+  return tutorialTimeline(content, cut).entries.map((entry) => ({
+    text: entry.beat.narration,
+    start: entry.start,
+    end: entry.end,
+    source: `tutorial/timeline.ts ${content.id}/${cut}/${entry.beat.id}`,
+  }));
 }
 
+const TUTORIAL_CONTENT: Record<string, TutorialContent> = {
+  "tutorial-contrast": CONTRAST_TUTORIAL,
+  "tutorial-hero": HERO_TUTORIAL,
+};
+
+/**
+ * The same five shapes the showcase reels deliver in: three crops of the 15
+ * second cut and two of the 45 second one.
+ *
+ * Built on demand rather than at module load, so importing this file to caption
+ * the web reel does not evaluate a tutorial timeline, and so a tutorial whose
+ * script has grown past its cut fails when that tutorial is asked for rather
+ * than on import.
+ */
+function tutorialTargets(reel: ReelKey): SrtTarget[] {
+  const content = TUTORIAL_CONTENT[reel];
+  const short = tutorialRows(content, "short");
+  const linkedin = tutorialRows(content, "linkedin");
+  return [
+    { format: "vertical", duration: "15s", rows: short, totalFrames: 450, reel },
+    { format: "feed", duration: "15s", rows: short, totalFrames: 450, reel },
+    { format: "square", duration: "15s", rows: short, totalFrames: 450, reel },
+    { format: "linkedin", duration: "45s", rows: linkedin, totalFrames: 1350, reel },
+    { format: "landscape", duration: "45s", rows: linkedin, totalFrames: 1350, reel },
+  ];
+}
+
+/** The five targets for one reel. */
+export function targetsFor(reel: ReelKey): SrtTarget[] {
+  if (reel === "training") return TRAINING_SRT_TARGETS;
+  if (reel === "web") return SRT_TARGETS;
+  return tutorialTargets(reel);
+}
+
+/**
+ * Delivery names, per the spec. The web reel keeps the Section 10 name exactly;
+ * the training reel takes a "training" segment after the stem; a tutorial takes
+ * the shorter "kap-tut-<id>" stem its videos and stills use.
+ */
 export function srtFileName(target: SrtTarget): string {
-  const stem = target.reel === "training" ? "kap-reel-training" : "kap-reel";
+  const stem =
+    target.reel === "training"
+      ? "kap-reel-training"
+      : target.reel.startsWith("tutorial-")
+        ? `kap-tut-${target.reel.slice("tutorial-".length)}`
+        : "kap-reel";
   return `${stem}-${target.format}-${target.duration}.srt`;
 }
 
@@ -710,11 +799,17 @@ export function writeSrtFiles(
 function main(argv: string[]): void {
   const reelIndex = argv.indexOf("--reel");
   const reelArg = reelIndex === -1 ? "web" : argv[reelIndex + 1];
-  if (reelArg !== "web" && reelArg !== "training") {
-    console.error(`srt: unknown reel "${reelArg}". Use web or training.`);
+  const known: ReelKey[] = [
+    "web",
+    "training",
+    "tutorial-contrast",
+    "tutorial-hero",
+  ];
+  if (!known.includes(reelArg as ReelKey)) {
+    console.error(`srt: unknown reel "${reelArg}". Use ${known.join(", ")}.`);
     process.exit(2);
   }
-  const targets = targetsFor(reelArg);
+  const targets = targetsFor(reelArg as ReelKey);
 
   const printIndex = argv.indexOf("--print");
   if (printIndex !== -1) {

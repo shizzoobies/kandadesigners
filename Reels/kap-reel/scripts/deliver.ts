@@ -20,11 +20,13 @@
  * so this is runnable the moment the first render lands.
  *
  * Flags:
- *   --reel web|training  which reel to deliver. Defaults to web, so every
- *                        command that worked before this flag existed still
- *                        does exactly what it did.
- *   --variant a|b|c      which music bed was chosen. Required. The training
- *                        reel's beds are t-a, t-b and t-c.
+ *   --reel <key>         which reel to deliver: web, training,
+ *                        tutorial-contrast or tutorial-hero. Defaults to web,
+ *                        so every command that worked before this flag existed
+ *                        still does exactly what it did.
+ *   --variant a|b|c      which music bed was chosen. Required for the two
+ *                        showcase reels, refused for the tutorials. The
+ *                        training reel's beds are t-a, t-b and t-c.
  *   --remix              rebuild the 45 second mix even if it exists.
  *   --skip-encode        checks, captions and stills only.
  *   --only <name>        encode a single target, by format key.
@@ -38,6 +40,21 @@
  * out/kap-reel-training-{format}-{duration}.mp4 with matching SRTs, thumbnails
  * are out/thumbnail-training-{vertical,landscape}.jpg and the carousel stills
  * land in out/frames-training/. Nothing about the web reel's names moved.
+ *
+ * The two tutorial reels, added 2026-09-04:
+ *
+ *   npx tsx scripts/deliver.ts --reel tutorial-contrast
+ *
+ * Same pipeline again. Renders come from
+ * out/render-tutorial-{id}-{format}-{duration}.mp4 and deliveries go to
+ * out/kap-tut-{id}-{format}-{duration}.mp4 with matching SRTs, per the spec.
+ * Two things differ. There is no --variant, because a tutorial's mix is voice
+ * with a bed ducked under it and is built by scripts/voice.ts --mix from
+ * assets/audio/mix-tut-{id}-{15|45}s.wav. And the frames the thumbnails and the
+ * carousel stills come from are derived from src/tutorial/timeline.ts rather
+ * than hand picked, because a tutorial's beat map is computed from the measured
+ * length of its narration and a hand picked frame number would go stale the
+ * first time a line was regenerated.
  */
 
 import { spawnSync } from "node:child_process";
@@ -54,6 +71,11 @@ import {
   type ReelKey,
   type SrtTarget,
 } from "./srt.js";
+import { CONTRAST_TUTORIAL } from "../src/tutorial/reels/contrast.js";
+import { HERO_TUTORIAL } from "../src/tutorial/reels/hero.js";
+import { tutorialTimeline } from "../src/tutorial/timeline.js";
+import { tutorialStrings, type TutorialContent } from "../src/tutorial/types.js";
+import { mixFilePath } from "../src/tutorial/voice-log.js";
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -204,9 +226,15 @@ const SHAPES: { format: string; duration: "15s" | "45s"; frames: number; canvas:
  * either being able to overwrite the other.
  */
 type ReelNames = {
-  /** Segment inserted into render, delivery, thumbnail and caption names. */
+  /** Segment inserted into render, thumbnail and caption names. */
   infix: string;
-  /** Directory the six carousel stills go in. */
+  /**
+   * Stem of the delivered MP4s and SRTs. The showcase reels keep the Section 11
+   * name; a tutorial takes the shorter kap-tut-<id>, which is the name the spec
+   * gives and which keeps the finals in Reels/instructional reels/ legible.
+   */
+  deliveryStem: string;
+  /** Directory the carousel stills go in. */
   framesDir: string;
   /** The content config the manifest check reads project ids out of. */
   contentFile: string;
@@ -215,22 +243,46 @@ type ReelNames = {
 const REEL_NAMES: Record<ReelKey, ReelNames> = {
   web: {
     infix: "",
+    deliveryStem: "kap-reel",
     framesDir: "out/frames",
     contentFile: "src/reels/web.ts",
   },
   training: {
     infix: "-training",
+    deliveryStem: "kap-reel-training",
     framesDir: "out/frames-training",
     contentFile: "src/reels/training.ts",
   },
+  "tutorial-contrast": {
+    infix: "-tutorial-contrast",
+    deliveryStem: "kap-tut-contrast",
+    framesDir: "out/frames-tutorial-contrast",
+    contentFile: "src/tutorial/reels/contrast.ts",
+  },
+  "tutorial-hero": {
+    infix: "-tutorial-hero",
+    deliveryStem: "kap-tut-hero",
+    framesDir: "out/frames-tutorial-hero",
+    contentFile: "src/tutorial/reels/hero.ts",
+  },
 };
 
+/** The two tutorial reels, keyed the way --reel names them. */
+const TUTORIAL_CONTENT: Partial<Record<ReelKey, TutorialContent>> = {
+  "tutorial-contrast": CONTRAST_TUTORIAL,
+  "tutorial-hero": HERO_TUTORIAL,
+};
+
+function tutorialFor(reel: ReelKey): TutorialContent | null {
+  return TUTORIAL_CONTENT[reel] ?? null;
+}
+
 function targets(reel: ReelKey): DeliveryTarget[] {
-  const { infix } = REEL_NAMES[reel];
+  const { infix, deliveryStem } = REEL_NAMES[reel];
   return SHAPES.map((shape) => ({
     ...shape,
     input: `out/render${infix}-${shape.format}-${shape.duration}.mp4`,
-    output: `out/kap-reel${infix}-${shape.format}-${shape.duration}.mp4`,
+    output: `out/${deliveryStem}-${shape.format}-${shape.duration}.mp4`,
   }));
 }
 
@@ -807,7 +859,7 @@ async function thumbnail(
  */
 type CarouselFrame = { frame: number; slug: string; note: string };
 
-const CAROUSEL_FRAMES: Record<ReelKey, CarouselFrame[]> = {
+const CAROUSEL_FRAMES: Record<"web" | "training", CarouselFrame[]> = {
   web: [
     // PROJECT_1 54 to 186, clean capture from 78, claim in at 90. The beat did
     // not move, so neither did this.
@@ -849,6 +901,26 @@ const CAROUSEL_FRAMES: Record<ReelKey, CarouselFrame[]> = {
     { frame: 440, slug: "6-call-to-action", note: "CTA card, drawn lockup and contact" },
   ],
 };
+
+/**
+ * Which frames a reel's carousel stills come from.
+ *
+ * The showcase reels' frames are hand picked and hand argued, above. A
+ * tutorial's are derived: one still per beat of the 15 second cut, taken at the
+ * midpoint of the beat, because a tutorial beat is one idea held for its own
+ * length and the middle of it is the frame that shows the idea. Deriving them
+ * also means they follow the timeline when a line is regenerated, which a hand
+ * picked frame number would not.
+ */
+function carouselFramesFor(reel: ReelKey): CarouselFrame[] {
+  const tutorial = tutorialFor(reel);
+  if (!tutorial) return CAROUSEL_FRAMES[reel as "web" | "training"];
+  return tutorialTimeline(tutorial, "short").entries.map((entry, i) => ({
+    frame: Math.round((entry.start + entry.end) / 2),
+    slug: `${i + 1}-${entry.beat.id}`,
+    note: `${entry.beat.id} beat, midpoint of ${entry.start} to ${entry.end}`,
+  }));
+}
 
 function carouselStills(input: string, framesDir: string, frames: CarouselFrame[]): string[] {
   const FRAMES_DIR = path.join(ROOT, framesDir);
@@ -926,8 +998,21 @@ function checkProjectClearance(reel: ReelKey): CheckResult {
     if (!referenced.has(project)) referenced.set(project, `${where} captureId`);
   }
 
-  let ok = referenced.size > 0;
-  if (!ok) lines.push(`  BAD  no project or capture ids found in ${where}`);
+  // A showcase reel that names no project is a check that looked at nothing,
+  // which is worse than a failure. A tutorial that names none is the normal
+  // case: the contrast tutorial is about a colour and shows no client site at
+  // all, and Phase A's hero content has not had its three cleared sites written
+  // into it yet. So the emptiness is reported rather than treated as a fault,
+  // and any id a tutorial does name is still checked.
+  const tutorial = tutorialFor(reel) !== null;
+  let ok = referenced.size > 0 || tutorial;
+  if (referenced.size === 0) {
+    lines.push(
+      tutorial
+        ? `  ok   no project or capture ids in ${where}: this tutorial shows no client site`
+        : `  BAD  no project or capture ids found in ${where}`,
+    );
+  }
   for (const [id, source] of [...referenced].sort()) {
     const state = cleared.get(id);
     if (state === true) {
@@ -1106,7 +1191,7 @@ function walkText(dir: string, hits: string[]): void {
   }
 }
 
-function checkEmDashes(): CheckResult {
+function checkEmDashes(reel: ReelKey): CheckResult {
   const hits: string[] = [];
   for (const dir of ["out", "src", "scripts", "config"]) {
     const full = path.join(ROOT, dir);
@@ -1121,7 +1206,29 @@ function checkEmDashes(): CheckResult {
         if (line.includes(EM_DASH)) hits.push(`${file}:${i + 1}: ${line.trim().slice(0, 100)}`);
       });
   }
+
+  // The walk above catches an em dash in a source file, which covers a content
+  // file's literals as a side effect of them being source. A tutorial's strings
+  // are scanned again as strings, so the check is about what reaches a frame or
+  // a file rather than about which file it happens to be typed in, and so a
+  // string assembled from parts is caught as the string it assembles to.
+  const tutorial = tutorialFor(reel);
+  let scanned = 0;
+  if (tutorial) {
+    for (const value of tutorialStrings(tutorial)) {
+      scanned += 1;
+      if (value.includes(EM_DASH)) {
+        hits.push(`${REEL_NAMES[reel].contentFile}: "${value.slice(0, 90)}"`);
+      }
+    }
+  }
+
   const lines = hits.length === 0 ? ["  none found"] : hits.map((h) => `  BAD  ${h}`);
+  if (tutorial) {
+    lines.push(
+      `  scanned ${scanned} narration, caption, hook and end card strings in ${REEL_NAMES[reel].contentFile}`,
+    );
+  }
   lines.push("  skipped out/bundle, node_modules and .omc: build output and third party code");
   return {
     id: 6,
@@ -1182,16 +1289,24 @@ function checkLicensing(): CheckResult {
   };
 }
 
+/** The composition id prefix a reel's Debug twins carry, for the manual notes. */
+const DEBUG_PREFIX: Record<ReelKey, string> = {
+  web: "Reel",
+  training: "Training",
+  "tutorial-contrast": "TutorialContrast",
+  "tutorial-hero": "TutorialHero",
+};
+
 function manualChecks(reel: ReelKey): CheckResult[] {
-  const infix = REEL_NAMES[reel].infix;
-  const prefix = reel === "training" ? "Training" : "Reel";
+  const stem = REEL_NAMES[reel].deliveryStem;
+  const prefix = DEBUG_PREFIX[reel];
   return [
     {
       id: 3,
       title: "The vertical cut is comprehensible with audio muted",
       verdict: "MANUAL",
       lines: [
-        `  Watch out/kap-reel${infix}-vertical-15s.mp4 with the sound off, start to finish.`,
+        `  Watch out/${stem}-vertical-15s.mp4 with the sound off, start to finish.`,
         "  Every claim is burned in, so this is a judgement about pace, not about",
         "  whether the text exists. Nothing here can decide it.",
       ],
@@ -1211,13 +1326,19 @@ function manualChecks(reel: ReelKey): CheckResult[] {
       title: "Every plate composite inspected full size",
       verdict: "MANUAL",
       lines: [
-        reel === "training"
-          ? "  Done at the reel two plate gate. Full size stills are in out/gate-t4."
-          : "  Done in Phase 4. Full size stills are in out/gate4.",
-        "  Re-inspect any plate whose capture or composite changed: no visible face,",
-        "  no hand artifact, no warped device, no generated text or screen content",
-        "  at the quad edges.",
-      ],
+        tutorialFor(reel) !== null
+          ? "  No plate composite in either tutorial. Its pictures are drawn scenes, a"
+          : reel === "training"
+            ? "  Done at the reel two plate gate. Full size stills are in out/gate-t4."
+            : "  Done in Phase 4. Full size stills are in out/gate4.",
+        tutorialFor(reel) !== null
+          ? "  Jam recording and real captures, none of them a generated photograph."
+          : "  Re-inspect any plate whose capture or composite changed: no visible face,",
+        tutorialFor(reel) !== null
+          ? "  Inspect the Jam recording full size instead, once it lands."
+          : "  no hand artifact, no warped device, no generated text or screen content",
+        tutorialFor(reel) !== null ? "" : "  at the quad edges.",
+      ].filter((l) => l !== ""),
     },
     {
       id: 9,
@@ -1242,7 +1363,7 @@ function runAcceptance(
     checkNumbers(srtTargets),
     ...manualChecks(reel),
     checkFrameCounts(deliveries),
-    checkEmDashes(),
+    checkEmDashes(reel),
     checkLicensing(),
   ].sort((a, b) => a.id - b.id);
 
@@ -1268,24 +1389,47 @@ function flag(argv: string[], name: string): string | undefined {
   return i === -1 ? undefined : argv[i + 1];
 }
 
+/**
+ * Which music variants a reel's --variant accepts.
+ *
+ * The two tutorials take none. Their mixes are not a music bed on its own but
+ * the narration with a bed ducked under it, they are built by
+ * scripts/voice.ts --mix, and which take beds them is a field in the content
+ * file rather than a choice at delivery time. So --variant is refused for them
+ * rather than ignored: a flag that silently does nothing is worse than an error.
+ */
 const VARIANTS: Record<ReelKey, string[]> = {
   web: ["a", "b", "c"],
   training: ["t-a", "t-b", "t-c"],
+  "tutorial-contrast": [],
+  "tutorial-hero": [],
 };
+
+const REELS: ReelKey[] = ["web", "training", "tutorial-contrast", "tutorial-hero"];
 
 async function main(argv: string[]): Promise<void> {
   const reelArg = flag(argv, "reel") ?? "web";
-  if (reelArg !== "web" && reelArg !== "training") {
-    console.error(`deliver: unknown reel "${reelArg}". Use web or training.`);
+  if (!REELS.includes(reelArg as ReelKey)) {
+    console.error(`deliver: unknown reel "${reelArg}". Use ${REELS.join(", ")}.`);
     process.exit(2);
   }
-  const reel: ReelKey = reelArg;
+  const reel = reelArg as ReelKey;
   const names = REEL_NAMES[reel];
+  const tutorial = tutorialFor(reel);
   const TARGETS = targets(reel);
   const srtTargets = targetsFor(reel);
 
   const variant = flag(argv, "variant");
-  if (!variant || !VARIANTS[reel].includes(variant)) {
+  if (tutorial) {
+    if (variant) {
+      console.error(
+        `deliver: --variant is not used for ${reel}. Its mix is built by ` +
+          `npx tsx scripts/voice.ts --mix --reel ${tutorial.id}, and the bed under it ` +
+          `is content.music in ${names.contentFile}.`,
+      );
+      process.exit(2);
+    }
+  } else if (!variant || !VARIANTS[reel].includes(variant)) {
     console.error(`deliver: --variant ${VARIANTS[reel].join("|")} is required for the ${reel} reel.`);
     process.exit(2);
   }
@@ -1296,23 +1440,44 @@ async function main(argv: string[]): Promise<void> {
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const scratch = path.join(OUT_DIR, ".deliver-scratch.png");
 
-  const mix15 = path.join(AUDIO_DIR, `mix-${variant}-15s.wav`);
-  console.log(`=== Phase 6 delivery, ${reel} reel, music variant ${variant} ===\n`);
+  const mix15 = tutorial
+    ? path.join(ROOT, mixFilePath(tutorial.id, "short"))
+    : path.join(AUDIO_DIR, `mix-${variant}-15s.wav`);
+  console.log(
+    `=== Phase 6 delivery, ${reel} reel` +
+      (tutorial ? `, bed ${tutorial.music.short}` : `, music variant ${variant}`) +
+      ` ===\n`,
+  );
 
   // 1. Audio.
   let mix45: string | null = null;
   if (!skipEncode) {
-    if (!fs.existsSync(mix15)) {
-      const set = reel === "training" ? " --set training" : "";
-      console.log(
-        `[warn] ${rel(mix15)} does not exist. The 15 second files will keep the ` +
-          `render's own audio. Run: npx tsx scripts/audio.ts mix --variant ${variant}${set}`,
-      );
-    }
-    if (!fs.existsSync(RAW_AUDIO_DIR)) {
-      console.log(`[warn] ${rel(RAW_AUDIO_DIR)} missing, cannot build the 45 second mix.`);
+    if (tutorial) {
+      // Both tutorial mixes are voice plus a ducked bed and are built by
+      // scripts/voice.ts, which is where the timeline that places the lines
+      // lives. There is nothing for this script to build.
+      mix45 = path.join(ROOT, mixFilePath(tutorial.id, "linkedin"));
+      for (const wav of [mix15, mix45]) {
+        if (!fs.existsSync(wav)) {
+          console.log(
+            `[warn] ${rel(wav)} does not exist. That delivery will keep the render's ` +
+              `own audio. Run: npx tsx scripts/voice.ts --mix --reel ${tutorial.id}`,
+          );
+        }
+      }
     } else {
-      mix45 = build45sMix(variant, remix);
+      if (!fs.existsSync(mix15)) {
+        const set = reel === "training" ? " --set training" : "";
+        console.log(
+          `[warn] ${rel(mix15)} does not exist. The 15 second files will keep the ` +
+            `render's own audio. Run: npx tsx scripts/audio.ts mix --variant ${variant}${set}`,
+        );
+      }
+      if (!fs.existsSync(RAW_AUDIO_DIR)) {
+        console.log(`[warn] ${rel(RAW_AUDIO_DIR)} missing, cannot build the 45 second mix.`);
+      } else {
+        mix45 = build45sMix(variant as string, remix);
+      }
     }
     console.log("");
   }
@@ -1349,13 +1514,31 @@ async function main(argv: string[]): Promise<void> {
   const landscapeInput = `out/render${names.infix}-landscape-45s.mp4`;
   const verticalRender = path.join(ROOT, verticalInput);
   const landscapeRender = path.join(ROOT, landscapeInput);
+  // Frame 75 is inside the first project's plate, which runs 54 to 78: a real
+  // site on a real laptop over a real shoulder, with the project name fully
+  // typed on at 72. Frame 387 is inside the second project's plate in the 45
+  // second cut, which runs 366 to 390, where the name is complete at 384 and
+  // the panel is not caught mid word. Both showcase reels share the beat map,
+  // so both take the same two frames.
+  //
+  // A tutorial has no plate and no fixed beat map, so its two frames are
+  // derived: the midpoint of the stretch beat, which is the beat the cut is
+  // built around and the one held longest.
+  let verticalFrame = 75;
+  let landscapeFrame = 387;
+  if (tutorial) {
+    const midOfStretch = (cut: "short" | "linkedin") => {
+      const entries = tutorialTimeline(tutorial, cut).entries;
+      const beat = entries.find((e) => e.beat.stretch) ?? entries[1] ?? entries[0];
+      return Math.round((beat.start + beat.end) / 2);
+    };
+    verticalFrame = midOfStretch("short");
+    landscapeFrame = midOfStretch("linkedin");
+  }
   if (fs.existsSync(verticalRender)) {
-    // Frame 75 is inside the first project's plate, which runs 54 to 78: a real
-    // site on a real laptop over a real shoulder, with the project name fully
-    // typed on at 72. Both reels share the beat map, so both take frame 75.
     await thumbnail(
       verticalRender,
-      75,
+      verticalFrame,
       SAFE_VERTICAL,
       path.join(OUT_DIR, `thumbnail${names.infix}-vertical.jpg`),
       scratch,
@@ -1364,13 +1547,9 @@ async function main(argv: string[]): Promise<void> {
     console.log(`  [skip] thumbnail${names.infix}-vertical.jpg: ${verticalInput} does not exist yet.`);
   }
   if (fs.existsSync(landscapeRender)) {
-    // Frame 387 is inside the second project's plate in the 45 second cut,
-    // which runs 366 to 390. The name types on from beat+2 over 16 frames and
-    // is complete at 384, so this is the only part of that plate where the
-    // panel is not caught mid word. The old 380 was, and it showed.
     await thumbnail(
       landscapeRender,
-      387,
+      landscapeFrame,
       SAFE_LANDSCAPE,
       path.join(OUT_DIR, `thumbnail${names.infix}-landscape.jpg`),
       scratch,
@@ -1386,14 +1565,15 @@ async function main(argv: string[]): Promise<void> {
   // 5. Carousel stills.
   console.log("=== Carousel stills ===\n");
   if (fs.existsSync(verticalRender)) {
-    carouselStills(verticalRender, names.framesDir, CAROUSEL_FRAMES[reel]);
+    carouselStills(verticalRender, names.framesDir, carouselFramesFor(reel));
   } else {
     console.log(`  [skip] ${names.framesDir}: ${verticalInput} does not exist yet.`);
   }
 
   // 6. Acceptance.
   const failures = runAcceptance(reel, TARGETS, srtTargets);
-  const postCopy = reel === "training" ? "out/post-copy-training.md" : "out/post-copy.md";
+  const postCopy =
+    reel === "web" ? "out/post-copy.md" : `out/post-copy${names.infix}.md`;
   console.log(
     failures === 0
       ? `\nNothing published. Review ${postCopy} and post it yourself.`
