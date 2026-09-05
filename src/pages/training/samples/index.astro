@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import TrainingSubnav from '../../../components/TrainingSubnav.astro';
-import { liveSamples, plannedSamples } from '../../../data/training.js';
+import { liveSamples, plannedSamples, verticals } from '../../../data/training.js';
 
 // The samples grid. Everything on this page comes out of src/data/training.js,
 // which is the only file allowed to decide what is publishable: 'live' gets a
@@ -23,6 +23,30 @@ const cards = liveSamples.map((s) => ({
 const placeholders = plannedSamples.map((s) => ({
   ...s,
   meta: s.kind + ' · ' + s.vertical,
+}));
+
+// Filter groups for the grid, derived from the data so a new sample with a
+// new vertical or format shows up as an option with no edit here. Industries
+// keep the order of the verticals list; formats keep first appearance.
+const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const all = [...cards, ...placeholders];
+// Industry options come from the samples themselves (the sample wording,
+// "Construction and trades", is shorter than the verticals list's title), in
+// the verticals list's order where a match exists, then anything else.
+// 'Any' is the planned card's wildcard and is never an option.
+const order = verticals.map((v) => slug(v.title).split('-')[0]);
+const industries = [...new Set(all.map((s) => s.vertical))]
+  .filter((t) => t !== 'Any')
+  .map((t) => ({ title: t, key: slug(t), count: all.filter((s) => s.vertical === t).length }))
+  .sort((a, b) => {
+    const ia = order.indexOf(a.key.split('-')[0]);
+    const ib = order.indexOf(b.key.split('-')[0]);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+  });
+const formats = [...new Set(all.map((s) => s.kind))].map((t) => ({
+  title: t,
+  key: slug(t),
+  count: all.filter((s) => s.kind === t).length,
 }));
 
 const breadcrumb = {
@@ -96,9 +120,45 @@ const collectionSchema = {
   </section>
 
   <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <ul class="grid list-none gap-8 p-0 md:grid-cols-2">
+    <!-- The filter. A native details element, so it is collapsible with no
+         script and every card stays visible until a choice is made. Two
+         groups: the industry the piece was written for and the shape it
+         takes. Options are text toggles with a drawn marker, not chips. -->
+    <details class="tr-filter mb-10" id="tr-filter">
+      <summary class="tr-filter-summary">
+        <span class="tr-filter-label font-mono text-xs uppercase tracking-[0.25em]">Filter the samples</span>
+        <span class="font-mono text-xs uppercase tracking-[0.2em] text-muted" id="tr-filter-state" role="status" aria-live="polite">Showing all {all.length}</span>
+      </summary>
+      <div class="tr-filter-body">
+        <fieldset class="tr-filter-group">
+          <legend class="font-heading text-sm font-semibold tracking-wide">By industry</legend>
+          <div class="tr-filter-options">
+            <button type="button" class="tr-filter-opt" data-filter="vertical" data-value="" aria-pressed="true">All industries</button>
+            {industries.map((o) => (
+              <button type="button" class="tr-filter-opt" data-filter="vertical" data-value={o.key} aria-pressed="false">
+                {o.title} <span class="tr-filter-count">{o.count}</span>
+              </button>
+            ))}
+          </div>
+        </fieldset>
+        <fieldset class="tr-filter-group">
+          <legend class="font-heading text-sm font-semibold tracking-wide">By format</legend>
+          <div class="tr-filter-options">
+            <button type="button" class="tr-filter-opt" data-filter="kind" data-value="" aria-pressed="true">All formats</button>
+            {formats.map((o) => (
+              <button type="button" class="tr-filter-opt" data-filter="kind" data-value={o.key} aria-pressed="false">
+                {o.title} <span class="tr-filter-count">{o.count}</span>
+              </button>
+            ))}
+          </div>
+        </fieldset>
+        <p class="tr-filter-empty text-muted" id="tr-filter-empty" hidden>Nothing matches both choices yet. Pick a wider one, or ask us to build it.</p>
+      </div>
+    </details>
+
+    <ul class="grid list-none gap-8 p-0 md:grid-cols-2" id="tr-grid">
       {cards.map((s) => (
-        <li>
+        <li data-vertical={slug(s.vertical)} data-kind={slug(s.kind)}>
           <a href={s.href} data-animate="frame-lift" class="glow-frame tr-frame backdrop-card group flex h-full flex-col p-7" style={`--bd: url('${s.backdrop}')`}>
             <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">{s.meta}</p>
             <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
@@ -112,7 +172,7 @@ const collectionSchema = {
       ))}
 
       {placeholders.map((s) => (
-        <li>
+        <li data-vertical={s.vertical === 'Any' ? 'any' : slug(s.vertical)} data-kind={slug(s.kind)}>
           <div data-animate="frame-lift" class="tr-frame tr-frame-planned flex h-full flex-col p-7">
             <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">In production</p>
             <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
@@ -144,4 +204,164 @@ const collectionSchema = {
       </div>
     </div>
   </section>
+<style>
+  /* The filter panel. Unlayered on purpose: it sits beside .tr-frame and
+     .glow-frame, which are unlayered, so nothing here loses a fight. */
+  .tr-filter {
+    border-top: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
+  }
+  .tr-filter-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .tr-filter-summary::-webkit-details-marker { display: none; }
+  .tr-filter-summary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .tr-filter-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--color-ink);
+  }
+  .tr-filter-label::before {
+    content: '';
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 1.5px solid var(--color-accent);
+    transform: rotate(45deg);
+    transition: transform 0.35s ease, background-color 0.35s ease;
+  }
+  .tr-filter[open] .tr-filter-label::before {
+    background: var(--color-accent);
+    transform: rotate(225deg);
+  }
+  .tr-filter-body {
+    display: grid;
+    gap: 1.5rem 3rem;
+    padding: 0.25rem 0 1.6rem;
+  }
+  @media (min-width: 768px) {
+    .tr-filter-body { grid-template-columns: 1fr 1fr; }
+    .tr-filter-empty { grid-column: 1 / -1; }
+  }
+  .tr-filter-group {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+  .tr-filter-group legend {
+    padding: 0;
+    margin-bottom: 0.6rem;
+  }
+  .tr-filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.6rem;
+  }
+  .tr-filter-opt {
+    position: relative;
+    padding: 0.35rem 0;
+    font: inherit;
+    line-height: 1.4;
+    color: var(--color-muted);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+  .tr-filter-opt::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.15rem;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .tr-filter-opt:hover { color: var(--color-ink); }
+  .tr-filter-opt[aria-pressed='true'] { color: var(--color-ink); }
+  .tr-filter-opt[aria-pressed='true']::after { transform: scaleX(1); }
+  .tr-filter-opt:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .tr-filter-count {
+    margin-left: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+  .tr-filter-empty { padding-top: 0.5rem; }
+  #tr-grid > li[hidden] { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .tr-filter-label::before, .tr-filter-opt, .tr-filter-opt::after { transition: none; }
+  }
+</style>
+
+<script>
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  // Grid filter. One choice per group, AND across groups. Planned cards carry
+  // data-vertical="any" so they match every industry. Wrapped for the
+  // ClientRouter: runs on first load and again on every page-load, with a
+  // bound flag so a persisted element is never wired twice.
+  function trFilterInit() {
+    const panel = document.getElementById('tr-filter');
+    const grid = document.getElementById('tr-grid');
+    if (!panel || !grid || panel.dataset.bound) return;
+    panel.dataset.bound = '1';
+    const state = document.getElementById('tr-filter-state');
+    const empty = document.getElementById('tr-filter-empty');
+    const items = Array.from(grid.children);
+    const chosen = { vertical: '', kind: '' };
+
+    const apply = () => {
+      let shown = 0;
+      for (const li of items) {
+        const v = li.dataset.vertical || '';
+        const k = li.dataset.kind || '';
+        const ok = (!chosen.vertical || v === chosen.vertical || v === 'any') && (!chosen.kind || k === chosen.kind);
+        li.hidden = !ok;
+        if (ok) shown++;
+      }
+      empty.hidden = shown !== 0;
+      state.textContent = chosen.vertical || chosen.kind
+        ? 'Showing ' + shown + ' of ' + items.length
+        : 'Showing all ' + items.length;
+      // Cards carry a scroll reveal whose start line was measured where the
+      // card used to sit. Hiding its neighbours moves it up the page, so the
+      // triggers are re-measured (and any card now above its line plays in)
+      // and Lenis learns the new page height.
+      const motion = (window as any).__motion;
+      if (motion && !motion.reduced) {
+        motion.lenis?.resize();
+        ScrollTrigger.refresh();
+      }
+    };
+
+    panel.querySelectorAll('.tr-filter-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const group = btn.dataset.filter;
+        chosen[group] = btn.dataset.value || '';
+        panel.querySelectorAll('.tr-filter-opt[data-filter="' + group + '"]').forEach((b) => {
+          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+        });
+        apply();
+      });
+    });
+  }
+  trFilterInit();
+  document.addEventListener('astro:page-load', trFilterInit);
+</script>
 </BaseLayout>

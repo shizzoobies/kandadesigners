@@ -75,7 +75,7 @@ const breadcrumb = {
        the tier rows; the structure itself is three labelled lists. -->
   <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24" aria-labelledby="team-heading">
     <h2 id="team-heading" class="sr-only">The team</h2>
-    <div class="org" data-animate="type-settle">
+    <div class="org">
       {tiers.map((t, ti) => (
         <div class:list={['org-tier', `org-tier-${t.size}`, { 'org-tier-first': ti === 0 }]} style={`--n: ${t.people.length}`}>
           <p class="org-label" id={`tier-${t.id}`}>{t.label}</p>
@@ -391,14 +391,40 @@ const breadcrumb = {
 </style>
 
 <script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
   // Bio dialogs: native <dialog> gives Esc and focus containment. Focus goes
   // to the heading on open and back to the opener on close; a click on the
   // backdrop targets the dialog element itself. Re-run after every
   // client-side navigation; the data-bound guard skips a DOM already wired.
+  // The org chart's entrance. It used to be one type-settle on the whole
+  // chart, which slid a thousand-pixel block up by sixty percent and only
+  // once its top crossed 85% of the viewport, so on a laptop the team looked
+  // missing until the reader scrolled past the hero (Alex, 2026-09-04). Now
+  // the owners tier arrives on load with no scroll gate, and each lower tier
+  // staggers in on its own as it enters. Set-then-to rather than from(), so
+  // nothing paints in its resting state and then jumps back (see motion.js).
+  const revealTeam = (root: HTMLElement) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+    root.querySelectorAll<HTMLElement>('.org-tier').forEach((tier, i) => {
+      const parts = tier.querySelectorAll<HTMLElement>('.org-label, .org-node');
+      gsap.set(parts, { y: 26, opacity: 0, willChange: 'transform, opacity' });
+      const show = () =>
+        gsap.to(parts, {
+          y: 0, opacity: 1, duration: 0.85, ease: 'expo.out',
+          stagger: 0.07, overwrite: true, clearProps: 'transform,willChange',
+        });
+      if (i === 0) show();
+      else ScrollTrigger.create({ trigger: tier, start: 'top 92%', once: true, onEnter: show });
+    });
+  };
+
   const initTeam = () => {
     const root = document.querySelector('.org') as HTMLElement | null;
     if (!root || root.dataset.bound) return;
     root.dataset.bound = '1';
+    revealTeam(root);
 
     let opener: HTMLElement | null = null;
     const lockScroll = (on: boolean) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };

@@ -51,23 +51,22 @@
    deliberate Nordic serif, and the body stack leads with Segoe UI so
    the running text keeps a humanist shape rather than dropping to
    Arial. */
-/* FONTS: uncomment when the files land in assets/fonts/. Until then the
-   fallback stacks below carry every line; a referenced-but-missing font file
-   is a console 404 and the site's accessibility gate counts it as a failure.
+/* Licensed faces from Envato Elements, in the folder since 2026-09-04. */
 @font-face {
   font-family: 'Site Display';
-  src: url('assets/fonts/display-regular.woff2') format('woff2');
+  src: url('assets/fonts/display-regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Site Display';
-  src: url('assets/fonts/display-medium.woff2') format('woff2');
+  src: url('assets/fonts/display-medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
+/* Still awaiting the licensed file; the fallback stack carries this family.
 @font-face {
   font-family: 'Site Body';
   src: url('assets/fonts/body-regular.woff2') format('woff2');
