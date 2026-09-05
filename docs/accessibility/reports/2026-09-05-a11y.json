@@ -1,7 +1,149 @@
 {
-  "date": "2026-09-05T02:24:15.631Z",
-  "origin": "http://127.0.0.1:51230",
+  "date": "2026-09-05T02:56:45.634Z",
+  "origin": "http://127.0.0.1:65255",
   "pages": [
+    {
+      "path": "/training/samples/strong-is-a-skill/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Strong is a skill | Training Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Strong is a skill"
+          },
+          {
+            "level": 2,
+            "text": "Ask about something like this"
+          },
+          {
+            "level": 2,
+            "text": "Strong is a skill"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 6
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 2,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 2,
+        "first": "button|View the course"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/heat-done-well/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Heat, done well | Training Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Heat, done well"
+          },
+          {
+            "level": 2,
+            "text": "Ask about something like this"
+          },
+          {
+            "level": 2,
+            "text": "Heat, done well"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 7
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 2,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 2,
+        "first": "button|View the course"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
     {
       "path": "/training/team/",
       "status": 200,
@@ -124,100 +266,6 @@
         "frameTrap": false,
         "maxFrameTabs": 0,
         "steps": 40,
-        "first": "a|Skip to content"
-      },
-      "consoleErrors": [],
-      "problems": []
-    },
-    {
-      "path": "/training/samples/",
-      "status": 200,
-      "structure": {
-        "lang": "en",
-        "title": "Training Content Samples | K & A Performance",
-        "h1Count": 1,
-        "headings": [
-          {
-            "level": 1,
-            "text": "Samples you can actually play"
-          },
-          {
-            "level": 2,
-            "text": "Where this stands today"
-          },
-          {
-            "level": 2,
-            "text": "The RFI that gets answered"
-          },
-          {
-            "level": 2,
-            "text": "Spot it before it hurts someone"
-          },
-          {
-            "level": 2,
-            "text": "The P&L, read like an owner"
-          },
-          {
-            "level": 2,
-            "text": "Build the plate, skip the diet"
-          },
-          {
-            "level": 2,
-            "text": "Strong is a skill"
-          },
-          {
-            "level": 2,
-            "text": "Heat, done well"
-          },
-          {
-            "level": 2,
-            "text": "Accessibility remediation, before and after"
-          },
-          {
-            "level": 2,
-            "text": "Want one of these for your content"
-          },
-          {
-            "level": 2,
-            "text": "Services"
-          },
-          {
-            "level": 2,
-            "text": "Locations"
-          },
-          {
-            "level": 2,
-            "text": "Studio"
-          },
-          {
-            "level": 2,
-            "text": "Legal"
-          },
-          {
-            "level": 3,
-            "text": "Message received"
-          }
-        ],
-        "skips": [],
-        "mainCount": 1,
-        "hasNav": true,
-        "hasSkipLink": true,
-        "imgsNoAlt": [],
-        "framesNoTitle": []
-      },
-      "axe": {
-        "violations": [],
-        "incomplete": [],
-        "passes": 26
-      },
-      "keyboard": {
-        "stops": 39,
-        "missingFocus": [],
-        "sawFrame": false,
-        "leftFrame": false,
-        "frameTrap": false,
-        "maxFrameTabs": 0,
-        "steps": 39,
         "first": "a|Skip to content"
       },
       "consoleErrors": [],

@@ -2,12 +2,18 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { liveSamples } from '../../../data/training.js';
 
-// One sample viewer. Same idiom as the course chapter page: slim bar, the
-// interactive filling the viewport in an iframe, prev/next underneath. The
-// difference is the escape hatch. The business brief names an embedded
-// sample viewer as the most likely keyboard trap on the whole section, so
-// there is a skip link immediately before the frame and a plain sentence
-// telling keyboard and screen reader users what the frame will do.
+// One sample viewer. The interactive fills the viewport in an iframe. Above
+// it, a strip walks the collection (previous, position, next) with no arrow
+// glyphs anywhere, by the owner's rule. Over it, on arrival, a dialog frames
+// the piece (what it is, what it demonstrates, the technique, the
+// accessibility standard, how it was built) with one button that drops the
+// frame away and puts the reader in front of the course. That replaced a
+// long "About this sample" section under the frame (Alex, 2026-09-04).
+//
+// The business brief names an embedded sample viewer as the most likely
+// keyboard trap on the whole section, so there is a skip link immediately
+// before the frame and a plain sentence telling keyboard and screen reader
+// users what the frame will do.
 //
 // getStaticPaths runs over liveSamples only. A 'planned' or 'audit' entry
 // has no page here, by design, and never gets one by accident.
@@ -25,14 +31,16 @@ const index = liveSamples.findIndex((s) => s.slug === sample.slug);
 const prev = index > 0 ? liveSamples[index - 1] : null;
 const next = index >= 0 && index + 1 < liveSamples.length ? liveSamples[index + 1] : null;
 const hasSiblings = liveSamples.length > 1;
+const position = index + 1;
+const total = liveSamples.length;
 
 const frame = [
-  { term: 'What it is', detail: sample.what },
   { term: 'What it demonstrates', detail: sample.demonstrates },
   { term: 'Technique', detail: sample.technique },
   { term: 'Accessibility', detail: sample.accessibility },
   { term: 'Built with', detail: sample.built },
 ];
+const meta = sample.kind + ' · ' + sample.vertical + ' · About ' + sample.minutes + ' minutes';
 
 const breadcrumb = {
   '@context': 'https://schema.org',
@@ -85,18 +93,57 @@ const workSchema = {
         <span class="text-accent" aria-hidden="true">&middot;</span>
         {sample.title}
       </p>
-      <a
-        href={sample.dir}
-        target="_blank"
-        rel="noopener"
-        class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot"
-      >
-        Open in a new tab<span class="sr-only"> (opens in a new tab)</span>
-      </a>
+      <button type="button" class="sv-about font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot" data-intro-open hidden>
+        About this sample
+      </button>
     </div>
 
-    <h1 class="font-display text-3xl leading-tight md:text-5xl">{sample.title}</h1>
+    <h1 id="sample-title" tabindex="-1" class="font-display text-3xl leading-tight md:text-5xl">{sample.title}</h1>
     <p class="mt-4 max-w-3xl text-lg leading-relaxed text-muted">{sample.what}</p>
+
+    <!-- With scripting off the framing dialog never opens, so the same frame
+         renders here in the flow instead. -->
+    <noscript>
+      <dl class="mt-8 grid max-w-4xl gap-x-10 gap-y-5 md:grid-cols-[13rem_1fr]">
+        {frame.map((row) => (
+          <>
+            <dt class="font-mono text-xs uppercase tracking-[0.22em] text-accent md:pt-1">{row.term}</dt>
+            <dd class="m-0 leading-relaxed text-muted">{row.detail}</dd>
+          </>
+        ))}
+      </dl>
+    </noscript>
+
+    {hasSiblings && (
+      <nav aria-label="Other samples" class="sv-nav mt-10">
+        {prev ? (
+          <a href={'/training/samples/' + prev.slug + '/'} class="sv-nav-link sv-nav-prev">
+            <span class="sv-nav-kicker">Previous sample</span>
+            <span class="sv-nav-title">{prev.title}</span>
+          </a>
+        ) : (
+          <span class="sv-nav-link sv-nav-prev sv-nav-empty" aria-hidden="true">
+            <span class="sv-nav-kicker">Previous sample</span>
+            <span class="sv-nav-title">This is the first</span>
+          </span>
+        )}
+        <div class="sv-nav-mid">
+          <span class="sv-nav-kicker">Sample {position} of {total}</span>
+          <a href="/training/samples/" class="sv-nav-all">All samples</a>
+        </div>
+        {next ? (
+          <a href={'/training/samples/' + next.slug + '/'} class="sv-nav-link sv-nav-next">
+            <span class="sv-nav-kicker">Next sample</span>
+            <span class="sv-nav-title">{next.title}</span>
+          </a>
+        ) : (
+          <span class="sv-nav-link sv-nav-next sv-nav-empty" aria-hidden="true">
+            <span class="sv-nav-kicker">Next sample</span>
+            <span class="sv-nav-title">This is the last</span>
+          </span>
+        )}
+      </nav>
+    )}
 
     <p class="mt-8 max-w-3xl text-sm leading-relaxed text-muted">
       The sample runs inside a frame. Tab moves through it; when you reach the
@@ -114,6 +161,7 @@ const workSchema = {
 
     <div class="mt-6">
       <iframe
+        id="sample-frame"
         src={sample.dir}
         title={'Interactive sample: ' + sample.title}
         class="glow-frame tr-frame w-full"
@@ -128,7 +176,7 @@ const workSchema = {
          presses Finish inside it. This note answers it from the page side:
          a polite live region, so the completion is announced without taking
          focus away from the sample's own completion dialog. -->
-    <div id="sample-done" hidden class="mt-6 glow-frame flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between md:p-8" role="status" aria-live="polite">
+    <div id="sample-done" data-sample-slug={sample.slug} hidden class="mt-6 glow-frame flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between md:p-8" role="status" aria-live="polite">
       <div>
         <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">Sample complete</p>
         <p class="mt-2 font-heading text-lg font-semibold">You finished {sample.title}.</p>
@@ -144,35 +192,6 @@ const workSchema = {
       </div>
     </div>
   </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-4xl">About this sample</h2>
-    <dl class="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-[14rem_1fr]">
-      {frame.map((row) => (
-        <>
-          <dt class="font-mono text-xs uppercase tracking-[0.22em] text-accent md:pt-1">{row.term}</dt>
-          <dd class="m-0 leading-relaxed text-muted">{row.detail}</dd>
-        </>
-      ))}
-    </dl>
-  </section>
-
-  {hasSiblings && (
-    <nav aria-label="Other samples" class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-12">
-      <div class="flex flex-wrap items-center justify-between gap-6">
-        {prev ? (
-          <a href={'/training/samples/' + prev.slug + '/'} class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">
-            <span aria-hidden="true">&larr;</span> {prev.title}
-          </a>
-        ) : <span></span>}
-        {next ? (
-          <a href={'/training/samples/' + next.slug + '/'} class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">
-            {next.title} <span aria-hidden="true">&rarr;</span>
-          </a>
-        ) : <span></span>}
-      </div>
-    </nav>
-  )}
 
   <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
     <div class="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
@@ -194,18 +213,101 @@ const workSchema = {
       </div>
     </div>
   </section>
+
+  <!-- The frame. Opens as a modal on arrival (script), closed in the markup
+       so scripting-off readers get the noscript list above instead. -->
+  <dialog id="sample-intro" class="sv-intro" aria-labelledby="sample-intro-title">
+    <div class="sv-intro-card tr-frame">
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{meta}</p>
+      <h2 id="sample-intro-title" tabindex="-1" class="mt-4 font-display text-3xl leading-tight md:text-4xl">{sample.title}</h2>
+      <p class="mt-4 text-lg leading-relaxed text-ink">{sample.what}</p>
+      <dl class="sv-intro-frame mt-7">
+        {frame.map((row) => (
+          <div class="sv-intro-row">
+            <dt class="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-accent">{row.term}</dt>
+            <dd class="m-0 mt-1 text-sm leading-relaxed text-muted">{row.detail}</dd>
+          </div>
+        ))}
+      </dl>
+      <div class="sv-intro-actions mt-8 flex flex-wrap items-center gap-6">
+        <button type="button" class="btn-draw" data-intro-close autofocus>View the course</button>
+        <a href={sample.dir} target="_blank" rel="noopener" class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">
+          Open in a new tab<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+  </dialog>
 </BaseLayout>
 
-<script define:vars={{ slug: sample.slug }}>
-  // Listen for the sample's completion message. Origin is the same site,
-  // but the check is on the message shape and slug, never on trusting the
-  // payload for anything beyond showing the note.
-  window.addEventListener('message', (e) => {
-    const d = e && e.data;
-    if (!d || d.type !== 'ka-sample-complete' || d.slug !== slug) return;
-    const note = document.getElementById('sample-done');
-    if (note) note.hidden = false;
-  });
+<script>
+  // Two jobs, both re-run on every client-side navigation with a bound
+  // guard on the element so a DOM is never wired twice.
+  //
+  // 1. The framing dialog opens on arrival and drops away on "View the
+  //    course": a short slide-and-fade, then close, then focus lands on the
+  //    frame itself so the next Tab goes into the course. Escape does the
+  //    same. Under reduced motion it closes at once. The "About this sample"
+  //    button in the header reopens it.
+  // 2. The sample posts one ka-sample-complete message when the learner
+  //    presses Finish. One window listener, registered once, matched on the
+  //    slug the page carries, shows the completion note.
+  const initViewer = () => {
+    const intro = document.getElementById('sample-intro') as HTMLDialogElement | null;
+    if (!intro || intro.dataset.bound) return;
+    intro.dataset.bound = '1';
+    if (typeof intro.showModal !== 'function') return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const frame = document.getElementById('sample-frame') as HTMLIFrameElement | null;
+    const title = document.getElementById('sample-intro-title') as HTMLElement | null;
+    const about = document.querySelector<HTMLButtonElement>('[data-intro-open]');
+    const lock = (on: boolean) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
+
+    const open = () => {
+      intro.classList.remove('is-leaving');
+      intro.showModal();
+      lock(true);
+      title?.focus();
+    };
+    const leave = () => {
+      if (!intro.open || intro.classList.contains('is-leaving')) return;
+      const finish = () => {
+        intro.classList.remove('is-leaving');
+        intro.close();
+      };
+      if (reduced) finish();
+      else {
+        intro.classList.add('is-leaving');
+        window.setTimeout(finish, 460);
+      }
+    };
+
+    intro.addEventListener('close', () => {
+      lock(false);
+      // Land on the frame so Tab goes into the course, not back to the top.
+      frame?.focus();
+    });
+    intro.addEventListener('cancel', (e) => { e.preventDefault(); leave(); });
+    intro.querySelector('[data-intro-close]')?.addEventListener('click', leave);
+    intro.addEventListener('click', (e) => { if (e.target === intro) leave(); });
+    if (about) {
+      about.hidden = false;
+      about.addEventListener('click', open);
+    }
+    open();
+  };
+  initViewer();
+  document.addEventListener('astro:page-load', initViewer);
+
+  if (!(window as any).__kaSampleListener) {
+    (window as any).__kaSampleListener = true;
+    window.addEventListener('message', (e) => {
+      const d = e && e.data;
+      const note = document.getElementById('sample-done');
+      if (!note || !d || d.type !== 'ka-sample-complete' || d.slug !== note.dataset.sampleSlug) return;
+      note.hidden = false;
+    });
+  }
 </script>
 
 <style>
@@ -231,9 +333,154 @@ const workSchema = {
   .tr-skip:focus {
     transform: translateY(0);
   }
-  @media (prefers-reduced-motion: reduce) {
-    .tr-skip {
-      transition: none;
+
+  /* The collection strip above the frame. Three cells on a hairline rule;
+     the outer two are block links with a kicker and the neighbour's title,
+     and on hover a rule draws under the title from the reading edge. No
+     arrows: the words "Previous" and "Next" do that job. */
+  .sv-nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+    border-top: 1px solid color-mix(in oklab, var(--color-ink) 14%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--color-ink) 14%, transparent);
+  }
+  .sv-nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.15rem 0;
+    min-width: 0;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .sv-nav-next { text-align: right; align-items: flex-end; }
+  .sv-nav-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .sv-nav-title {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    padding-bottom: 0.2rem;
+    transition: color var(--dur-fast) ease;
+  }
+  .sv-nav-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .sv-nav-next .sv-nav-title::after { transform-origin: right; }
+  .sv-nav-link:hover .sv-nav-title,
+  .sv-nav-link:focus-visible .sv-nav-title { color: var(--color-accent); }
+  .sv-nav-link:hover .sv-nav-title::after,
+  .sv-nav-link:focus-visible .sv-nav-title::after { transform: scaleX(1); }
+  .sv-nav-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .sv-nav-empty { color: var(--color-muted); }
+  .sv-nav-empty .sv-nav-title { font-weight: 500; }
+  .sv-nav-mid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 1.15rem 2rem;
+    border-left: 1px solid color-mix(in oklab, var(--color-ink) 10%, transparent);
+    border-right: 1px solid color-mix(in oklab, var(--color-ink) 10%, transparent);
+  }
+  .sv-nav-all {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--dur-fast) ease;
+  }
+  .sv-nav-all:hover, .sv-nav-all:focus-visible { text-decoration-color: currentColor; }
+  @media (max-width: 47.99rem) {
+    .sv-nav { grid-template-columns: 1fr 1fr; }
+    .sv-nav-mid { grid-column: 1 / -1; grid-row: 1; border: 0; padding: 0.9rem 0 0.2rem; }
+  }
+
+  /* The framing dialog. A warm blurred backdrop, the card in the section's
+     own frame, and a drop-away: it slides down and fades while the backdrop
+     clears, then the dialog closes. Painted explicitly, never transparent. */
+  .sv-intro {
+    width: min(44rem, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    margin: auto; /* preflight zeroes dialog margins; this restores centring */
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  /* The heading takes focus on open so the dialog is announced from its
+     title; it is not a control, so it draws no ring. */
+  #sample-intro-title:focus { outline: none; }
+  .sv-intro::backdrop {
+    background: rgb(34 28 21 / 0.48);
+    backdrop-filter: blur(6px);
+  }
+  .sv-intro-card {
+    background: var(--color-surface, #FFFDF9);
+    color: var(--color-ink);
+    padding: 2.25rem 2.5rem 2.5rem;
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    box-shadow: 0 40px 80px -30px rgb(34 28 21 / 0.55);
+  }
+  .sv-intro-frame {
+    display: grid;
+    gap: 1.1rem 2.5rem;
+    margin: 1.75rem 0 0;
+  }
+  @media (min-width: 40rem) {
+    .sv-intro-frame { grid-template-columns: 1fr 1fr; }
+    .sv-intro-row:first-child { grid-column: 1 / -1; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sv-intro[open] { animation: sv-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .sv-intro[open]::backdrop { animation: sv-fade-in 0.4s ease both; }
+    .sv-intro.is-leaving { animation: sv-out 0.45s cubic-bezier(0.55, 0, 0.75, 0.2) both; }
+    .sv-intro.is-leaving::backdrop { animation: sv-fade-out 0.45s ease both; }
+  }
+  @keyframes sv-in { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: none; } }
+  @keyframes sv-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(40px); } }
+  @keyframes sv-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes sv-fade-out { from { opacity: 1; } to { opacity: 0; } }
+  @media (max-width: 40rem) {
+    .sv-intro-card { padding: 1.6rem 1.35rem 0; }
+    /* On a phone the card scrolls; the way out stays pinned to its foot. */
+    .sv-intro-actions {
+      position: sticky;
+      bottom: 0;
+      margin-top: 1.5rem;
+      padding: 1rem 0 1.25rem;
+      background: linear-gradient(to top, var(--color-surface, #FFFDF9) 78%, transparent);
     }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tr-skip, .sv-nav-title, .sv-nav-title::after, .sv-nav-all { transition: none; }
   }
 </style>
