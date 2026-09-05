@@ -101,7 +101,7 @@ Hook first line slams on frame 0. "fix" is the stretch beat.
 
 ## Tutorial 2: hero
 
-The weak example is a fictional bakery, Riverside Bakery, consistent with the fictional bakery in the training P&L sample. It is labelled "example" on screen. The good examples are three cleared client sites: Fore Motion Golf, Project Makeover, Southern Legacy Contractors. Their headlines are read from the live pages by the executor at build time (Playwright text of the first h1) and written into the content file as fixed strings with the date and URL noted; they are never paraphrased or invented. If a live headline does not fit the claim (it does not say what the visitor gets), the executor swaps in another cleared site and notes why.
+The weak example is a fictional bakery, Riverside Bakery, consistent with the fictional bakery in the training P&L sample. It is labelled "example" on screen. The good examples are three cleared client sites whose live hero copy states what the visitor gets, checked against the live pages on 2026-09-04: PB&J Strategic Accounting (pbjsa.com, "Strategic Accounting & Bookkeeping for Growing Businesses"), MBS Medicine (mbsdoc.com, "Healthcare that treats the whole person", subhead "One consistent provider. No insurance required. Same-week appointments across Florida"), and Southern Legacy Contractors (southernlegacycontractors.com, "Poured today. Standing for generations.", subhead naming residential, commercial and industrial concrete across Northeast Florida). Fore Motion Golf and Project Makeover were checked and rejected: their heroes are mood and mission lines, not promises. The reel shows the existing mobile home captures held on the hero; those three stills were confirmed to match the live copy on 2026-09-04. Headlines are never paraphrased on screen; the capture shows them as they are.
 
 ### 15 second script (Facebook)
 
@@ -122,7 +122,7 @@ The weak example is a fictional bakery, Riverside Bakery, consistent with the fi
 | hook | Your hero is a promise, not a photo. | As above |
 | fold | The first screen decides whether anyone scrolls. On a phone that is about six hundred pixels. A photo and a logo spend it on nothing. | Phone frame, the Riverside example, a thin rule marking the fold with a small caps "the fold" label |
 | rewrite | Take a weak line. Welcome to our website. Rewrite it: who it is for, what they get, why you. | The headline retypes in three passes, one per clause, each pass a fuller line, landing on the sourdough line |
-| real | Three real ones. Fore Motion, Project Makeover, Southern Legacy. Each tells you what you get before you scroll. | Three phones, each held about three seconds on its hero, name under each |
+| real | Three real ones. P B and J Accounting, M B S Medicine, Southern Legacy. Each tells you what you get before you scroll. | Three phones, each held about three seconds on its hero, name under each |
 | rule | Write the promise. Then pick the photo. | Kinetic line on teal |
 | cta | K and A Performance. Web design and AI integration, built in Gainesville. | The drawn end card |
 
