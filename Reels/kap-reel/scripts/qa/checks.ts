@@ -29,6 +29,7 @@ import {
   countNear,
   countNonBackground,
   dominantColour,
+  enclosedHoles,
   findFlatBlock,
   inkBox,
   inkCoverage,
@@ -125,6 +126,35 @@ export const DEAD_RING_FRACTION = 0.95;
 export const DEAD_RING_MIN_EDGES = 3;
 /** Check (e). Fraction of the frame that has to differ from the background. */
 export const MIN_INK_COVERAGE = 0.002;
+/**
+ * Check (e), the two end card frames the shot list tags `drawInProgress`.
+ * Floor on ink coverage for a frame that is a line being drawn. See
+ * checkBlankFrame() for why these frames are read by a different rule and why
+ * that is a refinement rather than a loosening.
+ */
+export const DRAW_MIN_INK_COVERAGE = 0.0004;
+/**
+ * Check (e), drawInProgress. The height band the mouse's own hole has to fall
+ * in, in pixels at 1080 canvas width, scaled by typeScale like every other
+ * authored number in this project.
+ *
+ * Measured on the 24 card frames of the restored draw build, hole height
+ * divided by typeScale: 72 in the two vertical crops, 79 in feed, square and
+ * both LinkedIn feeds, 77 in the training square, 52.3 in ReelLandscape and
+ * 42.2 in the three other landscape cards. The smallest of those sits 41
+ * percent above the floor and the largest 28 percent under the ceiling, which
+ * is room for a re-sized card and not room for a different object.
+ */
+export const MOUSE_MIN_HEIGHT_PX = 30;
+export const MOUSE_MAX_HEIGHT_PX = 110;
+/**
+ * Check (e), drawInProgress. Width over height of that hole. The mouse body is
+ * 88 by 148 authored units, so its hole measures 0.56 on every frame of every
+ * composition; the scroll wheel's hole, the only other one on the card, is 0.25
+ * to 0.29 and is an order of magnitude shorter.
+ */
+export const MOUSE_RATIO_MIN = 0.35;
+export const MOUSE_RATIO_MAX = 0.85;
 /** Check (f). Pixels of each drawn lockup colour the end card must carry. */
 export const LOGO_MIN_PIXELS = 200;
 /** Check (f). Pixels of the retired gold crest that count as a blob. */
@@ -842,8 +872,133 @@ export function checkScreenFill(
   );
 }
 
+/**
+ * The mouse, found by the hole its body punches in the ink.
+ *
+ * The mouse is a rounded rectangle filled with the canvas colour and stroked in
+ * taupe, and the path it is dragging runs under it, so the ink component that
+ * contains the mouse also contains the drawn part of the browser frame: it
+ * measures 104 to 134 px wide and grows from 107 to 216 px tall across the two
+ * frames sampled. There is no blob of the mouse's size to find. The hole is the
+ * mouse and nothing else, it is the same size on both frames, and on a card
+ * that is bare canvas there is no hole at all.
+ */
+function findMouse(
+  raw: Raw,
+  background: RGB,
+  format: FormatKey,
+): { x: number; y: number; w: number; h: number; pixels: number } | null {
+  const scale = formatMetrics(format).typeScale;
+  const min = MOUSE_MIN_HEIGHT_PX * scale;
+  const max = MOUSE_MAX_HEIGHT_PX * scale;
+  // The same 30 inkCoverage() uses, so the hole is bounded by the pixels the
+  // coverage figure beside it counted as ink.
+  const holes = enclosedHoles(raw, background, 30, 200);
+  for (const hole of holes) {
+    if (hole.h < min || hole.h > max) continue;
+    const ratio = hole.w / hole.h;
+    if (ratio < MOUSE_RATIO_MIN || ratio > MOUSE_RATIO_MAX) continue;
+    return hole;
+  }
+  return null;
+}
+
+/**
+ * (e) drawInProgress: the two frames the end card opens on, which are a line
+ * being drawn rather than a picture.
+ *
+ * This is a rule refinement for a known animation, not a loosened threshold,
+ * and the distinction is the whole point of it. The 0.2 percent floor is right
+ * for every frame that is meant to be a finished picture and it stays exactly
+ * where it is on all of them. It was never a measurement of these two frames:
+ * the browser frame is a 5 unit stroke on a 1340 unit stage, about 2.7 canvas
+ * pixels at the card's box width, and the whole of it drawn, mouse included,
+ * covers 0.28 percent of the frame. A sixth of it cannot reach 0.2 percent and
+ * no honest opening of this draw ever will. Raising the card's start time until
+ * it did, which is what the 2026-09-05 build did, passed the check by deleting
+ * the animation the owner asked for.
+ *
+ * So these two frames are asserted against three conditions instead, and all
+ * three have to hold:
+ *
+ *   a. ink coverage of at least 0.04 percent. Measured 0.056 to 0.122 percent
+ *      on the first frame across the twelve compositions.
+ *   b. the mouse is on the card, found as the hole its body punches in the ink
+ *      at the mouse's own height and proportion. See findMouse().
+ *   c. the second frame carries strictly more ink than the first, which is what
+ *      says the line is being drawn rather than held.
+ *
+ * A bare canvas fails on all three. A pointer alone, which is what the
+ * 2026-09-04 build showed, fails (a) at 0.044 percent and fails (c). A card
+ * that opens on the finished lockup by mistake passes (a) and (b) and fails
+ * (c), because a frozen mark does not grow.
+ *
+ * (c) is a property of the pair, so the first frame is judged on (a) and (b)
+ * and the second carries the comparison. Both frames are sampled in --fast for
+ * that reason.
+ */
+function checkDrawInProgress(
+  raw: Raw,
+  shot: Shot,
+  background: RGB,
+  coverage: number,
+  previous: number | null,
+): Finding {
+  const inked = coverage >= DRAW_MIN_INK_COVERAGE;
+  const mouse = findMouse(raw, background, shot.format);
+  const second = shot.drawInProgress === 1;
+  const grew = second && previous !== null ? coverage > previous : null;
+  const pass = inked && mouse !== null && grew !== false;
+  const scale = formatMetrics(shot.format).typeScale;
+
+  const mouseText =
+    mouse === null
+      ? `no mouse: no hole in the ink between ${(MOUSE_MIN_HEIGHT_PX * scale).toFixed(0)} and ` +
+        `${(MOUSE_MAX_HEIGHT_PX * scale).toFixed(0)} px tall at ${MOUSE_RATIO_MIN} to ` +
+        `${MOUSE_RATIO_MAX} wide over tall`
+      : `mouse ${mouse.w}x${mouse.h} at ${mouse.x},${mouse.y}, ` +
+        `${(mouse.w / mouse.h).toFixed(2)} wide over tall`;
+  const growthText =
+    grew === null
+      ? second
+        ? "; the first card frame was not measured, so the growth test did not run"
+        : "; the growth test is carried by the second card frame"
+      : `; ink ${grew ? "grew" : "did not grow"} from ` +
+        `${((previous ?? 0) * 100).toFixed(3)} percent on the first card frame`;
+
+  return finding(
+    shot,
+    "e",
+    pass ? "PASS" : "FAIL",
+    `end card frame ${(shot.drawInProgress ?? 0) + 1} of the draw: ink coverage ` +
+      `${(coverage * 100).toFixed(3)} percent against background rgb(${background.join(", ")}), ` +
+      `floor ${(DRAW_MIN_INK_COVERAGE * 100).toFixed(2)} percent for a frame that is a line ` +
+      `being drawn; ${mouseText}${growthText}`,
+    {
+      drawInProgress: shot.drawInProgress ?? 0,
+      coverage: Number(coverage.toFixed(5)),
+      floor: DRAW_MIN_INK_COVERAGE,
+      previousCoverage: previous === null ? null : Number(previous.toFixed(5)),
+      grew,
+      mouseFound: mouse !== null,
+      mouseWidth: mouse?.w ?? null,
+      mouseHeight: mouse?.h ?? null,
+      mouseRatio: mouse === null ? null : Number((mouse.w / mouse.h).toFixed(2)),
+      mouseMinHeightPx: Number((MOUSE_MIN_HEIGHT_PX * scale).toFixed(1)),
+      mouseMaxHeightPx: Number((MOUSE_MAX_HEIGHT_PX * scale).toFixed(1)),
+      backgroundR: background[0],
+      backgroundG: background[1],
+      backgroundB: background[2],
+    },
+  );
+}
+
 /** (e) Blank frames: ink coverage against the frame's own dominant colour. */
-export function checkBlankFrame(raw: Raw, shot: Shot): Finding {
+export function checkBlankFrame(
+  raw: Raw,
+  shot: Shot,
+  previous: number | null = null,
+): Finding {
   const background = dominantColour(raw);
   const coverage = inkCoverage(raw, background, 30);
   if (shot.intentionalBlank) {
@@ -854,6 +1009,9 @@ export function checkBlankFrame(raw: Raw, shot: Shot): Finding {
       `marked as an intentional blank, coverage ${(coverage * 100).toFixed(3)} percent`,
       { coverage: Number(coverage.toFixed(5)) },
     );
+  }
+  if (shot.drawInProgress !== undefined) {
+    return checkDrawInProgress(raw, shot, background, coverage, previous);
   }
   const pass = coverage >= MIN_INK_COVERAGE;
   return finding(
@@ -951,7 +1109,17 @@ export type FrameChecks = {
   device: DeviceMeasurement | null;
 };
 
-export function runFrameChecks(raw: Raw, shot: Shot): FrameChecks {
+/**
+ * `previousCoverage` is the ink coverage of the frame before this one, and only
+ * the end card's second opening frame uses it: check (e) reads that pair under
+ * the drawInProgress rule, whose third condition is that the line grew. Null
+ * everywhere else.
+ */
+export function runFrameChecks(
+  raw: Raw,
+  shot: Shot,
+  previousCoverage: number | null = null,
+): FrameChecks {
   const copy = measureCopy(raw, shot);
   const device = shot.device ? measureDevice(raw, shot) : null;
   const findings: Finding[] = [
@@ -959,7 +1127,7 @@ export function runFrameChecks(raw: Raw, shot: Shot): FrameChecks {
     checkSafeZones(raw, shot, copy),
     checkDeviceGeometry(shot, device),
     checkScreenFill(raw, shot, device, copy),
-    checkBlankFrame(raw, shot),
+    checkBlankFrame(raw, shot, previousCoverage),
     checkLogo(raw, shot),
   ];
   return { findings, copy, device };

@@ -30,7 +30,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { noise2D } from "@remotion/noise";
 import sharp from "sharp";
-import { fillRegion, isFullFrame } from "../src/lib/content-fill";
+import { coverRegion, fillRegion, isFullFrame } from "../src/lib/content-fill";
 import { clipBackgroundColor } from "./capture";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -504,12 +504,13 @@ async function measureRing(
     h: capture.height,
   };
   const filled = !isFullFrame(box, capture.width, capture.height);
+  // Both branches are a region of the capture scaled to the layer's width, so
+  // the trace back is one line either way. coverRegion() carries the anchoring
+  // PlateComposite renders with, including the centred crop on a phone capture.
   const region = filled
     ? fillRegion(box, capture.width, capture.height, size.width / size.height)
-    : { x: 0, y: 0, w: capture.width, h: capture.height };
-  const k = filled
-    ? size.width / region.w
-    : Math.max(size.width / capture.width, size.height / capture.height);
+    : coverRegion(capture.width, capture.height, size.width / size.height);
+  const k = size.width / region.w;
 
   let sampled = 0;
   let backdrop = 0;

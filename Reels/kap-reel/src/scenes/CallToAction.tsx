@@ -43,26 +43,28 @@ export type CallToActionProps = {
  * project beat eight frames. The draw takes 66 of them, a hair under the 72
  * floor and accepted by the owner because this end card is the one place in the
  * reel where the viewer is not being asked to read anything while it happens.
- * The contact block arrives at frame 44, two frames after the wordmark starts
- * at T 5.2, so the last thing the lockup does and the first thing the copy does
- * are the same gesture. Everything is on screen from 44; the last wordmark
- * glyph finishes its ease at 58 and nothing moves after that, so the card is
- * frozen for the final 20 frames. That is under CTA_HOLD_MIN_FRAMES and the
- * owner took the trade with the number in front of them.
+ * The wordmark's T 5.2 lands at relative 45.5, so its first glyph is on screen
+ * on frame 46 and the contact block arrives one frame later, at 47: the last
+ * thing the lockup does and the first thing the copy does are the same gesture.
+ * Everything is on screen from 47; the last wordmark glyph finishes its ease at
+ * 60 and nothing moves after that, so the card is frozen for the final 18
+ * frames. That is under CTA_HOLD_MIN_FRAMES and the owner took the trade with
+ * the number in front of them.
  *
  * 45 second cut. LINKEDIN_CALL_TO_ACTION is 124 frames and did not have to
- * change. The draw takes 84, the copy arrives at 55, and the finished card is
- * frozen from frame 74 to the end, which is 50 frames and clears the minimum.
+ * change. The draw takes 84, the wordmark starts on frame 58, the copy arrives
+ * at 59, and the finished card is frozen from frame 76 to the end, which is 48
+ * frames and clears the minimum.
  *
- * Both copy cues moved on 2026-09-05, with DRAW_START_T below. The wordmark
- * starts at relative 41.7 rather than 48.1 in the 15 second cut and at 53.0
- * rather than 61.3 in the 45 second one, which is more than the two frame
+ * Both copy cues moved again later on 2026-09-05, with DRAW_START_T below. The
+ * wordmark starts at relative 45.5 rather than 41.7 in the 15 second cut and at
+ * 57.9 rather than 53.0 in the 45 second one, which is more than the two frame
  * threshold at which the SRT tables have to be re-cut, so they were: the url
- * and the phone now begin at absolute 416 and 1281 in scripts/srt.ts.
+ * and the phone now begin at absolute 419 and 1285 in scripts/srt.ts.
  */
 const CTA_TIMING: Record<ReelCut, { drawFrames: number; copyIn: number }> = {
-  short: { drawFrames: 66, copyIn: 44 },
-  linkedin: { drawFrames: 84, copyIn: 55 },
+  short: { drawFrames: 66, copyIn: 47 },
+  linkedin: { drawFrames: 84, copyIn: 59 },
 };
 
 /**
@@ -70,43 +72,42 @@ const CTA_TIMING: Record<ReelCut, { drawFrames: number; copyIn: number }> = {
  *
  * Owner fix 2026-09-04 set this to 0.35, the T at which the mouse has finished
  * ramping in, so the first frame of the card was a pointer at the head of a
- * path that had drawn nothing. The QA harness then failed check (e) on both
- * card frames of all twelve compositions: ink coverage 0.044 to 0.096 percent
- * against a 0.2 percent floor. A pointer alone is not a frame with something on
- * it, and the check was right.
+ * path that had drawn nothing. The QA harness failed check (e) on both card
+ * frames of all twelve compositions: ink coverage 0.044 to 0.096 percent
+ * against a flat 0.2 percent floor.
  *
- * The value below was solved by measurement rather than by eye, because the
- * obvious answer does not work. Rendering the first twenty five frames of the
- * card in four compositions and measuring each one the way checkBlankFrame()
- * does gives coverage against the path's own progress:
+ * The first answer to that, earlier the same day, was to start the card at
+ * T 2.119, nine tenths of the way round the frame, which cleared the floor by
+ * measurement and cost the thing the owner asked for. The mouse dragging the
+ * browser frame into being is the opening gesture of the piece, and at 2.119 it
+ * has already happened off screen: the card cut in on a nearly finished
+ * rectangle.
  *
- *   prog   0.00   0.13   0.26   0.45   0.67   0.82   0.92   1.00
- *   1080x1920  .048  .057  .085  .151  .199  .232  .255  .273 percent
- *   1920x1080  .045  .055  .083  .156  .205  .238  .264  .278 percent
+ * Owner decision 2026-09-05, later the same day: the draw comes back. The card
+ * opens where the path is one sixth drawn, which is easeInOutCubic(p) = 0.16,
+ * so p = 0.04^(1/3) = 0.34200, and the draw runs from T 0.35 to T 2.85, giving
+ * T = 0.35 + 2.5 p = 1.205. mouseIn ramps over T 0 to 0.35, so the pointer is
+ * fully in on frame 0 and it opens on a cursor with a short segment of line
+ * behind it. The sweep up the left edge, along the top, the three window dots
+ * popping and the drop down the right are all in the cut again.
  *
- * One sixth drawn, which is the intuitive answer, measures about 0.055 percent
- * and fails by a factor of four. The reason is that the browser frame is a five
- * unit stroke on a 1340 unit stage, about 2.7 canvas pixels at this box width,
- * and the whole of it fully drawn is only 0.28 percent of the frame. All the
- * ink in this card is in the letters, and they do not start until T 3.
+ * That frame is not a blank one, but it is under the 0.2 percent floor, and it
+ * always was: the browser frame is a five unit stroke on a 1340 unit stage,
+ * about 2.7 canvas pixels at this box width, and the whole of it fully drawn,
+ * mouse included, covers only 0.28 percent of the frame. All the ink on this
+ * card is in the letters and they do not start until T 3. The floor is not the
+ * wrong number for a finished picture; it is the wrong test for two frames of a
+ * line being drawn, and check (e) now says so per frame rather than being
+ * loosened. See checkBlankFrame() in scripts/qa/checks.ts and the QA section of
+ * the README.
  *
- * So the card opens with the frame drawn nine tenths of the way round. Solving
- * easeInOutCubic(p) = 0.90 gives p = 0.70760, and the draw runs from T 0.35 to
- * T 2.85, so T = 0.35 + 2.5 p = 2.119. Frame 0 measures 0.251 to 0.262 percent
- * across the twelve compositions, a quarter over the floor, and frame 1 is
- * higher again.
- *
- * What is lost is the sweep along the bottom and the left and the three window
- * dots popping, which now happen before the cut. What is kept, and what the
- * viewer actually reads, is the whole letter choreography: K and A landing, the
- * ampersand scaling in, PERFORMANCE typing on. That gets more time than it used
- * to, not less. The remaining 4.881 seconds compress into the same 66 and 84
- * frames, so the piece runs at 2.2x rather than 3.0x and every gesture in it is
- * a third slower.
- *
- * The cost is that the copy cue had to move: see CTA_TIMING above.
+ * The cost is that the copy cue had to move again: see CTA_TIMING above. The
+ * remaining 5.795 seconds compress into the same 66 and 84 frames, so the piece
+ * runs at 2.6x rather than 2.2x and every gesture in it is a fifth quicker than
+ * it was at T 2.119, which is the price of putting the sweep back inside a beat
+ * whose length the owner has already fixed.
  */
-const DRAW_START_T = 2.119;
+const DRAW_START_T = 1.205;
 
 /**
  * Rendered width of the logo box at 1080 canvas width, and the box's aspect.

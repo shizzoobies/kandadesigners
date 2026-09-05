@@ -279,6 +279,15 @@ async function main(): Promise<void> {
   const cache = new RawCache(8);
   const byKey = new Map(shots.map((s) => [s.key, s]));
 
+  /**
+   * Ink coverage of each composition's first end card frame, so the second one
+   * can be measured against it. Check (e) reads that pair under the
+   * drawInProgress rule and its third condition is that the line grew. The
+   * shots are measured in frame order within a composition, so the first frame
+   * is always in this map before the second one asks for it.
+   */
+  const cardCoverage = new Map<string, number>();
+
   let measured = 0;
   for (const shot of shots) {
     const file = stillPath(shot);
@@ -296,7 +305,17 @@ async function main(): Promise<void> {
       continue;
     }
     const raw = await cache.get(file);
-    findings.push(...runFrameChecks(raw, shot).findings);
+    const frameFindings = runFrameChecks(
+      raw,
+      shot,
+      shot.drawInProgress === 1 ? (cardCoverage.get(shot.composition) ?? null) : null,
+    ).findings;
+    if (shot.drawInProgress === 0) {
+      const blank = frameFindings.find((f) => f.check === "e");
+      const coverage = blank?.metrics.coverage;
+      if (typeof coverage === "number") cardCoverage.set(shot.composition, coverage);
+    }
+    findings.push(...frameFindings);
     measured += 1;
     if (measured % 25 === 0) {
       process.stdout.write(`  measuring ${measured}/${shots.length}\r`);

@@ -26,7 +26,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { captureSrc, getCapture } from "../lib/captures";
-import { fillRegion, isFullFrame } from "../lib/content-fill";
+import { fillRegion, isFullFrame, isPortraitCapture } from "../lib/content-fill";
 import {
   captureTint,
   getPlate,
@@ -88,18 +88,36 @@ const SEAT_COLOR = "rgba(6, 5, 4, 0.44)";
  * Where the capture sits when its aspect does not match the screen quad's, for
  * a capture that fills its own frame.
  *
- * Cover has to crop one axis, and centring that crop is wrong for a web page.
- * plate-tablet-b is the worst case in the set: a 4:3 tablet screen against a
- * 16:10 desktop capture crops about a quarter of the width, and centred that
- * cut the first letters off every headline. A page is laid out from its top
- * left, so anchoring there keeps the logo, the nav and the headline and takes
- * the loss out of the right margin instead.
+ * Cover has to crop one axis, and which end of that axis to give up depends on
+ * how the page underneath is laid out. Both of these are the objectPosition on
+ * a cover crop, so the axis that already fits is unaffected either way.
  *
- * This is still every clip in the web reel and every mobile clip in the
- * training reel. A capture whose page does not fill its frame takes the branch
- * below instead: see fillRegion() in src/lib/content-fill.ts.
+ * A desktop page is laid out from its top left, so it anchors there.
+ * plate-tablet-b is the worst case in the set: a 4:3 tablet screen against a
+ * 16:10 desktop capture crops about a quarter of the width, and centring that
+ * cut the first letters off every headline, where anchoring left keeps the
+ * logo, the nav and the headline and takes the loss out of the right margin.
+ *
+ * A phone page is not laid out that way, and owner fix 2026-09-05 is that the
+ * mobile crops come off both sides instead. The four phone quads are narrower
+ * than the 780x1688 mobile captures, so cover crops the width: 15.3 percent on
+ * t-phone-hands, 7.4 on t-phone-hands-b, 6.3 on plate-phone-hands and 1.7 on
+ * plate-phone-hands-b. Anchored left that came off the right edge in one piece,
+ * and a mobile layout is a centred column with its buttons and its right hand
+ * chrome on that edge, so the worst of them lost a button. Centred, each side
+ * gives up half, the page reads on its own axis, and nothing is cut in half
+ * that was not already close to the edge.
+ *
+ * Portrait or landscape is the whole test, because in this project a portrait
+ * capture is a phone capture: every mobile clip is 780x1688 and every desktop
+ * one is 2880x1800 or 980x628.
+ *
+ * A capture whose page does not fill its frame takes neither branch: see
+ * fillRegion() in src/lib/content-fill.ts. That is the five safety desktop
+ * clips, which fill from their content box and are untouched by this.
  */
 const CAPTURE_ANCHOR = "left top";
+const MOBILE_CAPTURE_ANCHOR = "center top";
 
 /**
  * Layer 4, the screen glow spill.
@@ -184,6 +202,14 @@ export const PlateComposite: React.FC<PlateCompositeProps> = ({
    * leaves the height alone, and the result is the wrong part of the capture at
    * the wrong scale rather than anything that looks like an error.
    */
+  // A phone page takes a symmetric crop, a desktop page keeps its top left.
+  // isPortraitCapture() is the same call scripts/composite-check.ts makes
+  // through coverRegion(), so the ring check traces back to the pixel this
+  // shows. See the note on CAPTURE_ANCHOR.
+  const anchor = isPortraitCapture(capture.width, capture.height)
+    ? MOBILE_CAPTURE_ANCHOR
+    : CAPTURE_ANCHOR;
+
   const box = capture.contentBox;
   const region =
     box && !isFullFrame(box, capture.width, capture.height)
@@ -253,7 +279,7 @@ export const PlateComposite: React.FC<PlateCompositeProps> = ({
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    objectPosition: CAPTURE_ANCHOR,
+                    objectPosition: anchor,
                   }
             }
           />

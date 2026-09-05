@@ -297,6 +297,43 @@ export function inkCoverage(raw: Raw, background: RGB, tol: number, step = 2): n
   return total === 0 ? 0 : ink / total;
 }
 
+/**
+ * Bounding boxes of the background regions the ink completely encloses.
+ *
+ * A connected component of background that does not reach the frame edge is a
+ * hole punched in the ink, which is a different thing from a dark shape and is
+ * measurable when the shape is not. The end card's mouse is the case this
+ * exists for: it is a rounded rectangle filled with the canvas colour and
+ * stroked in taupe, and its stroke runs continuously into the path it is
+ * dragging, so the ink component that contains the mouse also contains however
+ * much of the browser frame has been drawn and grows frame by frame. The hole
+ * does not. See checkBlankFrame().
+ *
+ * Regions are returned largest first, as maskRegions() orders them, and the
+ * outer background is filtered out by the bounding box test rather than by
+ * size: a component that reaches any edge of the frame is bounded by the frame
+ * and not by ink.
+ */
+export function enclosedHoles(
+  raw: Raw,
+  background: RGB,
+  tol: number,
+  minPixels = 200,
+): { x: number; y: number; w: number; h: number; pixels: number }[] {
+  const mask = new Array<boolean>(raw.width * raw.height);
+  for (let y = 0; y < raw.height; y += 1) {
+    for (let x = 0; x < raw.width; x += 1) {
+      mask[y * raw.width + x] = near(raw, x, y, background, tol);
+    }
+  }
+  return maskRegions(mask, raw.width, raw.height, minPixels)
+    .filter(
+      (r) =>
+        r.x > 0 && r.y > 0 && r.x + r.w < raw.width && r.y + r.h < raw.height,
+    )
+    .map((r) => ({ x: r.x, y: r.y, w: r.w, h: r.h, pixels: r.cells }));
+}
+
 /** Peak signal to noise ratio between two same sized frames, in decibels. */
 export function psnr(a: Raw, b: Raw): number {
   if (a.width !== b.width || a.height !== b.height) {

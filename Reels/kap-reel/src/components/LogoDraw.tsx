@@ -155,14 +155,15 @@ export type LogoDrawProps = {
    * In a video the cut from the previous beat lands on that frame, and an empty
    * canvas is what the viewer sees.
    *
-   * How much of the piece a caller has to skip to put real ink on frame 0 is a
-   * measurement rather than a judgement, and it is a bigger number than it
-   * looks. The whole browser frame is a 5 unit stroke on a 1340 unit stage: at
-   * the end card's box width it is a 2.7 canvas pixel line, and even fully
-   * drawn, with the mouse, it covers only 0.28 percent of a 1080x1920 frame.
-   * The letters are where the ink is, and they do not start until T 3. See
-   * DRAW_START_T in src/scenes/CallToAction.tsx for the measured curve and for
-   * the value the end card settled on.
+   * How much ink a given startT puts on frame 0 is a measurement rather than a
+   * judgement, and it is a smaller number than it looks. The whole browser
+   * frame is a 5 unit stroke on a 1340 unit stage: at the end card's box width
+   * it is a 2.7 canvas pixel line, and even fully drawn, with the mouse, it
+   * covers only 0.28 percent of a 1080x1920 frame. The letters are where the
+   * ink is, and they do not start until T 3. So a caller that wants the drawing
+   * itself in shot cannot also want a dense opening frame, and the end card
+   * wants the drawing: see DRAW_START_T in src/scenes/CallToAction.tsx for the
+   * measured curve and for the value it settled on.
    */
   startT?: number;
   /**

@@ -70,12 +70,13 @@ const WHIP_FRAMES = 6;
  * The end card's draw length and the frame its copy arrives on, per cut.
  * Private const CTA_TIMING in src/scenes/CallToAction.tsx, restated for the
  * same reason. If these drift the harness samples the wrong frames of the draw
- * and check (e) will say so, because a frame sampled before the mark exists
- * reads as blank.
+ * and the checks will say so: check (f) needs the logo colours down on the copy
+ * cue frame, and check (e) reads the card's first two frames under the
+ * drawInProgress rule, which expects a line that is still growing.
  */
 const CTA_TIMING: Record<ReelCut, { drawFrames: number; copyIn: number }> = {
-  short: { drawFrames: 66, copyIn: 44 },
-  linkedin: { drawFrames: 84, copyIn: 55 },
+  short: { drawFrames: 66, copyIn: 47 },
+  linkedin: { drawFrames: 84, copyIn: 59 },
 };
 
 export type ReelKey = "web" | "training";
@@ -197,6 +198,17 @@ export type Shot = {
   inTransit: boolean;
   /** Run the end card logo check on this frame. */
   logo: boolean;
+  /**
+   * Position of this frame in the pair the end card opens on, or undefined
+   * everywhere else. 0 is the card's first frame, 1 is its second.
+   *
+   * These two frames are the browser frame being drawn, and check (e) measures
+   * them by a different rule for that reason: see checkBlankFrame(). The pair
+   * has to be sampled in both modes, because the rule's third condition is that
+   * the second frame carries more ink than the first, and a rule that cannot
+   * take its measurement in --fast would have to SKIP there.
+   */
+  drawInProgress?: 0 | 1;
   /**
    * True where the shot list expects the frame to carry almost no ink. Nothing
    * in either reel is one, which is what makes check (e) worth running.
@@ -472,12 +484,14 @@ export function shotsFor(comp: CompositionSpec, mode: SampleMode): Shot[] {
   // Call to action: start, start plus 1, draw middle, copy in plus 1, end minus 1.
   const cta = beats.callToAction;
   const timing = CTA_TIMING[comp.cut];
-  push(cta.start, "cta", "start", "end card, first frame", { copySettled: false });
-  if (!fast) {
-    push(cta.start + 1, "cta", "start+1", "end card, second frame", {
-      copySettled: false,
-    });
-  }
+  push(cta.start, "cta", "start", "end card, first frame", {
+    copySettled: false,
+    drawInProgress: 0,
+  });
+  push(cta.start + 1, "cta", "start+1", "end card, second frame", {
+    copySettled: false,
+    drawInProgress: 1,
+  });
   if (!fast) {
     push(
       cta.start + Math.floor(timing.drawFrames / 2),

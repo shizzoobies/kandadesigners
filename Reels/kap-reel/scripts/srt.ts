@@ -30,8 +30,8 @@
  * and from 1290 to 1281.
  *
  * And once more later the same day, when the owner had the full draw put back
- * and the clock moved to T 1.205. The wordmark now starts at relative 45.5 rather
- * than 41.7 in the 15 second cut and 57.9 rather than 53.0 in the 45 second
+ * and the clock moved to T 1.205. The wordmark now starts at relative 45.5
+ * rather than 41.7 in the 15 second cut and 57.9 rather than 53.0 in the 45 second
  * one, and the copy arrives one frame after its first glyph is on screen, so
  * the cues move from 416 to 419 and from 1281 to 1285. Nothing else in any
  * table moved on either date.
@@ -117,8 +117,8 @@ export const CUE_ROWS_15S: CueRow[] = [
 
   // src/scenes/CallToAction.tsx. CALL_TO_ACTION 372 to 450, re-timed on
   // 2026-09-04 for the drawn lockup and re-cut twice since, most recently when
-  // DRAW_START_T moved to 1.205 to put the whole draw back in
-  // shot. The url and the phone both arrive at the beat's copy cue, now
+  // DRAW_START_T moved to 1.205 to put the whole draw back in shot. The url
+  // and the phone both arrive at the beat's copy cue, now
   // relative frame 47 rather than 44, because the wordmark's first glyph is on
   // screen on relative 46 rather than 42. The lockup is a mark, not a line, so
   // the draw itself gets no cue.
@@ -288,8 +288,8 @@ export const CUE_ROWS_TRAINING_15S: CueRow[] = [
   // src/scenes/CallToAction.tsx. CALL_TO_ACTION 372 to 450, re-timed on
   // 2026-09-04 for the drawn lockup and re-cut with DRAW_START_T on 2026-09-05
   // and again later the same day. The closing line, the url and the phone all
-  // arrive together at the beat's copy cue, now relative frame 47 rather than 44. The
-  // lockup is a mark, not a line, so the draw itself gets no cue.
+  // arrive together at the beat's copy cue, now relative frame 47 rather than
+  // 44. The lockup is a mark, not a line, so the draw itself gets no cue.
   { text: "Never the bottleneck.", start: 419, end: 450, source: "CallToAction.tsx" },
   { text: "ka-performancefl.com", start: 419, end: 450, source: "CallToAction.tsx" },
   { text: "904-210-1071", start: 419, end: 450, source: "CallToAction.tsx" },

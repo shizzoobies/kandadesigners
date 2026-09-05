@@ -140,6 +140,23 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-05 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 37.6s |
 | 2026-09-05 | sheets | `out/final/vertical-sheet.png`, `out/final-training/vertical-sheet.png` | 4x3 tile of 12 frames each, ffmpeg | 0.8s |
 | 2026-09-05 | **Both reels re-delivered, the three QA fixes** | **end card clock, plate crop cap, P&L playback** | **bundle + ten renders + two deliveries** | **407.9s (6m 48s)** |
+| 2026-09-05 | ring | `out/_fill/centred`, 13 composite stills | `npx tsx scripts/composite-check.ts ring`, 13 of 13 under 0.25 percent off page | 42.3s |
+| 2026-09-05 | QA | `out/qa/report.md`, 528 stills, 12 contact sheets, 13 plate crop sets | `npx tsx scripts/qa.ts --reel all`, 0 FAIL | 102.7s |
+| 2026-09-05 | bundle | `out/bundle` (restored draw, centred phone crop) | rspack bundle, public dir linked not copied | 2.3s |
+| 2026-09-05 | ReelVertical | `out/render-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 15.7 MB | 21.4s |
+| 2026-09-05 | ReelFeed | `out/render-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s, 8.9 MB | 18.9s |
+| 2026-09-05 | ReelSquare | `out/render-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s, 6.6 MB | 20.0s |
+| 2026-09-05 | ReelLinkedIn | `out/render-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s, 18.2 MB | 39.1s |
+| 2026-09-05 | ReelLinkedInLandscape | `out/render-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s, 18.5 MB | 50.1s |
+| 2026-09-05 | TrainingVertical | `out/render-training-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 6.8 MB | 21.1s |
+| 2026-09-05 | TrainingFeed | `out/render-training-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s, 6.0 MB | 18.9s |
+| 2026-09-05 | TrainingSquare | `out/render-training-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s, 5.2 MB | 18.2s |
+| 2026-09-05 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s, 17.1 MB | 52.7s |
+| 2026-09-05 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s, 10.2 MB | 61.1s |
+| 2026-09-05 | deliver web | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel web --variant a` | 39.3s |
+| 2026-09-05 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 36.8s |
+| 2026-09-05 | sheets | `out/final/vertical-sheet.png`, `out/final-training/vertical-sheet.png` | 4x3 tile of 12 frames each, ffmpeg | 0.8s |
+| 2026-09-05 | **Both reels re-delivered, the restored draw** | **the full logo draw, the honest blank check, the centred phone crop** | **bundle + ten renders + two deliveries** | **400.0s (6m 40s)** |
 | 2026-09-04 | bundle | `out/bundle` (tutorial reels, Phase A) | rspack bundle, public dir linked not copied | 2.3s |
 | 2026-09-04 | voice | 22 mp3s in `assets/audio/voice/`, 23 generations | ElevenLabs `eleven_multilingual_v2`, 1524 characters, 1524 credits measured | 87.2s |
 | 2026-09-04 | mix tutorial | four `assets/audio/mix-tut-*.wav` | voice with `music-a` ducked under it, solved duck plus two pass loudnorm | 18.9s |
@@ -219,12 +236,22 @@ it, which is run to run noise rather than the end card being cheaper to draw
 than to composite: the draw is vector work on a flat canvas and costs less per
 frame than the webp did, but only 78 frames of 450 are the end card.
 
-The 2026-09-05 number, **407.9 seconds**, is the same measurement again after
-the three QA fixes: one bundle at 2.5s, ten renders totalling 328.2s and two
-deliveries at 39.6s and 37.6s. No music mixes, which did not change, and it does
-not include the 113.0s QA run that gated it or the 0.8s of frame sheets, both
-review steps. It is within run to run noise of the two before it, which is what
-should be expected: none of the three fixes changes how much work a frame is.
+The first 2026-09-05 number, **407.9 seconds**, is the same measurement again
+after the three QA fixes: one bundle at 2.5s, ten renders totalling 328.2s and
+two deliveries at 39.6s and 37.6s. No music mixes, which did not change, and it
+does not include the 113.0s QA run that gated it or the 0.8s of frame sheets,
+both review steps. It is within run to run noise of the two before it, which is
+what should be expected: none of the three fixes changes how much work a frame
+is.
+
+The second 2026-09-05 number, **400.0 seconds**, is the rebuild after the full
+logo draw came back and the phone crops were centred: one bundle at 2.3s, ten renders totalling
+321.5s and two deliveries at 39.3s and 36.8s. Again no music mixes, and again it
+excludes the review steps, which this time are the 42.3s ring check, the 102.7s
+QA run that gated it and 0.8s of frame sheets. It is eight seconds under the run
+before it and that is noise as well. Neither change costs a frame anything: the
+draw is the same vector work started at a different T, and the crop is one
+`objectPosition` on a video that was already being cover cropped.
 
 Two things make this much faster than the Phase 4 numbers suggest. Rendering
 from a prebuilt bundle rather than from `src/index.ts` skips the public dir copy
@@ -424,22 +451,23 @@ reads as a sweep, and 144 is comfortable.
 |---|---|---|
 | Beat | 372-450, 78 frames | 1226-1350, 124 frames |
 | Draw | 66 frames | 84 frames |
-| Clock starts, `DRAW_START_T` | T 2.119 | T 2.119 |
-| Wordmark starts, T 5.2 | relative 41.7 | relative 53.0 |
-| Copy arrives | relative 44, absolute 416 | relative 55, absolute 1281 |
-| Last movement, the final glyph | relative 58 | relative 74 |
-| Frozen finished card | relative 58 to 78, 20 frames | relative 74 to 124, 50 frames |
+| Clock starts, `DRAW_START_T` | T 1.205 | T 1.205 |
+| Wordmark starts, T 5.2 | relative 45.5 | relative 57.9 |
+| First wordmark glyph on screen | relative 46 | relative 58 |
+| Copy arrives | relative 47, absolute 419 | relative 59, absolute 1285 |
+| Last movement, the final glyph | relative 60 | relative 76 |
+| Frozen finished card | relative 60 to 78, 18 frames | relative 76 to 124, 48 frames |
 
 The 15 second cut breaks `CTA_HOLD_MIN_FRAMES`, and the owner took that trade
 with the number in front of them. Section 6 asks for 36 frames of finished card
-so a screenshot of the end frame reads. This card gives 34 frames from the
-moment every element is on screen, 20 of them completely static. The argument
+so a screenshot of the end frame reads. This card gives 31 frames from the
+moment every element is on screen, 18 of them completely static. The argument
 for allowing it is that the minimum was written for a card that cuts in: a
 viewer who has watched a mark assemble for two seconds has already read it by
 the time it finishes, where a viewer shown a finished card needs the whole hold.
 The 45 second cut clears the minimum without a note.
 
-### Where the clock starts, 2026-09-05
+### Where the clock starts, and the two attempts it took
 
 The card used to begin at T 0.35, which is where the mouse has finished ramping
 in. That put a pointer on the first frame and nothing else, because the path has
@@ -447,8 +475,8 @@ drawn zero length at 0.35, and the QA harness failed check (e) on both card
 frames of all twelve compositions: ink coverage 0.044 to 0.096 percent against a
 0.2 percent floor.
 
-The obvious repair, starting where the path is about a sixth drawn, does not
-work, and the numbers are worth keeping because they are counter-intuitive.
+**The first repair, T 2.119, passed the check and cost the animation.** The
+numbers behind it are worth keeping because they are counter-intuitive.
 Rendering the first twenty five frames of the card in four compositions and
 measuring each one the way `checkBlankFrame()` does gives this:
 
@@ -457,39 +485,49 @@ measuring each one the way `checkBlankFrame()` does gives this:
 | Coverage, 1080x1920 | .048 | .057 | .085 | .151 | .199 | .232 | .255 | .273 |
 | Coverage, 1920x1080 | .045 | .055 | .083 | .156 | .205 | .238 | .264 | .278 |
 
-A sixth drawn measures about 0.055 percent and misses by a factor of four. The
-browser frame is a 5 unit stroke on a 1340 unit stage, about 2.7 canvas pixels
-at this box width, and the whole of it drawn, with the mouse, is only 0.28
-percent of the frame. All the ink on this card is in the letters, and the
-letters do not start until T 3.
+A sixth drawn measures about 0.055 percent and misses the floor by a factor of
+four. The browser frame is a 5 unit stroke on a 1340 unit stage, about 2.7
+canvas pixels at this box width, and the whole of it drawn, with the mouse, is
+only 0.28 percent of the frame. All the ink on this card is in the letters, and
+the letters do not start until T 3. So clearing 0.2 percent on frame 0 meant
+starting nine tenths of the way through the draw, at T 2.119, and the card then
+cut in on a nearly finished rectangle. The mouse dragging the browser frame into
+being, which is the part the owner asked for, had already happened off screen.
 
-So the clock starts nine tenths of the way through the draw. `easeInOutCubic(p)`
-is 0.90 at p = 0.70760, and the draw runs T 0.35 to T 2.85, so `DRAW_START_T` is
-0.35 + 2.5 p = 2.119. Measured on the delivered frames, both card frames now run
-0.246 to 0.480 percent, against the 0.2 floor:
+**The second, T 1.205, is the animation, and the check moved instead.** Owner
+decision: the card opens where the path is one sixth drawn.
+`easeInOutCubic(p) = 0.16` at p = 0.04^(1/3) = 0.34200, and the draw runs T 0.35
+to T 2.85, so `DRAW_START_T` is 0.35 + 2.5 p = 1.205. `mouseIn` ramps over T 0
+to 0.35, so the pointer is fully in on frame 0 and the card opens on a cursor
+with a short segment of line behind it. The sweep up the left edge, along the
+top, the three window dots popping and the drop down the right are all in the
+cut. The remaining 5.795 seconds compress into the same 66 and 84 frames, so the
+piece runs at 2.6x rather than the 2.2x it ran at T 2.119, and every gesture in
+it is a fifth quicker.
 
-| Composition | First frame | Second frame |
-|---|---|---|
-| `ReelVertical` / `TrainingVertical` | .251 / .246 | .258 / .251 |
-| `ReelFeed` / `TrainingFeed` | .370 / .379 | .375 / .384 |
-| `ReelSquare` / `TrainingSquare` | .474 / .426 | .480 / .430 |
-| `ReelLandscape` / `TrainingLandscape` | .339 / .261 | .346 / .267 |
-| `ReelLinkedIn` / `TrainingLinkedIn` | .379 / .379 | .381 / .381 |
-| `ReelLinkedInLandscape` / `TrainingLinkedInLandscape` | .261 / .261 | .265 / .265 |
+Those two opening frames are the two the check now reads by a different rule.
+Measured on the delivered build, first frame and second:
 
-What that gives up is the sweep along the bottom and the left of the browser
-frame and the three window dots popping, which now happen before the cut. What
-it keeps is the whole letter choreography, and that gets more time rather than
-less: the remaining 4.881 seconds compress into the same 66 and 84 frames, so
-the piece runs at 2.2x rather than 3.0x and every gesture in it is a third
-slower.
+| Composition | First frame | Second frame | Mouse hole |
+|---|---|---|---|
+| `ReelVertical` / `TrainingVertical` | .063 / .056 | .075 / .068 | 40x72 |
+| `ReelFeed` / `TrainingFeed` | .089 / .098 | .107 / .117 | 44x79 |
+| `ReelSquare` / `TrainingSquare` | .122 / .116 | .146 / .128 | 44x79 / 43x77 |
+| `ReelLandscape` / `TrainingLandscape` | .090 / .062 | .104 / .074 | 52x93 / 42x75 |
+| `ReelLinkedIn` / `TrainingLinkedIn` | .098 / .098 | .113 / .113 | 44x79 |
+| `ReelLinkedInLandscape` / `TrainingLinkedInLandscape` | .062 / .062 | .071 / .071 | 42x75 |
 
-The copy cue moved with it, which the 2026-09-04 change did not have to do. The
-wordmark's T 5.2 lands at relative 41.7 rather than 48.1 in the 15 second cut
-and 53.0 rather than 61.3 in the 45 second one, both well past the two frame
-threshold at which the caption tables have to be re-cut. `copyIn` is 44 and 55,
-and the end card cues in `scripts/srt.ts` moved from 422 to 416 and from 1290 to
-1281. Nothing else in any caption table moved.
+Coverage is in percent and the mouse hole in canvas pixels. Every first frame
+clears the 0.04 percent floor those two frames are held to, every second frame
+carries more ink than the first, and the mouse is found on all 24. See "Check
+(e) reads the end card's opening pair by its own rule" under QA.
+
+The copy cue moved with each change. The wordmark's T 5.2 now lands at relative
+45.5 in the 15 second cut and 57.9 in the 45 second one, so its first glyph is
+on screen on relative 46 and 58 and the copy arrives one frame later, at 47 and
+59. Both moves are past the two frame threshold at which the caption tables have
+to be re-cut, so the end card cues in `scripts/srt.ts` went 422 to 416 to 419,
+and 1290 to 1281 to 1285. Nothing else in any caption table moved.
 
 Everything else about the card is unchanged. It is centered on the canvas by
 `centeredBox()`, the logo box is the 720 at 1080 width the static lockup used
@@ -1350,9 +1388,9 @@ raw bounding box finds at the top is only where the header type starts.
 
 **The fill rule**, in `src/lib/content-fill.ts` so `PlateComposite` and the ring
 check cannot drift apart. A capture whose box is the full frame keeps the cover
-crop anchored top left it has always had, which is what keeps the web reel and
-every phone shot byte identical. A capture with a real box takes a region of
-itself instead:
+crop it has always had, anchored top and, since the crop change below, anchored
+left only where the page is a desktop page. A capture with a real box takes a
+region of itself instead:
 
 - the region has the quad's aspect, so nothing is letterboxed or stretched. The
   aspect is `quadSourceSize()`'s, which is already the average of the two
@@ -1432,6 +1470,62 @@ plate's placement, `PlateShot`'s crop to the delivery canvas, and every line of
 copy and its box come from the same `safeArea()` and `formatMetrics()` numbers
 they came from before. There is no code path from a capture's content box to a
 text position.
+
+### The phone crops come off both sides, 2026-09-05
+
+Owner fix. The four phone quads are narrower than the 780 x 1688 mobile
+captures, so the cover crop takes it out of the width, and anchored top left the
+whole of that came off the right hand edge:
+
+| Plate | Quad aspect | Capture aspect | Width cropped | Off one side, before | Off each side, now |
+|---|---|---|---|---|---|
+| `t-phone-hands` | 0.3916 | 0.4621 | 15.3% | 15.3% right | 7.6% |
+| `t-phone-hands-b` | 0.4278 | 0.4621 | 7.4% | 7.4% right | 3.7% |
+| `plate-phone-hands` | 0.4331 | 0.4621 | 6.3% | 6.3% right | 3.1% |
+| `plate-phone-hands-b` | 0.4543 | 0.4621 | 1.7% | 1.7% right | 0.9% |
+
+A mobile layout is a centered column with its buttons and its right hand chrome
+on that edge, so the worst of them lost one. `t-phone-hands` is the safety
+hierarchy sorter: its NEXT button sat under the cut with two letters of it left,
+against a whole BACK button on the other side. `t-phone-hands-b` is the RFI
+cover, whose NEXT was sliced down its right edge. Centered, each side gives up
+half, both buttons are whole, and the page reads on its own axis.
+
+So `PlateComposite` layer 2 takes `objectPosition: center top` where the capture
+is portrait and keeps `left top` where it is landscape. Portrait against
+landscape is the whole test, because in this project a portrait capture is a
+phone capture: every mobile clip is 780 x 1688 and every desktop one is
+2880 x 1800 or 980 x 628.
+
+**Desktop pages keep the left anchor, deliberately.** Several of them crop wider
+than a phone does: `plate-tablet-b` loses 26.7 percent of its width to a 4:3
+tablet screen, `plate-laptop-shoulder` and `plate-ipad-lap` about 6, and
+centering those is the thing the 2026-09-04 note in `CAPTURE_ANCHOR` recorded as
+wrong, because it cut the first letters off every headline. A desktop page is
+laid out from its top left; a phone page is not. The three safety desktop clips
+are further out of scope again: they fill from their content box through
+`fillRegion()` and never take the cover branch at all.
+
+`coverRegion()` in `src/lib/content-fill.ts` states the anchoring once, for the
+same reason `fillRegion()` lives there: `scripts/composite-check.ts` traces each
+ring point back through it to a capture pixel, and the off page figure is only
+meaningful while the composite and the check agree about where the crop sits.
+
+Re-running the ring check over all thirteen composites in use:
+
+| Plate | Rendered, before | Rendered, now | Source | Off page |
+|---|---|---|---|---|
+| `plate-phone-hands` | 16.04% | 13.38% | 27.27% | 0.11% |
+| `plate-phone-hands-b` | 0.12% | 0.12% | 20.12% | 0.18% |
+| `t-phone-hands` | 37.66% | 33.84% | 34.26% | 0.21% |
+| `t-phone-hands-b` | 0.00% | 0.00% | 0.61% | 0.00% |
+
+The other nine composites are unchanged to the byte, which is the check that
+matters most here: the rendered stills for every laptop, tablet and monitor
+plate compare identical to the ones from before the change, and only the four
+phone composites differ. Every one of the thirteen is under 0.25 percent off
+page, the highest being `t-phone-hands` at 0.21, which is the same corner
+rounding it read before.
 
 ### Training reel stand-ins
 
@@ -2039,14 +2133,21 @@ never many.
 |---|---|---|
 | 2026-09-05 | web, training | 26 FAIL, 159 REVIEW, 1792 PASS, 1124 not applicable |
 | 2026-09-05, after the three fixes | web, training | **0 FAIL**, 161 REVIEW, 1820 PASS, 1120 not applicable |
+| 2026-09-05, the restored draw and the centred phone crop | web, training | **0 FAIL**, 161 REVIEW, 1820 PASS, 1120 not applicable |
 
 The first run is the one that found the three faults: 24 blank end card frames
 on check (e), the `t-desktop-wide` full bleed tour plate on check (d), and the
-P&L simulator's frozen last pair on check (i). The second is the delivered
-build. Of its 161 REVIEW rows, 116 are check (d) screening the dark themed
-courseware, 21 are check (h) reading the expected hard cut into each clean shot,
-13 are the check (g) plate crops that always review, and 11 are check (b) on
-frames that are mid whip by design.
+P&L simulator's frozen last pair on check (i). Of the 161 REVIEW rows the two
+clean runs carry, 116 are check (d) screening the dark themed courseware, 21 are
+check (h) reading the expected hard cut into each clean shot, 13 are the check
+(g) plate crops that always review, and 11 are check (b) on frames that are mid
+whip by design.
+
+The third run is the delivered build, and its identical numbers are the point of
+it: the end card went back to the full draw and check (e) went from a flat floor
+to the drawInProgress rule on the same 24 frames, which is a different test
+passing rather than the same test relaxed, and the four phone crops moved
+without touching anything either check measures.
 
 ### What it renders, and from where
 
@@ -2082,7 +2183,9 @@ composition as visual evidence. `--fast` cuts it to roughly half.
 
 The two frames the brief does not name are there because two checks need a pair:
 the last plate frame against the first clean frame for check (h), and the second
-to last frame of each clean shot against the last for check (i).
+to last frame of each clean shot against the last for check (i). The end card's
+start and start + 1 are a third pair, for check (e), and they are the only
+frames `--fast` cannot drop: the rule that reads them compares the two.
 
 ### The nine checks
 
@@ -2092,7 +2195,7 @@ to last frame of each clean shot against the last for check (i).
 | b | safe zones: copy pixels inside the reserved rectangles `safeArea()` derives | more than 120 px, which is the antialiasing allowance, and REVIEW rather than FAIL on a frame that is mid whip |
 | c | device geometry: the `#100D0A` body's center line, and the aspect of the screen hole inside it | body missing, center off by more than 4 px, or aspect off by more than 1 percent |
 | d | screen fill: a ring 6 px inside the screen hole or the plate quad, against a flat page backdrop | 95 percent of the ring or more, on a ring with at least three of its four edges measurable, which is a screen with nothing in it. Over the 2 percent line and under that is REVIEW |
-| e | blank frames: ink coverage against the frame's own dominant color | under 0.2 percent |
+| e | blank frames: ink coverage against the frame's own dominant color | under 0.2 percent, except on the end card's opening pair, which is held to 0.04 percent plus a mouse plus a growing line. See below |
 | f | logo: the drawn lockup's colors present, the retired gold crest absent | under 200 px of `#a93c1c` or `#8b6f5c`, or 3000 px or more of `#C09A5E` |
 | g | plate review: 2x crops of each plate's quad corners and of skin touching the quad | never fails, always REVIEW |
 | h | cut continuity: PSNR across the hard cut from the plate to the clean shot | never fails, REVIEW under 8 dB |
@@ -2152,6 +2255,49 @@ few code values of it, and a loose tolerance turned the band into a device and a
 dark page into bezel. The first pass read the Fore Motion phone's screen as
 732x209 for exactly that reason. These are PNG stills of a flat CSS fill, so
 nothing has to be forgiven.
+
+**Check (e) reads the end card's opening pair by its own rule, and that is a
+refinement for a known animation rather than a loosened threshold.** The
+distinction is the whole point of it, so it is written down here.
+
+The 0.2 percent floor is the right number for a frame that is meant to be a
+finished picture, and it stays exactly where it is on the 480 stills that are
+one. It was never a measurement of the other 24, two per composition, which are
+the end card opening on a line being drawn:
+the browser frame is a 5 unit stroke on a 1340 unit stage, about 2.7 canvas
+pixels at the card's box width, and the whole of it drawn, mouse included,
+covers 0.28 percent of the frame. A sixth of it cannot reach 0.2 percent and no
+honest opening of this draw ever will. On 2026-09-05 the card was moved to
+T 2.119 to clear the floor, which passed the check by deleting the animation the
+owner asked for, and that is the failure this rule exists to prevent happening
+again.
+
+So `scripts/qa/shots.ts` tags those two frames `drawInProgress`, and
+`checkBlankFrame()` asserts three things about them instead of one. All three
+have to hold:
+
+- **ink coverage of at least 0.04 percent.** Measured 0.056 to 0.122 percent on
+  the first frame across the twelve compositions, so the floor sits 40 percent
+  under the lowest reading.
+- **the mouse is on the card.** It is found as the hole its own body punches in
+  the ink: between 30 and 110 px tall at 1080 canvas width, scaled by
+  `typeScale`, and 0.35 to 0.85 wide over tall. Measured 40x72 to 52x93 px at a
+  ratio of 0.56 on all 24 frames.
+- **the second frame carries strictly more ink than the first**, which is what
+  says the line is being drawn rather than held.
+
+A bare canvas fails all three. A pointer on an undrawn path, which is what the
+2026-09-04 build showed, fails the first at 0.044 percent and fails the third. A
+card that opened on the finished lockup by mistake would pass the first two and
+fail the third, because a frozen mark does not grow.
+
+The mouse is found by its hole rather than as a blob because there is no blob to
+find. It is a rounded rectangle filled with the canvas color and stroked in
+taupe, and the path it is dragging runs underneath it, so the connected ink
+region that contains the mouse also contains however much of the browser frame
+has been drawn: it measures 104 to 134 px wide and grows from 107 to 216 px tall
+across the two frames sampled. The hole is the mouse and nothing else, it is the
+same size on both frames, and a card with nothing on it has no hole at all.
 
 **Check (d) is a screening check on this content, not a gate, and the reason is
 worth recording so nobody retries the two versions that do not work.**

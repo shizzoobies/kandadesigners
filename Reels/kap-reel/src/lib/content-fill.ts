@@ -30,7 +30,52 @@ export function isFullFrame(
 }
 
 /**
- * The region of the capture that fills a screen quad of the given aspect.
+ * True when a capture is a phone capture, which is the one fact that decides
+ * which way a cover crop is anchored.
+ *
+ * Portrait or landscape is the whole test, because in this project a portrait
+ * capture is a phone capture: every mobile clip is 780x1688 and every desktop
+ * one is 2880x1800 or 980x628.
+ */
+export function isPortraitCapture(
+  frameWidth: number,
+  frameHeight: number,
+): boolean {
+  return frameHeight > frameWidth;
+}
+
+/**
+ * The region of a capture that a cover crop shows inside a quad of the given
+ * aspect, for a capture whose page fills its own frame.
+ *
+ * This is the arithmetic behind PlateComposite's objectFit cover, written out
+ * so scripts/composite-check.ts can trace a rendered ring point back to the
+ * capture pixel it came from. The two would otherwise state the anchoring
+ * twice, and the ring check's off page figure is only meaningful while they
+ * agree.
+ *
+ * Top anchored either way, because a page starts at its top. Horizontally a
+ * desktop page is anchored left, so the crop comes off the right margin and the
+ * logo, the nav and the headline survive; a phone page is centred, so the crop
+ * comes off both edges evenly and a centred mobile column keeps the buttons on
+ * its right hand side. Owner fix 2026-09-05, and the numbers are in the note on
+ * CAPTURE_ANCHOR in src/components/PlateComposite.tsx.
+ */
+export function coverRegion(
+  frameWidth: number,
+  frameHeight: number,
+  quadAspect: number,
+): FillRegion {
+  const frameAspect = frameWidth / frameHeight;
+  const w = frameAspect > quadAspect ? frameHeight * quadAspect : frameWidth;
+  const h = frameAspect > quadAspect ? frameHeight : frameWidth / quadAspect;
+  const x = isPortraitCapture(frameWidth, frameHeight) ? (frameWidth - w) / 2 : 0;
+  return { x, y: 0, w, h };
+}
+
+/**
+ * The region of the capture that fills a screen quad of the given aspect, for a
+ * capture whose page is a sheet on a backdrop.
  *
  * The rule, and the one decision in it:
  *
