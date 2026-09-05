@@ -3,6 +3,7 @@
 
 import { staticFile } from "remotion";
 import capturesIndex from "../../assets/captures/captures.json";
+import type { ContentBox } from "./content-fill";
 
 export type CaptureViewport = "mobile" | "desktop";
 
@@ -19,6 +20,12 @@ export type CaptureEntry = {
   fps: number;
   durationFrames: number;
   durationSec: number;
+  /**
+   * Where the captured page sits inside the frame, in capture pixels. Measured
+   * by scripts/capture.ts off the clip's own first frame, and the whole frame
+   * for every page that fills its viewport. See src/lib/content-fill.ts.
+   */
+  contentBox?: ContentBox;
 };
 
 const CAPTURES = capturesIndex as CaptureEntry[];

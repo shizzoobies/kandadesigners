@@ -26,6 +26,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { captureSrc, getCapture } from "../lib/captures";
+import { fillRegion, isFullFrame } from "../lib/content-fill";
 import {
   captureTint,
   getPlate,
@@ -84,7 +85,8 @@ const SEAT_SPREAD = 6;
 const SEAT_COLOR = "rgba(6, 5, 4, 0.44)";
 
 /**
- * Where the capture sits when its aspect does not match the screen quad's.
+ * Where the capture sits when its aspect does not match the screen quad's, for
+ * a capture that fills its own frame.
  *
  * Cover has to crop one axis, and centring that crop is wrong for a web page.
  * plate-tablet-b is the worst case in the set: a 4:3 tablet screen against a
@@ -92,6 +94,10 @@ const SEAT_COLOR = "rgba(6, 5, 4, 0.44)";
  * cut the first letters off every headline. A page is laid out from its top
  * left, so anchoring there keeps the logo, the nav and the headline and takes
  * the loss out of the right margin instead.
+ *
+ * This is still every clip in the web reel and every mobile clip in the
+ * training reel. A capture whose page does not fill its frame takes the branch
+ * below instead: see fillRegion() in src/lib/content-fill.ts.
  */
 const CAPTURE_ANCHOR = "left top";
 
@@ -160,6 +166,31 @@ export const PlateComposite: React.FC<PlateCompositeProps> = ({
     transform: warp,
   };
 
+  /**
+   * Layer 2's source rectangle.
+   *
+   * A capture whose page fills its own frame keeps the objectFit cover it has
+   * always had, anchored top left, which is what every web reel clip and every
+   * training mobile clip is. A capture whose page is a sheet on a backdrop
+   * takes fillRegion() instead, and the video is laid out at the scale that
+   * makes that region cover the quad and offset so the region lands on it. The
+   * quad's aspect is the source size's, because quadSourceSize() is already the
+   * average of the two horizontal edges over the average of the two vertical
+   * ones.
+   *
+   * ZoomShot does the same arithmetic for the clean shots, including the
+   * maxWidth and maxHeight of none: Tailwind's preflight sets
+   * `video { max-width: 100% }`, which silently clamps the width below and
+   * leaves the height alone, and the result is the wrong part of the capture at
+   * the wrong scale rather than anything that looks like an error.
+   */
+  const box = capture.contentBox;
+  const region =
+    box && !isFullFrame(box, capture.width, capture.height)
+      ? fillRegion(box, capture.width, capture.height, source.width / source.height)
+      : null;
+  const regionScale = region ? source.width / region.w : 1;
+
   return (
     <AbsoluteFill style={{ backgroundColor: "#0B0908", overflow: "hidden" }}>
       <div
@@ -207,12 +238,24 @@ export const PlateComposite: React.FC<PlateCompositeProps> = ({
             trimBefore={captureFrameOffset}
             playbackRate={scrollPlaybackRate}
             muted
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: CAPTURE_ANCHOR,
-            }}
+            style={
+              region
+                ? {
+                    position: "absolute",
+                    left: -region.x * regionScale,
+                    top: -region.y * regionScale,
+                    width: capture.width * regionScale,
+                    height: capture.height * regionScale,
+                    maxWidth: "none",
+                    maxHeight: "none",
+                  }
+                : {
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: CAPTURE_ANCHOR,
+                  }
+            }
           />
         </div>
 

@@ -46,8 +46,23 @@ npx remotion render src/index.ts ReelVertical out/kap-reel-vertical.mp4
 npx remotion compositions src/index.ts
 ```
 
+**Re-measure every capture's content box** (after any re-capture; see "Content
+boxes, and filling the device from the page")
+
+```
+npx tsx scripts/capture.ts --content-boxes
+```
+
+**Check that no plate composite shows backdrop inside the device**
+
+```
+npx tsx scripts/composite-check.ts ring --out out/_fill/after
+```
+
 If you must run from the real path, invoke the CLI directly:
-`node node_modules/@remotion/cli/remotion-cli.js <args>`.
+`node node_modules/@remotion/cli/remotion-cli.js <args>`. The same applies to
+`npx tsx`: the real path carries an ampersand that `npx.cmd` splits, so
+`node node_modules/tsx/dist/cli.mjs scripts/<name>.ts <args>` is the fallback.
 
 ## Render time log
 
@@ -1056,6 +1071,164 @@ for hero to zones (99 to 100), 17.1 dB for the hazard hunt (131 to 132), 32.0 dB
 for the P&L simulator (159 to 160) and 21.7 dB for the RFI branch (89 to 90).
 The Section 6b line is 40 dB.
 
+### Content boxes, and filling the device from the page, 2026-09-04
+
+The owner's note on the safety deck inside the laptop plate was that it is "off
+on the actual laptop screen". It was. The training samples are authored as a
+fixed width sheet on a near black stage, so a 2880 x 1800 capture of one carries
+348 pixels of backdrop down the left, 348 down the right and 30 across the top.
+`PlateComposite` cover cropped the whole viewport anchored top left, so inside
+the panel the page sat off centre with dead black around three of its sides.
+
+**The measurement.** `scripts/capture.ts` writes a `contentBox` onto every entry
+in `assets/captures/captures.json`. It is taken from the clip's own first frame,
+pulled with ffmpeg, and not from the checked still beside it, because an
+interaction clip can start on a different screen from the still. The box is the
+bounding box of every pixel more than 60 from the frame's top left pixel, summed
+across the three channels, padded outward by 4 and clamped to the frame. Both
+capture paths write it as they record, and
+`npx tsx scripts/capture.ts --content-boxes` backfills the whole index without
+re-recording anything.
+
+**That bounding box on its own is not the answer, and the web reel is why.**
+Fore Motion Golf lays a logo, a headline and one card on a flat dark green
+field. Its ink stops at 1562 x 1439 of 2880 x 1800, and filling a device screen
+from that box would crop a website nobody asked to crop. Synovial does the same
+on cream, at 2723 x 1734. Pixel statistics inside the box cannot separate those
+two from the safety deck, because the safety deck is itself near black: 69 to 94
+percent of what is inside its box is within 60 of the stage colour, which is
+worse than Fore Motion's 92. The margin can be separated, on two tests, and both
+are in `contentBoxForClip()`:
+
+- **flatness.** A backdrop is one CSS colour, and at crf 16 it decodes back
+  almost exactly: 0.1 to 0.5 percent of the safety decks' margin pixels sit more
+  than 12 from the corner colour. The same figure across the eight client sites
+  runs 8 to 89 percent, because a page's own background is photographed,
+  gradiented or textured.
+- **materiality.** Several sites' first ink starts a few rows down, which makes
+  a 25 row "margin" that is not a margin. A real frame takes at least a
+  twentieth of one axis.
+
+Fail either and the box is recorded as the full frame, which is what "this page
+fills its viewport" means. All seventeen web clips come out full frame, and so
+does every training mobile clip, every finance clip and every RFI clip. Five
+clips have a real box, and all five are the safety deck on desktop.
+
+| Training clip | Content box | Frame |
+|---|---|---|
+| `training-finance-hero-desktop` | 0, 0, 2880 x 1800 | full frame |
+| `training-finance-hero-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-finance-line-item-sorter-desktop` | 0, 0, 2880 x 1800 | full frame |
+| `training-finance-line-item-sorter-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-finance-pnl-simulator-desktop` | 0, 0, 2880 x 1800 | full frame |
+| `training-finance-waterfall-desktop` | 0, 0, 2880 x 1800 | full frame |
+| `training-finance-waterfall-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-rfi-hero-desktop` | 0, 0, 2880 x 1800 | full frame |
+| `training-rfi-hero-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-rfi-knowledge-check-desktop` | 0, 0, 2880 x 1800 | full frame |
+| `training-rfi-scenario-branch-desktop` | 0, 0, 2880 x 1800 | full frame |
+| `training-safety-hazard-hunt-desktop` | 352, 30, 2180 x 1756 | 2880 x 1800 |
+| `training-safety-hazard-hunt-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-safety-hero-to-zones-desktop` | 348, 30, 2184 x 1756 | 2880 x 1800 |
+| `training-safety-hero-to-zones-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-safety-hierarchy-sorter-desktop` | 348, 30, 2184 x 1756 | 2880 x 1800 |
+| `training-safety-hierarchy-sorter-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-safety-stop-or-go-desktop` | 348, 30, 2184 x 1756 | 2880 x 1800 |
+| `training-safety-stop-or-go-mobile` | 0, 0, 780 x 1688 | full frame |
+| `training-safety-walkthrough-card-desktop` | 348, 30, 2184 x 1756 | 2880 x 1800 |
+| `training-safety-walkthrough-card-mobile` | 0, 0, 780 x 1688 | full frame |
+
+The finance folio and the RFI drawing set do fill their viewports, which is
+worth saying because the brief expected them not to. Only the safety deck is
+mounted on a stage. The mobile safety clips fill theirs too: the deck is laid
+out for a 390 wide screen and runs edge to edge there, and the 34 row inset the
+raw bounding box finds at the top is only where the header type starts.
+
+**The fill rule**, in `src/lib/content-fill.ts` so `PlateComposite` and the ring
+check cannot drift apart. A capture whose box is the full frame keeps the cover
+crop anchored top left it has always had, which is what keeps the web reel and
+every phone shot byte identical. A capture with a real box takes a region of
+itself instead:
+
+- the region has the quad's aspect, so nothing is letterboxed or stretched. The
+  aspect is `quadSourceSize()`'s, which is already the average of the two
+  horizontal edges over the average of the two vertical ones.
+- it is anchored at the content box's top, so the page's top edge lands on the
+  panel's top edge, and centred horizontally on the box, so a centred sheet
+  stays centred.
+- it is always a **crop** of the content box, never an expansion of it.
+
+That last one is the only real decision, and the arithmetic makes it. The safety
+box is 2184 x 1756, an aspect of 1.24, against `t-laptop-shoulder`'s quad at
+1.50. Widening 1756 rows to 1.50 needs 2640 columns, 456 more than the page has,
+so expanding would put a quarter of a thousand pixels of the black stage back
+inside the device, which is the fault this exists to fix. Cropping takes 2184 x
+1452 from the top of the sheet: the module header, the interaction and its
+feedback, and no backdrop at all. Because the region is always inside the box,
+the "content box too narrow to fill, centre it instead" case cannot arise.
+
+| Plate | Capture | Quad | Region | Scale |
+|---|---|---|---|---|
+| `t-laptop-shoulder` | hero to zones | 832 x 553, 1.5045 | 348, 30, 2184 x 1452 | 0.381 |
+| `t-laptop-two` | walk-through card | 816 x 519, 1.5723 | 348, 30, 2184 x 1389 | 0.374 |
+| `t-desktop-wide` | stop or go | 1115 x 646, 1.7260 | 348, 30, 2184 x 1265 | 0.511 |
+
+Those are the three composites in the reel that changed. Everything else is a
+full frame capture and renders as it did.
+
+**The check is mechanical.** `npx tsx scripts/composite-check.ts ring` renders
+all thirteen live plate composites at 1080x1920 through `src/plates-entry.ts`,
+maps each quad through the same layer 1 transform `PlateComposite` applies,
+drift and scale ramp included, and walks a ring 6 canvas pixels inside the quad
+edge along each edge's own inward normal. It reports three numbers per
+composite:
+
+- **rendered**, the fraction of ring pixels within 12 of the capture's backdrop
+  colour. This is the number the brief asked for, and on its own it is not
+  enough: the safety deck's page background is the same near black as its stage,
+  so a panel filled entirely with page still reads about a third backdrop.
+- **source**, the same test run on the capture pixel each ring point traces back
+  to through the inverse warp. This is the floor the rendered figure cannot go
+  below while the page's own edge is that colour.
+- **offpage**, the fraction of ring points tracing back outside the content box.
+  This is the one that means dead backdrop inside the device, and the one that
+  has to be under 2 percent.
+
+| Plate | Rendered, before | Rendered, after | Source | Off page, after |
+|---|---|---|---|---|
+| `plate-laptop-shoulder` | 67.76% | 67.76% | 61.78% | 0.09% |
+| `plate-ipad-lap` | 6.98% | 6.98% | 29.05% | 0.19% |
+| `plate-desktop-wide` | 14.67% | 14.67% | 0.98% | 0.09% |
+| `plate-handoff` | 0.00% | 0.00% | 56.42% | 0.05% |
+| `plate-tablet-b` | 0.00% | 0.00% | 0.05% | 0.05% |
+| `plate-phone-hands-b` | 0.12% | 0.12% | 20.12% | 0.18% |
+| `plate-phone-hands` | 16.04% | 16.04% | 24.05% | 0.11% |
+| `t-laptop-shoulder` | 95.80% | 34.09% | 29.64% | 0.10% |
+| `t-phone-hands` | 37.66% | 37.66% | 37.66% | 0.21% |
+| `t-laptop-cafe-free` | 0.14% | 0.14% | 0.09% | 0.05% |
+| `t-phone-hands-b` | 0.00% | 0.00% | 1.29% | 0.07% |
+| `t-laptop-two` | 96.22% | 34.84% | 30.01% | 0.10% |
+| `t-desktop-wide` | 0.00% | 0.00% | 2.03% | 0.08% |
+
+The two plates the fix reaches went from 95.80 and 96.22 percent backdrop on
+that ring to 34.09 and 34.84, against a floor of 29.64 and 30.01. What is left
+is the deck's own dark edge plus the layer 3 seat shadow darkening it further,
+not the stage. Every composite is under 0.21 percent off page, and the residue
+there is rounding at the quad corners where a sampled point lands a pixel
+outside the clip.
+
+`plate-laptop-shoulder` reads 67.76 percent on the rendered column and always
+did: Fore Motion's page background is the corner colour the box was measured
+from, its content box is the whole frame, and a clip with no backdrop cannot
+show any. Its off page figure is 0.09 percent.
+
+**Safe zones are untouched by all of this.** Nothing in the layout moved. The
+change is the source rectangle of one video inside a warped div; the quad, the
+plate's placement, `PlateShot`'s crop to the delivery canvas, and every line of
+copy and its box come from the same `safeArea()` and `formatMetrics()` numbers
+they came from before. There is no code path from a capture's content box to a
+text position.
+
 ### Training reel stand-ins
 
 Interaction captures and training plates are produced by two other agents. Any
@@ -1114,10 +1287,30 @@ badly chosen crop. `ZoomShot` sets `maxWidth: none` for exactly this reason.
 | 2026-09-04 | deliver | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 36.7s |
 | 2026-09-04 | sheet | `out/final-training/vertical-sheet.png` (16:10 screen) | 4x3 tile of 12 frames, ffmpeg | 0.4s |
 | 2026-09-04 | **Training re-delivered, 16:10 laptop screen** | **the 16:10 screen rule and the four re-cut zoom regions** | **warm bundle + five renders + delivery + sheet** | **207.9s (3m 28s)** |
+| 2026-09-04 | content boxes | `assets/captures/captures.json` (content box fill) | 38 clips, first frame pulled with ffmpeg and scanned | 9.2s |
+| 2026-09-04 | ring check | `out/_fill/before` and `out/_fill/after` | 13 plate composites at 1080x1920, rendered and measured | 46.9s per set |
+| 2026-09-04 | ReelVertical | `out/_fill/psnr`, frames 60 and 200 | 2 stills each, 1080x1920, the web reel PSNR control | under 20s per set |
+| 2026-09-04 | bundle | `out/bundle` (content box fill) | rspack bundle, public dir linked not copied | 1.9s warm |
+| 2026-09-04 | TrainingVertical | `out/render-training-vertical-15s.mp4` (content box fill) | 450 frames, 1080x1920, 30fps, 15.0s | 22.5s |
+| 2026-09-04 | TrainingFeed | `out/render-training-feed-15s.mp4` (content box fill) | 450 frames, 1080x1350, 30fps, 15.0s | 20.4s |
+| 2026-09-04 | TrainingSquare | `out/render-training-square-15s.mp4` (content box fill) | 450 frames, 1080x1080, 30fps, 15.0s | 19.4s |
+| 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` (content box fill) | 1350 frames, 1080x1350, 30fps, 45.0s | 56.6s |
+| 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` (content box fill) | 1350 frames, 1920x1080, 30fps, 45.0s | 64.0s |
+| 2026-09-04 | deliver | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 38.3s |
+| 2026-09-04 | stills | `out/_fill/stills` | 15 stills, TrainingVertical and TrainingLinkedIn | 25.5s |
+| 2026-09-04 | sheet | `out/final-training/vertical-sheet.png` (content box fill) | 4x3 tile of 12 frames, ffmpeg | 0.4s |
+| 2026-09-04 | **Training re-delivered, content box fill** | **the plate fills from the page rather than from the viewport** | **warm bundle + five renders + delivery + sheet** | **223.6s (3m 44s)** |
 
 The 16:10 re-delivery touched the training reel only. The web reel has no beat
 with `cleanFrame: "laptop"`, so nothing in it changed and its five delivered
 MP4s were not re-rendered or re-encoded.
+
+The content box re-delivery is the training reel only for a different reason.
+Every web capture measures as a full frame content box and so takes the same
+cover crop it always took, which makes its plate composites byte identical:
+`ReelVertical` frames 60 and 200 rendered before and after the change come back
+at infinite PSNR and compare equal with `cmp`. Its five delivered MP4s were not
+re-rendered or re-encoded either.
 
 Section 14 item 9 for the training reel: **231.9 seconds**, which is
 2.4 + 2.6 + 184.9 + 42.0. It is the sum of the nine "final build" rows above and
@@ -1390,3 +1583,181 @@ Delivered, measured off the five MP4s with loudnorm in analysis mode:
   every 84 frames. 1350 frames sampled every 84 gives 17 frames and a 4x4 holds
   16, so the sheets run 0 to 1260 and the last sample at 1344 is dropped. Frame
   1260 is inside the CTA beat, so nothing in the cut goes unrepresented.
+
+## QA
+
+Added 2026-09-04. Owner's brief, in his words: "we really wanna get everything
+pixel perfect, any way we can really QA this in a meaningful way so I don't keep
+finding stuff like that."
+
+Every alignment and composition fault the owner has caught so far was findable
+by measurement. Text blocks centred on the safe area rather than the canvas, a
+device box off centre, a bare browser window where a device belonged, a laptop
+screen at 3:1 instead of 16:10, a blank first frame on the end card: all of them
+are numbers, and all of them were found by eye first. `scripts/qa.ts` renders
+stills off its own bundle and measures them, so the next one is found by the
+harness.
+
+```
+npx tsx scripts/qa.ts                       both reels, every frame
+npx tsx scripts/qa.ts --reel training       one reel
+npx tsx scripts/qa.ts --fast                fewer frames per beat
+npm run qa -- --reel web
+```
+
+| Flag | What it does |
+|---|---|
+| `--reel web\|training\|all` | Which reel. Default `all`. |
+| `--fast` | Samples fewer frames per beat. Keeps every frame a PASS or FAIL check needs. |
+| `--only <ids>` | Comma separated composition ids, for one crop at a time. |
+| `--rebundle` | Forces a rebuild of `out/qa/bundle`. |
+| `--concurrency <n>` | Browsers rendering stills at once. Default 6. |
+| `--skip-render` | Re-measures the stills already on disk. |
+
+It exits 1 if anything failed. **No delivery goes into the Posts folder until
+`npx tsx scripts/qa.ts` exits 0.** Read the REVIEW rows before shipping as well:
+they are the checks that can measure a thing but cannot judge it, and there are
+never many.
+
+### What it renders, and from where
+
+The harness builds its own bundle at `out/qa/bundle` and never touches
+`out/bundle`, so it can run while a delivery render is in flight and a report
+can name the bundle it measured. The bundle is rebuilt whenever anything under
+`src`, `config` or `assets/captures/captures.json` is newer than the last build,
+which takes about a second because the public dir is linked rather than copied.
+
+The Node API does not read `remotion.config.ts`, so `scripts/qa/render.ts`
+passes the two settings that change what renders: `publicDir` is `./assets`, not
+`./public`, and Tailwind is enabled. That second one is load bearing rather than
+cosmetic. `ZoomShot` only sets `maxWidth: none` because Tailwind's preflight
+clamps a zoomed video, so a bundle built without Tailwind renders a different
+picture from the one that ships and every measurement taken off it would be
+worthless.
+
+The shot list comes from the beat maps in `src/lib/timing.ts` and the content
+configs in `src/reels`, so a re-timed cut or a re-cast project beat changes which
+frames get tested without anyone editing the harness. Per composition:
+
+| Beat | Frames tested |
+|---|---|
+| Hook | start + 1, middle, end - 1 |
+| Project beat | plate + 1, plate middle, last plate frame, first clean frame, clean + 1, claim in + 2, end - 2, end - 1 |
+| Surfaces tour | start + 1, middle, end - 1 of every cut |
+| How we work, accessibility | each line in + 2, section end - 1 |
+| Call to action | start, start + 1, middle of the draw, copy in + 1, end - 1 |
+
+That is 33 frames for each of the eight 15 second compositions and 60 for each of
+the four 45 second ones, 504 in all, plus two safe zone Debug stills per
+composition as visual evidence. `--fast` cuts it to roughly half.
+
+The two frames the brief does not name are there because two checks need a pair:
+the last plate frame against the first clean frame for check (h), and the second
+to last frame of each clean shot against the last for check (i).
+
+### The nine checks
+
+| | Measures | Fails at |
+|---|---|---|
+| a | text centring: the ink centre of the copy block against the canvas centre, or the panel centre in the landscape split | more than 4 px |
+| b | safe zones: copy pixels inside the reserved rectangles `safeArea()` derives | more than 120 px, which is the antialiasing allowance |
+| c | device geometry: the `#100D0A` body's centre line, and the aspect of the screen hole inside it | body missing, centre off by more than 4 px, or aspect off by more than 1 percent |
+| d | screen fill: a ring 6 px inside the screen hole or the plate quad, against a flat page backdrop | see the two modes below |
+| e | blank frames: ink coverage against the frame's own dominant colour | under 0.2 percent |
+| f | logo: the drawn lockup's colours present, the retired gold crest absent | under 200 px of `#a93c1c` or `#8b6f5c`, or 3000 px or more of `#C09A5E` |
+| g | plate review: 2x crops of each plate's quad corners and of skin touching the quad | never fails, always REVIEW |
+| h | cut continuity: PSNR across the hard cut from the plate to the clean shot | never fails, REVIEW under 8 dB |
+| i | motion: PSNR between the last two frames of every clean shot | 40 dB or over, which is a frozen shot |
+
+**How (a) and (b) find the copy.** Where a capture is on screen the copy sits on
+the opaque `#14100C` scrim, so the scrim block is found first and the ink is
+measured against it, which is what the throwaway `out/_align/measure.mts` did
+during the centring pass. Where the whole canvas is flat brand colour, the corner
+pixel is the background and the whole frame is the region. Check (b) then counts
+copy pixels inside the reserved rectangles and reports the closest approach in
+pixels, which is the number that says whether a layout change is heading for
+trouble before it arrives.
+
+Doing it that way, rather than colour matching the whole frame, is deliberate.
+A site capture contains plenty of near ink and near canvas pixels, and a check
+that flagged them would fire on every crop with a device in a reserved zone,
+which Section 8 explicitly allows. Measuring inside the copy region only is the
+mechanical form of "the capture may enter a reserved zone, text may not".
+
+**Check (a) only runs on settled frames.** `KineticText` hides characters with
+`visibility` while it types, so a half typed line lays out at its final width but
+inks only the left of it. Its ink centre is not its box centre, by design. Those
+frames are reported as not applicable rather than measured, and the shot list
+knows which they are: a project name is settled at relative frame 18, a LinkedIn
+context sentence at 40, and the end card only on its last frame, because the
+wordmark is still typing at copy in.
+
+**Check (c) measures the aspect only where the whole device is visible.** In the
+overlay arrangement the lower third sits on top of the device's lower part, so
+the visible screen is clipped and its aspect is not the device's. The centre line
+and whether a device body exists at all are measured everywhere, which is what
+catches a device off centre and a bare browser window. No laptop beat is ever in
+the overlay arrangement, because a 16:10 screen is wider than any of these
+canvases and `ProjectShowcase` sends it to `stack`, so the 16:10 rule is enforced
+on every laptop shot in both reels.
+
+The body tolerance is near exact, 3 in RGB. The scrim is 5.4 away from the body
+colour and several of these sites open on a near black hero that runs within a
+few code values of it, and a loose tolerance turned the band into a device and a
+dark page into bezel. The first pass read the Fore Motion phone's screen as
+732x209 for exactly that reason. These are PNG stills of a flat CSS fill, so
+nothing has to be forgiven.
+
+**Check (d) has two modes, and the report says which one each row is in.** In
+precise mode `captures.json` declares a content box background for the clip, the
+ring is matched against that one colour, and anything over the 2 percent line is
+the page's own margin showing inside the screen. In screening mode nothing is
+declared, so the ring is matched against near black and near white, which is also
+what a dark hero or a white page looks like at the edge of its own screen.
+Screening mode cannot separate dead space from a page whose background reaches
+the edge, so it reports over the line as REVIEW with the per edge numbers, and
+only fails on the shape a cover crop actually makes: an opposite pair of edges
+both more than 60 percent one flat colour, which is a letterbox or a pillarbox.
+Adding a `contentBox.background` per clip to `captures.json` moves every row into
+precise mode with no change here.
+
+**The plate quad is mapped, not guessed.** `PlateShot` offsets `PlateComposite`
+by the quad's own centre and scales about the canvas centre, and `PlateComposite`
+lays the plate out at its own pixel size with `translate(drift) scale(cover *
+ramp)` about the plate's centre. `plateQuadOnCanvas()` in `scripts/qa/geometry.ts`
+composes those, drift curve and scale ramp included, so the ring follows the real
+screen on the real frame. If either component ever changes how it places the
+plate, that function has to change with it and check (d) will report nonsense
+until it does. That is the intended failure mode: a silent pass would be worse.
+
+### Output
+
+| Path | What it is |
+|---|---|
+| `out/qa/report.md` | A table per composition, one row per still per check, with the numbers. Failures and reviews are also listed together at the top. |
+| `out/qa/findings.json` | The same thing for machines, with every metric as a field and the thresholds the run used. |
+| `out/qa/sheets/<composition>.png` | Contact sheet of every tested still, with a red FAIL badge and border on failing frames and an amber border on review frames. |
+| `out/qa/stills/<composition>/<frame>.png` | The stills themselves, kept so `--skip-render` can re-measure without rendering. |
+| `out/qa/debug/<composition>Debug/<frame>.png` | Two Debug stills per composition, the red reserved zones over the same picture. |
+| `out/qa/plates/<plate id>/` | Check (g): the four quad corners at 2x, every skin toned region touching the quad at 2x, and `quad.json`. |
+| `out/qa/bundle` | The harness's own bundle. Never `out/bundle`. |
+
+### What it still cannot do
+
+Worth writing down, because a harness whose limits are not recorded gets trusted
+further than it should be.
+
+- **It cannot say whether a photograph is good.** Check (g) puts the quad corners
+  and any skin near them in front of a reviewer in seconds instead of minutes,
+  but whether a hand reads as occluding the panel, or whether a face is in shot,
+  is a look rather than a number.
+- **It cannot judge type.** A word that measures 5 px right of centre because of
+  its own side bearings and a word that is 5 px off because the layout is wrong
+  measure the same. The landscape surfaces tour word is the known example.
+- **It cannot read the copy.** Nothing here knows whether the claim on screen is
+  the claim that beat is meant to carry.
+- **It samples frames, not the video.** A fault that exists only between two
+  sampled frames is not tested. The sample list is dense at the ends of beats,
+  which is where the faults have been.
+- **Screening mode on check (d)** cannot separate a page's own background at the
+  screen edge from real dead space. See above.

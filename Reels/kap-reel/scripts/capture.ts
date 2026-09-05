@@ -19,6 +19,9 @@
  *   --gate-sheets               Build no clips. Read captures.json and tile the
  *                               25/50/75 percent frames of every interaction
  *                               clip into out/gate-t1/<project>-<viewport>.png.
+ *   --content-boxes             Build no clips. Read captures.json and write a
+ *                               contentBox onto every entry, measured off each
+ *                               clip's own first frame. See contentBoxForClip().
  *
  * The clearance gate in loadApprovedProjects() is non-negotiable. Nothing
  * launches a browser until at least one project is cleared for public
@@ -27,9 +30,11 @@
 
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium, type Browser, type BrowserContext, type Page } from "playwright";
+import sharp from "sharp";
 import { beatsFor } from "./interactions/index";
 import type { Beat, Step } from "./interactions/types";
 
@@ -108,6 +113,18 @@ type ProjectsManifest = {
   excluded_do_not_show?: string[];
 };
 
+/**
+ * The part of a clip's frame that is the captured page, in capture pixels.
+ *
+ * A website fills its viewport, so its content box is the whole frame. A page
+ * authored as a framed deck on a backdrop does not: the training samples are a
+ * fixed size sheet centred on near black, so a 2880x1800 capture of one carries
+ * a few hundred pixels of backdrop down each side. PlateComposite fills the
+ * device screen from this box rather than from the raw frame, so the page's own
+ * edges land on the panel's edges instead of the backdrop's.
+ */
+type ContentBox = { x: number; y: number; w: number; h: number };
+
 type CaptureEntry = {
   id: string;
   project: string;
@@ -128,6 +145,8 @@ type CaptureEntry = {
   mode?: "interaction";
   /** Beat id from scripts/interactions/, only on interaction clips. */
   beat?: string;
+  /** Where the captured page sits inside the frame. See ContentBox. */
+  contentBox?: ContentBox;
 };
 
 type SummaryRow = {
@@ -145,6 +164,7 @@ type Cli = {
   keepFrames: boolean;
   selfTest: boolean;
   gateSheets: boolean;
+  contentBoxes: boolean;
 };
 
 // ---------------------------------------------------------------------------
@@ -161,6 +181,7 @@ function parseCli(argv: string[]): Cli {
     keepFrames: false,
     selfTest: false,
     gateSheets: false,
+    contentBoxes: false,
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -177,6 +198,9 @@ function parseCli(argv: string[]): Cli {
         break;
       case "--gate-sheets":
         cli.gateSheets = true;
+        break;
+      case "--content-boxes":
+        cli.contentBoxes = true;
         break;
       case "--stills-only":
         cli.stillsOnly = true;
@@ -1001,6 +1025,12 @@ export async function recordInteraction(
       fs.rmSync(frameDir, { recursive: true, force: true });
     }
 
+    const contentBox = await contentBoxForClip(videoPath);
+    console.log(
+      `  content box: ${String(contentBox.x)},${String(contentBox.y)} ` +
+        `${String(contentBox.w)}x${String(contentBox.h)}`,
+    );
+
     return {
       id: clipId,
       project: job.projectId,
@@ -1019,6 +1049,7 @@ export async function recordInteraction(
       dismissed,
       mode: "interaction",
       beat: beat.id,
+      contentBox,
     };
   } finally {
     await context.close();
@@ -1174,6 +1205,211 @@ function extractFrame(videoPath: string, frameIndex: number, outPath: string): v
     const tail = (res.stderr ?? "").split("\n").slice(-6).join("\n");
     throw new Error(`ffmpeg frame extract failed for ${videoPath}:\n${tail}`);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Content boxes
+// ---------------------------------------------------------------------------
+
+/**
+ * How far a pixel's colour has to sit from the frame's corner colour, summed
+ * across the three channels, before it counts as page rather than backdrop.
+ *
+ * 60 across three channels is 20 a channel on average, which clears x264's own
+ * ringing along a hard edge and the slight vignette a deck's backdrop carries
+ * at its corners, and still catches the near black card the safety sample opens
+ * on against the near black stage behind it.
+ */
+const CONTENT_DIFF_THRESHOLD = 60;
+
+/** Grown outward afterwards, so a soft page edge is inside the box, not on it. */
+const CONTENT_BOX_PAD = 4;
+
+/**
+ * The two tests that separate a page framed on a backdrop from a page that
+ * fills its viewport, and why they are here at all.
+ *
+ * The bounding box above is the box of everything that is not the corner
+ * colour, which on a framed deck is the page and on an ordinary website is only
+ * the page's ink. Fore Motion Golf lays a logo, a headline and one card on a
+ * flat dark green field: measured on its own, its box is 1562x1439 of 2880x1800,
+ * and filling a device screen from that box would crop a website nobody asked
+ * to crop. The training safety deck lays a fixed width sheet on a black stage:
+ * its box is 2176x1748, and filling from that box is the whole point.
+ *
+ * Pixel statistics inside the box cannot tell those two apart, because the
+ * safety deck is itself near black. The margin can:
+ *
+ *   1. Flatness. A backdrop is one CSS colour, and at crf 16 it decodes back
+ *      almost exactly: 0.1 to 0.8 percent of the safety decks' margin pixels
+ *      sit more than 12 from the corner colour. A page's own background is
+ *      photographed, gradiented or textured, and the same figure runs 8 to 89
+ *      percent across the eight client sites.
+ *   2. Materiality. Several sites' first ink starts a few rows down, which
+ *      makes a 25 row "margin" that is not a margin. A real frame takes at
+ *      least a twentieth of one axis.
+ *
+ * Fail either and the box is the full frame, which is what the composite did
+ * before content boxes existed.
+ */
+const MARGIN_FLAT_THRESHOLD = 12;
+const MARGIN_FLAT_MAX_FRACTION = 0.02;
+const MARGIN_MIN_INSET = 0.05;
+
+type RawFrame = { data: Buffer; width: number; height: number; channels: number };
+
+/**
+ * The clip's first frame as raw pixels.
+ *
+ * The clip, deliberately, and not the checked still beside it in
+ * assets/captures/stills: a still is one screenshot of the module's first
+ * screen and an interaction clip can start somewhere else entirely, so the box
+ * has to be measured on the footage that actually plays.
+ */
+async function firstFrameRaw(videoPath: string): Promise<RawFrame> {
+  const tmp = path.join(
+    os.tmpdir(),
+    `kap-first-frame-${String(process.pid)}-${path.basename(videoPath)}.png`,
+  );
+  const res = spawnSync(
+    "ffmpeg",
+    ["-y", "-i", videoPath, "-frames:v", "1", "-f", "image2", tmp],
+    { encoding: "utf8" },
+  );
+  if (res.status !== 0) {
+    const tail = (res.stderr ?? "").split("\n").slice(-6).join("\n");
+    throw new Error(`ffmpeg first frame failed for ${videoPath}:\n${tail}`);
+  }
+  try {
+    const { data, info } = await sharp(tmp).raw().toBuffer({ resolveWithObject: true });
+    return { data, width: info.width, height: info.height, channels: info.channels };
+  } finally {
+    fs.rmSync(tmp, { force: true });
+  }
+}
+
+/**
+ * The backdrop colour of a frame: its top left pixel.
+ *
+ * One corner rather than an average of four, because an average of four is a
+ * colour that may appear nowhere in the frame. A page laid out from its top
+ * left either starts at that pixel, in which case the box comes out as the full
+ * frame and nothing changes, or it is inset and that pixel is the backdrop.
+ */
+function cornerColor(frame: RawFrame): [number, number, number] {
+  const d = frame.data;
+  return [d[0], d[1], d[2]];
+}
+
+/** The same corner colour, read straight off a clip. Used by the ring check. */
+export async function clipBackgroundColor(
+  videoPath: string,
+): Promise<[number, number, number]> {
+  return cornerColor(await firstFrameRaw(videoPath));
+}
+
+/**
+ * The bounding box of everything in the first frame that is not the backdrop,
+ * padded outward by CONTENT_BOX_PAD and clamped to the frame, or the full frame
+ * where the margin around that box is not a backdrop at all. See the two tests
+ * above MARGIN_FLAT_THRESHOLD.
+ *
+ * A frame with no pixel far enough from its corner colour, which would be a
+ * clip of a single flat colour, returns the whole frame rather than nothing:
+ * an empty box is not a fact about the page, it is a failure to measure one,
+ * and the full frame is what the composite did before content boxes existed.
+ */
+export async function contentBoxForClip(videoPath: string): Promise<ContentBox> {
+  const frame = await firstFrameRaw(videoPath);
+  const { data, width, height, channels } = frame;
+  const [br, bg, bb] = cornerColor(frame);
+
+  let minX = width;
+  let minY = height;
+  let maxX = -1;
+  let maxY = -1;
+
+  for (let y = 0; y < height; y += 1) {
+    const row = y * width * channels;
+    for (let x = 0; x < width; x += 1) {
+      const i = row + x * channels;
+      const diff =
+        Math.abs(data[i] - br) + Math.abs(data[i + 1] - bg) + Math.abs(data[i + 2] - bb);
+      if (diff <= CONTENT_DIFF_THRESHOLD) continue;
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+    }
+  }
+
+  const fullFrame: ContentBox = { x: 0, y: 0, w: width, h: height };
+  if (maxX < 0) return fullFrame;
+
+  const boxWidth = maxX - minX + 1;
+  const boxHeight = maxY - minY + 1;
+  if (boxWidth === width && boxHeight === height) return fullFrame;
+
+  // Materiality: a frame takes at least a twentieth of one axis.
+  const material =
+    boxWidth <= width * (1 - MARGIN_MIN_INSET) ||
+    boxHeight <= height * (1 - MARGIN_MIN_INSET);
+  if (!material) return fullFrame;
+
+  // Flatness: the margin has to be one colour, not a page background.
+  let marginPixels = 0;
+  let marginRough = 0;
+  for (let y = 0; y < height; y += 1) {
+    const row = y * width * channels;
+    const insideRows = y >= minY && y <= maxY;
+    for (let x = 0; x < width; x += 1) {
+      if (insideRows && x >= minX && x <= maxX) continue;
+      const i = row + x * channels;
+      const diff =
+        Math.abs(data[i] - br) + Math.abs(data[i + 1] - bg) + Math.abs(data[i + 2] - bb);
+      marginPixels += 1;
+      if (diff > MARGIN_FLAT_THRESHOLD) marginRough += 1;
+    }
+  }
+  if (marginPixels === 0) return fullFrame;
+  if (marginRough / marginPixels > MARGIN_FLAT_MAX_FRACTION) return fullFrame;
+
+  const left = Math.max(0, minX - CONTENT_BOX_PAD);
+  const top = Math.max(0, minY - CONTENT_BOX_PAD);
+  const right = Math.min(width, maxX + 1 + CONTENT_BOX_PAD);
+  const bottom = Math.min(height, maxY + 1 + CONTENT_BOX_PAD);
+  return { x: left, y: top, w: right - left, h: bottom - top };
+}
+
+/** Measures one entry's box and logs it, or logs why it could not be measured. */
+async function attachContentBox(entry: CaptureEntry): Promise<void> {
+  const abs = path.join(ROOT, entry.path);
+  if (!fs.existsSync(abs)) {
+    console.log(`  ${entry.id}: clip missing, no content box`);
+    return;
+  }
+  const box = await contentBoxForClip(abs);
+  entry.contentBox = box;
+  const full = box.x === 0 && box.y === 0 && box.w === entry.width && box.h === entry.height;
+  console.log(
+    `  ${entry.id}: ${String(box.x)},${String(box.y)} ${String(box.w)}x${String(box.h)}` +
+      ` of ${String(entry.width)}x${String(entry.height)}${full ? " (full frame)" : ""}`,
+  );
+}
+
+/** Backfills contentBox onto every entry of an existing index, in place. */
+async function backfillContentBoxes(indexFile: string): Promise<void> {
+  const entries = readCapturesIndex(indexFile);
+  if (entries.length === 0) {
+    console.log("No entries in captures.json. Nothing to measure.");
+    return;
+  }
+  console.log(`Measuring content boxes for ${String(entries.length)} clips.`);
+  for (const entry of entries) {
+    await attachContentBox(entry);
+  }
+  fs.writeFileSync(indexFile, `${JSON.stringify(entries, null, 2)}\n`, "utf8");
+  console.log(`\nIndex: ${path.relative(ROOT, indexFile)} rewritten.`);
 }
 
 /**
@@ -1422,6 +1658,12 @@ async function captureOne(
       fs.rmSync(frameDir, { recursive: true, force: true });
     }
 
+    const contentBox = await contentBoxForClip(videoPath);
+    console.log(
+      `  content box: ${String(contentBox.x)},${String(contentBox.y)} ` +
+        `${String(contentBox.w)}x${String(contentBox.h)}`,
+    );
+
     return {
       id: clipId,
       project: job.projectId,
@@ -1438,6 +1680,7 @@ async function captureOne(
       scrollDistancePx,
       pageHeightPx,
       dismissed,
+      contentBox,
     };
   } finally {
     await context.close();
@@ -1456,6 +1699,11 @@ async function main(): Promise<void> {
       path.join(CAPTURES_DIR, "captures.json"),
       path.join(ROOT, "out", "gate-t1"),
     );
+    return;
+  }
+
+  if (cli.contentBoxes) {
+    await backfillContentBoxes(path.join(CAPTURES_DIR, "captures.json"));
     return;
   }
 
@@ -1641,7 +1889,17 @@ async function main(): Promise<void> {
   }
 }
 
-main().catch((err: unknown) => {
-  console.error(err);
-  process.exit(1);
-});
+// Only when this file is the process entry. scripts/composite-check.ts imports
+// contentBoxForClip() and clipBackgroundColor() from here so the ring check
+// measures a backdrop exactly the way the box that hides it was measured, and
+// an import must not launch a browser. Same guard composite-check.ts uses.
+const invokedDirectly =
+  !!process.argv[1] &&
+  path.basename(process.argv[1]) === path.basename(fileURLToPath(import.meta.url));
+
+if (invokedDirectly) {
+  main().catch((err: unknown) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
