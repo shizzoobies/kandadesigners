@@ -155,6 +155,24 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | stills | `out/_hero-gate/before` and `out/_hero-gate/after` (hook fit) | 5 stills each: ReelVertical, TrainingVertical, three tutorial hooks, frame 20 | under 20s per set |
 | 2026-09-04 | TutorialHeroVertical | `out/render-tutorial-hero-vertical-15s.mp4` (Phase B) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 9.9s |
 | 2026-09-04 | TutorialHeroLinkedIn | `out/render-tutorial-hero-linkedin-45s.mp4` (Phase B) | 1350 frames, 1080x1350, 30fps, 45.0s, 3.1 MB | 19.6s |
+| 2026-09-04 | voice | three regenerated lines in `assets/audio/voice/contrast/` (Phase C, US spelling) | ElevenLabs `eleven_multilingual_v2`, 197 characters, 197 credits measured; the other eight contrast beats skipped on their hash | 12.2s |
+| 2026-09-04 | mix tutorial | `assets/audio/mix-tut-contrast-15s.wav` and `mix-tut-contrast-45s.wav` (Phase C) | I -13.99 and -14.03 LUFS, TP -1.79 and -1.92 dBTP, bed -10.6 and -13.2 dB with 9.4 and 7.9 dB of duck | 10.6s |
+| 2026-09-04 | bundle | `out/bundle` (Phase C) | rspack bundle, public dir linked not copied | 2.3s |
+| 2026-09-04 | TutorialContrastVertical | `out/render-tutorial-contrast-vertical-15s.mp4` (Phase C) | 450 frames, 1080x1920, 30fps, 15.0s, 1.2 MB | 8.3s |
+| 2026-09-04 | TutorialContrastFeed | `out/render-tutorial-contrast-feed-15s.mp4` (Phase C) | 450 frames, 1080x1350, 30fps, 15.0s, 1.3 MB | 7.3s |
+| 2026-09-04 | TutorialContrastSquare | `out/render-tutorial-contrast-square-15s.mp4` (Phase C) | 450 frames, 1080x1080, 30fps, 15.0s, 1.3 MB | 6.5s |
+| 2026-09-04 | TutorialContrastLandscape | `out/render-tutorial-contrast-landscape-15s.mp4` (Phase C) | 450 frames, 1920x1080, 30fps, 15.0s, 1.6 MB | 8.2s |
+| 2026-09-04 | TutorialContrastLinkedIn | `out/render-tutorial-contrast-linkedin-45s.mp4` (Phase C) | 1350 frames, 1080x1350, 30fps, 45.0s, 3.6 MB | 25.3s |
+| 2026-09-04 | TutorialContrastLinkedInLandscape | `out/render-tutorial-contrast-landscape-45s.mp4` (Phase C) | 1350 frames, 1920x1080, 30fps, 45.0s, 4.1 MB | 28.8s |
+| 2026-09-04 | TutorialHeroVertical | `out/render-tutorial-hero-vertical-15s.mp4` (Phase C) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 8.6s |
+| 2026-09-04 | TutorialHeroFeed | `out/render-tutorial-hero-feed-15s.mp4` (Phase C) | 450 frames, 1080x1350, 30fps, 15.0s, 1.1 MB | 7.4s |
+| 2026-09-04 | TutorialHeroSquare | `out/render-tutorial-hero-square-15s.mp4` (Phase C) | 450 frames, 1080x1080, 30fps, 15.0s, 1.0 MB | 6.9s |
+| 2026-09-04 | TutorialHeroLandscape | `out/render-tutorial-hero-landscape-15s.mp4` (Phase C) | 450 frames, 1920x1080, 30fps, 15.0s, 1.1 MB | 8.5s |
+| 2026-09-04 | TutorialHeroLinkedIn | `out/render-tutorial-hero-linkedin-45s.mp4` (Phase C) | 1350 frames, 1080x1350, 30fps, 45.0s, 3.1 MB | 17.6s |
+| 2026-09-04 | TutorialHeroLinkedInLandscape | `out/render-tutorial-hero-landscape-45s.mp4` (Phase C) | 1350 frames, 1920x1080, 30fps, 45.0s, 3.4 MB | 21.0s |
+| 2026-09-04 | deliver tutorial-contrast | six MP4s, six SRTs, two thumbnails, five stills, acceptance | `npx tsx scripts/deliver.ts --reel tutorial-contrast` | 29.6s |
+| 2026-09-04 | deliver tutorial-hero | six MP4s, six SRTs, two thumbnails, five stills, acceptance | `npx tsx scripts/deliver.ts --reel tutorial-hero` | 29.8s |
+| 2026-09-04 | **Tutorial Phase C** | **both tutorials regenerated, rendered and delivered to `Reels/instructional reels/`** | **voice + two mixes + bundle + twelve renders + two deliveries** | **238.9s (3m 59s)** |
 
 The tutorial number, **190.0 seconds**, is the Phase A foundation gate end to
 end: one bundle at 2.3s, the 23 voice generations at 87.2s, the four mixes at 18.9s,
@@ -166,6 +184,17 @@ credits rather than the generation itself. It is not a number a rebuild repeats:
 `voice.ts` skips any beat whose text, voice, model and settings hash already
 matches a file on disk, so a rebuild that changes no script pays 0 credits and no
 seconds. The renders are fast because the pictures are stand-ins.
+
+The Phase C number, **238.9 seconds**, is both tutorials from a script edit to
+the finals on disk: three regenerated voice lines at 12.2s, the two contrast
+mixes at 10.6s, one bundle at 2.3s, twelve renders totalling 154.4s, and two
+deliveries at 29.6s and 29.8s. It is twelve renders rather than ten because a
+tutorial delivers a sixth crop the showcase reels do not, the 15 second cut at
+1920x1080, which `Reels/instructional reels/` carries under "Other formats".
+The voice figure is a stopwatch this time rather than a stamp delta, because it
+was one invocation. Only three of the eleven contrast beats were paid for: the
+other eight matched their hash and were skipped, and the whole hero side of the
+run cost nothing, because nothing in its script moved.
 
 Section 14 item 9, the full rebuild number: **190.7 seconds**, which is
 2.1 + 2.8 + 143.7 + 42.1. It is the sum of the seven "final build" rows above
@@ -1933,18 +1962,24 @@ compositions, through `tutorialRegistrations(prefix, content)`, which mirrors
 `registrations()`.
 
 ```
-npx tsx scripts/qa/tutorial.ts                       120 checks, no picture needed
-npx tsx scripts/srt.ts --reel tutorial-contrast      five sidecars from the timeline
+npx tsx scripts/qa/tutorial.ts                       125 checks, no picture needed
+npx tsx scripts/srt.ts --reel tutorial-contrast      six sidecars from the timeline
 npx tsx scripts/deliver.ts --reel tutorial-contrast  the usual pipeline
 ```
 
 Renders are `out/render-tutorial-<id>-<format>-<duration>.mp4`, deliveries
-`out/kap-tut-<id>-<format>-<duration>.mp4`, with matching SRTs. Two things differ
-from the showcase pipeline. There is no `--variant`: a tutorial's mix is voice
-with a bed under it and is built by `voice.ts`, and which take beds it is a field
-in the content file. And the frames the thumbnails and carousel stills come from
-are derived from the timeline rather than hand picked, because a hand picked
-frame number would go stale the first time a line was regenerated.
+`out/kap-tut-<id>-<format>-<duration>.mp4`, with matching SRTs. Three things
+differ from the showcase pipeline. There is no `--variant`: a tutorial's mix is
+voice with a bed under it and is built by `voice.ts`, and which take beds it is a
+field in the content file. The frames the thumbnails and carousel stills come
+from are derived from the timeline rather than hand picked, because a hand picked
+frame number would go stale the first time a line was regenerated. And a tutorial
+delivers six crops rather than five: the showcase five plus the 15 second cut at
+1920x1080, which `Reels/instructional reels/` carries under "Other formats".
+`TutorialContrastLandscape` and `TutorialHeroLandscape` had been registered since
+Phase A with nothing behind them; `TUTORIAL_SHAPES` in `scripts/deliver.ts` and
+the matching row in `tutorialTargets()` in `scripts/srt.ts` are what deliver
+them.
 
 The SRT cues are generated too, one per beat, carrying the full narration rather
 than the burned in caption. The captions are deliberately shorter than the lines

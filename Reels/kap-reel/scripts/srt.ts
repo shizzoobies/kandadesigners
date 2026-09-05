@@ -24,10 +24,17 @@
  * behind a logo settle.
  *
  * All four tables changed again on 2026-09-05, in the same one place. The end
- * card's clock now starts at T 2.119 instead of T 0.35, so the wordmark, which
- * the copy cue is pinned two frames behind, starts six frames earlier in the 15
- * second cut and eight earlier in the 45 second one. The end card cues move
- * from 422 to 416 and from 1290 to 1281. Nothing else in any table moved.
+ * card's clock started at T 2.119 instead of T 0.35, so the wordmark, which the
+ * copy cue is pinned behind, started six frames earlier in the 15 second cut
+ * and eight earlier in the 45 second one, and the cues moved from 422 to 416
+ * and from 1290 to 1281.
+ *
+ * And once more later the same day, when the owner had the full draw put back
+ * and the clock moved to T 1.205. The wordmark now starts at relative 45.5 rather
+ * than 41.7 in the 15 second cut and 57.9 rather than 53.0 in the 45 second
+ * one, and the copy arrives one frame after its first glyph is on screen, so
+ * the cues move from 416 to 419 and from 1281 to 1285. Nothing else in any
+ * table moved on either date.
  *
  *   npx tsx scripts/srt.ts            write all five
  *   npx tsx scripts/srt.ts --check    validate without writing
@@ -109,13 +116,14 @@ export const CUE_ROWS_15S: CueRow[] = [
   { text: "No page builder", start: 354, end: 372, source: "SurfacesTour.tsx", shortHold: true },
 
   // src/scenes/CallToAction.tsx. CALL_TO_ACTION 372 to 450, re-timed on
-  // 2026-09-04 for the drawn lockup and re-cut on 2026-09-05 when DRAW_START_T
-  // moved to 2.119 to fix the blank opening frame. The url and the phone both
-  // arrive at the beat's copy cue, now relative frame 44 rather than 50,
-  // because the wordmark starts to type on at relative 41.7 rather than 48.1.
-  // The lockup is a mark, not a line, so the draw itself gets no cue.
-  { text: "ka-performancefl.com", start: 416, end: 450, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 416, end: 450, source: "CallToAction.tsx" },
+  // 2026-09-04 for the drawn lockup and re-cut twice since, most recently when
+  // DRAW_START_T moved to 1.205 to put the whole draw back in
+  // shot. The url and the phone both arrive at the beat's copy cue, now
+  // relative frame 47 rather than 44, because the wordmark's first glyph is on
+  // screen on relative 46 rather than 42. The lockup is a mark, not a line, so
+  // the draw itself gets no cue.
+  { text: "ka-performancefl.com", start: 419, end: 450, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 419, end: 450, source: "CallToAction.tsx" },
 ];
 
 /**
@@ -201,14 +209,14 @@ export const CUE_ROWS_45S: CueRow[] = [
   { text: "Measured, not promised.", start: 1166, end: 1226, source: "AccessibilityBeat.tsx" },
 
   // src/scenes/CallToAction.tsx. LINKEDIN_CALL_TO_ACTION 1226 to 1350, beat
-  // length unchanged by the 2026-09-04 end card work and unchanged again by the
-  // 2026-09-05 DRAW_START_T fix. The closing line, the url and the phone all
-  // arrive together at the beat's copy cue, now relative frame 55 rather than
-  // 64, because the drawn lockup's wordmark starts to type on at relative 53.0
-  // rather than 61.3.
-  { text: "Taking new projects.", start: 1281, end: 1350, source: "CallToAction.tsx" },
-  { text: "ka-performancefl.com", start: 1281, end: 1350, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 1281, end: 1350, source: "CallToAction.tsx" },
+  // length unchanged by the 2026-09-04 end card work and unchanged again by
+  // both DRAW_START_T moves. The closing line, the url and the phone all arrive
+  // together at the beat's copy cue, now relative frame 59 rather than 55,
+  // because the drawn lockup's wordmark starts to type on at relative 57.9
+  // rather than 53.0.
+  { text: "Taking new projects.", start: 1285, end: 1350, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 1285, end: 1350, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 1285, end: 1350, source: "CallToAction.tsx" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -278,13 +286,13 @@ export const CUE_ROWS_TRAINING_15S: CueRow[] = [
   },
 
   // src/scenes/CallToAction.tsx. CALL_TO_ACTION 372 to 450, re-timed on
-  // 2026-09-04 for the drawn lockup and re-cut on 2026-09-05 with
-  // DRAW_START_T. The closing line, the url and the phone all arrive together
-  // at the beat's copy cue, now relative frame 44 rather than 50. The lockup is
-  // a mark, not a line, so the draw itself gets no cue.
-  { text: "Never the bottleneck.", start: 416, end: 450, source: "CallToAction.tsx" },
-  { text: "ka-performancefl.com", start: 416, end: 450, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 416, end: 450, source: "CallToAction.tsx" },
+  // 2026-09-04 for the drawn lockup and re-cut with DRAW_START_T on 2026-09-05
+  // and again later the same day. The closing line, the url and the phone all
+  // arrive together at the beat's copy cue, now relative frame 47 rather than 44. The
+  // lockup is a mark, not a line, so the draw itself gets no cue.
+  { text: "Never the bottleneck.", start: 419, end: 450, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 419, end: 450, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 419, end: 450, source: "CallToAction.tsx" },
 ];
 
 /**
@@ -435,10 +443,11 @@ export const CUE_ROWS_TRAINING_45S: CueRow[] = [
   },
 
   // src/scenes/CallToAction.tsx. LINKEDIN_CALL_TO_ACTION 1226 to 1350, all
-  // three lines at the beat's copy cue, relative frame 55 since 2026-09-05.
-  { text: "Taking new projects.", start: 1281, end: 1350, source: "CallToAction.tsx" },
-  { text: "ka-performancefl.com", start: 1281, end: 1350, source: "CallToAction.tsx" },
-  { text: "904-210-1071", start: 1281, end: 1350, source: "CallToAction.tsx" },
+  // three lines at the beat's copy cue, relative frame 59 since the clock moved
+  // to T 1.205.
+  { text: "Taking new projects.", start: 1285, end: 1350, source: "CallToAction.tsx" },
+  { text: "ka-performancefl.com", start: 1285, end: 1350, source: "CallToAction.tsx" },
+  { text: "904-210-1071", start: 1285, end: 1350, source: "CallToAction.tsx" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -573,7 +582,7 @@ function tutorialTargets(reel: ReelKey): SrtTarget[] {
     { format: "vertical", duration: "15s", rows: short, totalFrames: 450, reel },
     { format: "feed", duration: "15s", rows: short, totalFrames: 450, reel },
     { format: "square", duration: "15s", rows: short, totalFrames: 450, reel },
-    // The sixth, added 2026-09-05: the 15 second cut at 1920x1080. Same cues as
+    // The sixth, added 2026-09-04: the 15 second cut at 1920x1080. Same cues as
     // the other three 15 second crops, because they are the same cut.
     { format: "landscape", duration: "15s", rows: short, totalFrames: 450, reel },
     { format: "linkedin", duration: "45s", rows: linkedin, totalFrames: 1350, reel },

@@ -190,7 +190,7 @@ Unit costs measured for Phase 5: Eleven Music at music_v2 costs 27.35 credits
 per second of generated audio, flat, measured at both lengths (20s costs 547,
 50s costs 1,368). Sound effects cost roughly 10 credits per second (0.5s cost
 5, 0.6s cost 6, 0.8s cost 8), so the entire sound effect set cost 25 credits
-and is not worth optimising. Neither the music endpoint nor the sound effects
+and is not worth optimizing. Neither the music endpoint nor the sound effects
 endpoint reports a cost anywhere in its response, so every figure above is a
 before and after delta on
 GET /v1/usage/character-stats?breakdown_type=product_type, which buckets the
@@ -757,3 +757,63 @@ box across. The container tags that do survive are the encoder string and
 Remotion's own comment. No step in `scripts/encode.sh` removes metadata: there
 is no `-map_metadata -1` anywhere in it, and the source PNGs in `assets/plates`
 keep their credentials permanently.
+
+## Narration (text to speech), tutorial reels
+
+Added 2026-09-04, for the two tutorial reels in `Reels/instructional reels/`.
+
+- Product: ElevenLabs text to speech, on the same Pro plan recorded in the
+  ElevenLabs section above (owner-confirmed 2026-09-03).
+- Voice: `Eric`, voice id `cjVigY5qzO86Huf0OWal`. A premade ElevenLabs library
+  voice, not a cloned or custom one, chosen on 2026-09-04 for a calm mid
+  register read. It is a draft. Kai's own voice id replaces it for the final
+  pass, and every line regenerates when it does, because the voice is part of
+  the regeneration hash in `config/voice.json`.
+- Model: `eleven_multilingual_v2`. Output format `mp3_44100_128`, default voice
+  settings (stability 0.5, similarity_boost 0.75, style 0, speaker boost on,
+  speed 1).
+- Credits: 1,806 measured across 27 generations, which is every tutorial voice
+  generation to date. Text to speech is billed at one credit per character and
+  1,806 characters were sent, so the measured figure and the character count
+  agree exactly. Read from the `creditsMeasured` field of every entry in
+  `config/voice.json`, each of which is a before and after delta on
+  GET /v1/usage/character-stats?breakdown_type=product_type, sampled around the
+  call, the same way the music and sound effect figures above are measured.
+
+| Tutorial | Cut | Generations | Credits |
+|---|---|---|---|
+| contrast | 15 second | 6 | 225 |
+| contrast | 45 second | 8 | 726 |
+| hero | 15 second | 5 | 168 |
+| hero | 45 second | 8 | 687 |
+| **All tutorial narration** | | **27** | **1,806** |
+
+The four cuts carry 23 beats between them and the log holds 27 generations,
+because four lines were read twice. Three are the contrast lines that changed
+from British to US spelling on 2026-09-04: the 15 second end card, and the
+"inspect" and "rule" beats of the 45 second cut. The fourth is the hero 45
+second "real" line, re-read when its three named examples changed. Nothing is
+deleted from `config/voice.json` when a line is regenerated: the credits were
+spent either way, and the log has to show it.
+
+Music under the narration: no new music was generated for either tutorial. Both
+reels bed the existing `music-a` take, `music-a-20s.mp3` under the 15 second
+cuts and `music-a-50s.mp3` under the 45 second ones, which are the same files
+the web showcase reel uses and are licensed and logged in the Music section
+above. No sound effects are used in either tutorial.
+
+### To confirm before publishing
+
+Whether the Pro plan's commercial grant covers a premade ElevenLabs library
+voice in a published video is **to confirm**. Two things are already recorded
+above and are not in question: the general Terms of Use grant a paid user
+commercial use of the Services at Section 1(c), and confirm at Section
+4(c)(ii) that the user retains all rights in the Output. What has not been read
+against the published terms is the voice-specific position, meaning any
+restriction that attaches to the premade library voices themselves rather than
+to the plan. The Eleven Music terms transcribed above cover music and do not
+speak to speech. Check the text to speech and voice library terms, or ask
+ElevenLabs, before either tutorial is posted.
+
+This is moot if the final narration is Kai's own recorded voice rather than a
+library voice, which is the plan. It matters only if a draft ships.

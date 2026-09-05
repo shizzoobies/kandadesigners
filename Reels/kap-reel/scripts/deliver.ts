@@ -223,7 +223,7 @@ const SHAPES: Shape[] = [
 ];
 
 /**
- * A tutorial's six, added 2026-09-05.
+ * A tutorial's six, added 2026-09-04.
  *
  * Both showcase reels deliver the 15 second cut in the three Facebook shapes
  * only, because that cut goes to Facebook Reels and nowhere else. A tutorial's
@@ -1023,7 +1023,7 @@ function checkProjectClearance(reel: ReelKey): CheckResult {
 
   // A showcase reel that names no project is a check that looked at nothing,
   // which is worse than a failure. A tutorial that names none is the normal
-  // case: the contrast tutorial is about a colour and shows no client site at
+  // case: the contrast tutorial is about a color and shows no client site at
   // all, and Phase A's hero content has not had its three cleared sites written
   // into it yet. So the emptiness is reported rather than treated as a fault,
   // and any id a tutorial does name is still checked.
