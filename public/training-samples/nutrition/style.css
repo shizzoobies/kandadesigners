@@ -318,7 +318,7 @@ h1 {
 .meter-fill {
   display: block;
   height: 100%;
-  width: 12.5%;
+  width: 11.11%;
   background: var(--honey);
   border-right: 2px solid var(--ink);
   transition: width 0.4s cubic-bezier(0.2, 0.9, 0.25, 1);
@@ -478,15 +478,18 @@ b {
   margin-bottom: 0;
 }
 
-/* ---------- card 1 ---------- */
+/* ---------- card 1: the cover ---------- */
 
-.screen-hero {
-  position: relative;
-}
+/* The front of the recipe card: one plate of stock over the hero photograph,
+   a red rule along the top edge, the drawn plate as the mark, and the title
+   at the largest size the display face is ever set. Four facts under it and
+   nothing else. No objectives here, no instructions, no body copy: a cover
+   is a cover, and the work starts on the card after it. */
 
-.screen-hero .screen-body {
+.screen-cover .screen-body {
   position: relative;
-  padding: 1rem 1.1rem;
+  overflow: hidden;
+  padding: 1.5rem 1.7rem 1.1rem;
   border: 1px solid var(--hair-hard);
   border-radius: var(--round);
   background-color: var(--card-2);
@@ -501,6 +504,135 @@ b {
   background-size: auto, cover, cover, auto;
   background-position: 0 0, center, center, 0 0;
   background-repeat: repeat, no-repeat, no-repeat, repeat;
+}
+
+/* The red rule across the top of an index card, again, at the size the front
+   of the box would carry it. */
+.cover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 7px;
+  background: var(--tomato);
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+}
+
+.cover-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cover-mark {
+  flex: 0 0 auto;
+  width: 92px;
+  height: 80px;
+  margin-bottom: 0.7rem;
+  overflow: visible;
+}
+
+.cover-kicker {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tomato-ink);
+}
+
+h2.cover-title {
+  margin: 0 0 0.75rem;
+  padding: 0;
+  border: 0;
+  max-width: 18ch;
+  font-size: clamp(2.4rem, 6.2vw, 4.3rem);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+}
+
+.cover-promise {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 1.14rem;
+  line-height: 1.45;
+}
+
+.cover-foot {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+  padding-top: 0.6rem;
+  border-top: 2px dashed var(--hair-hard);
+}
+
+.cover-meta {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}
+
+.cover-fine {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- card 2: objectives ---------- */
+
+.objectives > li {
+  line-height: 1.45;
+}
+
+/* Both columns are anchored top and bottom: the objectives and the "how this
+   works" note start at the rule, the hook and the disclaimer sit on the
+   bottom edge. On a tall stage that fills the card instead of leaving a
+   third of it blank, and on a short one the auto margins collapse to nothing
+   and the order is unchanged. */
+html.js .brief .col {
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .brief .col > .col-low,
+html.js .brief .col > .disclaimer {
+  margin-top: auto;
+}
+
+/* Only where the stage is fixed. Once the card body is allowed to scroll the
+   row goes back to its content height and both columns close up. */
+@media (min-width: 56.25rem) and (min-height: 40rem) {
+  html.js .brief {
+    align-content: stretch;
+  }
+}
+
+/* A tall stage spends its spare height on the objectives rather than banking
+   it in one gap: five lines with room around them scan faster than five
+   stacked tight. Short stages never see this. */
+@media (min-height: 44rem) {
+  .brief .objectives > li {
+    margin-bottom: 0.85rem;
+  }
+
+  .brief .col > h3 {
+    margin-bottom: 0.55rem;
+  }
 }
 
 /* ---------- side column and photo plates ---------- */
@@ -1701,6 +1833,39 @@ html.js .tabpanel > .results + .disclaimer {
   color: var(--ink-soft);
 }
 
+/* The ending reads back against the objectives before it reads back the
+   scores, in the same verbs the second card used, because what the learner
+   can now do is the point and the tallies are only a note of the work. */
+.done-recap-h {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tomato-ink);
+}
+
+/* Column flow, three rows: the visual order then runs down the first column
+   and on down the second, which is the order the objectives were written in
+   and the order a screen reader reads them. */
+.done-recap {
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--hair-hard);
+  display: grid;
+  gap: 0 1.2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: column;
+}
+
+.done-recap > li {
+  margin-bottom: 0.1rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
 .done-scores {
   list-style: none;
   margin: 0 0 0.8rem;
@@ -1929,8 +2094,18 @@ button[disabled]:hover {
     padding-top: 0.6rem;
   }
 
-  .screen-hero .screen-body {
-    padding: 0.8rem 0.9rem;
+  .screen-cover .screen-body {
+    padding: 1.1rem 1.2rem 0.85rem;
+  }
+
+  .cover-mark {
+    width: 74px;
+    height: 64px;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-foot {
+    margin-top: 0.9rem;
   }
 
   .note {
@@ -2047,8 +2222,13 @@ button[disabled]:hover {
 
   .done-sub,
   .done-scores,
+  .done-recap,
   .done-line {
     margin-bottom: 0.55rem;
+  }
+
+  .done-recap {
+    padding-bottom: 0.5rem;
   }
 }
 
@@ -2113,8 +2293,14 @@ button[disabled]:hover {
     padding-right: 3rem;
   }
 
-  .done-scores {
+  .done-scores,
+  .done-recap {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .done-recap {
+    grid-auto-flow: row;
+    grid-template-rows: none;
   }
 }
 

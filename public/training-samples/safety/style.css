@@ -247,7 +247,7 @@ h1 {
 .meter-fill {
   display: block;
   height: 100%;
-  width: 11.1%;
+  width: 10%;
   background-image: var(--stripe);
   background-size: 39.6px 39.6px;
   transition: width 0.4s cubic-bezier(0.2, 0.9, 0.25, 1);
@@ -375,24 +375,39 @@ b {
   color: var(--chalk);
 }
 
+/* The objectives, one to a stamped plate. Same furniture as the zone list on
+   screen 3, so the promise and the method read as the same object. */
 .ticklist {
   list-style: none;
   padding-left: 0;
+  margin: 0 0 var(--v);
+  display: grid;
+  gap: 0.45rem;
+  align-content: start;
 }
 
 .ticklist > li {
   position: relative;
-  padding-left: 1.6rem;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.45rem 0.9rem 0.45rem 2.6rem;
+  background: var(--panel);
+  border-left: 5px solid var(--yellow);
+  color: var(--chalk);
+  line-height: 1.45;
 }
 
 .ticklist > li::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 12px;
-  height: 12px;
+  left: 0.95rem;
+  top: 50%;
+  margin-top: -8px;
+  width: 16px;
+  height: 16px;
   background: var(--orange);
+  clip-path: polygon(18% 48%, 8% 60%, 40% 90%, 92% 22%, 80% 12%, 38% 66%);
 }
 
 /* ---------- two column screen bodies ---------- */
@@ -412,33 +427,140 @@ b {
   margin-bottom: 0;
 }
 
-/* ---------- screen 1 backdrop ---------- */
+/* ---------- screen 1: the cover ---------- */
 
-.screen-hero {
+/* The site plate. It was the backdrop of the old dense opener; a cover is
+   where a photograph of the work earns its keep, so it lives here now and
+   carries one line of type instead of six paragraphs. */
+.screen-cover {
   background-color: var(--panel);
   background-image:
     /* Overlay measured against a pure white photo pixel as the worst case:
        at 0.78 the ground resolves to about #454547, and chalk, yellow, and
        concrete all clear 4.5:1 on it. Heavier at the bottom where the
-       body copy sits. */
+       meta line sits. */
     linear-gradient(180deg, rgb(17 18 20 / 0.78) 0%, rgb(17 18 20 / 0.92) 100%),
     url('assets/img/hero.jpg'),
     var(--stripe-faint);
   background-size: cover, cover, 45.3px 45.3px;
   background-position: center, center, 0 0;
   background-repeat: no-repeat, no-repeat, repeat;
-  padding: 1.2rem 1.2rem 1.2rem;
+  padding: 1.2rem 1.4rem;
   border: 2px solid var(--line);
   margin: 0.6rem 0 0.4rem;
 }
 
-/* The hero numeral sits over a photo the owner has not chosen yet, so it is
-   lightened to clear 3:1 against the brightest pixel the overlay can let
-   through (a pure white photo under the 86 percent wash reads as #323335). */
-.screen-hero .stamp {
+/* The cover numeral sits over a photograph, so it is lightened to clear 3:1
+   against the brightest pixel the overlay can let through (a pure white photo
+   under the 86 percent wash reads as #323335). */
+.screen-cover .stamp {
   right: 0.8rem;
   top: 0.5rem;
   color: #8A8A86;
+}
+
+.cover {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.cover-lede {
+  align-self: center;
+  min-width: 0;
+  max-width: 44rem;
+  padding-right: 3.5rem;
+}
+
+.cover-kicker {
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+  font-size: 0.74rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+.cover-title {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 6.4vw, 4.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--yellow);
+}
+
+.cover-rule {
+  height: 12px;
+  margin: 0.85rem 0 0.9rem;
+  background-image: var(--stripe);
+  background-size: 39.6px 39.6px;
+}
+
+.cover-promise {
+  margin: 0;
+  max-width: 34rem;
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.45;
+  color: var(--chalk);
+}
+
+.cover-meta {
+  align-self: end;
+  margin: 1rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 2px solid var(--line-hard);
+  font-weight: 700;
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--concrete);
+}
+
+/* ---------- screen 2: the brief ---------- */
+
+/* Both columns take the whole stage: the objective plates share the slack
+   between them, and the disclaimer sits on the floor of its column rather
+   than trailing off halfway down an empty screen. */
+.brief {
+  align-content: stretch;
+}
+
+.brief > .col {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* The plates take some of a tall stage's slack, capped so a single line of
+   type never floats in the middle of an empty box. */
+.brief .ticklist {
+  flex: 1 1 auto;
+  max-height: 20rem;
+  align-content: stretch;
+  grid-auto-rows: minmax(min-content, 1fr);
+}
+
+/* The floor of each column: the hook under the objectives, the disclaimer
+   under the practicalities. Both sit on the bottom rule of the stage, so a
+   tall window opens one clean gap rather than trailing off. */
+.brief-floor {
+  margin-top: auto;
+}
+
+.brief .disclaimer {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.brief .col > *:last-child {
+  margin-bottom: 0;
+}
+
+.brief .note {
+  margin-bottom: 0;
 }
 
 /* ---------- zones list ---------- */
@@ -1345,6 +1467,48 @@ html.js .screen-body > .substeps {
   color: var(--concrete);
 }
 
+/* The recap comes before the numbers on purpose: what you can now do is the
+   point of the module, and the scores are how it went. Same five verbs as
+   screen 2, in the same order. */
+.done-recap-head {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.done-recap {
+  list-style: none;
+  margin: 0 0 0.9rem;
+  padding: 0;
+  columns: 15rem auto;
+  column-gap: 1.6rem;
+}
+
+.done-recap > li {
+  position: relative;
+  margin: 0 0 0.18rem;
+  padding-left: 1.4rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--chalk);
+  break-inside: avoid;
+}
+
+.done-recap > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4em;
+  width: 13px;
+  height: 13px;
+  background: var(--yellow);
+  clip-path: polygon(18% 48%, 8% 60%, 40% 90%, 92% 22%, 80% 12%, 38% 66%);
+}
+
 .done-scores {
   list-style: none;
   margin: 0 0 0.9rem;
@@ -1541,8 +1705,21 @@ button[disabled]:hover {
     gap: 0.5rem;
   }
 
-  .screen-hero {
-    padding: 0.85rem;
+  .ticklist {
+    gap: 0.35rem;
+  }
+
+  .ticklist > li {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+
+  .screen-cover {
+    padding: 0.9rem 1rem;
+  }
+
+  .cover-rule {
+    margin: 0.6rem 0 0.65rem;
   }
 
   .note {
@@ -1605,6 +1782,15 @@ button[disabled]:hover {
     padding: 0.45rem 0.75rem;
   }
 
+  .ticklist {
+    gap: 0.28rem;
+  }
+
+  .ticklist > li {
+    padding-top: 0.22rem;
+    padding-bottom: 0.22rem;
+  }
+
   .hoc > li {
     padding-top: 0.15rem;
     padding-bottom: 0.15rem;
@@ -1634,6 +1820,7 @@ button[disabled]:hover {
   }
 
   .done-sub,
+  .done-recap,
   .done-scores,
   .done-line {
     margin-bottom: 0.65rem;

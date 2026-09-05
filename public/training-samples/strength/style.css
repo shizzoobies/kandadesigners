@@ -465,12 +465,29 @@ li::marker {
   background: var(--signal);
 }
 
-/* ---------- the terms list on screen one ---------- */
+/* ---------- the terms list on the objectives screen ---------- */
 
 .terms {
   margin: 0 0 var(--v);
   border-left: 3px solid var(--steel-line);
   padding-left: 0.9rem;
+}
+
+/* Word on the left, one line on the right: three definitions in the height a
+   stacked list would have spent on two. */
+.terms-row {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.32rem 0.9rem;
+  align-items: baseline;
+}
+
+.terms-row dt {
+  font-size: 0.9rem;
+}
+
+.terms-row dd {
+  margin: 0;
 }
 
 .terms dt {
@@ -501,6 +518,12 @@ li::marker {
   align-content: start;
 }
 
+/* The objectives screen is short on a tall stage. Sat in the middle of the
+   floor it reads as a spread; sat at the top it reads as a page that ran out. */
+html.js .cols2-mid {
+  align-content: center;
+}
+
 .col {
   min-width: 0;
 }
@@ -511,7 +534,24 @@ li::marker {
   margin-bottom: 0;
 }
 
-/* ---------- screen one plate ---------- */
+/* ---------- the objectives screen ---------- */
+
+.objectives > li {
+  margin-bottom: 0.5rem;
+}
+
+.objectives > li:last-child {
+  margin-bottom: 0;
+}
+
+.hook {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--chalk);
+}
+
+/* ---------- the cover plate ---------- */
 
 .screen-hero {
   background-color: var(--panel);
@@ -525,22 +565,89 @@ li::marker {
   background-size: cover, cover, 34px 34px;
   background-position: center, center, 0 0;
   background-repeat: no-repeat, no-repeat, repeat;
-  padding: 1rem 1.1rem;
+  padding: 1.5rem 1.6rem;
   border: 2px solid var(--line);
   border-left: 6px solid var(--signal);
   margin: 0.5rem 0 0.3rem;
-}
-
-/* The opening plate is a whole screen of its own, so its two columns sit in
-   the middle of it rather than clinging to the top edge. */
-html.js .screen-hero > .screen-body {
-  align-content: center;
 }
 
 .screen-hero .stamp {
   right: 0.8rem;
   top: 0.45rem;
   color: #8E939A;
+}
+
+/* The cover is a cover: the kicker, the title, the bar, one promise and the
+   meta line, stacked and set in the middle of the plate. Nothing here is set
+   in the ember: over a photograph the worst case ground is light enough that
+   ember stops clearing 4.5:1 at these sizes, so the red on this screen is the
+   loaded bar and the rail down the left edge, both of them graphics. */
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+html.js .cover {
+  justify-content: center;
+}
+
+.cover-kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.76rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--chalk);
+}
+
+.cover-title {
+  margin: 0.55rem 0 0;
+  padding-right: 3.5rem;
+  font-size: clamp(2.6rem, 7.4vw, 5.4rem);
+  line-height: 0.88;
+}
+
+.cover-bar {
+  display: block;
+  width: min(21rem, 62%);
+  height: auto;
+  margin: 1.15rem 0 0;
+}
+
+.cb-shaft {
+  fill: var(--steel-line);
+}
+
+.cb-plate {
+  fill: var(--signal);
+}
+
+.cover-promise {
+  margin: 1.15rem 0 0;
+  max-width: 34rem;
+  font-size: clamp(1.02rem, 1.7vw, 1.22rem);
+  line-height: 1.45;
+  color: var(--chalk);
+}
+
+.cover-meta {
+  margin: 1.2rem 0 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.cover-med {
+  margin: 0.45rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--steel);
 }
 
 /* ---------- split bodies with a photograph plate ---------- */
@@ -1569,6 +1676,44 @@ html.js .tabpanel > .plate-card {
   white-space: nowrap;
 }
 
+/* The recap, in the same verbs the objectives screen used. */
+.done-sub {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.done-can {
+  list-style: none;
+  margin: 0 0 0.8rem;
+  padding: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.done-can > li {
+  position: relative;
+  margin: 0;
+  padding-left: 1.35rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--chalk);
+}
+
+.done-can > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 9px;
+  height: 9px;
+  background: var(--signal);
+}
+
 .done-line {
   margin: 0 0 0.7rem;
   font-size: 0.99rem;
@@ -1759,7 +1904,16 @@ button[disabled]:hover {
   }
 
   .screen-hero {
-    padding: 0.8rem 0.9rem;
+    padding: 1.1rem 1.2rem;
+  }
+
+  .cover-bar,
+  .cover-promise {
+    margin-top: 0.9rem;
+  }
+
+  .cover-meta {
+    margin-top: 0.95rem;
   }
 
   .note {
@@ -1773,6 +1927,15 @@ button[disabled]:hover {
   .dial {
     margin-bottom: 0.6rem;
     padding: 0.45rem 0.8rem 0.55rem;
+  }
+
+  /* Two lines held open for the sentence under each slider. Some readings run
+     to two lines and some to one, and on a short stage a line appearing under
+     the top dial used to shove the note below it off the bottom of the stage.
+     Reserving the taller of the two makes the screen the same height at every
+     slider position. */
+  .dial-say {
+    min-height: 2.8rem;
   }
 
   .bignum {
@@ -1808,6 +1971,8 @@ button[disabled]:hover {
      little back at the shortest stage. */
   .dial { margin-bottom: 0.35rem; padding: 0.4rem 0.8rem 0.4rem; }
   .dial + .note, .note { font-size: 0.9rem; line-height: 1.42; }
+  .dial input[type='range'] { margin: 0.2rem 0 0.1rem; }
+  .dial-ends { line-height: 1.3; }
 
   :root {
     --v: 0.6rem;
@@ -1843,9 +2008,31 @@ button[disabled]:hover {
 
   .done-h,
   .done-scores,
+  .done-can,
   .done-line,
   .done-note {
     margin-bottom: 0.6rem;
+  }
+
+  .done-can > li {
+    font-size: 0.88rem;
+  }
+
+  .cover-title {
+    font-size: clamp(2.2rem, 6.4vw, 4rem);
+  }
+
+  .cover-bar {
+    width: min(17rem, 55%);
+    margin-top: 0.7rem;
+  }
+
+  .cover-promise {
+    margin-top: 0.75rem;
+  }
+
+  .cover-meta {
+    margin-top: 0.8rem;
   }
 }
 
@@ -1897,7 +2084,8 @@ button[disabled]:hover {
 
   .sort-row,
   .split,
-  .cols2 {
+  .cols2,
+  html.js .cols2-mid {
     align-content: start;
   }
 }
@@ -1928,6 +2116,14 @@ button[disabled]:hover {
 
   h2 {
     padding-right: 3.4rem;
+  }
+
+  .cover-title {
+    padding-right: 2.6rem;
+  }
+
+  .cover-bar {
+    width: min(15rem, 80%);
   }
 
   .pat-btn,

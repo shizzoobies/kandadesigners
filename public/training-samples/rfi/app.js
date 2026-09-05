@@ -20,7 +20,7 @@
 (function () {
   'use strict';
 
-  var TOTAL = 8;
+  var TOTAL = 9;
   var current = 1;
   var completedSent = false;
 
@@ -355,7 +355,7 @@
 
   /* ---------- sub-steps ----------
      A small pager inside the screen, pinned under the screen body, with its
-     own polite count. The outer "Screen N of 8" count is untouched. */
+     own polite count. The outer "Sheet N of 9" count is untouched. */
 
   function buildSteps() {
     list(document.querySelectorAll('[data-substeps]')).forEach(function (group) {
@@ -453,9 +453,17 @@
 
     prevBtn.disabled = current === 1;
     // The last screen is where the piece ends, so the pager ends with a live
-    // Finish rather than a greyed out Next.
+    // Finish rather than a greyed out Next. The cover sheet gets Start,
+    // because the button on a cover opens the set rather than paging through
+    // one already open.
     nextBtn.disabled = false;
-    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
+    if (current === TOTAL) {
+      nextBtn.textContent = 'Finish';
+    } else if (current === 1) {
+      nextBtn.textContent = 'Start';
+    } else {
+      nextBtn.textContent = 'Next';
+    }
 
     if (current === TOTAL) {
       updateFinalScore();

@@ -45,7 +45,7 @@ they are where a change in metrics shows up soonest:
   2. The screen numeral in the top right corner. It is positioned
      absolutely and sized in vw, so a wider face can crowd the heading
      beside it. The heading reserves 4.5rem of right padding for it.
-  3. The step and situation titles on screens four and five, which are
+  3. The step and situation titles on screens six and seven, which are
      the largest running type in the module and set the vertical rhythm
      for both of those screens.
 
@@ -53,7 +53,7 @@ Both families are placeholders for licensed faces. No web font service
 and no CDN: the files sit here and are served from here.
 
 
-PLACEHOLDER NOTE (2026-09-04)
+PLACEHOLDER NOTE (2026-09-04), SUPERSEDED the same evening: the licensed files are in this folder and the @font-face block is live.
 The @font-face block in style.css is commented out until these files exist,
 because a missing font file is a console 404 and the site accessibility gate
 counts it as a failure. Drop the files in, remove the comment markers around

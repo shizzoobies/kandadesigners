@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Build the plate, skip the diet: an eight minute everyday nutrition module</title>
 <meta name="description" content="A short interactive module on building a balanced plate, reading a nutrition label, and telling hunger apart from habit. General education, not medical advice." />
+<!-- A self contained tab mark: the divided plate, in the course palette. No
+     file to fetch, so a copy of this folder anywhere still has its icon. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23C8321F'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='10'%20fill='%23F6EFE2'/%3E%3Cpath%20d='M16%206a10%2010%200%200%200%200%2020z'%20fill='%233E7A4B'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="style.css" />
 <script>document.documentElement.className += ' js';</script>
 </head>
@@ -19,7 +22,7 @@
       </div>
       <div class="meter">
         <div class="meter-track" aria-hidden="true"><span class="meter-fill" id="bar-fill"></span></div>
-        <p class="meter-text" id="progress-text" role="status" aria-live="polite">Card 1 of 8</p>
+        <p class="meter-text" id="progress-text" role="status" aria-live="polite">Card 1 of 9</p>
       </div>
     </div>
     <div class="slat" aria-hidden="true"></div>
@@ -28,26 +31,31 @@
   <main id="module">
 
     <!-- ============ 1 ============ -->
-    <section class="screen screen-hero" id="screen-1">
-      <p class="stamp" aria-hidden="true">1</p>
-      <h2 tabindex="-1">Before you build anything</h2>
-      <div class="screen-body cols2">
-        <div class="col">
-          <p class="lead">By the end of these eight cards you will be able to put together a balanced plate without measuring anything, find the two lines on a food label that actually change what you buy, and tell the difference between being hungry and being on autopilot.</p>
-          <p><b>Nutrition</b> is simply what your food is made of and what your body does with it. That is the whole word. It is not a plan, it is not a rulebook, and it does not come with a list of foods you are banned from.</p>
-          <p class="note"><b>Keyboard.</b> Tab moves between controls, Enter or Space chooses, and the left and right arrows move between the tabbed dividers. The food label lists every spot as a button beside it. Nothing is timed and there is no sound.</p>
+    <!-- The cover. The recipe card at the front of the box: the drawn plate,
+         the title large in the display face, and four facts. Nothing else. -->
+    <!-- No corner numeral here. Every other card is numbered because it is one
+         card out of nine; the front of the box is not one of the nine. -->
+    <section class="screen screen-cover" id="screen-1">
+      <div class="screen-body cover">
+        <div class="cover-main">
+          <svg class="cover-mark" viewBox="0 0 96 84" aria-hidden="true" focusable="false">
+            <circle class="plate-rim" cx="42" cy="42" r="37" />
+            <path class="wedge wedge-veg is-on" d="M42 8A34 34 0 0 0 42 76Z" />
+            <path class="wedge wedge-pro is-on" d="M42 8A34 34 0 0 1 76 42L42 42Z" />
+            <path class="wedge wedge-grain is-on" d="M42 42L76 42A34 34 0 0 1 42 76Z" />
+            <g class="plate-lines"><path d="M42 8V76M42 42H76" /></g>
+            <g class="side-kit is-on">
+              <path class="glass" d="M84 18 95 18 93.5 47 85.5 47Z" />
+              <path class="glass-water" d="M85 27 94.3 27 93.2 45.5 85.8 45.5Z" />
+            </g>
+          </svg>
+          <p class="cover-kicker">Everyday nutrition &middot; Health and wellness</p>
+          <h2 class="cover-title" tabindex="-1">Build the plate, skip the diet</h2>
+          <p class="cover-promise">You will leave able to put a balanced meal together by eye, read the handful of lines on a label that change what you buy, and tell real hunger apart from habit.</p>
         </div>
-        <div class="col">
-          <h3>What you will do</h3>
-          <ul class="ticklist">
-            <li>Learn the plate method and why it works without counting.</li>
-            <li>Build a plate from eight everyday foods.</li>
-            <li>Find six things worth knowing on a nutrition label.</li>
-            <li>Read up on protein and fibre, the two that keep you full.</li>
-            <li>Call six moments hunger, habit, thirst or tiredness.</li>
-            <li>Keep the small swaps you would actually repeat.</li>
-          </ul>
-          <p class="disclaimer">This is general education, not medical or dietary advice, and none of it is personalised to you. For anything to do with your own health, a medication, a pregnancy, an allergy, or a condition you are managing, speak to a registered dietitian or your clinician before changing how you eat.</p>
+        <div class="cover-foot">
+          <p class="cover-meta">About 8 minutes &middot; 9 cards &middot; Short module</p>
+          <p class="cover-fine">General education, not medical advice.</p>
         </div>
       </div>
     </section>
@@ -55,6 +63,32 @@
     <!-- ============ 2 ============ -->
     <section class="screen" id="screen-2">
       <p class="stamp" aria-hidden="true">2</p>
+      <h2 tabindex="-1">What you will be able to do</h2>
+      <div class="screen-body cols2 brief">
+        <div class="col">
+          <ul class="ticklist objectives">
+            <li>Describe how the plate method divides a meal without counting anything.</li>
+            <li>Sort everyday foods into the vegetable half, the two quarters, or beside the plate.</li>
+            <li>Find the six lines on a nutrition label worth reading before you buy.</li>
+            <li>Tell hunger, habit, thirst and tiredness apart from the cues in a moment.</li>
+            <li>Choose one small swap you would still be making in a month.</li>
+          </ul>
+          <h3 class="col-low">Why this matters</h3>
+          <p class="note"><b>Nutrition</b> is simply what your food is made of and what your body does with it. That is the whole word. It is not a plan, it is not a rulebook, and it does not come with a list of foods you are banned from, which is why nothing in here asks you to give anything up.</p>
+        </div>
+        <div class="col">
+          <h3>How this works</h3>
+          <p>Nine cards, about eight minutes. Nothing is timed, there is no sound, and no answer locks: change any of them, and move with Back and Next. Tab moves between controls, Enter or Space chooses, the left and right arrows move between the tabbed dividers, and every line of the food label is also a button in the list beside it.</p>
+          <h3>Who this is for</h3>
+          <p class="quiet">Anyone who eats, cooks for other people, or has quietly given up on a diet. No background needed.</p>
+          <p class="disclaimer">This is general education, not medical or dietary advice, and none of it is personalised to you. For anything to do with your own health, a medication, a pregnancy, an allergy, or a condition you are managing, speak to a registered dietitian or your clinician before changing how you eat.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 ============ -->
+    <section class="screen" id="screen-3">
+      <p class="stamp" aria-hidden="true">3</p>
       <h2 tabindex="-1">What a balanced plate looks like</h2>
       <div class="screen-body split">
         <div class="split-text">
@@ -62,13 +96,13 @@
 
           <div class="tabs" data-tabs data-plate="plate-a">
             <div class="tablist" role="tablist" aria-label="The plate method">
-              <button type="button" role="tab" id="tab-2a" aria-controls="pan-2a" data-wedge="veg">Vegetables and fruit</button>
-              <button type="button" role="tab" id="tab-2b" aria-controls="pan-2b" data-wedge="pro">Protein</button>
-              <button type="button" role="tab" id="tab-2c" aria-controls="pan-2c" data-wedge="grain">Grains and starch</button>
-              <button type="button" role="tab" id="tab-2d" aria-controls="pan-2d" data-wedge="side">Fats and drinks</button>
+              <button type="button" role="tab" id="tab-3a" aria-controls="pan-3a" data-wedge="veg">Vegetables and fruit</button>
+              <button type="button" role="tab" id="tab-3b" aria-controls="pan-3b" data-wedge="pro">Protein</button>
+              <button type="button" role="tab" id="tab-3c" aria-controls="pan-3c" data-wedge="grain">Grains and starch</button>
+              <button type="button" role="tab" id="tab-3d" aria-controls="pan-3d" data-wedge="side">Fats and drinks</button>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-2a" aria-labelledby="tab-2a" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-3a" aria-labelledby="tab-3a" tabindex="0">
               <h3>Half the plate</h3>
               <ul>
                 <li>Vegetables and fruit bring fibre, water and vitamins, and they take up room on the plate for very little effort.</li>
@@ -78,7 +112,7 @@
               </ul>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-2b" aria-labelledby="tab-2b" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-3b" aria-labelledby="tab-3b" tabindex="0">
               <h3>A quarter of the plate</h3>
               <ul>
                 <li>Protein is the part of food your body uses to build and repair things, and it is slow to digest, which is why it keeps you comfortable between meals.</li>
@@ -88,7 +122,7 @@
               </ul>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-2c" aria-labelledby="tab-2c" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-3c" aria-labelledby="tab-3c" tabindex="0">
               <h3>The other quarter</h3>
               <ul>
                 <li>A <b>whole grain</b> is a grain with the whole seed still in it: the bran, the germ and the starchy middle. Milling takes the first two out, and most of the fibre goes with them.</li>
@@ -98,7 +132,7 @@
               </ul>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-2d" aria-labelledby="tab-2d" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-3d" aria-labelledby="tab-3d" tabindex="0">
               <h3>Beside the plate</h3>
               <ul>
                 <li>Fat carries flavour and helps your body absorb some vitamins. Olive oil, nuts, seeds, avocado and oily fish are the ones to reach for first.</li>
@@ -133,9 +167,9 @@
       </div>
     </section>
 
-    <!-- ============ 3 ============ -->
-    <section class="screen" id="screen-3">
-      <p class="stamp" aria-hidden="true">3</p>
+    <!-- ============ 4 ============ -->
+    <section class="screen" id="screen-4">
+      <p class="stamp" aria-hidden="true">4</p>
       <h2 tabindex="-1">Build a plate</h2>
       <div class="screen-body sorter">
         <p class="lead">Eight things came out of the shop. Send each one to the part of the plate it belongs on, or beside the plate. You can change any answer, and nothing here is timed.</p>
@@ -249,9 +283,9 @@
       </div>
     </section>
 
-    <!-- ============ 4 ============ -->
-    <section class="screen" id="screen-4">
-      <p class="stamp" aria-hidden="true">4</p>
+    <!-- ============ 5 ============ -->
+    <section class="screen" id="screen-5">
+      <p class="stamp" aria-hidden="true">5</p>
       <h2 tabindex="-1">Reading a nutrition label</h2>
       <div class="screen-body label-screen">
         <p class="lead">A <b>Nutrition Facts label</b> describes one <b>serving</b> of a packaged food, a fixed standard amount, not the whole box. Select any line on the panel, or a button beside it.</p>
@@ -327,9 +361,9 @@
       </div>
     </section>
 
-    <!-- ============ 5 ============ -->
-    <section class="screen" id="screen-5">
-      <p class="stamp" aria-hidden="true">5</p>
+    <!-- ============ 6 ============ -->
+    <section class="screen" id="screen-6">
+      <p class="stamp" aria-hidden="true">6</p>
       <h2 tabindex="-1">Protein and fibre keep you full</h2>
       <div class="screen-body split">
         <div class="split-text">
@@ -388,12 +422,12 @@
       </div>
     </section>
 
-    <!-- ============ 6 ============ -->
-    <section class="screen" id="screen-6">
-      <p class="stamp" aria-hidden="true">6</p>
+    <!-- ============ 7 ============ -->
+    <section class="screen" id="screen-7">
+      <p class="stamp" aria-hidden="true">7</p>
       <h2 tabindex="-1">Hunger or habit</h2>
       <div class="screen-body">
-        <p class="lead">Six ordinary moments. For each one, pick the most likely explanation from what the situation tells you. This is about noticing a cue, not about being right or wrong with your own body.</p>
+        <p class="lead">Four things send people to the kitchen, and only one of them is food. <b>Hunger</b> builds slowly and will accept dull food. <b>Habit</b> arrives with a place or a time rather than with an empty stomach. <b>Thirst</b> speaks as a dry mouth or a dull head. <b>Tiredness</b> asks for sweetness rather than for a meal. Six ordinary moments follow: pick the likeliest explanation from what the situation tells you, not from what your own body would do.</p>
 
         <div class="substeps" data-substeps data-sub-label="Moment">
           <div class="sub-bar">
@@ -487,13 +521,13 @@
       </div>
     </section>
 
-    <!-- ============ 7 ============ -->
-    <section class="screen" id="screen-7">
-      <p class="stamp" aria-hidden="true">7</p>
+    <!-- ============ 8 ============ -->
+    <section class="screen" id="screen-8">
+      <p class="stamp" aria-hidden="true">8</p>
       <h2 tabindex="-1">Small swaps that stick</h2>
       <div class="screen-body swaps-screen">
         <div class="swaps-head">
-          <p class="lead">Turn a card over to see the swap and why it works. Tick the ones you would actually repeat, and they go onto your card at the end.</p>
+          <p class="lead">A swap you keep beats a better one you drop in a fortnight. Turn a card over for the swap and the reason, then tick the ones you would repeat: they go onto your card at the end.</p>
           <p class="counter" id="swap-count" role="status" aria-live="polite">0 swaps kept.</p>
         </div>
 
@@ -597,20 +631,20 @@
       </div>
     </section>
 
-    <!-- ============ 8 ============ -->
-    <section class="screen" id="screen-8">
-      <p class="stamp" aria-hidden="true">8</p>
+    <!-- ============ 9 ============ -->
+    <section class="screen" id="screen-9">
+      <p class="stamp" aria-hidden="true">9</p>
       <h2 tabindex="-1">Your card</h2>
       <div class="screen-body split">
         <div class="split-text">
           <div class="tabs tabs-wide" data-tabs>
             <div class="tablist" role="tablist" aria-label="Your card">
-              <button type="button" role="tab" id="tab-8a" aria-controls="pan-8a">This week's plate</button>
-              <button type="button" role="tab" id="tab-8b" aria-controls="pan-8b">Where you landed</button>
-              <button type="button" role="tab" id="tab-8c" aria-controls="pan-8c">Start over</button>
+              <button type="button" role="tab" id="tab-9a" aria-controls="pan-9a">This week's plate</button>
+              <button type="button" role="tab" id="tab-9b" aria-controls="pan-9b">Where you landed</button>
+              <button type="button" role="tab" id="tab-9c" aria-controls="pan-9c">Start over</button>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-8a" aria-labelledby="tab-8a" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-9a" aria-labelledby="tab-9a" tabindex="0">
               <div class="card" id="card">
                 <p class="card-title">This week's plate</p>
                 <p class="card-rule">Half the plate vegetables and fruit. A quarter protein. A quarter whole grains or starch. Water first.</p>
@@ -619,7 +653,7 @@
               </div>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-8b" aria-labelledby="tab-8b" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-9b" aria-labelledby="tab-9b" tabindex="0">
               <div class="results">
                 <p class="card-title">Where you landed</p>
                 <ul id="results-list">
@@ -632,7 +666,7 @@
               <p class="disclaimer">General education, not medical or dietary advice. Speak to a registered dietitian or your clinician about anything to do with your own health.</p>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-8c" aria-labelledby="tab-8c" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-9c" aria-labelledby="tab-9c" tabindex="0">
               <p>Starting over clears every answer, every found line and every kept swap, and takes you back to the first card.</p>
               <p><button type="button" class="btn-ghost" id="restart">Start over</button></p>
             </div>
@@ -665,6 +699,15 @@
         <h2 class="done-h" id="done-title" tabindex="-1">That is the plate</h2>
         <p class="done-sub">Build the plate, skip the diet</p>
 
+        <p class="done-recap-h">What you can now do</p>
+        <ul class="done-recap ticklist">
+          <li>Describe how the plate divides a meal, without counting.</li>
+          <li>Sort a food onto the plate by eye.</li>
+          <li>Find the six lines on a label worth reading.</li>
+          <li>Tell hunger, habit, thirst and tiredness apart.</li>
+          <li>Choose one swap you would still be making in a month.</li>
+        </ul>
+
         <ul class="done-scores">
           <li><span class="done-label">Build a plate</span> <span class="done-val" id="done-plate">0 of 8</span></li>
           <li><span class="done-label">Label lines found</span> <span class="done-val" id="done-label">0 of 6</span></li>
@@ -672,7 +715,7 @@
           <li><span class="done-label">Swaps kept</span> <span class="done-val" id="done-swaps">0</span></li>
         </ul>
 
-        <p class="done-line">You did not learn a diet, and that was the point. You learned a picture of a plate, two lines on a label, and a question to ask yourself at three in the afternoon. Take one swap into this week and leave the rest on the card.</p>
+        <p class="done-line">You did not learn a diet, and that was the point. Take one swap into this week and leave the rest on the card.</p>
         <p class="done-fine">General education, not medical or dietary advice. Talk to a registered dietitian or your clinician before changing how you eat.</p>
 
         <div class="done-actions">

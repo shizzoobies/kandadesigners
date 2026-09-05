@@ -61,9 +61,10 @@ async function visibleButtons(page) {
 }
 
 async function pressOuterNext(page) {
-  // The outer pager is last in the DOM; its Next/Finish is the last match.
+  // The outer pager is last in the DOM; its Start/Next/Finish is the last
+  // match. A cover screen reads Start (never "Start over", which restarts).
   const btns = await visibleButtons(page);
-  const nexts = btns.filter((b) => /^(next|finish)\b/i.test(b.text));
+  const nexts = btns.filter((b) => /^(next|finish|begin|start(?! over))\b/i.test(b.text));
   if (!nexts.length) return false;
   await nexts[nexts.length - 1].h.click();
   await page.waitForTimeout(250);
@@ -76,10 +77,10 @@ async function unlockScreen(page) {
   // a few passes at most.
   for (let pass = 0; pass < 4; pass++) {
     const btns = await visibleButtons(page);
-    const next = btns.filter((b) => /^(next|finish)\b/i.test(b.text)).pop();
+    const next = btns.filter((b) => /^(next|finish|begin|start(?! over))\b/i.test(b.text)).pop();
     if (next) return true;
     for (const b of btns) {
-      if (/^(back|start over|next|finish)\b/i.test(b.text)) continue;
+      if (/^(back|start over|next|finish|begin|start)\b/i.test(b.text)) continue;
       const role = await b.h.getAttribute('role');
       const exp = await b.h.getAttribute('aria-expanded');
       if (role === 'tab' || exp !== null) continue;

@@ -401,7 +401,7 @@ h1 {
 .gauge-fill {
   display: block;
   height: 100%;
-  width: 14.3%;
+  width: 12.5%;
   border-radius: 6px;
   background: linear-gradient(90deg, var(--cedar), var(--ember));
   transition: width var(--slow);
@@ -551,7 +551,7 @@ b {
   background: var(--ember);
 }
 
-/* ---------- screen one ---------- */
+/* ---------- the two opening screens ---------- */
 
 .cols2 {
   display: grid;
@@ -562,13 +562,6 @@ b {
   min-width: 0;
   display: flex;
   flex-direction: column;
-}
-
-/* The keyboard note and the disclaimer sit on the floor of their column,
-   so the hero plate is anchored top and bottom rather than top only. */
-.col > .note,
-.col > .disclaimer {
-  margin-top: auto;
 }
 
 .col > *:last-child,
@@ -636,6 +629,178 @@ b {
   fill: #FFFFFF;
   opacity: 0;
   filter: blur(18px);
+}
+
+/* ---------- the cover ----------
+
+   Screen one is a cover and nothing else: the kicker, the title at the
+   largest type in the module, one sentence of promise, the meta line and
+   the one small health line. It sits on the cedar plate with the steam
+   rising behind it, and the block is centred on the stage so the plate
+   reads as a photograph with a title on it rather than as a card that
+   ran out of content. */
+
+.screen-cover {
+  padding-top: 0.6rem;
+}
+
+/* The cover is the one plate that shows its photograph. Every word on it
+   lives in the left column and the numeral lives in the top band, so the
+   heavy wash only has to cover those two strips: one gradient down the
+   left, one across the top, and a light 28 percent wash under everything
+   so the room reads warm rather than raw. Measured against a pure black
+   photo pixel as the worst case, the ground under the text is 0.995
+   opaque, which is heavier than the old flat wash, and the exposed lower
+   right carries no text at all. */
+.screen-cover {
+  background-image:
+    var(--grain),
+    linear-gradient(90deg,
+      rgb(244 241 236 / 0.925) 0,
+      rgb(244 241 236 / 0.925) 34rem,
+      rgb(244 241 236 / 0) 47rem),
+    linear-gradient(180deg,
+      rgb(244 241 236 / 0.925) 0,
+      rgb(244 241 236 / 0.925) 5rem,
+      rgb(244 241 236 / 0) 11rem),
+    linear-gradient(0deg, rgb(244 241 236 / 0.28), rgb(244 241 236 / 0.28)),
+    url('assets/img/hero.jpg'),
+    var(--plank);
+  background-size: auto, auto, auto, auto, cover, auto;
+  background-position: 0 0, 0 0, 0 0, 0 0, center, 0 0;
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 46rem;
+  padding: 0.6rem 0 0.4rem;
+}
+
+/* Nothing on the cover reaches past 33rem, which is where the wash down
+   the left of the plate is still at full strength. */
+.cover-kicker {
+  margin: 0 0 0.6rem;
+  max-width: 33rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cedar-deep);
+}
+
+.cover h2.cover-title {
+  margin: 0 0 0.8rem;
+  max-width: 32rem;
+  padding-right: 0;
+  font-size: clamp(2.4rem, 6.2vw, 4.3rem);
+  line-height: 0.99;
+  letter-spacing: -0.026em;
+}
+
+.cover-promise {
+  margin: 0 0 1.15rem;
+  max-width: 33rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.08rem, 1.9vw, 1.4rem);
+  line-height: 1.34;
+  color: var(--ink);
+}
+
+.cover-meta {
+  margin: 0;
+  max-width: 33rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--rule);
+  font-weight: 500;
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+
+.cover-small {
+  margin: 0.45rem 0 0;
+  max-width: 33rem;
+  font-size: 0.87rem;
+  line-height: 1.45;
+  color: var(--quiet);
+}
+
+/* ---------- objectives and how this works ---------- */
+
+/* The two columns take the stage and the two small blocks sit on the
+   floor of it, full width, so the keyboard note and the disclaimer read
+   in two or three lines instead of stacking up inside a column. */
+
+.brief {
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .brief > .brief-cols {
+  flex: 1 1 auto;
+}
+
+.brief-foot {
+  flex: 0 0 auto;
+  margin-top: 1rem;
+}
+
+.brief-foot > .note {
+  margin-bottom: 0.7rem;
+}
+
+.brief-foot > .disclaimer {
+  margin-bottom: 0;
+}
+
+/* The objectives sit on a bench board, the same plate as a session step
+   and a situation, so the promise of the course is one solid object
+   rather than a loose list. It grows into the stage; the explanation
+   beside it stays plain text on the ground, anchored top and bottom. */
+.board {
+  position: relative;
+  overflow: clip;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--birch-soft);
+  padding: 1rem 1.2rem;
+}
+
+html.js .brief .col > .board {
+  flex: 1 1 auto;
+}
+
+.board::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 5px;
+  background-image: var(--wood-light);
+}
+
+.objectives {
+  margin-bottom: 0;
+}
+
+.objectives > li {
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.why {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--rule);
+  color: var(--quiet);
+  font-size: 0.95rem;
 }
 
 /* ---------- teaching layouts ---------- */
@@ -1568,6 +1733,41 @@ html.js .split-text > .substeps {
   white-space: nowrap;
 }
 
+/* The recap against the objectives, in the same verbs screen two used. */
+.done-recap-h {
+  margin: 0 0 0.4rem;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cedar-deep);
+}
+
+.done-recap {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding-left: 0;
+}
+
+.done-recap > li {
+  position: relative;
+  margin-bottom: 0.2rem;
+  padding-left: 1.4rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.done-recap > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.52em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ember);
+}
+
 .done-line {
   margin: 0 0 0.7rem;
   font-size: 1rem;
@@ -1731,6 +1931,22 @@ button[disabled]:hover {
   }
 }
 
+/* On a short stage the two small blocks on the floor of screen two go side
+   by side instead of stacking: half the width, and roughly half the height
+   back to the two columns above them. */
+@media (min-width: 56rem) and (max-height: 46rem) {
+  .brief-foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0 2rem;
+    align-items: start;
+  }
+
+  .brief-foot > .note {
+    margin-bottom: 0;
+  }
+}
+
 @media (min-width: 70rem) {
   .split {
     grid-template-columns: minmax(0, 1fr) 17rem;
@@ -1758,6 +1974,19 @@ button[disabled]:hover {
 
   .screen-hero {
     padding: 0.85rem 1rem;
+  }
+
+  .cover h2.cover-title {
+    font-size: clamp(2.1rem, 5.4vw, 3.4rem);
+    margin-bottom: 0.6rem;
+  }
+
+  .cover-promise {
+    margin-bottom: 0.85rem;
+  }
+
+  .brief-foot {
+    margin-top: 0.8rem;
   }
 
   .note {
@@ -1851,6 +2080,33 @@ button[disabled]:hover {
     gap: 0.9rem 2rem;
   }
 
+  .cover h2.cover-title {
+    font-size: clamp(1.95rem, 4.8vw, 3rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-promise {
+    margin-bottom: 0.7rem;
+    line-height: 1.28;
+  }
+
+  .cover-meta {
+    padding-top: 0.55rem;
+  }
+
+  .brief-foot {
+    margin-top: 0.65rem;
+  }
+
+  .board {
+    padding: 0.7rem 0.95rem;
+  }
+
+  .objectives > li {
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+
   .col h3 {
     margin-top: 0;
     margin-bottom: 0.3rem;
@@ -1929,8 +2185,14 @@ button[disabled]:hover {
 
   .done-sub,
   .done-scores,
+  .done-recap,
   .done-line {
     margin-bottom: 0.6rem;
+  }
+
+  .done-recap > li {
+    font-size: 0.92rem;
+    margin-bottom: 0.12rem;
   }
 }
 
@@ -1977,13 +2239,19 @@ button[disabled]:hover {
   html.js .tabpanel > .results,
   html.js .screen-body > .reveal,
   html.js .split-text > .accordion,
+  html.js .brief > .brief-cols,
   .acc-sec:has(> .acc-panel:not([hidden])) {
     flex: 0 0 auto;
   }
 
-  .col > .note,
-  .col > .disclaimer,
-  .ask-note {
+  /* The cover stops centring once the body can scroll: a short viewport
+     should show the title at the top, not pushed off the bottom. */
+  .cover {
+    justify-content: flex-start;
+  }
+
+  .ask-note,
+  .why {
     margin-top: var(--v);
   }
 

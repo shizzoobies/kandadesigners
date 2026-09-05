@@ -1,5 +1,5 @@
 /* Spot it before it hurts someone.
-   Plain DOM, no framework, no network. Seven jobs:
+   Plain DOM, no framework, no network. Eight jobs:
      1. show one screen at a time and move focus to its heading,
      2. run the tab sets on the teaching screens,
      3. run the accordion on the walk-through card,
@@ -22,8 +22,8 @@
 (function () {
   'use strict';
 
-  var TOTAL = 9;
-  var HUNT_SCREEN = 6;
+  var TOTAL = 10;
+  var HUNT_SCREEN = 7;
   var SPOT_COUNT = 6;
   var REVEAL_AFTER = 3;
 
@@ -578,7 +578,8 @@
     // The last screen keeps a live button: reaching it earns Finish, which is
     // the ending, rather than a greyed out Next with nothing behind it.
     nextBtn.disabled = current === HUNT_SCREEN && foundCount < SPOT_COUNT;
-    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
+    // Start on the cover, Finish on the last screen, Next everywhere between.
+    nextBtn.textContent = current === TOTAL ? 'Finish' : (current === 1 ? 'Start' : 'Next');
 
     if (current === TOTAL) {
       updateResults();
@@ -724,7 +725,7 @@
     });
 
     doneReviewBtn.addEventListener('click', function () {
-      var cardTab = document.getElementById('tab-9b');
+      var cardTab = document.getElementById('tab-10b');
       if (cardTab) {
         cardTab.click();
       }

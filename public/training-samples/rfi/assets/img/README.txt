@@ -33,13 +33,13 @@ THE FOUR SLOTS
                   face, and should read as shape rather than detail, because
                   shape is all that survives the wash.
 
-  detail.jpg      Screen 2 side plate, beside "What an RFI actually is".
+  detail.jpg      Screen 3 side plate, beside "What an RFI actually is".
                   Delivered at 900 x 1045, 54KB. A drawing detail close up.
 
-  review.jpg      Screen 3 side plate, beside "Why RFIs come back slow".
+  review.jpg      Screen 4 side plate, beside "Why RFIs come back slow".
                   Delivered at 900 x 1350, 86KB. A set under review.
 
-  rolls.jpg       Screen 4 side plate, beside the four parts.
+  rolls.jpg       Screen 5 side plate, beside the four parts.
                   Delivered at 900 x 600, 40KB. Rolled drawings.
 
 The three side plates run the full height of the drawing border and are about

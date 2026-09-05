@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Heat, done well: a seven minute module on using a sauna sensibly</title>
 <meta name="description" content="A short interactive module on what a sauna does to the body, how to walk through a session without overdoing it, and when to stop." />
+<!-- Self-contained tab icon: the stones and the steam, drawn in the course
+     palette. No file, no request, no blank tab. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237A4A26'/%3E%3Cg fill='%23E8722A'%3E%3Cellipse cx='11.5' cy='24' rx='6.4' ry='4.2'/%3E%3Cellipse cx='21' cy='25' rx='5.4' ry='3.6'/%3E%3Cellipse cx='16' cy='18.6' rx='5' ry='3.4'/%3E%3C/g%3E%3Cg fill='none' stroke='%23EAD9BE' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 11.4c-2.8-3.4 2.2-5 0-8.2M20.4 10.4c-2.8-3.4 2.2-5 0-8.2'/%3E%3C/g%3E%3C/svg%3E" />
 <link rel="stylesheet" href="style.css" />
 <script>document.documentElement.className += ' js';</script>
 </head>
@@ -30,58 +33,75 @@
       </div>
       <div class="gauge">
         <div class="gauge-track" aria-hidden="true"><span class="gauge-fill" id="bar-fill"></span></div>
-        <p class="gauge-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 7</p>
+        <p class="gauge-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 8</p>
       </div>
     </div>
     <div class="edge edge-head" aria-hidden="true"></div>
   </header>
 
   <main id="module">
-
     <!-- ============ 1 ============ -->
-    <section class="screen screen-hero" id="screen-1">
+    <section class="screen screen-hero screen-cover" id="screen-1">
       <svg class="steam" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
         <ellipse class="puff puff-a" cx="90" cy="250" rx="62" ry="34" />
         <ellipse class="puff puff-b" cx="215" cy="270" rx="80" ry="42" />
         <ellipse class="puff puff-c" cx="320" cy="255" rx="54" ry="30" />
       </svg>
       <p class="stamp" aria-hidden="true">01</p>
-      <h2 tabindex="-1">Before you sit down</h2>
-      <div class="screen-body cols2">
-        <div class="col">
-          <p class="lead">A sauna is a small room built to be heated well above ordinary room temperature, used in short sessions of dry or steamy heat. By the end of this module you will know what the heat is doing to you, how to walk through a session without overdoing it, and when the right answer is to get out.</p>
-          <p>Two kinds turn up almost everywhere: a traditional sauna, heated by a stove and a pile of hot stones, and an infrared sauna, where panels warm your body directly. This module covers both.</p>
-          <p class="note"><b>Keyboard.</b> Tab moves between controls, Enter or Space chooses, and the left and right arrow keys move between tabs. Nothing is timed, nothing plays sound, and the one moving thing on here has a Start button and never starts on its own.</p>
-        </div>
-        <div class="col">
-          <h3>What you will do</h3>
-          <ul class="ticklist">
-            <li>Compare traditional and infrared heat.</li>
-            <li>Read what the heat asks of your heart, your fluids and your muscles.</li>
-            <li>Walk a session, step by step.</li>
-            <li>Make eight calls on whether to stay, cool down, or stop.</li>
-            <li>Check the seven reasons to ask a clinician first.</li>
-            <li>Build a plan for a first session.</li>
-          </ul>
-          <p class="disclaimer"><b>Please read this part.</b> This is general education, not medical advice. Heat is a real physical stress, not a spa nicety. If you are pregnant, live with heart disease, have low or high blood pressure, take medication that affects heat regulation or blood pressure, or have been drinking alcohol, talk to a clinician before using a sauna.</p>
-        </div>
+      <div class="screen-body cover">
+        <p class="cover-kicker">Sauna and recovery &middot; Health and wellness</p>
+        <h2 tabindex="-1" class="cover-title">Heat, done well</h2>
+        <p class="cover-promise">You will walk into a sauna knowing what the heat is doing to you, how to run a session without overdoing it, and when the right answer is to get out.</p>
+        <p class="cover-meta">About 7 minutes &middot; 8 screens &middot; Microlearning</p>
+        <p class="cover-small">General education, not medical advice.</p>
       </div>
     </section>
 
     <!-- ============ 2 ============ -->
     <section class="screen" id="screen-2">
       <p class="stamp" aria-hidden="true">02</p>
+      <h2 tabindex="-1">What you will be able to do</h2>
+      <div class="screen-body brief">
+        <div class="cols2 brief-cols">
+          <div class="col">
+            <div class="board">
+              <ul class="ticklist objectives">
+                <li>Distinguish traditional heat from infrared, and what both ask of you.</li>
+                <li>Describe what the heat does to your circulation, your fluids and your muscles.</li>
+                <li>Identify who should ask a clinician before a first session.</li>
+                <li>Order the steps of a session, and build a plan for your own first one.</li>
+                <li>Decide, on the bench, whether to stay, cool down now, or stop and get help.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col">
+            <h3>What a sauna is</h3>
+            <p>A <b>sauna</b> is a small room heated well above ordinary room temperature, used in short sessions of dry or steamy heat. Two kinds turn up almost everywhere: <b>traditional</b>, heated by a stove and a pile of hot stones, and <b>infrared</b>, where panels warm your body directly. Both are covered here.</p>
+            <p class="why">Trouble in a sauna is rarely the heat on its own. It is usually heat and something else: no water since breakfast, a drink at lunch, a warning sign sat through because the round was not over.</p>
+          </div>
+        </div>
+        <div class="brief-foot">
+          <p class="note"><b>How this works.</b> About seven minutes across eight screens. Nothing is timed, nothing plays sound, and the one moving thing has a Start button. Tab moves between controls, Enter or Space chooses, and the arrow keys move between tabs.</p>
+          <p class="disclaimer"><b>Please read this part.</b> This is general education, not medical advice. Heat is a real physical stress, not a spa nicety. If you are pregnant, live with heart disease, have low or high blood pressure, take medication that affects heat regulation or blood pressure, or have been drinking alcohol, talk to a clinician before using a sauna.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 ============ -->
+    <section class="screen" id="screen-3">
+      <p class="stamp" aria-hidden="true">03</p>
       <h2 tabindex="-1">Two kinds of heat</h2>
       <div class="screen-body split">
         <div class="split-text">
+          <p class="lead">Two rooms, two ways of getting hot, and one body that answers both in much the same way.</p>
           <div class="tabs" data-tabs>
             <div class="tablist" role="tablist" aria-label="Kinds of sauna heat">
-              <button type="button" role="tab" id="tab-2a" aria-controls="pan-2a">Traditional</button>
-              <button type="button" role="tab" id="tab-2b" aria-controls="pan-2b">Infrared</button>
-              <button type="button" role="tab" id="tab-2c" aria-controls="pan-2c">What they share</button>
+              <button type="button" role="tab" id="tab-3a" aria-controls="pan-3a">Traditional</button>
+              <button type="button" role="tab" id="tab-3b" aria-controls="pan-3b">Infrared</button>
+              <button type="button" role="tab" id="tab-3c" aria-controls="pan-3c">What they share</button>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-2a" aria-labelledby="tab-2a" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-3a" aria-labelledby="tab-3a" tabindex="0">
               <p class="lead">A stove heats the room and a pile of stones on top of it. The air itself gets hot, and it is usually dry until somebody adds water.</p>
               <ul>
                 <li>Ladle a little water onto the stones and you get <b>l&ouml;yly</b>: the burst of steam that rises when water hits hot rock, and the wave of heat you feel a second later. Humidity climbs for a moment, then settles.</li>
@@ -90,7 +110,7 @@
               </ul>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-2b" aria-labelledby="tab-2b" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-3b" aria-labelledby="tab-3b" tabindex="0">
               <p class="lead"><b>Infrared</b> saunas use panels that warm your body directly rather than heating all of the air first, so the air stays cooler than it would in a traditional room.</p>
               <ul>
                 <li>The air can feel mild while you are still sweating steadily, which is the part people misread.</li>
@@ -99,7 +119,7 @@
               </ul>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-2c" aria-labelledby="tab-2c" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-3c" aria-labelledby="tab-3c" tabindex="0">
               <p class="lead">The room is different. What your body does about it is broadly the same.</p>
               <ul>
                 <li>Your core temperature, meaning the temperature deep inside you rather than at the skin, rises. You flush, and you sweat.</li>
@@ -170,9 +190,9 @@
       </div>
     </section>
 
-    <!-- ============ 3 ============ -->
-    <section class="screen" id="screen-3">
-      <p class="stamp" aria-hidden="true">03</p>
+    <!-- ============ 4 ============ -->
+    <section class="screen" id="screen-4">
+      <p class="stamp" aria-hidden="true">04</p>
       <h2 tabindex="-1">What the heat does</h2>
       <div class="screen-body split">
         <div class="split-text">
@@ -222,12 +242,69 @@
       </div>
     </section>
 
-    <!-- ============ 4 ============ -->
-    <section class="screen" id="screen-4">
-      <p class="stamp" aria-hidden="true">04</p>
+    <!-- ============ 5 ============ -->
+    <section class="screen" id="screen-5">
+      <p class="stamp" aria-hidden="true">05</p>
+      <h2 tabindex="-1">Who should check first</h2>
+      <div class="screen-body">
+        <p class="lead">Seven situations where the sensible move is a question before a session. Select one to read why it is worth asking.</p>
+
+        <div class="reveal" data-accordion>
+          <div class="reveal-list">
+            <ul class="asklist">
+              <li><button type="button" class="acc-btn" id="askb-1" aria-controls="askp-1"><span class="acc-mark" aria-hidden="true"></span><span>Pregnancy</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-2" aria-controls="askp-2"><span class="acc-mark" aria-hidden="true"></span><span>Heart conditions and blood pressure</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-3" aria-controls="askp-3"><span class="acc-mark" aria-hidden="true"></span><span>Medications</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-4" aria-controls="askp-4"><span class="acc-mark" aria-hidden="true"></span><span>Alcohol</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-5" aria-controls="askp-5"><span class="acc-mark" aria-hidden="true"></span><span>Children and older adults</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-6" aria-controls="askp-6"><span class="acc-mark" aria-hidden="true"></span><span>Recent illness or a fever</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-7" aria-controls="askp-7"><span class="acc-mark" aria-hidden="true"></span><span>Open wounds or skin conditions</span></button></li>
+            </ul>
+            <p class="note ask-note">None of this is a diagnosis and none of it is a list of bans. It is a prompt to ask somebody who knows your history, before a first session rather than after one.</p>
+          </div>
+
+          <div class="reveal-panels">
+            <div class="acc-panel ask-panel" id="askp-1" role="region" aria-labelledby="askb-1">
+              <p class="ask-head">Pregnancy</p>
+              <p>Heat raises core body temperature, and raised core temperature is something clinicians watch carefully in pregnancy. Guidance varies by country and by stage. Ask your midwife or doctor rather than reading a forum, and ask before the first session rather than after it.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-2" role="region" aria-labelledby="askb-2">
+              <p class="ask-head">Heart conditions and blood pressure</p>
+              <p>Heat asks your heart and circulation to work: faster beats, wider vessels, and a blood pressure that can drop when you stand up. If you live with a heart condition, unstable blood pressure high or low, or you have had a recent cardiac event, this is a conversation with your clinician and not a guess on the bench.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-3" role="region" aria-labelledby="askb-3">
+              <p class="ask-head">Medications</p>
+              <p>Some medicines change how you regulate heat, how much you sweat, or how your blood pressure behaves when you stand. Diuretics, blood pressure medicines, sedatives and various others can all matter here. Your pharmacist can answer this in about a minute, and it is a good minute to spend.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-4" role="region" aria-labelledby="askb-4">
+              <p class="ask-head">Alcohol</p>
+              <p>Alcohol and heat both lower blood pressure and both dry you out, and together they make fainting considerably more likely. Do not drink before a session and do not drink during one. Water is the drink here, and it is not a compromise.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-5" role="region" aria-labelledby="askb-5">
+              <p class="ask-head">Children and older adults</p>
+              <p>Children heat up faster than adults and have far less practice noticing it or saying so. Older adults are more likely to be on medication and may feel a change in balance more sharply on standing. Both do better with shorter, cooler, supervised visits, and with somebody paying attention who is not also enjoying themselves.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-6" role="region" aria-labelledby="askb-6">
+              <p class="ask-head">Recent illness or a fever</p>
+              <p>If you already have a fever, your body is running hot deliberately and does not need the help. If you are recovering from an illness, dehydration and a lower tolerance for heat both linger longer than the symptoms do. Wait until you are properly well.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-7" role="region" aria-labelledby="askb-7">
+              <p class="ask-head">Open wounds or skin conditions</p>
+              <p>Heat, sweat and shared benches are hard on broken skin, and several skin conditions flare with heat rather than settle. Cover what can be covered, sit on your own towel either way, and ask a clinician about anything that is currently open or currently angry.</p>
+            </div>
+            <div class="plate plate-towel" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6 ============ -->
+    <section class="screen" id="screen-6">
+      <p class="stamp" aria-hidden="true">06</p>
       <h2 tabindex="-1">A good session, step by step</h2>
       <div class="screen-body split split-wide">
         <div class="split-text">
+          <p class="lead">Nine steps in order. Most of what makes a session good happens before you sit down and after you get up.</p>
           <div class="substeps" id="session" data-substeps data-sub-label="Step">
             <div class="sub-bar">
               <h3 class="sub-head" tabindex="-1" data-sub-head>Step 1 of 9</h3>
@@ -329,9 +406,9 @@
       </div>
     </section>
 
-    <!-- ============ 5 ============ -->
-    <section class="screen" id="screen-5">
-      <p class="stamp" aria-hidden="true">05</p>
+    <!-- ============ 7 ============ -->
+    <section class="screen" id="screen-7">
+      <p class="stamp" aria-hidden="true">07</p>
       <h2 tabindex="-1">Stay, cool down, or stop</h2>
       <div class="screen-body">
         <p class="lead">Eight moments on the bench. For each one, choose whether you stay put, get out and cool down now, or stop and get help. You can change an answer, and nothing here is timed.</p>
@@ -454,74 +531,19 @@
       </div>
     </section>
 
-    <!-- ============ 6 ============ -->
-    <section class="screen" id="screen-6">
-      <p class="stamp" aria-hidden="true">06</p>
-      <h2 tabindex="-1">Who should check first</h2>
-      <div class="screen-body">
-        <p class="lead">Seven situations where the sensible move is a question before a session. Select one to read why it is worth asking.</p>
-
-        <div class="reveal" data-accordion>
-          <div class="reveal-list">
-            <ul class="asklist">
-              <li><button type="button" class="acc-btn" id="askb-1" aria-controls="askp-1"><span class="acc-mark" aria-hidden="true"></span><span>Pregnancy</span></button></li>
-              <li><button type="button" class="acc-btn" id="askb-2" aria-controls="askp-2"><span class="acc-mark" aria-hidden="true"></span><span>Heart conditions and blood pressure</span></button></li>
-              <li><button type="button" class="acc-btn" id="askb-3" aria-controls="askp-3"><span class="acc-mark" aria-hidden="true"></span><span>Medications</span></button></li>
-              <li><button type="button" class="acc-btn" id="askb-4" aria-controls="askp-4"><span class="acc-mark" aria-hidden="true"></span><span>Alcohol</span></button></li>
-              <li><button type="button" class="acc-btn" id="askb-5" aria-controls="askp-5"><span class="acc-mark" aria-hidden="true"></span><span>Children and older adults</span></button></li>
-              <li><button type="button" class="acc-btn" id="askb-6" aria-controls="askp-6"><span class="acc-mark" aria-hidden="true"></span><span>Recent illness or a fever</span></button></li>
-              <li><button type="button" class="acc-btn" id="askb-7" aria-controls="askp-7"><span class="acc-mark" aria-hidden="true"></span><span>Open wounds or skin conditions</span></button></li>
-            </ul>
-            <p class="note ask-note">None of this is a diagnosis and none of it is a list of bans. It is a prompt to ask somebody who knows your history, before a first session rather than after one.</p>
-          </div>
-
-          <div class="reveal-panels">
-            <div class="acc-panel ask-panel" id="askp-1" role="region" aria-labelledby="askb-1">
-              <p class="ask-head">Pregnancy</p>
-              <p>Heat raises core body temperature, and raised core temperature is something clinicians watch carefully in pregnancy. Guidance varies by country and by stage. Ask your midwife or doctor rather than reading a forum, and ask before the first session rather than after it.</p>
-            </div>
-            <div class="acc-panel ask-panel" id="askp-2" role="region" aria-labelledby="askb-2">
-              <p class="ask-head">Heart conditions and blood pressure</p>
-              <p>Heat asks your heart and circulation to work: faster beats, wider vessels, and a blood pressure that can drop when you stand up. If you live with a heart condition, unstable blood pressure high or low, or you have had a recent cardiac event, this is a conversation with your clinician and not a guess on the bench.</p>
-            </div>
-            <div class="acc-panel ask-panel" id="askp-3" role="region" aria-labelledby="askb-3">
-              <p class="ask-head">Medications</p>
-              <p>Some medicines change how you regulate heat, how much you sweat, or how your blood pressure behaves when you stand. Diuretics, blood pressure medicines, sedatives and various others can all matter here. Your pharmacist can answer this in about a minute, and it is a good minute to spend.</p>
-            </div>
-            <div class="acc-panel ask-panel" id="askp-4" role="region" aria-labelledby="askb-4">
-              <p class="ask-head">Alcohol</p>
-              <p>Alcohol and heat both lower blood pressure and both dry you out, and together they make fainting considerably more likely. Do not drink before a session and do not drink during one. Water is the drink here, and it is not a compromise.</p>
-            </div>
-            <div class="acc-panel ask-panel" id="askp-5" role="region" aria-labelledby="askb-5">
-              <p class="ask-head">Children and older adults</p>
-              <p>Children heat up faster than adults and have far less practice noticing it or saying so. Older adults are more likely to be on medication and may feel a change in balance more sharply on standing. Both do better with shorter, cooler, supervised visits, and with somebody paying attention who is not also enjoying themselves.</p>
-            </div>
-            <div class="acc-panel ask-panel" id="askp-6" role="region" aria-labelledby="askb-6">
-              <p class="ask-head">Recent illness or a fever</p>
-              <p>If you already have a fever, your body is running hot deliberately and does not need the help. If you are recovering from an illness, dehydration and a lower tolerance for heat both linger longer than the symptoms do. Wait until you are properly well.</p>
-            </div>
-            <div class="acc-panel ask-panel" id="askp-7" role="region" aria-labelledby="askb-7">
-              <p class="ask-head">Open wounds or skin conditions</p>
-              <p>Heat, sweat and shared benches are hard on broken skin, and several skin conditions flare with heat rather than settle. Cover what can be covered, sit on your own towel either way, and ask a clinician about anything that is currently open or currently angry.</p>
-            </div>
-            <div class="plate plate-towel" aria-hidden="true"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ 7 ============ -->
-    <section class="screen" id="screen-7">
-      <p class="stamp" aria-hidden="true">07</p>
+    <!-- ============ 8 ============ -->
+    <section class="screen" id="screen-8">
+      <p class="stamp" aria-hidden="true">08</p>
       <h2 tabindex="-1">Your sauna card</h2>
       <div class="screen-body">
+        <p class="lead">Set a first session the way you want it and the card rewrites itself. The second panel shows how the eight calls went.</p>
         <div class="tabs tabs-wide" data-tabs>
           <div class="tablist" role="tablist" aria-label="Your sauna card">
-            <button type="button" role="tab" id="tab-7a" aria-controls="pan-7a">Your first session plan</button>
-            <button type="button" role="tab" id="tab-7b" aria-controls="pan-7b">Where you landed</button>
+            <button type="button" role="tab" id="tab-8a" aria-controls="pan-8a">Your first session plan</button>
+            <button type="button" role="tab" id="tab-8b" aria-controls="pan-8b">Where you landed</button>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-7a" aria-labelledby="tab-7a">
+          <div class="tabpanel" role="tabpanel" id="pan-8a" aria-labelledby="tab-8a">
             <div class="plan">
               <form class="picker" id="picker">
                 <fieldset>
@@ -568,7 +590,7 @@
             </div>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-7b" aria-labelledby="tab-7b" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-8b" aria-labelledby="tab-8b" tabindex="0">
             <div class="results">
               <p class="card-title">Where you landed</p>
               <ul id="results-list">
@@ -608,7 +630,16 @@
           <li><span class="done-label">Stay, cool down, or stop</span> <span class="done-val" id="done-calls">0 of 8</span></li>
         </ul>
 
-        <p class="done-line">You have a plan for a first session and a short list of moments where getting out is the right answer. That is most of the skill. The rest of it is only ever going to be paying attention to how you feel and believing what you find.</p>
+        <p class="done-recap-h">You can now</p>
+        <ul class="done-recap">
+          <li>Distinguish traditional heat from infrared, and what both ask of you.</li>
+          <li>Describe what the heat does to your circulation, your fluids and your muscles.</li>
+          <li>Identify who should ask a clinician before a first session.</li>
+          <li>Order the steps of a session, and you have a plan for your own first one.</li>
+          <li>Decide, on the bench, whether to stay, cool down now, or stop and get help.</li>
+        </ul>
+
+        <p class="done-line">That is most of the skill. The rest of it is only ever going to be paying attention to how you feel and believing what you find.</p>
 
         <p class="done-note">General education, not medical advice. If you are pregnant, live with heart disease or blood pressure that is not settled, take medication that affects heat or blood pressure, or have been drinking, talk to a clinician before your first session.</p>
 

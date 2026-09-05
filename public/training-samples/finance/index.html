@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Reading a profit and loss statement: an eight minute module</title>
 <meta name="description" content="An interactive eight minute module for non-finance managers on reading a profit and loss statement line by line, why gross margin is the number to watch, and why profit is not cash." />
+<!-- The tab icon, drawn here rather than fetched: a bottle green board, a
+     ruled cream page, the red margin rule down it, and the double rule a
+     ledger closes a total with. URL encoded so it needs no file. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%23123D2B'/%3E%3Crect%20x='6'%20y='4'%20width='20'%20height='24'%20fill='%23F3EBD9'/%3E%3Crect%20x='9'%20y='4'%20width='1.6'%20height='24'%20fill='%23B3261E'/%3E%3Crect%20x='13'%20y='9'%20width='10'%20height='1.8'%20fill='%23123D2B'/%3E%3Crect%20x='13'%20y='13.5'%20width='10'%20height='1.8'%20fill='%23123D2B'/%3E%3Crect%20x='13'%20y='19'%20width='10'%20height='1.4'%20fill='%238A6A1F'/%3E%3Crect%20x='13'%20y='22'%20width='10'%20height='1.4'%20fill='%238A6A1F'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="style.css" />
 <script>document.documentElement.className += " js";</script>
 </head>
@@ -22,51 +26,71 @@
       </div>
       <div class="progress">
         <div class="track" aria-hidden="true"><span id="bar-fill"></span></div>
-        <p class="progress-text" id="progress-text" role="status" aria-live="polite">Folio 1 of 8</p>
+        <p class="progress-text" id="progress-text" role="status" aria-live="polite">Folio 1 of 9</p>
       </div>
     </div>
   </header>
 
   <main id="module">
 
-    <!-- ============================= 1 ============================= -->
-    <section class="screen is-current" id="screen-1">
-      <div class="screen-head">
-        <h2 tabindex="-1">Before you start</h2>
-        <p class="lead">By the end of this module you will be able to read a profit and loss statement from the top line to the bottom line, say in plain words what each line means, name the one number worth watching month to month, and explain why a profitable month can still leave the bank account empty.</p>
-      </div>
-
-      <div class="screen-body">
-        <div class="col">
-          <p>Everything here uses one invented business: a small bakery with two locations. The figures are made up and deliberately round, so the arithmetic never gets in the way of the idea.</p>
-          <p class="note">Everything works with the keyboard alone. Tab moves between controls, Enter or Space chooses, and the arrow keys move the sliders. Nothing is timed, and there is no sound.</p>
-          <p class="disclaimer">This is a teaching demonstration and not a substitute for advice from your accountant.</p>
+    <!-- ============================= 1 =============================
+         The cover. The board of the book, with the label pasted on it
+         and the frontispiece plate beside it. Nothing here teaches:
+         a cover says what the book is and gets out of the way. -->
+    <section class="screen cover-screen is-current" id="screen-1">
+      <div class="board">
+        <div class="board-label">
+          <p class="cover-kicker">The ledger book, finance for managers</p>
+          <h2 tabindex="-1">The profit and loss statement, read like an owner</h2>
+          <p class="cover-promise">You will read a month of a business the way its owner reads it, line by line, down to the one number worth watching.</p>
+          <p class="cover-meta">About eight minutes &#183; Nine screens &#183; Short module</p>
         </div>
-
-        <div class="col">
-          <h3>What you will do</h3>
-          <ul class="ticks">
-            <li>Read a month of the bakery&rsquo;s statement, line by line, with a plain English note behind every line.</li>
-            <li>Work out gross margin, and see why it beats the raw profit figure for comparing anything.</li>
-            <li>Move four levers in a live statement and watch the bottom line answer.</li>
-            <li>Sort ten items into where they land, including three that are not on the statement at all.</li>
-            <li>Make the call an owner has to make, and read the month off a chart.</li>
-          </ul>
-        </div>
-
-        <div class="col col-side">
-          <div class="photo photo-hero" role="presentation"></div>
-          <dl class="factbox">
-            <div><dt>Runtime</dt><dd>About eight minutes</dd></div>
-            <div><dt>Audience</dt><dd>Managers without a finance background</dd></div>
-            <div><dt>Business</dt><dd>An invented two location bakery</dd></div>
-          </dl>
-        </div>
+        <div class="photo photo-hero board-plate" role="presentation"></div>
       </div>
     </section>
 
     <!-- ============================= 2 ============================= -->
     <section class="screen" id="screen-2">
+      <div class="screen-head">
+        <h2 tabindex="-1">What you will be able to do</h2>
+        <p class="lead">Everything here uses one invented business: a small bakery with two locations. The figures are made up and deliberately round, so the arithmetic never gets in the way of the idea.</p>
+      </div>
+
+      <div class="screen-body">
+        <div class="col">
+          <h3>Five objectives</h3>
+          <ul class="ticks">
+            <li><strong>Name</strong> every line on a profit and loss statement, and say in plain words what it is telling you.</li>
+            <li><strong>Calculate</strong> gross margin, and explain why the percent compares two months when the dollars cannot.</li>
+            <li><strong>Sort</strong> what a business spends into cost of goods sold, operating expenses, and the items that never reach the statement.</li>
+            <li><strong>Predict</strong> what a five point move in cost of goods does to the bottom line.</li>
+            <li><strong>Decide</strong> whether a profitable month is enough to act on, and say why profit is not cash.</li>
+          </ul>
+        </div>
+
+        <div class="col">
+          <h3>Why this matters</h3>
+          <p class="hook">A bakery can post a profitable month and miss payroll in the same month. Both facts come off the same set of books, and the manager who can read only one of them is the one who signs the wrong lease.</p>
+
+          <h3>How this works</h3>
+          <p class="note">About eight minutes across nine screens. Nothing is timed, there is no sound, you can go back at any point, and everything works with the keyboard alone: Tab moves between controls, Enter or Space chooses, and the arrow keys move the sliders.</p>
+        </div>
+
+        <div class="col col-side">
+          <h3>At a glance</h3>
+          <dl class="factbox">
+            <div><dt>Runtime</dt><dd>About eight minutes</dd></div>
+            <div><dt>Screens</dt><dd>Nine</dd></div>
+            <div><dt>Audience</dt><dd>Managers without a finance background</dd></div>
+            <div><dt>Business</dt><dd>An invented two location bakery</dd></div>
+          </dl>
+          <p class="disclaimer">This is a teaching demonstration and not a substitute for advice from your accountant.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= 3 ============================= -->
+    <section class="screen" id="screen-3">
       <div class="screen-head">
         <h2 tabindex="-1">The statement, top to bottom</h2>
         <p class="lead">A profit and loss statement is one long subtraction. Money came in at the top. Costs come off in a fixed order. What survives is at the bottom.</p>
@@ -194,12 +218,12 @@
 
               <div class="note-body" id="ex-10">
                 <p class="note-line">Other income and expense</p>
-                <p>Costs and gains that are not the trade: interest charged on borrowing, or a gain on selling off an old mixer. Only the interest on a loan appears here. The repayment of the amount borrowed is not a cost at all, and does not appear anywhere on this statement. That one comes back on screen five.</p>
+                <p>Costs and gains that are not the trade: interest charged on borrowing, or a gain on selling off an old mixer. Only the interest on a loan appears here. The repayment of the amount borrowed is not a cost at all, and does not appear anywhere on this statement. That one comes back on screen six.</p>
               </div>
 
               <div class="note-body" id="ex-11">
                 <p class="note-line">Net income</p>
-                <p>The bottom line, and the most over quoted number in business. It is what the month earned on paper. It is not what landed in the bank, and folio six is about the gap between the two.</p>
+                <p>The bottom line, and the most over quoted number in business. It is what the month earned on paper. It is not what landed in the bank, and folio seven is about the gap between the two.</p>
               </div>
             </div>
           </div>
@@ -210,8 +234,8 @@
       </div>
     </section>
 
-    <!-- ============================= 3 ============================= -->
-    <section class="screen" id="screen-3">
+    <!-- ============================= 4 ============================= -->
+    <section class="screen" id="screen-4">
       <div class="screen-head">
         <h2 tabindex="-1">Margin is the number</h2>
         <p class="lead">Gross margin is gross profit divided by revenue, written as a percent. At the bakery this month: $48,000 divided by $80,000 is sixty percent.</p>
@@ -275,8 +299,8 @@
       </div>
     </section>
 
-    <!-- ============================= 4 ============================= -->
-    <section class="screen" id="screen-4">
+    <!-- ============================= 5 ============================= -->
+    <section class="screen" id="screen-5">
       <div class="screen-head">
         <h2 tabindex="-1">Move the levers</h2>
         <p class="lead">Four things drive this statement. Move them and watch the whole page answer. The sliders take arrow keys, Home, and End.</p>
@@ -393,8 +417,8 @@
       </div>
     </section>
 
-    <!-- ============================= 5 ============================= -->
-    <section class="screen" id="screen-5">
+    <!-- ============================= 6 ============================= -->
+    <section class="screen" id="screen-6">
       <div class="screen-head">
         <h2 tabindex="-1">Classify the line</h2>
         <p class="lead">Ten things that happen at the bakery in a month. Decide where each one lands. Three of them never touch this statement at all, and those three are the ones worth the argument.</p>
@@ -528,8 +552,8 @@
       </div>
     </section>
 
-    <!-- ============================= 6 ============================= -->
-    <section class="screen" id="screen-6">
+    <!-- ============================= 7 ============================= -->
+    <section class="screen" id="screen-7">
       <div class="screen-head">
         <h2 tabindex="-1">Profit is not cash</h2>
         <p class="lead">The month you just read showed $4,100 of net income. In the same month the bakery&rsquo;s bank balance fell, and the owner could not make payroll without dipping into savings. Both of those things are true, and neither is an error.</p>
@@ -549,7 +573,7 @@
 
             <div class="tabpanel" role="tabpanel" id="panel-g1" aria-labelledby="tab-g1" tabindex="0">
               <h3 class="nojs-h">One: a customer who pays in forty five days</h3>
-              <p>A cafe takes $9,000 of wholesale bread on the fifth. The sale is revenue in this month&rsquo;s statement, in full, that same day. The cash arrives seven weeks later. Every dollar of that sale is profit on the page and nothing in the account.</p>
+              <p>A cafe takes $9,000 of wholesale bread on the fifth. The sale is revenue in this month&rsquo;s statement, in full, that same day. The cash arrives seven weeks later. Every dollar of that sale is profit on the page and nothing in the account. Money billed and not yet collected is called receivables.</p>
               <figure class="timeline-figure">
                 <svg class="timeline" viewBox="0 0 620 96" role="presentation" aria-hidden="true" focusable="false">
                   <line class="tl-axis" x1="30" y1="58" x2="590" y2="58" />
@@ -646,8 +670,8 @@
       </div>
     </section>
 
-    <!-- ============================= 7 ============================= -->
-    <section class="screen" id="screen-7">
+    <!-- ============================= 8 ============================= -->
+    <section class="screen" id="screen-8">
       <div class="screen-head">
         <h2 tabindex="-1">The decision</h2>
         <p class="setup">The owner has read the month, seen $4,100 of net income, and wants to sign a lease on a third location next week. The reason given, in full, is that we made money last month. A build out will take about $60,000, most of it in the first sixty days. You are the manager she is asking.</p>
@@ -688,8 +712,8 @@
       </div>
     </section>
 
-    <!-- ============================= 8 ============================= -->
-    <section class="screen" id="screen-8">
+    <!-- ============================= 9 ============================= -->
+    <section class="screen" id="screen-9">
       <div class="screen-head">
         <h2 tabindex="-1">The margin check</h2>
         <p class="lead">One last look at the month, drawn to scale. Every bar is the same month you started with, and the scale is honest, which is the lesson.</p>
@@ -887,6 +911,15 @@
       </div>
     </div>
     <p class="done-say">You have taken a month apart from the top line to the bottom, and you know which number to carry into the next one.</p>
+
+    <p class="panel-title done-heading">What you can now do</p>
+    <ul class="done-recap">
+      <li>Name every line on the statement, in plain words.</li>
+      <li>Calculate gross margin, and compare months with it.</li>
+      <li>Sort any cost into the right place on the page.</li>
+      <li>Predict what five points of cost of goods is worth.</li>
+      <li>Decide when a profitable month is not enough to act on.</li>
+    </ul>
 
     <p class="panel-title done-heading">The closing entry</p>
     <dl class="done-figures">

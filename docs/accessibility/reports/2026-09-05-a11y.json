@@ -1,7 +1,580 @@
 {
-  "date": "2026-09-05T02:56:45.634Z",
-  "origin": "http://127.0.0.1:65255",
+  "date": "2026-09-05T03:27:43.781Z",
+  "origin": "http://127.0.0.1:64415",
   "pages": [
+    {
+      "path": "/training/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Custom eLearning and Training Content Development | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Training content built without the wait"
+          },
+          {
+            "level": 2,
+            "text": "Where we are deepest"
+          },
+          {
+            "level": 3,
+            "text": "Construction and skilled trades"
+          },
+          {
+            "level": 3,
+            "text": "Finance and accounting"
+          },
+          {
+            "level": 3,
+            "text": "Health and wellness"
+          },
+          {
+            "level": 3,
+            "text": "Everyone else with a backlog"
+          },
+          {
+            "level": 2,
+            "text": "What we build"
+          },
+          {
+            "level": 3,
+            "text": "Full courses"
+          },
+          {
+            "level": 3,
+            "text": "Standard modules"
+          },
+          {
+            "level": 3,
+            "text": "Microlearning"
+          },
+          {
+            "level": 3,
+            "text": "Job aids and performance support"
+          },
+          {
+            "level": 3,
+            "text": "Assessments"
+          },
+          {
+            "level": 3,
+            "text": "Conversion and refresh"
+          },
+          {
+            "level": 3,
+            "text": "Accessibility remediation"
+          },
+          {
+            "level": 2,
+            "text": "Your LMS, your data"
+          },
+          {
+            "level": 2,
+            "text": "How we work"
+          },
+          {
+            "level": 3,
+            "text": "Discovery"
+          },
+          {
+            "level": 3,
+            "text": "Outline"
+          },
+          {
+            "level": 3,
+            "text": "Storyboard"
+          },
+          {
+            "level": 3,
+            "text": "Alpha"
+          },
+          {
+            "level": 3,
+            "text": "Beta and LMS testing"
+          },
+          {
+            "level": 3,
+            "text": "Final delivery"
+          },
+          {
+            "level": 2,
+            "text": "Accessibility, tested"
+          },
+          {
+            "level": 3,
+            "text": "Every build gets these five passes"
+          },
+          {
+            "level": 2,
+            "text": "Yes, we use AI. Here is exactly how."
+          },
+          {
+            "level": 2,
+            "text": "Three ways to work together"
+          },
+          {
+            "level": 3,
+            "text": "Fixed project"
+          },
+          {
+            "level": 3,
+            "text": "Monthly pod"
+          },
+          {
+            "level": 3,
+            "text": "Retainer bench"
+          },
+          {
+            "level": 2,
+            "text": "See the work"
+          },
+          {
+            "level": 3,
+            "text": "Play a working sample"
+          },
+          {
+            "level": 3,
+            "text": "Meet the team"
+          },
+          {
+            "level": 2,
+            "text": "Training inquiry"
+          },
+          {
+            "level": 3,
+            "text": "Got it"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 1
+          }
+        ],
+        "passes": 23
+      },
+      "keyboard": {
+        "stops": 41,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 41,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Training Content Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Samples you can actually play"
+          },
+          {
+            "level": 2,
+            "text": "Where this stands today"
+          },
+          {
+            "level": 2,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "Spot it before it hurts someone"
+          },
+          {
+            "level": 2,
+            "text": "The P&L, read like an owner"
+          },
+          {
+            "level": 2,
+            "text": "Build the plate, skip the diet"
+          },
+          {
+            "level": 2,
+            "text": "Strong is a skill"
+          },
+          {
+            "level": 2,
+            "text": "Heat, done well"
+          },
+          {
+            "level": 2,
+            "text": "Accessibility remediation, before and after"
+          },
+          {
+            "level": 2,
+            "text": "Want one of these for your content"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 26
+      },
+      "keyboard": {
+        "stops": 39,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 39,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/rfi-that-gets-answered/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "The RFI that gets answered | Training Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "Ask about something like this"
+          },
+          {
+            "level": 2,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 4
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 2,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 2,
+        "first": "button|View the course"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/hazard-recognition/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Spot it before it hurts someone | Training Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Spot it before it hurts someone"
+          },
+          {
+            "level": 2,
+            "text": "Ask about something like this"
+          },
+          {
+            "level": 2,
+            "text": "Spot it before it hurts someone"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 4
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 2,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 2,
+        "first": "button|View the course"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/reading-the-pnl/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "The P&L, read like an owner | Training Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "The P&L, read like an owner"
+          },
+          {
+            "level": 2,
+            "text": "Ask about something like this"
+          },
+          {
+            "level": 2,
+            "text": "The P&L, read like an owner"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 5
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 2,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 2,
+        "first": "button|View the course"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/build-the-plate/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Build the plate, skip the diet | Training Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Build the plate, skip the diet"
+          },
+          {
+            "level": 2,
+            "text": "Ask about something like this"
+          },
+          {
+            "level": 2,
+            "text": "Build the plate, skip the diet"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 5
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 2,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 2,
+        "first": "button|View the course"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
     {
       "path": "/training/samples/strong-is-a-skill/",
       "status": 200,
@@ -55,7 +628,7 @@
         "incomplete": [
           {
             "id": "color-contrast",
-            "nodes": 6
+            "nodes": 5
           }
         ],
         "passes": 27
@@ -126,7 +699,7 @@
         "incomplete": [
           {
             "id": "color-contrast",
-            "nodes": 7
+            "nodes": 4
           }
         ],
         "passes": 27
@@ -266,6 +839,1113 @@
         "frameTrap": false,
         "maxFrameTabs": 0,
         "steps": 40,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/capabilities/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Training Content Capabilities | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "The capabilities one-pager"
+          },
+          {
+            "level": 2,
+            "text": "What we do"
+          },
+          {
+            "level": 2,
+            "text": "What we build"
+          },
+          {
+            "level": 2,
+            "text": "The bench"
+          },
+          {
+            "level": 2,
+            "text": "Subject matter experts"
+          },
+          {
+            "level": 2,
+            "text": "Where we go deepest"
+          },
+          {
+            "level": 2,
+            "text": "How we deliver"
+          },
+          {
+            "level": 2,
+            "text": "How we work"
+          },
+          {
+            "level": 2,
+            "text": "Accessibility"
+          },
+          {
+            "level": 2,
+            "text": "AI transparency"
+          },
+          {
+            "level": 2,
+            "text": "Engagement models"
+          },
+          {
+            "level": 2,
+            "text": "Contact"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 5
+          }
+        ],
+        "passes": 22
+      },
+      "keyboard": {
+        "stops": 27,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 27,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training-samples/rfi/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "The RFI that gets answered: writing a request for information (RFI) a design team can act on",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "What you will be able to do"
+          },
+          {
+            "level": 2,
+            "text": "What an RFI actually is"
+          },
+          {
+            "level": 3,
+            "text": "What it is"
+          },
+          {
+            "level": 3,
+            "text": "A contract document"
+          },
+          {
+            "level": 3,
+            "text": "What it is not"
+          },
+          {
+            "level": 2,
+            "text": "Why RFIs come back slow, or come back wrong"
+          },
+          {
+            "level": 3,
+            "text": "Not a question"
+          },
+          {
+            "level": 3,
+            "text": "No reference"
+          },
+          {
+            "level": 3,
+            "text": "No consequence"
+          },
+          {
+            "level": 3,
+            "text": "No proposed answer"
+          },
+          {
+            "level": 2,
+            "text": "The four parts of an RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "Two ways to ask the same thing"
+          },
+          {
+            "level": 2,
+            "text": "Belongs in the RFI, or leave it out"
+          },
+          {
+            "level": 3,
+            "text": "Fragments 1 and 2"
+          },
+          {
+            "level": 3,
+            "text": "Fragments 3 and 4"
+          },
+          {
+            "level": 3,
+            "text": "Fragments 5 and 6"
+          },
+          {
+            "level": 2,
+            "text": "Three decisions"
+          },
+          {
+            "level": 3,
+            "text": "1. A subcontractor hands you a note: the duct will not fit above the c"
+          },
+          {
+            "level": 3,
+            "text": "2. You have four related questions about the same wall assembly, all o"
+          },
+          {
+            "level": 3,
+            "text": "3. The mechanical crew is standing by and you are fairly sure the answ"
+          },
+          {
+            "level": 2,
+            "text": "The four part checklist"
+          },
+          {
+            "level": 2,
+            "text": "RFI answered"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": false,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 5
+          }
+        ],
+        "passes": 19
+      },
+      "keyboard": {
+        "stops": 1,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 1,
+        "first": "button#next|Start"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training-samples/safety/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Spot it before it hurts someone: a nine minute hazard recognition module",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Spot it before it hurts someone"
+          },
+          {
+            "level": 2,
+            "text": "Spot it before it hurts someone"
+          },
+          {
+            "level": 2,
+            "text": "What you will be able to do"
+          },
+          {
+            "level": 3,
+            "text": "Why this matters"
+          },
+          {
+            "level": 3,
+            "text": "How this works"
+          },
+          {
+            "level": 3,
+            "text": "Who this is for"
+          },
+          {
+            "level": 2,
+            "text": "The walk-through method"
+          },
+          {
+            "level": 2,
+            "text": "Zone one: access and egress"
+          },
+          {
+            "level": 2,
+            "text": "Zones two and three: height and energy"
+          },
+          {
+            "level": 2,
+            "text": "Zone four: housekeeping and protective equipment"
+          },
+          {
+            "level": 2,
+            "text": "Hazard hunt"
+          },
+          {
+            "level": 3,
+            "text": "Check this spot"
+          },
+          {
+            "level": 2,
+            "text": "The hierarchy of controls"
+          },
+          {
+            "level": 3,
+            "text": "Situation 1 of 6"
+          },
+          {
+            "level": 2,
+            "text": "Stop or go"
+          },
+          {
+            "level": 3,
+            "text": "Call 1 of 8"
+          },
+          {
+            "level": 2,
+            "text": "Your walk-through card"
+          },
+          {
+            "level": 3,
+            "text": "Zone 1: access and egress"
+          },
+          {
+            "level": 3,
+            "text": "Zone 2: work at height"
+          },
+          {
+            "level": 3,
+            "text": "Zone 3: energy and equipment"
+          },
+          {
+            "level": 3,
+            "text": "Zone 4: housekeeping and materials"
+          },
+          {
+            "level": 2,
+            "text": "Walk-through done"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": false,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 5
+          }
+        ],
+        "passes": 19
+      },
+      "keyboard": {
+        "stops": 1,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 1,
+        "first": "button#next|Start"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training-samples/finance/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Reading a profit and loss statement: an eight minute module",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "The profit and loss statement, read like an owner"
+          },
+          {
+            "level": 2,
+            "text": "The profit and loss statement, read like an owner"
+          },
+          {
+            "level": 2,
+            "text": "What you will be able to do"
+          },
+          {
+            "level": 3,
+            "text": "Five objectives"
+          },
+          {
+            "level": 3,
+            "text": "Why this matters"
+          },
+          {
+            "level": 3,
+            "text": "How this works"
+          },
+          {
+            "level": 3,
+            "text": "At a glance"
+          },
+          {
+            "level": 2,
+            "text": "The statement, top to bottom"
+          },
+          {
+            "level": 2,
+            "text": "Margin is the number"
+          },
+          {
+            "level": 3,
+            "text": "The worked example"
+          },
+          {
+            "level": 2,
+            "text": "Move the levers"
+          },
+          {
+            "level": 3,
+            "text": "Prompt one: find a price and a volume that pay for the month"
+          },
+          {
+            "level": 3,
+            "text": "Prompt two: move cost of goods by five points"
+          },
+          {
+            "level": 2,
+            "text": "Classify the line"
+          },
+          {
+            "level": 3,
+            "text": "Flour, butter, and the bakery boxes"
+          },
+          {
+            "level": 3,
+            "text": "The store manager’s salary"
+          },
+          {
+            "level": 3,
+            "text": "A new deck oven, bought outright for $18,000"
+          },
+          {
+            "level": 3,
+            "text": "Rent on the second location"
+          },
+          {
+            "level": 3,
+            "text": "Paying back $1,400 of the amount borrowed for the oven"
+          },
+          {
+            "level": 3,
+            "text": "The owner taking $3,000 out of the business for herself"
+          },
+          {
+            "level": 3,
+            "text": "Fuel for the van that runs bread to the wholesale accounts"
+          },
+          {
+            "level": 3,
+            "text": "Everything rung up at the counter on a Saturday"
+          },
+          {
+            "level": 3,
+            "text": "The card processor’s fee on every counter sale"
+          },
+          {
+            "level": 3,
+            "text": "The bread still on the shelf when the month ends"
+          },
+          {
+            "level": 2,
+            "text": "Profit is not cash"
+          },
+          {
+            "level": 3,
+            "text": "One: a customer who pays in forty five days"
+          },
+          {
+            "level": 3,
+            "text": "Two: flour sitting in the storeroom"
+          },
+          {
+            "level": 3,
+            "text": "Three: a year of insurance paid in one month"
+          },
+          {
+            "level": 3,
+            "text": "Add the three together"
+          },
+          {
+            "level": 2,
+            "text": "The decision"
+          },
+          {
+            "level": 2,
+            "text": "The margin check"
+          },
+          {
+            "level": 3,
+            "text": "The month as a chart"
+          },
+          {
+            "level": 3,
+            "text": "Three quick reads"
+          },
+          {
+            "level": 3,
+            "text": "1. What is the gross margin on this month?"
+          },
+          {
+            "level": 3,
+            "text": "2. Which single bar takes the most away from revenue?"
+          },
+          {
+            "level": 3,
+            "text": "3. Cost of goods rises five points, to forty five percent of revenue. "
+          },
+          {
+            "level": 3,
+            "text": "What to take away"
+          },
+          {
+            "level": 2,
+            "text": "Books closed"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": false,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 4
+          }
+        ],
+        "passes": 20
+      },
+      "keyboard": {
+        "stops": 1,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 1,
+        "first": "button#next|Start"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training-samples/nutrition/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Build the plate, skip the diet: an eight minute everyday nutrition module",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Build the plate, skip the diet"
+          },
+          {
+            "level": 2,
+            "text": "Build the plate, skip the diet"
+          },
+          {
+            "level": 2,
+            "text": "What you will be able to do"
+          },
+          {
+            "level": 3,
+            "text": "Why this matters"
+          },
+          {
+            "level": 3,
+            "text": "How this works"
+          },
+          {
+            "level": 3,
+            "text": "Who this is for"
+          },
+          {
+            "level": 2,
+            "text": "What a balanced plate looks like"
+          },
+          {
+            "level": 3,
+            "text": "Half the plate"
+          },
+          {
+            "level": 3,
+            "text": "A quarter of the plate"
+          },
+          {
+            "level": 3,
+            "text": "The other quarter"
+          },
+          {
+            "level": 3,
+            "text": "Beside the plate"
+          },
+          {
+            "level": 2,
+            "text": "Build a plate"
+          },
+          {
+            "level": 2,
+            "text": "Reading a nutrition label"
+          },
+          {
+            "level": 3,
+            "text": "Six lines worth knowing"
+          },
+          {
+            "level": 2,
+            "text": "Protein and fibre keep you full"
+          },
+          {
+            "level": 3,
+            "text": "What protein does"
+          },
+          {
+            "level": 3,
+            "text": "Where to find protein"
+          },
+          {
+            "level": 3,
+            "text": "What fibre does"
+          },
+          {
+            "level": 3,
+            "text": "Where to find fibre"
+          },
+          {
+            "level": 2,
+            "text": "Hunger or habit"
+          },
+          {
+            "level": 3,
+            "text": "Moment 1 of 6"
+          },
+          {
+            "level": 2,
+            "text": "Small swaps that stick"
+          },
+          {
+            "level": 2,
+            "text": "Your card"
+          },
+          {
+            "level": 2,
+            "text": "That is the plate"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": false,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 8
+          }
+        ],
+        "passes": 19
+      },
+      "keyboard": {
+        "stops": 1,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 1,
+        "first": "button#next|Start"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training-samples/strength/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Strong is a skill: a nine minute introduction to beginner strength training",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Strong is a skill"
+          },
+          {
+            "level": 2,
+            "text": "Strong is a skill"
+          },
+          {
+            "level": 2,
+            "text": "What you will be able to do"
+          },
+          {
+            "level": 3,
+            "text": "Why this matters"
+          },
+          {
+            "level": 3,
+            "text": "Words we will use"
+          },
+          {
+            "level": 3,
+            "text": "How this works"
+          },
+          {
+            "level": 2,
+            "text": "Why it matters at any age"
+          },
+          {
+            "level": 2,
+            "text": "The five movement patterns"
+          },
+          {
+            "level": 2,
+            "text": "Match the movement"
+          },
+          {
+            "level": 3,
+            "text": "Item 1 of 10"
+          },
+          {
+            "level": 3,
+            "text": "Where they landed"
+          },
+          {
+            "level": 2,
+            "text": "How hard is hard enough"
+          },
+          {
+            "level": 2,
+            "text": "Spot the fault"
+          },
+          {
+            "level": 3,
+            "text": "Set 1 of 6"
+          },
+          {
+            "level": 2,
+            "text": "Your first week"
+          },
+          {
+            "level": 2,
+            "text": "Where you landed"
+          },
+          {
+            "level": 3,
+            "text": "Before you go"
+          },
+          {
+            "level": 2,
+            "text": "First plate on the bar"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": false,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 6
+          }
+        ],
+        "passes": 19
+      },
+      "keyboard": {
+        "stops": 1,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 1,
+        "first": "button#next|Start"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training-samples/sauna/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Heat, done well: a seven minute module on using a sauna sensibly",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Heat, done well"
+          },
+          {
+            "level": 2,
+            "text": "Heat, done well"
+          },
+          {
+            "level": 2,
+            "text": "What you will be able to do"
+          },
+          {
+            "level": 3,
+            "text": "What a sauna is"
+          },
+          {
+            "level": 2,
+            "text": "Two kinds of heat"
+          },
+          {
+            "level": 2,
+            "text": "What the heat does"
+          },
+          {
+            "level": 3,
+            "text": "Heart rate and circulation"
+          },
+          {
+            "level": 3,
+            "text": "Sweating and fluids"
+          },
+          {
+            "level": 3,
+            "text": "Muscles and recovery"
+          },
+          {
+            "level": 3,
+            "text": "Relaxation and sleep"
+          },
+          {
+            "level": 3,
+            "text": "What the research does and does not say"
+          },
+          {
+            "level": 2,
+            "text": "Who should check first"
+          },
+          {
+            "level": 2,
+            "text": "A good session, step by step"
+          },
+          {
+            "level": 3,
+            "text": "Step 1 of 9"
+          },
+          {
+            "level": 3,
+            "text": "Slow breathing"
+          },
+          {
+            "level": 2,
+            "text": "Stay, cool down, or stop"
+          },
+          {
+            "level": 3,
+            "text": "Situation 1 of 8"
+          },
+          {
+            "level": 2,
+            "text": "Your sauna card"
+          },
+          {
+            "level": 2,
+            "text": "Cooled down and finished"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": false,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 9
+          }
+        ],
+        "passes": 19
+      },
+      "keyboard": {
+        "stops": 1,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 1,
+        "first": "button#next|Start"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/services/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Web Design & AI Services in Florida | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Web design and AI, built in Florida"
+          },
+          {
+            "level": 2,
+            "text": "Twelve weeks to a workflow you own"
+          },
+          {
+            "level": 2,
+            "text": "Custom website design"
+          },
+          {
+            "level": 2,
+            "text": "AI that earns its place"
+          },
+          {
+            "level": 2,
+            "text": "Found by Google, found by AI"
+          },
+          {
+            "level": 2,
+            "text": "Accessibility audits"
+          },
+          {
+            "level": 2,
+            "text": "Courses, modules, and job aids, delivered into your LMS"
+          },
+          {
+            "level": 2,
+            "text": "AI, where it earns its place"
+          },
+          {
+            "level": 2,
+            "text": "How it goes"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 1
+          }
+        ],
+        "passes": 23
+      },
+      "keyboard": {
+        "stops": 36,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 36,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/accessibility/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Accessibility Statement | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Accessibility Statement"
+          },
+          {
+            "level": 2,
+            "text": "The standard we build to"
+          },
+          {
+            "level": 2,
+            "text": "What is in place"
+          },
+          {
+            "level": 2,
+            "text": "How we handle artwork"
+          },
+          {
+            "level": 2,
+            "text": "How we test"
+          },
+          {
+            "level": 2,
+            "text": "Known limitations"
+          },
+          {
+            "level": 2,
+            "text": "Third-party content"
+          },
+          {
+            "level": 2,
+            "text": "Tell us if something blocks you"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 1
+          }
+        ],
+        "passes": 23
+      },
+      "keyboard": {
+        "stops": 27,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 27,
         "first": "a|Skip to content"
       },
       "consoleErrors": [],

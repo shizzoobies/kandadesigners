@@ -23,7 +23,7 @@
 (function () {
   'use strict';
 
-  var TOTAL = 8;
+  var TOTAL = 9;
   var SORT_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10'];
   var FAULT_KEYS = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'];
   var MOVE_GROUPS = ['m-squat', 'm-hinge', 'm-push', 'm-pull', 'm-carry'];
@@ -677,7 +677,8 @@
     loadBar();
 
     prevBtn.disabled = current === 1;
-    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
+    // Start on the cover, Next through the course, Finish on the last screen.
+    nextBtn.textContent = current === 1 ? 'Start' : (current === TOTAL ? 'Finish' : 'Next');
 
     if (current === TOTAL) {
       updateResults();
@@ -819,7 +820,7 @@
     });
 
     doneReviewBtn.addEventListener('click', function () {
-      var cardTab = byId('tab-8a');
+      var cardTab = byId('tab-9a');
       if (cardTab) {
         cardTab.click();
       }

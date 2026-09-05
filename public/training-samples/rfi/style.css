@@ -258,7 +258,7 @@ h1 {
 .bar > span {
   display: block;
   height: 100%;
-  width: 12.5%;
+  width: 11.11%;
   background: var(--highlight);
   transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -481,6 +481,109 @@ li::marker {
 
 .screen-cover li::marker {
   color: var(--highlight);
+}
+
+/* The cover's own block: kicker, title, drawn rule, promise, issue line, and
+   nothing else. Set low in the sheet the way a project name sits on a real
+   cover, with the washed photograph carrying the air above it. */
+
+.cover {
+  gap: 0;
+}
+
+@media (min-width: 900px) and (min-height: 640px) {
+  html.js .cover {
+    justify-content: center;
+    padding-block: 1rem;
+  }
+}
+
+.cover-kicker {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--pencil);
+}
+
+/* The masthead keeps the h1. This is the h2 the pager focuses on arrival, and
+   it is the biggest type in the piece, because a cover is a cover. */
+.cover-title {
+  max-width: 16em;
+  margin: 0 0 0.9rem;
+  font-size: clamp(2rem, 5.4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: 0.045em;
+}
+
+.cover-rule {
+  width: 6.5rem;
+  height: 4px;
+  margin: 0 0 1rem;
+  background: var(--highlight);
+  transform-origin: left center;
+}
+
+.cover-promise {
+  max-width: 36em;
+  margin: 0 0 1.3rem;
+  font-size: clamp(1rem, 1.5vw, 1.16rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* The issue line off the bottom of a title sheet: how long, how many sheets,
+   what kind of set. */
+.cover-meta {
+  max-width: 36em;
+  margin: 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pencil);
+}
+
+/* ---------- objectives and how this works ---------- */
+
+.objectives {
+  margin: 0 0 0.85rem;
+  padding-left: 1.35rem;
+}
+
+.objectives > li {
+  margin-bottom: 0.45rem;
+}
+
+.objectives > li:last-child {
+  margin-bottom: 0;
+}
+
+.howbox p {
+  font-size: 0.95rem;
+}
+
+.howbox > :last-child {
+  margin-bottom: 0;
+}
+
+.howbox .who {
+  color: var(--pencil);
+}
+
+/* The disclaimer is present in full and set small, under its own rule. */
+.howbox .disclaimer {
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--rule);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--pencil);
 }
 
 /* ---------- two column screens and the photo plates ---------- */
@@ -1285,6 +1388,10 @@ button[disabled]:hover {
 
   .feedback[data-mark]::before {
     animation: cloud-draw 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  html.js .screen-cover.on .cover-rule {
+    animation: done-draw 0.5s 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   #done[open]::backdrop {

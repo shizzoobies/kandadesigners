@@ -26,7 +26,7 @@
 (function () {
   'use strict';
 
-  var TOTAL = 8;
+  var TOTAL = 9;
   var current = 1;
   var completedSent = false;
 
@@ -250,7 +250,7 @@
   });
 
   /* ============================================================
-     Screen two: one statement line's explanation at a time, in
+     Screen three: one statement line's explanation at a time, in
      the panel beside the table. The note is a long piece of
      prose, so the panel is a polite live region: pressing the
      button is a request to be told, and being told is the point.
@@ -283,7 +283,7 @@
   });
 
   /* ============================================================
-     Screen four: the simulator
+     Screen five: the simulator
      ============================================================ */
 
   var DEFAULTS = { price: 8, units: 10000, cogs: 40, opex: 43000 };
@@ -482,7 +482,7 @@
   });
 
   /* ============================================================
-     Screen five: classify the line
+     Screen six: classify the line
      ============================================================ */
 
   var LABELS = {
@@ -533,7 +533,7 @@
   }
 
   /* ============================================================
-     Screen seven: the decision
+     Screen eight: the decision
      ============================================================ */
 
   var DECISION = {
@@ -558,13 +558,13 @@
     price: {
       kind: 'wrong',
       verdict: 'Half right.',
-      text: 'Price is the strongest single lever on margin, and the simulator on screen four shows why: five points of margin is five percent of revenue, straight through to operating income.',
+      text: 'Price is the strongest single lever on margin, and the simulator on screen five shows why: five points of margin is five percent of revenue, straight through to operating income.',
       note: 'But a price move is a test, and you need a month or two to see what it does to volume before building on the result. A better margin next month still does not put $60,000 in the account this quarter.'
     }
   };
 
   /* ============================================================
-     Screen eight: the three reads
+     Screen nine: the three reads
      ============================================================ */
 
   var READS = {
@@ -649,7 +649,7 @@
   });
 
   /* ============================================================
-     Screen eight: the chart table toggle and the scorecard
+     Screen nine: the chart table toggle and the scorecard
      ============================================================ */
 
   var wfToggle = document.getElementById('wf-toggle');
@@ -697,7 +697,7 @@
   function paintScorecard() {
     var c = classifyTally();
     finalClassify.textContent = c.answered === 0
-      ? 'Classify the line: not answered yet. Screen five is still there if you want it.'
+      ? 'Classify the line: not answered yet. Screen six is still there if you want it.'
       : 'Classify the line: ' + c.right + ' of ' + c.answered + ' placed correctly, out of ten items.';
 
     var d = decisionSummary();
@@ -739,7 +739,7 @@
   }
 
   function animateBars() {
-    var bars = document.querySelectorAll('#screen-3 .bar');
+    var bars = document.querySelectorAll('#screen-4 .bar');
     Array.prototype.forEach.call(bars, function (bar) {
       var w = bar.getAttribute('data-w');
       if (reduced()) {
@@ -755,7 +755,7 @@
   }
 
   function animateWaterfall() {
-    var svg = document.querySelector('#screen-8 .waterfall');
+    var svg = document.querySelector('#screen-9 .waterfall');
     if (!svg) { return; }
     var groups = svg.querySelectorAll('.wf-bar');
     svg.classList.remove('animate-wf');
@@ -820,19 +820,21 @@
     // The last button is never a dead control. On the last screen it stops
     // being a pager and becomes the thing that ends the module.
     nextBtn.disabled = false;
-    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
+    // Three words for one button: the cover starts the module, the last
+    // folio ends it, and everything between is a page turn.
+    nextBtn.textContent = current === TOTAL ? 'Finish' : (current === 1 ? 'Start' : 'Next');
 
     var heading = screens[current - 1].querySelector('h2');
     if (heading) { restart(heading); }
 
-    if (current === 2) { animateRows(); }
-    if (current === 3) { animateBars(); }
-    if (current === 4) {
+    if (current === 3) { animateRows(); }
+    if (current === 4) { animateBars(); }
+    if (current === 5) {
       // Figures count up from zero on entry, then exactly.
       [vRev, vCogs, vGp, vOpex, vOi, vOiBig, vGm].forEach(function (el) { el._val = 0; });
       paintSim(true);
     }
-    if (current === 8) {
+    if (current === 9) {
       animateWaterfall();
       paintScorecard();
     }

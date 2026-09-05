@@ -11,10 +11,12 @@ a broken image. The module ships correctly with the folder emptied.
 
 THE FOUR SLOTS
 
-  hero.jpg          Screen 1, side column.
+  hero.jpg          Screen 1, the cover, mounted beside the label.
                     Delivered at 1600 x 1115, 189KB. Invoices on a wooden
                     desk.
-                    Panel ratio 16:11, matching the file.
+                    On the cover the panel gives up its ratio and fills
+                    the height of the board, so the crop is tighter there
+                    than 16:11.
                     This is the only treated slot: a 160 degree ink navy
                     gradient, 72 to 92 percent, sits over it on multiply.
                     No text is placed over it, so there is no contrast
@@ -23,17 +25,17 @@ THE FOUR SLOTS
                     darkest and lightest points of the image under the
                     overlay, not against the overlay alone.
 
-  ledger.jpg        Screen 2, side column, beside the statement.
+  ledger.jpg        Screen 3, side column, beside the statement.
                     Delivered at 900 x 600, 41KB. A young business owner in
                     an apron working through the finances.
                     Panel ratio 3:2, matching the file. Untreated.
 
-  storefront.jpg    Screen 3, side column, beside the margin comparison.
+  storefront.jpg    Screen 4, side column, beside the margin comparison.
                     Delivered at 900 x 1350, 125KB. A bakery window display
                     of breads.
                     Panel ratio 2:3, matching the file. Untreated.
 
-  owner.jpg         Screen 6, side column, beside profit versus cash.
+  owner.jpg         Screen 7, side column, beside profit versus cash.
                     Delivered at 900 x 600, 62KB. A baker standing in an
                     artisan bakery.
                     Panel ratio 3:2, matching the file. Untreated.

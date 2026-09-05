@@ -57,7 +57,7 @@ face changes the metrics most:
   1. The course title in the title block. It must stay on one line, and the
      block must stay at two rows. The whole fixed stage is measured against
      that height.
-  2. The revision tab labels on screens 2 and 3. Four tabs have to sit on
+  2. The revision tab labels on screens 3 and 4. Four tabs have to sit on
      one row at 900px wide.
   3. The stamp word on the ending, "RFI ANSWERED". It is set at up to
      2.35rem with 0.12em tracking and must not wrap.

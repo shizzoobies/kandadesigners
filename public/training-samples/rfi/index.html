@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The RFI that gets answered: writing a request for information (RFI) a design team can act on</title>
 <meta name="description" content="A short interactive lesson on writing a construction request for information that a design team can answer in one pass." />
+<!-- A sheet with its title block, drawn in the piece's own palette and
+     carried inline so a course opened in its own tab has an icon without
+     asking the network for one. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%230E2F63'/%3E%3Crect%20x='6'%20y='4'%20width='20'%20height='24'%20fill='%23F7F6F2'/%3E%3Crect%20x='6'%20y='21'%20width='20'%20height='7'%20fill='%231C4E9A'/%3E%3Crect%20x='9'%20y='24'%20width='14'%20height='2'%20fill='%23F5E663'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="style.css" />
 <script>document.documentElement.className = 'js';</script>
 </head>
@@ -38,7 +42,7 @@
         <h1>The RFI that gets answered</h1>
       </div>
       <div class="tb-cell tb-cell-count">
-        <p class="progress-text" id="progress-text" aria-live="polite" role="status">Sheet 1 of 8</p>
+        <p class="progress-text" id="progress-text" aria-live="polite" role="status">Sheet 1 of 9</p>
       </div>
     </div>
     <div class="bar" aria-hidden="true"><span id="bar-fill"></span></div>
@@ -47,33 +51,53 @@
   <main id="piece">
 
     <!-- 1: the cover sheet. Deep blue, white lettering, the hero photograph
-         under a heavy blue wash. Every other screen is a white sheet. -->
+         under a heavy blue wash. A cover sheet carries the project name, the
+         one line that says what the set is for, and the issue line. Nothing
+         else: no index, no objectives, no instructions. Every other screen is
+         a white sheet. The masthead keeps the h1; this h2 is the focus target
+         on arrival and the title is set large regardless, because a cover
+         that does not carry its own title is not a cover. -->
     <section class="screen screen-cover" id="screen-1">
-      <h2 tabindex="-1">Before you start</h2>
+      <div class="screen-body cover">
+        <p class="cover-kicker">Construction and trades</p>
+        <h2 class="cover-title" tabindex="-1">The RFI that gets answered</h2>
+        <div class="cover-rule" aria-hidden="true"></div>
+        <p class="cover-promise">You will walk away able to write a request for information, an RFI, that a design team can answer in one pass, without a phone call to work out what you meant.</p>
+        <p class="cover-meta">About 8 minutes &middot; 9 sheets &middot; Microlearning</p>
+      </div>
+    </section>
+
+    <!-- 2: objectives and how this works. Everything the old opening crammed
+         into one card, split out and set to be scanned rather than read. -->
+    <section class="screen" id="screen-2">
+      <h2 tabindex="-1">What you will be able to do</h2>
       <div class="screen-body">
         <div class="cols2">
           <div>
-            <p class="lead">By the end of this piece you will be able to write a request for information (RFI) that a design team can answer in one pass, without a phone call to work out what you meant.</p>
-            <p>An RFI that comes back in two days and an RFI that comes back in three weeks usually differ by about forty words. This is about those forty words.</p>
-            <p class="note">Everything here works with the keyboard alone. Tab moves between controls, Enter or Space chooses. Nothing is timed and there is no sound.</p>
+            <ol class="objectives">
+              <li>Identify the four parts an RFI needs before it leaves your desk.</li>
+              <li>Spot the four ways an RFI stalls, and name the part that is missing.</li>
+              <li>Choose the stronger of two drafts of the same question, and explain why.</li>
+              <li>Sort what belongs in an RFI from what belongs somewhere else.</li>
+              <li>Decide the next move at three moments on a live job.</li>
+            </ol>
+            <p class="note">An RFI that comes back in two days and an RFI that comes back in three weeks usually differ by about forty words. This piece is about those forty words.</p>
           </div>
-          <div>
-            <h3 class="col-head">What you will do</h3>
-            <ul>
-              <li>Read what an RFI is, and the four parts of one that gets answered.</li>
-              <li>Judge two versions of the same question, and see why one stalls.</li>
-              <li>Sort six fragments into what belongs in an RFI and what does not.</li>
-              <li>Make three decisions and see how they scored.</li>
-            </ul>
+          <div class="jobaid howbox">
+            <p class="jobaid-title">How this works</p>
+            <p>Nine sheets, about eight minutes. Nothing is timed, there is no sound, and nothing is scored on speed. Everything works with the keyboard alone: Tab moves between controls, Enter or Space chooses.</p>
+            <p class="who"><b>Who this is for.</b> Field engineers, project engineers and superintendents who have to put a question to the design team in writing.</p>
+            <p class="disclaimer">Demonstration sample. RFI procedures, contract requirements and response times vary from project to project; follow your own contract documents, your specification section on submittals and requests for information, and your company's process.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2 -->
-    <section class="screen" id="screen-2">
+    <!-- 3 -->
+    <section class="screen" id="screen-3">
       <h2 tabindex="-1">What an RFI actually is</h2>
       <div class="screen-body">
+        <p>An RFI is a written question to the design team about the contract documents, and it is a contract document itself.</p>
         <div class="split">
           <div class="tabs" data-tabs data-tabs-label="What an RFI is">
             <section class="tabsec">
@@ -99,8 +123,8 @@
       </div>
     </section>
 
-    <!-- 3 -->
-    <section class="screen" id="screen-3">
+    <!-- 4 -->
+    <section class="screen" id="screen-4">
       <h2 tabindex="-1">Why RFIs come back slow, or come back wrong</h2>
       <div class="screen-body">
         <p>Almost every stalled RFI fails in one of four ways, and all four are fixable in the writing, before it leaves your desk.</p>
@@ -132,10 +156,11 @@
       </div>
     </section>
 
-    <!-- 4 -->
-    <section class="screen" id="screen-4">
+    <!-- 5 -->
+    <section class="screen" id="screen-5">
       <h2 tabindex="-1">The four parts of an RFI that gets answered</h2>
       <div class="screen-body">
+        <p>An RFI that gets answered in one pass carries all four of these. A draft missing one of them is the slow version of the same question.</p>
         <!-- All four at once, two by two. This screen is the reference the
              rest of the piece points back at, and it fits without hiding
              anything, so nothing here is hidden. -->
@@ -163,8 +188,8 @@
       </div>
     </section>
 
-    <!-- 5 -->
-    <section class="screen" id="screen-5">
+    <!-- 6 -->
+    <section class="screen" id="screen-6">
       <h2 tabindex="-1">Two ways to ask the same thing</h2>
       <div class="screen-body">
         <p class="setup">You are the field engineer on a mid-size commercial build, a three story medical office shell. Structural drawings show a 6 inch slab on grade at the loading dock. The approved dock leveler submittal calls for 8 inches with added reinforcing under the pit. Concrete for that area is scheduled in nine days. <b class="hi">Which RFI do you send?</b></p>
@@ -187,8 +212,8 @@
       </div>
     </section>
 
-    <!-- 6 -->
-    <section class="screen" id="screen-6">
+    <!-- 7 -->
+    <section class="screen" id="screen-7">
       <h2 tabindex="-1">Belongs in the RFI, or leave it out</h2>
       <div class="screen-body">
         <p>Six fragments from a draft RFI on the same job. Decide where each one goes. Choose with the mouse or with the keyboard; there is nothing to drag.</p>
@@ -263,8 +288,8 @@
       </div>
     </section>
 
-    <!-- 7 -->
-    <section class="screen" id="screen-7">
+    <!-- 8 -->
+    <section class="screen" id="screen-8">
       <h2 tabindex="-1">Three decisions</h2>
       <div class="screen-body">
         <p>Same job, three moments. Each one scores the decision, not the definition.</p>
@@ -305,8 +330,8 @@
       </div>
     </section>
 
-    <!-- 8 -->
-    <section class="screen" id="screen-8">
+    <!-- 9 -->
+    <section class="screen" id="screen-9">
       <h2 tabindex="-1">The four part checklist</h2>
       <div class="screen-body">
         <div class="cols2">
@@ -368,13 +393,17 @@
       </p>
     </div>
 
-    <p class="done-aid-title">Before you send</p>
-    <ol class="done-aid">
-      <li><b>One question.</b> Answerable yes, no, or with a number.</li>
-      <li><b>The exact reference.</b> Sheet and detail, or section and paragraph.</li>
-      <li><b>The impact and the needed by date.</b> What is held, and by when.</li>
-      <li><b>The proposed answer.</b> What you believe is correct, and why.</li>
-    </ol>
+    <!-- The recap is read against the objectives on sheet 2, in the same
+         verbs, so the ending answers the promise the opening made. The four
+         part checklist itself is on sheet 9, one button away. -->
+    <p class="done-aid-title">You can now</p>
+    <ul class="done-aid">
+      <li><b>Identify</b> the four parts an RFI needs before it leaves your desk.</li>
+      <li><b>Spot</b> the four ways an RFI stalls, and name the part that is missing.</li>
+      <li><b>Choose</b> the stronger of two drafts, and explain why.</li>
+      <li><b>Sort</b> what belongs in an RFI from what belongs somewhere else.</li>
+      <li><b>Decide</b> the next move at a moment on a live job.</li>
+    </ul>
 
     <div class="done-actions">
       <button type="button" class="btn-ghost" id="done-review">Review the checklist</button>

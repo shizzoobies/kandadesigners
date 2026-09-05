@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Spot it before it hurts someone: a nine minute hazard recognition module</title>
 <meta name="description" content="A short interactive module on recognizing common jobsite hazards during a walk-through and matching each one to the right level of control." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%231B1D1F'/%3E%3Cpath%20d='M16%204.5%2030%2028H2Z'%20fill='%23FFD100'/%3E%3Crect%20x='14.4'%20y='12'%20width='3.2'%20height='8.4'%20fill='%231B1D1F'/%3E%3Crect%20x='14.4'%20y='22.4'%20width='3.2'%20height='3.2'%20fill='%231B1D1F'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="style.css" />
 <script>document.documentElement.className += ' js';</script>
 </head>
@@ -19,7 +20,7 @@
       </div>
       <div class="meter">
         <div class="meter-track" aria-hidden="true"><span class="meter-fill" id="bar-fill"></span></div>
-        <p class="meter-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 9</p>
+        <p class="meter-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 10</p>
       </div>
     </div>
     <div class="stripe" aria-hidden="true"></div>
@@ -28,42 +29,59 @@
   <main id="module">
 
     <!-- ============ 1 ============ -->
-    <section class="screen screen-hero" id="screen-1">
+    <!-- The cover. One idea, set large, on the site plate. Nothing to read
+         through and nothing to decide: the objectives are the next screen. -->
+    <section class="screen screen-cover" id="screen-1">
       <p class="stamp" aria-hidden="true">01</p>
-      <h2 tabindex="-1">Before you walk the site</h2>
-      <div class="screen-body cols2">
-        <div class="col">
-          <p class="lead">By the end of this module you will be able to walk a jobsite on a fixed route, name the common hazards you find, and match each one to the strongest control that is realistic in the situation.</p>
-          <p>Most people can point at a hazard once it is pointed out to them. The hard part is seeing it on the fourteenth morning, in the same doorway you have walked past thirteen times. That is what a method is for.</p>
-          <p class="note"><b>Keyboard.</b> Tab moves between controls, Enter or Space chooses, and left and right arrows move between tabs. The hazard hunt lists every spot as a button beside the picture. Nothing is timed and there is no sound.</p>
+      <div class="screen-body cover">
+        <div class="cover-lede">
+          <p class="cover-kicker">Site safety &middot; Construction and trades</p>
+          <h2 class="cover-title" tabindex="-1">Spot it before it hurts someone</h2>
+          <div class="cover-rule" aria-hidden="true"></div>
+          <p class="cover-promise">You will walk a jobsite on a fixed route, name what you find, and pick the control that will actually hold.</p>
         </div>
-        <div class="col">
-          <h3>What you will do</h3>
-          <ul class="ticklist">
-            <li>Learn a four zone walk-through route and why the order matters.</li>
-            <li>Read the common findings in each zone.</li>
-            <li>Hunt six hazards in an illustrated site scene.</li>
-            <li>Pick the strongest realistic control for six situations.</li>
-            <li>Make eight stop or go calls.</li>
-            <li>Build a walk-through card you can carry.</li>
-          </ul>
-          <p class="disclaimer">This is a teaching demonstration. It is not a substitute for a site-specific safety program, a competent person on site, or the training your project actually requires.</p>
-        </div>
+        <p class="cover-meta">About 9 minutes &middot; 10 screens &middot; Short module</p>
       </div>
     </section>
 
     <!-- ============ 2 ============ -->
     <section class="screen" id="screen-2">
       <p class="stamp" aria-hidden="true">02</p>
+      <h2 tabindex="-1">What you will be able to do</h2>
+      <div class="screen-body cols2 brief">
+        <div class="col">
+          <ul class="ticklist">
+            <li>Name the four zones of a walk-through, in order.</li>
+            <li>Identify six common hazards in a site scene.</li>
+            <li>Choose the strongest control a situation allows.</li>
+            <li>Decide whether work continues or stops.</li>
+            <li>Build a walk-through card you can carry.</li>
+          </ul>
+          <h3 class="brief-floor">Why this matters</h3>
+          <p>Most people can point at a hazard once it is pointed out to them. The hard part is seeing it on the fourteenth morning, in the same doorway you have walked past thirteen times. That is what a method is for.</p>
+        </div>
+        <div class="col">
+          <h3>How this works</h3>
+          <p class="note">Ten screens, about nine minutes. Nothing is timed and there is no sound. Tab moves between controls, Enter or Space chooses, left and right arrows move between tabs, and every spot in the hazard hunt is also a button in the list beside the picture.</p>
+          <h3>Who this is for</h3>
+          <p>Anyone who walks a site and can call a stop: foremen, supervisors, safety leads, and the trades working alongside them.</p>
+          <p class="disclaimer">This is a teaching demonstration. It is not a substitute for a site-specific safety program, a competent person on site, or the training your project actually requires.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 ============ -->
+    <section class="screen" id="screen-3">
+      <p class="stamp" aria-hidden="true">03</p>
       <h2 tabindex="-1">The walk-through method</h2>
       <div class="screen-body">
        <div class="tabs tabs-wide" data-tabs>
         <div class="tablist" role="tablist" aria-label="The walk-through method">
-          <button type="button" role="tab" id="tab-2a" aria-controls="pan-2a">The four zones</button>
-          <button type="button" role="tab" id="tab-2b" aria-controls="pan-2b">Why a fixed route works</button>
+          <button type="button" role="tab" id="tab-3a" aria-controls="pan-3a">The four zones</button>
+          <button type="button" role="tab" id="tab-3b" aria-controls="pan-3b">Why a fixed route works</button>
         </div>
 
-        <div class="tabpanel" role="tabpanel" id="pan-2a" aria-labelledby="tab-2a" tabindex="0">
+        <div class="tabpanel" role="tabpanel" id="pan-3a" aria-labelledby="tab-3a" tabindex="0">
         <p class="lead">Walk the same four zones in the same order, every time. A route beats a wander, because a wander only finds what is already bothering you.</p>
 
         <ol class="zones">
@@ -90,9 +108,10 @@
         </ol>
         </div>
 
-        <div class="tabpanel" role="tabpanel" id="pan-2b" aria-labelledby="tab-2b" tabindex="0">
+        <div class="tabpanel" role="tabpanel" id="pan-3b" aria-labelledby="tab-3b" tabindex="0">
+          <p class="lead">A fixed route beats a sharp eye, because the eye is the part that gets tired.</p>
           <ul class="why">
-            <li><b>You stop seeing what you walk past.</b> Familiar ground goes invisible in about a week. A route forces you to look at the doorway you always cut through.</li>
+            <li><b>You stop seeing what you walk past.</b> Familiar ground goes invisible fast. A route forces you to look at the doorway you always cut through.</li>
             <li><b>It survives a bad morning.</b> When the day is already sideways, a habit still runs. Judgment on its own does not.</li>
             <li><b>It produces a comparable record.</b> The same four zones every day means today's list can be read against last Tuesday's.</li>
             <li><b>It is teachable.</b> A new foreman can run your route on day one. Nobody can run your intuition.</li>
@@ -103,9 +122,9 @@
       </div>
     </section>
 
-    <!-- ============ 3 ============ -->
-    <section class="screen" id="screen-3">
-      <p class="stamp" aria-hidden="true">03</p>
+    <!-- ============ 4 ============ -->
+    <section class="screen" id="screen-4">
+      <p class="stamp" aria-hidden="true">04</p>
       <h2 tabindex="-1">Zone one: access and egress</h2>
       <div class="screen-body split">
         <div class="split-text">
@@ -113,11 +132,11 @@
 
           <div class="tabs" data-tabs>
             <div class="tablist" role="tablist" aria-label="Access and egress topics">
-              <button type="button" role="tab" id="tab-3a" aria-controls="pan-3a">Ladders</button>
-              <button type="button" role="tab" id="tab-3b" aria-controls="pan-3b">Stairs and walkways</button>
-              <button type="button" role="tab" id="tab-3c" aria-controls="pan-3c">Exits</button>
+              <button type="button" role="tab" id="tab-4a" aria-controls="pan-4a">Ladders</button>
+              <button type="button" role="tab" id="tab-4b" aria-controls="pan-4b">Stairs and walkways</button>
+              <button type="button" role="tab" id="tab-4c" aria-controls="pan-4c">Exits</button>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-3a" aria-labelledby="tab-3a" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4a" aria-labelledby="tab-4a" tabindex="0">
               <ul>
                 <li>Set on firm, level ground, at roughly a one to four angle, with the base secured against kicking out.</li>
                 <li>Tied off at the top, and extended well above the landing so there is something to hold while stepping off.</li>
@@ -125,14 +144,14 @@
                 <li>Used for access, not as a work platform for anything that needs two hands and a reach.</li>
               </ul>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-3b" aria-labelledby="tab-3b" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4b" aria-labelledby="tab-4b" tabindex="0">
               <ul>
                 <li>Clear full width, with no material staged in the path and no cords crossing it.</li>
                 <li>Handrails in place, including on temporary stair towers.</li>
                 <li>Lit well enough to see the tread edge, including in the stairwell nobody uses until the fire alarm goes off.</li>
               </ul>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-3c" aria-labelledby="tab-3c" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4c" aria-labelledby="tab-4c" tabindex="0">
               <ul>
                 <li>Marked, unlocked, and clear on both sides of the door.</li>
                 <li>Never the convenient place to set a pallet, because it is always the convenient place to set a pallet.</li>
@@ -144,9 +163,9 @@
       </div>
     </section>
 
-    <!-- ============ 4 ============ -->
-    <section class="screen" id="screen-4">
-      <p class="stamp" aria-hidden="true">04</p>
+    <!-- ============ 5 ============ -->
+    <section class="screen" id="screen-5">
+      <p class="stamp" aria-hidden="true">05</p>
       <h2 tabindex="-1">Zones two and three: height and energy</h2>
       <div class="screen-body split">
         <div class="split-text">
@@ -154,11 +173,11 @@
 
           <div class="tabs" data-tabs>
             <div class="tablist" role="tablist" aria-label="Height and energy topics">
-              <button type="button" role="tab" id="tab-4a" aria-controls="pan-4a">Fall exposure</button>
-              <button type="button" role="tab" id="tab-4b" aria-controls="pan-4b">Temporary power and cords</button>
-              <button type="button" role="tab" id="tab-4c" aria-controls="pan-4c">Locking out</button>
+              <button type="button" role="tab" id="tab-5a" aria-controls="pan-5a">Fall exposure</button>
+              <button type="button" role="tab" id="tab-5b" aria-controls="pan-5b">Temporary power and cords</button>
+              <button type="button" role="tab" id="tab-5c" aria-controls="pan-5c">Locking out</button>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-4a" aria-labelledby="tab-4a" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-5a" aria-labelledby="tab-5a" tabindex="0">
               <ul>
                 <li>Walk every leading edge, every stair opening, every shaft, and every place a guardrail was taken out to land material.</li>
                 <li>Guardrails: top rail, mid rail, and a toe board where anything could be kicked off onto people below.</li>
@@ -166,15 +185,15 @@
                 <li>If a rail comes out, it goes back the same shift, and somebody owns that. A rail removed at ten and remembered at four is an open edge for six hours.</li>
               </ul>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-4b" aria-labelledby="tab-4b" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-5b" aria-labelledby="tab-5b" tabindex="0">
               <ul>
                 <li>Cords out of walkways and up off wet ground. If a cord has to cross a path, it gets a ramp or it goes overhead.</li>
-                <li>Ground fault protection on temporary circuits, checked rather than assumed.</li>
+                <li>Ground fault protection on temporary circuits, checked rather than assumed. That is the device that cuts the power the moment current starts leaking to ground, which is the moment before somebody becomes the path.</li>
                 <li>No damaged jackets, no missing ground pins, no daisy chain of strips feeding a heater.</li>
                 <li>Panels closed, labeled, and not being used as a shelf.</li>
               </ul>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-4c" aria-labelledby="tab-4c" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-5c" aria-labelledby="tab-5c" tabindex="0">
               <ul>
                 <li>Before anyone works on equipment, its energy gets shut off, released, and physically locked so it cannot come back on.</li>
                 <li>The person doing the work puts their own lock and tag on it, and only that person takes it off.</li>
@@ -188,21 +207,21 @@
       </div>
     </section>
 
-    <!-- ============ 5 ============ -->
-    <section class="screen" id="screen-5">
-      <p class="stamp" aria-hidden="true">05</p>
+    <!-- ============ 6 ============ -->
+    <section class="screen" id="screen-6">
+      <p class="stamp" aria-hidden="true">06</p>
       <h2 tabindex="-1">Zone four: housekeeping and protective equipment</h2>
       <div class="screen-body split">
         <div class="split-text">
-          <p class="lead">Housekeeping is the zone people skip because it feels like tidiness. It is not tidiness. Most of the injuries that put someone in a truck to the clinic start with a floor.</p>
+          <p class="lead">Housekeeping is the zone people skip because it feels like tidiness. It is not tidiness. The injuries it prevents are the ordinary ones: a slip, a trip, a puncture through a boot, a stack that lets go.</p>
 
           <div class="tabs" data-tabs>
             <div class="tablist" role="tablist" aria-label="Housekeeping and protective equipment topics">
-              <button type="button" role="tab" id="tab-5a" aria-controls="pan-5a">Debris and trip hazards</button>
-              <button type="button" role="tab" id="tab-5b" aria-controls="pan-5b">Material staging</button>
-              <button type="button" role="tab" id="tab-5c" aria-controls="pan-5c">Protective equipment</button>
+              <button type="button" role="tab" id="tab-6a" aria-controls="pan-6a">Debris and trip hazards</button>
+              <button type="button" role="tab" id="tab-6b" aria-controls="pan-6b">Material staging</button>
+              <button type="button" role="tab" id="tab-6c" aria-controls="pan-6c">Protective equipment</button>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-5a" aria-labelledby="tab-5a" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-6a" aria-labelledby="tab-6a" tabindex="0">
               <ul>
                 <li>Cut offs, banding, strapping and packaging cleared as the work makes them, not at the end of the week.</li>
                 <li>Bins where the work is. A can forty feet away is a can nobody walks to.</li>
@@ -210,14 +229,14 @@
                 <li>Protruding rebar and fasteners capped or bent over, including the ones at shin height nobody can see.</li>
               </ul>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-5b" aria-labelledby="tab-5b" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-6b" aria-labelledby="tab-6b" tabindex="0">
               <ul>
                 <li>Staged out of walkways, off exits, and away from edges and openings.</li>
                 <li>Stacked on level ground, bound or blocked, and not higher than the stack can hold itself.</li>
                 <li>Loads checked for weight on the deck before they go up, not after somebody notices the deflection.</li>
               </ul>
             </div>
-            <div class="tabpanel" role="tabpanel" id="pan-5c" aria-labelledby="tab-5c" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-6c" aria-labelledby="tab-6c" tabindex="0">
               <ul>
                 <li>Present is not the same as worn. Look at heads, eyes, feet, hands and ears, not at the box by the gate.</li>
                 <li>Fitted and in usable condition: a cracked shell, a scratched lens or a torn glove is decoration.</li>
@@ -231,9 +250,9 @@
       </div>
     </section>
 
-    <!-- ============ 6 ============ -->
-    <section class="screen" id="screen-6">
-      <p class="stamp" aria-hidden="true">06</p>
+    <!-- ============ 7 ============ -->
+    <section class="screen" id="screen-7">
+      <p class="stamp" aria-hidden="true">07</p>
       <h2 tabindex="-1">Hazard hunt</h2>
       <div class="screen-body hunt">
         <p class="lead">Six hazards are in this scene. Select a spot to check it. Every spot in the picture is also a button in the list beside it, so you can work through it with the keyboard or a screen reader without hunting by pointer.</p>
@@ -398,18 +417,18 @@
       </div>
     </section>
 
-    <!-- ============ 7 ============ -->
-    <section class="screen" id="screen-7">
-      <p class="stamp" aria-hidden="true">07</p>
+    <!-- ============ 8 ============ -->
+    <section class="screen" id="screen-8">
+      <p class="stamp" aria-hidden="true">08</p>
       <h2 tabindex="-1">The hierarchy of controls</h2>
       <div class="screen-body">
         <div class="tabs tabs-wide" data-tabs>
           <div class="tablist" role="tablist" aria-label="Hierarchy of controls">
-            <button type="button" role="tab" id="tab-7a" aria-controls="pan-7a">The five levels</button>
-            <button type="button" role="tab" id="tab-7b" aria-controls="pan-7b">Six situations</button>
+            <button type="button" role="tab" id="tab-8a" aria-controls="pan-8a">The five levels</button>
+            <button type="button" role="tab" id="tab-8b" aria-controls="pan-8b">Six situations</button>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-7a" aria-labelledby="tab-7a" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-8a" aria-labelledby="tab-8a" tabindex="0">
             <p class="lead">Finding a hazard is half the job. The other half is choosing a control, and controls are not equal. Work down this list and stop at the strongest one that is realistic in the situation.</p>
             <ol class="hoc">
               <li><b>Elimination.</b> Remove the hazard. The task does not happen, or it happens somewhere it cannot hurt anyone.</li>
@@ -421,7 +440,7 @@
             <p class="note">The top two remove the hazard. The middle one contains it. The bottom two depend on people behaving exactly as intended, every time, which is why they sit at the bottom.</p>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-7b" aria-labelledby="tab-7b">
+          <div class="tabpanel" role="tabpanel" id="pan-8b" aria-labelledby="tab-8b">
             <p class="sub-intro">For each situation, pick the strongest control that is actually realistic. You can change an answer at any time, and nothing here is timed.</p>
 
             <div class="substeps" data-substeps data-sub-label="Situation">
@@ -524,9 +543,9 @@
       </div>
     </section>
 
-    <!-- ============ 8 ============ -->
-    <section class="screen" id="screen-8">
-      <p class="stamp" aria-hidden="true">08</p>
+    <!-- ============ 9 ============ -->
+    <section class="screen" id="screen-9">
+      <p class="stamp" aria-hidden="true">09</p>
       <h2 tabindex="-1">Stop or go</h2>
       <div class="screen-body">
         <p class="lead">Eight things you see on the walk. For each one, decide whether the work continues or the work stops until it is fixed. Nothing here is timed, and you can change an answer.</p>
@@ -633,22 +652,22 @@
       </div>
     </section>
 
-    <!-- ============ 9 ============ -->
-    <section class="screen" id="screen-9">
-      <p class="stamp" aria-hidden="true">09</p>
+    <!-- ============ 10 ============ -->
+    <section class="screen" id="screen-10">
+      <p class="stamp" aria-hidden="true">10</p>
       <h2 tabindex="-1">Your walk-through card</h2>
       <div class="screen-body">
         <div class="tabs tabs-wide" data-tabs>
           <div class="tab-row">
             <div class="tablist" role="tablist" aria-label="Walk-through card">
-              <button type="button" role="tab" id="tab-9a" aria-controls="pan-9a">Choose your checks</button>
-              <button type="button" role="tab" id="tab-9b" aria-controls="pan-9b">My card</button>
-              <button type="button" role="tab" id="tab-9c" aria-controls="pan-9c">Where you landed</button>
+              <button type="button" role="tab" id="tab-10a" aria-controls="pan-10a">Choose your checks</button>
+              <button type="button" role="tab" id="tab-10b" aria-controls="pan-10b">My card</button>
+              <button type="button" role="tab" id="tab-10c" aria-controls="pan-10c">Where you landed</button>
             </div>
             <p class="counter" id="card-count" role="status" aria-live="polite">0 items on your card.</p>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-9a" aria-labelledby="tab-9a">
+          <div class="tabpanel" role="tabpanel" id="pan-10a" aria-labelledby="tab-10a">
             <p class="sub-intro">Tick what you will check on your route. Open a zone, choose the checks you will actually make, and the card fills itself in.</p>
 
             <form class="picker accordion" id="picker" data-accordion>
@@ -694,7 +713,7 @@
             </form>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-9b" aria-labelledby="tab-9b" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-10b" aria-labelledby="tab-10b" tabindex="0">
             <div class="card" id="card">
               <p class="card-title">My walk-through card</p>
               <div id="card-body"><p class="quiet">Nothing ticked yet. Open the first tab, choose the checks you will actually make, then this card fills in.</p></div>
@@ -702,7 +721,7 @@
             </div>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-9c" aria-labelledby="tab-9c">
+          <div class="tabpanel" role="tabpanel" id="pan-10c" aria-labelledby="tab-10c">
             <div class="results" id="results">
               <p class="card-title">Where you landed</p>
               <ul id="results-list">
@@ -737,6 +756,16 @@
         <h2 class="done-h" id="done-title" tabindex="-1">Walk-through done</h2>
         <p class="done-sub">Spot it before it hurts someone</p>
 
+        <p class="done-recap-head">You can now</p>
+        <ul class="done-recap">
+          <li>Name the four zones of a walk-through, in order.</li>
+          <li>Identify six common hazards in a site scene.</li>
+          <li>Choose the strongest control a situation allows.</li>
+          <li>Decide whether work continues or stops.</li>
+          <li>Build a walk-through card you can carry.</li>
+        </ul>
+
+        <p class="done-recap-head">Where you landed</p>
         <ul class="done-scores">
           <li><span class="done-label">Hazards found</span> <span class="done-val" id="done-hunt">0 of 6</span></li>
           <li><span class="done-label">Hierarchy of controls</span> <span class="done-val" id="done-controls">0 of 6</span></li>

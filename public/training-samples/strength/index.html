@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Strong is a skill: a nine minute introduction to beginner strength training</title>
 <meta name="description" content="A short interactive course on why strength training matters at any age, the five movement patterns, how hard a set should feel, the form faults to watch for, and a first week you can actually start." />
+<!-- A loaded bar in the course palette, inline so a new tab never shows a
+     blank icon and nothing extra is requested. -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%230D0D0F'/%3E%3Crect%20x='3'%20y='14'%20width='26'%20height='4'%20fill='%238C949C'/%3E%3Crect%20x='7'%20y='7'%20width='5'%20height='18'%20fill='%23E63B1F'/%3E%3Crect%20x='20'%20y='7'%20width='5'%20height='18'%20fill='%23E63B1F'/%3E%3C/svg%3E" />
 <link rel="stylesheet" href="style.css" />
 <script>document.documentElement.className += ' js';</script>
 </head>
@@ -25,16 +28,17 @@
           <rect class="bar-shaft" x="4" y="20" width="238" height="6" />
           <rect class="bar-collar" x="18" y="12" width="7" height="22" />
           <rect class="bar-cap" x="238" y="14" width="6" height="18" />
-          <rect class="plate" data-plate="1" x="30" y="3"  width="15" height="40" />
-          <rect class="plate" data-plate="2" x="55" y="4"  width="15" height="38" />
-          <rect class="plate" data-plate="3" x="80" y="5"  width="15" height="36" />
-          <rect class="plate" data-plate="4" x="105" y="6" width="15" height="34" />
-          <rect class="plate" data-plate="5" x="130" y="7" width="15" height="32" />
-          <rect class="plate" data-plate="6" x="155" y="8" width="15" height="30" />
-          <rect class="plate" data-plate="7" x="180" y="9" width="15" height="28" />
-          <rect class="plate" data-plate="8" x="205" y="10" width="15" height="26" />
+          <rect class="plate" data-plate="1" x="28" y="3"   width="15" height="40" />
+          <rect class="plate" data-plate="2" x="51" y="4"   width="15" height="38" />
+          <rect class="plate" data-plate="3" x="74" y="5"   width="15" height="36" />
+          <rect class="plate" data-plate="4" x="97" y="6"   width="15" height="34" />
+          <rect class="plate" data-plate="5" x="120" y="7"  width="15" height="32" />
+          <rect class="plate" data-plate="6" x="143" y="8"  width="15" height="30" />
+          <rect class="plate" data-plate="7" x="166" y="9"  width="15" height="28" />
+          <rect class="plate" data-plate="8" x="189" y="10" width="15" height="26" />
+          <rect class="plate" data-plate="9" x="212" y="11" width="15" height="24" />
         </svg>
-        <p class="load-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 8</p>
+        <p class="load-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 9</p>
       </div>
     </div>
     <div class="upright" aria-hidden="true"></div>
@@ -43,48 +47,80 @@
   <main id="module">
 
     <!-- ================= 1 ================= -->
+    <!-- The cover. One idea per line and nothing else: the objectives, the
+         keyboard note and the disclaimer all live on screen two. -->
     <section class="screen screen-hero" id="screen-1">
       <p class="stamp" aria-hidden="true">01</p>
-      <h2 class="chalked" tabindex="-1">Before your first set</h2>
-      <div class="screen-body cols2">
-        <div class="col">
-          <p class="lead">Strength training is not a talent you either have or you do not. It is a skill: a handful of shapes your body already makes every day, practised on purpose, with a load.</p>
+      <div class="screen-body cover">
+        <p class="cover-kicker">Beginner strength &middot; Health and wellness</p>
+        <h2 class="chalked cover-title" tabindex="-1">Strong is a skill</h2>
 
-          <dl class="terms">
-            <dt>Strength training</dt>
-            <dd>Working your muscles against a load, which can be your own body weight, a dumbbell, a band, or a machine. The load is what gives muscle and bone a reason to get stronger.</dd>
-            <dt>Rep</dt>
-            <dd>Short for repetition. One complete movement, down and back up once.</dd>
-            <dt>Set</dt>
-            <dd>A group of reps done back to back, then a rest.</dd>
-          </dl>
+        <svg class="cover-bar" viewBox="0 0 248 46" preserveAspectRatio="xMinYMid meet" aria-hidden="true" focusable="false">
+          <rect class="cb-shaft" x="4" y="20" width="238" height="6" />
+          <rect class="cb-shaft" x="18" y="12" width="7" height="22" />
+          <rect class="cb-shaft" x="238" y="14" width="6" height="18" />
+          <rect class="cb-plate" x="28" y="3"   width="15" height="40" />
+          <rect class="cb-plate" x="51" y="4"   width="15" height="38" />
+          <rect class="cb-plate" x="74" y="5"   width="15" height="36" />
+          <rect class="cb-plate" x="97" y="6"   width="15" height="34" />
+          <rect class="cb-plate" x="120" y="7"  width="15" height="32" />
+          <rect class="cb-plate" x="143" y="8"  width="15" height="30" />
+          <rect class="cb-plate" x="166" y="9"  width="15" height="28" />
+          <rect class="cb-plate" x="189" y="10" width="15" height="26" />
+          <rect class="cb-plate" x="212" y="11" width="15" height="24" />
+        </svg>
 
-          <p class="note"><b>Keyboard.</b> Tab moves between controls, Enter or Space chooses, and the left and right arrows move between tabs. The sliders take the arrow keys. Nothing is timed and there is no sound.</p>
-        </div>
+        <p class="cover-promise">You will walk away with the five shapes strength training is built from, one beginner move for each, and a first week you could start on Monday.</p>
 
-        <div class="col">
-          <h3>What you will do</h3>
-          <ul class="ticklist">
-            <li>Read why loading your muscles matters at any age.</li>
-            <li>Learn the five movement patterns and one beginner move for each.</li>
-            <li>Sort ten everyday actions into those patterns.</li>
-            <li>Set a slider to find how hard a set should feel.</li>
-            <li>Spot the fault in six sets that have gone wrong.</li>
-            <li>Build a first week you could start on Monday.</li>
-          </ul>
-
-          <p class="disclaimer">This is general education, not medical advice and not a personal training program. If you have an injury, a heart condition, are pregnant, or have ever been told to avoid exertion, talk to a clinician before you start. For form, nothing on a screen beats a qualified coach watching you move.</p>
-        </div>
+        <p class="cover-meta">About 9 minutes &middot; 9 screens &middot; Short module</p>
+        <p class="cover-med">General education, not medical advice.</p>
       </div>
     </section>
 
     <!-- ================= 2 ================= -->
     <section class="screen" id="screen-2">
       <p class="stamp" aria-hidden="true">02</p>
+      <h2 class="chalked" tabindex="-1">What you will be able to do</h2>
+      <div class="screen-body cols2 cols2-mid">
+        <div class="col">
+          <ul class="ticklist objectives">
+            <li>Describe what regular strength training has been associated with, from bone and balance to blood sugar.</li>
+            <li>Name the five movement patterns, and sort a gym exercise or an everyday job into the one it belongs to.</li>
+            <li>Choose how hard a beginner set should feel, and how much to add the week after.</li>
+            <li>Spot the fault in a set that has gone wrong, and give the cue that fixes it.</li>
+            <li>Build a first training week you could start on Monday.</li>
+          </ul>
+
+          <h3>Why this matters</h3>
+          <p class="hook">Strength training is not a talent you either have or you do not. It is a skill: a handful of shapes your body already makes every day, practised on purpose, with a load. Nothing here assumes a gym, equipment, or a day of experience.</p>
+        </div>
+
+        <div class="col">
+          <h3>Words we will use</h3>
+          <dl class="terms terms-row">
+            <dt>Load</dt>
+            <dd>Anything your muscles work against: your own body weight, a dumbbell, a band, a machine.</dd>
+            <dt>Rep</dt>
+            <dd>Short for repetition. One complete movement, down and back up once.</dd>
+            <dt>Set</dt>
+            <dd>A group of reps done back to back, then a rest.</dd>
+          </dl>
+
+          <h3>How this works</h3>
+          <p class="note">Nine screens, about nine minutes, and Back is always there. Nothing is timed and there is no sound. Tab moves between controls, Enter or Space chooses, the left and right arrows move between tabs, and the sliders take the arrow keys.</p>
+
+          <p class="disclaimer">This is general education, not medical advice and not a personal training program. If you have an injury, a heart condition, are pregnant, or have ever been told to avoid exertion, talk to a clinician before you start. For form, nothing on a screen beats a qualified coach watching you move.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 3 ================= -->
+    <section class="screen" id="screen-3">
+      <p class="stamp" aria-hidden="true">03</p>
       <h2 class="chalked" tabindex="-1">Why it matters at any age</h2>
       <div class="screen-body split">
         <div class="split-text">
-          <p class="lead">Six reasons, one per card. Open a card to read it. Every claim here is general on purpose: the useful research is about the direction of the effect, not a number you can put on your own body.</p>
+          <p class="lead">Loading a muscle changes more than the muscle. Six reasons, one per card. Every claim here is general on purpose: the useful research is about the direction of the effect, not a number you can put on your own body.</p>
 
           <div class="flipgrid">
             <div class="flip">
@@ -156,9 +192,9 @@
       </div>
     </section>
 
-    <!-- ================= 3 ================= -->
-    <section class="screen" id="screen-3">
-      <p class="stamp" aria-hidden="true">03</p>
+    <!-- ================= 4 ================= -->
+    <section class="screen" id="screen-4">
+      <p class="stamp" aria-hidden="true">04</p>
       <h2 class="chalked" tabindex="-1">The five movement patterns</h2>
       <div class="screen-body split">
         <div class="split-text">
@@ -166,14 +202,14 @@
 
           <div class="tabs" data-tabs>
             <div class="tablist" role="tablist" aria-label="The five movement patterns">
-              <button type="button" role="tab" id="tab-3a" aria-controls="pan-3a">Squat</button>
-              <button type="button" role="tab" id="tab-3b" aria-controls="pan-3b">Hinge</button>
-              <button type="button" role="tab" id="tab-3c" aria-controls="pan-3c">Push</button>
-              <button type="button" role="tab" id="tab-3d" aria-controls="pan-3d">Pull</button>
-              <button type="button" role="tab" id="tab-3e" aria-controls="pan-3e">Carry</button>
+              <button type="button" role="tab" id="tab-4a" aria-controls="pan-4a">Squat</button>
+              <button type="button" role="tab" id="tab-4b" aria-controls="pan-4b">Hinge</button>
+              <button type="button" role="tab" id="tab-4c" aria-controls="pan-4c">Push</button>
+              <button type="button" role="tab" id="tab-4d" aria-controls="pan-4d">Pull</button>
+              <button type="button" role="tab" id="tab-4e" aria-controls="pan-4e">Carry</button>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-3a" aria-labelledby="tab-3a" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4a" aria-labelledby="tab-4a" tabindex="0">
               <div class="pat">
                 <div class="pat-art" aria-hidden="true">
                   <svg viewBox="0 0 120 120" focusable="false"><g class="fig"><circle cx="58" cy="20" r="9" /><path d="M58 29v30" /><path d="M58 59 44 78l4 26" /><path d="M58 59 74 78l-1 26" /><path d="M58 36 44 50M58 36 74 50" /><path d="M38 108h22M64 108h18" class="ground" /></g></svg>
@@ -190,7 +226,7 @@
               </div>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-3b" aria-labelledby="tab-3b" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4b" aria-labelledby="tab-4b" tabindex="0">
               <div class="pat">
                 <div class="pat-art" aria-hidden="true">
                   <svg viewBox="0 0 120 120" focusable="false"><g class="fig"><circle cx="30" cy="34" r="9" /><path d="M38 38 74 52" /><path d="M74 52v52" /><path d="M74 52 66 78" /><path d="M42 44v30" /><path d="M62 104h24" class="ground" /><rect x="34" y="72" width="18" height="12" class="load" /></g></svg>
@@ -207,7 +243,7 @@
               </div>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-3c" aria-labelledby="tab-3c" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4c" aria-labelledby="tab-4c" tabindex="0">
               <div class="pat">
                 <div class="pat-art" aria-hidden="true">
                   <svg viewBox="0 0 120 120" focusable="false"><g class="fig"><circle cx="40" cy="22" r="9" /><path d="M40 31v34" /><path d="M40 65 30 88v16M40 65 52 88v16" /><path d="M40 40 70 44M40 40 70 52" /><rect x="74" y="34" width="10" height="26" class="load" /><path d="M24 104h34" class="ground" /></g></svg>
@@ -224,7 +260,7 @@
               </div>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-3d" aria-labelledby="tab-3d" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4d" aria-labelledby="tab-4d" tabindex="0">
               <div class="pat">
                 <div class="pat-art" aria-hidden="true">
                   <svg viewBox="0 0 120 120" focusable="false"><g class="fig"><circle cx="72" cy="22" r="9" /><path d="M72 31v34" /><path d="M72 65 62 88v16M72 65 84 88v16" /><path d="M72 40 44 46 58 58" /><rect x="30" y="38" width="10" height="18" class="load" /><path d="M56 104h34" class="ground" /></g></svg>
@@ -241,7 +277,7 @@
               </div>
             </div>
 
-            <div class="tabpanel" role="tabpanel" id="pan-3e" aria-labelledby="tab-3e" tabindex="0">
+            <div class="tabpanel" role="tabpanel" id="pan-4e" aria-labelledby="tab-4e" tabindex="0">
               <div class="pat">
                 <div class="pat-art" aria-hidden="true">
                   <svg viewBox="0 0 120 120" focusable="false"><g class="fig"><circle cx="60" cy="16" r="9" /><path d="M60 25v41" /><path d="M60 66 54 88v16M60 66 66 88v16" /><path d="M60 34 34 40v22M60 34l26 6v22" /><rect x="26" y="62" width="16" height="12" class="load" /><rect x="78" y="62" width="16" height="12" class="load" /><path d="M46 104h12M62 104h12" class="ground" /></g></svg>
@@ -266,9 +302,9 @@
       </div>
     </section>
 
-    <!-- ================= 4 ================= -->
-    <section class="screen" id="screen-4">
-      <p class="stamp" aria-hidden="true">04</p>
+    <!-- ================= 5 ================= -->
+    <section class="screen" id="screen-5">
+      <p class="stamp" aria-hidden="true">05</p>
       <h2 class="chalked" tabindex="-1">Match the movement</h2>
       <div class="screen-body sorter">
         <p class="lead">Ten things, some from the gym and some from an ordinary Tuesday. Send each one to the pattern it belongs to. You can change an answer, nothing is timed, and the bins fill as you go.</p>
@@ -444,13 +480,13 @@
       </div>
     </section>
 
-    <!-- ================= 5 ================= -->
-    <section class="screen" id="screen-5">
-      <p class="stamp" aria-hidden="true">05</p>
+    <!-- ================= 6 ================= -->
+    <section class="screen" id="screen-6">
+      <p class="stamp" aria-hidden="true">06</p>
       <h2 class="chalked" tabindex="-1">How hard is hard enough</h2>
       <div class="screen-body split">
         <div class="split-text">
-          <p class="lead"><b>Reps in reserve</b> is the number of reps you could still have done when you stopped a set. Ten in reserve means you barely started. Zero means you could not have managed one more. Move the slider and read what that set would feel like.</p>
+          <p class="lead"><b>Reps in reserve</b> is how many reps you could still have done when you stopped a set. Move each slider and read what that set would feel like.</p>
 
           <div class="dial">
             <div class="dial-head">
@@ -478,19 +514,19 @@
             <p class="dial-say" id="addon-say" role="status" aria-live="polite">One more rep on a set or two. Small, boring, and it is the setting that keeps working for months.</p>
           </div>
 
-          <p class="note"><b>Progressive overload</b> means giving your body slightly more to do over time: one more rep, one more set, a little more weight, or better control of the same weight. Without it there is no reason for anything to change. With too much of it at once, form goes first.</p>
+          <p class="note"><b>Progressive overload</b> means a little more to do over time: one more rep, one more set, or slightly more weight. Too much at once and form goes first.</p>
         </div>
 
         <div class="split-media media-dumbbells" aria-hidden="true"></div>
       </div>
     </section>
 
-    <!-- ================= 6 ================= -->
-    <section class="screen" id="screen-6">
-      <p class="stamp" aria-hidden="true">06</p>
+    <!-- ================= 7 ================= -->
+    <section class="screen" id="screen-7">
+      <p class="stamp" aria-hidden="true">07</p>
       <h2 class="chalked" tabindex="-1">Spot the fault</h2>
       <div class="screen-body stack">
-        <p class="lead">Six sets that have gone wrong. Read what is happening, pick the fault, and take the cue with you. Form comes before load every time, and sharp pain is always a stop.</p>
+        <p class="lead">Form comes before load, every time, and sharp pain is always a stop. Beginner sets go wrong in six ways: a rounding back, caving knees, a held breath, a bounced rep, a rushed lowering, and too much weight too soon. Pick the fault in each set below, and take the cue with you.</p>
 
         <div class="substeps" data-substeps data-sub-label="Set">
           <div class="sub-bar">
@@ -610,22 +646,24 @@
       </div>
     </section>
 
-    <!-- ================= 7 ================= -->
-    <section class="screen" id="screen-7">
-      <p class="stamp" aria-hidden="true">07</p>
+    <!-- ================= 8 ================= -->
+    <section class="screen" id="screen-8">
+      <p class="stamp" aria-hidden="true">08</p>
       <h2 class="chalked" tabindex="-1">Your first week</h2>
       <div class="screen-body stack">
+        <p class="lead">A first week is two decisions: which days you will train, and one move for each of the five patterns.</p>
+
         <div class="tabs tabs-wide" data-tabs>
           <div class="tab-row">
             <div class="tablist" role="tablist" aria-label="Building your first week">
-              <button type="button" role="tab" id="tab-7a" aria-controls="pan-7a">Pick your days</button>
-              <button type="button" role="tab" id="tab-7b" aria-controls="pan-7b">Pick one move per pattern</button>
-              <button type="button" role="tab" id="tab-7c" aria-controls="pan-7c">Your week</button>
+              <button type="button" role="tab" id="tab-8a" aria-controls="pan-8a">Pick your days</button>
+              <button type="button" role="tab" id="tab-8b" aria-controls="pan-8b">Pick one move per pattern</button>
+              <button type="button" role="tab" id="tab-8c" aria-controls="pan-8c">Your week</button>
             </div>
             <p class="counter" id="build-count" role="status" aria-live="polite">0 days, 0 of 5 moves.</p>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-7a" aria-labelledby="tab-7a" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-8a" aria-labelledby="tab-8a" tabindex="0">
             <p class="sub-intro">Two or three sessions a week is plenty to start, each one a full body session covering all five patterns. Leave at least a day between them: the getting stronger happens in the rest, not in the set.</p>
 
             <form class="daypick" id="daypick">
@@ -647,7 +685,7 @@
             <p class="note"><b>Sleep and rest.</b> Sore for a day or two after a new session is ordinary. Sharp pain, or pain in a joint rather than a muscle, is not: stop and get it looked at. Sleep is the cheapest thing on this list and the one that does the most.</p>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-7b" aria-labelledby="tab-7b" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-8b" aria-labelledby="tab-8b" tabindex="0">
             <p class="sub-intro">One move per pattern, done in the same session. Two or three sets of about six to twelve reps each, stopping with two to four reps left in the tank.</p>
 
             <form class="movepick" id="movepick">
@@ -684,7 +722,7 @@
             </form>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-7c" aria-labelledby="tab-7c" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-8c" aria-labelledby="tab-8c" tabindex="0">
             <div class="plate-card">
               <div class="pc-head">
                 <p class="pc-title">My first week</p>
@@ -719,19 +757,19 @@
       </div>
     </section>
 
-    <!-- ================= 8 ================= -->
-    <section class="screen" id="screen-8">
-      <p class="stamp" aria-hidden="true">08</p>
+    <!-- ================= 9 ================= -->
+    <section class="screen" id="screen-9">
+      <p class="stamp" aria-hidden="true">09</p>
       <h2 class="chalked" tabindex="-1">Where you landed</h2>
       <div class="screen-body stack">
         <div class="tabs tabs-wide" data-tabs>
           <div class="tablist" role="tablist" aria-label="Where you landed">
-            <button type="button" role="tab" id="tab-8a" aria-controls="pan-8a">Your week card</button>
-            <button type="button" role="tab" id="tab-8b" aria-controls="pan-8b">Scores</button>
-            <button type="button" role="tab" id="tab-8c" aria-controls="pan-8c">Start over</button>
+            <button type="button" role="tab" id="tab-9a" aria-controls="pan-9a">Your week card</button>
+            <button type="button" role="tab" id="tab-9b" aria-controls="pan-9b">Scores</button>
+            <button type="button" role="tab" id="tab-9c" aria-controls="pan-9c">Start over</button>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-8a" aria-labelledby="tab-8a" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-9a" aria-labelledby="tab-9a" tabindex="0">
             <div class="plate-card">
               <div class="pc-head">
                 <p class="pc-title">My first week</p>
@@ -752,7 +790,7 @@
             </div>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-8b" aria-labelledby="tab-8b" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-9b" aria-labelledby="tab-9b" tabindex="0">
             <div class="board">
               <p class="pc-title">Scores</p>
               <ul id="results-list">
@@ -765,7 +803,7 @@
             <p class="disclaimer">General education, not medical advice and not a personal program. Talk to a clinician before you start if anything about your health makes exertion a question, and get a qualified coach to watch your form.</p>
           </div>
 
-          <div class="tabpanel" role="tabpanel" id="pan-8c" aria-labelledby="tab-8c" tabindex="0">
+          <div class="tabpanel" role="tabpanel" id="pan-9c" aria-labelledby="tab-9c" tabindex="0">
             <h3>Before you go</h3>
             <ul class="ticklist">
               <li>Put the first session in the calendar the way you would put in a meeting. A day and a time beats an intention.</li>
@@ -806,7 +844,16 @@
           <li><span class="done-label">Days a week</span> <span class="done-val" id="done-days">0</span></li>
         </ul>
 
-        <p class="done-line">You have five shapes, one move for each, a feel for how hard a set should be, and six ways a set goes wrong. That is the whole skill. Everything after this is turning up, leaving a couple of reps in the tank, and adding a little.</p>
+        <p class="done-sub">You can now</p>
+        <ul class="done-can">
+          <li>Describe what regular strength training has been associated with.</li>
+          <li>Name the five patterns, and sort a job into the one it belongs to.</li>
+          <li>Choose how hard a set should feel, and what to add the week after.</li>
+          <li>Spot the fault in a set, and give the cue that fixes it.</li>
+          <li>Build a first week you could start on Monday.</li>
+        </ul>
+
+        <p class="done-line">That is the whole skill. Everything after this is turning up, leaving a couple of reps in the tank, and adding a little.</p>
         <p class="done-note">General education, not medical advice and not a personal program. Talk to a clinician first if exertion is a question for you, and get a qualified coach to watch your form.</p>
 
         <div class="done-actions">

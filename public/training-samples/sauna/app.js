@@ -22,8 +22,8 @@
 (function () {
   'use strict';
 
-  var TOTAL = 7;
-  var SESSION_SCREEN = 4;
+  var TOTAL = 8;
+  var SESSION_SCREEN = 6;
   var SESSION_STEPS = 9;
 
   var current = 1;
@@ -481,7 +481,14 @@
     barFill.style.width = ((current / TOTAL) * 100) + '%';
 
     prevBtn.disabled = current === 1;
-    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
+    // Start on the cover, Finish on the last screen, Next everywhere between.
+    if (current === 1) {
+      nextBtn.textContent = 'Start';
+    } else if (current === TOTAL) {
+      nextBtn.textContent = 'Finish';
+    } else {
+      nextBtn.textContent = 'Next';
+    }
 
     if (current === SESSION_SCREEN) {
       var run = sessionRun();
@@ -623,7 +630,7 @@
     });
 
     doneReviewBtn.addEventListener('click', function () {
-      var planTab = document.getElementById('tab-7a');
+      var planTab = document.getElementById('tab-8a');
       if (planTab) {
         planTab.click();
       }

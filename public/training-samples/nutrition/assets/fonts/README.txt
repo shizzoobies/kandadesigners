@@ -42,16 +42,16 @@ because they are where different metrics will show up hardest:
 
   1. The masthead title, which is clamped and sits beside the progress meter.
   2. The corner numerals on each card, which are sized off the viewport.
-  3. The tabbed divider labels on cards 2 and 8, which must stay on one row
+  3. The tabbed divider labels on cards 3 and 9, which must stay on one row
      of the tab strip at 1100px wide.
-  4. The zone buttons on card 3 (Veg, Protein, Grains, Beside), which are
+  4. The zone buttons on card 4 (Veg, Protein, Grains, Beside), which are
      set in the body face but sit in a row that must not wrap at 900px wide.
 
-A wider display face will also change the Nutrition Facts panel on card 4,
+A wider display face will also change the Nutrition Facts panel on card 5,
 where the word Calories and the figure beside it share a fixed column.
 
 
-PLACEHOLDER NOTE (2026-09-04)
+PLACEHOLDER NOTE (2026-09-04), SUPERSEDED the same evening: the licensed files are in this folder and the @font-face block is live.
 The @font-face block in style.css is commented out until these files exist,
 because a missing font file is a console 404 and the site accessibility gate
 counts it as a failure. Drop the files in, remove the comment markers around

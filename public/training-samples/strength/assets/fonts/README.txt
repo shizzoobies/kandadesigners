@@ -46,7 +46,7 @@ or equivalent. Web font licences are separate from desktop licences on most
 marketplaces, so confirm the web licence covers embedding before shipping.
 
 
-PLACEHOLDER NOTE (2026-09-04)
+PLACEHOLDER NOTE (2026-09-04), SUPERSEDED the same evening: the licensed files are in this folder and the @font-face block is live.
 The @font-face block in style.css is commented out until these files exist,
 because a missing font file is a console 404 and the site accessibility gate
 counts it as a failure. Drop the files in, remove the comment markers around

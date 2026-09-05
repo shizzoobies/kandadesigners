@@ -24,8 +24,8 @@
 (function () {
   'use strict';
 
-  var TOTAL = 8;
-  var SORT_SCREEN = 3;
+  var TOTAL = 9;
+  var SORT_SCREEN = 4;
   var FOOD_COUNT = 8;
   var SPOT_COUNT = 6;
   var SORT_HELP_AFTER = 4;
@@ -725,7 +725,9 @@
     // The last card keeps a live button: reaching it earns Finish, which is
     // the ending, rather than a greyed out Next with nothing behind it.
     nextBtn.disabled = current === SORT_SCREEN && placedCount < FOOD_COUNT;
-    nextBtn.textContent = current === TOTAL ? 'Finish' : 'Next';
+    // The cover offers Start rather than Next: it is an invitation to begin,
+    // not the second page of something already under way.
+    nextBtn.textContent = current === TOTAL ? 'Finish' : current === 1 ? 'Start' : 'Next';
 
     if (current === TOTAL) {
       updateResults();
@@ -886,7 +888,7 @@
     });
 
     doneReviewBtn.addEventListener('click', function () {
-      var cardTab = document.getElementById('tab-8a');
+      var cardTab = document.getElementById('tab-9a');
       if (cardTab) {
         cardTab.click();
       }
