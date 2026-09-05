@@ -1,13 +1,14 @@
 import type { CSSProperties } from "react";
 import { AbsoluteFill, OffthreadVideo } from "remotion";
-import { KineticText } from "../../components/KineticText";
+import { fitHookLines, KineticText } from "../../components/KineticText";
 import { StandIn } from "../../components/StandIn";
-import { COLORS, DISPLAY_STACK } from "../../lib/brand";
+import { COLORS, DISPLAY_FAMILY, DISPLAY_STACK } from "../../lib/brand";
 import { captureSrc, findCapture } from "../../lib/captures";
 import {
   centeredPadding,
   formatMetrics,
   safeArea,
+  SAFE_ZONES,
   type FormatKey,
 } from "../../lib/layout";
 import type { TutorialHookContent } from "../types";
@@ -19,6 +20,20 @@ export type TutorialHookProps = {
 
 /** Type size at 1080 canvas width. Section 7 wants 96px or more on a hook. */
 const HOOK_FONT_SIZE = 104;
+
+/**
+ * The smallest a hook half may be set at, at 1080 canvas width, before it is
+ * allowed to wrap instead of shrinking further.
+ *
+ * Under Section 7's 96px preference on purpose. A tutorial hook is a sentence
+ * rather than a two word slam, and 84px is the point at which "Your hero is a
+ * promise," is still a headline read at arm's length on a phone. Below it the
+ * line stops reading as a hook, so the fit stops there and wraps instead.
+ */
+const HOOK_MIN_FONT_SIZE = 84;
+
+/** Line box multiplier. The same 1.08 src/scenes/Hook.tsx sets. */
+const HOOK_LINE_HEIGHT = 1.08;
 
 /** Opaque scrim, not a drop shadow. Section 7. The same value src/scenes/Hook.tsx uses. */
 const SCRIM = "#14100C";
@@ -32,7 +47,7 @@ const SCRIM = "#14100C";
  * option here rather than a missing shot. Everything else is the same
  * treatment: both halves of the line slam on frame 0, the first in canvas and
  * the second in amber, on a scrim anchored 28 percent down the safe area, with
- * the copy box centred on the canvas by centeredPadding().
+ * the copy box centered on the canvas by centeredPadding().
  *
  * On a field the scrim comes off. Its whole job is to hold text off a
  * photograph, and there is no photograph: leaving it in would draw a darker
@@ -48,29 +63,37 @@ export const TutorialHook: React.FC<TutorialHookProps> = ({
   const scale = metrics.typeScale;
   const shot = content.shot;
 
-  const fontSize = Math.round(HOOK_FONT_SIZE * scale);
+  const pad = centeredPadding(format, scale);
 
   /**
-   * Each half of the line gets at least one line box and takes more if it needs
-   * it.
+   * The type size and the two box heights, measured rather than assumed.
    *
-   * src/scenes/Hook.tsx pins each half to exactly one line box, which is right
-   * for the showcase reels: "Custom built." and "One designer." are thirteen
-   * characters and never wrap. A tutorial hook is a sentence, and "Your hero is
-   * a promise," is twenty three characters, which at 104px will not fit an 864
-   * pixel copy box however it is set. Section 7 puts a floor of 96px under a
-   * hook, so the answer is not smaller type: the line wraps, and the box has to
-   * grow with it. Pinned, the second half rendered straight through the first,
-   * which is what the first grey render showed.
+   * A tutorial hook is a sentence: "Your hero is a promise," is twenty three
+   * characters and at 104px it is a third wider than the 864 pixel copy box in
+   * the vertical crop. fitHookLines() shrinks it to fit on one line where that
+   * is possible and wraps it where it is not, and either way it hands back a
+   * box tall enough for the lines the half really took, so the amber second
+   * half stacks under the first instead of over it. Where both halves already
+   * fit, which is every showcase hook and the contrast tutorial's, it returns
+   * the authored size and one line box each: unchanged.
    */
-  const lineBox = Math.round(fontSize * 1.08);
+  const fit = fitHookLines({
+    lines: content.lines,
+    maxWidth: SAFE_ZONES[format].width - pad * 2,
+    fontSize: Math.round(HOOK_FONT_SIZE * scale),
+    minFontSize: Math.round(HOOK_MIN_FONT_SIZE * scale),
+    lineHeight: HOOK_LINE_HEIGHT,
+    fontFamily: DISPLAY_FAMILY,
+    fontWeight: 800,
+    letterSpacing: -2 * scale,
+  });
 
   const hookLineStyle: CSSProperties = {
     fontFamily: DISPLAY_STACK,
-    fontSize,
+    fontSize: fit.fontSize,
     fontWeight: 800,
     letterSpacing: -2 * scale,
-    lineHeight: 1.08,
+    lineHeight: HOOK_LINE_HEIGHT,
   };
 
   const onField = shot.kind === "field";
@@ -118,13 +141,13 @@ export const TutorialHook: React.FC<TutorialHookProps> = ({
             borderTop: `${Math.round(8 * scale)}px solid ${COLORS.accent}`,
             paddingTop: Math.round(44 * scale),
             paddingBottom: Math.round(52 * scale),
-            paddingLeft: centeredPadding(format, scale),
-            paddingRight: centeredPadding(format, scale),
+            paddingLeft: pad,
+            paddingRight: pad,
             textAlign: "center",
           }}
         >
           {/* One kinetic line, so both halves slam together. */}
-          <div style={{ minHeight: lineBox }}>
+          <div style={{ height: fit.boxes[0] }}>
             <KineticText
               text={content.lines[0]}
               mode="slam"
@@ -139,7 +162,7 @@ export const TutorialHook: React.FC<TutorialHookProps> = ({
               }}
             />
           </div>
-          <div style={{ minHeight: lineBox }}>
+          <div style={{ height: fit.boxes[1] }}>
             <KineticText
               text={content.lines[1]}
               mode="slam"

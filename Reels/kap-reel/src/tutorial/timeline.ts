@@ -74,7 +74,7 @@ export const CTA_MIN_FRAMES: Record<TutorialCut, number> = {
 /**
  * Words per second assumed for a beat that has no voice file yet.
  *
- * Only a scaffold: it exists so a grey render lays out and can be watched
+ * Only a scaffold: it exists so a gray render lays out and can be watched
  * before a single credit is spent, and every estimated beat is named in a
  * console warning when the bundle first evaluates the timeline.
  *
@@ -248,7 +248,7 @@ export function tutorialTimeline(
   let laidFrames = laid.reduce((sum, l) => sum + l.frames, 0);
 
   // An overrun on measured beats is a real overrun and the build fails. An
-  // overrun on estimates is not: the estimate exists so a grey render lays out
+  // overrun on estimates is not: the estimate exists so a gray render lays out
   // before a credit is spent, and 2.6 words a second is a guess about a read
   // nobody has heard yet. The draft read measured nearer four words a second,
   // so the estimate is conservative in the direction that would have failed

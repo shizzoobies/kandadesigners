@@ -60,7 +60,7 @@
  *   similarity_boost and speaker boost, and its pacing is directed with audio
  *   tags rather than with the speed setting.
  *
- *   eleven_multilingual_v2 is generally available, honours every voice setting
+ *   eleven_multilingual_v2 is generally available, honors every voice setting
  *   below, and the same page notes it "can better generalize the reading out of
  *   numbers in a way that is more natural for human listeners", which matters
  *   for a tutorial whose whole subject is a contrast ratio read aloud.

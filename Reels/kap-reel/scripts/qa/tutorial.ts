@@ -6,7 +6,7 @@
  * The rest of scripts/qa/ is the pixel harness: it renders stills and measures
  * them. This is the other kind of check, the one that needs no picture. It
  * asserts the things the tutorial spec states as facts, so that a script edit,
- * a regenerated voice line or a colour moving in config/brand.json fails here
+ * a regenerated voice line or a color moving in config/brand.json fails here
  * rather than on screen:
  *
  *   1. Every cut lays out to exactly its frame count, and no beat is shorter
@@ -187,8 +187,10 @@ for (const content of TUTORIALS) {
   for (const cut of TUTORIAL_CUTS) {
     for (const beat of content.beats[cut]) {
       ok(
-        `${content.id} ${cut} ${beat.id} caption is 1 or 2 lines`,
-        beat.caption.length >= 1 && beat.caption.length <= CAPTION_MAX_LINES,
+        `${content.id} ${cut} ${beat.id} caption is at most 2 lines`,
+        // Zero is allowed: a beat whose picture is the line itself (the "rule"
+        // beats) drops the card rather than repeating itself.
+        beat.caption.length <= CAPTION_MAX_LINES,
         `${beat.caption.length} lines`,
       );
       const longest = beat.caption.reduce((a, b) => (b.length > a.length ? b : a), "");

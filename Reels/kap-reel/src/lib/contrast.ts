@@ -40,7 +40,7 @@ export function hexToRgb(hex: string): [number, number, number] {
           .join("")
       : raw;
   if (!/^[0-9a-fA-F]{6}$/.test(full)) {
-    throw new Error(`Not a hex colour: "${hex}".`);
+    throw new Error(`Not a hex color: "${hex}".`);
   }
   return [
     parseInt(full.slice(0, 2), 16),
@@ -55,7 +55,7 @@ function linearise(channel8Bit: number): number {
   return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
 }
 
-/** WCAG 2.x relative luminance of a hex colour, 0 (black) to 1 (white). */
+/** WCAG 2.x relative luminance of a hex color, 0 (black) to 1 (white). */
 export function relativeLuminance(hex: string): number {
   const [r, g, b] = hexToRgb(hex);
   return (
@@ -64,9 +64,9 @@ export function relativeLuminance(hex: string): number {
 }
 
 /**
- * WCAG 2.x contrast ratio between two hex colours, 1 to 21.
+ * WCAG 2.x contrast ratio between two hex colors, 1 to 21.
  *
- * Order does not matter: the lighter colour is always the numerator, which is
+ * Order does not matter: the lighter color is always the numerator, which is
  * what the specification says and what a checker in a browser reports.
  */
 export function contrastRatio(a: string, b: string): number {
@@ -96,9 +96,9 @@ export function ratioLabel(ratio: number): string {
  * Whether a ratio clears AA at a given text size.
  *
  * Rounded to one decimal first, deliberately: the number on screen is what the
- * viewer is asked to judge, so a 4.47 that prints as "4.5" must not be labelled
+ * viewer is asked to judge, so a 4.47 that prints as "4.5" must not be labeled
  * a pass while its own caption reads like one. Nothing in either tutorial sits
- * that close to a threshold, and this keeps it that way if a colour moves.
+ * that close to a threshold, and this keeps it that way if a color moves.
  */
 export function passesAA(ratio: number, large = false): boolean {
   return Number(formatRatio(ratio)) >= (large ? AA_LARGE : AA_NORMAL);

@@ -36,13 +36,13 @@ export function findJamClip(id: string): JamEntry | null {
 }
 
 /**
- * A Jam screen recording inside the laptop frame, or a labelled stand-in.
+ * A Jam screen recording inside the laptop frame, or a labeled stand-in.
  *
  * Alex records these by hand: Chrome on a real page, DevTools open, a real
  * pointer clicking through a real panel. There is no script that can produce
  * one, so a beat that needs a recording has to be able to render before the
  * recording exists, and the rule is the showcase reels' rule: a stand-in must
- * be impossible to mistake for a finished shot. It is flat grey, hatched, and
+ * be impossible to mistake for a finished shot. It is flat gray, hatched, and
  * it says which clip is missing.
  *
  * The laptop is always 16:10, whatever the recording's own aspect is, for the

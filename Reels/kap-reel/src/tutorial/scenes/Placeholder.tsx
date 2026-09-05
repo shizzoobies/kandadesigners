@@ -7,10 +7,10 @@ import type { TutorialSceneProps } from "./registry";
 /**
  * The scene every beat is set to until Phase B replaces it.
  *
- * It is the showcase reels' grey render, one beat at a time: a labelled grey
+ * It is the showcase reels' gray render, one beat at a time: a labeled gray
  * rectangle in the box the real scene will occupy, saying which beat it is
  * standing in for. That is deliberate and it is the whole point of Phase A's
- * gate. A grey render with the draft voice on it lets the scripts and the
+ * gate. A gray render with the draft voice on it lets the scripts and the
  * timing be judged before a single tutorial scene is drawn, and a placeholder
  * that looked plausible would get signed off.
  *

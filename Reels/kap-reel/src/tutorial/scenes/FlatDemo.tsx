@@ -22,7 +22,7 @@ import {
  * "auto" is what nearly every beat wants: a phone in the three 1080 wide crops
  * and a laptop in landscape, because that is the device the surface being
  * demonstrated actually lives on at that shape. "none" is a bare canvas card,
- * for a beat whose subject is a colour or a rule rather than a screen.
+ * for a beat whose subject is a color or a rule rather than a screen.
  */
 export type DemoDevice = "auto" | "phone" | "laptop" | "none";
 
@@ -56,12 +56,12 @@ const PHONE_SCREEN_ASPECT = 780 / 1688;
 const CAPTION_RESERVE = 198;
 
 /**
- * The box every tutorial demo is laid out inside: the canvas centred copy box
+ * The box every tutorial demo is laid out inside: the canvas centered copy box
  * horizontally, and the safe area less the caption reserve vertically.
  *
  * Exported because a Phase B scene that wants to place something against the
  * demo, and the QA harness that measures where it landed, both have to compute
- * the same rectangle. Nothing may centre a demo by hand.
+ * the same rectangle. Nothing may center a demo by hand.
  */
 export function demoBox(format: FormatKey): DemoBox {
   const spec = SAFE_ZONES[format];
@@ -87,7 +87,7 @@ export type FlatDemoProps = {
   format: FormatKey;
   device?: DemoDevice;
   /**
-   * The card's own ground. Canvas by default, which is the page colour both
+   * The card's own ground. Canvas by default, which is the page color both
    * tutorials are arguing about; "surface" for a demo that has to sit a card on
    * a card without the two touching.
    */
@@ -104,11 +104,11 @@ export type FlatDemoProps = {
 const CARD_RADIUS = 8;
 
 /**
- * A canvas coloured card centred in the safe area that a tutorial scene draws
+ * A canvas colored card centered in the safe area that a tutorial scene draws
  * inside, phone shaped in the tall crops and laptop shaped in landscape.
  *
  * This is the shared ground the per tutorial scenes are built on, so a beat
- * about a headline and a beat about a colour sit in the same place at the same
+ * about a headline and a beat about a color sit in the same place at the same
  * size and a cut between them does not move the frame. The device is drawn with
  * the same DeviceFrame and LaptopFrame the showcase reels use, so a tutorial
  * mock and a real capture belong to one visual family.

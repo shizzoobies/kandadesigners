@@ -39,7 +39,7 @@ const FADE_FRAMES = 6;
  * because a tutorial watched muted in a feed is the normal case, and the SRT
  * sidecar carries the full narration for a viewer reading rather than listening.
  *
- * Centred on the CANVAS through centeredBox(), like everything else in this
+ * Centered on the CANVAS through centeredBox(), like everything else in this
  * project since the owner's 2026-09-04 decision. The card is sized to its own
  * copy rather than run edge to edge, so it reads as a caption card sitting on
  * the picture and not as a second lower third.

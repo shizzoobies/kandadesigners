@@ -5,16 +5,17 @@
 // hero". Narration is exactly what is sent to the voice model, so "K&A" is
 // written "K and A" and "six hundred pixels" is spelled out.
 //
-// Every beat's scene is "placeholder" in Phase A. The Phase B hero agent
-// replaces those keys with its own scenes and registers them in
-// src/tutorial/scenes/registry.ts, and touches nothing else outside
-// src/tutorial/scenes/hero/ and this file.
+// Phase A set every beat's scene to "placeholder". Phase B replaced those keys
+// with the "hero-*" scenes in src/tutorial/scenes/hero/, registered in
+// src/tutorial/scenes/registry.ts. The fictional bakery's own copy, the three
+// real client ids and the three rewrite passes live in
+// src/tutorial/scenes/hero/riverside.ts, next to the scenes that draw them.
 //
 // Two facts about the pictures this tutorial needs, recorded here because they
 // are content decisions rather than scene decisions:
 //
 // 1. The weak example is fictional. Riverside Bakery, consistent with the
-//    fictional bakery in the training P&L sample, labelled "example" on screen.
+//    fictional bakery in the training P&L sample, labeled "example" on screen.
 //    A weak hero is never attributed to a real client.
 // 2. The good examples are three cleared client sites whose live hero copy
 //    states what the visitor gets, checked against the live pages on
@@ -42,7 +43,7 @@ import type { TutorialBeat, TutorialContent } from "../types";
 const SHORT_BEATS: TutorialBeat[] = [
   {
     id: "weak",
-    scene: "placeholder",
+    scene: "hero-weak",
     narration: "Welcome to our website says nothing.",
     caption: ["Welcome to our website", "says nothing."],
     minFrames: 60,
@@ -50,7 +51,7 @@ const SHORT_BEATS: TutorialBeat[] = [
   },
   {
     id: "promise",
-    scene: "placeholder",
+    scene: "hero-promise",
     narration: "Say what they get, in the first six words.",
     caption: ["Say what they get,", "in the first six words."],
     // The headline retypes on the same phone. 78 frames is 2.6 seconds, which
@@ -60,7 +61,7 @@ const SHORT_BEATS: TutorialBeat[] = [
   },
   {
     id: "real",
-    scene: "placeholder",
+    scene: "hero-real",
     narration: "These three do.",
     caption: ["These three do."],
     // Three phone frames, fast cut. 60 frames is 20 a piece, which is the
@@ -70,15 +71,18 @@ const SHORT_BEATS: TutorialBeat[] = [
 ];
 
 /**
- * The 45 second LinkedIn cut. Five beats and an end card, 1350 frames.
+ * The 45 second LinkedIn cut. Six beats and an end card, 1350 frames.
  *
  * "real" is the stretch beat: three real client heroes, each held about three
  * seconds, and the slack in this cut buys that hold rather than a longer line.
+ * It was five beats until 2026-09-04, when the measured read came in 327 frames
+ * short of the cut and every one of them landed on "real": eleven seconds for
+ * three phones. "test" is the beat that slack bought.
  */
 const LINKEDIN_BEATS: TutorialBeat[] = [
   {
     id: "fold",
-    scene: "placeholder",
+    scene: "hero-fold",
     narration:
       "The first screen decides whether anyone scrolls. On a phone that is " +
       "about six hundred pixels. A photo and a logo spend it on nothing.",
@@ -88,7 +92,7 @@ const LINKEDIN_BEATS: TutorialBeat[] = [
   },
   {
     id: "rewrite",
-    scene: "placeholder",
+    scene: "hero-rewrite",
     narration:
       "Take a weak line. Welcome to our website. Rewrite it: who it is for, " +
       "what they get, why you.",
@@ -97,8 +101,28 @@ const LINKEDIN_BEATS: TutorialBeat[] = [
     minFrames: 120,
   },
   {
+    id: "test",
+    scene: "hero-test",
+    narration:
+      "Test it. Cover the photo. If the line still tells a stranger what they " +
+      "get, it works.",
+    caption: ["Test it. Cover the photo.", "Still tells you what you get?"],
+    // Added 2026-09-04. The 45 second cut under filled: with five beats the
+    // slack came to 327 frames and all of it landed on "real", which held three
+    // phones for six and a half seconds each. That is not a hold, it is a
+    // stall. This beat is the argument the cut was missing between rewriting
+    // the line and showing three real ones: a test the viewer can run on their
+    // own page, on the same fictional phone, with the photo taken away.
+    //
+    // 90 frames is the shortest the picture may run: the canvas mask wipes down
+    // over the photo band and the headline underneath has to be read after it
+    // lands, not during it.
+    minFrames: 90,
+    props: { label: "example" },
+  },
+  {
     id: "real",
-    scene: "placeholder",
+    scene: "hero-real",
     narration:
       "Three real ones. P B and J Accounting, M B S Medicine, Southern " +
       "Legacy. Each tells you what you get before you scroll.",
@@ -110,9 +134,12 @@ const LINKEDIN_BEATS: TutorialBeat[] = [
   },
   {
     id: "rule",
-    scene: "placeholder",
+    scene: "hero-rule",
     narration: "Write the promise. Then pick the photo.",
-    caption: ["Write the promise.", "Then pick the photo."],
+    // No caption: the picture is the line itself, and a card repeating it
+    // word for word under it reads as a stutter. The SRT still carries the
+    // narration.
+    caption: [],
     minFrames: 60,
   },
 ];

@@ -7,17 +7,17 @@
 // rather than set as digits, which is how a text to speech model reads a number
 // aloud reliably.
 //
-// Every beat's scene is "placeholder" in Phase A. The Phase B contrast agent
-// replaces those keys with its own scenes and registers them in
-// src/tutorial/scenes/registry.ts, and touches nothing else outside
-// src/tutorial/scenes/contrast/ and this file.
+// Every beat's scene was "placeholder" in Phase A. Phase B replaced those keys
+// on 2026-09-04 with the scenes in src/tutorial/scenes/contrast/, registered in
+// src/tutorial/scenes/registry.ts. The one exception is "inspect", which takes
+// the shared "jam" player rather than a scene of this tutorial's own.
 //
 // The numbers this tutorial is about are never typed into a scene. They are
 // computed from config/brand.json through src/lib/contrast.ts, and
 // scripts/qa/tutorial.ts asserts them: amber #D97706 on canvas #F8F5F2 is 2.9
 // to 1, rust #9A3412 on canvas is 6.7 to 1, and espresso ink #221C15 on amber
 // clears AA. The captions below quote those numbers, and the test also asserts
-// that what the captions quote is what the helper computes, so a colour moving
+// that what the captions quote is what the helper computes, so a color moving
 // in brand.json fails the build rather than putting a stale figure on screen.
 
 import type { TutorialBeat, TutorialContent } from "../types";
@@ -32,7 +32,7 @@ import type { TutorialBeat, TutorialContent } from "../types";
 const SHORT_BEATS: TutorialBeat[] = [
   {
     id: "fine",
-    scene: "placeholder",
+    scene: "contrast-fine",
     narration: "This amber on cream looks fine.",
     caption: ["This amber on cream", "looks fine."],
     // Long enough for the eye to accept the page before it is contradicted.
@@ -40,7 +40,7 @@ const SHORT_BEATS: TutorialBeat[] = [
   },
   {
     id: "fails",
-    scene: "placeholder",
+    scene: "contrast-fails",
     // The ratio is spelled out because the voice model reads "2.9 : 1" as
     // punctuation. On screen it is set as digits in Lenia Mono.
     narration: "It measures two point nine to one. That fails.",
@@ -50,7 +50,7 @@ const SHORT_BEATS: TutorialBeat[] = [
   },
   {
     id: "fix",
-    scene: "placeholder",
+    scene: "contrast-fix",
     narration: "Same palette, rust instead. Six point seven. Passes.",
     caption: ["Same palette, rust instead.", "6.7 to 1. Passes."],
     // The crossfade plus both ratios on screen. Takes the cut's slack.
@@ -70,7 +70,7 @@ const SHORT_BEATS: TutorialBeat[] = [
 const LINKEDIN_BEATS: TutorialBeat[] = [
   {
     id: "real",
-    scene: "placeholder",
+    scene: "contrast-real",
     narration:
       "Here's a real page. The amber reads as bold, so your eye says it's " +
       "fine. The checker says two point nine to one. Body text needs four " +
@@ -80,21 +80,25 @@ const LINKEDIN_BEATS: TutorialBeat[] = [
   },
   {
     id: "inspect",
-    scene: "placeholder",
+    // The shared Jam player, not a scene of this tutorial's own. It renders a
+    // labeled stand-in until Alex's recording lands in assets/captures/jam/ and
+    // is listed in config/jam.json.
+    scene: "jam",
     narration:
-      "Open the inspector, click the colour swatch, and the ratio is right " +
+      "Open the inspector, click the color swatch, and the ratio is right " +
       "there with the pass marks under it.",
     caption: ["Open the inspector.", "The ratio is right there."],
     minFrames: 120,
     stretch: true,
-    // Alex's Jam recording of Chrome DevTools on ka-performancefl.com. Phase B
-    // switches this beat to the "jam" scene; the id is here from Phase A so the
-    // asset request and the beat that consumes it are in one place.
+    // Alex's Jam recording of Chrome DevTools on ka-performancefl.com. The id
+    // is not in config/jam.json yet, and must not be added until the mp4 lands:
+    // JamClip draws a labeled stand-in for an unlisted id, and a listed id with
+    // no file behind it would fail the render instead.
     props: { clipId: "contrast-devtools" },
   },
   {
     id: "fix",
-    scene: "placeholder",
+    scene: "contrast-fix-wide",
     narration:
       "The fix is not a new palette. Amber stays on buttons, with dark text " +
       "on top. Words on the page get the rust from the same family. Six " +
@@ -104,9 +108,12 @@ const LINKEDIN_BEATS: TutorialBeat[] = [
   },
   {
     id: "rule",
-    scene: "placeholder",
-    narration: "Every colour that carries text gets measured, not eyeballed.",
-    caption: ["Measured, not eyeballed."],
+    scene: "contrast-rule",
+    narration: "Every color that carries text gets measured, not eyeballed.",
+    // No caption: the picture is the line itself, and a card repeating it
+    // word for word under it reads as a stutter. The SRT still carries the
+    // narration.
+    caption: [],
     minFrames: 60,
   },
 ];
@@ -118,7 +125,7 @@ export const CONTRAST_TUTORIAL: TutorialContent = {
     narration: "Contrast is not a vibe.",
     // No capture opens this one. A flat teal field is the brand's dark band
     // from config/brand.json, and it is the right ground for a claim about
-    // colour: a screenshot behind the line would be a fifth colour arguing
+    // color: a screenshot behind the line would be a fifth color arguing
     // with the four the tutorial is about.
     shot: { kind: "field", field: "teal" },
   },
@@ -128,8 +135,8 @@ export const CONTRAST_TUTORIAL: TutorialContent = {
   },
   cta: {
     short: {
-      narration: "Measure every colour you set text in.",
-      closingLine: "Measure every colour.",
+      narration: "Measure every color you set text in.",
+      closingLine: "Measure every color.",
     },
     linkedin: {
       // "K and A", never "K&A", in anything the voice model reads.

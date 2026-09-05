@@ -90,7 +90,7 @@ export type TutorialBeat = {
    * The burned in caption, one or two lines of about 32 characters at 1080
    * canvas width. Usually the narration cut down rather than the narration
    * verbatim: a 30 word line does not fit two lines and a caption that scrolls
-   * is worse than a caption that summarises. The SRT sidecar carries the full
+   * is worse than a caption that summarizes. The SRT sidecar carries the full
    * narration, so nothing is lost for a viewer reading rather than listening.
    */
   caption: string[];
