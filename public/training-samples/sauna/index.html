@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Heat, done well: a seven minute module on using a sauna sensibly</title>
+<meta name="description" content="A short interactive module on what a sauna does to the body, how to walk through a session without overdoing it, and when to stop." />
+<link rel="stylesheet" href="style.css" />
+<script>document.documentElement.className += ' js';</script>
+</head>
+<body>
+<div class="rig">
+
+  <header class="rig-head">
+    <div class="rig-head-inner">
+      <div class="head-id">
+        <svg class="mark" viewBox="0 0 60 52" aria-hidden="true" focusable="false">
+          <g class="mark-steam"><path d="M20 17c-5-6 4-9 0-15M31 15c-5-6 4-9 0-15" /></g>
+          <g class="mark-stones">
+            <ellipse cx="19" cy="41" rx="12" ry="8" />
+            <ellipse cx="34" cy="43" rx="10" ry="7" />
+            <ellipse cx="27" cy="31" rx="9" ry="6" />
+          </g>
+          <g class="mark-ladle"><path d="M36 30a8 6 0 0 0 14 5" /><path d="M48 32 58 24" /></g>
+        </svg>
+        <div class="head-words">
+          <p class="kicker">Sauna and recovery &middot; Health and wellness</p>
+          <h1>Heat, done well</h1>
+        </div>
+      </div>
+      <div class="gauge">
+        <div class="gauge-track" aria-hidden="true"><span class="gauge-fill" id="bar-fill"></span></div>
+        <p class="gauge-text" id="progress-text" role="status" aria-live="polite">Screen 1 of 7</p>
+      </div>
+    </div>
+    <div class="edge edge-head" aria-hidden="true"></div>
+  </header>
+
+  <main id="module">
+
+    <!-- ============ 1 ============ -->
+    <section class="screen screen-hero" id="screen-1">
+      <svg class="steam" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <ellipse class="puff puff-a" cx="90" cy="250" rx="62" ry="34" />
+        <ellipse class="puff puff-b" cx="215" cy="270" rx="80" ry="42" />
+        <ellipse class="puff puff-c" cx="320" cy="255" rx="54" ry="30" />
+      </svg>
+      <p class="stamp" aria-hidden="true">01</p>
+      <h2 tabindex="-1">Before you sit down</h2>
+      <div class="screen-body cols2">
+        <div class="col">
+          <p class="lead">A sauna is a small room built to be heated well above ordinary room temperature, used in short sessions of dry or steamy heat. By the end of this module you will know what the heat is doing to you, how to walk through a session without overdoing it, and when the right answer is to get out.</p>
+          <p>Two kinds turn up almost everywhere: a traditional sauna, heated by a stove and a pile of hot stones, and an infrared sauna, where panels warm your body directly. This module covers both.</p>
+          <p class="note"><b>Keyboard.</b> Tab moves between controls, Enter or Space chooses, and the left and right arrow keys move between tabs. Nothing is timed, nothing plays sound, and the one moving thing on here has a Start button and never starts on its own.</p>
+        </div>
+        <div class="col">
+          <h3>What you will do</h3>
+          <ul class="ticklist">
+            <li>Compare traditional and infrared heat.</li>
+            <li>Read what the heat asks of your heart, your fluids and your muscles.</li>
+            <li>Walk a session, step by step.</li>
+            <li>Make eight calls on whether to stay, cool down, or stop.</li>
+            <li>Check the seven reasons to ask a clinician first.</li>
+            <li>Build a plan for a first session.</li>
+          </ul>
+          <p class="disclaimer"><b>Please read this part.</b> This is general education, not medical advice. Heat is a real physical stress, not a spa nicety. If you are pregnant, live with heart disease, have low or high blood pressure, take medication that affects heat regulation or blood pressure, or have been drinking alcohol, talk to a clinician before using a sauna.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 ============ -->
+    <section class="screen" id="screen-2">
+      <p class="stamp" aria-hidden="true">02</p>
+      <h2 tabindex="-1">Two kinds of heat</h2>
+      <div class="screen-body split">
+        <div class="split-text">
+          <div class="tabs" data-tabs>
+            <div class="tablist" role="tablist" aria-label="Kinds of sauna heat">
+              <button type="button" role="tab" id="tab-2a" aria-controls="pan-2a">Traditional</button>
+              <button type="button" role="tab" id="tab-2b" aria-controls="pan-2b">Infrared</button>
+              <button type="button" role="tab" id="tab-2c" aria-controls="pan-2c">What they share</button>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-2a" aria-labelledby="tab-2a" tabindex="0">
+              <p class="lead">A stove heats the room and a pile of stones on top of it. The air itself gets hot, and it is usually dry until somebody adds water.</p>
+              <ul>
+                <li>Ladle a little water onto the stones and you get <b>l&ouml;yly</b>: the burst of steam that rises when water hits hot rock, and the wave of heat you feel a second later. Humidity climbs for a moment, then settles.</li>
+                <li>Heat stacks toward the ceiling, so the bench you choose changes the experience more than anything else in the room.</li>
+                <li>Ask before you pour. In a shared room, l&ouml;yly is everybody's.</li>
+              </ul>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-2b" aria-labelledby="tab-2b" tabindex="0">
+              <p class="lead"><b>Infrared</b> saunas use panels that warm your body directly rather than heating all of the air first, so the air stays cooler than it would in a traditional room.</p>
+              <ul>
+                <li>The air can feel mild while you are still sweating steadily, which is the part people misread.</li>
+                <li>Cooler air is not the same as less demand. Your body is still warming up and still losing fluid.</li>
+                <li>There are no stones and no steam, so there is no l&ouml;yly here.</li>
+              </ul>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-2c" aria-labelledby="tab-2c" tabindex="0">
+              <p class="lead">The room is different. What your body does about it is broadly the same.</p>
+              <ul>
+                <li>Your core temperature, meaning the temperature deep inside you rather than at the skin, rises. You flush, and you sweat.</li>
+                <li>You lose fluid whether or not the air feels wet.</li>
+                <li>The same habits carry across both: water first, short rounds, time out of the heat afterwards, and stopping when you feel done.</li>
+              </ul>
+              <p class="quiet">The heat is the point. Enduring it is not.</p>
+            </div>
+          </div>
+
+          <svg class="bench" viewBox="0 0 420 152" aria-hidden="true" focusable="false">
+            <g class="bench-steam">
+              <path d="M148 66c-10-14 10-20 0-34" />
+              <path d="M176 54c-9-13 9-19 0-31" />
+              <path d="M206 64c-10-14 10-20 0-34" />
+            </g>
+            <g class="bench-stones">
+              <ellipse cx="128" cy="112" rx="25" ry="16" />
+              <ellipse cx="176" cy="106" rx="29" ry="19" />
+              <ellipse cx="221" cy="112" rx="23" ry="15" />
+              <ellipse cx="152" cy="88" rx="20" ry="13" />
+              <ellipse cx="199" cy="86" rx="18" ry="12" />
+              <ellipse cx="176" cy="72" rx="15" ry="10" />
+            </g>
+            <g class="bench-rim">
+              <path d="M96 118h164a10 10 0 0 1 10 10v8a10 10 0 0 1-10 10H96a10 10 0 0 1-10-10v-8a10 10 0 0 1 10-10z" />
+            </g>
+            <g class="bench-ladle">
+              <path d="M250 68h44" />
+              <path d="M252 68a21 17 0 0 0 40 0" />
+              <path d="M292 64 388 28" />
+              <circle cx="393" cy="26" r="6" />
+            </g>
+            <g class="bench-drops">
+              <ellipse cx="270" cy="96" rx="3" ry="4.5" />
+              <ellipse cx="276" cy="111" rx="2.4" ry="3.6" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="split-side">
+          <div class="dialbox">
+            <svg class="dial" viewBox="0 0 280 178" role="img" aria-labelledby="dial-title" aria-describedby="dial-desc">
+              <title id="dial-title">How hot each kind of room tends to feel</title>
+              <desc id="dial-desc">A curved scale reading warm, hot, then very hot. A traditional sauna usually sits across the hot and very hot part of the scale. An infrared sauna usually sits across the warm and hot part. This is typical only and varies from sauna to sauna.</desc>
+              <path class="dial-track" d="M40 140 A100 100 0 0 1 240 140" />
+              <path class="dial-band dial-band-trad" d="M90 53.4 A100 100 0 0 1 240 140" />
+              <path class="dial-band dial-band-ir" d="M40 140 A100 100 0 0 1 190 53.4" />
+              <g class="dial-ticks">
+                <path d="M83.4 46.8 90 53.4M196.6 46.8 190 53.4" />
+              </g>
+              <g class="dial-label">
+                <text x="76" y="112" text-anchor="middle">Warm</text>
+                <text x="140" y="78" text-anchor="middle">Hot</text>
+                <text x="204" y="112" text-anchor="middle">Very hot</text>
+              </g>
+              <g class="dial-key">
+                <rect x="46" y="150" width="18" height="6" rx="3" class="key-ir" />
+                <text x="70" y="157">Infrared</text>
+                <rect x="146" y="150" width="18" height="6" rx="3" class="key-trad" />
+                <text x="170" y="157">Traditional</text>
+              </g>
+              <text class="dial-note" x="140" y="174" text-anchor="middle">Typical, varies by sauna</text>
+            </svg>
+          </div>
+          <div class="plate plate-stones" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 ============ -->
+    <section class="screen" id="screen-3">
+      <p class="stamp" aria-hidden="true">03</p>
+      <h2 tabindex="-1">What the heat does</h2>
+      <div class="screen-body split">
+        <div class="split-text">
+          <p class="lead">Sitting still in a hot room is not doing nothing. Open a section to read what is actually going on.</p>
+
+          <div class="accordion" data-accordion>
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-1" aria-controls="accp-1"><span class="acc-mark" aria-hidden="true"></span><span>Heart rate and circulation</span></button></h3>
+              <div class="acc-panel" id="accp-1" role="region" aria-labelledby="accb-1">
+                <p>The blood vessels near your skin widen and your heart beats faster to push blood outward, because the skin is where heat leaves the body. The feeling has been compared to light exercise. Treat it as a real demand on your circulation rather than as rest with the heating on.</p>
+              </div>
+            </div>
+
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-2" aria-controls="accp-2"><span class="acc-mark" aria-hidden="true"></span><span>Sweating and fluids</span></button></h3>
+              <div class="acc-panel" id="accp-2" role="region" aria-labelledby="accb-2">
+                <p>Sweat is the cooling system working. You lose water and salts while you sit, and in a dry room the sweat evaporates so fast that you underestimate how much has gone. Drink water before and after. If you are already thirsty, you are behind.</p>
+              </div>
+            </div>
+
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-3" aria-controls="accp-3"><span class="acc-mark" aria-hidden="true"></span><span>Muscles and recovery</span></button></h3>
+              <div class="acc-panel" id="accp-3" role="region" aria-labelledby="accb-3">
+                <p>Warm tissue feels looser and more willing to move, which is why heat after training is pleasant and why easy stretching afterwards comes without a fight. Whether that speeds recovery in any measurable way is less settled than the marketing suggests. Enjoy it for how it feels and keep your expectations modest.</p>
+              </div>
+            </div>
+
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-4" aria-controls="accp-4"><span class="acc-mark" aria-hidden="true"></span><span>Relaxation and sleep</span></button></h3>
+              <div class="acc-panel" id="accp-4" role="region" aria-labelledby="accb-4">
+                <p>Many people find that heat followed by cooling leaves them calm and ready to sleep. Some of that is the fall in body temperature afterwards. Some of it is a stretch of quiet with nothing to do and nowhere to be, which is not nothing.</p>
+              </div>
+            </div>
+
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-5" aria-controls="accp-5"><span class="acc-mark" aria-hidden="true"></span><span>What the research does and does not say</span></button></h3>
+              <div class="acc-panel" id="accp-5" role="region" aria-labelledby="accb-5">
+                <p>Long-running population studies in Finland, where sauna use is ordinary, have associated frequent use with better heart health. Association is not cause. People who use a sauna often may differ from people who do not in ways the study cannot separate out. Read it as encouraging, not as a prescription, and never as a reason to skip a conversation with your own clinician.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-side">
+          <div class="plate plate-window plate-tall" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4 ============ -->
+    <section class="screen" id="screen-4">
+      <p class="stamp" aria-hidden="true">04</p>
+      <h2 tabindex="-1">A good session, step by step</h2>
+      <div class="screen-body split split-wide">
+        <div class="split-text">
+          <div class="substeps" id="session" data-substeps data-sub-label="Step">
+            <div class="sub-bar">
+              <h3 class="sub-head" tabindex="-1" data-sub-head>Step 1 of 9</h3>
+              <div class="sess-meter">
+                <span class="sess-track" aria-hidden="true"><span class="sess-fill" id="sess-fill"></span></span>
+              </div>
+              <div class="sub-nav">
+                <button type="button" class="btn-quiet" data-sub="prev">Previous</button>
+                <button type="button" class="btn-quiet" data-sub="next">Next</button>
+              </div>
+            </div>
+            <p class="visually-hidden" role="status" aria-live="polite" data-sub-live></p>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">1</span>
+                <p class="step-title">Drink water first</p>
+                <p>Go in already topped up. You are about to sweat, and starting behind is how a pleasant session turns into a headache in the car. Water, not alcohol, and not instead of a meal you skipped.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">2</span>
+                <p class="step-title">Rinse off</p>
+                <p>A quick warm shower before you go in takes the day off your skin. In a shared room it is also the ordinary courtesy. Dry yourself before you sit down: damp skin sweats less usefully.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">3</span>
+                <p class="step-title">Sit lower if you are new</p>
+                <p>Heat stacks toward the ceiling, so the lower bench is meaningfully gentler than the top one. There is no prize for the top bench. If this is your first time, do not go alone: bring someone, or at least tell someone you are in there.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">4</span>
+                <p class="step-title">Keep the first round short</p>
+                <p>Go in, sit, and pay attention. Come out while you still feel good, not when you have had enough. A short first round tells you what your body makes of this room, and you can always go back in.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">5</span>
+                <p class="step-title">Cool down properly</p>
+                <p>A <b>cool-down</b> is the deliberate stretch after a round where you leave the heat and let your temperature and heart rate come back down. A cool shower, fresh air, or simply sitting somewhere cooler all count. Skipping it is the most common mistake in the whole session.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">6</span>
+                <p class="step-title">Rest</p>
+                <p>Sit down for a while and let your breathing settle. This is not dead time between the good bits. The calm, loose feeling people go to saunas for mostly arrives here, off the bench.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">7</span>
+                <p class="step-title">Drink water again</p>
+                <p>Replace what you sweated out before you decide anything else. Plain water is fine. Alcohol is not a cool-down, whatever the room next door is selling.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">8</span>
+                <p class="step-title">A second round only if you feel good</p>
+                <p>If you feel steady, clear headed and comfortable, go back in. If you feel wrung out, light headed or vaguely off, you are finished for today and that is a fine result.</p>
+              </div>
+            </div>
+
+            <div class="substep" data-substep>
+              <div class="stepcard">
+                <span class="step-num" aria-hidden="true">9</span>
+                <p class="step-title">Stop when you feel done</p>
+                <p>No target, no count, nobody keeping score. The body gives you the signal well before a clock would. The whole skill is listening to it and then actually doing what it said.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-side">
+          <div class="pacer">
+            <h3>Slow breathing</h3>
+            <p class="quiet">Optional. Four counts in, six counts out, which is the pace people fall into on the bench anyway.</p>
+            <div class="pacer-stage" aria-hidden="true"><span class="pacer-dot" id="pacer-dot"></span></div>
+            <p class="pacer-cue" id="pacer-cue" role="status" aria-live="polite">Not running.</p>
+            <button type="button" class="btn-quiet btn-wide" id="pacer-toggle" aria-pressed="false">Start the pacer</button>
+          </div>
+          <p class="pacer-still">Motion is turned off in your display settings, so the breathing pacer is not shown. The pace it keeps is simple enough to do without it: breathe in slowly, then let the breath out for longer than you took it in.</p>
+          <div class="plate plate-lake" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5 ============ -->
+    <section class="screen" id="screen-5">
+      <p class="stamp" aria-hidden="true">05</p>
+      <h2 tabindex="-1">Stay, cool down, or stop</h2>
+      <div class="screen-body">
+        <p class="lead">Eight moments on the bench. For each one, choose whether you stay put, get out and cool down now, or stop and get help. You can change an answer, and nothing here is timed.</p>
+
+        <div class="substeps" data-substeps data-sub-label="Situation">
+          <div class="sub-bar">
+            <h3 class="sub-head" tabindex="-1" data-sub-head>Situation 1 of 8</h3>
+            <p class="counter" id="sg-score" role="status" aria-live="polite">Answered 0 of 8.</p>
+            <div class="sub-nav">
+              <button type="button" class="btn-quiet" data-sub="prev">Previous</button>
+              <button type="button" class="btn-quiet" data-sub="next">Next</button>
+            </div>
+          </div>
+          <p class="visually-hidden" role="status" aria-live="polite" data-sub-live></p>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">1</span>
+              <p class="sg-text" id="s1q">You shift on the bench to stand up and the room tilts for a second before it settles.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s1q">
+                <button type="button" class="call" data-q="s1" data-opt="stay" data-correct="false" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s1" data-opt="cool" data-correct="true" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s1" data-opt="help" data-correct="false" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s1" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">2</span>
+              <p class="sg-text" id="s2q">A few minutes into your first round you feel warm and loose. Your breathing is easy and nothing hurts.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s2q">
+                <button type="button" class="call" data-q="s2" data-opt="stay" data-correct="true" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s2" data-opt="cool" data-correct="false" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s2" data-opt="help" data-correct="false" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s2" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">3</span>
+              <p class="sg-text" id="s3q">A dull headache is building behind your eyes. It was not there when you came in.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s3q">
+                <button type="button" class="call" data-q="s3" data-opt="stay" data-correct="false" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s3" data-opt="cool" data-correct="true" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s3" data-opt="help" data-correct="false" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s3" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">4</span>
+              <p class="sg-text" id="s4q">You felt sick in the heat and came out. You have been sitting in the cool for a while, you still feel sick, and your skin has gone clammy.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s4q">
+                <button type="button" class="call" data-q="s4" data-opt="stay" data-correct="false" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s4" data-opt="cool" data-correct="false" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s4" data-opt="help" data-correct="true" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s4" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">5</span>
+              <p class="sg-text" id="s5q">You are on the bench when you remember the two beers you had at lunch.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s5q">
+                <button type="button" class="call" data-q="s5" data-opt="stay" data-correct="false" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s5" data-opt="cool" data-correct="true" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s5" data-opt="help" data-correct="false" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s5" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">6</span>
+              <p class="sg-text" id="s6q">The top bench is hotter than you are enjoying. You feel fine otherwise, and the lower bench is free.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s6q">
+                <button type="button" class="call" data-q="s6" data-opt="stay" data-correct="true" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s6" data-opt="cool" data-correct="false" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s6" data-opt="help" data-correct="false" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s6" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">7</span>
+              <p class="sg-text" id="s7q">Your heart is thumping hard and it does not settle when you sit still and breathe slowly.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s7q">
+                <button type="button" class="call" data-q="s7" data-opt="stay" data-correct="false" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s7" data-opt="cool" data-correct="false" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s7" data-opt="help" data-correct="true" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s7" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="sg-item">
+              <span class="step-num" aria-hidden="true">8</span>
+              <p class="sg-text" id="s8q">First visit. The air is fiercer than you expected, and you have not had anything to drink since this morning.</p>
+              <div class="sg-btns" role="group" aria-labelledby="s8q">
+                <button type="button" class="call" data-q="s8" data-opt="stay" data-correct="false" aria-pressed="false">Stay</button>
+                <button type="button" class="call" data-q="s8" data-opt="cool" data-correct="true" aria-pressed="false">Cool down now</button>
+                <button type="button" class="call" data-q="s8" data-opt="help" data-correct="false" aria-pressed="false">Stop and get help</button>
+              </div>
+              <p class="feedback" id="fb-s8" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6 ============ -->
+    <section class="screen" id="screen-6">
+      <p class="stamp" aria-hidden="true">06</p>
+      <h2 tabindex="-1">Who should check first</h2>
+      <div class="screen-body">
+        <p class="lead">Seven situations where the sensible move is a question before a session. Select one to read why it is worth asking.</p>
+
+        <div class="reveal" data-accordion>
+          <div class="reveal-list">
+            <ul class="asklist">
+              <li><button type="button" class="acc-btn" id="askb-1" aria-controls="askp-1"><span class="acc-mark" aria-hidden="true"></span><span>Pregnancy</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-2" aria-controls="askp-2"><span class="acc-mark" aria-hidden="true"></span><span>Heart conditions and blood pressure</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-3" aria-controls="askp-3"><span class="acc-mark" aria-hidden="true"></span><span>Medications</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-4" aria-controls="askp-4"><span class="acc-mark" aria-hidden="true"></span><span>Alcohol</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-5" aria-controls="askp-5"><span class="acc-mark" aria-hidden="true"></span><span>Children and older adults</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-6" aria-controls="askp-6"><span class="acc-mark" aria-hidden="true"></span><span>Recent illness or a fever</span></button></li>
+              <li><button type="button" class="acc-btn" id="askb-7" aria-controls="askp-7"><span class="acc-mark" aria-hidden="true"></span><span>Open wounds or skin conditions</span></button></li>
+            </ul>
+            <p class="note ask-note">None of this is a diagnosis and none of it is a list of bans. It is a prompt to ask somebody who knows your history, before a first session rather than after one.</p>
+          </div>
+
+          <div class="reveal-panels">
+            <div class="acc-panel ask-panel" id="askp-1" role="region" aria-labelledby="askb-1">
+              <p class="ask-head">Pregnancy</p>
+              <p>Heat raises core body temperature, and raised core temperature is something clinicians watch carefully in pregnancy. Guidance varies by country and by stage. Ask your midwife or doctor rather than reading a forum, and ask before the first session rather than after it.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-2" role="region" aria-labelledby="askb-2">
+              <p class="ask-head">Heart conditions and blood pressure</p>
+              <p>Heat asks your heart and circulation to work: faster beats, wider vessels, and a blood pressure that can drop when you stand up. If you live with a heart condition, unstable blood pressure high or low, or you have had a recent cardiac event, this is a conversation with your clinician and not a guess on the bench.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-3" role="region" aria-labelledby="askb-3">
+              <p class="ask-head">Medications</p>
+              <p>Some medicines change how you regulate heat, how much you sweat, or how your blood pressure behaves when you stand. Diuretics, blood pressure medicines, sedatives and various others can all matter here. Your pharmacist can answer this in about a minute, and it is a good minute to spend.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-4" role="region" aria-labelledby="askb-4">
+              <p class="ask-head">Alcohol</p>
+              <p>Alcohol and heat both lower blood pressure and both dry you out, and together they make fainting considerably more likely. Do not drink before a session and do not drink during one. Water is the drink here, and it is not a compromise.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-5" role="region" aria-labelledby="askb-5">
+              <p class="ask-head">Children and older adults</p>
+              <p>Children heat up faster than adults and have far less practice noticing it or saying so. Older adults are more likely to be on medication and may feel a change in balance more sharply on standing. Both do better with shorter, cooler, supervised visits, and with somebody paying attention who is not also enjoying themselves.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-6" role="region" aria-labelledby="askb-6">
+              <p class="ask-head">Recent illness or a fever</p>
+              <p>If you already have a fever, your body is running hot deliberately and does not need the help. If you are recovering from an illness, dehydration and a lower tolerance for heat both linger longer than the symptoms do. Wait until you are properly well.</p>
+            </div>
+            <div class="acc-panel ask-panel" id="askp-7" role="region" aria-labelledby="askb-7">
+              <p class="ask-head">Open wounds or skin conditions</p>
+              <p>Heat, sweat and shared benches are hard on broken skin, and several skin conditions flare with heat rather than settle. Cover what can be covered, sit on your own towel either way, and ask a clinician about anything that is currently open or currently angry.</p>
+            </div>
+            <div class="plate plate-towel" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 ============ -->
+    <section class="screen" id="screen-7">
+      <p class="stamp" aria-hidden="true">07</p>
+      <h2 tabindex="-1">Your sauna card</h2>
+      <div class="screen-body">
+        <div class="tabs tabs-wide" data-tabs>
+          <div class="tablist" role="tablist" aria-label="Your sauna card">
+            <button type="button" role="tab" id="tab-7a" aria-controls="pan-7a">Your first session plan</button>
+            <button type="button" role="tab" id="tab-7b" aria-controls="pan-7b">Where you landed</button>
+          </div>
+
+          <div class="tabpanel" role="tabpanel" id="pan-7a" aria-labelledby="tab-7a">
+            <div class="plan">
+              <form class="picker" id="picker">
+                <fieldset>
+                  <legend>Which room</legend>
+                  <label><input type="radio" name="kind" value="A traditional sauna, with stones" checked /> <span>Traditional, with stones</span></label>
+                  <label><input type="radio" name="kind" value="An infrared sauna, with panels" /> <span>Infrared, with panels</span></label>
+                  <label><input type="radio" name="kind" value="Whichever is free" /> <span>Not sure yet</span></label>
+                </fieldset>
+                <fieldset>
+                  <legend>How long a round</legend>
+                  <label><input type="radio" name="round" value="Short, and out while it still feels good" checked /> <span>Short</span></label>
+                  <label><input type="radio" name="round" value="A few minutes, sitting low" /> <span>A few minutes</span></label>
+                  <label><input type="radio" name="round" value="Until you feel done, and not a moment past it" /> <span>Until you feel done</span></label>
+                </fieldset>
+                <fieldset>
+                  <legend>How many rounds</legend>
+                  <label><input type="radio" name="rounds" value="One round, and see how it lands" checked /> <span>One</span></label>
+                  <label><input type="radio" name="rounds" value="Two rounds, the second only if you feel good" /> <span>Two</span></label>
+                  <label><input type="radio" name="rounds" value="As many as feel good, stopping when you feel done" /> <span>Stop when done</span></label>
+                </fieldset>
+                <fieldset>
+                  <legend>Cool-down</legend>
+                  <label><input type="radio" name="cool" value="A cool shower between rounds" checked /> <span>Cool shower</span></label>
+                  <label><input type="radio" name="cool" value="Fresh air between rounds" /> <span>Fresh air</span></label>
+                  <label><input type="radio" name="cool" value="Sitting somewhere cooler between rounds" /> <span>Sit somewhere cooler</span></label>
+                  <label><input type="radio" name="cool" value="A cold plunge, only because you already know you tolerate one" /> <span>Cold plunge, if you know you tolerate it</span></label>
+                </fieldset>
+              </form>
+
+              <div class="card" id="card">
+                <svg class="card-mark" viewBox="0 0 60 52" aria-hidden="true" focusable="false">
+                  <g class="mark-steam"><path d="M20 17c-5-6 4-9 0-15M31 15c-5-6 4-9 0-15" /></g>
+                  <g class="mark-stones">
+                    <ellipse cx="19" cy="41" rx="12" ry="8" />
+                    <ellipse cx="34" cy="43" rx="10" ry="7" />
+                    <ellipse cx="27" cy="31" rx="9" ry="6" />
+                  </g>
+                  <g class="mark-ladle"><path d="M36 30a8 6 0 0 0 14 5" /><path d="M48 32 58 24" /></g>
+                </svg>
+                <p class="card-title">My first session</p>
+                <ul class="card-list" id="card-body"></ul>
+                <p class="card-foot">Water before, water after. Never alone the first time. Stop when you feel done.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabpanel" role="tabpanel" id="pan-7b" aria-labelledby="tab-7b" tabindex="0">
+            <div class="results">
+              <p class="card-title">Where you landed</p>
+              <ul id="results-list">
+                <li>Session steps walked: none yet.</li>
+                <li>Stay, cool down, or stop: not attempted.</li>
+              </ul>
+            </div>
+            <p class="disclaimer">This module is general education and not medical advice. It is not a substitute for talking to a clinician who knows your history, and nothing in it is a reason to change medication, treatment or training.</p>
+            <p><button type="button" class="btn-ghost" id="restart">Start over</button></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rig-foot">
+    <div class="edge edge-foot" aria-hidden="true"></div>
+    <nav class="pager" aria-label="Screen navigation">
+      <button type="button" class="btn-ghost" id="prev">Back</button>
+      <p class="foot-note">Demonstration sample by K &amp; A Performance.</p>
+      <button type="button" class="btn-hi" id="next">Next</button>
+    </nav>
+  </footer>
+
+  <!-- The ending. Closed in the markup, so a visitor with scripting off never
+       meets it and the last screen is simply the end of the module. -->
+  <dialog class="done" id="done" aria-labelledby="done-title">
+    <div class="done-inner">
+      <div class="edge done-edge" aria-hidden="true"></div>
+      <div class="done-body">
+        <h2 class="done-h" id="done-title" tabindex="-1">Cooled down and finished</h2>
+        <p class="done-sub">Heat, done well</p>
+
+        <ul class="done-scores">
+          <li><span class="done-label">Session steps walked</span> <span class="done-val" id="done-steps">0 of 9</span></li>
+          <li><span class="done-label">Stay, cool down, or stop</span> <span class="done-val" id="done-calls">0 of 8</span></li>
+        </ul>
+
+        <p class="done-line">You have a plan for a first session and a short list of moments where getting out is the right answer. That is most of the skill. The rest of it is only ever going to be paying attention to how you feel and believing what you find.</p>
+
+        <p class="done-note">General education, not medical advice. If you are pregnant, live with heart disease or blood pressure that is not settled, take medication that affects heat or blood pressure, or have been drinking, talk to a clinician before your first session.</p>
+
+        <div class="done-actions">
+          <button type="button" class="btn-hi" id="done-review">Review my card</button>
+          <button type="button" class="btn-ghost" id="done-restart">Start over</button>
+          <button type="button" class="btn-ghost btn-mini" id="done-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

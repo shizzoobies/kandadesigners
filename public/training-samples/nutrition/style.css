@@ -1,0 +1,2177 @@
+/* ============================================================
+   BUILD THE PLATE, SKIP THE DIET
+   The world is a recipe-card box on a kitchen counter.
+
+   The stage is a card of cream stock with a faint linen tooth, lying
+   on a wooden crate. Every screen is one card pulled out of the box.
+   The index-card motif carries the structure: a red rule across the
+   top of the masthead, pale blue ruling behind the written panels,
+   and tabbed dividers with coloured flags for every tab set. Panels
+   that sit against the crate get a thin slat edge. The plate itself
+   is drawn, not photographed, and fills in wedge by wedge.
+
+   Self contained: no CDN, no build step, no network call. Everything
+   named here is relative and lives in assets/ beside this file.
+
+   Colour discipline, measured against the card stock #F6EFE2:
+
+     ink        #2A2622   14.5:1   body copy, headings
+     ink-soft   #6B6157    5.3:1   secondary copy
+     ink-mid    #574F47    7.4:1   the pager note, which sits on kraft
+                                   (#E2D3B4) where it measures 5.4:1;
+                                   ink-soft only reaches 4.1:1 there
+     tomato-ink #B62A18    5.5:1   the one red that is ever a word
+     leaf-ink   #2F6B3E    5.6:1   the one green that is ever a word
+     honey-ink  #8A6410    4.7:1   captions on cream
+     tomato     #C8321F    4.7:1   rules, fills, the primary button
+     leaf       #3E7A4B    4.5:1   fills and rules only
+     honey      #E0A428    1.9:1   NEVER text, NEVER a lone indicator
+     rule-blue  #9FBAD0    1.6:1   card ruling only, behind type
+
+   Honey and the ruling blue are decoration with no job. Any state a
+   colour marks is also marked by a word or a drawn tick, so the whole
+   module reads correctly in greyscale and with the sheet turned off.
+
+   Layout model, taken from the safety build because it is proven: a
+   fixed-height stage. The masthead is pinned at the top, the pager at
+   the bottom, one card fills the space between. At 900 by 640 and up
+   nothing scrolls, and content that will not fit is restructured into
+   tabs, an accordion or sub-steps rather than shrunk below reading
+   size. Below that only the card body scrolls, never the document.
+   With scripting off the whole module is one ordinary page with every
+   panel open in order.
+   ============================================================ */
+
+/* The friendly hand-lettered display face is being licensed and is not in the
+   folder yet. Until it lands, the fallback carries every display line:
+   Trebuchet MS at 700 with slightly tight tracking is warm, round and clearly
+   chosen, which is the point. It is never asked to be a script. */
+/* FONTS: uncomment when the files land in assets/fonts/. Until then the
+   fallback stacks below carry every line; a referenced-but-missing font file
+   is a console 404 and the site's accessibility gate counts it as a failure.
+@font-face {
+  font-family: 'Site Display';
+  src: url('assets/fonts/display.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Body';
+  src: url('assets/fonts/body-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Body';
+  src: url('assets/fonts/body-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Body';
+  src: url('assets/fonts/body-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+:root {
+  --card: #F6EFE2;
+  --card-2: #EFE4CE;
+  --kraft: #E2D3B4;
+  --wood: #7A5330;
+  --wood-2: #5E3F22;
+  --wood-3: #8C633C;
+
+  --ink: #2A2622;
+  --ink-soft: #6B6157;
+  --ink-mid: #574F47;
+  --tomato: #C8321F;
+  --tomato-ink: #B62A18;
+  --leaf: #3E7A4B;
+  --leaf-ink: #2F6B3E;
+  --honey: #E0A428;
+  --honey-ink: #8A6410;
+  --rule-blue: #9FBAD0;
+
+  --hair: rgb(42 38 34 / 0.16);
+  --hair-hard: rgb(42 38 34 / 0.34);
+
+  --font-display: 'Site Display', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  --font-body: 'Site Body', 'Segoe UI', system-ui, sans-serif;
+
+  /* One vertical rhythm knob. Short stages tighten the gaps, never the type. */
+  --v: 1rem;
+  --gutter: 1.5rem;
+  --round: 12px;
+
+  /* Card stock: a fine linen tooth from two crossed hatches, low enough to
+     sit under type without ever touching its contrast. */
+  --linen:
+    repeating-linear-gradient(90deg, rgb(42 38 34 / 0.028) 0 1px, rgb(0 0 0 / 0) 1px 4px),
+    repeating-linear-gradient(0deg, rgb(42 38 34 / 0.022) 0 1px, rgb(0 0 0 / 0) 1px 5px);
+
+  /* Index-card ruling. Used sparingly: the written panels only. */
+  --ruling: repeating-linear-gradient(180deg, rgb(0 0 0 / 0) 0 27px, rgb(159 186 208 / 0.44) 27px 28px);
+
+  /* Crate slats: thin boards with a dark shadow gap between them. */
+  --slats: repeating-linear-gradient(
+    90deg,
+    var(--wood) 0 34px,
+    var(--wood-3) 34px 66px,
+    var(--wood-2) 66px 70px
+  );
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  background-color: var(--wood-2);
+  background-image: var(--slats);
+  background-size: 100% 100%;
+}
+
+body {
+  margin: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One focus treatment: a 3px ink ring set off the control. Every control in
+   the module sits on card stock or kraft, where ink clears 10:1. */
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- the stage ---------- */
+
+.rig {
+  position: relative;
+  max-width: 68rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--card);
+  background-image: var(--linen);
+  box-shadow: 0 0 0 1px rgb(42 38 34 / 0.2), 0 14px 40px rgb(0 0 0 / 0.4);
+  /* The cards slide in from the left like being pulled out of a box and
+     briefly reach past the edge. Clip rather than hidden: no scroll container
+     is created, and the gutter keeps every focus ring clear of the line. */
+  overflow-x: clip;
+}
+
+@media (min-width: 70rem) {
+  .rig {
+    border-radius: var(--round);
+  }
+}
+
+/* Everything to the next banner applies only when the script is running. With
+   scripting off the module is one long document with every card, tab panel,
+   accordion section and sub-step open in order. */
+
+html.js,
+html.js body {
+  height: 100%;
+  overflow: hidden;
+}
+
+html.js .rig {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .rig-head,
+html.js .rig-foot {
+  flex: 0 0 auto;
+}
+
+html.js #module {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  overflow-clip-margin: 10px;
+}
+
+html.js .screen {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .screen-body {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---------- masthead ---------- */
+
+.rig-head {
+  position: relative;
+  background: transparent;
+}
+
+/* The red rule across the top of an index card. */
+.rig-head::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 6px;
+  background: var(--tomato);
+}
+
+.rig-head-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.9rem var(--gutter) 0.7rem;
+}
+
+.head-id {
+  min-width: 0;
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tomato-ink);
+}
+
+h1 {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.45rem, 3vw, 2.05rem);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+}
+
+/* A crate slat under the masthead and over the pager: the counter edge. */
+.slat {
+  height: 9px;
+  background-image: var(--slats);
+  background-size: 70px 100%;
+  border-top: 1px solid rgb(42 38 34 / 0.4);
+  border-bottom: 1px solid rgb(42 38 34 / 0.4);
+}
+
+.slat-foot {
+  height: 7px;
+}
+
+/* ---------- progress ---------- */
+
+.meter {
+  flex: 0 0 auto;
+  width: min(17rem, 34%);
+}
+
+.meter-track {
+  height: 12px;
+  background: var(--card-2);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meter-fill {
+  display: block;
+  height: 100%;
+  width: 12.5%;
+  background: var(--honey);
+  border-right: 2px solid var(--ink);
+  transition: width 0.4s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.meter-text {
+  margin: 0.35rem 0 0;
+  text-align: right;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- cards ---------- */
+
+#module {
+  padding: 0 var(--gutter) 0.4rem;
+}
+
+.screen {
+  position: relative;
+  padding-top: 0.9rem;
+}
+
+.stamp {
+  position: absolute;
+  right: 0.1rem;
+  top: 0.1rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3rem, 5.6vw, 4.4rem);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: rgb(200 50 31 / 0.22);
+  pointer-events: none;
+  user-select: none;
+  transform-origin: 100% 0;
+}
+
+h2 {
+  flex: 0 0 auto;
+  margin: 0 0 0.6rem;
+  padding: 0 3rem 0.35rem 0;
+  border-bottom: 2px solid var(--hair-hard);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.3vw, 2.1rem);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+}
+
+h3 {
+  margin: var(--v) 0 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--tomato-ink);
+}
+
+.screen-body > *:first-child,
+.col > *:first-child,
+.tabpanel > *:first-child,
+.acc-panel > *:first-child {
+  margin-top: 0;
+}
+
+p {
+  margin: 0 0 var(--v);
+}
+
+.lead {
+  font-size: 1.08rem;
+  line-height: 1.5;
+}
+
+.quiet {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.note {
+  border-left: 5px solid var(--honey);
+  background: var(--card-2);
+  border-radius: 0 8px 8px 0;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+}
+
+.disclaimer {
+  border-top: 2px dotted var(--hair-hard);
+  padding-top: 0.6rem;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.48;
+}
+
+ul,
+ol {
+  margin: 0 0 var(--v);
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: 0.35rem;
+}
+
+li::marker {
+  color: var(--leaf);
+}
+
+b {
+  font-weight: 700;
+}
+
+.ticklist {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ticklist > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.ticklist > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4em;
+  width: 14px;
+  height: 14px;
+  background: var(--leaf);
+  clip-path: polygon(16% 46%, 6% 58%, 40% 92%, 94% 20%, 82% 10%, 38% 68%);
+}
+
+/* ---------- two column card bodies ---------- */
+
+.cols2 {
+  display: grid;
+  gap: 1.2rem;
+  align-content: start;
+}
+
+.col {
+  min-width: 0;
+}
+
+.col > *:last-child,
+.tabpanel > *:last-child,
+.acc-panel > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- card 1 ---------- */
+
+.screen-hero {
+  position: relative;
+}
+
+.screen-hero .screen-body {
+  position: relative;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--hair-hard);
+  border-radius: var(--round);
+  background-color: var(--card-2);
+  background-image:
+    /* Measured against a pure white photo pixel as the worst case: under this
+       wash the ground resolves near #E7DCC6, where ink reads 12:1, soft ink
+       4.9:1 and the red 5.1:1. Every one clears its target. */
+    var(--ruling),
+    linear-gradient(180deg, rgb(239 228 206 / 0.9) 0%, rgb(239 228 206 / 0.95) 100%),
+    url('assets/img/hero.jpg'),
+    var(--linen);
+  background-size: auto, cover, cover, auto;
+  background-position: 0 0, center, center, 0 0;
+  background-repeat: repeat, no-repeat, no-repeat, repeat;
+}
+
+/* ---------- side column and photo plates ---------- */
+
+.split {
+  display: grid;
+  gap: 1.1rem;
+  min-height: 0;
+}
+
+.split-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.split-text > .lead {
+  flex: 0 0 auto;
+}
+
+.split-side {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* A photo slot is a finished plate before the photograph arrives: kraft
+   ground, the linen tooth over it, and a crate slat closing each end. The
+   slats stay when the photograph lands, so the plate is framed either way. */
+.media {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 120px;
+  border: 1px solid var(--hair-hard);
+  border-radius: 10px;
+  background-color: var(--kraft);
+  background-image: var(--linen);
+  background-size: auto;
+  background-repeat: repeat;
+}
+
+.media::before,
+.media::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: var(--slats);
+  background-size: 70px 100%;
+  border-block: 1px solid rgb(42 38 34 / 0.4);
+}
+
+.media::before {
+  top: 0;
+}
+
+.media::after {
+  bottom: 0;
+}
+
+.media-stack {
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 1.1rem;
+}
+
+.media-stack > .media {
+  display: block;
+  min-height: 0;
+}
+
+.media-plate {
+  background-image: url('assets/img/plate.jpg'), var(--linen);
+  background-size: cover, auto;
+  background-position: center, 0 0;
+  background-repeat: no-repeat, repeat;
+}
+
+.media-market {
+  background-image: url('assets/img/market.jpg'), var(--linen);
+  background-size: cover, auto;
+  background-position: center, 0 0;
+  background-repeat: no-repeat, repeat;
+}
+
+.media-pantry {
+  background-image: url('assets/img/pantry.jpg'), var(--linen);
+  background-size: cover, auto;
+  background-position: center, 0 0;
+  background-repeat: no-repeat, repeat;
+}
+
+.media-label {
+  background-image: url('assets/img/label.jpg'), var(--linen);
+  background-size: cover, auto;
+  background-position: center, 0 0;
+  background-repeat: no-repeat, repeat;
+}
+
+/* ---------- the drawn plate ---------- */
+
+.plate-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 0.7rem 0.6rem;
+  border: 1px solid var(--hair-hard);
+  border-radius: 10px;
+  background-color: var(--card-2);
+  background-image: var(--ruling), var(--linen);
+}
+
+.plate {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  min-height: 0;
+  flex: 0 1 auto;
+}
+
+.plate-rim {
+  fill: #FBF7EF;
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.wedge {
+  fill: #FBF7EF;
+  stroke: none;
+  transition: fill 0.45s ease;
+}
+
+.wedge.is-on.wedge-veg {
+  fill: rgb(62 122 75 / 0.55);
+}
+
+.wedge.is-on.wedge-pro {
+  fill: rgb(200 50 31 / 0.42);
+}
+
+.wedge.is-on.wedge-grain {
+  fill: rgb(224 164 40 / 0.55);
+}
+
+.plate-lines path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.side-kit path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.side-kit .glass-water,
+.side-kit .bottle-oil {
+  stroke: none;
+  transition: fill 0.45s ease;
+}
+
+.side-kit .glass-water {
+  fill: rgb(159 186 208 / 0.28);
+}
+
+.side-kit .bottle-oil {
+  fill: rgb(224 164 40 / 0.2);
+}
+
+.side-kit.is-on .glass-water {
+  fill: rgb(159 186 208 / 0.95);
+}
+
+.side-kit.is-on .bottle-oil {
+  fill: rgb(224 164 40 / 0.85);
+}
+
+.wedge-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+  text-anchor: middle;
+  fill: var(--ink);
+}
+
+.plate-cap {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ---------- tabbed dividers ---------- */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html.js .split-text > .tabs,
+html.js .screen-body > .tabs {
+  flex: 1 1 auto;
+}
+
+.tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 0.8rem;
+}
+
+/* Divider tabs: rounded at the top, a coloured flag along the top edge, and
+   the selected one joined to the panel below it. */
+.tablist [role='tab'] {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  background: var(--card-2);
+  border: 2px solid var(--ink);
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
+  margin-bottom: -2px;
+  padding: 0.42rem 0.85rem 0.44rem;
+  cursor: pointer;
+}
+
+.tablist [role='tab']::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 3px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--rule-blue);
+}
+
+.tablist [role='tab']:nth-child(1)::before { background: var(--tomato); }
+.tablist [role='tab']:nth-child(2)::before { background: var(--leaf); }
+.tablist [role='tab']:nth-child(3)::before { background: var(--honey); }
+.tablist [role='tab']:nth-child(4)::before { background: var(--rule-blue); }
+
+.tablist [role='tab']:hover {
+  background: var(--kraft);
+}
+
+.tablist [role='tab'][aria-selected='true'] {
+  background: var(--card);
+  padding-bottom: 0.56rem;
+}
+
+.tabpanel {
+  min-height: 0;
+}
+
+html.js .tabs > .tabpanel {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .tabs > .tabpanel[hidden] {
+  display: none;
+}
+
+.tabpanel:focus-visible {
+  outline-offset: -3px;
+}
+
+.tabpanel > h3:first-child {
+  margin-top: 0;
+}
+
+/* ---------- accordion ---------- */
+
+.accordion {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+
+html.js .split-text > .accordion {
+  flex: 1 1 auto;
+}
+
+.acc-h {
+  margin: 0;
+}
+
+.acc-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  background: var(--card-2);
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  padding: 0.42rem 0.85rem;
+  cursor: pointer;
+}
+
+.acc-btn:hover {
+  background: var(--kraft);
+}
+
+.acc-btn[aria-expanded='true'] {
+  border-radius: 9px 9px 0 0;
+}
+
+.acc-mark {
+  flex: 0 0 auto;
+  width: 13px;
+  height: 13px;
+  background: var(--tomato);
+  clip-path: polygon(0 10%, 100% 50%, 0 90%);
+  transition: transform 0.2s ease;
+}
+
+.acc-btn[aria-expanded='true'] .acc-mark {
+  transform: rotate(90deg);
+}
+
+.acc-panel {
+  padding: 0.6rem 0.9rem 0.65rem;
+  background-color: var(--card);
+  background-image: var(--ruling);
+  border: 2px solid var(--ink);
+  border-top: 0;
+  border-radius: 0 0 9px 9px;
+  margin-top: -2px;
+}
+
+/* ---------- counters and feedback ---------- */
+
+.counter {
+  display: inline-block;
+  margin: 0 0 0.6rem;
+  padding: 0.3rem 0.75rem;
+  background: var(--card-2);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+html.js .tabpanel > .counter {
+  align-self: flex-start;
+}
+
+.verdict {
+  margin: 0.7rem 0 0;
+  border-left: 6px solid var(--tomato);
+  border-radius: 0 9px 9px 0;
+  background: var(--card-2);
+  padding: 0.6rem 0.8rem;
+  flex: 0 0 auto;
+}
+
+.verdict:empty {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.verdict-head {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  line-height: 1.2;
+  color: var(--tomato-ink);
+}
+
+.verdict-why {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+.feedback {
+  margin: 0.7rem 0 0;
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+.feedback:empty {
+  margin: 0;
+}
+
+.feedback .glyph {
+  display: inline-flex;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.14em;
+  margin-right: 0.35em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Correctness is carried by the word first and the drawn mark second, never
+   by colour on its own. */
+.feedback .verdict-word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--leaf-ink);
+}
+
+.feedback.is-wrong .verdict-word {
+  color: var(--tomato-ink);
+}
+
+/* ---------- card 3: the sorter ---------- */
+
+.sorter {
+  display: flex;
+  flex-direction: column;
+}
+
+.sorter > .lead {
+  flex: 0 0 auto;
+}
+
+.sorter-row {
+  display: grid;
+  gap: 1.1rem;
+  min-height: 0;
+  flex: 0 1 auto;
+}
+
+/* The reason for a placement is prose, so it runs the full width of the card
+   rather than down the narrow column beside the plate. Empty it collapses,
+   which is what gives the food list its full height before the first answer. */
+.sorter > .verdict {
+  flex: 0 0 auto;
+  margin: 0.7rem 0 0;
+}
+
+.sorter-left {
+  min-width: 0;
+  min-height: 0;
+}
+
+.foods {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.food {
+  margin: 0;
+  padding: 0.4rem 0.6rem 0.5rem;
+  background: var(--card-2);
+  border: 1px solid var(--hair-hard);
+  border-left: 5px solid var(--rule-blue);
+  border-radius: 0 9px 9px 0;
+}
+
+.food.is-placed {
+  border-left-color: var(--leaf);
+}
+
+.food-name {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.zone-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.zn {
+  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--hair-hard);
+  border-radius: 8px;
+  padding: 0.22rem 0.5rem;
+  cursor: pointer;
+  line-height: 1.3;
+}
+
+.zn:hover {
+  border-color: var(--ink);
+}
+
+.zn[aria-pressed='true'] {
+  background: var(--leaf-ink);
+  border-color: var(--leaf-ink);
+  color: var(--card);
+}
+
+.zn[aria-pressed='true']::before {
+  content: '';
+  width: 11px;
+  height: 11px;
+  flex: 0 0 auto;
+  background: var(--card);
+  clip-path: polygon(16% 46%, 6% 58%, 40% 92%, 94% 20%, 82% 10%, 38% 68%);
+}
+
+.sorter-right {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.plate-wrap-live {
+  flex: 0 1 auto;
+}
+
+.sorter-right .counter {
+  align-self: flex-start;
+  flex: 0 0 auto;
+}
+
+.sorter-right .btn-mini {
+  align-self: flex-start;
+  margin-top: 0.6rem;
+  flex: 0 0 auto;
+}
+
+/* ---------- card 4: the label ---------- */
+
+.label-screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.label-screen > .lead {
+  flex: 0 0 auto;
+}
+
+.label-row {
+  display: grid;
+  gap: 1.1rem;
+  min-height: 0;
+}
+
+.label-col {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-col-photo {
+  display: none;
+}
+
+/* The panel: a printed block on white stock, black rules, the way the real
+   thing is set. It is invented copy for an invented cereal. */
+.nfl {
+  background: #FDFBF6;
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+  padding: 0.4rem 0.55rem 0.45rem;
+  font-size: 0.86rem;
+  line-height: 1.28;
+}
+
+.nfl-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.nfl-brand {
+  margin: 0.08rem 0 0.2rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 5px solid var(--ink);
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.nfl-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.1rem 0.2rem;
+  border-bottom: 1px solid var(--hair);
+}
+
+.nfl-in {
+  padding-left: 1.1rem;
+}
+
+.lab-row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  line-height: 1.28;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hair);
+  padding: 0.1rem 1.5rem 0.1rem 0.2rem;
+  cursor: pointer;
+}
+
+.lab-row.lab-in {
+  padding-left: 1.1rem;
+}
+
+.lab-row.lab-in2 {
+  padding-left: 2rem;
+}
+
+.lab-row:hover {
+  background: rgb(224 164 40 / 0.24);
+}
+
+.lab-serving .lab-val,
+.lab-cal .lab-val {
+  font-weight: 700;
+}
+
+.lab-big {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lab-cal {
+  border-top: 4px solid var(--ink);
+  border-bottom: 4px solid var(--ink);
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  align-items: center;
+}
+
+.lab-ing {
+  display: block;
+  margin-top: 0.25rem;
+  border-top: 4px solid var(--ink);
+  border-bottom: 0;
+  padding-top: 0.25rem;
+  font-size: 0.78rem;
+  line-height: 1.32;
+}
+
+.lab-thin {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+/* The found mark: a drawn tick, not a colour change. */
+.lab-mark {
+  position: absolute;
+  right: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--hair-hard);
+  border-radius: 4px;
+}
+
+.lab-ing .lab-mark {
+  top: 0.45rem;
+  transform: none;
+}
+
+.lab-row[aria-pressed='true'] {
+  background: rgb(224 164 40 / 0.3);
+}
+
+.lab-row[aria-pressed='true'] .lab-mark {
+  border-color: var(--leaf-ink);
+  background: var(--leaf-ink);
+  clip-path: polygon(16% 46%, 6% 58%, 40% 92%, 94% 20%, 82% 10%, 38% 68%);
+}
+
+.label-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+
+.label-head .counter {
+  margin-bottom: 0;
+}
+
+.label-col-list > h3 {
+  margin: 0.55rem 0 0.4rem;
+  flex: 0 0 auto;
+}
+
+
+.spotlist {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.3rem;
+  flex: 0 0 auto;
+}
+
+.spotlist > li {
+  margin: 0;
+}
+
+.spot {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--card-2);
+  border: 2px solid var(--hair-hard);
+  border-radius: 8px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+
+.spot:hover {
+  border-color: var(--ink);
+}
+
+.spot-mark {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--ink-soft);
+  border-radius: 4px;
+}
+
+.spot-name {
+  flex: 1 1 auto;
+}
+
+.spot-state {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--leaf-ink);
+}
+
+.spot[aria-pressed='true'] {
+  border-color: var(--leaf-ink);
+  background: var(--card);
+}
+
+.spot[aria-pressed='true'] .spot-mark {
+  border-color: var(--leaf-ink);
+  background: var(--leaf-ink);
+  clip-path: polygon(16% 46%, 6% 58%, 40% 92%, 94% 20%, 82% 10%, 38% 68%);
+}
+
+/* ---------- sub-steps ---------- */
+
+.substeps {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html.js .tabpanel > .substeps,
+html.js .screen-body > .substeps {
+  flex: 1 1 auto;
+}
+
+.sub-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--hair-hard);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.85rem;
+  flex: 0 0 auto;
+}
+
+.sub-head {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+
+.sub-bar .counter {
+  margin: 0;
+}
+
+.sub-nav {
+  display: flex;
+  gap: 0.45rem;
+}
+
+/* The open moment fills the rest of the stage, so the ruled card reads as a
+   card somebody wrote on rather than a box floating above a gap. */
+html.js .substeps > .substep:not([hidden]) {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .substeps > .substep > .qcard {
+  flex: 1 1 auto;
+}
+
+.qcard {
+  margin: 0;
+  padding: 0.9rem 1rem 1rem;
+  background-color: var(--card);
+  background-image: var(--ruling);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+}
+
+.qtext {
+  margin: 0 0 0.8rem;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.cue-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 7.5rem;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--card-2);
+  border: 2px solid var(--ink);
+  border-radius: 9px;
+  padding: 0.42rem 1.1rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 0 var(--hair-hard);
+}
+
+.cue:hover {
+  background: var(--kraft);
+}
+
+.cue[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--card);
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+.cue[aria-pressed='true']::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  background: var(--card);
+  clip-path: polygon(16% 46%, 6% 58%, 40% 92%, 94% 20%, 82% 10%, 38% 68%);
+}
+
+/* ---------- card 7: the swaps ---------- */
+
+.swaps-screen {
+  display: flex;
+  flex-direction: column;
+}
+
+.swaps-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+
+.swaps-head .lead {
+  flex: 1 1 22rem;
+  margin-bottom: 0.7rem;
+}
+
+.swaps-head .counter {
+  flex: 0 0 auto;
+}
+
+.swaps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  min-height: 0;
+}
+
+/* Two rows of equal cards taking the whole stage, so turning one over never
+   moves the others and the grid does not float above an empty half. */
+html.js .swaps {
+  flex: 1 1 auto;
+  align-content: stretch;
+  /* Never below the content: a row that shrinks past its card would let the
+     row under it paint over the Turn over button. */
+  grid-auto-rows: minmax(min-content, 1fr);
+}
+
+.swap {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.75rem 0.5rem;
+  background-color: var(--card-2);
+  background-image: var(--linen);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 0 rgb(42 38 34 / 0.16);
+}
+
+.swap-face {
+  flex: 1 1 auto;
+}
+
+.swap-tag {
+  margin: 0 0 0.2rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.swap-tag-on {
+  color: var(--leaf-ink);
+}
+
+.swap-line {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.swap-why {
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.swap-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.55rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed var(--hair-hard);
+  flex: 0 0 auto;
+}
+
+.swap-btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 0.2rem 0.7rem;
+  cursor: pointer;
+}
+
+.swap-btn:hover {
+  background: var(--kraft);
+}
+
+.keep {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.keep input[type='checkbox'] {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0;
+  accent-color: var(--leaf-ink);
+  cursor: pointer;
+}
+
+/* ---------- card 8: the card ---------- */
+
+.card,
+.results {
+  position: relative;
+  margin: 0 0 0.8rem;
+  padding: 0.9rem 1rem 0.85rem;
+  background-color: var(--card);
+  background-image: var(--ruling);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+}
+
+.card::before,
+.results::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 5px;
+  background: var(--tomato);
+  border-radius: 8px 8px 0 0;
+}
+
+/* Inside a divider panel the written card takes the whole stage, because a
+   recipe card with a rule at the bottom and nothing under it is the point. */
+html.js .tabpanel > .card,
+html.js .tabpanel > .results {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+html.js .tabpanel > .results + .disclaimer {
+  margin-top: 0.8rem;
+}
+
+.card-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.card-rule {
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--hair-hard);
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.card-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.card-list > li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.2rem;
+  line-height: 1.45;
+  break-inside: avoid;
+}
+
+.card-list > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4em;
+  width: 14px;
+  height: 14px;
+  background: var(--tomato);
+  clip-path: polygon(16% 46%, 6% 58%, 40% 92%, 94% 20%, 82% 10%, 38% 68%);
+}
+
+.card-foot {
+  margin: 0.7rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--hair-hard);
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.results ul {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+
+/* ---------- the ending ---------- */
+
+/* A native dialog: closed it is display:none from the user agent sheet, so a
+   visitor with scripting off never meets it, and open it sits in the top
+   layer where the stage behind it is inert to pointer and keyboard. */
+.done {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 3px solid var(--ink);
+  border-radius: var(--round);
+  background-color: var(--card);
+  background-image: var(--linen);
+  color: var(--ink);
+  box-shadow: 10px 10px 0 0 rgb(42 38 34 / 0.45);
+}
+
+.done::backdrop {
+  background: rgb(42 38 34 / 0.72);
+}
+
+.done-rule {
+  height: 7px;
+  background: var(--tomato);
+}
+
+.done-body {
+  padding: 0.9rem 1.2rem 1.1rem;
+}
+
+.done-h {
+  margin: 0 0 0.15rem;
+  padding: 0;
+  border: 0;
+  font-size: clamp(1.9rem, 4.4vw, 2.5rem);
+  line-height: 1;
+}
+
+.done-sub {
+  margin: 0 0 0.8rem;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.done-scores {
+  list-style: none;
+  margin: 0 0 0.8rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.done-scores > li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.3rem 0.7rem;
+  background: var(--card-2);
+  border-left: 5px solid var(--leaf);
+  border-radius: 0 8px 8px 0;
+}
+
+.done-label {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.done-val {
+  flex: 0 0 auto;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.done-line {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  line-height: 1.48;
+}
+
+.done-fine {
+  margin: 0 0 0.9rem;
+  padding-top: 0.55rem;
+  border-top: 2px dotted var(--hair-hard);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* ---------- pager ---------- */
+
+.rig-foot {
+  background: var(--kraft);
+}
+
+.pager {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem var(--gutter) 0.65rem;
+}
+
+.foot-note {
+  margin: 0;
+  flex: 1 1 auto;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}
+
+.btn-ghost,
+.btn-hi {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  padding: 0.45rem 1.3rem;
+  border-radius: 9px;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.btn-ghost {
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 0 var(--hair-hard);
+}
+
+.btn-ghost:hover {
+  background: var(--kraft);
+}
+
+.btn-hi {
+  color: var(--card);
+  background: var(--tomato);
+  border: 2px solid var(--tomato-ink);
+  box-shadow: 2px 2px 0 0 rgb(42 38 34 / 0.35);
+}
+
+.btn-hi:hover {
+  background: var(--tomato-ink);
+}
+
+.btn-mini {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 0.24rem 0.8rem;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.btn-mini:hover {
+  background: var(--kraft);
+}
+
+.btn-ghost:active,
+.btn-hi:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+button[disabled] {
+  opacity: 0.45;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+button[disabled]:hover {
+  background: var(--card);
+}
+
+.btn-hi[disabled]:hover {
+  background: var(--tomato);
+}
+
+/* ---------- the wide stage ---------- */
+
+@media (min-width: 56rem) {
+  .cols2 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.4rem 2rem;
+  }
+
+  .split {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+  }
+
+  .foods {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .sorter-row {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+  }
+
+  .label-row {
+    grid-template-columns: 18.5rem minmax(0, 1fr);
+  }
+
+  .spotlist {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .swaps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 68rem) {
+  .split {
+    grid-template-columns: minmax(0, 1fr) 16rem;
+  }
+
+  .sorter-row {
+    grid-template-columns: minmax(0, 1fr) 17rem;
+  }
+
+  .label-row {
+    grid-template-columns: 19.5rem minmax(0, 1fr) 12rem;
+  }
+
+  .label-col-photo {
+    display: flex;
+  }
+}
+
+/* ---------- short stages tighten the rhythm, never the type ---------- */
+
+@media (max-height: 46rem) {
+  :root {
+    --v: 0.75rem;
+  }
+
+  .lead {
+    margin-bottom: 0.65rem;
+  }
+
+  .screen {
+    padding-top: 0.6rem;
+  }
+
+  .screen-hero .screen-body {
+    padding: 0.8rem 0.9rem;
+  }
+
+  .note {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .foods {
+    gap: 0.4rem;
+  }
+
+  .food {
+    padding: 0.25rem 0.55rem 0.3rem;
+  }
+
+  .qcard {
+    padding: 0.7rem 0.85rem 0.8rem;
+  }
+
+  .swaps {
+    gap: 0.55rem;
+  }
+
+  .swap {
+    padding: 0.5rem 0.65rem 0.45rem;
+  }
+
+  .card,
+  .results {
+    padding: 0.75rem 0.85rem 0.7rem;
+  }
+
+  .plate-wrap {
+    padding: 0.5rem 0.5rem 0.45rem;
+  }
+}
+
+@media (max-height: 42rem) {
+  :root {
+    --v: 0.6rem;
+  }
+
+  .lead {
+    margin-bottom: 0.5rem;
+  }
+
+  li {
+    margin-bottom: 0.25rem;
+  }
+
+  .swap-why {
+    margin-top: 0.2rem;
+  }
+
+  .swap {
+    padding: 0.45rem 0.6rem 0.4rem;
+  }
+
+  .swap-foot {
+    margin-top: 0.4rem;
+    padding-top: 0.35rem;
+  }
+
+  /* The printed panel is the tallest fixed object in the module, so on a short
+     stage it loses padding and rule weight rather than reading size. */
+  .nfl-title {
+    font-size: 1.15rem;
+  }
+
+  .nfl-brand {
+    margin-bottom: 0.12rem;
+    padding-bottom: 0.12rem;
+    border-bottom-width: 4px;
+  }
+
+  .nfl-line,
+  .lab-row {
+    padding-top: 0.04rem;
+    padding-bottom: 0.04rem;
+  }
+
+  .lab-big {
+    font-size: 1.1rem;
+  }
+
+  .lab-cal {
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+  }
+
+  .lab-ing {
+    border-top-width: 3px;
+  }
+
+  .food-name {
+    margin-bottom: 0.25rem;
+  }
+
+  .acc-btn {
+    padding-top: 0.32rem;
+    padding-bottom: 0.32rem;
+  }
+
+  .accordion {
+    gap: 0.3rem;
+  }
+
+  .acc-panel {
+    padding: 0.5rem 0.85rem 0.55rem;
+  }
+
+  .done-body {
+    padding: 0.75rem 0.95rem 0.85rem;
+  }
+
+  .done-sub,
+  .done-scores,
+  .done-line {
+    margin-bottom: 0.55rem;
+  }
+}
+
+/* ---------- narrow or short: only the card body moves ---------- */
+
+@media (max-width: 56.24rem), (max-height: 39.99rem) {
+  html.js .screen-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  html.js .screen {
+    padding-bottom: 0.5rem;
+  }
+
+  .split,
+  .sorter-row,
+  .label-row,
+  .cols2 {
+    align-content: start;
+  }
+
+  .plate {
+    max-height: 15rem;
+  }
+
+  .media {
+    min-height: 9rem;
+  }
+}
+
+/* ---------- reflow ---------- */
+
+@media (max-width: 34rem) {
+  :root {
+    --gutter: 1rem;
+  }
+
+  .rig-head-inner {
+    display: block;
+  }
+
+  .meter {
+    width: 100%;
+    margin-top: 0.55rem;
+  }
+
+  .meter-text {
+    text-align: left;
+  }
+
+  .foot-note {
+    display: none;
+  }
+
+  .cue {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  h2 {
+    padding-right: 3rem;
+  }
+
+  .done-scores {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- motion, only when the visitor has not asked for less ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* A card being pulled out of the box. */
+  .screen {
+    animation: card-out 0.32s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  }
+
+  .stamp {
+    animation: stamp-in 0.4s cubic-bezier(0.2, 1.2, 0.3, 1) both;
+  }
+
+  .swap-face.is-in {
+    animation: turn-over 0.26s ease both;
+  }
+
+  .card-list > li {
+    animation: tick-in 0.28s ease both;
+  }
+
+  .done[open] {
+    animation: done-in 0.3s cubic-bezier(0.2, 1.15, 0.3, 1) both;
+  }
+
+  /* No opacity in these keyframes: a fade would drop headings and marks below
+     their contrast ratio for a few frames, and the movement already says it. */
+  @keyframes card-out {
+    from { transform: translateX(-16px) rotate(-0.7deg); }
+    to { transform: none; }
+  }
+
+  @keyframes stamp-in {
+    from { transform: scale(1.5) rotate(-8deg); }
+    to { transform: none; }
+  }
+
+  @keyframes turn-over {
+    from { transform: perspective(600px) rotateY(-52deg); }
+    to { transform: none; }
+  }
+
+  @keyframes tick-in {
+    from { transform: translateX(-8px); }
+    to { transform: none; }
+  }
+
+  @keyframes done-in {
+    from { transform: scale(1.05) rotate(-0.9deg); }
+    to { transform: none; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

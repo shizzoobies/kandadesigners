@@ -1,0 +1,2030 @@
+/* Strong is a skill.
+   Chalk and iron: a gym floor at six in the morning. Near black rubber tile,
+   chalk white type with a little dust on the edges, cool steel for the
+   secondary voice, and one hot signal colour that only ever marks the thing
+   you are on right now.
+
+   Self-contained: no CDN, no build step, no network call. Every asset named
+   here is relative and lives in assets/ beside this file.
+
+   Layout model, the same one the other samples use: a fixed stage, not a
+   page. The masthead is pinned at the top, the pager at the bottom, and one
+   screen fills what is left. At 900 by 640 and up nothing scrolls. Content
+   that will not fit a screen is restructured inside it as a tab set or a run
+   of sub-steps, never shrunk below the reading size. Everything under html.js
+   is the enhanced layout; with scripting off the whole course renders as one
+   ordinary document with every screen and panel open in order.
+
+   Faces: a heavy condensed grotesk for display, a sturdy geometric sans for
+   body, and a tabular mono for the counters. None of the three are in the
+   folder yet, so each fallback stack is tracked and cased to read as a
+   deliberate choice rather than a substitution. */
+
+/* FONTS: uncomment when the files land in assets/fonts/. Until then the
+   fallback stacks below carry every line; a referenced-but-missing font file
+   is a console 404 and the site's accessibility gate counts it as a failure.
+@font-face {
+  font-family: 'Site Display';
+  src: url('assets/fonts/display-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Display';
+  src: url('assets/fonts/display-black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Body';
+  src: url('assets/fonts/body-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Body';
+  src: url('assets/fonts/body-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Site Mono';
+  src: url('assets/fonts/mono.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+:root {
+  --pit: #0D0D0F;          /* under the floor: the page ground */
+  --iron: #141416;         /* rubber tile, the stage */
+  --panel: #1D1E21;        /* a plate laid on the floor */
+  --raise: #26282C;        /* a plate on top of a plate */
+  --chalk: #EDE9E1;        /* chalk white, all primary type */
+  --steel: #98A0A8;        /* secondary type, passes on every ground here */
+  --steel-line: #8C949C;   /* rules, rack rails, drawn things */
+  --signal: #E63B1F;       /* the current thing, and nothing else */
+  --ember: #FF5A3C;        /* the signal, lightened for small type */
+  --signal-ink: #B32612;   /* the signal, darkened for the chalk card */
+
+  --line: rgb(237 233 225 / 0.14);
+  --line-hard: rgb(237 233 225 / 0.30);
+
+  --font-display: 'Site Display', 'Arial Narrow', 'Helvetica Neue', Impact, sans-serif;
+  --font-body: 'Site Body', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Site Mono', 'Consolas', 'SF Mono', monospace;
+
+  /* One vertical rhythm knob. Short stages tighten the gaps, never the type. */
+  --v: 1rem;
+  --gutter: 1.5rem;
+
+  /* Rubber tile: a fine diamond scored into the floor, plus a speckle. */
+  --tile:
+    repeating-linear-gradient(45deg, rgb(237 233 225 / 0.028) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(-45deg, rgb(237 233 225 / 0.028) 0 1px, transparent 1px 10px);
+  --speck:
+    radial-gradient(circle at 20% 30%, rgb(237 233 225 / 0.035) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 70% 75%, rgb(237 233 225 / 0.028) 0 1px, transparent 1.2px);
+
+  /* A rack upright seen edge on: steel with slots punched down it. */
+  --rail:
+    repeating-linear-gradient(180deg, transparent 0 9px, rgb(13 13 15 / 0.9) 9px 15px),
+    linear-gradient(90deg, #A2AAB2, #6E757C);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--pit);
+}
+
+body {
+  margin: 0;
+  background: var(--pit);
+  color: var(--chalk);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One focus treatment everywhere: 3px ember, square, well clear of the edge. */
+:focus-visible {
+  outline: 3px solid var(--ember);
+  outline-offset: 3px;
+}
+
+/* On the chalk card the ember ring would not clear 3:1, so anything focusable
+   that ever lands on it takes the darkened signal instead. */
+.plate-card :focus-visible {
+  outline-color: var(--signal-ink);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Chalk dust on the edge of a heading. Blurred, low alpha, never a glow. */
+.chalked {
+  text-shadow:
+    0 0 16px rgb(237 233 225 / 0.15),
+    0 0 3px rgb(237 233 225 / 0.10);
+}
+
+/* ---------- the stage ---------- */
+
+.rig {
+  max-width: 70rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--iron);
+  background-image: var(--tile), var(--speck);
+  background-size: auto, 34px 34px, 41px 41px;
+  /* The stamp scales down onto the corner and the feedback slams in, and both
+     briefly reach past the panel edge. Clip rather than hidden: no scroll
+     container is created. */
+  overflow-x: clip;
+}
+
+html.js,
+html.js body {
+  height: 100%;
+  overflow: hidden;
+}
+
+html.js .rig {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .rig-head,
+html.js .rig-foot {
+  flex: 0 0 auto;
+}
+
+html.js #module {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  overflow-clip-margin: 10px;
+}
+
+html.js .screen {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .screen[hidden] {
+  display: none;
+}
+
+html.js .screen-body {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* ---------- masthead ---------- */
+
+.rig-head {
+  background: var(--pit);
+}
+
+.head-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.8rem var(--gutter) 0.75rem;
+}
+
+.head-id {
+  min-width: 0;
+}
+
+.kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+h1 {
+  margin: 0.3rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.55rem, 3.1vw, 2.2rem);
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--chalk);
+}
+
+.load {
+  flex: 0 0 auto;
+  width: min(15.5rem, 34%);
+}
+
+.bar {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.bar-shaft,
+.bar-collar,
+.bar-cap {
+  fill: var(--steel-line);
+}
+
+.plate {
+  fill: none;
+  stroke: rgb(140 148 156 / 0.55);
+  stroke-width: 2;
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.plate.is-done {
+  fill: var(--steel-line);
+  stroke: none;
+}
+
+.plate.is-now {
+  fill: var(--signal);
+  stroke: none;
+}
+
+.load-text {
+  margin: 0.3rem 0 0;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+/* The rack upright, laid across the top of the floor and under the pager. */
+.upright {
+  height: 11px;
+  background-image: var(--rail);
+  background-size: 100% 100%;
+  border-top: 2px solid rgb(13 13 15 / 0.7);
+}
+
+.upright-foot {
+  height: 8px;
+}
+
+/* ---------- screens ---------- */
+
+#module {
+  padding: 0 var(--gutter) 0.4rem;
+}
+
+.screen {
+  position: relative;
+  padding-top: 0.9rem;
+}
+
+.screen[hidden] {
+  display: none;
+}
+
+.stamp {
+  position: absolute;
+  right: 0;
+  top: 0.35rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(2.8rem, 5.2vw, 4.2rem);
+  line-height: 0.78;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: #7C8188;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: 100% 0;
+}
+
+h2 {
+  flex: 0 0 auto;
+  margin: 0 0 0.65rem;
+  padding-right: 4.5rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3.3vw, 2.15rem);
+  line-height: 1;
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  color: var(--chalk);
+}
+
+h3 {
+  margin: var(--v) 0 0.45rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.16rem;
+  line-height: 1.12;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.screen-body > *:first-child,
+.col > *:first-child,
+.tabpanel > *:first-child,
+.split-text > *:first-child {
+  margin-top: 0;
+}
+
+p {
+  margin: 0 0 var(--v);
+}
+
+.lead {
+  font-size: 1.08rem;
+  line-height: 1.48;
+  color: var(--chalk);
+}
+
+.quiet {
+  color: var(--steel);
+  font-size: 0.94rem;
+}
+
+b {
+  font-weight: 600;
+  color: var(--chalk);
+}
+
+.lead b {
+  color: var(--ember);
+}
+
+.note {
+  border-left: 6px solid var(--signal);
+  background: var(--panel);
+  padding: 0.65rem 0.9rem;
+  color: var(--chalk);
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.disclaimer {
+  border-top: 2px solid var(--line);
+  padding-top: 0.65rem;
+  color: var(--steel);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.closing {
+  color: var(--chalk);
+  font-size: 1rem;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* A screen that ends in an activity still gets a last word, pinned to the
+   bottom of the stage so the empty floor under the activity reads as a
+   deliberate margin rather than a screen that ran out. */
+.baseline {
+  margin: 1rem 0 0;
+  flex: 0 0 auto;
+  align-self: stretch;
+}
+
+html.js .screen-body > .baseline,
+html.js .split-text > .baseline {
+  margin-top: auto;
+}
+
+ul,
+ol {
+  margin: 0 0 var(--v);
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: 0.35rem;
+}
+
+li::marker {
+  color: var(--signal);
+}
+
+.ticklist {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ticklist > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.ticklist > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 11px;
+  height: 11px;
+  background: var(--signal);
+}
+
+/* ---------- the terms list on screen one ---------- */
+
+.terms {
+  margin: 0 0 var(--v);
+  border-left: 3px solid var(--steel-line);
+  padding-left: 0.9rem;
+}
+
+.terms dt {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.terms dd {
+  margin: 0.1rem 0 0.55rem;
+  color: var(--steel);
+  font-size: 0.94rem;
+  line-height: 1.48;
+}
+
+.terms dd:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- two column bodies ---------- */
+
+.cols2 {
+  display: grid;
+  gap: 1.3rem;
+  align-content: start;
+}
+
+.col {
+  min-width: 0;
+}
+
+.col > *:last-child,
+.tabpanel > *:last-child,
+.split-text > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- screen one plate ---------- */
+
+.screen-hero {
+  background-color: var(--panel);
+  background-image:
+    /* Measured against a pure white photo pixel as the worst case: under this
+       wash the ground resolves near #2F3033, and chalk, steel and ember all
+       clear their ratios on it. Heavier at the bottom where the copy sits. */
+    linear-gradient(180deg, rgb(13 13 15 / 0.86) 0%, rgb(13 13 15 / 0.94) 100%),
+    url('assets/img/hero.jpg'),
+    var(--tile);
+  background-size: cover, cover, 34px 34px;
+  background-position: center, center, 0 0;
+  background-repeat: no-repeat, no-repeat, repeat;
+  padding: 1rem 1.1rem;
+  border: 2px solid var(--line);
+  border-left: 6px solid var(--signal);
+  margin: 0.5rem 0 0.3rem;
+}
+
+/* The opening plate is a whole screen of its own, so its two columns sit in
+   the middle of it rather than clinging to the top edge. */
+html.js .screen-hero > .screen-body {
+  align-content: center;
+}
+
+.screen-hero .stamp {
+  right: 0.8rem;
+  top: 0.45rem;
+  color: #8E939A;
+}
+
+/* ---------- split bodies with a photograph plate ---------- */
+
+.split {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.split-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.split-text > .lead {
+  flex: 0 0 auto;
+}
+
+.split-media,
+.media-stack > span {
+  min-height: 170px;
+  background-color: var(--panel);
+  border: 2px solid var(--line);
+  border-left: 5px solid var(--steel-line);
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 34px 34px;
+  background-position: center, 0 0;
+  /* A lit plate: the vignette makes the slot read as a finished panel while
+     the photograph is missing, and sits over the photograph once it lands. */
+  box-shadow:
+    inset 0 0 70px rgb(0 0 0 / 0.6),
+    inset 0 2px 0 rgb(237 233 225 / 0.07);
+}
+
+.media-stack {
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 1.1rem;
+  min-height: 0;
+  background: none;
+  border: 0;
+}
+
+.media-stack > span {
+  display: block;
+  min-height: 0;
+}
+
+.media-rack { background-image: url('assets/img/rack.jpg'), var(--tile); }
+.media-dumbbells { background-image: url('assets/img/dumbbells.jpg'), var(--tile); }
+.media-chalk { background-image: url('assets/img/chalk.jpg'), var(--tile); }
+.media-floor { background-image: url('assets/img/floor.jpg'), var(--tile); }
+
+/* ---------- flip cards ---------- */
+
+.flipgrid {
+  display: grid;
+  gap: 0.6rem;
+  min-height: 0;
+  align-content: start;
+}
+
+html.js .flipgrid {
+  flex: 1 1 auto;
+  align-content: stretch;
+  grid-auto-rows: minmax(0, 1fr);
+}
+
+.flip {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-left: 5px solid var(--steel-line);
+}
+
+.flip[data-open] {
+  border-left-color: var(--signal);
+}
+
+.flip-face {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex: 1 1 auto;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  color: var(--chalk);
+}
+
+.flip[data-open] .flip-face {
+  flex: 0 0 auto;
+  border-bottom: 2px solid var(--line);
+}
+
+.flip-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--chalk);
+}
+
+.flip[data-open] .flip-label {
+  color: var(--ember);
+}
+
+.flip-hint {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.flip-face:hover .flip-hint {
+  color: var(--ember);
+}
+
+.flip-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.5rem 0.75rem 0.6rem;
+  transform-origin: 50% 0;
+}
+
+.flip-panel[hidden] {
+  display: none;
+}
+
+.flip-panel p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--steel);
+}
+
+/* ---------- tabs ---------- */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html.js .split-text > .tabs,
+html.js .screen-body > .tabs {
+  flex: 1 1 auto;
+}
+
+.tab-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tab-row .counter {
+  margin-bottom: 0.5rem;
+}
+
+.tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  flex: 0 1 auto;
+  border-bottom: 3px solid var(--line-hard);
+  margin-bottom: 0.85rem;
+}
+
+.tablist [role='tab'] {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chalk);
+  background: var(--raise);
+  border: 2px solid var(--line);
+  border-bottom: 0;
+  margin-bottom: -3px;
+  padding: 0.42rem 0.95rem 0.48rem;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.tablist [role='tab']:hover {
+  color: var(--ember);
+  border-color: var(--signal);
+}
+
+.tablist [role='tab'][aria-selected='true'] {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--pit);
+}
+
+.tabpanel {
+  min-height: 0;
+}
+
+.tabpanel[hidden] {
+  display: none;
+}
+
+html.js .tabs > .tabpanel {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+html.js .tabs > .tabpanel[hidden] {
+  display: none;
+}
+
+.tabpanel:focus-visible {
+  outline-offset: -3px;
+}
+
+.sub-intro {
+  margin-bottom: 0.75rem;
+  color: var(--steel);
+  font-size: 0.96rem;
+}
+
+/* ---------- the five patterns ---------- */
+
+.pat {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.pat-art {
+  background: var(--raise);
+  border: 2px solid var(--line);
+  padding: 0.4rem;
+  align-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(11rem, 24vh, 16rem);
+}
+
+.pat-art svg,
+.fault-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+
+.fig {
+  fill: none;
+  stroke: var(--chalk);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fig circle {
+  fill: none;
+}
+
+.fig .ground {
+  stroke: var(--steel-line);
+  stroke-width: 5;
+}
+
+.fig .load {
+  fill: var(--signal);
+  stroke: none;
+}
+
+.fig .warn {
+  stroke: var(--signal);
+  stroke-width: 4;
+}
+
+.pat-copy {
+  min-width: 0;
+}
+
+.pat-what {
+  margin: 0 0 0.7rem;
+  font-size: 1.02rem;
+  line-height: 1.45;
+  color: var(--chalk);
+}
+
+.pat-dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.28rem 0.9rem;
+  margin: 0;
+}
+
+.pat-dl dt {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+  padding-top: 0.22em;
+}
+
+.pat-dl dd {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: var(--chalk);
+}
+
+/* ---------- counters ---------- */
+
+.counter {
+  display: inline-block;
+  margin: 0 0 0.65rem;
+  padding: 0.3rem 0.75rem;
+  background: var(--pit);
+  border: 2px solid var(--signal);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.13em;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: var(--ember);
+  border-radius: 0;
+}
+
+/* ---------- sub-steps ---------- */
+
+.substeps {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html.js .tabpanel > .substeps,
+html.js .screen-body > .substeps,
+html.js .sort-left > .substeps {
+  flex: 1 1 auto;
+}
+
+.sub-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.8rem;
+  flex: 0 0 auto;
+}
+
+.sub-head {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--chalk);
+}
+
+.sub-bar .counter {
+  margin: 0;
+}
+
+.sub-nav {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.substep[hidden] {
+  display: none;
+}
+
+.qcard {
+  margin: 0;
+}
+
+.qtext {
+  margin: 0 0 0.75rem;
+  font-size: 1.04rem;
+  line-height: 1.45;
+  color: var(--chalk);
+}
+
+/* ---------- the sorter ---------- */
+
+.sorter {
+  display: flex;
+  flex-direction: column;
+}
+
+.sorter > .lead {
+  flex: 0 0 auto;
+}
+
+.sort-row {
+  display: grid;
+  gap: 1.2rem;
+  min-height: 0;
+}
+
+.sort-left,
+.sort-right {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+.sort-right > h3 {
+  margin: 0 0 0.5rem;
+  flex: 0 0 auto;
+}
+
+.pat-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pat-btn {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chalk);
+  background: var(--raise);
+  border: 2px solid var(--line-hard);
+  padding: 0.45rem 0.95rem;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.pat-btn:hover {
+  border-color: var(--signal);
+  color: var(--ember);
+}
+
+.pat-btn[aria-pressed='true'] {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--pit);
+}
+
+.bins {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+  flex: 0 0 auto;
+}
+
+.bin {
+  margin: 0;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-left: 5px solid var(--steel-line);
+  padding: 0.3rem 0.7rem 0.35rem;
+  min-height: 2.6rem;
+}
+
+.bin-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.bin-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.7rem;
+}
+
+.bin-list > li {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--chalk);
+  border-left: 3px solid var(--signal);
+  padding-left: 0.4rem;
+}
+
+/* The bins report where you put things, not whether you were right. The
+   verdict is the feedback line, in words, one item at a time. */
+
+/* ---------- the effort dials ---------- */
+
+.dial {
+  margin: 0 0 0.85rem;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-left: 6px solid var(--signal);
+  padding: 0.55rem 0.9rem 0.7rem;
+}
+
+.dial-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dial-head label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--chalk);
+}
+
+.bignum {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ember);
+}
+
+input[type='range'] {
+  width: 100%;
+  margin: 0.35rem 0 0.2rem;
+  accent-color: var(--signal);
+  cursor: pointer;
+}
+
+input[type='range']:focus-visible {
+  outline: 3px solid var(--ember);
+  outline-offset: 4px;
+}
+
+.dial-ends {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.dial-say {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--chalk);
+}
+
+.dial-say.is-target {
+  color: var(--ember);
+}
+
+/* ---------- spot the fault ---------- */
+
+.fault {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.fault-art {
+  background: var(--raise);
+  border: 2px solid var(--line);
+  padding: 0.4rem;
+  align-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(11rem, 24vh, 16rem);
+}
+
+.fault-copy {
+  min-width: 0;
+}
+
+.opt-btns {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+
+.opt {
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--chalk);
+  background: var(--raise);
+  border: 2px solid var(--line-hard);
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.opt:hover {
+  border-color: var(--signal);
+}
+
+.opt[aria-pressed='true'] {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--pit);
+}
+
+/* ---------- feedback ---------- */
+
+.feedback {
+  margin: 0.7rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--chalk);
+}
+
+.feedback:empty {
+  margin: 0;
+}
+
+.feedback .glyph {
+  display: inline-flex;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.15em;
+  margin-right: 0.4em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+/* Correctness is carried by the word first and the glyph second, never by
+   colour: the verdict reads the same with the stylesheet turned off. */
+.feedback .verdict-word {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.04em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+/* ---------- building the week ---------- */
+
+.daypick fieldset,
+.movepick fieldset {
+  margin: 0;
+  padding: 0.35rem 0.7rem 0.5rem;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-left: 5px solid var(--steel-line);
+  min-width: 0;
+}
+
+.daypick legend,
+.movepick legend {
+  padding: 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.dayrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.dayrow label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  background: var(--raise);
+  border: 2px solid var(--line-hard);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chalk);
+  cursor: pointer;
+}
+
+.dayrow label:hover {
+  border-color: var(--signal);
+}
+
+.dayrow label:has(input:checked) {
+  border-color: var(--signal);
+  background: var(--panel);
+  color: var(--ember);
+}
+
+.movepick {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.movepick label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--chalk);
+  cursor: pointer;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  flex: 0 0 auto;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0.12rem 0 0;
+  accent-color: var(--signal);
+  cursor: pointer;
+}
+
+.dayrow input[type='checkbox'] {
+  margin: 0;
+}
+
+/* ---------- the chalk card ---------- */
+
+/* The card fills the panel it sits in: a chalk-white page laid on the floor,
+   with the standing instructions pinned to its bottom edge. */
+html.js .tabpanel > .plate-card {
+  flex: 0 0 auto;
+  min-height: 0;
+  margin: auto 0;
+}
+
+.plate-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 0.8rem;
+  background: var(--chalk);
+  color: var(--iron);
+  border: 2px solid var(--chalk);
+  border-left: 8px solid var(--signal);
+  padding: 0.75rem 1rem 0.85rem;
+}
+
+.pc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  border-bottom: 3px solid rgb(20 20 22 / 0.2);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.pc-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--signal-ink);
+}
+
+.pc-bar {
+  flex: 0 0 auto;
+  width: 11rem;
+  height: auto;
+}
+
+.pc-shaft {
+  fill: rgb(20 20 22 / 0.55);
+}
+
+.wplate {
+  fill: none;
+  stroke: rgb(20 20 22 / 0.28);
+  stroke-width: 2;
+}
+
+.wplate.is-on {
+  fill: var(--signal-ink);
+  stroke: none;
+}
+
+.pc-body {
+  min-width: 0;
+  flex: 0 1 auto;
+  min-height: 0;
+}
+
+.pc-run {
+  margin-top: 0.7rem;
+  padding-top: 0.55rem;
+  border-top: 2px solid rgb(20 20 22 / 0.18);
+}
+
+.pc-sub {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5A5F64;
+}
+
+.pc-run ol {
+  counter-reset: run;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.pc-run li {
+  counter-increment: run;
+  position: relative;
+  margin: 0 0 0.1rem;
+  padding-left: 1.7rem;
+  font-size: 0.92rem;
+  line-height: 1.42;
+  color: var(--iron);
+}
+
+.pc-run li::before {
+  content: counter(run);
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--signal-ink);
+}
+
+.pc-empty {
+  margin: 0;
+  color: #4A4E52;
+  font-size: 0.95rem;
+}
+
+.pc-days {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--signal-ink);
+}
+
+.pc-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.15rem 1.4rem;
+}
+
+.pc-list > li {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 4.4rem minmax(0, 1fr);
+  gap: 0.6rem;
+  font-size: 0.94rem;
+  line-height: 1.4;
+  color: var(--iron);
+}
+
+.pc-pattern {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5A5F64;
+  padding-top: 0.32em;
+}
+
+/* A pattern with nothing chosen yet still shows, so the gap in the week is
+   the point rather than a silence. Set in the same ink as the pattern label,
+   which clears 4.5:1 on chalk. */
+.pc-missing {
+  color: #5A5F64;
+  font-style: italic;
+}
+
+.pc-foot {
+  margin: 0.7rem 0 0;
+  padding-top: 0.55rem;
+  border-top: 2px solid rgb(20 20 22 / 0.18);
+  color: #3D4145;
+  font-size: 0.87rem;
+  line-height: 1.45;
+}
+
+/* ---------- the score board ---------- */
+
+.board {
+  margin: 0 0 0.9rem;
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-left: 6px solid var(--signal);
+  padding: 0.75rem 1rem 0.85rem;
+}
+
+.board .pc-title {
+  color: var(--ember);
+  margin-bottom: 0.5rem;
+}
+
+.board ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.board li {
+  color: var(--chalk);
+}
+
+/* ---------- the ending ---------- */
+
+/* A native dialog: closed it is display:none from the user agent sheet, so a
+   visitor with scripting off never meets it, and open it sits in the top
+   layer where the stage behind it is inert to pointer and keyboard. */
+.done {
+  width: min(42rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 3px solid var(--signal);
+  background: var(--iron);
+  background-image: var(--tile);
+  background-size: 34px 34px;
+  color: var(--chalk);
+  box-shadow: 10px 10px 0 0 rgb(140 148 156 / 0.35);
+}
+
+.done::backdrop {
+  background: rgb(6 6 7 / 0.86);
+}
+
+.done-body {
+  padding: 1rem 1.3rem 1.15rem;
+}
+
+.done-kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+
+.done-h {
+  margin: 0.25rem 0 0.85rem;
+  padding-right: 0;
+  font-size: clamp(1.9rem, 4.4vw, 2.6rem);
+  line-height: 0.98;
+}
+
+.done-scores {
+  list-style: none;
+  margin: 0 0 0.85rem;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.done-scores > li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0.32rem 0.75rem;
+  background: var(--panel);
+  border-left: 5px solid var(--signal);
+}
+
+.done-label {
+  color: var(--steel);
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.done-val {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ember);
+  white-space: nowrap;
+}
+
+.done-line {
+  margin: 0 0 0.7rem;
+  font-size: 0.99rem;
+  line-height: 1.5;
+}
+
+.done-note {
+  margin: 0 0 0.9rem;
+  padding-top: 0.6rem;
+  border-top: 2px solid var(--line);
+  color: var(--steel);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* ---------- pager ---------- */
+
+.rig-foot {
+  background: var(--pit);
+}
+
+.pager {
+  display: flex;
+  gap: 0.85rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem var(--gutter) 0.7rem;
+}
+
+.foot-note {
+  margin: 0;
+  flex: 1 1 auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.btn-ghost,
+.btn-hi,
+.btn-mini {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  flex: 0 0 auto;
+}
+
+.btn-ghost,
+.btn-hi {
+  font-size: 1.02rem;
+  padding: 0.5rem 1.4rem;
+}
+
+.btn-ghost {
+  color: var(--chalk);
+  background: transparent;
+  border: 3px solid var(--line-hard);
+}
+
+.btn-ghost:hover {
+  border-color: var(--signal);
+  color: var(--ember);
+}
+
+.btn-hi {
+  color: var(--pit);
+  background: var(--signal);
+  border: 3px solid var(--signal);
+}
+
+.btn-hi:hover {
+  background: var(--ember);
+  border-color: var(--ember);
+}
+
+.btn-mini {
+  font-size: 0.9rem;
+  color: var(--chalk);
+  background: transparent;
+  border: 2px solid var(--line-hard);
+  padding: 0.28rem 0.85rem;
+}
+
+.btn-mini:hover {
+  border-color: var(--signal);
+  color: var(--ember);
+}
+
+.btn-ghost.btn-mini {
+  padding: 0.28rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+button[disabled] {
+  opacity: 0.42;
+  cursor: default;
+}
+
+button[disabled]:hover {
+  border-color: var(--line-hard);
+  color: var(--chalk);
+  background: transparent;
+}
+
+.btn-hi[disabled]:hover {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--pit);
+}
+
+/* ---------- the wide stage ---------- */
+
+@media (min-width: 50rem) {
+  .flipgrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .pat,
+  .fault {
+    grid-template-columns: 9rem minmax(0, 1fr);
+  }
+
+  .opt-btns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pc-list {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 56rem) {
+  .cols2 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.4rem 2.2rem;
+  }
+
+  .split {
+    grid-template-columns: minmax(0, 1fr) 14rem;
+    gap: 1.4rem;
+  }
+
+  .sort-row {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+  }
+
+  .movepick {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 68rem) {
+  .split {
+    grid-template-columns: minmax(0, 1fr) 16rem;
+  }
+
+  .movepick {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .pat,
+  .fault {
+    grid-template-columns: 10rem minmax(0, 1fr);
+  }
+}
+
+/* ---------- short stages tighten the rhythm, never the type ---------- */
+
+@media (max-height: 46rem) {
+  :root {
+    --v: 0.75rem;
+  }
+
+  .lead {
+    margin-bottom: 0.65rem;
+  }
+
+  .screen-hero {
+    padding: 0.8rem 0.9rem;
+  }
+
+  .note {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .terms dd {
+    margin-bottom: 0.4rem;
+  }
+
+  .dial {
+    margin-bottom: 0.6rem;
+    padding: 0.45rem 0.8rem 0.55rem;
+  }
+
+  .bignum {
+    font-size: 1.8rem;
+  }
+
+  .tablist {
+    margin-bottom: 0.65rem;
+  }
+
+  .sub-bar {
+    margin-bottom: 0.6rem;
+  }
+
+  .bin {
+    padding: 0.22rem 0.6rem 0.28rem;
+    min-height: 2.3rem;
+  }
+
+  .plate-card,
+  .board {
+    padding: 0.6rem 0.85rem 0.7rem;
+  }
+
+  .pc-foot {
+    margin-top: 0.5rem;
+    padding-top: 0.45rem;
+  }
+}
+
+@media (max-height: 42rem) {
+  :root {
+    --v: 0.6rem;
+  }
+
+  .lead {
+    margin-bottom: 0.5rem;
+  }
+
+  .bignum {
+    font-size: 1.55rem;
+  }
+
+  .dial-say {
+    margin-top: 0.35rem;
+  }
+
+  .pat-what {
+    margin-bottom: 0.5rem;
+  }
+
+  .qtext {
+    margin-bottom: 0.55rem;
+  }
+
+  .sub-intro {
+    margin-bottom: 0.5rem;
+  }
+
+  .done-body {
+    padding: 0.8rem 1rem 0.9rem;
+  }
+
+  .done-h,
+  .done-scores,
+  .done-line,
+  .done-note {
+    margin-bottom: 0.6rem;
+  }
+}
+
+/* ---------- narrow or short: only the screen body moves ---------- */
+
+@media (max-width: 56.24rem), (max-height: 39.99rem) {
+  html.js .screen-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  html.js .screen {
+    padding-bottom: 0.5rem;
+  }
+
+  /* Below the fixed stage the screen body scrolls, so nothing inside it
+     should still be trying to share out a fixed height. Every flex column
+     that stretches on the wide stage goes back to ordinary block flow here:
+     left as flex items with min-height 0 they would shrink under their own
+     content and print one block on top of another. */
+  html.js .sorter,
+  html.js .stack,
+  html.js .split-text,
+  html.js .sort-left,
+  html.js .sort-right,
+  html.js .tabs,
+  html.js .tabs > .tabpanel,
+  html.js .substeps,
+  html.js .plate-card {
+    display: block;
+    min-height: auto;
+  }
+
+  html.js .tabs > .tabpanel[hidden],
+  html.js .screen[hidden] {
+    display: none;
+  }
+
+  html.js .flipgrid {
+    grid-auto-rows: auto;
+    align-content: start;
+    flex: 0 0 auto;
+  }
+
+  html.js .screen-body > .baseline,
+  html.js .split-text > .baseline {
+    margin-top: 1rem;
+  }
+
+  .sort-row,
+  .split,
+  .cols2 {
+    align-content: start;
+  }
+}
+
+/* ---------- reflow ---------- */
+
+@media (max-width: 34rem) {
+  :root {
+    --gutter: 1rem;
+  }
+
+  .head-inner {
+    display: block;
+  }
+
+  .load {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .load-text {
+    text-align: left;
+  }
+
+  .foot-note {
+    display: none;
+  }
+
+  h2 {
+    padding-right: 3.4rem;
+  }
+
+  .pat-btn,
+  .opt {
+    flex: 1 1 100%;
+  }
+
+  .pc-list > li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .done-scores {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- motion, only when the visitor has not asked for less ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .screen {
+    animation: drop-in 0.32s cubic-bezier(0.24, 0.9, 0.2, 1) both;
+  }
+
+  .stamp {
+    animation: stamp-in 0.4s cubic-bezier(0.2, 1.2, 0.3, 1) both;
+  }
+
+  .plate.is-now {
+    animation: plate-slide 0.36s cubic-bezier(0.2, 0.95, 0.25, 1) both;
+  }
+
+  .wplate.is-fresh {
+    animation: plate-slide 0.34s cubic-bezier(0.2, 0.95, 0.25, 1) both;
+  }
+
+  .flip-panel {
+    animation: flip-open 0.26s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  }
+
+  .feedback.is-in {
+    transform-origin: 0 50%;
+    animation: slam 0.26s cubic-bezier(0.2, 1.4, 0.35, 1) both;
+  }
+
+  .bin-list > li {
+    animation: rack-in 0.26s ease both;
+  }
+
+  .done[open] {
+    animation: done-in 0.3s cubic-bezier(0.2, 1.15, 0.3, 1) both;
+  }
+
+  /* No opacity anywhere in these keyframes. A fade would drop chalk on iron
+     below its contrast ratio for a few frames, and the movement already says
+     everything the fade would have. */
+  @keyframes drop-in {
+    from { transform: translateY(14px); }
+    to { transform: none; }
+  }
+
+  @keyframes stamp-in {
+    from { transform: scale(1.5) rotate(-6deg); }
+    to { transform: none; }
+  }
+
+  @keyframes plate-slide {
+    from { transform: translateX(16px); }
+    to { transform: none; }
+  }
+
+  @keyframes flip-open {
+    from { transform: rotateX(-72deg); }
+    to { transform: none; }
+  }
+
+  @keyframes slam {
+    from { transform: scale(1.06) translateY(-5px); }
+    60% { transform: scale(0.99); }
+    to { transform: none; }
+  }
+
+  @keyframes rack-in {
+    from { transform: translateX(-7px); }
+    to { transform: none; }
+  }
+
+  @keyframes done-in {
+    from { transform: scale(1.05) rotate(-1deg); }
+    to { transform: none; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

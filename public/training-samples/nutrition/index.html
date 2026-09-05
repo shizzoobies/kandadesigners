@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Build the plate, skip the diet: an eight minute everyday nutrition module</title>
+<meta name="description" content="A short interactive module on building a balanced plate, reading a nutrition label, and telling hunger apart from habit. General education, not medical advice." />
+<link rel="stylesheet" href="style.css" />
+<script>document.documentElement.className += ' js';</script>
+</head>
+<body>
+<div class="rig">
+
+  <header class="rig-head">
+    <div class="rig-head-inner">
+      <div class="head-id">
+        <p class="kicker">Everyday nutrition &middot; Health and wellness</p>
+        <h1>Build the plate, skip the diet</h1>
+      </div>
+      <div class="meter">
+        <div class="meter-track" aria-hidden="true"><span class="meter-fill" id="bar-fill"></span></div>
+        <p class="meter-text" id="progress-text" role="status" aria-live="polite">Card 1 of 8</p>
+      </div>
+    </div>
+    <div class="slat" aria-hidden="true"></div>
+  </header>
+
+  <main id="module">
+
+    <!-- ============ 1 ============ -->
+    <section class="screen screen-hero" id="screen-1">
+      <p class="stamp" aria-hidden="true">1</p>
+      <h2 tabindex="-1">Before you build anything</h2>
+      <div class="screen-body cols2">
+        <div class="col">
+          <p class="lead">By the end of these eight cards you will be able to put together a balanced plate without measuring anything, find the two lines on a food label that actually change what you buy, and tell the difference between being hungry and being on autopilot.</p>
+          <p><b>Nutrition</b> is simply what your food is made of and what your body does with it. That is the whole word. It is not a plan, it is not a rulebook, and it does not come with a list of foods you are banned from.</p>
+          <p class="note"><b>Keyboard.</b> Tab moves between controls, Enter or Space chooses, and the left and right arrows move between the tabbed dividers. The food label lists every spot as a button beside it. Nothing is timed and there is no sound.</p>
+        </div>
+        <div class="col">
+          <h3>What you will do</h3>
+          <ul class="ticklist">
+            <li>Learn the plate method and why it works without counting.</li>
+            <li>Build a plate from eight everyday foods.</li>
+            <li>Find six things worth knowing on a nutrition label.</li>
+            <li>Read up on protein and fibre, the two that keep you full.</li>
+            <li>Call six moments hunger, habit, thirst or tiredness.</li>
+            <li>Keep the small swaps you would actually repeat.</li>
+          </ul>
+          <p class="disclaimer">This is general education, not medical or dietary advice, and none of it is personalised to you. For anything to do with your own health, a medication, a pregnancy, an allergy, or a condition you are managing, speak to a registered dietitian or your clinician before changing how you eat.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2 ============ -->
+    <section class="screen" id="screen-2">
+      <p class="stamp" aria-hidden="true">2</p>
+      <h2 tabindex="-1">What a balanced plate looks like</h2>
+      <div class="screen-body split">
+        <div class="split-text">
+          <p class="lead">The <b>plate method</b> is a way of judging a meal by how the plate is divided rather than by numbers. Open each divider and the plate beside it fills in.</p>
+
+          <div class="tabs" data-tabs data-plate="plate-a">
+            <div class="tablist" role="tablist" aria-label="The plate method">
+              <button type="button" role="tab" id="tab-2a" aria-controls="pan-2a" data-wedge="veg">Vegetables and fruit</button>
+              <button type="button" role="tab" id="tab-2b" aria-controls="pan-2b" data-wedge="pro">Protein</button>
+              <button type="button" role="tab" id="tab-2c" aria-controls="pan-2c" data-wedge="grain">Grains and starch</button>
+              <button type="button" role="tab" id="tab-2d" aria-controls="pan-2d" data-wedge="side">Fats and drinks</button>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-2a" aria-labelledby="tab-2a" tabindex="0">
+              <h3>Half the plate</h3>
+              <ul>
+                <li>Vegetables and fruit bring fibre, water and vitamins, and they take up room on the plate for very little effort.</li>
+                <li>Aim for more than one colour. Different plants carry different things, and colour is the easiest way to vary them without a chart.</li>
+                <li>Frozen and tinned count. So does the bag of salad you did not grow yourself.</li>
+                <li>Cooked counts too. Half a plate of raw salad is a lot of chewing, and roasted vegetables are the same food with the volume turned down.</li>
+              </ul>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-2b" aria-labelledby="tab-2b" tabindex="0">
+              <h3>A quarter of the plate</h3>
+              <ul>
+                <li>Protein is the part of food your body uses to build and repair things, and it is slow to digest, which is why it keeps you comfortable between meals.</li>
+                <li>Eggs, fish, chicken, beef, yoghurt and cheese all count. So do beans, lentils, chickpeas, tofu, nuts and seeds.</li>
+                <li>The plant ones bring fibre along with the protein, which is a genuinely useful two for one.</li>
+                <li>A quarter of a plate is roughly the size of your own palm. That is the only measurement in this module.</li>
+              </ul>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-2c" aria-labelledby="tab-2c" tabindex="0">
+              <h3>The other quarter</h3>
+              <ul>
+                <li>A <b>whole grain</b> is a grain with the whole seed still in it: the bran, the germ and the starchy middle. Milling takes the first two out, and most of the fibre goes with them.</li>
+                <li>Oats, brown rice, wholemeal bread, wholewheat pasta, barley and quinoa are the easy ones to find.</li>
+                <li>Potatoes, sweet potatoes, corn and plantain live here too. They are vegetables in the garden and starch on the plate.</li>
+                <li>Nothing here is forbidden. White rice is food. It simply does less for you than the brown bag next to it.</li>
+              </ul>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-2d" aria-labelledby="tab-2d" tabindex="0">
+              <h3>Beside the plate</h3>
+              <ul>
+                <li>Fat carries flavour and helps your body absorb some vitamins. Olive oil, nuts, seeds, avocado and oily fish are the ones to reach for first.</li>
+                <li>You do not need to measure it. You do need to notice it, because oil and dressing are easy to pour and easy to forget.</li>
+                <li>Water first for drinks. Tea and coffee count towards fluid, whatever you have heard.</li>
+                <li>Sweet drinks are the quietest way to take in <b>added sugars</b>, the sugars put into a food rather than the ones already in the fruit or the milk.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-side">
+          <div class="plate-wrap">
+            <svg class="plate" id="plate-a" viewBox="0 0 300 250" aria-hidden="true" focusable="false">
+              <circle class="plate-rim" cx="122" cy="125" r="106" />
+              <path class="wedge wedge-veg" data-wedge="veg" d="M122 27A98 98 0 0 0 122 223Z" />
+              <path class="wedge wedge-pro" data-wedge="pro" d="M122 27A98 98 0 0 1 220 125L122 125Z" />
+              <path class="wedge wedge-grain" data-wedge="grain" d="M122 125L220 125A98 98 0 0 1 122 223Z" />
+              <g class="plate-lines">
+                <path d="M122 27V223M122 125H220" />
+              </g>
+              <g class="side-kit" data-wedge="side">
+                <path class="glass" d="M247 46 287 46 282 138 252 138Z" />
+                <path class="glass-water" d="M250 78 284 78 280 135 254 135Z" />
+                <path class="bottle" d="M263 152 275 152 275 166 283 178 283 214 255 214 255 178 263 166Z" />
+                <path class="bottle-oil" d="M257 188 281 188 281 212 257 212Z" />
+              </g>
+            </svg>
+            <p class="plate-cap">Left half: vegetables and fruit. Top right: protein. Bottom right: grains and starch. Beside it: fats and drinks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3 ============ -->
+    <section class="screen" id="screen-3">
+      <p class="stamp" aria-hidden="true">3</p>
+      <h2 tabindex="-1">Build a plate</h2>
+      <div class="screen-body sorter">
+        <p class="lead">Eight things came out of the shop. Send each one to the part of the plate it belongs on, or beside the plate. You can change any answer, and nothing here is timed.</p>
+
+        <div class="sorter-row">
+          <div class="sorter-left">
+            <ul class="foods" id="foods">
+              <li class="food">
+                <p class="food-name" id="f1n">Roasted broccoli</p>
+                <div class="zone-btns" role="group" aria-labelledby="f1n">
+                  <button type="button" class="zn" data-f="f1" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f1" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f1" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f1" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+              <li class="food">
+                <p class="food-name" id="f2n">Grilled chicken thigh</p>
+                <div class="zone-btns" role="group" aria-labelledby="f2n">
+                  <button type="button" class="zn" data-f="f2" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f2" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f2" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f2" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+              <li class="food">
+                <p class="food-name" id="f3n">Brown rice</p>
+                <div class="zone-btns" role="group" aria-labelledby="f3n">
+                  <button type="button" class="zn" data-f="f3" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f3" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f3" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f3" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+              <li class="food">
+                <p class="food-name" id="f4n">Olive oil dressing</p>
+                <div class="zone-btns" role="group" aria-labelledby="f4n">
+                  <button type="button" class="zn" data-f="f4" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f4" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f4" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f4" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+              <li class="food">
+                <p class="food-name" id="f5n">Black beans</p>
+                <div class="zone-btns" role="group" aria-labelledby="f5n">
+                  <button type="button" class="zn" data-f="f5" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f5" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f5" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f5" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+              <li class="food">
+                <p class="food-name" id="f6n">Baked sweet potato</p>
+                <div class="zone-btns" role="group" aria-labelledby="f6n">
+                  <button type="button" class="zn" data-f="f6" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f6" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f6" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f6" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+              <li class="food">
+                <p class="food-name" id="f7n">Sliced strawberries</p>
+                <div class="zone-btns" role="group" aria-labelledby="f7n">
+                  <button type="button" class="zn" data-f="f7" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f7" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f7" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f7" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+              <li class="food">
+                <p class="food-name" id="f8n">A glass of water</p>
+                <div class="zone-btns" role="group" aria-labelledby="f8n">
+                  <button type="button" class="zn" data-f="f8" data-zone="veg" aria-label="Veg and fruit" aria-pressed="false">Veg</button>
+                  <button type="button" class="zn" data-f="f8" data-zone="pro" aria-pressed="false">Protein</button>
+                  <button type="button" class="zn" data-f="f8" data-zone="grain" aria-label="Grains and starch" aria-pressed="false">Grains</button>
+                  <button type="button" class="zn" data-f="f8" data-zone="side" aria-label="Beside the plate" aria-pressed="false">Beside</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="sorter-right">
+            <p class="counter" id="sort-counter" role="status" aria-live="polite">Placed 0 of 8.</p>
+            <div class="plate-wrap plate-wrap-live">
+              <svg class="plate plate-live" id="plate-b" viewBox="0 0 300 250" aria-hidden="true" focusable="false">
+                <circle class="plate-rim" cx="122" cy="125" r="106" />
+                <path class="wedge wedge-veg" data-wedge="veg" d="M122 27A98 98 0 0 0 122 223Z" />
+                <path class="wedge wedge-pro" data-wedge="pro" d="M122 27A98 98 0 0 1 220 125L122 125Z" />
+                <path class="wedge wedge-grain" data-wedge="grain" d="M122 125L220 125A98 98 0 0 1 122 223Z" />
+                <g class="plate-lines">
+                  <path d="M122 27V223M122 125H220" />
+                </g>
+                <text class="wedge-num" x="66" y="134" data-count="veg">0</text>
+                <text class="wedge-num" x="168" y="90" data-count="pro">0</text>
+                <text class="wedge-num" x="168" y="182" data-count="grain">0</text>
+                <g class="side-kit" data-wedge="side">
+                  <path class="glass" d="M247 46 287 46 282 138 252 138Z" />
+                  <path class="glass-water" d="M250 78 284 78 280 135 254 135Z" />
+                  <path class="bottle" d="M263 152 275 152 275 166 283 178 283 214 255 214 255 178 263 166Z" />
+                  <path class="bottle-oil" d="M257 188 281 188 281 212 257 212Z" />
+                </g>
+                <text class="wedge-num" x="269" y="243" data-count="side">0</text>
+              </svg>
+            </div>
+            <button type="button" class="btn-ghost btn-mini" id="sort-reveal" hidden>Place the rest for me</button>
+          </div>
+        </div>
+
+        <div class="verdict" id="sort-verdict" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ============ 4 ============ -->
+    <section class="screen" id="screen-4">
+      <p class="stamp" aria-hidden="true">4</p>
+      <h2 tabindex="-1">Reading a nutrition label</h2>
+      <div class="screen-body label-screen">
+        <p class="lead">A <b>Nutrition Facts label</b> describes one <b>serving</b> of a packaged food, a fixed standard amount, not the whole box. Select any line on the panel, or a button beside it.</p>
+
+        <div class="label-row">
+          <div class="label-col">
+            <div class="nfl">
+              <p class="nfl-title">Nutrition Facts</p>
+              <p class="nfl-brand">Honey Oat Crunch, a sample product</p>
+              <button type="button" class="lab-row lab-thin" data-spot="container">
+                <span class="lab-text">8 servings per container</span>
+                <span class="lab-mark" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="lab-row lab-serving" data-spot="serving">
+                <span class="lab-text"><b>Serving size</b></span>
+                <span class="lab-val">3/4 cup (40g)</span>
+                <span class="lab-mark" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="lab-row lab-cal" data-spot="calories">
+                <span class="lab-text">Calories</span>
+                <span class="lab-val lab-big">160</span>
+                <span class="lab-mark" aria-hidden="true"></span>
+              </button>
+              <p class="nfl-line"><span>Total Fat 3g</span></p>
+              <p class="nfl-line nfl-in"><span>Saturated Fat 0.5g</span></p>
+              <p class="nfl-line"><span>Cholesterol 0mg</span></p>
+              <button type="button" class="lab-row" data-spot="sodium">
+                <span class="lab-text">Sodium</span>
+                <span class="lab-val">210mg</span>
+                <span class="lab-mark" aria-hidden="true"></span>
+              </button>
+              <p class="nfl-line"><span>Total Carbohydrate 32g</span></p>
+              <button type="button" class="lab-row lab-in" data-spot="fibre">
+                <span class="lab-text">Dietary Fiber</span>
+                <span class="lab-val">3g</span>
+                <span class="lab-mark" aria-hidden="true"></span>
+              </button>
+              <p class="nfl-line nfl-in"><span>Total Sugars 12g</span></p>
+              <button type="button" class="lab-row lab-in lab-in2" data-spot="sugars">
+                <span class="lab-text">Includes Added Sugars</span>
+                <span class="lab-val">9g</span>
+                <span class="lab-mark" aria-hidden="true"></span>
+              </button>
+              <p class="nfl-line"><span>Protein 4g</span></p>
+              <button type="button" class="lab-row lab-ing" data-spot="ingredients">
+                <span class="lab-text"><b>Ingredients:</b> whole grain oats, sugar, rice flour, honey, canola oil, salt, natural flavour.</span>
+                <span class="lab-mark" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="label-col label-col-list">
+            <div class="label-head">
+              <p class="counter" id="spot-counter" role="status" aria-live="polite">Found 0 of 6.</p>
+              <button type="button" class="btn-ghost btn-mini" id="spot-reveal" hidden>Show me the rest</button>
+            </div>
+            <h3 id="spot-head">Six lines worth knowing</h3>
+            <ul class="spotlist" aria-labelledby="spot-head">
+              <li><button type="button" class="spot" data-spot="serving"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The serving size</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="container"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">Servings per container</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="calories"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The calorie figure</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="sugars"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">Added sugars, not total</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="fibre"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">Dietary fibre</span><span class="spot-state"></span></button></li>
+              <li><button type="button" class="spot" data-spot="ingredients"><span class="spot-mark" aria-hidden="true"></span><span class="spot-name">The ingredient order</span><span class="spot-state"></span></button></li>
+            </ul>
+            <div class="verdict" id="spot-verdict" role="status" aria-live="polite"></div>
+          </div>
+
+          <div class="label-col label-col-photo">
+            <div class="media media-label" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5 ============ -->
+    <section class="screen" id="screen-5">
+      <p class="stamp" aria-hidden="true">5</p>
+      <h2 tabindex="-1">Protein and fibre keep you full</h2>
+      <div class="screen-body split">
+        <div class="split-text">
+          <p class="lead">Two things in food slow a meal down on the way through you. That slowness is most of what the word <b>full</b> really describes.</p>
+
+          <div class="accordion" data-accordion>
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-1" aria-controls="accp-1"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">What protein does</span></button></h3>
+              <div class="acc-panel" id="accp-1" role="region" aria-labelledby="accb-1">
+                <ul>
+                  <li>Your body takes protein apart and uses the pieces to build and repair muscle, skin and a long list of things you never think about.</li>
+                  <li>It leaves the stomach slowly, so a meal with protein in it holds you longer than the same meal without.</li>
+                  <li>Spreading it across the day beats saving it all for dinner, and breakfast is where most people are short.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-2" aria-controls="accp-2"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">Where to find protein</span></button></h3>
+              <div class="acc-panel" id="accp-2" role="region" aria-labelledby="accb-2">
+                <ul>
+                  <li>Eggs, fish, tinned tuna, chicken, turkey and beef.</li>
+                  <li>Yoghurt, milk, cottage cheese and hard cheese.</li>
+                  <li>Beans, lentils, chickpeas, split peas, tofu and edamame.</li>
+                  <li>Nuts, seeds and the butters made from them: handy, and easy to overpour.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-3" aria-controls="accp-3"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">What fibre does</span></button></h3>
+              <div class="acc-panel" id="accp-3" role="region" aria-labelledby="accb-3">
+                <ul>
+                  <li><b>Fibre</b> is the part of a plant your body cannot break down. It goes through you largely intact, and that is the point of it.</li>
+                  <li>On the way it slows digestion, which softens the rise and fall in your energy, and it adds bulk and water to the plate.</li>
+                  <li>It feeds the bacteria living in your gut, and research suggests that community does more for you than we can currently list.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="acc-sec">
+              <h3 class="acc-h"><button type="button" class="acc-btn" id="accb-4" aria-controls="accp-4"><span class="acc-mark" aria-hidden="true"></span><span class="acc-label">Where to find fibre</span></button></h3>
+              <div class="acc-panel" id="accp-4" role="region" aria-labelledby="accb-4">
+                <ul>
+                  <li>Beans and lentils are the cheapest way to add a lot of it at once.</li>
+                  <li>Whole grains: oats, brown rice, wholemeal bread, barley.</li>
+                  <li>Fruit and vegetables with the skins on, plus nuts, seeds and popcorn.</li>
+                  <li>Build it up over a couple of weeks and drink water with it, or it can be uncomfortable.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-side media-stack">
+          <span class="media media-market"></span>
+          <span class="media media-pantry"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6 ============ -->
+    <section class="screen" id="screen-6">
+      <p class="stamp" aria-hidden="true">6</p>
+      <h2 tabindex="-1">Hunger or habit</h2>
+      <div class="screen-body">
+        <p class="lead">Six ordinary moments. For each one, pick the most likely explanation from what the situation tells you. This is about noticing a cue, not about being right or wrong with your own body.</p>
+
+        <div class="substeps" data-substeps data-sub-label="Moment">
+          <div class="sub-bar">
+            <h3 class="sub-head" tabindex="-1" data-sub-head>Moment 1 of 6</h3>
+            <p class="counter" id="cue-score" role="status" aria-live="polite">Answered 0 of 6.</p>
+            <div class="sub-nav">
+              <button type="button" class="btn-mini" data-sub="prev">Previous</button>
+              <button type="button" class="btn-mini" data-sub="next">Next</button>
+            </div>
+          </div>
+          <p class="visually-hidden" role="status" aria-live="polite" data-sub-live></p>
+
+          <div class="substep" data-substep>
+            <div class="qcard">
+              <p class="qtext" id="c1q">It is three in the afternoon. You had lunch at noon and you are not thinking about food, but the snack drawer is on the way back from the printer and you have already opened it.</p>
+              <div class="cue-btns" role="group" aria-labelledby="c1q">
+                <button type="button" class="cue" data-q="c1" data-correct="false" aria-pressed="false">Hungry</button>
+                <button type="button" class="cue" data-q="c1" data-correct="true" aria-pressed="false">Habit</button>
+                <button type="button" class="cue" data-q="c1" data-correct="false" aria-pressed="false">Thirsty</button>
+                <button type="button" class="cue" data-q="c1" data-correct="false" aria-pressed="false">Tired</button>
+              </div>
+              <p class="feedback" id="fb-c1" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="qcard">
+              <p class="qtext" id="c2q">You woke up, had coffee, and it is now mid morning. Your mouth is dry, there is a dull headache behind your eyes, and you have not had a glass of water since yesterday evening.</p>
+              <div class="cue-btns" role="group" aria-labelledby="c2q">
+                <button type="button" class="cue" data-q="c2" data-correct="false" aria-pressed="false">Hungry</button>
+                <button type="button" class="cue" data-q="c2" data-correct="false" aria-pressed="false">Habit</button>
+                <button type="button" class="cue" data-q="c2" data-correct="true" aria-pressed="false">Thirsty</button>
+                <button type="button" class="cue" data-q="c2" data-correct="false" aria-pressed="false">Tired</button>
+              </div>
+              <p class="feedback" id="fb-c2" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="qcard">
+              <p class="qtext" id="c3q">You slept badly and got up early. By eleven you cannot settle on a task, you keep rereading the same paragraph, and you want something sweet rather than something to eat.</p>
+              <div class="cue-btns" role="group" aria-labelledby="c3q">
+                <button type="button" class="cue" data-q="c3" data-correct="false" aria-pressed="false">Hungry</button>
+                <button type="button" class="cue" data-q="c3" data-correct="false" aria-pressed="false">Habit</button>
+                <button type="button" class="cue" data-q="c3" data-correct="false" aria-pressed="false">Thirsty</button>
+                <button type="button" class="cue" data-q="c3" data-correct="true" aria-pressed="false">Tired</button>
+              </div>
+              <p class="feedback" id="fb-c3" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="qcard">
+              <p class="qtext" id="c4q">Breakfast was at seven and it is half past twelve. Your stomach is making noise, you have gone slightly short tempered, and a bowl of plain beans and rice sounds genuinely good.</p>
+              <div class="cue-btns" role="group" aria-labelledby="c4q">
+                <button type="button" class="cue" data-q="c4" data-correct="true" aria-pressed="false">Hungry</button>
+                <button type="button" class="cue" data-q="c4" data-correct="false" aria-pressed="false">Habit</button>
+                <button type="button" class="cue" data-q="c4" data-correct="false" aria-pressed="false">Thirsty</button>
+                <button type="button" class="cue" data-q="c4" data-correct="false" aria-pressed="false">Tired</button>
+              </div>
+              <p class="feedback" id="fb-c4" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="qcard">
+              <p class="qtext" id="c5q">You ate an hour ago. The film is half over, somebody brings the bowl out, and your hand is going back to it without any decision arriving first.</p>
+              <div class="cue-btns" role="group" aria-labelledby="c5q">
+                <button type="button" class="cue" data-q="c5" data-correct="false" aria-pressed="false">Hungry</button>
+                <button type="button" class="cue" data-q="c5" data-correct="true" aria-pressed="false">Habit</button>
+                <button type="button" class="cue" data-q="c5" data-correct="false" aria-pressed="false">Thirsty</button>
+                <button type="button" class="cue" data-q="c5" data-correct="false" aria-pressed="false">Tired</button>
+              </div>
+              <p class="feedback" id="fb-c5" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="substep" data-substep>
+            <div class="qcard">
+              <p class="qtext" id="c6q">You have just come in from an hour walking in Florida heat. You feel a bit lightheaded, you want something cold, and the thought of a full meal is faintly unpleasant.</p>
+              <div class="cue-btns" role="group" aria-labelledby="c6q">
+                <button type="button" class="cue" data-q="c6" data-correct="false" aria-pressed="false">Hungry</button>
+                <button type="button" class="cue" data-q="c6" data-correct="false" aria-pressed="false">Habit</button>
+                <button type="button" class="cue" data-q="c6" data-correct="true" aria-pressed="false">Thirsty</button>
+                <button type="button" class="cue" data-q="c6" data-correct="false" aria-pressed="false">Tired</button>
+              </div>
+              <p class="feedback" id="fb-c6" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7 ============ -->
+    <section class="screen" id="screen-7">
+      <p class="stamp" aria-hidden="true">7</p>
+      <h2 tabindex="-1">Small swaps that stick</h2>
+      <div class="screen-body swaps-screen">
+        <div class="swaps-head">
+          <p class="lead">Turn a card over to see the swap and why it works. Tick the ones you would actually repeat, and they go onto your card at the end.</p>
+          <p class="counter" id="swap-count" role="status" aria-live="polite">0 swaps kept.</p>
+        </div>
+
+        <ul class="swaps" id="swaps">
+          <li class="swap">
+            <div class="swap-face swap-front" id="sw1-front">
+              <p class="swap-tag">Instead of</p>
+              <p class="swap-line">A fizzy drink with lunch, every day.</p>
+            </div>
+            <div class="swap-face swap-back" id="sw1-back">
+              <p class="swap-tag swap-tag-on">Try</p>
+              <p class="swap-line">Sparkling water with a squeeze of lime.</p>
+              <p class="swap-why">The cold and the fizz were most of what you wanted. The added sugars were along for the ride.</p>
+            </div>
+            <div class="swap-foot">
+              <button type="button" class="swap-btn" aria-expanded="false" aria-controls="sw1-back">Turn over</button>
+              <label class="keep"><input type="checkbox" data-keep="Sparkling water with lime instead of a fizzy drink at lunch" /> <span>Keep</span></label>
+            </div>
+          </li>
+
+          <li class="swap">
+            <div class="swap-face swap-front" id="sw2-front">
+              <p class="swap-tag">Instead of</p>
+              <p class="swap-line">Dry crackers on their own at three o'clock.</p>
+            </div>
+            <div class="swap-face swap-back" id="sw2-back">
+              <p class="swap-tag swap-tag-on">Try</p>
+              <p class="swap-line">The same crackers with peanut butter, or a handful of nuts.</p>
+              <p class="swap-why">Protein and fat slow the snack down, so four o'clock is quieter than it usually is.</p>
+            </div>
+            <div class="swap-foot">
+              <button type="button" class="swap-btn" aria-expanded="false" aria-controls="sw2-back">Turn over</button>
+              <label class="keep"><input type="checkbox" data-keep="Crackers with peanut butter, or nuts, for the afternoon snack" /> <span>Keep</span></label>
+            </div>
+          </li>
+
+          <li class="swap">
+            <div class="swap-face swap-front" id="sw3-front">
+              <p class="swap-tag">Instead of</p>
+              <p class="swap-line">White rice, because that is what is in the cupboard.</p>
+            </div>
+            <div class="swap-face swap-back" id="sw3-back">
+              <p class="swap-tag swap-tag-on">Try</p>
+              <p class="swap-line">Half brown and half white, cooked in the same pot.</p>
+              <p class="swap-why">A swap you will repeat beats a better one you abandon in a fortnight.</p>
+            </div>
+            <div class="swap-foot">
+              <button type="button" class="swap-btn" aria-expanded="false" aria-controls="sw3-back">Turn over</button>
+              <label class="keep"><input type="checkbox" data-keep="Half brown rice and half white, cooked together" /> <span>Keep</span></label>
+            </div>
+          </li>
+
+          <li class="swap">
+            <div class="swap-face swap-front" id="sw4-front">
+              <p class="swap-tag">Instead of</p>
+              <p class="swap-line">Deciding about breakfast on the way out of the door.</p>
+            </div>
+            <div class="swap-face swap-back" id="sw4-back">
+              <p class="swap-tag swap-tag-on">Try</p>
+              <p class="swap-line">Oats and yoghurt put in a jar the night before.</p>
+              <p class="swap-why">A decision made while you are late is not really a decision. Move it to a calmer moment.</p>
+            </div>
+            <div class="swap-foot">
+              <button type="button" class="swap-btn" aria-expanded="false" aria-controls="sw4-back">Turn over</button>
+              <label class="keep"><input type="checkbox" data-keep="Oats and yoghurt in a jar the night before" /> <span>Keep</span></label>
+            </div>
+          </li>
+
+          <li class="swap">
+            <div class="swap-face swap-front" id="sw5-front">
+              <p class="swap-tag">Instead of</p>
+              <p class="swap-line">A salad that arrives already dressed.</p>
+            </div>
+            <div class="swap-face swap-back" id="sw5-back">
+              <p class="swap-tag swap-tag-on">Try</p>
+              <p class="swap-line">Dressing on the side, poured by you.</p>
+              <p class="swap-why">You keep every bit of the flavour and you get the amount back under your own hand.</p>
+            </div>
+            <div class="swap-foot">
+              <button type="button" class="swap-btn" aria-expanded="false" aria-controls="sw5-back">Turn over</button>
+              <label class="keep"><input type="checkbox" data-keep="Salad dressing on the side, poured by me" /> <span>Keep</span></label>
+            </div>
+          </li>
+
+          <li class="swap">
+            <div class="swap-face swap-front" id="sw6-front">
+              <p class="swap-tag">Instead of</p>
+              <p class="swap-line">One vegetable at dinner, if there is one at all.</p>
+            </div>
+            <div class="swap-face swap-back" id="sw6-back">
+              <p class="swap-tag swap-tag-on">Try</p>
+              <p class="swap-line">Two, and let one of them be raw and unfussy.</p>
+              <p class="swap-why">Raw needs no pan and no attention, which is the only reason it survives a Tuesday.</p>
+            </div>
+            <div class="swap-foot">
+              <button type="button" class="swap-btn" aria-expanded="false" aria-controls="sw6-back">Turn over</button>
+              <label class="keep"><input type="checkbox" data-keep="Two vegetables at dinner, one of them raw" /> <span>Keep</span></label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 8 ============ -->
+    <section class="screen" id="screen-8">
+      <p class="stamp" aria-hidden="true">8</p>
+      <h2 tabindex="-1">Your card</h2>
+      <div class="screen-body split">
+        <div class="split-text">
+          <div class="tabs tabs-wide" data-tabs>
+            <div class="tablist" role="tablist" aria-label="Your card">
+              <button type="button" role="tab" id="tab-8a" aria-controls="pan-8a">This week's plate</button>
+              <button type="button" role="tab" id="tab-8b" aria-controls="pan-8b">Where you landed</button>
+              <button type="button" role="tab" id="tab-8c" aria-controls="pan-8c">Start over</button>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-8a" aria-labelledby="tab-8a" tabindex="0">
+              <div class="card" id="card">
+                <p class="card-title">This week's plate</p>
+                <p class="card-rule">Half the plate vegetables and fruit. A quarter protein. A quarter whole grains or starch. Water first.</p>
+                <div id="card-body"><p class="quiet">No swaps kept yet. Go back a card, turn a few over, and tick the ones you would actually repeat. They land here.</p></div>
+                <p class="card-foot">Pick one. Run it for a week before you add the next. A change you keep beats four you tried.</p>
+              </div>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-8b" aria-labelledby="tab-8b" tabindex="0">
+              <div class="results">
+                <p class="card-title">Where you landed</p>
+                <ul id="results-list">
+                  <li>Build a plate: not attempted.</li>
+                  <li>Label lines found: 0 of 6.</li>
+                  <li>Hunger or habit: not attempted.</li>
+                </ul>
+                <p class="card-foot">Nothing here is a grade. It is a note of what you worked through.</p>
+              </div>
+              <p class="disclaimer">General education, not medical or dietary advice. Speak to a registered dietitian or your clinician about anything to do with your own health.</p>
+            </div>
+
+            <div class="tabpanel" role="tabpanel" id="pan-8c" aria-labelledby="tab-8c" tabindex="0">
+              <p>Starting over clears every answer, every found line and every kept swap, and takes you back to the first card.</p>
+              <p><button type="button" class="btn-ghost" id="restart">Start over</button></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-side">
+          <div class="media media-plate" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rig-foot">
+    <div class="slat slat-foot" aria-hidden="true"></div>
+    <nav class="pager" aria-label="Card navigation">
+      <button type="button" class="btn-ghost" id="prev">Back</button>
+      <p class="foot-note">Demonstration sample by K &amp; A Performance.</p>
+      <button type="button" class="btn-hi" id="next">Next</button>
+    </nav>
+  </footer>
+
+  <!-- The ending. Closed in the markup, so a visitor with scripting off never
+       meets it and the last card is simply the end of the module. -->
+  <dialog class="done" id="done" aria-labelledby="done-title">
+    <div class="done-inner">
+      <div class="done-rule" aria-hidden="true"></div>
+      <div class="done-body">
+        <h2 class="done-h" id="done-title" tabindex="-1">That is the plate</h2>
+        <p class="done-sub">Build the plate, skip the diet</p>
+
+        <ul class="done-scores">
+          <li><span class="done-label">Build a plate</span> <span class="done-val" id="done-plate">0 of 8</span></li>
+          <li><span class="done-label">Label lines found</span> <span class="done-val" id="done-label">0 of 6</span></li>
+          <li><span class="done-label">Hunger or habit</span> <span class="done-val" id="done-cues">0 of 6</span></li>
+          <li><span class="done-label">Swaps kept</span> <span class="done-val" id="done-swaps">0</span></li>
+        </ul>
+
+        <p class="done-line">You did not learn a diet, and that was the point. You learned a picture of a plate, two lines on a label, and a question to ask yourself at three in the afternoon. Take one swap into this week and leave the rest on the card.</p>
+        <p class="done-fine">General education, not medical or dietary advice. Talk to a registered dietitian or your clinician before changing how you eat.</p>
+
+        <div class="done-actions">
+          <button type="button" class="btn-hi" id="done-review">Review my card</button>
+          <button type="button" class="btn-ghost" id="done-restart">Start over</button>
+          <button type="button" class="btn-ghost btn-mini" id="done-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -263,6 +263,10 @@ export const verticals = [
     blurb: 'Technical content reviewed by a licensed CPA, with the rigor that regulated topics and continuing education demand.',
   },
   {
+    title: 'Health and wellness',
+    blurb: 'Nutrition, movement, and recovery content written for real people, hedged where the research is hedged, and never a substitute for a clinician.',
+  },
+  {
     title: 'Everyone else with a backlog',
     blurb: 'Onboarding, compliance, systems training, and the fifty-slide deck that should have been a module years ago.',
   },
@@ -326,6 +330,56 @@ export const samples = [
     demonstrates: 'An original demonstration piece with a ledger-book identity: ruled cream pages, folio numbers, a closing entry at the end. No client, no real figures; the business is invented. Reviewed for a general audience, not a substitute for advice from your accountant.',
     technique: 'A live profit and loss simulator with sliders and animated figures, a classify-the-line-item sorter, a profit-versus-cash scenario, and a margin check with a drawn waterfall chart.',
     accessibility: 'Keyboard operable end to end, sliders with accessible names and live value announcements, charts with text equivalents, reduced motion respected, WCAG 2.1 AA.',
+    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
+  },
+  // The three health and wellness originals, 2026-09-04. Same rule as above:
+  // three different clients at a glance. Recipe-card kitchen, chalk and iron
+  // gym floor, cedar and steam. Every health claim is hedged the way the
+  // research is hedged, and each one carries a plain "not medical advice"
+  // line on the first screen and in the ending.
+  {
+    slug: 'build-the-plate',
+    status: 'live',
+    title: 'Build the plate, skip the diet',
+    dir: '/training-samples/nutrition/',
+    backdrop: '/images/training/backdrops/sample-nutrition.jpg?v=1',
+    kind: 'Short module',
+    vertical: 'Health and wellness',
+    minutes: 8,
+    what: 'An eight-minute module on everyday nutrition: the plate method, how to read a nutrition label, the two nutrients that keep you full, and the difference between hunger and habit.',
+    demonstrates: 'An original demonstration piece with a recipe-card identity: index-card ruling, a produce-crate texture, and a plate that fills in as you learn. No client, no employer material. General education, not dietary advice.',
+    technique: 'A plate diagram that draws itself, a build-a-plate sorter, a label-reading hotspot activity that also works as a list, a hunger-or-habit scenario quiz, and swap cards the learner keeps to build their own recipe card.',
+    accessibility: 'Keyboard operable end to end, hotspots exposed as a list, diagrams with text equivalents, reduced motion respected, WCAG 2.1 AA.',
+    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
+  },
+  {
+    slug: 'strong-is-a-skill',
+    status: 'live',
+    title: 'Strong is a skill',
+    dir: '/training-samples/strength/',
+    backdrop: '/images/training/backdrops/sample-strength.jpg?v=1',
+    kind: 'Short module',
+    vertical: 'Health and wellness',
+    minutes: 9,
+    what: 'A nine-minute beginner module on strength training: why it matters at any age, the five movement patterns, how hard is hard enough, and how to build a first week you will actually do.',
+    demonstrates: 'An original demonstration piece with a chalk-and-iron identity: a gym floor at six in the morning, a barbell that loads a plate per screen, and rep counters in big numerals. No client, no employer material. General education, not a personal program.',
+    technique: 'Flip-reveal cards, a movement-pattern sorter with illustrated figures, an effort slider with live plain-language readout, a spot-the-fault quiz with coaching cues, and a first-week planner the learner assembles.',
+    accessibility: 'Keyboard operable end to end, sliders with accessible names and value text, illustrations described in text, reduced motion respected, WCAG 2.1 AA.',
+    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
+  },
+  {
+    slug: 'heat-done-well',
+    status: 'live',
+    title: 'Heat, done well',
+    dir: '/training-samples/sauna/',
+    backdrop: '/images/training/backdrops/sample-sauna.jpg?v=1',
+    kind: 'Microlearning',
+    vertical: 'Health and wellness',
+    minutes: 7,
+    what: 'A seven-minute microlearning on sauna use: the two common kinds of heat, what a session does to the body, how to run a good one, and when to get out.',
+    demonstrates: 'An original demonstration piece with a cedar-and-steam identity: wood grain, rising steam, a calm editorial serif, and nothing in a hurry. No client, no employer material. General education, not medical advice; the research is hedged the way the research is hedged.',
+    technique: 'A tabbed comparison with a qualitative heat dial, an accordion on what the heat does, a step-by-step session walk with a breathing pacer, a stop-or-stay decision quiz, and a first-session card the learner builds.',
+    accessibility: 'Keyboard operable end to end, the breathing pacer never autoplays and is text-cued, reduced motion respected, WCAG 2.1 AA.',
     built: 'Custom HTML, no framework, packaged for SCORM without changes.',
   },
   {

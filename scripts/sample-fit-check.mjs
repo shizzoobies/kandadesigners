@@ -16,7 +16,7 @@ import { serveDist } from './lib/serve-dist.mjs';
 const require = createRequire('file:///D:/kap-reel/node_modules/');
 const { chromium } = require('playwright');
 
-const ALL = ['rfi', 'safety', 'finance'];
+const ALL = ['rfi', 'safety', 'finance', 'nutrition', 'strength', 'sauna'];
 const samples = process.argv.slice(2).length
   ? process.argv.slice(2).map((a) => a.replace(/^.*\//, '').replace(/\/$/, ''))
   : ALL;
@@ -121,7 +121,8 @@ async function exploreStates(page, record) {
   }
 }
 
-const { origin, close } = await serveDist();
+// FIT_ROOT=public checks a sample straight from source, no build needed.
+const { origin, close } = await serveDist(process.env.FIT_ROOT || 'dist');
 const browser = await chromium.launch();
 let failed = false;
 

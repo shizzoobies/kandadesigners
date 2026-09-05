@@ -1,280 +1,7 @@
 {
-  "date": "2026-09-04T18:04:16.720Z",
-  "origin": "http://127.0.0.1:58839",
+  "date": "2026-09-04T19:06:31.849Z",
+  "origin": "http://127.0.0.1:51656",
   "pages": [
-    {
-      "path": "/training/",
-      "status": 200,
-      "structure": {
-        "lang": "en",
-        "title": "Custom eLearning and Training Content Development | K & A Performance",
-        "h1Count": 1,
-        "headings": [
-          {
-            "level": 1,
-            "text": "Training content built without the wait"
-          },
-          {
-            "level": 2,
-            "text": "Where we are deepest"
-          },
-          {
-            "level": 3,
-            "text": "Construction and skilled trades"
-          },
-          {
-            "level": 3,
-            "text": "Finance and accounting"
-          },
-          {
-            "level": 3,
-            "text": "Everyone else with a backlog"
-          },
-          {
-            "level": 2,
-            "text": "What we build"
-          },
-          {
-            "level": 3,
-            "text": "Full courses"
-          },
-          {
-            "level": 3,
-            "text": "Standard modules"
-          },
-          {
-            "level": 3,
-            "text": "Microlearning"
-          },
-          {
-            "level": 3,
-            "text": "Job aids and performance support"
-          },
-          {
-            "level": 3,
-            "text": "Assessments"
-          },
-          {
-            "level": 3,
-            "text": "Conversion and refresh"
-          },
-          {
-            "level": 3,
-            "text": "Accessibility remediation"
-          },
-          {
-            "level": 2,
-            "text": "Your LMS, your data"
-          },
-          {
-            "level": 2,
-            "text": "How we work"
-          },
-          {
-            "level": 3,
-            "text": "Discovery"
-          },
-          {
-            "level": 3,
-            "text": "Outline"
-          },
-          {
-            "level": 3,
-            "text": "Storyboard"
-          },
-          {
-            "level": 3,
-            "text": "Alpha"
-          },
-          {
-            "level": 3,
-            "text": "Beta and LMS testing"
-          },
-          {
-            "level": 3,
-            "text": "Final delivery"
-          },
-          {
-            "level": 2,
-            "text": "Accessibility, tested"
-          },
-          {
-            "level": 3,
-            "text": "Every build gets these five passes"
-          },
-          {
-            "level": 2,
-            "text": "Yes, we use AI. Here is exactly how."
-          },
-          {
-            "level": 2,
-            "text": "Three ways to work together"
-          },
-          {
-            "level": 3,
-            "text": "Fixed project"
-          },
-          {
-            "level": 3,
-            "text": "Monthly pod"
-          },
-          {
-            "level": 3,
-            "text": "Retainer bench"
-          },
-          {
-            "level": 2,
-            "text": "See the work"
-          },
-          {
-            "level": 3,
-            "text": "Play a working sample"
-          },
-          {
-            "level": 3,
-            "text": "Meet the team"
-          },
-          {
-            "level": 2,
-            "text": "Training inquiry"
-          },
-          {
-            "level": 3,
-            "text": "Got it"
-          },
-          {
-            "level": 2,
-            "text": "Services"
-          },
-          {
-            "level": 2,
-            "text": "Locations"
-          },
-          {
-            "level": 2,
-            "text": "Studio"
-          },
-          {
-            "level": 2,
-            "text": "Legal"
-          },
-          {
-            "level": 3,
-            "text": "Message received"
-          }
-        ],
-        "skips": [],
-        "mainCount": 1,
-        "hasNav": true,
-        "hasSkipLink": true,
-        "imgsNoAlt": [],
-        "framesNoTitle": []
-      },
-      "axe": {
-        "violations": [],
-        "incomplete": [
-          {
-            "id": "color-contrast",
-            "nodes": 1
-          }
-        ],
-        "passes": 23
-      },
-      "keyboard": {
-        "stops": 41,
-        "missingFocus": [],
-        "sawFrame": false,
-        "leftFrame": false,
-        "frameTrap": false,
-        "maxFrameTabs": 0,
-        "steps": 41,
-        "first": "a|Skip to content"
-      },
-      "consoleErrors": [],
-      "problems": []
-    },
-    {
-      "path": "/training/samples/",
-      "status": 200,
-      "structure": {
-        "lang": "en",
-        "title": "Training Content Samples | K & A Performance",
-        "h1Count": 1,
-        "headings": [
-          {
-            "level": 1,
-            "text": "Samples you can actually play"
-          },
-          {
-            "level": 2,
-            "text": "Where this stands today"
-          },
-          {
-            "level": 2,
-            "text": "The RFI that gets answered"
-          },
-          {
-            "level": 2,
-            "text": "Spot it before it hurts someone"
-          },
-          {
-            "level": 2,
-            "text": "The P&L, read like an owner"
-          },
-          {
-            "level": 2,
-            "text": "Accessibility remediation, before and after"
-          },
-          {
-            "level": 2,
-            "text": "Want one of these for your content"
-          },
-          {
-            "level": 2,
-            "text": "Services"
-          },
-          {
-            "level": 2,
-            "text": "Locations"
-          },
-          {
-            "level": 2,
-            "text": "Studio"
-          },
-          {
-            "level": 2,
-            "text": "Legal"
-          },
-          {
-            "level": 3,
-            "text": "Message received"
-          }
-        ],
-        "skips": [],
-        "mainCount": 1,
-        "hasNav": true,
-        "hasSkipLink": true,
-        "imgsNoAlt": [],
-        "framesNoTitle": []
-      },
-      "axe": {
-        "violations": [],
-        "incomplete": [],
-        "passes": 22
-      },
-      "keyboard": {
-        "stops": 35,
-        "missingFocus": [],
-        "sawFrame": false,
-        "leftFrame": false,
-        "frameTrap": false,
-        "maxFrameTabs": 0,
-        "steps": 35,
-        "first": "a|Skip to content"
-      },
-      "consoleErrors": [],
-      "problems": []
-    },
     {
       "path": "/training/team/",
       "status": 200,
@@ -403,24 +130,48 @@
       "problems": []
     },
     {
-      "path": "/training/samples/hazard-recognition/",
+      "path": "/services/",
       "status": 200,
       "structure": {
         "lang": "en",
-        "title": "Spot it before it hurts someone | Training Samples | K & A Performance",
+        "title": "Web Design & AI Services in Florida | K & A Performance",
         "h1Count": 1,
         "headings": [
           {
             "level": 1,
-            "text": "Spot it before it hurts someone"
+            "text": "Web design and AI, built in Florida"
           },
           {
             "level": 2,
-            "text": "About this sample"
+            "text": "Twelve weeks to a workflow you own"
           },
           {
             "level": 2,
-            "text": "Ask about something like this"
+            "text": "Custom website design"
+          },
+          {
+            "level": 2,
+            "text": "AI that earns its place"
+          },
+          {
+            "level": 2,
+            "text": "Found by Google, found by AI"
+          },
+          {
+            "level": 2,
+            "text": "Accessibility audits"
+          },
+          {
+            "level": 2,
+            "text": "Courses, modules, and job aids, delivered into your LMS"
+          },
+          {
+            "level": 2,
+            "text": "AI, where it earns its place"
+          },
+          {
+            "level": 2,
+            "text": "How it goes"
           },
           {
             "level": 2,
@@ -455,126 +206,19 @@
         "incomplete": [
           {
             "id": "color-contrast",
-            "nodes": 2
+            "nodes": 1
           }
         ],
-        "passes": 27
+        "passes": 23
       },
       "keyboard": {
-        "stops": 33,
-        "missingFocus": [],
-        "sawFrame": true,
-        "leftFrame": true,
-        "frameTrap": false,
-        "maxFrameTabs": 1,
-        "steps": 34,
-        "first": "a|Skip to content"
-      },
-      "consoleErrors": [],
-      "problems": []
-    },
-    {
-      "path": "/training/capabilities/",
-      "status": 200,
-      "structure": {
-        "lang": "en",
-        "title": "Training Content Capabilities | K & A Performance",
-        "h1Count": 1,
-        "headings": [
-          {
-            "level": 1,
-            "text": "The capabilities one-pager"
-          },
-          {
-            "level": 2,
-            "text": "What we do"
-          },
-          {
-            "level": 2,
-            "text": "What we build"
-          },
-          {
-            "level": 2,
-            "text": "The bench"
-          },
-          {
-            "level": 2,
-            "text": "Subject matter experts"
-          },
-          {
-            "level": 2,
-            "text": "Where we go deepest"
-          },
-          {
-            "level": 2,
-            "text": "How we deliver"
-          },
-          {
-            "level": 2,
-            "text": "How we work"
-          },
-          {
-            "level": 2,
-            "text": "Accessibility"
-          },
-          {
-            "level": 2,
-            "text": "AI transparency"
-          },
-          {
-            "level": 2,
-            "text": "Engagement models"
-          },
-          {
-            "level": 2,
-            "text": "Contact"
-          },
-          {
-            "level": 2,
-            "text": "Services"
-          },
-          {
-            "level": 2,
-            "text": "Locations"
-          },
-          {
-            "level": 2,
-            "text": "Studio"
-          },
-          {
-            "level": 2,
-            "text": "Legal"
-          },
-          {
-            "level": 3,
-            "text": "Message received"
-          }
-        ],
-        "skips": [],
-        "mainCount": 1,
-        "hasNav": true,
-        "hasSkipLink": true,
-        "imgsNoAlt": [],
-        "framesNoTitle": []
-      },
-      "axe": {
-        "violations": [],
-        "incomplete": [
-          {
-            "id": "color-contrast",
-            "nodes": 5
-          }
-        ],
-        "passes": 22
-      },
-      "keyboard": {
-        "stops": 27,
+        "stops": 36,
         "missingFocus": [],
         "sawFrame": false,
         "leftFrame": false,
         "frameTrap": false,
         "maxFrameTabs": 0,
-        "steps": 27,
+        "steps": 36,
         "first": "a|Skip to content"
       },
       "consoleErrors": [],
