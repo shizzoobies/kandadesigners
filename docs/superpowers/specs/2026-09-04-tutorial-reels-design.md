@@ -20,7 +20,7 @@ The first two tutorials are built together:
 
 - No em dashes anywhere: scripts, captions, SRTs, post copy, on screen. Use periods, commas, colons.
 - No pill or chip UI. Labels are small caps interpunct lines or plain text.
-- Brand fonts and colours from `config/brand.json`. Amber is never small text on light.
+- Brand fonts and colors from `config/brand.json`. Amber is never small text on light.
 - Real sites only, and only projects with `cleared_for_public_showcase` true. Never attribute a weak example to a real client; weak examples are fictional and labelled as such.
 - No fabricated metrics. Every contrast ratio on screen is computed by code from the actual hex values (WCAG 2.x relative luminance) and asserted in a test.
 - Every ElevenLabs call is logged with measured credits, the way `scripts/audio.ts` does it. Report spend.
@@ -59,7 +59,7 @@ Shared, in `src/tutorial/scenes`:
 
 - `TutorialHook`: the showcase Hook with a flat teal or canvas field option, since not every tutorial opens on a capture.
 - `Caption`: the burned caption card.
-- `FlatDemo`: a canvas coloured card centred in the safe area that a tutorial scene draws inside. Phone shaped in the vertical crops, laptop shaped in landscape, using `DeviceFrame` and `LaptopFrame` where a device makes sense.
+- `FlatDemo`: a canvas colored card centered in the safe area that a tutorial scene draws inside. Phone shaped in the vertical crops, laptop shaped in landscape, using `DeviceFrame` and `LaptopFrame` where a device makes sense.
 - `JamClip`: plays a Jam screen recording from `assets/captures/jam/<id>.mp4` inside `LaptopFrame`, or renders `StandIn` labelled with the id when the file is missing. Same rule as the showcase: a stand in must be impossible to mistake for a finished shot.
 
 Per tutorial scenes live in `src/tutorial/scenes/contrast/` and `src/tutorial/scenes/hero/`.
@@ -82,7 +82,7 @@ Facts, computed and asserted: amber `#D97706` on canvas `#F8F5F2` is 2.9 to 1 (f
 | fine | This amber on cream looks fine. | A canvas card with a headline and a paragraph set in amber. It looks like a real page |
 | fails | It measures two point nine to one. That fails. | The ratio types on in Lenia Mono under the card, "2.9 : 1", then the small caps line "fails AA". Nothing turns red; the number is the verdict |
 | fix | Same palette, rust instead. Six point seven. Passes. | The text on the card cross fades from amber to rust. "6.7 : 1", "passes AA". Amber stays on the card's one button, with ink text on it |
-| cta | Measure every colour you set text in. | The drawn end card |
+| cta | Measure every color you set text in. | The drawn end card |
 
 Hook first line slams on frame 0. "fix" is the stretch beat.
 
@@ -92,9 +92,9 @@ Hook first line slams on frame 0. "fix" is the stretch beat.
 |---|---|---|
 | hook | Contrast is not a vibe. | As above |
 | real | Here's a real page. The amber reads as bold, so your eye says it's fine. The checker says two point nine to one. Body text needs four and a half. | The K&A home page desktop capture in the laptop frame, pushed in on a text block; a version of that block re-set in amber sits beside it in a card, with the ratio typed under it |
-| inspect | Open the inspector, click the colour swatch, and the ratio is right there with the pass marks under it. | `JamClip` id `contrast-devtools`: Alex's recording of Chrome DevTools on ka-performancefl.com showing the colour picker's contrast ratio. Stand in until it lands |
+| inspect | Open the inspector, click the color swatch, and the ratio is right there with the pass marks under it. | `JamClip` id `contrast-devtools`: Alex's recording of Chrome DevTools on ka-performancefl.com showing the color picker's contrast ratio. Stand in until it lands |
 | fix | The fix is not a new palette. Amber stays on buttons, with dark text on top. Words on the page get the rust from the same family. Six point seven to one. Passes. | Split: the card from the 15s cut, amber text crossfading to rust; the button keeps amber with ink text. Both ratios shown |
-| rule | Every colour that carries text gets measured, not eyeballed. | Kinetic line "Measured, not eyeballed." on teal |
+| rule | Every color that carries text gets measured, not eyeballed. | Kinetic line "Measured, not eyeballed." on teal |
 | cta | K and A Performance. Web design and AI integration, built in Gainesville. | The drawn end card |
 
 "inspect" is the stretch beat.
@@ -130,13 +130,13 @@ The weak example is a fictional bakery, Riverside Bakery, consistent with the fi
 
 ## Assets Alex supplies
 
-1. Jam recording `contrast-devtools`: Chrome on ka-performancefl.com, DevTools open, inspect a paragraph, click the colour swatch in Styles, show the Contrast ratio line and the AA and AAA marks, then change the hex to amber `#D97706` so it fails, then back. 30 to 40 seconds, browser window 1440x900 or larger, no bookmarks bar, no other tabs visible, highest quality Jam allows. Landscape.
+1. Jam recording `contrast-devtools`: Chrome on ka-performancefl.com, DevTools open, inspect a paragraph, click the color swatch in Styles, show the Contrast ratio line and the AA and AAA marks, then change the hex to amber `#D97706` so it fails, then back. 30 to 40 seconds, browser window 1440x900 or larger, no bookmarks bar, no other tabs visible, highest quality Jam allows. Landscape.
 2. Kai's ElevenLabs voice id, for the final narration pass.
 3. Approval of the two scripts above, or edits. Drafts render with a premade voice so the timing and the read can be judged before Kai's pass.
 
 ## Build phases and gates
 
-- Phase A: foundation. Types, timeline, voice script, mix, captions, Tutorial.tsx, registrations with both content files present, deliver support. Gate: a grey render of each cut with stand ins and a draft voice, typecheck clean.
+- Phase A: foundation. Types, timeline, voice script, mix, captions, Tutorial.tsx, registrations with both content files present, deliver support. Gate: a gray render of each cut with stand ins and a draft voice, typecheck clean.
 - Phase B: the two tutorials in parallel, one executor each, touching only their own scene and content files. Gate: still frames of every beat in the vertical and landscape crops, and one full render per cut.
 - Phase C: delivery to `Reels/instructional reels/`, post copy, README, LICENSING addendum for the voice, credit report.
 
