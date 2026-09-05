@@ -74,8 +74,8 @@ const WHIP_FRAMES = 6;
  * reads as blank.
  */
 const CTA_TIMING: Record<ReelCut, { drawFrames: number; copyIn: number }> = {
-  short: { drawFrames: 66, copyIn: 50 },
-  linkedin: { drawFrames: 84, copyIn: 64 },
+  short: { drawFrames: 66, copyIn: 44 },
+  linkedin: { drawFrames: 84, copyIn: 55 },
 };
 
 export type ReelKey = "web" | "training";

@@ -11,7 +11,8 @@
  *      already on disk. The 15 second mixes come from scripts/audio.ts.
  *   2. Encodes every out/render-*.mp4 that exists into its Section 11 target
  *      through scripts/encode.sh, muxing the matching mix.
- *   3. Writes all five sidecar SRTs from scripts/srt.ts.
+ *   3. Writes every sidecar SRT from scripts/srt.ts: five for a showcase reel,
+ *      six for a tutorial.
  *   4. Extracts the two thumbnails, with the brand lockup composited in.
  *   5. Writes the six carousel stills.
  *   6. Runs the Section 14 acceptance checks it can run mechanically.
@@ -210,13 +211,33 @@ export type DeliveryTarget = {
   canvas: string;
 };
 
-/** The five crops, before either reel's names are applied to them. */
-const SHAPES: { format: string; duration: "15s" | "45s"; frames: number; canvas: string }[] = [
+type Shape = { format: string; duration: "15s" | "45s"; frames: number; canvas: string };
+
+/** The five crops a showcase reel delivers, before its names are applied. */
+const SHAPES: Shape[] = [
   { format: "vertical", duration: "15s", frames: 450, canvas: "1080x1920" },
   { format: "feed", duration: "15s", frames: 450, canvas: "1080x1350" },
   { format: "square", duration: "15s", frames: 450, canvas: "1080x1080" },
   { format: "linkedin", duration: "45s", frames: 1350, canvas: "1080x1350" },
   { format: "landscape", duration: "45s", frames: 1350, canvas: "1920x1080" },
+];
+
+/**
+ * A tutorial's six, added 2026-09-05.
+ *
+ * Both showcase reels deliver the 15 second cut in the three Facebook shapes
+ * only, because that cut goes to Facebook Reels and nowhere else. A tutorial's
+ * 15 second cut is also handed round on its own as a landscape file, and
+ * Reels/instructional reels/ carries it under "Other formats", so the tutorials
+ * add that crop. Nothing new had to be registered for it:
+ * TutorialContrastLandscape and TutorialHeroLandscape have been in Root.tsx
+ * since Phase A, and until now they were compositions with no delivery behind
+ * them.
+ */
+const TUTORIAL_SHAPES: Shape[] = [
+  ...SHAPES.filter((s) => s.duration === "15s"),
+  { format: "landscape", duration: "15s", frames: 450, canvas: "1920x1080" },
+  ...SHAPES.filter((s) => s.duration === "45s"),
 ];
 
 /**
@@ -279,7 +300,8 @@ function tutorialFor(reel: ReelKey): TutorialContent | null {
 
 function targets(reel: ReelKey): DeliveryTarget[] {
   const { infix, deliveryStem } = REEL_NAMES[reel];
-  return SHAPES.map((shape) => ({
+  const shapes = tutorialFor(reel) ? TUTORIAL_SHAPES : SHAPES;
+  return shapes.map((shape) => ({
     ...shape,
     input: `out/render${infix}-${shape.format}-${shape.duration}.mp4`,
     output: `out/${deliveryStem}-${shape.format}-${shape.duration}.mp4`,
@@ -879,9 +901,10 @@ const CAROUSEL_FRAMES: Record<"web" | "training", CarouselFrame[]> = {
     // finishes typing on at 204, so 206 is inside that plate with the band not
     // caught mid word.
     { frame: 206, slug: "5-context-plate", note: "plate composite, phone in hands" },
-    // CALL_TO_ACTION 372 to 450. The contact block lands at 422 and the drawn
-    // lockup's last wordmark glyph finishes at 432, so 440 is the finished
-    // card, frozen, with eight frames of margin either side of it.
+    // CALL_TO_ACTION 372 to 450. The contact block lands at 416 and the drawn
+    // lockup's last wordmark glyph finishes at 430 since the 2026-09-05
+    // DRAW_START_T fix, so 440 is still the finished card, frozen, now with ten
+    // frames of margin behind it and ten in front.
     { frame: 440, slug: "6-call-to-action", note: "CTA card, drawn lockup and contact" },
   ],
   // Same beat map, so the same frames are the right frames. Four distinct
@@ -1149,7 +1172,7 @@ function checkFrameCounts(deliveries: DeliveryTarget[]): CheckResult {
   }
   return {
     id: 5,
-    title: "All five MP4s open in ffprobe at the expected frame count",
+    title: `All ${deliveries.length} MP4s open in ffprobe at the expected frame count`,
     verdict: ok ? "PASS" : "FAIL",
     lines,
   };

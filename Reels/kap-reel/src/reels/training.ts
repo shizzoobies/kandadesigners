@@ -349,10 +349,33 @@ const FEATURED_LINKEDIN: FeaturedBeat[] = [
     // The only training clip with continuous motion in it: four slider drags,
     // over source 27 to 40, 67 to 80, 107 to 120 and 147 to 160, each of them
     // thirteen frames of the statement and the margin figure moving together.
-    // 185 * 0.867 is 160.4, so the shot ends inside the fourth drag rather than
-    // in the pause after it. Measured 37.6 dB between the last two source
-    // frames, which is motion by the Section 6b test with room to spare.
-    cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 0.867 },
+    //
+    // Rate 0.867 ended this shot on source 160, inside the fourth drag, and
+    // measured 37.6 dB between the last two frames of the zoom region. Check
+    // (i) failed it anyway on 2026-09-05, at 43.3 dB, because the check
+    // measures the whole delivered frame and the landscape crop draws this
+    // screen at 525x328. That is 8.3 percent of a 1920x1080 canvas, so the same
+    // motion arrives about 10 dB quieter. What reads as a moving slider at
+    // 2144 capture pixels reads as a still page at 525.
+    //
+    // So the ending was re-solved on the crop that has to pass rather than on
+    // the source. All 179 consecutive source pairs were measured through the
+    // zoom region scaled to 525x328: the four drags run 27 to 33 dB, the still
+    // page runs 65 to 86, and the most motion any adjacent pair in this clip
+    // carries is 26.9 dB, inside the third drag. Rate 0.628 puts 185 * 0.628 at
+    // 116.2 and 184 * 0.628 at 115.6, so the last two output frames land on
+    // source 115 and 116, which is 26.96 dB in that region.
+    //
+    // The shot is a third slower for it, which suits a slider being dragged,
+    // and it gives up the fourth drag, which is the same gesture a third time.
+    // What it cannot do is reach the 36 dB the owner asked for. 186 output
+    // frames over a 160 frame window force a rate under 1, so two consecutive
+    // output frames are never more than one source frame apart, and one source
+    // frame of this clip through a 525 wide screen is worth about 37 dB
+    // whole frame. That clears the 40 dB line by 3 dB and no further. Under 36
+    // needs a capture with a page change near the end of it, not a playback
+    // value.
+    cleanPlayback: { trimBefore: 0, scrollPlaybackRate: 0.628 },
     name: "The P&L, read like an owner",
     nameLines: 2,
     contextLine: "Move a slider. Watch the margin move.",

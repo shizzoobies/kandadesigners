@@ -14,7 +14,8 @@ import {
   formatMetrics,
   type FormatKey,
 } from "../../src/lib/layout";
-import { getPlate, quadBounds, type PlateEntry } from "../../src/lib/plates";
+import { plateCrop } from "../../src/lib/plate-crop";
+import { getPlate, type PlateEntry } from "../../src/lib/plates";
 import { hexToRgb, type Quad, type Rect, type RGB } from "./pixels";
 
 /**
@@ -182,10 +183,16 @@ export function expectedScreenAspect(
  * innermost Sequence around it. The ramp is that same relative frame against
  * that Sequence's duration.
  *
- * If PlateComposite or PlateShot ever change how they place the plate, this is
- * the function that has to change with them, and check (d) will start reporting
- * nonsense until it does. That is the intended failure mode: a silent pass
- * would be worse.
+ * The crop itself is no longer restated here. It was until 2026-09-05, and the
+ * rule grew a cap on the recentring that made a hand copy the wrong bet, so
+ * plateCrop() is imported from src/lib/plate-crop.ts and this function composes
+ * it with PlateComposite's own layer 1 motion. Those two numbers, the drift and
+ * the ramp, are still restated: they are three constants that have not moved
+ * since Phase 4.
+ *
+ * If PlateComposite ever changes how it places the plate, this is the function
+ * that has to change with it, and check (d) will start reporting nonsense until
+ * it does. That is the intended failure mode: a silent pass would be worse.
  */
 export function plateQuadOnCanvas(
   plateId: string,
@@ -197,20 +204,13 @@ export function plateQuadOnCanvas(
 ): { quad: Quad; plate: PlateEntry } {
   const plate = getPlate(plateId);
   const cover = Math.max(canvasWidth / plate.width, canvasHeight / plate.height);
-  const bounds = quadBounds(plate.quad);
 
-  // PlateShot.plateCrop, restated from the same inputs.
-  const offsetX = (bounds.centerX - plate.width / 2) * cover;
-  const offsetY = (bounds.centerY - plate.height / 2) * cover;
-  const DRIFT_HEADROOM = 1.02;
-  const cropScale =
-    Math.max(
-      1,
-      canvasWidth / (canvasWidth + 2 * offsetX),
-      canvasWidth / (2 * (plate.width - bounds.centerX) * cover),
-      canvasHeight / (canvasHeight + 2 * offsetY),
-      canvasHeight / (2 * (plate.height - bounds.centerY) * cover),
-    ) * DRIFT_HEADROOM;
+  // The same crop PlateShot applies, from the same inputs. Its left and top are
+  // the negated offsets, which is the form the map below wants.
+  const crop = plateCrop(plate, canvasWidth, canvasHeight);
+  const offsetX = -crop.left;
+  const offsetY = -crop.top;
+  const cropScale = crop.scale;
 
   // PlateComposite layer 1 motion.
   const DRIFT_PX = 5;

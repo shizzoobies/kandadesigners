@@ -153,14 +153,16 @@ export type LogoDrawProps = {
    * opacity 0, because `mouseIn` ramps over T 0 to 0.35. On the site that is
    * correct, because the animation fades up over a page that is already there.
    * In a video the cut from the previous beat lands on that frame, and an empty
-   * canvas is what the viewer sees. Starting the clock at 0.35 puts the mouse
-   * fully in on frame 0, sitting at the head of the path, and compresses the
-   * remaining 6.65 seconds into the same `durationFrames`.
+   * canvas is what the viewer sees.
    *
-   * Every cue in the piece therefore lands about one and a half percent
-   * earlier: the wordmark's T 5.2 moves from frame 0.743 of the draw to 0.729
-   * of it. See CTA_TIMING in src/scenes/CallToAction.tsx for what that is worth
-   * in frames and why the copy cue did not have to move with it.
+   * How much of the piece a caller has to skip to put real ink on frame 0 is a
+   * measurement rather than a judgement, and it is a bigger number than it
+   * looks. The whole browser frame is a 5 unit stroke on a 1340 unit stage: at
+   * the end card's box width it is a 2.7 canvas pixel line, and even fully
+   * drawn, with the mouse, it covers only 0.28 percent of a 1080x1920 frame.
+   * The letters are where the ink is, and they do not start until T 3. See
+   * DRAW_START_T in src/scenes/CallToAction.tsx for the measured curve and for
+   * the value the end card settled on.
    */
   startT?: number;
   /**

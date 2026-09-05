@@ -68,7 +68,7 @@ If you must run from the real path, invoke the CLI directly:
 
 | Date | Composition | Output | Rendered | Wall clock |
 |---|---|---|---|---|
-| 2026-09-03 | ReelVertical | `out/greyrender.mp4` (Phase 2 grey render) | 450 frames, 1080x1920, 30fps, 15.0s | 12.8s |
+| 2026-09-03 | ReelVertical | `out/greyrender.mp4` (Phase 2 gray render) | 450 frames, 1080x1920, 30fps, 15.0s | 12.8s |
 | 2026-09-03 | ReelVertical | `out/phase3-vertical.mp4` (Phase 3, real copy) | 450 frames, 1080x1920, 30fps, 15.0s, 18.2 MB | 13.3s |
 | 2026-09-03 | ReelVertical | `out/phase4-vertical.mp4` (Phase 4, plates composited) | 450 frames, 1080x1920, 30fps, 15.0s, 21.9 MB | 26.6s |
 | 2026-09-03 | ReelLandscape | `out/phase4-landscape.mp4` (Phase 4, plates composited) | 450 frames, 1920x1080, 30fps, 15.0s, 11.8 MB | 31.6s |
@@ -83,7 +83,7 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-03 | ReelLinkedInLandscape | `out/render-landscape-45s.mp4` (final build) | 1350 frames, 1920x1080, 30fps, 45.0s | 48.3s |
 | 2026-09-03 | deliver | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --variant a --remix` | 42.1s |
 | 2026-09-03 | **Full rebuild** | **everything above from a warm node_modules** | **bundle + mix + five renders + delivery** | **190.7s (3m 11s)** |
-| 2026-09-04 | bundle | `out/bundle` (canvas centring rebuild) | webpack bundle, public dir linked not copied | 2.4s |
+| 2026-09-04 | bundle | `out/bundle` (canvas centering rebuild) | webpack bundle, public dir linked not copied | 2.4s |
 | 2026-09-04 | ReelVertical | `out/render-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 22.2s |
 | 2026-09-04 | ReelFeed | `out/render-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 19.9s |
 | 2026-09-04 | ReelSquare | `out/render-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s | 20.7s |
@@ -96,7 +96,7 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 62.5s |
 | 2026-09-04 | deliver web | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel web --variant a` | 40.5s |
 | 2026-09-04 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 38.6s |
-| 2026-09-04 | **Both reels re-delivered** | **the canvas centring fix, everything above** | **bundle + ten renders + two deliveries** | **421.1s (7m 1s)** |
+| 2026-09-04 | **Both reels re-delivered** | **the canvas centering fix, everything above** | **bundle + ten renders + two deliveries** | **421.1s (7m 1s)** |
 | 2026-09-04 | bundle | `out/bundle` (drawn end card rebuild) | rspack bundle, public dir linked not copied | 2.3s |
 | 2026-09-04 | ReelVertical | `out/render-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s | 20.6s |
 | 2026-09-04 | ReelFeed | `out/render-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s | 19.3s |
@@ -123,20 +123,42 @@ If you must run from the real path, invoke the CLI directly:
 | 2026-09-04 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s | 53.0s |
 | 2026-09-04 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s | 61.7s |
 | 2026-09-04 | deliver web and training | ten MP4s, ten SRTs, four thumbnails, twelve stills, both acceptance runs | `--reel web --variant a` then `--reel training --variant t-a` | 77.1s |
-| 2026-09-04 | **Both reels re-delivered, laptop frame** | **the laptop frame and the centred device box** | **bundle + ten renders + two deliveries** | **405.3s (6m 45s)** |
+| 2026-09-04 | **Both reels re-delivered, laptop frame** | **the laptop frame and the centered device box** | **bundle + ten renders + two deliveries** | **405.3s (6m 45s)** |
+| 2026-09-05 | QA | `out/qa/report.md`, 528 stills, 12 contact sheets, 13 plate crop sets | `npx tsx scripts/qa.ts --reel all --rebundle`, 0 FAIL | 113.0s |
+| 2026-09-05 | bundle | `out/bundle` (the three QA fixes) | rspack bundle, public dir linked not copied | 2.5s |
+| 2026-09-05 | ReelVertical | `out/render-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 16.5 MB | 22.9s |
+| 2026-09-05 | ReelFeed | `out/render-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s, 9.3 MB | 19.3s |
+| 2026-09-05 | ReelSquare | `out/render-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s, 6.9 MB | 19.9s |
+| 2026-09-05 | ReelLinkedIn | `out/render-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s, 19.1 MB | 39.1s |
+| 2026-09-05 | ReelLinkedInLandscape | `out/render-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s, 19.4 MB | 50.5s |
+| 2026-09-05 | TrainingVertical | `out/render-training-vertical-15s.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 7.2 MB | 21.0s |
+| 2026-09-05 | TrainingFeed | `out/render-training-feed-15s.mp4` | 450 frames, 1080x1350, 30fps, 15.0s, 6.3 MB | 19.3s |
+| 2026-09-05 | TrainingSquare | `out/render-training-square-15s.mp4` | 450 frames, 1080x1080, 30fps, 15.0s, 5.4 MB | 18.6s |
+| 2026-09-05 | TrainingLinkedIn | `out/render-training-linkedin-45s.mp4` | 1350 frames, 1080x1350, 30fps, 45.0s, 17.9 MB | 53.9s |
+| 2026-09-05 | TrainingLinkedInLandscape | `out/render-training-landscape-45s.mp4` | 1350 frames, 1920x1080, 30fps, 45.0s, 10.7 MB | 63.7s |
+| 2026-09-05 | deliver web | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel web --variant a` | 39.6s |
+| 2026-09-05 | deliver training | five MP4s, five SRTs, two thumbnails, six stills, acceptance | `npx tsx scripts/deliver.ts --reel training --variant t-a` | 37.6s |
+| 2026-09-05 | sheets | `out/final/vertical-sheet.png`, `out/final-training/vertical-sheet.png` | 4x3 tile of 12 frames each, ffmpeg | 0.8s |
+| 2026-09-05 | **Both reels re-delivered, the three QA fixes** | **end card clock, plate crop cap, P&L playback** | **bundle + ten renders + two deliveries** | **407.9s (6m 48s)** |
 | 2026-09-04 | bundle | `out/bundle` (tutorial reels, Phase A) | rspack bundle, public dir linked not copied | 2.3s |
 | 2026-09-04 | voice | 22 mp3s in `assets/audio/voice/`, 23 generations | ElevenLabs `eleven_multilingual_v2`, 1524 characters, 1524 credits measured | 87.2s |
 | 2026-09-04 | mix tutorial | four `assets/audio/mix-tut-*.wav` | voice with `music-a` ducked under it, solved duck plus two pass loudnorm | 18.9s |
-| 2026-09-04 | TutorialContrastVertical | `out/tut-grey-contrast-vertical.mp4` (Phase A grey render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 10.4s |
-| 2026-09-04 | TutorialContrastLinkedIn | `out/tut-grey-contrast-linkedin.mp4` (Phase A grey render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.5 MB | 19.1s |
-| 2026-09-04 | TutorialHeroVertical | `out/tut-grey-hero-vertical.mp4` (Phase A grey render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 8.4s |
-| 2026-09-04 | TutorialHeroLinkedIn | `out/tut-grey-hero-linkedin.mp4` (Phase A grey render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.6 MB | 18.1s |
-| 2026-09-04 | encode.sh x4 | `out/tut-grey-*-mixed.mp4` | the four grey renders with their mixes muxed in, 2.8 to 7.6 MB | 25.6s |
-| 2026-09-04 | **Tutorial Phase A** | **foundation gate: voice, mixes, four grey renders, four muxes** | **bundle + voice + mixes + four renders + four muxes** | **190.0s (3m 10s)** |
+| 2026-09-04 | TutorialContrastVertical | `out/tut-grey-contrast-vertical.mp4` (Phase A gray render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 10.4s |
+| 2026-09-04 | TutorialContrastLinkedIn | `out/tut-grey-contrast-linkedin.mp4` (Phase A gray render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.5 MB | 19.1s |
+| 2026-09-04 | TutorialHeroVertical | `out/tut-grey-hero-vertical.mp4` (Phase A gray render) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 8.4s |
+| 2026-09-04 | TutorialHeroLinkedIn | `out/tut-grey-hero-linkedin.mp4` (Phase A gray render) | 1350 frames, 1080x1350, 30fps, 45.0s, 2.6 MB | 18.1s |
+| 2026-09-04 | encode.sh x4 | `out/tut-grey-*-mixed.mp4` | the four gray renders with their mixes muxed in, 2.8 to 7.6 MB | 25.6s |
+| 2026-09-04 | **Tutorial Phase A** | **foundation gate: voice, mixes, four gray renders, four muxes** | **bundle + voice + mixes + four renders + four muxes** | **190.0s (3m 10s)** |
+| 2026-09-04 | voice | `assets/audio/voice/hero/linkedin/test.mp3` (Phase B, the added beat) | ElevenLabs `eleven_multilingual_v2`, 85 characters, 85 credits measured, 4.55s; the other six hero LinkedIn beats skipped on their hash | not timed |
+| 2026-09-04 | mix tutorial | `assets/audio/mix-tut-hero-45s.wav` (Phase B, seven beats) | I -14.01 LUFS, TP -1.92 dBTP, LRA 2.1, bed -11.7 dB with 9.3 dB of duck | 8.8s |
+| 2026-09-04 | stills | `out/gate-tut-hero` (Phase B hero gate) | 26 stills, TutorialHeroVertical, LinkedInLandscape, Feed, Square, Landscape, LinkedIn | 32.1s |
+| 2026-09-04 | stills | `out/_hero-gate/before` and `out/_hero-gate/after` (hook fit) | 5 stills each: ReelVertical, TrainingVertical, three tutorial hooks, frame 20 | under 20s per set |
+| 2026-09-04 | TutorialHeroVertical | `out/render-tutorial-hero-vertical-15s.mp4` (Phase B) | 450 frames, 1080x1920, 30fps, 15.0s, 1.0 MB | 9.9s |
+| 2026-09-04 | TutorialHeroLinkedIn | `out/render-tutorial-hero-linkedin-45s.mp4` (Phase B) | 1350 frames, 1080x1350, 30fps, 45.0s, 3.1 MB | 19.6s |
 
 The tutorial number, **190.0 seconds**, is the Phase A foundation gate end to
 end: one bundle at 2.3s, the 23 voice generations at 87.2s, the four mixes at 18.9s,
-four grey renders totalling 56.0s and four muxes totalling 25.6s. The voice
+four gray renders totalling 56.0s and four muxes totalling 25.6s. The voice
 figure is measured off the `createdAt` stamps in `config/voice.json` rather than
 with a stopwatch, because the run happened in three invocations; it averages 3.8
 seconds a beat, most of which is the poll on the usage endpoint that measures the
@@ -154,7 +176,7 @@ it does not include the 50.8 seconds the twenty four Gate 7 debug stills take,
 which is a review step rather than part of the build.
 
 The first 2026-09-04 number, **421.1 seconds**, is the same measurement for both
-reels at once after the canvas centring fix: one bundle, ten renders and two
+reels at once after the canvas centering fix: one bundle, ten renders and two
 deliveries. It does not include the music mixes, which were already on disk and
 did not change, or the 36 seconds the 56 alignment stills take, which is a
 review step rather than part of the build.
@@ -167,6 +189,13 @@ frame sheets, both review steps. It is eleven seconds faster than the run before
 it, which is run to run noise rather than the end card being cheaper to draw
 than to composite: the draw is vector work on a flat canvas and costs less per
 frame than the webp did, but only 78 frames of 450 are the end card.
+
+The 2026-09-05 number, **407.9 seconds**, is the same measurement again after
+the three QA fixes: one bundle at 2.5s, ten renders totalling 328.2s and two
+deliveries at 39.6s and 37.6s. No music mixes, which did not change, and it does
+not include the 113.0s QA run that gated it or the 0.8s of frame sheets, both
+review steps. It is within run to run noise of the two before it, which is what
+should be expected: none of the three fixes changes how much work a frame is.
 
 Two things make this much faster than the Phase 4 numbers suggest. Rendering
 from a prebuilt bundle rather than from `src/index.ts` skips the public dir copy
@@ -241,13 +270,13 @@ thing the shot exists to show. Every laptop beat is wider than the canvas, and
 so is the training reel's stop-or-go phone beat, which is pushed in on a region
 780 by 1040.
 
-**The device box.** In `overlay` and `stack` the device is centred on the
+**The device box.** In `overlay` and `stack` the device is centered on the
 CANVAS with `centeredBox(format, frameWidth)`, the same function and the same
 shift-left clamp the copy uses. Its box is the canvas minus the reserved right
 strip on both sides, which is the same box `centeredPadding()` gives the lower
-third's copy, so the device and the text under it share one centre line and one
+third's copy, so the device and the text under it share one center line and one
 width. In `split` the device is placed inside the strip left of the copy panel
-instead: there the canvas is shared, and centring on it would put the device
+instead: there the canvas is shared, and centering on it would put the device
 behind the panel.
 
 **Bands.** The hook band is anchored 28 percent down the safe area in every
@@ -255,7 +284,7 @@ crop. The lower third and the surfaces tour word are anchored to
 `formatMetrics().bandBottom`, which clears the reserved bottom plus 6 percent of
 the safe height.
 
-**Horizontal centring.** Everything centred is centred on the CANVAS, not on
+**Horizontal centering.** Everything centered is centered on the CANVAS, not on
 the safe area and not inside an asymmetric band. The scrims still run edge to
 edge; the copy box inside them takes the symmetric padding
 `centeredPadding(format, scale)` returns, which is the larger of the authored 72
@@ -263,7 +292,7 @@ and the width of the reserved right strip. Where a box has a width of its own,
 `centeredBox(format, boxWidth)` centres it and then, if its right edge would
 pass `safe.right`, shifts it left by exactly that overflow and no further than
 `safe.left`. Both are in `src/lib/layout.ts` and nothing in `src/scenes` is
-allowed to centre by hand. See "Centred on the canvas" below for the
+allowed to center by hand. See "Centered on the canvas" below for the
 measurements.
 
 **The CTA lockup** is capped against the safe area in both axes, not just by
@@ -366,21 +395,74 @@ reads as a sweep, and 144 is comfortable.
 |---|---|---|
 | Beat | 372-450, 78 frames | 1226-1350, 124 frames |
 | Draw | 66 frames | 84 frames |
-| Wordmark starts, T 5.2 | relative 49 | relative 62 |
-| Copy arrives | relative 50, absolute 422 | relative 64, absolute 1290 |
-| Last movement, the final glyph | relative 60 | relative 77 |
-| Frozen finished card | relative 61 to 78, 17 frames | relative 78 to 124, 46 frames |
+| Clock starts, `DRAW_START_T` | T 2.119 | T 2.119 |
+| Wordmark starts, T 5.2 | relative 41.7 | relative 53.0 |
+| Copy arrives | relative 44, absolute 416 | relative 55, absolute 1281 |
+| Last movement, the final glyph | relative 58 | relative 74 |
+| Frozen finished card | relative 58 to 78, 20 frames | relative 74 to 124, 50 frames |
 
 The 15 second cut breaks `CTA_HOLD_MIN_FRAMES`, and the owner took that trade
 with the number in front of them. Section 6 asks for 36 frames of finished card
-so a screenshot of the end frame reads. This card gives 22 frames from the
-moment every element is on screen, 17 of them completely static. The argument
+so a screenshot of the end frame reads. This card gives 34 frames from the
+moment every element is on screen, 20 of them completely static. The argument
 for allowing it is that the minimum was written for a card that cuts in: a
 viewer who has watched a mark assemble for two seconds has already read it by
 the time it finishes, where a viewer shown a finished card needs the whole hold.
 The 45 second cut clears the minimum without a note.
 
-Everything else about the card is unchanged. It is centred on the canvas by
+### Where the clock starts, 2026-09-05
+
+The card used to begin at T 0.35, which is where the mouse has finished ramping
+in. That put a pointer on the first frame and nothing else, because the path has
+drawn zero length at 0.35, and the QA harness failed check (e) on both card
+frames of all twelve compositions: ink coverage 0.044 to 0.096 percent against a
+0.2 percent floor.
+
+The obvious repair, starting where the path is about a sixth drawn, does not
+work, and the numbers are worth keeping because they are counter-intuitive.
+Rendering the first twenty five frames of the card in four compositions and
+measuring each one the way `checkBlankFrame()` does gives this:
+
+| Path progress | 0.00 | 0.13 | 0.26 | 0.45 | 0.67 | 0.82 | 0.92 | 1.00 |
+|---|---|---|---|---|---|---|---|---|
+| Coverage, 1080x1920 | .048 | .057 | .085 | .151 | .199 | .232 | .255 | .273 |
+| Coverage, 1920x1080 | .045 | .055 | .083 | .156 | .205 | .238 | .264 | .278 |
+
+A sixth drawn measures about 0.055 percent and misses by a factor of four. The
+browser frame is a 5 unit stroke on a 1340 unit stage, about 2.7 canvas pixels
+at this box width, and the whole of it drawn, with the mouse, is only 0.28
+percent of the frame. All the ink on this card is in the letters, and the
+letters do not start until T 3.
+
+So the clock starts nine tenths of the way through the draw. `easeInOutCubic(p)`
+is 0.90 at p = 0.70760, and the draw runs T 0.35 to T 2.85, so `DRAW_START_T` is
+0.35 + 2.5 p = 2.119. Measured on the delivered frames, both card frames now run
+0.246 to 0.480 percent, against the 0.2 floor:
+
+| Composition | First frame | Second frame |
+|---|---|---|
+| `ReelVertical` / `TrainingVertical` | .251 / .246 | .258 / .251 |
+| `ReelFeed` / `TrainingFeed` | .370 / .379 | .375 / .384 |
+| `ReelSquare` / `TrainingSquare` | .474 / .426 | .480 / .430 |
+| `ReelLandscape` / `TrainingLandscape` | .339 / .261 | .346 / .267 |
+| `ReelLinkedIn` / `TrainingLinkedIn` | .379 / .379 | .381 / .381 |
+| `ReelLinkedInLandscape` / `TrainingLinkedInLandscape` | .261 / .261 | .265 / .265 |
+
+What that gives up is the sweep along the bottom and the left of the browser
+frame and the three window dots popping, which now happen before the cut. What
+it keeps is the whole letter choreography, and that gets more time rather than
+less: the remaining 4.881 seconds compress into the same 66 and 84 frames, so
+the piece runs at 2.2x rather than 3.0x and every gesture in it is a third
+slower.
+
+The copy cue moved with it, which the 2026-09-04 change did not have to do. The
+wordmark's T 5.2 lands at relative 41.7 rather than 48.1 in the 15 second cut
+and 53.0 rather than 61.3 in the 45 second one, both well past the two frame
+threshold at which the caption tables have to be re-cut. `copyIn` is 44 and 55,
+and the end card cues in `scripts/srt.ts` moved from 422 to 416 and from 1290 to
+1281. Nothing else in any caption table moved.
+
+Everything else about the card is unchanged. It is centered on the canvas by
 `centeredBox()`, the logo box is the 720 at 1080 width the static lockup used
 and is still capped against the safe area in both axes, and the closing line,
 the url and the phone are still the same three lines in the same order.
@@ -395,9 +477,9 @@ most of a 22 frame hold.
 
 The drawn artwork inside that 1340 by 548 stage measures 1243 by 467 units,
 which is 0.376 and therefore the same shape the webp always was, sitting very
-nearly on the stage's own centre: 44 units of padding left against 52 right, 42
+nearly on the stage's own center: 44 units of padding left against 52 right, 42
 above against 38 below. That is why the column needs no manual re-balance to
-stay vertically centred in the safe area. It centres the box, and the box
+stay vertically centered in the safe area. It centres the box, and the box
 centres the mark. The one visible consequence is that the mark reads about seven
 percent smaller than the webp did at the same box width, because the webp was
 cropped tight and the stage is not.
@@ -406,44 +488,44 @@ The three subset faces the drawn lockup sets its letters in, "KA Playfair" in
 two styles and "KA Poppins", are registered in `src/lib/fonts.ts` and recorded
 in `LICENSING.md`.
 
-## Centred copy
+## Centered copy
 
 Owner decision 2026-09-03: the left hung copy read badly, so every line in the
-reel is centred horizontally, in every composition and both cuts.
+reel is centered horizontally, in every composition and both cuts.
 
 - `src/components/KineticText.tsx` takes an `align` prop. Centring is safe with
   the type-on because the reveal hides characters with `visibility` rather than
   slicing the string, so the line's box is its final width from frame 0. The
-  line is centred once, as a finished line, and characters appear from the left
+  line is centered once, as a finished line, and characters appear from the left
   of that fixed box rather than the box sliding as each one lands. Slam mode
-  also swaps its `transformOrigin` to centre, or the punch would push a centred
-  line sideways for four frames. A centred line centres on its containing box,
+  also swaps its `transformOrigin` to center, or the punch would push a centered
+  line sideways for four frames. A centered line centres on its containing box,
   and that box is forced to the container's full width, so the axis is always
   the container's axis.
 - `src/components/ClaimLine.tsx` moved its rule from beside the text to a short
-  centred bar above it. A dash hung off the left of a centred line reads as a
-  stray mark, and a rule to the left of centred text pulls the optical centre
+  centered bar above it. A dash hung off the left of a centered line reads as a
+  stray mark, and a rule to the left of centered text pulls the optical center
   off axis. The rule makes the claim taller than a plain body line, so
   `bandHeight()` in `ProjectShowcase` takes the larger of the two.
 - `src/scenes/Hook.tsx`, `ProjectShowcase.tsx` (both the full width band and the
   landscape panel), `SurfacesTour.tsx`, `HowWeWork.tsx` and
-  `AccessibilityBeat.tsx` all centre their copy. `CallToAction.tsx` already was.
-  The `HowWeWork` and `AccessibilityBeat` rules are centred over their blocks
+  `AccessibilityBeat.tsx` all center their copy. `CallToAction.tsx` already was.
+  The `HowWeWork` and `AccessibilityBeat` rules are centered over their blocks
   with auto margins.
 
-That first pass centred every block on the safe area and left the bands their
+That first pass centered every block on the safe area and left the bands their
 asymmetric padding, 72 on the left and 108 on the right at 1080 width. Both of
-those centre a line left of the canvas, and the errors add: the reserved right
+those center a line left of the canvas, and the errors add: the reserved right
 strip puts the safe area's middle 54 pixels left of the canvas middle in the
 vertical crop and 27 in the others, and the asymmetric padding takes another 18.
 Measured on rendered stills, every text block in the reel sat 15 to 54 pixels
-left of centre, and the `HowWeWork` beat sat as much as 152 left because its
+left of center, and the `HowWeWork` beat sat as much as 152 left because its
 lockup hung off the left of the column. The owner saw it, because it was there.
 
-### Centred on the canvas, 2026-09-04
+### Centered on the canvas, 2026-09-04
 
-The rule now, everywhere anything is horizontally centred: **centre on the
-canvas.** The reserved strip still matters, so after centring, a box whose right
+The rule now, everywhere anything is horizontally centered: **center on the
+canvas.** The reserved strip still matters, so after centering, a box whose right
 edge would pass `safe.right` shifts left by exactly that overflow, and never
 past `safe.left`. Both halves of that live in `src/lib/layout.ts`:
 
@@ -464,7 +546,7 @@ measured is 895 pixels, the training lower third at 1080 width, against a 972
 wide copy box in the feed and square crops; the vertical crop's 864 wide box
 wraps that project name to the two lines its `nameLines` already reserved.
 
-Two things changed shape. The `HowWeWork` lockup is centred over the column
+Two things changed shape. The `HowWeWork` lockup is centered over the column
 instead of hanging off its left, which is both what the owner asked for and what
 the frame measurement needs. The landscape split panel still centres its copy
 inside the panel rather than on the canvas, because there the canvas is shared
@@ -475,7 +557,7 @@ sits in the middle of the panel rather than 6 pixels right of it.
 Verified by measurement rather than by eye, on 56 rendered stills covering all
 twelve delivery compositions: frames 20, 120, 350 and 440 for the eight short
 crops, and 100, 300, 700, 1030, 1150 and 1300 for the four LinkedIn ones. The
-ink bounding box of every text block is now within 3 pixels of the canvas centre
+ink bounding box of every text block is now within 3 pixels of the canvas center
 in the six 1080 wide compositions and within 5 in landscape. The two frames that
 measure over 4, both the surfaces tour word in landscape at +5 and +4.5, are the
 type's own side bearings and the trailing letter space of a negative tracking,
@@ -497,8 +579,8 @@ beside those. `out/` is ignored, so none of it is tracked.
 
 The copy moved onto the canvas axis on 2026-09-04 and the device did not, which
 is what the owner saw next: the training reel's laptop sat left of the copy
-under it. The device box was `[0, safe.right]`, so the device centred on the
-safe area, and the safe area is not centred on the canvas.
+under it. The device box was `[0, safe.right]`, so the device centered on the
+safe area, and the safe area is not centered on the canvas.
 
 It now takes the same box the copy does, `width - 2 * (width - safe.right)`, and
 the same `centeredBox()` clamp. The clamp does not engage anywhere: the widest
@@ -520,11 +602,81 @@ against the brand ink ground, in the rows above the lower third:
 | `ReelFeed` 100 | -27.5 | -0.5 |
 
 Landscape is the exception and stays one: the device is inside the strip left of
-the copy panel, at 65 to 607 against a canvas centre of 960. It moved 3 pixels
+the copy panel, at 65 to 607 against a canvas center of 960. It moved 3 pixels
 right of where the browser window sat, because the laptop is 24 pixels narrower
 in that strip, and it centres in the same place the phone does.
 
 The stills, the measurements and the throwaway script are in `out/_laptop/`.
+
+### The plate crop cap, 2026-09-05
+
+A context plate is a 1536 x 2752 photograph with a device in it, and every crop
+but the 9:16 master has to reframe it. `plateCrop()`, now in
+`src/lib/plate-crop.ts` so the QA harness can import it instead of restating it,
+offsets the composite until the screen quad's center is on the canvas center and
+then scales up by the smallest factor that still covers the canvas.
+
+**Recentring is not free, and the reason is structural.** `PlateComposite` draws
+the plate centered on the canvas at its own pixel size, scaled by cover, inside a
+box whose origin is the canvas origin. Everything above and to the left of that
+origin has already been thrown away by the time `plateCrop()` runs. So shifting
+the shot down, to bring a quad that sits high on the plate onto the canvas
+center, opens a gap at the top that no amount of plate can fill, and the only
+way to close it is to push in. The push-in needed to close a gap of g at the top
+is h / (h - 2g), which runs away as g approaches half the canvas height.
+
+`t-desktop-wide` in the 1920 x 1080 crop is the case that ran away. Its quad
+sits 111 plate pixels above the plate center, 139 canvas pixels at cover 1.25,
+and closing that gap took a scale of 1.372. At that scale the quad measured 1919
+by 1112 on a 1920 by 1080 canvas: the monitor, the desk and the room were all
+off canvas and the tour's "Your LMS, not ours" cut was a full bleed web page.
+Check (d) read 96 percent of the ring as flat page backdrop and failed it.
+
+So the recentring is capped rather than the push-in. `QUAD_WIDTH_CAP` is 0.7:
+the offsets are taken as far as they go without driving the quad's bounding box
+past 70 percent of the canvas width, and no further. Where even no recentring at
+all leaves the quad wider than that, covering the canvas wins and the shot keeps
+cover, because a letterboxed plate is not an option. That second case is a
+property of the plate rather than of the crop, and `t-desktop-wide` is in it in
+every format: its quad is 1119 of 1536 plate pixels wide, 73 percent of the
+plate, so no framing of it can be 70 percent of a canvas the plate has to cover.
+
+Scale and quad width before and after, every plate in both reels, every format.
+Seven of the thirteen plates are untouched in all four crops:
+
+| Plate | Format | Scale | Quad width | Which rule |
+|---|---|---|---|---|
+| `plate-laptop-shoulder` | all four | 1.294 to 1.125 | 81 to 70 percent | cap binds |
+| `plate-ipad-lap` | all four | 1.119 to 1.046 | 75 to 70 percent | cap binds |
+| `plate-desktop-wide` | all four | 1.324 to 1.094 | 85 to 70 percent, 87 in square | cap binds |
+| `plate-handoff` | all four | unchanged, 1.072 to 1.206 | 60 to 67 percent | under the cap |
+| `plate-tablet-b` | vertical | 1.157 to 1.116 | 73 to 70 percent | cap binds |
+| `plate-tablet-b` | feed, square, landscape | unchanged, 1.083 | 68 percent | under the cap |
+| `plate-phone-hands-b` | all four | unchanged, 1.038 to 1.079 | 45 to 46 percent | under the cap |
+| `plate-phone-hands` | all four | unchanged, 1.062 to 1.165 | 38 to 42 percent | under the cap |
+| `t-laptop-shoulder` | all four | 1.248 to 1.208 | 72 to 70 percent | cap binds |
+| `t-phone-hands` | all four | unchanged, 1.075 to 1.216 | 32 to 36 percent | under the cap |
+| `t-laptop-cafe-free` | all four | unchanged, 1.051 to 1.104 | 63 to 66 percent | under the cap |
+| `t-phone-hands-b` | all four | unchanged, 1.057 to 1.147 | 38 to 41 percent | under the cap |
+| `t-laptop-two` | all four | unchanged, 1.088 to 1.105 | 58 to 59 percent | under the cap |
+| `t-desktop-wide` | vertical | 1.110 to 1.020 | 81 to 74 percent | cover binds, cap unreachable |
+| `t-desktop-wide` | feed | 1.153 to 1.020 | 84 to 74 percent | cover binds, cap unreachable |
+| `t-desktop-wide` | square | 1.192 to 1.020 | 87 to 74 percent | cover binds, cap unreachable |
+| `t-desktop-wide` | landscape | 1.372 to 1.020 | 100 to 74 percent | cover binds, cap unreachable |
+
+**The cap is not a landscape-only change, and that is worth being plain about.**
+The brief that produced it expected no vertical, feed or square plate shot to
+move by more than a few pixels. Six plates move in those crops, by 25 to 159
+pixels of quad width, because several of them were already framed at 72 to 87
+percent of the canvas width and the cap is 70 percent of the canvas width in
+every format. Applying it only in landscape was the alternative and it was not
+taken: the same plate would then present its screen at 70 percent in one crop
+and 87 in another, which is the kind of per-format special case this project has
+been removing rather than adding. Every changed shot was looked at, and the
+change reads as more room around the device rather than as a looser crop: the
+`plate-desktop-wide` monitor in `ReelVertical` 319 now has its stand, the desk
+and the window in frame. If the owner wants the old push-in back in the three
+vertical crops, `QUAD_WIDTH_CAP` is the one number to move.
 
 ## The 45 second LinkedIn cut
 
@@ -552,7 +704,7 @@ fork, so every scene below is the same file the 15 second master renders.
 *How we work* (`src/scenes/HowWeWork.tsx`) is the only beat in either cut with
 no site capture in it. Three sentences type on 30 frames apart and all three
 hold to the cut. The lockup sits small in the top left of the safe area in its
-own row, not centred and not floated over the copy: floating it and centring
+own row, not centered and not floated over the copy: floating it and centering
 the block on the whole safe area put the accent rule straight through the
 lockup at landscape's 1.778 type scale.
 
@@ -795,20 +947,20 @@ at 12 Mbps for 1080x1920 and 1920x1080 and 10 Mbps for 1080x1350 and
 keyframe interval, AAC 256 kbps at 48 kHz stereo, and `-movflags +faststart`.
 The bitrate is picked from the canvas, so there is nothing to pass.
 
-Two colour conversions happen on the way through, both deliberate:
+Two color conversions happen on the way through, both deliberate:
 
 - **Range.** Remotion writes `yuvj420p` tagged full range. Section 11 wants
   limited. Retagging alone would crush the levels, so the range is converted in
   swscale and the output is tagged `tv` to match.
 - **Matrix.** The render is tagged `bt470bg`, and that tag is honest: decoding
-  the render back returns the brand canvas colour to within one code value. But
+  the render back returns the brand canvas color to within one code value. But
   platforms assume `bt709` for HD and some of them ignore the tag, so the
-  matrix is converted rather than carried through. The canvas colour lands
+  matrix is converted rather than carried through. The canvas color lands
   within three code values of the source after the round trip through limited
   range, which is the cost of a compliant file.
 
 An ffprobe summary prints after every encode: codec, profile, pixel format,
-colour range, canvas, fps, frame count, duration, bitrate and audio.
+color range, canvas, fps, frame count, duration, bitrate and audio.
 
 ### Captions
 
@@ -846,7 +998,7 @@ that is not a tour cut, or a row that outlives the picture.
 plate frame, where a real site is on a real device in real hands. The brand
 lockup is composited in, because no frame in the cut carries both: the lockup
 only appears on the CTA card, and Section 11 rules a text card out. It goes on
-a canvas coloured plate inside the safe area, in the bottom left where the
+a canvas colored plate inside the safe area, in the bottom left where the
 frame has no full width band and in the top left where it does, because sitting
 it above a band puts it straight across the device screen.
 
@@ -860,7 +1012,7 @@ Project Makeover plate, which runs 366 to 390 with the name fully typed on at
 `out/frames/` gets six 1080x1350 carousel stills from the vertical render: the
 two featured projects on their clean captures with the claim up, two surfaces
 tour cuts, one context plate, and the CTA card. Four distinct cleared sites
-across the six. The 4:5 crop is centred on the safe area rather than on the
+across the six. The 4:5 crop is centered on the safe area rather than on the
 canvas, so the reserved strips are what gets thrown away and every band survives
 intact.
 
@@ -879,7 +1031,7 @@ The 15 second mixes come from `scripts/audio.ts`. `deliver.ts` builds the 45
 second one itself, to `assets/audio/mix-{variant}-45s.wav`, and caches it:
 rerunning does not rebuild unless `--remix` is passed.
 
-It takes the 50 second take for the variant from `config/audio.json`, honours
+It takes the 50 second take for the variant from `config/audio.json`, honors
 any `usableFromSeconds` trim logged against it, and cuts 45.0 seconds with a
 600 ms fade at the tail. Since the owner's 2026-09-03 decision it places no
 sound effects, so that is the whole mix.
@@ -965,9 +1117,9 @@ out of.
 scaled into a 1080 wide frame renders its body text about four pixels tall,
 which proves only that a page exists. Where a beat declares a `zoom`, the shot
 picks the scale that makes that region cover its box, lays the whole capture
-out at that scale, translates so the region's centre lands on the box's centre,
+out at that scale, translates so the region's center lands on the box's center,
 and pushes in three percent across the shot with the transform origin at the
-box centre. No new dependency, and it never reaches for the video's own pixels.
+box center. No new dependency, and it never reaches for the video's own pixels.
 
 ### The laptop frame, 2026-09-04
 
@@ -994,7 +1146,7 @@ phone with a hinge rather than a new idea:
   a small corner radius, so the lid is a thin frame rather than a slab;
 - a hairline lighter edge along the top of the lid, stopping short of the
   corners, which is the only lighting in the drawing;
-- a camera dot of about a quarter of the bezel, centred in the top bezel;
+- a camera dot of about a quarter of the bezel, centered in the top bezel;
 - a base under the lid: a flat rounded slab 4.5 percent of the screen height and
   6 percent wider than the lid, in the same body tone, with a hairline highlight
   along its top edge for the hinge. Rounded harder on its bottom corners than
@@ -1024,7 +1176,7 @@ screen are now two separate decisions:
 - **the box decides the shape.** The screen is 16:10 and is solved by width
   against the box the device has to fit, the same proportional shrink as before.
 - **the region decides what is in it.** `ZoomShot` already covers the box with
-  the region, so the region says what is centred on the screen and how tight the
+  the region, so the region says what is centered on the screen and how tight the
   crop is, and nothing else.
 
 The four regions in `src/reels/training.ts` are authored 16:10 as well, so cover
@@ -1033,8 +1185,8 @@ Nothing depends on that: hand the frame a 4:3 region and it still draws a 16:10
 screen, with the region covering it.
 
 **Screen sizes, measured on the delivered stills** with `out/_1610/measure.mjs`,
-which finds the body colour and reads the hole in it. The lid is the screen plus
-two bezels and the base is six percent wider than the lid; both are centred on
+which finds the body color and reads the hole in it. The lid is the screen plus
+two bezels and the base is six percent wider than the lid; both are centered on
 the same axis.
 
 | Format | Box the device fits | Screen | Ratio | Lid | Base | Frame |
@@ -1089,7 +1241,10 @@ Every laptop clean shot still ends on a frame that moves. Measured with ffmpeg
 psnr on the new region, the last consecutive source pair of each beat is 16.1 dB
 for hero to zones (99 to 100), 17.1 dB for the hazard hunt (131 to 132), 32.0 dB
 for the P&L simulator (159 to 160) and 21.7 dB for the RFI branch (89 to 90).
-The Section 6b line is 40 dB.
+The Section 6b line is 40 dB. The P&L beat now ends on 115 to 116 instead, at
+26.9 dB in the same region, for the reason in "Keeping five different
+interaction clips moving" below: a figure measured on the region is not the
+figure the delivered landscape frame carries.
 
 ### Content boxes, and filling the device from the page, 2026-09-04
 
@@ -1098,7 +1253,7 @@ on the actual laptop screen". It was. The training samples are authored as a
 fixed width sheet on a near black stage, so a 2880 x 1800 capture of one carries
 348 pixels of backdrop down the left, 348 down the right and 30 across the top.
 `PlateComposite` cover cropped the whole viewport anchored top left, so inside
-the panel the page sat off centre with dead black around three of its sides.
+the panel the page sat off center with dead black around three of its sides.
 
 **The measurement.** `scripts/capture.ts` writes a `contentBox` onto every entry
 in `assets/captures/captures.json`. It is taken from the clip's own first frame,
@@ -1116,13 +1271,13 @@ field. Its ink stops at 1562 x 1439 of 2880 x 1800, and filling a device screen
 from that box would crop a website nobody asked to crop. Synovial does the same
 on cream, at 2723 x 1734. Pixel statistics inside the box cannot separate those
 two from the safety deck, because the safety deck is itself near black: 69 to 94
-percent of what is inside its box is within 60 of the stage colour, which is
+percent of what is inside its box is within 60 of the stage color, which is
 worse than Fore Motion's 92. The margin can be separated, on two tests, and both
 are in `contentBoxForClip()`:
 
-- **flatness.** A backdrop is one CSS colour, and at crf 16 it decodes back
+- **flatness.** A backdrop is one CSS color, and at crf 16 it decodes back
   almost exactly: 0.1 to 0.5 percent of the safety decks' margin pixels sit more
-  than 12 from the corner colour. The same figure across the eight client sites
+  than 12 from the corner color. The same figure across the eight client sites
   runs 8 to 89 percent, because a page's own background is photographed,
   gradiented or textured.
 - **materiality.** Several sites' first ink starts a few rows down, which makes
@@ -1174,8 +1329,8 @@ itself instead:
   aspect is `quadSourceSize()`'s, which is already the average of the two
   horizontal edges over the average of the two vertical ones.
 - it is anchored at the content box's top, so the page's top edge lands on the
-  panel's top edge, and centred horizontally on the box, so a centred sheet
-  stays centred.
+  panel's top edge, and centered horizontally on the box, so a centered sheet
+  stays centered.
 - it is always a **crop** of the content box, never an expansion of it.
 
 That last one is the only real decision, and the arithmetic makes it. The safety
@@ -1185,7 +1340,7 @@ so expanding would put a quarter of a thousand pixels of the black stage back
 inside the device, which is the fault this exists to fix. Cropping takes 2184 x
 1452 from the top of the sheet: the module header, the interaction and its
 feedback, and no backdrop at all. Because the region is always inside the box,
-the "content box too narrow to fill, centre it instead" case cannot arise.
+the "content box too narrow to fill, center it instead" case cannot arise.
 
 | Plate | Capture | Quad | Region | Scale |
 |---|---|---|---|---|
@@ -1204,12 +1359,12 @@ edge along each edge's own inward normal. It reports three numbers per
 composite:
 
 - **rendered**, the fraction of ring pixels within 12 of the capture's backdrop
-  colour. This is the number the brief asked for, and on its own it is not
+  color. This is the number the brief asked for, and on its own it is not
   enough: the safety deck's page background is the same near black as its stage,
   so a panel filled entirely with page still reads about a third backdrop.
 - **source**, the same test run on the capture pixel each ring point traces back
   to through the inverse warp. This is the floor the rendered figure cannot go
-  below while the page's own edge is that colour.
+  below while the page's own edge is that color.
 - **offpage**, the fraction of ring points tracing back outside the content box.
   This is the one that means dead backdrop inside the device, and the one that
   has to be under 2 percent.
@@ -1238,7 +1393,7 @@ there is rounding at the quad corners where a sampled point lands a pixel
 outside the clip.
 
 `plate-laptop-shoulder` reads 67.76 percent on the rendered column and always
-did: Fore Motion's page background is the corner colour the box was measured
+did: Fore Motion's page background is the corner color the box was measured
 from, its content box is the whole frame, and a clip with no backdrop cannot
 show any. Its off page figure is 0.09 percent.
 
@@ -1253,7 +1408,7 @@ text position.
 
 Interaction captures and training plates are produced by two other agents. Any
 capture id not in `assets/captures/captures.json` and any plate id not in
-`config/plates.json` renders a labelled grey stand-in (`src/components/StandIn.tsx`)
+`config/plates.json` renders a labeled gray stand-in (`src/components/StandIn.tsx`)
 instead of the shot. Filling in the real asset is the only change needed.
 
 Every capture and plate the training reel names had landed by the last render,
@@ -1278,7 +1433,7 @@ badly chosen crop. `ZoomShot` sets `maxWidth: none` for exactly this reason.
 | 2026-09-04 | TrainingVertical | `out/gate-t2/tv-*.png` | 9 stills, 1080x1920 | 19.3s |
 | 2026-09-04 | TrainingLinkedIn | `out/gate-t2/tl-*.png` | 8 stills, 1080x1350 | 15.9s |
 | 2026-09-04 | Training*Debug | `out/gate-t2/dbg-*.png` | 6 stills, three crops at two frames | 11.0s |
-| 2026-09-04 | TrainingVertical | `out/training-grey-vertical.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 6.9 MB | 26.1s |
+| 2026-09-04 | TrainingVertical | `out/training-gray-vertical.mp4` | 450 frames, 1080x1920, 30fps, 15.0s, 6.9 MB | 26.1s |
 | 2026-09-04 | sheet | `out/gate-t2/training-vertical-sheet.png` | 4x3 tile of 12 frames, ffmpeg | under 1s |
 | 2026-09-04 | bundle | `out/bundle` (final build) | rspack bundle, public dir linked not copied | 2.4s |
 | 2026-09-04 | mix 15s | `assets/audio/mix-t-a-15s.wav` (final build, music only) | 15.0s, 48 kHz stereo | 2.6s |
@@ -1350,7 +1505,7 @@ The rebuild is reproducible: rerunning the 15 second mix produces a byte
 identical wav, which was checked rather than assumed, because the corrective
 loudness pass described under Audio would be worth nothing if it were not.
 
-The 26.1 second grey render row above sits between the web reel's Phase 4 and
+The 26.1 second gray render row above sits between the web reel's Phase 4 and
 final numbers. Every capture and plate landed while this was being built, so the
 whole cut is a real composite: two plate shots, three tour plate composites, and
 two zoomed laptop shots. There is no audio on it and no delivery step, which is
@@ -1358,13 +1513,13 @@ the rest of the web reel's 20.3.
 
 ### The final training timeline
 
-Rebuilt 2026-09-04 after the grey render review. Five things changed, all of
+Rebuilt 2026-09-04 after the gray render review. Five things changed, all of
 them in `src/reels/training.ts` except the one noted.
 
 **The hook is the mobile hazard hunt, full bleed.** It was the desktop clip
 pushed in on the illustration, and that did not read: a desktop module screen is
 a content column inside wide dark margins, so a 9:16 crop of a region of it kept
-half a sentence cut off at both edges and an empty grey rectangle where the
+half a sentence cut off at both edges and an empty gray rectangle where the
 picture was. The mobile capture is the same lesson laid out for a 390 wide
 screen, so the heading, the instructions, the found counter and the whole
 illustration all sit inside the crop. Vertical and feed keep almost the entire
@@ -1399,12 +1554,12 @@ That beat needed one change outside the content config. At the phone's native
 780x1688 the vertical crop's lower third cuts the shot at capture row 1039,
 which is the top edge of the STOP button, so the buttons and the whole feedback
 line sit behind the scrim. That is arithmetic rather than tuning: the device is
-centred on the canvas, the band is anchored near the bottom of it, so an
+centered on the canvas, the band is anchored near the bottom of it, so an
 overlaid band always covers the lower third or so of the device, and this clip
 keeps the thing worth seeing exactly there. A 9:16 site capture can afford it
 because what is behind the band is page it has already scrolled past.
 
-So the beat declares a zoom region, 780 by 1040 with the decision centred in it,
+So the beat declares a zoom region, 780 by 1040 with the decision centered in it,
 and `ProjectShowcase` now picks the stacked arrangement for any shot wider than
 the canvas rather than only for a laptop. The rule already existed and
 already said the right thing about laptop screens; it was written as
@@ -1458,8 +1613,32 @@ moved.
 | 15s | 2 | stop-or-go mobile | 0 | 1 | 107, mid answer |
 | 45s | 1 | hero-to-zones | 0 | 0.543 | 100, the second tab click |
 | 45s | 2 | hazard-hunt desktop | 0 | 0.716 | 132, the sixth hazard found |
-| 45s | 3 | P&L simulator | 0 | 0.867 | 160, inside the fourth slider drag |
+| 45s | 3 | P&L simulator | 0 | 0.628 | 116, inside the third slider drag |
 | 45s | 4 | RFI branch | 0 | 0.489 | 90, option B marked correct |
+
+Beat 3's rate was 0.867 until 2026-09-05, which ended the shot on source 160
+inside the fourth slider drag and measured 37.6 dB through the zoom region. QA
+check (i) failed it anyway, at 43.3 dB, and the difference is the crop rather
+than the clip: the check measures the whole delivered frame, and
+`TrainingLinkedInLandscape` draws this screen at 525 x 328, which is 8.3 percent
+of a 1920 x 1080 canvas, so the same motion arrives about 10 dB quieter. What
+reads as a moving slider at 2144 capture pixels reads as a still page at 525.
+
+So the ending was re-solved on the crop that has to pass. All 179 consecutive
+source pairs were measured through the zoom region scaled to 525 x 328: the four
+drags run 27 to 33 dB, the still page after source 160 runs 65 to 86, and the
+most motion any adjacent pair in this clip carries is 26.9 dB, inside the third
+drag. `185 * 0.628` is 116.2 and `184 * 0.628` is 115.6, so the last two output
+frames land on source 115 and 116, which is 26.96 dB in that region. The cost is
+a shot a third slower, which suits a slider being dragged, and the fourth drag,
+which is the same gesture a third time.
+
+**It does not reach 36 dB and it cannot.** 186 output frames over a 160 frame
+window force a rate under 1, so two consecutive output frames are never more
+than one source frame apart, and one source frame of this clip through a 525
+wide screen is worth about 37 dB whole frame. That clears the 40 dB line by 3 dB
+and no further. Getting under 36 needs a capture with a page change near the end
+of it, not a playback value.
 
 Beat 1's rate is solved rather than rounded. `33 + 107 * 0.629` is 100.3 and
 `33 + 106 * 0.629` is 99.7, so the last two output frames sit on source 99 and
@@ -1476,7 +1655,7 @@ delivered renders, the same test the web reel used:
 | 15s beat 2 | 316 to 317 | 25.1 dB |
 | 45s beat 1 | 364 to 365 | 20.7 dB |
 | 45s beat 2 | 574 to 575 | 18.9 dB |
-| 45s beat 3 | 784 to 785 | 35.9 dB |
+| 45s beat 3 | 784 to 785 | 31.2 dB, 37.3 dB in landscape |
 | 45s beat 4 | 994 to 995 | 25.3 dB |
 | 15s CTA card, static control | 440 to 441 | 87.6 dB |
 | 45s CTA card, static control | 1340 to 1341 | 79.2 dB |
@@ -1497,7 +1676,10 @@ the documented cost of any rate under 1, the same cost the web reel's LinkedIn
 cut pays at 0.6 and the same one its 15 second cut pays at 0.8, where frames 183
 to 184 measure 56.5 dB for exactly the same reason. The test that matters is the
 last pair before the cut, because a shot that is still moving when it is cut
-cannot read as frozen, and every one of those is under 36 dB.
+cannot read as frozen, and every one of those is under 36 dB except beat 3 in
+the landscape crop, which is 37.3 dB for the reason set out above and is the one
+shot in either reel whose ending is limited by the capture rather than by the
+playback value.
 
 Also worth recording: the stop-or-go clip is not continuous motion. Measured
 across all 107 consecutive pairs of its 108 frame window on its zoom region, 32
@@ -1637,7 +1819,7 @@ the end card, and writes its measured duration into `config/voice.json`.
   adjusted to make a script fit.
 
 A beat with no voice file yet is laid out from an estimate of 2.6 words a second
-and named in a console warning at bundle time, so a grey render exists before a
+and named in a console warning at bundle time, so a gray render exists before a
 credit is spent. The draft read measured nearer 3.9 words a second, so the
 estimate overstates every beat by about half; where that pushes a 15 second cut
 past 450 frames the estimated beats are squeezed back to their own `minFrames`
@@ -1771,7 +1953,7 @@ they caption, so a viewer reading rather than listening gets the whole thing.
 ### Phase A gate
 
 `npx tsc --noEmit` and `npx eslint src` clean, all twenty four compositions list,
-`scripts/qa/tutorial.ts` 120 of 120, and four grey renders with the draft voice
+`scripts/qa/tutorial.ts` 120 of 120, and four gray renders with the draft voice
 against the placeholders:
 
 | File | Canvas | Frames |
@@ -1788,8 +1970,8 @@ pixel perfect, any way we can really QA this in a meaningful way so I don't keep
 finding stuff like that."
 
 Every alignment and composition fault the owner has caught so far was findable
-by measurement. Text blocks centred on the safe area rather than the canvas, a
-device box off centre, a bare browser window where a device belonged, a laptop
+by measurement. Text blocks centered on the safe area rather than the canvas, a
+device box off center, a bare browser window where a device belonged, a laptop
 screen at 3:1 instead of 16:10, a blank first frame on the end card: all of them
 are numbers, and all of them were found by eye first. `scripts/qa.ts` renders
 stills off its own bundle and measures them, so the next one is found by the
@@ -1815,6 +1997,21 @@ It exits 1 if anything failed. **No delivery goes into the Posts folder until
 `npx tsx scripts/qa.ts` exits 0.** Read the REVIEW rows before shipping as well:
 they are the checks that can measure a thing but cannot judge it, and there are
 never many.
+
+### Runs
+
+| Date | Reels | Result |
+|---|---|---|
+| 2026-09-05 | web, training | 26 FAIL, 159 REVIEW, 1792 PASS, 1124 not applicable |
+| 2026-09-05, after the three fixes | web, training | **0 FAIL**, 161 REVIEW, 1820 PASS, 1120 not applicable |
+
+The first run is the one that found the three faults: 24 blank end card frames
+on check (e), the `t-desktop-wide` full bleed tour plate on check (d), and the
+P&L simulator's frozen last pair on check (i). The second is the delivered
+build. Of its 161 REVIEW rows, 116 are check (d) screening the dark themed
+courseware, 21 are check (h) reading the expected hard cut into each clean shot,
+13 are the check (g) plate crops that always review, and 11 are check (b) on
+frames that are mid whip by design.
 
 ### What it renders, and from where
 
@@ -1856,12 +2053,12 @@ to last frame of each clean shot against the last for check (i).
 
 | | Measures | Fails at |
 |---|---|---|
-| a | text centring: the ink centre of the copy block against the canvas centre, or the panel centre in the landscape split | more than 4 px at 1080 canvas width, scaled by `typeScale`, so 7.1 px in landscape |
+| a | text centering: the ink center of the copy block against the canvas center, or the panel center in the landscape split | more than 4 px at 1080 canvas width, scaled by `typeScale`, so 7.1 px in landscape |
 | b | safe zones: copy pixels inside the reserved rectangles `safeArea()` derives | more than 120 px, which is the antialiasing allowance, and REVIEW rather than FAIL on a frame that is mid whip |
-| c | device geometry: the `#100D0A` body's centre line, and the aspect of the screen hole inside it | body missing, centre off by more than 4 px, or aspect off by more than 1 percent |
-| d | screen fill: a ring 6 px inside the screen hole or the plate quad, against a flat page backdrop | 95 percent of the ring or more, which is a screen with nothing in it. Over the 2 percent line and under that is REVIEW |
-| e | blank frames: ink coverage against the frame's own dominant colour | under 0.2 percent |
-| f | logo: the drawn lockup's colours present, the retired gold crest absent | under 200 px of `#a93c1c` or `#8b6f5c`, or 3000 px or more of `#C09A5E` |
+| c | device geometry: the `#100D0A` body's center line, and the aspect of the screen hole inside it | body missing, center off by more than 4 px, or aspect off by more than 1 percent |
+| d | screen fill: a ring 6 px inside the screen hole or the plate quad, against a flat page backdrop | 95 percent of the ring or more, on a ring with at least three of its four edges measurable, which is a screen with nothing in it. Over the 2 percent line and under that is REVIEW |
+| e | blank frames: ink coverage against the frame's own dominant color | under 0.2 percent |
+| f | logo: the drawn lockup's colors present, the retired gold crest absent | under 200 px of `#a93c1c` or `#8b6f5c`, or 3000 px or more of `#C09A5E` |
 | g | plate review: 2x crops of each plate's quad corners and of skin touching the quad | never fails, always REVIEW |
 | h | cut continuity: PSNR across the hard cut from the plate to the clean shot | never fails, REVIEW under 8 dB |
 | i | motion: PSNR between the last two frames of every clean shot | 40 dB or over, which is a frozen shot |
@@ -1869,13 +2066,13 @@ to last frame of each clean shot against the last for check (i).
 **How (a) and (b) find the copy.** Where a capture is on screen the copy sits on
 the opaque `#14100C` scrim, so the scrim block is found first and the ink is
 measured against it, which is what the throwaway `out/_align/measure.mts` did
-during the centring pass. Where the whole canvas is flat brand colour, the corner
+during the centering pass. Where the whole canvas is flat brand color, the corner
 pixel is the background and the whole frame is the region. Check (b) then counts
 copy pixels inside the reserved rectangles and reports the closest approach in
 pixels, which is the number that says whether a layout change is heading for
 trouble before it arrives.
 
-Doing it that way, rather than colour matching the whole frame, is deliberate.
+Doing it that way, rather than color matching the whole frame, is deliberate.
 A site capture contains plenty of near ink and near canvas pixels, and a check
 that flagged them would fire on every crop with a device in a reserved zone,
 which Section 8 explicitly allows. Measuring inside the copy region only is the
@@ -1883,7 +2080,7 @@ mechanical form of "the capture may enter a reserved zone, text may not".
 
 **Check (a) only runs on settled frames.** `KineticText` hides characters with
 `visibility` while it types, so a half typed line lays out at its final width but
-inks only the left of it. Its ink centre is not its box centre, by design. Those
+inks only the left of it. Its ink center is not its box center, by design. Those
 frames are reported as not applicable rather than measured, and the shot list
 knows which they are: a project name is settled at relative frame 18, a LinkedIn
 context sentence at 40, and the end card only on its last frame, because the
@@ -1891,7 +2088,7 @@ wordmark is still typing at copy in.
 
 **The (a) tolerance scales with the type, and that is not slack.** What 4 px is
 absorbing is the type's own side bearings and the trailing letter space of a
-negative tracking, and both of those are drawn at the type's size. The centring
+negative tracking, and both of those are drawn at the type's size. The centering
 pass on 2026-09-04 measured exactly that: the surfaces tour word in landscape sat
 +5 against its own box before the change and +5 after it, which is the type and
 not the layout. Landscape renders at 1.778, so its line is 7.1 px. The six 1080
@@ -1907,15 +2104,15 @@ frames of transition per beat.
 
 **Check (c) measures the aspect only where the whole device is visible.** In the
 overlay arrangement the lower third sits on top of the device's lower part, so
-the visible screen is clipped and its aspect is not the device's. The centre line
+the visible screen is clipped and its aspect is not the device's. The center line
 and whether a device body exists at all are measured everywhere, which is what
-catches a device off centre and a bare browser window. No laptop beat is ever in
+catches a device off center and a bare browser window. No laptop beat is ever in
 the overlay arrangement, because a 16:10 screen is wider than any of these
 canvases and `ProjectShowcase` sends it to `stack`, so the 16:10 rule is enforced
 on every laptop shot in both reels.
 
 The body tolerance is near exact, 3 in RGB. The scrim is 5.4 away from the body
-colour and several of these sites open on a near black hero that runs within a
+color and several of these sites open on a near black hero that runs within a
 few code values of it, and a loose tolerance turned the band into a device and a
 dark page into bezel. The first pass read the Fore Motion phone's screen as
 732x209 for exactly that reason. These are PNG stills of a flat CSS fill, so
@@ -1926,7 +2123,7 @@ worth recording so nobody retries the two versions that do not work.**
 
 Matching near black and near white failed 226 frames, almost all of them dark
 pages whose hero simply is dark at the screen edge. Matching each clip's own
-backdrop colour, read off its first frame by `clipBackgroundColor()` in
+backdrop color, read off its first frame by `clipBackgroundColor()` in
 `scripts/capture.ts`, still failed 80: the training safety modules are dark
 themed, so the sheet inside their content box is within 12 of the backdrop
 outside it, and no tolerance separates a margin from the page it surrounds. A
@@ -1935,15 +2132,42 @@ chrome runs along the top and bottom as readily as down the sides.
 
 So the check reports the ring fraction and the four per edge fractions on every
 shot, calls anything over the 2 percent line REVIEW, and fails only where the
-ring is almost entirely one flat colour, which is a screen with nothing in it.
+ring is almost entirely one flat color, which is a screen with nothing in it.
 That last case is real and it found one: the `t-desktop-wide` tour plate in
-`TrainingLinkedInLandscape` reads 96 percent, because in that crop `plateCrop()`
-scales the composite until the monitor, the desk and the room are all off canvas
-and the shot is a full bleed page. The same plate in `TrainingLinkedIn` is a
-monitor on a desk with a hand at the bottom of the frame.
+`TrainingLinkedInLandscape` read 96 percent, because in that crop `plateCrop()`
+scaled the composite until the monitor, the desk and the room were all off
+canvas and the shot was a full bleed page. That is fixed, in "The plate crop
+cap, 2026-09-05".
 
-Precise mode does not change that rule. It narrows the colour matched from near
-black and near white to the one colour that clip's own margin is made of, which
+**The dead ring verdict needs a ring, and that qualifier was added on 2026-09-05
+because fixing the shot did not clear the row.** The sentence the verdict rests
+on is "a ring that is almost entirely one flat color is not a page with content
+in it". Two opposite edges are not a ring: they are a page's left and right
+margins, and on a dark themed course page those are the page's own background by
+construction, which is the exact thing this check is already established as
+unable to judge. `t-desktop-wide` in the 1920 x 1080 crop can never present more
+than two edges. The plate has to cover 1920, which fixes cover at 1.25, and at
+that scale the screen quad is 811 canvas pixels tall and sits high enough on the
+plate that its top edge is 11 to 16 pixels above the canvas whatever the crop
+does with it, while its bottom edge is behind the lower third. The ring is two
+vertical lines down the page's own chrome and reads 95 to 96 percent flat
+whether the shot is a monitor on a desk or a full bleed page.
+
+So `DEAD_RING_MIN_EDGES` is 3. Below that the row is REVIEW, carrying the
+fraction, the per edge numbers and a sentence saying the verdict was not
+available. What this costs is worth recording rather than glossing: the original
+full bleed fault would have come through as REVIEW at 96 percent instead of
+FAIL, and the evidence that actually separated the two shots was never in the
+ring. It was the quad's bounding box, 1919 by 1112 on a 1920 by 1080 canvas
+before the crop cap and 1427 by 828 after it. A check that fails on evidence it
+does not have is not a stricter check, it is a check that will fail the next
+correct shot for the same reason. For scale, `TrainingLandscape` frame 66 reads
+94.03 percent flat on a full four edge ring of the same courseware and is
+accepted as a good shot, so the 95 percent line is at the edge of what this
+content supports even with the whole ring present.
+
+Precise mode does not change that rule. It narrows the color matched from near
+black and near white to the one color that clip's own margin is made of, which
 makes every number sharper, and the report says which mode each row is in. A clip
 qualifies when its `contentBox` is inset from its own frame, which is what says
 the page has a margin at all; 5 of the 38 clips do.
@@ -1959,9 +2183,9 @@ Resolving the backdrops needs FFmpeg on `PATH`, the same requirement
 a note in the report rather than failing.
 
 **The plate quad is mapped, not guessed.** `PlateShot` offsets `PlateComposite`
-by the quad's own centre and scales about the canvas centre, and `PlateComposite`
+by the quad's own center and scales about the canvas center, and `PlateComposite`
 lays the plate out at its own pixel size with `translate(drift) scale(cover *
-ramp)` about the plate's centre. `plateQuadOnCanvas()` in `scripts/qa/geometry.ts`
+ramp)` about the plate's center. `plateQuadOnCanvas()` in `scripts/qa/geometry.ts`
 composes those, drift curve and scale ramp included, so the ring follows the real
 screen on the real frame. If either component ever changes how it places the
 plate, that function has to change with it and check (d) will report nonsense
@@ -1988,7 +2212,7 @@ further than it should be.
   and any skin near them in front of a reviewer in seconds instead of minutes,
   but whether a hand reads as occluding the panel, or whether a face is in shot,
   is a look rather than a number.
-- **It cannot judge type.** A word that measures 5 px right of centre because of
+- **It cannot judge type.** A word that measures 5 px right of center because of
   its own side bearings and a word that is 5 px off because the layout is wrong
   measure the same. The landscape surfaces tour word is the known example.
 - **It cannot read the copy.** Nothing here knows whether the claim on screen is

@@ -117,6 +117,12 @@ export const BACKDROP_TOLERANCE = 12;
  * with its per edge numbers. See the long note in checkScreenFill.
  */
 export const DEAD_RING_FRACTION = 0.95;
+/**
+ * Check (d). Edges of the ring that have to carry samples before the dead ring
+ * verdict is allowed to fire. See the note in checkScreenFill: the sentence
+ * that verdict rests on is about a ring, and two opposite edges are not one.
+ */
+export const DEAD_RING_MIN_EDGES = 3;
 /** Check (e). Fraction of the frame that has to differ from the background. */
 export const MIN_INK_COVERAGE = 0.002;
 /** Check (f). Pixels of each drawn lockup colour the end card must carry. */
@@ -757,10 +763,43 @@ export function checkScreenFill(
    * near black and near white to the one colour the clip's own margin is made
    * of, which makes every number sharper, and the report says which mode each
    * row is in.
+   *
+   * The dead ring verdict needs a ring, and that qualifier was added on
+   * 2026-09-05 after it fired on a shot that was right. The sentence the
+   * verdict rests on is "a ring that is almost entirely one flat colour is not
+   * a page with content in it". Two opposite edges are not a ring: they are a
+   * page's left and right margins, and on a dark themed course page those are
+   * the page's own background by construction, which is the exact thing this
+   * check has already been established as unable to judge.
+   *
+   * t-desktop-wide in the 1920x1080 crop can never present more than two edges.
+   * The plate has to cover 1920, which fixes cover at 1.25, and at that scale
+   * the screen quad is 811 canvas pixels tall and sits high enough on the plate
+   * that its top edge is 11 to 16 pixels above the canvas whatever the crop
+   * does with it, while its bottom edge is behind the lower third. So the ring
+   * is two vertical lines down the page's own chrome and reads 95 to 96 percent
+   * flat whether the shot is a monitor on a desk or a full bleed page.
+   *
+   * That is not hypothetical, and it is worth recording what this costs. Before
+   * plateCrop() was capped, that shot WAS a full bleed page, and this check
+   * failed it on those same two edges. Under the rule below that row would have
+   * been REVIEW at 96 percent instead, which is a row a reviewer reads before
+   * shipping rather than one that stops the build. The evidence that separated
+   * the two shots was never in the ring: it was the quad's bounding box, 1919
+   * by 1112 on a 1920 by 1080 canvas against 1427 by 828 after the fix. A check
+   * that fails on evidence it does not have is not a stricter check, it is a
+   * check that will fail the next correct shot for the same reason.
+   *
+   * For comparison, and this is what settles it: TrainingLandscape frame 66
+   * reads 94.03 percent flat on a full four edge ring of the same courseware
+   * and is accepted as a good shot. The 95 percent line is at the edge of what
+   * this content supports even when the whole ring is there.
    */
   const precise = backdrops.precise;
   const overLine = fraction > SCREEN_FILL_TOLERANCE;
-  const dead = fraction >= DEAD_RING_FRACTION;
+  const edgesSampled = edgeIn.filter((n) => n > 0).length;
+  const ringMeasurable = edgesSampled >= DEAD_RING_MIN_EDGES;
+  const dead = fraction >= DEAD_RING_FRACTION && ringMeasurable;
   const verdict: Verdict = dead ? "FAIL" : overLine ? "REVIEW" : "PASS";
 
   const edgeText = ["top", "right", "bottom", "left"]
@@ -775,7 +814,13 @@ export function checkScreenFill(
       `${backdrops.source}, ${(fraction * 100).toFixed(2)} percent ` +
       `(per edge, percent: ${edgeText}); line ${(SCREEN_FILL_TOLERANCE * 100).toFixed(0)} percent` +
       (behindBand > 0 ? `; ${behindBand} samples behind the lower third, not counted` : "") +
-      (precise ? ", precise mode" : ", screening mode"),
+      (precise ? ", precise mode" : ", screening mode") +
+      (fraction >= DEAD_RING_FRACTION && !ringMeasurable
+        ? `. Over the ${(DEAD_RING_FRACTION * 100).toFixed(0)} percent dead ring line, but only ` +
+          `${edgesSampled} of the four ring edges are on canvas and out from behind the ` +
+          "lower third, so this is two lines down the page rather than a ring and the " +
+          "dead screen verdict is not available. Reported, not failed."
+        : ""),
     {
       where,
       ringSamples: inCanvas,
@@ -786,11 +831,13 @@ export function checkScreenFill(
       edgeRight: Number(edgeFractions[1].toFixed(3)),
       edgeBottom: Number(edgeFractions[2].toFixed(3)),
       edgeLeft: Number(edgeFractions[3].toFixed(3)),
+      edgesSampled,
       oppositePairFraction: Number(opposite.toFixed(3)),
       backdropSource: backdrops.source,
       preciseMode: precise,
       tolerance: SCREEN_FILL_TOLERANCE,
       deadRingFraction: DEAD_RING_FRACTION,
+      deadRingMinEdges: DEAD_RING_MIN_EDGES,
     },
   );
 }
