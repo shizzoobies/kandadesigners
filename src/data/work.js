@@ -68,4 +68,16 @@ export const projects = [
     blurb: 'A full-service marketing team in Jacksonville that takes the whole puzzle off your plate: brand, social, web, and email. A warm, editorial site built around booking a discovery call, with their own client work front and center.',
     img: '/images/work-synovial.webp?v=1',
   },
+  {
+    slug: 'osteen-and-sons',
+    title: 'Osteen & Sons',
+    blurb: 'Lawn care, brush clearing, and junk removal in Gainesville. Type an address and the site pulls the lot from county records, then books a free walkthrough on the spot, with an AI assistant for the quick questions.',
+    img: '/images/work-osteens.webp?v=1',
+  },
+  {
+    slug: 'davids-bbq',
+    title: "David's BBQ",
+    blurb: "Gainesville pit barbecue since 1978. A smoky, photo-led site with the full menu and prices, catering and wedding paths, and online ordering one tap away.",
+    img: '/images/work-davidsbbq.webp?v=1',
+  },
 ];

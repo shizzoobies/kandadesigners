@@ -17,7 +17,7 @@ Pricing: scoped per project — never a fixed menu price. Budget bands: under $2
 
 Hosting philosophy (an honest differentiator): most businesses don't need to pay monthly hosting fees. A well-built site runs on modern global infrastructure for little to nothing a month — that's how K & A ships every build. Businesses paying monthly for a site that rarely changes should ask about a one-time build.
 
-Recent work: FDAAF (Florida Disability Access and Awareness Foundation), MBS Medicine (veteran-owned telehealth), PB&J Strategic Accounting, Project Makeover (school-space nonprofit), FixAlways (AI-powered home-services directory), Fore Motion Golf (indoor golf, Jacksonville), Ellenton Family Practice Direct (direct primary care), Southern Legacy Contractors, Synovial Marketing.
+Recent work: FDAAF (Florida Disability Access and Awareness Foundation), MBS Medicine (veteran-owned telehealth), PB&J Strategic Accounting, Project Makeover (school-space nonprofit), FixAlways (AI-powered home-services directory), Fore Motion Golf (indoor golf, Jacksonville), Ellenton Family Practice Direct (direct primary care), Southern Legacy Contractors, Synovial Marketing, Osteen & Sons (lawn, brush clearing, and junk removal, Gainesville), David's BBQ (pit barbecue since 1978, Gainesville).
 
 Contact: ka-performancefl.com/contact/ — either scope a project with the AI assistant in minutes, or send a message directly. Alex and Kristina reply personally within 24 hours. Accessibility questions and requests go to help@ka-performancefl.com.
 

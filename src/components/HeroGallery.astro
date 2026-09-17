@@ -398,6 +398,11 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     // existing mains top out at ±0.40 and these are scaled up 1.4x.
     { tx: -0.44, ty: -0.10, r: 6,   s: 1.4,  a: 0.95 }, // southern legacy — mid left
     { tx: 0.44,  ty: 0.12,  r: -6,  s: 1.4,  a: 0.95 }, // synovial — mid right
+    // Top and bottom seams, over two of the inner-page extras. Not nearer the
+    // middle: zIndex follows project order, so anything placed on the center
+    // would cover fixalways, the tile the mosaic is built around.
+    { tx: 0.2,   ty: -0.34, r: 5,   s: 1.34, a: 0.95 }, // osteen & sons — top, right of center
+    { tx: -0.21, ty: 0.32,  r: -5,  s: 1.34, a: 0.95 }, // david's bbq — bottom, left of center
   ];
 
   // STACK must have one entry per project: it is indexed directly, so a missing
