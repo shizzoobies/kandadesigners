@@ -22,6 +22,40 @@
     fetch('/api/course-event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ c: chapter, e: event }), keepalive: true }).catch(() => {});
   }
   const audio = $('narration');
+  let activeStage = 'listen', setupStep = 0;
+  const stageLabels = { listen: 'Listen', setup: 'Set up', practice: 'Practice', apply: 'Apply' };
+  const setupLabels = ['Install', 'Check', 'Open folder', 'Sign in'];
+  const stages = () => current().id === 'setup' ? ['listen', 'setup', 'practice', 'apply'] : ['listen', 'practice', 'apply'];
+  function updateStageNavigation() {
+    const order = stages(), index = order.indexOf(activeStage);
+    $('previous').disabled = state.chapter === 0 && index === 0;
+    $('previous').textContent = index === 0 ? 'Previous chapter' : 'Back';
+    $('next').textContent = activeStage === 'setup' && setupStep < 3 ? `Continue: ${setupLabels[setupStep + 1]}` : index < order.length - 1 ? `Continue to ${stageLabels[order[index + 1]].toLowerCase()}` : state.chapter === lesson.chapters.length - 1 ? 'Review progress' : 'Next chapter →';
+    $('stage-position').textContent = `${stageLabels[activeStage]} · ${current().short}`;
+  }
+  function selectSetup(step) {
+    setupStep = step;
+    document.querySelectorAll('.setup-steps > li').forEach((panel, index) => { panel.hidden = index !== step; });
+    document.querySelectorAll('[data-setup-step]').forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.setupStep) === step)));
+    updateStageNavigation();
+  }
+  function selectStage(stage, focus = false) {
+    activeStage = stages().includes(stage) ? stage : 'listen';
+    if (activeStage !== 'listen') audio.pause();
+    document.querySelectorAll('[data-stage]').forEach(button => {
+      const selected = button.dataset.stage === activeStage;
+      button.hidden = !stages().includes(button.dataset.stage);
+      button.setAttribute('aria-selected', String(selected));
+      button.tabIndex = selected ? 0 : -1;
+    });
+    document.querySelectorAll('[data-stage-panel]').forEach(panel => { panel.hidden = panel.dataset.stagePanel !== activeStage; });
+    updateStageNavigation();
+    if (focus) {
+      $('stage-' + activeStage).focus({ preventScroll: true });
+      const workspace = $('chapter-workspace');
+      if (workspace.getBoundingClientRect().top < 0) workspace.scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
+  }
   let toastTimer, simulation = { saved: [], selected: [], stage: 0 }, renderVersion = 0;
   const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   function save() { try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch { toast('Progress could not be saved in this browser. You can still complete the lesson.'); } }
@@ -50,11 +84,8 @@
     $('copy-prompt').textContent = 'Copy prompt';
     $('transcript').textContent = c.narration;
     $('chapter-count').textContent = '';
-    $('previous').disabled = state.chapter === 0;
-    $('next').textContent = state.chapter === lesson.chapters.length - 1 ? 'Review progress' : 'Next chapter →';
     $('feedback').textContent = '';
     $('feedback').className = 'feedback';
-    $('setup-panel').hidden = c.id !== 'setup';
     $('duration').textContent = m ? formatTime(m.duration) + ' AUDIO' : 'GUIDED AUDIO';
     $('caption').textContent = 'Press play when you are ready. You can also read the transcript below.';
     $('seek').value = 0;
@@ -65,6 +96,10 @@
     audio.load();
     audio.playbackRate = Number($('speed').value);
     renderExercise(c);
+    $('transcript').closest('details').open = false;
+    $('prompt').closest('details').open = false;
+    selectSetup(0);
+    selectStage('listen');
     updateNavigation();
     $('chapter-list').classList.remove('open');
     $('mobile-menu').setAttribute('aria-expanded', 'false');
@@ -143,11 +178,33 @@
     }
   });
   $('chapter-list').addEventListener('click', event => { const button = event.target.closest('[data-chapter]'); if (button) { state.chapter = Number(button.dataset.chapter); render(true); } });
-  $('previous').addEventListener('click', () => { if (state.chapter > 0) { state.chapter--; render(true); } });
+  $('stage-tabs').addEventListener('click', event => {
+    const button = event.target.closest('[data-stage]');
+    if (button) selectStage(button.dataset.stage);
+  });
+  $('stage-tabs').addEventListener('keydown', event => {
+    const button = event.target.closest('[data-stage]');
+    if (!button || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const order = stages(), index = order.indexOf(button.dataset.stage);
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? order.length - 1 : (index + (event.key === 'ArrowRight' ? 1 : -1) + order.length) % order.length;
+    document.querySelectorAll('[data-stage]').forEach(tab => { tab.tabIndex = tab.dataset.stage === order[next] ? 0 : -1; });
+    $('tab-' + order[next]).focus();
+  });
+  $('setup-controls').addEventListener('click', event => { const button = event.target.closest('[data-setup-step]'); if (button) selectSetup(Number(button.dataset.setupStep)); });
+  $('previous').addEventListener('click', () => {
+    const index = stages().indexOf(activeStage);
+    if (activeStage === 'setup' && setupStep > 0) { selectSetup(setupStep - 1); selectStage('setup', true); }
+    else if (index > 0) selectStage(stages()[index - 1], true);
+    else if (state.chapter > 0) { state.chapter--; render(true); selectStage('apply'); }
+  });
   $('next').addEventListener('click', () => {
+    const index = stages().indexOf(activeStage);
+    if (activeStage === 'setup' && setupStep < 3) { selectSetup(setupStep + 1); selectStage('setup', true); return; }
+    if (index < stages().length - 1) { selectStage(stages()[index + 1], true); return; }
     if (state.chapter < lesson.chapters.length - 1) { state.chapter++; render(true); }
     else if (state.completed.length === lesson.chapters.length) { $('completion').scrollIntoView({ behavior: 'instant' }); $('finish-notes').focus(); }
-    else { const missing = lesson.chapters.findIndex(c => !state.completed.includes(c.id)); state.chapter = missing; render(true); toast('Complete this exercise to finish the learning path.'); }
+    else { const missing = lesson.chapters.findIndex(c => !state.completed.includes(c.id)); state.chapter = missing; render(true); selectStage('practice', true); toast('Complete this exercise to finish the learning path.'); }
   });
   $('mobile-menu').addEventListener('click', () => { const open = $('chapter-list').classList.toggle('open'); $('mobile-menu').setAttribute('aria-expanded', String(open)); });
   async function copyText(text) {
@@ -205,7 +262,7 @@
     const text = ['K & A Performance | Your first session with Claude Code', '', 'Practice completion: ' + state.completed.length + '/7', ...lesson.chapters.map(c => `${state.completed.includes(c.id) ? '[x]' : '[ ]'} ${c.short}`), '', 'MY NEXT TASK', 'Goal: ' + (state.draft.outcome || ''), 'Preserve: ' + (state.draft.boundary || ''), 'Verify: ' + (state.draft.check || ''), '', 'WORKFLOW', 'Inspect relevant files. Review a small plan. Implement. Check the actual result.', '', 'Practice completion does not verify your real project. Repeat the browser checks there.', '', 'PROMPT LIBRARY', ...lesson.chapters.flatMap(c => ['', c.short, c.prompt]), '', 'OFFICIAL REFERENCES', ...lesson.sources.map(s => s.join(': '))].join('\n');
     download('my-claude-code-session.txt', text);
   }
-  $('download-notes').addEventListener('click', notes); $('finish-notes').addEventListener('click', notes);
+  $('download-notes').addEventListener('click', notes); $('finish-notes').addEventListener('click', notes); $('apply-notes').addEventListener('click', notes);
   let resetPending = false;
   $('reset').addEventListener('click', () => {
     if (!resetPending) { resetPending = true; $('reset').textContent = 'Confirm reset'; $('reset-status').textContent = 'This clears your saved progress and prompt draft. Click Confirm reset to continue.'; return; }

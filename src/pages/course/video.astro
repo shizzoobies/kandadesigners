@@ -64,7 +64,8 @@ const chapters = [
   video?.addEventListener('error', () => { if (status) status.textContent = 'The video could not load. Try reloading this page or use the download link below.'; });
 </script>
 <style>
-  video { aspect-ratio: 16 / 9; height: auto; }
+  video { aspect-ratio: 16 / 9; height: auto; border: 8px solid var(--color-ink); border-radius: 10px; box-shadow: 0 12px 30px rgb(34 28 21 / .15); }
+  @media (max-width: 650px) { video { border-width: 5px; border-radius: 7px; } }
   .video-details { display: grid; gap: 2.5rem; margin-top: 2.5rem; }
   .chapter-list li { border-top: 1px solid rgb(34 28 21 / .15); }
   .chapter-list button { width: 100%; display: flex; align-items: center; gap: 1.2rem; padding: .95rem .25rem; text-align: left; cursor: pointer; }
