@@ -27,7 +27,7 @@ const links = [
       <LogoLockup variant="nav" intro={Astro.url.pathname === '/'} />
     </a>
 
-    <nav class="hidden items-center gap-8 md:flex" aria-label="Primary">
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
       {links.map((l) => (
         <a
           href={l.href}
@@ -45,7 +45,7 @@ const links = [
 
     <button
       id="nav-toggle"
-      class="md:hidden"
+      class="lg:hidden"
       aria-label="Open menu"
       aria-expanded="false"
       aria-controls="nav-overlay"
@@ -59,7 +59,7 @@ const links = [
 
   <div
     id="nav-overlay"
-    class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-canvas/95 backdrop-blur-md md:hidden!"
+    class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-canvas/95 backdrop-blur-md lg:hidden!"
   >
     {links.map((l) => (
       <a href={l.href} data-no-modal class="font-heading text-3xl text-ink">{l.label}</a>

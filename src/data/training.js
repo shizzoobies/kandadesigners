@@ -39,6 +39,7 @@ export const section = {
 export const sectionLinks = [
   { href: '/training/', label: 'Overview' },
   { href: '/training/samples/', label: 'Samples' },
+  { href: '/training/ai/', label: 'AI training' },
   { href: '/training/team/', label: 'Meet the team' },
   { href: section.pdf, label: 'Capabilities (PDF)', download: true },
 ];

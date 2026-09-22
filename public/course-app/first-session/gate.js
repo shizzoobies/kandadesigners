@@ -6,7 +6,7 @@
   window.COURSE_ACCESS = !!existing || query.has('pass');
   if (!window.COURSE_ACCESS) {
     document.documentElement.style.visibility = 'hidden';
-    location.replace('/free-course/');
+    location.replace(location.pathname.replace(/\/$/, '') === '/course/video' ? '/free-course/?next=video' : '/free-course/');
     return;
   }
   const value = existing || encodeURIComponent(query.get('pass') || '1');

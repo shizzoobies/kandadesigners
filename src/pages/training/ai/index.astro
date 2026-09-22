@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TrainingSubnav from '../../../components/TrainingSubnav.astro';
+
+const collection = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'AI training',
+  url: 'https://ka-performancefl.com/training/ai/',
+  description: 'Practical AI lessons and video guides from K & A Performance.',
+  hasPart: [
+    { '@type': 'LearningResource', name: 'Your first session: interactive lesson', learningResourceType: 'Interactive lesson', url: 'https://ka-performancefl.com/course/' },
+    { '@type': 'LearningResource', name: 'Your first session: video guide', learningResourceType: 'Video guide', url: 'https://ka-performancefl.com/course/video/' },
+  ],
+};
+---
+<BaseLayout
+  title="AI Training & Video Guides | K & A Performance"
+  description="Build a practical AI workflow with K & A Performance. Explore our narrated interactive lesson and matching video guide to working with Claude Code."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(collection)} />
+  <section class="mx-auto max-w-6xl px-6 pt-40 pb-14 md:pt-48 md:pb-16">
+    <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">Training materials / AI</p>
+    <h1 class="mt-6 max-w-4xl font-display text-[clamp(2.8rem,7vw,5.25rem)] leading-[1.05]">Put AI <span class="text-accent">into practice.</span></h1>
+    <p class="mt-7 max-w-2xl text-lg leading-relaxed text-muted">Guided lessons for doing useful work with AI. Choose an interactive lesson when you want to practice, or a video when you want to see the whole workflow.</p>
+  </section>
+
+  <TrainingSubnav />
+
+  <section aria-labelledby="session-title" class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <div class="session-intro">
+      <div>
+        <p class="font-mono text-xs uppercase tracking-[0.22em] text-accent">The field guide</p>
+        <h2 id="session-title" class="mt-4 font-display text-3xl md:text-5xl">Your first session</h2>
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">Work through a small project with Claude Code: give it a clear brief, review a plan, make a change, and check the result.</p>
+      </div>
+      <p class="audience text-muted">Best if you are comfortable downloading files and opening folders on your computer. Follow along on a laptop or desktop.</p>
+    </div>
+
+    <div class="formats">
+      <article class="format">
+        <div class="practice-preview" aria-hidden="true">
+          <span class="preview-label">Listen. Try it. Check your work.</span>
+          <div class="preview-prompt">What should this project do?</div>
+          <div class="preview-answer">Remember which books I have read.</div>
+          <div class="preview-rule"></div>
+          <span class="preview-note">A clear brief. A small change. A result you can check.</span>
+        </div>
+        <div class="format-copy">
+          <p class="font-mono text-xs uppercase tracking-[0.16em] text-accent">Interactive lesson / At your pace</p>
+          <h3 class="mt-4 font-display text-2xl md:text-3xl">Learn by doing</h3>
+          <p class="mt-4 leading-relaxed text-muted">Seven narrated chapters with guided exercises, a downloadable reading-list project, and a transcript. Pause, practice, and pick up where you left off.</p>
+          <a class="material-link" href="/course/" data-astro-reload>Open the interactive lesson <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <article class="format">
+        <a href="/course/video/" class="video-preview" data-astro-reload aria-label="Open the video guide">
+          <img src="/course-app/first-session/video/poster.jpg?v=20260922" width="1920" height="1080" alt="Preview of the Your first session video guide" loading="lazy" />
+          <span class="play-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z" /></svg></span>
+        </a>
+        <div class="format-copy">
+          <p class="font-mono text-xs uppercase tracking-[0.16em] text-accent">Video guide / 8 min 38 sec</p>
+          <h3 class="mt-4 font-display text-2xl md:text-3xl">Watch the workflow</h3>
+          <p class="mt-4 leading-relaxed text-muted">Watch the same lesson from start to finish, with narrated demonstrations, English captions, and chapter shortcuts. Pause whenever you want to try it yourself.</p>
+          <a class="material-link" href="/course/video/" data-astro-reload>Watch the video guide <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </div>
+    <p class="mt-8 max-w-3xl leading-relaxed text-muted">Both formats are free with the same email signup. Already signed up on this browser? Open either one and continue. Narration uses an AI voice.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .session-intro { display: grid; gap: 1.5rem; align-items: end; }
+  .audience { border-left: 2px solid var(--color-accent); padding-left: 1.25rem; line-height: 1.7; }
+  .formats { display: grid; gap: 2rem; margin-top: 2.75rem; }
+  .format { min-width: 0; border: 1px solid rgb(34 28 21 / .16); background: var(--color-surface); }
+  .format-copy { padding: 1.5rem; }
+  .practice-preview, .video-preview { display: flex; position: relative; aspect-ratio: 16 / 9; border-bottom: 1px solid rgb(34 28 21 / .16); overflow: hidden; }
+  .practice-preview { flex-direction: column; justify-content: center; gap: .8rem; padding: clamp(1.1rem, 3vw, 2.4rem); background: #eee9e1; }
+  .preview-label { font-family: var(--font-mono); font-size: .65rem; color: var(--color-accent); }
+  .preview-prompt { font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 600; }
+  .preview-answer { padding: .7rem 1rem; border-left: 3px solid var(--color-accent); background: var(--color-surface); font-size: .95rem; }
+  .preview-rule { height: 3px; width: 55%; background: var(--color-accent); }
+  .preview-note { font-size: .72rem; color: var(--color-muted); }
+  .video-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .play-mark { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; width: 3.6rem; height: 3.6rem; border-radius: 50%; background: var(--color-ink); color: var(--color-surface); }
+  .material-link { display: inline-flex; align-items: center; gap: .7rem; min-height: 48px; margin-top: 1.5rem; color: var(--color-accent); font-weight: 700; text-decoration: underline; text-underline-offset: .3em; }
+  @media (max-width: 767px) { .practice-preview { aspect-ratio: auto; min-height: 220px; } }
+  @media (min-width: 768px) { .session-intro { grid-template-columns: 1.7fr 1fr; gap: 3.5rem; } .formats { grid-template-columns: 1fr 1fr; } .format-copy { padding: 2rem; } }
+</style>

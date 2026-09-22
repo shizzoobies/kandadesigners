@@ -121,7 +121,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           // the admin's analytics; '1' is the anonymous fallback.
           document.cookie = 'ka_course=' + encodeURIComponent(result.t || '1') + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
           if (fcStatus) fcStatus.textContent = '';
-          window.location.href = '/course/';
+          window.location.href = new URLSearchParams(location.search).get('next') === 'video' ? '/course/video/' : '/course/';
         } else {
           throw new Error(result.error || 'failed');
         }
