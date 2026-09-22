@@ -7,6 +7,7 @@
    ============================================= */
 
 const CHAPTERS = new Set([
+  'direction', 'setup', 'map', 'plan', 'verify', 'context', 'next',
   'introduction', 'install', 'sign-in', 'first-request', 'connect',
   'build-a-website', 'build-a-lesson', 'build-an-app', 'recap',
 ]);

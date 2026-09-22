@@ -1,121 +1,21 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { chapters, chapterIndex } from '../../data/course.js';
-
-// One chapter: a slim course bar, the interactive filling the rest of the
-// viewport, and prev/next. The interactive is the original Mighty-block
-// page, iframed untouched; no Rise runtime, no frame-size ceiling.
+// Keep previously shared chapter links working with the replacement lesson.
+const destinations = {
+  introduction: 'direction', install: 'setup', 'sign-in': 'setup',
+  'first-request': 'plan', connect: 'context', 'build-a-website': 'next',
+  'build-a-lesson': 'next', 'build-an-app': 'next', recap: 'next',
+};
 export function getStaticPaths() {
-  return chapters.map((c) => ({ params: { slug: c.slug }, props: { chapter: c } }));
+  return Object.keys({ introduction: 1, install: 1, 'sign-in': 1, 'first-request': 1, connect: 1, 'build-a-website': 1, 'build-a-lesson': 1, 'build-an-app': 1, recap: 1 }).map(slug => ({ params: { slug } }));
 }
-
-const { chapter } = Astro.props;
-const i = chapterIndex(chapter.slug);
-const prev = i > 0 ? chapters[i - 1] : null;
-const next = i < chapters.length - 1 ? chapters[i + 1] : null;
+const chapter = destinations[Astro.params.slug as keyof typeof destinations];
 ---
-<BaseLayout
-  title={`${chapter.title} | The Free Course | K & A Performance`}
-  noindex
-  description={chapter.blurb}
->
-  <section class="mx-auto max-w-7xl px-6 pt-28 pb-16 md:pt-32">
-    <div class="mb-3 flex flex-wrap items-center justify-between gap-4">
-      <p data-animate="type-settle" class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
-        <a href="/course/" class="transition-colors hover:text-accent">The free course</a>
-        <span class="text-accent" aria-hidden="true">&middot;</span>
-        {chapter.title}
-      </p>
-      <div class="flex items-center gap-5">
-        {prev && <a href={`/course/${prev.slug}/`} class="font-heading text-sm font-semibold tracking-wide text-muted transition-colors hover:text-accent">&larr; {prev.title}</a>}
-        {next && <a id="next-link" href={`/course/${next.slug}/`} class="font-heading text-sm font-semibold tracking-wide text-accent transition-colors hover:text-accent-hot">{next.title} &rarr;</a>}
-      </div>
-    </div>
-
-    <!-- Position without numerals: nine segments, done in accent, this one
-         in amber, the rest quiet. Screen readers get the words instead. -->
-    <div class="mb-5 flex gap-1.5" role="img" aria-label={`${chapter.title}: chapter ${i + 1} of ${chapters.length}`} id="chapter-progress" data-current={chapter.slug}>
-      {chapters.map((c) => (
-        <span data-seg={c.slug} class:list={['h-1 flex-1 rounded-full transition-colors', c.slug === chapter.slug ? 'bg-amber' : 'bg-ink/10']}></span>
-      ))}
-    </div>
-
-    <h1 class="sr-only">{chapter.title}</h1>
-
-    <!-- The chapter itself, wide now that Rise's column is gone. The
-         interactive scrolls inside its own document like it always did. -->
-    <div data-animate="frame-lift">
-      <iframe
-        id="chapter-frame"
-        src={`/course-app/assets/${chapter.dir}/`}
-        title={chapter.title}
-        class="glow-frame w-full"
-        style="height: max(76vh, 680px); border: 0;"
-        allow="microphone"
-        loading="eager"
-      ></iframe>
-    </div>
-
-    <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
-      <p data-animate="type-settle" class="text-sm text-muted">{chapter.blurb}</p>
-      <button id="mark-done" type="button" class="btn-accent">
-        {next ? `Done, next: ${next.title}` : 'Finish the course'}
-      </button>
-    </div>
-  </section>
-</BaseLayout>
-
-<script>
-  // Gate first, everything else after.
-  try {
-    const q = new URLSearchParams(location.search);
-    if (document.cookie.indexOf('ka_course=') === -1 && !q.has('pass')) {
-      location.replace('/free-course/');
-    } else if (q.has('pass')) {
-      document.cookie = 'ka_course=' + (q.get('pass') || '1') + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
-    }
-  } catch {}
-
-  const slug = location.pathname.split('/').filter(Boolean).pop()!;
-
-  // Own analytics: one view beacon per load, one done beacon per click.
-  // sendBeacon so navigation is never delayed; failures are nobody's problem.
-  const beacon = (event: string) => {
-    try {
-      navigator.sendBeacon('/api/course-event', new Blob([JSON.stringify({ c: slug, e: event })], { type: 'application/json' }));
-    } catch {}
-  };
-  beacon('view');
-
-  const done = () => {
-    try {
-      const list: string[] = JSON.parse(localStorage.getItem('ka_course_done') ?? '[]');
-      if (!list.includes(slug)) {
-        list.push(slug);
-        localStorage.setItem('ka_course_done', JSON.stringify(list));
-        beacon('done');
-      }
-    } catch {}
-  };
-
-  document.getElementById('mark-done')?.addEventListener('click', () => {
-    done();
-    const next = document.getElementById('next-link') as HTMLAnchorElement | null;
-    location.href = next ? next.href : '/course/';
-  });
-
-  // Paint finished chapters into the progress segments. Accent for done,
-  // amber stays on the current one.
-  try {
-    const list: string[] = JSON.parse(localStorage.getItem('ka_course_done') ?? '[]');
-    const current = document.getElementById('chapter-progress')?.dataset.current;
-    list.forEach((s) => {
-      if (s === current) return;
-      const seg = document.querySelector(`[data-seg="${s}"]`);
-      if (seg) {
-        seg.classList.remove('bg-ink/10');
-        seg.classList.add('bg-accent');
-      }
-    });
-  } catch {}
-</script>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><title>Continue the Course | K &amp; A Performance</title><meta name="robots" content="noindex,nofollow" /><link rel="canonical" href="https://ka-performancefl.com/course/" /></head>
+<body><p>The course has a new home. <a href={`/course/?chapter=${chapter}`}>Continue the lesson</a>.</p>
+<script is:inline define:vars={{ chapter }}>
+  const target = new URL('/course/', location.origin);
+  target.search = location.search;
+  target.searchParams.set('chapter', chapter);
+  location.replace(target.href);
+</script></body></html>
