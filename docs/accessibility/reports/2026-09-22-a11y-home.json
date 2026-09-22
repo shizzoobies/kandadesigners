@@ -1,0 +1,117 @@
+{
+  "date": "2026-09-22T23:05:02.350Z",
+  "origin": "http://127.0.0.1:52680",
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Gainesville Web Design & AI Integration | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Built on years of experience, made to perform"
+          },
+          {
+            "level": 2,
+            "text": "Recent builds"
+          },
+          {
+            "level": 3,
+            "text": "FDAAF"
+          },
+          {
+            "level": 2,
+            "text": "Web design in Gainesville, built in Gainesville"
+          },
+          {
+            "level": 2,
+            "text": "Accessible by default"
+          },
+          {
+            "level": 2,
+            "text": "Sites that think"
+          },
+          {
+            "level": 2,
+            "text": "Ninety days to one part of your business running on AI."
+          },
+          {
+            "level": 2,
+            "text": "In-house artistry"
+          },
+          {
+            "level": 3,
+            "text": "Bobbie"
+          },
+          {
+            "level": 3,
+            "text": "Jon Marc"
+          },
+          {
+            "level": 3,
+            "text": "Nicole"
+          },
+          {
+            "level": 2,
+            "text": "Customer reviews"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 4
+          }
+        ],
+        "passes": 25
+      },
+      "keyboard": {
+        "stops": 50,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 50,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "problems": [
+        "1 console error(s)"
+      ]
+    }
+  ]
+}

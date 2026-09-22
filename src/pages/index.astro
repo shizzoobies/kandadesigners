@@ -11,14 +11,78 @@ import ReviewsRail from '../components/ReviewsRail.astro';
        of client sites sweeps into the 3D horseshoe as you scroll. -->
   <HeroGallery />
 
+  <!-- The plain-words block, first after the hero on purpose: what the studio
+       does and where, in indexable copy with real links, before anything else
+       gets a word in. Its H2 is the first heading after the H1.
+       lg pulls it up into the hero's recede tail (this margin used to sit on
+       #a11y-home): the copy is already arriving while the last tiles fade, so
+       the canvas never sits blank between acts. -->
+  <section class="mx-auto max-w-6xl px-6 pt-14 pb-20 md:pb-24 lg:pt-16 lg:-mt-[34vh]">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-4xl">Web design in Gainesville, built in Gainesville</h2>
+    <div class="mt-6 grid max-w-5xl gap-8 md:grid-cols-2">
+      <div>
+        <p data-animate="type-settle" class="leading-relaxed text-muted">
+          K &amp; A Performance is a two-person studio doing
+          <a href="/services/web-design/" class="text-accent underline underline-offset-4 hover:text-accent-hot">custom website design</a>,
+          <a href="/services/ai-integration/" class="text-accent underline underline-offset-4 hover:text-accent-hot">AI integration</a>,
+          <a href="/services/seo-ai-search/" class="text-accent underline underline-offset-4 hover:text-accent-hot">SEO and AI search</a>,
+          and
+          <a href="/services/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility audits</a>
+          from
+          <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville, Florida</a>.
+          No templates, no page builders, no theme shared with a thousand other
+          companies: every build starts from a blank page and ships measured
+          against WCAG AA.
+        </p>
+        <p data-animate="type-settle" data-animate-delay="0.05" class="mt-5 leading-relaxed text-muted">
+          Two people, and you deal with both of them. Alex Anderson does the
+          design and the development, so the person who drew your layout is the
+          one writing the code and nothing gets mistranslated in a handoff
+          between departments that do not exist. Kristina Anderson runs
+          strategy and content, which in practice means asking why a page
+          exists at all and what it is meant to make somebody do once they are
+          on it. There is no account manager in the middle.
+        </p>
+        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-5 leading-relaxed text-muted">
+          Plenty of businesses pay a platform fee every month for the privilege
+          of not being allowed to edit their own opening hours. A well-built
+          site runs on modern global infrastructure for little to nothing a
+          month, and that is how we ship every build.
+        </p>
+      </div>
+      <div>
+        <p data-animate="type-settle" data-animate-delay="0.05" class="leading-relaxed text-muted">
+          The proof is already around town.
+          <a href="https://projectmakeover.org" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Project Makeover</a>,
+          the nonprofit out of the University of Florida that remakes a school
+          in a single weekend, runs on a site we built. So does the Florida
+          Disability Access and Awareness Foundation. So do
+          <a href="https://davidsbbq.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">David&#39;s BBQ</a>,
+          pit barbecue in town since 1978, and
+          <a href="https://osteenandsons.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Osteen &amp; Sons</a>,
+          the lawn, brush and junk crew whose site pulls your lot from county
+          records when you type in an address.
+        </p>
+        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-5 leading-relaxed text-muted">
+          Gainesville, Alachua, Newberry, High Springs and Ocala are close
+          enough to meet in person.
+          <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville</a>,
+          Orange Park, Fleming Island and St. Augustine run remote, the way
+          most projects do anyway. Curious about AI first? The
+          <a href="/free-course/" class="text-accent underline underline-offset-4 hover:text-accent-hot">free course</a>
+          costs an email, and the
+          <a href="/ai-launch/" class="text-accent underline underline-offset-4 hover:text-accent-hot">90-Day AI Launch</a>
+          puts it to work in your business.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Accessibility promise: the differentiator, stated plainly, beside a
        window sketching its own audit (same language as the hero sketch).
-       The draw starts while the gallery's empty tail is still on screen,
-       so the blank beat between sections gets filled. -->
-  <!-- lg pulls this section up into the hero's recede tail: the sketch is
-       already drawing while the last tiles fade, so the canvas never sits
-       blank between acts. -->
-  <section id="a11y-home" class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16 lg:-mt-[34vh]">
+       It follows the Gainesville block with normal spacing now that the
+       hero's pull-up belongs to that block. -->
+  <section id="a11y-home" class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16">
     <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
       <div>
         <h2 data-a11y-text class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent">by default</span></h2>
@@ -26,6 +90,17 @@ import ReviewsRail from '../components/ReviewsRail.astro';
           Every build is measured against WCAG AA: contrast, keyboard, screen
           readers, motion preferences. Already have a site? We'll check it and
           tell you exactly where it stands.
+        </p>
+        <p data-a11y-text class="mt-5 max-w-2xl leading-relaxed text-muted">
+          An audit hands back a written report in plain English, ordered by
+          what actually blocks somebody rather than by what a scanner found
+          most of. Each item says what the problem is, who it affects, which
+          WCAG criterion it fails, and what fixing it involves. Where a number
+          matters, the number is there. We hold our own work to the same
+          standard: this site publishes an
+          <a href="/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility statement</a>
+          saying what is in place, where we still fall short, and how to reach
+          a human if any of it gets in your way.
         </p>
         <div data-a11y-text class="mt-8">
           <a href="/services/#svc-a11y" class="btn-ghost">Get an accessibility check</a>
@@ -81,7 +156,20 @@ import ReviewsRail from '../components/ReviewsRail.astro';
       <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Sites that <span class="ai-pulse text-accent">think</span></h2>
       <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
         We integrate AI where it earns its place: assistants that qualify leads,
-        content engines, smart search. Ours is live right now:
+        content engines, smart search. Ours is live right now.
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.15" class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
+        Earning its place means one of three things. An assistant that answers
+        the questions your team answers forty times a week, at whatever hour
+        somebody turns up, then hands over a lead with the details already
+        collected. An automation nobody ever sees: intake that summarises
+        itself before it reaches an inbox, enquiries routed by what they are
+        actually about, quotes drafted from a conversation. Or AI inside the
+        product itself, where the customer never thinks about it. Kai, the
+        assistant on this site, is our own version of the first one. It knows
+        this business rather than a generic script, answers in text here and
+        out loud on the <a href="/services/" class="text-accent underline underline-offset-4 hover:text-accent-hot">services page</a>,
+        and passes a real lead to a human.
       </p>
       <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
         <a href="/contact/#scope" class="btn-accent">Scope your project with Kai</a>
@@ -102,6 +190,12 @@ import ReviewsRail from '../components/ReviewsRail.astro';
         your own account and the ability to run it without us. Add a full custom
         site for $3,999.
       </p>
+      <p data-animate="type-settle" data-animate-delay="0.25" class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
+        Three phases: an opportunity map and one quick win in the first two
+        weeks, the highest-value workflow in your business built together on
+        your real data through week eight, then you build the next one yourself
+        with Alex watching.
+      </p>
       <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10">
         <a href="/ai-launch/" class="btn-accent">See how the twelve weeks work</a>
       </div>
@@ -114,6 +208,13 @@ import ReviewsRail from '../components/ReviewsRail.astro';
     <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
       Original illustration and artwork through <a href="/artists/" class="font-semibold text-accent transition-colors hover:text-accent-hot">our collaborating artists</a>. Custom art is available on request, and most new builds include budget for a custom logo if you want one.
       Don't need a website? You can commission an artist on their own too. <a href="/contact/" class="font-semibold text-accent transition-colors hover:text-accent-hot">Reach out</a> and we'll make it happen.
+    </p>
+    <p data-animate="type-settle" data-animate-delay="0.15" class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
+      Bobbie draws: hand-lettered logotypes, character work, whole picture
+      books. Jon Marc builds identity systems that scale from a single mark to
+      a season of screens, shirts and social. Nicole designs for things that
+      get worn and handed out, from challenge coins to apparel to invitation
+      suites.
     </p>
     <div class="mt-14 grid gap-10 md:grid-cols-3">
       <a href="/artists/bobbie/" data-animate="frame-lift" class="group block">
@@ -143,39 +244,6 @@ import ReviewsRail from '../components/ReviewsRail.astro';
   <!-- Google reviews rail: live via /api/reviews, hidden until data (or
        placeholders on localhost) arrives -->
   <ReviewsRail />
-
-  <!-- The plain-words block: what we do and where, in indexable copy with
-       real links. The audit's finding was blunt: 307 words on a page whose
-       competitors carry 2,000, and no body path to the location pages. -->
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-4xl">Web design in Gainesville, built in Gainesville</h2>
-    <div class="mt-6 grid max-w-5xl gap-8 md:grid-cols-2">
-      <p data-animate="type-settle" class="leading-relaxed text-muted">
-        K &amp; A Performance is a two-person studio doing
-        <a href="/services/web-design/" class="text-accent underline underline-offset-4 hover:text-accent-hot">custom website design</a>,
-        <a href="/services/ai-integration/" class="text-accent underline underline-offset-4 hover:text-accent-hot">AI integration</a>,
-        <a href="/services/seo-ai-search/" class="text-accent underline underline-offset-4 hover:text-accent-hot">SEO and AI search</a>,
-        and
-        <a href="/services/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility audits</a>
-        from
-        <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville, Florida</a>.
-        No templates, no page builders, no theme shared with a thousand other
-        companies: every build starts from a blank page and ships measured
-        against WCAG AA.
-      </p>
-      <p data-animate="type-settle" data-animate-delay="0.1" class="leading-relaxed text-muted">
-        Gainesville, Alachua, Newberry and High Springs are close enough to
-        meet in person.
-        <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville</a>,
-        Orange Park, Fleming Island, St. Augustine and Ocala run remote, the
-        way most projects do anyway. Curious about AI first? The
-        <a href="/free-course/" class="text-accent underline underline-offset-4 hover:text-accent-hot">free course</a>
-        costs an email, and the
-        <a href="/ai-launch/" class="text-accent underline underline-offset-4 hover:text-accent-hot">90-Day AI Launch</a>
-        puts it to work in your business.
-      </p>
-    </div>
-  </section>
 
   <!-- Final CTA -->
   <section class="px-6 pb-40 pt-16">
@@ -220,11 +288,18 @@ import ReviewsRail from '../components/ReviewsRail.astro';
         .to(strokes, { strokeDashoffset: 0, duration: 3, stagger: 0.12, ease: 'none' }, 0)
         .from(texts, { x: -44, opacity: 0, duration: 1.1, stagger: 0.18, ease: 'power2.out' }, '>-0.5');
     } else {
-      // Mobile has no sketch: the copy gets the standard settle-in.
-      gsap.from(texts, {
-        y: 24, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 85%' },
-      });
+      // Mobile has no sketch: the copy gets the standard settle-in — but only
+      // the lines that are not already on screen when this runs. Same rule as
+      // motion.js: nothing parked at opacity 0 waiting for a scroll that a
+      // non-scrolling renderer will never make. The desktop branch above needs
+      // no such guard, because its from() is scrubbed rather than triggered.
+      const pending = texts.filter((el) => el.getBoundingClientRect().top >= window.innerHeight);
+      if (pending.length) {
+        gsap.from(pending, {
+          y: 24, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out',
+          scrollTrigger: { trigger: section, start: 'top 85%' },
+        });
+      }
     }
   }
 </script>

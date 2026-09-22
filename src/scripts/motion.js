@@ -30,7 +30,24 @@ if (reduced) {
   // triggers are killed, the new DOM is wired, and Lenis is told the page
   // changed height. Lenis and the ticker outlive pages on purpose.
   const initPage = () => {
+    // An element that is already on screen when the page settles gets no
+    // from-state at all: no gsap.from, no ScrollTrigger, it simply renders.
+    // Two reasons, in order of importance. A tall, non-scrolling renderer
+    // (a search engine's rendering pass, a full-page screenshot) reads the
+    // page in one frame, and anything parked at opacity 0 waiting for a
+    // scroll that never happens is invisible to it, which cost this site
+    // about a fifth of its home page copy. And on a normal screen, animating
+    // what the reader can already see is animation for its own sake: only
+    // the content that would have arrived on scroll still animates in.
+    //
+    // Measured live rather than assumed, so it stays honest wherever the
+    // page is: Lenis sits at scroll 0 on a fresh load, and on the
+    // ClientRouter pages initPage() runs again after each navigation, where
+    // the same question ("is this on screen right now?") is the right one.
+    const onScreenNow = (el) => el.getBoundingClientRect().top < window.innerHeight;
+
     document.querySelectorAll('[data-animate="type-settle"]').forEach((el) => {
+      if (onScreenNow(el)) return;
       gsap.from(el, {
         yPercent: 60, opacity: 0, duration: 0.8, ease: EASE,
         delay: parseFloat(el.dataset.animateDelay || 0),
@@ -90,6 +107,7 @@ if (reduced) {
     }
 
     document.querySelectorAll('[data-animate="frame-lift"]').forEach((el) => {
+      if (onScreenNow(el)) return;
       gsap.from(el, {
         y: 40, opacity: 0, duration: 0.8, ease: EASE,
         scrollTrigger: { trigger: el, start: 'top 85%' },
