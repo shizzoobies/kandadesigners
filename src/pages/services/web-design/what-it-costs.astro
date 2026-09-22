@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const PAGE_URL = 'https://ka-performancefl.com/services/web-design/what-it-costs/';
+
+// The cost questions people actually type, answered with the numbers this site
+// already publishes and nothing else. The visible answers and the FAQPage
+// schema below are the same strings, so they cannot drift apart. Proposed
+// intermediate bands live in the body prose, flagged with CONFIRM comments,
+// and deliberately never appear here: schema should carry settled facts only.
+const faqs = [
+  {
+    q: 'How much does a website cost?',
+    a: 'The published bands run from under $2,000 to $10,000 and up. Where a project lands depends on what the site has to do, not on how many pages it has, and the sections above walk through what moves it. The quote is free, and you know the number before any work starts.',
+  },
+  {
+    q: 'What does a website cost per page?',
+    a: 'Pages are the wrong unit. Eight pages sharing one layout is a smaller job than three that each do something different, and one page with a booking flow behind it can outweigh both. We price the work, not the page count, and the quote is free.',
+  },
+  {
+    q: 'Do I have to pay every month for hosting?',
+    a: 'Honestly, most businesses do not. A well-built site runs on modern global infrastructure for little to nothing a month, and that is how we ship every build. There is no monthly platform fee here, and no paying forever for the privilege of not being allowed to edit your own opening hours.',
+  },
+  {
+    q: 'Why is a custom site more than a template?',
+    a: 'A template is cheap because everyone else has it too. We start from a blank page instead: your structure, your words, your typography, your motion. What does not change with the budget is the standard. Every build ships measured against WCAG 2.2 AA.',
+  },
+  {
+    q: 'What does a redesign cost compared to a new site?',
+    a: 'It lands in the same bands, under $2,000 to $10,000 and up, because a redesign is the same work with more constraints. We audit and fix existing sites, especially for accessibility and speed. If a rebuild would honestly be better value than patching, we will tell you straight instead of billing you twice.',
+  },
+  {
+    q: 'What if there is genuinely no budget?',
+    a: 'Say so early rather than late. We have done fully free builds for nonprofits, and we would rather tell you on the first call that a job is not worth doing than take the money for something that will not earn it back.',
+  },
+  {
+    q: 'Is the quote really free?',
+    a: 'Yes, and it is a number rather than a range with an asterisk. Tell us what the site has to do, and we will tell you what it would take, what it would cost, and whether it is worth doing at all.',
+  },
+];
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://ka-performancefl.com/services/' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Custom website design',
+      item: 'https://ka-performancefl.com/services/web-design/',
+    },
+    { '@type': 'ListItem', position: 4, name: 'What it costs', item: PAGE_URL },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<BaseLayout
+  title="What a Website Costs in Gainesville | K & A Performance"
+  description="Honest website pricing from a Gainesville studio: the budget bands we publish, what moves a project up or down, no monthly platform fee, and a free quote."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      <a href="/services/" class="transition-colors hover:text-accent">Services</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span>
+      <a href="/services/web-design/" class="transition-colors hover:text-accent">Web design</a>
+      <span class="text-accent" aria-hidden="true">&middot;</span> What it costs
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      What a website costs, <span class="text-accent">without the runaround</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      Most studios will not give you a number until you have sat through a
+      discovery call. Here is ours, up front. Budget bands run from under
+      $2,000 to $10,000 and up, the quote is free, and you know your number
+      before anyone starts work.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">The short answer</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Under $2,000 to $10,000 and up. That is the honest span, and it is wide
+      because the jobs are. We have built sites for nothing at all, fully free,
+      for nonprofits, and we have run large engagements that carried on for
+      months. Both were the right price for what they were.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      What the range does not carry is a monthly bill. A well-built site runs on
+      modern global infrastructure for little to nothing a month, and that is how
+      we ship every build. No platform fee, and no arrangement where you pay
+      every month for the privilege of not being allowed to edit your own
+      opening hours.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      The quote is free, and it is a number rather than a range with an
+      asterisk on it. If the job is not worth doing, we will say that instead.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What moves the number</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Everything below is part of
+      <a href="/services/web-design/" class="text-accent underline underline-offset-4 hover:text-accent-hot">what a build includes</a>.
+      How much of each you need is the whole question.
+    </p>
+    <ul data-animate="type-settle" class="mt-6 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
+      <li>Page count, and how different the pages are from each other. Eight pages sharing one layout is a smaller job than three that each do something else.</li>
+      <li>Copy. We write and edit alongside you when you want that, because a handsome page saying nothing in particular still sells nothing.</li>
+      <li>Custom illustration and original artwork, for projects that want something nobody else has.</li>
+      <li>What the site has to do. Booking flows, donation paths, membership signups, patient portal handoffs, searchable directories. A brochure is not a booking system.</li>
+      <li>Integrations with the tools you run on, and AI assistants built into the site rather than bolted on beside it.</li>
+      <li>Ongoing work after launch. Plenty of clients never need any.</li>
+    </ul>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      What does not flex is the standard. Speed, clean structure, and
+      accessibility measured against WCAG 2.2 AA before launch are in every
+      build, whatever you spend.
+    </p>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      Very roughly, and always subject to the first conversation:
+    </p>
+    <ul data-animate="type-settle" class="mt-5 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
+      <li>A focused landing page doing one job: the bottom of the range, under $2,000. <!-- CONFIRM: proposed band, not yet published --></li>
+      <li>A working small-business site, several real pages, help with the copy: roughly $2,000 to $5,000. <!-- CONFIRM: proposed band, not yet published --></li>
+      <li>A build carrying integrations, an AI assistant, or original artwork: roughly $5,000 to $10,000. <!-- CONFIRM: proposed band, not yet published --></li>
+      <li>Larger than that, or ongoing month after month: $10,000 and up, where the published range stops pretending to be a range.</li>
+    </ul>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Run it over three years</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      One-time and monthly are hard to compare in a single year, which is
+      convenient for whoever is billing monthly. Stretch it to three. A one-time
+      build is one number paid once, then hosting that costs little to nothing a
+      month. A monthly platform is the same charge thirty-six times, whether or
+      not the site changed.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      We are not going to invent somebody else's price to win the argument. Use
+      your own: take what you pay each month, multiply by thirty-six, compare it
+      to a band above. If the monthly deal still wins, keep it. Plenty of
+      businesses are paying that fee for a site that has not changed since it
+      launched, and those are the ones worth a second look.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Low end, high end</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      At the bottom of the range you get one page that does one job properly.
+      Designed for you rather than chosen from a theme shop, fast on a phone in
+      a parking lot, keyboard and screen reader checked, one clear thing to
+      click. No blog, no store, no six layouts. Most businesses that think they
+      need eight pages need one good one and the patience to write it.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      At the top you get a site doing a job while you sleep. Bookings landing in
+      the calendar, donations clearing, a directory people search, an assistant
+      answering the four questions your inbox has answered a thousand times,
+      artwork drawn for you, copy written rather than borrowed. The difference
+      between the ends of the range is not polish. It is how much of your
+      business the site is running.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      Most projects land in the middle, and most get there by cutting
+      something. A smaller site you finish beats a larger one you abandon in
+      draft.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">How the quote works</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      It starts with a short call. You describe what the
+      business does and what the site has to make somebody do. We ask the
+      awkward questions early, because the expensive surprises live in the
+      answers nobody volunteers.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      Then you get the number, before work starts, with a real timeline. Most
+      sites launch in two to six weeks depending on scope, a focused landing
+      page moves fastest, and you hear the schedule in the first conversation
+      rather than after a deposit.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      The part people do not expect is that we will sometimes talk you out of
+      it. If patching the site you have beats replacing it, we will say so. If
+      the thing holding your business back is not the website at all, we will
+      say that too. Web design in Gainesville is a small enough world that a bad
+      fit costs more than the job was worth. How the local half runs is on the
+      <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville page</a>,
+      the remote half on the
+      <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville page</a>.
+    </p>
+  </section>
+
+  <!-- The cost questions people actually search, answered where a reader can
+       see them. The FAQPage markup in the head describes exactly these. -->
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <div class="mx-auto max-w-2xl text-left">
+      <h2 data-animate="type-settle" class="text-center font-mono text-sm font-semibold uppercase tracking-[0.2em] text-muted">Straight answers</h2>
+      <div data-animate="type-settle" data-animate-delay="0.1" class="mt-6">
+        {faqs.map((f) => (
+          <details class="faq-item">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 pb-40 pt-16 md:pt-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Get your <span class="text-accent">number</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        Tell us what the site has to do. We will come back with what it would
+        take, what it would cost, and whether it is worth doing at all. Free,
+        and nothing is owed either way.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="/contact/#scope" class="btn-accent">Scope a project</a>
+        <a href="/services/web-design/" class="btn-ghost">What a build includes</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
