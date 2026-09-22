@@ -16,6 +16,40 @@ const breadcrumb = {
   ],
 };
 
+// The four questions a Gainesville enquiry opens with. Every answer restates
+// something already said in the body of this page, which is the condition for
+// marking them up: FAQ markup over answers a reader cannot see on the page is
+// what gets the markup discounted rather than rewarded. Nothing new is
+// claimed here, and no price appears that is not already published.
+const faqs = [
+  {
+    q: 'Can we meet in person?',
+    a: 'Yes, when it helps. Most of the work runs over email, shared links, and a staging site you can open whenever you like, and plenty of clients never want more than that. But a first meeting in a room is genuinely faster for some businesses, so say so and we will come to you.',
+  },
+  {
+    q: 'Who actually does the work?',
+    a: 'Two people, and you will deal with both of them. Alex Anderson does the design and the development, so whoever drew your layout is the one writing the code. Kristina Anderson runs strategy and content. There is no account manager in the middle and no ticket queue.',
+  },
+  {
+    q: 'Do you work outside Gainesville?',
+    a: 'Alachua, Newberry, High Springs and Ocala are treated exactly like Gainesville: same in-person option, same response times, same pricing. Jacksonville and the rest of the coast run remote, which is described on the Jacksonville page.',
+  },
+  {
+    q: 'What does a quote cost?',
+    a: 'Nothing. Tell us what the site has to do and we will tell you what it would take, what it would cost, and whether it is worth doing at all.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 const services = [
   {
     href: '/services/web-design/',
@@ -44,6 +78,7 @@ const services = [
   description="Web design and AI integration from a Gainesville studio. Two founders, no account managers, in-person meetings if you want them, and quotes are always free."
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
 
   <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
     <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
@@ -161,6 +196,20 @@ const services = [
       remote, and it is described on the
       <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville page</a>.
     </p>
+  </section>
+
+  <!-- The questions that open a local enquiry, answered where a reader can
+       see them. The FAQPage markup in the head describes exactly these. -->
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Questions we get first</h2>
+    <dl class="mt-10 flex flex-col gap-8">
+      {faqs.map((f) => (
+        <div class="border-t border-ink/10 pt-6">
+          <dt class="font-heading text-lg font-semibold tracking-wide">{f.q}</dt>
+          <dd class="m-0 mt-3 leading-relaxed text-muted">{f.a}</dd>
+        </div>
+      ))}
+    </dl>
   </section>
 
   <div class="border-t border-ink/10">

@@ -46,12 +46,14 @@ const serviceSchema = {
   serviceType: deliverables.map((d) => d.title),
   description:
     "Custom eLearning and training content development: full courses, standard modules, microlearning, job aids, assessments, conversion, and accessibility remediation, delivered as SCORM, xAPI, or plain HTML into the client's own LMS.",
-  provider: {
-    '@type': 'ProfessionalService',
-    name: 'K & A Performance',
-    url: 'https://ka-performancefl.com/',
-  },
-  areaServed: { '@type': 'Country', name: 'United States' },
+  // Point at the organisation node BaseLayout already publishes, the way
+  // /ai-launch/ does, instead of restating a second, thinner copy of the
+  // business here and leaving search engines to guess they are the same one.
+  provider: { '@id': 'https://ka-performancefl.com/#organization' },
+  // Florida, not the whole country. The organisation node claims a service
+  // area of Florida cities; a Service claiming the United States on top of it
+  // is the kind of overreach that gets the smaller, true claim discounted too.
+  areaServed: { '@type': 'State', name: 'Florida' },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Engagement models',
@@ -83,6 +85,41 @@ const glyphs = [
   'M20 6 a3 3 0 1 1 -0.01 0 M8 15 h24 M20 15 v9 M20 24 l-6 10 M20 24 l6 10',
 ];
 
+// Questions we already answer on this page, pulled together where a reader
+// scanning for them can find them in one place. Every answer restates a fact
+// that is visible above it (the delivery block, the accessibility section, the
+// AI transparency section), because FAQ markup over content a reader cannot
+// see on the page is exactly what Google penalises. Nothing new is claimed
+// here, and nothing here carries a price.
+const faqs = [
+  {
+    q: 'Do you host our training content?',
+    a: 'No. Everything is delivered into your own LMS, in the package your system already accepts. We never receive learner data either: completion, scores, and identities stay in your system.',
+  },
+  {
+    q: 'What formats do you deliver?',
+    a: 'SCORM 1.2, SCORM 2004, xAPI, or plain HTML. Tell us the LMS and the version, and the build is tested inside it before you see the invoice for it.',
+  },
+  {
+    q: 'What accessibility standard do you build to?',
+    a: 'WCAG 2.1 AA, tested rather than claimed. Every build gets a keyboard pass, a read through with a real screen reader, measured contrast, a reduced-motion check, and all of it verified again inside your actual LMS.',
+  },
+  {
+    q: 'Do you use AI to build the content?',
+    a: 'Yes, and we will tell you exactly how. Authoring is AI-assisted with a human instructional designer reviewing and validating every output before it reaches you. Your confidential material never goes into a tool that trains on submitted content, and any restriction you need, from specific tools to no AI at all, is written into the statement of work.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 // The two doors out of this page, plus the asset enterprise buyers forward
 // internally. The bench stays deliberately unnamed here: the marketing-use
 // elections are not back.
@@ -103,11 +140,12 @@ const doors = [
 ---
 <BaseLayout
   clientRouter
-  title="Custom eLearning and Training Content Development | K & A Performance"
-  description="Custom eLearning development and instructional design: SCORM and xAPI course development, accessibility remediation for training, and construction and trades content, delivered into your own LMS."
+  title="Custom eLearning Content Development | K & A Performance"
+  description="Custom eLearning and instructional design: SCORM and xAPI courses, microlearning, job aids, and accessibility remediation, built into your own LMS."
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
 
   <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
     <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
@@ -119,10 +157,10 @@ const doors = [
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
       Senior instructional designers plus an AI-assisted production pipeline
-      compress timelines that normally run months. We are never the bottleneck.
-      Your review cycles set the schedule, and we write the review turnarounds
-      into the statement of work so the timeline is honest before anyone
-      commits to it.
+      compress eLearning timelines that normally run months. We are never the
+      bottleneck. Your review cycles set the schedule, and we write the review
+      turnarounds into the statement of work so the timeline is honest before
+      anyone commits to it.
     </p>
     <p data-animate="type-settle" data-animate-delay="0.3" class="mt-5 max-w-2xl leading-relaxed text-muted">
       Built for learning and development teams, HR, and training managers who
@@ -293,6 +331,21 @@ const doors = [
       covers what we build, how it ships, the accessibility standard, and how
       to reach us.
     </p>
+  </section>
+
+  <!-- The four questions every inquiry opens with, answered in one place.
+       Each answer repeats a fact already established above it; the FAQPage
+       markup in the head describes exactly these, and nothing else. -->
+  <section class="mx-auto max-w-4xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Questions we get first</h2>
+    <dl class="mt-10 flex flex-col gap-8">
+      {faqs.map((f) => (
+        <div class="border-t border-ink/10 pt-6">
+          <dt class="font-heading text-lg font-semibold tracking-wide">{f.q}</dt>
+          <dd class="m-0 mt-3 leading-relaxed text-muted">{f.a}</dd>
+        </div>
+      ))}
+    </dl>
   </section>
 
   <section id="inquire" class="scroll-mt-28 border-t border-ink/10 px-6 py-24 md:py-32">

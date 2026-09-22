@@ -51,6 +51,27 @@ Full local run with functions (uses your system `ANTHROPIC_API_KEY`):
 npx wrangler pages dev dist --port 8788 --compatibility-date=2026-06-18
 ```
 
+## The SEO gate (`scripts/seo-check.mjs`)
+
+A build gate that reads `dist/` and fails on the metadata rules the plan had already written down but nothing enforced. It is wired as npm's `postbuild`, so Cloudflare's `npm run build` fails the deploy rather than shipping a page that breaks them.
+
+What it enforces:
+
+- Every URL in the generated `dist/sitemap-0.xml` must have a `<title>` of **60 characters or fewer**, a `<meta name="description">` of **140 to 160 characters**, a canonical equal to its own sitemap URL, and **no** `noindex` robots meta (a page cannot both ask to be indexed and refuse).
+- Every other Astro route the build emits (`index.html` / `404.html`) must carry a `noindex` robots meta. Pass `noindex` to `BaseLayout` to get one.
+- Whether a page is an Astro route is decided from `src/pages`, so a routed page under a `NOINDEX` path (the course pages, the capabilities page) is still checked. Static files under a `NOINDEX` path are skipped: they live in `public/`, are already noindexed by `public/_headers`, and never pass through the layout. A static file outside every `NOINDEX` path fails, because nothing is keeping it out of the index. The script parses the `NOINDEX` array out of `astro.config.mjs` rather than keeping its own copy, so the two cannot drift.
+
+Lengths are counted on decoded text, not raw HTML, so the `&` in "K & A Performance" counts as one character rather than the five of `&#38;`.
+
+Because local builds bypass npm (see the Windows note above), run it by hand after a build:
+
+```bash
+node node_modules/astro/astro.js build
+node scripts/seo-check.mjs
+```
+
+It prints a row per page with both lengths and exits 1 on any failure. `npm run seo-check` does the same thing where npm works.
+
 ## Fonts licensing note
 
 Grivon + Neutrix are self-hosted woff2 in `public/fonts/`, converted from your Envato Elements downloads (originals in `fonts-drop/`, git-ignored). Licensed to your Envato account — keep the subscription record.

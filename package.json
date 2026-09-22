@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/seo-check.mjs",
+    "seo-check": "node scripts/seo-check.mjs",
     "preview": "astro preview"
   },
   "dependencies": {

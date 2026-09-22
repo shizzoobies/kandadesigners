@@ -42,6 +42,15 @@ const frame = [
 ];
 const meta = sample.kind + ' · ' + sample.vertical + ' · About ' + sample.minutes + ' minutes';
 
+// The suffix used to be " | Training Samples | K & A Performance", 39
+// characters ahead of the sample's own title, which pushed four of the six
+// rendered titles past 60. The trim belongs here and not in the sample titles:
+// those are the h1 on this page and the card title in the grid, they are
+// approved copy, and cutting them down to fit a suffix would be the tail
+// wagging the dog. The breadcrumb and the page copy carry the "training
+// samples" context the suffix was adding.
+const pageTitle = sample.title + ' | K & A Performance';
+
 const breadcrumb = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -80,8 +89,8 @@ const workSchema = {
 ---
 <BaseLayout
   clientRouter
-  title={sample.title + ' | Training Samples | K & A Performance'}
-  description={sample.what}
+  title={pageTitle}
+  description={sample.meta ?? sample.what}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(workSchema)} />

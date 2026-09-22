@@ -34,6 +34,34 @@ const bioFor = (p) =>
   p.bio ||
   'The approved bio goes here once this person has signed off on the wording. It will cover their field, what they carry on a K & A project, and the work they are proudest of.';
 
+// Published, or still waiting on a signed marketing-use election. A person is
+// published when they have both their own portrait and approved wording; the
+// three who have neither render the drawn placeholder and the "to follow"
+// line, and get no alt text and no schema, because there is nothing approved
+// to describe or to publish about them yet.
+const isPublished = (p) => Boolean(p.photo && p.bio);
+const portraitAlt = (p) => (isPublished(p) ? `Portrait of ${p.name}, ${p.role.toLowerCase()}` : '');
+
+// Person nodes for the published people only, each hung off the organisation
+// node BaseLayout emits. Everything in them is already rendered on this page:
+// the name, the role, the bio in the dialog, the portrait. `url` points at the
+// artist page for the three designers who have one.
+const SITE = 'https://ka-performancefl.com';
+const peopleSchema = {
+  '@context': 'https://schema.org',
+  '@graph': people.filter(isPublished).map((p) => ({
+    '@type': 'Person',
+    name: p.name,
+    jobTitle: p.role,
+    description: p.bio,
+    image: SITE + p.photo,
+    worksFor: { '@id': `${SITE}/#organization` },
+    // The same @id ArtistLayout uses, so the two Person nodes for a designer
+    // who also has an artist page merge into one entity instead of competing.
+    ...(p.link ? { '@id': `${SITE}${p.link}#person`, url: SITE + p.link } : {}),
+  })),
+};
+
 const breadcrumb = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -48,9 +76,10 @@ const breadcrumb = {
 <BaseLayout
   clientRouter
   title="Meet the Training Team | K & A Performance"
-  description="The people behind K & A's training content: the two owners, the instructional design bench, and the credentialed subject matter experts who check the field details."
+  description="The people behind K & A's training content: the two owners, the instructional design bench, and the subject matter experts who check the field details."
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(peopleSchema)} />
 
   <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
     <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
@@ -141,7 +170,7 @@ const breadcrumb = {
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="15" y2="15" /><line x1="15" y1="5" x2="5" y2="15" /></svg>
         </button>
         <div class="person-dialog-grid">
-          <img src={p.photo || PLACEHOLDER} alt="" width="400" height="500" class="person-dialog-photo" />
+          <img src={p.photo || PLACEHOLDER} alt={portraitAlt(p)} width="400" height="500" class="person-dialog-photo" />
           <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{p.role}</p>
             <h3 id={`person-bio-title-${i}`} tabindex="-1" class="mt-2 font-display text-3xl leading-tight">{p.name}</h3>

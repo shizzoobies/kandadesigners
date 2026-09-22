@@ -5,11 +5,32 @@ import BookFlip from '../components/BookFlip.astro';
 const { artist } = Astro.props;
 const hasGallery = artist.gallery?.length > 0;
 const hasArchive = artist.archive?.length > 0;
+
+const ORG_ID = 'https://ka-performancefl.com/#organization';
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+
+// The artist as a Person, hung off the organisation by @id rather than
+// describing a second business. Everything here is already on the page: the
+// name in the h1, the discipline under it, the bio in the first paragraph,
+// the portrait at the top. `worksFor` is the honest relation for a
+// collaborator commissioned and art-directed through the studio.
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${pageUrl}#person`,
+  name: artist.name,
+  url: pageUrl,
+  jobTitle: artist.discipline,
+  description: artist.bio,
+  image: new URL(artist.portrait, 'https://ka-performancefl.com/').href,
+  worksFor: { '@id': ORG_ID },
+};
 ---
 <BaseLayout
   title={`${artist.name} | Artist Collaborations | K & A Performance`}
-  description={`${artist.name}: ${artist.discipline}. Commission original work through K & A Performance, the Gainesville, FL studio that art-directs every piece.`}
+  description={`${artist.name}: ${artist.discipline}. Commission original work through K & A Performance, the Gainesville studio that art-directs every piece.`}
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
   <!-- Portrait hero -->
   <section class="mx-auto max-w-6xl px-6 pt-40 pb-20 md:pt-48">
     <div class="grid items-center gap-12 md:grid-cols-2 md:gap-16">

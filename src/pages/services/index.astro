@@ -20,6 +20,18 @@ const LOGO_FIELD = [
   left, top, size, rot, accent,
 }));
 
+// Home > Services. The four child service pages each emit a three-crumb trail
+// through this page; this is the two-crumb head of it, in the same shape, so
+// the hub is not the one link in the chain that goes unmarked.
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://ka-performancefl.com/services/' },
+  ],
+};
+
 const process = [
   { label: 'Discover', note: 'Goals, audience, scope.' },
   { label: 'Design', note: 'Structure, type, motion.' },
@@ -67,9 +79,10 @@ const services = [
 ];
 ---
 <BaseLayout
-  title="Web Design & AI Services in Florida | K & A Performance"
+  title="Florida Web Design & AI Services | K & A Performance"
   description="Purpose-built websites, AI integration, SEO and AI search, accessibility audits, and honest answers about hosting. Built in Gainesville, FL."
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
   <!-- Editorial header: centered title -->
   <section class="mx-auto max-w-4xl px-6 pt-40 pb-20 text-center md:pt-48">
     <h1 data-animate="type-settle" class="font-display text-[clamp(2.5rem,7vw,5.25rem)] leading-[1.02]">

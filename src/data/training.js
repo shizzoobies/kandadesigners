@@ -291,6 +291,8 @@ export const samples = [
     vertical: 'Construction and trades',
     minutes: 8,
     what: 'An eight-minute microlearning on writing a request for information that a design team can actually act on.',
+    // Meta description only; the card and page copy above stay as approved.
+    meta: 'An eight-minute microlearning on writing a request for information that a design team can actually act on, with branching scenarios and scored decisions.',
     demonstrates: 'An original demonstration piece with a drawing-set identity: a title block, sheet numbers, and red-pen markups. No client, no employer material; the scenario is invented.',
     technique: 'Scenario branching with immediate feedback, a drag-free sorting activity, and a knowledge check that scores the decision rather than the recall.',
     accessibility: 'Keyboard operable end to end, screen reader tested, reduced motion respected, WCAG 2.1 AA.',
@@ -312,6 +314,8 @@ export const samples = [
     vertical: 'Construction and trades',
     minutes: 9,
     what: 'A nine-minute module on jobsite hazard recognition: a walk-through method, a hazard hunt, and the hierarchy of controls.',
+    // Meta description only; the card and page copy above stay as approved.
+    meta: 'A nine-minute module on jobsite hazard recognition: a walk-through method, an illustrated hazard hunt, the hierarchy of controls, and stop-or-go calls.',
     demonstrates: 'An original demonstration piece with a high-visibility industrial identity. No client, no employer material; the jobsite is invented. It is a teaching sample, not a substitute for a site-specific safety program.',
     technique: 'An illustrated hazard hunt with hotspots that also work as a keyboard list, a drag-free hierarchy-of-controls sorter, rapid stop-or-go decisions with feedback, and a walk-through checklist the learner assembles.',
     accessibility: 'Keyboard operable end to end, hotspots exposed as a list for screen readers, reduced motion respected, WCAG 2.1 AA.',
@@ -327,6 +331,8 @@ export const samples = [
     vertical: 'Finance and accounting',
     minutes: 8,
     what: 'An eight-minute module for non-finance managers: what each line of a profit and loss statement means, why margin is the number that matters, and why profit is not cash.',
+    // Meta description only; the card and page copy above stay as approved.
+    meta: 'An eight-minute module for non-finance managers: what each line of a profit and loss statement means, why margin matters, and why profit is not cash.',
     demonstrates: 'An original demonstration piece with a ledger-book identity: ruled cream pages, folio numbers, a closing entry at the end. No client, no real figures; the business is invented. Reviewed for a general audience, not a substitute for advice from your accountant.',
     technique: 'A live profit and loss simulator with sliders and animated figures, a classify-the-line-item sorter, a profit-versus-cash scenario, and a margin check with a drawn waterfall chart.',
     accessibility: 'Keyboard operable end to end, sliders with accessible names and live value announcements, charts with text equivalents, reduced motion respected, WCAG 2.1 AA.',
@@ -347,6 +353,8 @@ export const samples = [
     vertical: 'Health and wellness',
     minutes: 8,
     what: 'An eight-minute module on everyday nutrition: the plate method, how to read a nutrition label, the two nutrients that keep you full, and the difference between hunger and habit.',
+    // Meta description only; the card and page copy above stay as approved.
+    meta: 'An eight-minute module on everyday nutrition: the plate method, how to read a nutrition label, the two nutrients that keep you full, and hunger versus habit.',
     demonstrates: 'An original demonstration piece with a recipe-card identity: index-card ruling, a produce-crate texture, and a plate that fills in as you learn. No client, no employer material. General education, not dietary advice.',
     technique: 'A plate diagram that draws itself, a build-a-plate sorter, a label-reading hotspot activity that also works as a list, a hunger-or-habit scenario quiz, and swap cards the learner keeps to build their own recipe card.',
     accessibility: 'Keyboard operable end to end, hotspots exposed as a list, diagrams with text equivalents, reduced motion respected, WCAG 2.1 AA.',
@@ -362,6 +370,8 @@ export const samples = [
     vertical: 'Health and wellness',
     minutes: 9,
     what: 'A nine-minute beginner module on strength training: why it matters at any age, the five movement patterns, how hard is hard enough, and how to build a first week you will actually do.',
+    // Meta description only; the card and page copy above stay as approved.
+    meta: 'A nine-minute beginner module on strength training: why it matters at any age, the five movement patterns, how hard is hard enough, and a first week plan.',
     demonstrates: 'An original demonstration piece with a chalk-and-iron identity: a gym floor at six in the morning, a barbell that loads a plate per screen, and rep counters in big numerals. No client, no employer material. General education, not a personal program.',
     technique: 'Flip-reveal cards, a movement-pattern sorter with illustrated figures, an effort slider with live plain-language readout, a spot-the-fault quiz with coaching cues, and a first-week planner the learner assembles.',
     accessibility: 'Keyboard operable end to end, sliders with accessible names and value text, illustrations described in text, reduced motion respected, WCAG 2.1 AA.',

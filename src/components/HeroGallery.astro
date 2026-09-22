@@ -158,8 +158,14 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     <!-- caption + controls: hidden until the horseshoe forms (desktop) -->
     <div id="hg-ui" class="relative z-30 mx-auto max-w-2xl px-6 pb-16 text-center lg:absolute lg:inset-x-0 lg:bottom-[4vh] lg:pb-0">
       <div class="min-h-[6.5rem]">
-        <h3 id="hg-title" class="font-heading text-xl tracking-wide text-ink"></h3>
-        <p id="hg-blurb" class="mt-2 text-sm leading-relaxed text-muted"></p>
+        <!-- Rendered with the first project's caption rather than left empty
+             for the script to fill in. setCaption(0) runs on load and
+             overwrites both of these anyway, but until it did, the served
+             HTML carried a heading with no text: no accessible name, and no
+             caption at all for anything reading the markup rather than
+             running it. -->
+        <h3 id="hg-title" class="font-heading text-xl tracking-wide text-ink">{projects[0].title}</h3>
+        <p id="hg-blurb" class="mt-2 text-sm leading-relaxed text-muted">{projects[0].blurb}</p>
         <p class="sr-only" id="hg-live" aria-live="polite"></p>
       </div>
       <div id="hg-dots" class="mt-4 flex items-center justify-center gap-3" role="tablist" aria-label="Choose project">

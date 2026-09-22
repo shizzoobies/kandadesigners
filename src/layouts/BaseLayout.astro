@@ -15,9 +15,26 @@ interface Props {
   ogImage?: string;
   /** Opt this page into Astro's ClientRouter (see the head comment). */
   clientRouter?: boolean;
+  /**
+   * Keep this page out of the index. Static files under public/ get the same
+   * treatment from the X-Robots-Tag rules in public/_headers, but an Astro
+   * route needs the meta tag, and until this prop existed no page on the site
+   * emitted one at all. The canonical stays in place either way: a noindexed
+   * page still declaring which URL it is is what stops a duplicate being
+   * picked in its place. Plain `noindex`, no `nofollow`: where a page should
+   * also not pass links, public/_headers already says so, and the two sources
+   * should not disagree about the same page.
+   */
+  noindex?: boolean;
 }
 
-const { title, description, ogImage = '/images/og-card.png?v=2', clientRouter = false } = Astro.props;
+const {
+  title,
+  description,
+  ogImage = '/images/og-card.png?v=2',
+  clientRouter = false,
+  noindex = false,
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
 // Sitewide identity for search engines. ProfessionalService (a LocalBusiness
@@ -138,6 +155,19 @@ const schema = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The pixel below fetches fbevents.js from connect.facebook.net after
+         load. Warming the connection here costs nothing and takes the DNS and
+         TLS round trips off that fetch. No crossorigin attribute on purpose:
+         the script tag it serves is not a CORS request, and a mismatched
+         preconnect opens a second, unused connection. -->
+    <link rel="preconnect" href="https://connect.facebook.net" />
+    <!-- The two faces every page paints above the fold: Schibsted Grotesk is
+         .font-display (the h1), Atkinson Hyperlegible Next is body and heading
+         text. The italic cuts, Fraunces (logo lockup only) and Lenia Mono
+         (which ships as .woff, not .woff2) are deliberately not preloaded:
+         preloading a face nothing above the fold uses just delays these two. -->
+    <link rel="preload" href="/fonts/Schibsted-VF.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/AtkinsonNext-VF.woff2" as="font" type="font/woff2" crossorigin />
     <!-- Meta domain verification. Must stay in place permanently: Meta re-checks
          periodically and un-verifies the domain if the tag disappears. -->
     <meta name="facebook-domain-verification" content="2go7mrp4qq77ardj8lsayydn6879x4" />
@@ -177,6 +207,7 @@ const schema = {
     <!-- End Meta Pixel Code -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <!-- ?v= bumps whenever the artwork changes: /images/* carries a 24h
          max-age, so reusing a bare filename would serve the old mark for a
