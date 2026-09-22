@@ -5,9 +5,9 @@ const PAGE_URL = 'https://ka-performancefl.com/services/web-design/what-it-costs
 
 // The cost questions people actually type, answered with the numbers this site
 // already publishes and nothing else. The visible answers and the FAQPage
-// schema below are the same strings, so they cannot drift apart. Proposed
-// intermediate bands live in the body prose, flagged with CONFIRM comments,
-// and deliberately never appear here: schema should carry settled facts only.
+// schema below are the same strings, so they cannot drift apart. The
+// intermediate bands (confirmed by Alex 2026-09-22) live in the body prose and
+// deliberately never appear here: schema should carry only the published range.
 const faqs = [
   {
     q: 'How much does a website cost?',
@@ -135,9 +135,9 @@ const faqSchema = {
       Very roughly, and always subject to the first conversation:
     </p>
     <ul data-animate="type-settle" class="mt-5 flex list-disc list-outside flex-col gap-3 pl-5 leading-relaxed text-muted marker:text-accent">
-      <li>A focused landing page doing one job: the bottom of the range, under $2,000. <!-- CONFIRM: proposed band, not yet published --></li>
-      <li>A working small-business site, several real pages, help with the copy: roughly $2,000 to $5,000. <!-- CONFIRM: proposed band, not yet published --></li>
-      <li>A build carrying integrations, an AI assistant, or original artwork: roughly $5,000 to $10,000. <!-- CONFIRM: proposed band, not yet published --></li>
+      <li>A focused landing page doing one job: the bottom of the range, under $2,000.</li>
+      <li>A working small-business site, several real pages, help with the copy: roughly $2,000 to $5,000.</li>
+      <li>A build carrying integrations, an AI assistant, or original artwork: roughly $5,000 to $10,000.</li>
       <li>Larger than that, or ongoing month after month: $10,000 and up, where the published range stops pretending to be a range.</li>
     </ul>
   </section>
