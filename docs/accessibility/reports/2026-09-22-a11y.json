@@ -1,0 +1,369 @@
+{
+  "date": "2026-09-22T22:46:34.669Z",
+  "origin": "http://127.0.0.1:54727",
+  "pages": [
+    {
+      "path": "/training/team/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Meet the Training Team | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "The people who actually build it"
+          },
+          {
+            "level": 2,
+            "text": "The team"
+          },
+          {
+            "level": 2,
+            "text": "What the bench covers"
+          },
+          {
+            "level": 3,
+            "text": "Curriculum architecture and assessment design"
+          },
+          {
+            "level": 3,
+            "text": "Visual design and illustrated learning"
+          },
+          {
+            "level": 3,
+            "text": "Interactive and scenario-based learning"
+          },
+          {
+            "level": 3,
+            "text": "Technical and compliance training"
+          },
+          {
+            "level": 2,
+            "text": "Talk to the person who will actually run your project"
+          },
+          {
+            "level": 3,
+            "text": "Alex Anderson"
+          },
+          {
+            "level": 3,
+            "text": "Kristina Anderson"
+          },
+          {
+            "level": 3,
+            "text": "Bobbie Connor"
+          },
+          {
+            "level": 3,
+            "text": "Jon Marc Ostrom"
+          },
+          {
+            "level": 3,
+            "text": "Nicole Cruz"
+          },
+          {
+            "level": 3,
+            "text": "James Hayes"
+          },
+          {
+            "level": 3,
+            "text": "Brittany Ferguson, CPA"
+          },
+          {
+            "level": 3,
+            "text": "Coty Jones"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "nodes": 8
+          },
+          {
+            "id": "color-contrast",
+            "nodes": 1
+          }
+        ],
+        "passes": 22
+      },
+      "keyboard": {
+        "stops": 40,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 40,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Training Content Samples | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Samples you can actually play"
+          },
+          {
+            "level": 2,
+            "text": "Where this stands today"
+          },
+          {
+            "level": 2,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "Spot it before it hurts someone"
+          },
+          {
+            "level": 2,
+            "text": "The P&L, read like an owner"
+          },
+          {
+            "level": 2,
+            "text": "Build the plate, skip the diet"
+          },
+          {
+            "level": 2,
+            "text": "Strong is a skill"
+          },
+          {
+            "level": 2,
+            "text": "Heat, done well"
+          },
+          {
+            "level": 2,
+            "text": "Accessibility remediation, before and after"
+          },
+          {
+            "level": 2,
+            "text": "Want one of these for your content"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 26
+      },
+      "keyboard": {
+        "stops": 39,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 39,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/training/samples/rfi-that-gets-answered/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "The RFI that gets answered | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "Ask about something like this"
+          },
+          {
+            "level": 2,
+            "text": "The RFI that gets answered"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 4
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 2,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 2,
+        "first": "button|View the course"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/course/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Free AI Course | K & A Performance | Gainesville, FL",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "AI curious? Start here."
+          },
+          {
+            "level": 2,
+            "text": "Free. Your email is the price."
+          },
+          {
+            "level": 2,
+            "text": "Made for the AI-curious"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 1
+          }
+        ],
+        "passes": 28
+      },
+      "keyboard": {
+        "stops": 29,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 29,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    }
+  ]
+}

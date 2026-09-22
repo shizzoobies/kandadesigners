@@ -1,0 +1,147 @@
+{
+  "date": "2026-09-22T22:30:52.160Z",
+  "origin": "http://127.0.0.1:65077",
+  "pages": [
+    {
+      "path": "/",
+      "accessibility": 95,
+      "bestPractices": 73,
+      "performance": 70,
+      "seo": 100,
+      "failingA11y": [
+        "heading-order: Heading elements are not in a sequentially-descending order",
+        "target-size: Touch targets do not have sufficient size or spacing."
+      ],
+      "failingBP": [
+        "errors-in-console: Browser errors were logged to the console",
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 6495,
+      "cls": 0.001,
+      "tbtMs": 89
+    },
+    {
+      "path": "/training/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 84,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3679,
+      "cls": 0,
+      "tbtMs": 152
+    },
+    {
+      "path": "/training/team/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 82,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 4353,
+      "cls": 0,
+      "tbtMs": 79
+    },
+    {
+      "path": "/training/samples/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 85,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3904,
+      "cls": 0,
+      "tbtMs": 86
+    },
+    {
+      "path": "/services/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 89,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3303,
+      "cls": 0,
+      "tbtMs": 118
+    },
+    {
+      "path": "/accessibility/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 91,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3052,
+      "cls": 0,
+      "tbtMs": 122
+    },
+    {
+      "path": "/locations/gainesville/",
+      "accessibility": 100,
+      "bestPractices": 73,
+      "performance": 86,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "errors-in-console: Browser errors were logged to the console",
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3603,
+      "cls": 0,
+      "tbtMs": 129
+    },
+    {
+      "path": "/locations/jacksonville/",
+      "accessibility": 100,
+      "bestPractices": 73,
+      "performance": 85,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "errors-in-console: Browser errors were logged to the console",
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 3603,
+      "cls": 0,
+      "tbtMs": 160
+    },
+    {
+      "path": "/artists/nicole/",
+      "accessibility": 100,
+      "bestPractices": 77,
+      "performance": 81,
+      "seo": 100,
+      "failingA11y": [],
+      "failingBP": [
+        "third-party-cookies: Uses third-party cookies",
+        "inspector-issues: Issues were logged in the `Issues` panel in Chrome Devtools"
+      ],
+      "lcpMs": 4204,
+      "cls": 0,
+      "tbtMs": 78
+    }
+  ]
+}
