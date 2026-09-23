@@ -1,0 +1,100 @@
+<section id="a11y-home" class="accessibility-home" aria-labelledby="home-accessibility-title">
+  <div class="accessibility-layout">
+    <home-accessibility-demo class="accessibility-workbench">
+      <div class="browser-top"><span aria-hidden="true" class="browser-dots"><i></i><i></i><i></i></span><span>A small usability check</span></div>
+      <div class="contrast-example">
+        <div class="example-label"><span>Read it at a glance</span><span class="sample-tag">Sample</span></div>
+        <div class="contrast-preview" data-preview aria-hidden="true">
+          <span class="preview-eyebrow">Your next project</span>
+          <span class="preview-heading">Let's make<br />something good.</span>
+          <span class="preview-caption">A little more clarity goes a long way.</span>
+          <span class="preview-button">Get in touch <span>↗</span></span>
+        </div>
+        <div class="contrast-toolbar" hidden>
+          <button type="button" data-contrast-toggle aria-pressed="true"><span class="toggle-track" aria-hidden="true"><span></span></span>Stronger contrast</button>
+        </div>
+        <p class="contrast-description" data-contrast-status aria-live="polite" aria-atomic="true">Dark text on a light background makes the example easier to read.</p>
+      </div>
+      <div class="keyboard-example">
+        <div class="keyboard-heading"><h3>Now try your keyboard.</h3><kbd>Tab</kbd></div>
+        <p>Use Tab to move between these links. The outline shows where you are. Enter opens the page.</p>
+        <div class="keyboard-links"><a href="/services/web-design/">Web design <span aria-hidden="true">↗</span></a><a href="/contact/">Contact us <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </home-accessibility-demo>
+    <div class="accessibility-copy">
+      <p class="eyebrow">Good design includes more people</p>
+      <h2 id="home-accessibility-title">Easy to use.<br /><span>Hard to overlook.</span></h2>
+      <p class="intro-copy">Readable text. A clear path with a keyboard. Room for the way someone actually uses the web.</p>
+      <p>These are two small examples. We also check screen reader support, motion preferences, forms, and the details that make a site work for more people.</p>
+      <a class="accessibility-link" href="/services/accessibility/">See what an accessibility audit covers <span aria-hidden="true">↗</span></a>
+      <a class="statement-link" href="/accessibility/">Read our own accessibility statement</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  class HomeAccessibilityDemo extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return;
+      this.dataset.ready = 'true';
+      const button = this.querySelector<HTMLButtonElement>('[data-contrast-toggle]');
+      const toolbar = this.querySelector<HTMLElement>('.contrast-toolbar');
+      const preview = this.querySelector<HTMLElement>('[data-preview]');
+      const status = this.querySelector<HTMLElement>('[data-contrast-status]');
+      if (!button || !preview || !status || !toolbar) return;
+      toolbar.hidden = false;
+      button.addEventListener('click', () => {
+        const stronger = button.getAttribute('aria-pressed') !== 'true';
+        button.setAttribute('aria-pressed', String(stronger));
+        preview.classList.toggle('low-contrast', !stronger);
+        status.textContent = stronger
+          ? 'Dark text on a light background makes the example easier to read.'
+          : 'The pale lettering in this example blends into the background. Turn stronger contrast back on to compare.';
+      });
+    }
+  }
+  if (!customElements.get('home-accessibility-demo')) customElements.define('home-accessibility-demo', HomeAccessibilityDemo);
+</script>
+
+<style>
+  .accessibility-home { padding: 96px 24px; }
+  .accessibility-layout { max-width: 1152px; margin: auto; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 80px; }
+  .accessibility-workbench { display: block; min-width: 0; border: 1px solid #b7aca0; background: var(--color-surface); box-shadow: 12px 12px 0 #eee6dd; }
+  .browser-top { display: flex; align-items: center; gap: 18px; padding: 15px 20px; border-bottom: 1px solid #d6cec3; color: var(--color-muted); font-family: var(--font-mono); font-size: .63rem; letter-spacing: .04em; }
+  .browser-dots { display: flex; gap: 5px; }.browser-dots i { width: 5px; height: 5px; border: 1px solid #8f8478; border-radius: 50%; }
+  .contrast-example { padding: 24px; }
+  .example-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: .85rem; margin-bottom: 16px; }
+  .sample-tag, .eyebrow, .preview-eyebrow { font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .08em; font-size: .68rem; }
+  .sample-tag { color: var(--color-muted); }
+  .contrast-preview { padding: 28px; background: #f4eee6; border: 1px solid #ded5cb; color: #221c15; display: flex; align-items: flex-start; flex-direction: column; }
+  .preview-eyebrow { margin-bottom: 18px; }
+  .preview-heading { font-family: var(--font-display); font-size: clamp(1.7rem, 3vw, 2.4rem); letter-spacing: -.035em; line-height: 1.15; }
+  .preview-caption { margin-top: 14px; font-size: .87rem; line-height: 1.5; }
+  .preview-button { display: flex; justify-content: space-between; gap: 28px; align-items: center; margin-top: 22px; border-bottom: 1px solid currentColor; padding-bottom: 7px; font-size: .86rem; }
+  .low-contrast { color: #bcb4aa; }
+  .contrast-toolbar { margin-top: 20px; }.contrast-toolbar[hidden] { display: none; }
+  .contrast-toolbar button { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 4px; background: transparent; color: var(--color-ink); font-size: .88rem; cursor: pointer; }
+  .toggle-track { display: inline-flex; align-items: center; width: 38px; height: 22px; padding: 3px; background: #6c635a; border-radius: 16px; }
+  .toggle-track > span { width: 16px; height: 16px; border-radius: 50%; background: #fffdf9; }
+  [aria-pressed="true"] .toggle-track { background: #9a3412; }[aria-pressed="true"] .toggle-track > span { transform: translateX(16px); }
+  .contrast-description { min-height: 42px; font-size: .8rem; line-height: 1.5; color: var(--color-muted); margin: 8px 0 0; }
+  .keyboard-example { padding: 24px; border-top: 1px solid #d6cec3; }
+  .keyboard-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  h3 { font-size: 1rem; margin: 0; font-weight: 600; }
+  kbd { padding: 4px 9px; border: 1px solid #b7aca0; box-shadow: 0 2px 0 #d6cec3; border-radius: 4px; font-family: var(--font-mono); font-size: .75rem; }
+  .keyboard-example p { font-size: .85rem; line-height: 1.55; color: var(--color-muted); margin: 12px 0 20px; }
+  .keyboard-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .keyboard-links a { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 44px; border: 1px solid #b7aca0; padding: 8px 14px; color: var(--color-ink); font-size: .9rem; }
+  .keyboard-links a:hover { background: #f4eee6; }
+  a:focus-visible, button:focus-visible { outline: 3px solid #9a3412; outline-offset: 4px; }
+  .eyebrow { color: var(--color-accent); margin: 0 0 20px; line-height: 1.6; }
+  h2 { font-family: var(--font-display); font-size: clamp(2rem, 4.7vw, 3.75rem); line-height: 1.07; letter-spacing: -.045em; margin: 0; }
+  h2 span { color: var(--color-accent); }
+  .accessibility-copy > p:not(.eyebrow) { color: var(--color-muted); font-size: 1rem; line-height: 1.7; margin: 20px 0; }
+  .accessibility-copy > .intro-copy { color: var(--color-ink) !important; font-size: 1.25rem !important; line-height: 1.55 !important; margin-top: 28px !important; }
+  .accessibility-link { display: inline-flex; align-items: center; gap: 12px; color: var(--color-accent); border-bottom: 1px solid #9a3412; padding-bottom: 9px; margin-top: 12px; line-height: 1.5; }
+  .statement-link { display: block; width: fit-content; margin-top: 20px; color: var(--color-muted); font-size: .85rem; text-decoration: underline; text-underline-offset: 4px; }
+  @media (prefers-reduced-motion: no-preference) { .contrast-preview { transition: color .22s ease; } .toggle-track > span { transition: transform .18s ease; } }
+  @media (max-width: 960px) { .accessibility-layout { gap: 40px; grid-template-columns: 1fr 1fr; }.accessibility-copy { align-self: center; }.contrast-preview { padding: 20px; }.contrast-example, .keyboard-example { padding: 20px; } }
+  @media (max-width: 700px) { .accessibility-home { padding: 48px 24px; }.accessibility-layout { grid-template-columns: 1fr; gap: 32px; }.accessibility-copy { grid-row: 1; }.accessibility-workbench { box-shadow: 7px 7px 0 #eee6dd; }.contrast-description { min-height: 60px; } }
+</style>
