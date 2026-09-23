@@ -8,51 +8,37 @@
     "binding": "ASSETS",
     "directory": "./dist"
   },
+  // ka-sites is the sites dashboard's own database. The old ka-admin database
+  // is an archive (it still receives free-course leads from the public site
+  // through that project's ADMIN_DB binding) and is deliberately not bound here.
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "ka-admin",
-      "database_id": "7e6d2716-1744-4618-a971-d12308a7bc5b"
+      "database_name": "ka-sites",
+      // Filled in at deploy (Task 16) from `wrangler d1 create ka-sites`.
+      // Local development and tests do not need the real id.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
     }
+  ],
+  "r2_buckets": [
+    { "binding": "LOGOS", "bucket_name": "ka-sites-logos" }
   ],
   // Identifiers, not secrets: the AUD tag names the Access application and the
   // team domain is public. Both are safe to commit.
   "vars": {
     "ACCESS_TEAM_DOMAIN": "kandaperformance.cloudflareaccess.com",
-    "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900",
-    // Newsletter sender. ka-performancefl.com is already verified in the
-    // Resend account (Resend's records live on their own subdomains, so
-    // Google Workspace's inbound MX on the apex is untouched). The
-    // RESEND_API_KEY secret is set separately via secret bulk.
-    "NEWSLETTER_FROM": "K & A Performance <news@ka-performancefl.com>"
+    "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900"
   },
-  // A Route, not a Custom Domain, and deliberately so.
-  //
-  // Custom Domain attachment fails with API code 100117, "already has externally
-  // managed DNS records", because a proxied A record already exists at this
-  // hostname. Routes are the mechanism that WANTS a pre-existing proxied record,
-  // so the thing blocking one path is the prerequisite of the other. The record
-  // points at 192.0.2.1 (RFC 5737 documentation space, deliberately unroutable);
-  // the Worker intercepts every request before anything is sent there.
-  //
-  // If the DNS record is ever deleted, switch back to:
-  //   { "pattern": "admin.ka-performancefl.com", "custom_domain": true }
+  // A Route, not a Custom Domain: a proxied A record (192.0.2.1, deliberately
+  // unroutable) already sits at this hostname, and Custom Domain attachment
+  // fails with API code 100117 because of it. Routes want that record.
   "routes": [
     { "pattern": "admin.ka-performancefl.com/*", "zone_name": "ka-performancefl.com" }
   ],
   "observability": { "enabled": true },
-  // False since 2026-09-22. admin.ka-performancefl.com is live, so the route
-  // above is the only door that should exist.
-  //
-  // This was not merely tidy-up. The old comment claimed "the app denies by
-  // default, so this URL is not a hole", which was true only of paths the
-  // middleware runs on. Static assets in ./dist are served by the assets
-  // binding BEFORE any Worker code, so on the workers.dev hostname, where
-  // Cloudflare Access does not apply, every file under public/ answered 200 to
-  // anyone who guessed the URL. The parked Launch Book was one of them and it
-  // carries a client's commercial terms; it has since moved behind the
-  // middleware (see src/pages/launch-book.js). Turning this off closes the
-  // ungated hostname as well, so the remaining static assets (fonts,
-  // favicons) are reachable only through Access.
+  // Off since 2026-09-22. Static assets are served before any Worker code, and
+  // Access does not cover workers.dev, so this hostname was once an ungated
+  // door. The route above is the only way in.
   "workers_dev": false
 }
