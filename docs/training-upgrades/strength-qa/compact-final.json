@@ -1,0 +1,128 @@
+[
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "Welcome to the studio",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "Your starting point",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "Strength for everyday life",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "The movement library",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "The movement sorting bench",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "Find a manageable challenge",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "The coaching lens",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "Your planning studio",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": false,
+    "h": 720,
+    "lesson": "Take the practice with you",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "Welcome to the studio",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "Your starting point",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "Strength for everyday life",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "The movement library",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "The movement sorting bench",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "Find a manageable challenge",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "The coaching lens",
+    "overflow": 0,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "Your planning studio",
+    "overflow": 15,
+    "w": 1280
+  },
+  {
+    "audio": true,
+    "h": 900,
+    "lesson": "Take the practice with you",
+    "overflow": 7,
+    "w": 1280
+  }
+]

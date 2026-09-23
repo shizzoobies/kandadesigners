@@ -1,0 +1,110 @@
+[
+  {
+    "duration": 21.362358,
+    "h": 900,
+    "mainBottom": 611,
+    "overflow": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "Welcome to the studio",
+    "time": 0.18254,
+    "trayTop": 629,
+    "w": 1280
+  },
+  {
+    "duration": 28.606984,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 4,
+    "paused": false,
+    "ready": 4,
+    "screen": "Your starting point",
+    "time": 0.187469,
+    "trayTop": 620.078125,
+    "w": 1280
+  },
+  {
+    "duration": 23.498594,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 8,
+    "paused": false,
+    "ready": 4,
+    "screen": "Strength for everyday life",
+    "time": 0.189769,
+    "trayTop": 620.078125,
+    "w": 1280
+  },
+  {
+    "duration": 25.40263,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "The movement library",
+    "time": 0.186986,
+    "trayTop": 620.078125,
+    "w": 1280
+  },
+  {
+    "duration": 24.288073,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "The movement sorting bench",
+    "time": 0.188518,
+    "trayTop": 620.078125,
+    "w": 1280
+  },
+  {
+    "duration": 23.034195,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "Find a manageable challenge",
+    "time": 0.187845,
+    "trayTop": 620.078125,
+    "w": 1280
+  },
+  {
+    "duration": 27.492426,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "The coaching lens",
+    "time": 0.190758,
+    "trayTop": 620.078125,
+    "w": 1280
+  },
+  {
+    "duration": 27.260227,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 70,
+    "paused": false,
+    "ready": 4,
+    "screen": "Your planning studio",
+    "time": 0.188037,
+    "trayTop": 620.078125,
+    "w": 1280
+  },
+  {
+    "duration": 24.798912,
+    "h": 900,
+    "mainBottom": 602.078125,
+    "overflow": 25,
+    "paused": false,
+    "ready": 4,
+    "screen": "Take the practice with you",
+    "time": 0.184898,
+    "trayTop": 620.078125,
+    "w": 1280
+  }
+]
