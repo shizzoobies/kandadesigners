@@ -8,4 +8,6 @@ The introduction is shorter and the page contains no internal bio drafting or si
 
 ## Verification
 
-Build and browser verification are recorded after the isolated branch is checked. Do not publish or deploy from this branch.
+Build and profile browser verification are recorded in `showcase-team-qa/verification.md`.
+
+The final integrated polish replaces the four legacy screenshot backdrops in the bench section with current illustrated course covers and separate title areas. Profile behavior and team data are unchanged. No production deployment is included.
