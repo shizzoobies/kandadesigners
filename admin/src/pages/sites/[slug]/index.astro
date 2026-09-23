@@ -1,0 +1,182 @@
+---
+import Shell from '../../../layouts/Shell.astro';
+import SiteLogo from '../../../components/SiteLogo.astro';
+import LevelDot from '../../../components/LevelDot.astro';
+import * as q from '../../../lib/db.js';
+import { computeLevel } from '../../../lib/health.js';
+import { uptimePercent, hourlyAverages, sparklinePath } from '../../../lib/sparkline.js';
+import { humanDate, easternDateTime, todayEastern } from '../../../lib/when.js';
+import { HOSTING_LABEL, PROJECT_STATUS, STATUS_LABEL } from '../../../lib/enums.js';
+
+const DB = Astro.locals.runtime.env.DB;
+const site = await q.getSiteBySlug(DB, Astro.params.slug);
+if (!site) return new Response('Not found', { status: 404 });
+
+const now = Date.now();
+const [checks, work, log, people] = await Promise.all([
+  q.checksSince(DB, site.id, new Date(now - 30 * 86400000).toISOString()),
+  q.listWorkItems(DB, site.id),
+  q.listLog(DB, site.id),
+  q.listPeople(DB),
+]);
+const { level, reason } = computeLevel(site, checks.slice(0, 12), now);
+const uptime = uptimePercent(checks);
+const path = sparklinePath(hourlyAverages(checks), 480, 44);
+const githubItems = work.filter((w) => w.source === 'github');
+const manualItems = work.filter((w) => w.source === 'manual');
+const maintainer = people.find((p) => p.id === site.maintainer_id);
+const err = Astro.url.searchParams.get('err');
+const msg = Astro.url.searchParams.get('msg');
+const orNone = (v) => v ?? 'Not set';
+const where = [
+  ['Repo', site.repo, site.repo ? `https://github.com/${site.repo}` : null],
+  ['Local folder', site.local_path, null],
+  ['Deploy command', site.deploy_command, null],
+];
+---
+<Shell title={site.name}>
+  {err && msg && <div class="alert" role="alert">{msg}</div>}
+
+  <div class="site-head" id="top">
+    <SiteLogo site={site} size="lg" />
+    <div class="meta">
+      <h1>{site.name}</h1>
+      <LevelDot level={level} reason={reason} />
+      <div>
+        <span class="caps">{STATUS_LABEL[site.project_status]}</span>
+        {site.status_note && <span> {site.status_note}</span>}
+      </div>
+      <details class="edit">
+        <summary>Change status</summary>
+        <form method="post" action={`/sites/${site.slug}/status`} class="row">
+          <div class="field">
+            <label for="project_status">Status</label>
+            <select id="project_status" name="project_status">
+              {PROJECT_STATUS.map((s) => <option value={s} selected={s === site.project_status}>{STATUS_LABEL[s]}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="status_note">Note</label>
+            <input type="text" id="status_note" name="status_note" value={site.status_note} maxlength="140" />
+          </div>
+          <button class="btn" type="submit">Save status</button>
+        </form>
+      </details>
+    </div>
+    <div class="actions">
+      <a class="btn" href={site.live_url} target="_blank" rel="noopener">Visit site<span class="sr"> (opens in a new tab)</span></a>
+      <a class="btn quiet" href={`/sites/${site.slug}/edit`}>Edit details</a>
+    </div>
+  </div>
+
+  <section class="section" aria-labelledby="where-h">
+    <h2 id="where-h">Where it lives</h2>
+    <dl class="facts">
+      <dt>Live site</dt><dd><a href={site.live_url}>{site.live_url}</a></dd>
+      <dt>Hosting</dt><dd>{HOSTING_LABEL[site.hosting]}</dd>
+      {where.map(([label, value, href]) => (
+        <>
+          <dt>{label}</dt>
+          <dd>
+            {value
+              ? <>{href ? <a href={href}><code>{value}</code></a> : <code>{value}</code>}<button class="copy" type="button" data-copy={value} hidden>Copy<span class="sr"> {label}</span></button></>
+              : 'Not set'}
+          </dd>
+        </>
+      ))}
+      <dt>Maintained by</dt><dd>{maintainer ? maintainer.name : 'Not assigned'}</dd>
+    </dl>
+  </section>
+
+  <section class="section" id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Open work</h2>
+    {err === 'work' || err === 'work-done' ? <p class="err" role="alert">{msg}</p> : null}
+    <h3 class="caps">From GitHub</h3>
+    {!site.repo
+      ? <p>No repo set, so nothing is read from GitHub.</p>
+      : githubItems.filter((w) => !w.done_at).length === 0
+        ? <p>Nothing open{site.github_synced_at ? `, as of ${easternDateTime(site.github_synced_at)}` : ', not synced yet'}.</p>
+        : <ul class="work">{githubItems.filter((w) => !w.done_at).map((w) => <li><a href={w.url}>{w.text}</a></li>)}</ul>}
+    <h3 class="caps">Your list</h3>
+    <ul class="work">
+      {manualItems.map((w) => (
+        <li>
+          <form method="post" action={`/sites/${site.slug}/work-done`}>
+            <input type="hidden" name="id" value={w.id} />
+            <input type="hidden" name="done" value={w.done_at ? '0' : '1'} />
+            <button class="copy" type="submit">{w.done_at ? 'Reopen' : 'Done'}<span class="sr">: {w.text}</span></button>
+          </form>
+          <span class={w.done_at ? 'done' : ''}>{w.text}</span>
+        </li>
+      ))}
+    </ul>
+    <form method="post" action={`/sites/${site.slug}/work`} class="row">
+      <div class="field" style="flex: 1 1 240px">
+        <label for="work-text">Add an item</label>
+        <input type="text" id="work-text" name="text" maxlength="200" required />
+      </div>
+      <button class="btn" type="submit">Add</button>
+    </form>
+  </section>
+
+  <section class="section" id="a11y" aria-labelledby="a11y-h">
+    <h2 id="a11y-h">Accessibility</h2>
+    {err === 'a11y' && <p class="err" role="alert">{msg}</p>}
+    <dl class="facts">
+      <dt>Last audit</dt><dd>{site.a11y_audited_on ? humanDate(site.a11y_audited_on) : 'Not set'}</dd>
+      <dt>Open issues</dt><dd>{orNone(site.a11y_open_issues)}</dd>
+      <dt>Statement</dt><dd>{site.a11y_statement_url ? <a href={site.a11y_statement_url}>{site.a11y_statement_url}</a> : 'Not published'}</dd>
+    </dl>
+    <details class="edit">
+      <summary>Update accessibility</summary>
+      <form method="post" action={`/sites/${site.slug}/a11y`} class="stack">
+        <div class="field"><label for="a11y_audited_on">Last audit</label><input type="date" id="a11y_audited_on" name="a11y_audited_on" value={site.a11y_audited_on ?? ''} /></div>
+        <div class="field"><label for="a11y_open_issues">Open issues</label><input type="number" min="0" step="1" id="a11y_open_issues" name="a11y_open_issues" value={site.a11y_open_issues ?? ''} /></div>
+        <div class="field"><label for="a11y_statement_url">Statement address</label><input type="url" id="a11y_statement_url" name="a11y_statement_url" value={site.a11y_statement_url ?? ''} /></div>
+        <div><button class="btn" type="submit">Save accessibility</button></div>
+      </form>
+    </details>
+  </section>
+
+  <section class="section" aria-labelledby="health-h">
+    <h2 id="health-h">Health</h2>
+    <dl class="facts">
+      <dt>Uptime, 30 days</dt><dd>{uptime === null ? 'No checks yet' : `${uptime}%`}</dd>
+      <dt>Last checked</dt><dd>{checks[0] ? easternDateTime(checks[0].checked_at) : 'Never'}</dd>
+      <dt>Certificate expires</dt><dd>{site.cert_expires_on ? humanDate(site.cert_expires_on) : 'Unknown'}</dd>
+      <dt>Domain expires</dt><dd>{site.domain_expires_on ? humanDate(site.domain_expires_on) : 'Unknown'}</dd>
+    </dl>
+    {path && (
+      <figure>
+        <svg class="spark" viewBox="0 0 480 44" role="img" aria-label="Response time, hourly average, last 30 days"><path d={path} /></svg>
+        <figcaption class="caps">Response time, hourly average, last 30 days</figcaption>
+      </figure>
+    )}
+  </section>
+
+  <section class="section" id="log" aria-labelledby="log-h">
+    <h2 id="log-h">Log</h2>
+    {err === 'log' && <p class="err" role="alert">{msg}</p>}
+    <form method="post" action={`/sites/${site.slug}/log`} class="row">
+      <div class="field"><label for="entry_date">Date</label><input type="date" id="entry_date" name="entry_date" value={todayEastern(now)} /></div>
+      <div class="field" style="flex: 1 1 240px"><label for="log-text">What happened</label><input type="text" id="log-text" name="text" maxlength="500" required /></div>
+      <button class="btn" type="submit">Add entry</button>
+    </form>
+    {log.length === 0
+      ? <p>No entries yet.</p>
+      : <ul class="log">{log.map((e) => <li><time class="caps" datetime={e.entry_date}>{humanDate(e.entry_date)}</time>{e.text}</li>)}</ul>}
+  </section>
+
+  <script>
+    // Copy buttons are hidden until JavaScript can make them work.
+    for (const btn of document.querySelectorAll('[data-copy]')) {
+      btn.hidden = false;
+      btn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        const label = btn.firstChild;
+        label.textContent = 'Copied';
+        setTimeout(() => { label.textContent = 'Copy'; }, 1500);
+      });
+    }
+  </script>
+</Shell>
