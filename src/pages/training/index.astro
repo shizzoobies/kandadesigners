@@ -1,26 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import TrainingSubnav from '../../components/TrainingSubnav.astro';
+import TrainingOverview from '../../components/TrainingOverview.astro';
+import { trainingPresentation } from '../../data/trainingPresentation.js';
 import {
   section,
-  verticals,
   deliverables,
-  delivery,
-  pipeline,
-  accessibility,
-  aiTransparency,
   engagementModels,
   inquiryFields,
 } from '../../data/training.js';
 
-// The anchor page of the training content service line. Every fact on this
-// page comes from src/data/training.js, which carries the four hard
-// constraints from the business brief: no pricing, no unaudited portfolio
-// work, no names without permission, no throughput numbers. Nothing is
-// duplicated here, so when Alex's answers arrive that file is the whole edit.
-//
-// House rules that apply everywhere on this page: no em dashes, no pill or
-// chip UI, no numbered kickers, tokens only for color.
+// The overview presentation is separate from the established inquiry flow.
+// Service facts and publication decisions remain in training.js.
 
 const PAGE_URL = 'https://ka-performancefl.com/training/';
 
@@ -65,26 +55,6 @@ const serviceSchema = {
   },
 };
 
-// One drawn glyph per deliverable, in the site's sketch line. Decorative:
-// the title beside each one carries the meaning, so they are hidden from
-// assistive technology. Order matches `deliverables` exactly.
-const glyphs = [
-  // Full courses: stacked modules
-  'M5 12 l15 -7 l15 7 l-15 7 Z M5 20 l15 7 l15 -7 M5 27 l15 7 l15 -7',
-  // Standard modules: one screen taught properly
-  'M7 7 h26 v26 h-26 Z M12 14 h16 M12 20 h16 M12 26 h10',
-  // Microlearning: minutes on one thing
-  'M20 6 a14 14 0 1 1 -0.01 0 M20 12 v8 l6 4',
-  // Job aids: the checklist that lives next to the work
-  'M13 8 h14 v4 h-14 Z M13 10 h-5 v25 h24 v-25 h-5 M13 21 l3 3 l6 -7 M13 29 h14',
-  // Assessments: the check that measures the decision
-  'M20 6 a14 14 0 1 1 -0.01 0 M13 20 l5 5 l9 -11',
-  // Conversion and refresh: the loop
-  'M8 20 a12 12 0 0 1 20 -8 M28 6 v6 h-6 M32 20 a12 12 0 0 1 -20 8 M12 34 v-6 h6',
-  // Accessibility remediation: the figure
-  'M20 6 a3 3 0 1 1 -0.01 0 M8 15 h24 M20 15 v9 M20 24 l-6 10 M20 24 l6 10',
-];
-
 // Questions we already answer on this page, pulled together where a reader
 // scanning for them can find them in one place. Every answer restates a fact
 // that is visible above it (the delivery block, the accessibility section, the
@@ -120,26 +90,10 @@ const faqSchema = {
   })),
 };
 
-// The two doors out of this page, plus the asset enterprise buyers forward
-// internally. The bench stays deliberately unnamed here: the marketing-use
-// elections are not back.
-const doors = [
-  {
-    href: '/training/samples/',
-    title: 'Play a working sample',
-    blurb: 'Real content running in a browser, keyboard operable, not a screenshot and not a download wall.',
-    backdrop: '/images/training/backdrops/overview-samples.jpg?v=2',
-  },
-  {
-    href: '/training/team/',
-    title: 'Meet the team',
-    blurb: 'The two owners, the instructional designers, and the subject matter experts who check the field details.',
-    backdrop: '/images/training/backdrops/overview-bench.jpg?v=2',
-  },
-];
 ---
 <BaseLayout
   clientRouter
+  ogImage={trainingPresentation['hazard-recognition'].shareImage}
   title="Custom eLearning Content Development | K & A Performance"
   description="Custom eLearning and instructional design: SCORM and xAPI courses, microlearning, job aids, and accessibility remediation, built into your own LMS."
 >
@@ -147,230 +101,7 @@ const doors = [
   <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
 
-  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
-    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
-      <a href="/services/" class="transition-colors hover:text-accent">Services</a>
-      <span class="text-accent" aria-hidden="true">&middot;</span> Training content
-    </p>
-    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
-      Training content built <span class="text-accent">without the wait</span>
-    </h1>
-    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-      Senior instructional designers plus an AI-assisted production pipeline
-      compress eLearning timelines that normally run months. We are never the
-      bottleneck. Your review cycles set the schedule, and we write the review
-      turnarounds into the statement of work so the timeline is honest before
-      anyone commits to it.
-    </p>
-    <p data-animate="type-settle" data-animate-delay="0.3" class="mt-5 max-w-2xl leading-relaxed text-muted">
-      Built for learning and development teams, HR, and training managers who
-      have a backlog, a deadline, and a subject matter expert with about an
-      hour to spare.
-    </p>
-    <div data-animate="type-settle" data-animate-delay="0.4" class="mt-10 flex flex-wrap items-center gap-6">
-      <button type="button" data-inquire class="btn-draw">Start an inquiry</button>
-      <a href="/training/samples/" class="btn-ghost">See a working sample</a>
-    </div>
-  </section>
-
-  <TrainingSubnav />
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Where we are deepest</h2>
-    <div class="mt-10 grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-4">
-      {verticals.map((v, i) => (
-        <div data-animate="type-settle" data-animate-delay={i * 0.1} class="border-t border-ink/10 pt-6">
-          <h3 class="font-heading text-lg font-semibold tracking-wide">{v.title}</h3>
-          <p class="mt-3 leading-relaxed text-muted">{v.blurb}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What we build</h2>
-    <div class="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
-      {deliverables.map((d, i) => (
-        <div data-animate="type-settle" class="flex items-start gap-5">
-          <svg class="mt-1 h-9 w-9 shrink-0 text-accent" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d={glyphs[i]} />
-          </svg>
-          <div>
-            <h3 class="font-heading text-lg font-semibold tracking-wide">{d.title}</h3>
-            <p class="mt-2 leading-relaxed text-muted">{d.blurb}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- The one dark moment on this page. It earns it: the hosting and
-       learner-data lines are the sentences that close procurement's file. -->
-  <section class="dark-band border-y border-ink/10">
-    <div class="mx-auto max-w-6xl px-6 py-20 md:py-24">
-      <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
-        Your LMS, <span class="text-accent">your data</span>
-      </h2>
-      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        Content ships in the package your system already accepts. Tell us the
-        LMS and the version, and the build is tested inside it before you see
-        the invoice for it.
-      </p>
-
-      <ul data-animate="type-settle" data-animate-delay="0.2" class="mt-12 grid gap-x-10 gap-y-6 sm:grid-cols-2 md:grid-cols-4">
-        {delivery.formats.map((f) => (
-          <li class="border-t border-ink/25 pt-4 font-heading text-lg font-semibold tracking-wide">{f}</li>
-        ))}
-      </ul>
-
-      <div class="mt-14 grid gap-8 md:grid-cols-3">
-        {delivery.notes.map((n, i) => (
-          <p data-animate="type-settle" data-animate-delay={0.1 + i * 0.1} class="leading-relaxed text-muted">{n}</p>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">How we work</h2>
-    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-      Six stages, in this order, on every project. You always know which one
-      you are in and what you owe us before the next one starts.
-    </p>
-
-    <div class="relative mt-12">
-      <!-- Decorative rail joining the six stages on wide screens. The list
-           below is the content; at phone width this draws nothing. -->
-      <div class="absolute inset-x-0 top-3 hidden h-px bg-ink/15 lg:block" aria-hidden="true"></div>
-      <ol class="grid gap-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6">
-        {pipeline.map((step, i) => (
-          <li data-animate="type-settle" data-animate-delay={i * 0.06} class="relative">
-            <span class="mb-5 hidden h-1.5 w-1.5 rounded-full bg-accent lg:block lg:translate-y-[0.15rem]" aria-hidden="true"></span>
-            <h3 class="font-heading text-base font-semibold tracking-wide lg:mt-0">{step.label}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted">{step.note}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <div class="grid gap-12 md:grid-cols-[1fr_1fr] md:gap-16">
-      <div>
-        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Accessibility, tested</h2>
-        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 text-lg leading-relaxed text-muted">
-          Client content is built and delivered to {accessibility.standard}.
-          Not claimed against it, tested against it, by a person, in the place
-          your learners will actually open it.
-        </p>
-        <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 leading-relaxed text-muted">
-          We audit websites too. Our
-          <a href="/services/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility audit service</a>
-          applies the same passes to the site your training sits behind, and
-          this site publishes
-          <a href="/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">its own accessibility statement</a>
-          so you can read what we hold ourselves to before you hire us to hold
-          anything else to it. The owner is pursuing IAAP CPACC certification.
-        </p>
-      </div>
-      <div>
-        <h3 data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.25em] text-muted">Every build gets these five passes</h3>
-        <ul data-animate="type-settle" data-animate-delay="0.1" class="mt-6 flex list-disc list-outside flex-col gap-4 pl-5 leading-relaxed text-muted marker:text-accent">
-          {accessibility.tests.map((t) => <li>{t}</li>)}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-4xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
-      Yes, we use AI. <span class="text-accent">Here is exactly how.</span>
-    </h2>
-    <div class="mt-10 flex flex-col gap-6">
-      {aiTransparency.map((line, i) => (
-        <p data-animate="type-settle" data-animate-delay={i * 0.1} class="border-t border-ink/10 pt-6 text-lg leading-relaxed text-muted">{line}</p>
-      ))}
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Three ways to work together</h2>
-    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-      Which one fits is a conversation about your backlog and your calendar,
-      not a menu you pick from cold.
-    </p>
-    <div class="mt-12 grid gap-8 md:grid-cols-3">
-      {engagementModels.map((m, i) => (
-        <div data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame tr-frame flex flex-col p-8">
-          <h3 class="font-display text-2xl">{m.title}</h3>
-          <p class="mt-4 flex-1 leading-relaxed text-muted">{m.shape}</p>
-          <div class="mt-8">
-            <button type="button" data-inquire class="btn-ghost">Ask about this</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">See the work</h2>
-    <div class="mt-12 grid gap-8 md:grid-cols-2">
-      {doors.map((d, i) => (
-        <a href={d.href} data-animate="frame-lift" data-animate-delay={i * 0.1} class="glow-frame tr-frame backdrop-card group flex min-h-[14rem] flex-col p-8" style={`--bd: url('${d.backdrop}')`}>
-          <h3 class="font-display text-2xl">{d.title}</h3>
-          <p class="mt-4 flex-1 leading-relaxed text-muted">{d.blurb}</p>
-          <p class="mt-6 font-heading text-sm font-semibold tracking-wide text-accent">
-            Take a look <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
-          </p>
-        </a>
-      ))}
-    </div>
-    <p data-animate="type-settle" class="mt-10 leading-relaxed text-muted">
-      Need something to forward internally? Our
-      <a href={section.pdf} download class="text-accent underline underline-offset-4 hover:text-accent-hot">capabilities one-pager (PDF)</a>
-      covers what we build, how it ships, the accessibility standard, and how
-      to reach us.
-    </p>
-  </section>
-
-  <!-- The four questions every inquiry opens with, answered in one place.
-       Each answer repeats a fact already established above it; the FAQPage
-       markup in the head describes exactly these, and nothing else. -->
-  <section class="mx-auto max-w-4xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Questions we get first</h2>
-    <dl class="mt-10 flex flex-col gap-8">
-      {faqs.map((f) => (
-        <div class="border-t border-ink/10 pt-6">
-          <dt class="font-heading text-lg font-semibold tracking-wide">{f.q}</dt>
-          <dd class="m-0 mt-3 leading-relaxed text-muted">{f.a}</dd>
-        </div>
-      ))}
-    </dl>
-  </section>
-
-  <section id="inquire" class="scroll-mt-28 border-t border-ink/10 px-6 py-24 md:py-32">
-    <div class="mx-auto max-w-4xl text-center">
-      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
-        Tell us what you need <span class="text-accent">built</span>
-      </p>
-      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-        The form asks the questions a first call would ask, so the reply is
-        useful instead of a request for more information. Alex reads every
-        inquiry himself and answers within one business day.
-      </p>
-      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
-        <button type="button" data-inquire class="btn-draw">Start an inquiry</button>
-      </div>
-      <noscript>
-        <p class="mx-auto mt-8 max-w-2xl text-sm leading-relaxed text-muted">
-          The form needs JavaScript. Prefer email? Write to
-          <a href={'mailto:' + section.email} class="text-accent underline underline-offset-4">{section.email}</a>
-          with what you need built, who takes it, and when you need it, and we
-          will pick it up from there.
-        </p>
-      </noscript>
-    </div>
-  </section>
+  <TrainingOverview faqs={faqs} />
 
   <!-- The inquiry modal. Every [data-inquire] button on the page opens it;
        the native dialog gives Esc, focus containment, and a real backdrop
@@ -382,12 +113,7 @@ const doors = [
           <h2 id="tr-modal-title" class="font-display text-2xl md:text-3xl">Training inquiry</h2>
           <p class="mt-2 text-sm leading-relaxed text-muted">Four questions are required. The rest just make the reply better.</p>
         </div>
-        <button type="button" id="tr-modal-close" class="-m-2 p-2 text-muted transition-colors hover:text-ink" aria-label="Close">
-          <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
-            <line x1="5" y1="5" x2="15" y2="15" />
-            <line x1="15" y1="5" x2="5" y2="15" />
-          </svg>
-        </button>
+        <button type="button" id="tr-modal-close" class="inquiry-close" aria-label="Close inquiry">Close <span aria-hidden="true">↙</span></button>
       </div>
 
       <form id="tr-form" class="flex flex-col gap-6" novalidate>
@@ -535,6 +261,8 @@ const doors = [
 </BaseLayout>
 
 <style>
+  .inquiry-close { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--color-accent); background: transparent; color: var(--color-accent); font: 700 .85rem var(--font-heading); cursor: pointer; }
+  .inquiry-close:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
   /* The inquiry modal: a bare dialog shell so the glow-frame inside is the
      only visible surface, floating on a blurred ink wash. Same treatment as
      the intake modal on /ai-launch/. */
