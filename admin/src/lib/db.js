@@ -9,7 +9,7 @@ const nil = (v) => (v === undefined ? null : v);
 // people
 
 export async function getPersonByEmail(db, email) {
-  return db.prepare('SELECT id, name, email, role FROM people WHERE email = ?')
+  return db.prepare('SELECT id, name, email, role FROM people WHERE email = ? COLLATE NOCASE')
     .bind(String(email ?? '').toLowerCase()).first();
 }
 

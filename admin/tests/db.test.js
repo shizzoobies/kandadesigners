@@ -18,6 +18,11 @@ describe('people', () => {
     expect(await q.getPersonByEmail(db, 'ALEX@example.com')).toMatchObject({ name: 'Alex', role: 'owner' });
     expect(await q.getPersonByEmail(db, 'nobody@example.com')).toBeNull();
   });
+
+  it('finds a person even when their stored email has capital letters', async () => {
+    await db.prepare("INSERT INTO people (name, email, role, created_at) VALUES ('Alex', 'Alex@Example.com', 'owner', 't')").run();
+    expect(await q.getPersonByEmail(db, 'alex@example.com')).toMatchObject({ name: 'Alex', role: 'owner' });
+  });
 });
 
 describe('sites', () => {
