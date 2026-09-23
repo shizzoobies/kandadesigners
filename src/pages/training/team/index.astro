@@ -102,7 +102,7 @@ const breadcrumb = {
                     <span class="org-action">Read profile <span aria-hidden="true">&rarr;</span></span>
                   </button>
                   ) : (
-                    <div class="org-person org-person-pending" aria-label={`${p.name}, ${p.role}. Profile coming soon.`}>
+                    <div class="org-person org-person-pending">
                       <span class="org-portrait org-initials" aria-hidden="true">{p.name.split(/\s+/).map((part) => part[0]).join('').replace(',', '').slice(0, 2)}</span>
                       <span class="org-name">{p.name}</span>
                       <span class="org-title">{p.line}</span>
