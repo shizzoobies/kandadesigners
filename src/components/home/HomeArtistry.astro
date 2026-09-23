@@ -1,0 +1,82 @@
+<section class="artistry" aria-labelledby="home-artistry-title">
+  <div class="art-intro">
+    <div>
+      <p class="eyebrow">Made by a human</p>
+      <h2 id="home-artistry-title">Art with a<br /><span>point of view.</span></h2>
+    </div>
+    <div class="art-description">
+      <p>Characters, lettering, identities, and things you can hold. Meet the artists we collaborate with to give your project its own personality.</p>
+      <a href="/artists/" class="text-link">Explore the artists <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <div class="art-spread">
+    <figure class="book-art">
+      <a href="/artists/bobbie/" class="art-image" aria-label="Explore Bobbie's illustrated picture book">
+        <img src="/images/art/book/hha-04.webp?v=1" width="1200" height="927" alt="Hope and Harry peer from a green plane flying beneath a painted turquoise and purple aurora." loading="lazy" decoding="async" />
+      </a>
+      <figcaption>
+        <div><a href="/artists/bobbie/">Bobbie <span aria-hidden="true">↗</span></a><p>Illustration &amp; brand artwork</p></div>
+        <span class="work-note">Hope &amp; Harry's<br />Alaskan Adventure</span>
+      </figcaption>
+    </figure>
+    <div class="art-details">
+      <figure>
+        <a href="/artists/jon-marc/" class="art-image lettering" aria-label="Explore Jon Marc's graphic design">
+          <img src="/media/homepage/jon-marc-dance.webp" width="800" height="554" alt="A high heel composed of black dance lettering, including spins, right turn, and all night." loading="lazy" decoding="async" />
+        </a>
+        <figcaption><div><a href="/artists/jon-marc/">Jon Marc <span aria-hidden="true">↗</span></a><p>Graphic design &amp; visual identity</p></div></figcaption>
+      </figure>
+      <figure class="coin-art">
+        <a href="/artists/nicole/" class="art-image" aria-label="Explore Nicole's identity and merchandise design">
+          <img src="/images/art/nc-king-neptune.webp?v=2" width="900" height="566" alt="Both sides of Nicole's King Neptune Navy challenge coin, with a gold trident, ships, and blue waves." loading="lazy" decoding="async" />
+        </a>
+        <figcaption><div><a href="/artists/nicole/">Nicole <span aria-hidden="true">↗</span></a><p>Brand identity &amp; merchandise</p></div></figcaption>
+      </figure>
+    </div>
+  </div>
+  <p class="commission-note">Have a project just for an artist? <a href="/contact/">You can commission artwork on its own.</a></p>
+</section>
+
+<style>
+  .artistry { max-width: 1152px; margin-inline: auto; padding: 88px 24px; }
+  .art-intro { display: grid; grid-template-columns: 1.1fr 1fr; align-items: end; gap: 48px; margin-bottom: 40px; }
+  .eyebrow { font: 0.72rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.18em; color: var(--color-accent); margin: 0 0 18px; }
+  h2 { font: 700 clamp(2rem, 4.8vw, 3.75rem)/1.07 var(--font-display); letter-spacing: -0.035em; margin: 0; }
+  h2 span { color: var(--color-accent); }
+  .art-description p { max-width: 36ch; font-size: 1.1rem; line-height: 1.65; color: var(--color-muted); margin: 0 0 20px; }
+  .text-link { color: var(--color-accent); font-weight: 700; text-decoration: underline; text-underline-offset: 6px; }
+  .text-link span { display: inline-block; margin-left: 12px; }
+  .art-spread { display: grid; grid-template-columns: 1.55fr 1fr; gap: 32px; align-items: start; }
+  figure { min-width: 0; margin: 0; }
+  .art-image { display: block; background: white; border: 1px solid rgb(34 28 21 / 14%); overflow: hidden; }
+  .art-image img { display: block; width: 100%; height: auto; }
+  .book-art { margin-top: 42px; }
+  .book-art .art-image { box-shadow: 10px 10px 0 #eae1d8; }
+  .art-details { display: grid; gap: 32px; }
+  .art-details .art-image img { max-height: 240px; object-fit: contain; }
+  .coin-art { margin-left: 30px; }
+  .coin-art .art-image { background: #f8f5f2; }
+  figcaption { display: flex; justify-content: space-between; align-items: start; gap: 12px; padding-top: 16px; }
+  figcaption a { display: inline-flex; gap: 18px; align-items: center; min-height: 24px; font: 700 1.2rem var(--font-heading); text-decoration: none; }
+  figcaption a:hover { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; }
+  figcaption a span { font-size: 1rem; color: var(--color-accent); }
+  figcaption p { margin: 4px 0 0; font-size: 0.9rem; color: var(--color-muted); }
+  .work-note { text-align: right; font-size: 0.8rem; line-height: 1.5; color: var(--color-muted); }
+  .commission-note { border-top: 1px solid rgb(34 28 21 / 16%); margin: 32px 0 0; padding-top: 22px; font-size: 0.95rem; color: var(--color-muted); }
+  .commission-note a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; }
+  a:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 5px; }
+  @media (max-width: 767px) {
+    .artistry { padding-block: 48px; }
+    .art-intro { grid-template-columns: 1fr; gap: 24px; margin-bottom: 28px; }
+    .art-description p { max-width: none; font-size: 1rem; }
+    .art-spread { grid-template-columns: 1fr; gap: 32px; }
+    .book-art { margin-top: 0; }
+    .art-details { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .art-details .art-image { aspect-ratio: 1; display: grid; place-items: center; }
+    .coin-art { margin-left: 0; padding-top: 32px; }
+    figcaption { gap: 8px; }
+    figcaption a { font-size: 1.1rem; gap: 12px; }
+    figcaption p { font-size: 0.8rem; line-height: 1.5; }
+    .work-note { max-width: 135px; font-size: 0.72rem; }
+  }
+</style>

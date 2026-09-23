@@ -1,0 +1,128 @@
+---
+const phases = [
+  { key: 'find', label: 'Find the opportunity', time: 'Weeks 1 to 2', title: 'Start with a job worth doing.', copy: 'Map the repetitive work in your business, choose a useful place to start, and get your own account ready.', deliverable: 'An opportunity map', note: 'Illustrative example: a studio intake workflow', rows: [['The task', 'Turn incoming inquiries into a useful project brief.'], ['The friction', 'Details arrive across emails and notes.'], ['The opportunity', 'Collect the context in one place for a person to review.']] },
+  { key: 'build', label: 'Build it together', time: 'Weeks 3 to 8', title: 'Work on your actual workflow.', copy: 'Build alongside Alex using your real work. Try it, check what comes back, and improve the parts that need attention.', deliverable: 'A working process', note: 'Illustrative example: an inquiry becomes a brief', rows: [['Collect', 'Ask what the customer needs and what is missing.'], ['Organize', 'Draft a brief with goals, constraints, and open questions.'], ['Review', 'A person checks the draft before using it.']] },
+  { key: 'run', label: 'Run it yourself', time: 'Weeks 9 to 12', title: 'Leave with the controls.', copy: 'Build the next workflow yourself with Alex watching. Keep the handoff document, recorded walkthroughs, and a written plan for what comes next.', deliverable: 'Your operating guide', note: 'Illustrative example: a handoff checklist', rows: [['How to run it', 'Where to start and what a good result looks like.'], ['What to check', 'The details a person needs to verify.'], ['What comes next', 'The next useful improvement to work on.']] },
+];
+---
+<section class="launch-section" aria-labelledby="home-launch-title" data-home-launch>
+  <div class="launch-inner">
+    <header>
+      <p class="eyebrow">The 90-Day AI Launch</p>
+      <h2 id="home-launch-title">Build it with us.<br /><span>Make it yours.</span></h2>
+      <p class="launch-intro">Twelve weeks, one on one. A useful workflow in your own account, and the ability to run it yourself.</p>
+    </header>
+    <div class="phase-nav" aria-label="Explore the twelve-week program">
+      {phases.map((phase) => <a href={`#launch-${phase.key}`} data-phase-link><span class="phase-time">{phase.time}</span><span>{phase.label}</span><span aria-hidden="true" class="phase-arrow">→</span></a>)}
+    </div>
+    <div class="phase-panels">
+      {phases.map((phase) => (
+        <article class="phase-panel" id={`launch-${phase.key}`} data-phase-panel>
+          <div class="phase-copy"><p class="eyebrow">{phase.time}</p><h3>{phase.title}</h3><p>{phase.copy}</p></div>
+          <div class="deliverable">
+            <div class="paper-heading"><span class="paper-mark">Your build</span><p>What you take away</p></div>
+            <h4>{phase.deliverable}</h4>
+            <p class="sample-note">{phase.note}</p>
+            <dl>{phase.rows.map(([label, text]) => <div><dt>{label}</dt><dd>{text}</dd></div>)}</dl>
+          </div>
+        </article>
+      ))}
+    </div>
+    <a href="/ai-launch/" class="launch-cta">See how the twelve weeks work <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .launch-section { background: var(--color-surface); border-block: 1px solid rgb(34 28 21 / 12%); }
+  .launch-inner { max-width: 1152px; margin-inline: auto; padding: 88px 24px; }
+  header { max-width: 750px; }
+  .eyebrow { font: 0.72rem var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 18px; }
+  h2 { font: 700 clamp(2rem, 4.8vw, 3.75rem)/1.07 var(--font-display); letter-spacing: -0.035em; margin: 0; }
+  h2 span { color: var(--color-accent); }
+  .launch-intro { font-size: 1.1rem; line-height: 1.65; color: var(--color-muted); max-width: 55ch; margin: 24px 0 0; }
+  .phase-nav { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 40px; border: 1px solid rgb(34 28 21 / 22%); }
+  .phase-nav a { position: relative; padding: 22px 42px 22px 24px; font-size: 1.05rem; font-weight: 700; text-decoration: none; border-right: 1px solid rgb(34 28 21 / 18%); background: var(--color-canvas); }
+  .phase-nav a:last-child { border-right: 0; }
+  .phase-nav a:hover { background: #eee6de; }
+  .phase-nav a[aria-selected="true"] { background: var(--color-ink); color: var(--color-surface); }
+  .phase-time { display: block; font: 0.7rem var(--font-mono); margin-bottom: 8px; color: var(--color-muted); }
+  .phase-nav a[aria-selected="true"] .phase-time { color: #ded3c8; }
+  .phase-arrow { position: absolute; right: 20px; bottom: 24px; }
+  .phase-panel { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 64px; padding: 38px 0; min-height: 448px; scroll-margin-top: 100px; }
+  .phase-panel[hidden] { display: none; }
+  .phase-copy h3 { font: 700 clamp(1.6rem, 2.7vw, 2.25rem)/1.15 var(--font-display); letter-spacing: -0.02em; max-width: 15ch; margin: 0 0 20px; }
+  .phase-copy > p:last-child { max-width: 37ch; color: var(--color-muted); font-size: 1.05rem; line-height: 1.7; margin: 0; }
+  .deliverable { padding: 28px 32px; border: 1px solid rgb(34 28 21 / 22%); box-shadow: 7px 7px 0 #eee5dc; background: var(--color-surface); }
+  .paper-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid rgb(34 28 21 / 15%); padding-bottom: 16px; margin-bottom: 20px; }
+  .paper-heading p { font: 0.64rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; margin: 0; color: var(--color-muted); }
+  .paper-mark { font: 700 1rem var(--font-display); color: var(--color-accent); }
+  h4 { font: 700 1.35rem var(--font-heading); margin: 0 0 6px; }
+  .sample-note { font-size: 0.8rem; line-height: 1.5; color: var(--color-muted); margin: 0 0 20px; }
+  dl { margin: 0; }
+  dl > div { display: grid; grid-template-columns: 100px 1fr; gap: 18px; border-top: 1px solid rgb(34 28 21 / 12%); padding: 13px 0; font-size: 0.88rem; line-height: 1.5; }
+  dt { font-weight: 700; color: var(--color-accent); }
+  dd { margin: 0; color: var(--color-muted); }
+  .launch-cta { display: inline-flex; align-items: center; gap: 24px; background: var(--color-amber); color: var(--color-ink); padding: 14px 22px; min-height: 48px; font-weight: 700; text-decoration: none; border: 1px solid transparent; }
+  .launch-cta:hover { border-color: var(--color-ink); }
+  a:focus-visible, .phase-panel:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 5px; }
+  @media (prefers-reduced-motion: no-preference) { .phase-panel[data-enter] .deliverable { animation: paper-arrive 280ms ease-out; } @keyframes paper-arrive { from { opacity: 0.45; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } } }
+  @media (max-width: 767px) {
+    .launch-inner { padding-block: 48px; }
+    .launch-intro { font-size: 1rem; }
+    .phase-nav { margin-top: 28px; }
+    .phase-nav a { padding: 14px 10px; font-size: 0.84rem; line-height: 1.4; }
+    .phase-time { font-size: 0.6rem; line-height: 1.5; }
+    .phase-arrow { display: none; }
+    .phase-panel { grid-template-columns: 1fr; gap: 24px; padding: 28px 0; min-height: 0; }
+    .phase-copy h3 { max-width: none; }
+    .phase-copy > p:last-child { max-width: none; font-size: 1rem; }
+    .deliverable { padding: 22px 18px; }
+    dl > div { grid-template-columns: 80px 1fr; gap: 12px; font-size: 0.83rem; }
+    .launch-cta { font-size: 0.9rem; gap: 16px; }
+  }
+</style>
+
+<script>
+  let launchCleanup: (() => void) | undefined;
+  const initLaunch = () => {
+    launchCleanup?.();
+    const root = document.querySelector<HTMLElement>('[data-home-launch]');
+    if (!root) return;
+    const nav = root.querySelector<HTMLElement>('.phase-nav');
+    const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-phase-link]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-phase-panel]'));
+    const controller = new AbortController();
+    const options = { signal: controller.signal };
+    nav?.setAttribute('role', 'tablist');
+    const show = (index: number, focus = false) => {
+      links.forEach((link, i) => { link.setAttribute('aria-selected', String(i === index)); link.tabIndex = i === index ? 0 : -1; });
+      panels.forEach((panel, i) => { panel.hidden = i !== index; panel.toggleAttribute('data-enter', i === index); });
+      if (focus) links[index].focus();
+    };
+    links.forEach((link, index) => {
+      link.setAttribute('role', 'tab');
+      link.id = `launch-tab-${index}`;
+      link.setAttribute('aria-controls', panels[index].id);
+      panels[index].setAttribute('role', 'tabpanel');
+      panels[index].setAttribute('aria-labelledby', link.id);
+      panels[index].tabIndex = 0;
+      link.addEventListener('click', (event) => { event.preventDefault(); show(index); }, options);
+      link.addEventListener('keydown', (event) => {
+        let next = index;
+        if (event.key === 'ArrowRight') next = (index + 1) % links.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + links.length) % links.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = links.length - 1;
+        else if (event.key === ' ') { event.preventDefault(); show(index); return; }
+        else return;
+        event.preventDefault(); show(next, true);
+      }, options);
+    });
+    const hashIndex = panels.findIndex((panel) => `#${panel.id}` === window.location.hash);
+    show(hashIndex < 0 ? 0 : hashIndex);
+    launchCleanup = () => controller.abort();
+  };
+  initLaunch();
+  document.addEventListener('astro:page-load', initLaunch);
+  document.addEventListener('astro:before-swap', () => launchCleanup?.());
+</script>

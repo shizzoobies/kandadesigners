@@ -1,0 +1,98 @@
+<section class="home-training" aria-labelledby="home-training-title" data-home-training>
+  <div class="training-layout">
+    <div class="training-copy">
+      <p class="eyebrow">Learn something useful</p>
+      <h2 id="home-training-title">A little guidance.<br /><span>A real first step.</span></h2>
+      <p>You do not need to know how to code to get your bearings. Our beginner orientation explains the windows, files, and first actions in plain language.</p>
+      <a href="/training/ai/" class="training-link">Explore the AI lessons <span aria-hidden="true">→</span></a>
+      <p class="signup-note">The full AI lessons open with a <a href="/free-course/">free email signup</a>. Narration uses an AI voice.</p>
+    </div>
+    <div class="preview-frame">
+      <div class="frame-heading"><span>Before your first build</span><span class="sample-label">30-second sample</span></div>
+      <video data-training-preview controls playsinline preload="none" width="1280" height="720" poster="/course-app/orientation/video/poster.jpg?v=20260923-guide" aria-label="Beginner orientation, 30-second preview" aria-describedby="training-preview-transcript">
+        <source src="/media/homepage/orientation-preview.mp4" type="video/mp4" />
+        <track kind="captions" src="/media/homepage/orientation-preview.vtt" srclang="en" label="English" default />
+        Your browser cannot play this preview. Read the transcript below or explore the AI lessons.
+      </video>
+      <div class="preview-footer">
+        <span class="preview-status" data-preview-status role="status" aria-live="polite">Play when you are ready.</span>
+        <button type="button" data-preview-replay hidden>Replay sample <span aria-hidden="true">↻</span></button>
+      </div>
+      <details class="preview-transcript" id="training-preview-transcript">
+        <summary>Read the sample transcript</summary>
+        <p>Welcome. If you have never written code, start here. Code is a set of instructions that tells a computer what to do. A website keeps those instructions in files. You do not have to write them yourself to begin this lesson. Claude Code can help read and change a project. You describe the result you want, and you check the result it produces. In an ordinary chat, you might ask for advice and receive an explanation. Here, you will eventually let Claude work on files in a folder you choose.</p>
+      </details>
+    </div>
+  </div>
+  <div class="training-browse"><p>Training for your team, too.</p><a href="/training/samples/">Try our interactive training samples <span aria-hidden="true">→</span></a></div>
+</section>
+
+<style>
+  .home-training { max-width: 1152px; padding: 88px 24px; margin-inline: auto; }
+  .training-layout { display: grid; grid-template-columns: 0.85fr 1.3fr; align-items: center; gap: 48px; }
+  .eyebrow { font: 0.72rem var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 18px; }
+  h2 { font: 700 clamp(2rem, 4.1vw, 3.2rem)/1.1 var(--font-display); letter-spacing: -0.035em; margin: 0; }
+  h2 span { color: var(--color-accent); }
+  .training-copy > p:not(.eyebrow):not(.signup-note) { color: var(--color-muted); font-size: 1.05rem; line-height: 1.7; margin: 24px 0; max-width: 38ch; }
+  .training-link { color: var(--color-accent); font-weight: 700; text-decoration: underline; text-underline-offset: 6px; display: inline-flex; align-items: center; gap: 16px; min-height: 32px; }
+  .signup-note { max-width: 38ch; font-size: 0.83rem; line-height: 1.65; color: var(--color-muted); margin: 20px 0 0; }
+  .signup-note a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+  .preview-frame { border: 1px solid rgb(34 28 21 / 30%); box-shadow: 8px 8px 0 #e8ded4; border-radius: 8px; overflow: hidden; background: var(--color-surface); min-width: 0; }
+  .frame-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 14px; padding: 16px 18px; border-bottom: 1px solid rgb(34 28 21 / 18%); font-size: 0.88rem; font-weight: 700; }
+  .sample-label { font: 0.68rem var(--font-mono); align-self: center; color: var(--color-accent); }
+  video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--color-ink); }
+  .preview-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 18px; min-height: 60px; border-top: 1px solid rgb(34 28 21 / 18%); }
+  .preview-status { font-size: 0.8rem; line-height: 1.5; color: var(--color-muted); }
+  .preview-footer button { border: 1px solid var(--color-accent); color: var(--color-accent); font: 700 0.78rem var(--font-heading); padding: 8px 10px; min-height: 40px; background: transparent; cursor: pointer; white-space: nowrap; }
+  .preview-footer button[hidden] { display: none; }
+  .preview-footer button:hover { background: #efe5dc; }
+  .preview-footer button span { margin-left: 8px; }
+  .preview-transcript { padding: 14px 18px; border-top: 1px solid rgb(34 28 21 / 14%); }
+  summary { font-size: 0.8rem; color: var(--color-accent); cursor: pointer; }
+  .preview-transcript p { font-size: 0.9rem; line-height: 1.7; color: var(--color-muted); margin-top: 16px; }
+  .training-browse { display: flex; justify-content: space-between; gap: 16px 30px; flex-wrap: wrap; border-top: 1px solid rgb(34 28 21 / 16%); margin-top: 40px; padding-top: 24px; }
+  .training-browse p { margin: 0; font-weight: 700; }
+  .training-browse a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 5px; }
+  .training-browse a span { margin-left: 12px; }
+  a:focus-visible, button:focus-visible, summary:focus-visible, video:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
+  @media (max-width: 767px) {
+    .home-training { padding-block: 48px; }
+    .training-layout { grid-template-columns: 1fr; gap: 28px; }
+    .training-copy > p:not(.eyebrow):not(.signup-note) { max-width: none; font-size: 1rem; }
+    .signup-note { max-width: none; }
+    .frame-heading, .preview-footer, .preview-transcript { padding-inline: 12px; }
+    .preview-status { font-size: 0.75rem; }
+    .preview-footer button { font-size: 0.72rem; padding-inline: 8px; }
+    .training-browse { margin-top: 32px; font-size: 0.9rem; }
+  }
+</style>
+
+<script>
+  let trainingCleanup: (() => void) | undefined;
+  const initTraining = () => {
+    trainingCleanup?.();
+    const root = document.querySelector<HTMLElement>('[data-home-training]');
+    const video = root?.querySelector<HTMLVideoElement>('[data-training-preview]');
+    const replay = root?.querySelector<HTMLButtonElement>('[data-preview-replay]');
+    const status = root?.querySelector<HTMLElement>('[data-preview-status]');
+    if (!video || !replay || !status) return;
+    const controller = new AbortController();
+    const options = { signal: controller.signal };
+    const setStatus = (text: string) => { status.textContent = text; };
+    video.addEventListener('playing', () => { replay.hidden = true; setStatus('Playing the orientation sample.'); }, options);
+    video.addEventListener('pause', () => { if (!video.ended) setStatus('Paused. Continue whenever you are ready.'); }, options);
+    video.addEventListener('waiting', () => setStatus('Loading the sample...'), options);
+    video.addEventListener('ended', () => { replay.hidden = false; setStatus('Sample complete. Explore the AI lessons for more.'); }, options);
+    video.addEventListener('error', () => setStatus('The sample could not load. You can read its transcript below.'), options);
+    replay.addEventListener('click', async () => {
+      video.currentTime = 0;
+      video.focus();
+      try { await video.play(); }
+      catch { setStatus('Use the video play control to try again.'); }
+    }, options);
+    trainingCleanup = () => { controller.abort(); video.pause(); };
+  };
+  initTraining();
+  document.addEventListener('astro:page-load', initTraining);
+  document.addEventListener('astro:before-swap', () => trainingCleanup?.());
+</script>
