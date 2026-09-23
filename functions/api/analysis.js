@@ -9,6 +9,9 @@ async function callClaude(apiKey, model, maxTokens, system, userContent) {
     body: JSON.stringify({
       model,
       max_tokens: maxTokens,
+      // Sonnet 5 runs adaptive thinking when the field is omitted; the caps
+      // here are sized for the reply alone, so it stays off as on Sonnet 4.5.
+      thinking: { type: 'disabled' },
       system,
       messages: [{ role: 'user', content: userContent }],
     }),
@@ -27,7 +30,7 @@ export async function onRequestPost(context) {
 
     const data = await callClaude(
       apiKey,
-      'claude-sonnet-4-5-20250929',
+      'claude-sonnet-5',
       400,
       `You are a grandmaster-level chess coach providing post-game analysis. Be concise, specific, and actionable. Structure your response with these exact sections:
 **Key Moments** — 2-3 critical turning points in the game

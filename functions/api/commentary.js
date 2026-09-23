@@ -27,7 +27,7 @@ export async function onRequestPost(context) {
 
     const data = await callClaude(
       apiKey,
-      'claude-haiku-4-5-20251001',
+      'claude-haiku-4-5',
       120,
       `You are a chess grandmaster commentator. When given a chess position and the move just played, write 1-2 sentences of insightful commentary explaining WHY the move was played — the strategic or tactical idea behind it. Be specific and educational. Never just describe what happened — explain the idea. Keep it under 30 words. No filler phrases like "This move..." or "Stockfish plays...". Start directly with the insight.`,
       `Position (FEN): ${fen}\nMove played: ${moveSAN} (${move})\nMove number: ${moveNumber}\n\nExplain this move in 1-2 sentences.`

@@ -49,6 +49,10 @@ async function callClaude(apiKey, model, lane, duration, usedTitles = [], strict
     body: JSON.stringify({
       model,
       max_tokens: 4000,
+      // Sonnet 5 runs adaptive thinking when the field is omitted; the cap is
+      // sized for the reply, so it stays off. The Haiku fallback takes no
+      // thinking field at all.
+      ...(model.startsWith('claude-sonnet-5') ? { thinking: { type: 'disabled' } } : {}),
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userMsg }],
     }),
@@ -105,7 +109,7 @@ export async function onRequestPost(context) {
   }
 
   const apiKey = env.ANTHROPIC_API_KEY;
-  const model = env.MODEL_NAME || 'claude-sonnet-4-6';
+  const model = env.MODEL_NAME || 'claude-sonnet-5';
   const titles = Array.isArray(usedTitles) ? usedTitles.slice(0, 300) : [];
 
   let rawText;
@@ -116,7 +120,7 @@ export async function onRequestPost(context) {
     if (err.message === 'rate_limited') {
       // Anthropic rate limit: retry once with Haiku
       try {
-        rawText = await callClaude(apiKey, 'claude-haiku-4-5-20251001', lane, duration, titles);
+        rawText = await callClaude(apiKey, 'claude-haiku-4-5', lane, duration, titles);
       } catch {
         return jsonResponse({ error: 'Generation failed. Please try again.' }, 502);
       }

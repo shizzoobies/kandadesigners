@@ -107,8 +107,12 @@ export async function onRequestPost(context) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        // Claude Sonnet 5. It runs adaptive thinking when the field is omitted,
+        // and this cap is sized for the reply alone, so thinking stays off as
+        // it was on Sonnet 4.
+        model: 'claude-sonnet-5',
         max_tokens: 2048,
+        thinking: { type: 'disabled' },
         system: system,
         messages: messages.slice(-20),
       }),

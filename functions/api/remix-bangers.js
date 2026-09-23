@@ -58,7 +58,7 @@ Top performers:
 ${catalogText}`;
 
   const apiKey = env.ANTHROPIC_API_KEY;
-  const model  = env.REMIX_MODEL_NAME || 'claude-haiku-4-5-20251001';
+  const model  = env.REMIX_MODEL_NAME || 'claude-haiku-4-5';
 
   async function callClaude(strict = false) {
     const content = strict

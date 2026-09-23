@@ -93,7 +93,7 @@ export async function onRequestPost(context) {
   const apiKey = env.ANTHROPIC_API_KEY;
   // Remix uses Haiku by default: lighter repackaging task, lower cost.
   // Override with REMIX_MODEL_NAME secret if needed.
-  const model = env.REMIX_MODEL_NAME || 'claude-haiku-4-5-20251001';
+  const model = env.REMIX_MODEL_NAME || 'claude-haiku-4-5';
 
   let rawText;
   try {

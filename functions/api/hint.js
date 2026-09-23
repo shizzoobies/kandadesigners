@@ -30,7 +30,7 @@ export async function onRequestPost(context) {
   try {
     const data = await callClaude(
       apiKey,
-      'claude-haiku-4-5-20251001',
+      'claude-haiku-4-5',
       150,
       `You are a chess coach. Explain why a specific move is the best in the current position. Be clear and educational — explain the idea, threat, or positional concept. Keep it under 40 words. Speak directly to the player ("This move..." or "Playing here...").`,
       `Position (FEN): ${fen}\nBest move: ${bestMoveSAN} (${bestMove})\n\nWhy is this the best move here?`
