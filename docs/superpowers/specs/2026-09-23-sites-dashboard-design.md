@@ -35,7 +35,7 @@ The August admin (clients, projects, invoices, retainers, follow-ups, coaching c
 ## Data model (`ka-sites`)
 
 - **people**: `id`, `name`, `email` (unique, lowercased), `role` (`owner` | `maintainer`), `created_at`.
-- **sites**: `id`, `slug` (unique), `name`, `live_url`, `logo_key` (R2 key, nullable), `repo` (`owner/name`, nullable), `local_path`, `hosting` (`pages` | `worker` | `client-push` | `other`), `deploy_command`, `maintainer_id` → people (nullable), `project_status` (`live` | `in_progress` | `waiting_client` | `paused`), `status_note`, `a11y_audited_on` (date, nullable), `a11y_open_issues` (int, nullable), `a11y_statement_url` (nullable), `domain` (nullable; derived from `live_url` unless overridden), `domain_expires_on`, `cert_expires_on`, `github_synced_at`, `created_at`, `updated_at`.
+- **sites**: `id`, `slug` (unique), `name`, `live_url`, `logo_key` (R2 key, nullable), `favicon_key` (R2 key for the fetched fallback icon, nullable), `repo` (`owner/name`, nullable), `local_path`, `hosting` (`pages` | `worker` | `client-push` | `other`), `deploy_command`, `maintainer_id` → people (nullable), `project_status` (`live` | `in_progress` | `waiting_client` | `paused`), `status_note`, `a11y_audited_on` (date, nullable), `a11y_open_issues` (int, nullable), `a11y_statement_url` (nullable), `domain` (nullable; derived from `live_url` unless overridden), `domain_expires_on`, `cert_expires_on`, `github_synced_at`, `created_at`, `updated_at`.
 - **checks**: `id`, `site_id`, `checked_at`, `ok` (bool), `http_status` (nullable), `ms` (nullable), `error` (nullable). Rows older than 30 days are pruned by the checker.
 - **work_items**: `id`, `site_id`, `source` (`manual` | `github`), `text`, `url` (nullable), `github_key` (nullable; unique per site, e.g. `pr:12` or `branch:site-fixes`), `done_at` (nullable), `created_at`.
 - **log_entries**: `id`, `site_id`, `entry_date`, `text`, `created_at`.
@@ -59,7 +59,7 @@ Enums are whitelisted in code, following the old admin's pattern.
 
 Rules are evaluated in the order red, gray, amber, green, and the first match wins. The two check-based red rules only apply when the checks are fresh, so stale uptime data reads gray, not red; an expiry within 7 days is red even when uptime data is stale. It returns the level plus a short reason string ("Down since 14:05", "Cert expires in 12 days").
 
-**Alerts.** After each run, the checker compares each site's level with `alert_state`. On a transition into red it sends one email ("<site> is down: <reason>"). On a transition from red to green it sends one "<site> is back" email. Nothing is sent while a site stays red. Sending goes through Resend (already verified for the apex, used by the newsletter) from `alerts@ka-performancefl.com` to Alex, with the key in the secret `RESEND_API_KEY`. A send failure is logged and retried on the next run, because `last_alert_level` is only updated on success.
+**Alerts.** After each run, the checker compares each site's level with `alert_state`. On a transition into red it sends one email ("<site> is red: <reason>", since red can mean an expiring certificate as well as downtime). On a transition from red to green it sends one "<site> is back" email. Nothing is sent while a site stays red. Sending goes through Resend (already verified for the apex, used by the newsletter) from `alerts@ka-performancefl.com` to Alex, with the key in the secret `RESEND_API_KEY`. A send failure is logged and retried on the next run, because `last_alert_level` is only updated on success.
 
 ## Screens
 
@@ -75,7 +75,7 @@ Styling follows the site system: Earthen palette tokens, Schibsted Grotesk displ
 5. Health: 30-day uptime percentage, response-time sparkline, cert and domain expiry dates, last checked time.
 6. Log: add-entry field, then entries newest first.
 
-**Add / edit site (`/sites/new`, `/sites/<slug>/edit`).** Name, live URL and logo upload are required; everything else is optional. Logo upload: PNG, JPEG, WebP or SVG, 1 MB max, stored in R2 as `logos/<slug>-<hash>.<ext>`. With no logo, the card uses the site's favicon, fetched server-side by the checker once and cached in R2; failing that, an initials monogram.
+**Add / edit site (`/sites/new`, `/sites/<slug>/edit`).** Name and live URL are required; the logo upload and everything else are optional. Logo upload: PNG, JPEG, WebP or SVG, 1 MB max, stored in R2 as `logos/<slug>-<hash>.<ext>`. With no logo, the card uses the site's favicon, fetched server-side by the checker once and cached in R2; failing that, an initials monogram.
 
 Writes are plain form posts (progressive enhancement), and in-place edits enhance those same forms. No client framework.
 
