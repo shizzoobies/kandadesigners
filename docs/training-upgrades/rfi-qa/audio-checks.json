@@ -1,0 +1,101 @@
+[
+  {
+    "duration": 21.176599,
+    "lessonBottom": 594,
+    "lessonScroll": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-1",
+    "source": "assets/audio/screen-1.mp3",
+    "time": 0.174855,
+    "trayTop": 612
+  },
+  {
+    "duration": 29.117823,
+    "lessonBottom": 594,
+    "lessonScroll": 30,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-2",
+    "source": "assets/audio/screen-2.mp3",
+    "time": 0.185666,
+    "trayTop": 612
+  },
+  {
+    "duration": 25.959909,
+    "lessonBottom": 594,
+    "lessonScroll": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-3",
+    "source": "assets/audio/screen-3.mp3",
+    "time": 0.206948,
+    "trayTop": 612
+  },
+  {
+    "duration": 22.894875,
+    "lessonBottom": 594,
+    "lessonScroll": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-4",
+    "source": "assets/audio/screen-4.mp3",
+    "time": 0.196665,
+    "trayTop": 612
+  },
+  {
+    "duration": 24.613152,
+    "lessonBottom": 594,
+    "lessonScroll": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-5",
+    "source": "assets/audio/screen-5.mp3",
+    "time": 0.192966,
+    "trayTop": 612
+  },
+  {
+    "duration": 24.845351,
+    "lessonBottom": 594,
+    "lessonScroll": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-6",
+    "source": "assets/audio/screen-6.mp3",
+    "time": 0.190917,
+    "trayTop": 612
+  },
+  {
+    "duration": 26.145669,
+    "lessonBottom": 594,
+    "lessonScroll": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-7",
+    "source": "assets/audio/screen-7.mp3",
+    "time": 0.19675,
+    "trayTop": 612
+  },
+  {
+    "duration": 28.653424,
+    "lessonBottom": 594,
+    "lessonScroll": 0,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-8",
+    "source": "assets/audio/screen-8.mp3",
+    "time": 0.195675,
+    "trayTop": 612
+  },
+  {
+    "duration": 24.427392,
+    "lessonBottom": 594,
+    "lessonScroll": 46,
+    "paused": false,
+    "ready": 4,
+    "screen": "screen-9",
+    "source": "assets/audio/screen-9.mp3",
+    "time": 0.194146,
+    "trayTop": 612
+  }
+]

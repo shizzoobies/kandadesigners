@@ -1,0 +1,23 @@
+[
+  {
+    "course": "rfi",
+    "completion": {
+      "text": "Sample complete You finished The RFI that gets answered. Everything you just used, from the pacing to the keyboard path, is how we build for clients.   Next sample: Spot it before it hurts someone Ask about a project like this",
+      "visible": true
+    }
+  },
+  {
+    "course": "finance",
+    "completion": {
+      "text": "Sample complete You finished The P&L, read like an owner. Everything you just used, from the pacing to the keyboard path, is how we build for clients.   Next sample: Build the plate, skip the diet Ask about a project like this",
+      "visible": true
+    }
+  },
+  {
+    "course": "nutrition",
+    "completion": {
+      "text": "Sample complete You finished Build the plate, skip the diet. Everything you just used, from the pacing to the keyboard path, is how we build for clients.   Next sample: Strong is a skill Ask about a project like this",
+      "visible": true
+    }
+  }
+]
