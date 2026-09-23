@@ -1,57 +1,15 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import TrainingSubnav from '../../../components/TrainingSubnav.astro';
-import { liveSamples, plannedSamples, verticals } from '../../../data/training.js';
-
-// The samples grid. Everything on this page comes out of src/data/training.js,
-// which is the only file allowed to decide what is publishable: 'live' gets a
-// card and a viewer page, 'planned' gets a placeholder with no link, and
-// 'audit' never reaches this file at all. Nothing here carries a price, a
-// person's name, a throughput figure, or a client name, per the business brief.
-
+import TrainingCourseCard from '../../../components/TrainingCourseCard.astro';
+import { liveSamples, plannedSamples } from '../../../data/training.js';
+import { trainingPresentation } from '../../../data/trainingPresentation.js';
 const SITE = 'https://ka-performancefl.com';
 const PAGE_URL = SITE + '/training/samples/';
-
-const cards = liveSamples.map((s) => ({
-  ...s,
-  href: '/training/samples/' + s.slug + '/',
-  minutesLabel: 'About ' + s.minutes + ' minutes',
-  iso: 'PT' + s.minutes + 'M',
-  meta: s.kind + ' · ' + s.vertical,
-}));
-
-const placeholders = plannedSamples.map((s) => ({
-  ...s,
-  meta: s.kind + ' · ' + s.vertical,
-}));
-
-// Filter groups for the grid, derived from the data so a new sample with a
-// new vertical or format shows up as an option with no edit here. Industries
-// keep the order of the verticals list; formats keep first appearance.
-const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-const all = [...cards, ...placeholders];
-// Industry options come from the samples themselves (the sample wording,
-// "Construction and trades", is shorter than the verticals list's title), in
-// the verticals list's order where a match exists, then anything else.
-// 'Any' is the planned card's wildcard and is never an option.
-const order = verticals.map((v) => slug(v.title).split('-')[0]);
-const industries = [...new Set(all.map((s) => s.vertical))]
-  .filter((t) => t !== 'Any')
-  .map((t) => ({ title: t, key: slug(t), count: all.filter((s) => s.vertical === t).length }))
-  .sort((a, b) => {
-    const ia = order.indexOf(a.key.split('-')[0]);
-    const ib = order.indexOf(b.key.split('-')[0]);
-    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
-  });
-const formats = [...new Set(all.map((s) => s.kind))].map((t) => ({
-  title: t,
-  key: slug(t),
-  count: all.filter((s) => s.kind === t).length,
-}));
-
+const key = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const industries = [...new Set(liveSamples.map((sample) => sample.vertical))].map((title) => ({ title, key: key(title), count: liveSamples.filter((sample) => sample.vertical === title).length }));
 const breadcrumb = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: SITE + '/' },
     { '@type': 'ListItem', position: 2, name: 'Services', item: SITE + '/services/' },
@@ -59,309 +17,99 @@ const breadcrumb = {
     { '@type': 'ListItem', position: 4, name: 'Samples', item: PAGE_URL },
   ],
 };
-
 const collectionSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  '@id': PAGE_URL + '#collection',
-  url: PAGE_URL,
-  name: 'Training content samples',
-  description:
-    'Original interactive training samples from K & A Performance, playable in the browser, each with the technique it demonstrates and the accessibility standard it meets.',
-  inLanguage: 'en-US',
-  hasPart: cards.map((s) => ({
-    '@type': 'CreativeWork',
-    name: s.title,
-    url: SITE + s.href,
-    description: s.what,
-    learningResourceType: s.kind,
-    timeRequired: s.iso,
-  })),
+  '@context': 'https://schema.org', '@type': 'CollectionPage', '@id': PAGE_URL + '#collection', url: PAGE_URL, name: 'Training content samples',
+  description: 'Six original interactive courses with illustrated guides, optional audio and practical activities. Explore each course in your browser.', inLanguage: 'en-US',
+  hasPart: liveSamples.map((sample) => ({ '@type': 'CreativeWork', name: sample.title, url: SITE + '/training/samples/' + sample.slug + '/', description: sample.what, image: SITE + trainingPresentation[sample.slug].cover, learningResourceType: sample.kind, timeRequired: 'PT' + sample.minutes + 'M' })),
 };
 ---
-<BaseLayout
-  clientRouter
-  title="Training Content Samples | K & A Performance"
-  description="Play our original training samples in the browser. Each one says what it is, what it demonstrates, the technique, and the accessibility standard it meets."
->
+<BaseLayout clientRouter title="Interactive Training Samples | K & A Performance" description="Explore six original interactive courses with illustrated guides, optional audio and practical activities. Play construction, finance and wellness samples." ogImage={trainingPresentation['hazard-recognition'].shareImage}>
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(collectionSchema)} />
-
-  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
-    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
-      <a href="/training/" class="transition-colors hover:text-accent">Training content</a>
-      <span class="text-accent" aria-hidden="true">&middot;</span> Samples
-    </p>
-    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
-      Samples you can <span class="text-accent">actually play</span>
-    </h1>
-    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-      Not screenshots, not a download wall, not a form standing between you and
-      a demo. Each sample runs in the browser, and each one comes with the same
-      four things: what it is, what it demonstrates, the technique behind it,
-      and the accessibility standard it meets.
-    </p>
+  <section class="gallery-intro mx-auto max-w-6xl px-6">
+    <p class="gallery-eyebrow"><a href="/training/">Training content</a><span aria-hidden="true"> / </span> The courses</p>
+    <div class="gallery-intro-copy"><h1>Learning you can <span>step into.</span></h1><p>Walk a jobsite. Open a bakery's books. Build a plate. Six original courses with illustrated guides, optional audio and something useful to practice.</p></div>
   </section>
-
   <TrainingSubnav />
-
-  <section class="mx-auto max-w-6xl px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-4xl">Where this stands today</h2>
-    <p data-animate="type-settle" class="mt-6 max-w-3xl leading-relaxed text-muted">
-      This section is new, and we would rather say so than pad it. Six
-      originals are live and playable below, and each one wears a different
-      identity on purpose: a course should look like the client it was built
-      for, not like the studio that built it. One more is in production and is
-      listed unfinished so you can see what is coming rather than what we wish
-      we had. Everything shown on this page is original K &amp; A work, built
-      for this page. Work produced for an employer or a client belongs to them
-      and does not appear here.
-    </p>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <!-- The filter. A native details element, so it is collapsible with no
-         script and every card stays visible until a choice is made. Two
-         groups: the industry the piece was written for and the shape it
-         takes. Options are text toggles with a drawn marker, not chips. -->
-    <details class="tr-filter mb-10" id="tr-filter">
-      <summary class="tr-filter-summary">
-        <span class="tr-filter-label font-mono text-xs uppercase tracking-[0.25em]">Filter the samples</span>
-        <span class="font-mono text-xs uppercase tracking-[0.2em] text-muted" id="tr-filter-state" role="status" aria-live="polite">Showing all {all.length}</span>
-      </summary>
-      <div class="tr-filter-body">
-        <fieldset class="tr-filter-group">
-          <legend class="font-heading text-sm font-semibold tracking-wide">By industry</legend>
-          <div class="tr-filter-options">
-            <button type="button" class="tr-filter-opt" data-filter="vertical" data-value="" aria-pressed="true">All industries</button>
-            {industries.map((o) => (
-              <button type="button" class="tr-filter-opt" data-filter="vertical" data-value={o.key} aria-pressed="false">
-                {o.title} <span class="tr-filter-count">{o.count}</span>
-              </button>
-            ))}
-          </div>
-        </fieldset>
-        <fieldset class="tr-filter-group">
-          <legend class="font-heading text-sm font-semibold tracking-wide">By format</legend>
-          <div class="tr-filter-options">
-            <button type="button" class="tr-filter-opt" data-filter="kind" data-value="" aria-pressed="true">All formats</button>
-            {formats.map((o) => (
-              <button type="button" class="tr-filter-opt" data-filter="kind" data-value={o.key} aria-pressed="false">
-                {o.title} <span class="tr-filter-count">{o.count}</span>
-              </button>
-            ))}
-          </div>
-        </fieldset>
-        <p class="tr-filter-empty text-muted" id="tr-filter-empty" hidden>Nothing matches both choices yet. Pick a wider one, or ask us to build it.</p>
-      </div>
-    </details>
-
-    <ul class="grid list-none gap-8 p-0 md:grid-cols-2" id="tr-grid">
-      {cards.map((s) => (
-        <li data-vertical={slug(s.vertical)} data-kind={slug(s.kind)}>
-          <a href={s.href} data-animate="frame-lift" class="glow-frame tr-frame backdrop-card group flex h-full flex-col p-7" style={`--bd: url('${s.backdrop}')`}>
-            <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">{s.meta}</p>
-            <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
-            <p class="mt-4 flex-1 leading-relaxed text-muted">{s.what}</p>
-            <p class="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-muted">{s.minutesLabel}</p>
-            <p class="mt-2 font-heading text-sm font-semibold tracking-wide text-accent">
-              Play the sample <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">&rarr;</span>
-            </p>
-          </a>
-        </li>
-      ))}
-
-      {placeholders.map((s) => (
-        <li data-vertical={s.vertical === 'Any' ? 'any' : slug(s.vertical)} data-kind={slug(s.kind)}>
-          <div data-animate="frame-lift" class="tr-frame tr-frame-planned flex h-full flex-col p-7">
-            <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">In production</p>
-            <h2 class="mt-4 font-display text-2xl leading-tight md:text-3xl">{s.title}</h2>
-            <p class="mt-4 flex-1 leading-relaxed text-muted">{s.what}</p>
-            <p class="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-muted">{s.meta}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <div class="grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center">
-      <div>
-        <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">
-          Want one of these <span class="text-accent">for your content</span>
-        </h2>
-        <p data-animate="type-settle" class="mt-6 max-w-xl leading-relaxed text-muted">
-          Tell us the topic, the audience, and what your LMS accepts. We will
-          tell you what shape the piece should take and what it takes to build
-          it, before anybody commits to anything.
-        </p>
-      </div>
-      <div data-animate="type-settle" data-animate-delay="0.1" class="flex flex-wrap items-center gap-6">
-        <a href="/training/?inquire=1" class="btn-draw">Ask about a project</a>
-        <a href="/training/team/" class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">
-          Meet the team
-        </a>
-      </div>
+  <section class="gallery-collection mx-auto max-w-6xl px-6" aria-label="Playable courses">
+    <div class="gallery-filter" id="tr-filter" hidden>
+      <fieldset><legend class="sr-only">Filter courses by industry</legend><div class="gallery-filter-options">
+        <button type="button" data-value="" aria-pressed="true">All courses <span>{liveSamples.length}</span></button>
+        {industries.map((industry) => <button type="button" data-value={industry.key} aria-pressed="false">{industry.title}<span>{industry.count}</span></button>)}
+      </div></fieldset>
+      <p id="tr-filter-state" role="status" aria-live="polite">{liveSamples.length} courses to explore</p>
     </div>
+    <ul class="gallery-grid" id="tr-grid">{liveSamples.map((sample, index) => <li data-vertical={key(sample.vertical)}><TrainingCourseCard sample={sample} headingLevel={2} eager={index < 2} /></li>)}</ul>
+    {plannedSamples.length > 0 && <aside class="gallery-coming" aria-labelledby="coming-title">
+      <div class="gallery-coming-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M12 16h26v34H12zM26 10h26v34H38M19 25h12M19 32h9M19 39h12" stroke="currentColor" stroke-width="1.5" /><path d="m41 24 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></div>
+      <div><p class="gallery-eyebrow" id="coming-title">Coming next</p>{plannedSamples.map((sample) => <div><h2>{sample.title}</h2><p>{sample.what}</p></div>)}</div><span class="gallery-coming-status">In development</span>
+    </aside>}
   </section>
-<style>
-  /* The filter panel. Unlayered on purpose: it sits beside .tr-frame and
-     .glow-frame, which are unlayered, so nothing here loses a fight. */
-  .tr-filter {
-    border-top: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
-    border-bottom: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
-  }
-  .tr-filter-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.1rem 0;
-    cursor: pointer;
-    list-style: none;
-  }
-  .tr-filter-summary::-webkit-details-marker { display: none; }
-  .tr-filter-summary:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 4px;
-  }
-  .tr-filter-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    color: var(--color-ink);
-  }
-  .tr-filter-label::before {
-    content: '';
-    width: 0.55rem;
-    height: 0.55rem;
-    border: 1.5px solid var(--color-accent);
-    transform: rotate(45deg);
-    transition: transform 0.35s ease, background-color 0.35s ease;
-  }
-  .tr-filter[open] .tr-filter-label::before {
-    background: var(--color-accent);
-    transform: rotate(225deg);
-  }
-  .tr-filter-body {
-    display: grid;
-    gap: 1.5rem 3rem;
-    padding: 0.25rem 0 1.6rem;
-  }
-  @media (min-width: 768px) {
-    .tr-filter-body { grid-template-columns: 1fr 1fr; }
-    .tr-filter-empty { grid-column: 1 / -1; }
-  }
-  .tr-filter-group {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    min-width: 0;
-  }
-  .tr-filter-group legend {
-    padding: 0;
-    margin-bottom: 0.6rem;
-  }
-  .tr-filter-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 1.6rem;
-  }
-  .tr-filter-opt {
-    position: relative;
-    padding: 0.35rem 0;
-    font: inherit;
-    line-height: 1.4;
-    color: var(--color-muted);
-    background: none;
-    border: 0;
-    cursor: pointer;
-    transition: color 0.25s ease;
-  }
-  .tr-filter-opt::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0.15rem;
-    height: 2px;
-    background: var(--color-accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .tr-filter-opt:hover { color: var(--color-ink); }
-  .tr-filter-opt[aria-pressed='true'] { color: var(--color-ink); }
-  .tr-filter-opt[aria-pressed='true']::after { transform: scaleX(1); }
-  .tr-filter-opt:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-  }
-  .tr-filter-count {
-    margin-left: 0.3rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--color-muted);
-  }
-  .tr-filter-empty { padding-top: 0.5rem; }
-  #tr-grid > li[hidden] { display: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .tr-filter-label::before, .tr-filter-opt, .tr-filter-opt::after { transition: none; }
-  }
-</style>
-
-<script>
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  // Grid filter. One choice per group, AND across groups. Planned cards carry
-  // data-vertical="any" so they match every industry. Wrapped for the
-  // ClientRouter: runs on first load and again on every page-load, with a
-  // bound flag so a persisted element is never wired twice.
-  function trFilterInit() {
-    const panel = document.getElementById('tr-filter');
-    const grid = document.getElementById('tr-grid');
-    if (!panel || !grid || panel.dataset.bound) return;
-    panel.dataset.bound = '1';
-    const state = document.getElementById('tr-filter-state');
-    const empty = document.getElementById('tr-filter-empty');
-    const items = Array.from(grid.children);
-    const chosen = { vertical: '', kind: '' };
-
-    const apply = () => {
-      let shown = 0;
-      for (const li of items) {
-        const v = li.dataset.vertical || '';
-        const k = li.dataset.kind || '';
-        const ok = (!chosen.vertical || v === chosen.vertical || v === 'any') && (!chosen.kind || k === chosen.kind);
-        li.hidden = !ok;
-        if (ok) shown++;
-      }
-      empty.hidden = shown !== 0;
-      state.textContent = chosen.vertical || chosen.kind
-        ? 'Showing ' + shown + ' of ' + items.length
-        : 'Showing all ' + items.length;
-      // Cards carry a scroll reveal whose start line was measured where the
-      // card used to sit. Hiding its neighbours moves it up the page, so the
-      // triggers are re-measured (and any card now above its line plays in)
-      // and Lenis learns the new page height.
-      const motion = (window as any).__motion;
-      if (motion && !motion.reduced) {
-        motion.lenis?.resize();
+  <section class="gallery-cta mx-auto max-w-6xl px-6">
+    <div><p class="gallery-eyebrow">Your subject. Your audience.</p><h2>Give your content<br /><span>this much care.</span></h2><p>Bring the topic and the people you need to reach. We can work out the right format together.</p></div>
+    <div class="gallery-cta-actions"><a href="/training/?inquire=1" class="btn-draw">Discuss your project</a><a href="/training/team/" class="gallery-team-link">Meet the team <span aria-hidden="true">↗</span></a></div>
+  </section>
+  <style>
+    .gallery-intro { padding-top: 10rem; padding-bottom: 3rem; }
+    .gallery-eyebrow { font-family: var(--font-mono); font-size: .7rem; line-height: 1.7; letter-spacing: .15em; text-transform: uppercase; color: var(--color-accent); }
+    .gallery-eyebrow a { text-decoration: none; }
+    .gallery-eyebrow a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .gallery-intro-copy { display: grid; gap: 1.5rem 3rem; margin-top: 1.3rem; align-items: end; }
+    .gallery-intro h1 { max-width: 12ch; font-family: var(--font-display); font-size: clamp(2.8rem,5.5vw,4.6rem); font-weight: 700; letter-spacing: -.045em; line-height: 1.04; }
+    .gallery-intro h1 span, .gallery-cta h2 span { color: var(--color-accent); }
+    .gallery-intro-copy > p { max-width: 34rem; font-size: 1.1rem; line-height: 1.7; color: var(--color-muted); }
+    .gallery-collection { padding-top: 2.5rem; padding-bottom: 4.5rem; }
+    .gallery-filter { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
+    .gallery-filter[hidden] { display: none; }
+    .gallery-filter fieldset { border: 0; min-width: 0; padding: 0; margin: 0; }
+    .gallery-filter-options { display: flex; flex-wrap: wrap; gap: .35rem 1.5rem; }
+    .gallery-filter button { min-height: 44px; padding: .6rem 0; border: 0; border-bottom: 2px solid transparent; font-family: var(--font-heading); font-size: .9rem; line-height: 1.5; color: var(--color-muted); background: none; cursor: pointer; transition: color .2s, border-color .2s; }
+    .gallery-filter button[aria-pressed='true'] { color: var(--color-accent); border-bottom-color: var(--color-accent); font-weight: 650; }
+    .gallery-filter button:hover { color: var(--color-ink); }
+    .gallery-filter button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+    .gallery-filter button span { margin-left: .4rem; font-size: .7rem; color: var(--color-muted); }
+    .gallery-filter > p { font-family: var(--font-mono); font-size: .65rem; color: var(--color-muted); }
+    .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; list-style: none; padding: 0; margin: 0; }
+    .gallery-grid > li { min-width: 0; }
+    .gallery-grid > li[hidden] { display: none; }
+    .gallery-coming { display: flex; align-items: center; gap: 1.5rem; margin-top: 3rem; padding: 2rem 0; border-top: 1px solid rgb(34 28 21 / .15); border-bottom: 1px solid rgb(34 28 21 / .15); }
+    .gallery-coming-mark { display: none; width: 4rem; height: 4rem; flex: 0 0 auto; color: var(--color-accent); }
+    .gallery-coming h2 { margin-top: .5rem; font-family: var(--font-display); font-size: 1.25rem; font-weight: 650; line-height: 1.3; }
+    .gallery-coming p:not(.gallery-eyebrow) { max-width: 44rem; margin-top: .5rem; color: var(--color-muted); line-height: 1.6; }
+    .gallery-coming-status { display: none; margin-left: auto; flex: 0 0 auto; font-size: .8rem; color: var(--color-muted); }
+    .gallery-cta { display: grid; gap: 2rem; padding-bottom: 5rem; }
+    .gallery-cta h2 { margin-top: 1rem; font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem,4vw,3.4rem); line-height: 1.08; letter-spacing: -.03em; }
+    .gallery-cta p:not(.gallery-eyebrow) { max-width: 34rem; margin-top: 1.25rem; color: var(--color-muted); line-height: 1.7; }
+    .gallery-cta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+    .gallery-team-link { color: var(--color-accent); font-weight: 650; text-underline-offset: 4px; }
+    @media (min-width: 640px) { .gallery-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .gallery-coming-mark { display: block; } }
+    @media (min-width: 900px) { .gallery-intro-copy { grid-template-columns: 1.1fr 1fr; } .gallery-coming-status { display: block; } .gallery-cta { grid-template-columns: 1fr auto; align-items: center; } }
+    @media (min-width: 1100px) { .gallery-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; } }
+    @media (prefers-reduced-motion: reduce) { .gallery-filter button { transition: none; } }
+  </style>
+  <script>
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    function initCourseFilter() {
+      const panel = document.getElementById('tr-filter');
+      const grid = document.getElementById('tr-grid');
+      if (!panel || !grid || panel.dataset.bound) return;
+      panel.dataset.bound = 'true';
+      panel.hidden = false;
+      const buttons = Array.from(panel.querySelectorAll<HTMLButtonElement>('button[data-value]'));
+      const courses = Array.from(grid.querySelectorAll<HTMLElement>('li[data-vertical]'));
+      const status = document.getElementById('tr-filter-state');
+      for (const button of buttons) button.addEventListener('click', () => {
+        const chosen = button.dataset.value;
+        let shown = 0;
+        for (const course of courses) { course.hidden = Boolean(chosen && course.dataset.vertical !== chosen); if (!course.hidden) shown++; }
+        for (const option of buttons) option.setAttribute('aria-pressed', String(option === button));
+        if (status) status.textContent = chosen ? `${shown} of ${courses.length} courses` : `${courses.length} courses to explore`;
+        const motion = (window as any).__motion;
+        motion?.lenis?.resize();
         ScrollTrigger.refresh();
-      }
-    };
-
-    panel.querySelectorAll('.tr-filter-opt').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const group = btn.dataset.filter;
-        chosen[group] = btn.dataset.value || '';
-        panel.querySelectorAll('.tr-filter-opt[data-filter="' + group + '"]').forEach((b) => {
-          b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
-        });
-        apply();
       });
-    });
-  }
-  trFilterInit();
-  document.addEventListener('astro:page-load', trFilterInit);
-</script>
+    }
+    initCourseFilter();
+    document.addEventListener('astro:page-load', initCourseFilter);
+  </script>
 </BaseLayout>
