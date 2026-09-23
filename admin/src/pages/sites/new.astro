@@ -1,0 +1,21 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import SiteForm from '../../components/SiteForm.astro';
+import { listPeople } from '../../lib/db.js';
+import { saveSite } from '../../lib/save-site.js';
+
+const { DB, LOGOS } = Astro.locals.runtime.env;
+let values = { hosting: 'pages' };
+let errors = {};
+if (Astro.request.method === 'POST') {
+  const r = await saveSite({ db: DB, bucket: LOGOS, form: await Astro.request.formData(), existing: null });
+  if (r.ok) return Astro.redirect(`/sites/${r.slug}`, 303);
+  ({ values, errors } = r);
+}
+const people = await listPeople(DB);
+---
+<Shell title="Add site" active="new">
+  <h1>Add site</h1>
+  {Object.keys(errors).length > 0 && <div class="alert" role="alert">Some fields need attention.</div>}
+  <SiteForm values={values} errors={errors} people={people} action="/sites/new" submitLabel="Add site" />
+</Shell>

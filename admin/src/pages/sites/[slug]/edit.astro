@@ -1,0 +1,24 @@
+---
+import Shell from '../../../layouts/Shell.astro';
+import SiteForm from '../../../components/SiteForm.astro';
+import { getSiteBySlug, listPeople } from '../../../lib/db.js';
+import { saveSite } from '../../../lib/save-site.js';
+
+const { DB, LOGOS } = Astro.locals.runtime.env;
+const site = await getSiteBySlug(DB, Astro.params.slug);
+if (!site) return new Response('Not found', { status: 404 });
+
+let values = site;
+let errors = {};
+if (Astro.request.method === 'POST') {
+  const r = await saveSite({ db: DB, bucket: LOGOS, form: await Astro.request.formData(), existing: site });
+  if (r.ok) return Astro.redirect(`/sites/${r.slug}`, 303);
+  ({ values, errors } = r);
+}
+const people = await listPeople(DB);
+---
+<Shell title={`Edit ${site.name}`}>
+  <h1>Edit {site.name}</h1>
+  {Object.keys(errors).length > 0 && <div class="alert" role="alert">Some fields need attention.</div>}
+  <SiteForm values={values} errors={errors} people={people} action={`/sites/${site.slug}/edit`} submitLabel="Save changes" />
+</Shell>

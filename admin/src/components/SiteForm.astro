@@ -1,0 +1,52 @@
+---
+import { HOSTING, HOSTING_LABEL } from '../lib/enums.js';
+const { values = {}, errors = {}, people = [], action, submitLabel } = Astro.props;
+const v = (k) => values[k] ?? '';
+const fields = [
+  { name: 'name', label: 'Name', type: 'text', required: true },
+  { name: 'live_url', label: 'Live address', type: 'url', required: true, hint: 'The full address, starting with https://.' },
+  { name: 'repo', label: 'GitHub repo', type: 'text', hint: 'owner/name. Leave blank if the code is not on GitHub.' },
+  { name: 'local_path', label: 'Local folder', type: 'text', hint: 'For example D:\\MBS Medical\\mbsmedical-ref.' },
+  { name: 'deploy_command', label: 'Deploy command', type: 'text' },
+  { name: 'domain', label: 'Domain for expiry checks', type: 'text', hint: 'Only needed when it is not simply the live address without www.' },
+];
+---
+<form method="post" action={action} enctype="multipart/form-data" class="stack" novalidate>
+  {fields.map((f) => (
+    <div class="field">
+      <label for={f.name}>{f.label}{f.required ? '' : ' (optional)'}</label>
+      {f.hint && <span class="hint" id={`${f.name}-hint`}>{f.hint}</span>}
+      <input
+        type={f.type}
+        id={f.name}
+        name={f.name}
+        value={v(f.name)}
+        required={f.required}
+        aria-invalid={errors[f.name] ? 'true' : undefined}
+        aria-describedby={[f.hint && `${f.name}-hint`, errors[f.name] && `${f.name}-err`].filter(Boolean).join(' ') || undefined}
+      />
+      {errors[f.name] && <span class="err" id={`${f.name}-err`}>{errors[f.name]}</span>}
+    </div>
+  ))}
+  <div class="field">
+    <label for="hosting">Hosting</label>
+    <select id="hosting" name="hosting">
+      {HOSTING.map((h) => <option value={h} selected={v('hosting') === h}>{HOSTING_LABEL[h]}</option>)}
+    </select>
+    {errors.hosting && <span class="err">{errors.hosting}</span>}
+  </div>
+  <div class="field">
+    <label for="maintainer_id">Maintained by (optional)</label>
+    <select id="maintainer_id" name="maintainer_id">
+      <option value="">Not assigned</option>
+      {people.map((p) => <option value={p.id} selected={String(v('maintainer_id')) === String(p.id)}>{p.name}</option>)}
+    </select>
+  </div>
+  <div class="field">
+    <label for="logo">Logo (optional)</label>
+    <span class="hint" id="logo-hint">PNG, JPEG, WebP or SVG, up to 1 MB. Without one, the site's own icon is used.</span>
+    <input type="file" id="logo" name="logo" accept="image/png,image/jpeg,image/webp,image/svg+xml" aria-describedby="logo-hint" />
+    {errors.logo && <span class="err">{errors.logo}</span>}
+  </div>
+  <div><button class="btn" type="submit">{submitLabel}</button></div>
+</form>
