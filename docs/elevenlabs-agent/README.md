@@ -6,7 +6,7 @@ Created 2026-07-23 via the ElevenLabs Agents API.
 ## Live identifiers
 
 - **Agent ID:** `agent_2101ky8y21nmeh5ah2ytbntetzhm` (public — used by the embed, safe in the repo)
-- **Knowledge-base doc ID:** `o26Mt6pae3ddNZ5dRLrz` ("K&A Performance KB (2026-08-29)"), re-uploaded 2026-08-29 from `knowledge-base.md` (adds the free course at /free-course/ and the Build Alongside from-$10,000 tier). The 2026-08-28 doc was deleted after read-back verification.
+- **Knowledge-base doc ID:** `Pi80QCUHPHOQ5ISRkFbO` ("K&A Performance KB (2026-09-22)"), re-uploaded 2026-09-22 from `knowledge-base.md` (adds the cost page at /services/web-design/what-it-costs/: the published under-$2,000-to-$10,000-and-up range, the three intermediate bands, no monthly platform fee, the free quote and the two-to-six-week build window). The agent was repointed and both the stored text and the agent's `knowledge_base` list were read back before the superseded doc `o26Mt6pae3ddNZ5dRLrz` ("K&A Performance KB (2026-08-29)", re-uploaded 2026-08-29, added the free course at /free-course/ and the Build Alongside from-$10,000 tier) was deleted. Earlier ids, all deleted after the same check: `i4xv7xj525AkR5aaGAHV` (2026-08-28), `77Pgp2ZzOV5gdo3VVXlq` (2026-08-01).
 - **Voice ID:** `qSeXEcewz7tA0Q0qk9fH` (Alex's chosen voice)
 - **LLM:** `qwen35-397b-a17b` (the README previously said gemini-2.5-flash; it had been changed in the dashboard, so read the live agent before assuming)
 - Auth: public widget access (`enable_auth: false`) — anyone on the site can talk to it.

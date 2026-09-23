@@ -26,6 +26,22 @@ const { chromium } = require('playwright');
 const axeSource = fs.readFileSync('D:/kap-reel/node_modules/axe-core/axe.min.js', 'utf8');
 
 const DEFAULT_PAGES = [
+  // The marketing core: home, the services hub and its children, the cost
+  // page, both location pages, the artists index, and the pages visitors
+  // are sent to directly.
+  '/',
+  '/services/',
+  '/services/web-design/',
+  '/services/web-design/what-it-costs/',
+  '/services/seo-ai-search/',
+  '/services/ai-integration/',
+  '/services/accessibility/',
+  '/locations/gainesville/',
+  '/locations/jacksonville/',
+  '/artists/',
+  '/accessibility/',
+  '/contact/',
+  // Training section and its sample lessons.
   '/training/',
   '/training/samples/',
   '/training/samples/rfi-that-gets-answered/',
@@ -42,14 +58,24 @@ const DEFAULT_PAGES = [
   '/training-samples/nutrition/',
   '/training-samples/strength/',
   '/training-samples/sauna/',
-  '/services/',
-  '/accessibility/',
 ];
 // Git Bash rewrites a bare /path argument into C:/Program Files/Git/path
 // (MSYS path conversion). Strip that back off, and accept paths without a
 // leading slash, so the script works from any shell.
 const normalize = (a) => '/' + a.replace(/^[A-Za-z]:\/.*?\/Git\//, '').replace(/^\/+/, '');
 const pages = process.argv.slice(2).length ? process.argv.slice(2).map(normalize) : DEFAULT_PAGES;
+
+// The reviews rail (home and both location pages) hydrates from
+// /api/reviews, a Cloudflare Pages Function that only exists on the deployed
+// site. Against the static dist server it 404s, the rail catches it and
+// removes itself, and Chrome still logs the failed request as a console
+// error. Allow that one request URL and nothing else: any other console
+// error, including a 404 for any other URL, still fails the page.
+const ALLOWED_CONSOLE_ERROR_URLS = ['/api/reviews'];
+const isAllowedConsoleError = (msg) => {
+  const url = msg.location()?.url || '';
+  return ALLOWED_CONSOLE_ERROR_URLS.some((u) => url.startsWith(origin + u));
+};
 
 const AXE_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 const MAX_TABS = 500;
@@ -169,7 +195,10 @@ for (const p of pages) {
   const page = await context.newPage();
   const consoleErrors = [];
   page.on('pageerror', (e) => consoleErrors.push(String(e)));
-  page.on('console', (m) => m.type() === 'error' && consoleErrors.push(m.text()));
+  page.on('console', (m) => {
+    if (m.type() !== 'error' || isAllowedConsoleError(m)) return;
+    consoleErrors.push(m.text());
+  });
   const res = await page.goto(origin + p, { waitUntil: 'networkidle' });
   const status = res?.status();
   const entry = { path: p, status };

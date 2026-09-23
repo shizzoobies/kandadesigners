@@ -13,7 +13,7 @@ Services:
 
 Process: Discover (goals, audience, scope) → Design (structure, type, motion) → Build (fast, accessible, tested) → Launch (ships on modern hosting).
 
-Pricing: scoped per project — never a fixed menu price. Budget bands: under $2,000; $2,000–5,000; $5,000–10,000; $10,000+. No job is too small or too big; every project is scoped to fit.
+Pricing: scoped per project — never a fixed menu price. The published range runs from under $2,000 to $10,000 and up, and the whole thing is written out at ka-performancefl.com/services/web-design/what-it-costs/. Very roughly: a focused landing page doing one job sits at the bottom, under $2,000; a working small-business site with several real pages and help with the copy is roughly $2,000–5,000; a build carrying integrations, an AI assistant, or original artwork is roughly $5,000–10,000; larger or ongoing work is $10,000 and up. There is no monthly platform fee. The quote is free, it is a number rather than a range with an asterisk, and the client knows it before any work starts. No job is too small or too big; every project is scoped to fit.
 
 Hosting philosophy (an honest differentiator): most businesses don't need to pay monthly hosting fees. A well-built site runs on modern global infrastructure for little to nothing a month — that's how K & A ships every build. Businesses paying monthly for a site that rarely changes should ask about a one-time build.
 
@@ -23,7 +23,7 @@ Contact: ka-performancefl.com/contact/ — either scope a project with the AI as
 
 ## Where K & A works
 
-The studio is in Gainesville, Florida. Meeting in person is easy in Gainesville and the nearby towns: Alachua, Newberry, High Springs, and Ocala. Jacksonville, Orange Park, Fleming Island, and St. Augustine run remote, which is how most projects run anyway, and remote works everywhere else too. The site has dedicated pages at ka-performancefl.com/locations/gainesville/ and /locations/jacksonville/. Each service also has its own page: /services/web-design/, /services/ai-integration/, /services/seo-ai-search/, and /services/accessibility/.
+The studio is in Gainesville, Florida. Meeting in person is easy in Gainesville and the nearby towns: Alachua, Newberry, High Springs, and Ocala. Jacksonville, Orange Park, Fleming Island, and St. Augustine run remote, which is how most projects run anyway, and remote works everywhere else too. The site has dedicated pages at ka-performancefl.com/locations/gainesville/ and /locations/jacksonville/. Each service also has its own page: /services/web-design/, /services/ai-integration/, /services/seo-ai-search/, and /services/accessibility/. Web design has a cost page under it at /services/web-design/what-it-costs/, which publishes the bands, what moves a project up or down, the three-year comparison against a monthly platform fee, and how the free quote works.
 
 ## The free course
 
@@ -93,13 +93,13 @@ K & A publishes its own accessibility statement at ka-performancefl.com/accessib
 ## Common questions and answers
 
 Q: How much does a website cost?
-A: It's scoped per project — there's no fixed menu. Budget bands run from under $2,000 for a focused build to $10,000+ for a full platform. The fastest way to a real number is a short scoping conversation.
+A: It's scoped per project — there's no fixed menu, but the bands are published rather than hidden behind a discovery call. Under $2,000 for a focused landing page, roughly $2,000–5,000 for a working small-business site, roughly $5,000–10,000 for a build carrying integrations, an AI assistant, or original artwork, and $10,000 and up beyond that. No monthly platform fee. The quote is free and you know the number before any work starts. It is all laid out at ka-performancefl.com/services/web-design/what-it-costs/.
 
 Q: How long does a site take?
-A: Depends on scope — a focused landing page moves much faster than a multi-page platform. The Discover conversation sets a realistic timeline before any commitment.
+A: Most sites launch in two to six weeks depending on scope — a focused landing page moves much faster than a multi-page platform. You hear the timeline in the first conversation, before any deposit, not after one.
 
 Q: Do I need to pay monthly for hosting?
-A: Honestly, most businesses don't. A well-built site runs on modern global infrastructure for little to nothing a month. If you're paying monthly fees for a site that rarely changes, ask about a one-time build.
+A: Honestly, most businesses don't. A well-built site runs on modern global infrastructure for little to nothing a month, and there is no monthly platform fee on a K & A build. If you're paying monthly fees for a site that rarely changes, ask about a one-time build — the three-year comparison is on ka-performancefl.com/services/web-design/what-it-costs/.
 
 Q: Can you fix my existing site instead of rebuilding?
 A: Yes for accessibility — K & A audits existing sites and fixes what fails. For design and performance, an honest assessment sometimes concludes a rebuild is cheaper than patching; you'll get a straight answer either way.
