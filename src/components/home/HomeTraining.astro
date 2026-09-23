@@ -1,3 +1,10 @@
+---
+import { liveSamples } from '../../data/training.js';
+import TrainingCourseCard from '../TrainingCourseCard.astro';
+
+const featuredSlugs = ['hazard-recognition', 'reading-the-pnl', 'build-the-plate'];
+const featuredCourses = featuredSlugs.map((slug) => liveSamples.find((sample) => sample.slug === slug)).filter(Boolean);
+---
 <section class="home-training" aria-labelledby="home-training-title" data-home-training>
   <div class="training-layout">
     <div class="training-copy">
@@ -24,7 +31,16 @@
       </details>
     </div>
   </div>
-  <div class="training-browse"><p>Training for your team, too.</p><a href="/training/samples/">Try our interactive training samples</a></div>
+  <div class="training-browse" aria-labelledby="home-course-title">
+    <div class="browse-heading">
+      <div><p class="eyebrow">Training for your team</p><h3 id="home-course-title">See what learning can look like.</h3></div>
+      <a href="/training/samples/">Explore all six courses</a>
+    </div>
+    <p class="browse-copy">An illustrated guide, a real decision, a chance to practice. Try a short course and see how we bring a subject to life.</p>
+    <div class="course-previews">
+      {featuredCourses.map((sample) => <TrainingCourseCard sample={sample} headingLevel={3} />)}
+    </div>
+  </div>
 </section>
 
 <style>
@@ -49,8 +65,13 @@
   .preview-transcript { padding: 14px 18px; border-top: 1px solid rgb(34 28 21 / 14%); }
   summary { font-size: 0.8rem; color: var(--color-accent); cursor: pointer; }
   .preview-transcript p { font-size: 0.9rem; line-height: 1.7; color: var(--color-muted); margin-top: 16px; }
-  .training-browse { display: flex; justify-content: space-between; gap: 16px 30px; flex-wrap: wrap; border-top: 1px solid rgb(34 28 21 / 16%); margin-top: 40px; padding-top: 24px; }
-  .training-browse p { margin: 0; font-weight: 700; }
+  .training-browse { border-top: 1px solid rgb(34 28 21 / 16%); margin-top: 64px; padding-top: 40px; }
+  .browse-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+  .browse-heading .eyebrow { margin-bottom: 12px; }
+  .browse-heading h3 { font: 700 clamp(1.65rem, 3vw, 2.35rem)/1.15 var(--font-display); letter-spacing: -0.025em; }
+  .browse-heading > a { padding-block: 10px; font-weight: 600; }
+  .browse-copy { max-width: 65ch; margin: 18px 0 28px; line-height: 1.7; color: var(--color-muted); }
+  .course-previews { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .training-browse a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 5px; }
   a:focus-visible, button:focus-visible, summary:focus-visible, video:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
   @media (max-width: 767px) {
@@ -62,6 +83,7 @@
     .preview-status { font-size: 0.75rem; }
     .preview-footer button { font-size: 0.72rem; padding-inline: 8px; }
     .training-browse { margin-top: 32px; font-size: 0.9rem; }
+    .course-previews { grid-template-columns: 1fr; }
   }
 </style>
 

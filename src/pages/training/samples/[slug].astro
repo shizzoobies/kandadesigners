@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { liveSamples } from '../../../data/training.js';
+import { trainingPresentation } from '../../../data/trainingPresentation.js';
 
 // One sample viewer. The interactive fills the viewport in an iframe. Above
 // it, a strip walks the collection (previous, position, next) with no arrow
@@ -23,6 +24,7 @@ export function getStaticPaths() {
 }
 
 const { sample } = Astro.props;
+const presentation = trainingPresentation[sample.slug];
 
 const SITE = 'https://ka-performancefl.com';
 const PAGE_URL = SITE + '/training/samples/' + sample.slug + '/';
@@ -40,7 +42,6 @@ const frame = [
   { term: 'Accessibility', detail: sample.accessibility },
   { term: 'Built with', detail: sample.built },
 ];
-const meta = sample.kind + ' · ' + sample.vertical + ' · About ' + sample.minutes + ' minutes';
 
 // The suffix used to be " | Training Samples | K & A Performance", 39
 // characters ahead of the sample's own title, which pushed four of the six
@@ -70,6 +71,7 @@ const workSchema = {
   url: PAGE_URL,
   name: sample.title,
   description: sample.what,
+  image: SITE + presentation.shareImage,
   learningResourceType: sample.kind,
   timeRequired: 'PT' + sample.minutes + 'M',
   inLanguage: 'en-US',
@@ -91,6 +93,7 @@ const workSchema = {
   clientRouter
   title={pageTitle}
   description={sample.meta ?? sample.what}
+  ogImage={presentation.shareImage}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(workSchema)} />
@@ -227,22 +230,35 @@ const workSchema = {
        so scripting-off readers get the noscript list above instead. -->
   <dialog id="sample-intro" class="sv-intro" aria-labelledby="sample-intro-title">
     <div class="sv-intro-card tr-frame">
-      <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{meta}</p>
-      <h2 id="sample-intro-title" tabindex="-1" class="mt-4 font-display text-3xl leading-tight md:text-4xl">{sample.title}</h2>
-      <p class="mt-4 text-lg leading-relaxed text-ink">{sample.what}</p>
-      <dl class="sv-intro-frame mt-7">
-        {frame.map((row) => (
-          <div class="sv-intro-row">
-            <dt class="font-mono text-[0.68rem] uppercase tracking-[0.22em] text-accent">{row.term}</dt>
-            <dd class="m-0 mt-1 text-sm leading-relaxed text-muted">{row.detail}</dd>
+      <div class="sv-intro-toolbar">
+        <span>Inside the course</span>
+        <button type="button" class="sv-intro-dismiss" data-intro-close>Close introduction</button>
+      </div>
+      <div class="sv-intro-layout">
+        <div class="sv-intro-art">
+          <img src={presentation.cover} alt={presentation.coverAlt} width="1200" height="750" loading="eager" />
+          <p>{presentation.experience}</p>
+        </div>
+        <div class="sv-intro-copy">
+          <p class="sv-intro-meta">{sample.vertical} <span aria-hidden="true">/</span> About {sample.minutes} minutes</p>
+          <h2 id="sample-intro-title" tabindex="-1">{sample.title}</h2>
+          <p class="sv-intro-summary">{presentation.summary}</p>
+          <div class="sv-intro-actions">
+            <button type="button" class="btn-draw" data-intro-close autofocus>View the course</button>
+            <a href={sample.dir} target="_blank" rel="noopener">Open in a new tab<span class="sr-only"> (opens in a new tab)</span></a>
           </div>
-        ))}
-      </dl>
-      <div class="sv-intro-actions mt-8 flex flex-wrap items-center gap-6">
-        <button type="button" class="btn-draw" data-intro-close autofocus>View the course</button>
-        <a href={sample.dir} target="_blank" rel="noopener" class="font-heading text-sm font-semibold tracking-wide text-accent hover:text-accent-hot">
-          Open in a new tab<span class="sr-only"> (opens in a new tab)</span>
-        </a>
+          <details class="sv-production">
+            <summary>About the design and accessibility</summary>
+            <dl class="sv-intro-frame">
+              {frame.map((row) => (
+                <div class="sv-intro-row">
+                  <dt>{row.term}</dt>
+                  <dd>{row.detail}</dd>
+                </div>
+              ))}
+            </dl>
+          </details>
+        </div>
       </div>
     </div>
   </dialog>
@@ -297,7 +313,7 @@ const workSchema = {
       frame?.focus();
     });
     intro.addEventListener('cancel', (e) => { e.preventDefault(); leave(); });
-    intro.querySelector('[data-intro-close]')?.addEventListener('click', leave);
+    intro.querySelectorAll('[data-intro-close]').forEach((button) => button.addEventListener('click', leave));
     intro.addEventListener('click', (e) => { if (e.target === intro) leave(); });
     if (about) {
       about.hidden = false;
@@ -436,7 +452,7 @@ const workSchema = {
      own frame, and a drop-away: it slides down and fades while the backdrop
      clears, then the dialog closes. Painted explicitly, never transparent. */
   .sv-intro {
-    width: min(44rem, calc(100vw - 2rem));
+    width: min(62rem, calc(100vw - 2rem));
     max-height: calc(100vh - 2rem);
     margin: auto; /* preflight zeroes dialog margins; this restores centring */
     padding: 0;
@@ -454,20 +470,32 @@ const workSchema = {
   .sv-intro-card {
     background: var(--color-surface, #FFFDF9);
     color: var(--color-ink);
-    padding: 2.25rem 2.5rem 2.5rem;
+    padding: 0;
     max-height: calc(100vh - 2rem);
     overflow: auto;
     box-shadow: 0 40px 80px -30px rgb(34 28 21 / 0.55);
   }
-  .sv-intro-frame {
-    display: grid;
-    gap: 1.1rem 2.5rem;
-    margin: 1.75rem 0 0;
-  }
-  @media (min-width: 40rem) {
-    .sv-intro-frame { grid-template-columns: 1fr 1fr; }
-    .sv-intro-row:first-child { grid-column: 1 / -1; }
-  }
+  .sv-intro-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem 1.25rem; border-bottom: 1px solid rgb(34 28 21 / .14); }
+  .sv-intro-toolbar > span { font: .65rem var(--font-mono); text-transform: uppercase; letter-spacing: .16em; color: var(--color-muted); }
+  .sv-intro-dismiss { font: 600 .78rem var(--font-heading); padding: .45rem .75rem; min-height: 36px; border: 1px solid rgb(34 28 21 / .2); border-radius: 100px; color: var(--color-accent); cursor: pointer; }
+  .sv-intro-dismiss:hover { background: rgb(154 52 18 / .07); }
+  .sv-intro-layout { display: grid; grid-template-columns: 1fr 1.05fr; }
+  .sv-intro-art { background: #eee6db; display: flex; flex-direction: column; justify-content: center; }
+  .sv-intro-art img { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; }
+  .sv-intro-art p { margin: 0; padding: 1.25rem 1.5rem; font: 600 .85rem var(--font-heading); color: var(--color-ink); border-top: 1px solid rgb(34 28 21 / .12); }
+  .sv-intro-copy { padding: 2rem; }
+  .sv-intro-meta { font: .68rem/1.7 var(--font-mono); color: var(--color-accent); letter-spacing: .05em; text-transform: uppercase; }
+  .sv-intro-meta span { margin-inline: .3em; }
+  #sample-intro-title { font: 700 clamp(1.75rem, 3vw, 2.5rem)/1.1 var(--font-display); letter-spacing: -.025em; margin-top: .85rem; }
+  .sv-intro-summary { font-size: 1rem; line-height: 1.65; color: var(--color-muted); margin: 1rem 0 1.5rem; }
+  .sv-intro-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.5rem; }
+  .sv-intro-actions > a { font: 600 .8rem/1.5 var(--font-heading); color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; }
+  .sv-production { margin-top: 1.5rem; border-top: 1px solid rgb(34 28 21 / .14); }
+  .sv-production summary { padding: 1rem 0 .2rem; cursor: pointer; color: var(--color-accent); font: 600 .8rem/1.6 var(--font-heading); }
+  .sv-intro-frame { display: grid; gap: 1rem; margin-top: 1.25rem; }
+  .sv-intro-row dt { font: 600 .72rem var(--font-heading); color: var(--color-ink); }
+  .sv-intro-row dd { margin: .25rem 0 0; color: var(--color-muted); font-size: .85rem; line-height: 1.65; }
+  .sv-intro button:focus-visible, .sv-intro a:focus-visible, .sv-intro summary:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
   @media (prefers-reduced-motion: no-preference) {
     .sv-intro[open] { animation: sv-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
     .sv-intro[open]::backdrop { animation: sv-fade-in 0.4s ease both; }
@@ -479,15 +507,17 @@ const workSchema = {
   @keyframes sv-fade-in { from { opacity: 0; } to { opacity: 1; } }
   @keyframes sv-fade-out { from { opacity: 1; } to { opacity: 0; } }
   @media (max-width: 40rem) {
-    .sv-intro-card { padding: 1.6rem 1.35rem 0; }
-    /* On a phone the card scrolls; the way out stays pinned to its foot. */
-    .sv-intro-actions {
-      position: sticky;
-      bottom: 0;
-      margin-top: 1.5rem;
-      padding: 1rem 0 1.25rem;
-      background: linear-gradient(to top, var(--color-surface, #FFFDF9) 78%, transparent);
-    }
+    .sv-intro-layout { grid-template-columns: 1fr; }
+    .sv-intro-toolbar { padding: .55rem .85rem; }
+    .sv-intro-toolbar > span { font-size: .58rem; letter-spacing: .08em; }
+    .sv-intro-dismiss { font-size: .7rem; padding-inline: .65rem; }
+    .sv-intro-art img { max-height: 190px; object-fit: cover; }
+    .sv-intro-art p { padding: .65rem 1.2rem; font-size: .75rem; }
+    .sv-intro-copy { padding: 1.25rem; }
+    .sv-intro-meta { font-size: .6rem; }
+    .sv-intro-summary { font-size: .9rem; margin: .75rem 0 1.1rem; }
+    .sv-intro-actions { gap: .8rem 1.25rem; }
+    .sv-production { margin-top: 1rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .tr-skip, .sv-nav-title, .sv-nav-title::after, .sv-nav-all { transition: none; }
