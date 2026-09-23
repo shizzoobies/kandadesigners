@@ -1,0 +1,31 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "ka-sites-checker",
+  "main": "./index.js",
+  "compatibility_date": "2026-08-13",
+  "triggers": {
+    "crons": ["*/15 * * * *"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ka-sites",
+      // Same id as ../wrangler.jsonc, filled in at deploy (Task 16).
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "../migrations"
+    }
+  ],
+  "r2_buckets": [
+    { "binding": "LOGOS", "bucket_name": "ka-sites-logos" }
+  ],
+  // GITHUB_TOKEN and RESEND_API_KEY are secrets, set at deploy with
+  // `secret bulk` from a BOM-free JSON file, never pasted into a terminal.
+  "vars": {
+    "ALERT_TO": "alex@ka-performancefl.com",
+    "ALERT_FROM": "K & A sites <alerts@ka-performancefl.com>",
+    "ADMIN_URL": "https://admin.ka-performancefl.com"
+  },
+  "observability": { "enabled": true },
+  // No fetch handler and nothing to serve; the cron is the only way in.
+  "workers_dev": false
+}
