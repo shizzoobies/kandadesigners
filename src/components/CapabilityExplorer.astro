@@ -1,0 +1,117 @@
+---
+import CapabilityArt from './CapabilityArt.astro';
+import { deliverables } from '../data/training.js';
+const labels = ['Full courses', 'Modules', 'Microlearning', 'Job aids', 'Assessments', 'Content refresh', 'Accessibility'];
+const groups = [
+  { title: 'Teach the topic', note: 'A clear path from the first idea to practical understanding.' },
+  { title: 'Put it into practice', note: 'Decisions, scenarios and references that support the work.' },
+  { title: 'Make existing content work harder', note: 'A considered next chapter for the material you already have.' },
+];
+const groupFor = (index: number) => groups[index < 3 ? 0 : index < 5 ? 1 : 2];
+---
+<div class="cap-explorer" data-cap-explorer>
+  <div class="explorer-controls" hidden>
+    <p class="explorer-hint"><span class="desktop-hint">Hover or select a format to look inside.</span><span class="touch-hint">Swipe through the formats. Tap to look inside.</span></p>
+    <div class="format-strip" role="tablist" aria-label="Training formats">
+      {deliverables.map((item, index) => <button type="button" id={`cap-tab-${index}`} role="tab" aria-selected={index === 0 ? 'true' : 'false'} aria-controls={`cap-panel-${index}`} tabindex={index === 0 ? 0 : -1} data-cap-index={index}>
+        <span class="format-art"><CapabilityArt kind={index} /></span><span>{labels[index]}</span><span class="selected-rule" aria-hidden="true"></span>
+      </button>)}
+    </div>
+  </div>
+  <div class="cap-stage">
+    {deliverables.map((item, index) => <article id={`cap-panel-${index}`} class="cap-panel" data-cap-panel={index}>
+      <div class="stage-art"><div class="art-grid" aria-hidden="true"></div><CapabilityArt kind={index} /></div>
+      <div class="stage-copy"><p class="stage-category">{groupFor(index).title}</p><h3>{item.title}</h3><p class="stage-description">{item.blurb}</p><p class="stage-context">{groupFor(index).note}</p></div>
+    </article>)}
+  </div>
+</div>
+<style>
+  .explorer-controls[hidden], .cap-panel[hidden] { display: none; }
+  .explorer-hint { color: var(--color-muted); font-size: .8rem; margin: 0 0 18px; }
+  .touch-hint { display: none; }
+  .format-strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; padding: 6px 4px 20px; }
+  .format-strip button { position: relative; appearance: none; border: 1px solid transparent; border-radius: 3px; background: transparent; color: var(--color-ink); padding: 5px 5px 20px; min-width: 0; font: 600 .86rem/1.35 var(--font-heading); cursor: pointer; transition: background .25s, border-color .25s; }
+  .format-strip button[aria-selected="true"] { background: #fffdf9; border-color: #d4b7a2; }
+  .format-strip button:hover { background: #fffdf9; }
+  .format-art { display: block; height: 90px; margin-bottom: 6px; }
+  .selected-rule { position: absolute; bottom: 8px; left: calc(50% - 13px); height: 2px; width: 26px; background: var(--color-accent); transform: scaleX(0); transition: transform .25s; }
+  button[aria-selected="true"] .selected-rule { transform: scaleX(1); }
+  .format-strip button:focus-visible, .cap-panel:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+  .cap-stage { border: 1px solid #d9cfc5; background: #fffdf9; }
+  .cap-panel { display: grid; grid-template-columns: .8fr 1.2fr; min-height: 290px; }
+  .cap-panel + .cap-panel { border-top: 1px solid #d9cfc5; }
+  .cap-explorer[data-enhanced] .cap-panel { border: 0; }
+  .stage-art { position: relative; display: grid; place-items: center; background: #ede7df; padding: 22px 40px; overflow: hidden; }
+  .stage-art :global(svg) { position: relative; max-width: 330px; max-height: 235px; }
+  .art-grid { position: absolute; inset: 0; opacity: .3; background-image: linear-gradient(#c8b9a6 1px, transparent 1px), linear-gradient(90deg, #c8b9a6 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse, #000, transparent 75%); }
+  .stage-copy { align-self: center; padding: 34px 44px; }
+  .stage-category { color: var(--color-accent); font: .66rem/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .12em; margin: 0 0 12px; }
+  h3 { color: var(--color-ink); font: 700 clamp(1.45rem,2.4vw,2rem)/1.12 var(--font-display); letter-spacing: -.035em; margin: 0; }
+  .stage-description { font-size: 1rem; line-height: 1.65; margin: 18px 0; max-width: 52ch; }
+  .stage-context { color: var(--color-muted); border-top: 1px solid #e4dbd1; padding-top: 14px; font-size: .82rem; line-height: 1.6; margin: 0; }
+  .cap-explorer[data-enhanced] .stage-copy { animation: reveal-copy .25s ease-out; }
+  @keyframes reveal-copy { from { opacity: .35; transform: translateY(5px); } }
+  @media (max-width: 900px) { .format-strip { gap: 3px; } .format-strip button { font-size: .76rem; } .format-art { height: 70px; } .stage-copy { padding: 28px; } .stage-art { padding: 18px; } }
+  @media (max-width: 600px) {
+    .desktop-hint { display: none; } .touch-hint { display: inline; }
+    .format-strip { display: flex; overflow-x: auto; gap: 8px; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: #b59780 #eee5db; padding-bottom: 15px; margin-bottom: 12px; }
+    .format-strip button { flex: 0 0 119px; scroll-snap-align: center; font-size: .82rem; }
+    .format-art { height: 72px; }
+    .cap-panel { grid-template-columns: 1fr; min-height: 430px; }
+    .stage-art { height: 145px; padding: 4px 30px; }
+    .stage-art :global(svg) { max-width: 215px; max-height: 140px; }
+    .stage-copy { padding: 24px; align-self: start; }
+    .stage-description { font-size: .94rem; margin: 14px 0; }
+  }
+  @media (hover: none) { .desktop-hint { display: none; } .touch-hint { display: inline; } }
+  @media (prefers-reduced-motion: reduce) { .cap-explorer *, .selected-rule { animation: none !important; transition: none !important; } }
+</style>
+<script>
+  function initCapabilityExplorer() {
+    document.querySelectorAll<HTMLElement>('[data-cap-explorer]').forEach((root) => {
+      if (root.dataset.enhanced) return;
+      const controls = root.querySelector<HTMLElement>('.explorer-controls');
+      const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-cap-index]'));
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-cap-panel]'));
+      if (!controls || buttons.length !== panels.length) return;
+      const select = (index: number) => {
+        buttons.forEach((button, i) => {
+          button.setAttribute('aria-selected', String(i === index));
+          button.tabIndex = i === index ? 0 : -1;
+          button.dataset.capActive = String(i === index);
+          panels[i].hidden = i !== index;
+          panels[i].dataset.capActive = String(i === index);
+        });
+      };
+      panels.forEach((panel, i) => {
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', buttons[i].id);
+        panel.tabIndex = 0;
+      });
+      buttons.forEach((button, i) => {
+        button.addEventListener('click', () => select(i));
+        button.addEventListener('focus', () => select(i));
+        button.addEventListener('pointerenter', (event) => {
+          if (event.pointerType !== 'mouse' || !window.matchMedia('(hover: hover) and (min-width: 601px)').matches || (controls.contains(document.activeElement) && document.activeElement !== button && document.activeElement?.matches(':focus-visible'))) return;
+          select(i);
+        });
+        button.addEventListener('keydown', (event) => {
+          let next = i;
+          if (event.key === 'ArrowRight') next = (i + 1) % buttons.length;
+          else if (event.key === 'ArrowLeft') next = (i + buttons.length - 1) % buttons.length;
+          else if (event.key === 'Home') next = 0;
+          else if (event.key === 'End') next = buttons.length - 1;
+          else return;
+          event.preventDefault();
+          buttons[next].focus({ preventScroll: true });
+          buttons[next].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+        });
+      });
+      select(0);
+      root.dataset.enhanced = 'true';
+      controls.hidden = false;
+    });
+  }
+  initCapabilityExplorer();
+  document.addEventListener('astro:page-load', initCapabilityExplorer);
+</script>

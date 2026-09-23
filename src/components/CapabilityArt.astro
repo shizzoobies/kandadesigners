@@ -1,0 +1,61 @@
+---
+const { kind = 0 } = Astro.props;
+---
+<svg class="cap-art" viewBox="0 0 240 160" fill="none" aria-hidden="true">
+  <ellipse cx="120" cy="140" rx="84" ry="7" fill="currentColor" opacity=".06" />
+  {kind === 0 && <>
+    <path d="M41 119h158" class="fine" stroke-dasharray="3 6" />
+    <g class="float-back"><rect x="45" y="39" width="110" height="86" rx="5" class="paper muted" /><path d="M59 56h58M59 65h37" class="fine" /></g>
+    <g class="float-front"><rect x="80" y="23" width="116" height="92" rx="5" class="paper" /><path d="M80 43h116" class="fine" /><circle cx="91" cy="33" r="2" class="solid" /><circle cx="99" cy="33" r="2" class="solid" /><rect x="92" y="54" width="40" height="46" rx="3" class="tint" /><path d="m106 66 15 11-15 11Z" class="solid" /><path d="M144 61h38M144 72h29M144 87h38M144 98h22" class="fine" /></g>
+    <circle cx="62" cy="121" r="13" class="seal" /><path d="m56 121 4 4 8-9" class="white check" />
+  </>}
+  {kind === 1 && <>
+    <g class="float-back"><rect x="45" y="39" width="134" height="88" rx="5" class="paper muted" /></g>
+    <g class="float-front"><rect x="61" y="24" width="134" height="88" rx="5" class="paper" /><path d="M61 44h134" class="fine" /><rect x="73" y="56" width="45" height="42" rx="3" class="tint" /><path d="m87 66 17 11-17 11Z" class="solid" /><path d="M132 61h47M132 71h38M132 87h27" class="fine" /></g>
+    <path d="M86 135h69" class="fine" /><circle cx="94" cy="135" r="4" class="solid" /><circle cx="120" cy="135" r="4" class="solid" opacity=".5" /><circle cx="146" cy="135" r="4" class="solid" opacity=".2" />
+  </>}
+  {kind === 2 && <>
+    <g class="float-front"><rect x="83" y="16" width="76" height="123" rx="12" class="paper" /><path d="M109 25h24" class="fine" /><rect x="94" y="39" width="54" height="45" rx="5" class="tint" /><path d="m115 50 17 12-17 12Z" class="solid" /><path d="M96 97h45M96 107h33M113 129h17" class="fine" /></g>
+    <g class="badge"><circle cx="169" cy="103" r="25" class="seal" /><circle cx="169" cy="103" r="16" class="white" /><path d="M169 93v11l7 4" class="white hand" /></g>
+  </>}
+  {kind === 3 && <>
+    <g class="float-back"><rect x="57" y="36" width="121" height="102" rx="5" class="paper muted" /></g>
+    <g class="float-front"><rect x="69" y="22" width="113" height="107" rx="5" class="paper" /><rect x="101" y="17" width="47" height="14" rx="5" class="seal" />
+    {[53,80,107].map((y)=><><rect x="82" y={y-8} width="15" height="15" rx="3" class="tint" /><path d={`m85 ${y-1} 3 3 6-7`} class="accent check" /><path d={`M108 ${y-3}h57M108 ${y+4}h39`} class="fine" /></>)}</g>
+  </>}
+  {kind === 4 && <>
+    <path d="M120 58v22M62 109V80h115v29" class="fine" /><g class="float-front"><path d="m120 18 35 22-35 23-35-23Z" class="paper" /><path d="m116 32 11 8-11 8Z" class="solid" /></g>
+    <rect x="36" y="100" width="56" height="32" rx="5" class="paper muted" /><path d="M52 112h24M52 120h15" class="fine" />
+    <g class="badge"><rect x="145" y="100" width="63" height="32" rx="5" class="seal" /><path d="m167 116 6 6 13-14" class="white check" /></g>
+    <path d="M120 68v12h57v15" class="accent route" />
+  </>}
+  {kind === 5 && <>
+    <g class="float-back"><rect x="29" y="42" width="74" height="91" rx="4" class="paper muted" /><path d="M43 61h46M43 72h37M43 94h46M43 105h30" class="fine" /></g>
+    <g class="float-front"><rect x="135" y="26" width="83" height="106" rx="5" class="paper" /><rect x="146" y="39" width="61" height="40" rx="4" class="tint" /><path d="m169 48 17 11-17 11Z" class="solid" /><path d="M147 92h58M147 103h45M147 114h26" class="fine" /></g>
+    <path d="M80 28c32-20 56-17 79-4m-4-13 5 13-14 2" class="accent sweep" /><path d="M105 89h20m-7-7 8 7-8 7" class="accent" />
+  </>}
+  {kind === 6 && <>
+    <rect x="48" y="29" width="145" height="102" rx="6" class="paper" /><path d="M48 50h145M60 40h3m7 0h3" class="fine" /><rect x="62" y="64" width="51" height="42" rx="4" class="tint" /><path d="M124 67h55M124 79h46M124 92h37" class="fine" />
+    <rect x="58" y="59" width="59" height="53" rx="7" class="accent focus-ring" stroke-dasharray="4 4" />
+    <g class="badge"><circle cx="181" cy="120" r="24" class="seal" /><path d="m169 120 8 8 15-17" class="white check" /></g>
+    <path d="m80 87 6 25 5-9 10-3Z" class="paper pointer" />
+  </>}
+</svg>
+<style>
+  .cap-art { width: 100%; height: 100%; display: block; color: var(--color-accent); overflow: visible; }
+  .paper { fill: #fffdf9; stroke: #8b7667; stroke-width: 1.3; }
+  .muted { fill: #e8ddd0; }
+  .fine { stroke: #8b7667; stroke-width: 1.4; stroke-linecap: round; }
+  .solid, .seal { fill: currentColor; }
+  .tint { fill: #eed5bf; }
+  .accent { stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .white { stroke: #fffdf9; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .float-front, .float-back, .badge, .pointer, .focus-ring, .sweep { transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .4s; transform-box: fill-box; transform-origin: center; }
+  :global([data-cap-active="true"]) .float-front { transform: translateY(-5px); }
+  :global([data-cap-active="true"]) .float-back { transform: translate(-4px, 3px) rotate(-3deg); }
+  :global([data-cap-active="true"]) .badge { transform: translateY(-4px) rotate(-5deg); }
+  :global([data-cap-active="true"]) .pointer { transform: translate(5px, -7px); }
+  :global([data-cap-active="true"]) .focus-ring { stroke-width: 3; }
+  :global([data-cap-active="true"]) .sweep { transform: translateY(-4px); }
+  @media (prefers-reduced-motion: reduce) { .cap-art * { transition: none !important; transform: none !important; } }
+</style>

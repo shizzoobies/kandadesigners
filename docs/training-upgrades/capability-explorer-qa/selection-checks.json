@@ -1,0 +1,44 @@
+[
+  {
+    "selected": "Full courses",
+    "visible": [
+      "Full courses"
+    ]
+  },
+  {
+    "selected": "Modules",
+    "visible": [
+      "Standard modules"
+    ]
+  },
+  {
+    "selected": "Microlearning",
+    "visible": [
+      "Microlearning"
+    ]
+  },
+  {
+    "selected": "Job aids",
+    "visible": [
+      "Job aids and performance support"
+    ]
+  },
+  {
+    "selected": "Assessments",
+    "visible": [
+      "Assessments"
+    ]
+  },
+  {
+    "selected": "Content refresh",
+    "visible": [
+      "Conversion and refresh"
+    ]
+  },
+  {
+    "selected": "Accessibility",
+    "visible": [
+      "Accessibility remediation"
+    ]
+  }
+]

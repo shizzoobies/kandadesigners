@@ -1,16 +1,12 @@
 ---
 import TrainingSubnav from './TrainingSubnav.astro';
 import TrainingCourseCard from './TrainingCourseCard.astro';
+import CapabilityExplorer from './CapabilityExplorer.astro';
 import { trainingPresentation } from '../data/trainingPresentation.js';
-import { section, liveSamples, team, deliverables, delivery, pipeline, accessibility, aiTransparency, engagementModels } from '../data/training.js';
+import { section, liveSamples, team, delivery, pipeline, accessibility, aiTransparency, engagementModels } from '../data/training.js';
 const { faqs } = Astro.props;
 const featured = ['hazard-recognition', 'reading-the-pnl', 'build-the-plate']
   .map((slug) => liveSamples.find((sample) => sample.slug === slug));
-const capabilityGroups = [
-  { title: 'Teach the topic', note: 'A clear path from the first idea to practical understanding.', items: deliverables.slice(0, 3) },
-  { title: 'Put it into practice', note: 'Decisions, scenarios and references that support the work.', items: deliverables.slice(3, 5) },
-  { title: 'Make existing content work harder', note: 'A considered next chapter for the material you already have.', items: deliverables.slice(5) },
-];
 const hero = trainingPresentation['hazard-recognition'];
 ---
 
@@ -50,7 +46,7 @@ const hero = trainingPresentation['hazard-recognition'];
 
 <section class="studio-wrap studio-section" aria-labelledby="capabilities-heading">
   <div class="section-heading"><div><p class="eyebrow">What we build</p><h2 id="capabilities-heading">The right shape<br />for what needs to change.</h2></div><p class="section-aside">Bring the topic, the audience and the material you have. We will work out the learning experience with you.</p></div>
-  <div class="capability-groups">{capabilityGroups.map((group) => <article><h3>{group.title}</h3><p>{group.note}</p><ul>{group.items.map((item) => <li><strong>{item.title}</strong><span>{item.blurb}</span></li>)}</ul></article>)}</div>
+  <CapabilityExplorer />
 </section>
 
 <section class="process-section studio-wrap studio-section" aria-labelledby="process-heading">
@@ -98,6 +94,7 @@ const hero = trainingPresentation['hazard-recognition'];
   h1 span, .inquiry-section h2 span { color: var(--color-accent); }
   h2 { font-size: clamp(2rem, 3.35vw, 3rem); line-height: 1.1; }
   h3 { font-size: 1.3rem; line-height: 1.22; }
+  #capabilities-heading { scroll-margin-top: 125px; }
   p { line-height: 1.65; }
   .studio-hero { display: grid; grid-template-columns: .92fr 1.08fr; gap: 54px; align-items: center; padding-block: 170px 64px; }
   .hero-intro { font-size: 1.18rem; line-height: 1.55; margin: 25px 0 14px; max-width: 35ch; }
@@ -131,13 +128,6 @@ const hero = trainingPresentation['hazard-recognition'];
   .practice-copy { padding-top: 24px; }
   .practice-copy .eyebrow { margin-bottom: 12px; }
   .practice-copy > p:not(.eyebrow) { color: var(--color-muted); font-size: .95rem; margin: 15px 0 12px; }
-  .capability-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; }
-  .capability-groups article { border-top: 2px solid var(--color-accent); padding-top: 24px; }
-  .capability-groups article > p { color: var(--color-muted); font-size: .95rem; margin: 14px 0 24px; }
-  .capability-groups ul { list-style: none; padding: 0; margin: 0; }
-  .capability-groups li { padding: 16px 0; border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent); }
-  .capability-groups li strong, .capability-groups li span { display: block; }
-  .capability-groups li span { font-size: .88rem; line-height: 1.65; color: var(--color-muted); margin-top: 6px; }
   .process-section, .engagement-section, .faq-section { border-top: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent); }
   .process-list { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 40px; padding: 0; margin: 0; }
   .process-list li { border-left: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent); padding: 0 0 0 20px; }
@@ -179,7 +169,7 @@ const hero = trainingPresentation['hazard-recognition'];
   .inquiry-section > p.inquiry-note { font-size: .8rem; margin-top: 18px; }
   a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 5px; }
   @media (max-width: 1000px) { .studio-hero { gap: 28px; } .feature-topline { font-size: .6rem; } .hero-actions { gap: 10px 18px; } .featured-courses, .practice-grid { gap: 18px; } .section-heading { gap: 30px; } .people-section { gap: 35px; } .delivery-columns { gap: 40px; } }
-  @media (max-width: 800px) { .studio-hero { grid-template-columns: 1fr; padding-top: 145px; gap: 36px; } h1 { max-width: 13ch; font-size: clamp(2.8rem, 7vw, 4rem); } .hero-intro, .hero-detail { max-width: 48ch; } .hero-feature { max-width: 650px; } .section-heading { display: block; } .section-aside { max-width: 54ch; margin-top: 22px; } .featured-courses { grid-template-columns: repeat(3, minmax(0, 1fr)); } .practice-grid { grid-template-columns: 1fr; gap: 34px; } .practice-card { display: grid; grid-template-columns: .85fr 1.15fr; gap: 24px; align-items: center; } .practice-copy { padding-top: 0; } .practice-image, .guide-image { height: 220px; } .capability-groups { gap: 24px; } .people-section { grid-template-columns: 1fr; } .people-portraits { max-width: 480px; } .faq-section { grid-template-columns: 1fr; gap: 30px; } }
-  @media (max-width: 600px) { .featured-courses { grid-template-columns: 1fr; } .hero-note { display: none; } .studio-wrap { width: calc(100% - 40px); } .studio-section { padding-block: 52px; } .studio-hero { padding-top: 132px; padding-bottom: 44px; } h1 { font-size: 2.8rem; } .eyebrow { font-size: .65rem; margin-bottom: 16px; } .hero-intro { font-size: 1.1rem; } .hero-detail { font-size: .95rem; } .hero-feature { box-shadow: 6px 6px 0 color-mix(in srgb, var(--color-accent) 8%, var(--color-canvas)); } .feature-topline { padding: 12px; } .feature-caption { padding: 18px 14px; gap: 14px; } .feature-caption strong { font-size: 1.1rem; } .feature-kicker { font-size: .7rem; } .hero-actions { gap: 14px 20px; } .capability-groups, .engagement-list, .delivery-columns, .ai-note > div { grid-template-columns: 1fr; gap: 30px; } .process-list { grid-template-columns: 1fr; gap: 24px; } .format-list { grid-template-columns: 1fr 1fr; gap: 0 20px; } .practice-card { display: block; } .practice-copy { padding-top: 22px; } .practice-image, .guide-image { height: 205px; } .people-portraits { gap: 14px; } .people-section { gap: 34px; } .inquiry-section { padding-block: 50px 72px; } .selection-footnote { line-height: 1.6; } }
+  @media (max-width: 800px) { .studio-hero { grid-template-columns: 1fr; padding-top: 145px; gap: 36px; } h1 { max-width: 13ch; font-size: clamp(2.8rem, 7vw, 4rem); } .hero-intro, .hero-detail { max-width: 48ch; } .hero-feature { max-width: 650px; } .section-heading { display: block; } .section-aside { max-width: 54ch; margin-top: 22px; } .featured-courses { grid-template-columns: repeat(3, minmax(0, 1fr)); } .practice-grid { grid-template-columns: 1fr; gap: 34px; } .practice-card { display: grid; grid-template-columns: .85fr 1.15fr; gap: 24px; align-items: center; } .practice-copy { padding-top: 0; } .practice-image, .guide-image { height: 220px; } .people-section { grid-template-columns: 1fr; } .people-portraits { max-width: 480px; } .faq-section { grid-template-columns: 1fr; gap: 30px; } }
+  @media (max-width: 600px) { .featured-courses { grid-template-columns: 1fr; } .hero-note { display: none; } .studio-wrap { width: calc(100% - 40px); } .studio-section { padding-block: 52px; } .studio-hero { padding-top: 132px; padding-bottom: 44px; } h1 { font-size: 2.8rem; } .eyebrow { font-size: .65rem; margin-bottom: 16px; } .hero-intro { font-size: 1.1rem; } .hero-detail { font-size: .95rem; } .hero-feature { box-shadow: 6px 6px 0 color-mix(in srgb, var(--color-accent) 8%, var(--color-canvas)); } .feature-topline { padding: 12px; } .feature-caption { padding: 18px 14px; gap: 14px; } .feature-caption strong { font-size: 1.1rem; } .feature-kicker { font-size: .7rem; } .hero-actions { gap: 14px 20px; } .engagement-list, .delivery-columns, .ai-note > div { grid-template-columns: 1fr; gap: 30px; } .process-list { grid-template-columns: 1fr; gap: 24px; } .format-list { grid-template-columns: 1fr 1fr; gap: 0 20px; } .practice-card { display: block; } .practice-copy { padding-top: 22px; } .practice-image, .guide-image { height: 205px; } .people-portraits { gap: 14px; } .people-section { gap: 34px; } .inquiry-section { padding-block: 50px 72px; } .selection-footnote { line-height: 1.6; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 </style>
