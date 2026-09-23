@@ -49,7 +49,9 @@ const phases = [
   .phase-nav a[aria-selected="true"] .phase-time { color: #ded3c8; }
   .phase-arrow { position: absolute; right: 20px; bottom: 24px; }
   .phase-panel { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 64px; padding: 38px 0; min-height: 448px; scroll-margin-top: 100px; }
-  .phase-panel[hidden] { display: none; }
+  [data-enhanced] .phase-panels { display: grid; }
+  [data-enhanced] .phase-panel { grid-area: 1 / 1; }
+  [data-enhanced] .phase-panel[data-inactive] { display: grid; visibility: hidden; pointer-events: none; }
   .phase-copy h3 { font: 700 clamp(1.6rem, 2.7vw, 2.25rem)/1.15 var(--font-display); letter-spacing: -0.02em; max-width: 15ch; margin: 0 0 20px; }
   .phase-copy > p:last-child { max-width: 37ch; color: var(--color-muted); font-size: 1.05rem; line-height: 1.7; margin: 0; }
   .deliverable { padding: 28px 32px; border: 1px solid rgb(34 28 21 / 22%); box-shadow: 7px 7px 0 #eee5dc; background: var(--color-surface); }
@@ -88,6 +90,7 @@ const phases = [
     launchCleanup?.();
     const root = document.querySelector<HTMLElement>('[data-home-launch]');
     if (!root) return;
+    root.setAttribute('data-enhanced', '');
     const nav = root.querySelector<HTMLElement>('.phase-nav');
     const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-phase-link]'));
     const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-phase-panel]'));
@@ -96,7 +99,7 @@ const phases = [
     nav?.setAttribute('role', 'tablist');
     const show = (index: number, focus = false) => {
       links.forEach((link, i) => { link.setAttribute('aria-selected', String(i === index)); link.tabIndex = i === index ? 0 : -1; });
-      panels.forEach((panel, i) => { panel.hidden = i !== index; panel.toggleAttribute('data-enter', i === index); });
+      panels.forEach((panel, i) => { panel.toggleAttribute('data-inactive', i !== index); panel.inert = i !== index; panel.setAttribute('aria-hidden', String(i !== index)); panel.toggleAttribute('data-enter', i === index); });
       if (focus) links[index].focus();
     };
     links.forEach((link, index) => {

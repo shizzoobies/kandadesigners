@@ -193,6 +193,13 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 </div>
 
 <style>
+  @media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+    #gallery { height: auto; }
+    #hg-sticky { position: relative; height: auto; }
+    #hg-stage { position: relative; top: auto; margin-top: 40px; height: 440px; transform: none; }
+    #hg-ui { position: relative; bottom: auto; padding-bottom: 48px; }
+    #hg-heading, #scroll-cue, #scroll-rail { display: none; }
+  }
   .hg-slot {
     position: absolute;
     left: 50%;

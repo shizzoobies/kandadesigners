@@ -59,7 +59,7 @@
         buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
         panels.forEach((panel) => {
           const inactive = panel.dataset.panel !== button.dataset.stage;
-          panel.hidden = inactive;
+          panel.toggleAttribute('data-inactive', inactive);
           panel.inert = inactive;
           panel.setAttribute('aria-hidden', String(inactive));
         });
@@ -75,7 +75,7 @@
 
 <style>
   .ai-demo { padding: 96px 24px; }
-  .ai-layout { max-width: 1152px; margin: auto; display: grid; grid-template-columns: .86fr 1.14fr; gap: 64px; align-items: center; }
+  .ai-layout { max-width: 1104px; margin: auto; display: grid; grid-template-columns: .86fr 1.14fr; gap: 64px; align-items: center; }
   .eyebrow, .document-type, .workspace-label, .sample-label, .brief-question > span { font-family: var(--font-mono); font-size: .69rem; letter-spacing: .08em; text-transform: uppercase; }
   .eyebrow { color: var(--color-accent); margin: 0 0 20px; }
   h2 { font-family: var(--font-display); font-size: clamp(2rem, 4.7vw, 3.75rem); font-weight: 700; line-height: 1.07; letter-spacing: -.045em; margin: 0; }
@@ -98,9 +98,9 @@
   .demo-stage { padding: 24px; background: #fffdf9; color: #221c15; }
   [data-ready] .stage-window { display: grid; grid-template-columns: minmax(0, 1fr); }
   [data-ready] .demo-stage { grid-area: 1 / 1; }
-  [data-ready] .demo-stage[hidden] { display: block; visibility: hidden; pointer-events: none; }
-  .demo-stage + .demo-stage:not([hidden]) { margin-top: 20px; }
-  [data-ready] .demo-stage + .demo-stage:not([hidden]) { margin-top: 0; }
+  [data-ready] .demo-stage[data-inactive] { display: block; visibility: hidden; pointer-events: none; }
+  .demo-stage + .demo-stage:not([data-inactive]) { margin-top: 20px; }
+  [data-ready] .demo-stage + .demo-stage:not([data-inactive]) { margin-top: 0; }
   .document-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; }
   .document-type { color: #6c635a; font-size: .63rem; line-height: 1.5; }
   .document-mark { font-size: 1.3rem; color: #9a3412; }
@@ -116,7 +116,7 @@
   .brief-question > span { color: #9a3412; }
   .brief-question p { font-size: .98rem; line-height: 1.5; margin: 8px 0 0; }
   .demo-note { padding: 0 24px 20px; margin: 0; font-size: .75rem; color: #b4cdc6; line-height: 1.5; }
-  @media (prefers-reduced-motion: no-preference) { [data-ready] .demo-stage:not([hidden]) { animation: document-arrive .24s ease-out; } @keyframes document-arrive { from { opacity: .4; transform: translateY(5px); } to { opacity: 1; transform: none; } } }
+  @media (prefers-reduced-motion: no-preference) { [data-ready] .demo-stage:not([data-inactive]) { animation: document-arrive .24s ease-out; } @keyframes document-arrive { from { opacity: .4; transform: translateY(5px); } to { opacity: 1; transform: none; } } }
   @media (max-width: 960px) { .ai-layout { grid-template-columns: 1fr; gap: 40px; } .intro-copy { max-width: 58ch; } }
   @media (max-width: 540px) { .ai-demo { padding: 48px 24px; } .workspace-label { padding: 16px; line-height: 1.6; } .sample-label { margin-left: 16px; } .stage-controls { padding: 8px 8px 0; } .stage-controls button { font-size: .75rem; } .stage-window { padding: 12px; } .demo-stage { padding: 20px 16px; } .extracted-details > div { grid-template-columns: 1fr; gap: 4px; } .demo-note { padding: 0 16px 16px; } }
 </style>

@@ -16,7 +16,7 @@
       </video>
       <div class="preview-footer">
         <span class="preview-status" data-preview-status role="status" aria-live="polite">Play when you are ready.</span>
-        <button type="button" data-preview-replay hidden>Replay sample <span aria-hidden="true">↻</span></button>
+        <button type="button" data-preview-replay hidden>Play 30-second sample</button>
       </div>
       <details class="preview-transcript" id="training-preview-transcript">
         <summary>Read the sample transcript</summary>
@@ -41,7 +41,7 @@
   .frame-heading { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 14px; padding: 16px 18px; border-bottom: 1px solid rgb(34 28 21 / 18%); font-size: 0.88rem; font-weight: 700; }
   .sample-label { font: 0.68rem var(--font-mono); align-self: center; color: var(--color-accent); }
   video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: var(--color-ink); }
-  .preview-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 18px; min-height: 60px; border-top: 1px solid rgb(34 28 21 / 18%); }
+  .preview-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 18px; min-height: 60px; border-top: 1px solid rgb(34 28 21 / 18%); }
   .preview-status { font-size: 0.8rem; line-height: 1.5; color: var(--color-muted); }
   .preview-footer button { border: 1px solid var(--color-accent); color: var(--color-accent); font: 700 0.78rem var(--font-heading); padding: 8px 10px; min-height: 40px; background: transparent; cursor: pointer; white-space: nowrap; }
   .preview-footer button[hidden] { display: none; }
@@ -76,19 +76,24 @@
     const replay = root?.querySelector<HTMLButtonElement>('[data-preview-replay]');
     const status = root?.querySelector<HTMLElement>('[data-preview-status]');
     if (!video || !replay || !status) return;
+    video.controls = false;
+    replay.hidden = false;
+    let mediaFailed = false;
     const controller = new AbortController();
     const options = { signal: controller.signal };
     const setStatus = (text: string) => { status.textContent = text; };
-    video.addEventListener('playing', () => { replay.hidden = true; setStatus('Playing the orientation sample.'); }, options);
-    video.addEventListener('pause', () => { if (!video.ended) setStatus('Paused. Continue whenever you are ready.'); }, options);
+    video.addEventListener('playing', () => { video.controls = true; replay.textContent = 'Pause sample'; setStatus('Playing the orientation sample.'); }, options);
+    video.addEventListener('pause', () => { if (!video.ended) { replay.textContent = 'Continue sample'; setStatus('Paused. Continue whenever you are ready.'); } }, options);
     video.addEventListener('waiting', () => setStatus('Loading the sample...'), options);
-    video.addEventListener('ended', () => { replay.hidden = false; setStatus('Sample complete. Explore the AI lessons for more.'); }, options);
-    video.addEventListener('error', () => setStatus('The sample could not load. You can read its transcript below.'), options);
+    video.addEventListener('ended', () => { replay.textContent = 'Replay sample'; setStatus('Sample complete. Explore the AI lessons for more.'); }, options);
+    const showError = () => { mediaFailed = true; video.controls = true; setStatus('The sample could not load. You can read its transcript below.'); };
+    video.addEventListener('error', showError, options);
+    video.querySelector('source')?.addEventListener('error', showError, options);
     replay.addEventListener('click', async () => {
-      video.currentTime = 0;
-      video.focus();
+      if (!video.paused) { video.pause(); return; }
+      if (video.ended) video.currentTime = 0;
       try { await video.play(); }
-      catch { setStatus('Use the video play control to try again.'); }
+      catch { video.controls = true; if (!mediaFailed) setStatus('Use the video play control to try again.'); }
     }, options);
     trainingCleanup = () => { controller.abort(); video.pause(); };
   };

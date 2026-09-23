@@ -2,319 +2,36 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroGallery from '../components/HeroGallery.astro';
 import ReviewsRail from '../components/ReviewsRail.astro';
+import HomeWork from '../components/home/HomeWork.astro';
+import HomeAiDemo from '../components/home/HomeAiDemo.astro';
+import HomeAccessibility from '../components/home/HomeAccessibility.astro';
+import HomeLaunch from '../components/home/HomeLaunch.astro';
+import HomeArtistry from '../components/home/HomeArtistry.astro';
+import HomeTraining from '../components/home/HomeTraining.astro';
+import HomeStudio from '../components/home/HomeStudio.astro';
 ---
 <BaseLayout
   title="Gainesville Web Design & AI Integration | K & A Performance"
   description="A Gainesville web design and AI integration studio building fast, accessible sites for businesses that refuse to blend in. Quotes are always free."
 >
-  <!-- Hero and work gallery are one scroll-driven piece: the sloppy stack
-       of client sites sweeps into the 3D horseshoe as you scroll. -->
   <HeroGallery />
-
-  <!-- The plain-words block, first after the hero on purpose: what the studio
-       does and where, in indexable copy with real links, before anything else
-       gets a word in. Its H2 is the first heading after the H1.
-       lg pulls it up into the hero's recede tail (this margin used to sit on
-       #a11y-home): the copy is already arriving while the last tiles fade, so
-       the canvas never sits blank between acts. -->
-  <section class="mx-auto max-w-6xl px-6 pt-14 pb-20 md:pb-24 lg:pt-16 lg:-mt-[34vh]">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-4xl">Web design in Gainesville, built in Gainesville</h2>
-    <div class="mt-6 grid max-w-5xl gap-8 md:grid-cols-2">
-      <div>
-        <p data-animate="type-settle" class="leading-relaxed text-muted">
-          K &amp; A Performance is a two-person studio doing
-          <a href="/services/web-design/" class="text-accent underline underline-offset-4 hover:text-accent-hot">custom website design</a>,
-          <a href="/services/ai-integration/" class="text-accent underline underline-offset-4 hover:text-accent-hot">AI integration</a>,
-          <a href="/services/seo-ai-search/" class="text-accent underline underline-offset-4 hover:text-accent-hot">SEO and AI search</a>,
-          and
-          <a href="/services/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility audits</a>
-          from
-          <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville, Florida</a>.
-          No templates, no page builders, no theme shared with a thousand other
-          companies: every build starts from a blank page and ships measured
-          against WCAG AA.
-        </p>
-        <p data-animate="type-settle" data-animate-delay="0.05" class="mt-5 leading-relaxed text-muted">
-          Two people, and you deal with both of them. Alex Anderson does the
-          design and the development, so the person who drew your layout is the
-          one writing the code and nothing gets mistranslated in a handoff
-          between departments that do not exist. Kristina Anderson runs
-          strategy and content, which in practice means asking why a page
-          exists at all and what it is meant to make somebody do once they are
-          on it. There is no account manager in the middle.
-        </p>
-        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-5 leading-relaxed text-muted">
-          Plenty of businesses pay a platform fee every month for the privilege
-          of not being allowed to edit their own opening hours. A well-built
-          site runs on modern global infrastructure for little to nothing a
-          month, and that is how we ship every build. The bands a project lands
-          in, and what pushes it up or down, are laid out in
-          <a href="/services/web-design/what-it-costs/" class="text-accent underline underline-offset-4 hover:text-accent-hot">what a website costs</a>.
-        </p>
-      </div>
-      <div>
-        <p data-animate="type-settle" data-animate-delay="0.05" class="leading-relaxed text-muted">
-          The proof is already around town.
-          <a href="https://projectmakeover.org" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Project Makeover</a>,
-          the nonprofit out of the University of Florida that remakes a school
-          in a single weekend, runs on a site we built. So does the Florida
-          Disability Access and Awareness Foundation. So do
-          <a href="https://davidsbbq.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">David&#39;s BBQ</a>,
-          pit barbecue in town since 1978, and
-          <a href="https://osteenandsons.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Osteen &amp; Sons</a>,
-          the lawn, brush and junk crew whose site pulls your lot from county
-          records when you type in an address.
-        </p>
-        <p data-animate="type-settle" data-animate-delay="0.1" class="mt-5 leading-relaxed text-muted">
-          Gainesville, Alachua, Newberry, High Springs and Ocala are close
-          enough to meet in person.
-          <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville</a>,
-          Orange Park, Fleming Island and St. Augustine run remote, the way
-          most projects do anyway. Curious about AI first? The
-          <a href="/free-course/" class="text-accent underline underline-offset-4 hover:text-accent-hot">free course</a>
-          costs an email, and the
-          <a href="/ai-launch/" class="text-accent underline underline-offset-4 hover:text-accent-hot">90-Day AI Launch</a>
-          puts it to work in your business.
-        </p>
-      </div>
-    </div>
-    <!-- Recognition row. The directories that list the studio, set in the site's
-         mono caps so it reads as a credential rather than a stray sentence. It
-         sits on its own rule under the two columns and takes more pills as the
-         listings come live. DesignRush activates the profile only when a live
-         page carries this exact anchor text and URL, so keep both as they are. -->
-    <ul class="mt-10 flex flex-wrap items-center gap-3 border-t border-ink/10 pt-6" aria-label="Directories that list the studio">
-      <li>
-        <a href="https://www.designrush.com/agency/website-design-development" target="_blank" rel="noopener" class="group inline-flex items-center gap-2 rounded-full border border-ink/15 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] text-ink transition-colors hover:border-accent hover:text-accent">
-          As seen on DesignRush
-          <svg aria-hidden="true" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:-translate-y-px group-hover:translate-x-px"><path d="M3 9 9 3M4 3h5v5" /></svg>
-        </a>
-      </li>
-    </ul>
-  </section>
-
-  <!-- Accessibility promise: the differentiator, stated plainly, beside a
-       window sketching its own audit (same language as the hero sketch).
-       It follows the Gainesville block with normal spacing now that the
-       hero's pull-up belongs to that block. -->
-  <section id="a11y-home" class="mx-auto max-w-6xl px-6 pt-14 pb-28 lg:pt-16">
-    <div class="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
-      <div>
-        <h2 data-a11y-text class="font-display text-4xl md:text-6xl">Accessible <span class="text-accent">by default</span></h2>
-        <p data-a11y-text class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-          Every build is measured against WCAG AA: contrast, keyboard, screen
-          readers, motion preferences. Already have a site? We'll check it and
-          tell you exactly where it stands.
-        </p>
-        <p data-a11y-text class="mt-5 max-w-2xl leading-relaxed text-muted">
-          An audit hands back a written report in plain English, ordered by
-          what actually blocks somebody rather than by what a scanner found
-          most of. Each item says what the problem is, who it affects, which
-          WCAG criterion it fails, and what fixing it involves. Where a number
-          matters, the number is there. We hold our own work to the same
-          standard: this site publishes an
-          <a href="/accessibility/" class="text-accent underline underline-offset-4 hover:text-accent-hot">accessibility statement</a>
-          saying what is in place, where we still fall short, and how to reach
-          a human if any of it gets in your way.
-        </p>
-        <div data-a11y-text class="mt-8">
-          <a href="/services/#svc-a11y" class="btn-ghost">Get an accessibility check</a>
-        </div>
-      </div>
-      <!-- a site auditing itself, stroke by stroke: focus ring, contrast
-           pair, screen-reader eye, keyboard with Tab. Decorative. The draw
-           is scrubbed to scroll so the canvas is never blank; the text
-           slides in as the last strokes land. -->
-      <svg
-        id="a11y-sketch"
-        class="hidden w-full text-ink/35 lg:block"
-        viewBox="0 0 640 430"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <rect x="1" y="1" width="638" height="428" rx="14" />
-        <line x1="1" y1="46" x2="639" y2="46" />
-        <circle cx="26" cy="23" r="6" />
-        <circle cx="48" cy="23" r="6" />
-        <circle cx="70" cy="23" r="6" />
-        <line x1="48" y1="102" x2="300" y2="102" />
-        <line x1="48" y1="132" x2="252" y2="132" />
-        <rect x="48" y="172" width="132" height="36" rx="18" />
-        <rect x="41" y="165" width="146" height="50" rx="25" class="text-accent" />
-        <path d="M400 202 L441 92 L482 202" />
-        <path d="M419 162 L463 162" />
-        <path d="M500 202 L541 92 L582 202" class="text-accent" />
-        <path d="M519 162 L563 162" class="text-accent" />
-        <ellipse cx="112" cy="262" rx="36" ry="20" />
-        <circle cx="112" cy="262" r="8" />
-        <circle cx="490" cy="262" r="26" class="text-accent" />
-        <path d="M478 262 l9 9 l17 -20" class="text-accent" />
-        <rect x="48" y="312" width="544" height="78" rx="10" />
-        <rect x="62" y="326" width="64" height="24" rx="5" class="text-accent" />
-        <rect x="140" y="326" width="28" height="24" rx="5" />
-        <rect x="182" y="326" width="28" height="24" rx="5" />
-        <rect x="224" y="326" width="28" height="24" rx="5" />
-        <rect x="140" y="358" width="220" height="20" rx="5" />
-        <rect x="470" y="326" width="28" height="24" rx="5" />
-        <rect x="512" y="326" width="64" height="24" rx="5" />
-      </svg>
-    </div>
-  </section>
-
-  <!-- AI section: the one deliberate dark moment on the light site — and it breathes. -->
-  <section class="dark-band ai-alive ai-alive-dark border-y border-ink/10">
-    <div class="mx-auto max-w-6xl px-6 py-32">
-      <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">Sites that <span class="ai-pulse text-accent">think</span></h2>
-      <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        We integrate AI where it earns its place: assistants that qualify leads,
-        content engines, smart search. Ours is live right now.
-      </p>
-      <p data-animate="type-settle" data-animate-delay="0.15" class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
-        Earning its place means one of three things. An assistant that answers
-        the questions your team answers forty times a week, at whatever hour
-        somebody turns up, then hands over a lead with the details already
-        collected. An automation nobody ever sees: intake that summarises
-        itself before it reaches an inbox, enquiries routed by what they are
-        actually about, quotes drafted from a conversation. Or AI inside the
-        product itself, where the customer never thinks about it. Kai, the
-        assistant on this site, is our own version of the first one. It knows
-        this business rather than a generic script, answers in text here and
-        out loud on the <a href="/services/" class="text-accent underline underline-offset-4 hover:text-accent-hot">services page</a>,
-        and passes a real lead to a human.
-      </p>
-      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
-        <a href="/contact/#scope" class="btn-accent">Scope your project with Kai</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- The lead offer. One CTA, per the launch handoff: the header already
-       carries every other way to reach us. -->
-  <section class="border-b border-ink/10 bg-surface">
-    <div class="mx-auto max-w-6xl px-6 py-28 md:py-32">
-      <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-accent">New from K &amp; A</p>
-      <h2 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-3xl font-display text-4xl leading-tight md:text-6xl">
-        Ninety days to one part of your business running on AI.
-      </h2>
-      <p data-animate="type-settle" data-animate-delay="0.2" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-        A twelve-week build, one on one. You end with a real workflow running in
-        your own account and the ability to run it without us. Add a full custom
-        site for $3,999.
-      </p>
-      <p data-animate="type-settle" data-animate-delay="0.25" class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
-        Three phases: an opportunity map and one quick win in the first two
-        weeks, the highest-value workflow in your business built together on
-        your real data through week eight, then you build the next one yourself
-        with Alex watching.
-      </p>
-      <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10">
-        <a href="/ai-launch/" class="btn-accent">See how the twelve weeks work</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Artists teaser -->
-  <section class="mx-auto max-w-6xl px-6 py-32">
-    <h2 data-animate="type-settle" class="font-display text-4xl md:text-6xl">In-house artistry</h2>
-    <p data-animate="type-settle" data-animate-delay="0.1" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-      Original illustration and artwork through <a href="/artists/" class="font-semibold text-accent transition-colors hover:text-accent-hot">our collaborating artists</a>. Custom art is available on request, and most new builds include budget for a custom logo if you want one.
-      Don't need a website? You can commission an artist on their own too. <a href="/contact/" class="font-semibold text-accent transition-colors hover:text-accent-hot">Reach out</a> and we'll make it happen.
-    </p>
-    <p data-animate="type-settle" data-animate-delay="0.15" class="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
-      Bobbie draws: hand-lettered logotypes, character work, whole picture
-      books. Jon Marc builds identity systems that scale from a single mark to
-      a season of screens, shirts and social. Nicole designs for things that
-      get worn and handed out, from challenge coins to apparel to invitation
-      suites.
-    </p>
-    <div class="mt-14 grid gap-10 md:grid-cols-3">
-      <a href="/artists/bobbie/" data-animate="frame-lift" class="group block">
-        <figure class="glow-frame relative">
-          <img src="/images/art/bb-portrait.webp" alt="Bobbie, Bobbie Draws mark over a softened portrait of the artist, portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
-        </figure>
-        <h3 class="mt-4 font-heading text-lg tracking-wide transition-colors group-hover:text-accent">Bobbie</h3>
-        <p class="mt-1 text-sm text-muted">Illustration &amp; brand artwork</p>
-      </a>
-      <a href="/artists/jon-marc/" data-animate="frame-lift" class="group block">
-        <figure class="glow-frame relative">
-          <img src="/images/art/jm-portrait.jpg" alt="Jon Marc, JMO monogram mark over a softened portrait of the artist, portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
-        </figure>
-        <h3 class="mt-4 font-heading text-lg tracking-wide transition-colors group-hover:text-accent">Jon Marc</h3>
-        <p class="mt-1 text-sm text-muted">Graphic design &amp; visual identity</p>
-      </a>
-      <a href="/artists/nicole/" data-animate="frame-lift" class="group block">
-        <figure class="glow-frame relative">
-          <img src="/images/art/nc-portrait.webp?v=1" alt="Nicole, Nicole Cruz Design wordmark over a softened portrait of the artist, portfolio preview" class="aspect-[4/3] w-full object-cover" loading="lazy" />
-        </figure>
-        <h3 class="mt-4 font-heading text-lg tracking-wide transition-colors group-hover:text-accent">Nicole</h3>
-        <p class="mt-1 text-sm text-muted">Brand identity &amp; merchandise design</p>
-      </a>
-    </div>
-  </section>
-
-  <!-- Google reviews rail: live via /api/reviews, hidden until data (or
-       placeholders on localhost) arrives -->
+  <HomeWork />
+  <HomeAiDemo />
+  <HomeAccessibility />
+  <HomeLaunch />
+  <HomeArtistry />
+  <HomeTraining />
+  <HomeStudio />
   <ReviewsRail />
-
-  <!-- Final CTA -->
-  <section class="px-6 pb-40 pt-16">
-    <div class="mx-auto max-w-4xl text-center">
-      <p data-animate="type-settle" class="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.05]">
-        Your site should work hard, <span class="text-accent">so you don't have to</span>
-      </p>
-      <div data-animate="type-settle" data-animate-delay="0.15" class="mt-10">
-        <a href="/contact/#scope" class="btn-accent">Start a project</a>
-      </div>
-      <p data-animate="type-settle" data-animate-delay="0.25" class="mt-5 text-sm text-muted">Quotes are always free.</p>
-    </div>
+  <section class="home-close" aria-labelledby="home-close-title">
+    <p class="close-label">What would make work easier?</p>
+    <h2 id="home-close-title">Let’s build<br /><span>something useful.</span></h2>
+    <p>A website, a workflow, or a better way to teach your team. Tell us where you want to go.</p>
+    <a href="/contact/#scope" class="btn-accent">Start a project</a>
+    <span class="close-note">Quotes are always free.</span>
+    <nav aria-label="Explore our services"><a href="/services/web-design/">Web design</a><a href="/services/ai-integration/">AI integration</a><a href="/services/seo-ai-search/">SEO &amp; AI search</a><a href="/services/accessibility/">Accessibility</a></nav>
   </section>
 </BaseLayout>
-
-<script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
-  const section = document.getElementById('a11y-home');
-  const texts = section ? [...section.querySelectorAll('[data-a11y-text]')] : [];
-
-  if (!reduced && section) {
-    gsap.registerPlugin(ScrollTrigger);
-
-    if (isDesktop) {
-      // The audit sketch draws with the scroll itself: strokes start landing
-      // the moment the section peeks into the viewport (while the gallery's
-      // empty tail is still clearing), and the copy slides in as the last
-      // strokes finish.
-      const strokes = [...document.querySelectorAll('#a11y-sketch path, #a11y-sketch line, #a11y-sketch rect, #a11y-sketch circle, #a11y-sketch ellipse')];
-      strokes.forEach((p) => {
-        const len = p.getTotalLength ? p.getTotalLength() : 800;
-        p.style.strokeDasharray = String(len);
-        p.style.strokeDashoffset = String(len);
-      });
-      gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'top 30%', scrub: 0.7 },
-      })
-        .to(strokes, { strokeDashoffset: 0, duration: 3, stagger: 0.12, ease: 'none' }, 0)
-        .from(texts, { x: -44, opacity: 0, duration: 1.1, stagger: 0.18, ease: 'power2.out' }, '>-0.5');
-    } else {
-      // Mobile has no sketch: the copy gets the standard settle-in — but only
-      // the lines that are not already on screen when this runs. Same rule as
-      // motion.js: nothing parked at opacity 0 waiting for a scroll that a
-      // non-scrolling renderer will never make. The desktop branch above needs
-      // no such guard, because its from() is scrubbed rather than triggered.
-      const pending = texts.filter((el) => el.getBoundingClientRect().top >= window.innerHeight);
-      if (pending.length) {
-        gsap.from(pending, {
-          y: 24, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out',
-          scrollTrigger: { trigger: section, start: 'top 85%' },
-        });
-      }
-    }
-  }
-</script>
+<style>
+  .home-close{max-width:1152px;margin:auto;padding:80px 24px 104px;text-align:center;border-top:1px solid #221c1525}.close-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--color-accent);margin-bottom:24px}.home-close h2{font-family:var(--font-display);font-size:clamp(2.75rem,6vw,5.5rem);line-height:1.04;font-weight:700;letter-spacing:-.035em}.home-close h2 span{color:var(--color-accent)}.home-close>p:not(.close-label){max-width:460px;margin:26px auto;font-size:1.12rem;line-height:1.6;color:var(--color-muted)}.close-note{display:block;margin:17px 0 45px;font-size:.85rem;color:var(--color-muted)}.home-close nav{display:flex;justify-content:center;flex-wrap:wrap;gap:16px 28px}.home-close nav a{font-size:.88rem;text-decoration:underline;text-underline-offset:5px;color:var(--color-accent)}
+</style>
