@@ -22,6 +22,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       and hands-on exercises. Start with a small reading-list project, give
       Claude a clear brief, review its plan, and check the result yourself.
       Follow the interactive lesson or watch the matching video guide.
+      Completely new? Begin with the orientation to windows, folders, and
+      your first commands before you install anything.
     </p>
   </section>
 
@@ -50,6 +52,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div data-animate="frame-lift" class="glow-frame self-start p-8 md:p-10">
           <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">Inside the course</p>
           <ul class="mt-6 space-y-4 text-lg leading-relaxed">
+            <li>A beginner orientation with browser practice and a video</li>
             <li>Install, sign in, and open your project</li>
             <li>Write a clear brief and review a small plan</li>
             <li>Practice with guided interactive exercises</li>
@@ -121,7 +124,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           // the admin's analytics; '1' is the anonymous fallback.
           document.cookie = 'ka_course=' + encodeURIComponent(result.t || '1') + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
           if (fcStatus) fcStatus.textContent = '';
-          window.location.href = new URLSearchParams(location.search).get('next') === 'video' ? '/course/video/' : '/course/';
+          const destinations: Record<string, string> = {
+            video: '/course/video/',
+            orientation: '/course/orientation/',
+            'orientation-video': '/course/orientation/?view=video',
+          };
+          const next = new URLSearchParams(location.search).get('next') || '';
+          window.location.href = Object.hasOwn(destinations, next) ? destinations[next] : '/course/';
         } else {
           throw new Error(result.error || 'failed');
         }
