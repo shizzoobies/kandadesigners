@@ -1,0 +1,10 @@
+---
+import { logoSrc, initials } from '../lib/view.js';
+const { site, size = 'sm' } = Astro.props;
+const src = logoSrc(site);
+---
+<span class={`logo ${size}`}>
+  {src
+    ? <img src={src} alt="" loading="lazy" />
+    : <span class="initials" aria-hidden="true">{initials(site.name)}</span>}
+</span>

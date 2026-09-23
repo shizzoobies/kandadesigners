@@ -1,0 +1,41 @@
+---
+import Shell from '../layouts/Shell.astro';
+import SiteCard from '../components/SiteCard.astro';
+import { listSites, latestChecksForAll, openWorkCounts } from '../lib/db.js';
+import { buildCards, filterCards } from '../lib/view.js';
+import { PROJECT_STATUS, STATUS_LABEL } from '../lib/enums.js';
+
+const DB = Astro.locals.runtime.env.DB;
+const [sites, checks, counts] = await Promise.all([listSites(DB), latestChecksForAll(DB, 12), openWorkCounts(DB)]);
+const show = Astro.url.searchParams.get('show') ?? 'all';
+const all = buildCards(sites, checks, counts, Date.now());
+const cards = filterCards(all, show);
+
+const filters = [
+  { key: 'all', label: `All (${all.length})` },
+  { key: 'problems', label: `Problems (${all.filter((c) => c.level !== 'green').length})` },
+  ...PROJECT_STATUS.map((s) => ({ key: s, label: STATUS_LABEL[s] })),
+];
+---
+<Shell title="Sites" active="sites">
+  <h1>Sites</h1>
+  {sites.length === 0 ? (
+    <div class="empty">
+      <p>No sites yet.</p>
+      <a class="btn" href="/sites/new">Add a site</a>
+    </div>
+  ) : (
+    <>
+      <nav aria-label="Filter sites">
+        <ul class="filters">
+          {filters.map((f) => (
+            <li><a href={f.key === 'all' ? '/' : `/?show=${f.key}`} aria-current={show === f.key ? 'true' : undefined}>{f.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+      {cards.length === 0
+        ? <p>No sites match this filter.</p>
+        : <ul class="grid">{cards.map((card) => <SiteCard card={card} />)}</ul>}
+    </>
+  )}
+</Shell>

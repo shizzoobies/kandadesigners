@@ -1,0 +1,6 @@
+---
+import { LEVEL_LABEL } from '../lib/enums.js';
+const { level, reason } = Astro.props;
+const text = level === 'green' ? LEVEL_LABEL.green : reason;
+---
+<span class="level"><span class={`dot ${level}`} aria-hidden="true"></span><span>{text}</span></span>

@@ -3,33 +3,6 @@ import '../styles/admin.css';
 
 const { title, active = '' } = Astro.props;
 const user = Astro.locals.user;
-
-// Members get a member nav; showing a client the business sidebar would
-// leak structure and every link would just bounce off the role gate anyway.
-const isMember = user?.role === 'client';
-
-const nav = isMember
-  ? [
-      { href: '/members', label: 'Home', key: 'members' },
-      // The course went public 2026-08-28 (the Launch page's free hook), so
-      // members use the same copy everyone else does.
-      { href: 'https://ka-performancefl.com/course/?pass=member', label: 'Course', key: 'course' },
-    ]
-  : [
-      { href: '/', label: 'Today', key: 'today' },
-      { href: '/clients', label: 'Clients', key: 'clients' },
-      { href: '/projects', label: 'Projects', key: 'projects' },
-      { href: '/money', label: 'Money', key: 'money' },
-      { href: '/invoices', label: 'Invoices', key: 'invoices' },
-      { href: '/followups', label: 'Follow-ups', key: 'followups' },
-      { href: '/coaching', label: 'Coaching', key: 'coaching' },
-      { href: '/newsletter', label: 'Newsletter', key: 'newsletter' },
-      // Parked artifact, kept here so the commission math lives in one place
-      // until the real Launch Book module gets built. Served by
-      // src/pages/launch-book.js rather than as a static file, so the
-      // middleware gates it like every other page.
-      { href: '/launch-book', label: 'Launch Book', key: 'launchbook' },
-    ];
 ---
 <html lang="en">
   <head>
@@ -38,28 +11,20 @@ const nav = isMember
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png" />
-    <title>{title} · K &amp; A admin</title>
+    <title>{title} | K &amp; A sites</title>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <div class="app">
-      <div class="frame">
-        <aside class="side">
-          <div class="brand">K &amp; A <em>{isMember ? 'members' : 'admin'}</em></div>
-          <nav class="nav">
-            {nav.map((item) => (
-              <a href={item.href} class={item.key === active ? 'on' : ''}>{item.label}</a>
-            ))}
-          </nav>
-        </aside>
-        <main class="main" id="main">
-          <div class="head">
-            <h2>{title}</h2>
-            <div class="date">{user?.name || user?.email}</div>
-          </div>
-          <slot />
-        </main>
-      </div>
-    </div>
+    <header class="top">
+      <a class="brand" href="/">K &amp; A <em>sites</em></a>
+      <nav aria-label="Main">
+        <a href="/" aria-current={active === 'sites' ? 'page' : undefined}>Sites</a>
+        <a href="/sites/new" aria-current={active === 'new' ? 'page' : undefined}>Add site</a>
+      </nav>
+      <div class="who">{user?.name || user?.email}</div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
   </body>
 </html>
