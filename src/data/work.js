@@ -1,12 +1,8 @@
 // Inner-page captures that only appear in the hero stack — they scatter with
 // the mosaic for density, then fly off as the home pages form the horseshoe.
 export const stackExtras = [
-  { img: '/images/work-extras/fdaaf-project.webp' },
-  { img: '/images/work-extras/fdaaf-projects.webp' },
   { img: '/images/work-extras/pmbuild-makeovers.webp?v=2' },
   { img: '/images/work-extras/pmbuild-alumni.webp?v=2' },
-  { img: '/images/work-extras/fixalways-hvac.webp' },
-  { img: '/images/work-extras/fixalways-plumbing.webp' },
   { img: '/images/work-extras/familypractice-dpc.webp' },
   { img: '/images/work-extras/familypractice-medicine.webp' },
   { img: '/images/work-extras/pbj-services.webp' },
@@ -14,12 +10,6 @@ export const stackExtras = [
 ];
 
 export const projects = [
-  {
-    slug: 'fdaaf',
-    title: 'FDAAF',
-    blurb: 'The Florida Disability Access and Awareness Foundation uses media to change how the world sees disability. We built them a bright, accessible home for that mission, with donation and volunteer paths front and center.',
-    img: '/images/work-fdaaf.webp',
-  },
   {
     slug: 'mbs-medicine',
     title: 'MBS Medicine',
@@ -37,12 +27,6 @@ export const projects = [
     title: 'Project Makeover',
     blurb: 'A nonprofit transforming school spaces into vibrant learning environments. A joyful, gallery-driven site with donation and makeover-showcase paths built for community momentum.',
     img: '/images/work-pmbuild.webp?v=2',
-  },
-  {
-    slug: 'fixalways',
-    title: 'FixAlways',
-    blurb: 'A Florida home-services directory powered by Google Places and Claude AI: search that actually finds the right pro, fast.',
-    img: '/images/fixalways-hero.webp',
   },
   {
     slug: 'foremotion-golf',

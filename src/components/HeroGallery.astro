@@ -129,7 +129,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
             )}
             {/* alt="" on purpose: these inner-page captures are set dressing
                 for the stack, they never reach the ring, and their whole
-                container is aria-hidden. The seven real project tiles above
+                container is aria-hidden. The real project tiles above
                 carry the descriptions. */}
             <img
               src={e.img}
@@ -399,23 +399,15 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
   // Tight mosaic: tiles sized and placed to overlap their neighbors so
   // almost no canvas shows between them.
   const STACK = [
-    { tx: -0.38, ty: -0.28, r: -8,  s: 1.5,  a: 0.95 }, // fdaaf — top left
-    { tx: 0.0,   ty: -0.32, r: 6,   s: 1.48, a: 0.95 }, // mbs — top center
-    { tx: 0.38,  ty: -0.29, r: -7,  s: 1.5,  a: 0.95 }, // pbj — top right
-    { tx: -0.4,  ty: 0.24,  r: 7,   s: 1.5,  a: 0.95 }, // makeover — bottom left
-    { tx: 0.03,  ty: 0.02,  r: 10,  s: 1.62, a: 1    }, // fixalways — center, biggest
-    { tx: 0.4,   ty: 0.26,  r: -8,  s: 1.5,  a: 0.95 }, // foremotion — bottom right
-    { tx: -0.02, ty: 0.36,  r: -11, s: 1.42, a: 0.95 }, // family practice — bottom center
-    // Mid left and mid right, the last real gaps in the mosaic. Kept at ±0.44,
-    // not further: at ±0.52 both were clipped by the viewport edge, since the
-    // existing mains top out at ±0.40 and these are scaled up 1.4x.
-    { tx: -0.44, ty: -0.10, r: 6,   s: 1.4,  a: 0.95 }, // southern legacy — mid left
-    { tx: 0.44,  ty: 0.12,  r: -6,  s: 1.4,  a: 0.95 }, // synovial — mid right
-    // Top and bottom seams, over two of the inner-page extras. Not nearer the
-    // middle: zIndex follows project order, so anything placed on the center
-    // would cover fixalways, the tile the mosaic is built around.
-    { tx: 0.2,   ty: -0.34, r: 5,   s: 1.34, a: 0.95 }, // osteen & sons — top, right of center
-    { tx: -0.21, ty: 0.32,  r: -5,  s: 1.34, a: 0.95 }, // david's bbq — bottom, left of center
+    { tx: -0.38, ty: -0.28, r: -8, s: 1.5, a: 0.95 }, // MBS, top left
+    { tx: 0.38, ty: -0.29, r: -7, s: 1.5, a: 0.95 }, // PB&J, top right
+    { tx: 0.03, ty: 0.02, r: 10, s: 1.62, a: 1 }, // Project Makeover, center
+    { tx: 0.4, ty: 0.26, r: -8, s: 1.5, a: 0.95 }, // Fore Motion, bottom right
+    { tx: -0.02, ty: 0.36, r: -11, s: 1.42, a: 0.95 }, // Family Practice, bottom center
+    { tx: -0.44, ty: -0.10, r: 6, s: 1.4, a: 0.95 }, // Southern Legacy, mid left
+    { tx: 0.44, ty: 0.12, r: -6, s: 1.4, a: 0.95 }, // Synovial, mid right
+    { tx: 0.2, ty: -0.34, r: 5, s: 1.34, a: 0.95 }, // Osteen & Sons, upper seam
+    { tx: -0.3, ty: 0.28, r: -5, s: 1.5, a: 0.95 }, // David's BBQ, bottom left
   ];
 
   // STACK must have one entry per project: it is indexed directly, so a missing
