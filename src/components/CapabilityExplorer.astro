@@ -1,6 +1,8 @@
 ---
 import CapabilityArt from './CapabilityArt.astro';
 import { deliverables } from '../data/training.js';
+const { headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
 const labels = ['Full courses', 'Modules', 'Microlearning', 'Job aids', 'Assessments', 'Content refresh', 'Accessibility'];
 const groups = [
   { title: 'Teach the topic', note: 'A clear path from the first idea to practical understanding.' },
@@ -21,7 +23,7 @@ const groupFor = (index: number) => groups[index < 3 ? 0 : index < 5 ? 1 : 2];
   <div class="cap-stage">
     {deliverables.map((item, index) => <article id={`cap-panel-${index}`} class="cap-panel" data-cap-panel={index}>
       <div class="stage-art"><div class="art-grid" aria-hidden="true"></div><CapabilityArt kind={index} /></div>
-      <div class="stage-copy"><p class="stage-category">{groupFor(index).title}</p><h3>{item.title}</h3><p class="stage-description">{item.blurb}</p><p class="stage-context">{groupFor(index).note}</p></div>
+      <div class="stage-copy"><p class="stage-category">{groupFor(index).title}</p><Heading>{item.title}</Heading><p class="stage-description">{item.blurb}</p><p class="stage-context">{groupFor(index).note}</p></div>
     </article>)}
   </div>
 </div>
@@ -46,7 +48,7 @@ const groupFor = (index: number) => groups[index < 3 ? 0 : index < 5 ? 1 : 2];
   .art-grid { position: absolute; inset: 0; opacity: .3; background-image: linear-gradient(#c8b9a6 1px, transparent 1px), linear-gradient(90deg, #c8b9a6 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse, #000, transparent 75%); }
   .stage-copy { align-self: center; padding: 34px 44px; }
   .stage-category { color: var(--color-accent); font: .66rem/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .12em; margin: 0 0 12px; }
-  h3 { color: var(--color-ink); font: 700 clamp(1.45rem,2.4vw,2rem)/1.12 var(--font-display); letter-spacing: -.035em; margin: 0; }
+  :is(h2, h3) { color: var(--color-ink); font: 700 clamp(1.45rem,2.4vw,2rem)/1.12 var(--font-display); letter-spacing: -.035em; margin: 0; }
   .stage-description { font-size: 1rem; line-height: 1.65; margin: 18px 0; max-width: 52ch; }
   .stage-context { color: var(--color-muted); border-top: 1px solid #e4dbd1; padding-top: 14px; font-size: .82rem; line-height: 1.6; margin: 0; }
   .cap-explorer[data-enhanced] .stage-copy { animation: reveal-copy .25s ease-out; }

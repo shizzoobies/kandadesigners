@@ -2,27 +2,19 @@
 import TrainingSubnav from './TrainingSubnav.astro';
 import TrainingCourseCard from './TrainingCourseCard.astro';
 import CapabilityExplorer from './CapabilityExplorer.astro';
-import { trainingPresentation } from '../data/trainingPresentation.js';
 import { section, liveSamples, team, delivery, pipeline, accessibility, aiTransparency, engagementModels } from '../data/training.js';
 const { faqs } = Astro.props;
 const featured = ['hazard-recognition', 'reading-the-pnl', 'build-the-plate']
   .map((slug) => liveSamples.find((sample) => sample.slug === slug));
-const hero = trainingPresentation['hazard-recognition'];
 ---
 
-<section class="studio-hero studio-wrap" aria-labelledby="training-title">
-  <div class="hero-copy">
-    <p class="eyebrow"><a href="/services/">Services</a><span aria-hidden="true"> / </span>Training studio</p>
-    <h1 id="training-title">Training worth <span>paying <span class="headline-last">attention to.</span></span></h1>
-    <p class="hero-intro">Custom courses that turn your team's knowledge into something people can use.</p>
-    <div class="hero-actions"><a href="/training/samples/" class="studio-primary">Explore the courses <span aria-hidden="true">↗</span></a><button type="button" data-inquire class="text-link" aria-label="Let's talk about your training project">Let's talk</button></div>
-    <p class="hero-note">Six original courses. Open them and try the work.</p>
+<section class="capability-hero studio-wrap" aria-labelledby="capabilities-heading">
+  <div class="section-heading">
+    <div><p class="eyebrow">Training studio <span aria-hidden="true"> / </span> What we build</p><h1 id="capabilities-heading">The right shape <br />for what needs to change.</h1></div>
+    <p class="section-aside">Bring the topic, the audience and the material you have. We will work out the learning experience with you.</p>
   </div>
-  <a class="hero-feature" href="/training/samples/hazard-recognition/" aria-label="Explore Spot it before it hurts someone">
-    <div class="feature-topline"><span>Inside the learning studio</span><span>Construction &amp; trades</span></div>
-    <img src={hero.cover} alt={hero.coverAlt} width="1200" height="750" fetchpriority="high" />
-    <div class="feature-caption"><div><span class="feature-kicker">A scene to explore. A decision to make.</span><strong>Spot it before it hurts someone</strong></div><span class="feature-arrow" aria-hidden="true">↗</span></div>
-  </a>
+  <CapabilityExplorer headingLevel={2} />
+  <div class="hero-actions"><a href="/training/samples/" class="studio-primary">Explore the courses <span aria-hidden="true">↗</span></a><button type="button" data-inquire class="text-link" aria-label="Let's talk about your training project">Let's talk</button><p class="hero-note">Six original courses. Open them and try the work.</p></div>
 </section>
 
 <TrainingSubnav />
@@ -42,11 +34,6 @@ const hero = trainingPresentation['hazard-recognition'];
       <a class="practice-card" href="/training/samples/heat-done-well/"><div class="practice-image audio-image"><img src="/images/training/showcase/listen-and-read.webp" width="360" height="224" loading="lazy" alt="A close-up of the sauna guide beside the transcript and narration controls" /></div><div class="practice-copy"><p class="eyebrow">Listen and follow along</p><h3>Audio with room to read.</h3><p>Optional narration and a matching transcript sit alongside the learning. The learner controls the pace.</p><span class="text-link">Explore the sauna workshop <span aria-hidden="true">↗</span></span></div></a>
     </div>
   </div>
-</section>
-
-<section class="studio-wrap studio-section" aria-labelledby="capabilities-heading">
-  <div class="section-heading"><div><p class="eyebrow">What we build</p><h2 id="capabilities-heading">The right shape<br />for what needs to change.</h2></div><p class="section-aside">Bring the topic, the audience and the material you have. We will work out the learning experience with you.</p></div>
-  <CapabilityExplorer />
 </section>
 
 <section class="process-section studio-wrap studio-section" aria-labelledby="process-heading">
@@ -88,30 +75,20 @@ const hero = trainingPresentation['hazard-recognition'];
   .eyebrow { margin: 0 0 20px; color: var(--color-accent); font: 0.7rem/1.6 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
   .eyebrow a { text-decoration: none; }
   h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.04em; margin: 0; }
-  h1 { font-size: clamp(2.65rem, 4.6vw, 4.15rem); line-height: 1.02; max-width: 13ch; }
-  h1 > span { display: block; }
-  .headline-last { display: block; }
-  h1 span, .inquiry-section h2 span { color: var(--color-accent); }
+  h1 { font-size: clamp(2.2rem, 3.9vw, 3.5rem); line-height: 1.08; }
+  .inquiry-section h2 span { color: var(--color-accent); }
   h2 { font-size: clamp(2rem, 3.35vw, 3rem); line-height: 1.1; }
   h3 { font-size: 1.3rem; line-height: 1.22; }
   #capabilities-heading { scroll-margin-top: 125px; }
   p { line-height: 1.65; }
-  .studio-hero { display: grid; grid-template-columns: .92fr 1.08fr; gap: 54px; align-items: center; padding-block: 170px 64px; }
-  .hero-intro { font-size: 1.18rem; line-height: 1.55; margin: 25px 0 14px; max-width: 35ch; }
-  .hero-detail { max-width: 43ch; font-size: 1rem; color: var(--color-muted); margin: 0; }
+  .capability-hero { padding-block: 150px 40px; }
+  .capability-hero .section-heading { align-items: center; margin-bottom: 26px; }
   .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 28px; }
   .studio-primary { display: inline-flex; align-items: center; justify-content: center; gap: 22px; padding: 15px 20px; border: 1px solid var(--color-accent); background: var(--color-accent); color: var(--color-surface); text-decoration: none; font: 700 .92rem/1.35 var(--font-heading); cursor: pointer; min-height: 48px; transition: background .2s; }
   .studio-primary:hover { background: var(--color-accent-hot); }
   .text-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font: 700 .92rem/1.4 var(--font-heading); color: var(--color-accent); background: transparent; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 5px; cursor: pointer; }
   .text-link:hover { color: var(--color-accent-hot); }
-  .hero-note { margin: 18px 0 0; color: var(--color-muted); font-size: .8rem; }
-  .hero-feature { display: block; color: var(--color-ink); background: var(--color-surface); border: 1px solid color-mix(in srgb, var(--color-ink) 25%, transparent); box-shadow: 10px 10px 0 color-mix(in srgb, var(--color-accent) 8%, var(--color-canvas)); text-decoration: none; overflow: hidden; }
-  .feature-topline { display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: space-between; padding: 14px 18px; font: .65rem/1.5 var(--font-mono); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent); }
-  .hero-feature > img { width: 100%; height: auto; aspect-ratio: 8/5; display: block; object-fit: cover; }
-  .feature-caption { padding: 22px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-  .feature-kicker { display: block; color: var(--color-muted); font-size: .78rem; margin-bottom: 8px; }
-  .feature-caption strong { display: block; font: 700 1.3rem/1.2 var(--font-display); letter-spacing: -.02em; max-width: 21ch; }
-  .feature-arrow { width: 44px; height: 44px; border: 1px solid var(--color-accent); color: var(--color-accent); display: grid; place-items: center; flex: 0 0 auto; font-size: 1.4rem; }
+  .hero-note { margin: 0 0 0 auto; color: var(--color-muted); font-size: .8rem; }
   .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px 60px; margin-bottom: 38px; }
   .section-aside { max-width: 37ch; color: var(--color-muted); margin: 0; }
   .section-aside p { margin: 0 0 12px; }
@@ -168,8 +145,8 @@ const hero = trainingPresentation['hazard-recognition'];
   .inquiry-section > p:not(.eyebrow) { max-width: 47ch; margin: 24px auto; color: var(--color-muted); }
   .inquiry-section > p.inquiry-note { font-size: .8rem; margin-top: 18px; }
   a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 5px; }
-  @media (max-width: 1000px) { .studio-hero { gap: 28px; } .feature-topline { font-size: .6rem; } .hero-actions { gap: 10px 18px; } .featured-courses, .practice-grid { gap: 18px; } .section-heading { gap: 30px; } .people-section { gap: 35px; } .delivery-columns { gap: 40px; } }
-  @media (max-width: 800px) { .studio-hero { grid-template-columns: 1fr; padding-top: 145px; gap: 36px; } h1 { max-width: 13ch; font-size: clamp(2.8rem, 7vw, 4rem); } .hero-intro, .hero-detail { max-width: 48ch; } .hero-feature { max-width: 650px; } .section-heading { display: block; } .section-aside { max-width: 54ch; margin-top: 22px; } .featured-courses { grid-template-columns: repeat(3, minmax(0, 1fr)); } .practice-grid { grid-template-columns: 1fr; gap: 34px; } .practice-card { display: grid; grid-template-columns: .85fr 1.15fr; gap: 24px; align-items: center; } .practice-copy { padding-top: 0; } .practice-image, .guide-image { height: 220px; } .people-section { grid-template-columns: 1fr; } .people-portraits { max-width: 480px; } .faq-section { grid-template-columns: 1fr; gap: 30px; } }
-  @media (max-width: 600px) { .featured-courses { grid-template-columns: 1fr; } .hero-note { display: none; } .studio-wrap { width: calc(100% - 40px); } .studio-section { padding-block: 52px; } .studio-hero { padding-top: 132px; padding-bottom: 44px; } h1 { font-size: 2.8rem; } .eyebrow { font-size: .65rem; margin-bottom: 16px; } .hero-intro { font-size: 1.1rem; } .hero-detail { font-size: .95rem; } .hero-feature { box-shadow: 6px 6px 0 color-mix(in srgb, var(--color-accent) 8%, var(--color-canvas)); } .feature-topline { padding: 12px; } .feature-caption { padding: 18px 14px; gap: 14px; } .feature-caption strong { font-size: 1.1rem; } .feature-kicker { font-size: .7rem; } .hero-actions { gap: 14px 20px; } .engagement-list, .delivery-columns, .ai-note > div { grid-template-columns: 1fr; gap: 30px; } .process-list { grid-template-columns: 1fr; gap: 24px; } .format-list { grid-template-columns: 1fr 1fr; gap: 0 20px; } .practice-card { display: block; } .practice-copy { padding-top: 22px; } .practice-image, .guide-image { height: 205px; } .people-portraits { gap: 14px; } .people-section { gap: 34px; } .inquiry-section { padding-block: 50px 72px; } .selection-footnote { line-height: 1.6; } }
+  @media (max-width: 1000px) { .hero-actions { gap: 10px 18px; } .featured-courses, .practice-grid { gap: 18px; } .section-heading { gap: 30px; } .people-section { gap: 35px; } .delivery-columns { gap: 40px; } }
+  @media (max-width: 800px) { .capability-hero { padding-top: 135px; } .capability-hero h1 { font-size: clamp(2.1rem, 5.7vw, 2.8rem); } .section-heading { display: block; } .section-aside { max-width: 54ch; margin-top: 22px; } .featured-courses { grid-template-columns: repeat(3, minmax(0, 1fr)); } .practice-grid { grid-template-columns: 1fr; gap: 34px; } .practice-card { display: grid; grid-template-columns: .85fr 1.15fr; gap: 24px; align-items: center; } .practice-copy { padding-top: 0; } .practice-image, .guide-image { height: 220px; } .people-section { grid-template-columns: 1fr; } .people-portraits { max-width: 480px; } .faq-section { grid-template-columns: 1fr; gap: 30px; } }
+  @media (max-width: 600px) { .featured-courses { grid-template-columns: 1fr; } .hero-note { display: none; } .studio-wrap { width: calc(100% - 40px); } .studio-section { padding-block: 52px; } .capability-hero { padding-block: 132px 32px; } .eyebrow { font-size: .65rem; margin-bottom: 16px; } .hero-actions { gap: 14px 20px; } .engagement-list, .delivery-columns, .ai-note > div { grid-template-columns: 1fr; gap: 30px; } .process-list { grid-template-columns: 1fr; gap: 24px; } .format-list { grid-template-columns: 1fr 1fr; gap: 0 20px; } .practice-card { display: block; } .practice-copy { padding-top: 22px; } .practice-image, .guide-image { height: 205px; } .people-portraits { gap: 14px; } .people-section { gap: 34px; } .inquiry-section { padding-block: 50px 72px; } .selection-footnote { line-height: 1.6; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 </style>
