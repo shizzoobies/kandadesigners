@@ -292,12 +292,11 @@ export const samples = [
     vertical: 'Construction and trades',
     minutes: 8,
     what: 'An eight-minute microlearning on writing a request for information that a design team can actually act on.',
-    // Meta description only; the card and page copy above stay as approved.
-    meta: 'An eight-minute microlearning on writing a request for information that a design team can actually act on, with branching scenarios and scored decisions.',
-    demonstrates: 'An original demonstration piece with a drawing-set identity: a title block, sheet numbers, and red-pen markups. No client, no employer material; the scenario is invented.',
-    technique: 'Scenario branching with immediate feedback, a drag-free sorting activity, and a knowledge check that scores the decision rather than the recall.',
-    accessibility: 'Keyboard operable end to end, screen reader tested, reduced motion respected, WCAG 2.1 AA.',
-    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
+    meta: 'Practice writing a clear request for information: inspect a drawing conflict, collect evidence and assemble an RFI with an illustrated guide and audio.',
+    demonstrates: 'An original illustrated review desk with drawing markups, a construction guide and optional narrated introductions. No client or employer material; the project is invented.',
+    technique: 'Inspect a document conflict, assemble the supporting evidence, build an RFI from field notes and follow its handoff through design review.',
+    accessibility: 'Keyboard controls, matching audio transcripts, descriptive feedback, a readable fallback and reduced-motion support.',
+    built: 'Custom HTML, CSS and JavaScript with local illustrations, recorded audio and website completion reporting.',
   },
   // The two originals that replaced the construction and finance placeholders
   // on 2026-09-03. Each has its own visual identity on purpose: a buyer
@@ -332,12 +331,11 @@ export const samples = [
     vertical: 'Finance and accounting',
     minutes: 8,
     what: 'An eight-minute module for non-finance managers: what each line of a profit and loss statement means, why margin is the number that matters, and why profit is not cash.',
-    // Meta description only; the card and page copy above stay as approved.
     meta: 'An eight-minute module for non-finance managers: what each line of a profit and loss statement means, why margin matters, and why profit is not cash.',
-    demonstrates: 'An original demonstration piece with a ledger-book identity: ruled cream pages, folio numbers, a closing entry at the end. No client, no real figures; the business is invented. Reviewed for a general audience, not a substitute for advice from your accountant.',
-    technique: 'A live profit and loss simulator with sliders and animated figures, a classify-the-line-item sorter, a profit-versus-cash scenario, and a margin check with a drawn waterfall chart.',
+    demonstrates: 'An illustrated bakery workbook with a finance guide and optional narrated introductions. The business and figures are invented. General education, not a substitute for advice from your accountant.',
+    technique: 'Explore a statement, test price and cost changes, file receipts, reconcile profit to cash and assemble an expansion decision brief.',
     accessibility: 'Keyboard operable end to end, sliders with accessible names and live value announcements, charts with text equivalents, reduced motion respected, WCAG 2.1 AA.',
-    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
+    built: 'Custom HTML, CSS and JavaScript with local illustrations, recorded audio and website completion reporting.',
   },
   // The three health and wellness originals, 2026-09-04. Same rule as above:
   // three different clients at a glance. Recipe-card kitchen, chalk and iron
@@ -353,13 +351,12 @@ export const samples = [
     kind: 'Short module',
     vertical: 'Health and wellness',
     minutes: 8,
-    what: 'An eight-minute module on everyday nutrition: the plate method, how to read a nutrition label, the two nutrients that keep you full, and the difference between hunger and habit.',
-    // Meta description only; the card and page copy above stay as approved.
-    meta: 'An eight-minute module on everyday nutrition: the plate method, how to read a nutrition label, the two nutrients that keep you full, and hunger versus habit.',
-    demonstrates: 'An original demonstration piece with a recipe-card identity: index-card ruling, a produce-crate texture, and a plate that fills in as you learn. No client, no employer material. General education, not dietary advice.',
-    technique: 'A plate diagram that draws itself, a build-a-plate sorter, a label-reading hotspot activity that also works as a list, a hunger-or-habit scenario quiz, and swap cards the learner keeps to build their own recipe card.',
+    meta: 'Build a balanced plate, investigate nutrition labels and serving sizes, and collect practical meal swaps in this illustrated workshop with optional audio.',
+    what: 'An eight-minute module on everyday nutrition: a flexible plate guide, reading nutrition labels, protein and fiber, and noticing eating cues without judgment.',
+    demonstrates: 'An illustrated kitchen workshop with a course guide, optional narration and a plate the learner builds. No client or employer material. General education, not personalized dietary advice.',
+    technique: 'Assemble a plate, investigate a label and serving sizes, reflect on eating cues, and collect practical meal swaps into a personal takeaway card.',
     accessibility: 'Keyboard operable end to end, hotspots exposed as a list, diagrams with text equivalents, reduced motion respected, WCAG 2.1 AA.',
-    built: 'Custom HTML, no framework, packaged for SCORM without changes.',
+    built: 'Custom HTML, CSS and JavaScript with local illustrations, recorded audio and website completion reporting.',
   },
   {
     slug: 'strong-is-a-skill',

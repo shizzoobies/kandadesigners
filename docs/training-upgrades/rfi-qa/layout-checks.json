@@ -1,0 +1,218 @@
+[
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-1",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-2",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-3",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-4",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-5",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-6",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-7",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-8",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 900,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-9",
+    "width": 1280
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-1",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-2",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-3",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-4",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-5",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-6",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-7",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-8",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 1024,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-9",
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 0,
+    "screen": "screen-1",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 467,
+    "screen": "screen-2",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 108,
+    "screen": "screen-3",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 336,
+    "screen": "screen-4",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 103,
+    "screen": "screen-5",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 180,
+    "screen": "screen-6",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 160,
+    "screen": "screen-7",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 126,
+    "screen": "screen-8",
+    "width": 360
+  },
+  {
+    "brokenImages": 0,
+    "height": 800,
+    "horizontal": false,
+    "lessonScroll": 569,
+    "screen": "screen-9",
+    "width": 360
+  }
+]

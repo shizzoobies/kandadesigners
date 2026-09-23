@@ -1,417 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The RFI that gets answered: writing a request for information (RFI) a design team can act on</title>
-<meta name="description" content="A short interactive lesson on writing a construction request for information that a design team can answer in one pass." />
-<!-- A sheet with its title block, drawn in the piece's own palette and
-     carried inline so a course opened in its own tab has an icon without
-     asking the network for one. -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%230E2F63'/%3E%3Crect%20x='6'%20y='4'%20width='20'%20height='24'%20fill='%23F7F6F2'/%3E%3Crect%20x='6'%20y='21'%20width='20'%20height='7'%20fill='%231C4E9A'/%3E%3Crect%20x='9'%20y='24'%20width='14'%20height='2'%20fill='%23F5E663'/%3E%3C/svg%3E" />
-<link rel="stylesheet" href="style.css" />
-<script>document.documentElement.className = 'js';</script>
-</head>
-<body>
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The RFI that gets answered | K &amp; A Performance</title>
+<meta name="description" content="Inspect a drawing conflict, assemble a clear request for information, and practice a better handoff to the design team.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b3246'/%3E%3Cpath d='M9 7h10l5 5v13H9zM19 7v6h5M13 18h7M13 21h5' stroke='%23ecd09c' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css?v=8fcfe341d6"><script>document.documentElement.classList.add('js');</script>
+</head><body>
+<svg class="icon-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="m9 6 9 6-9 6Z"/></symbol><symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol><symbol id="i-fold" viewBox="0 0 24 24"><path d="M4 5h16M7 11l5 5 5-5"/></symbol><symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 10h4l5-4v12l-5-4H4Zm13-2q4 4 0 8"/></symbol><symbol id="i-paper" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6ZM14 3v5h4M9 12h6M9 16h6"/></symbol>
+</defs></svg>
 <div class="stage">
-
-  <!-- The masthead is a drawing title block: two rows of labelled cells, the
-       course title in the big cell, the sheet counter in the small one, and
-       the progress bar as the thin blue rule that closes the block. -->
-  <header class="titleblock">
-    <div class="tb-row tb-row-top">
-      <div class="tb-cell">
-        <span class="tb-label">Project</span>
-        <span class="tb-val">Construction and trades</span>
-      </div>
-      <div class="tb-cell tb-cell-sm">
-        <span class="tb-label">Series</span>
-        <span class="tb-val">RFI</span>
-      </div>
-      <div class="tb-cell tb-cell-sm">
-        <span class="tb-label">Rev</span>
-        <span class="tb-val">A</span>
-      </div>
-      <div class="tb-cell tb-cell-sm">
-        <span class="tb-label">Scale</span>
-        <span class="tb-val">N.T.S.</span>
-      </div>
-    </div>
-    <div class="tb-row tb-row-main">
-      <div class="tb-cell tb-cell-title">
-        <h1>The RFI that gets answered</h1>
-      </div>
-      <div class="tb-cell tb-cell-count">
-        <p class="progress-text" id="progress-text" aria-live="polite" role="status">Sheet 1 of 9</p>
-      </div>
-    </div>
-    <div class="bar" aria-hidden="true"><span id="bar-fill"></span></div>
-  </header>
-
-  <main id="piece">
-
-    <!-- 1: the cover sheet. Deep blue, white lettering, the hero photograph
-         under a heavy blue wash. A cover sheet carries the project name, the
-         one line that says what the set is for, and the issue line. Nothing
-         else: no index, no objectives, no instructions. Every other screen is
-         a white sheet. The masthead keeps the h1; this h2 is the focus target
-         on arrival and the title is set large regardless, because a cover
-         that does not carry its own title is not a cover. -->
-    <section class="screen screen-cover" id="screen-1">
-      <div class="screen-body cover">
-        <p class="cover-kicker">Construction and trades</p>
-        <h2 class="cover-title" tabindex="-1">The RFI that gets answered</h2>
-        <div class="cover-rule" aria-hidden="true"></div>
-        <p class="cover-promise">You will walk away able to write a request for information, an RFI, that a design team can answer in one pass, without a phone call to work out what you meant.</p>
-        <p class="cover-meta">About 8 minutes &middot; 9 sheets &middot; Microlearning</p>
-      </div>
-    </section>
-
-    <!-- 2: objectives and how this works. Everything the old opening crammed
-         into one card, split out and set to be scanned rather than read. -->
-    <section class="screen" id="screen-2">
-      <h2 tabindex="-1">What you will be able to do</h2>
-      <div class="screen-body">
-        <div class="cols2">
-          <div>
-            <ol class="objectives">
-              <li>Identify the four parts an RFI needs before it leaves your desk.</li>
-              <li>Spot the four ways an RFI stalls, and name the part that is missing.</li>
-              <li>Choose the stronger of two drafts of the same question, and explain why.</li>
-              <li>Sort what belongs in an RFI from what belongs somewhere else.</li>
-              <li>Decide the next move at three moments on a live job.</li>
-            </ol>
-            <p class="note">An RFI that comes back in two days and an RFI that comes back in three weeks usually differ by about forty words. This piece is about those forty words.</p>
-          </div>
-          <div class="jobaid howbox">
-            <p class="jobaid-title">How this works</p>
-            <p>Nine sheets, about eight minutes. Nothing is timed, there is no sound, and nothing is scored on speed. Everything works with the keyboard alone: Tab moves between controls, Enter or Space chooses.</p>
-            <p class="who"><b>Who this is for.</b> Field engineers, project engineers and superintendents who have to put a question to the design team in writing.</p>
-            <p class="disclaimer">Demonstration sample. RFI procedures, contract requirements and response times vary from project to project; follow your own contract documents, your specification section on submittals and requests for information, and your company's process.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3 -->
-    <section class="screen" id="screen-3">
-      <h2 tabindex="-1">What an RFI actually is</h2>
-      <div class="screen-body">
-        <p>An RFI is a written question to the design team about the contract documents, and it is a contract document itself.</p>
-        <div class="split">
-          <div class="tabs" data-tabs data-tabs-label="What an RFI is">
-            <section class="tabsec">
-              <h3>What it is</h3>
-              <p>A request for information, an RFI, is a written question from the field to the design team about the contract documents. It exists because drawings and specifications are made by people, and people leave gaps: a dimension that does not close, a detail that contradicts the section it points to, a product that is no longer manufactured.</p>
-            </section>
-            <section class="tabsec">
-              <h3>A contract document</h3>
-              <p>It is also a contract document in its own right. It gets logged, it gets a number, and it gets read months later by somebody deciding who owed what. Write it for that reader as well as for the one answering it this week.</p>
-            </section>
-            <section class="tabsec">
-              <h3>What it is not</h3>
-              <ul>
-                <li>A change order. It may lead to one. It is not one.</li>
-                <li>A complaint about the drawings.</li>
-                <li>A request for the design team to design something new.</li>
-                <li>A place to argue about schedule or fault.</li>
-              </ul>
-            </section>
-          </div>
-          <div class="plate plate-detail" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4 -->
-    <section class="screen" id="screen-4">
-      <h2 tabindex="-1">Why RFIs come back slow, or come back wrong</h2>
-      <div class="screen-body">
-        <p>Almost every stalled RFI fails in one of four ways, and all four are fixable in the writing, before it leaves your desk.</p>
-        <div class="split">
-          <div class="tabs" data-tabs data-tabs-label="Four ways an RFI stalls">
-            <section class="tabsec">
-              <h3>Not a question</h3>
-              <p class="claim">It is not actually a question.</p>
-              <p>A statement that something does not match leaves the reviewer guessing at what you want ruled on.</p>
-            </section>
-            <section class="tabsec">
-              <h3>No reference</h3>
-              <p class="claim">The reference is missing.</p>
-              <p>The reviewer has to hunt for the conflict before they can rule on it, and hunting is what gets an RFI put down and picked up later.</p>
-            </section>
-            <section class="tabsec">
-              <h3>No consequence</h3>
-              <p class="claim">Nobody said what it is holding.</p>
-              <p>With no consequence attached, it sits behind whatever does have a date on it.</p>
-            </section>
-            <section class="tabsec">
-              <h3>No proposed answer</h3>
-              <p class="claim">There is no proposed answer.</p>
-              <p>The reviewer starts from a blank page instead of from a yes or a correction.</p>
-            </section>
-          </div>
-          <div class="plate plate-review" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5 -->
-    <section class="screen" id="screen-5">
-      <h2 tabindex="-1">The four parts of an RFI that gets answered</h2>
-      <div class="screen-body">
-        <p>An RFI that gets answered in one pass carries all four of these. A draft missing one of them is the slow version of the same question.</p>
-        <!-- All four at once, two by two. This screen is the reference the
-             rest of the piece points back at, and it fits without hiding
-             anything, so nothing here is hidden. -->
-        <div class="split">
-          <ol class="parts">
-            <li>
-              <b>1. The specific question.</b>
-              <p>One question, asked so it can be answered yes, no, or with a dimension. If you have three questions, write three RFIs. A single reply cannot be partially approved.</p>
-            </li>
-            <li>
-              <b>2. The exact reference.</b>
-              <p>Drawing sheet and detail number, or specification section and paragraph. Name both sources when two documents disagree. "See the plans" is not a reference.</p>
-            </li>
-            <li>
-              <b>3. The impact and the needed by date.</b>
-              <p>What is held, who is standing by, and the date after which the answer costs money or time. State the effect, not your frustration.</p>
-            </li>
-            <li>
-              <b>4. The proposed answer.</b>
-              <p>What you believe is correct, and why. A reviewer who agrees can answer in one line. This is the part most people leave out, and the one that moves response time the most.</p>
-            </li>
-          </ol>
-          <div class="plate plate-rolls" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6 -->
-    <section class="screen" id="screen-6">
-      <h2 tabindex="-1">Two ways to ask the same thing</h2>
-      <div class="screen-body">
-        <p class="setup">You are the field engineer on a mid-size commercial build, a three story medical office shell. Structural drawings show a 6 inch slab on grade at the loading dock. The approved dock leveler submittal calls for 8 inches with added reinforcing under the pit. Concrete for that area is scheduled in nine days. <b class="hi">Which RFI do you send?</b></p>
-
-        <div class="options options-2" role="group" aria-labelledby="scenario-q">
-          <p class="visually-hidden" id="scenario-q">Choose the RFI you would send</p>
-
-          <button type="button" class="choice" data-q="scenario" data-correct="false" aria-pressed="false">
-            <span class="choice-tag">Option A</span>
-            <span class="choice-body">"Slab thickness at the dock does not match. Please advise."</span>
-          </button>
-
-          <button type="button" class="choice" data-q="scenario" data-correct="true" aria-pressed="false">
-            <span class="choice-tag">Option B</span>
-            <span class="choice-body">"Structural sheet <span class="ref">S-2.1</span>, detail <span class="ref">4</span>, shows a 6 inch slab on grade at the loading dock. The approved dock leveler submittal, specification section <span class="ref">11 13 19</span>, requires 8 inches with number 5 bars at 12 inches each way under the pit. Please confirm which governs. Placement is scheduled for the 19th and we need a response by the 16th to hold it. We propose thickening the slab to 8 inches across the 12 foot by 14 foot area behind the dock face, per the submittal, with no change to the placement date."</span>
-          </button>
-        </div>
-
-        <p class="feedback" id="fb-scenario" aria-live="polite"></p>
-      </div>
-    </section>
-
-    <!-- 7 -->
-    <section class="screen" id="screen-7">
-      <h2 tabindex="-1">Belongs in the RFI, or leave it out</h2>
-      <div class="screen-body">
-        <p>Six fragments from a draft RFI on the same job. Decide where each one goes. Choose with the mouse or with the keyboard; there is nothing to drag.</p>
-
-        <!-- Two fragments at a time, three pairs. Six at once does not fit
-             once every fragment has its feedback under it. -->
-        <div class="steps" data-substeps data-step-noun="pair">
-          <section class="step">
-            <h3 class="step-head">Fragments 1 and 2</h3>
-            <div class="cols2">
-              <div class="fragblock">
-                <p class="frag" id="frag-1">"Structural sheet <span class="ref">S-2.1</span>, detail <span class="ref">4</span>."</p>
-                <div class="sort-btns" role="group" aria-labelledby="frag-1">
-                  <button type="button" class="sort" data-q="s1" data-correct="true" aria-pressed="false">Belongs in the RFI</button>
-                  <button type="button" class="sort" data-q="s1" data-correct="false" aria-pressed="false">Leave it out</button>
-                </div>
-                <p class="feedback" id="fb-s1" aria-live="polite"></p>
-              </div>
-              <div class="fragblock">
-                <p class="frag" id="frag-2">"This is the third time the drawings have contradicted themselves on this building."</p>
-                <div class="sort-btns" role="group" aria-labelledby="frag-2">
-                  <button type="button" class="sort" data-q="s2" data-correct="false" aria-pressed="false">Belongs in the RFI</button>
-                  <button type="button" class="sort" data-q="s2" data-correct="true" aria-pressed="false">Leave it out</button>
-                </div>
-                <p class="feedback" id="fb-s2" aria-live="polite"></p>
-              </div>
-            </div>
-          </section>
-          <section class="step">
-            <h3 class="step-head">Fragments 3 and 4</h3>
-            <div class="cols2">
-              <div class="fragblock">
-                <p class="frag" id="frag-3">"We need a response by the 16th to hold the placement on the 19th."</p>
-                <div class="sort-btns" role="group" aria-labelledby="frag-3">
-                  <button type="button" class="sort" data-q="s3" data-correct="true" aria-pressed="false">Belongs in the RFI</button>
-                  <button type="button" class="sort" data-q="s3" data-correct="false" aria-pressed="false">Leave it out</button>
-                </div>
-                <p class="feedback" id="fb-s3" aria-live="polite"></p>
-              </div>
-              <div class="fragblock">
-                <p class="frag" id="frag-4">"Please advise at your earliest convenience."</p>
-                <div class="sort-btns" role="group" aria-labelledby="frag-4">
-                  <button type="button" class="sort" data-q="s4" data-correct="false" aria-pressed="false">Belongs in the RFI</button>
-                  <button type="button" class="sort" data-q="s4" data-correct="true" aria-pressed="false">Leave it out</button>
-                </div>
-                <p class="feedback" id="fb-s4" aria-live="polite"></p>
-              </div>
-            </div>
-          </section>
-          <section class="step">
-            <h3 class="step-head">Fragments 5 and 6</h3>
-            <div class="cols2">
-              <div class="fragblock">
-                <p class="frag" id="frag-5">"We propose the 8 inch slab per the approved submittal."</p>
-                <div class="sort-btns" role="group" aria-labelledby="frag-5">
-                  <button type="button" class="sort" data-q="s5" data-correct="true" aria-pressed="false">Belongs in the RFI</button>
-                  <button type="button" class="sort" data-q="s5" data-correct="false" aria-pressed="false">Leave it out</button>
-                </div>
-                <p class="feedback" id="fb-s5" aria-live="polite"></p>
-              </div>
-              <div class="fragblock">
-                <p class="frag" id="frag-6">"Also, can you confirm the paint color in the lobby?"</p>
-                <div class="sort-btns" role="group" aria-labelledby="frag-6">
-                  <button type="button" class="sort" data-q="s6" data-correct="false" aria-pressed="false">Belongs in the RFI</button>
-                  <button type="button" class="sort" data-q="s6" data-correct="true" aria-pressed="false">Leave it out</button>
-                </div>
-                <p class="feedback" id="fb-s6" aria-live="polite"></p>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8 -->
-    <section class="screen" id="screen-8">
-      <h2 tabindex="-1">Three decisions</h2>
-      <div class="screen-body">
-        <p>Same job, three moments. Each one scores the decision, not the definition.</p>
-
-        <div class="steps" data-substeps data-step-noun="decision">
-          <section class="step">
-            <h3 id="kc1">1. A subcontractor hands you a note: the duct will not fit above the ceiling in corridor 2. What do you do first?</h3>
-            <div class="options" role="group" aria-labelledby="kc1">
-              <button type="button" class="choice" data-q="k1" data-correct="false" aria-pressed="false"><span class="choice-body">Forward the note as the RFI so the clock starts today.</span></button>
-              <button type="button" class="choice" data-q="k1" data-correct="true" aria-pressed="false"><span class="choice-body">Find the sheet and section that show the conflict, measure the depth actually available, then write the question.</span></button>
-              <button type="button" class="choice" data-q="k1" data-correct="false" aria-pressed="false"><span class="choice-body">Call the design team and ask somebody to take a look at it.</span></button>
-            </div>
-            <p class="feedback" id="fb-k1" aria-live="polite"></p>
-          </section>
-
-          <section class="step">
-            <h3 id="kc2">2. You have four related questions about the same wall assembly, all on sheet <span class="ref">A-6.1</span>. How do you submit them?</h3>
-            <div class="options" role="group" aria-labelledby="kc2">
-              <button type="button" class="choice" data-q="k2" data-correct="false" aria-pressed="false"><span class="choice-body">One RFI listing all four, since they share a sheet.</span></button>
-              <button type="button" class="choice" data-q="k2" data-correct="true" aria-pressed="false"><span class="choice-body">Four RFIs, one question each, cross referenced to one another.</span></button>
-              <button type="button" class="choice" data-q="k2" data-correct="false" aria-pressed="false"><span class="choice-body">Hold all four until you understand the whole assembly, then send the best one.</span></button>
-            </div>
-            <p class="feedback" id="fb-k2" aria-live="polite"></p>
-          </section>
-
-          <section class="step">
-            <h3 id="kc3">3. The mechanical crew is standing by and you are fairly sure the answer is a 4 inch drop in the corridor soffit. Nobody asked your opinion. What goes in the RFI?</h3>
-            <div class="options" role="group" aria-labelledby="kc3">
-              <button type="button" class="choice" data-q="k3" data-correct="false" aria-pressed="false"><span class="choice-body">Nothing. Offering an answer looks presumptuous and could be used against you later.</span></button>
-              <button type="button" class="choice" data-q="k3" data-correct="true" aria-pressed="false"><span class="choice-body">The proposed 4 inch soffit drop, stated as a proposal with the reasoning, so the reviewer can confirm or correct it.</span></button>
-              <button type="button" class="choice" data-q="k3" data-correct="false" aria-pressed="false"><span class="choice-body">Nothing yet. Wait to see whether the design team asks what you would do.</span></button>
-            </div>
-            <p class="feedback" id="fb-k3" aria-live="polite"></p>
-          </section>
-        </div>
-
-        <p class="score" id="score-line" aria-live="polite" role="status">Answered 0 of 3.</p>
-      </div>
-    </section>
-
-    <!-- 9 -->
-    <section class="screen" id="screen-9">
-      <h2 tabindex="-1">The four part checklist</h2>
-      <div class="screen-body">
-        <div class="cols2">
-          <div>
-            <p id="final-score" class="score">You finished the piece.</p>
-            <p>Keep this next to the RFI log. If a draft is missing one of these four, it is not ready to send.</p>
-            <p class="jobaid-foot">Then read it once as the reviewer: could you answer this without opening anything you were not given, and without calling anybody?</p>
-            <p><button type="button" class="btn-ghost" id="restart">Start over</button></p>
-          </div>
-          <div class="jobaid">
-            <p class="jobaid-title">Before you send</p>
-            <ol>
-              <li><b>One question.</b> Answerable yes, no, or with a number. More than one question means more than one RFI.</li>
-              <li><b>The exact reference.</b> Sheet and detail, or specification section and paragraph. Both sources when two documents disagree.</li>
-              <li><b>The impact and the needed by date.</b> What is held, who is standing by, and a date tied to a real activity rather than a wish.</li>
-              <li><b>The proposed answer.</b> What you believe is correct and why, written so a reviewer who agrees can reply in one line.</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <div class="stage-foot">
-    <footer class="piece-foot">
-      <p>Not for construction &middot; Demonstration sample by K &amp; A Performance.</p>
-    </footer>
-    <nav class="pager" aria-label="Screen navigation">
-      <button type="button" class="btn-ghost" id="prev">Back</button>
-      <button type="button" class="btn-ink" id="next">Next</button>
-    </nav>
-  </div>
-
+<header class="masthead"><div><p class="eyebrow">K &amp; A Performance <span>/</span> Construction &amp; trades</p><h1>The RFI that gets answered</h1></div><div class="progress-wrap"><p id="progress-text" role="status">The review desk</p><div class="progress" role="progressbar" aria-label="Course progress" aria-valuemin="1" aria-valuemax="9" aria-valuenow="1"><span id="bar-fill"></span></div></div></header>
+<main id="piece">
+<section class="screen cover" id="screen-1" data-name="The review desk"><div class="cover-copy"><p class="eyebrow">A field engineer's field guide</p><h2 tabindex="-1">A better question.<br><em>A clearer answer.</em></h2><p class="lede">Turn a drawing conflict into a request the design team can act on.</p><p class="cover-meta">About 8 minutes <span>·</span> Work at your own pace</p><div class="cover-tags"><span>Inspect the evidence</span><span>Build the request</span><span>Make the handoff</span></div></div><figure class="hero-art"><img src="assets/img/review-desk.webp" width="1672" height="941" alt="Illustrated review desk with architectural drawings, a red markup pen and a concrete detail model."><figcaption>One fictional project. A real skill to take back to work.</figcaption></figure></section>
+<section class="screen" id="screen-2" data-name="Your assignment"><div class="section-heading"><p class="eyebrow">Your assignment</p><h2 tabindex="-1">The dock pour is getting close.</h2><p>A drawing and an approved equipment submittal disagree. Your job is to make that conflict easy to resolve.</p></div><div class="assignment-grid"><div class="project-card"><span class="project-type">Fictional project file</span><h3>Medical office shell</h3><p>Loading dock · Slab on grade</p><div class="project-stats"><div><b>16th</b><span>Requested response</span></div><div><b>19th</b><span>Planned placement</span></div></div><p class="small">Dates are for this practice scenario. Allow the response period required by your project's process.</p></div><div class="mission"><h3>Leave with a repeatable method.</h3><ul class="method-list"><li><b>Investigate</b><span>Find the conflict and identify the documents that matter.</span></li><li><b>Make it answerable</b><span>Connect one question to references, impact and a proposed resolution.</span></li><li><b>Review before sending</b><span>Remove distractions, then check what the recipient still needs.</span></li></ul><p class="note">Optional audio introduces each lesson. Every activity works by touch, mouse or keyboard. Nothing is timed.</p></div></div><p class="disclaimer">Demonstration only. Follow your contract documents and company RFI process. All project details are invented and are not for construction.</p></section>
+<section class="screen" id="screen-3" data-name="Know the boundary"><div class="section-heading"><p class="eyebrow">Know the boundary</p><h2 tabindex="-1">A request for clarity.</h2><p>An RFI records a specific question about the project information. It gives the right person enough context to respond.</p></div><div class="boundary-layout"><div class="document-art" aria-hidden="true"><div class="paper-icon"><svg><use href="#i-paper"/></svg><span>FIELD QUESTION</span><i></i><i></i><i></i></div><div class="routing-line"></div><div class="answer-seal">DESIGN<br>REVIEW</div></div><div class="tabbed" data-tabs><div class="tablist" role="tablist" aria-label="RFI boundaries"><button role="tab" aria-selected="true" aria-controls="boundary-clarify" id="tab-clarify">Clarify</button><button role="tab" aria-selected="false" aria-controls="boundary-record" id="tab-record" tabindex="-1">Record</button><button role="tab" aria-selected="false" aria-controls="boundary-authority" id="tab-authority" tabindex="-1">Authority</button></div><div id="boundary-clarify" role="tabpanel" aria-labelledby="tab-clarify"><h3>Describe the gap, then ask the question.</h3><p>A missing dimension, a conflicting detail or a mismatch between documents needs a clear ruling. First check that the information is not already available.</p><p class="example">“Please confirm the required slab thickness and reinforcing at the loading dock pit.”</p></div><div id="boundary-record" role="tabpanel" aria-labelledby="tab-record"><h3>Write for the person reading it later.</h3><p>Use your project's log, references and distribution process. A phone conversation may help, but record the clarification through the required channel.</p><p class="note">Separate independently answerable issues and cross-reference related requests, subject to your project's rules.</p></div><div id="boundary-authority" role="tabpanel" aria-labelledby="tab-authority"><h3>A proposal is not permission to build.</h3><p>An RFI does not automatically authorize changes to scope, cost or time. Follow the required change and approval procedures.</p><p class="note">Offer a reasoned proposal when appropriate. Do not present it as an approved design.</p><a class="source" href="https://help.aiacontracts.com/hc/en-us/articles/1500009325281-Instructions-G716-2004-Request-for-Information-RFI" target="_blank" rel="noopener">Reference: AIA RFI guidance ↗</a></div></div></div></section>
+<section class="screen" id="screen-4" data-name="The reviewer's desk"><div class="section-heading"><p class="eyebrow">The reviewer's desk</p><h2 tabindex="-1">Find the gaps before they do.</h2><p>Select a marked phrase to see what the recipient is still missing.</p></div><div class="review-layout"><article class="draft-paper"><div class="paper-heading"><span>Draft from the field</span><span class="stamp">Needs work</span></div><p><button class="markup" data-gap="question">Slab thickness does not match.</button></p><p><button class="markup" data-gap="reference">See the plans.</button></p><p><button class="markup" data-gap="impact">Please advise at your earliest convenience.</button></p><p><button class="markup" data-gap="proposal">We will wait to hear from you.</button></p></article><aside class="review-note" aria-live="polite"><span class="eyebrow">Review notes</span><h3 id="gap-title">Put yourself in their seat.</h3><p id="gap-copy">What exactly are they being asked to decide? Which documents should they open? What is waiting on the answer?</p><p id="gap-example" class="example">Tap any underlined phrase to begin the review.</p><p id="gap-progress" class="small">No phrases reviewed yet.</p></aside></div></section>
+<section class="screen" id="screen-5" data-name="An answerable request"><div class="section-heading"><p class="eyebrow">An answerable request</p><h2 tabindex="-1">Give the answer somewhere to land.</h2><p>Explore the four parts of this practice RFI.</p></div><div class="anatomy-layout"><div class="anatomy-nav" role="group" aria-label="Parts of a strong RFI"><button data-part="question" aria-pressed="true"><span>Question</span><small>One decision</small></button><button data-part="reference" aria-pressed="false"><span>References</span><small>Both sides of the conflict</small></button><button data-part="impact" aria-pressed="false"><span>Impact &amp; date</span><small>The work it holds</small></button><button data-part="proposal" aria-pressed="false"><span>Proposal</span><small>A starting point for review</small></button></div><article class="anatomy-paper" aria-live="polite"><p class="eyebrow" id="part-label">Question</p><h3 id="part-title">Make one decision possible.</h3><p class="quote" id="part-example">Please confirm the required slab thickness and reinforcing beneath the loading dock pit.</p><p class="note" id="part-note">Name the location and the decision. “Please advise” leaves the reader to invent the question.</p></article></div></section>
+<section class="screen" id="screen-6" data-name="Inspect the evidence"><div class="section-heading"><p class="eyebrow">Inspect the evidence</p><h2 tabindex="-1">Open the file. Find the conflict.</h2><p>Review each source, then attach the three relevant records to your practice RFI.</p></div><div class="evidence-layout"><div class="file-tabs" role="group" aria-label="Project documents"><button data-file="drawing" aria-pressed="true"><svg><use href="#i-paper"/></svg>Structural detail<span>Drawing</span></button><button data-file="submittal" aria-pressed="false"><svg><use href="#i-paper"/></svg>Dock leveler<span>Submittal</span></button><button data-file="schedule" aria-pressed="false"><svg><use href="#i-paper"/></svg>Placement plan<span>Schedule</span></button><button data-file="finish" aria-pressed="false"><svg><use href="#i-paper"/></svg>Lobby finishes<span>Schedule</span></button></div><article class="evidence-document"><div id="document-view"></div><button class="button ink" id="attach-evidence"><svg><use href="#i-check"/></svg><span>Attach this record</span></button></article></div><div class="evidence-footer"><p id="evidence-status" role="status">Evidence collected: none yet.</p><button class="button" id="check-evidence">Review my evidence<svg><use href="#i-arrow"/></svg></button></div><p class="feedback" id="evidence-feedback" role="status"></p><noscript><p>The structural detail shows 6 inches. The equipment submittal calls for 8 inches with reinforcing. The placement plan explains the needed response date. Lobby finishes do not help resolve this issue.</p></noscript></section>
+<section class="screen" id="screen-7" data-name="Build the request"><div class="section-heading"><p class="eyebrow">Build the request</p><h2 tabindex="-1">A place for every useful detail.</h2><p>Pick a fragment, then place it in the matching field. Leave distractions on the desk. Select a filled field to return its fragment.</p></div><div class="builder-layout"><div><p class="eyebrow">On your desk</p><div id="fragment-bank" class="fragment-bank" role="group" aria-label="Available RFI fragments"></div><p id="selection-note" class="small" role="status">Select a fragment to pick it up.</p></div><div class="rfi-form"><div class="paper-heading"><span>Loading dock clarification</span><svg><use href="#i-paper"/></svg></div><div id="rfi-slots"></div></div></div><div class="activity-actions"><p id="builder-progress" class="small" role="status">All four fields are empty.</p><button class="button ink" id="review-rfi">Send to practice review<svg><use href="#i-arrow"/></svg></button></div><p class="feedback" id="builder-feedback" role="status"></p><noscript><p>Include a clear question, both document references, the affected placement and requested reply date, and a proposal for design review. Leave complaints and unrelated finish questions out of this request.</p></noscript></section>
+<section class="screen" id="screen-8" data-name="Make the handoff"><div class="section-heading"><p class="eyebrow">Make the handoff</p><h2 tabindex="-1">What happens on the other side?</h2><p>Move through the review to see how the information supports a response.</p></div><div class="handoff-layout"><div class="handoff-track" role="group" aria-label="Review stages"><button data-handoff="received" aria-pressed="true">Received<span>Locate the issue</span></button><button data-handoff="reviewed" aria-pressed="false">Reviewed<span>Resolve the conflict</span></button><button data-handoff="returned" aria-pressed="false">Returned<span>Check the next action</span></button></div><article class="response-paper" aria-live="polite"><p class="eyebrow" id="handoff-label">At the design desk</p><h3 id="handoff-title">They can open the right documents.</h3><p id="handoff-copy">The structural detail and equipment submittal are identified together. The reviewer can see both requirements without sending you a request for references.</p><div class="response-insight" id="handoff-insight">A vague request creates another search. A complete request makes the decision visible.</div></article></div><details class="transfer-prompt"><summary>Try the method on a different issue</summary><p>A duct does not fit above the corridor ceiling. Before drafting, gather the relevant drawing and section, the measured space available, and the affected work dates. Separate unrelated wall questions. Label any soffit change as a proposal for review, not an instruction.</p><label for="own-question">Draft one answerable question</label><textarea id="own-question" rows="2" maxlength="600" placeholder="Please confirm..."></textarea><p class="small">Private practice in this tab. No submission, automatic grading or saving.</p></details></section>
+<section class="screen" id="screen-9" data-name="Before you send"><div class="section-heading"><p class="eyebrow">Back at your desk</p><h2 tabindex="-1">Make the next RFI easier to answer.</h2><p>Use this check before the request leaves your hands.</p></div><div class="finish-layout"><div class="takeaway"><h3>Before you send</h3><ul class="checklist"><li><svg><use href="#i-check"/></svg><div><b>One clear question</b><span>Identify the location and the decision you need.</span></div></li><li><svg><use href="#i-check"/></svg><div><b>Exact references</b><span>Attach both sources when documents disagree.</span></div></li><li><svg><use href="#i-check"/></svg><div><b>Impact and requested date</b><span>Tie the request to the actual work it affects.</span></div></li><li><svg><use href="#i-check"/></svg><div><b>A reasoned proposal</b><span>Offer it for review when appropriate, never as approval.</span></div></li></ul><button class="button ink" id="download-card">Keep the checklist<svg><use href="#i-paper"/></svg></button></div><div class="finish-summary"><span class="eyebrow">Your practice</span><h3>Ready for a better handoff.</h3><p id="final-score"></p><button class="button" id="return-practice">Return to my RFI<svg><use href="#i-arrow"/></svg></button><p class="note">Read it once as the reviewer: could you answer without asking for something that is missing?</p><p class="small">This demonstration is not a credential or project approval. Follow your own contract and company process.</p><button class="text-button" id="restart">Start a fresh practice</button></div></div></section>
+<noscript><div class="reading-fallback"><!-- Static reading sections for insertion inside the course's noscript fallback. -->
+<section aria-labelledby="reading-gaps">
+  <h2 id="reading-gaps">Find the gaps before they do</h2>
+  <p>Read the draft as its recipient. Remove avoidable questions before the reviewer has to ask them.</p>
+  <dl>
+    <dt><strong>“Slab thickness does not match.”</strong></dt>
+    <dd>A statement describes a symptom. Ask for the decision: “Please confirm the required slab thickness and reinforcing beneath the loading dock pit.”</dd>
+    <dt><strong>“See the plans.”</strong></dt>
+    <dd>Identify both sources: structural sheet S-2.1, detail 4, shows 6 inches; the approved dock leveler submittal, section 11 13 19, calls for 8 inches with reinforcing.</dd>
+    <dt><strong>“Please advise at your earliest convenience.”</strong></dt>
+    <dd>Name the affected work and requested date: placement is planned for the 19th, with a response requested by the 16th to finalize that work. A requested date does not override the contractual response period.</dd>
+    <dt><strong>“We will wait to hear from you.”</strong></dt>
+    <dd>When appropriate, offer a reasoned resolution for review: “We propose the 8-inch slab and reinforcing described in the submittal, subject to design review.” A proposal is not permission to build.</dd>
+  </dl>
+</section>
+<section aria-labelledby="reading-parts">
+  <h2 id="reading-parts">Give the answer somewhere to land</h2>
+  <dl>
+    <dt><strong>One clear question</strong></dt>
+    <dd>Identify the location and the decision you need. “Please advise” leaves the reader to invent the question.</dd>
+    <dt><strong>Exact references</strong></dt>
+    <dd>Name both sources when documents disagree. Attach the relevant pages or markups through your project process so the reviewer can find the mismatch.</dd>
+    <dt><strong>Impact and requested date</strong></dt>
+    <dd>Explain which work depends on the answer and when a response is requested. State the consequence without assigning blame. Allow the response period required by your project.</dd>
+    <dt><strong>A reasoned proposal</strong></dt>
+    <dd>Offer a suitable option for evaluation when appropriate. Explain your reasoning and keep it subject to design review. Confirm cost, schedule and approval implications before work proceeds.</dd>
+  </dl>
+</section>
+<section aria-labelledby="reading-evidence">
+  <h2 id="reading-evidence">Inspect the evidence</h2>
+  <p>This fictional loading dock scenario contains three relevant records:</p>
+  <ul>
+    <li><strong>Structural detail:</strong> S-2.1, detail 4, shows a 6-inch slab on grade at the loading dock.</li>
+    <li><strong>Dock leveler submittal:</strong> section 11 13 19 calls for an 8-inch slab with number 5 bars at 12 inches each way beneath the pit.</li>
+    <li><strong>Placement plan:</strong> placement is planned for the 19th, with a response requested by the 16th to finalize the affected work.</li>
+  </ul>
+  <p>Attach these records to document the conflict and explain the requested date. Refer the mismatch to the design team; do not choose which requirement governs yourself. The lobby finish schedule concerns a separate issue and does not belong in this request.</p>
+</section>
+<section aria-labelledby="reading-request">
+  <h2 id="reading-request">Build the request</h2>
+  <p><strong>Question:</strong> Please confirm the required slab thickness and reinforcing beneath the loading dock pit.</p>
+  <p><strong>References:</strong> S-2.1, detail 4: 6-inch slab. Approved dock leveler submittal, section 11 13 19: 8 inches with reinforcing.</p>
+  <p><strong>Impact and date:</strong> Placement is planned for the 19th. A response by the 16th is requested to finalize the affected work.</p>
+  <p><strong>Proposal:</strong> We propose the 8-inch slab and reinforcing described in the submittal, subject to design review.</p>
+  <p>Leave complaints about the drawings and unrelated lobby paint questions out. This is a complete practice handoff, not an approval to build.</p>
+</section>
+<section aria-labelledby="reading-handoff">
+  <h2 id="reading-handoff">Make the handoff</h2>
+  <dl>
+    <dt><strong>Received: locate the issue</strong></dt>
+    <dd>The reviewer can open the structural detail and equipment submittal together. A complete request makes the conflict visible without another search for references.</dd>
+    <dt><strong>Reviewed: resolve the conflict</strong></dt>
+    <dd>The question identifies the required decision; the proposal offers an option to evaluate; the placement plan explains the dependency. The designer may confirm, revise or request more information. A complete RFI supports review but does not guarantee an answer or deadline.</dd>
+    <dt><strong>Returned: check the next action</strong></dt>
+    <dd>Log and distribute the response through the project process. Confirm that it resolves the question. If it affects scope, cost or time, follow the required change and approval procedure. A response does not automatically authorize changed work.</dd>
+  </dl>
+  <h3>Try the method on a different issue</h3>
+  <p>A duct does not fit above the corridor ceiling. Before drafting a question, gather the relevant drawing and section, the measured space available, and the affected work dates. Separate unrelated wall questions. Label any soffit change as a proposal for review, not an instruction.</p>
+  <p>Write one answerable question, then read it as the recipient. Could you answer without asking for missing information?</p>
+</section>
+<p><small>All project details and dates are invented for practice, not for construction. Follow your contract documents and company RFI process. This demonstration is not a credential or project approval.</small></p>
+</div></noscript></main>
+<aside id="narration-tray" class="narration-tray" aria-label="Audio introduction and transcript" hidden><div class="guide"><img src="assets/img/course-guide.webp" width="720" height="864" alt="Your illustrated K&A construction guide in a hardhat, holding drawings."><span id="guide-state">Ready</span></div><div class="audio-area"><div class="audio-heading"><h2 id="narration-title" tabindex="-1">Audio introduction</h2><button class="text-button" id="close-narration">Hide audio<svg><use href="#i-fold"/></svg></button></div><div class="audio-controls"><button id="audio-toggle" class="player-button" aria-label="Play audio"><svg><use href="#i-play"/></svg><span>Play</span></button><label class="sr-only" for="audio-seek">Audio position</label><input id="audio-seek" type="range" min="0" max="0" step="0.1" value="0"><span id="audio-time">0:00 / 0:00</span><button class="sound-button" id="audio-mute" aria-label="Mute audio"><svg><use href="#i-volume"/></svg></button></div><p id="narration-error" role="status" hidden>Audio could not play. Try Play again, or read the transcript below.</p><div class="transcript" tabindex="0" role="region" aria-label="Transcript"><p id="narration-copy"></p></div><audio id="narration-audio" preload="none"></audio></div></aside>
+<footer class="course-footer"><button class="button" id="prev"><svg class="back-arrow"><use href="#i-arrow"/></svg>Back</button><button id="open-narration" class="listen-button" aria-expanded="false" aria-controls="narration-tray"><span class="play-medallion"><svg><use href="#i-play"/></svg></span><span><b>Play introduction</b><small>Audio + transcript</small></span></button><button class="button ink" id="next"><span>Start</span><svg><use href="#i-arrow"/></svg></button></footer>
 </div>
-
-<!-- The ending, as an approval stamp. Closed by default, so with scripting off
-     it never renders and the checklist screen is the end of the document. -->
-<dialog id="done" aria-labelledby="done-title">
-  <div class="done-card">
-    <button type="button" class="done-x" id="done-close" aria-label="Close this summary">
-      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5.5 5.5 14.5 14.5M14.5 5.5 5.5 14.5"/></svg>
-    </button>
-
-    <p class="done-kicker">The RFI that gets answered</p>
-    <h2 class="done-title" id="done-title" tabindex="-1">RFI answered</h2>
-    <div class="done-rule" aria-hidden="true"></div>
-
-    <p class="done-line">That is the whole method: four parts, and a draft missing any one of them is not ready to send.</p>
-
-    <div class="done-scores">
-      <p class="done-score">
-        <span class="done-score-label">Three decisions</span>
-        <b id="done-decisions">0 of 3</b>
-      </p>
-      <p class="done-score">
-        <span class="done-score-label">Fragment sorter</span>
-        <b id="done-sorter">0 of 6 correct</b>
-      </p>
-    </div>
-
-    <!-- The recap is read against the objectives on sheet 2, in the same
-         verbs, so the ending answers the promise the opening made. The four
-         part checklist itself is on sheet 9, one button away. -->
-    <p class="done-aid-title">You can now</p>
-    <ul class="done-aid">
-      <li><b>Identify</b> the four parts an RFI needs before it leaves your desk.</li>
-      <li><b>Spot</b> the four ways an RFI stalls, and name the part that is missing.</li>
-      <li><b>Choose</b> the stronger of two drafts, and explain why.</li>
-      <li><b>Sort</b> what belongs in an RFI from what belongs somewhere else.</li>
-      <li><b>Decide</b> the next move at a moment on a live job.</li>
-    </ul>
-
-    <div class="done-actions">
-      <button type="button" class="btn-ghost" id="done-review">Review the checklist</button>
-      <button type="button" class="btn-ink" id="done-restart">Start over</button>
-    </div>
-  </div>
-</dialog>
-
-<script src="app.js"></script>
-</body>
-</html>
+<dialog id="done" aria-labelledby="done-title"><div class="done-card"><p class="eyebrow">Practice complete</p><h2 id="done-title" tabindex="-1">A clearer question starts here.</h2><p id="done-summary"></p><p>Keep the four-part check beside your RFI log. A complete request helps the reviewer focus on the decision.</p><div class="activity-actions"><button class="button" id="done-close">Back to my checklist<svg><use href="#i-fold"/></svg></button><button class="button ink" id="done-restart">Practice again</button></div></div></dialog>
+<noscript><p class="noscript-note">JavaScript is off. All lessons are shown as a reading guide. Interactive practice and audio controls need JavaScript.</p></noscript><script src="narration.js?v=fabb2138a1"></script><script src="app.js?v=4a9c57fac6"></script>
+</body></html>
