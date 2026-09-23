@@ -1,24 +1,11 @@
 ---
-// Meet the team: /training/team/. One org chart: the two owners on top,
-// the instructional design bench below them, the subject matter experts
-// below that. Every person is a round portrait with a name and a title,
-// and opens a bio dialog. People come from src/data/training.js (`team`);
-// the bench's four focus areas come from `bench`. A person with no photo
-// shows the drawn placeholder and an empty bio shows the "to follow" line,
-// so the layout is final while headshots and approved wording arrive.
-//
-// House rules: no em dashes, no pills, no numbered kickers, no employer
-// names, no pricing, no throughput numbers. Never name an SME's employer.
+// Meet the team: owners, instructional designers, then subject matter experts.
+// Only people with both an approved portrait and bio open a profile dialog.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import TrainingSubnav from '../../../components/TrainingSubnav.astro';
-import { team, bench, combinedYears } from '../../../data/training.js';
+import { team, bench } from '../../../data/training.js';
 
 const PAGE_URL = 'https://ka-performancefl.com/training/team/';
-const PLACEHOLDER = '/images/training/sme-placeholder.svg';
-
-// Rendered as a rounded, spelled-out figure, never the precise number.
-const YEARS_AS_WORDS = { 60: 'sixty' };
-const combinedYearsWord = YEARS_AS_WORDS[combinedYears] ?? String(combinedYears);
 
 const tiers = [
   { id: 'owners', label: 'Owners', people: team.owners, size: 'lg' },
@@ -30,15 +17,7 @@ const tiers = [
 const people = tiers.flatMap((t) => t.people.map((p) => ({ ...p, tier: t.id })));
 const indexOf = (p) => people.findIndex((x) => x.name === p.name);
 
-const bioFor = (p) =>
-  p.bio ||
-  'The approved bio goes here once this person has signed off on the wording. It will cover their field, what they carry on a K & A project, and the work they are proudest of.';
-
-// Published, or still waiting on a signed marketing-use election. A person is
-// published when they have both their own portrait and approved wording; the
-// three who have neither render the drawn placeholder and the "to follow"
-// line, and get no alt text and no schema, because there is nothing approved
-// to describe or to publish about them yet.
+// Publish a profile only when both its portrait and approved bio are present.
 const isPublished = (p) => Boolean(p.photo && p.bio);
 const portraitAlt = (p) => (isPublished(p) ? `Portrait of ${p.name}, ${p.role.toLowerCase()}` : '');
 
@@ -90,11 +69,9 @@ const breadcrumb = {
       The people who <span class="text-accent">actually build it</span>
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-      Every project runs under a written agreement, with a named lead and a
-      single point of contact from the first call to final delivery. Two owners
-      you deal with directly, a bench with roughly {combinedYearsWord} years of
-      combined experience behind them, and the experts who check the field
-      details before anything ships. Select anyone to read their bio.
+      Each project has a named lead from first call to final delivery. Meet the
+      owners, design bench, and subject matter experts who help shape and check
+      the work.
     </p>
   </section>
 
@@ -111,15 +88,27 @@ const breadcrumb = {
           <ul class="org-row" aria-labelledby={`tier-${t.id}`}>
             {t.people.map((p) => {
               const i = indexOf(p);
+              const published = isPublished(p);
+              const profileId = `person-bio-${i}`;
               return (
                 <li class="org-node">
-                  <button type="button" class="org-person" data-person-open={i} aria-haspopup="dialog" aria-controls={`person-bio-${i}`}>
+                  {published ? (
+                  <button type="button" class="org-person" data-person-open={i} aria-haspopup="dialog" aria-controls={profileId}>
                     <span class="org-portrait">
-                      <img src={p.photo || PLACEHOLDER} alt="" width="400" height="500" loading="lazy" />
+                      <img src={p.photo} alt="" width="400" height="500" loading="lazy" />
                     </span>
                     <span class="org-name">{p.name}</span>
                     <span class="org-title">{p.line}</span>
+                    <span class="org-action">Read profile <span aria-hidden="true">&rarr;</span></span>
                   </button>
+                  ) : (
+                    <div class="org-person org-person-pending" aria-label={`${p.name}, ${p.role}. Profile coming soon.`}>
+                      <span class="org-portrait org-initials" aria-hidden="true">{p.name.split(/\s+/).map((part) => part[0]).join('').replace(',', '').slice(0, 2)}</span>
+                      <span class="org-name">{p.name}</span>
+                      <span class="org-title">{p.line}</span>
+                      <span class="org-pending">Profile coming soon</span>
+                    </div>
+                  )}
                 </li>
               );
             })}
@@ -163,19 +152,20 @@ const breadcrumb = {
     </div>
   </section>
 
-  {people.map((p, i) => (
+  {people.map((p, i) => isPublished(p) && (
     <dialog id={`person-bio-${i}`} class="person-dialog" aria-labelledby={`person-bio-title-${i}`}>
       <div class="glow-frame tr-frame person-dialog-card">
-        <button type="button" class="person-dialog-close" data-person-close aria-label="Close">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="15" y2="15" /><line x1="15" y1="5" x2="5" y2="15" /></svg>
+        <button type="button" class="person-dialog-close" data-person-close>
+          <span>Close profile</span>
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="5" x2="15" y2="15" /><line x1="15" y1="5" x2="5" y2="15" /></svg>
         </button>
         <div class="person-dialog-grid">
-          <img src={p.photo || PLACEHOLDER} alt={portraitAlt(p)} width="400" height="500" class="person-dialog-photo" />
+          <img src={p.photo} alt={portraitAlt(p)} width="400" height="500" class="person-dialog-photo" />
           <div>
             <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">{p.role}</p>
             <h3 id={`person-bio-title-${i}`} tabindex="-1" class="mt-2 font-display text-3xl leading-tight">{p.name}</h3>
             <p class="mt-2 font-heading text-sm font-semibold tracking-wide text-ink/80">{p.line}</p>
-            <p class="mt-5 leading-relaxed text-muted">{bioFor(p)}</p>
+            <p class="mt-5 leading-relaxed text-muted">{p.bio}</p>
             {p.link && (
               <p class="mt-5"><a href={p.link} data-astro-reload class="font-heading text-sm font-semibold tracking-wide text-accent underline underline-offset-4 hover:text-accent-hot">See their art</a></p>
             )}
@@ -284,6 +274,7 @@ const breadcrumb = {
     cursor: pointer;
     color: var(--color-ink);
   }
+  .org-person-pending { cursor: default; }
   .org-portrait {
     position: relative;
     display: block;
@@ -307,8 +298,20 @@ const breadcrumb = {
     height: 100%;
     object-fit: cover;
   }
-  .org-person:hover .org-portrait,
-  .org-person:focus-visible .org-portrait {
+  .org-initials {
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--color-accent);
+    background: linear-gradient(145deg, #f4eee3, #e9ddcc);
+    font-family: var(--font-display);
+    font-size: 2.7rem;
+    letter-spacing: 0.04em;
+    box-shadow: inset 0 0 0 1px rgb(133 73 48 / 0.14), 0 0 0 3px var(--color-surface), 0 0 0 4px rgb(34 28 21 / 0.12), 0 14px 30px -16px rgb(34 28 21 / 0.35);
+  }
+  .org-tier-lg .org-initials { font-size: 3.3rem; }
+  .org-person:not(.org-person-pending):hover .org-portrait,
+  .org-person:not(.org-person-pending):focus-visible .org-portrait {
     transform: translateY(-3px);
     box-shadow:
       0 0 0 3px var(--color-surface),
@@ -335,6 +338,19 @@ const breadcrumb = {
     color: var(--color-muted);
     max-width: 16ch;
   }
+  .org-action,
+  .org-pending {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .org-action { color: var(--color-accent); }
+  .org-pending { color: var(--color-muted); letter-spacing: 0.04em; }
 
   /* Narrow screens: rows wrap two across and the rail no longer lines up
      with the nodes, so the connectors go and the labels carry the tiers. */
@@ -373,17 +389,30 @@ const breadcrumb = {
   }
   .person-dialog-card {
     position: relative;
-    padding: 2rem;
+    padding: 4.5rem 2rem 2rem;
   }
   .person-dialog-close {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 0.75rem;
     color: var(--color-muted);
+    border: 1px solid rgb(34 28 21 / 0.14);
+    border-radius: 999px;
+    background: var(--color-surface);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
     transition: color var(--dur-fast) var(--ease-out-expo);
   }
   .person-dialog-close:hover { color: var(--color-ink); }
+  .org-person:focus-visible,
+  .person-dialog-close:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 4px; }
   .person-dialog-grid {
     display: grid;
     gap: 1.75rem;
@@ -398,6 +427,7 @@ const breadcrumb = {
     box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 4px rgb(34 28 21 / 0.12);
   }
   @media (max-width: 560px) {
+    .person-dialog-card { padding: 4.5rem 1.25rem 1.5rem; }
     .person-dialog-grid { grid-template-columns: 1fr; }
     .person-dialog-photo { width: 7.5rem; }
   }
