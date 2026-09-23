@@ -52,4 +52,13 @@ In-app browser used at `http://127.0.0.1:62121/training-samples/nutrition/`.
 - `node --check` passed for course logic, transcripts and generation script.
 - Nine audio files were generated successfully, approximately 3.4MB total. Actual browser playback was tested on the welcome and plate lesson clips.
 
-The root agent owns the integrated Astro build and catalog metadata review. No production or wrapper-page verification was claimed in this isolated course pass. The no-JavaScript fallback provides a short accessible overview; interactive practice and full narration require JavaScript. Reduced-motion styling suppresses animated indicators and transitions.
+The root agent owns the integrated Astro build and catalog metadata review. No production or wrapper-page verification was claimed in this isolated course pass. The no-JavaScript fallback links to the complete static reference workbook described below. Interactive practice and narration require JavaScript. Reduced-motion styling suppresses animated indicators and transitions.
+
+## Follow-up: static coverage and audio recovery
+
+- Added `workbook.html`, linked from the no-script course view. It contains the full plate guide, all eight food explanations, all six label details and four serving calculations, protein/fiber guidance, all six eating moments, every swap, reflection fields, a takeaway and primary sources.
+- The workbook has no JavaScript dependency, external asset paths or network submission. Native disclosure sections and checkboxes work without scripts. It is also printable.
+- When the media element has an error, pressing Listen now calls `load()` before retrying playback so a transient failed request can recover.
+- Confirmed that local course assets use relative paths and the audio element does not expose the generic native control bar.
+- `node --check public/training-samples/nutrition/app.js` and `git diff --check` passed after these changes.
+- Follow-up rendered checks could not run: the existing in-app browser reported `Browser is not available: 1`, and fresh discovery reported `No browser is available`. No installed Playwright package resolved from this worktree. The earlier interactive-course screenshot checks remain valid; the new workbook layout and retry recovery need a browser recheck when available.
