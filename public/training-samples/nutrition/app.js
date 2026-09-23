@@ -1,919 +1,125 @@
-/* Build the plate, skip the diet.
-   Plain DOM, no framework, no network. Eight jobs:
-     1. show one card at a time and move focus to its heading,
-     2. run the tabbed dividers, and fill the drawn plate wedge by wedge as
-        the plate-method dividers are opened,
-     3. run the accordion on the protein and fibre card,
-     4. run the sub-steps inside the hunger or habit card,
-     5. run the plate sorter: eight foods, four places, a live plate, and a
-        reason for every placement,
-     6. run the label hunt from either the printed panel or the list beside it,
-     7. turn the swap cards over and collect the ones the learner keeps,
-     8. end the module: the pager's last button opens a completion dialog.
-
-   Every panel, sub-step, accordion section and swap face is open in the
-   markup and closed here, so a visitor with scripting off gets the whole
-   module in order rather than a stack of empty boxes.
-
-   Deliberately absent: focus looping. The module runs inside an iframe on the
-   studio site, and trapping Tab on the last card would turn the embed into a
-   keyboard trap, so focus leaves the document naturally. Nothing here reads or
-   writes window.top, and nothing depends on a parent being there: the only
-   thing sent outward is one completion ping, in a try block, once. */
-
-(function () {
+(() => {
   'use strict';
-
-  var TOTAL = 9;
-  var SORT_SCREEN = 4;
-  var FOOD_COUNT = 8;
-  var SPOT_COUNT = 6;
-  var SORT_HELP_AFTER = 4;
-  var SPOT_HELP_AFTER = 3;
-
-  var current = 1;
-  var completedSent = false;
-
-  var placed = {};
-  var placedCount = 0;
-  var placedRight = 0;
-
-  var found = {};
-  var foundCount = 0;
-  var spotTries = 0;
-
-  var screens = [];
-  for (var i = 1; i <= TOTAL; i += 1) {
-    screens.push(document.getElementById('screen-' + i));
-  }
-
-  var progressText = document.getElementById('progress-text');
-  var barFill = document.getElementById('bar-fill');
-  var prevBtn = document.getElementById('prev');
-  var nextBtn = document.getElementById('next');
-  var restartBtn = document.getElementById('restart');
-
-  var sortCounter = document.getElementById('sort-counter');
-  var sortVerdict = document.getElementById('sort-verdict');
-  var sortReveal = document.getElementById('sort-reveal');
-  var plateLive = document.getElementById('plate-b');
-
-  var spotCounter = document.getElementById('spot-counter');
-  var spotVerdict = document.getElementById('spot-verdict');
-  var spotReveal = document.getElementById('spot-reveal');
-
-  var cueScore = document.getElementById('cue-score');
-
-  var swapWrap = document.getElementById('swaps');
-  var swapCount = document.getElementById('swap-count');
-  var cardBody = document.getElementById('card-body');
-  var resultsList = document.getElementById('results-list');
-
-  var doneDialog = document.getElementById('done');
-  var doneTitle = document.getElementById('done-title');
-  var donePlate = document.getElementById('done-plate');
-  var doneLabel = document.getElementById('done-label');
-  var doneCues = document.getElementById('done-cues');
-  var doneSwaps = document.getElementById('done-swaps');
-  var doneReviewBtn = document.getElementById('done-review');
-  var doneRestartBtn = document.getElementById('done-restart');
-  var doneCloseBtn = document.getElementById('done-close');
-  var focusAfterDone = null;
-
-  function each(list, fn) {
-    Array.prototype.forEach.call(list, fn);
-  }
-
-  /* ---------- copy ---------- */
-
-  var CHECK = 'M4 10.5 8 14.5 16 5.5';
-  var CROSS = 'M5.5 5.5 14.5 14.5M14.5 5.5 5.5 14.5';
-
-  // Written as the tail of "X goes ...", so the preposition travels with the
-  // zone and the sentence reads properly for the one that is not on the plate.
-  var ZONE_NAME = {
-    veg: 'in the vegetables and fruit half',
-    pro: 'in the protein quarter',
-    grain: 'in the grains and starch quarter',
-    side: 'beside the plate'
-  };
-
-  var FOODS = {
-    f1: {
-      name: 'Roasted broccoli',
-      zone: 'veg',
-      right: 'Broccoli goes in the half. Vegetables bring fibre, water and vitamins, and they take up room on a plate for very little effort, which is the entire reason the half exists.',
-      wrong: 'Broccoli belongs in the vegetables and fruit half. Roasting changes the flavour and not much else: it is still the part of the plate that costs you the least and does the most.'
-    },
-    f2: {
-      name: 'Grilled chicken thigh',
-      zone: 'pro',
-      right: 'Chicken takes the protein quarter. Protein leaves the stomach slowly, and that slowness is what carries you comfortably to the next meal.',
-      wrong: 'Chicken belongs in the protein quarter. A quarter is roughly the size of your own palm, and it is there because protein is the part of the meal that keeps you from raiding the cupboard at four.'
-    },
-    f3: {
-      name: 'Brown rice',
-      zone: 'grain',
-      right: 'Brown rice takes the starch quarter. The bran is still on it, and the bran is where most of the fibre lives.',
-      wrong: 'Brown rice belongs in the grains and starch quarter. It is a whole grain, which simply means the seed still has its bran and germ, so it brings more fibre than the white bag beside it.'
-    },
-    f4: {
-      name: 'Olive oil dressing',
-      zone: 'side',
-      right: 'Dressing lives beside the plate. Fat carries flavour and helps you absorb some vitamins, and it is easy to pour without noticing, which is exactly why it gets its own place.',
-      wrong: 'Dressing belongs beside the plate rather than in a quarter. It is not a problem to be solved, it is just the one thing on the table that goes from a drizzle to a puddle while you are talking.'
-    },
-    f5: {
-      name: 'Black beans',
-      zone: 'pro',
-      right: 'Beans take the protein quarter, and they are the useful in-between: protein and a serious amount of fibre in the same spoonful.',
-      wrong: 'Put beans in the protein quarter. They are the one food on this list that could argue for two places, because they bring protein and fibre together, but if they go in the vegetable half the protein quarter ends up empty.'
-    },
-    f6: {
-      name: 'Baked sweet potato',
-      zone: 'grain',
-      right: 'Sweet potato takes the starch quarter. It is a vegetable in the garden and a starch on the plate, because that is how your body treats it.',
-      wrong: 'Sweet potato belongs in the grains and starch quarter. It grows like a vegetable, and it behaves like rice or bread once you have eaten it, so the plate counts it with the starch.'
-    },
-    f7: {
-      name: 'Sliced strawberries',
-      zone: 'veg',
-      right: 'Fruit shares the half with vegetables. The sugar in a strawberry arrives wrapped in fibre and water, which is why it behaves nothing like a sweet.',
-      wrong: 'Strawberries belong in the vegetables and fruit half. Fruit is not a treat you have to justify: it comes with fibre, water and vitamins attached to the sweetness.'
-    },
-    f8: {
-      name: 'A glass of water',
-      zone: 'side',
-      right: 'Water goes beside the plate, and it goes there first. Nothing else on this list does as much for as little.',
-      wrong: 'Water belongs beside the plate. It is not part of the meal you are dividing up, and it is the drink to reach for before anything else arrives.'
-    }
-  };
-
-  var FOOD_ORDER = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8'];
-
-  var SPOTS = {
-    serving: {
-      head: 'Serving size: three quarters of a cup, 40 grams',
-      why: 'Every number under this line describes that amount and nothing else. It is a standard measure for comparing one box with another, not a recommendation of how much to eat. Weigh your usual bowl once: most people find it holds more than one serving, and every figure moves with it.'
-    },
-    container: {
-      head: 'Eight servings per container',
-      why: 'The panel describes one of those eight. This is the line that turns a comfortable looking number into an honest one, and it is the first thing to read on anything you might finish in a single sitting.'
-    },
-    calories: {
-      head: 'Calories 160, for one serving',
-      why: 'A calorie is a measure of the energy in food, and this figure is per serving, not per box. It is on the panel so you can compare like with like. What the food is made of tells you far more about how the morning goes than this number does.'
-    },
-    sugars: {
-      head: 'Total sugars 12 grams, of which 9 are added',
-      why: 'Total sugars counts everything, including the sugar already in the grain. Added sugars are the ones put in during making, and those are the ones worth watching. Nine of the twelve grams here were added: that is the sentence this panel is quietly telling you.'
-    },
-    fibre: {
-      head: 'Dietary fibre 3 grams',
-      why: 'Fibre is the part of a plant you cannot digest, and it slows the whole meal down on the way through. On a cereal it is the fastest quality check you have, because a bowl with fibre in it behaves very differently by mid morning from one without.'
-    },
-    ingredients: {
-      head: 'The ingredients run by weight, most first',
-      why: 'That ordering is the rule, and it is the most useful thing printed on any packet. Whole grain oats come first here, which is a good sign. Sugar comes second, which tells you this box holds more sugar than rice flour, honey, oil or salt.'
-    }
-  };
-
-  var SPOT_ORDER = ['serving', 'container', 'calories', 'sugars', 'fibre', 'ingredients'];
-
-  var FEEDBACK = {
-    c1: {
-      correct: 'Habit. Nothing in your body asked for this. The cue was the route past the drawer, and your hand arrived before the decision did. Habits are not a failing, they are efficient, and noticing one is usually the whole repair.',
-      wrong: 'The strongest signal here is habit. You ate three hours ago and you were not thinking about food. What changed was walking past the drawer, and when the cue is a place or a time rather than your stomach, that is habit talking.'
-    },
-    c2: {
-      correct: 'Thirsty. A dry mouth and a dull headache after a night and a morning without water are thirst signals, and they are easy to read as hunger because both feel like a vague need for something. Drink first, then see what is left.',
-      wrong: 'This one is thirst. You have had nothing to drink but coffee since yesterday evening, and the dry mouth and the headache are the giveaway. Thirst and hunger speak in overlapping language, which is why drinking first and waiting ten minutes is such old advice.'
-    },
-    c3: {
-      correct: 'Tired. Wanting sweetness rather than wanting food is the tell, and so is losing the thread of a paragraph. Studies have associated short sleep with exactly this pattern the following day. A walk or twenty minutes of quiet often does more than the biscuit.',
-      wrong: 'This one is tiredness. You are not describing an empty stomach, you are describing a flat afternoon that arrived at eleven. Studies have associated poor sleep with wanting quick energy the next day, and wanting sweet rather than wanting food is how that shows up.'
-    },
-    c4: {
-      correct: 'Hungry, plainly. The most reliable check is whether you would eat something dull, and beans and rice is about as dull as it gets. Five and a half hours after breakfast this is a meal, not a snack.',
-      wrong: 'This one is straightforward hunger. Five and a half hours since breakfast, a stomach making noise, a shortening temper, and a genuine appetite for plain food. That last one is the most reliable signal on this whole card.'
-    },
-    c5: {
-      correct: 'Habit. The bowl arriving is the cue, the film removes the part of you that would have noticed, and the routine runs itself. Moving the bowl off your lap is a smaller change than any rule about snacking, and it works better.',
-      wrong: 'This one is habit. You ate an hour ago, so hunger is not what is happening. The bowl appearing is the cue and the screen is the distraction. Distance from the bowl beats willpower every time, because it does not need you to be paying attention.'
-    },
-    c6: {
-      correct: 'Thirsty, and probably short of some salt with it. An hour walking in heat costs you fluid, and lightheadedness with no appetite for a real meal is what that feels like. Something cold to drink, and food will look reasonable again shortly.',
-      wrong: 'This one is thirst. An hour in the heat, lightheaded, wanting something cold, and put off by the idea of a full meal: that combination is fluid, not food. Drink first and eat when your appetite comes back.'
-    }
-  };
-
-  var CUE_KEYS = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'];
-
-  /* ---------- tabbed dividers ---------- */
-
-  var tabSets = [];
-
-  function fillWedge(plateId, key) {
-    var plate = document.getElementById(plateId);
-    if (!plate) {
-      return;
-    }
-    var node = plate.querySelector('[data-wedge="' + key + '"]');
-    if (node) {
-      node.classList.add('is-on');
-    }
-  }
-
-  function selectTab(set, index, moveFocus) {
-    set.index = index;
-    each(set.tabs, function (tab, i) {
-      var on = i === index;
-      tab.setAttribute('aria-selected', on ? 'true' : 'false');
-      tab.tabIndex = on ? 0 : -1;
-      set.panels[i].hidden = !on;
-      if (on && set.plateId && tab.getAttribute('data-wedge')) {
-        fillWedge(set.plateId, tab.getAttribute('data-wedge'));
-      }
-    });
-    if (moveFocus) {
-      set.tabs[index].focus();
-    }
-  }
-
-  function initTabs() {
-    each(document.querySelectorAll('[data-tabs]'), function (group) {
-      var set = {
-        tabs: group.querySelectorAll('[role="tab"]'),
-        panels: [],
-        plateId: group.getAttribute('data-plate'),
-        index: 0
-      };
-
-      each(set.tabs, function (tab) {
-        set.panels.push(document.getElementById(tab.getAttribute('aria-controls')));
-      });
-
-      each(set.tabs, function (tab, i) {
-        tab.addEventListener('click', function () {
-          selectTab(set, i, false);
-        });
-        tab.addEventListener('keydown', function (event) {
-          var last = set.tabs.length - 1;
-          var to = -1;
-          if (event.key === 'ArrowRight') {
-            to = i === last ? 0 : i + 1;
-          } else if (event.key === 'ArrowLeft') {
-            to = i === 0 ? last : i - 1;
-          } else if (event.key === 'Home') {
-            to = 0;
-          } else if (event.key === 'End') {
-            to = last;
-          }
-          if (to !== -1) {
-            event.preventDefault();
-            // Automatic activation: the panel follows the focused tab.
-            selectTab(set, to, true);
-          }
-        });
-      });
-
-      tabSets.push(set);
-      selectTab(set, 0, false);
-    });
-  }
-
-  /* ---------- accordion ---------- */
-
-  var accordions = [];
-
-  function openSection(acc, index) {
-    acc.index = index;
-    each(acc.buttons, function (btn, i) {
-      var on = i === index;
-      btn.setAttribute('aria-expanded', on ? 'true' : 'false');
-      acc.panels[i].hidden = !on;
-    });
-  }
-
-  function initAccordions() {
-    each(document.querySelectorAll('[data-accordion]'), function (group) {
-      var acc = {
-        buttons: group.querySelectorAll('.acc-btn'),
-        panels: [],
-        index: 0
-      };
-
-      each(acc.buttons, function (btn) {
-        acc.panels.push(document.getElementById(btn.getAttribute('aria-controls')));
-      });
-
-      each(acc.buttons, function (btn, i) {
-        btn.addEventListener('click', function () {
-          // One section open at a time: four sets of sources only fit the
-          // stage one at a time, and nothing is lost by closing the others.
-          openSection(acc, acc.index === i ? -1 : i);
-        });
-      });
-
-      accordions.push(acc);
-      openSection(acc, 0);
-    });
-  }
-
-  /* ---------- sub-steps ---------- */
-
-  var subRuns = [];
-
-  function showStep(run, index, moveFocus) {
-    run.index = Math.min(Math.max(index, 0), run.steps.length - 1);
-
-    each(run.steps, function (step, i) {
-      step.hidden = i !== run.index;
-    });
-
-    var text = run.label + ' ' + (run.index + 1) + ' of ' + run.steps.length;
-    run.head.textContent = text;
-    run.prev.disabled = run.index === 0;
-    run.next.disabled = run.index === run.steps.length - 1;
-
-    if (moveFocus) {
-      run.live.textContent = text + '.';
-      run.head.focus();
-    }
-  }
-
-  function initSubsteps() {
-    each(document.querySelectorAll('[data-substeps]'), function (group) {
-      var run = {
-        steps: group.querySelectorAll('[data-substep]'),
-        head: group.querySelector('[data-sub-head]'),
-        live: group.querySelector('[data-sub-live]'),
-        prev: group.querySelector('[data-sub="prev"]'),
-        next: group.querySelector('[data-sub="next"]'),
-        label: group.getAttribute('data-sub-label') || 'Step',
-        index: 0
-      };
-
-      run.prev.addEventListener('click', function () {
-        showStep(run, run.index - 1, true);
-      });
-      run.next.addEventListener('click', function () {
-        showStep(run, run.index + 1, true);
-      });
-
-      subRuns.push(run);
-      showStep(run, 0, false);
-    });
-  }
-
-  /* ---------- helpers ---------- */
-
-  function glyph(ok) {
-    return '<svg class="glyph" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="' +
-      (ok ? CHECK : CROSS) + '"/></svg>';
-  }
-
-  function renderFeedback(node, ok, text) {
-    // Correctness is carried by the word first and the drawn mark second,
-    // never by colour: the verdict reads the same with the sheet turned off.
-    node.classList.toggle('is-wrong', !ok);
-    node.innerHTML = glyph(ok) +
-      '<span class="verdict-word">' + (ok ? 'That is it.' : 'Not quite.') + '</span> ' + text;
-  }
-
-  function renderVerdict(node, head, why) {
-    node.innerHTML = '<p class="verdict-head">' + head + '</p><p class="verdict-why">' + why + '</p>';
-  }
-
-  function tally(keys) {
-    var answered = 0;
-    var right = 0;
-    keys.forEach(function (key) {
-      var chosen = document.querySelector('[data-q="' + key + '"][aria-pressed="true"]');
-      if (chosen) {
-        answered += 1;
-        if (chosen.getAttribute('data-correct') === 'true') {
-          right += 1;
-        }
-      }
-    });
-    return { answered: answered, right: right, total: keys.length };
-  }
-
-  function updateCueScore() {
-    var s = tally(CUE_KEYS);
-    cueScore.textContent = s.answered === 0
-      ? 'Answered 0 of 6.'
-      : 'Answered ' + s.answered + ' of 6. Matching the cue: ' + s.right + '.';
-  }
-
-  /* ---------- the plate sorter ---------- */
-
-  function countsByZone() {
-    var counts = { veg: 0, pro: 0, grain: 0, side: 0 };
-    FOOD_ORDER.forEach(function (key) {
-      if (placed[key]) {
-        counts[placed[key]] += 1;
-      }
-    });
-    return counts;
-  }
-
-  function paintLivePlate() {
-    var counts = countsByZone();
-    ['veg', 'pro', 'grain', 'side'].forEach(function (zone) {
-      var wedge = plateLive.querySelector('[data-wedge="' + zone + '"]');
-      if (wedge) {
-        wedge.classList.toggle('is-on', counts[zone] > 0);
-      }
-      var num = plateLive.querySelector('[data-count="' + zone + '"]');
-      if (num) {
-        num.textContent = String(counts[zone]);
-      }
-    });
-  }
-
-  function updateSorter() {
-    var counts = countsByZone();
-    // The plate drawing is decoration; the live region carries the same state
-    // in words, so nothing here depends on seeing the wedges fill.
-    sortCounter.textContent = placedCount === 0
-      ? 'Placed 0 of 8.'
-      : 'Placed ' + placedCount + ' of 8. Vegetables and fruit ' + counts.veg +
-        ', protein ' + counts.pro + ', grains and starch ' + counts.grain +
-        ', beside the plate ' + counts.side + '.';
-
-    paintLivePlate();
-
-    if (placedCount >= SORT_HELP_AFTER && placedCount < FOOD_COUNT) {
-      sortReveal.hidden = false;
-    }
-    if (placedCount >= FOOD_COUNT) {
-      sortReveal.hidden = true;
-    }
-
-    if (current === SORT_SCREEN) {
-      nextBtn.disabled = placedCount < FOOD_COUNT;
-    }
-  }
-
-  function placeFood(key, zone, quiet) {
-    var food = FOODS[key];
-    if (!food) {
-      return;
-    }
-
-    if (!placed[key]) {
-      placedCount += 1;
-    }
-    placed[key] = zone;
-
-    each(document.querySelectorAll('[data-f="' + key + '"]'), function (btn) {
-      btn.setAttribute('aria-pressed', btn.getAttribute('data-zone') === zone ? 'true' : 'false');
-    });
-
-    var row = document.querySelector('[data-f="' + key + '"]');
-    if (row && row.closest('.food')) {
-      row.closest('.food').classList.add('is-placed');
-    }
-
-    placedRight = 0;
-    FOOD_ORDER.forEach(function (k) {
-      if (placed[k] === FOODS[k].zone) {
-        placedRight += 1;
-      }
-    });
-
-    if (!quiet) {
-      var ok = zone === food.zone;
-      renderVerdict(
-        sortVerdict,
-        (ok ? 'Yes. ' : 'Not there. ') + food.name + ' goes ' + ZONE_NAME[food.zone] + '.',
-        ok ? food.right : food.wrong
-      );
-    }
-
-    updateSorter();
-  }
-
-  function sortRest() {
-    FOOD_ORDER.forEach(function (key) {
-      if (!placed[key]) {
-        placeFood(key, FOODS[key].zone, true);
-      }
-    });
-    renderVerdict(
-      sortVerdict,
-      'The rest are on the plate for you',
-      'Select any food to read why it sits where it does. Nothing is locked, so you can move any of them and the reason will change with it.'
-    );
-    updateSorter();
-  }
-
-  /* ---------- the label hunt ---------- */
-
-  function markSpot(key) {
-    each(document.querySelectorAll('[data-spot="' + key + '"]'), function (btn) {
-      btn.setAttribute('aria-pressed', 'true');
-      var state = btn.querySelector('.spot-state');
-      if (state) {
-        state.textContent = 'Read';
-      }
-    });
-  }
-
-  function updateSpots() {
-    spotCounter.textContent = foundCount >= SPOT_COUNT
-      ? 'All six read.'
-      : 'Found ' + foundCount + ' of ' + SPOT_COUNT + '.';
-    if (foundCount >= SPOT_COUNT) {
-      spotReveal.hidden = true;
-    }
-  }
-
-  function takeSpot(key) {
-    spotTries += 1;
-    if (spotTries >= SPOT_HELP_AFTER && foundCount < SPOT_COUNT) {
-      spotReveal.hidden = false;
-    }
-    if (!found[key]) {
-      found[key] = true;
-      foundCount += 1;
-      markSpot(key);
-    }
-    renderVerdict(spotVerdict, SPOTS[key].head, SPOTS[key].why);
-    updateSpots();
-  }
-
-  function revealSpots() {
-    var missed = SPOT_ORDER.filter(function (key) {
-      return !found[key];
-    });
-    if (missed.length) {
-      missed.forEach(function (key) {
-        found[key] = true;
-        foundCount += 1;
-        markSpot(key);
-      });
-      // Marked rather than dumped into one long block: every line is still a
-      // button, and selecting one reads out the same explanation in the same
-      // place it would have appeared anyway.
-      renderVerdict(
-        spotVerdict,
-        'The rest are marked for you',
-        'There were ' + missed.length + ' you had not opened. Select any line, on the panel or in the list, to read what it is telling you.'
-      );
-    }
-    updateSpots();
-  }
-
-  /* ---------- the swap cards ---------- */
-
-  var swaps = [];
-
-  function turnSwap(swap, over) {
-    swap.over = over;
-    swap.front.hidden = over;
-    swap.back.hidden = !over;
-    swap.btn.setAttribute('aria-expanded', over ? 'true' : 'false');
-    swap.btn.textContent = over ? 'Turn back' : 'Turn over';
-
-    var face = over ? swap.back : swap.front;
-    face.classList.remove('is-in');
-    void face.offsetWidth;
-    face.classList.add('is-in');
-  }
-
-  function keptSwaps() {
-    var out = [];
-    each(document.querySelectorAll('[data-keep]'), function (box) {
-      if (box.checked) {
-        out.push(box.getAttribute('data-keep'));
-      }
-    });
-    return out;
-  }
-
-  function buildCard() {
-    var kept = keptSwaps();
-    swapCount.textContent = kept.length === 1 ? '1 swap kept.' : kept.length + ' swaps kept.';
-
-    if (!kept.length) {
-      cardBody.innerHTML = '<p class="quiet">No swaps kept yet. Go back a card, turn a few over, and tick the ones you would actually repeat. They land here.</p>';
-      return;
-    }
-
-    var html = '<ul class="card-list">';
-    kept.forEach(function (item) {
-      html += '<li>' + item + '</li>';
-    });
-    html += '</ul>';
-    cardBody.innerHTML = html;
-  }
-
-  function initSwaps() {
-    each(document.querySelectorAll('.swap'), function (node) {
-      var swap = {
-        front: node.querySelector('.swap-front'),
-        back: node.querySelector('.swap-back'),
-        btn: node.querySelector('.swap-btn'),
-        over: false
-      };
-      swap.btn.addEventListener('click', function () {
-        turnSwap(swap, !swap.over);
-      });
-      swaps.push(swap);
-      swap.front.hidden = false;
-      swap.back.hidden = true;
-      swap.btn.setAttribute('aria-expanded', 'false');
-      swap.btn.textContent = 'Turn over';
-    });
-  }
-
-  /* ---------- results ---------- */
-
-  function updateResults() {
-    var cues = tally(CUE_KEYS);
-    var lines = [];
-
-    lines.push(placedCount === 0
-      ? 'Build a plate: not attempted.'
-      : 'Build a plate: ' + placedRight + ' of ' + FOOD_COUNT + ' in the place the guide would put them.');
-
-    lines.push('Label lines read: ' + foundCount + ' of ' + SPOT_COUNT + '.');
-
-    lines.push(cues.answered === 0
-      ? 'Hunger or habit: not attempted.'
-      : cues.answered < cues.total
-        ? 'Hunger or habit: ' + cues.right + ' matching, out of the ' + cues.answered + ' you answered, of ' + cues.total + '.'
-        : 'Hunger or habit: ' + cues.right + ' of ' + cues.total + '.');
-
-    resultsList.innerHTML = lines.map(function (line) {
-      return '<li>' + line + '</li>';
-    }).join('');
-  }
-
-  /* ---------- the ending ---------- */
-
-  function announceCompletion(scores) {
-    if (completedSent) {
-      return;
-    }
-    completedSent = true;
-    // Best effort only. The host page is not required to listen, and a copy
-    // packaged into an LMS has no parent worth talking to.
-    try {
-      if (window.parent && window.parent !== window) {
-        window.parent.postMessage({
-          type: 'ka-sample-complete',
-          slug: 'build-the-plate',
-          scores: scores
-        }, '*');
-      }
-    } catch (err) {
-      /* nothing depends on this */
-    }
-  }
-
-  function openDone() {
-    if (!doneDialog || typeof doneDialog.showModal !== 'function') {
-      return;
-    }
-
-    var cues = tally(CUE_KEYS);
-    var kept = keptSwaps().length;
-    var scores = {
-      plate: placedRight + ' of ' + FOOD_COUNT,
-      label: foundCount + ' of ' + SPOT_COUNT,
-      cues: cues.right + ' of ' + cues.total,
-      swaps: kept
+  const $ = id => document.getElementById(id);
+  const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${{next:'m9 5 7 7-7 7M3 12h13',prev:'m15 5-7 7 7 7M8 12h13',play:'m9 5 10 7-10 7Z',pause:'M8 5v14M16 5v14',check:'m5 12 4 4 10-10',leaf:'M4 20C2 6 11 3 21 3c0 11-4 19-14 15M4 20 16 8',label:'M5 3h14v18H5zM8 7h8M8 11h8M8 15h4',plate:'M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0ZM12 4v16M12 12h8',journal:'M5 3h14v18H5zM8 8h8M8 12h8M8 16h5',save:'M6 3h12v18l-6-4-6 4z'}[name] || ''}"/></svg>`;
+  const art = (kind) => {
+    const paths = {
+      broccoli:'<path fill="#789354" d="m47 42-8 43h24l-8-43Z"/><path fill="#486b43" d="M27 58C8 57 10 34 26 33c-1-23 29-27 34-10 20-11 34 9 24 24 2 20-24 24-32 10-8 9-20 10-25 1Z"/><path d="m51 52-3 28m4-23 15-12m-17 9-13-11"/>',
+      chicken:'<path fill="#cf9d67" d="M25 26c20-22 58-5 55 20-1 14-17 28-34 28-6 0-12 0-16-4L18 81l-9-9 15-15C14 48 15 35 25 26Z"/><path d="m33 30 29 12m-35 0 34 13m-31 0 18 9"/>',
+      rice:'<path fill="#fffaf0" d="M12 50h76c-3 25-15 36-38 36S16 75 12 50Z"/><path fill="#c8a76e" d="M17 48c1-20 23-29 32-26 24-3 34 13 34 26Z"/><path d="m29 40 5-4m7 4 5-5m8 6 4-6m9 7 3-4m-21-8 5-3"/>',
+      oil:'<path fill="#c9b063" d="M42 17h17v18l12 12v39H30V47l12-12Z"/><path fill="#f7f0d9" d="M35 51h31v22H35Z"/><path d="M42 12h17v8H42zM40 58h21"/>',
+      beans:'<path fill="#f3e3c7" d="M9 52h82c-5 24-17 33-41 33S14 76 9 52Z"/><g fill="#654934"><ellipse cx="29" cy="39" rx="12" ry="8" transform="rotate(-20 29 39)"/><ellipse cx="55" cy="31" rx="12" ry="8" transform="rotate(30 55 31)"/><ellipse cx="69" cy="44" rx="12" ry="8"/><ellipse cx="46" cy="46" rx="12" ry="8"/></g>',
+      potato:'<path fill="#b56a3c" d="M16 54C8 29 69 16 85 40c15 28-54 47-69 14Z"/><path fill="#e4a84f" d="M25 49c0-13 43-21 50-8 4 13-42 26-50 8Z"/><path d="m35 43 4 10m10-15 4 12m8-13 3 10"/>',
+      berries:'<path fill="#b95540" d="M24 35c15-11 36-9 44 6 8 17-14 46-20 46-8 0-34-33-24-52Z"/><path fill="#6b8b4b" d="m46 34-20-7 11-8 10 8 6-17 7 16 17 2-14 11Z"/><path d="m34 44 2 3m17-4 2 3m-13 9 2 3m14-2 2 3m-11 11 2 3"/>',
+      water:'<path fill="#e9f4ef" d="M27 17h46l-7 70H34Z"/><path fill="#93b9b4" d="M30 43c11 7 23-7 40 0l-4 44H34Z"/><path d="M27 17h46l-7 70H34Z"/>',
+      oats:'<path fill="#f7edd7" d="M13 45h74c-3 25-17 39-37 39S16 70 13 45Z"/><ellipse fill="#c8ac72" cx="50" cy="44" rx="37" ry="10"/><path d="m25 42 7 4m7-7 7 7m10-5 7 6m8-7 6 4"/>',
+      eggs:'<path fill="#fff9e9" d="M26 22C7 24 2 66 24 80 48 90 59 74 58 55 56 38 43 20 26 22Z"/><path fill="#e8d3ab" d="M65 20c-20 0-29 43-8 58 18 10 38-4 35-24-2-20-12-34-27-34Z"/>'
     };
-
-    donePlate.textContent = scores.plate;
-    doneLabel.textContent = scores.label;
-    doneCues.textContent = scores.cues;
-    doneSwaps.textContent = String(kept);
-
-    // The ping goes out on the first Finish, not on merely landing here.
-    announceCompletion(scores);
-
-    focusAfterDone = nextBtn;
-    doneDialog.showModal();
-    doneTitle.focus();
+    return `<svg viewBox="0 0 100 100" aria-hidden="true" fill="none" stroke="#4c583d" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${paths[kind] || paths.broccoli}</svg>`;
+  };
+  const foods = [
+    ['Roasted broccoli','veg','broccoli','Vegetables belong in the half. Fresh, frozen and canned all have a place.'],
+    ['Grilled chicken','pro','chicken','Chicken supplies protein. Eggs, fish and tofu are other ways to fill this quarter.'],
+    ['Brown rice','grain','rice','Brown rice is a whole grain. It retains its bran and germ.'],
+    ['Olive oil dressing','side','oil','Oil is a finishing ingredient, rather than a whole section of the plate.'],
+    ['Black beans','pro','beans','Here, beans fill the protein quarter. They also provide fiber and can fit more than one food group.'],
+    ['Baked sweet potato','grain','potato','In this workshop we group starchy vegetables with grains and starch. Other plate guides classify them differently.'],
+    ['Sliced strawberries','veg','berries','Fruit shares the half with vegetables. It brings fiber, water and variety.'],
+    ['A glass of water','side','water','The drink sits beside the plate. Water is a simple everyday option.']
+  ];
+  const plateLessons = [
+    ['Vegetables & fruit','Make room for color.','Use roughly half for vegetables and fruit. Fresh, frozen, canned and cooked versions count. Combine what you enjoy with what you can afford.','veg','broccoli'],
+    ['Protein','A quarter with staying power.','Eggs, fish, poultry, beans, lentils and tofu are options. Protein supports growth and repair. Plant choices such as beans also bring fiber.','pro','beans'],
+    ['Grains & starch','Keep the grain in the picture.','Use the other quarter for grains or starch. Whole grains retain the bran and germ: think oats, brown rice and whole-wheat bread. This workshop also puts starchy vegetables here.','grain','rice'],
+    ['Beside the plate','The finishing touches.','Add a drink and the fats or flavorings you enjoy. Water is an easy default. Dairy or fortified alternatives can fit your wider eating pattern. Adjust for your needs, culture and preferences.','side','water']
+  ];
+  const labelNotes = {
+    container:['The whole box is not one serving.','This fictional box contains eight labeled servings. Check the amount you eat before comparing totals.'],
+    serving:['Start with the reference amount.','The numbers describe three quarters of a cup. Serving size reflects typical consumption, not advice about how much you should eat.'],
+    calories:['An amount, not a food score.','Calories describe energy per serving. Slide the amount below and watch the total change. Nutrients and enjoyment matter too.'],
+    fiber:['A useful comparison.','This serving has 3 grams of dietary fiber. Compare similar products at similar serving sizes.'],
+    sugars:['Find the added part.','The 9 grams of added sugars are included in the 12 grams of total sugars. They are not extra on top.'],
+    ingredients:['Read the order.','Ingredients appear in descending order by weight. Whole-grain oats come first here. The ingredient list also matters for allergies; always check the complete package.']
+  };
+  const moments = [
+    ['The snack drawer','You pass the printer and ', 'open the snack drawer without thinking', '. You are not sure whether you want food.','A familiar place can prompt an automatic routine. Pause and notice what you want. You can still choose a snack.'],
+    ['A busy morning','Your morning has been nonstop. You notice ', 'you have barely paused to drink', '.','That is useful information about your routine. Check in with thirst and make water available. It does not tell you whether you also need food.'],
+    ['After a short night','You feel distracted after ', 'a night with very little sleep', '. Food is on your mind.','Sleep, appetite and mood can interact. Notice the context without deciding that hunger must be false. Food and rest can both be appropriate.'],
+    ['Lunch has slipped','A meeting runs over. You realize ', 'several hours have passed since breakfast', '. Lunch sounds appealing.','Time since eating can be a useful cue. Hunger feels different across people and days; there is no need to pass a test before eating.'],
+    ['The film and the bowl','The film starts. Your hand reaches for the bowl ', 'as soon as it lands beside you', '.','The setting may be part of the routine. Notice taste, enjoyment and how you feel, rather than labeling the snack as a failure.'],
+    ['Back from a walk','You return from a warm afternoon walk and ', 'want something cool to drink', '.','Make time to cool down and notice your needs. This exercise cannot diagnose symptoms or decide whether food, fluids, rest or medical care are needed.']
+  ];
+  const swaps = [
+    ['A sweet fizzy drink with every lunch.','Sparkling water with a squeeze of lime.','Keep the cold and fizz while trying a drink without added sugars.'],
+    ['Plain crackers as your usual snack.','Add hummus or nut butter you enjoy.','A small addition introduces protein and variety. Choose ingredients that suit any allergies.'],
+    ['Only white rice in the cupboard.','Try a portion of brown rice alongside it.','Experiment with flavor and texture. Cook each according to its package, since cooking times can differ.'],
+    ['Breakfast decided as you leave.','Prepare oats and yogurt the night before.','Move one decision to a calmer moment. Keep the prepared food refrigerated.'],
+    ['Someone else dresses the salad.','Ask for dressing on the side.','Choose the amount and flavor that work for you.'],
+    ['The same vegetable every dinner.','Add one easy second color.','Frozen peas, sliced cucumber or canned carrots can make variety convenient.']
+  ];
+  const sections = ['Welcome','Your workshop','The plate guide','Build a plate','Read the label','Protein + fiber','Notice the moment','Small swaps','Your takeaway'];
+  let current=0, plateTab=0, foodIndex=0, momentIndex=0, swapIndex=0, proteinTab=0, labelActive='', serving=1, completed=false;
+  let placements={}, found=new Set(), clues=new Set(), keeps=new Set(), reflections={};
+  const lesson=$('lesson'), audio=$('narration'), tray=$('audio-tray');
+  const heading=(title,lead,eyebrow='Everyday nutrition')=>`<p class="eyebrow">${eyebrow}</p><h2 tabindex="-1">${title}</h2><p class="lead">${lead}</p>`;
+  const miniNav=(type,index,total,label)=>`<div class="mini-nav"><button data-step="${type}" data-dir="-1" aria-label="Previous ${label}" ${index===0?'disabled':''}>${icon('prev')}</button><span class="count">${label[0].toUpperCase()+label.slice(1)} ${index+1} of ${total}</span><button data-step="${type}" data-dir="1" aria-label="Next ${label}" ${index===total-1?'disabled':''}>${icon('next')}</button></div>`;
+  function plate(practice=false){
+    return `<div><div class="big-plate" aria-label="${practice?'Place the food on the plate':'Explore the plate'}">${[['veg','Vegetables<br>+ fruit','Half','broccoli'],['pro','Protein','Quarter','beans'],['grain','Grains<br>+ starch','Quarter','rice']].map(([zone,name,size,food])=>{
+      const items=foods.filter((f,i)=>placements[i]===zone);
+      const drawing=practice&&items.length?`<span class="placed-art">${items.map(f=>art(f[2])).join('')}</span>`:art(food);
+      return `<button class="plate-zone ${zone} ${!practice&&plateLessons[plateTab][3]===zone?'active':''}" data-zone="${zone}" aria-label="${practice?'Place in':'Explore'} ${name.replace('<br>',' ')}">${drawing}<span>${name}</span><small>${size}</small></button>`;
+    }).join('')}</div><div class="beside"><button data-zone="side">${art('water')}<span>${practice?'Place beside the plate':'Fats + drinks'}</span></button></div></div>`;
   }
-
-  function closeDone(focusTarget) {
-    focusAfterDone = focusTarget || null;
-    if (doneDialog && doneDialog.open) {
-      doneDialog.close();
-    }
+  function summary(){return `<div class="score-row"><span>Foods placed correctly</span><strong>${foods.filter((f,i)=>placements[i]===f[1]).length} of 8</strong></div><div class="score-row"><span>Label lines explored</span><strong>${found.size} of 6</strong></div><div class="score-row"><span>Moments explored</span><strong>${clues.size} of 6</strong></div><div class="score-row"><span>Swaps saved</span><strong>${keeps.size}</strong></div>`;}
+  function render(focus=false){
+    let body='';
+    if(current===0) body=`<article class="intro"><div><p class="eyebrow">A small workshop for everyday eating</p><h2 tabindex="-1">Good food.<br>Less overthinking.</h2><p class="lead">Build a meal by eye. Find what matters on a label. Leave with one small change that fits your life.</p><div class="meta"><span>About 8 minutes</span><span>Learn by doing</span><span>Optional audio</span></div><div class="guide-welcome"><img src="assets/img/kitchen-guide.webp" width="640" height="533" alt="Your illustrated kitchen guide"><div><strong>A guide at your table.</strong><small>Listen below, with the lesson still in view.</small></div></div><p class="caption">General education, not individualized dietary or medical advice.</p></div><figure><img class="hero" src="assets/img/balanced-plate.webp" width="1536" height="1024" alt="Overhead balanced meal with vegetables, salmon, brown rice and water"><figcaption class="caption">A flexible starting point. Make room for foods you enjoy.</figcaption></figure></article>`;
+    if(current===1) body=`<article>${heading('A little practice for real life.','No diet rules. No timed questions. A few useful things to try.','Your workshop')}<div class="split"><div class="map">${[['plate','Build it','Place everyday foods on a divided plate.'],['label','Investigate it','Explore six label details and adjust the serving.'],['journal','Make it yours','Notice eating cues and save a practical swap.']].map(([i,h,p])=>`<div class="map-item">${icon(i)}<div><strong>${h}</strong><p>${p}</p></div></div>`).join('')}</div><div class="surface green-surface"><p class="eyebrow">You set the pace</p><h3>Room to explore.</h3><p>Use Back and Next whenever you like. Every activity works by touch or keyboard; dragging is optional.</p><p>Audio is your choice. Its transcript opens below the lesson and can be tucked away at any time.</p><p class="caption">This is general education. A registered dietitian or clinician can help with individual needs, health conditions, pregnancy, medication or allergies.</p></div></div></article>`;
+    if(current===2){const p=plateLessons[plateTab];body=`<article>${heading('A guide, not a rulebook.','Explore the plate. Its proportions are a starting point, not a prescription for portion size.','The plate guide')}<div class="split"><div><div class="tabs" role="tablist" aria-label="Plate guide">${plateLessons.map((p,i)=>`<button role="tab" id="plate-tab-${i}" aria-controls="plate-detail" aria-selected="${i===plateTab}" tabindex="${i===plateTab?'0':'-1'}" data-plate-tab="${i}">${p[0]}</button>`).join('')}</div><div class="detail" id="plate-detail" role="tabpanel" aria-labelledby="plate-tab-${plateTab}"><h3>${p[1]}</h3><p>${p[2]}</p><p class="caption">Bowls, soups and shared dishes count too. Think about the ingredients across the meal.</p></div></div>${plate()}</div></article>`;}
+    if(current===3){const f=foods[foodIndex],placed=placements[foodIndex],correct=placed===f[1];body=`<article>${heading('Put it on the plate.','Choose a place for the food shown. Tap the plate or drag the food into place.','Kitchen practice')}<div class="split"><div><div class="food-card" draggable="true" data-food="${foodIndex}" aria-label="${f[0]}; use the plate buttons to place it">${art(f[2])}<div><p class="eyebrow">On your counter</p><h3>${f[0]}</h3><p class="caption">${placed?'You can change its placement.':'Choose its place on the plate.'}</p></div></div>${miniNav('food',foodIndex,8,'food')}<div class="feedback ${correct?'good':''}" role="status"><strong>${placed?(correct?'That fits.':'Try another part of the plate.'):'Where would you put it?'}</strong>${placed?f[3]:'The plate is your workspace. Each section is a button, so you can use Tab and Enter too.'}</div><div class="placed-list"><span>${Object.keys(placements).length} of 8 placed</span><span>${foods.filter((f,i)=>placements[i]===f[1]).length} in their intended place</span></div></div>${plate(true)}</div></article>`;}
+    if(current===4) body=`<article>${heading('Turn the package around.','Tap a line on this fictional cereal label. Then see what changes when the amount changes.','Label investigation')}<div class="label-layout"><div class="nutrition-label"><h3>Nutrition Facts</h3><p class="caption">Honey Oat Crunch · teaching example, abbreviated</p>${[['container','8 servings per container',''],['serving','Serving size','¾ cup (40g)'],['calories','Calories','160'],['fiber','Dietary Fiber','3g'],['sugars','Includes Added Sugars','9g']].map(([id,text,val])=>`<button data-label="${id}" aria-pressed="${labelActive===id}" class="${id==='calories'?'calories ':''}${found.has(id)?'found':''}"><span>${text}</span><strong>${val}</strong></button>`).join('')}<p class="plain-line">Total sugars 12g · Protein 4g</p><p class="plain-line">Sodium 210mg · Total fat 3g</p><button class="ingredients ${found.has('ingredients')?'found':''}" data-label="ingredients" aria-pressed="${labelActive==='ingredients'}">Ingredients: whole-grain oats, sugar, rice flour, honey, canola oil, salt, natural flavor.</button></div><div><p class="count" role="status">${found.size} of 6 details explored</p><div class="field-note" role="status"><p class="eyebrow">Your field note</p><h3>${labelActive?labelNotes[labelActive][0]:'Start wherever you are curious.'}</h3><p>${labelActive?labelNotes[labelActive][1]:'Each highlighted line opens a useful detail. No hidden answer and no score to chase.'}</p></div><div class="serving-control"><label for="servings">Try the amount: <span id="serving-value">${serving}</span> labeled servings</label><input type="range" id="servings" min="0.5" max="2" step="0.5" value="${serving}"><p class="calculation" id="calculation">${160*serving} calories</p><p class="caption" id="nutrient-total">${9*serving}g added sugars · ${3*serving}g fiber</p></div><p class="caption">For nutrients with a % Daily Value: 5% or less is low; 20% or more is high. Compare similar products using the same amount.</p></div></div></article>`;
+    if(current===5){const protein=proteinTab===0;body=`<article>${heading('Bring a useful pair to the table.','Protein and fiber do different jobs. Everyday foods can bring both.','Look inside the meal')}<div class="split"><div><div class="tabs" role="tablist" aria-label="Protein and fiber">${['Protein','Fiber'].map((s,i)=>`<button role="tab" id="pair-tab-${i}" aria-controls="pair-detail" aria-selected="${i===proteinTab}" tabindex="${i===proteinTab?'0':'-1'}" data-protein="${i}">${s}</button>`).join('')}</div><div class="detail" role="tabpanel" id="pair-detail" aria-labelledby="pair-tab-${proteinTab}"><h3>${protein?'Build and repair.':'More plants, more possibilities.'}</h3><p>${protein?'Your body uses protein to build and repair tissues. Eggs, fish, meat, dairy, tofu, beans and lentils offer different ways to include it.':'Fiber is a carbohydrate in plant foods that is not fully digested. Whole grains, beans, fruit, vegetables, nuts and seeds are sources.'}</p><p>${protein?'Try adding beans to a bowl, yogurt with oats, or an egg with toast. There is no single food you have to eat.':'Increase fiber gradually if you are adding more, and include fluids. What feels comfortable varies from person to person.'}</p></div></div><div><div class="pair-visual">${art(protein?'eggs':'oats')}${art('beans')}</div><div class="surface"><p class="eyebrow">One pantry overlap</p><h3>Beans bring both.</h3><p>Keep a can you enjoy on hand. Add it to soup, a grain bowl or a simple lunch.</p></div></div></div></article>`;}
+    if(current===6){const m=moments[momentIndex],seen=clues.has(momentIndex);body=`<article>${heading('Notice the moment.','Tap the underlined clue. Explore the context without trying to diagnose a feeling.','Hunger, habit and context')}<div class="split"><div><div class="moment"><p class="eyebrow">${m[0]}</p><p class="moment-scene">${m[1]}<button class="clue" data-clue aria-pressed="${seen}">${m[2]}</button>${m[3]}</p><p class="caption">${clues.size} of 6 moments explored</p></div>${miniNav('moment',momentIndex,6,'moment')}</div><div><div class="field-note" role="status"><h3>${seen?'A cue, not a verdict.':'What stands out?'}</h3><p>${seen?m[4]:'Hunger, thirst, mood, tiredness and routine can overlap. The clue helps you pause; it does not tell you what you must feel.'}</p></div><label class="reflection-label" for="reflection">What could you notice or try? <span>(optional)</span></label><textarea id="reflection" class="reflection" maxlength="500" placeholder="A thought to take with you...">${esc(reflections[momentIndex]||'')}</textarea><p class="caption">Stays in this page only. Nothing is sent or saved after a reload.</p></div></div></article>`;}
+    if(current===7){const s=swaps[swapIndex];body=`<article>${heading('One change you might keep.','Browse the ideas. Save the ones that suit your routine.','Small swaps')}<div class="swap-pair"><div class="surface"><span class="eyebrow">The familiar routine</span><p>${s[0]}</p></div><div class="swap-arrow" aria-hidden="true">→</div><div class="surface green-surface"><span class="eyebrow">Something to try</span><p>${s[1]}</p></div></div><div class="swap-bottom"><p>${s[2]}</p><button class="keep-button" data-keep aria-pressed="${keeps.has(swapIndex)}">${icon(keeps.has(swapIndex)?'check':'save')}${keeps.has(swapIndex)?'Saved to my takeaway':'Keep this idea'}</button></div>${miniNav('swap',swapIndex,6,'swap')}<p class="count" role="status">${keeps.size} ${keeps.size===1?'idea':'ideas'} saved</p></article>`;}
+    if(current===8) body=`<article>${heading('Your next meal starts here.','Choose one idea for the week. Keep it small enough to repeat.','Your takeaway')}<div class="split"><div class="takeaway"><p class="eyebrow">A note for your kitchen</p><h3>Build. Notice. Repeat.</h3><p>Use the plate as a flexible guide. Read the serving size. Notice the context around eating.</p>${keeps.size?`<ul>${[...keeps].map(i=>`<li>${swaps[i][1]}</li>`).join('')}</ul>`:'<p class="caption">No ideas saved yet. Go back to Small swaps to keep one, or choose your own.</p>'}<p class="caption">General education, not individualized dietary or medical advice.</p></div><div>${summary()}<details class="sources"><summary>Where the guidance comes from</summary><a href="https://www.canada.ca/en/health-canada/services/food-guide/eating-support/cooking/make-healthy-meals-plate.html" target="_blank" rel="noopener">Health Canada: using a plate as a flexible guide</a><a href="https://www.fda.gov/food/nutrition-facts-label/how-understand-and-use-nutrition-facts-label" target="_blank" rel="noopener">FDA: understanding the Nutrition Facts label</a><p>The course uses a practical plate adaptation that groups starches together. It is not a personalized diet plan or a reproduction of one official food guide.</p></details></div></div></article>`;
+    lesson.innerHTML=body;
+    $('progress-label').textContent=sections[current];
+    $('progress-fill').style.width=((current+1)/sections.length*100)+'%';
+    $('prev').disabled=current===0;
+    $('next').querySelector('span').textContent=current===0?'Step inside':current===8?'Finish':'Next';
+    if(focus){lesson.scrollTop=0;lesson.querySelector('h2').focus();}
   }
-
-  /* ---------- card movement ---------- */
-
-  function show(n, moveFocus) {
-    current = Math.min(Math.max(n, 1), TOTAL);
-
-    screens.forEach(function (section, index) {
-      section.hidden = index + 1 !== current;
-    });
-
-    progressText.textContent = 'Card ' + current + ' of ' + TOTAL;
-    barFill.style.width = ((current / TOTAL) * 100) + '%';
-
-    prevBtn.disabled = current === 1;
-    // The last card keeps a live button: reaching it earns Finish, which is
-    // the ending, rather than a greyed out Next with nothing behind it.
-    nextBtn.disabled = current === SORT_SCREEN && placedCount < FOOD_COUNT;
-    // The cover offers Start rather than Next: it is an invitation to begin,
-    // not the second page of something already under way.
-    nextBtn.textContent = current === TOTAL ? 'Finish' : current === 1 ? 'Start' : 'Next';
-
-    if (current === TOTAL) {
-      updateResults();
-      buildCard();
-    }
-
-    if (moveFocus) {
-      var heading = screens[current - 1].querySelector('h2');
-      if (heading) {
-        heading.focus();
-      }
-    }
-  }
-
-  /* ---------- wiring ---------- */
-
-  prevBtn.addEventListener('click', function () {
-    show(current - 1, true);
+  function move(n){audio.pause();audio.removeAttribute('src');audio.load();current=Math.min(8,Math.max(0,n));$('transcript').textContent=window.nutritionNarration[current];$('audio-title').textContent=sections[current];$('audio-error').hidden=true;$('audio-time').textContent='0:00';$('audio-duration').textContent='0:00';$('audio-seek').value=0;render(true);}
+  $('prev').addEventListener('click',()=>move(current-1));
+  $('next').addEventListener('click',()=>{if(current<8){move(current+1);return;}audio.pause();$('done-results').innerHTML=summary();$('done').showModal();if(!completed){completed=true;try{if(window.parent!==window)window.parent.postMessage({type:'ka-sample-complete',slug:'build-the-plate',scores:{plate:foods.filter((f,i)=>placements[i]===f[1]).length+' of 8',label:found.size+' of 6',cues:clues.size+' of 6',swaps:keeps.size}},'*');}catch{}}});
+  $('done-review').addEventListener('click',()=>$('done').close());
+  $('done').addEventListener('close',()=>$('next').focus());
+  $('restart').addEventListener('click',()=>{placements={};found=new Set();clues=new Set();keeps=new Set();reflections={};foodIndex=momentIndex=swapIndex=plateTab=proteinTab=0;labelActive='';serving=1;completed=false;$('done').close();move(0);});
+  function retainFocus(selector){render();lesson.querySelector(selector)?.focus();}
+  lesson.addEventListener('click',event=>{const b=event.target.closest('button');if(!b)return;
+    if(b.dataset.plateTab!==undefined){plateTab=Number(b.dataset.plateTab);retainFocus(`[data-plate-tab="${plateTab}"]`);}
+    if(b.dataset.protein!==undefined){proteinTab=Number(b.dataset.protein);retainFocus(`[data-protein="${proteinTab}"]`);}
+    if(b.dataset.zone){if(current===2){plateTab=plateLessons.findIndex(p=>p[3]===b.dataset.zone);retainFocus(`[data-zone="${b.dataset.zone}"]`);}else if(current===3){placements[foodIndex]=b.dataset.zone;retainFocus(`[data-zone="${b.dataset.zone}"]`);}}
+    if(b.dataset.step){const dir=Number(b.dataset.dir);if(b.dataset.step==='food')foodIndex=Math.max(0,Math.min(7,foodIndex+dir));if(b.dataset.step==='moment')momentIndex=Math.max(0,Math.min(5,momentIndex+dir));if(b.dataset.step==='swap')swapIndex=Math.max(0,Math.min(5,swapIndex+dir));render();const target=lesson.querySelector(`[data-step="${b.dataset.step}"][data-dir="${dir}"]:not(:disabled)`)||lesson.querySelector(`[data-step="${b.dataset.step}"]:not(:disabled)`);target?.focus();}
+    if(b.dataset.label){labelActive=b.dataset.label;found.add(labelActive);retainFocus(`[data-label="${labelActive}"]`);}
+    if(b.hasAttribute('data-clue')){clues.add(momentIndex);retainFocus('[data-clue]');}
+    if(b.hasAttribute('data-keep')){keeps.has(swapIndex)?keeps.delete(swapIndex):keeps.add(swapIndex);retainFocus('[data-keep]');}
   });
-
-  nextBtn.addEventListener('click', function () {
-    if (current === TOTAL) {
-      openDone();
-      return;
-    }
-    show(current + 1, true);
-  });
-
-  sortReveal.addEventListener('click', sortRest);
-  spotReveal.addEventListener('click', revealSpots);
-
-  swapWrap.addEventListener('change', buildCard);
-
-  document.addEventListener('click', function (event) {
-    var target = event.target;
-    if (!target || !target.closest) {
-      return;
-    }
-
-    var zoneBtn = target.closest('[data-f]');
-    if (zoneBtn) {
-      placeFood(zoneBtn.getAttribute('data-f'), zoneBtn.getAttribute('data-zone'), false);
-      return;
-    }
-
-    var spotBtn = target.closest('[data-spot]');
-    if (spotBtn) {
-      takeSpot(spotBtn.getAttribute('data-spot'));
-      return;
-    }
-
-    var btn = target.closest('[data-q]');
-    if (!btn) {
-      return;
-    }
-
-    var key = btn.getAttribute('data-q');
-    var ok = btn.getAttribute('data-correct') === 'true';
-
-    // One selection per moment, and nothing is ever disabled, so a first
-    // guess never locks anybody out of changing their mind.
-    each(document.querySelectorAll('[data-q="' + key + '"]'), function (other) {
-      other.setAttribute('aria-pressed', other === btn ? 'true' : 'false');
-    });
-
-    var node = document.getElementById('fb-' + key);
-    var copy = FEEDBACK[key];
-    if (node && copy) {
-      renderFeedback(node, ok, ok ? copy.correct : copy.wrong);
-    }
-
-    updateCueScore();
-  });
-
-  function resetModule() {
-    each(document.querySelectorAll('[data-q]'), function (btn) {
-      btn.setAttribute('aria-pressed', 'false');
-    });
-    each(document.querySelectorAll('[data-f]'), function (btn) {
-      btn.setAttribute('aria-pressed', 'false');
-    });
-    each(document.querySelectorAll('.food'), function (node) {
-      node.classList.remove('is-placed');
-    });
-    each(document.querySelectorAll('[data-spot]'), function (btn) {
-      btn.setAttribute('aria-pressed', 'false');
-      var state = btn.querySelector('.spot-state');
-      if (state) {
-        state.textContent = '';
-      }
-    });
-    each(document.querySelectorAll('.feedback'), function (p) {
-      p.textContent = '';
-      p.classList.remove('is-wrong');
-    });
-    each(document.querySelectorAll('[data-keep]'), function (box) {
-      box.checked = false;
-    });
-    each(document.querySelectorAll('#plate-a .wedge, #plate-a .side-kit'), function (node) {
-      node.classList.remove('is-on');
-    });
-
-    placed = {};
-    placedCount = 0;
-    placedRight = 0;
-    found = {};
-    foundCount = 0;
-    spotTries = 0;
-    sortReveal.hidden = true;
-    spotReveal.hidden = true;
-    sortVerdict.innerHTML = '';
-    spotVerdict.innerHTML = '';
-
-    tabSets.forEach(function (set) {
-      selectTab(set, 0, false);
-    });
-    accordions.forEach(function (acc) {
-      openSection(acc, 0);
-    });
-    subRuns.forEach(function (run) {
-      showStep(run, 0, false);
-    });
-    swaps.forEach(function (swap) {
-      turnSwap(swap, false);
-    });
-
-    updateSorter();
-    updateSpots();
-    updateCueScore();
-    buildCard();
-    updateResults();
-    show(1, true);
-  }
-
-  if (restartBtn) {
-    restartBtn.addEventListener('click', resetModule);
-  }
-
-  if (doneDialog) {
-    doneDialog.addEventListener('close', function () {
-      var target = focusAfterDone;
-      focusAfterDone = null;
-      if (target && target.focus) {
-        target.focus();
-      }
-    });
-
-    // A press on the dialog itself is a press on the backdrop: the padding
-    // lives on the inner box, so nothing else can be the target.
-    doneDialog.addEventListener('click', function (event) {
-      if (event.target === doneDialog) {
-        closeDone(nextBtn);
-      }
-    });
-
-    doneCloseBtn.addEventListener('click', function () {
-      closeDone(nextBtn);
-    });
-
-    doneReviewBtn.addEventListener('click', function () {
-      var cardTab = document.getElementById('tab-9a');
-      if (cardTab) {
-        cardTab.click();
-      }
-      closeDone(screens[TOTAL - 1].querySelector('h2'));
-    });
-
-    doneRestartBtn.addEventListener('click', function () {
-      closeDone(null);
-      resetModule();
-    });
-  }
-
-  /* ---------- start ---------- */
-
-  // No focus grab on load: the module is embedded, and stealing focus would
-  // yank the host page down to the frame before anybody asked it to.
-  initTabs();
-  initAccordions();
-  initSubsteps();
-  initSwaps();
-
-  updateSorter();
-  updateSpots();
-  updateCueScore();
-  buildCard();
-  updateResults();
-  show(1, false);
-}());
+  lesson.addEventListener('keydown',event=>{if(event.target.getAttribute('role')!=='tab')return;const tabs=[...event.target.parentElement.querySelectorAll('[role=tab]')];let i=tabs.indexOf(event.target);if(event.key==='ArrowRight')i=(i+1)%tabs.length;else if(event.key==='ArrowLeft')i=(i+tabs.length-1)%tabs.length;else if(event.key==='Home')i=0;else if(event.key==='End')i=tabs.length-1;else return;event.preventDefault();tabs[i].click();});
+  lesson.addEventListener('input',event=>{if(event.target.id==='reflection')reflections[momentIndex]=event.target.value;if(event.target.id==='servings'){serving=Number(event.target.value);$('serving-value').textContent=serving;$('calculation').textContent=160*serving+' calories';$('nutrient-total').textContent=9*serving+'g added sugars · '+3*serving+'g fiber';}});
+  lesson.addEventListener('dragstart',event=>{const card=event.target.closest('[data-food]');if(card)event.dataTransfer.setData('text/plain',card.dataset.food);});
+  lesson.addEventListener('dragover',event=>{if(event.target.closest('[data-zone]'))event.preventDefault();});
+  lesson.addEventListener('drop',event=>{const zone=event.target.closest('[data-zone]');if(!zone||current!==3)return;event.preventDefault();const food=Number(event.dataTransfer.getData('text/plain'));if(Number.isInteger(food)&&food>=0&&food<8){placements[food]=zone.dataset.zone;render();}});
+  const time=seconds=>`${Math.floor((seconds||0)/60)}:${String(Math.floor((seconds||0)%60)).padStart(2,'0')}`;
+  function audioState(playing){document.querySelector('.course').classList.toggle('is-playing',playing);$('play-icon').innerHTML=icon(playing?'pause':'play');$('listen-label').textContent=playing?'Pause the guide':'Listen to the guide';}
+  $('listen').addEventListener('click',async()=>{tray.hidden=false;$('listen').setAttribute('aria-expanded','true');$('transcript').textContent=window.nutritionNarration[current];$('audio-title').textContent=sections[current];if(!audio.paused){audio.pause();return;}if(!audio.getAttribute('src'))audio.src=`assets/audio/screen-${current+1}.mp3`;try{await audio.play();$('audio-error').hidden=true;}catch{audioState(false);$('audio-error').textContent='Audio could not start. The full transcript is above. Tap Listen to try again.';$('audio-error').hidden=false;}});
+  $('collapse-audio').addEventListener('click',()=>{audio.pause();tray.hidden=true;$('listen').setAttribute('aria-expanded','false');$('listen').focus();});
+  audio.addEventListener('playing',()=>audioState(true));['pause','ended','waiting','emptied','error'].forEach(e=>audio.addEventListener(e,()=>audioState(false)));
+  audio.addEventListener('error',()=>{if(audio.getAttribute('src')){$('audio-error').textContent='Audio is unavailable. You can read the full transcript above.';$('audio-error').hidden=false;}});
+  audio.addEventListener('loadedmetadata',()=>{$('audio-duration').textContent=time(audio.duration);});
+  audio.addEventListener('timeupdate',()=>{$('audio-time').textContent=time(audio.currentTime);$('audio-seek').value=audio.duration?audio.currentTime/audio.duration*100:0;});
+  $('audio-seek').addEventListener('input',e=>{if(Number.isFinite(audio.duration))audio.currentTime=Number(e.target.value)/100*audio.duration;});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)audio.pause();});
+  audioState(false);render();
+})();
