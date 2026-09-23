@@ -1,0 +1,65 @@
+[
+  {
+    "duration": 26.331429,
+    "paused": false,
+    "ready": 4,
+    "screen": "The owner's desk",
+    "src": "assets/audio/screen-1.mp3"
+  },
+  {
+    "duration": 27.817506,
+    "paused": false,
+    "ready": 4,
+    "screen": "The assignment",
+    "src": "assets/audio/screen-2.mp3"
+  },
+  {
+    "duration": 28.699864,
+    "paused": false,
+    "ready": 4,
+    "screen": "Read the statement",
+    "src": "assets/audio/screen-3.mp3"
+  },
+  {
+    "duration": 27.260227,
+    "paused": false,
+    "ready": 4,
+    "screen": "Watch the margin",
+    "src": "assets/audio/screen-4.mp3"
+  },
+  {
+    "duration": 34.365533,
+    "paused": false,
+    "ready": 4,
+    "screen": "Move the levers",
+    "src": "assets/audio/screen-5.mp3"
+  },
+  {
+    "duration": 33.297415,
+    "paused": false,
+    "ready": 4,
+    "screen": "File the receipts",
+    "src": "assets/audio/screen-6.mp3"
+  },
+  {
+    "duration": 35.015692,
+    "paused": false,
+    "ready": 4,
+    "screen": "Follow the cash",
+    "src": "assets/audio/screen-7.mp3"
+  },
+  {
+    "duration": 30.278821,
+    "paused": false,
+    "ready": 4,
+    "screen": "The expansion brief",
+    "src": "assets/audio/screen-8.mp3"
+  },
+  {
+    "duration": 31.579138,
+    "paused": false,
+    "ready": 4,
+    "screen": "Your closing review",
+    "src": "assets/audio/screen-9.mp3"
+  }
+]
