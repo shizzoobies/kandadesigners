@@ -30,7 +30,7 @@ const MIME = {
   '.mp4': 'video/mp4',
 };
 
-export function serveDist(root = path.resolve('dist')) {
+export function serveDist(root = path.resolve('dist'), requestedPort = 0) {
   // Normalize so a caller's forward-slash root still matches path.join's
   // backslashes on Windows; otherwise the escape guard below 403s everything.
   root = path.resolve(root);
@@ -62,13 +62,39 @@ export function serveDist(root = path.resolve('dist')) {
           return;
         }
         const type = MIME[path.extname(file).toLowerCase()] || 'application/octet-stream';
-        res.writeHead(200, { 'content-type': type, 'content-length': stat.size });
+        // Media seeking needs byte ranges, including in the local course preview.
+        const media = type.startsWith('audio/') || type.startsWith('video/');
+        if (media && req.headers.range) {
+          const range = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+          let start = 0;
+          let end = stat.size - 1;
+          if (range && (range[1] || range[2])) {
+            if (range[1]) {
+              start = Number(range[1]);
+              if (range[2]) end = Math.min(Number(range[2]), end);
+            } else {
+              start = Math.max(0, stat.size - Number(range[2]));
+            }
+          } else {
+            start = stat.size;
+          }
+          if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start > end || start >= stat.size) {
+            res.writeHead(416, { 'content-range': `bytes */${stat.size}` }).end();
+            return;
+          }
+          res.writeHead(206, { 'content-type': type, 'accept-ranges': 'bytes', 'content-range': `bytes ${start}-${end}/${stat.size}`, 'content-length': end - start + 1 });
+          if (req.method === 'HEAD') res.end();
+          else fs.createReadStream(file, { start, end }).pipe(res);
+          return;
+        }
+        res.writeHead(200, { 'content-type': type, 'content-length': stat.size, ...(media ? { 'accept-ranges': 'bytes' } : {}) });
+        if (req.method === 'HEAD') { res.end(); return; }
         fs.createReadStream(file).pipe(res);
       } catch (err) {
         res.writeHead(500).end(String(err));
       }
     });
-    server.listen(0, '127.0.0.1', () => {
+    server.listen(requestedPort, '127.0.0.1', () => {
       const { port } = server.address();
       resolve({ server, port, origin: `http://127.0.0.1:${port}`, close: () => new Promise((r) => server.close(r)) });
     });
