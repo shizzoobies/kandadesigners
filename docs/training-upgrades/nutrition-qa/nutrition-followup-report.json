@@ -1,0 +1,91 @@
+{
+  "base": "http://127.0.0.1:62121/training-samples/nutrition/",
+  "browser": "Existing Playwright Chromium fallback",
+  "workbook": [
+    {
+      "width": 360,
+      "height": 800,
+      "javaScriptEnabled": false,
+      "documentWidth": 360,
+      "scripts": 0,
+      "headings": [
+        "Good food. Less overthinking.",
+        "A guide, not a rulebook.",
+        "Put it on the plate.",
+        "Turn the package around.",
+        "Protein and fiber do different jobs.",
+        "Notice the moment.",
+        "One change you might keep.",
+        "Build. Notice. Repeat.",
+        "Sources and scope"
+      ],
+      "audioControls": 0,
+      "foodExplanations": 8,
+      "nativeSwaps": 6,
+      "errors": []
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "javaScriptEnabled": false,
+      "documentWidth": 768,
+      "scripts": 0,
+      "headings": [
+        "Good food. Less overthinking.",
+        "A guide, not a rulebook.",
+        "Put it on the plate.",
+        "Turn the package around.",
+        "Protein and fiber do different jobs.",
+        "Notice the moment.",
+        "One change you might keep.",
+        "Build. Notice. Repeat.",
+        "Sources and scope"
+      ],
+      "audioControls": 0,
+      "foodExplanations": 8,
+      "nativeSwaps": 6,
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "javaScriptEnabled": false,
+      "documentWidth": 1280,
+      "scripts": 0,
+      "headings": [
+        "Good food. Less overthinking.",
+        "A guide, not a rulebook.",
+        "Put it on the plate.",
+        "Turn the package around.",
+        "Protein and fiber do different jobs.",
+        "Notice the moment.",
+        "One change you might keep.",
+        "Build. Notice. Repeat.",
+        "Sources and scope"
+      ],
+      "audioControls": 0,
+      "foodExplanations": 8,
+      "nativeSwaps": 6,
+      "errors": []
+    }
+  ],
+  "audioRetry": {
+    "attempts": 2,
+    "failed": {
+      "code": 4,
+      "transcriptVisible": true,
+      "feedbackVisible": true,
+      "playingIndicator": false
+    },
+    "recovered": {
+      "time": 0.411386,
+      "paused": false,
+      "readyState": 4,
+      "error": null,
+      "feedbackHidden": true,
+      "playingIndicator": true
+    },
+    "pageErrors": [],
+    "expectedNetworkFailure": "One intentionally mocked HTTP 503 response"
+  }
+}
