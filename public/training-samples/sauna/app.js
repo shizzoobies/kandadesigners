@@ -1,658 +1,81 @@
-/* Heat, done well.
-   Plain DOM, no framework, no build step, no network. Eight jobs:
-     1. show one screen at a time and move focus to its heading,
-     2. run the tab sets on the two kinds of heat and the card,
-     3. run the accordion on what the heat does,
-     4. run the reveal list on who should check first,
-     5. run the sub-steps in the session walk and the eight situations,
-     6. run the breathing pacer, which never starts on its own,
-     7. assemble the session card from the radio choices,
-     8. end the module: the pager's last button opens a completion dialog.
-
-   Every tab panel, accordion section and sub-step is open in the markup
-   and closed from here, so a visitor with scripting off reads the whole
-   module top to bottom instead of meeting a stack of empty boxes.
-
-   Deliberately absent: focus looping. The module runs inside an iframe on
-   the studio site, and trapping Tab on the last screen would turn the
-   embed into a keyboard trap, so focus leaves the document naturally.
-   Nothing here reads or writes window.top. The only thing sent outward is
-   one completion ping, in a try block, once. */
-
-(function () {
+(() => {
   'use strict';
-
-  var TOTAL = 8;
-  var SESSION_SCREEN = 6;
-  var SESSION_STEPS = 9;
-
-  var current = 1;
-  var completedSent = false;
-  var sessionSeen = {};
-  var sessionCount = 0;
-
-  var screens = [];
-  for (var i = 1; i <= TOTAL; i += 1) {
-    screens.push(document.getElementById('screen-' + i));
-  }
-
-  var progressText = document.getElementById('progress-text');
-  var barFill = document.getElementById('bar-fill');
-  var prevBtn = document.getElementById('prev');
-  var nextBtn = document.getElementById('next');
-  var restartBtn = document.getElementById('restart');
-
-  var sgScore = document.getElementById('sg-score');
-  var sessFill = document.getElementById('sess-fill');
-
-  var picker = document.getElementById('picker');
-  var cardBody = document.getElementById('card-body');
-  var resultsList = document.getElementById('results-list');
-
-  var pacerBox = document.querySelector('.pacer');
-  var pacerToggle = document.getElementById('pacer-toggle');
-  var pacerCue = document.getElementById('pacer-cue');
-
-  var doneDialog = document.getElementById('done');
-  var doneTitle = document.getElementById('done-title');
-  var doneSteps = document.getElementById('done-steps');
-  var doneCalls = document.getElementById('done-calls');
-  var doneReviewBtn = document.getElementById('done-review');
-  var doneRestartBtn = document.getElementById('done-restart');
-  var doneCloseBtn = document.getElementById('done-close');
-  var focusAfterDone = null;
-
-  function each(list, fn) {
-    Array.prototype.forEach.call(list, fn);
-  }
-
-  /* ---------- copy ---------- */
-
-  var CHECK = 'M4 10.6 8 14.6 16 5.4';
-  var CROSS = 'M5.6 5.6 14.4 14.4M14.4 5.6 5.6 14.4';
-
-  var SG_KEYS = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8'];
-
-  /* One explanation per option, not one per verdict: choosing to stay when
-     you should cool down is a different mistake from leaving when you were
-     fine, and the learner deserves to be told which one they made. */
-  var FEEDBACK = {
-    s1: {
-      stay: 'Light headedness is your circulation telling you it is behind. It usually settles once you are out of the heat, and it usually does not settle if you sit back down and wait for it to pass.',
-      cool: 'Get out, sit somewhere cool, and drink water. A moment of the room tilting is the common early warning, and it is far easier to deal with on a bench in the changing room than on the floor of a hot one.',
-      help: 'Help is the right instinct if it does not settle, but a single tilt on standing is usually a cool-down and a glass of water. Get out first, then see how you feel.'
-    },
-    s2: {
-      stay: 'Nothing here says stop. Warm, loose, easy breathing and no pain is the session working. Keep noticing, and come out while you still feel this good rather than when you have had enough.',
-      cool: 'You can always come out, and there is no penalty for it. But nothing here is a warning sign, so this would be cutting a good round short out of caution rather than out of information.',
-      help: 'Nothing here needs help. Feeling warm and loose with easy breathing is what a session in progress feels like.'
-    },
-    s3: {
-      stay: 'A headache that arrived with the heat is usually dehydration, the heat itself, or both. Sitting in it tends to make the rest of your evening worse, not better.',
-      cool: 'Out, cool down, water. A new headache in a hot room is the most common reason people say afterwards that a sauna does not agree with them, and most of the time it was fluid.',
-      help: 'A new dull headache is not usually an emergency. Cool down and drink first. If it is severe, sudden, or comes with confusion or visual changes, then yes, get help.'
-    },
-    s4: {
-      stay: 'You are already out of the heat and still unwell. Going back in is the one thing that cannot help here.',
-      cool: 'You have already cooled down and it has not worked. That is the part that matters. Sickness that persists after cooling, with clammy skin, is the point where this stops being something to wait out.',
-      help: 'Yes. Cooling down did not fix it, and clammy skin with persistent nausea is a sign of heat illness rather than a rough round. Tell someone, stay with people, and get medical help.'
-    },
-    s5: {
-      stay: 'Alcohol and heat both lower blood pressure and both dry you out. Together they make fainting more likely, and a faint in a hot room with a hot stove in it is a burn as well as a fall.',
-      cool: 'Out now. It does not matter that you feel fine: the combination raises the risk of fainting whether or not you have noticed anything yet. Drink water and leave the second round for another day.',
-      help: 'Get out first. Unless you feel unwell, this is a cool-down and some water rather than a call for help. The rule to keep is simple: alcohol and saunas do not share a day.'
-    },
-    s6: {
-      stay: 'Stay, and move down. Heat stacks toward the ceiling, so the lower bench is a genuinely different room. Nothing about you is wrong here: the bench was.',
-      cool: 'You can, and it is never a bad answer. But there is a lower bench free and nothing else is wrong, so the cheaper fix is to move down and keep the round you were enjoying.',
-      help: 'Nothing here needs help. A bench that is hotter than you like is a seating problem, and the seat below solves it.'
-    },
-    s7: {
-      stay: 'A heart that will not settle when you are sitting still is not something to sit through. Whatever it turns out to be, the hot room is the wrong place to find out.',
-      cool: 'Getting out is right, and it is the first thing to do. It is not the last thing: a pounding heart that does not settle with rest and slow breathing needs someone to look at you, not just cooler air.',
-      help: 'Yes. Get out, tell someone, and get medical help. A heart rate that will not come down when you rest is one of the few signs on this list that is worth being unhurried and cautious about in exactly that order.'
-    },
-    s8: {
-      stay: 'First visit, fierce air, and no fluid all day is three things at once. Any one of them alone would be a reason to be careful.',
-      cool: 'Out, water, and try again another day from the lower bench. There is nothing to prove on a first visit, and going in dehydrated is the single most reliable way to have a bad one.',
-      help: 'Not yet. You feel uncomfortable rather than unwell. Get out, drink, and come back to it when you have had a proper day of fluid behind you.'
-    }
-  };
-
-  var CARD_KEYS = [
-    { name: 'kind', label: 'Room' },
-    { name: 'round', label: 'Each round' },
-    { name: 'rounds', label: 'Rounds' },
-    { name: 'cool', label: 'Cool-down' }
+  const $ = id => document.getElementById(id), lesson = $('lesson'), audio = $('narration'), tray = $('audio-tray');
+  const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true">${({play:'<path d="m9 5 11 7-11 7Z" fill="currentColor" stroke="none"/>',pause:'<path d="M8 5v14M16 5v14" stroke-width="3"/>',left:'<path d="m14 6-6 6 6 6"/>',right:'<path d="m10 6 6 6-6 6"/>',up:'<path d="m6 14 6-6 6 6"/>',down:'<path d="m6 10 6 6 6-6"/>',sound:'<path d="M4 9h4l5-4v14l-5-4H4ZM17 8c3 2 3 6 0 8M20 5c5 4 5 10 0 14"/>',mute:'<path d="M4 9h4l5-4v14l-5-4H4ZM17 9l5 6M22 9l-5 6"/>',check:'<path d="m5 12 4 4L20 5"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 3"/>',water:'<path d="M12 3S5 11 5 15a7 7 0 0 0 14 0c0-4-7-12-7-12Z"/>',door:'<path d="M4 21V3h13v18M1 21h21M12 12h1"/>',leaf:'<path d="M4 20C0 3 18 3 21 3c0 17-10 19-17 17ZM4 20 16 8"/>',book:'<path d="M12 5C7 2 3 3 2 4v15c4-2 7-1 10 1 3-2 6-3 10-1V4c-4-2-7-1-10 1Zm0 0v15"/>',heart:'<path d="M12 21S1 14 2 7c1-5 7-6 10-1 3-5 9-4 10 1 1 7-10 14-10 14Z"/>',ask:'<path d="M8 8a4 4 0 1 1 7 3l-3 2v2M12 19v.1"/><circle cx="12" cy="12" r="11"/>'})[name] || ''}</svg>`;
+  const titles = ['Welcome','Two kinds of heat','Your body in heat','Before you enter','The session path','Notice the change','Read the promise','Make room for a plan','Your takeaway'];
+  const heat = [
+    ['Traditional','The room carries the heat.','A heater warms the air and stones. Water on suitable stones briefly raises humidity and changes how intense the heat feels. Follow the facility rules and ask others before adding water.','Higher benches can be hotter. A lower bench may feel gentler, but no seat guarantees a safe exposure.'],
+    ['Infrared','The panels deliver the heat.','Infrared panels transfer radiant heat to the body. The air is often cooler than in a traditional sauna, yet you can still warm up, sweat and lose fluid.','Cooler air does not remove the need for an exit plan or make a longer stay automatically safe.'],
+    ['Both','Different rooms. Shared decisions.','Both place a demand on temperature regulation and circulation. Follow the specific facility guidance and any personal clinical advice.','This course does not prescribe one safe temperature, duration or number of rounds for everyone. Feeling comfortable is not a guarantee.']
   ];
-
-  /* ---------- tab sets ---------- */
-
-  var tabSets = [];
-
-  function selectTab(set, index, moveFocus) {
-    set.index = index;
-    each(set.tabs, function (tab, i) {
-      var on = i === index;
-      tab.setAttribute('aria-selected', on ? 'true' : 'false');
-      tab.tabIndex = on ? 0 : -1;
-      set.panels[i].hidden = !on;
-    });
-    if (moveFocus) {
-      set.tabs[index].focus();
-    }
+  const body = [
+    ['Circulation','Heat asks your heart to respond.','Blood flow to the skin increases and heart rate often rises. Heat can affect blood pressure, including when you stand up.','A sauna is not a substitute for exercise or cardiovascular treatment.'],
+    ['Fluids','Sweat is fluid leaving the body.','Sweating helps release heat but costs water and salts. Make fluids available before and after a visit; avoid arriving dehydrated.','If you have a fluid restriction or a condition affecting fluid balance, ask your clinician how to plan. More water is not always better.'],
+    ['Recovery','Comfort is a valid reason.','Some people enjoy warmth for relaxation or temporary relief of muscle stiffness. Benefits for recovery and sleep are still being studied.','Enjoyment does not establish a treatment effect. Keep sleep, food, appropriate training and medical care in the picture.']
+  ];
+  const checks = [
+    ['Pregnancy','Ask your maternity clinician.','Overheating, dehydration and fainting are concerns in pregnancy. Avoid treating sauna use as a routine recovery recommendation. Discuss it with the clinician who knows your pregnancy.'],
+    ['Heart & blood pressure','Get advice that fits your history.','Heart disease, unstable blood pressure, a history of fainting, or another condition affecting heat tolerance needs an individual discussion before sauna use.'],
+    ['Medication & fluids','Ask about heat interactions.','Some medicines alter sweating, circulation or fluid balance. A clinician or pharmacist can check your medicines and fluid restrictions. Do not stop or change medication on your own.'],
+    ['Alcohol & illness','Choose another day.','Skip the sauna after alcohol or when ill, feverish or dehydrated. Heat adds stress to a body that may already be struggling.'],
+    ['Age & support','Do not copy an adult routine.','Children and older adults can be more vulnerable to heat. Check the facility age policy and seek appropriate clinical advice. Arrange help when mobility, communication or leaving independently may be difficult.'],
+    ['After exercise','Recover before adding heat.','Hard training can leave you hot or short of fluids. Cool down and reassess first. If you feel unwell, skip the sauna; it is not a way to push through symptoms.']
+  ];
+  const steps = [
+    ['Check first','Confirm the visit fits your health and the facility rules.','ask'],
+    ['Prepare outside','Locate the exit, cooling space and staff. Have fluids available.','water'],
+    ['Enter gently','Follow local limits. Keep the visit modest and leave before pushing it.','door'],
+    ['Leave and cool','Move carefully to a comfortable cooler space.','leaf'],
+    ['Reassess','Replace fluids as appropriate. Another round is optional, never a target.','clock']
+  ];
+  const scenes = [
+    {name:'A change on the bench',start:'A visitor says they feel ',signal:'dizzy and nauseated',end:'. The timer still has time left.',title:'Leave the heat and get support.',detail:'Help them reach a cool place safely and tell staff. Sit or lie down, cool with wet cloths and sip water only if fully alert and able to swallow. Do not resume the session.',extra:'Get medical help right away for vomiting, worsening symptoms or symptoms lasting more than an hour. If unsure or concerned, seek help sooner.',emergency:false},
+    {name:'An urgent change',start:'A visitor becomes ',signal:'confused and cannot answer clearly',end:'. They may still be sweating.',title:'Call 911 and begin cooling now.',detail:'This could be heat stroke. Alert staff, stay with the person and move them to a cooler place if safe. Use cool wet cloths or wet the skin while help is on the way. Do not give anything to drink. Follow the dispatcher.',extra:'Do not wait for a timer, a temperature reading or this exercise. Loss of consciousness or seizures also needs emergency help.',emergency:true},
+    {name:'A detail remembered',start:'Halfway through a visit, someone mentions ',signal:'drinking alcohol before coming in',end:'. They say they feel fine.',title:'End the visit and cool down.',detail:'Feeling fine does not cancel the added risk. Leave carefully, tell staff if assistance is needed, and skip further rounds. Save sauna use for another day.',extra:'Chest pain, severe shortness of breath, collapse or other severe symptoms require emergency help, not just a longer cool-down.',emergency:false},
+    {name:'No reason to compete',start:'The upper bench feels ',signal:'hotter than you want',end:'. A friend says you should last longer.',title:'You can leave without a warning sign.',detail:'A sauna visit is optional. Follow the facility guidance and your own clinical advice. You do not need to endure discomfort or finish a target time.',extra:'A gentler bench may change comfort, but it is not permission to ignore symptoms or stay beyond local guidance.',emergency:false}
+  ];
+  const claims = [
+    ['A healthier heart?','An association is not a prescription.','Some observational research links regular sauna use with favorable health outcomes. That cannot establish that sauna caused the difference or that the same result applies to you.','heart'],
+    ['Better recovery?','Keep the promise modest.','Warmth can feel relaxing. Studies of recovery, sleep and clinical benefits vary in quality and size; a guaranteed result or ideal routine has not been established.','leaf'],
+    ['Longer is better?','Exposure is not a competition.','There is no single safe dose for every person and every sauna. Do not translate a research protocol or a marketing promise into your own treatment plan.','clock']
+  ];
+  let current=0, heatTab=0, bodyTab=0, checkIndex=0, sceneIndex=0, order=[2,0,4,1,3], routeChecked=false, completed=false;
+  let seen=new Set(), revealed=new Set(), plan={question:'',place:'',reminder:''};
+  const heading=(name,lead,kicker)=>`<p class="eyebrow">${kicker}</p><h2 tabindex="-1">${name}</h2><p class="lead">${lead}</p>`;
+  const tabs=(items,active,type)=>`<div class="tabs" role="tablist" aria-label="${type==='heat'?'Types of sauna':'Body response'}">${items.map((x,i)=>`<button role="tab" id="${type}-tab-${i}" aria-selected="${i===active}" tabindex="${i===active?0:-1}" aria-controls="${type}-panel" data-${type}="${i}">${x[0]}</button>`).join('')}</div>`;
+  const room=()=>`<svg class="room-diagram" viewBox="0 0 480 300" role="img" aria-label="${heatTab===1?'Infrared wall panels beside a timber bench':'Traditional sauna with heater, rising warmth and two bench levels'}"><path class="light" d="M45 20h390v250H45z"/><path d="M45 270V20h390v250M45 270h390M190 60v130h220M190 120h220M190 190v80M380 190v80M190 140h220M190 155h220"/>${heatTab===1?'<path class="warm" d="M70 60h25v140H70zM110 60h25v140h-25zM150 60h15v140h-15z"/><path class="air" d="M80 60v140M122 60v140M160 60v140"/>':'<path class="dark-fill" d="M66 185h87v85H66z"/><ellipse class="warm" cx="86" cy="181" rx="18" ry="10"/><ellipse class="warm" cx="124" cy="180" rx="22" ry="12"/><ellipse class="warm" cx="106" cy="169" rx="16" ry="12"/><path class="air" d="M85 140c-30-30 30-30 0-60M112 130c-30-30 30-30 0-60M140 140c-30-30 30-30 0-60"/>'}<path d="M210 200h200v22H210zM230 223v47M390 223v47"/></svg>`;
+  const bodyArt=()=>`<div class="body-visual"><svg viewBox="0 0 220 280" role="img" aria-label="Illustrated body with ${['heart','sweat droplets','relaxed shoulders'][bodyTab]} highlighted"><circle cx="110" cy="40" r="25"/><path d="M91 65v18L64 98l-20 88 20 5 22-62-4 122M129 65v18l27 15 20 88-20 5-22-62 4 122M82 251h24l4-76 4 76h24M85 87q25 22 50 0"/>${bodyTab===0?'<path class="spot" d="M111 130s-23-13-17-25c5-9 14-5 17 0 4-6 14-8 18 0 7 12-18 25-18 25Z"/>':bodyTab===1?'<path class="spot" d="M43 53s-11 15-11 21a11 11 0 0 0 22 0c0-6-11-21-11-21ZM177 43s-11 15-11 21a11 11 0 0 0 22 0c0-6-11-21-11-21Z"/>':'<path class="spot" d="M58 87q20-20 36 0M127 87q20-20 36 0"/>'}</svg></div>`;
+  const routeOK=()=>order.every((id,i)=>id===i);
+  const summary=()=>`<div class="score-row"><span>Session path</span><strong>${routeChecked&&routeOK()?'Put in order':'Available to revisit'}</strong></div><div class="score-row"><span>Situations explored</span><strong>${seen.size} of ${scenes.length}</strong></div><div class="score-row"><span>Evidence notes opened</span><strong>${revealed.size} of 3</strong></div>`;
+  const sources=()=>`<details class="sources"><summary>Sources and a printable reference</summary><a href="workbook.html" target="_blank" rel="noopener">Complete course workbook</a><a href="https://www.mayoclinic.org/healthy-lifestyle/consumer-health/expert-answers/infrared-sauna/faq-20057954" target="_blank" rel="noopener">Mayo Clinic: traditional and infrared heat</a><a href="https://www.cdc.gov/niosh/heat-stress/about/illnesses.html" target="_blank" rel="noopener">CDC: heat illness signs and first aid</a><a href="https://www.cdc.gov/heat-health/hcp/clinical-guidance/heat-and-medications-guidance-for-clinicians.html" target="_blank" rel="noopener">CDC: heat and medications</a><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5941775/" target="_blank" rel="noopener">Systematic review of dry sauna research</a></details>`;
+  function render(focus=false){
+    let html='';
+    if(current===0)html=`<article class="intro"><div><p class="eyebrow">A quieter kind of practice</p><h2 tabindex="-1">Heat, with a little perspective.</h2><p class="lead">Understand the room. Plan a considered visit. Know when the useful thing is to leave.</p><div class="meta"><span>About 8 minutes</span><span>Explore at your pace</span></div><p class="caption">General education for adults. Not medical advice or a personalized sauna prescription.</p><div class="guide-welcome"><img src="assets/img/wellness-guide.webp" width="640" height="960" alt="Your illustrated wellness guide"><div><strong>Your cedar room guide</strong><small>Optional audio, with a full transcript below.</small></div></div></div><figure><img class="hero" src="assets/img/cedar-room.webp" width="1500" height="844" alt="Illustrated cedar sauna with a clear doorway to a cooling lounge"><figcaption class="caption">The whole visit includes what happens outside the heat.</figcaption></figure></article>`;
+    if(current===1){const h=heat[heatTab];html=`<article>${heading('Start with the room.','Explore how heat reaches you. The room changes; your need for a plan does not.','Two kinds of heat')}<div class="split"><div>${tabs(heat,heatTab,'heat')}<div class="detail" id="heat-panel" role="tabpanel" aria-labelledby="heat-tab-${heatTab}"><h3>${h[1]}</h3><p>${h[2]}</p><p>${h[3]}</p></div></div><div>${room()}<p class="caption">Illustration of heat delivery, not a temperature or safety scale.</p></div></div></article>`;}
+    if(current===2){const b=body[bodyTab];html=`<article>${heading('Still sitting. Still responding.','Heat has effects even when the room is quiet.','Your body in heat')}<div class="split"><div>${tabs(body,bodyTab,'body')}<div class="detail" id="body-panel" role="tabpanel" aria-labelledby="body-tab-${bodyTab}"><h3>${b[1]}</h3><p>${b[2]}</p><p>${b[3]}</p></div></div>${bodyArt()}</div></article>`;}
+    if(current===3){const c=checks[checkIndex];html=`<article>${heading('A question before a session.','Open each consideration. These are prompts for a conversation, not a medical clearance checklist.','Before you enter')}<div class="split"><div class="watch-list">${checks.map((x,i)=>`<button data-check="${i}" aria-pressed="${i===checkIndex}" aria-controls="check-detail">${x[0]}${icon('right')}</button>`).join('')}</div><div class="surface watch-detail" id="check-detail" aria-live="polite"><p class="eyebrow">${c[0]}</p><h3>${c[1]}</h3><p>${c[2]}</p><p class="caption">If you are unsure, pause the plan and ask someone qualified to advise you.</p></div></div></article>`;}
+    if(current===4)html=`<article>${heading('Build the whole visit.','Move the cards into a sensible order, from the first question to the final reassessment.','The session path')}<div class="split"><ol class="route-list" aria-label="Your session order">${order.map((id,i)=>`<li class="route-item">${icon(steps[id][2])}<div><strong>${steps[id][0]}</strong><small>${steps[id][1]}</small></div><div class="reorder"><button class="icon-button" data-move="${id}" data-dir="-1" aria-label="Move ${steps[id][0]} earlier" ${i===0?'disabled':''}>${icon('up')}</button><button class="icon-button" data-move="${id}" data-dir="1" aria-label="Move ${steps[id][0]} later" ${i===4?'disabled':''}>${icon('down')}</button></div></li>`).join('')}</ol><div class="route-note surface"><p class="eyebrow">The useful boundary</p><h3>A plan is permission to stop.</h3><p>Follow the facility instructions and personal clinical advice. Leave promptly if you feel unwell. No target time takes priority over a warning sign.</p><p>Cool gradually in a comfortable place. A cold plunge adds a separate stress and is not required.</p><button class="primary" data-review-route>Review my path ${icon('check')}</button><div class="feedback" role="status">${routeChecked?(routeOK()?'<strong>The visit has a clear beginning and end.</strong>Check first, prepare, enter, leave and cool, then reassess.':'<strong>Look at what needs to happen before entry.</strong>Start with the health and facility check, then prepare outside. Cooling comes before reassessment.'):'Use the arrow controls with a pointer or keyboard. No dragging needed.'}</div></div></div></article>`;
+    if(current===5){const s=scenes[sceneIndex],isSeen=seen.has(sceneIndex);html=`<article>${heading('Notice the change.','Tap the underlined detail to connect the observation with the response.','Practice with a situation')}<div class="split"><div><div class="scene-card"><p class="eyebrow">${s.name}</p><h3>${s.start}<button class="signal" data-signal aria-pressed="${isSeen}">${s.signal}</button>${s.end}</h3><p class="caption">${seen.size} of ${scenes.length} situations explored</p></div><div class="mini-nav"><button class="icon-button" data-scene="-1" aria-label="Previous situation" ${sceneIndex===0?'disabled':''}>${icon('left')}</button><span>${sceneIndex+1} of ${scenes.length} situations</span><button class="icon-button" data-scene="1" aria-label="Next situation" ${sceneIndex===scenes.length-1?'disabled':''}>${icon('right')}</button></div></div><div class="surface response ${s.emergency?'emergency':''}" aria-live="polite"><p class="eyebrow">${s.emergency?'Emergency response':'The immediate action'}</p><p class="action-heading">${s.title}</p><p>${s.detail}</p>${isSeen?`<p><strong>Keep in mind:</strong> ${s.extra}</p>`:'<p class="caption">Open the highlighted observation for an additional note. The immediate response is always visible.</p>'}</div></div></article>`;}
+    if(current===6)html=`<article>${heading('Read past the promise.','Open each claim to see the distinction worth remembering.','Evidence with perspective')}<div class="evidence-cards">${claims.map((c,i)=>`<button class="evidence-card" data-claim="${i}" aria-pressed="${revealed.has(i)}">${icon(c[3])}<strong>${revealed.has(i)?c[1]:c[0]}</strong><span>${revealed.has(i)?c[2]:'A sauna headline can sound more certain than the evidence behind it.'}</span><small>${revealed.has(i)?'Note opened':'Open the evidence note'}</small></button>`).join('')}</div><p class="caption">Sauna research does not replace individualized advice or establish a universal session recipe.</p></article>`;
+    if(current===7)html=`<article>${heading('Make room for a plan.','Write what you want to remember. No health details are needed.','Your own next step')}<div class="split"><div class="planner"><div class="field"><label for="plan-question">A question to ask before going</label><textarea id="plan-question" data-plan="question" maxlength="300" placeholder="For example: What are the facility rules?">${esc(plan.question)}</textarea></div><div class="field"><label for="plan-place">Where I can cool down or find help</label><textarea id="plan-place" data-plan="place" maxlength="300" placeholder="For example: Ask staff to show me the cooling area.">${esc(plan.place)}</textarea></div><div class="field"><label for="plan-reminder">One boundary I want to keep</label><textarea id="plan-reminder" data-plan="reminder" maxlength="300" placeholder="For example: I do not have to match someone else's visit.">${esc(plan.reminder)}</textarea></div></div><div class="plan-card"><p class="eyebrow">A few things already decided</p><h3>Ask. Prepare. Leave. Reassess.</h3><p>A sauna visit is optional. Follow local instructions and individual advice. Skip it when ill, dehydrated or after alcohol.</p><p>Find the exit and help before you need them. Leave with symptoms, not after a timer finishes.</p><p class="caption">Your notes stay in this page only. They are not sent or saved after a reload. You can download them on the next screen.</p></div></div></article>`;
+    if(current===8)html=`<article>${heading('Take a considered approach.','Bring a useful question and a clear way to leave. There is nothing to prove on the bench.','Your takeaway')}<div class="split"><div class="plan-card"><p class="eyebrow">My next visit</p><h3>Keep the whole visit in view.</h3><p><strong>Ask:</strong> ${esc(plan.question)||'Confirm health considerations and facility guidance.'}</p><p><strong>Locate:</strong> ${esc(plan.place)||'The exit, cooling space and staff.'}</p><p><strong>Remember:</strong> ${esc(plan.reminder)||'A shorter visit or no visit is a valid choice.'}</p><div class="summary-links"><button class="primary" data-download>Save my note ${icon('book')}</button><button class="text-button" data-edit>Edit my plan</button></div></div><div>${summary()}<p class="caption">This is education, not medical clearance. Severe symptoms need immediate help. In the US, call 911 for an emergency.</p>${sources()}</div></div></article>`;
+    lesson.innerHTML=html;$('progress-label').textContent=titles[current];$('progress-fill').style.width=((current+1)/titles.length*100)+'%';$('prev').disabled=current===0;$('next').querySelector('span').textContent=current===0?'Step inside':current===8?'Finish':'Next';
+    if(focus){lesson.scrollTop=0;lesson.querySelector('h2')?.focus();}
   }
-
-  function initTabs() {
-    each(document.querySelectorAll('[data-tabs]'), function (group) {
-      var set = {
-        tabs: group.querySelectorAll('[role="tab"]'),
-        panels: [],
-        index: 0
-      };
-
-      each(set.tabs, function (tab) {
-        set.panels.push(document.getElementById(tab.getAttribute('aria-controls')));
-      });
-
-      each(set.tabs, function (tab, i) {
-        tab.addEventListener('click', function () {
-          selectTab(set, i, false);
-        });
-        tab.addEventListener('keydown', function (event) {
-          var last = set.tabs.length - 1;
-          var to = -1;
-          if (event.key === 'ArrowRight') {
-            to = i === last ? 0 : i + 1;
-          } else if (event.key === 'ArrowLeft') {
-            to = i === 0 ? last : i - 1;
-          } else if (event.key === 'Home') {
-            to = 0;
-          } else if (event.key === 'End') {
-            to = last;
-          }
-          if (to !== -1) {
-            event.preventDefault();
-            // Automatic activation: the panel follows the focused tab.
-            selectTab(set, to, true);
-          }
-        });
-      });
-
-      tabSets.push(set);
-      selectTab(set, 0, false);
-    });
-  }
-
-  /* ---------- accordion and the reveal list ---------- */
-
-  /* Both use the same machinery. One section open at a time: five
-     explanations or seven cautions will not all fit a fixed stage, and
-     leaving one open keeps the reading column from jumping about. */
-
-  var accordions = [];
-
-  function openSection(acc, index) {
-    acc.index = index;
-    each(acc.buttons, function (btn, i) {
-      var on = i === index;
-      btn.setAttribute('aria-expanded', on ? 'true' : 'false');
-      acc.panels[i].hidden = !on;
-    });
-  }
-
-  function initAccordions() {
-    each(document.querySelectorAll('[data-accordion]'), function (group) {
-      var acc = {
-        buttons: group.querySelectorAll('.acc-btn'),
-        panels: [],
-        index: 0
-      };
-
-      each(acc.buttons, function (btn) {
-        acc.panels.push(document.getElementById(btn.getAttribute('aria-controls')));
-      });
-
-      each(acc.buttons, function (btn, i) {
-        btn.addEventListener('click', function () {
-          openSection(acc, acc.index === i ? -1 : i);
-        });
-      });
-
-      accordions.push(acc);
-      openSection(acc, 0);
-    });
-  }
-
-  /* ---------- sub-steps ---------- */
-
-  var subRuns = [];
-
-  function markSessionStep(index) {
-    var key = 'k' + index;
-    if (!sessionSeen[key]) {
-      sessionSeen[key] = true;
-      sessionCount += 1;
-    }
-  }
-
-  function showStep(run, index, moveFocus) {
-    run.index = Math.min(Math.max(index, 0), run.steps.length - 1);
-
-    each(run.steps, function (step, i) {
-      step.hidden = i !== run.index;
-    });
-
-    var text = run.label + ' ' + (run.index + 1) + ' of ' + run.steps.length;
-    run.head.textContent = text;
-    run.prev.disabled = run.index === 0;
-    run.next.disabled = run.index === run.steps.length - 1;
-
-    if (run.isSession) {
-      if (sessFill) {
-        sessFill.style.width = (((run.index + 1) / run.steps.length) * 100) + '%';
-      }
-      if (moveFocus || current === SESSION_SCREEN) {
-        markSessionStep(run.index);
-      }
-    }
-
-    if (moveFocus) {
-      run.live.textContent = text + '.';
-      run.head.focus();
-    }
-  }
-
-  function initSubsteps() {
-    each(document.querySelectorAll('[data-substeps]'), function (group) {
-      var run = {
-        steps: group.querySelectorAll('[data-substep]'),
-        head: group.querySelector('[data-sub-head]'),
-        live: group.querySelector('[data-sub-live]'),
-        prev: group.querySelector('[data-sub="prev"]'),
-        next: group.querySelector('[data-sub="next"]'),
-        label: group.getAttribute('data-sub-label') || 'Step',
-        isSession: group.id === 'session',
-        index: 0
-      };
-
-      run.prev.addEventListener('click', function () {
-        showStep(run, run.index - 1, true);
-      });
-      run.next.addEventListener('click', function () {
-        showStep(run, run.index + 1, true);
-      });
-
-      subRuns.push(run);
-      showStep(run, 0, false);
-    });
-  }
-
-  function sessionRun() {
-    for (var n = 0; n < subRuns.length; n += 1) {
-      if (subRuns[n].isSession) {
-        return subRuns[n];
-      }
-    }
-    return null;
-  }
-
-  /* ---------- the breathing pacer ---------- */
-
-  /* Four counts in, six counts out, on a ten second loop. It is off until
-     somebody presses the button, it stops itself when the learner leaves
-     the screen, and it does not exist at all for a visitor who has asked
-     for reduced motion: the stylesheet hides it and puts a line of text in
-     its place that says the same thing in words. */
-
-  var pacerLoop = null;
-  var pacerOut = null;
-  var pacerOn = false;
-
-  function reducedMotion() {
-    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  }
-
-  function pacerPhase() {
-    pacerCue.textContent = 'Breathe in, slowly.';
-    pacerOut = window.setTimeout(function () {
-      pacerCue.textContent = 'Breathe out, for longer.';
-    }, 4000);
-  }
-
-  function stopPacer() {
-    if (!pacerBox) {
-      return;
-    }
-    pacerOn = false;
-    window.clearInterval(pacerLoop);
-    window.clearTimeout(pacerOut);
-    pacerLoop = null;
-    pacerOut = null;
-    pacerBox.classList.remove('is-running');
-    pacerToggle.setAttribute('aria-pressed', 'false');
-    pacerToggle.textContent = 'Start the pacer';
-    pacerCue.textContent = 'Not running.';
-  }
-
-  function startPacer() {
-    if (!pacerBox || reducedMotion()) {
-      return;
-    }
-    pacerOn = true;
-    pacerBox.classList.add('is-running');
-    pacerToggle.setAttribute('aria-pressed', 'true');
-    pacerToggle.textContent = 'Stop the pacer';
-    pacerPhase();
-    pacerLoop = window.setInterval(pacerPhase, 10000);
-  }
-
-  /* ---------- helpers ---------- */
-
-  function glyph(ok) {
-    return '<svg class="glyph" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="' +
-      (ok ? CHECK : CROSS) + '"/></svg>';
-  }
-
-  function renderFeedback(node, ok, text) {
-    // Correctness is carried by the word first and the glyph second, never
-    // by colour: the verdict reads the same with the stylesheet turned off.
-    node.classList.remove('is-in');
-    node.innerHTML = glyph(ok) +
-      '<span class="verdict-word">' + (ok ? 'That is the call.' : 'Not the call here.') + '</span> ' + text;
-    void node.offsetWidth;
-    node.classList.add('is-in');
-  }
-
-  function tally(keys) {
-    var answered = 0;
-    var right = 0;
-    keys.forEach(function (key) {
-      var chosen = document.querySelector('[data-q="' + key + '"][aria-pressed="true"]');
-      if (chosen) {
-        answered += 1;
-        if (chosen.getAttribute('data-correct') === 'true') {
-          right += 1;
-        }
-      }
-    });
-    return { answered: answered, right: right, total: keys.length };
-  }
-
-  function updateSgScore() {
-    var s = tally(SG_KEYS);
-    sgScore.textContent = s.answered === 0
-      ? 'Answered 0 of 8.'
-      : 'Answered ' + s.answered + ' of 8. Right so far: ' + s.right + '.';
-  }
-
-  /* ---------- the card ---------- */
-
-  function buildCard() {
-    var html = '';
-    CARD_KEYS.forEach(function (item) {
-      var chosen = picker.querySelector('input[name="' + item.name + '"]:checked');
-      if (!chosen) {
-        return;
-      }
-      html += '<li><span class="card-key">' + item.label + '</span>' + chosen.value + '</li>';
-    });
-    cardBody.innerHTML = html;
-  }
-
-  function updateResults() {
-    var s = tally(SG_KEYS);
-    var calls;
-    if (s.answered === 0) {
-      calls = 'Stay, cool down, or stop: not attempted.';
-    } else if (s.answered < s.total) {
-      calls = 'Stay, cool down, or stop: ' + s.right + ' right out of the ' + s.answered + ' you answered, of ' + s.total + '.';
-    } else {
-      calls = 'Stay, cool down, or stop: ' + s.right + ' out of ' + s.total + '.';
-    }
-
-    resultsList.innerHTML =
-      '<li>Session steps walked: ' + (sessionCount === 0 ? 'none yet' : sessionCount + ' of ' + SESSION_STEPS) + '.</li>' +
-      '<li>' + calls + '</li>';
-  }
-
-  /* ---------- the ending ---------- */
-
-  function announceCompletion(scores) {
-    if (completedSent) {
-      return;
-    }
-    completedSent = true;
-    // Best effort only. The host page is not required to listen, and a copy
-    // packaged into a learning management system has no parent worth
-    // talking to.
-    try {
-      if (window.parent && window.parent !== window) {
-        window.parent.postMessage({
-          type: 'ka-sample-complete',
-          slug: 'heat-done-well',
-          scores: scores
-        }, '*');
-      }
-    } catch (err) {
-      /* nothing depends on this */
-    }
-  }
-
-  function openDone() {
-    if (!doneDialog || typeof doneDialog.showModal !== 'function') {
-      return;
-    }
-
-    var s = tally(SG_KEYS);
-    var scores = {
-      steps: sessionCount + ' of ' + SESSION_STEPS,
-      calls: s.right + ' of ' + s.total
-    };
-
-    doneSteps.textContent = scores.steps;
-    doneCalls.textContent = scores.calls;
-
-    // The ping goes out on the first Finish, not on merely arriving here.
-    announceCompletion(scores);
-
-    focusAfterDone = nextBtn;
-    doneDialog.showModal();
-    doneTitle.focus();
-  }
-
-  function closeDone(focusTarget) {
-    focusAfterDone = focusTarget || null;
-    if (doneDialog && doneDialog.open) {
-      doneDialog.close();
-    }
-  }
-
-  /* ---------- screen movement ---------- */
-
-  function show(n, moveFocus) {
-    current = Math.min(Math.max(n, 1), TOTAL);
-
-    screens.forEach(function (section, index) {
-      section.hidden = index + 1 !== current;
-    });
-
-    progressText.textContent = 'Screen ' + current + ' of ' + TOTAL;
-    barFill.style.width = ((current / TOTAL) * 100) + '%';
-
-    prevBtn.disabled = current === 1;
-    // Start on the cover, Finish on the last screen, Next everywhere between.
-    if (current === 1) {
-      nextBtn.textContent = 'Start';
-    } else if (current === TOTAL) {
-      nextBtn.textContent = 'Finish';
-    } else {
-      nextBtn.textContent = 'Next';
-    }
-
-    if (current === SESSION_SCREEN) {
-      var run = sessionRun();
-      if (run) {
-        markSessionStep(run.index);
-      }
-    } else if (pacerOn) {
-      // Nothing should keep breathing at you from a screen you have left.
-      stopPacer();
-    }
-
-    if (current === TOTAL) {
-      updateResults();
-    }
-
-    if (moveFocus) {
-      var heading = screens[current - 1].querySelector('h2');
-      if (heading) {
-        heading.focus();
-      }
-    }
-  }
-
-  /* ---------- wiring ---------- */
-
-  prevBtn.addEventListener('click', function () {
-    show(current - 1, true);
-  });
-
-  nextBtn.addEventListener('click', function () {
-    if (current === TOTAL) {
-      openDone();
-      return;
-    }
-    show(current + 1, true);
-  });
-
-  if (pacerToggle) {
-    pacerToggle.addEventListener('click', function () {
-      if (pacerOn) {
-        stopPacer();
-      } else {
-        startPacer();
-      }
-    });
-  }
-
-  picker.addEventListener('change', buildCard);
-
-  picker.addEventListener('submit', function (event) {
-    event.preventDefault();
-  });
-
-  document.addEventListener('click', function (event) {
-    var target = event.target;
-    if (!target || !target.closest) {
-      return;
-    }
-
-    var btn = target.closest('[data-q]');
-    if (!btn) {
-      return;
-    }
-
-    var key = btn.getAttribute('data-q');
-    var opt = btn.getAttribute('data-opt');
-    var ok = btn.getAttribute('data-correct') === 'true';
-
-    // One selection per situation, and nothing is ever disabled, so a first
-    // guess never locks anybody out of changing their mind.
-    each(document.querySelectorAll('[data-q="' + key + '"]'), function (other) {
-      other.setAttribute('aria-pressed', other === btn ? 'true' : 'false');
-    });
-
-    var node = document.getElementById('fb-' + key);
-    var copy = FEEDBACK[key];
-    if (node && copy && copy[opt]) {
-      renderFeedback(node, ok, copy[opt]);
-    }
-
-    updateSgScore();
-  });
-
-  function resetModule() {
-    each(document.querySelectorAll('[data-q]'), function (btn) {
-      btn.setAttribute('aria-pressed', 'false');
-    });
-    each(document.querySelectorAll('.feedback'), function (p) {
-      p.textContent = '';
-      p.classList.remove('is-in');
-    });
-    each(picker.querySelectorAll('input[type="radio"]'), function (box) {
-      box.checked = box.defaultChecked;
-    });
-
-    sessionSeen = {};
-    sessionCount = 0;
-    stopPacer();
-
-    tabSets.forEach(function (set) {
-      selectTab(set, 0, false);
-    });
-    accordions.forEach(function (acc) {
-      openSection(acc, 0);
-    });
-    subRuns.forEach(function (run) {
-      showStep(run, 0, false);
-    });
-
-    updateSgScore();
-    buildCard();
-    updateResults();
-    show(1, true);
-  }
-
-  if (restartBtn) {
-    restartBtn.addEventListener('click', resetModule);
-  }
-
-  if (doneDialog) {
-    doneDialog.addEventListener('close', function () {
-      var target = focusAfterDone;
-      focusAfterDone = null;
-      if (target && target.focus) {
-        target.focus();
-      }
-    });
-
-    // A press on the dialog itself is a press on the backdrop: all the
-    // padding lives on the inner box, so nothing else can be the target.
-    doneDialog.addEventListener('click', function (event) {
-      if (event.target === doneDialog) {
-        closeDone(nextBtn);
-      }
-    });
-
-    doneCloseBtn.addEventListener('click', function () {
-      closeDone(nextBtn);
-    });
-
-    doneReviewBtn.addEventListener('click', function () {
-      var planTab = document.getElementById('tab-8a');
-      if (planTab) {
-        planTab.click();
-      }
-      closeDone(screens[TOTAL - 1].querySelector('h2'));
-    });
-
-    doneRestartBtn.addEventListener('click', function () {
-      closeDone(null);
-      resetModule();
-    });
-  }
-
-  /* ---------- start ---------- */
-
-  // No focus grab on load: the module is embedded, and stealing focus would
-  // yank the host page down to the frame before anybody asked it to.
-  initTabs();
-  initAccordions();
-  initSubsteps();
-
-  updateSgScore();
-  buildCard();
-  updateResults();
-  show(1, false);
-}());
+  function move(n){audio.pause();audio.removeAttribute('src');audio.load();current=Math.max(0,Math.min(8,n));$('transcript').textContent=window.saunaNarration[current];$('audio-title').textContent=titles[current];$('audio-error').hidden=true;$('audio-time').textContent=$('audio-duration').textContent='0:00';$('audio-seek').value=0;$('audio-seek').setAttribute('aria-valuetext','0:00 of 0:00');$('guide-state').textContent='Ready';render(true);}
+  function focusRender(selector){render();lesson.querySelector(selector)?.focus();}
+  $('prev').addEventListener('click',()=>move(current-1));$('next').addEventListener('click',()=>{if(current<8){move(current+1);return;}audio.pause();$('done-results').innerHTML=summary();$('done').showModal();if(!completed){completed=true;if(window.parent!==window)window.parent.postMessage({type:'ka-sample-complete',slug:'heat-done-well',scores:{path:routeChecked&&routeOK(),situations:seen.size,evidence:revealed.size}},'*');}});
+  $('done-review').addEventListener('click',()=>$('done').close());$('done').addEventListener('close',()=>$('next').focus());
+  $('restart').addEventListener('click',()=>{heatTab=bodyTab=checkIndex=sceneIndex=0;order=[2,0,4,1,3];routeChecked=completed=false;seen=new Set();revealed=new Set();plan={question:'',place:'',reminder:''};tray.hidden=true;$('listen').setAttribute('aria-expanded','false');audio.muted=false;muteState();$('done').close();move(0);});
+  lesson.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.heat!==undefined){heatTab=Number(b.dataset.heat);focusRender(`[data-heat="${heatTab}"]`);}if(b.dataset.body!==undefined){bodyTab=Number(b.dataset.body);focusRender(`[data-body="${bodyTab}"]`);}if(b.dataset.check!==undefined){checkIndex=Number(b.dataset.check);focusRender(`[data-check="${checkIndex}"]`);}if(b.dataset.move!==undefined){const id=Number(b.dataset.move),from=order.indexOf(id),to=from+Number(b.dataset.dir);if(to>=0&&to<5){[order[from],order[to]]=[order[to],order[from]];routeChecked=false;render();(lesson.querySelector(`[data-move="${id}"][data-dir="${b.dataset.dir}"]:not(:disabled)`)||lesson.querySelector(`[data-move="${id}"]:not(:disabled)`))?.focus();}}if(b.hasAttribute('data-review-route')){routeChecked=true;focusRender('[data-review-route]');}if(b.dataset.scene!==undefined){sceneIndex=Math.max(0,Math.min(scenes.length-1,sceneIndex+Number(b.dataset.scene)));render();(lesson.querySelector(`[data-scene="${b.dataset.scene}"]:not(:disabled)`)||lesson.querySelector('[data-scene]:not(:disabled)'))?.focus();}if(b.hasAttribute('data-signal')){seen.add(sceneIndex);focusRender('[data-signal]');}if(b.dataset.claim!==undefined){revealed.add(Number(b.dataset.claim));focusRender(`[data-claim="${b.dataset.claim}"]`);}if(b.hasAttribute('data-edit'))move(7);if(b.hasAttribute('data-download')){const note=`Heat, done well | K & A Performance\n\nAsk: ${plan.question||'Confirm health considerations and facility guidance.'}\nLocate: ${plan.place||'The exit, cooling space and staff.'}\nRemember: ${plan.reminder||'A shorter visit or no visit is a valid choice.'}\n\nGeneral education, not medical clearance. Leave if unwell. Severe symptoms need immediate help. Call 911 for an emergency in the US.\n\nReference: https://www.cdc.gov/niosh/heat-stress/about/illnesses.html`;const url=URL.createObjectURL(new Blob([note],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='my-sauna-note.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}});
+  lesson.addEventListener('input',e=>{if(e.target.dataset.plan)plan[e.target.dataset.plan]=e.target.value;});
+  lesson.addEventListener('keydown',e=>{if(e.target.getAttribute('role')!=='tab')return;const list=[...e.target.parentElement.querySelectorAll('[role=tab]')];let n=list.indexOf(e.target);if(e.key==='ArrowRight')n=(n+1)%list.length;else if(e.key==='ArrowLeft')n=(n+list.length-1)%list.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=list.length-1;else return;e.preventDefault();list[n].click();});
+  const time=s=>`${Math.floor((s||0)/60)}:${String(Math.floor((s||0)%60)).padStart(2,'0')}`;
+  function audioState(playing,label){$('play-icon').innerHTML=icon(playing?'pause':'play');$('listen-label').textContent=playing?'Pause the guide':audio.error?'Retry the audio':'Listen to the guide';$('guide-state').textContent=label||(playing?'Speaking':'Paused');}
+  function muteState(){$('mute').innerHTML=icon(audio.muted?'mute':'sound');$('mute').setAttribute('aria-pressed',String(audio.muted));$('mute').setAttribute('aria-label',audio.muted?'Unmute narration':'Mute narration');}
+  async function play(){tray.hidden=false;$('listen').setAttribute('aria-expanded','true');$('transcript').textContent=window.saunaNarration[current];$('audio-title').textContent=titles[current];if(!audio.getAttribute('src'))audio.src=`assets/audio/screen-${current+1}.mp3`;else if(audio.error)audio.load();const lessonAtStart=current,sourceAtStart=audio.getAttribute('src');try{await audio.play();if(current===lessonAtStart&&audio.getAttribute('src')===sourceAtStart)$('audio-error').hidden=true;}catch(error){if(error.name==='AbortError'||current!==lessonAtStart||audio.getAttribute('src')!==sourceAtStart||tray.hidden)return;audioState(false,'Unavailable');$('audio-error').textContent='Audio could not start. Read the transcript or tap Listen to try again.';$('audio-error').hidden=false;}}
+  $('listen').addEventListener('click',()=>audio.paused?play():audio.pause());$('replay').addEventListener('click',()=>{audio.currentTime=0;play();});$('mute').addEventListener('click',()=>{audio.muted=!audio.muted;muteState();});
+  function collapse(){audio.pause();tray.hidden=true;$('listen').setAttribute('aria-expanded','false');$('listen').focus();}$('collapse-audio').addEventListener('click',collapse);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!tray.hidden&&!$('done').open)collapse();});
+  audio.addEventListener('playing',()=>audioState(true));audio.addEventListener('pause',()=>audioState(false,audio.error?'Unavailable':'Paused'));audio.addEventListener('ended',()=>audioState(false,'Complete'));audio.addEventListener('waiting',()=>audioState(false,'Loading'));audio.addEventListener('seeking',()=>audioState(false,'Seeking'));audio.addEventListener('seeked',()=>audioState(!audio.paused));audio.addEventListener('emptied',()=>audioState(false,'Ready'));audio.addEventListener('error',()=>{if(audio.getAttribute('src')){$('audio-error').textContent='Audio is unavailable. The transcript is ready to read. Tap Retry to try again.';$('audio-error').hidden=false;audioState(false,'Unavailable');}});audio.addEventListener('loadedmetadata',()=>$('audio-duration').textContent=time(audio.duration));audio.addEventListener('timeupdate',()=>{$('audio-time').textContent=time(audio.currentTime);$('audio-seek').value=audio.duration?audio.currentTime/audio.duration*100:0;$('audio-seek').setAttribute('aria-valuetext',time(audio.currentTime)+' of '+time(audio.duration));});$('audio-seek').addEventListener('input',e=>{if(Number.isFinite(audio.duration))audio.currentTime=Number(e.target.value)/100*audio.duration;});document.addEventListener('visibilitychange',()=>{if(document.hidden)audio.pause();});audioState(false,'Ready');muteState();render();
+})();

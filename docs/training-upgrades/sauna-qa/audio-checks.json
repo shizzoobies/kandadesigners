@@ -1,0 +1,101 @@
+[
+  {
+    "duration": 29.024943,
+    "height": 900,
+    "overflow": 0,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 16.239428,
+    "title": "Heat, with a little perspective.",
+    "width": 1280
+  },
+  {
+    "duration": 26.888707,
+    "height": 900,
+    "overflow": 0,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.185819,
+    "title": "Start with the room.",
+    "width": 1280
+  },
+  {
+    "duration": 27.910385,
+    "height": 900,
+    "overflow": 0,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.187217,
+    "title": "Still sitting. Still responding.",
+    "width": 1280
+  },
+  {
+    "duration": 31.672018,
+    "height": 900,
+    "overflow": 0,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.195649,
+    "title": "A question before a session.",
+    "width": 1280
+  },
+  {
+    "duration": 29.860862,
+    "height": 900,
+    "overflow": 65,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.185416,
+    "title": "Build the whole visit.",
+    "width": 1280
+  },
+  {
+    "duration": 30.78966,
+    "height": 900,
+    "overflow": 0,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.184302,
+    "title": "Notice the change.",
+    "width": 1280
+  },
+  {
+    "duration": 28.235465,
+    "height": 900,
+    "overflow": 0,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.187182,
+    "title": "Read past the promise.",
+    "width": 1280
+  },
+  {
+    "duration": 23.127075,
+    "height": 900,
+    "overflow": 5,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.190317,
+    "title": "Make room for a plan.",
+    "width": 1280
+  },
+  {
+    "duration": 25.263311,
+    "height": 900,
+    "overflow": 0,
+    "overlay": false,
+    "paused": false,
+    "ready": 4,
+    "time": 0.181755,
+    "title": "Take a considered approach.",
+    "width": 1280
+  }
+]
