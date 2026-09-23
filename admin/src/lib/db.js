@@ -713,3 +713,25 @@ export async function recentCourseActivity(db, limit = 12) {
   ).bind(limit).all();
   return results ?? [];
 }
+
+/* ---------- app_state (migration 0007) ---------- */
+
+// One JSON blob per key, for screens that are a single document rather than a
+// set of rows. See migrations/0007_app_state.sql for why this exists.
+export async function getAppState(db, key) {
+  return db.prepare('SELECT value, updated_at, updated_by FROM app_state WHERE key = ?')
+    .bind(key).first();
+}
+
+export async function setAppState(db, key, value, { now, email = '' }) {
+  await db.prepare(
+    `INSERT INTO app_state (key, value, updated_at, updated_by) VALUES (?, ?, ?, ?)
+       ON CONFLICT(key) DO UPDATE SET value = excluded.value,
+                                      updated_at = excluded.updated_at,
+                                      updated_by = excluded.updated_by`
+  ).bind(key, value, now, email).run();
+}
+
+export async function deleteAppState(db, key) {
+  await db.prepare('DELETE FROM app_state WHERE key = ?').bind(key).run();
+}

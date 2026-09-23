@@ -214,6 +214,36 @@ button.btn.warn:hover{background:var(--danger);color:#fff}
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
+/* This page was written against a window.storage.get/set/delete API that
+   nothing in this app defined, so every save threw "Could not save". The shim
+   below is that API, backed by /api/state (D1 table app_state, migration
+   0007). The three call sites below are unchanged on purpose: the contract is
+   the same one they were written for. get resolves to {value} or null, set
+   resolves truthy on success, delete throws on failure so the caller's
+   fallback to a full save still fires. */
+window.storage = {
+  async get(key) {
+    const r = await fetch(`/api/state?key=${encodeURIComponent(key)}`, {
+      headers: { Accept: 'application/json' },
+    });
+    if (!r.ok) throw new Error(`state get failed: ${r.status}`);
+    const body = await r.json();
+    return body.value === null ? null : { value: body.value };
+  },
+  async set(key, value) {
+    const r = await fetch('/api/state', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key, value }),
+    });
+    return r.ok;
+  },
+  async delete(key) {
+    const r = await fetch(`/api/state?key=${encodeURIComponent(key)}`, { method: 'DELETE' });
+    if (!r.ok) throw new Error(`state delete failed: ${r.status}`);
+  },
+};
+
 const KEY = 'kap:launchbook';
 const RATE = 0.20;
 const CAPS = { core: 40, advisory: 8 };
@@ -247,6 +277,13 @@ function toast(msg) {
   t._t = setTimeout(() => t.classList.remove('show'), 2400);
 }
 
+/* Set when load() could not reach the store. The book now lives on the server,
+   so a failed read is not the same as an empty book: saving over it would
+   replace real rows with the blank one on screen. Saves are refused while this
+   is true. A never-written key resolves to null instead of throwing, so an
+   actually-empty book still starts fresh and saves normally. */
+let loadFailed = false;
+
 async function load() {
   try {
     const res = await window.storage.get(KEY);
@@ -255,11 +292,16 @@ async function load() {
       book = { clients: parsed.clients || [], payments: parsed.payments || [], statements: parsed.statements || {} };
     }
   } catch (e) {
-    console.log('No saved book yet, starting fresh.');
+    loadFailed = true;
+    console.error(e);
   }
 }
 
 async function save() {
+  if (loadFailed) {
+    toast('Not saved: the book could not be loaded. Reload before making changes.');
+    return;
+  }
   try {
     const res = await window.storage.set(KEY, JSON.stringify(book));
     if (!res) toast('Could not save. Your last change may not stick.');

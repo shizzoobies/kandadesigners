@@ -24,9 +24,11 @@ const nav = isMember
       { href: '/followups', label: 'Follow-ups', key: 'followups' },
       { href: '/coaching', label: 'Coaching', key: 'coaching' },
       { href: '/newsletter', label: 'Newsletter', key: 'newsletter' },
-      // Static artifact, parked here so the commission math lives in one
-      // place until the real Launch Book module gets built.
-      { href: '/launch-book.html', label: 'Launch Book', key: 'launchbook' },
+      // Parked artifact, kept here so the commission math lives in one place
+      // until the real Launch Book module gets built. Served by
+      // src/pages/launch-book.js rather than as a static file, so the
+      // middleware gates it like every other page.
+      { href: '/launch-book', label: 'Launch Book', key: 'launchbook' },
     ];
 ---
 <html lang="en">

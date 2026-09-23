@@ -68,17 +68,27 @@ const headingDate = new Intl.DateTimeFormat('en-GB', {
           <div class="row s-soon">
             <div class="tag">{s.tag}</div>
             <div class="what">
-              <b>{s.title}</b>
+              {/* Every promise row carries an href and the digest email has always
+                  linked it; on screen the title was a bare <b>, so the coaching
+                  rows were the only ones you could not click through to. */}
+              <b>{s.href ? <a href={s.href}>{s.title}</a> : s.title}</b>
               <span>{s.detail}</span>
             </div>
             <div class="amt">
               <em>
-                <form method="POST" action="/api/followups" style="display:inline">
-                  <input type="hidden" name="intent" value="done" />
-                  <input type="hidden" name="id" value={s.followupId} />
-                  <input type="hidden" name="returnTo" value="/" />
-                  <button class="danger" type="submit">done</button>
-                </form>
+                {/* Only follow-up rows can be ticked done. The week-10 and
+                    stale-member rows are derived from the members table, not
+                    from a followups row, so they have no id to post: showing
+                    them this button submitted an empty id and bounced off the
+                    generic error. They show their own next action instead. */}
+                {s.followupId ? (
+                  <form method="POST" action="/api/followups" style="display:inline">
+                    <input type="hidden" name="intent" value="done" />
+                    <input type="hidden" name="id" value={s.followupId} />
+                    <input type="hidden" name="returnTo" value="/" />
+                    <button class="danger" type="submit">done</button>
+                  </form>
+                ) : s.note}
               </em>
             </div>
           </div>

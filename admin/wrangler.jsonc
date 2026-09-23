@@ -41,7 +41,18 @@
     { "pattern": "admin.ka-performancefl.com/*", "zone_name": "ka-performancefl.com" }
   ],
   "observability": { "enabled": true },
-  // Stays true only until admin.ka-performancefl.com is live. The app denies by
-  // default, so this URL is not a hole, but two doors is one more than needed.
-  "workers_dev": true
+  // False since 2026-09-22. admin.ka-performancefl.com is live, so the route
+  // above is the only door that should exist.
+  //
+  // This was not merely tidy-up. The old comment claimed "the app denies by
+  // default, so this URL is not a hole", which was true only of paths the
+  // middleware runs on. Static assets in ./dist are served by the assets
+  // binding BEFORE any Worker code, so on the workers.dev hostname, where
+  // Cloudflare Access does not apply, every file under public/ answered 200 to
+  // anyone who guessed the URL. The parked Launch Book was one of them and it
+  // carries a client's commercial terms; it has since moved behind the
+  // middleware (see src/pages/launch-book.js). Turning this off closes the
+  // ungated hostname as well, so the remaining static assets (fonts,
+  // favicons) are reachable only through Access.
+  "workers_dev": false
 }
