@@ -48,5 +48,14 @@ who prefer reduced motion receive a normal-flow hero instead of the existing
   reviewed, but network failure was not injected.
 
 Local preview review cards are existing localhost-only placeholders. Real
-reviews remain controlled by the unchanged production ReviewsRail component.
+reviews remain controlled by the existing production review integration.
 Screenshots are saved outside the release tree under Explainer Videos/homepage-qa.
+
+## Arrow refinement
+
+Removed decorative arrows from homepage links, project frames, program tabs,
+and the shared review links. Functional carousel direction controls remain.
+Removed unused icon styles and the extra space reserved in program tabs.
+Checked desktop, tablet, and phone layouts, project and program tab switching,
+and browser console output. No horizontal overflow or console errors found.
+Astro build, SEO validation, and whitespace checks passed.

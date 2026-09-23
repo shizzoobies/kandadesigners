@@ -13,7 +13,7 @@ const phases = [
       <p class="launch-intro">Twelve weeks, one on one. A useful workflow in your own account, and the ability to run it yourself.</p>
     </header>
     <div class="phase-nav" aria-label="Explore the twelve-week program">
-      {phases.map((phase) => <a href={`#launch-${phase.key}`} data-phase-link><span class="phase-time">{phase.time}</span><span>{phase.label}</span><span aria-hidden="true" class="phase-arrow">→</span></a>)}
+      {phases.map((phase) => <a href={`#launch-${phase.key}`} data-phase-link><span class="phase-time">{phase.time}</span><span>{phase.label}</span></a>)}
     </div>
     <div class="phase-panels">
       {phases.map((phase) => (
@@ -28,7 +28,7 @@ const phases = [
         </article>
       ))}
     </div>
-    <a href="/ai-launch/" class="launch-cta">See how the twelve weeks work <span aria-hidden="true">→</span></a>
+    <a href="/ai-launch/" class="launch-cta">See how the twelve weeks work</a>
   </div>
 </section>
 
@@ -41,13 +41,12 @@ const phases = [
   h2 span { color: var(--color-accent); }
   .launch-intro { font-size: 1.1rem; line-height: 1.65; color: var(--color-muted); max-width: 55ch; margin: 24px 0 0; }
   .phase-nav { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 40px; border: 1px solid rgb(34 28 21 / 22%); }
-  .phase-nav a { position: relative; padding: 22px 42px 22px 24px; font-size: 1.05rem; font-weight: 700; text-decoration: none; border-right: 1px solid rgb(34 28 21 / 18%); background: var(--color-canvas); }
+  .phase-nav a { position: relative; padding: 22px 24px; font-size: 1.05rem; font-weight: 700; text-decoration: none; border-right: 1px solid rgb(34 28 21 / 18%); background: var(--color-canvas); }
   .phase-nav a:last-child { border-right: 0; }
   .phase-nav a:hover { background: #eee6de; }
   .phase-nav a[aria-selected="true"] { background: var(--color-ink); color: var(--color-surface); }
   .phase-time { display: block; font: 0.7rem var(--font-mono); margin-bottom: 8px; color: var(--color-muted); }
   .phase-nav a[aria-selected="true"] .phase-time { color: #ded3c8; }
-  .phase-arrow { position: absolute; right: 20px; bottom: 24px; }
   .phase-panel { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: 64px; padding: 38px 0; min-height: 448px; scroll-margin-top: 100px; }
   [data-enhanced] .phase-panels { display: grid; }
   [data-enhanced] .phase-panel { grid-area: 1 / 1; }
@@ -74,7 +73,6 @@ const phases = [
     .phase-nav { margin-top: 28px; }
     .phase-nav a { padding: 14px 10px; font-size: 0.84rem; line-height: 1.4; }
     .phase-time { font-size: 0.6rem; line-height: 1.5; }
-    .phase-arrow { display: none; }
     .phase-panel { grid-template-columns: 1fr; gap: 24px; padding: 28px 0; min-height: 0; }
     .phase-copy h3 { max-width: none; }
     .phase-copy > p:last-child { max-width: none; font-size: 1rem; }
