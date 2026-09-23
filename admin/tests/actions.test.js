@@ -40,6 +40,12 @@ describe('site actions', () => {
     expect((await q.listLog(db, 1))[0]).toMatchObject({ entry_date: '2026-09-23', text: 'Added credit link' });
   });
 
+  it('rejects work-done with a missing id instead of silently succeeding', async () => {
+    const r = await act('work-done', {});
+    expect(r.status).toBe(303);
+    expect(r.location).toMatch(/err=work-done/);
+  });
+
   it('404s an unknown action or site', async () => {
     expect((await act('delete', {})).status).toBe(404);
     expect((await act('status', { project_status: 'live' }, 'nope')).status).toBe(404);

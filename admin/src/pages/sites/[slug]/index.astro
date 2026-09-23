@@ -35,7 +35,7 @@ const where = [
 ];
 ---
 <Shell title={site.name}>
-  {err && msg && <div class="alert" role="alert">{msg}</div>}
+  {err === 'status' && msg && <div class="alert" role="alert">{msg}</div>}
 
   <div class="site-head" id="top">
     <SiteLogo site={site} size="lg" />

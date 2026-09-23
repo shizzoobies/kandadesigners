@@ -19,4 +19,6 @@ export default defineConfig({
   }),
   trailingSlash: 'ignore',
   devToolbar: { enabled: false },
+  // Rejects form posts whose Origin header is not this site's.
+  security: { checkOrigin: true },
 });

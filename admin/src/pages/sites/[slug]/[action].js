@@ -33,8 +33,9 @@ export async function handleAction({ db, slug, action, form, nowMs = Date.now() 
     if (!r.ok) return fail(slug, action, r.error);
     await q.addManualWork(db, site.id, r.value, nowIso);
   } else if (action === 'work-done') {
-    const id = Number(form.get('id'));
-    if (!Number.isInteger(id)) return fail(slug, action, 'That item could not be found.');
+    const raw = String(form.get('id') ?? '');
+    if (!/^\d+$/.test(raw) || Number(raw) <= 0) return fail(slug, action, 'That item could not be found.');
+    const id = Number(raw);
     await q.setManualWorkDone(db, site.id, id, form.get('done') === '1', nowIso);
   } else if (action === 'log') {
     const r = parseText(form, 'text', 500);
