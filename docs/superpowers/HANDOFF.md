@@ -1,5 +1,28 @@
 # K&A Performance — Session Handoff
 
+## START HERE (written 2026-09-23, evening)
+
+**Where things stand in one paragraph.** Direction A's on-site half is finished and live: Commit 1 (metadata within limits, a `noindex` layout prop, schema, and `scripts/seo-check.mjs` as the deploy gate), Commit 2 (the Gainesville block leads the home page, copy doubled, no animation from-state on anything already on screen), the cost page at `/services/web-design/what-it-costs/` with Alex's confirmed bands, the hero track cap, and the DesignRush "As seen on" recognition row on the home page. All eleven client builds carry a linked credit. Every Claude model id across Alex's work is current (Opus calls on `claude-opus-5-5`, Sonnet on `claude-sonnet-5`, Haiku on `claude-haiku-4-5`). Kai's knowledge base is re-uploaded with the cost page. **Astra (another agent) is making content changes to this site on `main` right now; pull before every commit and keep out of the pages she is touching.**
+
+**Working copies.** The main checkout `D:\K & A Performance Site` is held by a Codex stream on `codex/training-premium-safety` (uncommitted safety-sample work; rebase it onto main before it merges). Claude's work happens in the sibling worktree `D:\ka-site-seo` (on `main`, `node_modules` and `admin/node_modules` junctioned from the main checkout; npm scripts still break in the ampersand path, so build with `node node_modules/astro/astro.js build` and run `node scripts/seo-check.mjs` after it). A second worktree `D:\ka-site-admin` holds the admin fix branch.
+
+**Waiting on Alex to deploy, in this order (nothing below is live):**
+
+1. **Admin, branch `admin/three-bugs` in `D:\ka-site-admin`, rebased on main, 166 tests pass.** The Launch Book leak is CONFIRMED LIVE: the admin's workers.dev hostname serves that page, with Synovial's commercial terms, to anyone. From `D:\ka-site-admin\admin`: apply migration 0007 with `--remote` FIRST, then build, then `wrangler deploy` (all via `node ./node_modules/...`). The same deploy carries the newsletter polish on Opus 5.5. Verify: workers.dev stops answering, `admin.ka-performancefl.com` 302s on every path, the Launch Book saves. Details under "OVERNIGHT" in Open items.
+2. **Site branch `site/small-fixes`** (preview `https://site-small-fixes.kandadesigners.pages.dev/services/ai-integration/`): the FixAlways paragraph corrected, the personal Gmail on `/mbsfeedback/` replaced with the practice address, a11y-check covering the marketing pages. Alex approves the paragraph, then fast-forward main. The line after it ("Not a feature announcing itself") reads oddly now.
+3. **Client repos, each committed on a branch, none pushed or deployed:** FDAAF `site-fixes` (canonical to fdaaf.org, real 404, accessibility statement; `git push client main` after merge); FixAlways `accessibility-statement` (statement plus chat on Sonnet 5); MBS `accessibility-statement` in `D:\MBS Medical\mbsmedical-ref` (statement plus canonical Haiku id; that checkout was moved off `legitscript-compliance`, and its own handoff names `D:\Skills\mbs-live` as canonical, so cherry-pick if that is where Alex works); Ellenton `accessibility-statement`. Synovial `main` (polish on Opus 5.5, `npx wrangler deploy` from `D:\Synovial Pitch`); K & A Memories `main` in `D:\kamemories` (assistant on Opus 5.5, its wrangler deploy); AudioProto and the reach-360 test worker on their `main`, not pushed.
+4. **Test before publishing:** the FixAlways statement uses help@ka-performancefl.com because fixalways.com has no MX; confirm that address receives mail.
+
+**Citations, Alex's hands.** DesignRush: profile submitted 09-22, reciprocal link live 09-23, Alex confirms back to their contact by email. GBP services paste, LinkedIn Services and Bing Places done. Apple Business: no Maps card (Apple has no hide-address setting and rejects home-based listings); Branded Mail submitted instead. Next: Yelp, then GoodFirms, Crunchbase, Expertise. GSC read around 2026-11-17.
+
+**Facts for any listing:** name `K & A Performance` (spaces), phone `(904) 210-1071` exactly, city only, legal name `K & A Performance LLC`, founded 2026-05-28 (filed articles in `D:\Taxes\K & A Perfomance\LLC Sunbiz.pdf`; the address on that filing is a home address, never published). The DesignRush Kit at `D:\K & A Performance Site\DesignRush Kit\` holds everything else.
+
+**Remaining decisions for Alex, none blocking:** the palettes on FDAAF (teal at 2:1) and FixAlways (grey at 3.8:1) and the MBS header ARIA, all listed in the OVERNIGHT block; the three FixAlways testimonials with no source; David Hervig's review entry (MBS or Ellenton); the Meta pixel on `/training/*`; the admin rethink direction.
+
+**Rules that held all day:** nothing deploys to a client site or the admin without Alex's word; DNS changes go to Alex as one PowerShell command (auto mode refuses them); copy changes on this site go to a preview branch first; no training pricing anywhere, ever; no phone on the site; no street address on any listing.
+
+---
+
 **Date:** 2026-09-22 · **Branch: `main`** · **Status: LIVE and clean.**
 
 **Verified in production 2026-09-22:** working tree carries only the expected untracked drops (now including `DesignRush Kit/` and the `Reels/` folders), `main` is level with `origin/main`, and `/`, `/ai-launch/`, `/free-course/`, `/services/`, `/contact/`, `/terms/`, `/privacy/`, `/training/` all return 200. `admin.ka-performancefl.com` returns 302 to Cloudflare Access on every path. All eleven portfolio client sites return 200.
