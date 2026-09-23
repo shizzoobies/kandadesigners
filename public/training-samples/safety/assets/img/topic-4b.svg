@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#293637" stroke-width="1"/></pattern><radialGradient id="light"><stop stop-color="#2d3b3a"/><stop offset="1" stop-color="#152020"/></radialGradient></defs>
+  <style>path,rect,circle{stroke-linecap:round;stroke-linejoin:round}.structure{fill:none;stroke:#d4dbd4;stroke-width:2.5}.muted{fill:none;stroke:#657873;stroke-width:2}.gold{fill:none;stroke:#edca70;stroke-width:3}.blue{fill:none;stroke:#9dc7c4;stroke-width:3}.guide{fill:none;stroke:#82978d;stroke-width:1.5;stroke-dasharray:5 7}.heavy{stroke-width:5}.point{fill:#edca70;stroke:#152020;stroke-width:3}</style>
+  <path fill="url(#light)" d="M0 0H640V400H0Z"/><path fill="url(#grid)" opacity=".5" d="M0 0H640V400H0Z"/>
+  <g><path class="muted" d="M75 350H575M100 368H545"/><path class="structure heavy" d="M100 320H180V282H260V244H340V206H420V168H540"/>
+    <path class="gold heavy" d="M145 199 465 47"/><path class="gold" d="M180 282V182M260 244V144M340 206V106M420 168V68"/>
+    <path class="blue" d="M193 330 273 292 353 254 433 216 506 216M491 206 506 216 491 226"/><path class="guide" d="M180 300H231M260 262H311M340 224H391M420 186H471"/></g><path d="M22 42V22H42M598 22H618V42M22 358V378H42M598 378H618V358" fill="none" stroke="#64796e"/>
+  </svg>

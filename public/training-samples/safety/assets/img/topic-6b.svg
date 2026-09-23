@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#293637" stroke-width="1"/></pattern><radialGradient id="light"><stop stop-color="#2d3b3a"/><stop offset="1" stop-color="#152020"/></radialGradient></defs>
+  <style>path,rect,circle{stroke-linecap:round;stroke-linejoin:round}.structure{fill:none;stroke:#d4dbd4;stroke-width:2.5}.muted{fill:none;stroke:#657873;stroke-width:2}.gold{fill:none;stroke:#edca70;stroke-width:3}.blue{fill:none;stroke:#9dc7c4;stroke-width:3}.guide{fill:none;stroke:#82978d;stroke-width:1.5;stroke-dasharray:5 7}.heavy{stroke-width:5}.point{fill:#edca70;stroke:#152020;stroke-width:3}</style>
+  <path fill="url(#light)" d="M0 0H640V400H0Z"/><path fill="url(#grid)" opacity=".5" d="M0 0H640V400H0Z"/>
+  <g><path class="muted" d="M73 323H558M89 345H548"/><path class="structure" d="M122 278 360 223 519 270 281 325ZM122 278V294L281 342 519 287V270M281 325V342"/>
+    <path class="structure" d="M139 254 359 203 496 244 277 295ZM139 232 359 181 496 222 277 273ZM139 210 359 159 496 200 277 251ZM139 188 359 137 496 178 277 229Z"/>
+    <path class="gold heavy" d="M202 172 340 213V281M304 149 442 193V257"/><path class="gold" d="M120 304 143 299 161 312 138 319ZM471 295 494 288 512 303 489 310Z"/>
+    <path class="guide" d="M109 119 351 64 527 116M535 139V227"/></g><path d="M22 42V22H42M598 22H618V42M22 358V378H42M598 378H618V358" fill="none" stroke="#64796e"/>
+  </svg>
