@@ -19,6 +19,14 @@ The nine-screen module is rebuilt around the fictional bakery owner's desk. Bott
 
 No shared catalog files were changed. No deployment was performed. No credentials are present in public assets. The narration generator reads the existing root .dev.vars file by default or KA_ENV_FILE.
 
+## Production follow-up
+
+The package now contains its own K&A logo with a relative asset reference. Native media controls have been replaced with a styled time display, seek slider and SVG mute control. The transport appears before the transcript so it remains easy to find on phones.
+
+Audio errors retain an explicit Retry audio label. Retry calls load before play, cancelled requests after lesson changes are ignored, and guide motion follows actual playback events. Restart now resets the statement selection. Editing a checked calculation immediately invalidates its old score and keeps the revised value for review.
+
+Focused verification: scripts/verify-finance-followup.mjs passed 16 checks, including a simulated HTTP 503 followed by successful real audio recovery, seeking, mute/unmute, paused guide state, reduced motion, phone overflow, reserved transcript space, stale-score prevention and restart. No JavaScript errors. Updated desktop and phone transport screenshots were visually inspected. This follow-up used the installed Playwright dependency after the in-app browser reconnection returned "No browser is available". The existing range-capable serveDist helper was used because the earlier Python preview cannot verify media seeking reliably.
+
 ## Verification
 
 Browser used: Codex in-app browser. The browser skill was read and its documented connection succeeded; no Playwright fallback was needed.
