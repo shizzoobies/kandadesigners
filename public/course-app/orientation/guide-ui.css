@@ -1,0 +1,10 @@
+.audio-guide{position:relative;gap:16px;padding:12px 18px;background:#f8f5f2;min-height:126px}
+.narration-portrait{width:82px;height:100px;object-fit:contain;flex:none;align-self:center;filter:drop-shadow(0 3px 3px #221c1510)}
+.audio-guide.is-speaking{border-color:#9a3412;background:#fcf6ee}
+.audio-guide.is-speaking .narration-portrait{filter:drop-shadow(0 0 7px #bc714e45)}
+.audio-label{flex-wrap:wrap;gap:3px 12px}
+.audio-label .guide-meta{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.audio-label #guide-state{display:inline-block;font:11px var(--body);letter-spacing:0;color:var(--muted);padding-left:8px;border-left:1px solid var(--line)}
+.is-speaking #guide-state{color:var(--rust)}
+@media(max-width:650px){.audio-guide{display:grid;grid-template-columns:60px minmax(0,1fr) 44px;gap:8px 12px;padding:12px;min-height:128px}.narration-portrait{grid-column:1;grid-row:1/3;width:60px;height:82px}.audio-info{grid-column:2/4;grid-row:1;min-width:0}.audio-guide .play-button{grid-column:2;grid-row:2;width:36px;height:36px}.audio-guide>label{grid-column:3;grid-row:2}.audio-guide .audio-label{display:block}.audio-guide .audio-label strong{font-size:13px}.audio-label .guide-meta{margin-top:3px}.audio-guide #seek{margin-top:7px}.audio-guide select{max-width:44px;padding:4px 0;font-size:12px}}
+@media(prefers-reduced-motion:no-preference){.audio-guide{transition:background .18s,border-color .18s}.narration-portrait{transition:filter .18s}}
