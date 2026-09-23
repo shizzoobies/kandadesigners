@@ -1,0 +1,70 @@
+{
+  "checks": [
+    {
+      "label": "Logo reference is local to the package",
+      "passed": true
+    },
+    {
+      "label": "Packaged logo loads",
+      "passed": true
+    },
+    {
+      "label": "Media error label survives pause events",
+      "passed": true
+    },
+    {
+      "label": "Retry recovers actual playback and guide signal",
+      "passed": true
+    },
+    {
+      "label": "Guide stops on pause",
+      "passed": true
+    },
+    {
+      "label": "Custom mute changes media state",
+      "passed": true
+    },
+    {
+      "label": "Custom unmute changes media state",
+      "passed": true
+    },
+    {
+      "label": "Custom seek updates media position",
+      "passed": true
+    },
+    {
+      "label": "Native audio controls removed",
+      "passed": true
+    },
+    {
+      "label": "Reduced motion disables guide animation",
+      "passed": true
+    },
+    {
+      "label": "Custom controls fit phone width",
+      "passed": true
+    },
+    {
+      "label": "Open transcript reserves phone layout space",
+      "passed": true
+    },
+    {
+      "label": "Editing an answer invalidates checked feedback",
+      "passed": true
+    },
+    {
+      "label": "Edited answer cannot retain a stale correct score",
+      "passed": true
+    },
+    {
+      "label": "Restart restores the first ledger line",
+      "passed": true
+    },
+    {
+      "label": "No JavaScript errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "note": "In-app browser reconnection returned No browser is available. Existing local Playwright used for follow-up regression checks."
+}
