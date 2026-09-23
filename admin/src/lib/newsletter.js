@@ -144,14 +144,23 @@ export async function polishWithOpus(env, { notes, subject, body }) {
       'anthropic-version': '2023-06-01',
     },
     body: JSON.stringify({
-      model: 'claude-opus-5',
-      max_tokens: 2000,
+      // Claude Opus 5.5. Thinking is always on and effort is the only dial;
+      // its default is medium where Opus 5 ran high, so it is set explicitly
+      // to keep the polish at the depth it had. Thinking counts toward
+      // max_tokens even though it is not returned, so the cap is sized for
+      // both, not just the JSON reply.
+      model: 'claude-opus-5-5',
+      max_tokens: 8000,
+      output_config: { effort: 'high' },
       system: POLISH_SYSTEM,
       messages: [{ role: 'user', content: user }],
     }),
   });
   if (!r.ok) throw new Error('anthropic ' + r.status);
   const data = await r.json();
+  // A safety classifier can decline with HTTP 200 and no text; say so
+  // instead of failing on the JSON parse downstream.
+  if (data.stop_reason === 'refusal') throw new Error('anthropic refusal');
   const text = (data.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
   return parsePolish(text);
 }
