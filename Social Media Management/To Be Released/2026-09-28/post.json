@@ -5,18 +5,31 @@
   "timezone": "America/New_York",
   "status": "planned",
   "pillar": "client-spotlight",
-  "title": "Ellenton Family Practice Direct is number one",
+  "title": "Ellenton Family Practice Direct in the top three",
   "platforms": {
     "facebook": {
-      "type": "POST",
+      "type": "REEL",
       "caption": "facebook.md"
     },
     "instagram": {
-      "type": "POST",
+      "type": "REEL",
       "caption": "instagram.md"
     }
   },
-  "media": [],
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "human",
+      "alt": ""
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "human",
+      "alt": "Google search results for Primary Care, Ellenton, FL, with Ellenton Family Practice Direct in the map listing and named in the AI Overview"
+    }
+  ],
   "ai": {
     "voice": false,
     "visuals": false
