@@ -16,6 +16,12 @@ describe("cloudflare", () => {
     expect(() => apiToken({}, "linux")).toThrow(/CLOUDFLARE_API_TOKEN/);
   });
 
+  it("falls back to the user scope reader on Windows and to a clear error when that fails", () => {
+    expect(apiToken({}, "win32", () => "from-registry")).toBe("from-registry");
+    expect(() => apiToken({}, "win32", () => { throw new Error("spawn powershell ENOENT"); })).toThrow("CLOUDFLARE_API_TOKEN is not set");
+    expect(() => apiToken({}, "win32", () => "")).toThrow("CLOUDFLARE_API_TOKEN is not set");
+  });
+
   it("runs wrangler with the token and account only in the child environment", () => {
     const { run, calls } = fakeRun();
     const out = wrangler(["r2", "bucket", "list"], { config, token: "secret", run });
@@ -24,11 +30,18 @@ describe("cloudflare", () => {
     expect(calls[0].args.join(" ")).not.toContain("secret");
     expect(calls[0].opts.env.CLOUDFLARE_API_TOKEN).toBe("secret");
     expect(calls[0].opts.env.CLOUDFLARE_ACCOUNT_ID).toBe("acct");
+    expect(calls[0].cmd).toBe(process.execPath);
+    expect(calls[0].args[0]).toMatch(/wrangler\.js$/);
   });
 
   it("throws with stderr when wrangler fails", () => {
     const { run } = fakeRun(1, "", "No access");
     expect(() => wrangler(["r2", "bucket", "list"], { config, token: "t", run })).toThrow(/No access/);
+  });
+
+  it("reports a spawn failure instead of an empty message", () => {
+    const run = () => ({ status: null, stdout: "", stderr: "", error: new Error("ENOENT node") });
+    expect(() => wrangler(["r2", "bucket", "list"], { config, token: "t", run })).toThrow(/could not start: ENOENT node/);
   });
 
   it("puts an object with the right key, file, and content type", () => {

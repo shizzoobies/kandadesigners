@@ -16,16 +16,25 @@ export function readR2Config(file = CONFIG_FILE) {
   return JSON.parse(fs.readFileSync(file, "utf8"));
 }
 
+/** Read the user-scope CLOUDFLARE_API_TOKEN through PowerShell. Never log or persist the value. */
+function defaultReadUser() {
+  return execFileSync("powershell", ["-NoProfile", "-Command", "[Environment]::GetEnvironmentVariable('CLOUDFLARE_API_TOKEN','User')"], { encoding: "utf8" }).trim();
+}
+
 /**
  * The Cloudflare API token. The environment wins. On Windows, shells started
  * by the desktop app inherit an old environment, so fall back to the user
  * scope variable through PowerShell. Never log or persist the value.
  */
-export function apiToken(env = process.env, platform = process.platform) {
+export function apiToken(env = process.env, platform = process.platform, readUser = defaultReadUser) {
   if (env.CLOUDFLARE_API_TOKEN) return env.CLOUDFLARE_API_TOKEN;
   if (platform === "win32") {
-    const out = execFileSync("powershell", ["-NoProfile", "-Command", "[Environment]::GetEnvironmentVariable('CLOUDFLARE_API_TOKEN','User')"], { encoding: "utf8" }).trim();
-    if (out) return out;
+    try {
+      const out = readUser();
+      if (out) return out;
+    } catch {
+      // fall through to the error below
+    }
   }
   throw new Error("CLOUDFLARE_API_TOKEN is not set");
 }
@@ -36,6 +45,7 @@ export function wrangler(args, { config = readR2Config(), token = apiToken(), ru
     encoding: "utf8",
     env: { ...process.env, CLOUDFLARE_API_TOKEN: token, CLOUDFLARE_ACCOUNT_ID: config.accountId, WRANGLER_SEND_METRICS: "false" }
   });
+  if (res.error) throw new Error(`wrangler could not start: ${res.error.message}`);
   if (res.status !== 0) throw new Error(`wrangler ${args.slice(0, 3).join(" ")} failed: ${String(res.stderr || res.stdout || "").trim()}`);
   return res.stdout;
 }
