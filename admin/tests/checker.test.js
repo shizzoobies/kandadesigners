@@ -131,6 +131,8 @@ describe('runChecker', () => {
       'https://a.test/apple-touch-icon.png': async () => new Response(new Uint8Array([137, 80, 78, 71]), { headers: { 'content-type': 'image/png' } }),
       'https://a.test/': async () => new Response('<link rel="apple-touch-icon" href="/apple-touch-icon.png">', { headers: { 'content-type': 'text/html' } }),
     });
+    await runChecker({ env: { ...env, LOGOS }, nowMs: T0, fetchImpl: icons, log: quiet });
+    expect(put).toHaveLength(0); // 14:15 is not an hourly run
     const onTheHour = Date.parse('2026-09-23T15:00:00Z');
     await runChecker({ env: { ...env, LOGOS }, nowMs: onTheHour, fetchImpl: icons, log: quiet });
     expect(put).toEqual([{ key: 'favicons/a', type: 'image/png' }]);
