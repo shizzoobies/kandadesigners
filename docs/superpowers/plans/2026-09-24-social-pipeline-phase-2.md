@@ -1435,7 +1435,7 @@ Update the status bullet to say `scheduled` and `published` are set by `release 
 
 - [ ] **Step 2: Spec alignment**
 
-In the spec, change the release section to say one Metricool post per non-manual network, always (drop the identical-captions case), and note that caption sidecars are not uploaded. Check `grep -c ", "` prints 0.
+In the spec, change the release section to say one Metricool post per non-manual network, always (drop the identical-captions case), and note that caption sidecars are not uploaded. Check that a grep for U+2014 prints 0.
 
 - [ ] **Step 3: Live draft test**
 

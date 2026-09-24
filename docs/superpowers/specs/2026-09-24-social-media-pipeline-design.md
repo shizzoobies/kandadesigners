@@ -116,7 +116,9 @@ Fields:
   informational; the `ai` block is what drives the AI flag and the disclosure
   check. `alt` is required for every image role; the validator enforces it.
 - `generate` is the ordered list of generation jobs (see Generation).
-- `r2` is written by upload: `{ "<file>": { "url", "sha256", "uploadedAt" } }`.
+- `r2` is written by upload: `{ "<file>": { "key", "url", "sha256", "uploadedAt",
+  "previous"?, "deletedAt"? } }`. Keys are `<folder id>/<sha8>-<basename>`; a
+  replaced file keeps its old keys in `previous` so cleanup deletes them too.
 - `metricool` is written by release, keyed by network because Facebook and
   Instagram usually get different captions and so different Metricool posts:
   `{ "facebook": { "payload", "id", "uuid", "scheduledAt", "draft" },
@@ -170,14 +172,23 @@ writes `lastError`, and prints it.
   Skips files whose sha256 already matches the record. Does not change status.
 - **release** `[folder|--all]` builds the Metricool `createScheduledPost`
   payload for each `approved` folder whose media is all in `r2`, writes it to
-  `metricool.payload`, and prints a release packet: one JSON document per folder.
+  `metricool.<network>.payload` with `preparedAt`, and prints one release
+  packet per network. Repeating the step for a network prepared earlier prints
+  a warning: check `getScheduledPosts` for that date before sending again.
   Claude reads the packet in a session, calls the MCP, and runs
   `release --record <folder> --network <n> --id <id> --uuid <uuid>` once per
   network, which writes `metricool.<network>`. The folder becomes `scheduled`
   once every non-manual network has a record. With `--draft`, the payload
   carries `draft: true`. Networks that already have a record are skipped, so a
   folder where Facebook was recorded and Instagram was rejected stays
-  `approved` with `lastError` set until the Instagram post is recorded.
+  `approved` with `lastError` set until the Instagram post is recorded. A
+  rejection is recorded with `release --record <folder> --network <n> --error
+  "<message>"`. A Metricool draft never auto-publishes: `release --promote
+  <folder>` prints one `updateScheduledPost` packet per draft network with
+  `draft: false`, Claude sends it, and `release --promoted <folder> --network
+  <n> --id <newId>` records the new id (the uuid does not change). `reconcile`
+  holds any folder with a draft record, or whose uuid Metricool lists as a
+  draft, under `waiting` until it is promoted.
 - **reconcile** asks Metricool for scheduled posts across the window covering
   every `scheduled` folder (Claude runs `getScheduledPosts` in a session and
   passes the result via `reconcile --from <file>`). Any `scheduled` folder none
@@ -203,7 +214,8 @@ Built from the manifest, following the Metricool MCP contract confirmed on
 - `facebookData: { type }`, `instagramData: { type, isAiGenerated:
   ai.voice || ai.visuals }`.
 - A thumbnail is only sent when a video is present and the network is
-  Facebook POST or REEL or Instagram REEL, per Metricool's rule.
+  Facebook POST or REEL or Instagram REEL or TRIAL_REEL, per Metricool's rule.
+  Thumbnails must be jpg, jpeg, or png.
 
 ### Validator rules
 
