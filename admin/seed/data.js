@@ -203,14 +203,17 @@ export default {
     {
       // Source: Workers custom domain navigatingnorthflorida.com ->
       // navigating-north-florida-production; git remote (Synovial org, so
-      // GitHub is not connected); package.json "deploy" script.
+      // GitHub is not connected). Top-level wrangler config is staging
+      // (gina.ka-testing2.com); production is env.production, and
+      // .github/workflows/deploy.yml deploys production with --env production.
+      // A push to main and plain `npm run deploy` only update staging.
       slug: 'navigating-north-florida',
       name: 'Navigating North Florida',
       live_url: 'https://navigatingnorthflorida.com',
       repo: 'Synovial-kaperformance/navigating-north-florida',
       local_path: 'D:\\Synovial Pitch\\Web Builds\\Navigating North Florida',
       hosting: 'worker',
-      deploy_command: 'npm run deploy',
+      deploy_command: 'npx wrangler deploy --env production',
     },
     {
       // Source: git remotes (origin shizzoobies/cpsolutions, plus a client-owned
