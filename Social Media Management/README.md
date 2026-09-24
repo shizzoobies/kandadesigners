@@ -94,7 +94,7 @@ Run from `D:\ka-social` (a junction to this folder) or from here:
 ```
 node tools/social.mjs plan 2026-10-05 --pillar tip --title "Tab through your site"
 node tools/social.mjs plan 2026-09-28 --pillar client-spotlight --title "Web reel" --from "D:\K & A Performance Site\Reels\Posts 9-4-26\Web reel" --ai-visuals
-node tools/social.mjs validate            all folders
+node tools/social.mjs validate
 node tools/social.mjs validate 2026-09-28
 node tools/social.mjs calendar --days 14
 ```

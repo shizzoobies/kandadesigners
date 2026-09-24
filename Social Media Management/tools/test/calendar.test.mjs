@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 import fs from "node:fs";
 import { makeTempRoot, makeDay, baseManifest } from "./helpers.mjs";
-import { buildCalendar, formatCalendar } from "../lib/calendar.mjs";
+import { buildCalendar, formatCalendar, todayInNewYork } from "../lib/calendar.mjs";
 
 let root;
 afterEach(() => { if (root) fs.rmSync(root, { recursive: true, force: true }); });
@@ -32,5 +32,10 @@ describe("calendar", () => {
       "2026-09-28  Mon  ready        client-spotlight    Web reel",
       "2026-10-02  Fri  gap"
     ]);
+  });
+
+  it("reports today in New York as YYYY-MM-DD", () => {
+    expect(todayInNewYork(new Date("2026-09-25T03:30:00Z"))).toBe("2026-09-24");
+    expect(todayInNewYork(new Date("2026-09-25T12:00:00Z"))).toBe("2026-09-25");
   });
 });

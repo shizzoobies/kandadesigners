@@ -4,7 +4,7 @@ import { resolveRoot, dayDir } from "./lib/paths.mjs";
 import { listDayFolders } from "./lib/manifest.mjs";
 import { validateFolder } from "./lib/validate.mjs";
 import { createDay } from "./lib/plan.mjs";
-import { buildCalendar, formatCalendar } from "./lib/calendar.mjs";
+import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mjs";
 
 const USAGE = `usage:
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
@@ -26,10 +26,6 @@ function parse(argv) {
   return out;
 }
 
-function todayLocal() {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
-}
-
 function main() {
   const root = resolveRoot();
   const [command, ...rest] = process.argv.slice(2);
@@ -37,7 +33,9 @@ function main() {
 
   if (command === "plan") {
     const date = args._[0];
-    if (!date || !args.pillar || !args.title) { console.error(USAGE); return 1; }
+    const isText = (v) => typeof v === "string" && v.length > 0;
+    const optional = ["type", "time", "from"].every((k) => args[k] === undefined || isText(args[k]));
+    if (!isText(date) || !isText(args.pillar) || !isText(args.title) || !optional) { console.error(USAGE); return 1; }
     const dir = createDay({
       root, date, pillar: args.pillar, title: args.title,
       type: args.type || "REEL", time: args.time || "09:00", from: args.from || null,
@@ -63,7 +61,7 @@ function main() {
   }
 
   if (command === "calendar") {
-    const rows = buildCalendar({ root, today: args.today || todayLocal(), days: Number(args.days || 14) });
+    const rows = buildCalendar({ root, today: args.today || todayInNewYork(), days: Number(args.days || 14) });
     console.log(formatCalendar(rows));
     return 0;
   }

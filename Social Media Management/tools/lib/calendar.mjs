@@ -3,6 +3,11 @@ import { listDayFolders, readManifest } from "./manifest.mjs";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+/** Today's date in America/New_York as YYYY-MM-DD. */
+export function todayInNewYork(now = new Date()) {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" }).format(now);
+}
+
 /** Rows for today through today + days - 1. Dates are YYYY-MM-DD strings, no timezone math. */
 export function buildCalendar({ root, today, days = 14 }) {
   const byDate = new Map();
