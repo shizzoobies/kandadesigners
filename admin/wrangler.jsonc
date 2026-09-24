@@ -17,7 +17,7 @@
       "database_name": "ka-sites",
       // Filled in at deploy (Task 16) from `wrangler d1 create ka-sites`.
       // Local development and tests do not need the real id.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "1859da99-2c03-4796-b6e6-8a1e4ab8112b",
       "migrations_dir": "migrations"
     }
   ],
