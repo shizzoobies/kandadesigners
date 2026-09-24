@@ -62,4 +62,29 @@ describe("createDay", () => {
     fs.mkdirSync(reel);
     expect(() => createDay({ root, date: "2026-09-28", pillar: "x", title: "x", from: reel })).toThrow(/no \.mp4 in/);
   });
+
+  it("accepts a suffixed name for a second post on the same day", () => {
+    root = makeTempRoot();
+    const dir = createDay({ root, date: "2026-10-05-2", pillar: "tip", title: "Second" });
+    const m = readManifest(dir);
+    expect(path.basename(dir)).toBe("2026-10-05-2");
+    expect(m.id).toBe("2026-10-05-2");
+    expect(m.date).toBe("2026-10-05");
+  });
+
+  it("removes the folder when the reel import fails", () => {
+    root = makeTempRoot();
+    const reel = path.join(root, "empty-reel");
+    fs.mkdirSync(reel);
+    expect(() => createDay({ root, date: "2026-09-28", pillar: "x", title: "x", from: reel })).toThrow(/no \.mp4 in/);
+    expect(fs.existsSync(path.join(root, "To Be Released", "2026-09-28"))).toBe(false);
+  });
+
+  it("refuses a reel folder with more than one mp4", () => {
+    root = makeTempRoot();
+    const reel = path.join(root, "two-reel");
+    fs.mkdirSync(path.join(reel, "Facebook"), { recursive: true });
+    for (const f of ["a.mp4", "b.mp4", "a.srt", "thumbnail-a.jpg"]) fs.writeFileSync(path.join(reel, "Facebook", f), Buffer.alloc(4));
+    expect(() => createDay({ root, date: "2026-09-28", pillar: "x", title: "x", from: reel })).toThrow("more than one .mp4 in");
+  });
 });
