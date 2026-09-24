@@ -79,8 +79,7 @@ A day folder is named `YYYY-MM-DD`. A second post on the same day is
   "title": "Osteen and Sons address lookup",
   "platforms": {
     "facebook": { "type": "REEL", "caption": "facebook.md" },
-    "instagram": { "type": "REEL", "caption": "instagram.md",
-                   "firstCommentFrom": "instagram.md#first-comment" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" },
     "linkedin": { "manual": true, "caption": "linkedin.md" }
   },
   "media": [
@@ -104,7 +103,9 @@ Fields:
 
 - `status` moves one way: `planned`, `generating`, `ready`, `approved`,
   `scheduled`, `published`. `native` is terminal and set by hand. Alex sets
-  `approved`. Scripts set every other value.
+  `approved`; he may do so straight from `planned` when the media is already on
+  disk and `validate` is clean. `ready` is set by `generate`, or by hand when
+  media was placed manually. Scripts set every other value.
 - `time` is local to `timezone`. Default `09:00` on weekdays until Metricool has
   enough history for `getBestTimeToPostByNetwork`, after which `release` reads
   that and writes the chosen time back.
@@ -116,8 +117,11 @@ Fields:
   check. `alt` is required for every image role; the validator enforces it.
 - `generate` is the ordered list of generation jobs (see Generation).
 - `r2` is written by upload: `{ "<file>": { "url", "sha256", "uploadedAt" } }`.
-- `metricool` is written by release: `{ "payload", "id", "uuid",
-  "scheduledAt", "draft" }`.
+- `metricool` is written by release, keyed by network because Facebook and
+  Instagram usually get different captions and so different Metricool posts:
+  `{ "facebook": { "payload", "id", "uuid", "scheduledAt", "draft" },
+  "instagram": { ... } }`. When both captions are identical, one Metricool
+  post carries both providers and the same record is written under both keys.
 - `published` is written by reconcile: `{ "at", "facebook": { "permalink" },
   "instagram": { "permalink" } }` with permalinks filled when available.
 - `credits` is written by generate: `{ "<jobId>": { "credits", "at" } }`.
@@ -128,7 +132,7 @@ Fields:
 
 `facebook.md` is the Facebook caption verbatim. `instagram.md` has the caption,
 then a `## First comment` heading whose body becomes `firstCommentText`
-(hashtags go there). `linkedin.md` is free form and only read by `calendar`.
+(hashtags go there). `linkedin.md` is free form. Showing it in `calendar` is deferred past phase 1.
 Markdown is used so captions are readable and editable anywhere; no Markdown
 syntax other than that one heading is interpreted.
 
@@ -168,15 +172,17 @@ writes `lastError`, and prints it.
   payload for each `approved` folder whose media is all in `r2`, writes it to
   `metricool.payload`, and prints a release packet: one JSON document per folder.
   Claude reads the packet in a session, calls the MCP, and runs
-  `release --record <folder> --id <id> --uuid <uuid>` which sets
-  `metricool.id`, `metricool.uuid`, `metricool.scheduledAt`, and status
-  `scheduled`. With `--draft`, the payload carries `draft: true`. Folders that
-  already have `metricool.id` are skipped.
+  `release --record <folder> --network <n> --id <id> --uuid <uuid>` once per
+  network, which writes `metricool.<network>`. The folder becomes `scheduled`
+  once every non-manual network has a record. With `--draft`, the payload
+  carries `draft: true`. Networks that already have a record are skipped, so a
+  folder where Facebook was recorded and Instagram was rejected stays
+  `approved` with `lastError` set until the Instagram post is recorded.
 - **reconcile** asks Metricool for scheduled posts across the window covering
   every `scheduled` folder (Claude runs `getScheduledPosts` in a session and
-  passes the result via `reconcile --from <file>`). Any `scheduled` folder whose
-  `metricool.uuid` is no longer in the list and whose post time has passed is
-  marked `published` with `published.at` set to the scheduled time, its
+  passes the result via `reconcile --from <file>`). Any `scheduled` folder none
+  of whose recorded `uuid` values is still in the list, and whose post time has
+  passed, is marked `published` with `published.at` set to the scheduled time, its
   manifest is written, and only then is the folder moved to Already Released.
   R2 objects for folders published more than seven days ago are deleted.
 - **calendar** `[--days 14]` prints one line per day: date, weekday, status,
@@ -211,10 +217,12 @@ network needs a video; a Story with text is rejected; caption length within
 each network's limit; `time` is a valid local time and in the future for
 `approved` folders.
 
-House rules: no em dash (U+2014) in any text file;
+House rules: no em dash (U+2014) in any text file; network names, types,
+media roles, and origins come from the closed sets in the README; every
+`media[].file` is a relative path inside `media/`;
 Instagram hashtags only under the first comment heading; when `ai.voice` or
 `ai.visuals` is true, both captions contain a disclosure line (matching
-"AI narrated", "AI voice", or "AI generated"); any narration script in `source/`
+"AI narrated", "AI voice", "AI generated", or "AI assisted"); any narration script in `source/`
 spells "K and A".
 
 ## Generation
@@ -270,8 +278,9 @@ else.
   em dash and disclosure checks), status transitions, payload builder against
   a fixture manifest, caption parsing (first comment split), reconcile's
   published detection.
-- A fixture day folder at `tools/test/fixtures/2026-01-05/` with a tiny MP4,
-  a JPG, an SRT, and captions.
+- Fixtures are built per test in a temporary root by helpers in
+  `tools/test/helpers.mjs` (`makeTempRoot`, `makeDay`, `baseManifest`,
+  `baseFiles`), so no binary fixture lives in git.
 - `--dry-run` on upload and release prints the actions and payloads without
   calling anything.
 - One live test in phase 2: a single post scheduled as a draft on a date well
