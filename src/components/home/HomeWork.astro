@@ -31,6 +31,12 @@ const work = [
   @media(min-width:1024px){.home-work{padding-top:64px;padding-bottom:104px}.project-tabs{margin-top:48px}.project-panel{gap:52px}}
   @media(min-width:1024px) and (prefers-reduced-motion:no-preference){.home-work{margin-top:-34vh}}
   @media(prefers-reduced-motion:no-preference){.project-panel:not([data-inactive]){animation:work-appear .3s ease-out}@keyframes work-appear{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}}
+  .project-tabs a { padding-inline: 12px; border-radius: 3px 3px 0 0; }
+  .project-tabs a[aria-selected=true] { background: var(--color-amber-soft); color: var(--color-ink); }
+  .project-window { border-color: var(--color-teal-border); box-shadow: 8px 8px 0 var(--color-teal-soft); }
+  .window-bar { background: var(--color-teal-soft); color: var(--color-teal); border-color: var(--color-teal-border); }
+  .window-bar span:first-child { background: var(--color-amber); border-color: var(--color-amber); }
+  .feature { border-left: 3px solid var(--color-amber); padding-left: 18px; }
 </style>
 <script>
   class HomeWorkSwitcher extends HTMLElement {

@@ -69,6 +69,10 @@
   --color-accent: #9A3412;
   --color-accent-hot: #7C2D12;
   --color-amber: #D97706;
+  --color-amber-soft: #F6E5BD;
+  --color-teal: #134E4A;
+  --color-teal-soft: #E2EFEB;
+  --color-teal-border: #A6C8BF;
   --font-display: "Schibsted Grotesk", "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-heading: "Atkinson Hyperlegible Next", system-ui, sans-serif;
   --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;

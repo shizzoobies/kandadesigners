@@ -80,6 +80,9 @@ const phases = [
     dl > div { grid-template-columns: 80px 1fr; gap: 12px; font-size: 0.83rem; }
     .launch-cta { font-size: 0.9rem; gap: 16px; }
   }
+  .phase-nav a[aria-selected="true"] { background: var(--color-amber-soft); color: var(--color-ink); box-shadow: inset 0 -3px 0 var(--color-accent); }
+  .phase-nav a[aria-selected="true"] .phase-time { color: var(--color-accent); }
+  .deliverable { border-color: var(--color-teal-border); border-top: 3px solid var(--color-amber); box-shadow: 7px 7px 0 var(--color-teal-soft); }
 </style>
 
 <script>

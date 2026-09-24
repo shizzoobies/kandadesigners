@@ -1,0 +1,45 @@
+---
+const { kind = 0 } = Astro.props;
+---
+<svg viewBox="0 0 136 88" fill="none" aria-hidden="true">
+  <ellipse cx="68" cy="77" rx="51" ry="5" class="shadow" />
+  {kind === 0 && <>
+    <rect x="19" y="15" width="98" height="61" rx="5" class="paper" />
+    <path d="M19 30h98M28 23h2m6 0h2" class="line" />
+    <rect x="29" y="40" width="32" height="24" rx="3" class="tint" /><path d="M71 43h35M71 51h28M71 61h17" class="line" />
+    <path d="m91 54 8 24 5-10 10-3Z" class="detail cursor" />
+  </>}
+  {kind === 1 && <>
+    <path d="M37 28h28v29h34" class="line" /><path d="M66 28h31" class="line" stroke-dasharray="3 4" />
+    <rect x="15" y="12" width="39" height="32" rx="6" class="paper" /><path d="M26 23h18M26 31h12" class="line" />
+    <rect x="84" y="11" width="37" height="27" rx="5" class="tint" /><path d="m95 23 5 5 10-11" class="line" />
+    <g class="detail"><path d="M88 45h36v25h-17l-9 8v-8H88Z" class="paper" /><path d="M97 55h19M97 62h12" class="line" /></g>
+    <circle cx="66" cy="28" r="8" class="gold" />
+  </>}
+  {kind === 2 && <>
+    <rect x="18" y="12" width="84" height="62" rx="5" class="paper" /><path d="M29 25h50M29 36h59M29 60h19" class="line" />
+    <rect x="28" y="44" width="62" height="9" rx="3" class="tint" />
+    <g class="detail"><circle cx="94" cy="46" r="20" class="glass" /><path d="m108 61 14 14" class="handle" /><path d="m84 48 7 6 13-16" class="line" /></g>
+  </>}
+  {kind === 3 && <>
+    <rect x="19" y="15" width="98" height="61" rx="5" class="paper" /><path d="M31 27h56M31 39h34M77 40h26" class="line" />
+    <rect x="29" y="50" width="39" height="15" rx="3" class="tint" /><rect x="25" y="46" width="47" height="23" rx="5" class="line" stroke-dasharray="3 3" />
+    <g class="detail"><circle cx="105" cy="63" r="17" class="teal" /><path d="m97 63 6 6 11-13" class="check" /></g>
+  </>}
+</svg>
+<style>
+  svg { display: block; width: 136px; height: 88px; }
+  .paper { fill: var(--color-surface); stroke: var(--color-teal); stroke-width: 1.4; }
+  .line { stroke: var(--color-teal); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tint { fill: var(--color-amber-soft); stroke: var(--color-amber); }
+  .gold, .cursor { fill: var(--color-amber); }
+  .cursor { stroke: var(--color-accent); stroke-width: 1.2; }
+  .shadow { fill: var(--color-teal); opacity: .08; }
+  .glass { fill: var(--color-teal-soft); stroke: var(--color-teal); stroke-width: 2; }
+  .handle { stroke: var(--color-amber); stroke-width: 6; stroke-linecap: round; }
+  .teal { fill: var(--color-teal); }
+  .check { stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .detail { transition: transform .35s ease; transform-origin: center; }
+  :global(.service-card:hover) .detail, :global(.service-card:focus-visible) .detail { transform: translateY(-4px); }
+  @media (prefers-reduced-motion: reduce) { .detail { transition: none; transform: none !important; } }
+</style>

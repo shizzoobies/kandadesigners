@@ -457,6 +457,12 @@ const breadcrumb = {
     .org-portrait { transition: none; }
     .person-dialog[open], .person-dialog[open]::backdrop { animation: none; }
   }
+  .org-portrait { box-shadow: 0 0 0 3px var(--color-surface), 0 0 0 5px var(--color-teal-border), 0 14px 30px -16px rgb(19 78 74 / .3); }
+  .org-initials { background: var(--color-teal-soft); color: var(--color-teal); box-shadow: inset 0 0 0 1px var(--color-teal-border), 0 0 0 3px var(--color-surface), 0 0 0 5px var(--color-amber-soft); }
+  .org-pending { background: var(--color-amber-soft); color: var(--color-accent); padding: 5px 9px; border-radius: 3px; }
+  .bench-card { border-color: var(--color-teal-border); }
+  .bench-card h3 { background: color-mix(in srgb, var(--color-teal-soft) 50%, var(--color-surface)); }
+  .bench-card:nth-child(2n) h3 { background: color-mix(in srgb, var(--color-amber-soft) 50%, var(--color-surface)); }
 </style>
 
 <script>

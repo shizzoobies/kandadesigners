@@ -33,17 +33,17 @@ const groupFor = (index: number) => groups[index < 3 ? 0 : index < 5 ? 1 : 2];
   .touch-hint { display: none; }
   .format-strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; padding: 6px 4px 20px; }
   .format-strip button { position: relative; appearance: none; border: 1px solid transparent; border-radius: 3px; background: transparent; color: var(--color-ink); padding: 5px 5px 20px; min-width: 0; font: 600 .86rem/1.35 var(--font-heading); cursor: pointer; transition: background .25s, border-color .25s; }
-  .format-strip button[aria-selected="true"] { background: #fffdf9; border-color: #d4b7a2; }
-  .format-strip button:hover { background: #fffdf9; }
+  .format-strip button[aria-selected="true"] { background: var(--color-amber-soft); border-color: var(--color-accent); }
+  .format-strip button:hover:not([aria-selected="true"]) { background: var(--color-teal-soft); }
   .format-art { display: block; height: 90px; margin-bottom: 6px; }
   .selected-rule { position: absolute; bottom: 8px; left: calc(50% - 13px); height: 2px; width: 26px; background: var(--color-accent); transform: scaleX(0); transition: transform .25s; }
   button[aria-selected="true"] .selected-rule { transform: scaleX(1); }
   .format-strip button:focus-visible, .cap-panel:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
-  .cap-stage { border: 1px solid #d9cfc5; background: #fffdf9; }
+  .cap-stage { border: 1px solid var(--color-teal-border); background: #fffdf9; }
   .cap-panel { display: grid; grid-template-columns: .8fr 1.2fr; min-height: 290px; }
   .cap-panel + .cap-panel { border-top: 1px solid #d9cfc5; }
   .cap-explorer[data-enhanced] .cap-panel { border: 0; }
-  .stage-art { position: relative; display: grid; place-items: center; background: #ede7df; padding: 22px 40px; overflow: hidden; }
+  .stage-art { position: relative; display: grid; place-items: center; background: var(--color-teal-soft); padding: 22px 40px; overflow: hidden; }
   .stage-art :global(svg) { position: relative; max-width: 330px; max-height: 235px; }
   .art-grid { position: absolute; inset: 0; opacity: .3; background-image: linear-gradient(#c8b9a6 1px, transparent 1px), linear-gradient(90deg, #c8b9a6 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse, #000, transparent 75%); }
   .stage-copy { align-self: center; padding: 34px 44px; }

@@ -44,10 +44,11 @@ const { kind = 0 } = Astro.props;
 <style>
   .cap-art { width: 100%; height: 100%; display: block; color: var(--color-accent); overflow: visible; }
   .paper { fill: #fffdf9; stroke: #8b7667; stroke-width: 1.3; }
-  .muted { fill: #e8ddd0; }
+  .muted { fill: var(--color-amber-soft); }
   .fine { stroke: #8b7667; stroke-width: 1.4; stroke-linecap: round; }
-  .solid, .seal { fill: currentColor; }
-  .tint { fill: #eed5bf; }
+  .solid { fill: var(--color-amber); }
+  .seal { fill: var(--color-teal); }
+  .tint { fill: var(--color-amber-soft); }
   .accent { stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .white { stroke: #fffdf9; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .float-front, .float-back, .badge, .pointer, .focus-ring, .sweep { transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .4s; transform-box: fill-box; transform-origin: center; }
