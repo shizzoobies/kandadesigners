@@ -30,23 +30,41 @@ const fields = [
   ))}
   <div class="field">
     <label for="hosting">Hosting</label>
-    <select id="hosting" name="hosting">
+    <select
+      id="hosting"
+      name="hosting"
+      aria-invalid={errors.hosting ? 'true' : undefined}
+      aria-describedby={errors.hosting ? 'hosting-err' : undefined}
+    >
       {HOSTING.map((h) => <option value={h} selected={v('hosting') === h}>{HOSTING_LABEL[h]}</option>)}
     </select>
-    {errors.hosting && <span class="err">{errors.hosting}</span>}
+    {errors.hosting && <span class="err" id="hosting-err">{errors.hosting}</span>}
   </div>
   <div class="field">
     <label for="maintainer_id">Maintained by (optional)</label>
-    <select id="maintainer_id" name="maintainer_id">
+    <select
+      id="maintainer_id"
+      name="maintainer_id"
+      aria-invalid={errors.maintainer_id ? 'true' : undefined}
+      aria-describedby={errors.maintainer_id ? 'maintainer_id-err' : undefined}
+    >
       <option value="">Not assigned</option>
       {people.map((p) => <option value={p.id} selected={String(v('maintainer_id')) === String(p.id)}>{p.name}</option>)}
     </select>
+    {errors.maintainer_id && <span class="err" id="maintainer_id-err">{errors.maintainer_id}</span>}
   </div>
   <div class="field">
     <label for="logo">Logo (optional)</label>
     <span class="hint" id="logo-hint">PNG, JPEG, WebP or SVG, up to 1 MB. Without one, the site's own icon is used.</span>
-    <input type="file" id="logo" name="logo" accept="image/png,image/jpeg,image/webp,image/svg+xml" aria-describedby="logo-hint" />
-    {errors.logo && <span class="err">{errors.logo}</span>}
+    <input
+      type="file"
+      id="logo"
+      name="logo"
+      accept="image/png,image/jpeg,image/webp,image/svg+xml"
+      aria-invalid={errors.logo ? 'true' : undefined}
+      aria-describedby={['logo-hint', errors.logo && 'logo-err'].filter(Boolean).join(' ')}
+    />
+    {errors.logo && <span class="err" id="logo-err">{errors.logo}</span>}
   </div>
   <div><button class="btn" type="submit">{submitLabel}</button></div>
 </form>
