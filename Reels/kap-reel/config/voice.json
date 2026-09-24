@@ -1418,5 +1418,376 @@
       "measuredLra": 3.1,
       "createdAt": "2026-09-05T11:50:30.087Z"
     }
-  ]
+  ],
+  "v3": {
+    "_note": "eleven_v3 candidate reads, added 2026-09-24. Kept apart from generations above on purpose: src/tutorial/timeline.ts lays the rendered reels out from generations, and nothing reads this section, so a candidate never moves a render. text is exactly what was sent, audio tags included; plainText is the same line with the tags stripped. creditsMeasured is the same before and after usage delta as every other entry. Written by scripts/voice.ts --model eleven_v3.",
+    "generations": [
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "hook",
+        "mode": "natural",
+        "file": "assets/audio/voice/contrast-v3/natural/hook.mp3",
+        "text": "[confident] Contrast is not a vibe.",
+        "plainText": "Contrast is not a vibe.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 35,
+        "hash": "6406dec4",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 2,
+        "creditsMeasured": 35,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:53:39.765Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "fine",
+        "mode": "natural",
+        "file": "assets/audio/voice/contrast-v3/natural/fine.mp3",
+        "text": "[amused] This amber on cream looks fine.",
+        "plainText": "This amber on cream looks fine.",
+        "tags": [
+          "amused"
+        ],
+        "characters": 40,
+        "hash": "9afbada5",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 2.4,
+        "creditsMeasured": 40,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:53:43.954Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "fails",
+        "mode": "natural",
+        "file": "assets/audio/voice/contrast-v3/natural/fails.mp3",
+        "text": "[matter-of-fact] It measures two point nine to one. [short pause] That fails.",
+        "plainText": "It measures two point nine to one. That fails.",
+        "tags": [
+          "matter-of-fact",
+          "short pause"
+        ],
+        "characters": 77,
+        "hash": "25b409e7",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 4,
+        "creditsMeasured": 77,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:53:56.461Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "fix",
+        "mode": "natural",
+        "file": "assets/audio/voice/contrast-v3/natural/fix.mp3",
+        "text": "[warm] Same palette, rust instead. Six point seven. [pleased] Passes.",
+        "plainText": "Same palette, rust instead. Six point seven. Passes.",
+        "tags": [
+          "warm",
+          "pleased"
+        ],
+        "characters": 69,
+        "hash": "cb0eb80c",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 4.72,
+        "creditsMeasured": 69,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:54:01.370Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "cta",
+        "mode": "natural",
+        "file": "assets/audio/voice/contrast-v3/natural/cta.mp3",
+        "text": "[warm] Measure every color you set text in.",
+        "plainText": "Measure every color you set text in.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 43,
+        "hash": "091a67cc",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 2.48,
+        "creditsMeasured": 43,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:54:05.713Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "hook",
+        "mode": "creative",
+        "file": "assets/audio/voice/contrast-v3/creative/hook.mp3",
+        "text": "[confident] Contrast is not a vibe.",
+        "plainText": "Contrast is not a vibe.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 35,
+        "hash": "f163ba59",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 2.32,
+        "creditsMeasured": 35,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:54:11.329Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "fine",
+        "mode": "creative",
+        "file": "assets/audio/voice/contrast-v3/creative/fine.mp3",
+        "text": "[amused] This amber on cream looks fine.",
+        "plainText": "This amber on cream looks fine.",
+        "tags": [
+          "amused"
+        ],
+        "characters": 40,
+        "hash": "7bbe707c",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 2.24,
+        "creditsMeasured": 40,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:54:15.449Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "fails",
+        "mode": "creative",
+        "file": "assets/audio/voice/contrast-v3/creative/fails.mp3",
+        "text": "[matter-of-fact] It measures two point nine to one. [short pause] That fails.",
+        "plainText": "It measures two point nine to one. That fails.",
+        "tags": [
+          "matter-of-fact",
+          "short pause"
+        ],
+        "characters": 77,
+        "hash": "d16cd10a",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 4.08,
+        "creditsMeasured": 77,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:54:20.277Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "fix",
+        "mode": "creative",
+        "file": "assets/audio/voice/contrast-v3/creative/fix.mp3",
+        "text": "[warm] Same palette, rust instead. Six point seven. [pleased] Passes.",
+        "plainText": "Same palette, rust instead. Six point seven. Passes.",
+        "tags": [
+          "warm",
+          "pleased"
+        ],
+        "characters": 69,
+        "hash": "a7337071",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 4.96,
+        "creditsMeasured": 69,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:54:25.298Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "cta",
+        "mode": "creative",
+        "file": "assets/audio/voice/contrast-v3/creative/cta.mp3",
+        "text": "[warm] Measure every color you set text in.",
+        "plainText": "Measure every color you set text in.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 43,
+        "hash": "0fde2a31",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 2.08,
+        "creditsMeasured": 43,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T20:54:29.270Z"
+      }
+    ],
+    "stitches": [
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "mode": "natural",
+        "file": "out/candidates/contrast-15s-voice-natural.mp3",
+        "totalFrames": 529,
+        "overFrames": 79,
+        "beats": [
+          {
+            "beatId": "hook",
+            "startFrame": 0,
+            "seconds": 2
+          },
+          {
+            "beatId": "fine",
+            "startFrame": 72,
+            "seconds": 2.4
+          },
+          {
+            "beatId": "fails",
+            "startFrame": 156,
+            "seconds": 4
+          },
+          {
+            "beatId": "fix",
+            "startFrame": 288,
+            "seconds": 4.72
+          },
+          {
+            "beatId": "cta",
+            "startFrame": 442,
+            "seconds": 2.48
+          }
+        ],
+        "measuredIntegratedLufs": -16.19,
+        "measuredTruePeakDbfs": -6.1,
+        "createdAt": "2026-09-24T20:55:01.081Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "mode": "creative",
+        "file": "out/candidates/contrast-15s-voice-creative.mp3",
+        "totalFrames": 536,
+        "overFrames": 86,
+        "beats": [
+          {
+            "beatId": "hook",
+            "startFrame": 0,
+            "seconds": 2.32
+          },
+          {
+            "beatId": "fine",
+            "startFrame": 82,
+            "seconds": 2.24
+          },
+          {
+            "beatId": "fails",
+            "startFrame": 162,
+            "seconds": 4.08
+          },
+          {
+            "beatId": "fix",
+            "startFrame": 297,
+            "seconds": 4.96
+          },
+          {
+            "beatId": "cta",
+            "startFrame": 458,
+            "seconds": 2.08
+          }
+        ],
+        "measuredIntegratedLufs": -16.08,
+        "measuredTruePeakDbfs": -5.86,
+        "createdAt": "2026-09-24T20:55:02.331Z"
+      }
+    ],
+    "mixes": [
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "wav": "assets/audio/voice/contrast-v3/natural/mix-15s-i-b.wav",
+        "musicSource": "assets/audio/raw/music-i-b-20s.mp3",
+        "musicVariant": "i-b",
+        "bedGainDb": -7.1,
+        "measuredDuckDb": 9.5,
+        "limiterCeilingDbfs": -3.33,
+        "measuredIntegratedLufs": -14,
+        "measuredTruePeakDbfs": -3.69,
+        "measuredLra": 3.5,
+        "createdAt": "2026-09-24T20:56:58.639Z",
+        "mode": "natural",
+        "mp3": "out/candidates/contrast-15s-preview-1.mp3"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "wav": "assets/audio/voice/contrast-v3/creative/mix-15s-i-a.wav",
+        "musicSource": "assets/audio/raw/music-i-a-20s.mp3",
+        "musicVariant": "i-a",
+        "bedGainDb": -7.5,
+        "measuredDuckDb": 8.4,
+        "limiterCeilingDbfs": -3.44,
+        "measuredIntegratedLufs": -13.99,
+        "measuredTruePeakDbfs": -3.79,
+        "measuredLra": 2.1,
+        "createdAt": "2026-09-24T20:57:03.712Z",
+        "mode": "creative",
+        "mp3": "out/candidates/contrast-15s-preview-2.mp3"
+      }
+    ]
+  }
 }

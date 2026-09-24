@@ -21,6 +21,16 @@
  * out/gate-t5/preview-{id}.mp3 instead of muxing against a picture, because
  * the owner has not chosen a variant yet.
  *
+ * Tutorial reel music candidates (--set tutorial2), added 2026-09-24:
+ *   npx tsx scripts/audio.ts music --variant i-a|i-b|i-c --length 20 --set tutorial2
+ * Indie pop, guitar driven, feel good, instrumental, for the tutorial reels
+ * after Alex found the first bed weak. Same code path as --set training, its
+ * own cap of 3 (one take per candidate), and no automatic regenerate on a
+ * failed first-second test: a failing take is kept, flagged in its notes and
+ * left for Alex's ear, because a retry would spend the next candidate's slot.
+ * Each take is also copied to out/candidates/music-<id>.mp3 so the candidates
+ * sit next to the voice previews they are heard with.
+ *
  * API contract, confirmed against the live docs on 2026-09-03:
  *
  *   POST https://api.elevenlabs.io/v1/music
@@ -109,7 +119,14 @@ const CREDIT_ALARM = 5000;
  */
 const SET_CAPS: Record<string, number> = {
   training: 6,
+  tutorial2: 3,
 };
+
+/** Sets whose takes are never regenerated automatically. See the header. */
+const SET_NO_RETRY = new Set(["tutorial2"]);
+
+/** Where --set tutorial2 copies each take for listening. */
+const CANDIDATE_DIR = path.join(OUT_DIR, "candidates");
 
 /** Reject a music take whose first second sits more than this far under the whole-track mean. */
 const FIRST_SECOND_TOLERANCE_DB = 6;
@@ -174,7 +191,16 @@ const MUSIC_INSTRUCTION =
   "stands on its own. Modern product launch film, not a nightclub. Clean " +
   "modern production, plenty of headroom, nothing distorted.";
 
-export type VariantId = "a" | "b" | "c" | "t-a" | "t-b" | "t-c";
+export type VariantId =
+  | "a"
+  | "b"
+  | "c"
+  | "t-a"
+  | "t-b"
+  | "t-c"
+  | "i-a"
+  | "i-b"
+  | "i-c";
 
 const MUSIC_VARIANTS: { id: VariantId; feel: string; note: string }[] = [
   {
@@ -263,6 +289,67 @@ const TRAINING_MUSIC_VARIANTS: { id: VariantId; feel: string; note: string }[] =
       note: "Organic marimba/mallets over a soft bass, about 112 bpm",
     },
   ];
+
+/**
+ * Tutorial reels, second music pass (--set tutorial2), 2026-09-24.
+ *
+ * Owner direction: trendy and upbeat, indie pop, guitar driven, feel good, no
+ * vocals. The instruction half keeps the two things every bed in this project
+ * has needed: a clean start with no ramp, because the hook line lands on frame
+ * 0, and room in the midrange, because this bed sits under a voice rather than
+ * carrying a picture alone. "Clean intro" here means the groove is there on
+ * the first beat without a build, not a quiet lead in.
+ */
+const TUTORIAL2_MUSIC_INSTRUCTION =
+  "Clean intro: the groove starts on the very first beat, no fade in, no " +
+  "long build, no silence at the start. Fully instrumental, no vocals, no " +
+  "vocal chops, no humming, no oohs, no spoken word, no lyrics. No heavy " +
+  "drop, no big riser, no sweep, no impact hit. Even feel good energy the " +
+  "whole way through so any fifteen second window stands on its own. It sits " +
+  "under a spoken voiceover, so leave space in the midrange where a voice " +
+  "sits: no busy lead melody competing for attention, no guitar solo. Clean " +
+  "modern indie production, plenty of headroom, nothing distorted.";
+
+/**
+ * The three candidates differ on purpose, per the brief: one brighter and
+ * faster, one in the middle, one warmer with more acoustic guitar.
+ */
+const TUTORIAL2_MUSIC_VARIANTS: {
+  id: VariantId;
+  feel: string;
+  note: string;
+}[] = [
+  {
+    id: "i-a",
+    feel:
+      "Bright upbeat indie pop instrumental at about 120 bpm. Crisp clean " +
+      "electric guitars with a chiming, jangly strummed rhythm and a short " +
+      "bright picked riff, bouncy bass, tight punchy drums with handclaps on " +
+      "the backbeat. Sunny, playful, feel good and trendy, like a summer " +
+      "morning social video.",
+    note: "Bright jangly indie pop, clean electric guitars, handclaps, about 120 bpm",
+  },
+  {
+    id: "i-b",
+    feel:
+      "Feel good indie pop instrumental at about 114 bpm. A clean electric " +
+      "guitar plays a light palm muted groove with a simple catchy picked " +
+      "motif, a warm melodic bass line, relaxed tight drums with a crisp snare " +
+      "and a steady hi hat. Upbeat, confident and friendly, modern and " +
+      "trendy without being loud.",
+    note: "Mid tempo indie pop, palm muted clean electric guitar, melodic bass, about 114 bpm",
+  },
+  {
+    id: "i-c",
+    feel:
+      "Warm acoustic indie pop instrumental at about 110 bpm. Strummed " +
+      "acoustic guitar carries the rhythm, with a light fingerpicked acoustic " +
+      "line and a soft clean electric guitar accent, warm round bass, gentle " +
+      "kick, snare and shaker, a few handclaps. Warm, optimistic, feel good " +
+      "and upbeat, sunny and relaxed but still moving forward.",
+    note: "Warm acoustic led indie pop, strummed and fingerpicked acoustic guitar, about 110 bpm",
+  },
+];
 
 type SfxName = "whoosh-transition" | "ui-click" | "impact-low";
 
@@ -775,11 +862,22 @@ async function generateMusic(
   assertUnderCap(setLabel);
   const variant =
     MUSIC_VARIANTS.find((v) => v.id === variantId) ??
-    TRAINING_MUSIC_VARIANTS.find((v) => v.id === variantId);
+    TRAINING_MUSIC_VARIANTS.find((v) => v.id === variantId) ??
+    TUTORIAL2_MUSIC_VARIANTS.find((v) => v.id === variantId);
   if (!variant) throw new Error(`Unknown music variant "${variantId}".`);
+  if (variantId.startsWith("i-") !== (setLabel === "tutorial2")) {
+    throw new Error(
+      `Variant ${variantId} and --set ${setLabel ?? "(none)"} do not go together: ` +
+        `the i-* variants are generated with --set tutorial2 and only with it.`,
+    );
+  }
 
   const instruction =
-    setLabel === "training" ? TRAINING_MUSIC_INSTRUCTION : MUSIC_INSTRUCTION;
+    setLabel === "training"
+      ? TRAINING_MUSIC_INSTRUCTION
+      : setLabel === "tutorial2"
+        ? TUTORIAL2_MUSIC_INSTRUCTION
+        : MUSIC_INSTRUCTION;
   const prompt = `${variant.feel} ${instruction}`;
   const lengthMs = Math.round(lengthSeconds * 1000);
   const suffix = attempt > 1 ? `-take${attempt}` : "";
@@ -837,6 +935,13 @@ async function generateMusic(
     set: setLabel,
   });
 
+  if (setLabel === "tutorial2") {
+    fs.mkdirSync(CANDIDATE_DIR, { recursive: true });
+    const candidate = path.join(CANDIDATE_DIR, `music-${variantId}.mp3`);
+    fs.copyFileSync(file, candidate);
+    console.log(`  copied to ${rel(candidate)}`);
+  }
+
   return { file, test, credits };
 }
 
@@ -849,6 +954,13 @@ async function generateMusicWithRetry(
 ): Promise<string> {
   const first = await generateMusic(key, variantId, lengthSeconds, 1, setLabel);
   if (first.test.pass) return first.file;
+  if (setLabel && SET_NO_RETRY.has(setLabel)) {
+    console.log(
+      `  variant ${variantId} failed the first-second test. --set ${setLabel} does not ` +
+        `regenerate automatically, so the take is kept and flagged for the owner.`,
+    );
+    return first.file;
+  }
   console.log(
     `  regenerating variant ${variantId} once, the first second was too quiet`,
   );
@@ -1688,6 +1800,7 @@ async function main(): Promise<void> {
       "Usage:",
       "  npx tsx scripts/audio.ts music --variant a|b|c --length 20|50",
       "  npx tsx scripts/audio.ts music --variant t-a|t-b|t-c --length 20 --set training",
+      "  npx tsx scripts/audio.ts music --variant i-a|i-b|i-c --length 20 --set tutorial2",
       "  npx tsx scripts/audio.ts sfx --name whoosh-transition|ui-click|impact-low",
       "  npx tsx scripts/audio.ts all",
       "  npx tsx scripts/audio.ts mix [--variant a|b|c]",

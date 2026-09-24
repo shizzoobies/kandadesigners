@@ -856,3 +856,28 @@ than a library one. Note also that only premade voices were auditioned: a voice
 from the ElevenLabs Voice Library, which the workspace's `GET /v1/voices` also
 returns under category `professional`, would add a second and different
 licensing question on top of this unanswered one.
+
+## Tutorial reel candidates, 2026-09-24
+
+Candidates for Alex to hear after he found the narration flat and the bed weak.
+Nothing here is in a delivered file. Same ElevenLabs account and Pro plan as
+everything above, so the Music rights and the 2026-09-04 commercial use
+confirmation cover the three music takes, and the narration takes carry the
+same open **to confirm** question as the section above: they are Sarah, a
+premade library voice, only on a different model.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| Music, three 20 second indie pop candidates, `--set tutorial2` (`music-i-a-20s`, `music-i-b-20s`, `music-i-c-20s`), all pass the first-second test on the first take | music_v2 | 3 | 1,641 |
+| Narration, contrast 15 second cut, Sarah, stability natural (0.5), tagged script `config/contrast-v3-script.json` | eleven_v3 | 5 | 264 |
+| Narration, the same script at stability creative (0.0) | eleven_v3 | 5 | 264 |
+| Transcription check of the two voice only previews, to confirm no tag was spoken aloud (a one off, not a script) | scribe_v2 | 2 | 16 |
+| **Candidate pass total** | | **15** | **2,185** |
+
+Every figure is a before and after delta on the usage endpoint, logged per call
+in `config/audio.json` (music, `set: "tutorial2"`) and in the `v3` section of
+`config/voice.json` (narration), except the transcription check, which is
+recorded only here. The usage endpoint moved from 45,849 to 48,034 over the
+run, exactly 2,185, so nothing else spent in the window. v3 text to speech is
+billed one credit a character, audio tags included: the tagged script is 264
+characters against 188 untagged.

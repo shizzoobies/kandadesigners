@@ -318,6 +318,72 @@
         "pass": true
       },
       "set": "training"
+    },
+    {
+      "kind": "music",
+      "id": "music-i-a-20s",
+      "file": "assets/audio/raw/music-i-a-20s.mp3",
+      "prompt": "Bright upbeat indie pop instrumental at about 120 bpm. Crisp clean electric guitars with a chiming, jangly strummed rhythm and a short bright picked riff, bouncy bass, tight punchy drums with handclaps on the backbeat. Sunny, playful, feel good and trendy, like a summer morning social video. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit. Even feel good energy the whole way through so any fifteen second window stands on its own. It sits under a spoken voiceover, so leave space in the midrange where a voice sits: no busy lead melody competing for attention, no guitar solo. Clean modern indie production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 20000,
+      "creditsMeasured": 547,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-24T20:49:44.584Z",
+      "accepted": true,
+      "notes": "Bright jangly indie pop, clean electric guitars, handclaps, about 120 bpm. Measured duration 20.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -23.8,
+        "wholeTrackMeanDb": -23.4,
+        "deficitDb": 0.4,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "tutorial2"
+    },
+    {
+      "kind": "music",
+      "id": "music-i-b-20s",
+      "file": "assets/audio/raw/music-i-b-20s.mp3",
+      "prompt": "Feel good indie pop instrumental at about 114 bpm. A clean electric guitar plays a light palm muted groove with a simple catchy picked motif, a warm melodic bass line, relaxed tight drums with a crisp snare and a steady hi hat. Upbeat, confident and friendly, modern and trendy without being loud. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit. Even feel good energy the whole way through so any fifteen second window stands on its own. It sits under a spoken voiceover, so leave space in the midrange where a voice sits: no busy lead melody competing for attention, no guitar solo. Clean modern indie production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 20000,
+      "creditsMeasured": 547,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-24T20:49:52.811Z",
+      "accepted": true,
+      "notes": "Mid tempo indie pop, palm muted clean electric guitar, melodic bass, about 114 bpm. Measured duration 20.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.8,
+        "wholeTrackMeanDb": -17.1,
+        "deficitDb": -1.3,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "tutorial2"
+    },
+    {
+      "kind": "music",
+      "id": "music-i-c-20s",
+      "file": "assets/audio/raw/music-i-c-20s.mp3",
+      "prompt": "Warm acoustic indie pop instrumental at about 110 bpm. Strummed acoustic guitar carries the rhythm, with a light fingerpicked acoustic line and a soft clean electric guitar accent, warm round bass, gentle kick, snare and shaker, a few handclaps. Warm, optimistic, feel good and upbeat, sunny and relaxed but still moving forward. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit. Even feel good energy the whole way through so any fifteen second window stands on its own. It sits under a spoken voiceover, so leave space in the midrange where a voice sits: no busy lead melody competing for attention, no guitar solo. Clean modern indie production, plenty of headroom, nothing distorted.",
+      "model": "music_v2",
+      "lengthMs": 20000,
+      "creditsMeasured": 547,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-24T20:50:01.723Z",
+      "accepted": true,
+      "notes": "Warm acoustic led indie pop, strummed and fingerpicked acoustic guitar, about 110 bpm. Measured duration 20.04s.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -18,
+        "wholeTrackMeanDb": -17.4,
+        "deficitDb": 0.6,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "tutorial2"
     }
   ],
   "mixes": [

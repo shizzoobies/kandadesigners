@@ -1,0 +1,34 @@
+{
+  "_note": "Tagged narration for the contrast tutorial, 15 second cut, read on eleven_v3. The words are the ones in src/tutorial/reels/contrast.ts, unchanged; only the inline audio tags are added. scripts/voice.ts strips the tags and refuses to run if what is left is not exactly the narration in src, so the words cannot drift. Tags only ever go to the voice model: captions and the SRT read the untagged narration from src. Direction: warm and confident, a little playful, like a friend who already knows the answer. One pause tag only, before the verdict, because the 15 second cut has about 24 frames of slack and every pause costs some of it.",
+  "tutorial": "contrast",
+  "cut": "short",
+  "model": "eleven_v3",
+  "direction": "Warm, confident, a little playful.",
+  "beats": [
+    {
+      "id": "hook",
+      "narration": "[confident] Contrast is not a vibe.",
+      "why": "A flat claim. Confident, not announced."
+    },
+    {
+      "id": "fine",
+      "narration": "[amused] This amber on cream looks fine.",
+      "why": "The setup. She already knows it does not pass, so the line gets a light smile rather than a straight face."
+    },
+    {
+      "id": "fails",
+      "narration": "[matter-of-fact] It measures two point nine to one. [short pause] That fails.",
+      "why": "The number is the verdict, so it is said plainly. The one pause in the script sits before \"That fails.\" so the verdict lands on its own."
+    },
+    {
+      "id": "fix",
+      "narration": "[warm] Same palette, rust instead. Six point seven. [pleased] Passes.",
+      "why": "The fix is the good news. Warm through the line, a small lift of satisfaction on the last word."
+    },
+    {
+      "id": "cta",
+      "narration": "[warm] Measure every color you set text in.",
+      "why": "The takeaway, said like advice to a friend."
+    }
+  ]
+}

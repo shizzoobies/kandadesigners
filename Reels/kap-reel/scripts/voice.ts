@@ -22,6 +22,23 @@
  *   --mix                       build the mixes instead of generating voice.
  *   --force                     regenerate even when the hash already matches.
  *   --voice <id>                override the draft voice for this run.
+ *   --model <id>                eleven_multilingual_v2 (default, every line above
+ *                               behaves exactly as it always has) or eleven_v3.
+ *
+ * eleven_v3 candidates (added 2026-09-24, see "eleven_v3" below). One reel and
+ * one cut at a time, read from a tagged script file, never from src:
+ *   npx tsx scripts/voice.ts --model eleven_v3 --reel contrast --cut short --stability natural [--dry-run]
+ *   npx tsx scripts/voice.ts --model eleven_v3 --reel contrast --cut short --stability natural --stitch
+ *   npx tsx scripts/voice.ts --model eleven_v3 --reel contrast --cut short --stability natural \
+ *     --mix --music i-b --out out/candidates/contrast-15s-preview-1.mp3
+ *
+ *   --stability natural|creative|robust   the v3 stability mode. Default natural.
+ *   --script <path>             tagged script. Default config/<reel>-v3-script.json.
+ *   --stitch                    voice only preview of the cut, beats placed where
+ *                               src/tutorial/timeline.ts would place them, to
+ *                               out/candidates/<reel>-15s-voice-<stability>.mp3.
+ *   --mix --music <variant>     the same ducked mix as the v2 --mix, over the named
+ *     --out <file.mp3>          music take, encoded to the given mp3.
  *
  * API contract, confirmed against the live docs on 2026-09-04:
  *
@@ -65,6 +82,54 @@
  *   below, and the same page notes it "can better generalize the reading out of
  *   numbers in a way that is more natural for human listeners", which matters
  *   for a tutorial whose whole subject is a contrast ratio read aloud.
+ *
+ * eleven_v3, added 2026-09-24 on Alex's call.
+ *
+ *   He found the v2 read flat and approved v3 with audio tags for candidates.
+ *   The reasons above still hold for anything that ships: v3 is opt in with
+ *   --model eleven_v3, its beats live in their own folders and in their own
+ *   "v3" section of config/voice.json, and nothing in src/ ever reads them,
+ *   so the rendered timelines cannot move because a v3 candidate was made.
+ *
+ *   Confirmed against the live docs on 2026-09-24:
+ *
+ *   - Same endpoint and body as above with model_id "eleven_v3". The models
+ *     page now lists it as generally available, 70+ languages, a 5,000
+ *     character limit per request, and not meant for real time use.
+ *   - Stability is a mode, not a dial. The v3 prompting guide names three:
+ *     Creative ("More emotional and expressive, but prone to
+ *     hallucinations"), Natural ("Closest to the original voice recording,
+ *     balanced and neutral") and Robust ("Highly stable, but less responsive
+ *     to directional prompts but consistent, similar to v2"). The official
+ *     pages give no numbers for them. 0.0, 0.5 and 1.0 are the values the
+ *     playground's three position slider sends and that third party SDK notes
+ *     report the API rounds to, so that is what V3_STABILITY holds; it is not
+ *     from the ElevenLabs docs themselves, and the 2026-09-24 calls at 0.0
+ *     and 0.5 were accepted as sent, which is all that was verified.
+ *   - Of the other voice settings the best practices page names only speed as
+ *     honored by v3 (0.7 to 1.2). similarity_boost, style and speaker boost
+ *     are v2 controls. So a v3 call sends voice_settings { stability } and
+ *     nothing else: speed stays at its default for the same reason it does
+ *     on v2, and sending settings v3 ignores would only muddy the record.
+ *   - Audio tags are written inline in square brackets, lower case words,
+ *     placed before the words they color: "[amused] This amber on cream
+ *     looks fine." The guide's examples are emotional and delivery tags
+ *     ([excited], [curious], [sarcastic], [whispers], [laughs], [sighs]) and
+ *     it warns that how well a tag works depends on the voice. SSML break
+ *     tags are not supported on v3; the help center page on pauses gives
+ *     [pause], [short pause] and [long pause] instead, alongside ellipses.
+ *   - The tags are spoken as direction, not read out, and they are billed as
+ *     characters like any other text, so a tagged line costs its tags too.
+ *
+ *   Tags belong to the narration string sent to the model and nowhere else.
+ *   stripAudioTags() below removes them, the v3 path refuses a script whose
+ *   stripped text is not word for word the narration in src/tutorial/reels,
+ *   and captions and the SRT keep reading that untagged narration from src.
+ *
+ *   The cache key for a v3 beat is voiceHash() over the tagged text, the
+ *   voice, "eleven_v3" and the stability, with the settings v3 is not sent
+ *   pinned to constants, so a beat is regenerated only when one of those four
+ *   changes, and never twice for the same tagged line.
  *
  * Credits. The text to speech endpoint reports no cost, so cost is measured the
  * way scripts/audio.ts measures music and sound effects: a before and after
@@ -111,6 +176,7 @@ import {
   tutorialBeats,
   tutorialTimeline,
   TUTORIAL_TOTAL_FRAMES,
+  type TutorialTimeline,
 } from "../src/tutorial/timeline.js";
 import {
   findVoice,
@@ -132,7 +198,6 @@ import type {
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..");
 const VOICE_JSON = path.join(ROOT, "config", "voice.json");
-const AUDIO_DIR = path.join(ROOT, "assets", "audio");
 
 const API_BASE = "https://api.elevenlabs.io";
 
@@ -342,17 +407,19 @@ async function speak(
   voiceId: string,
   text: string,
   label: string,
+  // The v3 path passes its own model and its stability-only settings. Left
+  // out, this is the v2 call it has always been.
+  model: { model_id: string; voice_settings: object } = {
+    model_id: MODEL,
+    voice_settings: SETTINGS,
+  },
 ): Promise<Buffer> {
   const res = await fetchRetry(
     `${API_BASE}/v1/text-to-speech/${voiceId}?output_format=${OUTPUT_FORMAT}`,
     {
       method: "POST",
       headers: { "xi-api-key": key, "content-type": "application/json" },
-      body: JSON.stringify({
-        text,
-        model_id: MODEL,
-        voice_settings: SETTINGS,
-      }),
+      body: JSON.stringify({ text, ...model }),
     },
   );
   if (!res.ok) {
@@ -522,6 +589,15 @@ type MixShape = {
   fadeOut: number;
   bedGainDb: number;
   threshold: number;
+  /**
+   * Pad the voice bus with silence to the full length of the cut. Only the v3
+   * candidate mixes set it. sidechaincompress ends when its shorter input
+   * ends, so without the pad the mix stops on the last word and the bed never
+   * reaches its fade; the v2 mixes on disk measure 14.58s against a 15.0s
+   * cut for that reason. Left off for v2 so its output is unchanged until
+   * that is decided on its own.
+   */
+  padVoice: boolean;
 };
 
 /** Input 0, trimmed, gained and faded: the music bed before anything ducks it. */
@@ -558,7 +634,8 @@ function voiceChain(shape: MixShape): string[] {
   } else {
     parts.push(`${labels[0]}anull[voiceraw]`);
   }
-  parts.push(`[voiceraw]${AFORMAT}[voiceall]`);
+  const pad = shape.padVoice ? `apad=whole_dur=${shape.seconds},` : "";
+  parts.push(`[voiceraw]${pad}${AFORMAT}[voiceall]`);
   return parts;
 }
 
@@ -679,18 +756,35 @@ function solveDuck(
   return { threshold, thresholdDb, measuredDuckDb: measured };
 }
 
+/**
+ * What the v3 candidate mixes change about buildMix, and nothing else: the
+ * timeline (laid out from the v3 durations), the music take, where the wav
+ * goes, and where the record is kept. Everything that decides how the mix
+ * sounds (bed level, duck, limiter, loudnorm) is the same code either way.
+ */
+type MixOverride = {
+  timeline: TutorialTimeline;
+  music: { file: string; from: number; id: string };
+  musicVariant: string;
+  wav: string;
+  save: (record: VoiceMixRecord) => void;
+};
+
 async function buildMix(
   content: TutorialContent,
   cut: TutorialCut,
   log: VoiceLog,
+  override?: MixOverride,
 ): Promise<VoiceMixRecord> {
-  const timeline = tutorialTimeline(content, cut, log);
+  const timeline = override?.timeline ?? tutorialTimeline(content, cut, log);
   const seconds = timeline.totalFrames / FPS;
-  const variant = content.music[cut];
-  const music = musicTake(
-    variant as Parameters<typeof musicTake>[0],
-    cut === "short" ? 20 : 50,
-  );
+  const variant = override?.musicVariant ?? content.music[cut];
+  const music =
+    override?.music ??
+    musicTake(
+      variant as Parameters<typeof musicTake>[0],
+      cut === "short" ? 20 : 50,
+    );
 
   const placements: VoicePlacement[] = [];
   // The longest line, and where it sits, so the duck can be measured while
@@ -763,6 +857,7 @@ async function buildMix(
     fadeOut: FADE_OUT_SECONDS[cut],
     bedGainDb,
     threshold: Math.min(0.5, Math.max(0.0005, 10 ** (firstThresholdDb / 20))),
+    padVoice: Boolean(override),
   };
 
   const solved = solveDuck(inputs, shape, duckWindow);
@@ -787,8 +882,8 @@ async function buildMix(
     `  pass 1: I ${measured.input_i} LUFS, TP ${measured.input_tp} dBTP, LRA ${measured.input_lra}`,
   );
 
-  fs.mkdirSync(AUDIO_DIR, { recursive: true });
-  const wav = path.join(ROOT, mixFilePath(content.id, cut));
+  const wav = override?.wav ?? path.join(ROOT, mixFilePath(content.id, cut));
+  fs.mkdirSync(path.dirname(wav), { recursive: true });
   const pass2 = ffmpeg([
     ...inputs,
     "-filter_complex",
@@ -845,6 +940,11 @@ async function buildMix(
     createdAt: new Date().toISOString(),
   };
 
+  if (override) {
+    override.save(record);
+    return record;
+  }
+
   const fresh = loadLog();
   fresh.mixes = fresh.mixes.filter(
     (m) => !(m.tutorial === content.id && m.cut === cut),
@@ -855,6 +955,545 @@ async function buildMix(
   );
   saveLog(fresh);
   return record;
+}
+
+// ---------------------------------------------------------------------------
+// eleven_v3 candidates
+// ---------------------------------------------------------------------------
+
+const V3_MODEL = "eleven_v3";
+
+/** The three documented v3 stability modes. See the header for where the numbers come from. */
+const V3_STABILITY = {
+  creative: 0.0,
+  natural: 0.5,
+  robust: 1.0,
+} as const;
+
+type V3Mode = keyof typeof V3_STABILITY;
+
+/** What a v3 call sends as voice_settings. Stability only; see the header. */
+type V3Settings = { stability: number };
+
+/**
+ * Cap on v3 generations logged in the v3 section, separate from the v2 cap so
+ * a candidate pass can never eat the budget the shipping reads rely on. Two
+ * reads of a five beat cut is ten; this allows one more full pair and stops.
+ */
+const V3_GENERATION_CAP = 20;
+
+/** Where the voice only and mixed candidate previews go. */
+const CANDIDATE_DIR = path.join(ROOT, "out", "candidates");
+
+/**
+ * Removes inline audio tags ("[warm]", "[short pause]") and the spaces they
+ * leave. Exported so anything that ever turns a tagged line into caption or
+ * SRT text strips it the same way.
+ */
+export function stripAudioTags(text: string): string {
+  return text
+    .replace(/\[[^\]]*\]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const tagsIn = (text: string): string[] =>
+  [...text.matchAll(/\[([^\]]*)\]/g)].map((m) => m[1]);
+
+type V3Generation = {
+  tutorial: string;
+  cut: string;
+  beatId: string;
+  /** The stability mode, which is also the folder the file lives in. */
+  mode: V3Mode;
+  file: string;
+  /** The exact text sent, tags included. */
+  text: string;
+  /** The same line with the tags stripped: what captions and the SRT say. */
+  plainText: string;
+  tags: string[];
+  /** Characters sent, tags included, since tags are billed as text. */
+  characters: number;
+  hash: string;
+  voiceId: string;
+  voiceName: string;
+  model: string;
+  settings: V3Settings;
+  outputFormat: string;
+  durationSeconds: number;
+  creditsMeasured: number | null;
+  creditsBucket: string | null;
+  createdAt: string;
+};
+
+type V3Stitch = {
+  tutorial: string;
+  cut: string;
+  mode: V3Mode;
+  file: string;
+  totalFrames: number;
+  /** Frames over the cut's fixed total, 0 when the read fits. */
+  overFrames: number;
+  beats: { beatId: string; startFrame: number; seconds: number }[];
+  measuredIntegratedLufs: number;
+  measuredTruePeakDbfs: number;
+  createdAt: string;
+};
+
+type V3Mix = VoiceMixRecord & { mode: V3Mode; mp3: string };
+
+type V3Section = {
+  _note: string;
+  generations: V3Generation[];
+  stitches: V3Stitch[];
+  mixes: V3Mix[];
+};
+
+type LogWithV3 = VoiceLog & { v3?: V3Section };
+
+const EMPTY_V3: V3Section = {
+  _note:
+    "eleven_v3 candidate reads, added 2026-09-24. Kept apart from generations " +
+    "above on purpose: src/tutorial/timeline.ts lays the rendered reels out " +
+    "from generations, and nothing reads this section, so a candidate never " +
+    "moves a render. text is exactly what was sent, audio tags included; " +
+    "plainText is the same line with the tags stripped. creditsMeasured is the " +
+    "same before and after usage delta as every other entry. Written by " +
+    "scripts/voice.ts --model eleven_v3.",
+  generations: [],
+  stitches: [],
+  mixes: [],
+};
+
+function v3Of(log: LogWithV3): V3Section {
+  if (!log.v3) log.v3 = structuredClone(EMPTY_V3);
+  log.v3.generations ??= [];
+  log.v3.stitches ??= [];
+  log.v3.mixes ??= [];
+  return log.v3;
+}
+
+/**
+ * The regeneration key for a v3 beat. voiceHash() over the tagged text, the
+ * voice, the model and the stability; the three settings v3 is not sent are
+ * pinned to constants so they cannot change the key.
+ */
+function v3Hash(text: string, voiceId: string, stability: number): string {
+  return voiceHash(text, voiceId, V3_MODEL, {
+    stability,
+    similarity_boost: 0,
+    style: 0,
+    use_speaker_boost: false,
+    speed: 1,
+  });
+}
+
+function v3FilePath(tutorial: string, cut: TutorialCut, mode: V3Mode, beatId: string): string {
+  const cutDir = cut === "short" ? "" : `${cut}/`;
+  return `assets/audio/voice/${tutorial}-v3/${mode}/${cutDir}${beatId}.mp3`;
+}
+
+type V3Script = {
+  tutorial: string;
+  cut: string;
+  beats: { id: string; narration: string }[];
+};
+
+type V3Job = {
+  beat: TutorialBeat;
+  text: string;
+  plainText: string;
+  file: string;
+  hash: string;
+};
+
+/**
+ * Reads the tagged script and checks it against src, beat for beat.
+ *
+ * Every beat of the cut must be present, in order, and its stripped text must
+ * be exactly the narration in src. That is the guarantee that only the tags
+ * changed, and it is checked before anything is spent.
+ */
+function v3Jobs(
+  content: TutorialContent,
+  cut: TutorialCut,
+  mode: V3Mode,
+  voiceId: string,
+  scriptPath: string,
+): V3Job[] {
+  const script = JSON.parse(fs.readFileSync(scriptPath, "utf8")) as V3Script;
+  if (script.tutorial !== content.id || script.cut !== cut) {
+    throw new Error(
+      `${rel(scriptPath)} is for ${script.tutorial} ${script.cut}, not ${content.id} ${cut}.`,
+    );
+  }
+  const beats = tutorialBeats(content, cut);
+  const ids = beats.map((b) => b.id).join(", ");
+  const scriptIds = script.beats.map((b) => b.id).join(", ");
+  if (ids !== scriptIds) {
+    throw new Error(
+      `${rel(scriptPath)} has beats [${scriptIds}], the cut has [${ids}]. They must match in order.`,
+    );
+  }
+  return beats.map((beat, i) => {
+    const text = script.beats[i].narration.trim();
+    const plainText = stripAudioTags(text);
+    if (plainText !== beat.narration) {
+      throw new Error(
+        `${rel(scriptPath)} beat "${beat.id}": with its tags stripped it reads\n` +
+          `  "${plainText}"\nbut the narration in src is\n  "${beat.narration}"\n` +
+          `Only tags may change. Nothing was sent.`,
+      );
+    }
+    if (text.includes(String.fromCharCode(0x2014))) {
+      throw new Error(`${rel(scriptPath)} beat "${beat.id}" contains an em dash.`);
+    }
+    if (/K&A/.test(text)) {
+      throw new Error(`${rel(scriptPath)} beat "${beat.id}": write "K and A" for the voice model.`);
+    }
+    return {
+      beat,
+      text,
+      plainText,
+      file: path.join(ROOT, v3FilePath(content.id, cut, mode, beat.id)),
+      hash: v3Hash(text, voiceId, V3_STABILITY[mode]),
+    };
+  });
+}
+
+function findV3(
+  v3: V3Section,
+  tutorial: string,
+  cut: string,
+  mode: V3Mode,
+  beatId: string,
+): V3Generation | null {
+  let found: V3Generation | null = null;
+  for (const g of v3.generations) {
+    if (g.tutorial === tutorial && g.cut === cut && g.mode === mode && g.beatId === beatId) {
+      found = g;
+    }
+  }
+  return found;
+}
+
+function v3UpToDate(v3: V3Section, content: TutorialContent, cut: TutorialCut, mode: V3Mode, job: V3Job): V3Generation | null {
+  const found = findV3(v3, content.id, cut, mode, job.beat.id);
+  if (!found || found.hash !== job.hash) return null;
+  if (!fs.existsSync(path.join(ROOT, found.file))) return null;
+  return found;
+}
+
+async function generateV3(
+  key: string,
+  content: TutorialContent,
+  cut: TutorialCut,
+  mode: V3Mode,
+  voiceId: string,
+  voiceName: string,
+  scriptPath: string,
+  options: { force: boolean; dryRun: boolean },
+): Promise<void> {
+  const jobs = v3Jobs(content, cut, mode, voiceId, scriptPath);
+  const log = loadLog() as LogWithV3;
+  const v3 = v3Of(log);
+  const settings: V3Settings = { stability: V3_STABILITY[mode] };
+
+  let generated = 0;
+  let skipped = 0;
+  let credits = 0;
+  let unmeasured = 0;
+  let characters = 0;
+
+  for (const job of jobs) {
+    const label = `${content.id}/${cut}/v3-${mode}/${job.beat.id}`;
+    const existing = options.force ? null : v3UpToDate(v3, content, cut, mode, job);
+    if (existing) {
+      skipped += 1;
+      console.log(`[skip] ${label}: hash ${job.hash} already on disk (${existing.durationSeconds.toFixed(2)}s)`);
+      continue;
+    }
+    characters += job.text.length;
+    if (options.dryRun) {
+      console.log(`[dry run] ${label}: ${job.text.length} characters  ${job.text}`);
+      continue;
+    }
+    if (v3.generations.length >= V3_GENERATION_CAP) {
+      throw new Error(
+        `v3 generation cap reached: ${v3.generations.length} of ${V3_GENERATION_CAP} logged in ` +
+          `config/voice.json. Stopping rather than spending more.`,
+      );
+    }
+
+    console.log(`\n[voice v3] ${label}`);
+    console.log(`  ${job.text.length} characters, ${V3_MODEL} stability ${settings.stability}, ${OUTPUT_FORMAT}`);
+    console.log(`  ${job.text}`);
+
+    const before = await usageSnapshot(key);
+    const bytes = await speak(key, voiceId, job.text, label, {
+      model_id: V3_MODEL,
+      voice_settings: settings,
+    });
+    fs.mkdirSync(path.dirname(job.file), { recursive: true });
+    fs.writeFileSync(job.file, bytes);
+    const durationSeconds = Number(probeDuration(job.file).toFixed(3));
+    console.log(`  wrote ${rel(job.file)} (${(bytes.length / 1024).toFixed(0)} KB, ${durationSeconds.toFixed(2)}s)`);
+
+    const measured = await creditsSince(key, before);
+    console.log(
+      `  credits ${measured.credits ?? "not reported"}${measured.bucket ? ` (${measured.bucket})` : ""}`,
+    );
+    assertUnderCreditAlarm(measured.credits, label);
+
+    const record: V3Generation = {
+      tutorial: content.id,
+      cut,
+      beatId: job.beat.id,
+      mode,
+      file: rel(job.file),
+      text: job.text,
+      plainText: job.plainText,
+      tags: tagsIn(job.text),
+      characters: job.text.length,
+      hash: job.hash,
+      voiceId,
+      voiceName,
+      model: V3_MODEL,
+      settings,
+      outputFormat: OUTPUT_FORMAT,
+      durationSeconds,
+      creditsMeasured: measured.credits,
+      creditsBucket: measured.bucket,
+      createdAt: new Date().toISOString(),
+    };
+    // Reloaded and written after every call, so a paid beat is on the record
+    // even if the next one throws.
+    const onDisk = loadLog() as LogWithV3;
+    v3Of(onDisk).generations.push(record);
+    saveLog(onDisk);
+    v3.generations.push(record);
+    generated += 1;
+    if (measured.credits === null) unmeasured += 1;
+    else credits += measured.credits;
+  }
+
+  if (options.dryRun) {
+    console.log(
+      `\n${characters} characters to send at ${CREDITS_PER_CHARACTER} credit a character, ` +
+        `about ${characters * CREDITS_PER_CHARACTER} credits. ${skipped} already on disk. Nothing was called.`,
+    );
+    return;
+  }
+  console.log(
+    `\n${generated} generated, ${skipped} skipped. ${credits} credits measured` +
+      (unmeasured > 0 ? `, ${unmeasured} not reported by the usage endpoint` : "") +
+      `. ${v3.generations.length} of ${V3_GENERATION_CAP} v3 generations logged.`,
+  );
+}
+
+/**
+ * The v3 read laid out exactly as src/tutorial/timeline.ts would lay it out.
+ *
+ * tutorialTimeline() is handed a log whose generations are the v3 beats of one
+ * mode, so the gaps, the hook and end card floors and the stretch beat are the
+ * real rule, not a copy of it. If the v3 read is too long for the cut, the
+ * real rule throws; a candidate still has to be heard, so the beats are then
+ * laid end to end by the same beatFrames() rule with no stretch, and the
+ * overrun is reported rather than hidden.
+ */
+function v3Timeline(
+  content: TutorialContent,
+  cut: TutorialCut,
+  mode: V3Mode,
+): { timeline: TutorialTimeline; overFrames: number; log: VoiceLog } {
+  const full = loadLog() as LogWithV3;
+  const v3 = v3Of(full);
+  const beats = tutorialBeats(content, cut);
+  const records = beats.map((beat) => {
+    const found = findV3(v3, content.id, cut, mode, beat.id);
+    if (!found || !fs.existsSync(path.join(ROOT, found.file))) {
+      throw new Error(
+        `${content.id} ${cut} v3 ${mode}: no voice file for beat "${beat.id}". Run: ` +
+          `npx tsx scripts/voice.ts --model eleven_v3 --reel ${content.id} --cut ${cut} --stability ${mode}`,
+      );
+    }
+    return found;
+  });
+  const log: VoiceLog = {
+    ...structuredClone(EMPTY_LOG),
+    generations: records.map((r) => ({
+      ...r,
+      settings: { ...SETTINGS, stability: r.settings.stability },
+    })) as VoiceGeneration[],
+  };
+  try {
+    return { timeline: tutorialTimeline(content, cut, log), overFrames: 0, log };
+  } catch (err) {
+    if (!(err instanceof Error) || !/frames over/.test(err.message)) throw err;
+    let cursor = 0;
+    const entries = beats.map((beat, i) => {
+      const frames = beatFrames(beat, records[i].durationSeconds);
+      const kind: TutorialTimeline["entries"][number]["kind"] =
+        i === 0 ? "hook" : i === beats.length - 1 ? "cta" : "beat";
+      const entry = {
+        kind,
+        beat,
+        start: cursor,
+        end: cursor + frames,
+        seconds: records[i].durationSeconds,
+        source: "measured" as const,
+        voiceFile: records[i].file,
+        stretchFrames: 0,
+      };
+      cursor += frames;
+      return entry;
+    });
+    const overFrames = cursor - TUTORIAL_TOTAL_FRAMES[cut];
+    console.log(
+      `  WARNING: this read is ${overFrames} frames over the ${TUTORIAL_TOTAL_FRAMES[cut]} frame cut. ` +
+        `Laid end to end for listening; it would not render as is.`,
+    );
+    return {
+      timeline: { id: content.id, cut, totalFrames: cursor, entries, slackFrames: 0, estimated: [] },
+      overFrames,
+      log,
+    };
+  }
+}
+
+const cutSeconds = (cut: TutorialCut) => (cut === "short" ? "15s" : "45s");
+
+function encodeMp3(input: string, output: string, filter?: string): void {
+  fs.mkdirSync(path.dirname(output), { recursive: true });
+  const res = ffmpeg([
+    "-i",
+    input,
+    ...(filter ? ["-af", filter] : []),
+    "-c:a",
+    "libmp3lame",
+    "-b:a",
+    "320k",
+    "-ar",
+    "48000",
+    "-ac",
+    "2",
+    "-y",
+    output,
+  ]);
+  if (res.code !== 0) throw new Error(`mp3 encode failed:\n${res.stderr.slice(-3000)}`);
+}
+
+/**
+ * Voice only preview of one v3 read: every beat at the frame the timeline puts
+ * it on, silence between, the whole cut long. Normalized to -16 LUFS, the
+ * spec's voice level, so the two modes can be compared at the same loudness.
+ */
+function stitchV3(content: TutorialContent, cut: TutorialCut, mode: V3Mode): V3Stitch {
+  const { timeline, overFrames } = v3Timeline(content, cut, mode);
+  const seconds = timeline.totalFrames / FPS;
+  const out = path.join(CANDIDATE_DIR, `${content.id}-${cutSeconds(cut)}-voice-${mode}.mp3`);
+  const wav = `${out}.tmp.wav`;
+  const inputs = timeline.entries.flatMap((e) => ["-i", path.join(ROOT, e.voiceFile as string)]);
+  const parts = timeline.entries.map(
+    (e, i) => `[${i}:a]adelay=${Math.round((e.start / FPS) * 1000)}:all=1,${AFORMAT}[v${i}]`,
+  );
+  parts.push(
+    `${timeline.entries.map((_, i) => `[v${i}]`).join("")}amix=inputs=${timeline.entries.length}:` +
+      `duration=longest:normalize=0,apad=whole_dur=${seconds},atrim=0:${seconds},` +
+      `loudnorm=I=-16:TP=-1.5:LRA=11,${AFORMAT}[out]`,
+  );
+  console.log(`\n[stitch v3] ${content.id} ${cut} ${mode} (${seconds.toFixed(2)}s)`);
+  const res = ffmpeg([
+    ...inputs,
+    "-filter_complex",
+    parts.join(";"),
+    "-map",
+    "[out]",
+    "-c:a",
+    "pcm_s16le",
+    "-ar",
+    "48000",
+    "-ac",
+    "2",
+    "-y",
+    wav,
+  ]);
+  if (res.code !== 0) throw new Error(`stitch failed:\n${res.stderr.slice(-3000)}`);
+  encodeMp3(wav, out);
+  fs.rmSync(wav);
+  const loud = verifyLoudness(out);
+  for (const e of timeline.entries) {
+    console.log(
+      `  ${e.beat.id.padEnd(6)} frame ${String(e.start).padStart(3)}  ${e.seconds.toFixed(2)}s` +
+        (e.stretchFrames ? `  +${e.stretchFrames} stretch` : ""),
+    );
+  }
+  console.log(`  I ${loud.integrated} LUFS, TP ${loud.truePeak} dBTP. wrote ${rel(out)}`);
+
+  const record: V3Stitch = {
+    tutorial: content.id,
+    cut,
+    mode,
+    file: rel(out),
+    totalFrames: timeline.totalFrames,
+    overFrames,
+    beats: timeline.entries.map((e) => ({ beatId: e.beat.id, startFrame: e.start, seconds: e.seconds })),
+    measuredIntegratedLufs: loud.integrated,
+    measuredTruePeakDbfs: loud.truePeak,
+    createdAt: new Date().toISOString(),
+  };
+  const onDisk = loadLog() as LogWithV3;
+  const section = v3Of(onDisk);
+  section.stitches = section.stitches.filter(
+    (s) => !(s.tutorial === content.id && s.cut === cut && s.mode === mode),
+  );
+  section.stitches.push(record);
+  saveLog(onDisk);
+  return record;
+}
+
+/** The v2 --mix, over a v3 read and a chosen music take, encoded to an mp3 candidate. */
+async function mixV3(
+  content: TutorialContent,
+  cut: TutorialCut,
+  mode: V3Mode,
+  musicVariant: string,
+  outMp3: string,
+): Promise<V3Mix> {
+  const { timeline, log } = v3Timeline(content, cut, mode);
+  const music = musicTake(
+    musicVariant as Parameters<typeof musicTake>[0],
+    cut === "short" ? 20 : 50,
+  );
+  const wav = path.join(
+    ROOT,
+    "assets",
+    "audio",
+    "voice",
+    `${content.id}-v3`,
+    mode,
+    `mix-${cutSeconds(cut)}-${musicVariant}.wav`,
+  );
+  const holder: { record?: V3Mix } = {};
+  await buildMix(content, cut, log, {
+    timeline,
+    music,
+    musicVariant,
+    wav,
+    save: (record) => {
+      holder.record = { ...record, mode, mp3: rel(outMp3) };
+    },
+  });
+  const saved = holder.record;
+  if (!saved) throw new Error("mixV3: the mix record was not produced.");
+  encodeMp3(wav, outMp3);
+  console.log(`  wrote ${rel(outMp3)}`);
+  const onDisk = loadLog() as LogWithV3;
+  const section = v3Of(onDisk);
+  section.mixes = section.mixes.filter((m) => m.mp3 !== rel(outMp3));
+  section.mixes.push(saved);
+  saveLog(onDisk);
+  return saved;
 }
 
 // ---------------------------------------------------------------------------
@@ -1116,6 +1755,60 @@ async function main(): Promise<void> {
 
   if (command === "audition") {
     await auditionVoices(readApiKey());
+    return;
+  }
+
+  const model = flag(argv, "model") ?? MODEL;
+  if (model !== MODEL && model !== V3_MODEL) {
+    throw new Error(`Unknown --model "${model}". Use ${MODEL} (default) or ${V3_MODEL}.`);
+  }
+
+  if (model === V3_MODEL) {
+    const reel = flag(argv, "reel");
+    const cutName = flag(argv, "cut");
+    const content = reel ? TUTORIALS[reel] : undefined;
+    if (!content || (cutName !== "short" && cutName !== "linkedin")) {
+      throw new Error(
+        `--model ${V3_MODEL} works on one reel and one cut at a time, from a tagged script: ` +
+          `--reel contrast|hero --cut short|linkedin.`,
+      );
+    }
+    const cut: TutorialCut = cutName;
+    const modeName = flag(argv, "stability") ?? "natural";
+    if (!(modeName in V3_STABILITY)) {
+      throw new Error(`Unknown --stability "${modeName}". Use creative, natural or robust.`);
+    }
+    const mode = modeName as V3Mode;
+
+    if (argv.includes("--stitch")) {
+      stitchV3(content, cut, mode);
+      return;
+    }
+    if (argv.includes("--mix")) {
+      const music = flag(argv, "music");
+      const out = flag(argv, "out");
+      if (!music || !out) {
+        throw new Error(`--mix with --model ${V3_MODEL} needs --music <variant> and --out <file.mp3>.`);
+      }
+      const r = await mixV3(content, cut, mode, music, path.resolve(ROOT, out));
+      console.log(
+        `\n  ${r.tutorial} ${r.cut} v3 ${mode} over ${music}: I ${r.measuredIntegratedLufs} LUFS, ` +
+          `TP ${r.measuredTruePeakDbfs} dBTP, bed ${r.bedGainDb} dB with ${r.measuredDuckDb} dB of duck  ${r.mp3}`,
+      );
+      return;
+    }
+
+    const scriptPath = path.resolve(
+      ROOT,
+      flag(argv, "script") ?? path.join("config", `${content.id}-v3-script.json`),
+    );
+    const dryRun = argv.includes("--dry-run");
+    const voiceId = flag(argv, "voice") ?? DRAFT_VOICE.id;
+    const voiceName = voiceId === DRAFT_VOICE.id ? DRAFT_VOICE.name : voiceId;
+    await generateV3(dryRun ? "" : readApiKey(), content, cut, mode, voiceId, voiceName, scriptPath, {
+      force: argv.includes("--force"),
+      dryRun,
+    });
     return;
   }
 
