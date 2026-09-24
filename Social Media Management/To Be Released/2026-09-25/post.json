@@ -1,0 +1,10 @@
+{
+  "id": "2026-09-25",
+  "date": "2026-09-25",
+  "time": "09:00",
+  "timezone": "America/New_York",
+  "status": "native",
+  "pillar": "training",
+  "title": "Job aids that make sense (video, scheduled in Facebook)",
+  "platforms": { "facebook": { "type": "REEL" } }
+}

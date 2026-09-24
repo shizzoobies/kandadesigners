@@ -1,0 +1,10 @@
+{
+  "id": "2026-09-26",
+  "date": "2026-09-26",
+  "time": "09:00",
+  "timezone": "America/New_York",
+  "status": "native",
+  "pillar": "behind-the-scenes",
+  "title": "Bobbie Connor highlight (scheduled in Facebook)",
+  "platforms": { "facebook": { "type": "POST" } }
+}
