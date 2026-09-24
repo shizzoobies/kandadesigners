@@ -27,13 +27,15 @@ export default {
       // canonical; D:\MBS Medical\mbsmedical-ref is the other checkout (moved
       // off legitscript-compliance) referenced by the ka-site-seo HANDOFF for
       // the pending accessibility-statement branch. Live URL curl-verified 200.
+      // The deploy command is in D:\Skills\mbs-live\HANDOFF.md and depends on
+      // branch state (the checkout's current branch and main have both drifted
+      // from the command HANDOFF documents), so it is left for Alex to fill in.
       slug: 'mbs-medicine',
       name: 'MBS Medicine',
       live_url: 'https://mbsdoc.com',
       repo: 'shizzoobies/mbsmedical',
       local_path: 'D:\\Skills\\mbs-live',
       hosting: 'pages',
-      deploy_command: 'git push origin main',
       domain: 'mbsdoc.com',
     },
     {
