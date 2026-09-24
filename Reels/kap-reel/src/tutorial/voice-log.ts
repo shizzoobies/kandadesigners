@@ -181,7 +181,16 @@ export function voiceFilePath(
   return `assets/audio/voice/${tutorial}/${cut}/${beatId}.mp3`;
 }
 
-/** Where a tutorial's finished mix lives, repo-relative. */
-export function mixFilePath(tutorial: string, cut: string): string {
-  return `assets/audio/mix-tut-${tutorial}-${cut === "short" ? "15" : "45"}s.wav`;
+/**
+ * Where a tutorial's finished mix lives, repo-relative. A cut that ships an
+ * eleven_v3 read takes a "-v3" suffix, so the v2 mix beside it is never
+ * overwritten.
+ */
+export function mixFilePath(
+  tutorial: string,
+  cut: string,
+  read: "v2" | "v3" = "v2",
+): string {
+  const suffix = read === "v3" ? "-v3" : "";
+  return `assets/audio/mix-tut-${tutorial}-${cut === "short" ? "15" : "45"}s${suffix}.wav`;
 }

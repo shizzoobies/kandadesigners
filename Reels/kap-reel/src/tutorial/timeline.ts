@@ -10,8 +10,14 @@
 //   2. The hook holds at least 54 frames in the short cut and 36 in the
 //      LinkedIn one, which are the two hook lengths src/lib/timing.ts already
 //      uses. The end card holds at least what its own draw needs.
-//   3. The composition total is exactly 450 or 1350. Slack goes to the beat
-//      marked stretch. An overrun is a hard error naming the beat to cut.
+//   3. The LinkedIn total is exactly 1350. Slack goes to the beat marked
+//      stretch. An overrun is a hard error naming the beat to cut.
+//   4. The short cut's total is max(450, laid out length), capped at 600
+//      (TUTORIAL_MAX_FRAMES). Under 450, slack goes to the stretch beat as
+//      before. Over 450, the cut runs as long as its words and nothing is
+//      stretched; the CTA floor and the 12 frame tails are unchanged. Over 600
+//      is a hard error. Alex's call on 2026-09-24, so the eleven_v3 read can
+//      ship without cutting a word.
 //
 // Speed is never touched to make a script fit. The script is edited, and the
 // error says so.
@@ -24,13 +30,26 @@ import {
   type TutorialContent,
   type TutorialCut,
 } from "./types";
-import { findVoice, type VoiceLog } from "./voice-log";
+import { findVoice, mixFilePath, type VoiceGeneration, type VoiceLog } from "./voice-log";
 
 export const FPS = 30;
 
-/** Total frames per cut. Exact: a cut is 15.0 or 45.0 seconds, not about. */
+/**
+ * Nominal frames per cut: 15.0 and 45.0 seconds. The LinkedIn cut is exactly
+ * this long. The short cut is at least this long and may run to
+ * TUTORIAL_MAX_FRAMES when its narration needs the room.
+ */
 export const TUTORIAL_TOTAL_FRAMES: Record<TutorialCut, number> = {
   short: 450,
+  linkedin: 1350,
+};
+
+/**
+ * The longest a cut may lay out to. 600 frames is 20 seconds for the short
+ * cut; the LinkedIn cut has no give, so its cap is its total.
+ */
+export const TUTORIAL_MAX_FRAMES: Record<TutorialCut, number> = {
+  short: 600,
   linkedin: 1350,
 };
 
@@ -94,6 +113,45 @@ export const CTA_MIN_FRAMES: Record<TutorialCut, number> = {
 export const ESTIMATE_WORDS_PER_SECOND = 2.6;
 
 const VOICE_LOG = voiceJson as unknown as VoiceLog;
+
+/** The v3 section of config/voice.json, as far as the timeline reads it. */
+type V3Record = VoiceGeneration & { mode?: string };
+type LogWithV3 = VoiceLog & { v3?: { generations?: V3Record[] } };
+
+/**
+ * The log a cut is laid out from when no log is passed in.
+ *
+ * A cut that ships an eleven_v3 read (content.voice) is laid out from the v3
+ * section's generations of its model and stability mode, newest wins exactly
+ * as findVoice() does for v2. Every other cut reads the v2 generations as it
+ * always has.
+ */
+export function voiceLogFor(
+  content: TutorialContent,
+  cut: TutorialCut,
+  log: VoiceLog = VOICE_LOG,
+): VoiceLog {
+  const choice = content.voice?.[cut];
+  if (!choice) return log;
+  const v3 = ((log as LogWithV3).v3?.generations ?? []).filter(
+    (g) =>
+      g.tutorial === content.id &&
+      g.cut === cut &&
+      g.model === choice.model &&
+      g.mode === choice.mode,
+  );
+  return { ...log, generations: v3 };
+}
+
+/** The finished mix a cut is delivered with, repo-relative. */
+export function tutorialMixPath(content: TutorialContent, cut: TutorialCut): string {
+  return mixFilePath(content.id, cut, content.voice?.[cut] ? "v3" : "v2");
+}
+
+/** The music variant under a cut: the v3 read's own bed when it has one. */
+export function tutorialMusic(content: TutorialContent, cut: TutorialCut): string {
+  return content.voice?.[cut]?.music ?? content.music[cut];
+}
 
 /** What a laid out beat is: the beat itself, its frames, and where its length came from. */
 export type TutorialEntry = {
@@ -202,9 +260,15 @@ export function tutorialTimeline(
   // because a mix built one process after a generation has to place the lines
   // against the durations that generation measured, not against a snapshot
   // taken before it ran.
-  log: VoiceLog = VOICE_LOG,
+  //
+  // Left out, the log is voiceLogFor(content, cut): the v3 read for a cut that
+  // ships one, the v2 generations for every other. A log passed in is used as
+  // it is.
+  log?: VoiceLog,
 ): TutorialTimeline {
-  const totalFrames = TUTORIAL_TOTAL_FRAMES[cut];
+  const voiceLog = log ?? voiceLogFor(content, cut);
+  const floorFrames = TUTORIAL_TOTAL_FRAMES[cut];
+  const maxFrames = TUTORIAL_MAX_FRAMES[cut];
   const beats = tutorialBeats(content, cut);
 
   const stretchIds = beats.filter((b) => b.stretch).map((b) => b.id);
@@ -213,7 +277,7 @@ export function tutorialTimeline(
       `${content.id} ${cut}: exactly one beat must set stretch: true, found ` +
         `${stretchIds.length}${stretchIds.length ? ` (${stretchIds.join(", ")})` : ""}. ` +
         `The stretch beat is where the slack between the laid out beats and the ` +
-        `${totalFrames} frame total goes.`,
+        `${floorFrames} frame total goes.`,
     );
   }
 
@@ -227,7 +291,7 @@ export function tutorialTimeline(
 
   const estimated: string[] = [];
   const laid: Laid[] = beats.map((beat) => {
-    const record = findVoice(log, content.id, cut, beat.id);
+    const record = findVoice(voiceLog, content.id, cut, beat.id);
     const seconds = record
       ? record.durationSeconds
       : estimateSeconds(beat.narration);
@@ -259,25 +323,27 @@ export function tutorialTimeline(
   // every cut on a fresh checkout. So the estimated beats are squeezed back to
   // their own minFrames, in order, until the cut fits, and the warning below
   // already says the timing is provisional.
-  if (laidFrames > totalFrames && estimated.length > 0) {
+  if (laidFrames > floorFrames && estimated.length > 0) {
     for (const l of laid) {
-      if (laidFrames <= totalFrames) break;
+      if (laidFrames <= floorFrames) break;
       if (l.source !== "estimated") continue;
-      const give = Math.min(l.frames - l.beat.minFrames, laidFrames - totalFrames);
+      const give = Math.min(l.frames - l.beat.minFrames, laidFrames - floorFrames);
       l.frames -= give;
       laidFrames -= give;
     }
   }
 
-  if (laidFrames > totalFrames) {
-    const over = laidFrames - totalFrames;
+  if (laidFrames > maxFrames) {
+    const over = laidFrames - maxFrames;
     throw new Error(
-      `${content.id} ${cut} is ${over} frames over its ${totalFrames} frame total ` +
+      `${content.id} ${cut} is ${over} frames over its ${maxFrames} frame limit ` +
         `(${laidFrames} laid out). Shorten a narration line or drop a beat; the ` +
         `speed of the read is not adjusted to make a script fit.\n${describe()}`,
     );
   }
 
+  // Rule 4: a cut with give runs as long as its words, up to its cap.
+  const totalFrames = Math.max(floorFrames, laidFrames);
   const slackFrames = totalFrames - laidFrames;
 
   if (estimated.length > 0) {

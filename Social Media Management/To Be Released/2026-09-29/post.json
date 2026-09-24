@@ -16,7 +16,25 @@
       "caption": "instagram.md"
     }
   },
-  "media": [],
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": ""
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "Amber text on cream beside rust text on cream, with their contrast ratios"
+    }
+  ],
   "ai": {
     "voice": true,
     "visuals": false

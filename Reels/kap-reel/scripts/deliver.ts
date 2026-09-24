@@ -74,9 +74,12 @@ import {
 } from "./srt.js";
 import { CONTRAST_TUTORIAL } from "../src/tutorial/reels/contrast.js";
 import { HERO_TUTORIAL } from "../src/tutorial/reels/hero.js";
-import { tutorialTimeline } from "../src/tutorial/timeline.js";
+import {
+  tutorialMixPath,
+  tutorialMusic,
+  tutorialTimeline,
+} from "../src/tutorial/timeline.js";
 import { tutorialStrings, type TutorialContent } from "../src/tutorial/types.js";
-import { mixFilePath } from "../src/tutorial/voice-log.js";
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -300,9 +303,14 @@ function tutorialFor(reel: ReelKey): TutorialContent | null {
 
 function targets(reel: ReelKey): DeliveryTarget[] {
   const { infix, deliveryStem } = REEL_NAMES[reel];
-  const shapes = tutorialFor(reel) ? TUTORIAL_SHAPES : SHAPES;
+  const tutorial = tutorialFor(reel);
+  const shapes = tutorial ? TUTORIAL_SHAPES : SHAPES;
+  // A tutorial's short cut may run past 450 frames to fit its words
+  // (src/tutorial/timeline.ts rule 4), so its frame count is the timeline's.
+  const shortFrames = tutorial ? tutorialTimeline(tutorial, "short").totalFrames : null;
   return shapes.map((shape) => ({
     ...shape,
+    frames: shortFrames !== null && shape.duration === "15s" ? shortFrames : shape.frames,
     input: `out/render${infix}-${shape.format}-${shape.duration}.mp4`,
     output: `out/${deliveryStem}-${shape.format}-${shape.duration}.mp4`,
   }));
@@ -677,7 +685,7 @@ export function build45sMix(variant: string, force: boolean): string {
 // Encode
 // ---------------------------------------------------------------------------
 
-function encodeTarget(target: DeliveryTarget, mixFor: (t: DeliveryTarget) => string | null) {
+export function encodeTarget(target: DeliveryTarget, mixFor: (t: DeliveryTarget) => string | null) {
   const input = path.join(ROOT, target.input);
   if (!fs.existsSync(input)) {
     console.log(
@@ -727,7 +735,7 @@ function safeArea(width: number, height: number, top: number, bottom: number, ri
 }
 
 /** Mirrors src/lib/layout.ts SAFE_ZONES for the two thumbnail canvases. */
-const SAFE_VERTICAL = safeArea(1080, 1920, 0.15, 0.2, 0.1);
+export const SAFE_VERTICAL = safeArea(1080, 1920, 0.15, 0.2, 0.1);
 const SAFE_LANDSCAPE = safeArea(1920, 1080, 0.05, 0.08, 0.05);
 
 function extractFrame(input: string, frame: number, dest: string, extraFilter = ""): void {
@@ -804,7 +812,7 @@ async function findBandTop(file: string): Promise<number | null> {
  *   exists to show, so the mark moves to the top left of the safe area, over
  *   the plate's out of focus background.
  */
-async function thumbnail(
+export async function thumbnail(
   input: string,
   frame: number,
   safe: SafeArea,
@@ -1464,11 +1472,11 @@ async function main(argv: string[]): Promise<void> {
   const scratch = path.join(OUT_DIR, ".deliver-scratch.png");
 
   const mix15 = tutorial
-    ? path.join(ROOT, mixFilePath(tutorial.id, "short"))
+    ? path.join(ROOT, tutorialMixPath(tutorial, "short"))
     : path.join(AUDIO_DIR, `mix-${variant}-15s.wav`);
   console.log(
     `=== Phase 6 delivery, ${reel} reel` +
-      (tutorial ? `, bed ${tutorial.music.short}` : `, music variant ${variant}`) +
+      (tutorial ? `, bed ${tutorialMusic(tutorial, "short")}` : `, music variant ${variant}`) +
       ` ===\n`,
   );
 
@@ -1479,7 +1487,7 @@ async function main(argv: string[]): Promise<void> {
       // Both tutorial mixes are voice plus a ducked bed and are built by
       // scripts/voice.ts, which is where the timeline that places the lines
       // lives. There is nothing for this script to build.
-      mix45 = path.join(ROOT, mixFilePath(tutorial.id, "linkedin"));
+      mix45 = path.join(ROOT, tutorialMixPath(tutorial, "linkedin"));
       for (const wav of [mix15, mix45]) {
         if (!fs.existsSync(wav)) {
           console.log(
@@ -1604,7 +1612,28 @@ async function main(argv: string[]): Promise<void> {
   );
 }
 
-main(process.argv.slice(2)).catch((err: unknown) => {
-  console.error(err instanceof Error ? err.stack : String(err));
-  process.exit(1);
-});
+/**
+ * True when this file is the entry point rather than an import, so
+ * scripts/deliver-tutorial-short.ts can reuse thumbnail() without running a
+ * whole delivery. Compared through realpath for the D:kap-reel junction, the
+ * same way scripts/srt.ts does it.
+ */
+function isEntryPoint(): boolean {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  const real = (p: string) => {
+    try {
+      return fs.realpathSync(p);
+    } catch {
+      return path.resolve(p);
+    }
+  };
+  return real(fileURLToPath(import.meta.url)) === real(entry);
+}
+
+if (isEntryPoint()) {
+  main(process.argv.slice(2)).catch((err: unknown) => {
+    console.error(err instanceof Error ? err.stack : String(err));
+    process.exit(1);
+  });
+}

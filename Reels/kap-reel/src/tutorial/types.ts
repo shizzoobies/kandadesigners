@@ -133,6 +133,24 @@ export type TutorialContent = {
    * 15 second cut and music-a-50s.mp3 for the 45 second one.
    */
   music: Record<TutorialCut, string>;
+  /**
+   * Cuts that ship an eleven_v3 read instead of the eleven_multilingual_v2 one.
+   * Left out, a cut reads its beats from the v2 generations in
+   * config/voice.json exactly as it always has. Set, the timeline lays the cut
+   * out from the v3 section's generations of that stability mode, the render
+   * plays those files, and the delivered mix is mix-tut-<id>-<15|45>s-v3.wav
+   * over this entry's own music, which takes the place of `music` above for
+   * that cut. See scripts/voice.ts, "eleven_v3".
+   */
+  voice?: Partial<Record<TutorialCut, TutorialVoiceV3>>;
+};
+
+/** An eleven_v3 read chosen to ship, and the bed chosen to go under it. */
+export type TutorialVoiceV3 = {
+  model: "eleven_v3";
+  mode: "creative" | "natural" | "robust";
+  /** Music variant in config/audio.json, e.g. "i-b". */
+  music: string;
 };
 
 /**

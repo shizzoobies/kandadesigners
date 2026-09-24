@@ -39,6 +39,11 @@
  *                               out/candidates/<reel>-15s-voice-<stability>.mp3.
  *   --mix --music <variant>     the same ducked mix as the v2 --mix, over the named
  *     --out <file.mp3>          music take, encoded to the given mp3.
+ *   --mix (no --out)            the shipping mix, for a cut whose content file
+ *                               declares this v3 read in content.voice: over that
+ *                               entry's music, to assets/audio/mix-tut-<id>-<15|45>s-v3.wav.
+ *                               The v2 mix beside it is not touched.
+ *     npx tsx scripts/voice.ts --model eleven_v3 --reel contrast --cut short --stability natural --mix
  *
  * API contract, confirmed against the live docs on 2026-09-04:
  *
@@ -86,10 +91,12 @@
  * eleven_v3, added 2026-09-24 on Alex's call.
  *
  *   He found the v2 read flat and approved v3 with audio tags for candidates.
- *   The reasons above still hold for anything that ships: v3 is opt in with
- *   --model eleven_v3, its beats live in their own folders and in their own
- *   "v3" section of config/voice.json, and nothing in src/ ever reads them,
- *   so the rendered timelines cannot move because a v3 candidate was made.
+ *   v3 is opt in with --model eleven_v3, and its beats live in their own
+ *   folders and in their own "v3" section of config/voice.json. src/ reads
+ *   that section only for a cut whose content file names a v3 read in
+ *   content.voice (the contrast 15 second cut, natural, from 2026-09-24 on
+ *   Alex's call), so a candidate made for any other cut or mode still cannot
+ *   move a render.
  *
  *   Confirmed against the live docs on 2026-09-24:
  *
@@ -174,6 +181,7 @@ import {
   beatFrames,
   estimateSeconds,
   tutorialBeats,
+  tutorialMixPath,
   tutorialTimeline,
   TUTORIAL_TOTAL_FRAMES,
   type TutorialTimeline,
@@ -1040,7 +1048,8 @@ type V3Stitch = {
   createdAt: string;
 };
 
-type V3Mix = VoiceMixRecord & { mode: V3Mode; mp3: string };
+/** mp3 is null for the shipping mix, which is only ever a wav. */
+type V3Mix = VoiceMixRecord & { mode: V3Mode; mp3: string | null };
 
 type V3Section = {
   _note: string;
@@ -1058,7 +1067,9 @@ const EMPTY_V3: V3Section = {
     "from generations, and nothing reads this section, so a candidate never " +
     "moves a render. text is exactly what was sent, audio tags included; " +
     "plainText is the same line with the tags stripped. creditsMeasured is the " +
-    "same before and after usage delta as every other entry. Written by " +
+    "same before and after usage delta as every other entry. From " +
+    "2026-09-24 a cut whose content file sets content.voice is laid out and " +
+    "rendered from this section, for that mode only. Written by " +
     "scripts/voice.ts --model eleven_v3.",
   generations: [],
   stitches: [],
@@ -1327,7 +1338,14 @@ function v3Timeline(
     })) as VoiceGeneration[],
   };
   try {
-    return { timeline: tutorialTimeline(content, cut, log), overFrames: 0, log };
+    // The short cut now lays out past its nominal 450 when the words need it
+    // (timeline.ts rule 4), so over is measured against that nominal total.
+    const timeline = tutorialTimeline(content, cut, log);
+    return {
+      timeline,
+      overFrames: Math.max(0, timeline.totalFrames - TUTORIAL_TOTAL_FRAMES[cut]),
+      log,
+    };
   } catch (err) {
     if (!(err instanceof Error) || !/frames over/.test(err.message)) throw err;
     let cursor = 0;
@@ -1452,28 +1470,35 @@ function stitchV3(content: TutorialContent, cut: TutorialCut, mode: V3Mode): V3S
   return record;
 }
 
-/** The v2 --mix, over a v3 read and a chosen music take, encoded to an mp3 candidate. */
+/**
+ * The v2 --mix, over a v3 read and a chosen music take. With an mp3 path it is
+ * a candidate, encoded to that mp3. With null it is the shipping mix for a cut
+ * that declares this read in content.voice, written to tutorialMixPath() and
+ * nowhere else.
+ */
 async function mixV3(
   content: TutorialContent,
   cut: TutorialCut,
   mode: V3Mode,
   musicVariant: string,
-  outMp3: string,
+  outMp3: string | null,
 ): Promise<V3Mix> {
   const { timeline, log } = v3Timeline(content, cut, mode);
   const music = musicTake(
     musicVariant as Parameters<typeof musicTake>[0],
     cut === "short" ? 20 : 50,
   );
-  const wav = path.join(
-    ROOT,
-    "assets",
-    "audio",
-    "voice",
-    `${content.id}-v3`,
-    mode,
-    `mix-${cutSeconds(cut)}-${musicVariant}.wav`,
-  );
+  const wav = outMp3
+    ? path.join(
+        ROOT,
+        "assets",
+        "audio",
+        "voice",
+        `${content.id}-v3`,
+        mode,
+        `mix-${cutSeconds(cut)}-${musicVariant}.wav`,
+      )
+    : path.join(ROOT, tutorialMixPath(content, cut));
   const holder: { record?: V3Mix } = {};
   await buildMix(content, cut, log, {
     timeline,
@@ -1481,16 +1506,20 @@ async function mixV3(
     musicVariant,
     wav,
     save: (record) => {
-      holder.record = { ...record, mode, mp3: rel(outMp3) };
+      holder.record = { ...record, mode, mp3: outMp3 ? rel(outMp3) : null };
     },
   });
   const saved = holder.record;
   if (!saved) throw new Error("mixV3: the mix record was not produced.");
-  encodeMp3(wav, outMp3);
-  console.log(`  wrote ${rel(outMp3)}`);
+  if (outMp3) {
+    encodeMp3(wav, outMp3);
+    console.log(`  wrote ${rel(outMp3)}`);
+  }
   const onDisk = loadLog() as LogWithV3;
   const section = v3Of(onDisk);
-  section.mixes = section.mixes.filter((m) => m.mp3 !== rel(outMp3));
+  section.mixes = section.mixes.filter((m) =>
+    outMp3 ? m.mp3 !== rel(outMp3) : m.wav !== saved.wav,
+  );
   section.mixes.push(saved);
   saveLog(onDisk);
   return saved;
@@ -1785,15 +1814,26 @@ async function main(): Promise<void> {
       return;
     }
     if (argv.includes("--mix")) {
-      const music = flag(argv, "music");
       const out = flag(argv, "out");
-      if (!music || !out) {
-        throw new Error(`--mix with --model ${V3_MODEL} needs --music <variant> and --out <file.mp3>.`);
+      const choice = content.voice?.[cut];
+      if (!out) {
+        // The shipping mix. Only for the read the content file ships.
+        if (!choice || choice.mode !== mode) {
+          throw new Error(
+            `--mix with --model ${V3_MODEL} and no --out builds the shipping mix, and ` +
+              `${content.id} ${cut} does not ship the v3 ${mode} read (content.voice). ` +
+              `For a candidate pass --music <variant> and --out <file.mp3>.`,
+          );
+        }
       }
-      const r = await mixV3(content, cut, mode, music, path.resolve(ROOT, out));
+      const music = flag(argv, "music") ?? (out ? undefined : choice?.music);
+      if (!music) {
+        throw new Error(`--mix with --model ${V3_MODEL} and --out needs --music <variant>.`);
+      }
+      const r = await mixV3(content, cut, mode, music, out ? path.resolve(ROOT, out) : null);
       console.log(
         `\n  ${r.tutorial} ${r.cut} v3 ${mode} over ${music}: I ${r.measuredIntegratedLufs} LUFS, ` +
-          `TP ${r.measuredTruePeakDbfs} dBTP, bed ${r.bedGainDb} dB with ${r.measuredDuckDb} dB of duck  ${r.mp3}`,
+          `TP ${r.measuredTruePeakDbfs} dBTP, bed ${r.bedGainDb} dB with ${r.measuredDuckDb} dB of duck  ${r.mp3 ?? r.wav}`,
       );
       return;
     }

@@ -578,13 +578,16 @@ function tutorialTargets(reel: ReelKey): SrtTarget[] {
   const content = TUTORIAL_CONTENT[reel];
   const short = tutorialRows(content, "short");
   const linkedin = tutorialRows(content, "linkedin");
+  // The short cut may lay out past 450 frames to fit its words (timeline.ts
+  // rule 4), so its picture length is the timeline's, not a constant.
+  const shortFrames = tutorialTimeline(content, "short").totalFrames;
   return [
-    { format: "vertical", duration: "15s", rows: short, totalFrames: 450, reel },
-    { format: "feed", duration: "15s", rows: short, totalFrames: 450, reel },
-    { format: "square", duration: "15s", rows: short, totalFrames: 450, reel },
+    { format: "vertical", duration: "15s", rows: short, totalFrames: shortFrames, reel },
+    { format: "feed", duration: "15s", rows: short, totalFrames: shortFrames, reel },
+    { format: "square", duration: "15s", rows: short, totalFrames: shortFrames, reel },
     // The sixth, added 2026-09-04: the 15 second cut at 1920x1080. Same cues as
     // the other three 15 second crops, because they are the same cut.
-    { format: "landscape", duration: "15s", rows: short, totalFrames: 450, reel },
+    { format: "landscape", duration: "15s", rows: short, totalFrames: shortFrames, reel },
     { format: "linkedin", duration: "45s", rows: linkedin, totalFrames: 1350, reel },
     { format: "landscape", duration: "45s", rows: linkedin, totalFrames: 1350, reel },
   ];

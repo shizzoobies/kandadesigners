@@ -1420,7 +1420,7 @@
     }
   ],
   "v3": {
-    "_note": "eleven_v3 candidate reads, added 2026-09-24. Kept apart from generations above on purpose: src/tutorial/timeline.ts lays the rendered reels out from generations, and nothing reads this section, so a candidate never moves a render. text is exactly what was sent, audio tags included; plainText is the same line with the tags stripped. creditsMeasured is the same before and after usage delta as every other entry. Written by scripts/voice.ts --model eleven_v3.",
+    "_note": "eleven_v3 candidate reads, added 2026-09-24. Kept apart from generations above on purpose: src/tutorial/timeline.ts lays the rendered reels out from generations, except for a cut whose content file sets content.voice, which it lays out from this section for that mode only (the contrast 15 second cut, natural, from 2026-09-24 on Alex's call). A candidate for any other cut or mode never moves a render. text is exactly what was sent, audio tags included; plainText is the same line with the tags stripped. creditsMeasured is the same before and after usage delta as every other entry. Written by scripts/voice.ts --model eleven_v3.",
     "generations": [
       {
         "tutorial": "contrast",
@@ -1675,6 +1675,31 @@
         "creditsMeasured": 43,
         "creditsBucket": "TTS",
         "createdAt": "2026-09-24T20:54:29.270Z"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "beatId": "fails",
+        "mode": "natural",
+        "file": "assets/audio/voice/contrast-v3/natural/fails.mp3",
+        "text": "[matter-of-fact] It measures two point nine to one. That fails.",
+        "plainText": "It measures two point nine to one. That fails.",
+        "tags": [
+          "matter-of-fact"
+        ],
+        "characters": 63,
+        "hash": "5371cd05",
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "mp3_44100_128",
+        "durationSeconds": 3.28,
+        "creditsMeasured": 63,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-24T21:10:10.869Z"
       }
     ],
     "stitches": [
@@ -1787,6 +1812,22 @@
         "createdAt": "2026-09-24T20:57:03.712Z",
         "mode": "creative",
         "mp3": "out/candidates/contrast-15s-preview-2.mp3"
+      },
+      {
+        "tutorial": "contrast",
+        "cut": "short",
+        "wav": "assets/audio/mix-tut-contrast-15s-v3.wav",
+        "musicSource": "assets/audio/raw/music-i-b-20s.mp3",
+        "musicVariant": "i-b",
+        "bedGainDb": -7.1,
+        "measuredDuckDb": 9.2,
+        "limiterCeilingDbfs": -3.45,
+        "measuredIntegratedLufs": -14.01,
+        "measuredTruePeakDbfs": -3.69,
+        "measuredLra": 2.6,
+        "createdAt": "2026-09-24T21:11:57.803Z",
+        "mode": "natural",
+        "mp3": null
       }
     ]
   }

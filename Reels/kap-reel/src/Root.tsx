@@ -9,7 +9,7 @@ import type { ReelContent } from "./reels/types";
 import { TRAINING_REEL } from "./reels/training";
 import { WEB_REEL } from "./reels/web";
 import { Tutorial } from "./tutorial/Tutorial";
-import { TUTORIAL_TOTAL_FRAMES } from "./tutorial/timeline";
+import { TUTORIAL_TOTAL_FRAMES, tutorialTimeline } from "./tutorial/timeline";
 import type { TutorialContent, TutorialCut } from "./tutorial/types";
 import { CONTRAST_TUTORIAL } from "./tutorial/reels/contrast";
 import { HERO_TUTORIAL } from "./tutorial/reels/hero";
@@ -121,7 +121,9 @@ function tutorialRegistrations(
       id: `${prefix}${suffix}`,
       format,
       cut: "short",
-      durationInFrames: TUTORIAL_TOTAL_FRAMES.short,
+      // Laid out, not fixed: a short cut may run past 450 frames to fit its
+      // words (see src/tutorial/timeline.ts, rule 4).
+      durationInFrames: tutorialTimeline(content, "short").totalFrames,
       content,
     });
   }

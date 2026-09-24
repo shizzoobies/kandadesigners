@@ -9,7 +9,8 @@
  * a regenerated voice line or a color moving in config/brand.json fails here
  * rather than on screen:
  *
- *   1. Every cut lays out to exactly its frame count, and no beat is shorter
+ *   1. Every cut lays out to its frame count (the short cut to 450 through 600,
+ *      rule 4 in src/tutorial/timeline.ts), and no beat is shorter
  *      than the narration it has to carry.
  *   2. Exactly one beat per cut is marked stretch, which is where the slack
  *      goes.
@@ -39,7 +40,10 @@ import {
   tutorialStrings,
   type TutorialContent,
 } from "../../src/tutorial/types.js";
-import { TUTORIAL_TOTAL_FRAMES } from "../../src/tutorial/timeline.js";
+import {
+  TUTORIAL_MAX_FRAMES,
+  TUTORIAL_TOTAL_FRAMES,
+} from "../../src/tutorial/timeline.js";
 import {
   contrastRatio,
   formatRatio,
@@ -91,12 +95,17 @@ console.log("\n[timeline]");
 for (const content of TUTORIALS) {
   for (const cut of TUTORIAL_CUTS) {
     const timeline = tutorialTimeline(content, cut);
-    const total = TUTORIAL_TOTAL_FRAMES[cut];
+    const floor = TUTORIAL_TOTAL_FRAMES[cut];
+    const cap = TUTORIAL_MAX_FRAMES[cut];
     const last = timeline.entries[timeline.entries.length - 1];
 
+    // Exactly the nominal total, or for a cut with give (the short cut, rule 4
+    // in src/tutorial/timeline.ts) anywhere from it up to the cap.
     ok(
-      `${content.id} ${cut} totals ${total} frames`,
-      last.end === total && timeline.totalFrames === total,
+      `${content.id} ${cut} totals ${floor === cap ? floor : `${floor} to ${cap}`} frames`,
+      last.end === timeline.totalFrames &&
+        timeline.totalFrames >= floor &&
+        timeline.totalFrames <= cap,
       `laid out to ${last.end}`,
     );
 

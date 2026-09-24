@@ -150,4 +150,12 @@ export const CONTRAST_TUTORIAL: TutorialContent = {
     short: "a",
     linkedin: "a",
   },
+  // Alex's call on 2026-09-24: the 15 second cut ships the eleven_v3 read,
+  // Sarah at the natural stability mode, tagged from
+  // config/contrast-v3-script.json with the short pause tag removed, over
+  // music B from the indie pop set (i-b). The v2 read and its mix over "a"
+  // stay on disk untouched; the LinkedIn cut is still v2.
+  voice: {
+    short: { model: "eleven_v3", mode: "natural", music: "i-b" },
+  },
 };

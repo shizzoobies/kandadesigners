@@ -1,5 +1,5 @@
 {
-  "_note": "Tagged narration for the contrast tutorial, 15 second cut, read on eleven_v3. The words are the ones in src/tutorial/reels/contrast.ts, unchanged; only the inline audio tags are added. scripts/voice.ts strips the tags and refuses to run if what is left is not exactly the narration in src, so the words cannot drift. Tags only ever go to the voice model: captions and the SRT read the untagged narration from src. Direction: warm and confident, a little playful, like a friend who already knows the answer. One pause tag only, before the verdict, because the 15 second cut has about 24 frames of slack and every pause costs some of it.",
+  "_note": "Tagged narration for the contrast tutorial, 15 second cut, read on eleven_v3. The words are the ones in src/tutorial/reels/contrast.ts, unchanged; only the inline audio tags are added. scripts/voice.ts strips the tags and refuses to run if what is left is not exactly the narration in src, so the words cannot drift. Tags only ever go to the voice model: captions and the SRT read the untagged narration from src. Direction: warm and confident, a little playful, like a friend who already knows the answer. The one short pause tag that sat before the verdict was removed on 2026-09-24 on Alex's call: it rendered as more than a second of dead air. Every other tag stays.",
   "tutorial": "contrast",
   "cut": "short",
   "model": "eleven_v3",
@@ -17,8 +17,8 @@
     },
     {
       "id": "fails",
-      "narration": "[matter-of-fact] It measures two point nine to one. [short pause] That fails.",
-      "why": "The number is the verdict, so it is said plainly. The one pause in the script sits before \"That fails.\" so the verdict lands on its own."
+      "narration": "[matter-of-fact] It measures two point nine to one. That fails.",
+      "why": "The number is the verdict, so it is said plainly. No pause tag: the sentence break alone separates \"That fails.\""
     },
     {
       "id": "fix",
