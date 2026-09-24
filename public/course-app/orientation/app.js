@@ -35,7 +35,7 @@
     order.forEach(id => { $(`stage-${id}`).hidden = id !== stage; $(`tab-${id}`).setAttribute('aria-selected', String(id === stage)); $(`tab-${id}`).tabIndex = id === stage ? 0 : -1; });
     $('previous').disabled = state.chapter === 0 && stage === 'listen';
     $('previous').textContent = stage === 'listen' ? 'Previous chapter' : 'Back';
-    $('next').textContent = stage === 'listen' ? 'Continue to try it' : stage === 'practice' ? 'On your computer' : state.chapter === lesson.chapters.length - 1 ? 'Finish orientation' : 'Next chapter →';
+    $('next').textContent = stage === 'listen' ? 'Continue to try it' : stage === 'practice' ? 'On your computer' : state.chapter === lesson.chapters.length - 1 ? 'Finish orientation' : 'Next chapter';
     $('stage-status').textContent = `${labels[stage]}: ${current().short}`;
     if (focus) { $(`stage-${stage}`).focus({ preventScroll: true }); if ($('chapter-workspace').getBoundingClientRect().top < 0) $('chapter-workspace').scrollIntoView({ block: 'start', behavior: 'instant' }); }
   }

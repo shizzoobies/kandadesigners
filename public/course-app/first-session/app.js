@@ -30,7 +30,7 @@
     const order = stages(), index = order.indexOf(activeStage);
     $('previous').disabled = state.chapter === 0 && index === 0;
     $('previous').textContent = index === 0 ? 'Previous chapter' : 'Back';
-    $('next').textContent = activeStage === 'setup' && setupStep < 3 ? `Continue: ${setupLabels[setupStep + 1]}` : index < order.length - 1 ? `Continue to ${stageLabels[order[index + 1]].toLowerCase()}` : state.chapter === lesson.chapters.length - 1 ? 'Review progress' : 'Next chapter →';
+    $('next').textContent = activeStage === 'setup' && setupStep < 3 ? `Continue: ${setupLabels[setupStep + 1]}` : index < order.length - 1 ? `Continue to ${stageLabels[order[index + 1]].toLowerCase()}` : state.chapter === lesson.chapters.length - 1 ? 'Review progress' : 'Next chapter';
     $('stage-position').textContent = `${stageLabels[activeStage]} · ${current().short}`;
   }
   function selectSetup(step) {

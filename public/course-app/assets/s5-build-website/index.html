@@ -417,7 +417,7 @@ body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</styl
     }
     var firstPage = pages[0];
     var homeCards = pages.map(function(s){
-      return '<button class="ecard" data-go="'+s+'"><span class="etitle">'+title(s)+'</span><span class="etease">'+esc(TEASE[s]||"")+'</span><span class="earrow">&rarr;</span></button>';
+      return '<button class="ecard" data-go="'+s+'"><span class="etitle">'+title(s)+'</span><span class="etease">'+esc(TEASE[s]||"")+'</span></button>';
     }).join("");
     var homePage =
       '<section class="page active" data-page="home">'+

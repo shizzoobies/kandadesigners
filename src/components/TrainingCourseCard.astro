@@ -12,14 +12,14 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
 <a class="course-card" href={`/training/samples/${sample.slug}/`} style={`--course-accent: ${art?.accent || '#9a3412'}`}>
   <div class="course-card-art">
     <img src={art?.cover || sample.backdrop} alt={art?.coverAlt || ''} width="1200" height="750" loading={eager ? 'eager' : 'lazy'} decoding="async" />
-    <div class="course-card-experience"><span>{art?.experience || 'Interactive course'}</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5.5 18 12l-9 6.5v-13Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" /></svg></div>
+    <div class="course-card-experience"><span>{art?.experience || 'Interactive course'}</span></div>
   </div>
   <div class="course-card-body">
     <p class="course-card-category">{sample.vertical}</p>
     <Heading class="course-card-title">{sample.title}</Heading>
     <p class="course-card-summary">{art?.summary || sample.what}</p>
     <div class="course-card-footer">
-      <span class="course-card-action">Explore the course <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+      <span class="course-card-action">Explore the course</span>
       <span class="course-card-duration">About {sample.minutes} min</span>
     </div>
   </div>
@@ -32,16 +32,13 @@ const Heading = headingLevel === 2 ? 'h2' : 'h3';
   .course-card-art img { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: cover; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
   .course-card:hover .course-card-art img { transform: scale(1.025); }
   .course-card-experience { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 2.8rem; padding: .6rem 1.25rem; color: #fffdf9; background: var(--course-accent); font-family: var(--font-heading); font-size: .85rem; font-weight: 600; letter-spacing: .015em; }
-  .course-card-experience svg { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; }
   .course-card-body { display: flex; flex: 1; flex-direction: column; padding: 1.6rem; }
   .course-card-category { font-family: var(--font-mono); font-size: .65rem; line-height: 1.7; letter-spacing: .11em; text-transform: uppercase; color: var(--color-muted); }
   .course-card-title { margin: .65rem 0 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.35rem,2.25vw,1.9rem); line-height: 1.15; letter-spacing: -.025em; }
   .course-card-summary { margin: .9rem 0 1.75rem; line-height: 1.65; color: var(--color-muted); }
   .course-card-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .65rem 1rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid rgb(34 28 21 / .12); }
   .course-card-action { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--font-heading); font-weight: 650; font-size: .9rem; color: var(--color-accent); }
-  .course-card-action svg { width: 1.2rem; height: 1.2rem; transition: transform .25s; }
-  .course-card:hover .course-card-action svg { transform: translateX(3px); }
   .course-card-duration { white-space: nowrap; color: var(--color-muted); font-size: .8rem; }
   @media (max-width: 420px) { .course-card-body { padding: 1.25rem; } }
-  @media (prefers-reduced-motion: reduce) { .course-card, .course-card-art img, .course-card-action svg { transition: none; } .course-card:hover .course-card-art img { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .course-card, .course-card-art img { transition: none; } .course-card:hover .course-card-art img { transform: none; } }
 </style>

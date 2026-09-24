@@ -328,10 +328,7 @@ const answers = [
       <a href="/services/ai-integration/" class="text-accent underline underline-offset-4 hover:text-accent-hot">AI integration service</a>
       ships for clients. A few that are live right now:
     </p>
-    <!-- Hover a card and it demonstrates itself: the chat card draws an
-         arrow to the real Kai in the corner, the dashboard and content
-         cards pop illustrated panels (numbers invented and labeled so),
-         and the voice card grows a button that actually opens Kai. -->
+    <!-- Cards preview example dashboards and content; the voice button opens Kai. -->
     <div class="mt-12 grid gap-8 md:grid-cols-2">
       {outcomes.map((o, i) => (
         <div data-animate="frame-lift" data-demo={['chat', 'dash', 'voice', 'content'][i]} class="al-card glow-frame relative flex flex-col p-8">
@@ -1211,77 +1208,6 @@ const answers = [
 </script>
 
 <script>
-  // The chat card's arrow: hover draws a sketch-line from the card to the
-  // real Kai orb in the corner, because the fastest proof the assistant
-  // exists is pointing at it. Pointer devices only; pure decoration, so
-  // keyboard users lose nothing.
-  import gsap from 'gsap';
-
-  const fine = window.matchMedia('(hover: hover) and (min-width: 768px)').matches;
-  const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const chatCard = document.querySelector('[data-demo="chat"]');
-  const orb = document.getElementById('sg-open');
-
-  if (fine && chatCard && orb) {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('aria-hidden', 'true');
-    svg.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:45;opacity:0;';
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    const head = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    for (const el of [path, head]) {
-      el.setAttribute('fill', 'none');
-      el.setAttribute('stroke', '#9A3412');
-      el.setAttribute('stroke-width', '1.75');
-      el.setAttribute('stroke-linecap', 'round');
-      el.setAttribute('stroke-linejoin', 'round');
-    }
-    svg.append(path, head);
-    document.body.appendChild(svg);
-
-    let tween: gsap.core.Tween | null = null;
-
-    chatCard.addEventListener('mouseenter', () => {
-      const c = chatCard.getBoundingClientRect();
-      const o = orb.getBoundingClientRect();
-      const sx = c.right - 24;
-      const sy = c.top + c.height * 0.55;
-      const ex = o.left - 14;
-      const ey = o.top + o.height * 0.3;
-      // one easy curve that swings low, like a hand gesturing "down there"
-      const mx = sx + (ex - sx) * 0.45;
-      const my = Math.max(sy, ey) + 60;
-      path.setAttribute('d', `M ${sx} ${sy} Q ${mx} ${my} ${ex} ${ey}`);
-      // arrowhead from the end tangent
-      const ang = Math.atan2(ey - my, ex - mx);
-      const a1 = ang + Math.PI * 0.82;
-      const a2 = ang - Math.PI * 0.82;
-      head.setAttribute('d', `M ${ex + Math.cos(a1) * 12} ${ey + Math.sin(a1) * 12} L ${ex} ${ey} L ${ex + Math.cos(a2) * 12} ${ey + Math.sin(a2) * 12}`);
-      svg.style.opacity = '1';
-      orb.classList.add('sg-nudge');
-      if (!noMotion) {
-        const len = path.getTotalLength();
-        path.style.strokeDasharray = String(len);
-        path.style.strokeDashoffset = String(len);
-        head.style.opacity = '0';
-        tween?.kill();
-        tween = gsap.to(path, {
-          strokeDashoffset: 0,
-          duration: 0.55,
-          ease: 'power2.out',
-          onComplete: () => gsap.to(head, { opacity: 1, duration: 0.15 }),
-        });
-      } else {
-        path.style.strokeDasharray = '';
-        head.style.opacity = '1';
-      }
-    });
-    chatCard.addEventListener('mouseleave', () => {
-      tween?.kill();
-      svg.style.opacity = '0';
-      orb.classList.remove('sg-nudge');
-    });
-  }
-
   // The voice card's button opens the real corner chat.
   document.getElementById('al-kai-btn')?.addEventListener('click', () => {
     document.getElementById('sg-open')?.click();
