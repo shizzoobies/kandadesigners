@@ -70,7 +70,9 @@ is `YYYY-MM-DD-2`. When a post has published, the whole folder moves to
 - `status` moves one way: `planned`, `generating`, `ready`, `approved`,
   `scheduled`, `published`. `native` marks a post that was scheduled directly
   in Facebook; it has no media and the tools leave it alone. Alex sets
-  `approved`. Scripts set everything else.
+  `approved`. Scripts set everything else. Once validate passes on a planned
+  folder whose media is on disk, Alex may set approved directly; ready is set
+  by generate, or by hand when media was placed manually.
 - `time` is local to `timezone`. Weekday default is 09:00.
 - `platforms.<network>.type`: Facebook `POST`, `REEL`, `STORY`. Instagram
   `POST`, `REEL`, `STORY`, `TRIAL_REEL`. LinkedIn is `"manual": true`.
@@ -98,6 +100,11 @@ node tools/social.mjs validate
 node tools/social.mjs validate 2026-09-28
 node tools/social.mjs calendar --days 14
 ```
+
+`--from` expects a folder with a Facebook subfolder holding exactly one
+.mp4, one .srt, and one thumbnail*.jpg. `plan` also takes `--type POST|REEL`,
+`--time HH:MM`, `--ai-voice`, and `--ai-visuals`; `calendar` takes
+`--today YYYY-MM-DD`.
 
 `plan` creates the folder and tells you what is still missing. `validate`
 lists every problem in every folder and exits 1 if there are any. `calendar`

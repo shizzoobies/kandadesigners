@@ -120,4 +120,110 @@ describe("validateFolder", () => {
     const files = baseFiles({ "source/narration-script.md": "K&A builds websites.\n" });
     expect(validateFolder(day({}, files))).toContain("2026-01-05: source/narration-script.md must spell K and A for the voice model");
   });
+
+  it("reports a non-object manifest as the only problem", () => {
+    root = makeTempRoot();
+    const dir = path.join(root, "To Be Released", "2026-01-05");
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "post.json"), "null\n");
+    expect(validateFolder(dir)).toEqual(["2026-01-05: post.json is not an object"]);
+  });
+
+  it("reports a non-object platform config and still validates the rest", () => {
+    const problems = validateFolder(day({
+      platforms: { facebook: null, instagram: { type: "REEL", caption: "instagram.md" } }
+    }));
+    expect(problems).toContain("2026-01-05: platforms.facebook is not an object");
+    expect(problems.some((p) => p.includes("instagram"))).toBe(false);
+  });
+
+  it("reports a media entry with no file and does not throw", () => {
+    const problems = validateFolder(day({ media: [{ role: "video" }], status: "ready" }));
+    expect(problems).toContain("2026-01-05: media entry 0 has no file");
+  });
+
+  it("reports an invalid IANA timezone and skips the past check", () => {
+    const problems = validateFolder(day({ timezone: "Eastern", status: "approved" }));
+    expect(problems).toContain('2026-01-05: timezone "Eastern" is not a valid IANA zone');
+  });
+
+  it("reports a missing folder", () => {
+    root = makeTempRoot();
+    const dir = path.join(root, "To Be Released", "2026-01-06");
+    expect(validateFolder(dir)).toEqual(["2026-01-06: folder does not exist"]);
+  });
+
+  it("reports a missing post.json in an existing folder", () => {
+    root = makeTempRoot();
+    const dir = path.join(root, "To Be Released", "2026-01-06");
+    fs.mkdirSync(dir, { recursive: true });
+    expect(validateFolder(dir)).toEqual(["2026-01-06: post.json is missing"]);
+  });
+
+  it("accepts a Story with no caption file and an image", () => {
+    const files = { "media/photo.jpg": Buffer.alloc(16) };
+    const problems = validateFolder(day({
+      platforms: { facebook: { type: "STORY" } },
+      media: [{ file: "media/photo.jpg", role: "image", origin: "human", alt: "A phone showing the site" }]
+    }, files));
+    expect(problems).toEqual([]);
+  });
+
+  it("rejects a Story that carries a caption", () => {
+    const files = { "media/photo.jpg": Buffer.alloc(16), "facebook.md": "Behind the scenes.\n" };
+    const problems = validateFolder(day({
+      platforms: { facebook: { type: "STORY", caption: "facebook.md" } },
+      media: [{ file: "media/photo.jpg", role: "image", origin: "human", alt: "A phone showing the site" }]
+    }, files));
+    expect(problems).toContain("2026-01-05: facebook STORY carries no caption");
+  });
+
+  it("rejects a lowercase type", () => {
+    const problems = validateFolder(day({ platforms: { facebook: { type: "reel", caption: "facebook.md" } } }));
+    expect(problems).toContain('2026-01-05: facebook type "reel" is not one of POST, REEL, STORY');
+  });
+
+  it("rejects an unknown network", () => {
+    const problems = validateFolder(day({ platforms: { tiktok: { type: "POST", caption: "facebook.md" } } }));
+    expect(problems).toContain('2026-01-05: unknown network "tiktok"');
+  });
+
+  it("requires linkedin to be manual", () => {
+    const problems = validateFolder(day({ platforms: { linkedin: { caption: "linkedin.md" } } }));
+    expect(problems).toContain("2026-01-05: linkedin must be manual until it is connected to Metricool");
+  });
+
+  it("rejects an unknown media role", () => {
+    const files = { "media/cover.jpg": Buffer.alloc(16) };
+    const problems = validateFolder(day({
+      platforms: {},
+      media: [{ file: "media/cover.jpg", role: "cover", origin: "human" }]
+    }, files));
+    expect(problems).toContain('2026-01-05: media/cover.jpg has unknown role "cover"');
+  });
+
+  it("rejects an unknown media origin", () => {
+    const files = { "media/cover.jpg": Buffer.alloc(16) };
+    const problems = validateFolder(day({
+      platforms: {},
+      media: [{ file: "media/cover.jpg", role: "image", origin: "midjourney", alt: "x" }]
+    }, files));
+    expect(problems).toContain('2026-01-05: media/cover.jpg has unknown origin "midjourney"');
+  });
+
+  it("rejects a media file outside media/", () => {
+    const problems = validateFolder(day({
+      platforms: {},
+      media: [{ file: "cover.jpg", role: "image", origin: "human", alt: "x" }]
+    }));
+    expect(problems).toContain("2026-01-05: cover.jpg must be a relative path inside media/");
+  });
+
+  it("rejects a media file that escapes media/ with ..", () => {
+    const problems = validateFolder(day({
+      platforms: {},
+      media: [{ file: "media/../secret.txt", role: "image", origin: "human", alt: "x" }]
+    }));
+    expect(problems).toContain("2026-01-05: media/../secret.txt must be a relative path inside media/");
+  });
 });
