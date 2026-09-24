@@ -163,7 +163,7 @@ Append inside `describe("validateFolder", ...)` in `test/validate.test.mjs`:
 
 ```js
   it("requires a timezone string", () => {
-    const m = baseManifest(); delete m.timezone;
+    const m = baseManifest(); m.timezone = undefined;
     expect(validateFolder(day(m))).toContain("2026-01-05: timezone is missing");
   });
 
