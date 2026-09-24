@@ -169,4 +169,14 @@ describe("reconcile", () => {
     // 01:00 UTC on the 11th is still the 10th in New York, so tomorrow is the 11th.
     expect(reconcileWindow(root, new Date("2026-01-11T01:00:00Z")).toDate).toBe("2026-01-11T23:59:59-05:00");
   });
+
+  it("keeps the window in order when every scheduled folder is in the future or in the past", () => {
+    root = makeTempRoot();
+    const now = new Date("2026-09-25T15:00:00Z");
+    const future = makeDay(root, "2026-12-15", scheduledDay("2026-12-15"), baseFiles());
+    expect(reconcileWindow(root, now)).toMatchObject({ fromDate: "2026-09-25T00:00:00-04:00", toDate: "2026-12-15T23:59:59-05:00" });
+    fs.rmSync(future, { recursive: true, force: true });
+    makeDay(root, "2026-09-20", scheduledDay("2026-09-20"), baseFiles());
+    expect(reconcileWindow(root, now)).toMatchObject({ fromDate: "2026-09-20T00:00:00-04:00", toDate: "2026-09-26T23:59:59-04:00" });
+  });
 });

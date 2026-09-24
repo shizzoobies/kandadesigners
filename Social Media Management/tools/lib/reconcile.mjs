@@ -38,8 +38,9 @@ function hasDraft(m) {
 }
 
 /**
- * The getScheduledPosts arguments that cover every scheduled folder: from the earliest one's date at 00:00:00
- * to tomorrow at 23:59:59, New York time. null when nothing is scheduled.
+ * The getScheduledPosts arguments that cover every scheduled folder and today: from the earlier of the earliest
+ * folder date and today at 00:00:00 to the later of the latest folder date and tomorrow at 23:59:59, New York time.
+ * null when nothing is scheduled.
  */
 export function reconcileWindow(root, now = new Date()) {
   const dates = [];
@@ -54,10 +55,13 @@ export function reconcileWindow(root, now = new Date()) {
   }
   if (!dates.length) return null;
   dates.sort();
+  const today = todayInNewYork(now);
   const tomorrow = todayInNewYork(new Date(now.getTime() + 86400000));
+  const from = dates[0] < today ? dates[0] : today;
+  const to = dates[dates.length - 1] > tomorrow ? dates[dates.length - 1] : tomorrow;
   return {
-    fromDate: isoWithOffset(dates[0], "00:00", WINDOW_ZONE),
-    toDate: isoWithOffset(tomorrow, "23:59", WINDOW_ZONE).replace("T23:59:00", "T23:59:59"),
+    fromDate: isoWithOffset(from, "00:00", WINDOW_ZONE),
+    toDate: isoWithOffset(to, "23:59", WINDOW_ZONE).replace("T23:59:00", "T23:59:59"),
     timezone: WINDOW_ZONE,
     extendedRange: true
   };

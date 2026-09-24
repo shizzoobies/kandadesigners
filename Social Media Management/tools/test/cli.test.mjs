@@ -117,7 +117,7 @@ describe("cli", () => {
     makeDay(root, "2030-01-07", baseManifest({ id: "2030-01-07", date: "2030-01-07", status: "scheduled" }), baseFiles());
     const r = run(["reconcile", "--window", "--now", "2030-01-06T12:00:00Z"]);
     expect(r.code).toBe(0);
-    expect(JSON.parse(r.out)).toEqual({ fromDate: "2030-01-07T00:00:00-05:00", toDate: "2030-01-07T23:59:59-05:00", timezone: "America/New_York", extendedRange: true });
+    expect(JSON.parse(r.out)).toEqual({ fromDate: "2030-01-06T00:00:00-05:00", toDate: "2030-01-07T23:59:59-05:00", timezone: "America/New_York", extendedRange: true });
   });
 
   it("reports a folder reconcile cannot move, keeps going, and exits 1", () => {
