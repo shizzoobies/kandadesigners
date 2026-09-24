@@ -1,0 +1,121 @@
+import { describe, it, expect, afterEach } from "vitest";
+import fs from "node:fs";
+import path from "node:path";
+import { makeTempRoot, makeDay, baseManifest, baseFiles } from "./helpers.mjs";
+import { validateFolder } from "../lib/validate.mjs";
+
+let root;
+afterEach(() => { if (root) fs.rmSync(root, { recursive: true, force: true }); });
+
+function day(overrides = {}, files = baseFiles(), name = "2026-01-05") {
+  root = makeTempRoot();
+  return makeDay(root, name, baseManifest(overrides), files);
+}
+
+describe("validateFolder", () => {
+  it("accepts the fixture", () => {
+    expect(validateFolder(day())).toEqual([]);
+  });
+
+  it("reports unparseable post.json as the only problem", () => {
+    root = makeTempRoot();
+    const dir = path.join(root, "To Be Released", "2026-01-05");
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, "post.json"), "{ not json");
+    expect(validateFolder(dir)).toEqual(["2026-01-05: cannot parse post.json"]);
+  });
+
+  it("requires folder name, id, and date to agree", () => {
+    const problems = validateFolder(day({ id: "2026-01-06" }));
+    expect(problems).toContain("2026-01-05: id \"2026-01-06\" does not match folder name");
+    const p2 = validateFolder(day({ date: "2026-01-09" }));
+    expect(p2).toContain("2026-01-05: date \"2026-01-09\" does not match id");
+  });
+
+  it("rejects unknown status", () => {
+    expect(validateFolder(day({ status: "done" }))).toContain("2026-01-05: unknown status \"done\"");
+  });
+
+  it("accepts a native placeholder with no media or captions", () => {
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-09-25", {
+      id: "2026-09-25", date: "2026-09-25", time: "09:00", timezone: "America/New_York",
+      status: "native", title: "Job aids video, scheduled in Facebook",
+      platforms: { facebook: { type: "REEL" } }
+    });
+    expect(validateFolder(dir)).toEqual([]);
+  });
+
+  it("rejects media on a native placeholder", () => {
+    const problems = validateFolder(day({ status: "native" }));
+    expect(problems).toEqual(["2026-01-05: native folders carry no media"]);
+  });
+
+  it("checks the time format and future time for approved posts", () => {
+    expect(validateFolder(day({ time: "9am" }))).toContain("2026-01-05: time \"9am\" is not HH:MM");
+    expect(validateFolder(day({ time: "25:00" }))).toContain("2026-01-05: time \"25:00\" is not HH:MM");
+    const past = validateFolder(day({ status: "approved" }), { now: new Date("2027-01-01T00:00:00Z") });
+    expect(past).toContain("2026-01-05: approved post time 2026-01-05 09:00 America/New_York is in the past");
+    const future = validateFolder(day({ status: "approved" }), { now: new Date("2025-12-01T00:00:00Z") });
+    expect(future).toEqual([]);
+  });
+
+  it("requires caption files for non manual platforms", () => {
+    const files = baseFiles(); delete files["instagram.md"];
+    expect(validateFolder(day({}, files))).toContain("2026-01-05: instagram caption file instagram.md is missing or empty");
+    const manual = validateFolder(day({ platforms: { facebook: { type: "REEL", caption: "facebook.md" }, linkedin: { manual: true, caption: "linkedin.md" } } }));
+    expect(manual).toEqual([]);
+  });
+
+  it("requires alt text on images and thumbnails", () => {
+    const m = baseManifest(); m.media[1].alt = "";
+    expect(validateFolder(day(m))).toContain("2026-01-05: media/thumbnail.jpg needs alt text");
+  });
+
+  it("requires media files to exist once ready", () => {
+    const files = baseFiles(); delete files["media/reel-vertical.mp4"];
+    expect(validateFolder(day({ status: "planned" }, files))).toEqual([]);
+    expect(validateFolder(day({ status: "ready" }, files))).toContain("2026-01-05: media/reel-vertical.mp4 does not exist");
+  });
+
+  it("enforces Metricool media rules", () => {
+    const noVideo = baseManifest(); noVideo.media = [noVideo.media[1]];
+    expect(validateFolder(day(noVideo))).toContain("2026-01-05: facebook REEL needs a video");
+    expect(validateFolder(day(noVideo))).toContain("2026-01-05: instagram REEL needs a video");
+    const igNoMedia = baseManifest(); igNoMedia.media = [];
+    expect(validateFolder(day(igNoMedia))).toContain("2026-01-05: instagram needs an image or video");
+    const story = baseManifest(); story.platforms.facebook.type = "STORY";
+    expect(validateFolder(day(story))).toContain("2026-01-05: facebook STORY carries no caption");
+  });
+
+  it("enforces caption length limits", () => {
+    const files = baseFiles({ "instagram.md": "x".repeat(2201) + "\n\n## First comment\n\n#a\n" });
+    expect(validateFolder(day({}, files))).toContain("2026-01-05: instagram caption is 2201 characters, limit 2200");
+  });
+
+  it("rejects em dashes in any text file", () => {
+    const files = baseFiles({ "source/script.md": "Measure every color \u2014 always.\n" });
+    expect(validateFolder(day({}, files))).toContain("2026-01-05: source/script.md contains an em dash");
+  });
+
+  it("keeps Instagram hashtags in the first comment", () => {
+    const files = baseFiles({ "instagram.md": "Great site #WebDesign\n\n## First comment\n\n#a\n" });
+    expect(validateFolder(day({}, files))).toContain("2026-01-05: instagram caption has hashtags above the first comment");
+  });
+
+  it("requires an AI disclosure when voice or visuals are AI", () => {
+    const problems = validateFolder(day({ ai: { voice: true, visuals: false } }));
+    expect(problems).toContain("2026-01-05: facebook caption needs an AI disclosure line");
+    expect(problems).toContain("2026-01-05: instagram caption needs an AI disclosure line");
+    const ok = validateFolder(day({ ai: { voice: true, visuals: false } }, baseFiles({
+      "facebook.md": "The voice is AI narrated.\n",
+      "instagram.md": "Narration is an AI voice.\n\n## First comment\n\n#a\n"
+    })));
+    expect(ok).toEqual([]);
+  });
+
+  it("requires K and A spelled out in narration scripts", () => {
+    const files = baseFiles({ "source/narration-script.md": "K&A builds websites.\n" });
+    expect(validateFolder(day({}, files))).toContain("2026-01-05: source/narration-script.md must spell K and A for the voice model");
+  });
+});
