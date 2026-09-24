@@ -19,7 +19,13 @@ Stop asking AI to write the email. Tell it who the email is for.
 - Caption points to the free AI lessons at ka-performancefl.com/training/ai/.
 
 ## Script draft
-(to write)
+Beat 1 (hook): Stop asking AI to write the email. Tell it who the email is for.
+Beat 2: "Write a follow up email" gets you a form letter.
+Beat 3: "Write a follow up to a bakery owner who asked about pricing and is nervous about cost" gets you something you would actually send.
+Beat 4: Give it the brief, not the task. Then you decide.
+CTA: Free AI lessons at ka-performancefl.com slash training slash AI.
+
+Word count: 58. On screen: the two prompts side by side, then the two results as real outputs from a real run, not typed by hand. The bakery is fictional and labeled "example".
 
 ## AI
 Voice is AI narrated; disclose. Set ai.voice true.

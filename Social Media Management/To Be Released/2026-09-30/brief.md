@@ -18,7 +18,13 @@ If a screen asks the learner to do two things, it does neither.
 - Voice (v3, tags), music, render, captions, thumbnail.
 
 ## Script draft
-(to write)
+Beat 1 (hook): If a screen asks the learner to do two things, it does neither.
+Beat 2: Read this, then click that, then answer this. That is three screens pretending to be one.
+Beat 3: We build one decision per screen. The learner acts, gets feedback, moves on.
+Beat 4: Fewer clicks. More learning. That is the whole trick.
+CTA: Free sample courses at ka-performancefl.com slash training.
+
+Word count: 52. On screen: a real sample module, one screen per beat, the cluttered version labeled "example" if we mock one up.
 
 ## AI
 Voice is AI narrated; disclose. Set ai.voice true. Captures are real.
