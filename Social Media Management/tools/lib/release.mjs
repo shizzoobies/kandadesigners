@@ -8,37 +8,43 @@ function activeNetworks(m) {
   return Object.entries(m.platforms).filter(([, cfg]) => !cfg.manual).map(([n]) => n);
 }
 
-/** Build and store the Metricool payloads for one approved, uploaded folder. Returns the packets Claude still has to send. */
+/**
+ * Build and store the Metricool payloads for one approved, uploaded folder. Returns the packets Claude still has to send.
+ * repeated lists networks that were prepared before, with the earlier preparedAt, so a resend can be checked first.
+ */
 export function prepareRelease(dir, { draft = false, now = new Date(), dryRun = false } = {}) {
   const name = path.basename(dir);
   const problems = validateFolder(dir, { now });
-  if (problems.length) return { name, skipped: "invalid", problems, packets: [] };
+  if (problems.length) return { name, skipped: "invalid", problems, packets: [], repeated: [] };
   const m = readManifest(dir);
-  if (m.status !== "approved") return { name, skipped: `status ${m.status}`, packets: [] };
+  if (m.status !== "approved") return { name, skipped: `status ${m.status}`, packets: [], repeated: [] };
   const r2 = m.r2 || {};
   const missing = m.media.filter((e) => UPLOAD_ROLES.has(e.role) && !(r2[e.file] && r2[e.file].url));
-  if (missing.length) return { name, skipped: "media not uploaded", packets: [] };
+  if (missing.length) return { name, skipped: "media not uploaded", packets: [], repeated: [] };
 
   const payloads = buildPayloads(dir, { draft });
   m.metricool = m.metricool || {};
   const packets = [];
+  const repeated = [];
   for (const network of activeNetworks(m)) {
     const existing = m.metricool[network] || {};
     if (!existing.id) {
-      m.metricool[network] = { ...existing, payload: payloads[network], draft };
+      if (existing.preparedAt) repeated.push({ network, preparedAt: existing.preparedAt });
+      m.metricool[network] = { ...existing, payload: payloads[network], draft, preparedAt: now.toISOString() };
       packets.push({ folder: name, network, ...payloads[network] });
     }
   }
-  if (dryRun) return { name, packets };
+  if (dryRun) return { name, packets, repeated };
   m.lastError = null;
   writeManifest(dir, m);
-  return { name, packets };
+  return { name, packets, repeated };
 }
 
 /** Write the Metricool id and uuid Claude got back for one network. Schedules the folder once every network has one. */
 export function recordRelease(dir, { network, id, uuid, now = new Date() }) {
   const name = path.basename(dir);
   const m = readManifest(dir);
+  if (m.status !== "approved" && m.status !== "scheduled") throw new Error(`${name}: cannot record on status ${m.status}`);
   const rec = m.metricool && m.metricool[network];
   if (!rec || !rec.payload) throw new Error(`${name}: ${network} has no prepared payload; run release first`);
   m.metricool[network] = { ...rec, id: String(id), uuid: String(uuid), scheduledAt: now.toISOString() };
@@ -50,4 +56,40 @@ export function recordRelease(dir, { network, id, uuid, now = new Date() }) {
   m.lastError = null;
   writeManifest(dir, m);
   return { name, status: m.status };
+}
+
+/** Write a Metricool rejection for one network into lastError. Changes nothing else. */
+export function recordError(dir, { network, message }) {
+  const name = path.basename(dir);
+  const m = readManifest(dir);
+  m.lastError = `${network}: ${message}`;
+  writeManifest(dir, m);
+  return { name };
+}
+
+/** The updateScheduledPost packets that turn a scheduled folder's drafts into real posts. Reads only. */
+export function promotePackets(dir) {
+  const name = path.basename(dir);
+  const m = readManifest(dir);
+  if (m.status !== "scheduled") throw new Error(`${name}: cannot promote on status ${m.status}`);
+  const packets = [];
+  for (const [network, rec] of Object.entries(m.metricool || {})) {
+    if (!rec || rec.draft !== true || !rec.id) continue;
+    const payload = rec.payload || {};
+    packets.push({ folder: name, network, id: rec.id, uuid: rec.uuid, date: payload.date, info: { ...payload.info, draft: false } });
+  }
+  return { name, packets };
+}
+
+/** Record a promoted draft: Metricool gave the post a new id and kept its uuid. */
+export function recordPromotion(dir, { network, id, now = new Date() }) {
+  const name = path.basename(dir);
+  const m = readManifest(dir);
+  const rec = m.metricool && m.metricool[network];
+  if (!rec) throw new Error(`${name}: ${network} has no Metricool record`);
+  if (rec.draft !== true) throw new Error(`${name}: ${network} is not a draft`);
+  m.metricool[network] = { ...rec, draft: false, id: String(id), promotedAt: now.toISOString() };
+  m.lastError = null;
+  writeManifest(dir, m);
+  return { name };
 }

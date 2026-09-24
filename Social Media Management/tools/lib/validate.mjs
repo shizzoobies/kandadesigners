@@ -106,6 +106,9 @@ export function validateFolder(dir, { now = new Date() } = {}) {
       if ((entry.role === "image" || entry.role === "thumbnail") && !String(entry.alt || "").trim()) {
         add(`${entry.file} needs alt text`);
       }
+      if (entry.role === "thumbnail" && !/\.(jpe?g|png)$/i.test(normalized)) {
+        add(`${entry.file} thumbnail must be jpg, jpeg, or png`);
+      }
       if (readyOrLater && !fs.existsSync(path.join(dir, normalized))) add(`${entry.file} does not exist`);
     }
 

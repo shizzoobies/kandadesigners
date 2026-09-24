@@ -78,7 +78,7 @@ is `YYYY-MM-DD-2`. When a post has published, the whole folder moves to
 - `platforms.<network>.type`: Facebook `POST`, `REEL`, `STORY`. Instagram
   `POST`, `REEL`, `STORY`, `TRIAL_REEL`. LinkedIn is `"manual": true`.
 - `media[].role`: `video`, `image`, `thumbnail`, `captions`. Every `image`
-  and `thumbnail` needs `alt`.
+  and `thumbnail` needs `alt`. A `thumbnail` is .jpg, .jpeg, or .png.
 - `media[].origin`: `human`, `codex`, `elevenlabs`, `kap-reel`.
 - `r2`, `metricool`, `published`, `credits`, `lastError` are written by the
   tools. Leave them as they are.
@@ -119,18 +119,40 @@ Once a folder is `approved`:
 
 1. `node tools/social.mjs upload 2026-09-28` pushes its video and images to
    R2 and writes the public urls into `post.json`. Rerunning it skips files
-   that have not changed.
+   that have not changed. A changed file gets a new key; the old key is kept
+   in `post.json` and deleted with the rest. Metricool copies the media to its
+   own host when the post is created, so the R2 objects are only needed until
+   then. Wrangler uploads files up to 300 MiB.
 2. `node tools/social.mjs release 2026-09-28 --draft` writes one Metricool
    payload per network into `post.json` and prints one packet per line.
    Claude sends each packet with the Metricool MCP (`createScheduledPost`,
    brand 7076479, `info` as a JSON string) and records what comes back:
    `node tools/social.mjs release --record 2026-09-28 --network facebook --id <id> --uuid <uuid>`.
-   The folder becomes `scheduled` once every network is recorded. Drop
-   `--draft` once the previews in Metricool have been checked.
-3. After post time, Claude saves the `getScheduledPosts` response to a file
-   and runs `node tools/social.mjs reconcile --from <file>`. Folders whose
-   posts are no longer scheduled move to `Already Released/`. R2 objects are
-   deleted a week after publishing.
+   If Metricool rejects a packet, record that instead:
+   `node tools/social.mjs release --record 2026-09-28 --network facebook --error "<message>"`.
+   The folder becomes `scheduled` once every network is recorded.
+
+   `--draft` puts the posts in Metricool as drafts so the previews can be
+   checked there. A draft never publishes on its own. Once the previews look
+   right, `node tools/social.mjs release --promote 2026-09-28` prints one
+   packet per draft. Claude sends each with `updateScheduledPost` (blogId
+   7076479, the packet's id and uuid, `info` as a JSON string). Metricool
+   gives the post a new id and keeps its uuid, so record the new id:
+   `node tools/social.mjs release --promoted 2026-09-28 --network facebook --id <new id>`.
+   Without `--draft`, the posts go straight onto the schedule.
+
+   If `release` prints `warning: ... was prepared before`, a packet for that
+   network may already be in Metricool. Never send it again until
+   `getScheduledPosts` for that date shows it is not there.
+3. After post time, run `node tools/social.mjs reconcile --window`. It prints
+   the `getScheduledPosts` arguments that cover every scheduled folder. Claude
+   calls `getScheduledPosts` with exactly those arguments plus brandId
+   7076479, saves the raw JSON response to a file, and runs
+   `node tools/social.mjs reconcile --from <file>`. Folders whose posts are
+   no longer scheduled move to `Already Released/`. A folder with any draft
+   waits, whatever the time, until it is promoted. R2 objects are deleted a
+   week after publishing. One folder that cannot be moved is reported and the
+   rest still go; the command then exits 1.
 
 `upload` and `release` take `--dry-run`. `reconcile` takes `--dry-run` and
 `--now <ISO>` for testing. Every command is safe to rerun.

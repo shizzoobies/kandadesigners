@@ -70,4 +70,29 @@ describe("uploadFolder", () => {
     expect(r.uploaded).toEqual(["media/reel-vertical.mp4", "media/thumbnail.jpg"]);
     expect(readManifest(dir).r2).toEqual({});
   });
+
+  it("keys objects by folder id, so a second post on the same day has its own prefix", () => {
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05-2", baseManifest({ id: "2026-01-05-2", status: "approved" }), baseFiles());
+    const puts = [];
+    uploadFolder(dir, { put: (key) => puts.push(key), config, now: new Date("2025-12-01T00:00:00Z") });
+    expect(puts.every((k) => k.startsWith("2026-01-05-2/"))).toBe(true);
+  });
+
+  it("keeps the replaced key in previous when a changed file is uploaded again", () => {
+    const dir = approvedDay();
+    const later = new Date("2025-12-01T00:00:00Z");
+    uploadFolder(dir, { put: () => {}, config, now: later });
+    const oldKey = readManifest(dir).r2["media/thumbnail.jpg"].key;
+    fs.writeFileSync(path.join(dir, "media/thumbnail.jpg"), Buffer.alloc(64, 1));
+    uploadFolder(dir, { put: () => {}, config, now: later });
+    const rec = readManifest(dir).r2["media/thumbnail.jpg"];
+    expect(rec.key).not.toBe(oldKey);
+    expect(rec.previous).toEqual([oldKey]);
+    expect(readManifest(dir).r2["media/reel-vertical.mp4"].previous).toBeUndefined();
+    const olderKey = rec.key;
+    fs.writeFileSync(path.join(dir, "media/thumbnail.jpg"), Buffer.alloc(64, 2));
+    uploadFolder(dir, { put: () => {}, config, now: later });
+    expect(readManifest(dir).r2["media/thumbnail.jpg"].previous).toEqual([oldKey, olderKey]);
+  });
 });

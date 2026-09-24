@@ -7,8 +7,8 @@ import { validateFolder } from "./lib/validate.mjs";
 import { createDay } from "./lib/plan.mjs";
 import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mjs";
 import { uploadFolder } from "./lib/upload.mjs";
-import { prepareRelease, recordRelease } from "./lib/release.mjs";
-import { reconcile } from "./lib/reconcile.mjs";
+import { prepareRelease, recordRelease, recordError, promotePackets, recordPromotion } from "./lib/release.mjs";
+import { reconcile, reconcileWindow } from "./lib/reconcile.mjs";
 
 const USAGE = `usage:
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
@@ -17,9 +17,13 @@ const USAGE = `usage:
   node tools/social.mjs upload [<folder name>|--all] [--dry-run]
   node tools/social.mjs release [<folder name>|--all] [--draft] [--dry-run]
   node tools/social.mjs release --record <folder name> --network facebook|instagram --id <id> --uuid <uuid>
+  node tools/social.mjs release --record <folder name> --network facebook|instagram --error "<message>"
+  node tools/social.mjs release --promote <folder name>
+  node tools/social.mjs release --promoted <folder name> --network facebook|instagram --id <new id>
+  node tools/social.mjs reconcile --window [--now <ISO>]
   node tools/social.mjs reconcile --from <getScheduledPosts.json> [--dry-run] [--now <ISO>]`;
 
-const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals"]);
+const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals", "window"]);
 
 /** Positionals, --flag for names in FLAGS, and --key value for everything else. */
 function parse(argv, flags = FLAGS) {
@@ -77,7 +81,10 @@ function main() {
     for (const dir of dirs) {
       try {
         const r = uploadFolder(dir, { dryRun: Boolean(args["dry-run"]) });
-        if (r.skipped) { console.log(`${r.name}: skipped (${r.skipped})`); for (const p of r.problems || []) console.log(`  ${p}`); continue; }
+        if (r.skipped) {
+          if (target && r.skipped === "invalid") failed++;
+          console.log(`${r.name}: skipped (${r.skipped})`); for (const p of r.problems || []) console.log(`  ${p}`); continue;
+        }
         console.log(`${r.name}: ${args["dry-run"] ? "would upload" : "uploaded"} ${r.uploaded.length}, unchanged ${r.unchanged.length}`);
       } catch (err) {
         failed++;
@@ -90,40 +97,74 @@ function main() {
   if (command === "release") {
     const isText = (v) => typeof v === "string" && v.length > 0;
     if (args.record !== undefined) {
-      if (!isText(args.record) || !isText(args.network) || !isText(args.id) || !isText(args.uuid)) { console.error(USAGE); return 1; }
+      if (!isText(args.record) || !isText(args.network)) { console.error(USAGE); return 1; }
+      if (args.error !== undefined) {
+        if (!isText(args.error)) { console.error(USAGE); return 1; }
+        const r = recordError(dayDir(root, args.record), { network: args.network, message: args.error });
+        console.log(`${r.name}: recorded error for ${args.network}`);
+        return 0;
+      }
+      if (!isText(args.id) || !isText(args.uuid)) { console.error(USAGE); return 1; }
       const r = recordRelease(dayDir(root, args.record), { network: args.network, id: args.id, uuid: args.uuid });
       console.log(`${r.name}: recorded ${args.network}, status ${r.status}`);
+      return 0;
+    }
+    if (args.promote !== undefined) {
+      if (!isText(args.promote)) { console.error(USAGE); return 1; }
+      const r = promotePackets(dayDir(root, args.promote));
+      console.log(`${r.packets.length} draft(s) to promote through Metricool. For each one call updateScheduledPost with blogId 7076479, the id, the uuid, and info as a JSON string, then run release --promoted.`);
+      for (const p of r.packets) console.log(JSON.stringify(p));
+      return 0;
+    }
+    if (args.promoted !== undefined) {
+      if (!isText(args.promoted) || !isText(args.network) || !isText(args.id)) { console.error(USAGE); return 1; }
+      const r = recordPromotion(dayDir(root, args.promoted), { network: args.network, id: args.id });
+      console.log(`${r.name}: promoted ${args.network}, id ${args.id}`);
       return 0;
     }
     const target = args._[0];
     const dirs = target ? [dayDir(root, target)] : listDayFolders(root);
     const packets = [];
+    let failed = 0;
     for (const dir of dirs) {
       const r = prepareRelease(dir, { draft: Boolean(args.draft), dryRun: Boolean(args["dry-run"]) });
-      if (r.skipped) { console.log(`${r.name}: skipped (${r.skipped})`); for (const p of r.problems || []) console.log(`  ${p}`); continue; }
+      if (r.skipped) {
+        if (target && r.skipped === "invalid") failed++;
+        console.log(`${r.name}: skipped (${r.skipped})`); for (const p of r.problems || []) console.log(`  ${p}`); continue;
+      }
+      for (const rep of r.repeated) {
+        console.log(`warning: ${r.name} ${rep.network} was prepared before at ${rep.preparedAt}; check getScheduledPosts for that date before sending again`);
+      }
       packets.push(...r.packets);
     }
     const verb = args["dry-run"] ? "would send" : "to send";
     console.log(`${packets.length} packet(s) ${verb} through Metricool. For each one call createScheduledPost with blogId 7076479, the date, and info as a JSON string, then run release --record.`);
     for (const p of packets) console.log(JSON.stringify(p));
-    return 0;
+    return failed === 0 ? 0 : 1;
   }
 
   if (command === "reconcile") {
-    if (typeof args.from !== "string") { console.error(USAGE); return 1; }
     if (args.now !== undefined && typeof args.now !== "string") { console.error(USAGE); return 1; }
-    const response = JSON.parse(fs.readFileSync(args.from, "utf8"));
     const now = typeof args.now === "string" ? new Date(args.now) : new Date();
     if (Number.isNaN(now.getTime())) { console.error(USAGE); return 1; }
+    if (args.window) {
+      console.log(JSON.stringify(reconcileWindow(root, now)));
+      return 0;
+    }
+    if (typeof args.from !== "string") { console.error(USAGE); return 1; }
+    const response = JSON.parse(fs.readFileSync(args.from, "utf8"));
     const r = reconcile({ root, response, now, dryRun: Boolean(args["dry-run"]) });
     const verb = args["dry-run"] ? "would publish" : "published";
     console.log(`${verb}: ${r.published.join(", ") || "none"}`);
     console.log(`waiting: ${r.waiting.join(", ") || "none"}`);
+    if (r.drafts.length) console.log(`drafts waiting for promotion: ${r.drafts.join(", ")}`);
     console.log(`${args["dry-run"] ? "would delete" : "deleted"} ${r.deleted.length} R2 object(s)`);
-    return 0;
+    for (const e of r.errors) console.log(`${e.folder}: failed: ${e.message}`);
+    return r.errors.length === 0 ? 0 : 1;
   }
 
   if (command === "calendar") {
+    if (args.days !== undefined && typeof args.days !== "string") { console.error(USAGE); return 1; }
     const days = args.days === undefined ? 14 : Number(args.days);
     if (!Number.isInteger(days) || days < 1) { console.error(USAGE); return 1; }
     const rows = buildCalendar({ root, today: args.today || todayInNewYork(), days });

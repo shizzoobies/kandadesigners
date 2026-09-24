@@ -74,6 +74,15 @@ describe("validateFolder", () => {
     expect(validateFolder(day(m))).toContain("2026-01-05: media/thumbnail.jpg needs alt text");
   });
 
+  it("requires a thumbnail to be jpg, jpeg, or png", () => {
+    const webp = baseManifest(); webp.media[1].file = "media/thumbnail.webp";
+    expect(validateFolder(day(webp))).toContain("2026-01-05: media/thumbnail.webp thumbnail must be jpg, jpeg, or png");
+    for (const file of ["media/thumbnail.PNG", "media/thumbnail.jpeg", "media/thumbnail.JPG"]) {
+      const ok = baseManifest(); ok.media[1].file = file;
+      expect(validateFolder(day(ok))).toEqual([]);
+    }
+  });
+
   it("requires media files to exist once ready", () => {
     const files = baseFiles(); delete files["media/reel-vertical.mp4"];
     expect(validateFolder(day({ status: "planned" }, files))).toEqual([]);

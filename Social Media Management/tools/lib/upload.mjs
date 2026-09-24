@@ -12,8 +12,9 @@ export function sha256(file) {
   return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
 }
 
-export function objectKey(date, file, sha) {
-  return `${date}/${sha.slice(0, 8)}-${path.basename(file)}`;
+/** The R2 key for one file: the folder id, so two posts on the same day never share a prefix. */
+export function objectKey(id, file, sha) {
+  return `${id}/${sha.slice(0, 8)}-${path.basename(file)}`;
 }
 
 /**
@@ -37,7 +38,7 @@ export function uploadFolder(dir, { put = (key, file) => r2Put(key, file), confi
     const sha = sha256(abs);
     const existing = m.r2[entry.file];
     if (existing && existing.sha256 === sha && !existing.deletedAt) { unchanged.push(entry.file); continue; }
-    const key = objectKey(m.date, entry.file, sha);
+    const key = objectKey(m.id, entry.file, sha);
     if (!dryRun) {
       try {
         put(key, abs);
@@ -46,7 +47,11 @@ export function uploadFolder(dir, { put = (key, file) => r2Put(key, file), confi
         writeManifest(dir, m);
         throw err;
       }
+      // Keep the replaced object's key so reconcile can delete it later.
+      const previous = existing && Array.isArray(existing.previous) ? [...existing.previous] : [];
+      if (existing && existing.key && existing.key !== key && !existing.deletedAt && !previous.includes(existing.key)) previous.push(existing.key);
       m.r2[entry.file] = { key, url: publicUrl(key, config), sha256: sha, uploadedAt: now.toISOString() };
+      if (previous.length) m.r2[entry.file].previous = previous;
       m.lastError = null;
       writeManifest(dir, m);
     }
