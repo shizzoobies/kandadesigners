@@ -1,0 +1,13 @@
+{
+  "name": "ka-social-tools",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Day folder tooling for K&A Performance social posts",
+  "scripts": {
+    "test": "node node_modules/vitest/vitest.mjs run"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0"
+  }
+}
