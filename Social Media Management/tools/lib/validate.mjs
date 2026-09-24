@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { STATUSES, DAY_NAME } from "./manifest.mjs";
+import { STATUSES, DAY_NAME, readManifest } from "./manifest.mjs";
 import { readCaption, splitInstagram } from "./captions.mjs";
 
 export const LIMITS = { facebook: 63206, instagram: 2200, firstComment: 2200 };
@@ -17,7 +17,7 @@ export function validateFolder(dir, { now = new Date() } = {}) {
 
   let m;
   try {
-    m = JSON.parse(fs.readFileSync(path.join(dir, "post.json"), "utf8"));
+    m = readManifest(dir);
   } catch {
     return [`${name}: cannot parse post.json`];
   }
@@ -54,17 +54,18 @@ export function validateFolder(dir, { now = new Date() } = {}) {
   for (const [network, cfg] of Object.entries(platforms)) {
     if (cfg.manual) continue;
     const raw = cfg.caption ? readCaption(dir, cfg.caption) : null;
-    const text = raw === null ? null : (network === "instagram" ? splitInstagram(raw).caption : raw);
+    const split = raw === null ? null : (network === "instagram" ? splitInstagram(raw) : null);
+    const text = raw === null ? null : (network === "instagram" ? split.caption : raw);
     if (!text) {
       add(`${network} caption file ${cfg.caption || "(none)"} is missing or empty`);
       continue;
     }
     const type = cfg.type || "POST";
     if (type === "REEL" && !roles.has("video")) add(`${network} REEL needs a video`);
-    if (type === "STORY" && text) add(`${network} STORY carries no caption`);
+    if (type === "STORY") add(`${network} STORY carries no caption`);
     if (network === "instagram") {
       if (!roles.has("image") && !roles.has("video")) add("instagram needs an image or video");
-      const { caption, firstComment } = splitInstagram(raw);
+      const { caption, firstComment } = split;
       if (caption.length > LIMITS.instagram) add(`instagram caption is ${caption.length} characters, limit ${LIMITS.instagram}`);
       if (firstComment.length > LIMITS.firstComment) add(`instagram first comment is ${firstComment.length} characters, limit ${LIMITS.firstComment}`);
       if (/(^|\s)#\w/.test(caption)) add("instagram caption has hashtags above the first comment");

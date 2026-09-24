@@ -63,6 +63,8 @@ describe("validateFolder", () => {
   it("requires caption files for non manual platforms", () => {
     const files = baseFiles(); delete files["instagram.md"];
     expect(validateFolder(day({}, files))).toContain("2026-01-05: instagram caption file instagram.md is missing or empty");
+    const headingOnly = validateFolder(day({}, baseFiles({ "instagram.md": "\n## First comment\n\n#a\n" })));
+    expect(headingOnly).toContain("2026-01-05: instagram caption file instagram.md is missing or empty");
     const manual = validateFolder(day({ platforms: { facebook: { type: "REEL", caption: "facebook.md" }, linkedin: { manual: true, caption: "linkedin.md" } } }));
     expect(manual).toEqual([]);
   });
