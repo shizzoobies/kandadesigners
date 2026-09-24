@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { makeTempRoot, makeDay, baseManifest } from "./helpers.mjs";
-import { STATUSES, readManifest, writeManifest, assertTransition, listDayFolders, DAY_NAME } from "../lib/manifest.mjs";
+import { STATUSES, FLOW, readManifest, writeManifest, assertTransition, listDayFolders, listAllDayDirs, DAY_NAME } from "../lib/manifest.mjs";
 import { TO_BE_RELEASED } from "../lib/paths.mjs";
 
 let root;
@@ -46,5 +46,30 @@ describe("manifest", () => {
     expect(DAY_NAME.test("2026-09-28")).toBe(true);
     expect(DAY_NAME.test("2026-09-28-2")).toBe(true);
     expect(DAY_NAME.test("sept-28")).toBe(false);
+  });
+
+  it("keeps native out of the flow and rejects unknown or same-status transitions", () => {
+    expect(FLOW).toEqual(["planned", "generating", "ready", "approved", "scheduled", "published"]);
+    expect(STATUSES).toEqual([...FLOW, "native"]);
+    expect(() => assertTransition("bogus", "ready")).toThrow(/unknown status "bogus"/);
+    expect(() => assertTransition("ready", "ready")).toThrow(/already ready/);
+    expect(() => assertTransition("published", "native")).toThrow(/native/);
+    expect(() => assertTransition("planned", "approved")).not.toThrow();
+  });
+
+  it("writes post.json atomically and leaves no temp file", () => {
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", baseManifest());
+    writeManifest(dir, { ...baseManifest(), status: "ready" });
+    expect(fs.existsSync(path.join(dir, "post.json.tmp"))).toBe(false);
+    expect(readManifest(dir).status).toBe("ready");
+  });
+
+  it("lists every day directory, with or without post.json", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-01-05", baseManifest());
+    fs.mkdirSync(path.join(root, TO_BE_RELEASED, "2026-01-06"));
+    expect(listAllDayDirs(root).map((p) => path.basename(p))).toEqual(["2026-01-05", "2026-01-06"]);
+    expect(listDayFolders(root).map((p) => path.basename(p))).toEqual(["2026-01-05"]);
   });
 });

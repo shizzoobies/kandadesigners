@@ -4,7 +4,7 @@ import { STATUSES, DAY_NAME, readManifest } from "./manifest.mjs";
 import { readCaption, splitInstagram } from "./captions.mjs";
 
 export const LIMITS = { facebook: 63206, instagram: 2200, firstComment: 2200 };
-export const AI_DISCLOSURE = /AI (narrated|voice|generated|assisted)/i;
+export const AI_DISCLOSURE = /\bAI (narrated|voice|generated|assisted)/i;
 export const NETWORKS = ["facebook", "instagram", "linkedin"];
 export const TYPES = {
   facebook: ["POST", "REEL", "STORY"],
@@ -49,11 +49,16 @@ export function validateFolder(dir, { now = new Date() } = {}) {
     }
 
     let tzValid = true;
-    try {
-      new Intl.DateTimeFormat("en-US", { timeZone: m.timezone });
-    } catch {
+    if (typeof m.timezone !== "string" || !m.timezone) {
       tzValid = false;
-      add(`timezone "${m.timezone}" is not a valid IANA zone`);
+      add("timezone is missing");
+    } else {
+      try {
+        new Intl.DateTimeFormat("en-US", { timeZone: m.timezone });
+      } catch {
+        tzValid = false;
+        add(`timezone "${m.timezone}" is not a valid IANA zone`);
+      }
     }
 
     if (!TIME.test(m.time)) add(`time "${m.time}" is not HH:MM`);
@@ -90,7 +95,9 @@ export function validateFolder(dir, { now = new Date() } = {}) {
         add(`${entry.file} must be a relative path inside media/`);
         continue;
       }
-      if (entry.role !== undefined && !ROLES.includes(entry.role)) {
+      if (entry.role === undefined) {
+        add(`${entry.file} has no role`);
+      } else if (!ROLES.includes(entry.role)) {
         add(`${entry.file} has unknown role "${entry.role}"`);
       }
       if (entry.origin !== undefined && !ORIGINS.includes(entry.origin)) {
@@ -105,6 +112,8 @@ export function validateFolder(dir, { now = new Date() } = {}) {
     const aiFlag = Boolean(m.ai && (m.ai.voice || m.ai.visuals));
     const rawPlatforms = (m.platforms && typeof m.platforms === "object" && !Array.isArray(m.platforms))
       ? m.platforms : {};
+    const active = Object.entries(rawPlatforms).filter(([, cfg]) => cfg && typeof cfg === "object" && !cfg.manual);
+    if (active.length === 0) add("platforms must name at least one non-manual network");
     for (const [network, cfg] of Object.entries(rawPlatforms)) {
       if (cfg === null || typeof cfg !== "object" || Array.isArray(cfg)) {
         add(`platforms.${network} is not an object`);
@@ -128,11 +137,15 @@ export function validateFolder(dir, { now = new Date() } = {}) {
       }
 
       if (type === "STORY") {
-        const storyRaw = cfg.caption ? readCaption(dir, cfg.caption) : null;
-        if (storyRaw) add(`${network} STORY carries no caption`);
         if (!roles.has("image") && !roles.has("video")) add(`${network} STORY needs an image or video`);
+        const storyRaw = cfg.caption ? readCaption(dir, cfg.caption) : null;
+        const storyText = (network === "instagram" && storyRaw !== null) ? splitInstagram(storyRaw).caption : storyRaw;
+        if (storyText) add(`${network} STORY carries no caption`);
         continue;
       }
+
+      if ((type === "REEL" || type === "TRIAL_REEL") && !roles.has("video")) add(`${network} REEL needs a video`);
+      if (network === "instagram" && !roles.has("image") && !roles.has("video")) add("instagram needs an image or video");
 
       const raw = cfg.caption ? readCaption(dir, cfg.caption) : null;
       const split = raw === null ? null : (network === "instagram" ? splitInstagram(raw) : null);
@@ -141,9 +154,7 @@ export function validateFolder(dir, { now = new Date() } = {}) {
         add(`${network} caption file ${cfg.caption || "(none)"} is missing or empty`);
         continue;
       }
-      if ((type === "REEL" || type === "TRIAL_REEL") && !roles.has("video")) add(`${network} REEL needs a video`);
       if (network === "instagram") {
-        if (!roles.has("image") && !roles.has("video")) add("instagram needs an image or video");
         const { caption, firstComment } = split;
         if (caption.length > LIMITS.instagram) add(`instagram caption is ${caption.length} characters, limit ${LIMITS.instagram}`);
         if (firstComment.length > LIMITS.firstComment) add(`instagram first comment is ${firstComment.length} characters, limit ${LIMITS.firstComment}`);

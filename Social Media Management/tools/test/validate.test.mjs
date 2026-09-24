@@ -226,4 +226,40 @@ describe("validateFolder", () => {
     }));
     expect(problems).toContain("2026-01-05: media/../secret.txt must be a relative path inside media/");
   });
+
+  it("requires a timezone string", () => {
+    const m = baseManifest(); m.timezone = undefined;
+    expect(validateFolder(day(m))).toContain("2026-01-05: timezone is missing");
+  });
+
+  it("requires at least one non-manual network on non-native folders", () => {
+    expect(validateFolder(day({ platforms: {} }))).toContain("2026-01-05: platforms must name at least one non-manual network");
+    expect(validateFolder(day({ platforms: { linkedin: { manual: true, caption: "linkedin.md" } } }))).toContain("2026-01-05: platforms must name at least one non-manual network");
+  });
+
+  it("requires a role on every media entry", () => {
+    const m = baseManifest(); delete m.media[0].role;
+    expect(validateFolder(day(m))).toContain("2026-01-05: media/reel-vertical.mp4 has no role");
+  });
+
+  it("reports the missing video even when the caption is missing", () => {
+    const m = baseManifest(); m.media = [m.media[1]];
+    const files = baseFiles(); delete files["facebook.md"];
+    const problems = validateFolder(day(m, files));
+    expect(problems).toContain("2026-01-05: facebook caption file facebook.md is missing or empty");
+    expect(problems).toContain("2026-01-05: facebook REEL needs a video");
+  });
+
+  it("accepts an Instagram Story whose file holds only the first comment heading", () => {
+    const m = baseManifest();
+    m.platforms = { instagram: { type: "STORY", caption: "instagram.md" } };
+    m.media = [{ file: "media/thumbnail.jpg", role: "image", origin: "human", alt: "A phone" }];
+    const files = baseFiles({ "instagram.md": "\n## First comment\n\n#a\n" });
+    expect(validateFolder(day(m, files))).toEqual([]);
+  });
+
+  it("requires a word boundary before AI in the disclosure", () => {
+    const files = baseFiles({ "facebook.md": "Our Thai voice actor.\n", "instagram.md": "Narration is an AI voice.\n\n## First comment\n\n#a\n" });
+    expect(validateFolder(day({ ai: { voice: true, visuals: false } }, files))).toContain("2026-01-05: facebook caption needs an AI disclosure line");
+  });
 });
