@@ -111,6 +111,7 @@ function main() {
 
   if (command === "reconcile") {
     if (typeof args.from !== "string") { console.error(USAGE); return 1; }
+    if (args.now !== undefined && typeof args.now !== "string") { console.error(USAGE); return 1; }
     const response = JSON.parse(fs.readFileSync(args.from, "utf8"));
     const now = typeof args.now === "string" ? new Date(args.now) : new Date();
     if (Number.isNaN(now.getTime())) { console.error(USAGE); return 1; }

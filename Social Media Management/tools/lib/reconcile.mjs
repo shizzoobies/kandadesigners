@@ -39,14 +39,14 @@ export function reconcile({ root, response, now = new Date(), del = (key) => r2D
     if (postTime > now || !gone) { waiting.push(name); continue; }
     published.push(name);
     if (dryRun) continue;
+    const target = path.join(root, ALREADY_RELEASED, name);
+    if (fs.existsSync(target)) throw new Error(`${name}: already exists in ${ALREADY_RELEASED}`);
     assertTransition(m.status, "published");
     m.status = "published";
     m.published = { at: postTime.toISOString() };
     for (const n of Object.keys(m.metricool || {})) m.published[n] = { permalink: "" };
     m.lastError = null;
     writeManifest(dir, m);
-    const target = path.join(root, ALREADY_RELEASED, name);
-    if (fs.existsSync(target)) throw new Error(`${name}: already exists in ${ALREADY_RELEASED}`);
     fs.renameSync(dir, target);
   }
 

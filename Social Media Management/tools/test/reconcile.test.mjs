@@ -65,6 +65,16 @@ describe("reconcile", () => {
     expect(deleted).toHaveLength(1);
   });
 
+  it("refuses to publish into an existing archive folder without touching the manifest", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-01-05", scheduledDay(), baseFiles());
+    makeDay(root, "2026-01-05", scheduledDay("2026-01-05", { status: "published", published: { at: "2026-01-05T14:00:00.000Z" } }), {}, "Already Released");
+    expect(() => reconcile({ root, response: { data: [] }, now: new Date("2026-01-05T15:00:00Z"), del: () => {} })).toThrow(/already exists in Already Released/);
+    const m = readManifest(path.join(root, "To Be Released", "2026-01-05"));
+    expect(m.status).toBe("scheduled");
+    expect(m.published).toEqual({});
+  });
+
   it("dry run moves and deletes nothing", () => {
     root = makeTempRoot();
     makeDay(root, "2026-01-05", scheduledDay(), baseFiles());
