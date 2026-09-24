@@ -185,5 +185,68 @@ export default {
       hosting: 'pages',
       domain: 'fixalways.com',
     },
+    // Added 2026-09-24 after Alex noticed missing clients. Sources: the
+    // read-only inventory of the Cloudflare account (Workers custom domains,
+    // Pages projects), each folder's `git remote -v` and package.json, and a
+    // live curl of every address (all 200 on 2026-09-24).
+    {
+      // Source: Workers custom domain onlynailsfl.com -> jennnails; git remote;
+      // package.json "deploy" script.
+      slug: 'only-nails-beauty',
+      name: 'Only Nails Beauty',
+      live_url: 'https://onlynailsfl.com',
+      repo: 'shizzoobies/jennnails',
+      local_path: 'D:\\Jenn Nail Business\\jennnails',
+      hosting: 'worker',
+      deploy_command: 'npm run deploy',
+    },
+    {
+      // Source: Workers custom domain navigatingnorthflorida.com ->
+      // navigating-north-florida-production; git remote (Synovial org, so
+      // GitHub is not connected); package.json "deploy" script.
+      slug: 'navigating-north-florida',
+      name: 'Navigating North Florida',
+      live_url: 'https://navigatingnorthflorida.com',
+      repo: 'Synovial-kaperformance/navigating-north-florida',
+      local_path: 'D:\\Synovial Pitch\\Web Builds\\Navigating North Florida',
+      hosting: 'worker',
+      deploy_command: 'npm run deploy',
+    },
+    {
+      // Source: git remotes (origin shizzoobies/cpsolutions, plus a client-owned
+      // remote computersolutionskeystone/computersolutions); not in Alex's
+      // Cloudflare account. No documented deploy step, so left blank.
+      slug: 'computer-solutions',
+      name: 'Computer Solutions',
+      live_url: 'https://computersolutionskeystone.com',
+      repo: 'shizzoobies/cpsolutions',
+      local_path: 'D:\\Cpsolutions',
+      hosting: 'client-push',
+    },
+    {
+      // Source: Pages project thrillers-vr with domain thrillersvr.com; git
+      // remote. The zone shows "pending" in Cloudflare while serving live.
+      // No documented deploy step, so left blank.
+      slug: 'thrillers-mobile-vr',
+      name: 'Thrillers Mobile VR',
+      live_url: 'https://thrillersvr.com',
+      repo: 'shizzoobies/thrillers-vr',
+      local_path: 'D:\\VR Pitch',
+      hosting: 'pages',
+    },
+    {
+      // Source: Pages project dancing-crafter-storefront with domain
+      // dancingcrafter.com; git remote; signed agreement in
+      // D:\Tari Paper Art Client\Paperwork. The domain serves an "Opening
+      // soon" holding page on purpose (HOLDING_HOSTS in its wrangler.jsonc).
+      slug: 'dancing-crafter',
+      name: 'Dancing Crafter',
+      live_url: 'https://dancingcrafter.com',
+      repo: 'shizzoobies/dancing-crafter-storefront',
+      local_path: 'D:\\Tari Paper Art Client\\Core',
+      hosting: 'pages',
+      project_status: 'in_progress',
+      status_note: 'Opening soon page is up; launch pending',
+    },
   ],
 };
