@@ -1,0 +1,62 @@
+Your first steps with Codex
+K & A Performance
+
+A PLACE TO START | What Codex does
+
+Welcome. If you have never written code, you can start here. Codex is an AI assistant that can help you understand and change a project on your computer. You describe the result you want in ordinary language. It can work on the files, and you check what happened. A project is simply a group of related files. Our example is a small reading list. We will change one heading, from Weekend reading to My reading list, while leaving the books and the design alone. That gives us something easy to check. The screens in this video are teaching illustrations, not a live recording of Codex. Your version may look a little different. Pause whenever you need to. You do not need to memorize the interface. By the end, you should know where the files are, how to ask for a small change, and how to check the result.
+
+PROMPT
+Explain this practice project in everyday language. Do not change any files yet.
+
+-----
+
+GET YOUR BEARINGS | Open the right place
+
+Start with the official desktop quickstart linked with this guide. Download the app for your computer and sign in with your ChatGPT account. Check the current account requirements there; this lesson does not provide a subscription. OpenAI currently describes the download as the ChatGPT desktop app. If you see a product menu, choose Codex. If your app already opens in Codex, stay there. Next, prepare a practice folder. Unpack the reading list starter supplied with this guide, and keep its files together. Add or open that folder as a local project in the app. A local project connects the task to files on your computer. Check that you chose the extracted folder, rather than the ZIP package. Start a new task or chat inside that project. For this exercise, work locally in that folder. If a choice mentions a worktree or cloud environment, leave that for a later lesson. We only need one practice folder today.
+
+PROMPT
+Confirm the name of the folder you are working in. Do not edit anything.
+
+-----
+
+A SIMPLE MAP | Know the three places
+
+Think of three places, each with a different job. Your file manager helps you find the project. On Windows, that is File Explorer. On a Mac, it is Finder. Codex is where you describe the work and follow the conversation. The project name tells you which folder you are working with. The message box is where your request goes. Your browser is where you look at the finished page. It might open beside the conversation or in another window. For our simple starter, index dot html is the page. You can open it with your browser to see Weekend reading and three books. Viewing it on your computer does not publish it online. If you lose track of a window, stop and name the job: finding a file, asking for a change, or looking at the result. Then return to the place that does that job.
+
+PROMPT
+Tell me which file opens the reading list and how I can view it in my browser. Do not change anything.
+
+-----
+
+SAY WHAT YOU WANT | Ask for one small change
+
+Before changing anything, ask Codex to explain the project in everyday language and to leave the files alone. That first message helps you check that you opened the right folder. A prompt is just the message you send. It does not need special wording or technical vocabulary. When you are ready, make one clear request. Change the heading from Weekend reading to My reading list. Keep the three books and the design the same. Explain which file you changed and how to check the result. Notice the three parts: the change you want, what should stay the same, and what you want to check afterward. Send the message and read the updates while Codex works. You may see it reading files or running a command. Those updates describe its work. If it heads in the wrong direction, stop the task and explain the correction in plain language.
+
+PROMPT
+Change the heading from "Weekend reading" to "My reading list". Keep the three books and the design the same. Explain which file you changed and how to check the result.
+
+-----
+
+LOOK AT THE RESULT | Stay in control and check
+
+Keep the normal workspace protections in place while you learn. An approval request asks whether Codex can take a particular action. Read what it wants to do and why. If the request does not fit your task, decline it and ask for an explanation. Some actions inside the allowed workspace can happen without another prompt. An approval setting does not mean every edit waits for a click. When Codex finishes, read its summary. Ask which file changed and what it checked. If your project uses Git, the app can show a review pane with the changed lines. Git records versions of files; we are not setting it up in this orientation. You can still inspect the result in your browser. Open the same reading list page and refresh it. Look for My reading list. Check that the same three books remain and the design still looks right. A confident reply is not the same as a checked result.
+
+PROMPT
+Show me exactly what changed. Confirm that the three books and the design stayed the same, and tell me what you checked.
+
+-----
+
+ONE ACTION AT A TIME | Recover and keep going
+
+If the result is wrong, describe the difference. Say what you expected and what you actually see. Add the exact error message or a screenshot when that helps. Ask for the smallest next step instead of starting over with a much larger request. If you need to stop, let the task finish or use its stop control. Closing a conversation is not a way to undo file changes. Keep an untouched copy of the starter so you can practice again. When you come back, reopen the same project and conversation for the same task. Start a new conversation when you begin a different outcome. Before moving on, check your bearings. Can you identify the project folder? Can you describe one visible change? Can you open the result and judge it for yourself? That is a useful first session. You choose the goal. Codex helps with the work. You decide whether the result is ready.
+
+PROMPT
+I expected [result], but I see [what happened]. Please explain the likely cause and the smallest next step. Ask before making a broader change.
+
+References
+Official desktop quickstart: https://learn.chatgpt.com/docs/quickstart
+Projects and local folders: https://learn.chatgpt.com/docs/projects
+Permission modes: https://learn.chatgpt.com/docs/permission-modes
+Reviewing changed files: https://learn.chatgpt.com/docs/code-review
+Windows desktop guidance: https://learn.chatgpt.com/docs/windows/windows-app
+Prompting: https://learn.chatgpt.com/docs/prompting
