@@ -122,6 +122,23 @@ describe('runChecker', () => {
     expect(result.errors.length).toBeGreaterThan(0);
   });
 
+  it('fetches a missing icon on the hourly run, once, and never over an uploaded logo', async () => {
+    const put = [];
+    const LOGOS = { async put(key, bytes, opts) { put.push({ key, type: opts.httpMetadata.contentType }); } };
+    await q.createSite(env.DB, { slug: 'b', name: 'B', live_url: 'https://b.test/', hosting: 'pages' }, 't');
+    await q.setSiteLogo(env.DB, 2, 'logos/b-00000000.png', 't');
+    const icons = net({
+      'https://a.test/apple-touch-icon.png': async () => new Response(new Uint8Array([137, 80, 78, 71]), { headers: { 'content-type': 'image/png' } }),
+      'https://a.test/': async () => new Response('<link rel="apple-touch-icon" href="/apple-touch-icon.png">', { headers: { 'content-type': 'text/html' } }),
+    });
+    const onTheHour = Date.parse('2026-09-23T15:00:00Z');
+    await runChecker({ env: { ...env, LOGOS }, nowMs: onTheHour, fetchImpl: icons, log: quiet });
+    expect(put).toEqual([{ key: 'favicons/a', type: 'image/png' }]);
+    expect((await q.getSiteBySlug(env.DB, 'a')).favicon_key).toBe('favicons/a');
+    await runChecker({ env: { ...env, LOGOS }, nowMs: onTheHour + 3600000, fetchImpl: icons, log: quiet });
+    expect(put).toHaveLength(1);
+  });
+
   it('prunes checks older than 30 days on the daily run', async () => {
     await q.insertCheck(env.DB, { site_id: 1, checked_at: '2026-08-01T00:00:00Z', ok: 1, http_status: 200, ms: 1, error: null });
     await runChecker({ env, nowMs: Date.parse('2026-09-23T10:00:00Z'), fetchImpl: net(), log: quiet });

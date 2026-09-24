@@ -5,8 +5,8 @@
 // between adapter versions. It imports the same lib modules, so the light it
 // alerts on is the light the dashboard shows.
 //
-// One cron, every 15 minutes. Inside a run: uptime always; GitHub on the run
-// at minute 0; expiry, favicons and pruning once a day at 10:00 UTC; alert
+// One cron, every 15 minutes. Inside a run: uptime always; missing icons and
+// GitHub on the run at minute 0; expiry and pruning once a day at 10:00 UTC; alert
 // evaluation last, every run. Every job is isolated: one failure is logged and
 // the rest carry on, and a job that never succeeds leaves stored values to age
 // into gray rather than pretending to be green.
@@ -58,6 +58,23 @@ export async function runChecker({ env, nowMs = Date.now(), fetchImpl = fetch, l
   }));
   uptime.forEach((r, i) => { if (r.status === 'rejected') note(`uptime ${sites[i].slug}`, r.reason); });
 
+  // Hourly: fetch the site's own icon for any card still showing initials.
+  // Once stored it is never refetched, and an uploaded logo always wins.
+  if (when.getUTCMinutes() < 15 && env.LOGOS) {
+    for (const site of sites.filter((s) => !s.logo_key && !s.favicon_key)) {
+      try {
+        const icon = await fetchFavicon(site.live_url, fetchImpl);
+        if (icon) {
+          const key = `favicons/${site.slug}`;
+          await env.LOGOS.put(key, icon.bytes, { httpMetadata: { contentType: icon.contentType } });
+          await q.setSiteFavicon(DB, site.id, key, nowIso);
+        }
+      } catch (err) {
+        note(`favicon ${site.slug}`, err);
+      }
+    }
+  }
+
   if (when.getUTCMinutes() < 15) {
     if (!env.GITHUB_TOKEN) log.warn('github: no GITHUB_TOKEN, skipped');
     else if (!env.GITHUB_OWNER) log.warn('github: no GITHUB_OWNER, skipped');
@@ -91,18 +108,6 @@ export async function runChecker({ env, nowMs = Date.now(), fetchImpl = fetch, l
           if (expires) await q.setSiteExpiry(DB, site.id, { domain_expires_on: expires }, nowIso);
         } catch (err) {
           note(`domain ${site.slug}`, err);
-        }
-      }
-      if (env.LOGOS && !site.logo_key && !site.favicon_key) {
-        try {
-          const icon = await fetchFavicon(site.live_url, fetchImpl);
-          if (icon) {
-            const key = `favicons/${site.slug}`;
-            await env.LOGOS.put(key, icon.bytes, { httpMetadata: { contentType: icon.contentType } });
-            await q.setSiteFavicon(DB, site.id, key, nowIso);
-          }
-        } catch (err) {
-          note(`favicon ${site.slug}`, err);
         }
       }
     }
