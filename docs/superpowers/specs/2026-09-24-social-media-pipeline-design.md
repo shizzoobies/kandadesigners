@@ -120,8 +120,8 @@ Fields:
 - `metricool` is written by release, keyed by network because Facebook and
   Instagram usually get different captions and so different Metricool posts:
   `{ "facebook": { "payload", "id", "uuid", "scheduledAt", "draft" },
-  "instagram": { ... } }`. When both captions are identical, one Metricool
-  post carries both providers and the same record is written under both keys.
+  "instagram": { ... } }`. There is always one Metricool post per network,
+  even when the captions happen to match, so the record shape never varies.
 - `published` is written by reconcile: `{ "at", "facebook": { "permalink" },
   "instagram": { "permalink" } }` with permalinks filled when available.
 - `credits` is written by generate: `{ "<jobId>": { "credits", "at" } }`.
@@ -197,8 +197,8 @@ Built from the manifest, following the Metricool MCP contract confirmed on
   true`, `draft` per flag.
 - `text` from `facebook.md`; `firstCommentText` from the Instagram first
   comment. When the Facebook and Instagram captions differ, two posts are
-  created, one per network, so each gets its own text. When they are identical,
-  one post with both providers.
+  created, one per network, so each gets its own text. Caption sidecars (role
+  `captions`) are not uploaded; Metricool has no field for them.
 - `media` and `videoThumbnailUrl` from `r2`. `mediaAltText` from `media[].alt`.
 - `facebookData: { type }`, `instagramData: { type, isAiGenerated:
   ai.voice || ai.visuals }`.

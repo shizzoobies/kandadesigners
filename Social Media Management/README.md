@@ -28,7 +28,7 @@ To Be Released/
     facebook.md      Facebook caption, verbatim
     instagram.md     Instagram caption, then "## First comment" with the hashtags
     linkedin.md      optional, posted by hand
-    media/           the files that get uploaded: video, thumbnail, SRT, images
+    media/           video, thumbnail, images (uploaded), and the SRT (kept on disk)
     source/          optional working files: script, narration takes, captures
 ```
 
@@ -70,7 +70,8 @@ is `YYYY-MM-DD-2`. When a post has published, the whole folder moves to
 - `status` moves one way: `planned`, `generating`, `ready`, `approved`,
   `scheduled`, `published`. `native` marks a post that was scheduled directly
   in Facebook; it has no media and the tools leave it alone. Alex sets
-  `approved`. Scripts set everything else. Once validate passes on a planned
+  `approved`. `release --record` sets `scheduled`, `reconcile` sets
+  `published`, and scripts set everything else. Once validate passes on a planned
   folder whose media is on disk, Alex may set approved directly; ready is set
   by generate, or by hand when media was placed manually.
 - `time` is local to `timezone`. Weekday default is 09:00.
@@ -111,6 +112,33 @@ lists every problem in every folder and exits 1 if there are any. `calendar`
 shows the next two weeks, with `gap` on weekdays that have nothing planned.
 
 Tests: from `tools/`, `node node_modules/vitest/vitest.mjs run`.
+
+## Release path
+
+Once a folder is `approved`:
+
+1. `node tools/social.mjs upload 2026-09-28` pushes its video and images to
+   R2 and writes the public urls into `post.json`. Rerunning it skips files
+   that have not changed.
+2. `node tools/social.mjs release 2026-09-28 --draft` writes one Metricool
+   payload per network into `post.json` and prints one packet per line.
+   Claude sends each packet with the Metricool MCP (`createScheduledPost`,
+   brand 7076479, `info` as a JSON string) and records what comes back:
+   `node tools/social.mjs release --record 2026-09-28 --network facebook --id <id> --uuid <uuid>`.
+   The folder becomes `scheduled` once every network is recorded. Drop
+   `--draft` once the previews in Metricool have been checked.
+3. After post time, Claude saves the `getScheduledPosts` response to a file
+   and runs `node tools/social.mjs reconcile --from <file>`. Folders whose
+   posts are no longer scheduled move to `Already Released/`. R2 objects are
+   deleted a week after publishing.
+
+`upload` and `release` take `--dry-run`. `reconcile` takes `--dry-run` and
+`--now <ISO>` for testing. Every command is safe to rerun.
+
+R2 settings live in `tools/config/r2.json` (bucket `ka-social`, public base
+`https://media.ka-performancefl.com`). The Cloudflare token is read from
+`CLOUDFLARE_API_TOKEN`, or on Windows from the user scope variable of that
+name. It is never written anywhere.
 
 ## For Codex
 
