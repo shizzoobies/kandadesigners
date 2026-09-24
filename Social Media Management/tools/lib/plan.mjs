@@ -37,11 +37,34 @@ export function createDay({ root, date, pillar, title, type = "REEL", time = "09
     });
     fs.writeFileSync(path.join(dir, "facebook.md"), "");
     fs.writeFileSync(path.join(dir, "instagram.md"), "\n## First comment\n\n");
+    fs.writeFileSync(path.join(dir, "brief.md"), briefTemplate(date, pillar, title));
   } catch (err) {
     fs.rmSync(dir, { recursive: true, force: true });
     throw err;
   }
   return dir;
+}
+
+/** The brief.md template for a new day folder, with the title, date, and pillar filled in. */
+function briefTemplate(date, pillar, title) {
+  return `# Brief: ${title}
+
+Slot: ${date.slice(0, 10)}. Facebook and Instagram.
+Pillar: ${pillar}.
+
+## What the viewer gets
+
+## Hook
+
+## Format
+
+## Needs
+
+## AI
+State whether the voice or visuals are AI and how the caption discloses it.
+
+Approved: no
+`;
 }
 
 /** Return the single file in `files` matching `test`, or throw using `kind` in the error. */

@@ -48,6 +48,14 @@ export function validateFolder(dir, { now = new Date() } = {}) {
       return problems;
     }
 
+    const briefPath = path.join(dir, "brief.md");
+    const briefContent = fs.existsSync(briefPath) ? fs.readFileSync(briefPath, "utf8") : null;
+    if (!briefContent || !briefContent.trim()) {
+      add("brief.md is missing or empty");
+    } else if (m.status !== "planned" && !/^Approved:\s*yes/im.test(briefContent)) {
+      add(`brief.md is not approved; status ${m.status} needs an approved brief`);
+    }
+
     let tzValid = true;
     if (typeof m.timezone !== "string" || !m.timezone) {
       tzValid = false;

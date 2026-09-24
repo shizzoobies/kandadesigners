@@ -19,12 +19,19 @@ Design: `docs/superpowers/specs/2026-09-24-social-media-pipeline-design.md`.
 - Anything sent to a voice model spells "K and A". On screen and in captions it stays K&A.
 - Nothing goes live until Alex sets `"status": "approved"` in `post.json`.
 
+## Plan first
+
+The week is planned in `plans/<week>.md` before any post exists. Each slot in
+that plan becomes a day folder with a brief. Nothing is generated, copied in,
+or scheduled until the brief says `Approved: yes`.
+
 ## The day folder
 
 ```
 To Be Released/
   2026-09-28/
     post.json        the manifest
+    brief.md         the plan for this post: what it is for, hook, format, needs; Alex marks Approved: yes
     facebook.md      Facebook caption, verbatim
     instagram.md     Instagram caption, then "## First comment" with the hashtags
     linkedin.md      optional, posted by hand
@@ -164,7 +171,7 @@ name. It is never written anywhere.
 
 ## For Codex
 
-To fill a planned day: read `post.json`, write `facebook.md` and
+Read `brief.md` first and do not change it. To fill a planned day: read `post.json`, write `facebook.md` and
 `instagram.md`, put finished files in `media/` with `"origin": "codex"` entries
 in `media[]`, write alt text for every image, and set `ai` honestly. Then run
 `validate` on the folder. Do not change `status`.

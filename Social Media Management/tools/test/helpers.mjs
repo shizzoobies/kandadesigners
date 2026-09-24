@@ -65,6 +65,7 @@ export function baseFiles(overrides = {}) {
     "media/reel-vertical.mp4": Buffer.alloc(32),
     "media/thumbnail.jpg": Buffer.alloc(32),
     "media/reel-vertical.srt": "1\n00:00:00,000 --> 00:00:01,000\nHello\n",
+    "brief.md": "# Brief: Fixture post\n\n## Hook\nA hook.\n\nApproved: yes\n",
     ...overrides
   };
 }

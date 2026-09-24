@@ -25,6 +25,14 @@ describe("createDay", () => {
     expect(fs.existsSync(path.join(dir, "media"))).toBe(true);
   });
 
+  it("writes a brief.md with the title and an unapproved default", () => {
+    root = makeTempRoot();
+    const dir = createDay({ root, date: "2026-10-05", pillar: "tip", title: "Tab through your site" });
+    const brief = fs.readFileSync(path.join(dir, "brief.md"), "utf8");
+    expect(brief).toContain("# Brief: Tab through your site");
+    expect(brief).toContain("Approved: no");
+  });
+
   it("refuses to overwrite an existing folder", () => {
     root = makeTempRoot();
     createDay({ root, date: "2026-10-05", pillar: "tip", title: "x" });

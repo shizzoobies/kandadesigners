@@ -170,7 +170,7 @@ describe("validateFolder", () => {
   });
 
   it("accepts a Story with no caption file and an image", () => {
-    const files = { "media/photo.jpg": Buffer.alloc(16) };
+    const files = { "media/photo.jpg": Buffer.alloc(16), "brief.md": "# Brief: Fixture post\n\nApproved: yes\n" };
     const problems = validateFolder(day({
       platforms: { facebook: { type: "STORY" } },
       media: [{ file: "media/photo.jpg", role: "image", origin: "human", alt: "A phone showing the site" }]
@@ -270,5 +270,23 @@ describe("validateFolder", () => {
   it("requires a word boundary before AI in the disclosure", () => {
     const files = baseFiles({ "facebook.md": "Our Thai voice actor.\n", "instagram.md": "Narration is an AI voice.\n\n## First comment\n\n#a\n" });
     expect(validateFolder(day({ ai: { voice: true, visuals: false } }, files))).toContain("2026-01-05: facebook caption needs an AI disclosure line");
+  });
+
+  it("requires brief.md to exist and be non-empty", () => {
+    const files = baseFiles(); delete files["brief.md"];
+    expect(validateFolder(day({}, files))).toContain("2026-01-05: brief.md is missing or empty");
+    const empty = validateFolder(day({}, baseFiles({ "brief.md": "   \n" })));
+    expect(empty).toContain("2026-01-05: brief.md is missing or empty");
+  });
+
+  it("requires an approved brief once status moves past planned", () => {
+    const files = baseFiles({ "brief.md": "# Brief: Fixture post\n\nApproved: no\n" });
+    const problems = validateFolder(day({ status: "ready" }, files));
+    expect(problems).toContain("2026-01-05: brief.md is not approved; status ready needs an approved brief");
+  });
+
+  it("allows a planned folder with an unapproved brief", () => {
+    const files = baseFiles({ "brief.md": "# Brief: Fixture post\n\nApproved: no\n" });
+    expect(validateFolder(day({ status: "planned" }, files))).toEqual([]);
   });
 });
