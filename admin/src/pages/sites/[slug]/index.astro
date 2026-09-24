@@ -28,6 +28,9 @@ const maintainer = people.find((p) => p.id === site.maintainer_id);
 const err = Astro.url.searchParams.get('err');
 const msg = Astro.url.searchParams.get('msg');
 const orNone = (v) => v ?? 'Not set';
+const githubOwner = Astro.locals.runtime.env.GITHUB_OWNER;
+const repoOwner = site.repo ? site.repo.split('/')[0] : null;
+const githubOwnerMismatch = repoOwner && (!githubOwner || repoOwner.toLowerCase() !== githubOwner.toLowerCase());
 const where = [
   ['Repo', site.repo, site.repo ? `https://github.com/${site.repo}` : null],
   ['Local folder', site.local_path, null],
@@ -94,9 +97,11 @@ const where = [
     <h3 class="caps">From GitHub</h3>
     {!site.repo
       ? <p>No repo set, so nothing is read from GitHub.</p>
-      : githubItems.filter((w) => !w.done_at).length === 0
-        ? <p>Nothing open{site.github_synced_at ? `, as of ${easternDateTime(site.github_synced_at)}` : ', not synced yet'}.</p>
-        : <ul class="work">{githubItems.filter((w) => !w.done_at).map((w) => <li><a href={w.url}>{w.text}</a></li>)}</ul>}
+      : githubOwnerMismatch
+        ? <p>GitHub is not connected for this repo (owned by {repoOwner}). Track its open work in your list below.</p>
+        : githubItems.filter((w) => !w.done_at).length === 0
+          ? <p>Nothing open{site.github_synced_at ? `, as of ${easternDateTime(site.github_synced_at)}` : ', not synced yet'}.</p>
+          : <ul class="work">{githubItems.filter((w) => !w.done_at).map((w) => <li><a href={w.url}>{w.text}</a></li>)}</ul>}
     <h3 class="caps">Your list</h3>
     <ul class="work">
       {manualItems.map((w) => (

@@ -155,6 +155,8 @@ The August admin above (clients, projects, invoices, retainers, follow-ups, note
 - The old `ka-admin` D1 database is kept as an archive. It is not modified or dropped, and it still receives free-course leads from the public site through its `ADMIN_DB` binding, so that flow keeps working after the new dashboard ships.
 - The Launch Book leak fix, branch `admin/three-bugs`, is what is live in production today. It must be merged to `main` before this branch deploys.
 - Beyond the plan, the build added: case-insensitive email lookup, Astro's `security.checkOrigin` (a form post from a foreign Origin returns 403 on the built worker), and error-association fixes on the site form.
+- Editing a site now keeps its existing slug instead of rebuilding it from the name, since the edit form has no slug field and a rebuilt slug would move the page's URL; the slug `new` is reserved so a site named "New" can never collide with `/sites/new`.
+- GitHub sync is scoped to one owner (`GITHUB_OWNER`, `shizzoobies`): the checker only reads repos under that owner, and a site's page says plainly when its repo belongs to someone else, so those repos' open work is tracked by hand instead.
 - Deployment follows `admin/DEPLOY-SITES.md`, step by step in PowerShell. As of this writing, none of its steps have been run. Seed facts were verified per site; MBS Medicine's deploy command in the seed data is deliberately left blank because it depends on branch state, see `D:\Skills\mbs-live\HANDOFF.md`. The seed people email, `alex@ka-performancefl.com`, still awaits Alex's confirmation that it matches the email he signs into Cloudflare Access with.
 
 ## daily-songs is off Firebase, on D1 (2026-08-13)

@@ -60,8 +60,10 @@ export async function runChecker({ env, nowMs = Date.now(), fetchImpl = fetch, l
 
   if (when.getUTCMinutes() < 15) {
     if (!env.GITHUB_TOKEN) log.warn('github: no GITHUB_TOKEN, skipped');
+    else if (!env.GITHUB_OWNER) log.warn('github: no GITHUB_OWNER, skipped');
     else {
-      for (const site of sites.filter((s) => s.repo)) {
+      const owner = env.GITHUB_OWNER.toLowerCase();
+      for (const site of sites.filter((s) => s.repo && s.repo.split('/')[0].toLowerCase() === owner)) {
         try {
           const fetched = await fetchOpenWork(site.repo, env.GITHUB_TOKEN, fetchImpl);
           const plan = reconcileGithub(await q.listGithubItems(DB, site.id), fetched);

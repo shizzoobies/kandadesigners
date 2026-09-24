@@ -18,6 +18,7 @@ export function initials(name) {
 }
 
 export function buildCards(sites, checksBySite, openCounts, nowMs) {
+  // checksBySite lists each site's checks newest first, as computeLevel requires.
   return sites
     .map((site) => ({
       site,

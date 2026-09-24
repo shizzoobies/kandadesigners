@@ -8,8 +8,9 @@ Stop at the first error and paste it into the session.
 - Alex confirms the email he signs into Cloudflare Access with. If it is not
   `alex@ka-performancefl.com`, fix it in `admin/seed/data.js`, then re-run
   `node scripts/seed-sql.mjs` and commit.
-- Alex creates a fine-grained GitHub token: Metadata, Contents and Pull
-  requests, all read-only, on the repos listed in `seed/data.js`.
+- Alex creates a fine-grained, read-only GitHub token (Metadata, Contents,
+  Pull requests) on the shizzoobies account, covering the shizzoobies repos
+  listed in `seed/data.js`. Sites under other owners are tracked by hand.
 
 ## 1. Create the database and the logo bucket
 ```powershell
@@ -26,19 +27,27 @@ cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js r2 buc
 cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js d1 migrations apply ka-sites --remote; if ($?) { node ./node_modules/wrangler/bin/wrangler.js d1 execute ka-sites --remote --file seed/seed.sql }
 ```
 
-## 3. Checker secrets
+## 3. Deploy the checker, then wait one cycle
+It runs fine with no secrets set yet: GitHub sync is skipped (logged, not
+fatal) and alert emails are held rather than sent.
+```powershell
+cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js deploy -c checker/wrangler.jsonc
+```
+Claude verifies after 15 minutes:
+```powershell
+cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js d1 execute ka-sites --remote --command "SELECT s.slug, c.ok, c.http_status, c.error FROM sites s JOIN checks c ON c.site_id = s.id WHERE c.checked_at = (SELECT MAX(checked_at) FROM checks WHERE site_id = s.id)"
+```
+This shows each site's latest result by name, so a site blocking the checker
+(for example a 403) is caught here, before any secret goes live and before
+any alert email goes out.
+
+## 4. Checker secrets
 Claude writes `$env:TEMP\checker-secrets.json` (BOM-free) with the keys
 `GITHUB_TOKEN` and `RESEND_API_KEY` left empty; Alex fills them in a text
 editor. Then:
 ```powershell
 cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js secret bulk "$env:TEMP\checker-secrets.json" -c checker/wrangler.jsonc; Remove-Item "$env:TEMP\checker-secrets.json"
 ```
-
-## 4. Deploy the checker, then wait one cycle
-```powershell
-cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js deploy -c checker/wrangler.jsonc
-```
-Claude verifies after 15 minutes: `d1 execute ka-sites --remote --command "SELECT COUNT(*) FROM checks"` is at least the number of sites.
 
 ## 5. Deploy the new admin
 ```powershell

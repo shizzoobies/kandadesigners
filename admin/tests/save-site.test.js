@@ -42,4 +42,20 @@ describe('saveSite', () => {
     const after = await q.getSiteBySlug(db, 'a');
     expect(after).toMatchObject({ live_url: 'https://a2.test', repo: 'o/r', logo_key: existing.logo_key });
   });
+
+  it('editing a site does not change its slug even when the name would slugify differently', async () => {
+    await saveSite({ db, bucket, form: form({ name: 'K & A Performance', slug: 'ka-performance', live_url: 'https://ka.test' }), existing: null, nowMs: 0 });
+    const existing = await q.getSiteBySlug(db, 'ka-performance');
+    const r = await saveSite({ db, bucket, form: form({ name: 'K & A Performance', live_url: 'https://ka2.test' }), existing, nowMs: 0 });
+    expect(r).toEqual({ ok: true, slug: 'ka-performance' });
+    const after = await q.getSiteBySlug(db, 'ka-performance');
+    expect(after).toBeTruthy();
+    expect(after.live_url).toBe('https://ka2.test');
+  });
+
+  it('reserves the slug "new" for new sites', async () => {
+    const r = await saveSite({ db, bucket, form: form({ name: 'New', live_url: 'https://new.test' }), existing: null, nowMs: 0 });
+    expect(r.ok).toBe(false);
+    expect(r.errors.name).toBeTruthy();
+  });
 });

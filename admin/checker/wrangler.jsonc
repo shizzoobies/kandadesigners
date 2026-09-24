@@ -23,7 +23,9 @@
   "vars": {
     "ALERT_TO": "alex@ka-performancefl.com",
     "ALERT_FROM": "K & A sites <alerts@ka-performancefl.com>",
-    "ADMIN_URL": "https://admin.ka-performancefl.com"
+    "ADMIN_URL": "https://admin.ka-performancefl.com",
+    // The GitHub token belongs to this account; repos owned by anyone else are tracked by hand.
+    "GITHUB_OWNER": "shizzoobies"
   },
   "observability": { "enabled": true },
   // No fetch handler and nothing to serve; the cron is the only way in.

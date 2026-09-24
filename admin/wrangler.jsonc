@@ -28,7 +28,9 @@
   // team domain is public. Both are safe to commit.
   "vars": {
     "ACCESS_TEAM_DOMAIN": "kandaperformance.cloudflareaccess.com",
-    "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900"
+    "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900",
+    // The GitHub token belongs to this account; repos owned by anyone else are tracked by hand.
+    "GITHUB_OWNER": "shizzoobies"
   },
   // A Route, not a Custom Domain: a proxied A record (192.0.2.1, deliberately
   // unroutable) already sits at this hostname, and Custom Domain attachment

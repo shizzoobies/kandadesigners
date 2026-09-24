@@ -79,14 +79,33 @@ describe('runChecker', () => {
         return new Response('[]');
       },
     });
-    await runChecker({ env: { ...env, GITHUB_TOKEN: 'tok' }, nowMs: T0, fetchImpl: gh, log: quiet });
+    await runChecker({ env: { ...env, GITHUB_TOKEN: 'tok', GITHUB_OWNER: 'o' }, nowMs: T0, fetchImpl: gh, log: quiet });
     expect(githubCalls).toBe(0);
     const onTheHour = Date.parse('2026-09-23T15:00:00Z');
     await runChecker({ env, nowMs: onTheHour, fetchImpl: gh, log: quiet });
     expect(githubCalls).toBe(0);
-    await runChecker({ env: { ...env, GITHUB_TOKEN: 'tok' }, nowMs: onTheHour, fetchImpl: gh, log: quiet });
+    await runChecker({ env: { ...env, GITHUB_TOKEN: 'tok', GITHUB_OWNER: 'o' }, nowMs: onTheHour, fetchImpl: gh, log: quiet });
     expect((await q.listGithubItems(env.DB, 1)).map((i) => i.github_key)).toEqual(['pr:3']);
     expect((await q.getSiteBySlug(env.DB, 'a')).github_synced_at).toBe('2026-09-23T15:00:00.000Z');
+  });
+
+  it('only syncs GitHub for sites whose repo owner matches GITHUB_OWNER', async () => {
+    await q.updateSite(env.DB, 1, { slug: 'a', name: 'A', live_url: 'https://a.test/', hosting: 'pages', repo: 'o/r' }, 't');
+    await q.createSite(env.DB, { slug: 'b', name: 'B', live_url: 'https://b.test/', hosting: 'pages', repo: 'x/y' }, 't');
+    let githubCalls = 0;
+    const gh = net({
+      'https://api.github.com/': async (url) => {
+        githubCalls += 1;
+        if (url.endsWith('/repos/o/r')) return new Response(JSON.stringify({ default_branch: 'main' }));
+        if (url.includes('/pulls')) return new Response('[]');
+        return new Response('[]');
+      },
+    });
+    const onTheHour = Date.parse('2026-09-23T15:00:00Z');
+    await runChecker({ env: { ...env, GITHUB_TOKEN: 'tok', GITHUB_OWNER: 'o' }, nowMs: onTheHour, fetchImpl: gh, log: quiet });
+    expect(githubCalls).toBeGreaterThan(0);
+    expect((await q.getSiteBySlug(env.DB, 'a')).github_synced_at).toBe('2026-09-23T15:00:00.000Z');
+    expect((await q.getSiteBySlug(env.DB, 'b')).github_synced_at).toBeNull();
   });
 
   it('refreshes expiry daily and keeps the stored date when a lookup fails', async () => {

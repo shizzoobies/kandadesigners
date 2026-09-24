@@ -11,9 +11,17 @@ export async function saveSite({ db, bucket, form, existing, nowMs = Date.now() 
   const logo = checkLogo(file);
   if (!logo.ok) errors.logo = logo.error;
 
-  if (!errors.name) {
-    const clash = await getSiteBySlug(db, parsed.values.slug);
-    if (clash && clash.id !== existing?.id) errors.name = 'A site with that name already exists.';
+  if (existing) {
+    // Editing never moves the page: the form has no slug field, so keep the
+    // slug the site already has instead of rebuilding it from the new name.
+    parsed.values.slug = existing.slug;
+  } else {
+    // 'new' collides with the /sites/new route, so it can never be a slug.
+    if (!errors.name && parsed.values.slug === 'new') errors.name = 'That name is reserved. Try another.';
+    if (!errors.name) {
+      const clash = await getSiteBySlug(db, parsed.values.slug);
+      if (clash) errors.name = 'A site with that name already exists.';
+    }
   }
   if (Object.keys(errors).length) return { ok: false, values: parsed.values, errors };
 
