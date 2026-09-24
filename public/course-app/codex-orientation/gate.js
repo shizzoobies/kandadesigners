@@ -5,7 +5,7 @@
   window.COURSE_ACCESS = !!existing || query.has('pass');
   if (!window.COURSE_ACCESS) {
     document.documentElement.style.visibility = 'hidden';
-    location.replace('/free-course/?next=codex-video');
+    location.replace('/free-course/?next=' + (location.pathname.replace(/\/$/, '').endsWith('/video') ? 'codex-video' : 'codex'));
     return;
   }
   document.cookie = 'ka_course=' + (existing || encodeURIComponent(query.get('pass') || '1')) + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
