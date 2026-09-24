@@ -1,0 +1,30 @@
+{
+  "id": "2026-09-30",
+  "date": "2026-09-30",
+  "time": "09:00",
+  "timezone": "America/New_York",
+  "status": "planned",
+  "pillar": "training",
+  "title": "One screen, one decision",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

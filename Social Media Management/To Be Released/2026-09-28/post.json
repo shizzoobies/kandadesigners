@@ -1,0 +1,30 @@
+{
+  "id": "2026-09-28",
+  "date": "2026-09-28",
+  "time": "09:00",
+  "timezone": "America/New_York",
+  "status": "planned",
+  "pillar": "client-spotlight",
+  "title": "Ellenton Family Practice Direct is number one",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

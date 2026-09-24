@@ -1,0 +1,30 @@
+{
+  "id": "2026-10-01",
+  "date": "2026-10-01",
+  "time": "09:00",
+  "timezone": "America/New_York",
+  "status": "planned",
+  "pillar": "ai-launch",
+  "title": "Give the AI the brief, not the task",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}
