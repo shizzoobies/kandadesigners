@@ -1,9 +1,9 @@
 {
   "id": "2026-09-28",
   "date": "2026-09-28",
-  "time": "09:00",
+  "time": "10:30",
   "timezone": "America/New_York",
-  "status": "planned",
+  "status": "approved",
   "pillar": "client-spotlight",
   "title": "Ellenton Family Practice Direct in the top three",
   "platforms": {
@@ -35,7 +35,20 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-09-28/c6679a43-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-28/c6679a43-reel-vertical.mp4",
+      "sha256": "c6679a43b649d3eb03ce41574fc803e8a11f218cff245a6a045b726fb58b1753",
+      "uploadedAt": "2026-09-24T21:09:22.521Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-09-28/5b0a4eb3-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28/5b0a4eb3-thumbnail.jpg",
+      "sha256": "5b0a4eb30a7f70f5a402dded0ef48a25e259bdb24de0cfb209a07e945c6321b3",
+      "uploadedAt": "2026-09-24T21:09:22.521Z"
+    }
+  },
   "metricool": {},
   "published": {},
   "credits": {},
