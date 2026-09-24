@@ -60,4 +60,22 @@ describe("release", () => {
     const dir = uploadedDay();
     expect(() => recordRelease(dir, { network: "facebook", id: "1", uuid: "u" })).toThrow(/no prepared payload/);
   });
+
+  it("leaves a recorded network's stored payload alone on a rerun", () => {
+    const dir = uploadedDay();
+    prepareRelease(dir, { draft: true, now: early });
+    recordRelease(dir, { network: "facebook", id: "111", uuid: "u-111" });
+    prepareRelease(dir, { draft: false, now: early });
+    const m = readManifest(dir);
+    expect(m.metricool.facebook.draft).toBe(true);
+    expect(m.metricool.facebook.payload.info.draft).toBe(true);
+    expect(m.metricool.instagram.draft).toBe(false);
+  });
+
+  it("dry run returns packets without writing", () => {
+    const dir = uploadedDay();
+    const r = prepareRelease(dir, { draft: true, now: early, dryRun: true });
+    expect(r.packets.map((p) => p.network)).toEqual(["facebook", "instagram"]);
+    expect(readManifest(dir).metricool).toEqual({});
+  });
 });

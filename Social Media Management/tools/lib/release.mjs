@@ -9,7 +9,7 @@ function activeNetworks(m) {
 }
 
 /** Build and store the Metricool payloads for one approved, uploaded folder. Returns the packets Claude still has to send. */
-export function prepareRelease(dir, { draft = false, now = new Date() } = {}) {
+export function prepareRelease(dir, { draft = false, now = new Date(), dryRun = false } = {}) {
   const name = path.basename(dir);
   const problems = validateFolder(dir, { now });
   if (problems.length) return { name, skipped: "invalid", problems, packets: [] };
@@ -24,9 +24,12 @@ export function prepareRelease(dir, { draft = false, now = new Date() } = {}) {
   const packets = [];
   for (const network of activeNetworks(m)) {
     const existing = m.metricool[network] || {};
-    m.metricool[network] = { ...existing, payload: payloads[network], draft };
-    if (!existing.id) packets.push({ folder: name, network, ...payloads[network] });
+    if (!existing.id) {
+      m.metricool[network] = { ...existing, payload: payloads[network], draft };
+      packets.push({ folder: name, network, ...payloads[network] });
+    }
   }
+  if (dryRun) return { name, packets };
   m.lastError = null;
   writeManifest(dir, m);
   return { name, packets };

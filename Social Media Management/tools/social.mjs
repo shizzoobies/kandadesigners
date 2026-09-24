@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import fs from "node:fs";
 import path from "node:path";
 import { resolveRoot, dayDir } from "./lib/paths.mjs";
 import { listAllDayDirs, listDayFolders } from "./lib/manifest.mjs";
@@ -7,6 +8,7 @@ import { createDay } from "./lib/plan.mjs";
 import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mjs";
 import { uploadFolder } from "./lib/upload.mjs";
 import { prepareRelease, recordRelease } from "./lib/release.mjs";
+import { reconcile } from "./lib/reconcile.mjs";
 
 const USAGE = `usage:
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
@@ -14,7 +16,8 @@ const USAGE = `usage:
   node tools/social.mjs calendar [--days N] [--today YYYY-MM-DD]
   node tools/social.mjs upload [<folder name>|--all] [--dry-run]
   node tools/social.mjs release [<folder name>|--all] [--draft] [--dry-run]
-  node tools/social.mjs release --record <folder name> --network facebook|instagram --id <id> --uuid <uuid>`;
+  node tools/social.mjs release --record <folder name> --network facebook|instagram --id <id> --uuid <uuid>
+  node tools/social.mjs reconcile --from <getScheduledPosts.json> [--dry-run] [--now <ISO>]`;
 
 const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals"]);
 
@@ -96,14 +99,26 @@ function main() {
     const dirs = target ? [dayDir(root, target)] : listDayFolders(root);
     const packets = [];
     for (const dir of dirs) {
-      const r = args["dry-run"]
-        ? { name: path.basename(dir), packets: [], skipped: "dry run" }
-        : prepareRelease(dir, { draft: Boolean(args.draft) });
+      const r = prepareRelease(dir, { draft: Boolean(args.draft), dryRun: Boolean(args["dry-run"]) });
       if (r.skipped) { console.log(`${r.name}: skipped (${r.skipped})`); for (const p of r.problems || []) console.log(`  ${p}`); continue; }
       packets.push(...r.packets);
     }
-    console.log(`${packets.length} packet(s) to send through Metricool. For each one call createScheduledPost with blogId 7076479, the date, and info as a JSON string, then run release --record.`);
+    const verb = args["dry-run"] ? "would send" : "to send";
+    console.log(`${packets.length} packet(s) ${verb} through Metricool. For each one call createScheduledPost with blogId 7076479, the date, and info as a JSON string, then run release --record.`);
     for (const p of packets) console.log(JSON.stringify(p));
+    return 0;
+  }
+
+  if (command === "reconcile") {
+    if (typeof args.from !== "string") { console.error(USAGE); return 1; }
+    const response = JSON.parse(fs.readFileSync(args.from, "utf8"));
+    const now = typeof args.now === "string" ? new Date(args.now) : new Date();
+    if (Number.isNaN(now.getTime())) { console.error(USAGE); return 1; }
+    const r = reconcile({ root, response, now, dryRun: Boolean(args["dry-run"]) });
+    const verb = args["dry-run"] ? "would publish" : "published";
+    console.log(`${verb}: ${r.published.join(", ") || "none"}`);
+    console.log(`waiting: ${r.waiting.join(", ") || "none"}`);
+    console.log(`${args["dry-run"] ? "would delete" : "deleted"} ${r.deleted.length} R2 object(s)`);
     return 0;
   }
 
