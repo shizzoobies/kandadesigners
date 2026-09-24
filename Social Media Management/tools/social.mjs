@@ -6,12 +6,15 @@ import { validateFolder } from "./lib/validate.mjs";
 import { createDay } from "./lib/plan.mjs";
 import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mjs";
 import { uploadFolder } from "./lib/upload.mjs";
+import { prepareRelease, recordRelease } from "./lib/release.mjs";
 
 const USAGE = `usage:
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
   node tools/social.mjs validate [<folder name>|--all]
   node tools/social.mjs calendar [--days N] [--today YYYY-MM-DD]
-  node tools/social.mjs upload [<folder name>|--all] [--dry-run]`;
+  node tools/social.mjs upload [<folder name>|--all] [--dry-run]
+  node tools/social.mjs release [<folder name>|--all] [--draft] [--dry-run]
+  node tools/social.mjs release --record <folder name> --network facebook|instagram --id <id> --uuid <uuid>`;
 
 const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals"]);
 
@@ -79,6 +82,29 @@ function main() {
       }
     }
     return failed === 0 ? 0 : 1;
+  }
+
+  if (command === "release") {
+    const isText = (v) => typeof v === "string" && v.length > 0;
+    if (args.record !== undefined) {
+      if (!isText(args.record) || !isText(args.network) || !isText(args.id) || !isText(args.uuid)) { console.error(USAGE); return 1; }
+      const r = recordRelease(dayDir(root, args.record), { network: args.network, id: args.id, uuid: args.uuid });
+      console.log(`${r.name}: recorded ${args.network}, status ${r.status}`);
+      return 0;
+    }
+    const target = args._[0];
+    const dirs = target ? [dayDir(root, target)] : listDayFolders(root);
+    const packets = [];
+    for (const dir of dirs) {
+      const r = args["dry-run"]
+        ? { name: path.basename(dir), packets: [], skipped: "dry run" }
+        : prepareRelease(dir, { draft: Boolean(args.draft) });
+      if (r.skipped) { console.log(`${r.name}: skipped (${r.skipped})`); for (const p of r.problems || []) console.log(`  ${p}`); continue; }
+      packets.push(...r.packets);
+    }
+    console.log(`${packets.length} packet(s) to send through Metricool. For each one call createScheduledPost with blogId 7076479, the date, and info as a JSON string, then run release --record.`);
+    for (const p of packets) console.log(JSON.stringify(p));
+    return 0;
   }
 
   if (command === "calendar") {

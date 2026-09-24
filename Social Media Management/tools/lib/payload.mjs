@@ -57,7 +57,7 @@ export function buildPayloads(dir, { draft = false } = {}) {
       text
     };
     if (type === "STORY") { delete info.text; delete info.firstCommentText; }
-    if (hasVideo && thumb && THUMB_TYPES[network].includes(type)) info.videoThumbnailUrl = urlOf(thumb);
+    if (hasVideo && thumb && (THUMB_TYPES[network] || []).includes(type)) info.videoThumbnailUrl = urlOf(thumb);
     if (network === "facebook") info.facebookData = { type };
     if (network === "instagram") info.instagramData = { type, isAiGenerated: aiFlag };
     out[network] = { date: isoWithOffset(m.date, m.time, m.timezone), info };
