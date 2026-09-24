@@ -13,6 +13,7 @@ import { TUTORIAL_TOTAL_FRAMES } from "./tutorial/timeline";
 import type { TutorialContent, TutorialCut } from "./tutorial/types";
 import { CONTRAST_TUTORIAL } from "./tutorial/reels/contrast";
 import { HERO_TUTORIAL } from "./tutorial/reels/hero";
+import { EndCardSEO } from "./scenes/EndCardSEO";
 
 /**
  * The four delivery crops of a 15 second cut, plus a debug twin of each.
@@ -217,6 +218,22 @@ export const RemotionRoot: React.FC = () => {
           }}
         />
       ))}
+
+      {/*
+       * One-off end card for the 2026-09-28 Ellenton Family Practice Direct
+       * social clip. 1080x1920, 120 frames (4s), not part of the
+       * registrations() system above because its copy is fixed rather than
+       * per-reel content.
+       */}
+      <Composition
+        id="EndCardSEO"
+        component={EndCardSEO}
+        durationInFrames={120}
+        fps={FPS}
+        width={SAFE_ZONES.vertical.width}
+        height={SAFE_ZONES.vertical.height}
+        defaultProps={{ format: "vertical" }}
+      />
     </>
   );
 };
