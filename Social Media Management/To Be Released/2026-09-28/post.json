@@ -3,7 +3,7 @@
   "date": "2026-09-28",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "approved",
+  "status": "scheduled",
   "pillar": "client-spotlight",
   "title": "Ellenton Family Practice Direct in the top three",
   "platforms": {
@@ -49,7 +49,91 @@
       "uploadedAt": "2026-09-24T21:09:22.521Z"
     }
   },
-  "metricool": {},
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-09-28T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-28/c6679a43-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            ""
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-28T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Search \"Primary Care, Ellenton, FL\" and look at what comes up. Google's AI Overview points to Ellenton Family Practice Direct first, and they sit in the map's top three, next to practices many times their size.\n\nThat is a two-provider, membership-style practice showing up where people actually look. Congratulations to the whole team.\n\nRecorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nLocal search is part of every site we build. If your business is not showing up where it should, call Alex at 904-210-1071 or visit ka-performancefl.com.\n\n#EllentonFL #PrimaryCare #LocalSEO",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28/5b0a4eb3-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-24T21:09:40.565Z",
+      "id": "381617380",
+      "uuid": "6610243749889723196",
+      "scheduledAt": "2026-09-24T21:10:05.885Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-09-28T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "#EllentonFL #PrimaryCare #LocalSEO #SmallBusiness #FloridaBusiness",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-28/c6679a43-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            ""
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-28T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Search \"Primary Care, Ellenton, FL\" and look at what comes up. Google's AI Overview points to Ellenton Family Practice Direct first, and they sit in the map's top three, next to practices many times their size.\n\nThat is a two-provider, membership-style practice showing up where people actually look. Congratulations to the whole team.\n\nRecorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nLocal search is part of every site we build. Link in bio.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28/5b0a4eb3-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-24T21:09:40.565Z",
+      "id": "381617409",
+      "uuid": "4825940660386873840",
+      "scheduledAt": "2026-09-24T21:10:05.957Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null
