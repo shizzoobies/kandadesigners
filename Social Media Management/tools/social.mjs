@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import path from "node:path";
 import { resolveRoot, dayDir } from "./lib/paths.mjs";
-import { listDayFolders } from "./lib/manifest.mjs";
+import { listAllDayDirs } from "./lib/manifest.mjs";
 import { validateFolder } from "./lib/validate.mjs";
 import { createDay } from "./lib/plan.mjs";
 import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mjs";
@@ -11,17 +11,19 @@ const USAGE = `usage:
   node tools/social.mjs validate [<folder name>|--all]
   node tools/social.mjs calendar [--days N] [--today YYYY-MM-DD]`;
 
-/** Minimal argv parser: positionals, --key value, and --flag. */
-function parse(argv) {
+const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals"]);
+
+/** Positionals, --flag for names in FLAGS, and --key value for everything else. */
+function parse(argv, flags = FLAGS) {
   const out = { _: [] };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a.startsWith("--")) {
-      const key = a.slice(2);
-      const next = argv[i + 1];
-      if (next !== undefined && !next.startsWith("--")) { out[key] = next; i++; }
-      else out[key] = true;
-    } else out._.push(a);
+    if (!a.startsWith("--")) { out._.push(a); continue; }
+    const key = a.slice(2);
+    if (flags.has(key)) { out[key] = true; continue; }
+    const next = argv[i + 1];
+    if (next === undefined || next.startsWith("--")) out[key] = true;
+    else { out[key] = next; i++; }
   }
   return out;
 }
@@ -49,7 +51,7 @@ function main() {
 
   if (command === "validate") {
     const target = args._[0];
-    const dirs = !target || args.all ? listDayFolders(root) : [dayDir(root, target)];
+    const dirs = target ? [dayDir(root, target)] : listAllDayDirs(root);
     let count = 0;
     for (const dir of dirs) {
       const problems = validateFolder(dir);
@@ -61,7 +63,9 @@ function main() {
   }
 
   if (command === "calendar") {
-    const rows = buildCalendar({ root, today: args.today || todayInNewYork(), days: Number(args.days || 14) });
+    const days = args.days === undefined ? 14 : Number(args.days);
+    if (!Number.isInteger(days) || days < 1) { console.error(USAGE); return 1; }
+    const rows = buildCalendar({ root, today: args.today || todayInNewYork(), days });
     console.log(formatCalendar(rows));
     return 0;
   }

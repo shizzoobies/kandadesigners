@@ -13,10 +13,16 @@ export function buildCalendar({ root, today, days = 14 }) {
   const byDate = new Map();
   for (const dir of listDayFolders(root)) {
     const name = path.basename(dir);
-    const m = readManifest(dir);
-    const list = byDate.get(m.date) || [];
+    let m;
+    try {
+      m = readManifest(dir);
+    } catch {
+      m = null;
+    }
+    const key = m ? m.date : name.slice(0, 10);
+    const list = byDate.get(key) || [];
     list.push({ name, m });
-    byDate.set(m.date, list);
+    byDate.set(key, list);
   }
 
   const rows = [];
@@ -32,6 +38,10 @@ export function buildCalendar({ root, today, days = 14 }) {
       continue;
     }
     for (const { name, m } of entries) {
+      if (!m) {
+        rows.push({ date, weekday, status: "broken", pillar: "", title: "", note: "cannot parse post.json" });
+        continue;
+      }
       let note = "";
       if (m.status === "native") note = "native";
       else if (name !== date) note = `second post ${name}`;

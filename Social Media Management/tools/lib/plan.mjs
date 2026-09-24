@@ -56,8 +56,8 @@ function pickOne(files, test, kind, src) {
 function copyReel(from, dir) {
   const src = path.join(from, "Facebook");
   const files = fs.existsSync(src) ? fs.readdirSync(src) : [];
-  const mp4 = pickOne(files, (f) => f.endsWith(".mp4"), ".mp4", src);
-  const srt = pickOne(files, (f) => f.endsWith(".srt"), ".srt", src);
+  const mp4 = pickOne(files, (f) => f.toLowerCase().endsWith(".mp4"), ".mp4", src);
+  const srt = pickOne(files, (f) => f.toLowerCase().endsWith(".srt"), ".srt", src);
   const jpg = pickOne(files, (f) => /^thumbnail.*\.jpg$/i.test(f), "thumbnail*.jpg", src);
   fs.copyFileSync(path.join(src, mp4), path.join(dir, "media", "reel-vertical.mp4"));
   fs.copyFileSync(path.join(src, srt), path.join(dir, "media", "reel-vertical.srt"));
