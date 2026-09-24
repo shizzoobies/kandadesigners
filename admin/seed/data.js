@@ -3,7 +3,7 @@
 // is left out, and Alex fills it in the app. Sources noted per site.
 export default {
   people: [
-    // CONFIRM with Alex: the email he signs into Cloudflare Access with.
+    // Confirmed by Alex 2026-09-24: his Cloudflare Access sign-in email.
     { name: 'Alex Anderson', email: 'alex@ka-performancefl.com', role: 'owner' },
   ],
   sites: [
