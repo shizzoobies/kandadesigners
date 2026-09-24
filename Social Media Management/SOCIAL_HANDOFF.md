@@ -1,4 +1,4 @@
-# Social Media Handoff — K & A Performance
+# Social Media Handoff: K & A Performance
 
 You're taking over Facebook and Instagram management for K & A Performance. This file covers the business, the connected tools, what's been done so far, and what comes next.
 
@@ -26,7 +26,7 @@ K & A Performance is a two-owner web design, AI integration, and instructional d
 | Project Makeover | Nonprofit (school makeovers) | https://projectmakeover.org | Browse makeovers, then a clear path to donate or volunteer |
 | Osteen & Sons | Gainesville lawn, brush, and junk crew | https://osteenandsons.com | Address lookup pulls county lot details and leads into booking a walkthrough |
 | David's BBQ | Gainesville restaurant | https://davidsbbq.com | Menu, catering, and online ordering easy to reach |
-| MBS Medicine | Veteran-owned FL telehealth clinic | — | Bold identity, same-week booking, patient portal |
+| MBS Medicine | Veteran-owned FL telehealth clinic | none | Bold identity, same-week booking, patient portal |
 
 Other clients are shown on the homepage: PB&J Strategic Accounting, Fore Motion Golf, Ellenton Family Practice Direct, Southern Legacy Contractors, and Synovial Marketing.
 
