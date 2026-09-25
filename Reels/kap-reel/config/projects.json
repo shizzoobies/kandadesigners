@@ -182,6 +182,25 @@
         "/"
       ],
       "capture_mode": "interaction"
+    },
+    {
+      "id": "thrillers-mobile-vr",
+      "display_name": "Thrillers Mobile VR",
+      "url": "https://thrillers.ka-testing2.com",
+      "cleared_for_public_showcase": true,
+      "credit_allowed": true,
+      "one_liner": "Veteran and family owned mobile VR trailer from Middleburg, FL. Four experiences, pricing, and booking on the page.",
+      "proof_points": [
+        "Four experiences, each with its own section",
+        "Plans and pricing page",
+        "Booking request form"
+      ],
+      "capture_routes": [
+        "/",
+        "/experiences",
+        "/book"
+      ],
+      "capture_note": "The url is the demo host and a placeholder: the real domain waits on Wix releasing it. Launch reel for 2026-10-02 captured from the demo by scripts/launch/thrillers-capture.ts at 360x640 CSS, device scale 3 (1080x1920 frames). The post does not release until the real domain is live."
     }
   ],
   "excluded_do_not_show": [
@@ -203,6 +222,9 @@
       "Reel 2 (training) started. Alex chose: safety module leads, RFI and P&L in the surfaces tour; NEW plates and NEW music (fresh credits); hook \"One designer. Or a whole team.\"; original-sample disclosure lives in the post copy only.",
       "The three training samples are K&A originals per src/data/training.js (no client or employer material), so they are cleared by Alex in session. Brief constraints carried into the reel: no pricing, no throughput counts, no bench or SME names, do not show the sixty combined years figure.",
       "Local edits to the samples dated 2026-09-04 are not deployed. Captures use the live builds per the spec unless Alex pushes first."
+    ],
+    "2026-09-24": [
+      "Thrillers Mobile VR launch reel approved for the 2026-10-02 slot (plans/2026-09-28.md, brief Approved: yes). Captured from the demo host; release waits on Alex confirming the real domain is live. Whether Thrillers can be tagged is still open."
     ]
   }
 }

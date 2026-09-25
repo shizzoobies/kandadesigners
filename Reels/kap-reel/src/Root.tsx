@@ -8,6 +8,8 @@ import { FPS, LINKEDIN_TOTAL_FRAMES, TOTAL_FRAMES } from "./lib/timing";
 import type { ReelContent } from "./reels/types";
 import { TRAINING_REEL } from "./reels/training";
 import { WEB_REEL } from "./reels/web";
+import { LaunchThrillers } from "./launch/LaunchThrillers";
+import { LAUNCH_TOTAL_FRAMES } from "./launch/thrillers";
 import { Tutorial } from "./tutorial/Tutorial";
 import { TUTORIAL_TOTAL_FRAMES, tutorialTimeline } from "./tutorial/timeline";
 import type { TutorialContent, TutorialCut } from "./tutorial/types";
@@ -220,6 +222,9 @@ export const RemotionRoot: React.FC = () => {
           }}
         />
       ))}
+
+      {/* Thrillers Mobile VR launch reel, 2026-10-02. See src/launch/. */}
+      <Composition id="LaunchThrillersVertical" component={LaunchThrillers} durationInFrames={LAUNCH_TOTAL_FRAMES} fps={FPS} width={SAFE_ZONES.vertical.width} height={SAFE_ZONES.vertical.height} defaultProps={{ format: "vertical" as const }} />
 
       {/*
        * One-off end card for the 2026-09-28 Ellenton Family Practice Direct

@@ -16,7 +16,25 @@
       "caption": "instagram.md"
     }
   },
-  "media": [],
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Screen recording of the Thrillers Mobile VR website in a phone frame: the home page, the four ride sections on the experiences page, and the booking request form, ending on the K&A Performance card with ka-performancefl.com and Call Alex, 904-210-1071"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "Phone frame showing the Thrillers Mobile VR home page headline, Florida's first and only mobile virtual reality trailer, with the K&A Performance logo in the corner"
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
   "ai": {
     "voice": false,
     "visuals": false
