@@ -1,0 +1,39 @@
+{
+  "_note": "Tagged narration for the one screen, one decision tutorial (the Wednesday 2026-09-30 reel), 15 second vertical cut, read on eleven_v3 by Sarah at the natural stability. The words are the ones in src/tutorial/onescreen/content.ts, which are the approved script in the day folder's brief.md with the url written the way it is said and K&A as \"K and A\". Only the inline audio tags are added: src/tutorial/onescreen/scripts/voice.ts strips them and refuses to send anything whose stripped text is not exactly that narration. Direction: warm and confident throughout, a little playful on the hook only. No pause tags; the contrast read showed a pause tag renders as more than a second of dead air. Tags only ever go to the voice model: captions and the SRT read their own text from content.ts.",
+  "tutorial": "onescreen",
+  "cut": "short",
+  "model": "eleven_v3",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah",
+  "mode": "natural",
+  "direction": "Warm, confident, a little playful on the hook only.",
+  "generationsPerBeat": 4,
+  "seedBase": 300926,
+  "beats": [
+    {
+      "id": "hook",
+      "narration": "[warm, a little playful] If a screen asks the learner to do two things, it does neither.",
+      "why": "The one playful line. A friend who has seen this screen a hundred times and finds it a little funny."
+    },
+    {
+      "id": "clutter",
+      "narration": "[confident] Read this, then click that, then answer this. That is three screens pretending to be one.",
+      "why": "The list is the joke and needs no help. Said plainly and sure, so the verdict lands on its own."
+    },
+    {
+      "id": "decide",
+      "narration": "[warm] We build one decision per screen. The learner acts, gets feedback, moves on.",
+      "why": "How we work, said the way you would explain it across a table."
+    },
+    {
+      "id": "trick",
+      "narration": "[confident] Fewer clicks. More learning. That is the whole trick.",
+      "why": "Short sentences, no lift. The payoff is the plainness."
+    },
+    {
+      "id": "cta",
+      "narration": "[warm] Free sample courses at K and A Performance F L dot com slash training.",
+      "why": "An invitation, not an announcement."
+    }
+  ]
+}

@@ -16,9 +16,27 @@
       "caption": "instagram.md"
     }
   },
-  "media": [],
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": ""
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "A phone showing the hazard hunt screen from the K&A safety sample course: a jobsite photo with an amber tap mark on the unsecured ladder, over the caption The learner acts, gets feedback, moves on."
+    }
+  ],
   "ai": {
-    "voice": false,
+    "voice": true,
     "visuals": false
   },
   "generate": [],

@@ -1,0 +1,116 @@
+{
+  "_note": "Written by src/tutorial/onescreen/scripts/capture.ts. Real screens from the live safety sample, captured at 405 by 720 CSS pixels and a device scale of 8/3, so every still is 1080 by 1920. tap is the element the next real tap landed on, in capture pixels.",
+  "url": "https://ka-performancefl.com/training-samples/safety/",
+  "capturedAt": "2026-09-25T00:27:31.244Z",
+  "width": 1080,
+  "height": 1920,
+  "captures": [
+    {
+      "id": "hunt-idle",
+      "file": "assets/captures/onescreen/hunt-idle.png",
+      "screen": 7,
+      "what": "Hazard hunt, nothing found yet",
+      "tap": {
+        "x": 908,
+        "y": 1234,
+        "width": 99,
+        "height": 351
+      }
+    },
+    {
+      "id": "hunt-found",
+      "file": "assets/captures/onescreen/hunt-found.png",
+      "screen": 7,
+      "what": "The ladder tapped: checked in the scene and the list, Found 1 of 6",
+      "tap": null
+    },
+    {
+      "id": "hunt-feedback",
+      "file": "assets/captures/onescreen/hunt-feedback.png",
+      "screen": 7,
+      "what": "The feedback for the ladder, under the checked list",
+      "tap": null
+    },
+    {
+      "id": "bench-idle",
+      "file": "assets/captures/onescreen/bench-idle.png",
+      "screen": 8,
+      "what": "Control workbench, Reroute the drain, nothing placed",
+      "tap": {
+        "x": 75,
+        "y": 1390,
+        "width": 915,
+        "height": 144
+      }
+    },
+    {
+      "id": "bench-toolkit",
+      "file": "assets/captures/onescreen/bench-toolkit.png",
+      "screen": 8,
+      "what": "The six controls, one to choose",
+      "tap": {
+        "x": 544,
+        "y": 1007,
+        "width": 454,
+        "height": 155
+      }
+    },
+    {
+      "id": "bench-chosen",
+      "file": "assets/captures/onescreen/bench-chosen.png",
+      "screen": 8,
+      "what": "Reroute overhead chosen, waiting to be placed on the situation",
+      "tap": {
+        "x": 75,
+        "y": 1390,
+        "width": 915,
+        "height": 144
+      }
+    },
+    {
+      "id": "bench-placed",
+      "file": "assets/captures/onescreen/bench-placed.png",
+      "screen": 8,
+      "what": "Reroute the line overhead placed, Placed 1 of 6",
+      "tap": null
+    },
+    {
+      "id": "audit-idle",
+      "file": "assets/captures/onescreen/audit-idle.png",
+      "screen": 9,
+      "what": "Inspect before release, eight locations",
+      "tap": {
+        "x": 546,
+        "y": 832,
+        "width": 444,
+        "height": 409
+      }
+    },
+    {
+      "id": "audit-open",
+      "file": "assets/captures/onescreen/audit-open.png",
+      "screen": 9,
+      "what": "Wet walkway field notes, Place hold marker",
+      "tap": {
+        "x": 97,
+        "y": 1261,
+        "width": 872,
+        "height": 124
+      }
+    },
+    {
+      "id": "audit-hold",
+      "file": "assets/captures/onescreen/audit-hold.png",
+      "screen": 9,
+      "what": "Hold marker placed on the wet walkway",
+      "tap": null
+    },
+    {
+      "id": "audit-board",
+      "file": "assets/captures/onescreen/audit-board.png",
+      "screen": 9,
+      "what": "The locations after the hold: Inspected 1 of 8, 1 hold",
+      "tap": null
+    }
+  ]
+}

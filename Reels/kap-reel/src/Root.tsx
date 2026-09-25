@@ -16,6 +16,7 @@ import type { TutorialContent, TutorialCut } from "./tutorial/types";
 import { CONTRAST_TUTORIAL } from "./tutorial/reels/contrast";
 import { HERO_TUTORIAL } from "./tutorial/reels/hero";
 import { EndCardSEO } from "./scenes/EndCardSEO";
+import { ONESCREEN_FRAMES, OneScreen } from "./tutorial/onescreen/OneScreen";
 
 /**
  * The four delivery crops of a 15 second cut, plus a debug twin of each.
@@ -241,6 +242,8 @@ export const RemotionRoot: React.FC = () => {
         height={SAFE_ZONES.vertical.height}
         defaultProps={{ format: "vertical" }}
       />
+      {/* "One screen, one decision", 2026-09-30. See src/tutorial/onescreen/. */}
+      <Composition id="TutorialOnescreenVertical" component={OneScreen} durationInFrames={ONESCREEN_FRAMES} fps={FPS} width={SAFE_ZONES.vertical.width} height={SAFE_ZONES.vertical.height} />
     </>
   );
 };
