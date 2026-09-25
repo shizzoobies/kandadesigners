@@ -28,3 +28,6 @@ assets/plates/*.png
 !assets/plates/plate-tablet-b-c03.png
 !assets/plates/plate-phone-hands-b-c03.png
 !assets/plates/plate-phone-hands-c03.png
+
+# Copies of source recordings used by social builds (originals live in Social Media Management/To Be Released/<day>/source/)
+assets/social/**/*.mp4

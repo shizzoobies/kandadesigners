@@ -384,6 +384,293 @@
         "pass": true
       },
       "set": "tutorial2"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-1-32s",
+      "file": "assets/audio/raw/music-w0928-1-32s.mp3",
+      "prompt": "Confident mid tempo indie pop instrumental at about 100 bpm in a major key. A bass led groove: a round, melodic electric bass line drives the song, a clean electric guitar plays tight muted stabs on the offbeats, dry punchy kick and snare, tambourine on the backbeat. Self assured, grounded and quietly proud, like walking into a room you own. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 890,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:37:52.308Z",
+      "accepted": true,
+      "notes": "confident, bass-led groove, muted electric stabs, about 100 bpm. For the week of 2026-09-28, no narration. Measured duration 50.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -14.3,
+        "wholeTrackMeanDb": -16.1,
+        "deficitDb": -1.8,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-2-32s",
+      "file": "assets/audio/raw/music-w0928-2-32s.mp3",
+      "prompt": "Bright, playful indie pop instrumental at about 116 bpm with a bouncy skipping shuffle feel. A strummed ukulele carries the rhythm, a clean electric guitar answers with short cheerful picked phrases, a glockenspiel adds sparkle on the hook, plucky round bass, snappy drums with finger snaps and handclaps. Sunny, cheeky, colorful and fun. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 1073,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:38:02.716Z",
+      "accepted": true,
+      "notes": "bright, playful, strummed ukulele, glockenspiel, snaps, about 116 bpm. For the week of 2026-09-28, no narration. Measured duration 32.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -19.1,
+        "wholeTrackMeanDb": -14.9,
+        "deficitDb": 4.2,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-3-32s",
+      "file": "assets/audio/raw/music-w0928-3-32s.mp3",
+      "prompt": "Calm, focused indie folk pop instrumental at about 92 bpm. A fingerpicked acoustic guitar plays a gentle repeating pattern over a soft warm synth pad, a clean electric guitar with a touch of reverb adds sparse melodic notes, brushed snare, soft kick and shaker, warm bass. Steady, thoughtful and clear headed, like concentrated work at a sunny desk, still gently moving forward. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:38:12.530Z",
+      "accepted": true,
+      "notes": "calm, focused, fingerpicked acoustic over a soft synth pad, about 92 bpm. For the week of 2026-09-28, no narration. Measured duration 32.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -16.7,
+        "wholeTrackMeanDb": -18.2,
+        "deficitDb": -1.5,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-4-32s",
+      "file": "assets/audio/raw/music-w0928-4-32s.mp3",
+      "prompt": "Light, curious indie pop instrumental at about 104 bpm. A bright mandolin plays a quick picked melodic figure in playful question and answer phrases, a nylon string guitar strums lightly underneath, pizzicato style plucks, a bouncy upright style bass, light drums with rimshots and shaker. Inquisitive, light footed, a little whimsical and optimistic. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:38:23.079Z",
+      "accepted": true,
+      "notes": "curious, light, picked mandolin and nylon guitar, about 104 bpm. For the week of 2026-09-28, no narration. Measured duration 32.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.3,
+        "wholeTrackMeanDb": -16.3,
+        "deficitDb": -1,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-5-32s",
+      "file": "assets/audio/raw/music-w0928-5-32s.mp3",
+      "prompt": "Airy, curious modern indie pop instrumental at about 108 bpm. Clean electric guitar arpeggios with a shimmering chorus effect, a light analog synth pad and a soft synth pluck counter melody, a bubbly melodic bass, crisp drums with rimshots and a steady hi hat. A sense of discovery, light and open, like an idea clicking into place. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:38:32.961Z",
+      "accepted": false,
+      "notes": "curious, airy, chorused clean electric arpeggios, synth pluck, about 108 bpm. For the week of 2026-09-28, no narration. Rejected: 0.56s leading silence.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -19.6,
+        "wholeTrackMeanDb": -17.7,
+        "deficitDb": 1.9,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-6-32s",
+      "file": "assets/audio/raw/music-w0928-6-32s.mp3",
+      "prompt": "High energy indie rock pop instrumental at about 128 bpm. Driving eighth note electric guitars, one lightly crunchy rhythm guitar and one bright clean lead riff, a punchy pumping bass, energetic drums with a four on the floor kick, open hi hats and big handclaps on every backbeat. Exciting, bold, celebratory launch day energy, like a countdown hitting zero. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 1103,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:38:44.745Z",
+      "accepted": true,
+      "notes": "high energy, launch, driving eighth-note electric guitars, big claps, about 128 bpm. For the week of 2026-09-28, no narration. Measured duration 50.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -14.8,
+        "wholeTrackMeanDb": -14.2,
+        "deficitDb": 0.6,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-7-32s",
+      "file": "assets/audio/raw/music-w0928-7-32s.mp3",
+      "prompt": "Upbeat, anthemic indie pop instrumental at about 124 bpm. Big bright acoustic guitar strums with foot stomps and claps, a clean electric guitar playing a soaring octave riff, a light synth arpeggio sparkle, driving bass, energetic tom heavy drums. Joyful, triumphant, high energy launch party feel. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 1090,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:38:55.158Z",
+      "accepted": true,
+      "notes": "high energy, anthemic, big acoustic strums, stomps, octave electric riff, about 124 bpm. For the week of 2026-09-28, no narration. Measured duration 32.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -16,
+        "wholeTrackMeanDb": -16.3,
+        "deficitDb": -0.3,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0928-5-32s-take2",
+      "file": "assets/audio/raw/music-w0928-5-32s-take2.mp3",
+      "prompt": "Airy, curious modern indie pop instrumental at about 108 bpm. Clean electric guitar arpeggios with a shimmering chorus effect, a light analog synth pad and a soft synth pluck counter melody, a bubbly melodic bass, crisp drums with rimshots and a steady hi hat. A sense of discovery, light and open, like an idea clicking into place. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 1083,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T14:39:21.218Z",
+      "accepted": true,
+      "notes": "curious, airy, chorused clean electric arpeggios, synth pluck, about 108 bpm. For the week of 2026-09-28, no narration. Returned 50.04s although 32s was asked. Accepted by hand: the only flag is a 0.5s gap at 45.6s, which is the track ending into trailing silence, far past the 18.5s used. Take 1 was rejected for 0.56s of leading silence.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -17.9,
+        "wholeTrackMeanDb": -18.4,
+        "deficitDb": -0.5,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0928"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0925-sun-32s",
+      "file": "assets/audio/raw/music-w0925-sun-32s.mp3",
+      "prompt": "Calm, reflective acoustic indie instrumental at about 78 bpm in a warm major key, for a quiet Sunday evening. A soft felt piano plays a simple, hopeful four note motif, a steel string acoustic guitar with a capo strums gently and sparsely underneath, a round upright bass walks slowly, soft brushed snare and a low tom pulse, a faint warm vibraphone answers the piano now and then. Unhurried, settled and quietly optimistic, like clearing the kitchen table and planning the week ahead as the light goes gold. Clean intro: the piano and guitar start on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No drop, no riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady, gentle energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean, warm modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 1750,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T15:46:24.759Z",
+      "accepted": false,
+      "notes": "calm, reflective Sunday evening, felt piano motif, soft capo acoustic strums, upright bass, about 78 bpm. For the Sunday 2026-09-27 carousel slide video, no narration. Rejected: first second 17 dB under the mean; 0.41s leading silence.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -38.4,
+        "wholeTrackMeanDb": -21.4,
+        "deficitDb": 17,
+        "toleranceDb": 6,
+        "pass": false
+      },
+      "set": "social-w0925-sun",
+      "edit": {
+        "file": "out/social/music-w0925-sun/music-w0925-sun.wav",
+        "trimStartSeconds": 6.52,
+        "fadeInSeconds": 0.02,
+        "durationSeconds": 25.52,
+        "reason": "The raw take opens with 6.5s of quiet solo piano (about -38 dB against a -21 dB mean). The bed starts at the full band entry at 6.52s instead of spending credits on a regenerate.",
+        "check": {
+          "firstSecondDeficitDb": -4.4,
+          "leadingSilenceSeconds": 0,
+          "midSilences": 0,
+          "flatFactor": 0,
+          "endingClean": true,
+          "pass": true
+        },
+        "acceptedAs": "music-w0925-sun"
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "words": 0,
+        "text": "[outro jingle]",
+        "credits": 15
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-w0925-fri-32s",
+      "file": "assets/audio/raw/music-w0925-fri-32s.mp3",
+      "prompt": "Warm, confident indie pop instrumental at about 96 bpm in a major key, with a relaxed Friday evening golden hour feel. A warm hollow body electric guitar plays a catchy, laid back melodic lead riff with a touch of slapback echo, a second clean electric guitar plays soft tremolo chords, a mellow electric piano fills the middle, a round warm bass line, a relaxed but steady backbeat with a crisp snare and light shaker. Easygoing and self assured, like the end of a good week with the work done right. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 1750,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T15:46:25.485Z",
+      "accepted": true,
+      "notes": "warm, confident Friday evening, warm hollow body electric riff, tremolo rhythm guitar, electric piano, about 96 bpm. For the 2026-09-25 carousel slide video (folder 2026-09-25-2), no narration. Measured duration 32.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.4,
+        "wholeTrackMeanDb": -16.4,
+        "deficitDb": -1,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0925"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0925-sat-32s",
+      "file": "assets/audio/raw/music-w0925-sat-32s.mp3",
+      "prompt": "Bright, easygoing indie pop instrumental at about 96 bpm in a major key with a relaxed, laid back backbeat. A clean, slightly twangy electric guitar plays a sunny, singable lead melody with gentle slides between notes, a second clean electric guitar with a soft tremolo effect plays lazy offbeat chords, a warm Rhodes electric piano fills underneath, a round melodic bass, a relaxed drum kit with rimshot clicks, light tambourine and a steady closed hi hat. Easy, sunny and unhurried, like a warm Saturday afternoon with nowhere to be. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T15:47:07.656Z",
+      "accepted": true,
+      "notes": "bright, easy Saturday afternoon, twangy clean electric lead with slides, tremolo rhythm guitar, Rhodes, about 96 bpm. For the Sat 2026-09-26 carousel slide video (2026-09-26-2), no narration. Measured duration 32.04s, ending rings out. Not used: too close in instrumentation and tempo to music-w0925-fri (generated the same afternoon); replaced by take 2.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.8,
+        "wholeTrackMeanDb": -17.7,
+        "deficitDb": -1.9,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0925-sat",
+      "used": false
+    },
+    {
+      "kind": "music",
+      "id": "music-w0925-sat-32s-take2",
+      "file": "assets/audio/raw/music-w0925-sat-32s-take2.mp3",
+      "prompt": "Bright, easygoing indie pop instrumental at about 104 bpm in a major key with a light, bouncy shuffle. A sweet lap steel guitar plays a sunny, singable lead melody with gentle glides, a bright acoustic guitar strums on the offbeats, a warm walking bass line, a relaxed drum kit with a soft rimshot backbeat and a shaker. No piano, no keyboards, no tremolo. Easy, sunny and unhurried, like a warm Saturday afternoon with nowhere to be. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T15:56:43.347Z",
+      "accepted": true,
+      "notes": "bright, easy Saturday afternoon, lap steel melody over offbeat acoustic strums, walking bass, shuffle, about 104 bpm. For the Sat 2026-09-26 carousel slide video (2026-09-26-2), no narration. Measured duration 32.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -18,
+        "wholeTrackMeanDb": -19.8,
+        "deficitDb": -1.8,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0925-sat"
     }
   ],
   "mixes": [

@@ -881,3 +881,113 @@ recorded only here. The usage endpoint moved from 45,849 to 48,034 over the
 run, exactly 2,185, so nothing else spent in the window. v3 text to speech is
 billed one credit a character, audio tags included: the tagged script is 264
 characters against 188 untagged.
+
+## Week of 2026-09-28 social music, 2026-09-25
+
+On 2026-09-25 Alex set two rules: no narration, and no music track reused
+within 30 days. This set covers the ten videos for the week of Sept 28: five
+reels and five Facebook slide videos. It uses the same ElevenLabs account and
+Pro plan as everything above, so the Music rights and the 2026-09-04 commercial
+use confirmation cover all seven new tracks. No text to speech was generated.
+Generator: `scripts/social/music-week-0928.ts`. It imports the helpers in
+`scripts/audio.ts` read-only, and every generation is logged in
+`config/audio.json` under `set: "social-w0928"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w0928-1`, confident, bass-led groove, about 100 bpm (returned 50s) | music_v2 | 1 | 890 |
+| `music-w0928-2`, bright and playful, ukulele and glockenspiel, about 116 bpm | music_v2 | 1 | 1,073 |
+| `music-w0928-3`, calm and focused, fingerpicked acoustic over a pad, about 92 bpm | music_v2 | 1 | 875 |
+| `music-w0928-4`, curious and light, mandolin and nylon guitar, about 104 bpm | music_v2 | 1 | 875 |
+| `music-w0928-5`, take 1, curious and airy, chorused electric arpeggios, about 108 bpm. Rejected for 0.56s of leading silence | music_v2 | 1 | 875 |
+| `music-w0928-5`, take 2, same prompt (returned 50s), accepted | music_v2 | 1 | 1,083 |
+| `music-w0928-6`, high energy launch, driving electrics and claps, about 128 bpm (returned 50s) | music_v2 | 1 | 1,103 |
+| `music-w0928-7`, high energy and anthemic, acoustic strums and stomps, about 124 bpm | music_v2 | 1 | 1,090 |
+| Vocal check, speech to text with audio event tags on the seven tracks and the three i-series candidates: zero words transcribed on all ten | scribe_v2 | 10 | 197 |
+| **Set total** | | **18** | **8,061** |
+
+Each music figure is the before-and-after delta on the usage endpoint for that
+call. 32 seconds was asked for every take. The deltas vary from 875 to 1,103
+while the durations returned were 32s or 50s, and the two do not line up. Some
+deltas may therefore include spend by other agents working in the same window,
+so read them as upper bounds. The three i-series candidates (`music-i-a`,
+`-b`, `-c`, logged in the 2026-09-24 section above) are used here for the
+first time, on the Monday to Wednesday reels. Where each track is used:
+`D:\K & A Performance Site\Social Media Management\plans\2026-09-28-music.md`.
+
+## Sunday 2026-09-27 carousel music, 2026-09-25
+
+One new bed, `music-w0925-sun`, for the Facebook slide video of the Sunday
+2026-09-27 6:00 PM carousel ("3 prompts to plan your week with AI"). Same
+ElevenLabs account and Pro plan as everything above, so the Music rights and
+the 2026-09-04 commercial use confirmation cover it. No text to speech was
+generated. Generator: `scripts/social/music-w0925-sun.ts` (imports
+`scripts/audio.ts` read-only and runs the checks in `music-week-0928.ts`). The
+generation is logged in `config/audio.json` under `set: "social-w0925-sun"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w0925-sun`, calm and reflective Sunday evening, felt piano motif, capo acoustic strums, upright bass, about 78 bpm | music_v2 | 1 | 1,750 |
+| Vocal check, speech to text with audio event tags: zero words transcribed | scribe_v2 | 1 | 15 |
+| **Set total** | | **2** | **1,765** |
+
+The music figure is the before-and-after delta on the usage endpoint. Other
+agents were generating in the same window, so read it as an upper bound. The
+raw take (`assets/audio/raw/music-w0925-sun-32s.mp3`) opens with 6.5 seconds of
+quiet solo piano, so it failed the first-second check. Instead of a regenerate,
+the bed used in the video starts at the full band entry:
+`out/social/music-w0925-sun/music-w0925-sun.wav`, trimmed at 6.52s with a 20 ms
+fade in, 25.5s long. It passes every check (no leading or mid silence, no
+clipping, clean ring-out ending). The file name is the track id.
+
+## Friday 2026-09-25 carousel music, 2026-09-25
+
+One new bed, `music-w0925-fri`, for the Facebook slide video of the Friday
+2026-09-25 6:30 PM carousel ("6 questions to ask before you hire a web
+designer", folder `2026-09-25-2`). Same ElevenLabs account and Pro plan as
+everything above, so the Music rights and the 2026-09-04 commercial use
+confirmation cover it. No text to speech was generated. Generator:
+`scripts/social/2026-09-25-2/music.ts` (a copy of `music-week-0928.ts` with one
+track; imports `scripts/audio.ts` read-only). The generation is logged in
+`config/audio.json` under `set: "social-w0925"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w0925-fri`, warm and confident Friday evening, hollow body electric riff, tremolo guitar, electric piano, about 96 bpm | music_v2 | 1 | 1,750 |
+| Vocal check, speech to text with audio event tags: zero words transcribed | scribe_v2 | 1 | 15 |
+| **Set total** | | **2** | **1,765** |
+
+The music figure is the before-and-after delta on the usage endpoint. Other
+agents were generating in the same window, so read it as an upper bound. The
+take (`assets/audio/raw/music-w0925-fri-32s.mp3`, copied to
+`out/candidates/music-w0925-fri.mp3`) passed every check on the first try:
+32.04s, no leading or mid silence, first second 1 dB above the mean, no
+clipping, clean ring-out ending. The slide video measures -14.2 LUFS
+integrated, -1.7 dBTP.
+
+## Saturday 2026-09-26 carousel music, 2026-09-25
+
+One new bed, `music-w0925-sat`, for the Facebook slide video of the Saturday
+2026-09-26 4:00 PM carousel ("The 10-second phone test for your website",
+folder `2026-09-26-2`). Same ElevenLabs account and Pro plan as everything
+above, so the Music rights and the 2026-09-04 commercial use confirmation cover
+it. No text to speech was generated. Generator:
+`scripts/social/music-w0925-sat.ts` (the approach of `music-week-0928.ts` with
+one track; imports `scripts/audio.ts` read-only). Both generations are logged in
+`config/audio.json` under `set: "social-w0925-sat"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w0925-sat`, take 1, bright and easy, twangy clean electric lead, tremolo rhythm guitar, Rhodes, about 96 bpm. Passed every check; not used, too close to `music-w0925-fri` | music_v2 | 1 | 875 |
+| `music-w0925-sat`, take 2, bright easy Saturday afternoon, lap steel melody over offbeat acoustic strums, walking bass, light shuffle, about 104 bpm. Used | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags, both takes: zero words transcribed | scribe_v2 | 2 | 30 |
+| **Set total** | | **4** | **1,780** |
+
+Each music figure is the before-and-after delta on the usage endpoint. Other
+agents were generating in the same window, so read them as upper bounds. Take 2
+(`assets/audio/raw/music-w0925-sat-32s-take2.mp3`, copied to
+`out/candidates/music-w0925-sat.mp3`) passed every check: 32.04s, no leading
+or mid silence, first second 1.8 dB above the mean, no clipping, clean ring-out
+ending. Its AAC true peak came out at -0.3 dBTP, so the bed was premastered
+(-2 dB, peak limiter) to `out/social/music-w0925-sat/mastered/music-w0925-sat.wav`.
+The slide video measures -14.4 LUFS integrated, -1.1 dBTP.
