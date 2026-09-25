@@ -7,9 +7,13 @@
 // are the kept reads in config/voice.json under "onescreen".
 //
 // The one difference is the ceiling. tutorialTimeline() stops a short cut at
-// 600 frames; this reel's approved 52 word script, read by eleven_v3, runs
-// past that (see ONESCREEN_MAX_FRAMES). Speed is still never touched and no
-// word is cut: the reel runs as long as its words.
+// 600 frames. Alex trimmed the script on 2026-09-24 to fit, and it still does
+// not: the three unchanged beats alone take 441 frames with their tails, the
+// end card needs at least 78, and "Read this, click that, answer this. Three
+// screens pretending to be one." reads in about five seconds. With the fastest
+// clean read of every beat (voice.ts select --fastest) the cut lays out to 690
+// frames, 23.0 seconds, about 3 seconds over. Alex's call: keep the trimmed
+// words, no further cuts, so this ceiling stays. Speed is never touched.
 
 import { beatFrames, estimateSeconds, FPS, TUTORIAL_TOTAL_FRAMES, tutorialBeats, type TutorialEntry, type TutorialTimeline } from "../timeline";
 import { CTA_BEAT_ID, HOOK_BEAT_ID } from "../types";

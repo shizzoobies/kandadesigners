@@ -1,5 +1,5 @@
 {
-  "_note": "Tagged narration for the one screen, one decision tutorial (the Wednesday 2026-09-30 reel), 15 second vertical cut, read on eleven_v3 by Sarah at the natural stability. The words are the ones in src/tutorial/onescreen/content.ts, which are the approved script in the day folder's brief.md with the url written the way it is said and K&A as \"K and A\". Only the inline audio tags are added: src/tutorial/onescreen/scripts/voice.ts strips them and refuses to send anything whose stripped text is not exactly that narration. Direction: warm and confident throughout, a little playful on the hook only. No pause tags; the contrast read showed a pause tag renders as more than a second of dead air. Tags only ever go to the voice model: captions and the SRT read their own text from content.ts.",
+  "_note": "Tagged narration for the one screen, one decision tutorial (the Wednesday 2026-09-30 reel), 15 second vertical cut, read on eleven_v3 by Sarah at the natural stability. The words are the ones in src/tutorial/onescreen/content.ts, which are the script in the day folder's brief.md as trimmed to fit 20 seconds and approved by Alex on 2026-09-24. Only the inline audio tags are added: src/tutorial/onescreen/scripts/voice.ts strips them and refuses to send anything whose stripped text is not exactly that narration. Direction: warm and confident throughout, a little playful on the hook only. No pause tags; the contrast read showed a pause tag renders as more than a second of dead air. Tags only ever go to the voice model: captions and the SRT read their own text from content.ts.",
   "tutorial": "onescreen",
   "cut": "short",
   "model": "eleven_v3",
@@ -17,7 +17,7 @@
     },
     {
       "id": "clutter",
-      "narration": "[confident] Read this, then click that, then answer this. That is three screens pretending to be one.",
+      "narration": "[confident] Read this, click that, answer this. Three screens pretending to be one.",
       "why": "The list is the joke and needs no help. Said plainly and sure, so the verdict lands on its own."
     },
     {
@@ -32,8 +32,8 @@
     },
     {
       "id": "cta",
-      "narration": "[warm] Free sample courses at K and A Performance F L dot com slash training.",
-      "why": "An invitation, not an announcement."
+      "narration": "[warm] Free sample courses, link in the caption.",
+      "why": "An invitation, not an announcement. The url is on the end card, not in the voice."
     }
   ]
 }

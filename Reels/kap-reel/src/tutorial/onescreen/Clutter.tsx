@@ -6,8 +6,7 @@ import { CAPTURE_HEIGHT, CAPTURE_WIDTH, onCanvas, PHONE, PHONE_LEFT, PHONE_SCALE
 import { wordFrame } from "./words";
 
 /**
- * "Read this, then click that, then answer this. That is three screens
- * pretending to be one."
+ * "Read this, click that, answer this. Three screens pretending to be one."
  *
  * An invented course screen, drawn here and labeled "example" both over the
  * device and inside its own header, so it cannot be mistaken for anyone's real
@@ -29,12 +28,12 @@ const PAGE = "#F3F4F5";
 /** The three asks, in page pixels, and the word each is named on. */
 const REGIONS = [
   { n: 1, word: 0, y: 330, h: 470, tag: "screen 1" },
-  { n: 2, word: 3, y: 830, h: 470, tag: "screen 2" },
-  { n: 3, word: 6, y: 1330, h: 440, tag: "screen 3" },
+  { n: 2, word: 2, y: 830, h: 470, tag: "screen 2" },
+  { n: 3, word: 4, y: 1330, h: 440, tag: "screen 3" },
 ] as const;
 
-/** "three", the word the outlines are tagged on. */
-const TAG_WORD = 10;
+/** "Three", the word the outlines are tagged on. */
+const TAG_WORD = 6;
 
 const Page: React.FC = () => (
   <div style={{ position: "relative", width: CAPTURE_WIDTH, height: CAPTURE_HEIGHT, backgroundColor: PAGE, fontFamily: BODY_STACK, color: INK }}>

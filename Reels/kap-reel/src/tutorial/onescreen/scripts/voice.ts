@@ -2,7 +2,7 @@
  * Narration and mix for the "One screen, one decision" tutorial reel.
  *
  *   node node_modules/tsx/dist/cli.mjs src/tutorial/onescreen/scripts/voice.ts generate [--dry-run] [--beat <id>]
- *   node node_modules/tsx/dist/cli.mjs src/tutorial/onescreen/scripts/voice.ts select
+ *   node node_modules/tsx/dist/cli.mjs src/tutorial/onescreen/scripts/voice.ts select [--fastest]
  *   node node_modules/tsx/dist/cli.mjs src/tutorial/onescreen/scripts/voice.ts mix
  *   node node_modules/tsx/dist/cli.mjs src/tutorial/onescreen/scripts/voice.ts report
  *
@@ -398,6 +398,23 @@ function analyse(file: string, plainText: string, tagged: string, stt: unknown):
   };
 }
 
+/**
+ * A read's file name. The first pass named reads <beat>-s<seed>.wav; a line
+ * whose words have changed since gets a hash of its tagged text in the name,
+ * so a new read never overwrites a paid for one of different words.
+ */
+const FIRST_PASS: Record<string, string> = {
+  hook: "[warm, a little playful] If a screen asks the learner to do two things, it does neither.",
+  decide: "[warm] We build one decision per screen. The learner acts, gets feedback, moves on.",
+  trick: "[confident] Fewer clicks. More learning. That is the whole trick.",
+};
+function takeName(beatId: string, text: string, seed: number): string {
+  if (FIRST_PASS[beatId] === text) return `${beatId}-s${seed}.wav`;
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i += 1) h = Math.imul(h ^ text.charCodeAt(i), 0x01000193) >>> 0;
+  return `${beatId}-${h.toString(16).padStart(8, "0")}-s${seed}.wav`;
+}
+
 // ---------------------------------------------------------------------------
 // generate
 // ---------------------------------------------------------------------------
@@ -409,7 +426,7 @@ async function generate(dryRun: boolean, onlyBeat?: string): Promise<void> {
     if (onlyBeat && b.id !== onlyBeat) continue;
     for (let i = 0; i < script.generationsPerBeat; i += 1) {
       const seed = script.seedBase + i;
-      jobs.push({ beatId: b.id, text: b.narration, plain: stripAudioTags(b.narration), seed, file: path.join(TAKES_DIR, `${b.id}-s${seed}.wav`) });
+      jobs.push({ beatId: b.id, text: b.narration, plain: stripAudioTags(b.narration), seed, file: path.join(TAKES_DIR, takeName(b.id, b.narration, seed)) });
     }
   }
   const section = readSection();
@@ -538,13 +555,24 @@ function finish(source: string, out: string): number {
   return Number(probeDuration(out).toFixed(3));
 }
 
-function select(): void {
+/**
+ * Clean enough to ship in --fastest mode: accepted, and no pause longer than
+ * this inside a phrase. A faster read that gets its speed by hesitating
+ * mid-phrase is not clean; on 2026-09-24 that keeps out decide seed 300929,
+ * whose 0.34s pause lands inside "The learner".
+ */
+const FASTEST_MAX_PHRASE_GAP = 0.3;
+
+function select(fastest = false): void {
   const section = readSection();
   const beats = tutorialBeats(ONESCREEN_TUTORIAL, CUT);
+  // Only reads of the line as it is scripted now. A beat whose words changed
+  // keeps its earlier reads in the log (they were paid for) but never competes.
+  const scripted = Object.fromEntries(loadScript().beats.map((b) => [b.id, b.narration]));
   type Ranked = { take: OnescreenTake; score: number; rejected: string[]; notes: string[] };
   const ranked: Record<string, Ranked[]> = {};
   for (const beat of beats) {
-    const takes = section.takes.filter((t) => t.beatId === beat.id && t.analysis && fs.existsSync(path.join(ROOT, t.file)));
+    const takes = section.takes.filter((t) => t.beatId === beat.id && t.text === scripted[beat.id] && t.analysis && fs.existsSync(path.join(ROOT, t.file)));
     if (takes.length === 0) throw new Error(`no reads for ${beat.id}. Run generate first.`);
     const ctx = {
       speech: median(takes.map((t) => t.analysis!.speechDb)),
@@ -562,7 +590,7 @@ function select(): void {
   // The best acceptable read per beat whose combination lays out inside the
   // cut's cap. Exhaustive: four or five reads of five beats is at most 3125.
   const cap = ONESCREEN_MAX_FRAMES;
-  const options = beats.map((b) => ranked[b.id].filter((r) => r.rejected.length === 0));
+  const options = beats.map((b) => ranked[b.id].filter((r) => r.rejected.length === 0 && (!fastest || r.take.analysis!.maxGapInPhrase <= FASTEST_MAX_PHRASE_GAP)));
   const empty = beats.filter((_, i) => options[i].length === 0).map((b) => b.id);
   if (empty.length) throw new Error(`no acceptable read for ${empty.join(", ")}. Generate more.`);
   // The finish adds 60 ms of air to every kept read.
@@ -572,7 +600,9 @@ function select(): void {
     if (i === beats.length) {
       const frames = pick.reduce((a, r, k) => a + framesOf(k, r), 0);
       if (frames > cap) return;
-      const total = pick.reduce((a, r) => a + r.score, 0);
+      // Default: the lowest total score that fits. --fastest (Alex, 2026-09-24):
+      // the shortest cut from clean reads, score as the tie break.
+      const total = pick.reduce((a, r) => a + r.score, 0) + (fastest ? frames * 1000 : 0);
       if (!best || total < best.total) best = { pick: [...pick], total, frames };
       return;
     }
@@ -594,7 +624,7 @@ function select(): void {
     const durationSeconds = finish(path.join(ROOT, r.take.file), out);
     const top = ranked[beat.id][0];
     const why =
-      (top.take === r.take ? "Best score of the beat. " : `Kept over seed ${top.take.seed} (score ${top.score}) so the cut fits ${cap} frames. `) +
+      (top.take === r.take ? "Best score of the beat. " : `Kept over seed ${top.take.seed} (score ${top.score}) ${fastest ? "as the shortest clean read (--fastest)" : `so the cut fits ${cap} frames`}. `) +
       `Transcript exact, no spoken tag or audio event, lead ${r.take.analysis!.leadSeconds}s, largest pause ` +
       `${Math.max(r.take.analysis!.maxGapInPhrase, r.take.analysis!.maxGapAtBoundary)}s, pitch spread ` +
       `${r.take.analysis!.pitchSpreadSt} st, score ${r.score}${r.notes.length ? ` (${r.notes.join("; ")})` : ""}.`;
@@ -804,7 +834,7 @@ async function main(): Promise<void> {
     return i === -1 ? undefined : rest[i + 1];
   };
   if (command === "generate") return generate(rest.includes("--dry-run"), flag("beat"));
-  if (command === "select") return select();
+  if (command === "select") return select(rest.includes("--fastest"));
   if (command === "mix") return mix();
   if (command === "report") return report();
   throw new Error("Use generate [--dry-run] [--beat <id>], select, mix or report.");

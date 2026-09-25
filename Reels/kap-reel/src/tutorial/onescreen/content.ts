@@ -1,12 +1,11 @@
 // Tutorial 3: one screen, one decision.
 //
 // The Wednesday 2026-09-30 social reel. Script approved in
-// Social Media Management/To Be Released/2026-09-30/brief.md, 52 words in
-// five beats, word for word below. Narration is exactly what the voice model is
-// sent once the tags in config/onescreen-v3-script.json are stripped, so the
-// url is written the way it should be said and "K&A" is "K and A". Captions
-// and the SRT read `caption` and `srt`, never the narration, which is why the
-// url is spelled normally in both.
+// Social Media Management/To Be Released/2026-09-30/brief.md, as trimmed to fit
+// 20 seconds and approved by Alex on 2026-09-24, word for word below. Narration
+// is exactly what the voice model is sent once the tags in
+// config/onescreen-v3-script.json are stripped. The url is not spoken; it is on
+// the end card only.
 //
 // Only the vertical short cut exists (it runs as long as its words; see
 // layout.ts). The LinkedIn cut below is the short
@@ -40,15 +39,14 @@ const BEATS: TutorialBeat[] = [
     id: "clutter",
     scene: "onescreen-clutter",
     narration:
-      "Read this, then click that, then answer this. That is three screens " +
-      "pretending to be one.",
-    caption: ["Read this, then click that,", "then answer this."],
+      "Read this, click that, answer this. Three screens pretending to be one.",
+    caption: ["Read this, click that,", "answer this."],
     minFrames: 90,
     props: {
       label: "example",
       captions: [
-        { from: 0, lines: ["Read this, then click that,", "then answer this."] },
-        { from: 8, lines: ["That is three screens", "pretending to be one."] },
+        { from: 0, lines: ["Read this, click that,", "answer this."] },
+        { from: 6, lines: ["Three screens", "pretending to be one."] },
       ],
     },
   },
@@ -82,10 +80,12 @@ const BEATS: TutorialBeat[] = [
   },
 ];
 
-/** The spoken url, and how it is written everywhere a viewer reads it. */
-export const CTA_SPOKEN =
-  "Free sample courses at K and A Performance F L dot com slash training.";
-export const CTA_WRITTEN = "Free sample courses at ka-performancefl.com/training.";
+/**
+ * The closing line. Trimmed on 2026-09-24 (Alex) so the reel fits: the url is
+ * no longer spoken and lives on the end card only.
+ */
+export const CTA_SPOKEN = "Free sample courses, link in the caption.";
+export const CTA_WRITTEN = CTA_SPOKEN;
 
 /** The url the end card points at. */
 export const CTA_URL = "ka-performancefl.com/training";

@@ -4009,83 +4009,885 @@
           "minLogprob": -0.002,
           "wordsPerSecond": 2.89
         }
+      },
+      {
+        "beatId": "clutter",
+        "seed": 300926,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300926.wav",
+        "text": "[confident] Read this, click that, answer this. Three screens pretending to be one.",
+        "plainText": "Read this, click that, answer this. Three screens pretending to be one.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 83,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 5.36,
+        "creditsMeasured": 84,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 83,
+        "requestId": "5UYo3oOfWMZJSnOs0hKu",
+        "createdAt": "2026-09-25T12:12:46.362Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300926.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 63
+        },
+        "analysis": {
+          "durationSeconds": 5.36,
+          "leadSeconds": 0.05,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0.13,
+          "maxGapAtBoundary": 0.3,
+          "startEdgeDb": -42.7,
+          "endEdgeDb": -32.8,
+          "peakDbfs": 0,
+          "speechDb": -12.72,
+          "medianF0": 207.8,
+          "pitchSpreadSt": 4.11,
+          "transcript": "Read this, click that, answer this. Three screens pretending to be one",
+          "words": [
+            {
+              "text": "Read",
+              "start": 0.12,
+              "end": 0.32
+            },
+            {
+              "text": "this,",
+              "start": 0.36,
+              "end": 0.62
+            },
+            {
+              "text": "click",
+              "start": 0.82,
+              "end": 1.04
+            },
+            {
+              "text": "that,",
+              "start": 1.1,
+              "end": 1.4
+            },
+            {
+              "text": "answer",
+              "start": 1.7,
+              "end": 2
+            },
+            {
+              "text": "this.",
+              "start": 2.04,
+              "end": 2.32
+            },
+            {
+              "text": "Three",
+              "start": 2.88,
+              "end": 3.12
+            },
+            {
+              "text": "screens",
+              "start": 3.24,
+              "end": 3.72
+            },
+            {
+              "text": "pretending",
+              "start": 3.84,
+              "end": 4.44
+            },
+            {
+              "text": "to",
+              "start": 4.48,
+              "end": 4.56
+            },
+            {
+              "text": "be",
+              "start": 4.6,
+              "end": 4.76
+            },
+            {
+              "text": "one",
+              "start": 4.82,
+              "end": 5.16
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.018,
+          "wordsPerSecond": 2.26
+        }
+      },
+      {
+        "beatId": "clutter",
+        "seed": 300927,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300927.wav",
+        "text": "[confident] Read this, click that, answer this. Three screens pretending to be one.",
+        "plainText": "Read this, click that, answer this. Three screens pretending to be one.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 83,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 5.36,
+        "creditsMeasured": 84,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 83,
+        "requestId": "CzCG9BIsHqTnFWS5vqbK",
+        "createdAt": "2026-09-25T12:12:54.459Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300927.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 103
+        },
+        "analysis": {
+          "durationSeconds": 5.36,
+          "leadSeconds": 0.12,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0.12,
+          "maxGapAtBoundary": 0.45,
+          "startEdgeDb": -78,
+          "endEdgeDb": -30.7,
+          "peakDbfs": -0.2,
+          "speechDb": -11.95,
+          "medianF0": 207.8,
+          "pitchSpreadSt": 3.93,
+          "transcript": "Read this, click that, answer this. Three screens pretending to be one",
+          "words": [
+            {
+              "text": "Read",
+              "start": 0.18,
+              "end": 0.34
+            },
+            {
+              "text": "this,",
+              "start": 0.4,
+              "end": 0.7
+            },
+            {
+              "text": "click",
+              "start": 0.86,
+              "end": 1.08
+            },
+            {
+              "text": "that,",
+              "start": 1.14,
+              "end": 1.44
+            },
+            {
+              "text": "answer",
+              "start": 1.78,
+              "end": 2.06
+            },
+            {
+              "text": "this.",
+              "start": 2.12,
+              "end": 2.44
+            },
+            {
+              "text": "Three",
+              "start": 3.14,
+              "end": 3.34
+            },
+            {
+              "text": "screens",
+              "start": 3.48,
+              "end": 3.98
+            },
+            {
+              "text": "pretending",
+              "start": 4.019,
+              "end": 4.5
+            },
+            {
+              "text": "to",
+              "start": 4.54,
+              "end": 4.6
+            },
+            {
+              "text": "be",
+              "start": 4.64,
+              "end": 4.76
+            },
+            {
+              "text": "one",
+              "start": 4.9,
+              "end": 5.14
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.005,
+          "wordsPerSecond": 2.29
+        }
+      },
+      {
+        "beatId": "clutter",
+        "seed": 300928,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300928.wav",
+        "text": "[confident] Read this, click that, answer this. Three screens pretending to be one.",
+        "plainText": "Read this, click that, answer this. Three screens pretending to be one.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 83,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 4.96,
+        "creditsMeasured": 85,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 83,
+        "requestId": "HUB7CNRTOvzJ0ogveMy4",
+        "createdAt": "2026-09-25T12:13:02.822Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300928.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 103
+        },
+        "analysis": {
+          "durationSeconds": 4.96,
+          "leadSeconds": 0,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0.12,
+          "maxGapAtBoundary": 0.28,
+          "startEdgeDb": -37,
+          "endEdgeDb": -32.5,
+          "peakDbfs": -0.5,
+          "speechDb": -12.69,
+          "medianF0": 207.8,
+          "pitchSpreadSt": 3.55,
+          "transcript": "Read this, click that, answer this. Three screens pretending to be one",
+          "words": [
+            {
+              "text": "Read",
+              "start": 0.2,
+              "end": 0.38
+            },
+            {
+              "text": "this,",
+              "start": 0.44,
+              "end": 0.72
+            },
+            {
+              "text": "click",
+              "start": 0.84,
+              "end": 1.06
+            },
+            {
+              "text": "that,",
+              "start": 1.12,
+              "end": 1.38
+            },
+            {
+              "text": "answer",
+              "start": 1.54,
+              "end": 1.8
+            },
+            {
+              "text": "this.",
+              "start": 1.86,
+              "end": 2.18
+            },
+            {
+              "text": "Three",
+              "start": 2.66,
+              "end": 2.86
+            },
+            {
+              "text": "screens",
+              "start": 3,
+              "end": 3.58
+            },
+            {
+              "text": "pretending",
+              "start": 3.62,
+              "end": 4.059
+            },
+            {
+              "text": "to",
+              "start": 4.1,
+              "end": 4.16
+            },
+            {
+              "text": "be",
+              "start": 4.2,
+              "end": 4.32
+            },
+            {
+              "text": "one",
+              "start": 4.46,
+              "end": 4.72
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.007,
+          "wordsPerSecond": 2.42
+        }
+      },
+      {
+        "beatId": "clutter",
+        "seed": 300929,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300929.wav",
+        "text": "[confident] Read this, click that, answer this. Three screens pretending to be one.",
+        "plainText": "Read this, click that, answer this. Three screens pretending to be one.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 83,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 5.2,
+        "creditsMeasured": 85,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 83,
+        "requestId": "apttukGQp86MH6f2kStn",
+        "createdAt": "2026-09-25T12:13:11.235Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300929.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 103
+        },
+        "analysis": {
+          "durationSeconds": 5.2,
+          "leadSeconds": 0.1,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.33,
+          "startEdgeDb": -70.6,
+          "endEdgeDb": -25.6,
+          "peakDbfs": -0.4,
+          "speechDb": -13.36,
+          "medianF0": 207.8,
+          "pitchSpreadSt": 4.06,
+          "transcript": "Read this, click that, answer this. Three screens pretending to be one",
+          "words": [
+            {
+              "text": "Read",
+              "start": 0.16,
+              "end": 0.36
+            },
+            {
+              "text": "this,",
+              "start": 0.4,
+              "end": 0.7
+            },
+            {
+              "text": "click",
+              "start": 0.9,
+              "end": 1.1
+            },
+            {
+              "text": "that,",
+              "start": 1.16,
+              "end": 1.46
+            },
+            {
+              "text": "answer",
+              "start": 1.7,
+              "end": 1.98
+            },
+            {
+              "text": "this.",
+              "start": 2.04,
+              "end": 2.4
+            },
+            {
+              "text": "Three",
+              "start": 2.98,
+              "end": 3.18
+            },
+            {
+              "text": "screens",
+              "start": 3.36,
+              "end": 3.9
+            },
+            {
+              "text": "pretending",
+              "start": 3.94,
+              "end": 4.38
+            },
+            {
+              "text": "to",
+              "start": 4.4,
+              "end": 4.46
+            },
+            {
+              "text": "be",
+              "start": 4.5,
+              "end": 4.62
+            },
+            {
+              "text": "one",
+              "start": 4.74,
+              "end": 4.96
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.029,
+          "wordsPerSecond": 2.35
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 300926,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300926.wav",
+        "text": "[warm] Free sample courses, link in the caption.",
+        "plainText": "Free sample courses, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 48,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 2.56,
+        "creditsMeasured": 198,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 48,
+        "requestId": "u7ZBWTXWddpxIPMj13ko",
+        "createdAt": "2026-09-25T12:13:34.960Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300926.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 45
+        },
+        "analysis": {
+          "durationSeconds": 2.56,
+          "leadSeconds": 0.14,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.2,
+          "startEdgeDb": -79.1,
+          "endEdgeDb": -9.4,
+          "peakDbfs": -0.2,
+          "speechDb": -12.24,
+          "medianF0": 219.2,
+          "pitchSpreadSt": 3.6,
+          "transcript": "Free sample courses. Link in the caption",
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.16,
+              "end": 0.3
+            },
+            {
+              "text": "sample",
+              "start": 0.4,
+              "end": 0.68
+            },
+            {
+              "text": "courses.",
+              "start": 0.76,
+              "end": 1.24
+            },
+            {
+              "text": "Link",
+              "start": 1.56,
+              "end": 1.8
+            },
+            {
+              "text": "in",
+              "start": 1.84,
+              "end": 1.92
+            },
+            {
+              "text": "the",
+              "start": 1.94,
+              "end": 2.02
+            },
+            {
+              "text": "caption",
+              "start": 2.08,
+              "end": 2.52
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.02,
+          "wordsPerSecond": 2.89
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 300927,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300927.wav",
+        "text": "[warm] Free sample courses, link in the caption.",
+        "plainText": "Free sample courses, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 48,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 2.48,
+        "creditsMeasured": 49,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 48,
+        "requestId": "PXZilghGA7pJTCUnRigp",
+        "createdAt": "2026-09-25T12:13:42.323Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300927.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 45
+        },
+        "analysis": {
+          "durationSeconds": 2.48,
+          "leadSeconds": 0.09,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.16,
+          "startEdgeDb": -58.7,
+          "endEdgeDb": -9.1,
+          "peakDbfs": -0.4,
+          "speechDb": -11.4,
+          "medianF0": 250,
+          "pitchSpreadSt": 3.24,
+          "transcript": "Free sample courses. Link in the caption",
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.1,
+              "end": 0.26
+            },
+            {
+              "text": "sample",
+              "start": 0.38,
+              "end": 0.62
+            },
+            {
+              "text": "courses.",
+              "start": 0.72,
+              "end": 1.26
+            },
+            {
+              "text": "Link",
+              "start": 1.56,
+              "end": 1.76
+            },
+            {
+              "text": "in",
+              "start": 1.8,
+              "end": 1.86
+            },
+            {
+              "text": "the",
+              "start": 1.9,
+              "end": 1.96
+            },
+            {
+              "text": "caption",
+              "start": 2.02,
+              "end": 2.44
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": -0.009,
+          "wordsPerSecond": 2.93
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 300928,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300928.wav",
+        "text": "[warm] Free sample courses, link in the caption.",
+        "plainText": "Free sample courses, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 48,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 2.4,
+        "creditsMeasured": 49,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 48,
+        "requestId": "AwDBGFXGLirizOFDHblm",
+        "createdAt": "2026-09-25T12:13:49.432Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300928.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1
+        },
+        "analysis": {
+          "durationSeconds": 2.4,
+          "leadSeconds": 0,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.17,
+          "startEdgeDb": -37,
+          "endEdgeDb": -12.1,
+          "peakDbfs": -0.4,
+          "speechDb": -12.52,
+          "medianF0": 219.2,
+          "pitchSpreadSt": 2.83,
+          "transcript": "Free sample courses. Link in the caption",
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.08,
+              "end": 0.22
+            },
+            {
+              "text": "sample",
+              "start": 0.32,
+              "end": 0.58
+            },
+            {
+              "text": "courses.",
+              "start": 0.68,
+              "end": 1.2
+            },
+            {
+              "text": "Link",
+              "start": 1.5,
+              "end": 1.68
+            },
+            {
+              "text": "in",
+              "start": 1.72,
+              "end": 1.76
+            },
+            {
+              "text": "the",
+              "start": 1.8,
+              "end": 1.86
+            },
+            {
+              "text": "caption",
+              "start": 1.92,
+              "end": 2.36
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": -0.078,
+          "wordsPerSecond": 2.92
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 300929,
+        "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300929.wav",
+        "text": "[warm] Free sample courses, link in the caption.",
+        "plainText": "Free sample courses, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 48,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_48000",
+        "durationSeconds": 2.4,
+        "creditsMeasured": 48,
+        "creditsBucket": "TTS",
+        "characterCostHeader": 48,
+        "requestId": "gXlzgJVVhNgJz6qaCyHZ",
+        "createdAt": "2026-09-25T12:13:56.490Z",
+        "stt": {
+          "file": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300929.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1
+        },
+        "analysis": {
+          "durationSeconds": 2.4,
+          "leadSeconds": 0.07,
+          "trailSeconds": 0,
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -50.3,
+          "endEdgeDb": -8.1,
+          "peakDbfs": -0.2,
+          "speechDb": -12.85,
+          "medianF0": 250,
+          "pitchSpreadSt": 3.8,
+          "transcript": "Free sample courses. Link in the caption",
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.08,
+              "end": 0.22
+            },
+            {
+              "text": "sample",
+              "start": 0.34,
+              "end": 0.64
+            },
+            {
+              "text": "courses.",
+              "start": 0.74,
+              "end": 1.2
+            },
+            {
+              "text": "Link",
+              "start": 1.4,
+              "end": 1.64
+            },
+            {
+              "text": "in",
+              "start": 1.68,
+              "end": 1.74
+            },
+            {
+              "text": "the",
+              "start": 1.78,
+              "end": 1.84
+            },
+            {
+              "text": "caption",
+              "start": 1.9,
+              "end": 2.34
+            }
+          ],
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": -0.014,
+          "wordsPerSecond": 3
+        }
       }
     ],
     "selections": [
       {
         "beatId": "hook",
-        "keptSeed": 300929,
-        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/hook-s300929.wav",
+        "keptSeed": 300926,
+        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/hook-s300926.wav",
         "file": "assets/audio/voice/onescreen-v3/natural/hook.wav",
-        "durationSeconds": 4.3,
+        "durationSeconds": 3.82,
         "words": [
           {
             "text": "If",
-            "start": 0.18,
-            "end": 0.26
+            "start": 0.16,
+            "end": 0.22
           },
           {
             "text": "a",
-            "start": 0.3,
+            "start": 0.26,
             "end": 0.34
           },
           {
             "text": "screen",
             "start": 0.38,
-            "end": 0.72
+            "end": 0.7
           },
           {
             "text": "asks",
-            "start": 0.82,
-            "end": 1.14
+            "start": 0.88,
+            "end": 1.18
           },
           {
             "text": "the",
-            "start": 1.18,
-            "end": 1.26
+            "start": 1.22,
+            "end": 1.3
           },
           {
             "text": "learner",
-            "start": 1.3,
-            "end": 1.62
+            "start": 1.34,
+            "end": 1.66
           },
           {
             "text": "to",
-            "start": 1.66,
-            "end": 1.74
+            "start": 1.7,
+            "end": 1.78
           },
           {
             "text": "do",
-            "start": 1.78,
-            "end": 1.96
+            "start": 1.82,
+            "end": 2
           },
           {
             "text": "two",
-            "start": 2.04,
-            "end": 2.28
+            "start": 2.06,
+            "end": 2.18
           },
           {
             "text": "things,",
-            "start": 2.34,
-            "end": 2.8
+            "start": 2.3,
+            "end": 2.66
           },
           {
             "text": "it",
-            "start": 3.06,
-            "end": 3.12
+            "start": 3,
+            "end": 3.08
           },
           {
             "text": "does",
-            "start": 3.18,
-            "end": 3.38
+            "start": 3.12,
+            "end": 3.34
           },
           {
-            "text": "neither.",
-            "start": 3.42,
-            "end": 3.84
+            "text": "neither",
+            "start": 3.38,
+            "end": 3.72
           }
         ],
-        "why": "Best score of the beat. Transcript exact, no spoken tag or audio event, lead 0.14s, largest pause 0.14s, pitch spread 6.02 st, score 0.87 (last sound cut at -24.5 dB +0.62; level -0.4 dB off the beat +0.13; length 4.24s against 4.12s +0.12).",
+        "why": "Kept over seed 300929 (score 0.87) as the shortest clean read (--fastest). Transcript exact, no spoken tag or audio event, lead 0.12s, largest pause 0.24s, pitch spread 3.38 st, score 1.421 (last sound cut at -14.1 dB +1.04; level 0.1 dB off the beat +0.04; length 3.76s against 4.12s +0.35).",
         "ranking": [
           {
             "seed": 300929,
@@ -4114,124 +4916,104 @@
             "rejected": []
           }
         ],
-        "createdAt": "2026-09-25T00:24:23.546Z"
+        "createdAt": "2026-09-25T12:14:49.172Z"
       },
       {
         "beatId": "clutter",
-        "keptSeed": 300929,
-        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/clutter-s300929.wav",
+        "keptSeed": 300928,
+        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/clutter-1dd5657d-s300928.wav",
         "file": "assets/audio/voice/onescreen-v3/natural/clutter.wav",
-        "durationSeconds": 6.62,
+        "durationSeconds": 5.02,
         "words": [
           {
             "text": "Read",
-            "start": 0.12,
-            "end": 0.34
+            "start": 0.2,
+            "end": 0.38
           },
           {
             "text": "this,",
-            "start": 0.38,
-            "end": 0.7
-          },
-          {
-            "text": "then",
-            "start": 0.98,
-            "end": 1.14
+            "start": 0.44,
+            "end": 0.72
           },
           {
             "text": "click",
-            "start": 1.22,
-            "end": 1.46
+            "start": 0.84,
+            "end": 1.06
           },
           {
             "text": "that,",
-            "start": 1.52,
-            "end": 1.84
-          },
-          {
-            "text": "then",
-            "start": 2.2,
-            "end": 2.4
+            "start": 1.12,
+            "end": 1.38
           },
           {
             "text": "answer",
-            "start": 2.48,
-            "end": 2.78
+            "start": 1.54,
+            "end": 1.8
           },
           {
             "text": "this.",
-            "start": 2.82,
-            "end": 3.16
+            "start": 1.86,
+            "end": 2.18
           },
           {
-            "text": "That",
-            "start": 3.76,
-            "end": 3.88
-          },
-          {
-            "text": "is",
-            "start": 3.94,
-            "end": 4.14
-          },
-          {
-            "text": "three",
-            "start": 4.18,
-            "end": 4.42
+            "text": "Three",
+            "start": 2.66,
+            "end": 2.86
           },
           {
             "text": "screens",
-            "start": 4.58,
-            "end": 5.1
+            "start": 3,
+            "end": 3.58
           },
           {
             "text": "pretending",
-            "start": 5.14,
-            "end": 5.6
+            "start": 3.62,
+            "end": 4.059
           },
           {
             "text": "to",
-            "start": 5.64,
-            "end": 5.72
+            "start": 4.1,
+            "end": 4.16
           },
           {
             "text": "be",
-            "start": 5.76,
-            "end": 5.88
+            "start": 4.2,
+            "end": 4.32
           },
           {
             "text": "one",
-            "start": 5.94,
-            "end": 6.28
+            "start": 4.46,
+            "end": 4.72
           }
         ],
-        "why": "Best score of the beat. Transcript exact, no spoken tag or audio event, lead 0.04s, largest pause 0.26s, pitch spread 3.55 st, score 0.215 (level -0.5 dB off the beat +0.19; length 6.56s against 6.52s +0.02).",
+        "why": "Kept over seed 300926 (score 0.423) as the shortest clean read (--fastest). Transcript exact, no spoken tag or audio event, lead 0s, largest pause 0.28s, pitch spread 3.55 st, score 0.788 (last sound cut at -32.5 dB +0.30; first sound starts at -37 dB +0.24; level 0.0 dB off the beat +0.01; length 4.96s against 5.28s +0.24).",
         "ranking": [
           {
-            "seed": 300929,
-            "durationSeconds": 6.56,
-            "score": 0.215,
-            "rejected": []
-          },
-          {
             "seed": 300926,
-            "durationSeconds": 6.56,
-            "score": 0.321,
+            "durationSeconds": 5.36,
+            "score": 0.423,
             "rejected": []
           },
           {
             "seed": 300927,
-            "durationSeconds": 6,
-            "score": 0.473,
+            "durationSeconds": 5.36,
+            "score": 0.697,
             "rejected": []
           },
           {
             "seed": 300928,
-            "durationSeconds": 6.48,
-            "score": 0.495,
+            "durationSeconds": 4.96,
+            "score": 0.788,
+            "rejected": []
+          },
+          {
+            "seed": 300929,
+            "durationSeconds": 5.2,
+            "score": 0.866,
             "rejected": []
           }
         ],
-        "createdAt": "2026-09-25T00:24:23.682Z"
+        "createdAt": "2026-09-25T12:14:49.302Z"
       },
       {
         "beatId": "decide",
@@ -4333,62 +5115,62 @@
             "rejected": []
           }
         ],
-        "createdAt": "2026-09-25T00:24:23.830Z"
+        "createdAt": "2026-09-25T12:14:49.430Z"
       },
       {
         "beatId": "trick",
-        "keptSeed": 300926,
-        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/trick-s300926.wav",
+        "keptSeed": 300929,
+        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/trick-s300929.wav",
         "file": "assets/audio/voice/onescreen-v3/natural/trick.wav",
-        "durationSeconds": 4.06,
+        "durationSeconds": 3.98,
         "words": [
           {
             "text": "Fewer",
-            "start": 0.16,
-            "end": 0.42
+            "start": 0.12,
+            "end": 0.36
           },
           {
             "text": "clicks,",
-            "start": 0.52,
-            "end": 0.94
+            "start": 0.46,
+            "end": 0.84
           },
           {
             "text": "more",
-            "start": 1.24,
+            "start": 1.18,
             "end": 1.42
           },
           {
             "text": "learning.",
-            "start": 1.52,
-            "end": 1.94
+            "start": 1.48,
+            "end": 1.9
           },
           {
             "text": "That",
-            "start": 2.44,
-            "end": 2.68
+            "start": 2.5,
+            "end": 2.72
           },
           {
             "text": "is",
-            "start": 2.74,
-            "end": 2.84
+            "start": 2.78,
+            "end": 2.88
           },
           {
             "text": "the",
-            "start": 2.9,
-            "end": 3
+            "start": 2.92,
+            "end": 2.98
           },
           {
             "text": "whole",
-            "start": 3.06,
-            "end": 3.24
+            "start": 3.02,
+            "end": 3.18
           },
           {
             "text": "trick",
-            "start": 3.34,
-            "end": 3.7
+            "start": 3.24,
+            "end": 3.52
           }
         ],
-        "why": "Best score of the beat. Transcript exact, no spoken tag or audio event, lead 0.15s, largest pause 0.37s, pitch spread 3.62 st, score 0.376 (pause in phrase 0.26s +0.12; last sound cut at -37.7 dB +0.09; level 0.0 dB off the beat +0.01; length 4s against 4.16s +0.15).",
+        "why": "Kept over seed 300926 (score 0.376) as the shortest clean read (--fastest). Transcript exact, no spoken tag or audio event, lead 0.1s, largest pause 0.29s, pitch spread 3.43 st, score 1.825 (short words the +1.50; level -0.3 dB off the beat +0.09; length 3.92s against 4.16s +0.23).",
         "ranking": [
           {
             "seed": 300926,
@@ -4415,69 +5197,85 @@
             "rejected": []
           }
         ],
-        "createdAt": "2026-09-25T00:24:23.962Z"
+        "createdAt": "2026-09-25T12:14:49.560Z"
       },
       {
         "beatId": "cta",
-        "keptSeed": 300929,
-        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/cta-s300929.wav",
+        "keptSeed": 300928,
+        "sourceFile": "assets/audio/voice/onescreen-v3/natural/takes/cta-7df032dc-s300928.wav",
         "file": "assets/audio/voice/onescreen-v3/natural/cta.wav",
-        "durationSeconds": 4.94,
+        "durationSeconds": 2.46,
         "words": [
           {
             "text": "Free",
-            "start": 0.1,
-            "end": 0.26
+            "start": 0.08,
+            "end": 0.22
           },
           {
             "text": "sample",
-            "start": 0.36,
-            "end": 0.62
+            "start": 0.32,
+            "end": 0.58
           },
           {
-            "text": "courses",
-            "start": 0.72,
-            "end": 1.14
+            "text": "courses.",
+            "start": 0.68,
+            "end": 1.2
           },
           {
-            "text": "at",
-            "start": 1.2,
-            "end": 1.3
+            "text": "Link",
+            "start": 1.5,
+            "end": 1.68
           },
           {
-            "text": "knaperformancefl.com/training",
-            "start": 1.4,
-            "end": 4.78
+            "text": "in",
+            "start": 1.72,
+            "end": 1.76
+          },
+          {
+            "text": "the",
+            "start": 1.8,
+            "end": 1.86
+          },
+          {
+            "text": "caption",
+            "start": 1.92,
+            "end": 2.36
           }
         ],
-        "why": "Best score of the beat. Transcript exact, no spoken tag or audio event, lead 0.03s, largest pause 0s, pitch spread 2.79 st, score 0.13 (last sound cut at -39.1 dB +0.04; first sound starts at -44.3 dB +0.02; level 0.1 dB off the beat +0.04; length 4.88s against 4.84s +0.03).",
+        "why": "Kept over seed 300926 (score 1.47) as the shortest clean read (--fastest). Transcript exact, no spoken tag or audio event, lead 0s, largest pause 0.17s, pitch spread 2.83 st, score 2.971 (short words the +1.50; last sound cut at -12.1 dB +1.12; first sound starts at -37 dB +0.24; level -0.1 dB off the beat +0.05; length 2.4s against 2.44s +0.07).",
         "ranking": [
           {
-            "seed": 300929,
-            "durationSeconds": 4.88,
-            "score": 0.13,
-            "rejected": []
-          },
-          {
             "seed": 300926,
-            "durationSeconds": 4.72,
-            "score": 1.346,
-            "rejected": []
-          },
-          {
-            "seed": 300927,
-            "durationSeconds": 5.12,
-            "score": 1.388,
-            "rejected": []
+            "durationSeconds": 2.56,
+            "score": 1.47,
+            "rejected": [
+              "stops inside the last word (-9.4 dB)"
+            ]
           },
           {
             "seed": 300928,
-            "durationSeconds": 4.8,
-            "score": 1.815,
+            "durationSeconds": 2.4,
+            "score": 2.971,
             "rejected": []
+          },
+          {
+            "seed": 300929,
+            "durationSeconds": 2.4,
+            "score": 3.006,
+            "rejected": [
+              "stops inside the last word (-8.1 dB)"
+            ]
+          },
+          {
+            "seed": 300927,
+            "durationSeconds": 2.48,
+            "score": 3.145,
+            "rejected": [
+              "stops inside the last word (-9.1 dB)"
+            ]
           }
         ],
-        "createdAt": "2026-09-25T00:24:24.089Z"
+        "createdAt": "2026-09-25T12:14:49.686Z"
       }
     ],
     "mixes": [
@@ -4487,14 +5285,14 @@
         "wav": "assets/audio/mix-tut-onescreen-15s-v3.wav",
         "musicSource": "out/candidates/music-i-c.mp3 (extended to assets/audio/music-i-c-onescreen-bed.wav: the take to 19.256s, then from 2s again, 0.3s crossfade)",
         "musicVariant": "i-c",
-        "bedGainDb": -6.8,
-        "measuredDuckDb": 9,
-        "limiterCeilingDbfs": -2.93,
-        "measuredIntegratedLufs": -14.05,
-        "measuredTruePeakDbfs": -2.97,
-        "measuredLra": 1.8,
-        "totalFrames": 829,
-        "createdAt": "2026-09-25T00:25:48.967Z"
+        "bedGainDb": -6.9,
+        "measuredDuckDb": 9.3,
+        "limiterCeilingDbfs": -2.96,
+        "measuredIntegratedLufs": -13.98,
+        "measuredTruePeakDbfs": -3.14,
+        "measuredLra": 1.4,
+        "totalFrames": 690,
+        "createdAt": "2026-09-25T12:15:06.097Z"
       }
     ]
   }
