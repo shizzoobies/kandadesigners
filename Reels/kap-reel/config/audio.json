@@ -671,6 +671,28 @@
         "pass": true
       },
       "set": "social-w0925-sat"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0926-pilot-32s",
+      "file": "assets/audio/raw/music-w0926-pilot-32s.mp3",
+      "prompt": "Upbeat, warm indie pop instrumental at about 112 bpm in a bright major key, guitar led. A chiming twelve string electric guitar plays a catchy, open, ringing riff as the main hook, a second clean electric guitar keeps a light palm muted eighth note rhythm, a warm vintage organ holds soft chords underneath, a melodic electric bass, crisp live drums with a tambourine on every beat. Friendly, optimistic and inviting, like a local shop opening its doors on a sunny Saturday morning. Clean intro: the guitars and drums start on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No drop, no riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady, upbeat energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean, warm modern indie production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-25T17:37:34.804Z",
+      "accepted": true,
+      "notes": "upbeat, warm, welcoming, chiming twelve string electric riff, palm muted rhythm guitar, warm organ, about 112 bpm. For the Saturday 2026-09-26 social pilot carousel slide video (2026-09-26-4), no narration. Measured duration 50.04s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.5,
+        "wholeTrackMeanDb": -17,
+        "deficitDb": -1.5,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0926-pilot"
     }
   ],
   "mixes": [

@@ -1,299 +1,102 @@
 {
-  "builtAt": "2026-09-25T15:58:32.323Z",
+  "builtAt": "2026-09-25T17:44:11.799Z",
   "posts": [
     {
-      "id": "2026-09-25-2",
-      "date": "2026-09-25",
-      "weekday": "Fri",
-      "time": "18:30",
-      "kind": "carousel",
-      "status": "ready",
-      "pillar": "tip",
-      "title": "6 questions to ask before you hire a web designer",
-      "hook": "Before you sign with a web designer, ask these 6 questions.",
-      "networks": [
-        "facebook",
-        "instagram"
-      ],
-      "facebook": "Before you sign with a web designer, ask these 6 questions.\nFree quote: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-25-2\n\nA website is a real investment for a small business. These six questions tell you what you are actually buying:\n\n1. Who owns the site and the domain when we are done?\n2. What exactly does the price include?\n3. What will I pay every month after launch?\n4. Will it load fast on a phone?\n5. Will it show up when locals search?\n6. After launch, who makes changes, and what do they cost?\n\nGet every answer in writing, from anyone you hire. The video shows how K&A answers each one, straight from our own site.\n\nAsk us all six. Call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #WebDesign #SmallBusiness",
-      "instagram": "Before you sign with a web designer, ask these 6 questions. Save this for later.\n\nA website is a real investment for a small business. These six questions tell you what you are actually buying:\n\n1. Who owns the site and the domain when we are done?\n2. What exactly does the price include?\n3. What will I pay every month after launch?\n4. Will it load fast on a phone?\n5. Will it show up when locals search?\n6. After launch, who makes changes, and what do they cost?\n\nGet every answer in writing, from anyone you hire. Swipe to see how K&A answers each one, straight from our own site.\n\nAsk us all six. Link in bio, or call Alex at 904-210-1071.",
-      "firstComment": "#GainesvilleFL #WebDesign #SmallBusiness #SmallBusinessTips #LocalSEO #GainesvilleBusiness",
-      "linkedin": "",
-      "linkedinComment": "",
-      "repost": "",
-      "questions": [
-        "Q1 domain: whose name is a client's domain registered in, and do clients get the registrar login at handoff? If the answer is \"you own it\", slide 2 can say so instead of \"get it in writing\".",
-        "Q6 changes after launch: what does a change cost after launch (hourly, per request, a care plan, or included for a period), and what turnaround do you promise? The site only says clients are \"asking a neighbour rather than opening a support case\", so slide 7 says \"ask for it in writing\".",
-        "Q3 monthly cost: \"little to nothing a month\" is the site's wording. Who pays the domain renewal and any infrastructure cost, the client directly or K&A? Worth saying on the slide if you want it sharper.",
-        "\"Can I update it myself?\" was left out because the site has no answer. If clients can edit their own hours or menus, that could replace a question in a later post."
-      ],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": "music-w0925-fri",
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-09-25-2/slide-01.jpg",
-          "role": "image",
-          "alt": "K&A Performance slide on a cream background: Before you sign with a web designer, ask these 6 questions. A hiring checklist below lists six empty boxes: who owns the site, what does the price include, what will I pay every month, is it fast on a phone, will locals find it, what do changes cost later. Swipe for question 1.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slide-02.jpg",
-          "role": "image",
-          "alt": "Question 1 of 6, box ticked: Who owns the site and the domain when we are done? Why it matters for your business: if someone else holds the code or the domain, moving on means starting over. How K&A answers: we hand over the code on every website we build. Domain ownership: get it in writing. From our site: ka-performancefl.com/ai-launch.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slide-03.jpg",
-          "role": "image",
-          "alt": "Question 2 of 6, box ticked: What exactly does the price include? Why it matters for your business: a low quote that leaves out the writing, the speed work, or search setup costs more later. How K&A answers: every project is scoped to fit. You know the number before we start, and the quote is always free. From our site: ka-performancefl.com/services/web-design.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slide-04.jpg",
-          "role": "image",
-          "alt": "Question 3 of 6, box ticked: What will I pay every month after launch? Why it matters for your business: hosting and platform fees run for years on a site that rarely changes. How K&A answers: no monthly hosting bill. Every build ships on modern global infrastructure for little to nothing a month. From our site: ka-performancefl.com/services/web-design.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slide-05.jpg",
-          "role": "image",
-          "alt": "Question 4 of 6, box ticked: Will it load fast on a phone? Why it matters for your business: your customer is on a phone in a parking lot, and a slow page loses them before they see your number. How K&A answers: static builds served from a global network, so pages arrive in well under a second, even when traffic spikes. From our site: ka-performancefl.com/services/web-design.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slide-06.jpg",
-          "role": "image",
-          "alt": "Question 5 of 6, box ticked: Will it show up when locals search? Why it matters for your business: a site nobody can find is a very expensive business card. How K&A answers: search foundations from day one. We do the on-site half properly and hand you a short, honest list for the rest. Nobody can promise you number one; be wary of anyone who does. From our site: ka-performancefl.com/services/seo-ai-search.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slide-07.jpg",
-          "role": "image",
-          "alt": "Question 6 of 6, box ticked: After launch, who makes changes, and what do they cost? Why it matters for your business: hours, menus, and events change, and a site you cannot update starts telling customers the wrong thing. How K&A answers: the site does not disappear into an inbox after launch. You are asking a neighbor, not opening a support case. Cost of changes: ask for it in writing. From our site: ka-performancefl.com/locations/gainesville.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slide-08.jpg",
-          "role": "image",
-          "alt": "Ask us all six. The hiring checklist with all six boxes ticked. ka-performancefl.com. Call Alex 904-210-1071. Free quote. Web design, local search, training, and AI integration from Gainesville. K&A Performance logo.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slideshow.mp4",
-          "role": "video",
-          "alt": "Video of the 8 carousel slides in order: K&A Performance slide on a cream background: Before you sign with a web designer, ask these 6 questions / Question 1 of 6, box ticked: Who owns the site and the domain when we are done? Why it matters for your business: if someone else holds the code or the domain, moving on means starting over / Question 2 of 6, box ticked: What exactly does the price include? Why it matters for your business: a low quote that leaves out the writing, the speed work, or search setup costs more later / Question 3 of 6, box ticked: What will I pay every month after launch? Why it matters for your business: hosting and platform fees run for years on a site that rarely changes / Question 4 of 6, box ticked: Will it load fast on a phone? Why it matters for your business: your customer is on a phone in a parking lot, and a slow page loses them before they see your number / Question 5 of 6, box ticked: Will it show up when locals search? Why it matters for your business: a site nobody can find is a very expensive business card / Question 6 of 6, box ticked: After launch, who makes changes, and what do they cost? Why it matters for your business: hours, menus, and events change, and a site you cannot update starts telling customers the wrong thing / Ask us all six",
-          "platforms": [
-            "facebook"
-          ]
-        },
-        {
-          "src": "media/2026-09-25-2/slideshow-cover.jpg",
-          "role": "thumbnail",
-          "alt": "K&A Performance slide on a cream background: Before you sign with a web designer, ask these 6 questions. A hiring checklist below lists six empty boxes: who owns the site, what does the price include, what will I pay every month, is it fast on a phone, will locals find it, what do changes cost later. Swipe for question 1.",
-          "platforms": [
-            "facebook"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "2026-09-25-3",
-      "date": "2026-09-25",
-      "weekday": "Fri",
-      "time": "19:00",
-      "kind": "linkedin",
-      "status": "ready",
-      "pillar": "tip",
-      "title": "LinkedIn: 6 questions to ask before you hire a web designer",
-      "hook": "Before you sign with a web designer, ask these 6 questions.",
-      "networks": [
-        "linkedin"
-      ],
-      "facebook": "",
-      "instagram": "",
-      "firstComment": "",
-      "linkedin": "Before you sign with a web designer, ask these 6 questions.\n\nA website is a real investment for a small business, and two quotes that look alike can cover very different work. These six questions show what you are actually buying:\n\n1. Who owns the site and the domain when we are done?\n2. What exactly does the price include?\n3. What will I pay every month after launch?\n4. Will it load fast on a phone?\n5. Will it show up when locals search?\n6. After launch, who makes changes, and what do they cost?\n\nEach page of this document says why the question matters for your business, and how we answer it, taken straight from our own site.\n\nThe takeaway: ask all six of anyone you are considering, and get every answer in writing. A low quote that leaves out the writing, the speed work, or the search setup costs more later.\n\nOur answers, in short: we hand over the code on every website we build. Every project is scoped to fit, and you know the number before we start. There is no monthly hosting bill. Search foundations go in from day one, and nobody can honestly promise you number one. The quote is always free.\n\n#WebDesign #SmallBusiness #GainesvilleFL",
-      "linkedinComment": "Ask us all six: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-25-3",
-      "repost": "Question 1 is the one I would ask first. If someone else holds your code or your domain, moving on later means starting over.",
-      "questions": [
-        "The source folder's open questions (domain ownership, cost of changes after launch, who pays renewals) apply here too. The caption only states what the site already says, and leaves domain and changes to \"get it in writing\"."
-      ],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": null,
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-09-25-3/slide-01.jpg",
-          "role": "image",
-          "alt": "K&A Performance slide on a cream background: Before you sign with a web designer, ask these 6 questions. A hiring checklist below lists six empty boxes: who owns the site, what does the price include, what will I pay every month, is it fast on a phone, will locals find it, what do changes cost later. Swipe for question 1.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-25-3/slide-02.jpg",
-          "role": "image",
-          "alt": "Question 1 of 6, box ticked: Who owns the site and the domain when we are done? Why it matters for your business: if someone else holds the code or the domain, moving on means starting over. How K&A answers: we hand over the code on every website we build. Domain ownership: get it in writing. From our site: ka-performancefl.com/ai-launch.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-25-3/slide-03.jpg",
-          "role": "image",
-          "alt": "Question 2 of 6, box ticked: What exactly does the price include? Why it matters for your business: a low quote that leaves out the writing, the speed work, or search setup costs more later. How K&A answers: every project is scoped to fit. You know the number before we start, and the quote is always free. From our site: ka-performancefl.com/services/web-design.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-25-3/slide-04.jpg",
-          "role": "image",
-          "alt": "Question 3 of 6, box ticked: What will I pay every month after launch? Why it matters for your business: hosting and platform fees run for years on a site that rarely changes. How K&A answers: no monthly hosting bill. Every build ships on modern global infrastructure for little to nothing a month. From our site: ka-performancefl.com/services/web-design.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-25-3/slide-05.jpg",
-          "role": "image",
-          "alt": "Question 4 of 6, box ticked: Will it load fast on a phone? Why it matters for your business: your customer is on a phone in a parking lot, and a slow page loses them before they see your number. How K&A answers: static builds served from a global network, so pages arrive in well under a second, even when traffic spikes. From our site: ka-performancefl.com/services/web-design.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-25-3/slide-06.jpg",
-          "role": "image",
-          "alt": "Question 5 of 6, box ticked: Will it show up when locals search? Why it matters for your business: a site nobody can find is a very expensive business card. How K&A answers: search foundations from day one. We do the on-site half properly and hand you a short, honest list for the rest. Nobody can promise you number one; be wary of anyone who does. From our site: ka-performancefl.com/services/seo-ai-search.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-25-3/slide-07.jpg",
-          "role": "image",
-          "alt": "Question 6 of 6, box ticked: After launch, who makes changes, and what do they cost? Why it matters for your business: hours, menus, and events change, and a site you cannot update starts telling customers the wrong thing. How K&A answers: the site does not disappear into an inbox after launch. You are asking a neighbor, not opening a support case. Cost of changes: ask for it in writing. From our site: ka-performancefl.com/locations/gainesville.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-25-3/slide-08.jpg",
-          "role": "image",
-          "alt": "Ask us all six. The hiring checklist with all six boxes ticked. ka-performancefl.com. Call Alex 904-210-1071. Free quote. Web design, local search, training, and AI integration from Gainesville. K&A Performance logo.",
-          "platforms": null
-        }
-      ]
-    },
-    {
-      "id": "2026-09-26-2",
+      "id": "2026-09-26-4",
       "date": "2026-09-26",
       "weekday": "Sat",
-      "time": "16:00",
+      "time": "12:00",
       "kind": "carousel",
       "status": "ready",
-      "pillar": "tip",
-      "title": "The 10-second phone test for your website",
-      "hook": "Grab your phone. Open your website. You have 10 seconds.",
+      "pillar": "offer",
+      "title": "Free social media management for 3 Gainesville businesses",
+      "hook": "We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots.",
       "networks": [
         "facebook",
         "instagram"
       ],
-      "facebook": "Grab your phone. Open your website. You have 10 seconds.\nWeb design and local search in Gainesville: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-26-2\n\nYour customers run this test every day without thinking about it. Run it yourself this weekend, two seconds per check:\n\n1. It loads fast. Turn off Wi-Fi and open your site on cell data. A blank screen or a spinner sends people back to the search results.\n2. You can tap to call. Tap your phone number. If it does not start a call, that call goes to someone else.\n3. Your hours are easy to find. From the first screen, can you tell if you are open right now?\n4. You can read it in the sun. Step outside and read your first paragraph at arm's length. Light gray text and tiny type fail here.\n5. The book or contact button is obvious. Without scrolling, point at the button that gets someone in touch with you.\n\nFailed one? We fix these. Save this for your next site check.\n\nVisit https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-26-2 or call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #WebDesign #SmallBusiness",
-      "instagram": "Grab your phone. Open your website. You have 10 seconds.\n\nYour customers run this test every day without thinking about it. Run it yourself this weekend, two seconds per check:\n\n1. It loads fast. Turn off Wi-Fi and open your site on cell data. A blank screen or a spinner sends people back to the search results.\n2. You can tap to call. Tap your phone number. If it does not start a call, that call goes to someone else.\n3. Your hours are easy to find. From the first screen, can you tell if you are open right now?\n4. You can read it in the sun. Step outside and read your first paragraph at arm's length. Light gray text and tiny type fail here.\n5. The book or contact button is obvious. Without scrolling, point at the button that gets someone in touch with you.\n\nFailed one? We fix these. Save this for your next site check.\n\nLink in bio, or call Alex at 904-210-1071.",
-      "firstComment": "#GainesvilleFL #WebDesign #SmallBusiness #MobileFirst #WebsiteTips #LocalBusiness #GainesvilleSmallBusiness",
+      "facebook": "We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots.\nCall Alex at 904-210-1071 or message us here to claim a spot.\n\nFor businesses in Gainesville and Alachua County.\n\nWhat you get, free for 3 months:\n- 3 posts a week on Facebook and Instagram (2 reels or carousels, plus 1 tip or carousel)\n- A monthly content plan you approve before anything is made\n- A short monthly results report: reach, engagement, and clicks to your site\n- Captions, music and scheduling, handled\n\nWhat we ask:\n- Approve each month's plan within 2 business days\n- Add us as a manager in Meta so we can post, and send real photos or footage when we ask\n- Let us share your results as a case study, and a short review if you are happy\n- An honest check-in at the end of month 3\n\nAfter 3 months: $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.\n\nWhat it is not: no paid ads or ad spend, no promised follower or sales numbers, and you keep replying to your own comments and messages.\n\nAlex picks the 3 best fits from everyone who calls or messages. No contract. No card.\n\nSee our work: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-26-4\n\nThe music is AI generated.\n\n#GainesvilleFL #AlachuaCounty #SmallBusiness #SocialMediaManagement #GainesvilleBusiness",
+      "instagram": "We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots.\nSend us a DM or call Alex at 904-210-1071 to claim a spot.\n\nFor businesses in Gainesville and Alachua County.\n\nWhat you get, free for 3 months:\n- 3 posts a week on Facebook and Instagram (2 reels or carousels, plus 1 tip or carousel)\n- A monthly content plan you approve before anything is made\n- A short monthly results report: reach, engagement, and clicks to your site\n- Captions, music and scheduling, handled\n\nWhat we ask:\n- Approve each month's plan within 2 business days\n- Add us as a manager in Meta so we can post, and send real photos or footage when we ask\n- Let us share your results as a case study, and a short review if you are happy\n- An honest check-in at the end of month 3\n\nAfter 3 months: $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.\n\nWhat it is not: no paid ads or ad spend, no promised follower or sales numbers, and you keep replying to your own comments and DMs.\n\nAlex picks the 3 best fits from everyone who calls or messages. No contract. No card.",
+      "firstComment": "#GainesvilleFL #AlachuaCounty #SmallBusiness #SocialMediaManagement #GainesvilleBusiness #SocialMediaMarketing",
       "linkedin": "",
       "linkedinComment": "",
       "repost": "",
-      "questions": [
-        "ka-performancefl.com has no tap-to-call link and no posted hours: no tel: link and no 904-210-1071 on /, /contact/, /services/ or /locations/gainesville/ (checked live 2026-09-25), and none in src/ either. The site has left the phone number off before, per the note in D:\\kap-reel\\config\\brand.json. Do you want a tel: link (and hours, if you keep set hours) added before this posts? Anyone who runs this test on our own site would fail checks 2 and 3. For now, those two slides use a drawn example labeled \"not a real site\".",
-        "The 1.8 s figure is measured under emulated Slow 4G (Lighthouse's mobile profile), not on a real phone on a cell network. OK to quote as \"median of 5 cold loads on a throttled Slow 4G phone profile\"?"
-      ],
+      "questions": [],
       "ai": {
         "voice": false,
         "visuals": false
       },
-      "music": "music-w0925-sat",
+      "music": "music-w0926-pilot",
       "scheduled": {},
       "media": [
         {
-          "src": "media/2026-09-26-2/slide-01.jpg",
+          "src": "media/2026-09-26-4/slide-01.jpg",
           "role": "image",
-          "alt": "K&A Performance slide with a stopwatch reading 0:10. Huge type: Grab your phone. Open your website. You have 10 seconds. Below, 5 checks, 2 seconds each, as empty checkboxes: it loads fast, you can tap to call, your hours are easy to find, you can read it in the sun, the book or contact button is obvious.",
+          "alt": "K&A Performance slide on a cream background: We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots. Three reserved-seat tickets numbered 1, 2 and 3, each marked open. Facebook and Instagram, planned, made and posted for you. Swipe for what you get.",
           "platforms": [
             "instagram"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slide-02.jpg",
+          "src": "media/2026-09-26-4/slide-02.jpg",
           "role": "image",
-          "alt": "Check 1 of 5, it loads fast. Does it show up fast? On your phone now: turn off Wi-Fi, open your site on cell data and count. It fails if you still see a blank screen or a spinner at two. Why it costs you: someone searching in a parking lot will not wait. A phone screenshot of the K&A homepage headline, outlined in rust, with 1.8 s headline on screen, the median of 5 cold loads on a throttled Slow 4G phone profile.",
+          "alt": "A ticket labeled Included, free for 3 months. What you get: 3 posts a week on Facebook and Instagram, 2 reels or carousels plus 1 tip or carousel. A monthly content plan you approve before anything is made. A short monthly results report: reach, engagement, and clicks to your site. Captions, music and scheduling, all handled for you. The ticket stub reads admit one business, Gainesville and Alachua County, with spots 1, 2 and 3 open.",
           "platforms": [
             "instagram"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slide-03.jpg",
+          "src": "media/2026-09-26-4/slide-03.jpg",
           "role": "image",
-          "alt": "Check 2 of 5, tap to call. Tap your number. Does it start a call? It fails if nothing happens, you have to copy the number by hand, or there is no number. Why it costs you: every extra step is a call that goes to a competitor. A drawn example phone layout labeled not a real site shows a Tap to call button at the top and the note: the fix is a tel: link on the number.",
+          "alt": "A ticket labeled Who it is for: For businesses in Gainesville and Alachua County. A Gainesville team running your Facebook and Instagram. Only 3 spots: call or message us, Alex picks the 3 best fits. The stub shows spots 1, 2 and 3 open.",
           "platforms": [
             "instagram"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slide-04.jpg",
+          "src": "media/2026-09-26-4/slide-04.jpg",
           "role": "image",
-          "alt": "Check 3 of 5, hours are easy to find. Are you open right now? From the first screen, find today's hours with no menu. It fails if hours live in the footer, a PDF, a photo of a sign, or only on Facebook. A drawn example phone layout labeled not a real site shows an Open today, until 5:00 PM box near the top, as text, not an image.",
+          "alt": "A ticket labeled Your part. What we ask in return: approve each month's plan within 2 business days. Add us as a manager in Meta so we can post. Send real photos or footage when we ask. Let us share your results as a case study, and a short review if you are happy. An honest check-in at the end of month 3.",
           "platforms": [
             "instagram"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slide-05.jpg",
+          "src": "media/2026-09-26-4/slide-05.jpg",
           "role": "image",
-          "alt": "Check 4 of 5, readable in the sun. Can you read it outside? Step outside and read your first paragraph at arm's length. It fails with light gray text, words over busy photos, or tiny type. A phone screenshot of the K&A homepage intro paragraph, outlined in rust, with 15.53 to 1, dark ink on cream. Body text is 20px; WCAG asks for at least 4.5 to 1.",
+          "alt": "A ticket labeled After 3 months. Then you decide. $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.",
           "platforms": [
             "instagram"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slide-06.jpg",
+          "src": "media/2026-09-26-4/slide-06.jpg",
           "role": "image",
-          "alt": "Check 5 of 5, the button is obvious. Where do I reach you? Without scrolling, point at the button that gets you in touch. It fails if you have to hunt for a small link or one hidden in the menu. A phone screenshot of the K&A first screen with the amber Start a project button outlined in rust and tagged visible with no scrolling, 5.29 to 1 text contrast.",
+          "alt": "A ticket labeled The fine print. What it is not: no paid ads, ad spend is not included. No promised numbers, we do not promise followers or sales. Your inbox stays yours, you keep replying to comments and DMs.",
           "platforms": [
             "instagram"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slide-07.jpg",
+          "src": "media/2026-09-26-4/slide-07.jpg",
           "role": "image",
-          "alt": "Stopwatch at 0:00, time's up. Failed one? We fix these. Anything you could not tick is costing you customers, above the five empty checkboxes. Web design and local search for Gainesville businesses. ka-performancefl.com. Call Alex 904-210-1071.",
+          "alt": "A dark teal ticket labeled How to claim. Claim one of 3 spots. Call Alex, 904-210-1071, or message K&A Performance on Facebook or Instagram. Alex picks the 3 best fits. No contract. No card. The stub shows spots 1, 2 and 3 open. K&A Performance logo and ka-performancefl.com at the top.",
           "platforms": [
             "instagram"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slideshow.mp4",
+          "src": "media/2026-09-26-4/slideshow.mp4",
           "role": "video",
-          "alt": "Video of the 7 carousel slides in order: K&A Performance slide with a stopwatch reading 0:10 / Check 1 of 5, it loads fast / Check 2 of 5, tap to call / Check 3 of 5, hours are easy to find / Check 4 of 5, readable in the sun / Check 5 of 5, the button is obvious / Stopwatch at 0:00, time's up",
+          "alt": "Video of the 7 carousel slides in order: K&A Performance slide on a cream background: We're managing social media free for 3 Gainesville businesses / A ticket labeled Included, free for 3 months / A ticket labeled Who it is for: For businesses in Gainesville and Alachua County / A ticket labeled Your part / A ticket labeled After 3 months / A ticket labeled The fine print / A dark teal ticket labeled How to claim",
           "platforms": [
             "facebook"
           ]
         },
         {
-          "src": "media/2026-09-26-2/slideshow-cover.jpg",
+          "src": "media/2026-09-26-4/slideshow-cover.jpg",
           "role": "thumbnail",
-          "alt": "K&A Performance slide with a stopwatch reading 0:10. Huge type: Grab your phone. Open your website. You have 10 seconds. Below, 5 checks, 2 seconds each, as empty checkboxes: it loads fast, you can tap to call, your hours are easy to find, you can read it in the sun, the book or contact button is obvious.",
+          "alt": "K&A Performance slide on a cream background: We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots. Three reserved-seat tickets numbered 1, 2 and 3, each marked open. Facebook and Instagram, planned, made and posted for you. Swipe for what you get.",
           "platforms": [
             "facebook"
           ]
@@ -301,319 +104,24 @@
       ]
     },
     {
-      "id": "2026-09-26-3",
-      "date": "2026-09-26",
-      "weekday": "Sat",
-      "time": "10:00",
-      "kind": "linkedin",
-      "status": "ready",
-      "pillar": "tip",
-      "title": "LinkedIn: The 10-second phone test for your website",
-      "hook": "Grab your phone. Open your website. You have 10 seconds.",
-      "networks": [
-        "linkedin"
-      ],
-      "facebook": "",
-      "instagram": "",
-      "firstComment": "",
-      "linkedin": "Grab your phone. Open your website. You have 10 seconds.\n\nYour customers run this test every time they find you on their phone. Run it yourself this weekend, two seconds per check:\n\n1. It loads fast. Turn off Wi-Fi and open your site on cell data. A blank screen or a spinner at two seconds sends people back to the search results.\n2. You can tap to call. Tap your phone number. If it does not start a call, you are asking a customer to copy it by hand.\n3. Your hours are easy to find. From the first screen, can you tell if you are open right now? Hours in a PDF, a photo of a sign, or only on Facebook do not count.\n4. You can read it in the sun. Step outside and read your first paragraph at arm's length. Light gray text and tiny type fail here.\n5. The book or contact button is obvious. Without scrolling, point at the button that gets someone in touch with you.\n\nWe measured our own homepage for checks 1 and 4: the headline was on screen in 1.8 seconds (median of five cold loads on a throttled Slow 4G phone profile), and the body text measures 15.53 to 1 against its background, where WCAG asks for at least 4.5 to 1.\n\nThe takeaway: anything you could not tick is costing you customers. Fix the one you failed first, then run the test again.\n\nWe design and build websites for Gainesville businesses with phone speed, readability, and local search built in. Failed one? We fix these.\n\n#WebDesign #SmallBusiness #GainesvilleFL",
-      "linkedinComment": "See how we build websites: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-26-3",
-      "repost": "Try check 1 with Wi-Fi off, standing in a parking lot. It is the quickest way I know to see your site the way a customer searching nearby does.",
-      "questions": [
-        "The source notes that ka-performancefl.com has no tap-to-call link and no posted hours, so the caption only quotes our own site on checks 1 and 4 and does not claim our sites pass all five. Worth adding a tel: link to the site before this goes out, since a LinkedIn reader may run the test on us."
-      ],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": null,
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-09-26-3/slide-01.jpg",
-          "role": "image",
-          "alt": "K&A Performance slide with a stopwatch reading 0:10. Huge type: Grab your phone. Open your website. You have 10 seconds. Below, 5 checks, 2 seconds each, as empty checkboxes: it loads fast, you can tap to call, your hours are easy to find, you can read it in the sun, the book or contact button is obvious.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-26-3/slide-02.jpg",
-          "role": "image",
-          "alt": "Check 1 of 5, it loads fast. Does it show up fast? On your phone now: turn off Wi-Fi, open your site on cell data and count. It fails if you still see a blank screen or a spinner at two. Why it costs you: someone searching in a parking lot will not wait. A phone screenshot of the K&A homepage headline, outlined in rust, with 1.8 s headline on screen, the median of 5 cold loads on a throttled Slow 4G phone profile.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-26-3/slide-03.jpg",
-          "role": "image",
-          "alt": "Check 2 of 5, tap to call. Tap your number. Does it start a call? It fails if nothing happens, you have to copy the number by hand, or there is no number. Why it costs you: every extra step is a call that goes to a competitor. A drawn example phone layout labeled not a real site shows a Tap to call button at the top and the note: the fix is a tel: link on the number.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-26-3/slide-04.jpg",
-          "role": "image",
-          "alt": "Check 3 of 5, hours are easy to find. Are you open right now? From the first screen, find today's hours with no menu. It fails if hours live in the footer, a PDF, a photo of a sign, or only on Facebook. A drawn example phone layout labeled not a real site shows an Open today, until 5:00 PM box near the top, as text, not an image.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-26-3/slide-05.jpg",
-          "role": "image",
-          "alt": "Check 4 of 5, readable in the sun. Can you read it outside? Step outside and read your first paragraph at arm's length. It fails with light gray text, words over busy photos, or tiny type. A phone screenshot of the K&A homepage intro paragraph, outlined in rust, with 15.53 to 1, dark ink on cream. Body text is 20px; WCAG asks for at least 4.5 to 1.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-26-3/slide-06.jpg",
-          "role": "image",
-          "alt": "Check 5 of 5, the button is obvious. Where do I reach you? Without scrolling, point at the button that gets you in touch. It fails if you have to hunt for a small link or one hidden in the menu. A phone screenshot of the K&A first screen with the amber Start a project button outlined in rust and tagged visible with no scrolling, 5.29 to 1 text contrast.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-26-3/slide-07.jpg",
-          "role": "image",
-          "alt": "Stopwatch at 0:00, time's up. Failed one? We fix these. Anything you could not tick is costing you customers, above the five empty checkboxes. Web design and local search for Gainesville businesses. ka-performancefl.com. Call Alex 904-210-1071.",
-          "platforms": null
-        }
-      ]
-    },
-    {
-      "id": "2026-09-27",
-      "date": "2026-09-27",
-      "weekday": "Sun",
-      "time": "18:00",
-      "kind": "carousel",
-      "status": "ready",
-      "pillar": "ai-launch",
-      "title": "3 prompts to plan your week with AI",
-      "hook": "Sunday night. 10 minutes. A week that doesn't run you.",
-      "networks": [
-        "facebook",
-        "instagram"
-      ],
-      "facebook": "Sunday night. 10 minutes. A week that doesn't run you.\nFree AI lessons: https://ka-performancefl.com/training/ai/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-27\n\nThree prompts to paste into any AI tool before Monday. Fill in the brackets and each one hands you something you can use:\n\n1. Sort the week: your messy to-do list becomes a Monday to Friday plan, three priorities a day.\n2. Send the three: short drafts of the messages you keep putting off, with every guess marked.\n3. Drop one thing: the one commitment to say no to this week, and the words to say it.\n\nAll three are on one page in the video. Screenshot it.\n\nThe AI drafts. You decide what goes out. That habit is what our free AI lessons teach: https://ka-performancefl.com/training/ai/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-27\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
-      "instagram": "Sunday night. 10 minutes. A week that doesn't run you. Save this for Sunday.\n\nThree prompts to paste into any AI tool before Monday. Fill in the brackets and each one hands you something you can use:\n\n1. Sort the week: your messy to-do list becomes a Monday to Friday plan, three priorities a day.\n2. Send the three: short drafts of the messages you keep putting off, with every guess marked.\n3. Drop one thing: the one commitment to say no to this week, and the words to say it.\n\nAll three are on one page on slide 5. Screenshot it.\n\nThe AI drafts. You decide what goes out. That habit is what our free AI lessons teach. Link in bio.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071.",
-      "firstComment": "#GainesvilleFL #AI #SmallBusiness #AITips #WeeklyPlanning #SmallBusinessTips",
-      "linkedin": "",
-      "linkedinComment": "",
-      "repost": "",
-      "questions": [
-        "The /training/ai page is currently built around two specific coding tools, while this post is about everyday planning. Keep that link as the CTA, or point Sunday's post at the main site?",
-        "The prompt tests were run by the building agent itself. Want one repeat in a clean chat in your usual AI tool before this goes out?"
-      ],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": "music-w0925-sun",
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-09-27/slide-01.jpg",
-          "role": "image",
-          "alt": "Sunday night, 10 minutes, a week that doesn't run you: a K&A Performance slide styled as a weekly planner page with Monday to Friday columns. Three sticky notes read 1, sort the week; 2, send the three; 3, drop one thing. Save this for Sunday night: three copy-and-paste prompts for any AI tool. Swipe for prompt 1.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slide-02.jpg",
-          "role": "image",
-          "alt": "Prompt 1 of 3, turn the to-do pile into a plan. A sticky note on the Monday column reads: Here is everything on my plate this week, unsorted: [paste your to-do list]. Fixed times: [meetings, appointments, deadlines]. A good week means [the one result that matters most]. Sort it into Must, Should, and Can wait. Put the Musts and Shoulds on Monday to Friday, three a day at most, hardest one first. Flag anything someone else could do. You get back: a Monday to Friday plan, three priorities a day, and a list of what can wait. Why it matters: your best hours go to the work that moves the business.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slide-03.jpg",
-          "role": "image",
-          "alt": "Prompt 2 of 3, draft the three messages you keep putting off. A sticky note reads: Draft the three messages I keep putting off. 1: to [who] about [what]. 2: to [who] about [what]. 3: to [who] about [what]. I run [your business]. Keep each under 80 words, friendly and direct, one clear ask, in my voice, not a template. Mark anything you had to guess. You get back: three short drafts ready to edit and send, with every guess marked. Why it matters: the messages we avoid are often the ones tied to money, like quotes, invoices, and follow-ups.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slide-04.jpg",
-          "role": "image",
-          "alt": "Prompt 3 of 3, find the one thing to say no to. A sticky note on the Friday column reads: Here is my week: [paste your plan or list]. My top goal right now is [your goal]. Pick the one commitment I should say no to, move, or hand off to free the most time for that goal. Give me the pick, the reason in two sentences, and a polite message I can send to say no. You get back: one pick, why it frees the most time, and the words to say no. Why it matters: every yes costs an hour somewhere, and one clear no protects the goal.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slide-05.jpg",
-          "role": "image",
-          "alt": "Screenshot this: all three prompts on one planner page as three stacked sticky notes, sort the week, send the three, and drop one thing, each with its fill-in brackets.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slide-06.jpg",
-          "role": "image",
-          "alt": "Then you decide what goes out. A two-column table: AI drafts a plan for the week, you decide what matters most. AI drafts three messages, you decide what you send, and when. AI drafts one thing to drop, you decide whether you drop it. Learn the habit, free: our free AI lessons are short videos and hands-on lessons you can try at your own pace, built by K&A Performance in Gainesville.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slide-07.jpg",
-          "role": "image",
-          "alt": "Free AI lessons for Gainesville businesses. A sticky note on the Monday column reads ka-performancefl.com/training/ai, Call Alex 904-210-1071. K&A Performance builds websites, local search, training, and AI integration that save you time.",
-          "platforms": [
-            "instagram"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slideshow.mp4",
-          "role": "video",
-          "alt": "Video of the 7 carousel slides in order: Sunday night, 10 minutes, a week that doesn't run you: a K&A Performance slide styled as a weekly planner page with Monday to Friday columns / Prompt 1 of 3, turn the to-do pile into a plan / Prompt 2 of 3, draft the three messages you keep putting off / Prompt 3 of 3, find the one thing to say no to / Screenshot this: all three prompts on one planner page as three stacked sticky notes, sort the week, send the three, and drop one thing, each with its fill-in brackets. / Then you decide what goes out / Free AI lessons for Gainesville businesses",
-          "platforms": [
-            "facebook"
-          ]
-        },
-        {
-          "src": "media/2026-09-27/slideshow-cover.jpg",
-          "role": "thumbnail",
-          "alt": "Sunday night, 10 minutes, a week that doesn't run you: a K&A Performance slide styled as a weekly planner page with Monday to Friday columns. Three sticky notes read 1, sort the week; 2, send the three; 3, drop one thing. Save this for Sunday night: three copy-and-paste prompts for any AI tool. Swipe for prompt 1.",
-          "platforms": [
-            "facebook"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "2026-09-27-2",
-      "date": "2026-09-27",
-      "weekday": "Sun",
-      "time": "17:00",
-      "kind": "linkedin",
-      "status": "ready",
-      "pillar": "ai-launch",
-      "title": "LinkedIn: 3 prompts to plan your week with AI",
-      "hook": "Sunday night. 10 minutes. A week that doesn't run you.",
-      "networks": [
-        "linkedin"
-      ],
-      "facebook": "",
-      "instagram": "",
-      "firstComment": "",
-      "linkedin": "Sunday night. 10 minutes. A week that doesn't run you.\n\nIf your Monday starts with a pile instead of a plan, here are three prompts to paste into any AI tool before the week starts. Fill in the brackets and each one hands you something you can use:\n\n1. Sort the week. Your messy to-do list becomes a Monday to Friday plan, three priorities a day at most, hardest one first, with a list of what can wait.\n2. Send the three. Short drafts of the messages you keep putting off, one clear ask each, with every guess marked. The messages we avoid are often the ones tied to money: quotes, invoices, follow-ups.\n3. Drop one thing. The one commitment to say no to, move, or hand off this week, the reason in two sentences, and a polite message to say it.\n\nThe full prompts are in this document, with all three on one page to save.\n\nThe takeaway: the AI drafts, and you decide. It drafts the plan, the messages, and the one thing to drop. You decide what matters most, what goes out, and whether you drop it.\n\nPutting AI to work inside a business is part of what we do, alongside web design, local search, and training. Our free AI lessons teach this habit.\n\n#AI #SmallBusiness #Productivity",
-      "linkedinComment": "Free AI lessons: https://ka-performancefl.com/training/ai/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-27-2",
-      "repost": "Prompt 3 is the one I needed: pick the one thing to say no to this week, and get the polite words to say it. The AI drafts it, and I still decide whether it goes out.",
-      "questions": [
-        "The source brief asks whether /training/ai fits an everyday planning post, since that page centers on coding tools. This post links there to match slide 7. If you would rather send LinkedIn readers to /services/ai-integration/, swap the first comment link."
-      ],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": null,
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-09-27-2/slide-01.jpg",
-          "role": "image",
-          "alt": "Sunday night, 10 minutes, a week that doesn't run you: a K&A Performance slide styled as a weekly planner page with Monday to Friday columns. Three sticky notes read 1, sort the week; 2, send the three; 3, drop one thing. Save this for Sunday night: three copy-and-paste prompts for any AI tool. Swipe for prompt 1.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-27-2/slide-02.jpg",
-          "role": "image",
-          "alt": "Prompt 1 of 3, turn the to-do pile into a plan. A sticky note on the Monday column reads: Here is everything on my plate this week, unsorted: [paste your to-do list]. Fixed times: [meetings, appointments, deadlines]. A good week means [the one result that matters most]. Sort it into Must, Should, and Can wait. Put the Musts and Shoulds on Monday to Friday, three a day at most, hardest one first. Flag anything someone else could do. You get back: a Monday to Friday plan, three priorities a day, and a list of what can wait. Why it matters: your best hours go to the work that moves the business.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-27-2/slide-03.jpg",
-          "role": "image",
-          "alt": "Prompt 2 of 3, draft the three messages you keep putting off. A sticky note reads: Draft the three messages I keep putting off. 1: to [who] about [what]. 2: to [who] about [what]. 3: to [who] about [what]. I run [your business]. Keep each under 80 words, friendly and direct, one clear ask, in my voice, not a template. Mark anything you had to guess. You get back: three short drafts ready to edit and send, with every guess marked. Why it matters: the messages we avoid are often the ones tied to money, like quotes, invoices, and follow-ups.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-27-2/slide-04.jpg",
-          "role": "image",
-          "alt": "Prompt 3 of 3, find the one thing to say no to. A sticky note on the Friday column reads: Here is my week: [paste your plan or list]. My top goal right now is [your goal]. Pick the one commitment I should say no to, move, or hand off to free the most time for that goal. Give me the pick, the reason in two sentences, and a polite message I can send to say no. You get back: one pick, why it frees the most time, and the words to say no. Why it matters: every yes costs an hour somewhere, and one clear no protects the goal.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-27-2/slide-05.jpg",
-          "role": "image",
-          "alt": "Screenshot this: all three prompts on one planner page as three stacked sticky notes, sort the week, send the three, and drop one thing, each with its fill-in brackets.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-27-2/slide-06.jpg",
-          "role": "image",
-          "alt": "Then you decide what goes out. A two-column table: AI drafts a plan for the week, you decide what matters most. AI drafts three messages, you decide what you send, and when. AI drafts one thing to drop, you decide whether you drop it. Learn the habit, free: our free AI lessons are short videos and hands-on lessons you can try at your own pace, built by K&A Performance in Gainesville.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-27-2/slide-07.jpg",
-          "role": "image",
-          "alt": "Free AI lessons for Gainesville businesses. A sticky note on the Monday column reads ka-performancefl.com/training/ai, Call Alex 904-210-1071. K&A Performance builds websites, local search, training, and AI integration that save you time.",
-          "platforms": null
-        }
-      ]
-    },
-    {
-      "id": "2026-09-28-3",
+      "id": "2026-09-28-4",
       "date": "2026-09-28",
       "weekday": "Mon",
-      "time": "08:00",
+      "time": "12:00",
       "kind": "linkedin",
       "status": "ready",
-      "pillar": "client-spotlight",
-      "title": "LinkedIn: Ellenton Family Practice Direct in the top three",
-      "hook": "A two-provider practice is in Google's top three for primary care in Ellenton, Florida.",
+      "pillar": "offer",
+      "title": "LinkedIn: Free social media management for 3 Gainesville businesses",
+      "hook": "We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots.",
       "networks": [
         "linkedin"
       ],
       "facebook": "",
       "instagram": "",
       "firstComment": "",
-      "linkedin": "A two-provider practice is in Google's top three for primary care in Ellenton, Florida.\n\nOn Sept 24 we searched \"Primary Care, Ellenton, FL\" in a fresh incognito window and recorded the screen. Ellenton Family Practice Direct sits in the map's top three, next to practices many times their size. Above the regular results, Google's AI Overview names them first.\n\nNothing on the Google page is edited. Search results move, so run the search yourself.\n\nWhy it matters: the map and the AI Overview sit above every other result. For a local business, that top section is where a search is won or lost, and this result shows a small practice can hold its own there.\n\nOne thing to do this week: open an incognito window on your phone and search for your service plus your town, the way a new customer would. Note where you land, and whether your listing shows your hours, your reviews, and a working link to your site.\n\nLocal search is part of every site we build: pages that say clearly what you do and where you do it, clean structure that search engines can read, and a site that loads fast. Congratulations to the whole team at Ellenton Family Practice Direct.\n\nThe music is AI generated.\n\n#LocalSEO #SmallBusiness #Florida",
-      "linkedinComment": "See how we build local search into every site: https://ka-performancefl.com/services/seo-ai-search/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-28-3",
-      "repost": "I recorded this search myself on Sept 24 in a clean incognito window: a two-provider practice holding a top three spot next to much bigger groups. Try the search and see where your own business lands.",
-      "questions": [
-        "The reel's music (music-i-b) goes out again on LinkedIn the same day it runs on Facebook and Instagram. validate's 30-day rule would flag that, so this folder names no track. OK to treat the same reel on another network as one use?",
-        "The AI Overview wording (\"names them first\") follows the source reel; the question on the source brief applies here too."
-      ],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": "music-i-b",
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-09-28-3/reel-vertical.mp4",
-          "role": "video",
-          "alt": "K&A Performance local SEO reel. A real incognito Google search for Primary Care Ellenton, FL, recorded Sept 24, shown in a framed browser card: Ellenton Family Practice Direct ringed in the map pack top three with 4.5 stars and 71 reviews, then named first in Google's AI Overview. Ends with Is your business showing up? ka-performancefl.com, Call Alex, 904-210-1071.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-28-3/thumbnail.jpg",
-          "role": "thumbnail",
-          "alt": "K&A Performance local SEO frame: A two-provider practice. Top three on Google. Google map pack results for Primary Care Ellenton, FL with Ellenton Family Practice Direct ringed in amber, and ka-performancefl.com below.",
-          "platforms": null
-        }
-      ]
-    },
-    {
-      "id": "2026-09-29-3",
-      "date": "2026-09-29",
-      "weekday": "Tue",
-      "time": "08:00",
-      "kind": "linkedin",
-      "status": "ready",
-      "pillar": "tip",
-      "title": "LinkedIn: Five contrast fixes you can make today",
-      "hook": "Your phone in the sun. Can anyone read your website?",
-      "networks": [
-        "linkedin"
-      ],
-      "facebook": "",
-      "instagram": "",
-      "firstComment": "",
-      "linkedin": "Your phone in the sun. Can anyone read your website?\n\nContrast is easy to miss on an office monitor and hard to miss outdoors on a phone. WCAG 2.2 sets the line: 4.5 to 1 for body text, 3 to 1 for large text. Every ratio in this document is computed from the real hex values.\n\nFive fixes you can make today:\n\n1. Light gray body text measures 2.52 to 1. A darker gray gets 7.62 to 1.\n2. White text on a bright photo measures 1.39 to 1. A dark scrim behind it gets 5.55 to 1.\n3. White text on a bright green button measures 2.27 to 1. A deeper green gets 5.01 to 1.\n4. Placeholder text used as the label measures 1.74 to 1. Put a real label above the field.\n5. Links shown by color alone measure 1.78 to 1 against the text around them. About 1 in 12 men see color differently. Underline your links.\n\nThe takeaway: run your three most used text and background pairs through a contrast checker and fix anything under 4.5 to 1. Start with buttons and form labels, where a customer is trying to act.\n\nWe measure contrast on every site we build, against WCAG 2.2 at Level AA, and we audit existing sites with real numbers, not a plugin badge.\n\n#Accessibility #WebDesign #WCAG",
-      "linkedinComment": "How we audit and fix accessibility: https://ka-performancefl.com/services/accessibility/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-29-3",
-      "repost": "Fix 3 is the one I would check first: white text on a bright brand button looks fine on a monitor and measured 2.27 to 1 here. Five minutes with a contrast checker catches it.",
+      "linkedin": "We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots.\n\nWe're adding social media management to what we do, and we want to start close to home. For 3 months, we run Facebook and Instagram for 3 businesses in Gainesville and Alachua County:\n\n- 3 posts a week (2 reels or carousels, plus 1 tip or carousel)\n- A monthly content plan you approve before anything is made\n- A short monthly results report: reach, engagement, and clicks to your site\n- Captions, music and scheduling, handled\n\nWhat we ask: approve each month's plan within 2 business days, add us as a manager in Meta, send real photos or footage when we ask, let us share the results as a case study (and a short review if you are happy), and give us an honest check-in at the end of month 3.\n\nAfter that, it is $600 a month, month to month, and pilot businesses keep that rate for as long as they stay. No auto-billing, no contract, cancel any time. No ad spend is included and we do not promise follower or sales numbers.\n\nTo claim a spot, call Alex at 904-210-1071 or message K&A Performance. Alex picks the 3 best fits.\n\n#GainesvilleFL #SmallBusiness #SocialMediaManagement",
+      "linkedinComment": "See our work: https://ka-performancefl.com/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-28-4",
+      "repost": "We're taking on 3 Gainesville and Alachua County businesses for a free 3-month social media pilot, and I'm picking the best fits myself. If that sounds like your business or someone you know, call me at 904-210-1071.",
       "questions": [],
       "ai": {
         "voice": false,
@@ -623,262 +131,50 @@
       "scheduled": {},
       "media": [
         {
-          "src": "media/2026-09-29-3/slide-01.jpg",
+          "src": "media/2026-09-28-4/slide-01.jpg",
           "role": "image",
-          "alt": "K&A Performance slide. Huge type: Your phone in the sun. Can anyone read your website? Five numbered color chips in gray, pale sky blue, bright green, light gray, and dark teal, with the line 5 contrast fixes you can make today. Every ratio computed to WCAG 2.2.",
+          "alt": "K&A Performance slide on a cream background: We're managing social media free for 3 Gainesville businesses. 3 months. 3 spots. Three reserved-seat tickets numbered 1, 2 and 3, each marked open. Facebook and Instagram, planned, made and posted for you. Swipe for what you get.",
           "platforms": null
         },
         {
-          "src": "media/2026-09-29-3/slide-02.jpg",
+          "src": "media/2026-09-28-4/slide-02.jpg",
           "role": "image",
-          "alt": "Fix 1 of 5: Darken your light gray body text. Before card: gray #A8A29E text on white #FFFFFF, 2.52 to 1, fails 4.5 to 1 for body text. After card: dark gray #57534E on white, 7.62 to 1, passes.",
+          "alt": "A ticket labeled Included, free for 3 months. What you get: 3 posts a week on Facebook and Instagram, 2 reels or carousels plus 1 tip or carousel. A monthly content plan you approve before anything is made. A short monthly results report: reach, engagement, and clicks to your site. Captions, music and scheduling, all handled for you. The ticket stub reads admit one business, Gainesville and Alachua County, with spots 1, 2 and 3 open.",
           "platforms": null
         },
         {
-          "src": "media/2026-09-29-3/slide-03.jpg",
+          "src": "media/2026-09-28-4/slide-03.jpg",
           "role": "image",
-          "alt": "Fix 2 of 5: Put a scrim behind text on photos. Before card: white headline on a pale sky blue #C9DDEA, 1.39 to 1, fails even the 3 to 1 large text line. After card: a 60 percent #221C15 scrim darkens the sky to #65696A, and the white text measures 5.55 to 1, passing 3 to 1 and 4.5 to 1.",
+          "alt": "A ticket labeled Who it is for: For businesses in Gainesville and Alachua County. A Gainesville team running your Facebook and Instagram. Only 3 spots: call or message us, Alex picks the 3 best fits. The stub shows spots 1, 2 and 3 open.",
           "platforms": null
         },
         {
-          "src": "media/2026-09-29-3/slide-04.jpg",
+          "src": "media/2026-09-28-4/slide-04.jpg",
           "role": "image",
-          "alt": "Fix 3 of 5: Check white text on your brand buttons. Before card: a white Book a visit label on a bright green #22C55E button, 2.27 to 1, fails 4.5 to 1. After card: the same label on a darker green #15803D, 5.01 to 1, passes.",
+          "alt": "A ticket labeled Your part. What we ask in return: approve each month's plan within 2 business days. Add us as a manager in Meta so we can post. Send real photos or footage when we ask. Let us share your results as a case study, and a short review if you are happy. An honest check-in at the end of month 3.",
           "platforms": null
         },
         {
-          "src": "media/2026-09-29-3/slide-05.jpg",
+          "src": "media/2026-09-28-4/slide-05.jpg",
           "role": "image",
-          "alt": "Fix 4 of 5: Stop using placeholder text as the label. Before card: an email field whose only label is light gray #C4C4C4 placeholder text on white, 1.74 to 1, fails. After card: a visible Email address label in dark ink above the field at 16.86 to 1, and placeholder text in #6B6B6B at 5.32 to 1, passes.",
+          "alt": "A ticket labeled After 3 months. Then you decide. $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.",
           "platforms": null
         },
         {
-          "src": "media/2026-09-29-3/slide-06.jpg",
+          "src": "media/2026-09-28-4/slide-06.jpg",
           "role": "image",
-          "alt": "Fix 5 of 5: Underline your links. Before card: a dark teal #134E4A link inside near black #221C15 text with no underline, only 1.78 to 1 between link and text, fails WCAG 1.4.1 use of color. After card: the same link underlined, 9.47 to 1 against white, passes.",
+          "alt": "A ticket labeled The fine print. What it is not: no paid ads, ad spend is not included. No promised numbers, we do not promise followers or sales. Your inbox stays yours, you keep replying to comments and DMs.",
           "platforms": null
         },
         {
-          "src": "media/2026-09-29-3/slide-07.jpg",
+          "src": "media/2026-09-28-4/slide-07.jpg",
           "role": "image",
-          "alt": "Recap of all five fixes, each clearing 4.5 to 1: gray text 7.62, photo scrim 5.55, button 5.01, placeholder 5.32, link 9.47. We check this on every site we build. ka-performancefl.com. Call Alex 904-210-1071.",
-          "platforms": null
-        }
-      ]
-    },
-    {
-      "id": "2026-09-30-3",
-      "date": "2026-09-30",
-      "weekday": "Wed",
-      "time": "08:00",
-      "kind": "linkedin",
-      "status": "ready",
-      "pillar": "training",
-      "title": "LinkedIn: Quiz questions that measure something",
-      "hook": "If everyone passes your quiz, it measured nothing.",
-      "networks": [
-        "linkedin"
-      ],
-      "facebook": "",
-      "instagram": "",
-      "firstComment": "",
-      "linkedin": "If everyone passes your quiz, it measured nothing.\n\nA quiz that everyone aces tells you people can read. It does not tell you whether they can do the job, and that is the whole reason the assessment exists.\n\nFive fixes we use on every course, each shown in this document as a weak and a strong example question:\n\n1. Test what they would do, not what they can recite. Put the learner in a scenario and ask for the next move.\n2. Make every wrong answer tempting to someone. A distractor nobody picks is a free point.\n3. Retire \"All of the above.\" It rewards guessing, not knowing.\n4. Ask it straight. Trick negatives test reading, not judgment.\n5. Write feedback that teaches the why. \"Incorrect, the answer is B\" is a missed lesson.\n\nThe example questions are ours, written for a customer service course.\n\nThe takeaway: take one recall question from your current quiz and rewrite it as a short scenario with a decision at the end. Then give each wrong answer feedback that explains why it is wrong.\n\nWe design and build training content, from full courses and short modules to assessments and job aids, delivered into your own LMS. Free sample courses are on our site.\n\n#InstructionalDesign #LearningAndDevelopment #eLearning",
-      "linkedinComment": "Try the free sample courses: https://ka-performancefl.com/training/samples/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-30-3",
-      "repost": "A quiz everyone passes looks great on a completion report and tells you almost nothing about the job. If you only try one of these, try fix 5: feedback that explains the why.",
-      "questions": [],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": null,
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-09-30-3/slide-01.jpg",
-          "role": "image",
-          "alt": "Lined exam paper with a score of 100 percent circled in red pen. Headline: If everyone passes your quiz, it measured nothing. Five fixes for quiz questions that measure something, with weak vs strong examples.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-30-3/slide-02.jpg",
-          "role": "image",
-          "alt": "Fix 1 of 5, recall vs application: test what they would do, not what they can recite. Weak example: What is the first step of our complaint process? Strong example: a customer with a damaged order cuts you off mid policy; the highlighted answer is stop, let them finish, and restate what happened.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-30-3/slide-03.jpg",
-          "role": "image",
-          "alt": "Fix 2 of 5, distractors: every wrong answer should tempt someone. Weak example: how to greet a customer, with joke options like Ignore them crossed out in red. Strong example: you are on a call when someone walks up; the highlighted answer is make eye contact and signal you will be right there.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-30-3/slide-04.jpg",
-          "role": "image",
-          "alt": "Fix 3 of 5: retire All of the above. Weak example: Good customer service includes, with All of the above circled as guessable. Strong example: a refund is a week late; the highlighted reply apologizes, says it is flagged, and promises an email update by Friday.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-30-3/slide-05.jpg",
-          "role": "image",
-          "alt": "Fix 4 of 5: ask it straight, no trick negatives. Weak example: a double negative question with NOT and avoid circled in red. Strong example: an upset customer raises their voice; the highlighted answer is I can hear this has been frustrating, let's sort it out.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-30-3/slide-06.jpg",
-          "role": "image",
-          "alt": "Fix 5 of 5: feedback should teach, not just grade. Weak example feedback: Incorrect, the correct answer is B. Strong example feedback explains that calm down can sound like their feelings are the problem, and that naming the frustration first shows you heard them.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-09-30-3/slide-07.jpg",
-          "role": "image",
-          "alt": "We build training people finish. Scenario questions, real distractors, and feedback that teaches. See the samples at ka-performancefl.com/training or call Alex at 904-210-1071.",
-          "platforms": null
-        }
-      ]
-    },
-    {
-      "id": "2026-10-01-3",
-      "date": "2026-10-01",
-      "weekday": "Thu",
-      "time": "08:00",
-      "kind": "linkedin",
-      "status": "ready",
-      "pillar": "ai-launch",
-      "title": "LinkedIn: The four-line brief. Save this.",
-      "hook": "Copy this before your next AI request.",
-      "networks": [
-        "linkedin"
-      ],
-      "facebook": "",
-      "instagram": "",
-      "firstComment": "",
-      "linkedin": "Copy this before your next AI request.\n\nWhen a first draft from an AI tool misses, the request is usually one line long, and the tool fills every gap with average. Four lines above the request close those gaps:\n\n1. Who it is for. Name the reader and what is on their mind.\n2. What good looks like. Length, tone, and the one thing the reader should do.\n3. What to avoid. List what would make you delete the draft.\n4. The format you want. Ask for the shape, and it arrives ready to use.\n\nThis document walks through a worked example of each line, a spring email for a fictional lawn care company, then puts all four on one fill-in-the-blank card you can save. It works in any AI tool.\n\nThe takeaway: before your next request, write one sentence for each of the four lines. The reader and the limits matter most, because the tool cannot guess them.\n\nPutting AI to work inside a business is part of what we do, alongside web design, local search, and training. Our free AI lessons teach practical habits like this one.\n\n#AI #SmallBusiness #Productivity",
-      "linkedinComment": "Free AI lessons: https://ka-performancefl.com/training/ai/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-01-3",
-      "repost": "\"What to avoid\" is the line I never skip. One sentence of limits saves me more rewriting than anything else I put in a request.",
-      "questions": [],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": null,
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-10-01-3/slide-01.jpg",
-          "role": "image",
-          "alt": "K&A Performance slide on a cream background: Copy this before your next AI prompt. An index card below lists four numbered lines: who it is for, what good looks like, what to avoid, the format you want. Save this post. Swipe for line 1.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-10-01-3/slide-02.jpg",
-          "role": "image",
-          "alt": "Big rust numeral 1: Who it is for. Name the reader and what is on their mind. Example index card for a fictional lawn care company's spring email reads: For: past customers who booked a spring cleanup last year, busy homeowners reading on their phone. Why it matters: the reader sets the tone, the length, and what to leave out.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-10-01-3/slide-03.jpg",
-          "role": "image",
-          "alt": "Big rust numeral 2: What good looks like. Describe done, or you get average. Example card reads: Good looks like: under 120 words, one ask, book a spring cleanup online, sounds like the owner, not an ad. Why it matters: the AI cannot read your standards, so say them once.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-10-01-3/slide-04.jpg",
-          "role": "image",
-          "alt": "Big rust numeral 3: What to avoid. List what would make you delete the draft. Example card reads: Avoid: no discount codes, no exclamation points, do not promise dates because the schedule fills up. Why it matters: one line of limits saves you three rounds of edits.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-10-01-3/slide-05.jpg",
-          "role": "image",
-          "alt": "Big rust numeral 4: The format you want. Ask for the shape, and it arrives ready to use. Example card reads: Format: a subject line under 50 characters, three short paragraphs, the booking link on its own line. Why it matters: ready to paste means ready to send.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-10-01-3/slide-06.jpg",
-          "role": "image",
-          "alt": "Screenshot this: the four-line brief as a fill-in-the-blank index card. Task: the job, in one line. Then four blanks: For, who it is for and what is on their mind. Good looks like, length, tone, the one thing they should do. Avoid, what would make you delete the draft. Format, the shape you want back.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-10-01-3/slide-07.jpg",
-          "role": "image",
-          "alt": "Free AI lessons for Gainesville businesses at ka-performancefl.com/training/ai. Call Alex 904-210-1071. K&A Performance builds websites, local search, training, and AI integration that save you time. K&A Performance logo.",
-          "platforms": null
-        }
-      ]
-    },
-    {
-      "id": "2026-10-02-3",
-      "date": "2026-10-02",
-      "weekday": "Fri",
-      "time": "08:00",
-      "kind": "linkedin",
-      "status": "ready",
-      "pillar": "client-spotlight",
-      "title": "LinkedIn: Thrillers Mobile VR website launch",
-      "hook": "No venue. No gear. The arcade pulls up to your driveway.",
-      "networks": [
-        "linkedin"
-      ],
-      "facebook": "",
-      "instagram": "",
-      "firstComment": "",
-      "linkedin": "No venue. No gear. The arcade pulls up to your driveway.\n\nWe just launched the website for Thrillers Mobile VR, a veteran and family owned virtual reality trailer out of Middleburg, Florida.\n\nA business like this sells an experience many people have not tried yet, so the site has to do the selling before the trailer arrives. On the new site you see the whole lineup on one page, pick one of four rides, from VR Rides to a racecar rig, and send a booking request for your date from your phone. Every request lands straight in their inbox.\n\nThe trailer is climate-controlled, so birthdays, school events, and festivals go ahead rain or shine. See it at thrillersvr.com.\n\nThe takeaway for any business that travels to its customers: put the booking request on the same page as the thing people want to book. Every extra step between \"that looks fun\" and \"send\" is a place to lose them.\n\nEverything in the video is the real site. The music is AI generated.\n\nWe design and build websites for Florida businesses, with local search built in. Your launch could be next.\n\n#WebDesign #SmallBusiness #Florida",
-      "linkedinComment": "See how we build websites: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-02-3",
-      "repost": "What I like most on this one: you can pick a ride and send a booking request from your phone, and it goes straight to the owners' inbox. Congratulations to the Thrillers Mobile VR team on the launch.",
-      "questions": [
-        "Hold until thrillersvr.com serves the new site (checked 2026-09-25: still the old Wix site).",
-        "Can we tag the Thrillers Mobile VR company page on LinkedIn, if they have one?",
-        "The reel's music repeats the same day on LinkedIn; validate would flag it, so this folder names no track. OK to treat it as one use?"
-      ],
-      "ai": {
-        "voice": false,
-        "visuals": false
-      },
-      "music": "music-w0928-6",
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-10-02-3/reel-vertical.mp4",
-          "role": "video",
-          "alt": "Fast cut reel inside a K&A Performance frame, with the K&A logo and ka-performancefl.com at the top and Built by K&A Performance at the bottom of every frame. A phone plays the real Thrillers Mobile VR website: the home page under the hook No venue. No gear. The arcade pulls up to your driveway., then the four rides on the experiences page, then the booking request form. It ends on Your launch could be next., the K&A logo, ka-performancefl.com and Call Alex, 904-210-1071.",
-          "platforms": null
-        },
-        {
-          "src": "media/2026-10-02-3/thumbnail.jpg",
-          "role": "thumbnail",
-          "alt": "K&A Performance logo and ka-performancefl.com above a phone showing the Thrillers Mobile VR home page, with the words Just launched, Thrillers Mobile VR, Built by K&A, Your launch could be next, and ka-performancefl.com",
+          "alt": "A dark teal ticket labeled How to claim. Claim one of 3 spots. Call Alex, 904-210-1071, or message K&A Performance on Facebook or Instagram. Alex picks the 3 best fits. No contract. No card. The stub shows spots 1, 2 and 3 open. K&A Performance logo and ka-performancefl.com at the top.",
           "platforms": null
         }
       ]
     }
   ],
   "stories": [],
-  "asks": [
-    {
-      "id": "ai-link",
-      "title": "Where should \"free AI lessons\" send people?",
-      "detail": "Thursday (reel, carousel, LinkedIn) and Sunday point \"Free AI lessons\" at ka-performancefl.com/training/ai. That page is lessons for building with AI coding tools (Codex, first build orientation), not everyday business use like writing emails or planning a week. Options: keep /training/ai; switch to /ai-launch/ (the 90-Day AI Launch page for business owners, but it is a paid program, so the wording would change from \"free lessons\" to something like \"how we set up AI in a business\"); or add a beginner lesson to /training/ai later. Thursday is already a Metricool draft; switching means I update its caption.",
-      "placeholder": "Keep /training/ai / switch to /ai-launch/ / other"
-    },
-    {
-      "id": "linkedin-connect",
-      "title": "Connect the K&A LinkedIn company page to Metricool",
-      "detail": "The eight LinkedIn posts go on the K&A company page and you repost them from your profile. In Metricool: Brand settings > Connect LinkedIn > choose the K&A company page (not your personal profile). Until it is connected, nothing can be scheduled there. Paste the company page URL here too.",
-      "placeholder": "Connected. Page URL: https://www.linkedin.com/company/..."
-    },
-    {
-      "id": "tonight-live",
-      "title": "Tonight's posts: schedule live or as drafts?",
-      "detail": "Tonight's carousel (6:30 PM) and LinkedIn post (7:00 PM) go out today. As drafts you would need to preview and promote them in Metricool before they post. Live means approving here is the last step.",
-      "placeholder": "Live / drafts"
-    },
-    {
-      "id": "site-phone",
-      "title": "Phone number and hours on ka-performancefl.com?",
-      "detail": "Every post says 'Call Alex 904-210-1071', but the website has no tap-to-call link and no hours (the site was built without a public phone number on purpose). Saturday's phone-test post tells people to check exactly those two things. Want a tap-to-call link (and hours, if you keep set hours) added to the site header or footer?",
-      "placeholder": "Yes add tap-to-call / add hours: ... / leave the site as is"
-    }
-  ]
+  "asks": []
 }

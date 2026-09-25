@@ -991,3 +991,29 @@ or mid silence, first second 1.8 dB above the mean, no clipping, clean ring-out
 ending. Its AAC true peak came out at -0.3 dBTP, so the bed was premastered
 (-2 dB, peak limiter) to `out/social/music-w0925-sat/mastered/music-w0925-sat.wav`.
 The slide video measures -14.4 LUFS integrated, -1.1 dBTP.
+
+## Saturday 2026-09-26 social pilot announcement music, 2026-09-25
+
+One new bed, `music-w0926-pilot`, for the Facebook slide video of the Saturday
+2026-09-26 12:00 PM carousel announcing the free social media pilot
+("Free social media management for 3 Gainesville businesses", folder
+`2026-09-26-4`). Same ElevenLabs account and Pro plan as everything above, so
+the Music rights and the 2026-09-04 commercial use confirmation cover it. No
+text to speech was generated. Generator: `scripts/social/2026-09-26-4/music.ts`
+(a copy of `music-w0925-sun.ts`; imports `scripts/audio.ts` read-only and runs
+the checks in `music-week-0928.ts`). The generation is logged in
+`config/audio.json` under `set: "social-w0926-pilot"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w0926-pilot`, upbeat, warm and welcoming, chiming twelve string electric riff, palm muted rhythm guitar, warm organ, about 112 bpm (asked for 32s, returned 50s) | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags: zero words transcribed | scribe_v2 | 1 | 23 |
+| **Set total** | | **2** | **898** |
+
+The figures are before-and-after deltas on the usage endpoint; other agents
+were generating in the same window, so read them as upper bounds. The take
+(`assets/audio/raw/music-w0926-pilot-32s.mp3`, copied to
+`out/candidates/music-w0926-pilot.mp3`) passed every check: no leading or mid
+silence, first second 1.5 dB above the mean, no clipping, clean ring-out
+ending. The slide video uses its first 22 seconds with a 1.2s fade out and
+measures -14.2 LUFS integrated, -1.6 dBTP.

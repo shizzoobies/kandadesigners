@@ -1,0 +1,1 @@
+We're taking on 3 Gainesville and Alachua County businesses for a free 3-month social media pilot, and I'm picking the best fits myself. If that sounds like your business or someone you know, call me at 904-210-1071.
