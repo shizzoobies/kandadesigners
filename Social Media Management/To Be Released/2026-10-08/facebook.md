@@ -1,0 +1,21 @@
+AI drafts. You decide.
+Put AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08
+
+We asked an AI model to reply to a customer of a bike repair shop. The customer asked if a 20% off deal applied and whether the bike could be ready by Friday for a race.
+
+The first draft read well. It also said yes to a deal that had already ended, and promised Friday, which nobody at the shop can promise. The AI had no way to know either one.
+
+So a person made three edits before it went out:
+1. Tone: a real thanks and a real name, not a placeholder.
+2. Fact: the deal ended in September.
+3. Promise: tune-ups take 3 to 5 business days, so no promise of Friday.
+
+That is the habit: let AI write the first draft, and keep the facts, the promises, and the send button for yourself.
+
+The draft in the video is the model's real, unedited output, quoted word for word. The shop, Dana, and Luis are a fictional example.
+
+Want help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08
+
+The music is AI generated.
+
+#GainesvilleFL #AI #SmallBusiness

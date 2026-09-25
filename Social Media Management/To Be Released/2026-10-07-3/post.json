@@ -1,0 +1,70 @@
+{
+  "id": "2026-10-07-3",
+  "date": "2026-10-07",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "training",
+  "title": "LinkedIn: Course, job aid, or neither? A 5-question test",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "Course, job aid, or neither? A 5-question test"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on cream: A 5-question test for any training request. Course, job aid, or neither? A dark teal wayfinding sign with three directions: Teach it, practice it, arrow left to Course. Hand it to them at the task, arrow right to Job aid. Training won't fix it, arrow up to Neither. Answer five questions about the task; each answer points one way. Swipe for question 1."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 1 of 5: How often do they do it? Sign: Rarely, once a month, once a quarter, points to Job aid. Every day, many times a shift, points to Course. Note: What people rarely do, they rarely remember. What they do daily is worth practicing until it is automatic."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 2 of 5: Is it done at a desk, or on the job with no time to look? Sign: At a desk, or on the job with a moment to check, points to Job aid. Hands busy, customer waiting, no pause, points to Course. Note: A job aid only works if they can glance at it while they work."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 3 of 5: Does it change often? Sign: Yes, prices, forms, software, rules, points to Job aid. No, it holds for years, points to Course. Note: When it changes, you update one page instead of retraining everyone."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 4 of 5: Is the risk of a mistake high? Sign: High, and they can check as they go, points to Job aid. High, and there is no time to check, points to Course. Note: High stakes are where a checklist earns its place. With no time to check, they need practice first."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 5 of 5: Do people already know the why? Sign: Yes, they just need the steps, points to Job aid. No, they need the why and the judgment, points to Course. They know how and why, and still don't do it, points to Neither. Note: If they already know it, more training will not help. Fix the process, the tool, or the incentive."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Save this card. A directory sign with columns Job aid and Course: 1 How often? Rarely, or every day. 2 Desk or job? Time to look, or no time to look. 3 Changes often? Yes, or no. 4 Mistake risk high? Yes with time to check, or yes with no time to check. 5 Know the why? Yes, or no. Neither: they know how and why and still don't do it? Fix the process, the tool, or the incentive. Count the answers; the side with more wins. We build courses and job aids. Not sure which it needs? Ask us. ka-performancefl.com/training. Call Alex 904-210-1071."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

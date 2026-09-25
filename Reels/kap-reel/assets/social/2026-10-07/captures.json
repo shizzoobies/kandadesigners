@@ -1,0 +1,59 @@
+{
+  "captures": [
+    {
+      "id": "rfi-checklist",
+      "url": "https://ka-performancefl.com/training-samples/rfi/",
+      "file": "assets/social/2026-10-07/rfi-checklist.png",
+      "cssSize": [
+        394,
+        422
+      ],
+      "scale": 3,
+      "capturedAt": "2026-09-25T18:28:16.040Z"
+    },
+    {
+      "id": "safety-picker",
+      "url": "https://ka-performancefl.com/training-samples/safety/",
+      "file": "assets/social/2026-10-07/safety-picker.png",
+      "cssSize": [
+        398,
+        752
+      ],
+      "scale": 3,
+      "capturedAt": "2026-09-25T18:28:25.381Z"
+    },
+    {
+      "id": "safety-card",
+      "url": "https://ka-performancefl.com/training-samples/safety/",
+      "file": "assets/social/2026-10-07/safety-card.png",
+      "cssSize": [
+        398,
+        423
+      ],
+      "scale": 3,
+      "capturedAt": "2026-09-25T18:28:26.346Z"
+    },
+    {
+      "id": "training-jobaid",
+      "url": "https://ka-performancefl.com/training/",
+      "file": "assets/social/2026-10-07/training-jobaid.png",
+      "cssSize": [
+        388,
+        430
+      ],
+      "scale": 3,
+      "capturedAt": "2026-09-25T18:28:29.007Z"
+    },
+    {
+      "id": "training-micro",
+      "url": "https://ka-performancefl.com/training/",
+      "file": "assets/social/2026-10-07/training-micro.png",
+      "cssSize": [
+        388,
+        430
+      ],
+      "scale": 3,
+      "capturedAt": "2026-09-25T18:28:34.507Z"
+    }
+  ]
+}

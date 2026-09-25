@@ -1,0 +1,70 @@
+{
+  "id": "2026-10-08-3",
+  "date": "2026-10-08",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "ai-launch",
+  "title": "LinkedIn: 3 jobs to hand AI first in a small business",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "3 jobs to hand AI first in a small business"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on cream: 3 jobs to hand AI first in a small business. And the part of each one to keep for yourself. Below, three stacked file folders with tabs: 1 First drafts, 2 Summaries, 3 Sorting and tagging. The front folder reads: Hand AI the first pass. Keep the last word. Swipe for job 1."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Job 1 of 3: First drafts. Fixing a draft is easier than facing a blank page. A sheet sliding out of a folder, labeled Hand it to AI: replies to customer emails, social posts and product descriptions, the first version of a page or a flyer. The folder front, labeled Keep for yourself: the facts (prices, dates, what is included), any promise about when or what, the final read and the send button."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Job 2 of 3: Summaries. Read the short version, then decide where to look. Hand it to AI: a long email thread before you reply, notes from a call or a meeting, a month of reviews grouped by theme. Keep for yourself: the decision, because a summary says what was said, not what to do; the original, open, for anything about money, contracts or health; names and numbers, checked against the source."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Job 3 of 3: Sorting and tagging. It is the same small call, made over and over. Hand it to AI: inbox triage into quote requests, questions and invoices; tagging customer questions by topic; labeling receipts by expense category. Keep for yourself: the categories, you decide what the buckets are; a spot check every week; anyone upset, a person answers that."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Why start with these three? 1. They come back every week. A job you do once a year is not where to start. 2. You can check the work at a glance. A draft, a summary or a tag takes a quick read to verify. 3. A miss gets caught before a customer sees it. You are the last step, so a mistake stays on your desk."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Save this. Hand AI the first pass. Keep the last word. A table with three columns, job, AI does, you keep: First drafts, the first version, facts, promises and the send button. Summaries, the short version, the decision and the original. Sorting and tagging, the first sort, the categories, spot checks and upset customers."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Put AI to work in your business. Start with the job that eats your week. The 90-Day AI Launch: twelve weeks, one on one with Alex. We find that job, build the workflow with you on your real work, and hand you the controls. ka-performancefl.com/ai-launch. Or call Alex 904-210-1071. K&A Performance, web design, local search, training and AI integration, Gainesville, FL."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

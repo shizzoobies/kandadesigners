@@ -1,0 +1,70 @@
+{
+  "id": "2026-10-09-3",
+  "date": "2026-10-09",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "behind-the-scenes",
+  "title": "LinkedIn: How we plan a week of posts",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "How we plan a week of posts, in 5 steps"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on cream: Every post we publish gets approved twice. Here's how we plan a week of our own posts, in five steps. A route of five stops, Plan, Brief, Build, Approve, Schedule, with Approval 1 flagged at Plan and Approval 2 at Approve. Two cards stamped Approved: 1. The plan, Alex approves it before anything is made. 2. Every post, Alex approves it before it is scheduled."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 1 of 5, Approval 1: Plan the week. Every slot gets a topic, a format and a time. Alex marks each one run, change or drop, and nothing is made until the plan says approved. Below, a sample week plan window: Monday to Friday slots, each marked run, Wednesday marked change, and Approved: yes with an Approved stamp."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 2 of 5: Write a brief for every post. What the viewer gets, the hook, each slide, where every fact comes from, and any question Alex needs to answer. Below, a sample brief window with those rows and a highlighted question for Alex."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 3 of 5: Build every version. One idea becomes a reel, a swipe carousel and a LinkedIn document, each with its own caption. Below, K&A's own contrast post as a reel on a phone, a stack of carousel slides and a LinkedIn document page, with checks: logo and web address on every frame, works with the sound off."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 4 of 5, Approval 2: Alex approves every post. One page, our Post Desk, shows every finished post and caption; he taps Approve, or asks for changes. Below, the Post Desk page with sample posts only: a list of sample posts by day with their status, one sample carousel open with its slides, captions, a sample question, and Request changes and Approve buttons."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 5 of 5: Schedule it. Then check what worked. Approved posts go on the calendar at set times. Once a week we read the results, and the next plan starts there. Below, a sample week calendar with LinkedIn at 8 AM, a reel at 10:30 and a carousel at 4 PM each weekday, and a weekly results card: reach, engagement, clicks to the site, what worked shapes next week's plan."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "This is how we run it for pilot businesses: you approve the month's plan once, we check every post before it goes out, and a short results report every month. 3 free months for 3 Gainesville businesses. Call Alex 904-210-1071 or message K&A Performance on Facebook or Instagram. ka-performancefl.com."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

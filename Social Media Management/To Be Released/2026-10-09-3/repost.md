@@ -1,0 +1,1 @@
+The step I would not skip is the plan. When the week is agreed before anything is made, checking the finished posts is quick. For our three pilot businesses in Gainesville it works the same way: they approve the month's plan once, and we check every post before it goes out.

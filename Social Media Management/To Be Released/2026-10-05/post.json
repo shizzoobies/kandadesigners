@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-05",
+  "date": "2026-10-05",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "5 Google Business Profile settings most businesses forget",
+  "platforms": {
+    "facebook": { "type": "REEL", "caption": "facebook.md" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" }
+  },
+  "media": [
+    { "file": "media/reel-vertical.mp4", "role": "video", "origin": "kap-reel", "alt": "Text-led reel: Your Google profile has 5 settings most businesses forget. A dark teal route map with five rust pins, then one stop at a time: the most specific primary category, shown on K&A's own profile as Website designer; hours plus holiday hours before November, with K&A's real weekly hours; services, drawn from Google's plumbing example; fresh photos by type; replying to reviews. Ends on Local search is part of every site we build, ka-performancefl.com/services/seo-ai-search, Call Alex 904-210-1071. K&A logo and ka-performancefl.com on every frame." },
+    { "file": "media/reel-vertical.srt", "role": "captions", "origin": "kap-reel" },
+    { "file": "media/thumbnail.jpg", "role": "thumbnail", "origin": "kap-reel", "alt": "K&A Performance logo and ka-performancefl.com above the headline Your Google profile has 5 settings most businesses forget, and a dark teal route map with five numbered pins: primary category, hours, services, fresh photos, review replies." }
+  ],
+  "ai": { "voice": false, "visuals": false },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1005-r"
+}

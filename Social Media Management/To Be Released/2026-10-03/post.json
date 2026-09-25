@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-03",
+  "date": "2026-10-03",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Tab through your website",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide: Put your mouse away. Can you still reach us? A real screenshot of ka-performancefl.com after one press of Tab shows a Skip to content link with a rust focus outline. Keycaps for Tab, Enter and Esc. 5 keyboard checks to run on your own website. Three keys, no mouse.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 1 of 5: Tab reaches every link and button. A real screenshot of the K&A home page header with numbered Tab stops 3 to 9 under Home, Services, Mentorship, Training, Artists, the phone number and Start a project, which has the focus outline. 0 links or buttons skipped: we tabbed 7 pages of our site end to end, at desktop and at phone width. Do it now: click the address bar, then press Tab again and again; every link and button gets a turn. Failing looks like: Tab skips your Book or Call button, or jumps from the menu to the footer. Why it costs customers: if Tab can't reach the button, that customer can't book, call or buy.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 2 of 5: You can always see where you are. A real screenshot of the K&A accessibility page FAQ with a rust outline around the focused question, Will an overlay or accessibility plugin fix this? Do it now: watch for an outline on whatever Tab just reached, and check every stop, not just the first. Failing looks like: no outline, one too faint to see, or the item hides under a sticky header. Why it costs customers: without it, a keyboard user is guessing, and presses Enter on the wrong thing.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 3 of 5: The menu opens from the keyboard. Keycaps Tab then Enter. Two real screenshots of the K&A site at phone width: first the menu button with a focus outline, then the open menu, with a close button in the header and the outline on Home. Do it now: narrow your browser to phone width, Tab to the menu button and press Enter. Failing looks like: it only opens on a tap or hover, or it opens and Tab skips past its links. Why it costs customers: zoomed-in screens get this menu; if it won't open, every page behind it is out of reach.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 4 of 5: Forms submit with Enter. A real screenshot of the K&A contact form with test@example.com typed in the email field, which has the focus outline, above the Send message button. Enter sends it; this was a test run and nothing was sent. Do it now: fill in your contact or booking form by keyboard, then press Enter in a one-line field. Failing looks like: nothing happens, or Send is a styled box the keyboard can't press. Why it costs customers: that form is the lead itself; if it can't be sent, the inquiry never arrives.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 5 of 5: Nothing traps you. Esc keycap. A real screenshot of the K&A Start a project window opened from the keyboard, with the focus outline on its close button. Esc closes it and returns focus. Do it now: open each pop-up, chat or embedded video by keyboard, then press Esc or Tab onward. Failing looks like: focus gets stuck in a pop-up or widget, and the only way out is closing the tab. Why it costs customers: a stuck visitor doesn't finish booking; they close the tab and call someone else.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "We build every site to work without a mouse. Our own site passes all five, retested on the live site. Keycaps Tab, Enter and Esc over the five checks, each marked Pass: Tab reaches every link and button; you can always see where you are; the menu opens from the keyboard; forms submit with Enter; nothing traps you. ka-performancefl.com/services/accessibility/. Call Alex 904-210-1071. K&A Performance logo.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance slide: Put your mouse away / Check 1 of 5: Tab reaches every link and button / Check 2 of 5: You can always see where you are / Check 3 of 5: The menu opens from the keyboard / Check 4 of 5: Forms submit with Enter / Check 5 of 5: Nothing traps you / We build every site to work without a mouse"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide: Put your mouse away. Can you still reach us? A real screenshot of ka-performancefl.com after one press of Tab shows a Skip to content link with a rust focus outline. Keycaps for Tab, Enter and Esc. 5 keyboard checks to run on your own website. Three keys, no mouse."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1003"
+}

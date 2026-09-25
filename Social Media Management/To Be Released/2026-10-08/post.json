@@ -1,0 +1,49 @@
+{
+  "id": "2026-10-08",
+  "date": "2026-10-08",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "ai-launch",
+  "title": "AI drafts, you decide",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel on a white document titled Reply to Dana, labeled Example: a bike repair shop, with the K&A Performance logo and ka-performancefl.com at the top and the 90-Day AI Launch address, ka-performancefl.com/ai-launch, at the bottom of every frame. Hook: AI drafts. You decide. The customer asks: Can you promise it will be ready by Friday? The sentences of the AI's first draft that get edited appear word for word, cuts marked with ellipses, then a person's three edits play as tracked changes, struck AI words and added human words. Edit 1, tone: a generic thanks and the [Your Name] placeholder become a personal thanks and the owner's name. Edit 2, fact: the AI said a 20% off deal applies; the person notes the deal ended in September. Edit 3, promise: the AI promised the bike by Friday; the person writes that tune-ups take 3 to 5 business days, so they can't promise Friday. Rule: make it sound like you, check every fact, cut promises you can't keep. Ends on Put AI to work in your business, the 90-Day AI Launch, ka-performancefl.com/ai-launch, or call Alex 904-210-1071."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "White document titled Reply to Dana, Example: a bike repair shop, under the K&A Performance logo and ka-performancefl.com. Huge type: AI drafts. You decide. Below: One real AI first draft of a customer reply, and the three edits a person made. Rust strip at the bottom: The 90-Day AI Launch, ka-performancefl.com/ai-launch."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1008-r"
+}

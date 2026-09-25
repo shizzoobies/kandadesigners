@@ -1017,3 +1017,187 @@ were generating in the same window, so read them as upper bounds. The take
 silence, first second 1.5 dB above the mean, no clipping, clean ring-out
 ending. The slide video uses its first 22 seconds with a 1.2s fade out and
 measures -14.2 LUFS integrated, -1.6 dBTP.
+
+## Sunday 2026-10-04 "What a month of posts looks like" music, 2026-09-25
+
+One new bed, `music-w1004`, for the Facebook slide video of the Sunday
+2026-10-04 6:00 PM carousel ("What a month of posts looks like", folder
+`2026-10-04`). Same ElevenLabs account and Pro plan as everything above, so
+the Music rights and the 2026-09-04 commercial use confirmation cover it. No
+text to speech was generated. Generator: `scripts/social/2026-10-04/music.ts`
+(a copy of `scripts/social/2026-09-26-4/music.ts`; imports `scripts/audio.ts`
+read-only and runs the checks in `music-week-0928.ts`). The generation is
+logged in `config/audio.json` under `set: "social-w1004"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w1004`, mellow Sunday evening, warm steel string acoustic melody in a swaying 6/8, soft Wurlitzer electric piano, brushed snare, about 84 bpm | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags: zero words transcribed | scribe_v2 | 1 | 15 |
+| **Set total** | | **2** | **890** |
+
+The figures are before-and-after deltas on the usage endpoint; other agents
+were generating in the same window, so read them as upper bounds. The take
+(`assets/audio/raw/music-w1004-32s.mp3`, copied to
+`out/candidates/music-w1004.mp3`) passed every check: no leading or mid
+silence, first second 2.8 dB above the mean, no clipping, clean ring-out
+ending. The slide video uses its first 22 seconds with a 1.2s fade out and
+measures -14.1 LUFS integrated, -1.5 dBTP.
+
+## Thursday 2026-10-08 music (AI day), 2026-09-25
+
+Two new beds for Thu 2026-10-08: `music-w1008-r` for the 10:30 AM reel "AI
+drafts, you decide" (folder `2026-10-08`) and `music-w1008-c` for the 6:00 PM
+carousel slide video "3 jobs to hand AI first in a small business" (folder
+`2026-10-08-2`). Same ElevenLabs account and Pro plan as everything above, so
+the Music rights and the 2026-09-04 commercial use confirmation cover them. No
+text to speech was generated. Generator: `scripts/social/2026-10-08/music.ts`
+(imports `scripts/audio.ts` read-only and runs the checks in
+`music-week-0928.ts`). Both generations are logged in `config/audio.json` under
+`set: "social-w1008"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w1008-r`, curious and light, pizzicato strings, clean electric guitar melody, upright bass, about 98 bpm (asked for 32s, returned 50s) | music_v2 | 1 | 875 |
+| `music-w1008-c`, soft synth-pop with guitar, analog pads, strummed acoustic, clean electric lead phrases, about 94 bpm | music_v2 | 1 | 1,773 |
+| Vocal check, speech to text with audio event tags, both takes: zero words transcribed | scribe_v2 | 2 | 76 |
+| **Set total** | | **4** | **2,724** |
+
+The figures are before-and-after deltas on the usage endpoint; other agents
+were generating in the same window (the 1,773 for `music-w1008-c` almost
+certainly includes another agent's call), so read them as upper bounds. Both
+takes passed every check: no leading or mid silence, first second within 6 dB
+of the mean, no clipping, clean ring-out ending. Delivered: the reel mix
+measures -13.9 LUFS integrated, -1.5 dBTP; the slide video -14.1 LUFS, -1.7 dBTP.
+
+## Tuesday 2026-10-06 social music, 2026-09-25
+
+Two new beds for the week of Oct 5 plan (`plans/2026-10-05.md` in Social Media
+Management), Tuesday, web design day: `music-w1006-r` for the reel (folder
+`2026-10-06`, "Your hero is a promise, not a photo") and `music-w1006-c` for the
+carousel's Facebook slide video (folder `2026-10-06-2`, "Above the fold"). Same
+ElevenLabs account and Pro plan as everything above, so the Music rights and the
+2026-09-04 commercial use confirmation cover them. No text to speech was
+generated. Generator: `scripts/social/2026-10-06/music.ts` (a copy of
+`scripts/social/2026-09-26-4/music.ts`; imports `scripts/audio.ts` read-only and
+runs the checks in `music-week-0928.ts`). Logged in `config/audio.json` under
+`set: "social-w1006"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w1006-r`, funky clean guitar, upbeat: sixteenth note scratch rhythm, bluesy double stop hook, round bass, about 106 bpm (asked for 32s, returned 50s) | music_v2 | 1 | 875 |
+| `music-w1006-c`, airy, bright, light percussion: open tuned acoustic with harmonics, kalimba, shaker, rim clicks, soft cajon, about 98 bpm (asked for 32s, returned 50s) | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags, both takes: zero words transcribed | scribe_v2 | 2 | 46 |
+| **Set total** | | **4** | **1,796** |
+
+The figures are before-and-after deltas on the usage endpoint; other agents
+were generating in the same window, so read them as upper bounds. Both takes
+passed every check: no leading or mid silence, first second within 6 dB of the
+mean, no clipping, clean ring-out ending. Delivered: the reel measures -14.3 LUFS
+integrated, -1.4 dBTP; the slide video -14.0 LUFS, -1.5 dBTP.
+
+## Friday 2026-10-09 behind the scenes music, 2026-09-25
+
+Two new beds for Fri 2026-10-09, "How we plan a week of posts": `music-w1009-r`
+for the 10:30 AM reel (folder `2026-10-09`) and `music-w1009-c` for the 4:00 PM
+carousel slide video (folder `2026-10-09-2`). Same ElevenLabs account and Pro
+plan as everything above, so the Music rights and the 2026-09-04 commercial use
+confirmation cover them. No text to speech was generated. Generator:
+`scripts/social/2026-10-09/music.ts` (a copy of `scripts/social/2026-10-08/music.ts`;
+imports `scripts/audio.ts` read-only and runs the checks in `music-week-0928.ts`).
+Both generations are logged in `config/audio.json` under `set: "social-w1009"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w1009-r`, upbeat happy Friday, surf-tinged clean electric riff with spring reverb, acoustic strums, upright piano stabs, handclaps, about 122 bpm | music_v2 | 1 | 875 |
+| `music-w1009-c`, groovy, round melodic bass with octave jumps, bright clean guitar hook with light phaser, congas, about 108 bpm | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags, both tracks: zero words transcribed | scribe_v2 | 2 | 30 |
+| **Set total** | | **4** | **1,780** |
+
+The figures are before-and-after deltas on the usage endpoint; other agents
+were generating in the same window, so read them as upper bounds. Both takes
+passed every check on the first try (32.04s, no leading or mid silence, no
+clipping, clean ring-out endings). The reel measures -14.0 LUFS integrated,
+-2.0 dBTP. The carousel bed's slide video first measured -1.0 dBTP, so it was
+premastered (-3 dB, peak limiter) to
+`out/social/music-w1009/mastered/music-w1009-c.wav`; the slide video measures
+-13.9 LUFS, -1.3 dBTP.
+
+## Wednesday 2026-10-07 training music, 2026-09-25
+
+Two new beds for Wednesday 2026-10-07 (training day): `music-w1007-r` for the
+10:30 AM reel "When a job aid beats a course" (folder `2026-10-07`) and
+`music-w1007-c` for the Facebook slide video of the 4:00 PM carousel "Course,
+job aid, or neither? A 5-question test" (folder `2026-10-07-2`). Same
+ElevenLabs account and Pro plan as everything above, so the Music rights and
+the 2026-09-04 commercial use confirmation cover them. No text to speech was
+generated. Generator: `scripts/social/2026-10-07/music.ts` (a copy of
+`scripts/social/2026-10-06/music.ts`; imports `scripts/audio.ts` read-only and
+runs the checks in `music-week-0928.ts`). The generations are logged in
+`config/audio.json` under `set: "social-w1007"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w1007-r`, calm and focused, Travis picked clean electric guitar, baritone guitar melody, upright bass, brushes, about 90 bpm | music_v2 | 1 | 890 |
+| `music-w1007-c`, warm and gentle, grand piano chords, celesta motif, singing clean electric guitar melody, brushed drums, about 86 bpm | music_v2 | 1 | 875 |
+| Vocal checks, speech to text with audio event tags: zero words transcribed on both | scribe_v2 | 2 | 30 |
+| **Set total** | | **4** | **1,795** |
+
+The figures are before-and-after deltas on the usage endpoint; other agents
+were generating in the same window, so read them as upper bounds. Both takes
+passed every check: no leading or mid silence, no clipping, clean ring-out
+ending. The reel uses the first 19 seconds of `music-w1007-r` with a 1.0s
+fade out and measures -14.0 LUFS integrated, -2.4 dBTP. The slide video uses
+the first 22 seconds of `music-w1007-c` and measures -13.9 LUFS integrated,
+-1.8 dBTP.
+
+## Saturday 2026-10-03 carousel music, 2026-09-25
+
+One new bed, `music-w1003`, for the Facebook slide video of the Saturday
+2026-10-03 carousel "Tab through your website" (folder `2026-10-03`). Same
+ElevenLabs account and Pro plan as everything above, so the Music rights and the
+2026-09-04 commercial use confirmation cover it. No text to speech was
+generated. Generator: `scripts/social/2026-10-03/music.ts` (a copy of
+`scripts/social/music-w0925-sat.ts`; imports `scripts/audio.ts` read-only).
+The generation is logged in `config/audio.json` under `set: "social-w1003"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w1003`, bright Saturday midday, jangly clean electric open-chord arpeggios, answering clean electric melody, tambourine, about 94 bpm | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags: zero words transcribed | scribe_v2 | 1 | 15 |
+| **Set total** | | **2** | **890** |
+
+Credits are before-and-after deltas on the usage endpoint; other agents may have
+been generating in the same window, so read them as upper bounds. Take 1
+(`assets/audio/raw/music-w1003-32s.mp3`, copied to
+`out/candidates/music-w1003.mp3`) passed every check: 32.04s, no leading or mid
+silence, first second within 6 dB of the mean, no clipping, clean ring-out
+ending. The slide video measures -14.0 LUFS integrated, -1.8 dBTP.
+
+## Monday 2026-10-05 reel and carousel music, 2026-09-25
+
+Two new beds for Monday 2026-10-05 (local search): `music-w1005-r` for the 10:30 AM reel
+("5 Google Business Profile settings most businesses forget", folder `2026-10-05`) and
+`music-w1005-c` for the Facebook slide video of the 4:00 PM carousel ("Update these 5
+things on your Google Business Profile this month", folder `2026-10-05-2`). Same ElevenLabs
+account and Pro plan as everything above, so the Music rights and the 2026-09-04 commercial
+use confirmation cover them. No text to speech was generated. Generator:
+`scripts/social/2026-10-05/music.ts` (a copy of `scripts/social/2026-09-25-2/music.ts` with
+two tracks; imports `scripts/audio.ts` read-only). Logged in `config/audio.json` under
+`set: "social-w1005-mon"`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-w1005-r`, steady and confident, melodic fingerstyle electric bass lead, clean chorused guitar double stops, rimshot backbeat, about 88 bpm half time (asked for 32s, returned 50s) | music_v2 | 1 | 921 |
+| `music-w1005-c`, light and optimistic, chiming twelve string acoustic strums, twangy clean electric lead, about 106 bpm | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags, both beds: zero words transcribed | scribe_v2 | 2 | 76 |
+| **Set total** | | **4** | **1,872** |
+
+The figures are before-and-after deltas on the usage endpoint; other agents were
+generating in the same window, so read them as upper bounds. `music-w1005-r` failed only
+the leading silence check (0.67s); its first 0.70s was trimmed with ffmpeg into
+`out/candidates/music-w1005-r.mp3` (mp3 320k, 48 kHz), which then passed every check: no
+leading or mid silence, first second 1 dB above the mean, no clipping, clean ring-out
+ending. The raw take stays at `assets/audio/raw/music-w1005-r-32s.mp3`. `music-w1005-c`
+(`assets/audio/raw/music-w1005-c-32s.mp3`, copied to `out/candidates/music-w1005-c.mp3`)
+passed every check on the first take. Delivered: the reel measures -14.0 LUFS integrated,
+-1.4 dBTP (17.0s); the slide video -14.2 LUFS, -1.9 dBTP (22.0s).

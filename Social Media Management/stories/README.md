@@ -1,4 +1,4 @@
-# Stories, week of Sept 28
+# Stories, weeks of Sept 28 and Oct 5
 
 One Story per day, 1080x1920 PNG, posted the same day as that day's reel on
 Instagram and Facebook. Instagram caption links do not click for business
@@ -24,8 +24,13 @@ The top 250 px and bottom 340 px carry no text, since the app UI covers them.
 | Wed 2026-09-30 | `2026-09-30-story.png` | See the sample courses | https://ka-performancefl.com/training/?utm_source=instagram&utm_medium=story&utm_campaign=2026-09-30 |
 | Thu 2026-10-01 | `2026-10-01-story.png` | See the 90-Day AI Launch | https://ka-performancefl.com/ai-launch/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-01 |
 | Fri 2026-10-02 | `2026-10-02-story.png` | See the site | https://ka-performancefl.com/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-02 |
+| Mon 2026-10-05 | `2026-10-05-story.png` | Check your Google profile | https://ka-performancefl.com/services/seo-ai-search/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-05 |
+| Tue 2026-10-06 | `2026-10-06-story.png` | See what we build | https://ka-performancefl.com/services/web-design/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-06 |
+| Wed 2026-10-07 | `2026-10-07-story.png` | See the sample courses | https://ka-performancefl.com/training/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-07 |
+| Thu 2026-10-08 | `2026-10-08-story.png` | The 90-Day AI Launch | https://ka-performancefl.com/ai-launch/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-08 |
+| Fri 2026-10-09 | `2026-10-09-story.png` | See our work | https://ka-performancefl.com/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-09 |
 
-The / and /training/ URLs returned 200 on 2026-09-25. Thu 10-01 moved from the free AI lessons page to the paid 90-Day AI Launch (/ai-launch/) on 2026-09-25 at Alex's direction.
+The / and /training/ URLs returned 200 on 2026-09-25. All five Oct 5 week sticker URLs returned 200 on 2026-09-25. Fri 10-09 links to the homepage, not the pilot offer: "Claim a pilot spot" is not a link. Thu 10-01 moved from the free AI lessons page to the paid 90-Day AI Launch (/ai-launch/) on 2026-09-25 at Alex's direction.
 
 Fri 10-02 is tentative like its reel: it goes out only when the Thrillers
 domain is live.
@@ -40,5 +45,5 @@ node "D:\K & A Performance Site\Social Media Management\stories\build.mjs"
 ```
 
 Add `--only 2026-10-01` to rebuild one day only. Add `--guides` to also write `frames/<date>-story-guides.png` with the app UI
-zones shaded red. `contact-sheet.png` shows all five side by side.
+zones shaded red. `contact-sheet.png` shows the week of Sept 28 side by side, `contact-sheet-2026-10-05.png` the week of Oct 5.
 If a reel's layout changes, check the crop box for that day in `build.mjs`.

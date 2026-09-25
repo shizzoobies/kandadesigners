@@ -17,7 +17,7 @@ A business based in Gainesville or elsewhere in Alachua County, with a Facebook 
 
 ## What we ask of each pilot business
 
-- Approve each month's plan within 2 business days.
+- Approve each month's plan within 2 business days. That plan is the client's only approval (Alex, 2026-09-25): they do not review finished posts; K&A checks every finished post internally before it is scheduled.
 - Give posting access (add K&A as a manager in Meta) and real photos or footage when asked.
 - Permission to share results as a case study, and a short review if they are happy.
 - An honest check-in at the end of month 3.

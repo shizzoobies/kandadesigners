@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-04",
+  "date": "2026-10-04",
+  "time": "18:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "offer",
+  "title": "What a month of posts looks like",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on a cream background: 12 posts. One month. Here's what each one is for. Below, a grid labeled Sample month: four weeks by Monday, Wednesday and Friday, each tile coded by its job. Week 1: behind the scenes, proof, tip. Week 2: proof, offer, tip. Week 3: behind the scenes, tip, offer. Week 4: proof, behind the scenes, offer.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A calendar titled Sample month: a local business, 3 posts a week on Facebook and Instagram. Week 1: Monday reel, behind the scenes, meet the team, one face at a time. Wednesday carousel, proof, a recent job, before and after. Friday tip post, one thing to check before you book anyone. Week 2: Monday reel, proof, a customer review in their own words. Wednesday carousel, offer, this month's offer, details up front. Friday tip post, the question we hear most, answered. Week 3: Monday reel, behind the scenes, one job start to finish. Wednesday carousel, tip, 3 signs it's time to call a pro. Friday carousel, offer, what's open next week and how to book. Week 4: Monday reel, proof, why a regular keeps coming back. Wednesday carousel, behind the scenes, what we changed this month and why. Friday carousel, offer, last week to book this month's offer.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Only 3 of the 12 ask for the sale. Every post has one job. Proof, 3 of 12: shows you deliver, reviews, before and afters, real customers. Tip, 3 of 12: answers what customers already ask, worth saving and sharing. Behind the scenes, 3 of 12: puts a face on the business, who does the work and how. Offer, 3 of 12: gives a clear next step, what to book, by when, and how.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "How it works, steps 1 and 2. We plan the month: every post on one page, the day, the format, and what it's for. You approve the plan once: mark each post run, change, or drop; it's the only approval you give, and nothing is made until then. A plan sheet shows four sample posts with Run checked, and 8 more. Our own weekly plan opens with the same line: Mark each slot: run, change, or drop.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 3: We build and schedule. You approve the month's plan once. We take it from there. A, Brief: one page per post, what it's for, the hook, the slides or shots. B, Build: reels and carousels, captions, and a music track. C, Check: we check every finished post before it goes out. D, Schedule: queued on Facebook and Instagram for the month. This is how we run K&A's own Facebook and Instagram, every week.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 4: You get a short report. A monthly report card lists reach, how many people saw your posts; engagement, likes, comments, shares and saves; and clicks to your site, who went from a post to your website; each with a blank box for your number. Then: next month's plan starts from what the report shows.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Dark teal panel: Want this for your business? 3 free months for 3 Gainesville businesses. 3 posts a week on Facebook and Instagram. You approve the plan before anything is made. Call Alex, 904-210-1071, or message us on Facebook or Instagram. K&A Performance logo and ka-performancefl.com at the top.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance slide on a cream background: 12 posts / A calendar titled Sample month: a local business, 3 posts a week on Facebook and Instagram / Only 3 of the 12 ask for the sale / How it works, steps 1 and 2 / Step 3: We build and schedule / Step 4: You get a short report / Dark teal panel: Want this for your business? 3 free months for 3 Gainesville businesses"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide on a cream background: 12 posts. One month. Here's what each one is for. Below, a grid labeled Sample month: four weeks by Monday, Wednesday and Friday, each tile coded by its job. Week 1: behind the scenes, proof, tip. Week 2: proof, offer, tip. Week 3: behind the scenes, tip, offer. Week 4: proof, behind the scenes, offer."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1004"
+}

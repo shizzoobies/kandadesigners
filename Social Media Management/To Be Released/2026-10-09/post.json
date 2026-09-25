@@ -1,0 +1,49 @@
+{
+  "id": "2026-10-09",
+  "date": "2026-10-09",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "behind-the-scenes",
+  "title": "How we plan a week of posts",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Every post we publish gets approved twice, with two Approved stamps: 1. The plan, Alex approves it before anything is made, and 2. Every post, Alex approves it before it is scheduled. A five-stop route, Plan, Brief, Build, Approve, Schedule, fills step by step. Step 1: Plan the week, Alex approves it; a sample week plan stamped Approval 1. Step 2: a sample brief with the hook, slides, sources and a question for Alex. Step 3: one idea as a reel, a carousel and a LinkedIn document. Step 4: Alex approves every post; the Post Desk on a phone with sample posts, Approve is tapped and the post turns Approved, stamped Approval 2. Step 5: a week calendar of scheduled posts and a weekly results check of reach, engagement and clicks to the site. Ends on This is how we run it for pilot businesses: you approve the month's plan once, we check every post before it goes out, a short monthly results report. 3 free months for 3 Gainesville businesses, Call Alex 904-210-1071 or message us, ka-performancefl.com."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above huge type: Every post we publish gets approved twice. Two cards stamped Approved: 1. The plan, Alex approves it before anything is made, and 2. Every post, Alex approves it before it is scheduled. Below: Here's the week, and a five-stop route: Plan, Brief, Build, Approve, Schedule."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1009-r"
+}

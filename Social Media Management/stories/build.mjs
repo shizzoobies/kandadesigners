@@ -1,4 +1,4 @@
-// Story images (1080x1920) for the week of Sept 28, one per day, each with an
+// Story images (1080x1920), one per weekday (weeks of Sept 28 and Oct 5), each with an
 // empty zone where Alex places the Instagram / Facebook link sticker by hand.
 //
 // Run from anywhere (npx breaks on the ampersand path, so call node directly):
@@ -10,7 +10,7 @@
 
 import { chromium } from 'file:///D:/kap-reel/node_modules/playwright/index.mjs';
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -20,7 +20,7 @@ const RELEASE = join(ROOT, 'To Be Released');
 const FRAMES = join(HERE, 'frames');
 const BRAND = 'D:/kap-reel/assets/brand';
 const GUIDES = process.argv.includes('--guides');
-// --only <date> rebuilds one day's story; the contact sheet still shows all five.
+// --only <date> rebuilds one day's story; that week's contact sheet still shows all five.
 const ONLY = process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1] : null;
 
 const url = (p) => pathToFileURL(p).href;
@@ -76,6 +76,54 @@ const DAYS = [
     site: 'ka-performancefl.com',
     cta: 'See the site',
     link: 'https://ka-performancefl.com/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-02',
+  },
+
+  // ---------- Week of Oct 5 ----------
+  {
+    date: '2026-10-05', dow: 'Mon', theme: 'teal',
+    t: 1.0, crop: [108, 760, 864, 628],
+    kicker: 'Local SEO',
+    hook: 'Your Google profile has 5 settings <em>most businesses forget.</em>',
+    site: 'ka-performancefl.com',
+    cta: 'Check your Google profile',
+    link: 'https://ka-performancefl.com/services/seo-ai-search/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-05',
+  },
+  {
+    date: '2026-10-06', dow: 'Tue', theme: 'bold',
+    t: 11.5, crop: [108, 740, 864, 780],
+    kicker: 'Web design',
+    hook: 'Your hero is a <span class="hl">promise,</span> <b>not a photo.</b>',
+    site: 'ka-performancefl.com',
+    cta: 'See what we build',
+    link: 'https://ka-performancefl.com/services/web-design/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-06',
+  },
+  {
+    date: '2026-10-07', dow: 'Wed', theme: 'editorial',
+    t: 8.5, crop: [184, 702, 712, 736],
+    caption: 'Real screen from our RFI sample course.',
+    kicker: 'Job aids',
+    hook: 'If they need it once a quarter, don\'t teach it. <b>Hand it to them.</b>',
+    site: 'ka-performancefl.com/training',
+    cta: 'See the sample courses',
+    link: 'https://ka-performancefl.com/training/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-07',
+  },
+  {
+    date: '2026-10-08', dow: 'Thu', theme: 'chat',
+    t: 15.2, crop: [108, 400, 864, 1000],
+    kicker: 'AI tip for business owners',
+    hook: 'AI drafts. <em>You decide.</em>',
+    site: 'ka-performancefl.com/ai-launch',
+    cta: 'The 90-Day AI Launch',
+    link: 'https://ka-performancefl.com/ai-launch/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-08',
+  },
+  {
+    date: '2026-10-09', dow: 'Fri', theme: 'energy',
+    t: 12.9, crop: [108, 740, 864, 820],
+    kicker: 'Behind the scenes',
+    hook: '<span class="bx w">Every post</span> <span class="bx w">we publish</span> <span class="bx r">gets approved</span> <span class="bx a">twice.</span>',
+    site: 'ka-performancefl.com',
+    cta: 'See our work',
+    link: 'https://ka-performancefl.com/?utm_source=instagram&utm_medium=story&utm_campaign=2026-10-09',
   },
 ];
 
@@ -266,10 +314,25 @@ for (const r of report) {
   console.log(`${r.date}  reel modified ${r.reelModified}  hook ${r.hook}px  frame ${r.shot.join('x')}  ${r.bad.length ? 'ISSUES: ' + r.bad.join('; ') : 'ok'}`);
 }
 
-// Contact sheet: the five stories side by side.
-const pngs = DAYS.map((d) => join(HERE, `${d.date}-story.png`));
-const inputs = pngs.flatMap((p) => ['-i', p]);
-const scale = pngs.map((_, i) => `[${i}]scale=432:768[s${i}]`).join(';');
-const stack = pngs.map((_, i) => `[s${i}]`).join('') + `hstack=${pngs.length}`;
-execFileSync('ffmpeg', ['-v', 'error', '-y', ...inputs, '-filter_complex', `${scale};${stack}`, join(HERE, 'contact-sheet.png')]);
-console.log('contact sheet: ' + join(HERE, 'contact-sheet.png'));
+// Contact sheets: one per week, that week's five stories side by side. Only the
+// weeks touched by this run are rewritten. The week of Sept 28 keeps its
+// original name, contact-sheet.png; later weeks are contact-sheet-<Monday>.png.
+const monday = (date) => {
+  const d = new Date(date + 'T12:00:00Z');
+  d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
+  return d.toISOString().slice(0, 10);
+};
+const weeks = [...new Set(DAYS.filter((d) => !ONLY || d.date === ONLY).map((d) => monday(d.date)))];
+for (const week of weeks) {
+  const pngs = DAYS.filter((d) => monday(d.date) === week).map((d) => join(HERE, `${d.date}-story.png`));
+  const inputs = pngs.flatMap((p) => ['-i', p]);
+  const scale = pngs.map((_, i) => `[${i}]scale=432:768[s${i}]`).join(';');
+  const stack = pngs.map((_, i) => `[s${i}]`).join('') + `hstack=${pngs.length}`;
+  const sheet = join(HERE, week === '2026-09-28' ? 'contact-sheet.png' : `contact-sheet-${week}.png`);
+  if (!pngs.every((p) => existsSync(p))) {
+    console.log(`contact sheet for the week of ${week} skipped: not every story in that week is built yet`);
+    continue;
+  }
+  execFileSync('ffmpeg', ['-v', 'error', '-y', ...inputs, '-filter_complex', `${scale};${stack}`, sheet]);
+  console.log('contact sheet: ' + sheet);
+}

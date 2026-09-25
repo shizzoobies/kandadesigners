@@ -1,0 +1,49 @@
+{
+  "id": "2026-10-07",
+  "date": "2026-10-07",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "training",
+  "title": "When a job aid beats a course",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel: If they need it once a quarter, don't teach it. Hand it to them. A year planner of 52 work weeks marks the 4 weeks the task comes up. Then real screens from K&A's sample courses: the Before you send checklist from the RFI course and the walk-through card from the safety course. Ends on ka-performancefl.com/training and Call Alex 904-210-1071, with the K&A Performance logo and ka-performancefl.com on every frame."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above the words If they need it once a quarter, don't teach it. Hand it to them., over a year planner of 52 weeks with one week marked in each quarter"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1007-r"
+}

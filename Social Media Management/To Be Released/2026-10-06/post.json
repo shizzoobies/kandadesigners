@@ -1,0 +1,40 @@
+{
+  "id": "2026-10-06",
+  "date": "2026-10-06",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Your hero is a promise, not a photo",
+  "platforms": {
+    "facebook": { "type": "REEL", "caption": "facebook.md" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel with a drawn phone labeled Drawn example, not a real business. A weak first screen, a stock photo and Welcome to our website, gets four crosses: what you do, where, proof, the next step. Rewritten, it says Fresh sourdough, baked daily. Gainesville. Open at 6 a.m. Five stars on Google. Order ahead, and all four tick. Then: cover the photo, still clear, it works. Ends on ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071. K&A Performance logo and ka-performancefl.com on every frame."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above the line Say it before they scroll. A drawn phone, labeled as a drawn example, shows a first screen with what you do, where, proof and an Order ahead button, each numbered, beside a list of the four with every one ticked."
+    }
+  ],
+  "ai": { "voice": false, "visuals": false },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1006-r"
+}

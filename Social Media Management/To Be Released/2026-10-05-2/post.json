@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-05-2",
+  "date": "2026-10-05",
+  "time": "16:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Update these 5 things on your Google Business Profile this month",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide: Update these 5 things on your Google Business Profile this month. A dark teal street map with a dashed route through five numbered rust map pins: 1 primary category, the most specific one; 2 hours, plus holiday hours before November; 3 services, what you actually sell; 4 fresh photos, the real place and the real work; 5 review replies, short, prompt, helpful. Every tip from Google's own help pages, checked on our profile. Swipe for stop 1.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Stop 1 of 5, primary category: Pick the most specific primary category. It tells Google, and customers, what you are. A real capture of K&A Performance's own Google profile, Sept 25, 2026, with the category Website designer circled. A drawn example of Google's own example: search Salon, pick Nail salon, because Salon is too general. Google's help page says choose the one category that best describes you, and the most specific one on the list.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Stop 2 of 5, hours: Confirm your hours. Add holiday hours now. Wrong holiday hours send a customer to a locked door. A real capture of K&A Performance's weekly hours on Google Maps, Sept 25, 2026: Monday to Friday 8 AM to 5 PM, Saturday 8 AM to 2:30 PM, Sunday closed. Beside it a drawn example of special hours: Wednesday Nov 11, Veterans Day, same hours; Thursday Nov 26, Thanksgiving, closed. Google's help page says set special hours for holidays and confirm them even when they match your regular hours.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Stop 3 of 5, services: List the services you actually sell. Customers search for the job, not your name. A drawn example based on Google's own plumbing example: a services list with Install faucet, Repair toilet and Water heater repair checked, each with a description and price, and Add a custom service. Google's help page says when a local searches for something you offer, that service may be highlighted on your profile.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Stop 4 of 5, fresh photos: Add fresh photos of the real thing. Customers decide from photos before they call. A drawn grid of the photo types Google lists: exterior, interior, products, team, at work, and the spec JPG or PNG, 720 by 720 pixels recommended, in focus, well lit. Google's help page says show the outside, the inside, your products, your team and your work, with no heavy filters.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Stop 5 of 5, review replies: Reply to reviews, the good and the bad. The next customer reads your replies too. A drawn example: a four star review, Good work, but the wait for a callback was long, and the owner's reply, Thanks for telling us, and sorry about the wait. Glad the repair held up. Google's help page says keep replies short and helpful, reply promptly, apologize when it fits, and never trade anything for a review.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Local search is part of every site we build. Your Google profile should match your website exactly; we build the site side properly and hand you a short, honest list for the profile. A real capture of K&A Performance's own Google Maps listing, Sept 25, 2026: 5.0 stars from 8 reviews, Website designer, (904) 210-1071. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance slide: Update these 5 things on your Google Business Profile this month / Stop 1 of 5, primary category: Pick the most specific primary category / Stop 2 of 5, hours: Confirm your hours / Stop 3 of 5, services: List the services you actually sell / Stop 4 of 5, fresh photos: Add fresh photos of the real thing / Stop 5 of 5, review replies: Reply to reviews, the good and the bad / Local search is part of every site we build"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide: Update these 5 things on your Google Business Profile this month. A dark teal street map with a dashed route through five numbered rust map pins: 1 primary category, the most specific one; 2 hours, plus holiday hours before November; 3 services, what you actually sell; 4 fresh photos, the real place and the real work; 5 review replies, short, prompt, helpful. Every tip from Google's own help pages, checked on our profile. Swipe for stop 1."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1005-c"
+}

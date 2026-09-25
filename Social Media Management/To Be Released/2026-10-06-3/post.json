@@ -1,0 +1,70 @@
+{
+  "id": "2026-10-06-3",
+  "date": "2026-10-06",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "LinkedIn: Above the fold, 4 things a visitor needs in 5 seconds",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "Above the fold: 4 things a visitor needs in 5 seconds"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on a cream grid: Above the fold, 4 things a visitor needs in 5 seconds. A real phone screenshot of the ka-performancefl.com homepage, marked up in rust: 1 around crafts fast, animated, AI-ready websites, 2 around Gainesville, Florida, 3 around five stars and 5.0 on Google, 8 reviews, 4 around the Call link and the Start a project button, all above a dashed line at the fold, 664 px on an iPhone 13. Beside it: 1 What you do, 2 Where, 3 Proof, 4 The next step. Ours has all 4. Swipe to see where each one sits."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "1 of 4, What you do. On the first screen, under the headline. The ka-performancefl.com phone screenshot with crafts fast, animated, AI-ready websites boxed as 1. Why it matters: a stranger needs something they can picture, websites, sourdough, roof repair. Ours: K & A Performance crafts fast, animated, AI-ready websites, in the line under our headline."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "2 of 4, Where. On the first screen. The ka-performancefl.com phone screenshot with Gainesville, Florida boxed as 2. Why it matters: local customers look for their own town, so name it in words, not just a map pin. Ours: We work out of Gainesville, Florida is in the paragraph under our headline."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "3 of 4, Proof. On the first screen. The ka-performancefl.com phone screenshot with five stars and 5.0 on Google, 8 reviews boxed as 3, above the fold. Why it matters: a stranger has no reason to trust you yet; one line, a rating with its count, gives them one. Ours: five stars and 5.0 on Google, 8 reviews, between our intro and our buttons."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "4 of 4, The next step. On the first screen. The ka-performancefl.com phone screenshot with the Call link in the header and the Start a project button boxed as 4. Why it matters: if the first tap is obvious, fewer people leave to go looking for it. Ours: Call is in the header; Start a project runs from 613 to 660 px, inside the 664 px fold."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Our first screen: 4 of 4. A scorecard, every row ticked: What you do, under the headline. Where, Gainesville, Florida. Proof, 5.0 on Google, 8 reviews. The next step, Call and Start a project. The 5-second test: open your homepage on your phone, look for 5 seconds, then look away. Could a stranger name all four?"
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Want a first screen that does all four? What you do, Where, Proof, The next step. Web design from Gainesville: ka-performancefl.com/services/web-design. Call Alex 904-210-1071. K&A Performance logo."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}
