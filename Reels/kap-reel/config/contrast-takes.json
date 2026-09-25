@@ -1,0 +1,185 @@
+{
+  "_note": "Three alternate eleven_v3 reads of the contrast tutorial, 15 second cut, made 2026-09-24 after Alex heard the natural read and asked for \"more feeling\" that was also not \"too much or wrong feeling\". Read as: the emotion that was there sounded performed or misplaced, and what was missing was a friend who knows the answer and enjoys telling you. Words are the ones in src/tutorial/reels/contrast.ts, unchanged; scripts/voice-takes.ts strips the tags with stripAudioTags from scripts/voice.ts and refuses to send anything whose stripped text differs. Every beat is generated several times with a different seed and the best generation is kept by measurement (scripts/voice-takes.ts select). Written for scripts/voice-takes.ts take, audition, rank, select, verify and build. Nothing here moves a render: the logs go to config/voice-takes.json, which src/ never reads.",
+  "tutorial": "contrast",
+  "cut": "short",
+  "model": "eleven_v3",
+  "outputFormat": "wav_44100",
+  "generationsPerBeat": 6,
+  "seedBase": 240924,
+  "runCreditCap": 25000,
+  "musicVariant": "i-b",
+  "takes": {
+    "a": {
+      "title": "Sarah, friend across the table",
+      "voiceId": "EXAVITQu4vr4xnSDxMaL",
+      "voiceName": "Sarah",
+      "mode": "natural",
+      "direction": "Understated warmth. Nothing playful on the numbers. A light smile only on the hook and the last line. The ratio lines plain and sure.",
+      "beats": [
+        {
+          "id": "hook",
+          "narration": "[with a light smile] Contrast is not a vibe.",
+          "why": "One of the two smiles. She is about to tell you something she finds a little funny, and that is the whole of it."
+        },
+        {
+          "id": "fine",
+          "narration": "[relaxed] This amber on cream looks fine.",
+          "why": "Was [amused], which is where the performed feeling most likely came from: amusement on a setup line is a wink. Relaxed lets the line be what it says."
+        },
+        {
+          "id": "fails",
+          "narration": "[calm and sure] It measures two point nine to one. That fails.",
+          "why": "Was [matter-of-fact]. The number is the verdict, said plainly and without weight."
+        },
+        {
+          "id": "fix",
+          "narration": "[calm and sure] Same palette, rust instead. Six point seven. Passes.",
+          "why": "Was [warm] with [pleased] on \"Passes.\" The second tag is what made the good news sound announced. Same plain certainty as the failing ratio, so the two numbers sound like one person measuring."
+        },
+        {
+          "id": "cta",
+          "narration": "[with a light smile] Measure every color you set text in.",
+          "why": "The second smile. Advice to a friend, not a slogan."
+        }
+      ]
+    },
+    "b": {
+      "title": "Sarah, brighter",
+      "voiceId": "EXAVITQu4vr4xnSDxMaL",
+      "voiceName": "Sarah",
+      "mode": "creative",
+      "direction": "More lift on the hook and on the payoff, the same plain read on the numbers. The brief asked for lift on \"Nobody has to squint\", which is post copy rather than narration (it is not in the 15 second script and words must not change), so the lift goes on the narration's own payoff, \"Passes.\"",
+      "beats": [
+        {
+          "id": "hook",
+          "narration": "[brightly] Contrast is not a vibe.",
+          "why": "The lift the brief asks for, on the claim that opens the reel."
+        },
+        {
+          "id": "fine",
+          "narration": "[relaxed] This amber on cream looks fine.",
+          "why": "Same as take A: the setup is not where the brightness goes."
+        },
+        {
+          "id": "fails",
+          "narration": "[calm and sure] It measures two point nine to one. That fails.",
+          "why": "The same plain read on the number as take A."
+        },
+        {
+          "id": "fix",
+          "narration": "[calm and sure] Same palette, rust instead. Six point seven. [brightly] Passes.",
+          "why": "Plain on the number, then the lift on the payoff word, standing in for \"Nobody has to squint\"."
+        },
+        {
+          "id": "cta",
+          "narration": "[with a light smile] Measure every color you set text in.",
+          "why": "Same as take A."
+        }
+      ]
+    },
+    "c": {
+      "title": "A better voice, friend across the table",
+      "voiceId": "aMSt68OGf4xUZAnLpTU8",
+      "voiceName": "Juniper",
+      "mode": "natural",
+      "direction": "Take A's tags and settings exactly, in the voice that won the audition below.",
+      "tagsFrom": "a",
+      "why": "Won the audition of twelve saved library voices (config/voice-takes.json auditionRanking): the only voice with no rejected generation and the lowest mean score across the hook, the checker line and the number line. Steady pace (2.68 words a second, the number line in 3.44s on both seeds, the same as Sarah), no pause inside a phrase on any line, and the most restrained pitch movement of the clean voices (2.5 semitones median spread against Sarah 3.7): grounded rather than performed, which is the note Alex gave. Described as \"a grounded female professional\", American, conversational. Jessa (easygoing, best friend) was a close second."
+    }
+  },
+  "audition": {
+    "mode": "natural",
+    "seedsPerLine": 2,
+    "lines": [
+      {
+        "id": "hook",
+        "text": "[with a light smile] Contrast is not a vibe.",
+        "note": "Take A's hook, exactly."
+      },
+      {
+        "id": "checker",
+        "text": "[with a light smile] Your eye is a bad checker.",
+        "note": "Asked for by name. It is the last line of the post copy, not narration, so it is read with take A's closing-line tag."
+      },
+      {
+        "id": "fails",
+        "text": "[calm and sure] It measures two point nine to one. That fails.",
+        "note": "Take A's number line, added because a spoken ratio is the hardest thing the script asks of a voice."
+      }
+    ],
+    "voices": [
+      {
+        "id": "EXAVITQu4vr4xnSDxMaL",
+        "name": "Sarah",
+        "category": "premade",
+        "description": "Sarah - Mature, Reassuring, Confident: \"Young adult woman with a confident and warm, mature quality and a reassuring, professional tone.\" female, american, young, professional, entertainment_tv. The control."
+      },
+      {
+        "id": "56AoDkrOh6qfVPDXZ7Pt",
+        "name": "Cassidy",
+        "category": "professional",
+        "description": "Cassidy: \"A confident female podcaster with plethora of experience in the music industry.\" female, american, middle_aged, confident, conversational."
+      },
+      {
+        "id": "EST9Ui6982FZPSi7gCHi",
+        "name": "Elise",
+        "category": "professional",
+        "description": "Elise - Warm, Natural and Engaging: \"An easy, conversational tone suited to narrations, explainers, podcasts, and editorial content that needs clarity, warmth, and a human touch.\" female, american, young, pleasant, conversational."
+      },
+      {
+        "id": "l4Coq6695JDX9xtLqXDE",
+        "name": "Lauren",
+        "category": "professional",
+        "description": "Lauren - Empathetic and Encouraging: \"Warm, Humanlike, Friendly Conversational ... a cheerful, clear, and relatable voice with a polished American (US) accent that feels like you're chatting with a trusted friend.\" female, american, middle_aged, pleasant, conversational."
+      },
+      {
+        "id": "qSeXEcewz7tA0Q0qk9fH",
+        "name": "Victoria",
+        "category": "professional",
+        "description": "Victoria - Warm, Trustworthy, and Relatable: \"Conversational and friendly VO for explainer videos, viral social media and modern brand ads. Warm, upbeat, and relatable.\" female, american, middle_aged, professional, narrative_story."
+      },
+      {
+        "id": "Nhs7eitvQWFTQBsf0yiT",
+        "name": "Sarah Explains",
+        "category": "professional",
+        "description": "Sarah Explains: \"This voice is approachable, conversational, and informative. Great for explainer videos, narration, e-learning, or even commercials!\" female, american, middle_aged, relaxed, informative_educational."
+      },
+      {
+        "id": "aMSt68OGf4xUZAnLpTU8",
+        "name": "Juniper",
+        "category": "professional",
+        "description": "Juniper: \"A grounded female professional, great for podcasts or ConvoAI.\" female, american, middle_aged, casual, conversational."
+      },
+      {
+        "id": "yj30vwTGJxSHezdAGsv9",
+        "name": "Jessa",
+        "category": "professional",
+        "description": "Jessa - Easygoing and Effortless: \"Easygoing, conversational and real, with a best friend vibe. A natural, effortless, and relatable female voice with a casual, off-the-cuff style that feels genuinely real.\" female, american, young, casual, narrative_story."
+      },
+      {
+        "id": "kdmDKE6EkgrWrrykO9Qt",
+        "name": "Alexandra",
+        "category": "professional",
+        "description": "Alexandra - Conversational and Real: \"Youthful and authentic, with a conversational tone that's relatable and down-to-earth.\" female, american, young, casual, conversational."
+      },
+      {
+        "id": "OZxMHsGaBmV5pjMIDIn0",
+        "name": "Amy",
+        "category": "professional",
+        "description": "Amy - Natural and Sweet: \"Down-to-earth and conversational, this voice is perfect for situations that call for a realistic sounding woman in her 30s.\" female, american, middle_aged, pleasant, conversational."
+      },
+      {
+        "id": "XrExE9yKIg1WjnnlVkGX",
+        "name": "Matilda",
+        "category": "premade",
+        "description": "Matilda - Knowledgable, Professional: \"A professional woman with a pleasing alto pitch. Suitable for many use cases.\" female, american, middle_aged, upbeat, informative_educational."
+      },
+      {
+        "id": "8hcTQbQtx4uFCMEiTbGE",
+        "name": "Diane",
+        "category": "professional",
+        "description": "Diane - Assured and Smooth: \"A mid-range, confident voice of a middle aged American female. It features a steady, rhythmic pace and a neutral, professional accent that feels both authoritative and easy to listen to.\" female, american, middle_aged, pleasant, narrative_story. Added 2026-09-24 from the saved workspace voices; Charlotte (Australian) and Lydia (Spanish) were passed over on accent."
+      }
+    ]
+  }
+}
