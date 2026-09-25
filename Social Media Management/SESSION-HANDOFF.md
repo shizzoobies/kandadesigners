@@ -26,7 +26,7 @@ time. Tests: `node node_modules/vitest/vitest.mjs run` from `tools/` (124 pass).
 | Sat 09-26 | Bobbie Connor highlight | native | nothing |
 | Mon 09-28 | Ellenton Family Practice Direct in the top three (incognito search + SEO end card, 14s, music C) | **scheduled as Metricool drafts** for 10:30 AM, FB id 381617380, IG id 381617409 | Alex previews in Metricool, then Claude runs `release --promote 2026-09-28`, sends both `updateScheduledPost` packets, records with `release --promoted` |
 | Tue 09-29 | Contrast is not a vibe (v3 narration, music B, 16.9s) | planned, media and captions in place, valid | Alex picks a voice take (see below). If he picks A or C the reel is re-rendered with that take. Then approve, upload, release |
-| Wed 09-30 | One screen, one decision | planned, first render delivered at 27.6s; **agent re-rendering with the trimmed script** | when the agent reports: check frames, send to Alex, approve, upload, release |
+| Wed 09-30 | One screen, one decision (v3 narration, music C looped, 23.0s with the trimmed script; the 600-frame cap does not fit it by 3s) | planned, media and captions in place, valid, reel sent to Alex | Alex approves, then upload and release. Instagram caption carries the plain URL because the voice says "link in the caption" |
 | Thu 10-01 | Give the AI the brief, not the task | planned, scenes built; **agent rendering with the trimmed script** | same as Wednesday |
 | Fri 10-02 | Thrillers Mobile VR launch (15s, music A, captures from the demo) | planned, media and captions in place, valid, captions carry `[REAL DOMAIN]` | waits on Wix releasing the domain; replace the placeholder, confirm the site is live, decide tagging, then approve |
 
@@ -42,7 +42,6 @@ Run `node tools/social.mjs calendar` and `node tools/social.mjs validate` to see
 
 ## Agents that were still running when this was written
 
-- `wed-reel`: re-rendering Wednesday with the trimmed script into `To Be Released/2026-09-30/media/`.
 - `thu-reel`: rendering Thursday with the trimmed script into `To Be Released/2026-10-01/media/`.
 Both commit only their own files. If a new session finds their media in place and `validate` clean, they finished. Frames land in `D:\kap-reel\out\candidates\`.
 

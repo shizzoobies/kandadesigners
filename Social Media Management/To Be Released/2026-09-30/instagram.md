@@ -8,6 +8,8 @@ The voice is AI narrated. The course screens are real captures.
 
 Free sample courses: link in bio.
 
+Free sample courses: ka-performancefl.com/training (link in bio)
+
 ## First comment
 
 #InstructionalDesign #eLearning #LearningDesign #CorporateTraining #GainesvilleFL
