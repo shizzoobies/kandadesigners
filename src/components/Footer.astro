@@ -1,5 +1,6 @@
 ---
 import LogoLockup from './LogoLockup.astro';
+import { phone, email } from '../data/contact.js';
 
 const year = new Date().getFullYear();
 
@@ -90,9 +91,14 @@ const columns = [
     </div>
 
     <div class="mt-14 flex flex-col gap-3 border-t border-ink/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-      <a href="mailto:alex@ka-performancefl.com" class="font-heading text-sm text-ink transition-colors hover:text-accent">
-        alex@ka-performancefl.com
-      </a>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-8">
+        <a href={`mailto:${email}`} class="font-heading text-sm text-ink transition-colors hover:text-accent">
+          {email}
+        </a>
+        <a href={phone.href} class="font-heading text-sm text-ink transition-colors hover:text-accent">
+          Call <span class="whitespace-nowrap">{phone.display}</span>
+        </a>
+      </div>
       <p class="text-xs text-muted">&copy; {year} K &amp; A Performance. All rights reserved.</p>
     </div>
   </div>

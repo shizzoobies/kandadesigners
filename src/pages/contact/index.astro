@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScopeChat from '../../components/ScopeChat.astro';
+import { phone } from '../../data/contact.js';
 ---
 <BaseLayout
   title="Contact | Gainesville Web Design | K & A Performance"
@@ -16,6 +17,10 @@ import ScopeChat from '../../components/ScopeChat.astro';
       Two ways in. Scope your project with our AI and get a working brief in
       minutes, or write to us directly. We read every word and reply within 24
       hours. Scoping and quotes are always free.
+    </p>
+    <p data-animate="type-settle" data-animate-delay="0.25" class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+      Rather talk it through? Call
+      <a href={phone.href} class="whitespace-nowrap font-semibold text-accent underline underline-offset-4 transition-colors hover:text-accent-hot">{phone.display}</a>.
     </p>
     <!-- The people who actually reply — not a ticket queue. -->
     <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10 flex items-center gap-4">

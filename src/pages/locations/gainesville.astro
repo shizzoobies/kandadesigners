@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ReviewsRail from '../../components/ReviewsRail.astro';
+import { phone } from '../../data/contact.js';
 
 const PAGE_URL = 'https://ka-performancefl.com/locations/gainesville/';
 
@@ -231,6 +232,10 @@ const services = [
       <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
         <a href="/contact/" class="btn-accent">Start a project</a>
       </div>
+      <p data-animate="type-settle" data-animate-delay="0.25" class="mt-6 text-lg leading-relaxed text-muted">
+        Or call
+        <a href={phone.href} class="whitespace-nowrap font-semibold text-accent underline underline-offset-4 transition-colors hover:text-accent-hot">{phone.display}</a>.
+      </p>
     </div>
   </section>
 </BaseLayout>

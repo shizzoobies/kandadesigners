@@ -4,6 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SiteGuide from '../components/SiteGuide.astro';
 import StartProjectModal from '../components/StartProjectModal.astro';
+import { phone, email } from '../data/contact.js';
 import { ClientRouter } from 'astro:transitions';
 
 const onContactPage = Astro.url.pathname.startsWith('/contact');
@@ -40,9 +41,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 // Sitewide identity for search engines. ProfessionalService (a LocalBusiness
 // subtype) because the studio is a real service-area business in Gainesville.
 // The address is deliberately city-level only: there is no public street
-// address and no published phone number, and claiming less beats asserting
-// something a searcher could turn up at. Do not add `streetAddress` or
-// `telephone` until both are genuinely published on the site.
+// address, and claiming less beats asserting something a searcher could turn
+// up at. Do not add `streetAddress` until one is genuinely published. The
+// phone has been published since 2026-09-25 (header, footer, contact page),
+// so `telephone` is here, read from src/data/contact.js like every tel: link.
 // No `aggregateRating` either: our reviews live on Google, and marking up
 // someone else's reviews as our own violates their structured-data guidelines.
 const ORG_ID = 'https://ka-performancefl.com/#organization';
@@ -70,7 +72,8 @@ const schema = {
       name: 'K & A Performance',
       alternateName: 'K&A Performance',
       url: 'https://ka-performancefl.com/',
-      email: 'alex@ka-performancefl.com',
+      email,
+      telephone: phone.schema,
       description:
         'Web design and AI integration studio in Gainesville, Florida, building fast, accessible, animated websites for businesses that refuse to blend in.',
       logo: {
@@ -115,7 +118,8 @@ const schema = {
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'sales',
-        email: 'alex@ka-performancefl.com',
+        email,
+        telephone: phone.schema,
         areaServed: 'US',
         availableLanguage: 'English',
       },
