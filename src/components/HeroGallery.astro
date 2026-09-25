@@ -12,6 +12,7 @@
 // algorithm, no preserve-3d) — so cards can never slice through each other,
 // and stack poses face the viewer flat.
 import { projects, stackExtras } from '../data/work.js';
+import { googleRating } from '../data/reviews.js';
 
 const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 ---
@@ -36,6 +37,17 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
             <a href="/contact/#scope" class="btn-accent">Start a project</a>
             <a href="/services/" class="btn-ghost">What we do</a>
           </div>
+          {/* Proof line, approved by Alex 2026-09-25. Numbers live in
+              src/data/reviews.js; ReviewsRail refreshes them from the live
+              Google data. Ink at 80% keeps it well past 4.5:1 on canvas. */}
+          <p class="hero-proof mt-6 flex items-center gap-2.5 font-heading text-[0.95rem] font-semibold tracking-wide text-ink/80">
+            <span class="flex gap-0.5 text-accent" aria-hidden="true">
+              {[0, 1, 2, 3, 4].map(() => (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.86.6-5.2 4.52 1.56 6.7L12 16.53 5.88 20.08l1.56-6.7-5.2-4.52 6.86-.6z" /></svg>
+              ))}
+            </span>
+            <span><span class="sr-only">Rated </span><span data-g-rating>{googleRating.rating.toFixed(1)}</span> on Google, <span data-g-count>{googleRating.count}</span> reviews</span>
+          </p>
         </div>
         <!-- the drawn-in mac window: a site sketching itself, stroke by
              stroke (motion.js line-draw). Decorative, desktop-only. -->

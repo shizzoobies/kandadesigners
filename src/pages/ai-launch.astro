@@ -546,7 +546,7 @@ const answers = [
                 </svg>
               </button>
             </h3>
-            <div class="al-acc-panel" id={`al-acc-panel-${i}`} role="region" aria-labelledby={`al-acc-btn-${i}`}>
+            <div class="al-acc-panel" id={`al-acc-panel-${i}`} role="region" aria-labelledby={`al-acc-btn-${i}`} inert>
               <div class="al-acc-body relative pb-7 pr-10">
                 <span class="al-acc-rule" aria-hidden="true"></span>
                 <p class="pl-6 text-lg leading-relaxed text-muted">{item.a}</p>
@@ -1208,6 +1208,11 @@ const answers = [
 </script>
 
 <script>
+  // The accordion below tweens with gsap. Without this import the bundled
+  // module threw "gsap is not defined" and no answer ever opened unless the
+  // visitor had reduced motion on.
+  import gsap from 'gsap';
+
   // The voice card's button opens the real corner chat.
   document.getElementById('al-kai-btn')?.addEventListener('click', () => {
     document.getElementById('sg-open')?.click();
@@ -1230,6 +1235,9 @@ const answers = [
       const body = item.querySelector<HTMLElement>('.al-acc-body')!;
       item.classList.toggle('is-open', open);
       btn.setAttribute('aria-expanded', String(open));
+      // A collapsed answer keeps its links out of the tab order and the
+      // accessibility tree; the panel starts inert in the markup.
+      panel.inert = !open;
       if (still) {
         panel.style.height = open ? 'auto' : '0px';
         return;

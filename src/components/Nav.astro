@@ -23,7 +23,9 @@ const links = [
 ];
 ---
 <header data-nav class="fixed inset-x-0 top-0 z-50" transition:persist="site-nav">
-  <div class="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
+  {/* relative z-50 keeps this bar, and the menu's close button, above the
+      z-40 phone overlay instead of underneath it. */}
+  <div class="relative z-50 mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
     <a href="/" class="nav-logo flex items-center text-2xl" aria-label="K & A Performance home">
       <LogoLockup variant="nav" intro={Astro.url.pathname === '/'} />
     </a>
@@ -65,14 +67,18 @@ const links = [
       </a>
       <button
         id="nav-toggle"
-        class="inline-flex min-h-11 min-w-11 items-center justify-center"
+        class="group inline-flex min-h-11 min-w-11 items-center justify-center"
         aria-label="Open menu"
         aria-expanded="false"
         aria-controls="nav-overlay"
       >
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" class="text-ink">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" class="text-ink group-aria-expanded:hidden" aria-hidden="true">
           <line x1="4" y1="9" x2="24" y2="9" />
           <line x1="4" y1="19" x2="24" y2="19" />
+        </svg>
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden text-ink group-aria-expanded:block" aria-hidden="true">
+          <line x1="7" y1="7" x2="21" y2="21" />
+          <line x1="21" y1="7" x2="7" y2="21" />
         </svg>
       </button>
     </div>
@@ -93,13 +99,71 @@ const links = [
 </header>
 
 <script>
+  // Phone menu. Esc closes it and hands focus back to the toggle; while it is
+  // open, Tab and Shift+Tab cycle through the header only (the bar plus the
+  // overlay links), and everything outside the header is inert, so neither
+  // keyboard nor screen reader can wander into the page behind.
+  const header = document.querySelector<HTMLElement>('[data-nav]');
   const toggle = document.getElementById('nav-toggle');
   const overlay = document.getElementById('nav-overlay');
-  toggle?.addEventListener('click', () => {
-    const open = overlay?.classList.toggle('hidden') === false;
-    overlay?.classList.toggle('flex', open);
+  let open = false;
+  let inerted: HTMLElement[] = [];
+
+  const focusables = () =>
+    [...(header?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? [])].filter(
+      (el) => el.getClientRects().length > 0,
+    );
+
+  const setMenu = (next: boolean, returnFocus = false) => {
+    if (!toggle || !overlay || next === open) return;
+    open = next;
+    overlay.classList.toggle('hidden', !open);
+    overlay.classList.toggle('flex', open);
+    header?.classList.toggle('menu-open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      inerted = [...document.body.children].filter(
+        (el): el is HTMLElement => el instanceof HTMLElement && el !== header && !el.contains(header) && !el.inert,
+      );
+      inerted.forEach((el) => (el.inert = true));
+    } else {
+      inerted.forEach((el) => (el.inert = false));
+      inerted = [];
+      if (returnFocus) toggle.focus();
+    }
+  };
+
+  toggle?.addEventListener('click', () => setMenu(!open));
+  // Following a menu link closes the menu (matters on ClientRouter pages,
+  // where the header persists across the navigation).
+  overlay?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!open) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setMenu(false, true);
+    } else if (e.key === 'Tab') {
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const i = items.indexOf(document.activeElement as HTMLElement);
+      if (e.shiftKey && (i <= 0)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (i === -1 || i === items.length - 1)) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+  // The overlay is phone-only; widening past lg with it open would leave the
+  // page inert behind a menu that no longer shows.
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+    if (e.matches) setMenu(false);
   });
 </script>

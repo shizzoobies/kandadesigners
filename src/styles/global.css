@@ -117,6 +117,16 @@ body {
   border-radius: 2px;
 }
 
+/* Keyboard focus never lands under the fixed 80px header: when a focused
+   control is scrolled into view, the browser keeps this much room above it
+   (and a little below). Set on the controls rather than as scroll-padding on
+   html, so the existing section scroll-margins that anchor links rely on keep
+   their current offsets. Zero specificity, so a component's own value wins. */
+:where(a[href], button, input, select, textarea, summary, [tabindex]:not([tabindex="-1"])) {
+  scroll-margin-top: 6rem;
+  scroll-margin-bottom: 1.5rem;
+}
+
 /* Skip link: first thing in the tab order, parked off-screen until focused.
    Moved with a transform rather than display/visibility, which would drop it
    out of the tab order entirely. Fixed rather than absolute so it lands at the
@@ -444,6 +454,13 @@ body {
   background: rgb(248 245 242 / 0.85);
   backdrop-filter: blur(12px);
   border-bottom-color: rgb(34 28 21 / 0.08);
+}
+/* A backdrop-filter makes the header the containing block for its fixed
+   children, which shrank the open phone menu to the 80px bar once the page
+   had scrolled. The overlay blurs the page itself, so drop the header's
+   filter while the menu is open. */
+[data-nav].menu-open {
+  backdrop-filter: none;
 }
 .nav-logo {
   transform-origin: left center;

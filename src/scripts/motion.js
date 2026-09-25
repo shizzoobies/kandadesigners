@@ -149,6 +149,26 @@ if (reduced) {
 
   initPage();
 
+  // Keyboard focus reveals what it lands on. Tabbing scrolls a control just
+  // into view, which can stop short of its reveal trigger line and leave it
+  // focused at opacity 0. If focus enters an element still parked in its
+  // from-state, play its reveal now instead of waiting for more scroll.
+  document.addEventListener('focusin', (e) => {
+    const target = e.target instanceof Element ? e.target : null;
+    let el = target?.closest('[data-animate]');
+    while (el) {
+      const kind = el.getAttribute('data-animate');
+      if (kind === 'type-settle' || kind === 'frame-lift') {
+        ScrollTrigger.getAll().forEach((st) => {
+          if (st.trigger === el && st.animation && st.animation.progress() < 1) st.animation.play();
+        });
+      } else if (kind === 'tile-settle' && Number(gsap.getProperty(el, 'opacity')) < 1) {
+        gsap.to(el, { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, duration: 0.5, ease: 'power3.out', clearProps: 'transform,willChange' });
+      }
+      el = el.parentElement?.closest('[data-animate]');
+    }
+  });
+
   // ClientRouter pages: astro:page-load also fires for the initial load, after
   // this module has already run, so the first event is skipped.
   let seenInitialPageLoad = false;

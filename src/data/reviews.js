@@ -29,3 +29,10 @@ export const reviews = [
     text: '[Placeholder] One more so the rail loops without visible repetition.',
   },
 ];
+
+// The Google rating quoted in the home hero's proof line. This is the one
+// place to update it: rating and count as the Business Profile shows them
+// (checked against /api/reviews on 2026-09-25: 5.0 across 8 reviews). The
+// reviews rail refreshes the hero line from the live API when it loads, so
+// these numbers are the first paint and the no-JS fallback.
+export const googleRating = { rating: 5.0, count: 8 };

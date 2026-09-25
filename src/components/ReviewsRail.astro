@@ -295,6 +295,11 @@
       if (data.rating && meta) {
         meta.textContent = `${data.rating.toFixed(1)} stars across ${data.count} Google reviews.`;
       }
+      // keep the hero proof line (seeded from src/data/reviews.js) current
+      if (data.rating && data.count) {
+        document.querySelectorAll('[data-g-rating]').forEach((el) => (el.textContent = data.rating.toFixed(1)));
+        document.querySelectorAll('[data-g-count]').forEach((el) => (el.textContent = String(data.count)));
+      }
 
       section.classList.remove('hidden');
     });
