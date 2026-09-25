@@ -16,6 +16,7 @@ import type { TutorialContent, TutorialCut } from "./tutorial/types";
 import { CONTRAST_TUTORIAL } from "./tutorial/reels/contrast";
 import { HERO_TUTORIAL } from "./tutorial/reels/hero";
 import { EndCardSEO } from "./scenes/EndCardSEO";
+import { BRIEF_FRAMES, BriefReel } from "./tutorial/brief/BriefReel";
 import { ONESCREEN_FRAMES, OneScreen } from "./tutorial/onescreen/OneScreen";
 
 /**
@@ -244,6 +245,8 @@ export const RemotionRoot: React.FC = () => {
       />
       {/* "One screen, one decision", 2026-09-30. See src/tutorial/onescreen/. */}
       <Composition id="TutorialOnescreenVertical" component={OneScreen} durationInFrames={ONESCREEN_FRAMES} fps={FPS} width={SAFE_ZONES.vertical.width} height={SAFE_ZONES.vertical.height} />
+      {/* "Give the AI the brief, not the task", 2026-10-01. See src/tutorial/brief/. */}
+      <Composition id="TutorialBriefVertical" component={BriefReel} durationInFrames={BRIEF_FRAMES} fps={FPS} width={SAFE_ZONES.vertical.width} height={SAFE_ZONES.vertical.height} defaultProps={{ format: "vertical" as const, debugSafeZones: false }} />
     </>
   );
 };

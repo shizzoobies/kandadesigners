@@ -5295,5 +5295,4662 @@
         "createdAt": "2026-09-25T12:15:06.097Z"
       }
     ]
+  },
+  "briefV3": {
+    "_note": "The brief tutorial (Give the AI the brief, not the task), 15 second vertical cut, read on eleven_v3 by Sarah at the natural stability mode from config/brief-v3-script.json, 2026-09-24. Kept apart from generations and v3 above: nothing but src/tutorial/brief reads this section. generations is every billable text to speech call, with the exact text sent (tags included), the seed, the measured duration and the credits measured as a before and after delta on the usage endpoint; stt is the scribe_v2 transcription check of that file and what it cost; analysis is what was measured off the file. kept is the one generation per beat the composition is laid out from, finished (edges trimmed, faded), with why. Written by src/tutorial/brief/pipeline.ts.",
+    "tutorial": "brief",
+    "cut": "short",
+    "model": "eleven_v3",
+    "mode": "natural",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "voiceName": "Sarah",
+    "outputFormat": "wav_44100",
+    "script": "config/brief-v3-script.json",
+    "generations": [
+      {
+        "beatId": "hook",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241001.wav",
+        "text": "[playfully] Stop asking AI to write the email. [confident] Tell it who the email is for.",
+        "plainText": "Stop asking AI to write the email. Tell it who the email is for.",
+        "tags": [
+          "playfully",
+          "confident"
+        ],
+        "characters": 88,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 4.56,
+        "creditsMeasured": 135,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:18:06.786Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 3,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 4.56,
+          "leadSeconds": 0,
+          "trailSeconds": 0.2,
+          "speechEnd": 4.36,
+          "gaps": [
+            {
+              "at": 2.34,
+              "seconds": 0.48,
+              "after": "email."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.48,
+          "startEdgeDb": -39.6,
+          "endEdgeDb": -50,
+          "peakDbfs": -0.4,
+          "integratedLufs": -12.4,
+          "speechDb": -11.87,
+          "transcript": "Stop asking AI to write the email. Tell it who the email is for",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": 0,
+          "words": [
+            {
+              "text": "Stop",
+              "start": 0.14,
+              "end": 0.4
+            },
+            {
+              "text": "asking",
+              "start": 0.5,
+              "end": 0.82
+            },
+            {
+              "text": "AI",
+              "start": 0.96,
+              "end": 1.28
+            },
+            {
+              "text": "to",
+              "start": 1.32,
+              "end": 1.38
+            },
+            {
+              "text": "write",
+              "start": 1.4,
+              "end": 1.6
+            },
+            {
+              "text": "the",
+              "start": 1.64,
+              "end": 1.76
+            },
+            {
+              "text": "email.",
+              "start": 1.84,
+              "end": 2.3
+            },
+            {
+              "text": "Tell",
+              "start": 2.88,
+              "end": 3.02
+            },
+            {
+              "text": "it",
+              "start": 3.06,
+              "end": 3.16
+            },
+            {
+              "text": "who",
+              "start": 3.2,
+              "end": 3.3
+            },
+            {
+              "text": "the",
+              "start": 3.36,
+              "end": 3.44
+            },
+            {
+              "text": "email",
+              "start": 3.5,
+              "end": 3.76
+            },
+            {
+              "text": "is",
+              "start": 3.82,
+              "end": 3.96
+            },
+            {
+              "text": "for",
+              "start": 4,
+              "end": 4.3
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "hook",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241002.wav",
+        "text": "[playfully] Stop asking AI to write the email. [confident] Tell it who the email is for.",
+        "plainText": "Stop asking AI to write the email. Tell it who the email is for.",
+        "tags": [
+          "playfully",
+          "confident"
+        ],
+        "characters": 88,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 4.48,
+        "creditsMeasured": 136,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:18:15.451Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 2,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 4.48,
+          "leadSeconds": 0.04,
+          "trailSeconds": 0,
+          "speechEnd": 4.48,
+          "gaps": [
+            {
+              "at": 2.24,
+              "seconds": 0.5,
+              "after": "email."
+            },
+            {
+              "at": 4.29,
+              "seconds": 0.18,
+              "after": "for"
+            }
+          ],
+          "maxGapInPhrase": 0.18,
+          "maxGapAtBoundary": 0.5,
+          "startEdgeDb": -49.7,
+          "endEdgeDb": -36.6,
+          "peakDbfs": -0.1,
+          "integratedLufs": -11.6,
+          "speechDb": -11.19,
+          "transcript": "Stop asking AI to write the email. Tell it who the email is for",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": 0,
+          "words": [
+            {
+              "text": "Stop",
+              "start": 0.14,
+              "end": 0.38
+            },
+            {
+              "text": "asking",
+              "start": 0.48,
+              "end": 0.76
+            },
+            {
+              "text": "AI",
+              "start": 0.88,
+              "end": 1.2
+            },
+            {
+              "text": "to",
+              "start": 1.24,
+              "end": 1.32
+            },
+            {
+              "text": "write",
+              "start": 1.34,
+              "end": 1.52
+            },
+            {
+              "text": "the",
+              "start": 1.56,
+              "end": 1.66
+            },
+            {
+              "text": "email.",
+              "start": 1.74,
+              "end": 2.2
+            },
+            {
+              "text": "Tell",
+              "start": 2.78,
+              "end": 2.92
+            },
+            {
+              "text": "it",
+              "start": 2.96,
+              "end": 3.06
+            },
+            {
+              "text": "who",
+              "start": 3.12,
+              "end": 3.22
+            },
+            {
+              "text": "the",
+              "start": 3.26,
+              "end": 3.36
+            },
+            {
+              "text": "email",
+              "start": 3.42,
+              "end": 3.68
+            },
+            {
+              "text": "is",
+              "start": 3.74,
+              "end": 3.88
+            },
+            {
+              "text": "for",
+              "start": 3.92,
+              "end": 4.22
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "hook",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241003.wav",
+        "text": "[playfully] Stop asking AI to write the email. [confident] Tell it who the email is for.",
+        "plainText": "Stop asking AI to write the email. Tell it who the email is for.",
+        "tags": [
+          "playfully",
+          "confident"
+        ],
+        "characters": 88,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 5.44,
+        "creditsMeasured": 150,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:18:23.934Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 5,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 5.44,
+          "leadSeconds": 0.14,
+          "trailSeconds": 0,
+          "speechEnd": 5.44,
+          "gaps": [
+            {
+              "at": 2.53,
+              "seconds": 0.69,
+              "after": "email."
+            },
+            {
+              "at": 5.16,
+              "seconds": 0.27,
+              "after": "for"
+            }
+          ],
+          "maxGapInPhrase": 0.27,
+          "maxGapAtBoundary": 0.69,
+          "startEdgeDb": -71,
+          "endEdgeDb": -17.6,
+          "peakDbfs": -0.3,
+          "integratedLufs": -12.6,
+          "speechDb": -12.04,
+          "transcript": "Stop asking AI to write the email. Tell it who the email is for",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": 0,
+          "words": [
+            {
+              "text": "Stop",
+              "start": 0.26,
+              "end": 0.52
+            },
+            {
+              "text": "asking",
+              "start": 0.62,
+              "end": 0.98
+            },
+            {
+              "text": "AI",
+              "start": 1.06,
+              "end": 1.46
+            },
+            {
+              "text": "to",
+              "start": 1.52,
+              "end": 1.6
+            },
+            {
+              "text": "write",
+              "start": 1.62,
+              "end": 1.82
+            },
+            {
+              "text": "the",
+              "start": 1.86,
+              "end": 1.96
+            },
+            {
+              "text": "email.",
+              "start": 2.06,
+              "end": 2.5
+            },
+            {
+              "text": "Tell",
+              "start": 3.28,
+              "end": 3.44
+            },
+            {
+              "text": "it",
+              "start": 3.5,
+              "end": 3.6
+            },
+            {
+              "text": "who",
+              "start": 3.64,
+              "end": 3.74
+            },
+            {
+              "text": "the",
+              "start": 3.8,
+              "end": 3.92
+            },
+            {
+              "text": "email",
+              "start": 4.019,
+              "end": 4.32
+            },
+            {
+              "text": "is",
+              "start": 4.38,
+              "end": 4.52
+            },
+            {
+              "text": "for",
+              "start": 4.6,
+              "end": 4.94
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "hook",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241004.wav",
+        "text": "[playfully] Stop asking AI to write the email. [confident] Tell it who the email is for.",
+        "plainText": "Stop asking AI to write the email. Tell it who the email is for.",
+        "tags": [
+          "playfully",
+          "confident"
+        ],
+        "characters": 88,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 4.64,
+        "creditsMeasured": 152,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:18:34.684Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/hook/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 46,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 4.64,
+          "leadSeconds": 0.14,
+          "trailSeconds": 0,
+          "speechEnd": 4.64,
+          "gaps": [
+            {
+              "at": 2.54,
+              "seconds": 0.54,
+              "after": "email."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.54,
+          "startEdgeDb": -78.5,
+          "endEdgeDb": -18.4,
+          "peakDbfs": -0.1,
+          "integratedLufs": -11.8,
+          "speechDb": -11.4,
+          "transcript": "Stop asking AI to write the email. Tell it who the email is for",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": 0,
+          "words": [
+            {
+              "text": "Stop",
+              "start": 0.26,
+              "end": 0.54
+            },
+            {
+              "text": "asking",
+              "start": 0.64,
+              "end": 0.96
+            },
+            {
+              "text": "AI",
+              "start": 1.08,
+              "end": 1.44
+            },
+            {
+              "text": "to",
+              "start": 1.5,
+              "end": 1.58
+            },
+            {
+              "text": "write",
+              "start": 1.6,
+              "end": 1.8
+            },
+            {
+              "text": "the",
+              "start": 1.84,
+              "end": 1.94
+            },
+            {
+              "text": "email.",
+              "start": 2.02,
+              "end": 2.48
+            },
+            {
+              "text": "Tell",
+              "start": 3.12,
+              "end": 3.26
+            },
+            {
+              "text": "it",
+              "start": 3.3,
+              "end": 3.36
+            },
+            {
+              "text": "who",
+              "start": 3.4,
+              "end": 3.48
+            },
+            {
+              "text": "the",
+              "start": 3.52,
+              "end": 3.62
+            },
+            {
+              "text": "email",
+              "start": 3.7,
+              "end": 4
+            },
+            {
+              "text": "is",
+              "start": 4.059,
+              "end": 4.24
+            },
+            {
+              "text": "for",
+              "start": 4.28,
+              "end": 4.6
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241001.wav",
+        "text": "[confident] \"Write a follow up email\" gets you a form letter.",
+        "plainText": "\"Write a follow up email\" gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.64,
+        "creditsMeasured": 62,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:18:46.500Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 46,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 2.64,
+          "leadSeconds": 0.09,
+          "trailSeconds": 0,
+          "speechEnd": 2.64,
+          "gaps": [],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -57.7,
+          "endEdgeDb": -30.6,
+          "peakDbfs": -0.5,
+          "integratedLufs": -12.8,
+          "speechDb": -12.24,
+          "transcript": "Write a follow-up email gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.011,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.12,
+              "end": 0.3
+            },
+            {
+              "text": "a",
+              "start": 0.34,
+              "end": 0.4
+            },
+            {
+              "text": "follow-up",
+              "start": 0.44,
+              "end": 0.82
+            },
+            {
+              "text": "email",
+              "start": 0.92,
+              "end": 1.26
+            },
+            {
+              "text": "gets",
+              "start": 1.52,
+              "end": 1.7
+            },
+            {
+              "text": "you",
+              "start": 1.74,
+              "end": 1.82
+            },
+            {
+              "text": "a",
+              "start": 1.88,
+              "end": 1.94
+            },
+            {
+              "text": "form",
+              "start": 1.98,
+              "end": 2.2
+            },
+            {
+              "text": "letter",
+              "start": 2.28,
+              "end": 2.54
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241002.wav",
+        "text": "[confident] \"Write a follow up email\" gets you a form letter.",
+        "plainText": "\"Write a follow up email\" gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.88,
+        "creditsMeasured": 61,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:18:54.888Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.88,
+          "leadSeconds": 0.12,
+          "trailSeconds": 0.01,
+          "speechEnd": 2.87,
+          "gaps": [
+            {
+              "at": 1.52,
+              "seconds": 0.18,
+              "after": "email"
+            }
+          ],
+          "maxGapInPhrase": 0.18,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -66.9,
+          "endEdgeDb": -22.6,
+          "peakDbfs": -0.3,
+          "integratedLufs": -12.7,
+          "speechDb": -12.04,
+          "transcript": "Write a follow-up email gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.057,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.16,
+              "end": 0.38
+            },
+            {
+              "text": "a",
+              "start": 0.42,
+              "end": 0.5
+            },
+            {
+              "text": "follow-up",
+              "start": 0.54,
+              "end": 0.94
+            },
+            {
+              "text": "email",
+              "start": 1.04,
+              "end": 1.44
+            },
+            {
+              "text": "gets",
+              "start": 1.8,
+              "end": 1.96
+            },
+            {
+              "text": "you",
+              "start": 2.02,
+              "end": 2.08
+            },
+            {
+              "text": "a",
+              "start": 2.12,
+              "end": 2.22
+            },
+            {
+              "text": "form",
+              "start": 2.26,
+              "end": 2.48
+            },
+            {
+              "text": "letter",
+              "start": 2.56,
+              "end": 2.82
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241003.wav",
+        "text": "[confident] \"Write a follow up email\" gets you a form letter.",
+        "plainText": "\"Write a follow up email\" gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.8,
+        "creditsMeasured": 62,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:19:02.444Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 48,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 2.8,
+          "leadSeconds": 0.03,
+          "trailSeconds": 0,
+          "speechEnd": 2.8,
+          "gaps": [
+            {
+              "at": 1.31,
+              "seconds": 0.29,
+              "after": "email"
+            }
+          ],
+          "maxGapInPhrase": 0.29,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -74.9,
+          "endEdgeDb": -26,
+          "peakDbfs": -0.4,
+          "integratedLufs": -12.5,
+          "speechDb": -11.87,
+          "transcript": "Write a follow-up email gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.066,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.08,
+              "end": 0.26
+            },
+            {
+              "text": "a",
+              "start": 0.3,
+              "end": 0.36
+            },
+            {
+              "text": "follow-up",
+              "start": 0.4,
+              "end": 0.8
+            },
+            {
+              "text": "email",
+              "start": 0.88,
+              "end": 1.26
+            },
+            {
+              "text": "gets",
+              "start": 1.68,
+              "end": 1.86
+            },
+            {
+              "text": "you",
+              "start": 1.9,
+              "end": 1.98
+            },
+            {
+              "text": "a",
+              "start": 2.02,
+              "end": 2.12
+            },
+            {
+              "text": "form",
+              "start": 2.16,
+              "end": 2.38
+            },
+            {
+              "text": "letter",
+              "start": 2.46,
+              "end": 2.72
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241004.wav",
+        "text": "[confident] \"Write a follow up email\" gets you a form letter.",
+        "plainText": "\"Write a follow up email\" gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.88,
+        "creditsMeasured": 62,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:19:10.118Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.88,
+          "leadSeconds": 0.11,
+          "trailSeconds": 0,
+          "speechEnd": 2.88,
+          "gaps": [
+            {
+              "at": 1.53,
+              "seconds": 0.27,
+              "after": "email."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.27,
+          "startEdgeDb": -72.8,
+          "endEdgeDb": -16.4,
+          "peakDbfs": -0.5,
+          "integratedLufs": -13.2,
+          "speechDb": -12.47,
+          "transcript": "Write a follow-up email. Gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.021,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.16,
+              "end": 0.36
+            },
+            {
+              "text": "a",
+              "start": 0.4,
+              "end": 0.5
+            },
+            {
+              "text": "follow-up",
+              "start": 0.54,
+              "end": 0.98
+            },
+            {
+              "text": "email.",
+              "start": 1.08,
+              "end": 1.48
+            },
+            {
+              "text": "Gets",
+              "start": 1.88,
+              "end": 2.06
+            },
+            {
+              "text": "you",
+              "start": 2.12,
+              "end": 2.18
+            },
+            {
+              "text": "a",
+              "start": 2.22,
+              "end": 2.3
+            },
+            {
+              "text": "form",
+              "start": 2.34,
+              "end": 2.54
+            },
+            {
+              "text": "letter",
+              "start": 2.6,
+              "end": 2.84
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/s241001.wav",
+        "text": "[warm] \"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "plainText": "\"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 138,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 7.6,
+        "creditsMeasured": 201,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:19:19.127Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 66,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 7.6,
+          "leadSeconds": 0.13,
+          "trailSeconds": 0.15,
+          "speechEnd": 7.45,
+          "gaps": [
+            {
+              "at": 5.06,
+              "seconds": 0.22,
+              "after": "cost"
+            }
+          ],
+          "maxGapInPhrase": 0.22,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -68.9,
+          "endEdgeDb": -55.4,
+          "peakDbfs": -0.2,
+          "integratedLufs": -13,
+          "speechDb": -12.34,
+          "transcript": "Write a follow-up to a bakery owner who asked about pricing and is nervous about cost gets you something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.058,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.18,
+              "end": 0.38
+            },
+            {
+              "text": "a",
+              "start": 0.42,
+              "end": 0.48
+            },
+            {
+              "text": "follow-up",
+              "start": 0.54,
+              "end": 1
+            },
+            {
+              "text": "to",
+              "start": 1.04,
+              "end": 1.12
+            },
+            {
+              "text": "a",
+              "start": 1.18,
+              "end": 1.22
+            },
+            {
+              "text": "bakery",
+              "start": 1.26,
+              "end": 1.6
+            },
+            {
+              "text": "owner",
+              "start": 1.7,
+              "end": 1.98
+            },
+            {
+              "text": "who",
+              "start": 2.02,
+              "end": 2.14
+            },
+            {
+              "text": "asked",
+              "start": 2.22,
+              "end": 2.42
+            },
+            {
+              "text": "about",
+              "start": 2.48,
+              "end": 2.72
+            },
+            {
+              "text": "pricing",
+              "start": 2.74,
+              "end": 3.32
+            },
+            {
+              "text": "and",
+              "start": 3.36,
+              "end": 3.46
+            },
+            {
+              "text": "is",
+              "start": 3.5,
+              "end": 3.62
+            },
+            {
+              "text": "nervous",
+              "start": 3.68,
+              "end": 4.019
+            },
+            {
+              "text": "about",
+              "start": 4.08,
+              "end": 4.32
+            },
+            {
+              "text": "cost",
+              "start": 4.38,
+              "end": 4.82
+            },
+            {
+              "text": "gets",
+              "start": 5.36,
+              "end": 5.56
+            },
+            {
+              "text": "you",
+              "start": 5.6,
+              "end": 5.68
+            },
+            {
+              "text": "something",
+              "start": 5.72,
+              "end": 6.04
+            },
+            {
+              "text": "you",
+              "start": 6.08,
+              "end": 6.14
+            },
+            {
+              "text": "would",
+              "start": 6.16,
+              "end": 6.36
+            },
+            {
+              "text": "actually",
+              "start": 6.46,
+              "end": 6.96
+            },
+            {
+              "text": "send",
+              "start": 7.02,
+              "end": 7.44
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/s241002.wav",
+        "text": "[warm] \"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "plainText": "\"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 138,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 7.2,
+        "creditsMeasured": 139,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:19:28.411Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 47,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 7.2,
+          "leadSeconds": 0.15,
+          "trailSeconds": 0.12,
+          "speechEnd": 7.08,
+          "gaps": [],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -42.3,
+          "endEdgeDb": -79.6,
+          "peakDbfs": -0.3,
+          "integratedLufs": -13.7,
+          "speechDb": -13.28,
+          "transcript": "Write a follow-up to a bakery owner who asked about pricing and is nervous about cost gets you something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.053,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.18,
+              "end": 0.36
+            },
+            {
+              "text": "a",
+              "start": 0.4,
+              "end": 0.48
+            },
+            {
+              "text": "follow-up",
+              "start": 0.52,
+              "end": 0.98
+            },
+            {
+              "text": "to",
+              "start": 1.02,
+              "end": 1.08
+            },
+            {
+              "text": "a",
+              "start": 1.12,
+              "end": 1.18
+            },
+            {
+              "text": "bakery",
+              "start": 1.22,
+              "end": 1.58
+            },
+            {
+              "text": "owner",
+              "start": 1.64,
+              "end": 1.92
+            },
+            {
+              "text": "who",
+              "start": 1.98,
+              "end": 2.1
+            },
+            {
+              "text": "asked",
+              "start": 2.2,
+              "end": 2.38
+            },
+            {
+              "text": "about",
+              "start": 2.42,
+              "end": 2.62
+            },
+            {
+              "text": "pricing",
+              "start": 2.66,
+              "end": 3.18
+            },
+            {
+              "text": "and",
+              "start": 3.22,
+              "end": 3.32
+            },
+            {
+              "text": "is",
+              "start": 3.38,
+              "end": 3.5
+            },
+            {
+              "text": "nervous",
+              "start": 3.54,
+              "end": 3.84
+            },
+            {
+              "text": "about",
+              "start": 3.9,
+              "end": 4.12
+            },
+            {
+              "text": "cost",
+              "start": 4.18,
+              "end": 4.6
+            },
+            {
+              "text": "gets",
+              "start": 5.06,
+              "end": 5.24
+            },
+            {
+              "text": "you",
+              "start": 5.28,
+              "end": 5.38
+            },
+            {
+              "text": "something",
+              "start": 5.42,
+              "end": 5.74
+            },
+            {
+              "text": "you",
+              "start": 5.78,
+              "end": 5.84
+            },
+            {
+              "text": "would",
+              "start": 5.86,
+              "end": 6.04
+            },
+            {
+              "text": "actually",
+              "start": 6.16,
+              "end": 6.62
+            },
+            {
+              "text": "send",
+              "start": 6.68,
+              "end": 7.04
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/s241003.wav",
+        "text": "[warm] \"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "plainText": "\"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 138,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 7.44,
+        "creditsMeasured": 139,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:19:37.286Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 48,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 7.44,
+          "leadSeconds": 0.05,
+          "trailSeconds": 0,
+          "speechEnd": 7.44,
+          "gaps": [
+            {
+              "at": 4.88,
+              "seconds": 0.27,
+              "after": "cost"
+            }
+          ],
+          "maxGapInPhrase": 0.27,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -55.3,
+          "endEdgeDb": -24.3,
+          "peakDbfs": -0.3,
+          "integratedLufs": -13,
+          "speechDb": -12.65,
+          "transcript": "Write a follow-up to a bakery owner who asked about pricing and is nervous about cost gets you something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "and",
+            "you"
+          ],
+          "minLogprob": -0.046,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.08,
+              "end": 0.28
+            },
+            {
+              "text": "a",
+              "start": 0.32,
+              "end": 0.4
+            },
+            {
+              "text": "follow-up",
+              "start": 0.44,
+              "end": 0.9
+            },
+            {
+              "text": "to",
+              "start": 0.94,
+              "end": 1.04
+            },
+            {
+              "text": "a",
+              "start": 1.08,
+              "end": 1.14
+            },
+            {
+              "text": "bakery",
+              "start": 1.18,
+              "end": 1.52
+            },
+            {
+              "text": "owner",
+              "start": 1.6,
+              "end": 1.88
+            },
+            {
+              "text": "who",
+              "start": 1.92,
+              "end": 2.06
+            },
+            {
+              "text": "asked",
+              "start": 2.16,
+              "end": 2.36
+            },
+            {
+              "text": "about",
+              "start": 2.42,
+              "end": 2.64
+            },
+            {
+              "text": "pricing",
+              "start": 2.68,
+              "end": 3.18
+            },
+            {
+              "text": "and",
+              "start": 3.22,
+              "end": 3.3
+            },
+            {
+              "text": "is",
+              "start": 3.36,
+              "end": 3.46
+            },
+            {
+              "text": "nervous",
+              "start": 3.52,
+              "end": 3.8
+            },
+            {
+              "text": "about",
+              "start": 3.86,
+              "end": 4.1
+            },
+            {
+              "text": "cost",
+              "start": 4.14,
+              "end": 4.62
+            },
+            {
+              "text": "gets",
+              "start": 5.24,
+              "end": 5.44
+            },
+            {
+              "text": "you",
+              "start": 5.48,
+              "end": 5.58
+            },
+            {
+              "text": "something",
+              "start": 5.62,
+              "end": 5.98
+            },
+            {
+              "text": "you",
+              "start": 6.02,
+              "end": 6.08
+            },
+            {
+              "text": "would",
+              "start": 6.12,
+              "end": 6.26
+            },
+            {
+              "text": "actually",
+              "start": 6.36,
+              "end": 6.72
+            },
+            {
+              "text": "send",
+              "start": 6.86,
+              "end": 7.24
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/s241004.wav",
+        "text": "[warm] \"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "plainText": "\"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 138,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 7.92,
+        "creditsMeasured": 185,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:19:45.662Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 5,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 7.92,
+          "leadSeconds": 0.11,
+          "trailSeconds": 0,
+          "speechEnd": 7.92,
+          "gaps": [
+            {
+              "at": 4.96,
+              "seconds": 0.22,
+              "after": "cost"
+            }
+          ],
+          "maxGapInPhrase": 0.22,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -42.2,
+          "endEdgeDb": -16.3,
+          "peakDbfs": -0.4,
+          "integratedLufs": -13.3,
+          "speechDb": -12.91,
+          "transcript": "Write a follow-up to a bakery owner who asked about pricing and is nervous about cost gets you something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.101,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.14,
+              "end": 0.3
+            },
+            {
+              "text": "a",
+              "start": 0.34,
+              "end": 0.4
+            },
+            {
+              "text": "follow-up",
+              "start": 0.46,
+              "end": 0.9
+            },
+            {
+              "text": "to",
+              "start": 0.94,
+              "end": 1.02
+            },
+            {
+              "text": "a",
+              "start": 1.08,
+              "end": 1.12
+            },
+            {
+              "text": "bakery",
+              "start": 1.16,
+              "end": 1.52
+            },
+            {
+              "text": "owner",
+              "start": 1.6,
+              "end": 1.86
+            },
+            {
+              "text": "who",
+              "start": 1.92,
+              "end": 2.04
+            },
+            {
+              "text": "asked",
+              "start": 2.12,
+              "end": 2.36
+            },
+            {
+              "text": "about",
+              "start": 2.4,
+              "end": 2.64
+            },
+            {
+              "text": "pricing",
+              "start": 2.68,
+              "end": 3.2
+            },
+            {
+              "text": "and",
+              "start": 3.24,
+              "end": 3.34
+            },
+            {
+              "text": "is",
+              "start": 3.4,
+              "end": 3.52
+            },
+            {
+              "text": "nervous",
+              "start": 3.58,
+              "end": 3.9
+            },
+            {
+              "text": "about",
+              "start": 3.96,
+              "end": 4.2
+            },
+            {
+              "text": "cost",
+              "start": 4.26,
+              "end": 4.68
+            },
+            {
+              "text": "gets",
+              "start": 5.26,
+              "end": 5.48
+            },
+            {
+              "text": "you",
+              "start": 5.52,
+              "end": 5.64
+            },
+            {
+              "text": "something",
+              "start": 5.72,
+              "end": 6.24
+            },
+            {
+              "text": "you",
+              "start": 6.3,
+              "end": 6.4
+            },
+            {
+              "text": "would",
+              "start": 6.42,
+              "end": 6.64
+            },
+            {
+              "text": "actually",
+              "start": 6.76,
+              "end": 7.2
+            },
+            {
+              "text": "send",
+              "start": 7.26,
+              "end": 7.62
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241001.wav",
+        "text": "[confident] Give it the brief, not the task. Then you decide.",
+        "plainText": "Give it the brief, not the task. Then you decide.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 3.76,
+        "creditsMeasured": 108,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:19:53.546Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 3,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 3.76,
+          "leadSeconds": 0.07,
+          "trailSeconds": 0,
+          "speechEnd": 3.76,
+          "gaps": [
+            {
+              "at": 0.96,
+              "seconds": 0.14,
+              "after": "brief,"
+            },
+            {
+              "at": 2.01,
+              "seconds": 0.33,
+              "after": "task."
+            },
+            {
+              "at": 2.77,
+              "seconds": 0.18,
+              "after": "Then"
+            }
+          ],
+          "maxGapInPhrase": 0.18,
+          "maxGapAtBoundary": 0.33,
+          "startEdgeDb": -80,
+          "endEdgeDb": -20.9,
+          "peakDbfs": 0,
+          "integratedLufs": -12.9,
+          "speechDb": -12.17,
+          "transcript": "Give it the brief, not the task. Then you decide",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.025,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.14,
+              "end": 0.26
+            },
+            {
+              "text": "it",
+              "start": 0.28,
+              "end": 0.36
+            },
+            {
+              "text": "the",
+              "start": 0.38,
+              "end": 0.46
+            },
+            {
+              "text": "brief,",
+              "start": 0.5,
+              "end": 0.88
+            },
+            {
+              "text": "not",
+              "start": 1.18,
+              "end": 1.38
+            },
+            {
+              "text": "the",
+              "start": 1.4,
+              "end": 1.48
+            },
+            {
+              "text": "task.",
+              "start": 1.54,
+              "end": 2.02
+            },
+            {
+              "text": "Then",
+              "start": 2.44,
+              "end": 2.7
+            },
+            {
+              "text": "you",
+              "start": 3.04,
+              "end": 3.14
+            },
+            {
+              "text": "decide",
+              "start": 3.18,
+              "end": 3.72
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241002.wav",
+        "text": "[confident] Give it the brief, not the task. Then you decide.",
+        "plainText": "Give it the brief, not the task. Then you decide.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 3.28,
+        "creditsMeasured": 123,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:20:01.306Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 4,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 3.28,
+          "leadSeconds": 0.05,
+          "trailSeconds": 0.01,
+          "speechEnd": 3.27,
+          "gaps": [
+            {
+              "at": 1,
+              "seconds": 0.18,
+              "after": "brief,"
+            },
+            {
+              "at": 2.02,
+              "seconds": 0.35,
+              "after": "task."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.35,
+          "startEdgeDb": -78.9,
+          "endEdgeDb": -38.8,
+          "peakDbfs": -0.1,
+          "integratedLufs": -12.5,
+          "speechDb": -12.09,
+          "transcript": "Give it the brief, not the task. Then you decide",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the",
+            "you"
+          ],
+          "minLogprob": -0.04,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.14,
+              "end": 0.24
+            },
+            {
+              "text": "it",
+              "start": 0.28,
+              "end": 0.34
+            },
+            {
+              "text": "the",
+              "start": 0.38,
+              "end": 0.44
+            },
+            {
+              "text": "brief,",
+              "start": 0.52,
+              "end": 0.94
+            },
+            {
+              "text": "not",
+              "start": 1.24,
+              "end": 1.42
+            },
+            {
+              "text": "the",
+              "start": 1.46,
+              "end": 1.54
+            },
+            {
+              "text": "task.",
+              "start": 1.58,
+              "end": 2.04
+            },
+            {
+              "text": "Then",
+              "start": 2.46,
+              "end": 2.64
+            },
+            {
+              "text": "you",
+              "start": 2.68,
+              "end": 2.76
+            },
+            {
+              "text": "decide",
+              "start": 2.78,
+              "end": 3.24
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241003.wav",
+        "text": "[confident] Give it the brief, not the task. Then you decide.",
+        "plainText": "Give it the brief, not the task. Then you decide.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 3.36,
+        "creditsMeasured": 123,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:20:09.088Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 4,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 3.36,
+          "leadSeconds": 0.09,
+          "trailSeconds": 0,
+          "speechEnd": 3.36,
+          "gaps": [
+            {
+              "at": 1.86,
+              "seconds": 0.26,
+              "after": "task."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.26,
+          "startEdgeDb": -73.4,
+          "endEdgeDb": -26.1,
+          "peakDbfs": -0.7,
+          "integratedLufs": -13.7,
+          "speechDb": -12.82,
+          "transcript": "Give it the brief, not the task. Then you decide",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.056,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.14,
+              "end": 0.24
+            },
+            {
+              "text": "it",
+              "start": 0.28,
+              "end": 0.34
+            },
+            {
+              "text": "the",
+              "start": 0.38,
+              "end": 0.46
+            },
+            {
+              "text": "brief,",
+              "start": 0.5,
+              "end": 0.86
+            },
+            {
+              "text": "not",
+              "start": 1.08,
+              "end": 1.26
+            },
+            {
+              "text": "the",
+              "start": 1.28,
+              "end": 1.36
+            },
+            {
+              "text": "task.",
+              "start": 1.4,
+              "end": 1.84
+            },
+            {
+              "text": "Then",
+              "start": 2.24,
+              "end": 2.48
+            },
+            {
+              "text": "you",
+              "start": 2.72,
+              "end": 2.8
+            },
+            {
+              "text": "decide",
+              "start": 2.84,
+              "end": 3.32
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241004.wav",
+        "text": "[confident] Give it the brief, not the task. Then you decide.",
+        "plainText": "Give it the brief, not the task. Then you decide.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 4.16,
+        "creditsMeasured": 61,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:20:17.062Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 2,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 4.16,
+          "leadSeconds": 0.11,
+          "trailSeconds": 0,
+          "speechEnd": 4.16,
+          "gaps": [
+            {
+              "at": 1.2,
+              "seconds": 0.13,
+              "after": "brief,"
+            },
+            {
+              "at": 2.28,
+              "seconds": 0.39,
+              "after": "task."
+            },
+            {
+              "at": 3.08,
+              "seconds": 0.26,
+              "after": "Then"
+            }
+          ],
+          "maxGapInPhrase": 0.26,
+          "maxGapAtBoundary": 0.39,
+          "startEdgeDb": -42.4,
+          "endEdgeDb": -16.5,
+          "peakDbfs": 0,
+          "integratedLufs": -13.4,
+          "speechDb": -12.55,
+          "transcript": "Give it the brief, not the task. Then you decide",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": -0.005,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.22,
+              "end": 0.32
+            },
+            {
+              "text": "it",
+              "start": 0.36,
+              "end": 0.46
+            },
+            {
+              "text": "the",
+              "start": 0.5,
+              "end": 0.62
+            },
+            {
+              "text": "brief,",
+              "start": 0.68,
+              "end": 1.12
+            },
+            {
+              "text": "not",
+              "start": 1.4,
+              "end": 1.58
+            },
+            {
+              "text": "the",
+              "start": 1.62,
+              "end": 1.7
+            },
+            {
+              "text": "task.",
+              "start": 1.76,
+              "end": 2.26
+            },
+            {
+              "text": "Then",
+              "start": 2.76,
+              "end": 3.02
+            },
+            {
+              "text": "you",
+              "start": 3.48,
+              "end": 3.6
+            },
+            {
+              "text": "decide",
+              "start": 3.64,
+              "end": 4.12
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241001.wav",
+        "text": "[warm] Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "plainText": "Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 82,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 6.16,
+        "creditsMeasured": 82,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:20:25.508Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 91,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 6.16,
+          "leadSeconds": 0.05,
+          "trailSeconds": 0,
+          "speechEnd": 6.16,
+          "gaps": [],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -73.3,
+          "endEdgeDb": -20.2,
+          "peakDbfs": -0.6,
+          "integratedLufs": -12.9,
+          "speechDb": -12.51,
+          "transcript": "Free AI lessons at kandaperformancefl.com/training/ai",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.03,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.1,
+              "end": 0.28
+            },
+            {
+              "text": "AI",
+              "start": 0.44,
+              "end": 0.72
+            },
+            {
+              "text": "lessons",
+              "start": 0.8,
+              "end": 1.2
+            },
+            {
+              "text": "at",
+              "start": 1.26,
+              "end": 1.36
+            },
+            {
+              "text": "kandaperformancefl.com/training/ai",
+              "start": 1.46,
+              "end": 5.7
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241002.wav",
+        "text": "[warm] Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "plainText": "Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 82,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 6.32,
+        "creditsMeasured": 172,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:20:39.685Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 5,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 6.32,
+          "leadSeconds": 0.09,
+          "trailSeconds": 0,
+          "speechEnd": 6.32,
+          "gaps": [
+            {
+              "at": 5.02,
+              "seconds": 0.15,
+              "after": "at"
+            }
+          ],
+          "maxGapInPhrase": 0.15,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -60.6,
+          "endEdgeDb": -9.3,
+          "peakDbfs": -0.7,
+          "integratedLufs": -13.5,
+          "speechDb": -12.97,
+          "transcript": "Free AI lessons at knaperformancefl.com/training/ai",
+          "wordErrors": 6,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.043,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.16,
+              "end": 0.34
+            },
+            {
+              "text": "AI",
+              "start": 0.5,
+              "end": 0.78
+            },
+            {
+              "text": "lessons",
+              "start": 0.88,
+              "end": 1.32
+            },
+            {
+              "text": "at",
+              "start": 1.44,
+              "end": 1.56
+            },
+            {
+              "text": "knaperformancefl.com/training/ai",
+              "start": 1.62,
+              "end": 5.86
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241003.wav",
+        "text": "[warm] Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "plainText": "Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 82,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 6.56,
+        "creditsMeasured": 172,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:20:50.129Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 3,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 6.56,
+          "leadSeconds": 0.12,
+          "trailSeconds": 0.01,
+          "speechEnd": 6.55,
+          "gaps": [],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -65.4,
+          "endEdgeDb": -35.4,
+          "peakDbfs": -0.5,
+          "integratedLufs": -13.4,
+          "speechDb": -12.89,
+          "transcript": "Free AI lessons at kandaperformancefl.com/training/AI",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.061,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.14,
+              "end": 0.32
+            },
+            {
+              "text": "AI",
+              "start": 0.46,
+              "end": 0.7
+            },
+            {
+              "text": "lessons",
+              "start": 0.78,
+              "end": 1.16
+            },
+            {
+              "text": "at",
+              "start": 1.2,
+              "end": 1.32
+            },
+            {
+              "text": "kandaperformancefl.com/training/AI",
+              "start": 1.42,
+              "end": 6.5
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241004.wav",
+        "text": "[warm] Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "plainText": "Free AI lessons at K and A Performance F L dot com slash training slash AI.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 82,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 6.64,
+        "creditsMeasured": 170,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T00:20:58.881Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 5,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 6.64,
+          "leadSeconds": 0.12,
+          "trailSeconds": 0,
+          "speechEnd": 6.64,
+          "gaps": [],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -77.3,
+          "endEdgeDb": -12,
+          "peakDbfs": -0.2,
+          "integratedLufs": -13.7,
+          "speechDb": -13.24,
+          "transcript": "Free AI lessons at kandaperformancefl.com/training/ai",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.078,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.16,
+              "end": 0.34
+            },
+            {
+              "text": "AI",
+              "start": 0.48,
+              "end": 0.76
+            },
+            {
+              "text": "lessons",
+              "start": 0.84,
+              "end": 1.26
+            },
+            {
+              "text": "at",
+              "start": 1.32,
+              "end": 1.42
+            },
+            {
+              "text": "kandaperformancefl.com/training/ai",
+              "start": 1.56,
+              "end": 6.12
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241001.wav",
+        "text": "[confident] 'Write a follow up email' gets you a form letter.",
+        "plainText": "'Write a follow up email' gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.8,
+        "creditsMeasured": 61,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:12:23.639Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.8,
+          "leadSeconds": 0,
+          "trailSeconds": 0,
+          "speechEnd": 2.8,
+          "gaps": [
+            {
+              "at": 1.36,
+              "seconds": 0.35,
+              "after": "email"
+            }
+          ],
+          "maxGapInPhrase": 0.35,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -24.4,
+          "endEdgeDb": -11.1,
+          "peakDbfs": -0.4,
+          "integratedLufs": -12.2,
+          "speechDb": -11.71,
+          "transcript": "Write a follow-up email gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.002,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.08,
+              "end": 0.26
+            },
+            {
+              "text": "a",
+              "start": 0.3,
+              "end": 0.38
+            },
+            {
+              "text": "follow-up",
+              "start": 0.42,
+              "end": 0.82
+            },
+            {
+              "text": "email",
+              "start": 0.92,
+              "end": 1.3
+            },
+            {
+              "text": "gets",
+              "start": 1.8,
+              "end": 1.96
+            },
+            {
+              "text": "you",
+              "start": 2,
+              "end": 2.08
+            },
+            {
+              "text": "a",
+              "start": 2.12,
+              "end": 2.2
+            },
+            {
+              "text": "form",
+              "start": 2.24,
+              "end": 2.46
+            },
+            {
+              "text": "letter",
+              "start": 2.54,
+              "end": 2.76
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241002.wav",
+        "text": "[confident] 'Write a follow up email' gets you a form letter.",
+        "plainText": "'Write a follow up email' gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.96,
+        "creditsMeasured": 61,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:12:31.719Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.96,
+          "leadSeconds": 0.11,
+          "trailSeconds": 0,
+          "speechEnd": 2.96,
+          "gaps": [
+            {
+              "at": 1.53,
+              "seconds": 0.2,
+              "after": "email"
+            }
+          ],
+          "maxGapInPhrase": 0.2,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -62.5,
+          "endEdgeDb": -24.5,
+          "peakDbfs": -0.3,
+          "integratedLufs": -12.1,
+          "speechDb": -11.49,
+          "transcript": "Write a follow-up email gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.001,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.18,
+              "end": 0.38
+            },
+            {
+              "text": "a",
+              "start": 0.42,
+              "end": 0.48
+            },
+            {
+              "text": "follow-up",
+              "start": 0.52,
+              "end": 0.94
+            },
+            {
+              "text": "email",
+              "start": 1.04,
+              "end": 1.46
+            },
+            {
+              "text": "gets",
+              "start": 1.82,
+              "end": 2
+            },
+            {
+              "text": "you",
+              "start": 2.04,
+              "end": 2.12
+            },
+            {
+              "text": "a",
+              "start": 2.16,
+              "end": 2.26
+            },
+            {
+              "text": "form",
+              "start": 2.3,
+              "end": 2.52
+            },
+            {
+              "text": "letter",
+              "start": 2.6,
+              "end": 2.88
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241003.wav",
+        "text": "[confident] 'Write a follow up email' gets you a form letter.",
+        "plainText": "'Write a follow up email' gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.72,
+        "creditsMeasured": 61,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:12:39.416Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 84,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 2.72,
+          "leadSeconds": 0.03,
+          "trailSeconds": 0,
+          "speechEnd": 2.72,
+          "gaps": [
+            {
+              "at": 1.31,
+              "seconds": 0.29,
+              "after": "email"
+            }
+          ],
+          "maxGapInPhrase": 0.29,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -73.2,
+          "endEdgeDb": -12.2,
+          "peakDbfs": -0.1,
+          "integratedLufs": -12.5,
+          "speechDb": -11.82,
+          "transcript": "Write a follow-up email gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.708,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.08,
+              "end": 0.26
+            },
+            {
+              "text": "a",
+              "start": 0.3,
+              "end": 0.36
+            },
+            {
+              "text": "follow-up",
+              "start": 0.4,
+              "end": 0.8
+            },
+            {
+              "text": "email",
+              "start": 0.88,
+              "end": 1.26
+            },
+            {
+              "text": "gets",
+              "start": 1.68,
+              "end": 1.86
+            },
+            {
+              "text": "you",
+              "start": 1.9,
+              "end": 1.98
+            },
+            {
+              "text": "a",
+              "start": 2.02,
+              "end": 2.1
+            },
+            {
+              "text": "form",
+              "start": 2.16,
+              "end": 2.4
+            },
+            {
+              "text": "letter",
+              "start": 2.44,
+              "end": 2.66
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "weak",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241004.wav",
+        "text": "[confident] 'Write a follow up email' gets you a form letter.",
+        "plainText": "'Write a follow up email' gets you a form letter.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 61,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 3.12,
+        "creditsMeasured": 63,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:12:47.125Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 84,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 3.12,
+          "leadSeconds": 0.12,
+          "trailSeconds": 0,
+          "speechEnd": 3.12,
+          "gaps": [
+            {
+              "at": 1.53,
+              "seconds": 0.33,
+              "after": "email"
+            }
+          ],
+          "maxGapInPhrase": 0.33,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -60.5,
+          "endEdgeDb": -21.2,
+          "peakDbfs": -0.2,
+          "integratedLufs": -12.8,
+          "speechDb": -12.18,
+          "transcript": "Write a follow-up email gets you a form letter",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.053,
+          "words": [
+            {
+              "text": "Write",
+              "start": 0.18,
+              "end": 0.38
+            },
+            {
+              "text": "a",
+              "start": 0.42,
+              "end": 0.5
+            },
+            {
+              "text": "follow-up",
+              "start": 0.54,
+              "end": 0.98
+            },
+            {
+              "text": "email",
+              "start": 1.06,
+              "end": 1.46
+            },
+            {
+              "text": "gets",
+              "start": 1.96,
+              "end": 2.18
+            },
+            {
+              "text": "you",
+              "start": 2.22,
+              "end": 2.3
+            },
+            {
+              "text": "a",
+              "start": 2.36,
+              "end": 2.46
+            },
+            {
+              "text": "form",
+              "start": 2.5,
+              "end": 2.74
+            },
+            {
+              "text": "letter",
+              "start": 2.82,
+              "end": 3.06
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241001.wav",
+        "text": "[warm] Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "plainText": "Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 101,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 5.12,
+        "creditsMeasured": 103,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:12:55.402Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 85,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 5.12,
+          "leadSeconds": 0.05,
+          "trailSeconds": 0,
+          "speechEnd": 5.12,
+          "gaps": [
+            {
+              "at": 2.66,
+              "seconds": 0.16,
+              "after": "cost"
+            }
+          ],
+          "maxGapInPhrase": 0.16,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -81.1,
+          "endEdgeDb": -18.8,
+          "peakDbfs": -0.4,
+          "integratedLufs": -13.5,
+          "speechDb": -12.88,
+          "transcript": "Tell it the bakery owner is nervous about cost and you get something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.313,
+          "words": [
+            {
+              "text": "Tell",
+              "start": 0.08,
+              "end": 0.22
+            },
+            {
+              "text": "it",
+              "start": 0.26,
+              "end": 0.34
+            },
+            {
+              "text": "the",
+              "start": 0.38,
+              "end": 0.46
+            },
+            {
+              "text": "bakery",
+              "start": 0.5,
+              "end": 0.86
+            },
+            {
+              "text": "owner",
+              "start": 0.92,
+              "end": 1.14
+            },
+            {
+              "text": "is",
+              "start": 1.18,
+              "end": 1.32
+            },
+            {
+              "text": "nervous",
+              "start": 1.38,
+              "end": 1.68
+            },
+            {
+              "text": "about",
+              "start": 1.74,
+              "end": 1.98
+            },
+            {
+              "text": "cost",
+              "start": 2.02,
+              "end": 2.48
+            },
+            {
+              "text": "and",
+              "start": 2.88,
+              "end": 3
+            },
+            {
+              "text": "you",
+              "start": 3.02,
+              "end": 3.1
+            },
+            {
+              "text": "get",
+              "start": 3.14,
+              "end": 3.28
+            },
+            {
+              "text": "something",
+              "start": 3.32,
+              "end": 3.66
+            },
+            {
+              "text": "you",
+              "start": 3.72,
+              "end": 3.8
+            },
+            {
+              "text": "would",
+              "start": 3.82,
+              "end": 4.059
+            },
+            {
+              "text": "actually",
+              "start": 4.16,
+              "end": 4.6
+            },
+            {
+              "text": "send",
+              "start": 4.72,
+              "end": 5.08
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241002.wav",
+        "text": "[warm] Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "plainText": "Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 101,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 5.36,
+        "creditsMeasured": 103,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:13:04.430Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 85,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 5.36,
+          "leadSeconds": 0.09,
+          "trailSeconds": 0.3,
+          "speechEnd": 5.06,
+          "gaps": [
+            {
+              "at": 2.76,
+              "seconds": 0.17,
+              "after": "cost"
+            }
+          ],
+          "maxGapInPhrase": 0.17,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -81.7,
+          "endEdgeDb": -45.6,
+          "peakDbfs": -0.1,
+          "integratedLufs": -13.1,
+          "speechDb": -12.44,
+          "transcript": "Tell it the bakery owner is nervous about cost and you get something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.16,
+          "words": [
+            {
+              "text": "Tell",
+              "start": 0.12,
+              "end": 0.26
+            },
+            {
+              "text": "it",
+              "start": 0.3,
+              "end": 0.44
+            },
+            {
+              "text": "the",
+              "start": 0.48,
+              "end": 0.56
+            },
+            {
+              "text": "bakery",
+              "start": 0.6,
+              "end": 0.94
+            },
+            {
+              "text": "owner",
+              "start": 1,
+              "end": 1.22
+            },
+            {
+              "text": "is",
+              "start": 1.28,
+              "end": 1.42
+            },
+            {
+              "text": "nervous",
+              "start": 1.46,
+              "end": 1.76
+            },
+            {
+              "text": "about",
+              "start": 1.82,
+              "end": 2.06
+            },
+            {
+              "text": "cost",
+              "start": 2.12,
+              "end": 2.54
+            },
+            {
+              "text": "and",
+              "start": 2.96,
+              "end": 3.04
+            },
+            {
+              "text": "you",
+              "start": 3.08,
+              "end": 3.16
+            },
+            {
+              "text": "get",
+              "start": 3.2,
+              "end": 3.36
+            },
+            {
+              "text": "something",
+              "start": 3.4,
+              "end": 3.74
+            },
+            {
+              "text": "you",
+              "start": 3.78,
+              "end": 3.84
+            },
+            {
+              "text": "would",
+              "start": 3.86,
+              "end": 4.019
+            },
+            {
+              "text": "actually",
+              "start": 4.14,
+              "end": 4.52
+            },
+            {
+              "text": "send",
+              "start": 4.64,
+              "end": 5.04
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241003.wav",
+        "text": "[warm] Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "plainText": "Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 101,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 5.28,
+        "creditsMeasured": 103,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:13:12.982Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 2,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 5.28,
+          "leadSeconds": 0.1,
+          "trailSeconds": 0,
+          "speechEnd": 5.28,
+          "gaps": [
+            {
+              "at": 2.8,
+              "seconds": 0.16,
+              "after": "cost"
+            }
+          ],
+          "maxGapInPhrase": 0.16,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -51,
+          "endEdgeDb": -12.8,
+          "peakDbfs": -0.6,
+          "integratedLufs": -13.8,
+          "speechDb": -13.29,
+          "transcript": "Tell it the bakery owner is nervous about cost and you get something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.313,
+          "words": [
+            {
+              "text": "Tell",
+              "start": 0.12,
+              "end": 0.26
+            },
+            {
+              "text": "it",
+              "start": 0.3,
+              "end": 0.38
+            },
+            {
+              "text": "the",
+              "start": 0.42,
+              "end": 0.52
+            },
+            {
+              "text": "bakery",
+              "start": 0.56,
+              "end": 0.9
+            },
+            {
+              "text": "owner",
+              "start": 0.98,
+              "end": 1.18
+            },
+            {
+              "text": "is",
+              "start": 1.24,
+              "end": 1.38
+            },
+            {
+              "text": "nervous",
+              "start": 1.44,
+              "end": 1.76
+            },
+            {
+              "text": "about",
+              "start": 1.82,
+              "end": 2.06
+            },
+            {
+              "text": "cost",
+              "start": 2.12,
+              "end": 2.58
+            },
+            {
+              "text": "and",
+              "start": 3,
+              "end": 3.12
+            },
+            {
+              "text": "you",
+              "start": 3.16,
+              "end": 3.24
+            },
+            {
+              "text": "get",
+              "start": 3.28,
+              "end": 3.46
+            },
+            {
+              "text": "something",
+              "start": 3.5,
+              "end": 3.88
+            },
+            {
+              "text": "you",
+              "start": 3.92,
+              "end": 4
+            },
+            {
+              "text": "would",
+              "start": 4.019,
+              "end": 4.22
+            },
+            {
+              "text": "actually",
+              "start": 4.32,
+              "end": 4.8
+            },
+            {
+              "text": "send",
+              "start": 4.86,
+              "end": 5.26
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "good",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241004.wav",
+        "text": "[warm] Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "plainText": "Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 101,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 5.28,
+        "creditsMeasured": 101,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:13:21.398Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 2,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 5.28,
+          "leadSeconds": 0.07,
+          "trailSeconds": 0,
+          "speechEnd": 5.28,
+          "gaps": [
+            {
+              "at": 2.87,
+              "seconds": 0.14,
+              "after": "cost"
+            }
+          ],
+          "maxGapInPhrase": 0.14,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -49.9,
+          "endEdgeDb": -32.4,
+          "peakDbfs": -1.2,
+          "integratedLufs": -13.1,
+          "speechDb": -12.57,
+          "transcript": "Tell it the bakery owner is nervous about cost and you get something you would actually send",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "you"
+          ],
+          "minLogprob": -0.313,
+          "words": [
+            {
+              "text": "Tell",
+              "start": 0.1,
+              "end": 0.26
+            },
+            {
+              "text": "it",
+              "start": 0.3,
+              "end": 0.4
+            },
+            {
+              "text": "the",
+              "start": 0.44,
+              "end": 0.54
+            },
+            {
+              "text": "bakery",
+              "start": 0.58,
+              "end": 0.92
+            },
+            {
+              "text": "owner",
+              "start": 1.04,
+              "end": 1.28
+            },
+            {
+              "text": "is",
+              "start": 1.32,
+              "end": 1.48
+            },
+            {
+              "text": "nervous",
+              "start": 1.54,
+              "end": 1.84
+            },
+            {
+              "text": "about",
+              "start": 1.9,
+              "end": 2.14
+            },
+            {
+              "text": "cost",
+              "start": 2.2,
+              "end": 2.66
+            },
+            {
+              "text": "and",
+              "start": 3.08,
+              "end": 3.18
+            },
+            {
+              "text": "you",
+              "start": 3.22,
+              "end": 3.28
+            },
+            {
+              "text": "get",
+              "start": 3.32,
+              "end": 3.48
+            },
+            {
+              "text": "something",
+              "start": 3.52,
+              "end": 3.88
+            },
+            {
+              "text": "you",
+              "start": 3.92,
+              "end": 4
+            },
+            {
+              "text": "would",
+              "start": 4.019,
+              "end": 4.2
+            },
+            {
+              "text": "actually",
+              "start": 4.32,
+              "end": 4.72
+            },
+            {
+              "text": "send",
+              "start": 4.86,
+              "end": 5.24
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241001.wav",
+        "text": "[confident] Give it the brief, not the task.",
+        "plainText": "Give it the brief, not the task.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.08,
+        "creditsMeasured": 44,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:13:28.776Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 49,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 2.08,
+          "leadSeconds": 0.06,
+          "trailSeconds": 0,
+          "speechEnd": 2.08,
+          "gaps": [
+            {
+              "at": 0.93,
+              "seconds": 0.22,
+              "after": "brief,"
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.22,
+          "startEdgeDb": -74.7,
+          "endEdgeDb": -17.6,
+          "peakDbfs": -0.5,
+          "integratedLufs": -13.5,
+          "speechDb": -12.92,
+          "transcript": "Give it the brief, not the task",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": 0,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.14,
+              "end": 0.24
+            },
+            {
+              "text": "it",
+              "start": 0.26,
+              "end": 0.34
+            },
+            {
+              "text": "the",
+              "start": 0.36,
+              "end": 0.46
+            },
+            {
+              "text": "brief,",
+              "start": 0.5,
+              "end": 0.88
+            },
+            {
+              "text": "not",
+              "start": 1.24,
+              "end": 1.42
+            },
+            {
+              "text": "the",
+              "start": 1.46,
+              "end": 1.52
+            },
+            {
+              "text": "task",
+              "start": 1.58,
+              "end": 2.02
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241002.wav",
+        "text": "[confident] Give it the brief, not the task.",
+        "plainText": "Give it the brief, not the task.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.4,
+        "creditsMeasured": 45,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:13:36.070Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 49,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 2.4,
+          "leadSeconds": 0.07,
+          "trailSeconds": 0,
+          "speechEnd": 2.4,
+          "gaps": [
+            {
+              "at": 1.1,
+              "seconds": 0.28,
+              "after": "brief,"
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.28,
+          "startEdgeDb": -69.1,
+          "endEdgeDb": -35.3,
+          "peakDbfs": 0,
+          "integratedLufs": -12.9,
+          "speechDb": -11.91,
+          "transcript": "Give it the brief, not the task",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.001,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.16,
+              "end": 0.28
+            },
+            {
+              "text": "it",
+              "start": 0.32,
+              "end": 0.44
+            },
+            {
+              "text": "the",
+              "start": 0.48,
+              "end": 0.58
+            },
+            {
+              "text": "brief,",
+              "start": 0.62,
+              "end": 1.06
+            },
+            {
+              "text": "not",
+              "start": 1.48,
+              "end": 1.68
+            },
+            {
+              "text": "the",
+              "start": 1.72,
+              "end": 1.8
+            },
+            {
+              "text": "task",
+              "start": 1.86,
+              "end": 2.36
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241003.wav",
+        "text": "[confident] Give it the brief, not the task.",
+        "plainText": "Give it the brief, not the task.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.4,
+        "creditsMeasured": 45,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:13:43.573Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 49,
+          "creditsBucket": "TTS"
+        },
+        "analysis": {
+          "durationSeconds": 2.4,
+          "leadSeconds": 0.07,
+          "trailSeconds": 0.05,
+          "speechEnd": 2.35,
+          "gaps": [
+            {
+              "at": 1.05,
+              "seconds": 0.22,
+              "after": "brief,"
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.22,
+          "startEdgeDb": -78.8,
+          "endEdgeDb": -70.1,
+          "peakDbfs": 0,
+          "integratedLufs": -12.4,
+          "speechDb": -11.36,
+          "transcript": "Give it the brief, not the task",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": 0,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.16,
+              "end": 0.28
+            },
+            {
+              "text": "it",
+              "start": 0.32,
+              "end": 0.42
+            },
+            {
+              "text": "the",
+              "start": 0.46,
+              "end": 0.52
+            },
+            {
+              "text": "brief,",
+              "start": 0.6,
+              "end": 1.02
+            },
+            {
+              "text": "not",
+              "start": 1.38,
+              "end": 1.68
+            },
+            {
+              "text": "the",
+              "start": 1.72,
+              "end": 1.82
+            },
+            {
+              "text": "task",
+              "start": 1.88,
+              "end": 2.38
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "rule",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241004.wav",
+        "text": "[confident] Give it the brief, not the task.",
+        "plainText": "Give it the brief, not the task.",
+        "tags": [
+          "confident"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.4,
+        "creditsMeasured": 94,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:14:05.668Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.4,
+          "leadSeconds": 0.03,
+          "trailSeconds": 0,
+          "speechEnd": 2.4,
+          "gaps": [
+            {
+              "at": 0.98,
+              "seconds": 0.24,
+              "after": "brief,"
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.24,
+          "startEdgeDb": -79.4,
+          "endEdgeDb": -28.9,
+          "peakDbfs": -0.3,
+          "integratedLufs": -12.6,
+          "speechDb": -11.99,
+          "transcript": "Give it the brief, not the task",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": 0,
+          "words": [
+            {
+              "text": "Give",
+              "start": 0.14,
+              "end": 0.26
+            },
+            {
+              "text": "it",
+              "start": 0.3,
+              "end": 0.38
+            },
+            {
+              "text": "the",
+              "start": 0.4,
+              "end": 0.48
+            },
+            {
+              "text": "brief,",
+              "start": 0.52,
+              "end": 0.92
+            },
+            {
+              "text": "not",
+              "start": 1.36,
+              "end": 1.72
+            },
+            {
+              "text": "the",
+              "start": 1.76,
+              "end": 1.84
+            },
+            {
+              "text": "task",
+              "start": 1.9,
+              "end": 2.36
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241001,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241001.wav",
+        "text": "[warm] Free AI lessons, link in the caption.",
+        "plainText": "Free AI lessons, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.56,
+        "creditsMeasured": 44,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:14:12.978Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241001.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.56,
+          "leadSeconds": 0.12,
+          "trailSeconds": 0,
+          "speechEnd": 2.56,
+          "gaps": [],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0,
+          "startEdgeDb": -42.8,
+          "endEdgeDb": -10.1,
+          "peakDbfs": 0,
+          "integratedLufs": -11.8,
+          "speechDb": -11.57,
+          "transcript": "Free AI lessons. Link in the caption",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.012,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.18,
+              "end": 0.4
+            },
+            {
+              "text": "AI",
+              "start": 0.54,
+              "end": 0.82
+            },
+            {
+              "text": "lessons.",
+              "start": 0.9,
+              "end": 1.38
+            },
+            {
+              "text": "Link",
+              "start": 1.6,
+              "end": 1.78
+            },
+            {
+              "text": "in",
+              "start": 1.82,
+              "end": 1.88
+            },
+            {
+              "text": "the",
+              "start": 1.9,
+              "end": 1.98
+            },
+            {
+              "text": "caption",
+              "start": 2.02,
+              "end": 2.5
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241002,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241002.wav",
+        "text": "[warm] Free AI lessons, link in the caption.",
+        "plainText": "Free AI lessons, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.72,
+        "creditsMeasured": 44,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:14:20.736Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241002.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.72,
+          "leadSeconds": 0.05,
+          "trailSeconds": 0,
+          "speechEnd": 2.72,
+          "gaps": [
+            {
+              "at": 1.38,
+              "seconds": 0.28,
+              "after": "lessons."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.28,
+          "startEdgeDb": -45.2,
+          "endEdgeDb": -19.7,
+          "peakDbfs": -0.3,
+          "integratedLufs": -11.4,
+          "speechDb": -10.93,
+          "transcript": "Free AI lessons. Link in the caption",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [],
+          "minLogprob": -0.002,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.06,
+              "end": 0.3
+            },
+            {
+              "text": "AI",
+              "start": 0.48,
+              "end": 0.74
+            },
+            {
+              "text": "lessons.",
+              "start": 0.82,
+              "end": 1.34
+            },
+            {
+              "text": "Link",
+              "start": 1.74,
+              "end": 1.96
+            },
+            {
+              "text": "in",
+              "start": 2,
+              "end": 2.06
+            },
+            {
+              "text": "the",
+              "start": 2.1,
+              "end": 2.18
+            },
+            {
+              "text": "caption",
+              "start": 2.22,
+              "end": 2.68
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241003,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241003.wav",
+        "text": "[warm] Free AI lessons, link in the caption.",
+        "plainText": "Free AI lessons, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.64,
+        "creditsMeasured": 44,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:14:27.872Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241003.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.64,
+          "leadSeconds": 0.03,
+          "trailSeconds": 0,
+          "speechEnd": 2.64,
+          "gaps": [
+            {
+              "at": 1.52,
+              "seconds": 0.18,
+              "after": "lessons."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.18,
+          "startEdgeDb": -62.6,
+          "endEdgeDb": -15.3,
+          "peakDbfs": -0.5,
+          "integratedLufs": -12.7,
+          "speechDb": -12.6,
+          "transcript": "Free AI lessons. Link in the caption",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": -0.005,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.1,
+              "end": 0.32
+            },
+            {
+              "text": "AI",
+              "start": 0.52,
+              "end": 0.82
+            },
+            {
+              "text": "lessons.",
+              "start": 0.92,
+              "end": 1.46
+            },
+            {
+              "text": "Link",
+              "start": 1.78,
+              "end": 1.94
+            },
+            {
+              "text": "in",
+              "start": 1.98,
+              "end": 2.04
+            },
+            {
+              "text": "the",
+              "start": 2.08,
+              "end": 2.14
+            },
+            {
+              "text": "caption",
+              "start": 2.2,
+              "end": 2.6
+            }
+          ]
+        }
+      },
+      {
+        "beatId": "cta",
+        "seed": 241004,
+        "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241004.wav",
+        "text": "[warm] Free AI lessons, link in the caption.",
+        "plainText": "Free AI lessons, link in the caption.",
+        "tags": [
+          "warm"
+        ],
+        "characters": 44,
+        "voiceId": "EXAVITQu4vr4xnSDxMaL",
+        "voiceName": "Sarah",
+        "model": "eleven_v3",
+        "mode": "natural",
+        "settings": {
+          "stability": 0.5
+        },
+        "outputFormat": "wav_44100",
+        "durationSeconds": 2.4,
+        "creditsMeasured": 44,
+        "creditsBucket": "TTS",
+        "createdAt": "2026-09-25T12:14:35.207Z",
+        "stt": {
+          "file": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241004.wav.stt.json",
+          "model": "scribe_v2",
+          "creditsMeasured": 1,
+          "creditsBucket": "STT"
+        },
+        "analysis": {
+          "durationSeconds": 2.4,
+          "leadSeconds": 0.02,
+          "trailSeconds": 0,
+          "speechEnd": 2.4,
+          "gaps": [
+            {
+              "at": 1.2,
+              "seconds": 0.16,
+              "after": "lessons."
+            }
+          ],
+          "maxGapInPhrase": 0,
+          "maxGapAtBoundary": 0.16,
+          "startEdgeDb": -42.3,
+          "endEdgeDb": -20.2,
+          "peakDbfs": -0.2,
+          "integratedLufs": -11.8,
+          "speechDb": -11.65,
+          "transcript": "Free AI lessons. Link in the caption",
+          "wordErrors": 0,
+          "audioEvents": [],
+          "spokenTag": false,
+          "shortWords": [
+            "the"
+          ],
+          "minLogprob": -0.007,
+          "words": [
+            {
+              "text": "Free",
+              "start": 0.06,
+              "end": 0.18
+            },
+            {
+              "text": "AI",
+              "start": 0.32,
+              "end": 0.58
+            },
+            {
+              "text": "lessons.",
+              "start": 0.66,
+              "end": 1.14
+            },
+            {
+              "text": "Link",
+              "start": 1.44,
+              "end": 1.64
+            },
+            {
+              "text": "in",
+              "start": 1.68,
+              "end": 1.74
+            },
+            {
+              "text": "the",
+              "start": 1.78,
+              "end": 1.84
+            },
+            {
+              "text": "caption",
+              "start": 1.9,
+              "end": 2.34
+            }
+          ]
+        }
+      }
+    ],
+    "kept": [
+      {
+        "beatId": "hook",
+        "file": "assets/audio/voice/brief-v3/natural/hook.wav",
+        "durationSeconds": 4.54,
+        "sourceFile": "assets/audio/voice/brief-v3/natural/takes/hook/s241001.wav",
+        "seed": 241001,
+        "words": [
+          {
+            "text": "Stop",
+            "start": 0.14,
+            "end": 0.4
+          },
+          {
+            "text": "asking",
+            "start": 0.5,
+            "end": 0.82
+          },
+          {
+            "text": "AI",
+            "start": 0.96,
+            "end": 1.28
+          },
+          {
+            "text": "to",
+            "start": 1.32,
+            "end": 1.38
+          },
+          {
+            "text": "write",
+            "start": 1.4,
+            "end": 1.6
+          },
+          {
+            "text": "the",
+            "start": 1.64,
+            "end": 1.76
+          },
+          {
+            "text": "email.",
+            "start": 1.84,
+            "end": 2.3
+          },
+          {
+            "text": "Tell",
+            "start": 2.88,
+            "end": 3.02
+          },
+          {
+            "text": "it",
+            "start": 3.06,
+            "end": 3.16
+          },
+          {
+            "text": "who",
+            "start": 3.2,
+            "end": 3.3
+          },
+          {
+            "text": "the",
+            "start": 3.36,
+            "end": 3.44
+          },
+          {
+            "text": "email",
+            "start": 3.5,
+            "end": 3.76
+          },
+          {
+            "text": "is",
+            "start": 3.82,
+            "end": 3.96
+          },
+          {
+            "text": "for",
+            "start": 4,
+            "end": 4.3
+          }
+        ],
+        "why": "Kept seed 241001: transcript \"Stop asking AI to write the email. Tell it who the email is for\", lead 0s, tail 0.2s, largest pause 0.48s, 4.56s raw, -12.4 LUFS (speech -11.87 dB), score 0.042 (level 0.0 dB off the read +0.01; length 4.56s against 4.60s +0.03). Others: seed 241003 score 1.863 (pause in phrase 0.27s +0.24; pause at break 0.69s +0.84; level -0.1 dB off the read +0.05; length 5.44s against 4.60s +0.73) | seed 241004 rejected: peaks at -0.1 dBFS | seed 241002 rejected: peaks at -0.1 dBFS."
+      },
+      {
+        "beatId": "weak",
+        "file": "assets/audio/voice/brief-v3/natural/weak.wav",
+        "durationSeconds": 2.97,
+        "sourceFile": "assets/audio/voice/brief-v3/natural/takes/weak/t1e55a968/s241002.wav",
+        "seed": 241002,
+        "words": [
+          {
+            "text": "Write",
+            "start": 0.13,
+            "end": 0.33
+          },
+          {
+            "text": "a",
+            "start": 0.37,
+            "end": 0.43
+          },
+          {
+            "text": "follow-up",
+            "start": 0.47,
+            "end": 0.89
+          },
+          {
+            "text": "email",
+            "start": 0.99,
+            "end": 1.41
+          },
+          {
+            "text": "gets",
+            "start": 1.77,
+            "end": 1.95
+          },
+          {
+            "text": "you",
+            "start": 1.99,
+            "end": 2.07
+          },
+          {
+            "text": "a",
+            "start": 2.11,
+            "end": 2.21
+          },
+          {
+            "text": "form",
+            "start": 2.25,
+            "end": 2.47
+          },
+          {
+            "text": "letter",
+            "start": 2.55,
+            "end": 2.83
+          }
+        ],
+        "why": "Kept seed 241002: transcript \"Write a follow-up email gets you a form letter\", lead 0.11s, tail 0s, largest pause 0.2s, 2.96s raw, -12.1 LUFS (speech -11.49 dB), score 0.251 (level 0.4 dB off the read +0.14; length 2.96s against 2.88s +0.11). Others: seed 241001 score 1.374 (pause in phrase 0.35s +1.20; level 0.2 dB off the read +0.06; length 2.8s against 2.88s +0.11) | seed 241004 score 2.895 (pause in phrase 0.33s +0.96; short words you +1.50; level -0.3 dB off the read +0.10; length 3.12s against 2.88s +0.33) | seed 241003 rejected: peaks at -0.1 dBFS."
+      },
+      {
+        "beatId": "good",
+        "file": "assets/audio/voice/brief-v3/natural/good.wav",
+        "durationSeconds": 5.3,
+        "sourceFile": "assets/audio/voice/brief-v3/natural/takes/good/t6b8fe831/s241003.wav",
+        "seed": 241003,
+        "words": [
+          {
+            "text": "Tell",
+            "start": 0.08,
+            "end": 0.22
+          },
+          {
+            "text": "it",
+            "start": 0.26,
+            "end": 0.34
+          },
+          {
+            "text": "the",
+            "start": 0.38,
+            "end": 0.48
+          },
+          {
+            "text": "bakery",
+            "start": 0.52,
+            "end": 0.86
+          },
+          {
+            "text": "owner",
+            "start": 0.94,
+            "end": 1.14
+          },
+          {
+            "text": "is",
+            "start": 1.2,
+            "end": 1.34
+          },
+          {
+            "text": "nervous",
+            "start": 1.4,
+            "end": 1.72
+          },
+          {
+            "text": "about",
+            "start": 1.78,
+            "end": 2.02
+          },
+          {
+            "text": "cost",
+            "start": 2.08,
+            "end": 2.54
+          },
+          {
+            "text": "and",
+            "start": 2.96,
+            "end": 3.08
+          },
+          {
+            "text": "you",
+            "start": 3.12,
+            "end": 3.2
+          },
+          {
+            "text": "get",
+            "start": 3.24,
+            "end": 3.42
+          },
+          {
+            "text": "something",
+            "start": 3.46,
+            "end": 3.84
+          },
+          {
+            "text": "you",
+            "start": 3.88,
+            "end": 3.96
+          },
+          {
+            "text": "would",
+            "start": 3.979,
+            "end": 4.18
+          },
+          {
+            "text": "actually",
+            "start": 4.28,
+            "end": 4.76
+          },
+          {
+            "text": "send",
+            "start": 4.82,
+            "end": 5.22
+          }
+        ],
+        "why": "Kept seed 241003: transcript \"Tell it the bakery owner is nervous about cost and you get something you would actually send\", lead 0.1s, tail 0s, largest pause 0.16s, 5.28s raw, -13.8 LUFS (speech -13.29 dB), score 0.49 (level -1.4 dB off the read +0.49). Others: seed 241004 score 1.738 (short words you +1.50; level -0.7 dB off the read +0.24) | seed 241001 score 1.968 (short words you +1.50; level -1.0 dB off the read +0.35; length 5.12s against 5.28s +0.12) | seed 241002 rejected: peaks at -0.1 dBFS."
+      },
+      {
+        "beatId": "rule",
+        "file": "assets/audio/voice/brief-v3/natural/rule.wav",
+        "durationSeconds": 2.14,
+        "sourceFile": "assets/audio/voice/brief-v3/natural/takes/rule/t75b1bbc3/s241001.wav",
+        "seed": 241001,
+        "words": [
+          {
+            "text": "Give",
+            "start": 0.14,
+            "end": 0.24
+          },
+          {
+            "text": "it",
+            "start": 0.26,
+            "end": 0.34
+          },
+          {
+            "text": "the",
+            "start": 0.36,
+            "end": 0.46
+          },
+          {
+            "text": "brief,",
+            "start": 0.5,
+            "end": 0.88
+          },
+          {
+            "text": "not",
+            "start": 1.24,
+            "end": 1.42
+          },
+          {
+            "text": "the",
+            "start": 1.46,
+            "end": 1.52
+          },
+          {
+            "text": "task",
+            "start": 1.58,
+            "end": 2.02
+          }
+        ],
+        "why": "Fit: seed 241004 gave way to seed 241001 to fit 600 frames. Kept seed 241001: transcript \"Give it the brief, not the task\", lead 0.06s, tail 0s, largest pause 0.22s, 2.08s raw, -13.5 LUFS (speech -12.92 dB), score 2.394 (short words the +1.50; level -1.0 dB off the read +0.36; length 2.08s against 2.40s +0.53). Others: seed 241004 score 1.535 (short words the +1.50; level -0.1 dB off the read +0.03) | seed 241002 rejected: peaks at 0 dBFS | seed 241003 rejected: peaks at 0 dBFS."
+      },
+      {
+        "beatId": "cta",
+        "file": "assets/audio/voice/brief-v3/natural/cta.wav",
+        "durationSeconds": 2.78,
+        "sourceFile": "assets/audio/voice/brief-v3/natural/takes/cta/tb73285df/s241002.wav",
+        "seed": 241002,
+        "words": [
+          {
+            "text": "Free",
+            "start": 0.06,
+            "end": 0.3
+          },
+          {
+            "text": "AI",
+            "start": 0.48,
+            "end": 0.74
+          },
+          {
+            "text": "lessons.",
+            "start": 0.82,
+            "end": 1.34
+          },
+          {
+            "text": "Link",
+            "start": 1.74,
+            "end": 1.96
+          },
+          {
+            "text": "in",
+            "start": 2,
+            "end": 2.06
+          },
+          {
+            "text": "the",
+            "start": 2.1,
+            "end": 2.18
+          },
+          {
+            "text": "caption",
+            "start": 2.22,
+            "end": 2.68
+          }
+        ],
+        "why": "Kept seed 241002: transcript \"Free AI lessons. Link in the caption\", lead 0.05s, tail 0s, largest pause 0.28s, 2.72s raw, -11.4 LUFS (speech -10.93 dB), score 0.521 (level 1.0 dB off the read +0.34; length 2.72s against 2.60s +0.18). Others: seed 241003 score 1.81 (short words the +1.50; level -0.7 dB off the read +0.25; length 2.64s against 2.60s +0.06) | seed 241004 score 1.892 (short words the +1.50; level 0.2 dB off the read +0.08; length 2.4s against 2.60s +0.31) | seed 241001 rejected: peaks at 0 dBFS."
+      }
+    ],
+    "selection": [
+      {
+        "beatId": "hook",
+        "ranking": [
+          {
+            "seed": 241001,
+            "score": 0.042,
+            "rejected": [],
+            "notes": "level 0.0 dB off the read +0.01; length 4.56s against 4.60s +0.03"
+          },
+          {
+            "seed": 241003,
+            "score": 1.863,
+            "rejected": [],
+            "notes": "pause in phrase 0.27s +0.24; pause at break 0.69s +0.84; level -0.1 dB off the read +0.05; length 5.44s against 4.60s +0.73"
+          },
+          {
+            "seed": 241004,
+            "score": 0.206,
+            "rejected": [
+              "peaks at -0.1 dBFS"
+            ],
+            "notes": "level 0.5 dB off the read +0.17; length 4.64s against 4.60s +0.03"
+          },
+          {
+            "seed": 241002,
+            "score": 0.349,
+            "rejected": [
+              "peaks at -0.1 dBFS"
+            ],
+            "notes": "level 0.7 dB off the read +0.25; length 4.48s against 4.60s +0.10"
+          }
+        ]
+      },
+      {
+        "beatId": "weak",
+        "ranking": [
+          {
+            "seed": 241002,
+            "score": 0.251,
+            "rejected": [],
+            "notes": "level 0.4 dB off the read +0.14; length 2.96s against 2.88s +0.11"
+          },
+          {
+            "seed": 241001,
+            "score": 1.374,
+            "rejected": [],
+            "notes": "pause in phrase 0.35s +1.20; level 0.2 dB off the read +0.06; length 2.8s against 2.88s +0.11"
+          },
+          {
+            "seed": 241004,
+            "score": 2.895,
+            "rejected": [],
+            "notes": "pause in phrase 0.33s +0.96; short words you +1.50; level -0.3 dB off the read +0.10; length 3.12s against 2.88s +0.33"
+          },
+          {
+            "seed": 241003,
+            "score": 0.727,
+            "rejected": [
+              "peaks at -0.1 dBFS"
+            ],
+            "notes": "pause in phrase 0.29s +0.48; level 0.1 dB off the read +0.02; length 2.72s against 2.88s +0.22"
+          }
+        ]
+      },
+      {
+        "beatId": "good",
+        "ranking": [
+          {
+            "seed": 241003,
+            "score": 0.49,
+            "rejected": [],
+            "notes": "level -1.4 dB off the read +0.49"
+          },
+          {
+            "seed": 241004,
+            "score": 1.738,
+            "rejected": [],
+            "notes": "short words you +1.50; level -0.7 dB off the read +0.24"
+          },
+          {
+            "seed": 241001,
+            "score": 1.968,
+            "rejected": [],
+            "notes": "short words you +1.50; level -1.0 dB off the read +0.35; length 5.12s against 5.28s +0.12"
+          },
+          {
+            "seed": 241002,
+            "score": 1.753,
+            "rejected": [
+              "peaks at -0.1 dBFS"
+            ],
+            "notes": "short words you +1.50; level -0.5 dB off the read +0.19; length 5.36s against 5.28s +0.06"
+          }
+        ]
+      },
+      {
+        "beatId": "rule",
+        "ranking": [
+          {
+            "seed": 241004,
+            "score": 1.535,
+            "rejected": [],
+            "notes": "short words the +1.50; level -0.1 dB off the read +0.03"
+          },
+          {
+            "seed": 241001,
+            "score": 2.394,
+            "rejected": [],
+            "notes": "short words the +1.50; level -1.0 dB off the read +0.36; length 2.08s against 2.40s +0.53"
+          },
+          {
+            "seed": 241002,
+            "score": 0.007,
+            "rejected": [
+              "peaks at 0 dBFS"
+            ],
+            "notes": "level -0.0 dB off the read +0.01"
+          },
+          {
+            "seed": 241003,
+            "score": 1.686,
+            "rejected": [
+              "peaks at 0 dBFS"
+            ],
+            "notes": "short words the +1.50; level 0.5 dB off the read +0.19"
+          }
+        ]
+      },
+      {
+        "beatId": "cta",
+        "ranking": [
+          {
+            "seed": 241002,
+            "score": 0.521,
+            "rejected": [],
+            "notes": "level 1.0 dB off the read +0.34; length 2.72s against 2.60s +0.18"
+          },
+          {
+            "seed": 241003,
+            "score": 1.81,
+            "rejected": [],
+            "notes": "short words the +1.50; level -0.7 dB off the read +0.25; length 2.64s against 2.60s +0.06"
+          },
+          {
+            "seed": 241004,
+            "score": 1.892,
+            "rejected": [],
+            "notes": "short words the +1.50; level 0.2 dB off the read +0.08; length 2.4s against 2.60s +0.31"
+          },
+          {
+            "seed": 241001,
+            "score": 0.174,
+            "rejected": [
+              "peaks at 0 dBFS"
+            ],
+            "notes": "level 0.3 dB off the read +0.11; length 2.56s against 2.60s +0.06"
+          }
+        ]
+      }
+    ],
+    "layout": {
+      "totalFrames": 595,
+      "seconds": 19.833,
+      "beats": [
+        {
+          "beatId": "hook",
+          "start": 0,
+          "end": 149,
+          "seconds": 4.54
+        },
+        {
+          "beatId": "weak",
+          "start": 149,
+          "end": 251,
+          "seconds": 2.97
+        },
+        {
+          "beatId": "good",
+          "start": 251,
+          "end": 422,
+          "seconds": 5.3
+        },
+        {
+          "beatId": "rule",
+          "start": 422,
+          "end": 499,
+          "seconds": 2.14
+        },
+        {
+          "beatId": "cta",
+          "start": 499,
+          "end": 595,
+          "seconds": 2.78
+        }
+      ]
+    },
+    "mix": {
+      "wav": "assets/audio/mix-tut-brief-15s-v3.wav",
+      "mp3": "out/candidates/brief-15s-mix.mp3",
+      "musicSource": "out/candidates/music-i-a.mp3",
+      "musicVariant": "i-a",
+      "seconds": 19.833333333333332,
+      "bedGainDb": -7.4,
+      "measuredDuckDb": 9.4,
+      "limiterCeilingDbfs": -2.93,
+      "measuredIntegratedLufs": -14.03,
+      "measuredTruePeakDbfs": -4.19,
+      "measuredLra": 2.7,
+      "createdAt": "2026-09-25T12:15:42.339Z"
+    }
   }
 }

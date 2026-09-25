@@ -16,9 +16,27 @@
       "caption": "instagram.md"
     }
   },
-  "media": [],
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Narrated reel: a weak AI prompt and a detailed one side by side, then the real, unedited Claude output each one got, ending on the K&A Performance card with the free AI lessons address"
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "Two AI prompts side by side: \"Write a follow up email\" labeled the task, and \"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" labeled the brief, marked example"
+    }
+  ],
   "ai": {
-    "voice": false,
+    "voice": true,
     "visuals": false
   },
   "generate": [],

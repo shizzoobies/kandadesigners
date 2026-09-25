@@ -1,0 +1,34 @@
+{
+  "_note": "Tagged narration for the brief tutorial (\"Give the AI the brief, not the task\"), 15 second vertical cut, read on eleven_v3 by Sarah at the natural stability mode. The words are the ones in src/tutorial/brief/content.ts, unchanged, which are the script in the 2026-10-01 day folder's brief.md as trimmed to fit 20 seconds and approved by Alex on 2026-09-24 (the first 58 word draft read at 26.8 seconds); only the inline audio tags are added. src/tutorial/brief/pipeline.ts strips the tags and refuses to send anything whose stripped text is not exactly that narration, so the words cannot drift. Tags only ever go to the voice model: captions and the SRT read the untagged narration from src. Direction: warm and confident throughout, a little playful on the hook only. No pause tags: on the contrast read a single [short pause] rendered as more than a second of dead air.",
+  "tutorial": "brief",
+  "cut": "short",
+  "model": "eleven_v3",
+  "direction": "Warm and confident. A little playful on the hook only.",
+  "beats": [
+    {
+      "id": "hook",
+      "narration": "[playfully] Stop asking AI to write the email. [confident] Tell it who the email is for.",
+      "why": "The one playful line: a gentle tease on the habit everyone has, then the turn said straight."
+    },
+    {
+      "id": "weak",
+      "narration": "[confident] 'Write a follow up email' gets you a form letter.",
+      "why": "The weak prompt quoted plainly, the verdict stated rather than mocked."
+    },
+    {
+      "id": "good",
+      "narration": "[warm] Tell it the bakery owner is nervous about cost, and you get something you would actually send.",
+      "why": "The turn. Warm, so the bakery owner reads as a person, and the payoff lands plainly."
+    },
+    {
+      "id": "rule",
+      "narration": "[confident] Give it the brief, not the task.",
+      "why": "The takeaway, said like advice from someone who does this every day."
+    },
+    {
+      "id": "cta",
+      "narration": "[warm] Free AI lessons, link in the caption.",
+      "why": "The offer, friendly. The address is on the end card, not spoken."
+    }
+  ]
+}
