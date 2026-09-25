@@ -133,3 +133,16 @@ describe("cli", () => {
     expect(r.out).toContain("waiting: none");
   });
 });
+
+describe("cli validate music", () => {
+  it("reports a track repeated within 30 days on a full run", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-10-05", baseManifest({ id: "2026-10-05", date: "2026-10-05", music: "music-x" }), baseFiles());
+    makeDay(root, "2026-10-06", baseManifest({ id: "2026-10-06", date: "2026-10-06", music: "music-x" }), baseFiles());
+    fs.mkdirSync(path.join(root, "To Be Released", ".omc"));
+    const r = run(["validate"]);
+    expect(r.code).toBe(1);
+    expect(r.out).toContain("2026-10-06: music-x was already used on 2026-10-05");
+    expect(r.out).not.toContain(".omc");
+  });
+});

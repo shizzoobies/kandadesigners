@@ -179,3 +179,47 @@ in `media[]`, write alt text for every image, and set `ai` honestly. Then run
 ## Pillars
 
 `client-spotlight`, `tip`, `training`, `ai-launch`, `behind-the-scenes`.
+
+## Reviewing: the Post Desk
+
+Alex approves from one page instead of opening folders:
+https://claude.ai/artifact/BwgxjJ7mbkuRGvxyHPMRd3
+
+- `node tools/review.mjs` rebuilds `review/data.json` from every folder in
+  `To Be Released/` (captions, media, and the `## Questions for Alex` bullets in
+  each `brief.md`) plus `stories/` and `review/asks.json`. Reels go up as 720p
+  review copies in `review/proxies/`; what posts is still the file in `media/`.
+- Claude republishes `review/index.html` with the map in `review/files.json`
+  (plus `data.json`) as the artifact's `files`, same file path, same URL.
+- Alex's taps land in the page's database: `decisions/<folder id>`
+  (`decision`: approved, changes, waiting; `note`; `answers` by question index)
+  and `answers/<ask id>`. Claude reads them with ArtifactData, then sets
+  `"status": "approved"` and runs upload and release as usual. The page never
+  changes anything by itself.
+- Put anything Alex has to decide under `## Questions for Alex` in `brief.md`.
+  Put anything the whole pipeline needs from him in `review/asks.json`.
+- Facebook captions carry the full link on line 2, tagged
+  `?utm_source=facebook&utm_medium=social&utm_campaign=<folder id>`. Instagram
+  uses the bio link and the day's Story link sticker (`stories/README.md`).
+- A day normally has a reel at 10:30 AM (`YYYY-MM-DD`) and a carousel in the
+  late afternoon (`YYYY-MM-DD-2`), plus a Story. Every frame and slide carries
+  the K&A logo and ka-performancefl.com.
+
+## Carousels, video, music (2026-09-25)
+
+- No narration on anything. Every post works muted: on-screen text plus a music bed.
+- A carousel folder posts swipe slides to Instagram and a slide video to Facebook
+  (Facebook shows multi-photo posts as a grid). `node tools/slideshow.mjs <folder> --music <mp3>`
+  renders `media/slideshow.mp4` and its cover and marks each media entry with
+  `"platforms": ["facebook"]` or `["instagram"]`; release sends each network only its own.
+- Every video names its track in post.json (`"music": "<track id>"`). A track never
+  repeats within 30 days; a full `validate` checks every folder plus `music-history.json`
+  (posts from before the pipeline).
+
+## Instagram link in bio (2026-09-25)
+
+The Instagram bio points at the Metricool SmartLink `https://t.mtrbio.com/kaperformancefl`
+(buttons: website, 90-Day AI Launch (/ai-launch/), training samples, Call Alex; every button link carries
+`?utm_source=instagram&utm_medium=smartlink`). Its Media section starts empty because
+Instagram had no posts; as posts publish, each gets a tile linking to its own page. If the
+release packet's `smartLinkData` cannot attach a post, add the tile in Metricool > SmartLinks > Media.

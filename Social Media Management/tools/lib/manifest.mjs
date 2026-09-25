@@ -8,6 +8,15 @@ export const STATUSES = [...FLOW, "native"];
 
 export const DAY_NAME = /^\d{4}-\d{2}-\d{2}(-\d+)?$/;
 
+/**
+ * Whether a media entry goes to this network. An entry without `platforms`
+ * goes everywhere; one with `platforms: ["facebook"]` goes only there (for
+ * example a slideshow video for Facebook beside swipe slides for Instagram).
+ */
+export function mediaFor(entry, network) {
+  return !Array.isArray(entry.platforms) || entry.platforms.includes(network);
+}
+
 export function readManifest(dir) {
   return JSON.parse(fs.readFileSync(path.join(dir, "post.json"), "utf8"));
 }
@@ -44,7 +53,7 @@ export function listAllDayDirs(root, bucket = TO_BE_RELEASED) {
   const base = path.join(root, bucket);
   if (!fs.existsSync(base)) return [];
   return fs.readdirSync(base, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
+    .filter((d) => d.isDirectory() && !d.name.startsWith("."))
     .map((d) => path.join(base, d.name))
     .sort();
 }

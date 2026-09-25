@@ -4,6 +4,7 @@ import path from "node:path";
 import { resolveRoot, dayDir } from "./lib/paths.mjs";
 import { listAllDayDirs, listDayFolders } from "./lib/manifest.mjs";
 import { validateFolder } from "./lib/validate.mjs";
+import { musicConflicts } from "./lib/music.mjs";
 import { createDay } from "./lib/plan.mjs";
 import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mjs";
 import { uploadFolder } from "./lib/upload.mjs";
@@ -69,6 +70,11 @@ function main() {
       const problems = validateFolder(dir);
       count += problems.length;
       for (const p of problems) console.log(p);
+    }
+    if (!target) {
+      const music = musicConflicts(root);
+      count += music.length;
+      for (const p of music) console.log(p);
     }
     console.log(count === 0 ? `${dirs.length} folder(s) valid` : `${count} problem(s) in ${dirs.length} folder(s)`);
     return count === 0 ? 0 : 1;

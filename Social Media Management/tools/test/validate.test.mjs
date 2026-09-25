@@ -99,6 +99,29 @@ describe("validateFolder", () => {
     expect(validateFolder(day(story))).toContain("2026-01-05: facebook STORY carries no caption");
   });
 
+  it("checks media rules per network when an entry names its platforms", () => {
+    const split = baseManifest();
+    split.platforms = { facebook: { type: "POST", caption: "facebook.md" }, instagram: { type: "POST", caption: "instagram.md" } };
+    split.media = [
+      { file: "media/slideshow.mp4", role: "video", origin: "kap-reel", alt: "", platforms: ["facebook"] },
+      { file: "media/slide-01.jpg", role: "image", origin: "kap-reel", alt: "Slide one", platforms: ["instagram"] }
+    ];
+    const files = baseFiles({ "media/slideshow.mp4": Buffer.alloc(8), "media/slide-01.jpg": Buffer.alloc(8) });
+    expect(validateFolder(day(split, files))).toEqual([]);
+
+    const igVideoOnly = baseManifest();
+    igVideoOnly.media = [{ file: "media/reel-vertical.mp4", role: "video", origin: "kap-reel", alt: "", platforms: ["facebook"] }];
+    expect(validateFolder(day(igVideoOnly))).toContain("2026-01-05: instagram REEL needs a video");
+    expect(validateFolder(day(igVideoOnly))).not.toContain("2026-01-05: facebook REEL needs a video");
+
+    const bad = baseManifest();
+    bad.media[0] = { ...bad.media[0], platforms: ["tiktok"] };
+    expect(validateFolder(day(bad))).toContain('2026-01-05: media/reel-vertical.mp4 names unknown platform "tiktok"');
+    const notList = baseManifest();
+    notList.media[0] = { ...notList.media[0], platforms: "facebook" };
+    expect(validateFolder(day(notList))).toContain("2026-01-05: media/reel-vertical.mp4 platforms must be a list of networks");
+  });
+
   it("enforces caption length limits", () => {
     const files = baseFiles({ "instagram.md": "x".repeat(2201) + "\n\n## First comment\n\n#a\n" });
     expect(validateFolder(day({}, files))).toContain("2026-01-05: instagram caption is 2201 characters, limit 2200");
@@ -197,9 +220,21 @@ describe("validateFolder", () => {
     expect(problems).toContain('2026-01-05: unknown network "tiktok"');
   });
 
-  it("requires linkedin to be manual", () => {
-    const problems = validateFolder(day({ platforms: { linkedin: { caption: "linkedin.md" } } }));
-    expect(problems).toContain("2026-01-05: linkedin must be manual until it is connected to Metricool");
+  it("accepts linkedin through Metricool as a post or a document", () => {
+    const li = baseManifest({ platforms: { linkedin: { type: "POST", caption: "linkedin.md" } } });
+    const files = baseFiles({ "linkedin.md": "A founder's note.\n\n## First comment\n\nhttps://ka-performancefl.com\n" });
+    expect(validateFolder(day(li, files))).toEqual([]);
+
+    const doc = baseManifest({ platforms: { linkedin: { type: "DOCUMENT", caption: "linkedin.md" } } });
+    doc.media = [{ file: "media/slide-01.jpg", role: "image", origin: "kap-reel", alt: "Slide one" }];
+    const docFiles = baseFiles({ "linkedin.md": "Swipe through.\n", "media/slide-01.jpg": Buffer.alloc(8) });
+    expect(validateFolder(day(doc, docFiles))).toContain("2026-01-05: linkedin DOCUMENT needs at least 2 images");
+
+    const bad = baseManifest({ platforms: { linkedin: { type: "REEL", caption: "linkedin.md" } } });
+    expect(validateFolder(day(bad, files))).toContain('2026-01-05: linkedin type "REEL" is not one of POST, DOCUMENT');
+
+    const long = baseFiles({ "linkedin.md": "x".repeat(3001) + "\n" });
+    expect(validateFolder(day(li, long))).toContain("2026-01-05: linkedin caption is 3001 characters, limit 3000");
   });
 
   it("rejects an unknown media role", () => {

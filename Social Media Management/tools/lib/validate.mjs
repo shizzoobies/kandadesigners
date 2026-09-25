@@ -1,14 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
-import { STATUSES, DAY_NAME, readManifest } from "./manifest.mjs";
+import { STATUSES, DAY_NAME, readManifest, mediaFor } from "./manifest.mjs";
 import { readCaption, splitInstagram } from "./captions.mjs";
 
-export const LIMITS = { facebook: 63206, instagram: 2200, firstComment: 2200 };
+export const LIMITS = { facebook: 63206, instagram: 2200, linkedin: 3000, firstComment: 2200 };
 export const AI_DISCLOSURE = /\bAI (narrated|voice|generated|assisted)/i;
 export const NETWORKS = ["facebook", "instagram", "linkedin"];
 export const TYPES = {
   facebook: ["POST", "REEL", "STORY"],
-  instagram: ["POST", "REEL", "STORY", "TRIAL_REEL"]
+  instagram: ["POST", "REEL", "STORY", "TRIAL_REEL"],
+  // DOCUMENT is ours: the images go up as one swipeable PDF (Metricool publishImagesAsPDF).
+  linkedin: ["POST", "DOCUMENT"]
 };
 export const ROLES = ["video", "image", "thumbnail", "captions"];
 export const ORIGINS = ["human", "codex", "elevenlabs", "kap-reel"];
@@ -118,7 +120,12 @@ export function validateFolder(dir, { now = new Date() } = {}) {
         add(`${entry.file} thumbnail must be jpg, jpeg, or png`);
       }
       if (readyOrLater && !fs.existsSync(path.join(dir, normalized))) add(`${entry.file} does not exist`);
+      if (entry.platforms !== undefined) {
+        if (!Array.isArray(entry.platforms)) add(`${entry.file} platforms must be a list of networks`);
+        else for (const p of entry.platforms) if (!NETWORKS.includes(p)) add(`${entry.file} names unknown platform "${p}"`);
+      }
     }
+    const rolesFor = (network) => new Set(media.filter((x) => mediaFor(x, network)).map((x) => x.role));
 
     const aiFlag = Boolean(m.ai && (m.ai.voice || m.ai.visuals));
     const rawPlatforms = (m.platforms && typeof m.platforms === "object" && !Array.isArray(m.platforms))
@@ -134,10 +141,6 @@ export function validateFolder(dir, { now = new Date() } = {}) {
         add(`unknown network "${network}"`);
         continue;
       }
-      if (network === "linkedin" && !cfg.manual) {
-        add("linkedin must be manual until it is connected to Metricool");
-        continue;
-      }
       if (cfg.manual) continue;
 
       const type = cfg.type || "POST";
@@ -147,6 +150,7 @@ export function validateFolder(dir, { now = new Date() } = {}) {
         continue;
       }
 
+      const roles = rolesFor(network);
       if (type === "STORY") {
         if (!roles.has("image") && !roles.has("video")) add(`${network} STORY needs an image or video`);
         const storyRaw = cfg.caption ? readCaption(dir, cfg.caption) : null;
@@ -157,10 +161,14 @@ export function validateFolder(dir, { now = new Date() } = {}) {
 
       if ((type === "REEL" || type === "TRIAL_REEL") && !roles.has("video")) add(`${network} REEL needs a video`);
       if (network === "instagram" && !roles.has("image") && !roles.has("video")) add("instagram needs an image or video");
+      if (network === "linkedin" && type === "DOCUMENT" &&
+          media.filter((x) => x.role === "image" && mediaFor(x, network)).length < 2) add("linkedin DOCUMENT needs at least 2 images");
 
       const raw = cfg.caption ? readCaption(dir, cfg.caption) : null;
-      const split = raw === null ? null : (network === "instagram" ? splitInstagram(raw) : null);
-      const text = raw === null ? null : (network === "instagram" ? split.caption : raw);
+      // LinkedIn captions may carry a "## First comment" too (the link goes there).
+      const splits = network === "instagram" || network === "linkedin";
+      const split = raw === null ? null : (splits ? splitInstagram(raw) : null);
+      const text = raw === null ? null : (splits ? split.caption : raw);
       if (!text) {
         add(`${network} caption file ${cfg.caption || "(none)"} is missing or empty`);
         continue;

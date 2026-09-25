@@ -59,6 +59,47 @@ describe("payload", () => {
     expect(p.facebook.info.facebookData).toEqual({ type: "STORY" });
   });
 
+  it("sends each network only the media that names it", () => {
+    const m = baseManifest({ status: "approved", ai: { voice: false, visuals: false } });
+    m.platforms = { facebook: { type: "POST", caption: "facebook.md" }, instagram: { type: "POST", caption: "instagram.md" } };
+    m.media = [
+      { file: "media/slideshow.mp4", role: "video", origin: "kap-reel", alt: "", platforms: ["facebook"] },
+      { file: "media/slideshow-cover.jpg", role: "thumbnail", origin: "kap-reel", alt: "Cover", platforms: ["facebook"] },
+      { file: "media/slide-01.jpg", role: "image", origin: "kap-reel", alt: "Slide one", platforms: ["instagram"] },
+      { file: "media/slide-02.jpg", role: "image", origin: "kap-reel", alt: "Slide two", platforms: ["instagram"] }
+    ];
+    m.r2 = Object.fromEntries(m.media.map((e) => [e.file, { key: e.file, url: `https://media.example.com/${e.file}` }]));
+    const p = buildPayloads(uploadedDay(m));
+    expect(p.facebook.info.media).toEqual(["https://media.example.com/media/slideshow.mp4"]);
+    expect(p.facebook.info.videoThumbnailUrl).toBe("https://media.example.com/media/slideshow-cover.jpg");
+    expect(p.instagram.info.media).toEqual(["https://media.example.com/media/slide-01.jpg", "https://media.example.com/media/slide-02.jpg"]);
+    expect(p.instagram.info.mediaAltText).toEqual(["Slide one", "Slide two"]);
+    expect(p.instagram.info.videoThumbnailUrl).toBeUndefined();
+  });
+
+  it("builds linkedin posts and documents with the first comment split off", () => {
+    const m = baseManifest({ status: "approved", title: "Six questions" });
+    m.platforms = { linkedin: { type: "DOCUMENT", caption: "linkedin.md", documentTitle: "6 questions before you hire a web designer" } };
+    m.media = [
+      { file: "media/slide-01.jpg", role: "image", origin: "kap-reel", alt: "One" },
+      { file: "media/slide-02.jpg", role: "image", origin: "kap-reel", alt: "Two" }
+    ];
+    m.r2 = Object.fromEntries(m.media.map((e) => [e.file, { key: e.file, url: `https://media.example.com/${e.file}` }]));
+    const files = baseFiles({ "linkedin.md": "A founder's note.\n\n## First comment\n\nhttps://ka-performancefl.com/?utm_source=linkedin\n" });
+    const p = buildPayloads(uploadedDay(m, files));
+    expect(p.linkedin.info).toMatchObject({
+      text: "A founder's note.",
+      firstCommentText: "https://ka-performancefl.com/?utm_source=linkedin",
+      media: ["https://media.example.com/media/slide-01.jpg", "https://media.example.com/media/slide-02.jpg"],
+      providers: [{ network: "linkedin" }],
+      linkedinData: { type: "post", documentTitle: "6 questions before you hire a web designer", publishImagesAsPDF: true, previewIncluded: true }
+    });
+
+    m.platforms = { linkedin: { type: "POST", caption: "linkedin.md" } };
+    const post = buildPayloads(uploadedDay(m, files));
+    expect(post.linkedin.info.linkedinData).toEqual({ type: "post", previewIncluded: true });
+  });
+
   it("fails clearly when a url is missing", () => {
     expect(() => buildPayloads(uploadedDay({ r2: {} }))).toThrow("media/reel-vertical.mp4 has no R2 url; run upload first");
   });

@@ -1,0 +1,44 @@
+[
+  {
+    "_note": "Written 2026-09-25 for the week of 2026-09-28. Tracks used in posts published from 2026-08-28 on. The music-a publish dates (2026-09-03, 2026-09-05) come from Alex's brief and the delivery folder names (Reels/FB 9-3-26, Reels/Linkedin 9-3-26, Reels/Posts 9-4-26); no Facebook post id or publish receipt for them is on disk. The bed is backed by D:/kap-reel/LICENSING.md (Music variant chosen: A, music-a-20s for the 15s cut, music-a-50s for the 45s cut). The Sept 17 to 22 client launch reels in D:/Reels did not use any ElevenLabs track from D:/kap-reel/config/audio.json: David's BBQ (delivered 2026-09-17), Osteen & Sons (2026-09-18) and Navigating North Florida (2026-09-20) carry one-off synthesized cues made for each reel (Osteen: D:/Osteens/Launch Reel/source/original-score.wav; David's BBQ: D:/Davis Catering/Davids Website Launch Reel/READ-ME.txt, 128 BPM original score; Navigating North Florida: source not found on disk). Project Makeover (2026-09-21), PB&J (2026-09-22), the Synovial AI Quiz (2026-09-22) and the K&A silent explainers (2026-09-23/24) were delivered with no audio stream, so any music they carried was added inside Facebook and is unknown. Whether and when each launch reel was actually published is not recorded in any file, so they are listed below without a published date and do not count against the 30-day rule. Never published, per Alex: the training reel (music-t-a), the i-series candidates (music-i-a, music-i-b, music-i-c). The Sept 5 contrast and hero tutorials also bed music-a; whether they were published is not recorded, and it does not change the music-a window."
+  },
+  {
+    "track": "music-a",
+    "file": "D:/kap-reel/assets/audio/raw/music-a-20s.mp3",
+    "published": "2026-09-03",
+    "post": "K&A web showcase reel, Facebook 15s vertical (Reels/FB 9-3-26/kapreelvertical15s.mp4)"
+  },
+  {
+    "track": "music-a",
+    "file": "D:/kap-reel/assets/audio/raw/music-a-50s.mp3",
+    "published": "2026-09-03",
+    "post": "K&A web showcase reel, LinkedIn 45s (Reels/Linkedin 9-3-26/Linkedin45.mp4)"
+  },
+  {
+    "track": "music-a",
+    "file": "D:/kap-reel/assets/audio/raw/music-a-20s.mp3",
+    "published": "2026-09-05",
+    "post": "K&A web showcase, Web reel (Reels/Posts 9-4-26/Web reel)"
+  },
+  {
+    "track": "custom-davids-bbq-launch-score",
+    "file": "D:/Reels/David's BBQ & Catering/David's BBQ & Catering.mp4",
+    "published": null,
+    "post": "David's BBQ & Catering website launch reel, delivered 2026-09-17",
+    "_note": "One-off synthesized score made for this reel only; publish date not recorded."
+  },
+  {
+    "track": "custom-osteen-launch-score",
+    "file": "D:/Osteens/Launch Reel/source/original-score.wav",
+    "published": null,
+    "post": "Osteen & Sons website launch reel, delivered 2026-09-18",
+    "_note": "One-off synthesized score made for this reel only; publish date not recorded."
+  },
+  {
+    "track": "unknown-navigating-north-florida-bed",
+    "file": "D:/Reels/Navigating North Florida/Gina Graham - Navigating North Florida.mp4",
+    "published": null,
+    "post": "Navigating North Florida launch reel, delivered 2026-09-20",
+    "_note": "Has an audio track; its source is not on disk and it is not an ElevenLabs track in config/audio.json. Publish date not recorded."
+  }
+]
