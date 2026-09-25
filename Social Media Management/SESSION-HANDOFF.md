@@ -1,4 +1,4 @@
-# Session handoff: social pipeline, written 2026-09-25 (early morning)
+# Session handoff: social pipeline, written 2026-09-25 (early morning), final
 
 Read this first in a new session. It says where the week of Sept 28 stands, what is
 still running, and what only Alex can decide. Business context: `SOCIAL_HANDOFF.md`.
@@ -27,7 +27,7 @@ time. Tests: `node node_modules/vitest/vitest.mjs run` from `tools/` (124 pass).
 | Mon 09-28 | Ellenton Family Practice Direct in the top three (incognito search + SEO end card, 14s, music C) | **scheduled as Metricool drafts** for 10:30 AM, FB id 381617380, IG id 381617409 | Alex previews in Metricool, then Claude runs `release --promote 2026-09-28`, sends both `updateScheduledPost` packets, records with `release --promoted` |
 | Tue 09-29 | Contrast is not a vibe (v3 narration, music B, 16.9s) | planned, media and captions in place, valid | Alex picks a voice take (see below). If he picks A or C the reel is re-rendered with that take. Then approve, upload, release |
 | Wed 09-30 | One screen, one decision (v3 narration, music C looped, 23.0s with the trimmed script; the 600-frame cap does not fit it by 3s) | planned, media and captions in place, valid, reel sent to Alex | Alex approves, then upload and release. Instagram caption carries the plain URL because the voice says "link in the caption" |
-| Thu 10-01 | Give the AI the brief, not the task | planned, scenes built; **agent rendering with the trimmed script** | same as Wednesday |
+| Thu 10-01 | Give the AI the brief, not the task (v3 narration, music A, 19.8s with the trimmed script; the two outputs on screen are real Claude outputs saved in source/prompt-run.md) | planned, media and captions in place, valid, reel sent to Alex | Alex approves, then upload and release. Instagram caption carries the plain URL |
 | Fri 10-02 | Thrillers Mobile VR launch (15s, music A, captures from the demo) | planned, media and captions in place, valid, captions carry `[REAL DOMAIN]` | waits on Wix releasing the domain; replace the placeholder, confirm the site is live, decide tagging, then approve |
 
 Run `node tools/social.mjs calendar` and `node tools/social.mjs validate` to see the live state.
@@ -54,7 +54,7 @@ Both commit only their own files. If a new session finds their media in place an
 
 ## Spend today (ElevenLabs credits, from per-request headers)
 
-Candidates 2,185; Tuesday regeneration 63; contrast takes and audition about 8,866; Wednesday about 1,716; Thursday about 1,720 so far. Alex said credits are not the constraint; quality first.
+Candidates 2,185; Tuesday regeneration 63; contrast takes and audition about 8,866; Wednesday about 2,180; Thursday about 2,720 (per-request character counts; the account meter reads higher because runs overlapped). Alex said credits are not the constraint; quality first.
 
 ## Rules that keep coming up
 

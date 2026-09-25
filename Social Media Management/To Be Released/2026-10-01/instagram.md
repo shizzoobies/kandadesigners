@@ -8,6 +8,8 @@ The outputs on screen are real, unedited Claude outputs from those two prompts. 
 
 More habits like this in our free AI lessons. Link in bio.
 
+Free AI lessons: ka-performancefl.com/training/ai (link in bio)
+
 ## First comment
 
 #GainesvilleFL #AI #SmallBusiness #AITips #PromptWriting
