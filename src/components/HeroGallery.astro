@@ -21,26 +21,24 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 
     <!-- Act 0: a clean canvas — heavy editorial headline beside a mac
          window sketching itself in. The mosaic is hidden until scroll. -->
-    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-36 lg:pt-[18vh]">
+    <div id="hg-headline" class="relative z-40 mx-auto max-w-6xl px-6 pt-32 sm:pt-36 lg:pt-[18vh]">
       <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <div class="max-w-2xl">
           <h1 class="font-display text-[clamp(3.25rem,5.8vw,6.5rem)] leading-[0.97] tracking-tight text-ink">
             Built on years of <span class="whitespace-nowrap">experience,</span>
             <span class="block text-accent">made to perform</span>
           </h1>
-          <p class="mt-7 max-w-xl text-xl font-medium leading-relaxed text-ink">
+          <p class="mt-6 max-w-xl text-lg font-medium leading-relaxed text-ink sm:mt-7 sm:text-xl">
             K &amp; A Performance crafts fast, animated, AI-ready websites for
             businesses that refuse to blend in. We work out of Gainesville,
             Florida, and build for clients well past it.
           </p>
-          <div class="mt-10 flex flex-wrap gap-4">
-            <a href="/contact/#scope" class="btn-accent">Start a project</a>
-            <a href="/services/" class="btn-ghost">What we do</a>
-          </div>
           {/* Proof line, approved by Alex 2026-09-25. Numbers live in
               src/data/reviews.js; ReviewsRail refreshes them from the live
-              Google data. Ink at 80% keeps it well past 4.5:1 on canvas. */}
-          <p class="hero-proof mt-6 flex items-center gap-2.5 font-heading text-[0.95rem] font-semibold tracking-wide text-ink/80">
+              Google data. Ink at 80% keeps it well past 4.5:1 on canvas.
+              It sits above the buttons so it stays on the first screen of
+              a 390x664 Safari viewport (an iPhone with browser bars). */}
+          <p class="hero-proof mt-4 flex items-center gap-2.5 font-heading text-[0.95rem] font-semibold tracking-wide text-ink/80">
             <span class="flex gap-0.5 text-accent" aria-hidden="true">
               {[0, 1, 2, 3, 4].map(() => (
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.26 6.86.6-5.2 4.52 1.56 6.7L12 16.53 5.88 20.08l1.56-6.7-5.2-4.52 6.86-.6z" /></svg>
@@ -48,6 +46,10 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
             </span>
             <span><span class="sr-only">Rated </span><span data-g-rating>{googleRating.rating.toFixed(1)}</span> on Google, <span data-g-count>{googleRating.count}</span> reviews</span>
           </p>
+          <div class="mt-6 flex flex-wrap gap-4 sm:mt-8">
+            <a href="/contact/#scope" class="btn-accent">Start a project</a>
+            <a href="/services/" class="btn-ghost">What we do</a>
+          </div>
         </div>
         <!-- the drawn-in mac window: a site sketching itself, stroke by
              stroke (motion.js line-draw). Decorative, desktop-only. -->
