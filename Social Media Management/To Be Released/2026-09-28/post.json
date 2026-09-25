@@ -96,14 +96,15 @@
           }
         }
       },
-      "draft": true,
+      "draft": false,
       "preparedAt": "2026-09-25T15:41:09.737Z",
-      "id": "382068363",
+      "id": "382110412",
       "uuid": "6610243749889723196",
       "scheduledAt": "2026-09-25T15:41:09.737Z",
       "previousIds": [
         "381617380"
-      ]
+      ],
+      "promotedAt": "2026-09-25T16:54:55.549Z"
     },
     "instagram": {
       "payload": {
@@ -141,14 +142,15 @@
           }
         }
       },
-      "draft": true,
+      "draft": false,
       "preparedAt": "2026-09-25T15:41:09.737Z",
-      "id": "382068415",
+      "id": "382110473",
       "uuid": "4825940660386873840",
       "scheduledAt": "2026-09-25T15:41:09.737Z",
       "previousIds": [
         "381617409"
-      ]
+      ],
+      "promotedAt": "2026-09-25T16:54:55.619Z"
     }
   },
   "published": {},
