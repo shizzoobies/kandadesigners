@@ -35,3 +35,21 @@ Final duration: 23.0 seconds (690 frames). The standard 600 frame (20 second) ca
 Voice is AI narrated; disclose. Set ai.voice true. Captures are real.
 
 Approved: yes for the slot; the script needs an ok from Alex before generation.
+
+## Revision 2 (2026-09-25)
+
+Rebuilt after Alex's rework direction (plans/2026-09-28-rework.md). Text led, no narration (voice on hold, no ElevenLabs). Editorial magazine style: cream paper, big rust numerals, pull-quote type, real course screens set like photos, rust rule system. K&A logo (masthead) and ka-performancefl.com/training plus Call 904-210-1071 (footer) on every frame, inside the safe area. 19.0 seconds, 570 frames, music-i-c (licensed) at -14 LUFS.
+
+Beats:
+- 0.0 to 3.2s, hook: pull quote "If a screen asks the learner to do two things, it does neither." Whole on frame 0. Under it: "One screen, one decision. How K&A builds every course, shown in a real one."
+- 3.2 to 7.2s, 01 The map: "The board: every location in view." Real screen: audit-idle (the inspection board). Dek: "Learners see the whole job first."
+- 7.2 to 11.2s, 02 One decision: "Tap one. It asks one thing: hold or go." Real screens: audit-open, the tap on Place hold marker, audit-hold. Dek: "One clear call. Your team knows what to do."
+- 11.2 to 15.2s, 03 Feedback: "Feedback on that one decision, right away." Real screen: hunt-feedback (the ladder feedback). Dek: "Act, get feedback, move on. It sticks."
+- 15.2 to 19.0s, end card (holds to the last frame): "We design training people finish." Try a free sample course, ka-performancefl.com/training, Call Alex 904-210-1071.
+
+Every screen is a real capture from the live safety sample (src/tutorial/onescreen/captures.json). The invented cluttered mock from the voiced cut is gone. The three beats show how we design, not a before and after: the map of the whole job, then one decision per screen, then feedback on that decision. None of it presents K&A's own course as a bad example. Captions: music disclosed as AI generated; ai.voice is now false. The voiced cut is kept in source/cut-v3-voice/.
+
+Build: D:\kap-reel\src\social\2026-09-30\ (entry index.ts, composition Wed0930OneScreen), delivery scripts/social/2026-09-30/deliver.ts.
+
+## Questions for Alex
+- The course screens are small on a phone, so they read as pictures and the headlines carry the message. OK?

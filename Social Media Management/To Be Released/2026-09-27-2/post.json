@@ -1,0 +1,169 @@
+{
+  "id": "2026-09-27-2",
+  "date": "2026-09-27",
+  "time": "17:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "ai-launch",
+  "title": "LinkedIn: 3 prompts to plan your week with AI",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "3 prompts to plan your week with AI"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Sunday night, 10 minutes, a week that doesn't run you: a K&A Performance slide styled as a weekly planner page with Monday to Friday columns. Three sticky notes read 1, sort the week; 2, send the three; 3, drop one thing. Save this for Sunday night: three copy-and-paste prompts for any AI tool. Swipe for prompt 1."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Prompt 1 of 3, turn the to-do pile into a plan. A sticky note on the Monday column reads: Here is everything on my plate this week, unsorted: [paste your to-do list]. Fixed times: [meetings, appointments, deadlines]. A good week means [the one result that matters most]. Sort it into Must, Should, and Can wait. Put the Musts and Shoulds on Monday to Friday, three a day at most, hardest one first. Flag anything someone else could do. You get back: a Monday to Friday plan, three priorities a day, and a list of what can wait. Why it matters: your best hours go to the work that moves the business."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Prompt 2 of 3, draft the three messages you keep putting off. A sticky note reads: Draft the three messages I keep putting off. 1: to [who] about [what]. 2: to [who] about [what]. 3: to [who] about [what]. I run [your business]. Keep each under 80 words, friendly and direct, one clear ask, in my voice, not a template. Mark anything you had to guess. You get back: three short drafts ready to edit and send, with every guess marked. Why it matters: the messages we avoid are often the ones tied to money, like quotes, invoices, and follow-ups."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Prompt 3 of 3, find the one thing to say no to. A sticky note on the Friday column reads: Here is my week: [paste your plan or list]. My top goal right now is [your goal]. Pick the one commitment I should say no to, move, or hand off to free the most time for that goal. Give me the pick, the reason in two sentences, and a polite message I can send to say no. You get back: one pick, why it frees the most time, and the words to say no. Why it matters: every yes costs an hour somewhere, and one clear no protects the goal."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Screenshot this: all three prompts on one planner page as three stacked sticky notes, sort the week, send the three, and drop one thing, each with its fill-in brackets."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Then you decide what goes out. A two-column table: AI drafts a plan for the week, you decide what matters most. AI drafts three messages, you decide what you send, and when. AI drafts one thing to drop, you decide whether you drop it. Put AI to work in your business: the 90-Day AI Launch is our coaching program for putting AI to work in your business, built by K&A Performance in Gainesville."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "The 90-Day AI Launch: how we help businesses put AI to work. A sticky note on the Monday column reads ka-performancefl.com/ai-launch, Call Alex 904-210-1071. K&A Performance builds websites, local search, training, and AI integration for Gainesville businesses."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-27-2/7c6df3d7-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-2/7c6df3d7-slide-01.jpg",
+      "sha256": "7c6df3d78fb4c2edfcaddff734da070e0bc7a4b1d667dae155c67d247c1437fe",
+      "uploadedAt": "2026-09-25T16:47:17.400Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-27-2/6a3585cf-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-2/6a3585cf-slide-02.jpg",
+      "sha256": "6a3585cf03faa88de71fdfde3771dd0c5c8b9f5b108724b4096df50d9e39c061",
+      "uploadedAt": "2026-09-25T16:47:17.400Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-27-2/3bc108d8-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-2/3bc108d8-slide-03.jpg",
+      "sha256": "3bc108d8cd2f9893e16f706f9d233179133acd3b1edb8246ca232259c64c8ee6",
+      "uploadedAt": "2026-09-25T16:47:17.400Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-27-2/dd62f3ac-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-2/dd62f3ac-slide-04.jpg",
+      "sha256": "dd62f3ac3a94acf430504c596fb77f456c15edf5d33bf1e75aa089802f6c1af6",
+      "uploadedAt": "2026-09-25T16:47:17.400Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-27-2/349d1c42-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-2/349d1c42-slide-05.jpg",
+      "sha256": "349d1c42e221e8fc72390a7cbf9b303c755a79eefeb05b9b4050154761f13cf6",
+      "uploadedAt": "2026-09-25T16:47:17.400Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-27-2/d82c3455-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-2/d82c3455-slide-06.jpg",
+      "sha256": "d82c3455967b32dfc78ca039dce7d0db3d0844bc971efe760d36239f4a097042",
+      "uploadedAt": "2026-09-25T16:47:17.400Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-27-2/8e324f39-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-2/8e324f39-slide-07.jpg",
+      "sha256": "8e324f39e179ff8c9bc192244bc72f6ad8dc50ebbf40988604241114d01ebd40",
+      "uploadedAt": "2026-09-25T16:47:17.400Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-27T17:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "Put AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-27-2",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-27-2/7c6df3d7-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-27-2/6a3585cf-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-27-2/3bc108d8-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-27-2/dd62f3ac-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-27-2/349d1c42-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-27-2/d82c3455-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-27-2/8e324f39-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "Sunday night, 10 minutes, a week that doesn't run you: a K&A Performance slide styled as a weekly planner page with Monday to Friday columns. Three sticky notes read 1, sort the week; 2, send the three; 3, drop one thing. Save this for Sunday night: three copy-and-paste prompts for any AI tool. Swipe for prompt 1.",
+            "Prompt 1 of 3, turn the to-do pile into a plan. A sticky note on the Monday column reads: Here is everything on my plate this week, unsorted: [paste your to-do list]. Fixed times: [meetings, appointments, deadlines]. A good week means [the one result that matters most]. Sort it into Must, Should, and Can wait. Put the Musts and Shoulds on Monday to Friday, three a day at most, hardest one first. Flag anything someone else could do. You get back: a Monday to Friday plan, three priorities a day, and a list of what can wait. Why it matters: your best hours go to the work that moves the business.",
+            "Prompt 2 of 3, draft the three messages you keep putting off. A sticky note reads: Draft the three messages I keep putting off. 1: to [who] about [what]. 2: to [who] about [what]. 3: to [who] about [what]. I run [your business]. Keep each under 80 words, friendly and direct, one clear ask, in my voice, not a template. Mark anything you had to guess. You get back: three short drafts ready to edit and send, with every guess marked. Why it matters: the messages we avoid are often the ones tied to money, like quotes, invoices, and follow-ups.",
+            "Prompt 3 of 3, find the one thing to say no to. A sticky note on the Friday column reads: Here is my week: [paste your plan or list]. My top goal right now is [your goal]. Pick the one commitment I should say no to, move, or hand off to free the most time for that goal. Give me the pick, the reason in two sentences, and a polite message I can send to say no. You get back: one pick, why it frees the most time, and the words to say no. Why it matters: every yes costs an hour somewhere, and one clear no protects the goal.",
+            "Screenshot this: all three prompts on one planner page as three stacked sticky notes, sort the week, send the three, and drop one thing, each with its fill-in brackets.",
+            "Then you decide what goes out. A two-column table: AI drafts a plan for the week, you decide what matters most. AI drafts three messages, you decide what you send, and when. AI drafts one thing to drop, you decide whether you drop it. Put AI to work in your business: the 90-Day AI Launch is our coaching program for putting AI to work in your business, built by K&A Performance in Gainesville.",
+            "The 90-Day AI Launch: how we help businesses put AI to work. A sticky note on the Monday column reads ka-performancefl.com/ai-launch, Call Alex 904-210-1071. K&A Performance builds websites, local search, training, and AI integration for Gainesville businesses."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-27T17:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Sunday night. 10 minutes. A week that doesn't run you.\n\nIf your Monday starts with a pile instead of a plan, here are three prompts to paste into any AI tool before the week starts. Fill in the brackets and each one hands you something you can use:\n\n1. Sort the week. Your messy to-do list becomes a Monday to Friday plan, three priorities a day at most, hardest one first, with a list of what can wait.\n2. Send the three. Short drafts of the messages you keep putting off, one clear ask each, with every guess marked. The messages we avoid are often the ones tied to money: quotes, invoices, follow-ups.\n3. Drop one thing. The one commitment to say no to, move, or hand off this week, the reason in two sentences, and a polite message to say it.\n\nThe full prompts are in this document, with all three on one page to save.\n\nThe takeaway: the AI drafts, and you decide. It drafts the plan, the messages, and the one thing to drop. You decide what matters most, what goes out, and whether you drop it.\n\nPutting AI to work inside a business is part of what we do, alongside web design, local search, and training. The 90-Day AI Launch is how we help a business put AI to work. The link is in the first comment.\n\n#AI #SmallBusiness #Productivity",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "3 prompts to plan your week with AI",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T16:47:29.240Z",
+      "id": "382107505",
+      "uuid": "8487714643798737595",
+      "scheduledAt": "2026-09-25T16:49:56.431Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

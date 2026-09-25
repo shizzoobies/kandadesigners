@@ -1,0 +1,169 @@
+{
+  "id": "2026-09-29-3",
+  "date": "2026-09-29",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "LinkedIn: Five contrast fixes you can make today",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "Five contrast fixes you can make today"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide. Huge type: Your phone in the sun. Can anyone read your website? Five numbered color chips in gray, pale sky blue, bright green, light gray, and dark teal, with the line 5 contrast fixes you can make today. Every ratio computed to WCAG 2.2."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 1 of 5: Darken your light gray body text. Before card: gray #A8A29E text on white #FFFFFF, 2.52 to 1, fails 4.5 to 1 for body text. After card: dark gray #57534E on white, 7.62 to 1, passes."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 2 of 5: Put a scrim behind text on photos. Before card: white headline on a pale sky blue #C9DDEA, 1.39 to 1, fails even the 3 to 1 large text line. After card: a 60 percent #221C15 scrim darkens the sky to #65696A, and the white text measures 5.55 to 1, passing 3 to 1 and 4.5 to 1."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 3 of 5: Check white text on your brand buttons. Before card: a white Book a visit label on a bright green #22C55E button, 2.27 to 1, fails 4.5 to 1. After card: the same label on a darker green #15803D, 5.01 to 1, passes."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 4 of 5: Stop using placeholder text as the label. Before card: an email field whose only label is light gray #C4C4C4 placeholder text on white, 1.74 to 1, fails. After card: a visible Email address label in dark ink above the field at 16.86 to 1, and placeholder text in #6B6B6B at 5.32 to 1, passes."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 5 of 5: Underline your links. Before card: a dark teal #134E4A link inside near black #221C15 text with no underline, only 1.78 to 1 between link and text, fails WCAG 1.4.1 use of color. After card: the same link underlined, 9.47 to 1 against white, passes."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recap of all five fixes, each clearing 4.5 to 1: gray text 7.62, photo scrim 5.55, button 5.01, placeholder 5.32, link 9.47. We check this on every site we build. ka-performancefl.com. Call Alex 904-210-1071."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-29-3/d0fcfc00-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-3/d0fcfc00-slide-01.jpg",
+      "sha256": "d0fcfc004e4bbc53c4d6556d7617cfbf052165e4a8c38a82f6feaff53e98c75e",
+      "uploadedAt": "2026-09-25T16:34:10.622Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-29-3/96206c69-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-3/96206c69-slide-02.jpg",
+      "sha256": "96206c69698df8ba61d81bc4a3fc019986fe5add0a742be3c0343cb45103524a",
+      "uploadedAt": "2026-09-25T16:34:10.622Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-29-3/cf30cd1a-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-3/cf30cd1a-slide-03.jpg",
+      "sha256": "cf30cd1a27d0fd9122d5d3a0ae56a17b6e56471e046f24478f486ef5571b2181",
+      "uploadedAt": "2026-09-25T16:34:10.622Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-29-3/535c6b37-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-3/535c6b37-slide-04.jpg",
+      "sha256": "535c6b37e4033502fe8517db15db4c0b0e548319efd7e2ea49b5281869e8e043",
+      "uploadedAt": "2026-09-25T16:34:10.622Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-29-3/f3d18228-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-3/f3d18228-slide-05.jpg",
+      "sha256": "f3d18228dd7657ddf89ad5d542bb0e6436a989508294b709c03d510fc20f0034",
+      "uploadedAt": "2026-09-25T16:34:10.622Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-29-3/3c5cef47-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-3/3c5cef47-slide-06.jpg",
+      "sha256": "3c5cef4760139f1eb1ba2d7b0860782f2fc31ba14cba368104e11526a894c412",
+      "uploadedAt": "2026-09-25T16:34:10.622Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-29-3/dd9c37cd-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-3/dd9c37cd-slide-07.jpg",
+      "sha256": "dd9c37cde2317830f82d55c75c4a8fca19faaf521fa6c70ecd50e74c4cf4cde7",
+      "uploadedAt": "2026-09-25T16:34:10.622Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-29T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "How we audit and fix accessibility: https://ka-performancefl.com/services/accessibility/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-29-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-29-3/d0fcfc00-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-3/96206c69-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-3/cf30cd1a-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-3/535c6b37-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-3/f3d18228-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-3/3c5cef47-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-3/dd9c37cd-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide. Huge type: Your phone in the sun. Can anyone read your website? Five numbered color chips in gray, pale sky blue, bright green, light gray, and dark teal, with the line 5 contrast fixes you can make today. Every ratio computed to WCAG 2.2.",
+            "Fix 1 of 5: Darken your light gray body text. Before card: gray #A8A29E text on white #FFFFFF, 2.52 to 1, fails 4.5 to 1 for body text. After card: dark gray #57534E on white, 7.62 to 1, passes.",
+            "Fix 2 of 5: Put a scrim behind text on photos. Before card: white headline on a pale sky blue #C9DDEA, 1.39 to 1, fails even the 3 to 1 large text line. After card: a 60 percent #221C15 scrim darkens the sky to #65696A, and the white text measures 5.55 to 1, passing 3 to 1 and 4.5 to 1.",
+            "Fix 3 of 5: Check white text on your brand buttons. Before card: a white Book a visit label on a bright green #22C55E button, 2.27 to 1, fails 4.5 to 1. After card: the same label on a darker green #15803D, 5.01 to 1, passes.",
+            "Fix 4 of 5: Stop using placeholder text as the label. Before card: an email field whose only label is light gray #C4C4C4 placeholder text on white, 1.74 to 1, fails. After card: a visible Email address label in dark ink above the field at 16.86 to 1, and placeholder text in #6B6B6B at 5.32 to 1, passes.",
+            "Fix 5 of 5: Underline your links. Before card: a dark teal #134E4A link inside near black #221C15 text with no underline, only 1.78 to 1 between link and text, fails WCAG 1.4.1 use of color. After card: the same link underlined, 9.47 to 1 against white, passes.",
+            "Recap of all five fixes, each clearing 4.5 to 1: gray text 7.62, photo scrim 5.55, button 5.01, placeholder 5.32, link 9.47. We check this on every site we build. ka-performancefl.com. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-29T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your phone in the sun. Can anyone read your website?\n\nContrast is easy to miss on an office monitor and hard to miss outdoors on a phone. WCAG 2.2 sets the line: 4.5 to 1 for body text, 3 to 1 for large text. Every ratio in this document is computed from the real hex values.\n\nFive fixes you can make today:\n\n1. Light gray body text measures 2.52 to 1. A darker gray gets 7.62 to 1.\n2. White text on a bright photo measures 1.39 to 1. A dark scrim behind it gets 5.55 to 1.\n3. White text on a bright green button measures 2.27 to 1. A deeper green gets 5.01 to 1.\n4. Placeholder text used as the label measures 1.74 to 1. Put a real label above the field.\n5. Links shown by color alone measure 1.78 to 1 against the text around them. About 1 in 12 men see color differently. Underline your links.\n\nThe takeaway: run your three most used text and background pairs through a contrast checker and fix anything under 4.5 to 1. Start with buttons and form labels, where a customer is trying to act.\n\nWe measure contrast on every site we build, against WCAG 2.2 at Level AA, and we audit existing sites with real numbers, not a plugin badge.\n\n#Accessibility #WebDesign #WCAG",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "Five contrast fixes you can make today",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T16:34:22.508Z",
+      "id": "382101799",
+      "uuid": "817580870377951043",
+      "scheduledAt": "2026-09-25T16:38:10.954Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

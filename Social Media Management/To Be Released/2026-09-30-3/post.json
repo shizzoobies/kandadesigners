@@ -1,0 +1,169 @@
+{
+  "id": "2026-09-30-3",
+  "date": "2026-09-30",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "training",
+  "title": "LinkedIn: Quiz questions that measure something",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "Quiz questions that measure something"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Lined exam paper with a score of 100 percent circled in red pen. Headline: If everyone passes your quiz, it measured nothing. Five fixes for quiz questions that measure something, with weak vs strong examples."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 1 of 5, recall vs application: test what they would do, not what they can recite. Weak example: What is the first step of our complaint process? Strong example: a customer with a damaged order cuts you off mid policy; the highlighted answer is stop, let them finish, and restate what happened."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 2 of 5, distractors: every wrong answer should tempt someone. Weak example: how to greet a customer, with joke options like Ignore them crossed out in red. Strong example: you are on a call when someone walks up; the highlighted answer is make eye contact and signal you will be right there."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 3 of 5: retire All of the above. Weak example: Good customer service includes, with All of the above circled as guessable. Strong example: a refund is a week late; the highlighted reply apologizes, says it is flagged, and promises an email update by Friday."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 4 of 5: ask it straight, no trick negatives. Weak example: a double negative question with NOT and avoid circled in red. Strong example: an upset customer raises their voice; the highlighted answer is I can hear this has been frustrating, let's sort it out."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 5 of 5: feedback should teach, not just grade. Weak example feedback: Incorrect, the correct answer is B. Strong example feedback explains that calm down can sound like their feelings are the problem, and that naming the frustration first shows you heard them."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "We build training people finish. Scenario questions, real distractors, and feedback that teaches. See the samples at ka-performancefl.com/training or call Alex at 904-210-1071."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-30-3/fc05fffa-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-3/fc05fffa-slide-01.jpg",
+      "sha256": "fc05fffa831fc29be617ab8dc719440ceadb4baa1338c0a58d643afbf2d9e3ba",
+      "uploadedAt": "2026-09-25T16:34:22.666Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-30-3/dac3b4af-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-3/dac3b4af-slide-02.jpg",
+      "sha256": "dac3b4af626f90aeb0a6f56fbb6c3d055e3e14b878bd937be69dcd958461590e",
+      "uploadedAt": "2026-09-25T16:34:22.666Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-30-3/f24cab3e-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-3/f24cab3e-slide-03.jpg",
+      "sha256": "f24cab3e0dd3774a16861538f99686a43821e7426bd5bcc1d03ee054208469e7",
+      "uploadedAt": "2026-09-25T16:34:22.666Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-30-3/dd2026c5-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-3/dd2026c5-slide-04.jpg",
+      "sha256": "dd2026c5955def6fdaa30daf68187f40df9e193fa39de8ab25ef3fa5a1736a9e",
+      "uploadedAt": "2026-09-25T16:34:22.666Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-30-3/86a4bfe4-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-3/86a4bfe4-slide-05.jpg",
+      "sha256": "86a4bfe468412a43498df6b6f119dea801208d4866d0126c8bae95889043276c",
+      "uploadedAt": "2026-09-25T16:34:22.666Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-30-3/20323fa7-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-3/20323fa7-slide-06.jpg",
+      "sha256": "20323fa78be29ca57620210b9514ddb9234f58ad30d5b37451041be1a11360b8",
+      "uploadedAt": "2026-09-25T16:34:22.666Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-30-3/64a4a139-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-3/64a4a139-slide-07.jpg",
+      "sha256": "64a4a13912b1b02b4a1c045114d29fdca1830282267864f2291fde476ffc2fe8",
+      "uploadedAt": "2026-09-25T16:34:22.666Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-30T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "Try the free sample courses: https://ka-performancefl.com/training/samples/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-30-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-30-3/fc05fffa-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-3/dac3b4af-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-3/f24cab3e-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-3/dd2026c5-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-3/86a4bfe4-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-3/20323fa7-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-3/64a4a139-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "Lined exam paper with a score of 100 percent circled in red pen. Headline: If everyone passes your quiz, it measured nothing. Five fixes for quiz questions that measure something, with weak vs strong examples.",
+            "Fix 1 of 5, recall vs application: test what they would do, not what they can recite. Weak example: What is the first step of our complaint process? Strong example: a customer with a damaged order cuts you off mid policy; the highlighted answer is stop, let them finish, and restate what happened.",
+            "Fix 2 of 5, distractors: every wrong answer should tempt someone. Weak example: how to greet a customer, with joke options like Ignore them crossed out in red. Strong example: you are on a call when someone walks up; the highlighted answer is make eye contact and signal you will be right there.",
+            "Fix 3 of 5: retire All of the above. Weak example: Good customer service includes, with All of the above circled as guessable. Strong example: a refund is a week late; the highlighted reply apologizes, says it is flagged, and promises an email update by Friday.",
+            "Fix 4 of 5: ask it straight, no trick negatives. Weak example: a double negative question with NOT and avoid circled in red. Strong example: an upset customer raises their voice; the highlighted answer is I can hear this has been frustrating, let's sort it out.",
+            "Fix 5 of 5: feedback should teach, not just grade. Weak example feedback: Incorrect, the correct answer is B. Strong example feedback explains that calm down can sound like their feelings are the problem, and that naming the frustration first shows you heard them.",
+            "We build training people finish. Scenario questions, real distractors, and feedback that teaches. See the samples at ka-performancefl.com/training or call Alex at 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-30T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If everyone passes your quiz, it measured nothing.\n\nA quiz that everyone aces tells you people can read. It does not tell you whether they can do the job, and that is the whole reason the assessment exists.\n\nFive fixes we use on every course, each shown in this document as a weak and a strong example question:\n\n1. Test what they would do, not what they can recite. Put the learner in a scenario and ask for the next move.\n2. Make every wrong answer tempting to someone. A distractor nobody picks is a free point.\n3. Retire \"All of the above.\" It rewards guessing, not knowing.\n4. Ask it straight. Trick negatives test reading, not judgment.\n5. Write feedback that teaches the why. \"Incorrect, the answer is B\" is a missed lesson.\n\nThe example questions are ours, written for a customer service course.\n\nThe takeaway: take one recall question from your current quiz and rewrite it as a short scenario with a decision at the end. Then give each wrong answer feedback that explains why it is wrong.\n\nWe design and build training content, from full courses and short modules to assessments and job aids, delivered into your own LMS. Free sample courses are on our site.\n\n#InstructionalDesign #LearningAndDevelopment #eLearning",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "Quiz questions that measure something",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T16:34:36.137Z",
+      "id": "382102019",
+      "uuid": "738934211266035904",
+      "scheduledAt": "2026-09-25T16:38:36.800Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

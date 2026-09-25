@@ -1,0 +1,263 @@
+{
+  "id": "2026-09-28-2",
+  "date": "2026-09-28",
+  "time": "17:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "What puts a local business in Google's map pack",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slide 1 of 7. Headline: Why do three businesses get the map, and everyone else gets scrolled past? Below it, a simple map pack diagram: results 1, 2 and 3 in bold with pins, a dashed cut line, then results 4 and 5 faded.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slide 2 of 7. Google ranks local results on three things: 1 Relevance, does your profile match the search; 2 Distance, how close are you to the searcher; 3 Prominence, how well known is your business. Google says there is no way to pay for a better local ranking.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slide 3 of 7. Factor 1, Relevance: how closely your Business Profile matches what the person typed. Do this: pick the category that says exactly what you do, then fill every field: hours, services, attributes.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slide 4 of 7. Factor 2, Distance: how far your business is from the person searching. Do this: make sure Google knows exactly where you are, with the full, correct address on your profile and your website.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slide 5 of 7. Factor 3, Prominence: how well known you are, including links from other sites and your reviews and ratings. Do this: ask every happy customer for a Google review and reply to each one, then earn links from local sites.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slide 6 of 7. Our client, in the top three. A framed screenshot of a Google search for Primary Care Ellenton, FL, showing three Places results; the third, Ellenton Family Practice Direct, 4.5 stars, 71 reviews, is boxed in orange. Real incognito search, Sept 24, nothing edited.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slide 7 of 7. Want to show up where people look? K&A builds local search into every site. Recap: 1 Relevance, 2 Distance, 3 Prominence. ka-performancefl.com. Call Alex 904-210-1071.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: Slide 1 of 7 / Slide 2 of 7 / Slide 3 of 7 / Slide 4 of 7 / Slide 5 of 7 / Slide 6 of 7 / Slide 7 of 7"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Slide 1 of 7. Headline: Why do three businesses get the map, and everyone else gets scrolled past? Below it, a simple map pack diagram: results 1, 2 and 3 in bold with pins, a dashed cut line, then results 4 and 5 faded."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-28-2/f7a92777-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/f7a92777-slide-01.jpg",
+      "sha256": "f7a92777ebf5c46aa9f1fd8ca9f65de4f93db9de682ff2d2f3073bef70e90eab",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-28-2/cd31c66f-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/cd31c66f-slide-02.jpg",
+      "sha256": "cd31c66f778ae6df957dc2b833bc629aa96e34b13779ea19ef0d54e21597cbda",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-28-2/e37c66bc-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/e37c66bc-slide-03.jpg",
+      "sha256": "e37c66bc7783080b7c3306a9580edc3637f4012fb51efc786945820a5683bed9",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-28-2/e50d53e9-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/e50d53e9-slide-04.jpg",
+      "sha256": "e50d53e964b86fd56475a38c2012ab75ebd4107184744346b12d354f68db4572",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-28-2/fa35ce42-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/fa35ce42-slide-05.jpg",
+      "sha256": "fa35ce429262417a6818660247cc5474148bd7623f6fdfe4c824805dc8dbc43c",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-28-2/654e9472-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/654e9472-slide-06.jpg",
+      "sha256": "654e947214fa358d04c4ba6e407b122cd315c30deac1070c49f11650a18afc94",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-28-2/0b1a06c4-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/0b1a06c4-slide-07.jpg",
+      "sha256": "0b1a06c46ff763a5c6bff3c4e46910055ce66e2a6e4726b614bd67a61a3e6a41",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-09-28-2/c6a9ef04-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/c6a9ef04-slideshow.mp4",
+      "sha256": "c6a9ef0464a94d6c034cc1489a0dd063bde3fcb13ea49b068d6d55c3c96dd8a0",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-09-28-2/2de0a927-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-2/2de0a927-slideshow-cover.jpg",
+      "sha256": "2de0a927637c6b0a97c73f4ed22c2535348c2b7204f44ad7f54aace9b12c2222",
+      "uploadedAt": "2026-09-25T15:38:40.980Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-09-28T17:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-28-2/c6a9ef04-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: Slide 1 of 7 / Slide 2 of 7 / Slide 3 of 7 / Slide 4 of 7 / Slide 5 of 7 / Slide 6 of 7 / Slide 7 of 7"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-28T17:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Why do three businesses get the map, and everyone else gets scrolled past?\nGet found where people look: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-28-2\n\nGoogle says local results come down to three things: relevance, distance, and prominence. And there is no way to pay your way in. Swipe for what each one means and one thing to do about it this week.\n\nSlide 6 is our client Ellenton Family Practice Direct, in the map's top three for \"Primary Care, Ellenton, FL\". Recorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nLocal search is part of every site we build. Want to show up where people look? Visit ka-performancefl.com or call Alex at 904-210-1071.\n\nSource: Google Business Profile Help, \"Tips to improve your local ranking on Google.\"\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28-2/2de0a927-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:38:56.727Z",
+      "id": "382070183",
+      "uuid": "444272503795172524",
+      "scheduledAt": "2026-09-25T15:44:04.164Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-09-28T17:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "#LocalSEO #GoogleBusinessProfile #SmallBusiness #GainesvilleFL #FloridaBusiness #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-28-2/f7a92777-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-28-2/cd31c66f-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-28-2/e37c66bc-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-28-2/e50d53e9-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-28-2/fa35ce42-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-28-2/654e9472-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-28-2/0b1a06c4-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "Slide 1 of 7. Headline: Why do three businesses get the map, and everyone else gets scrolled past? Below it, a simple map pack diagram: results 1, 2 and 3 in bold with pins, a dashed cut line, then results 4 and 5 faded.",
+            "Slide 2 of 7. Google ranks local results on three things: 1 Relevance, does your profile match the search; 2 Distance, how close are you to the searcher; 3 Prominence, how well known is your business. Google says there is no way to pay for a better local ranking.",
+            "Slide 3 of 7. Factor 1, Relevance: how closely your Business Profile matches what the person typed. Do this: pick the category that says exactly what you do, then fill every field: hours, services, attributes.",
+            "Slide 4 of 7. Factor 2, Distance: how far your business is from the person searching. Do this: make sure Google knows exactly where you are, with the full, correct address on your profile and your website.",
+            "Slide 5 of 7. Factor 3, Prominence: how well known you are, including links from other sites and your reviews and ratings. Do this: ask every happy customer for a Google review and reply to each one, then earn links from local sites.",
+            "Slide 6 of 7. Our client, in the top three. A framed screenshot of a Google search for Primary Care Ellenton, FL, showing three Places results; the third, Ellenton Family Practice Direct, 4.5 stars, 71 reviews, is boxed in orange. Real incognito search, Sept 24, nothing edited.",
+            "Slide 7 of 7. Want to show up where people look? K&A builds local search into every site. Recap: 1 Relevance, 2 Distance, 3 Prominence. ka-performancefl.com. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-28T17:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Why do three businesses get the map, and everyone else gets scrolled past?\n\nGoogle says local results come down to three things: relevance, distance, and prominence. And there is no way to pay your way in. Swipe for what each one means and one thing to do about it this week.\n\nSlide 6 is our client Ellenton Family Practice Direct, in the map's top three for \"Primary Care, Ellenton, FL\". Recorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nSave this for your next Google Business Profile update. Want to show up where people look? Link in bio, or call Alex at 904-210-1071.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:38:56.727Z",
+      "id": "382070350",
+      "uuid": "7998204981500661005",
+      "scheduledAt": "2026-09-25T15:44:22.528Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0928-1"
+}

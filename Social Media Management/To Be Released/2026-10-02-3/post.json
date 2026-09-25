@@ -1,0 +1,96 @@
+{
+  "id": "2026-10-02-3",
+  "date": "2026-10-02",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "client-spotlight",
+  "title": "LinkedIn: Thrillers Mobile VR website launch",
+  "platforms": {
+    "linkedin": {
+      "type": "POST",
+      "caption": "linkedin.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Fast cut reel inside a K&A Performance frame, with the K&A logo and ka-performancefl.com at the top and Built by K&A Performance at the bottom of every frame. A phone plays the real Thrillers Mobile VR website: the home page under the hook No venue. No gear. The arcade pulls up to your driveway., then the four rides on the experiences page, then the booking request form. It ends on Your launch could be next., the K&A logo, ka-performancefl.com and Call Alex, 904-210-1071."
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a phone showing the Thrillers Mobile VR home page, with the words Just launched, Thrillers Mobile VR, Built by K&A, Your launch could be next, and ka-performancefl.com"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-02-3/1b37a3b6-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-02-3/1b37a3b6-reel-vertical.mp4",
+      "sha256": "1b37a3b66bed3c199039abdd9926ae6dd9a507a955f2fc5715ab50a45d27f607",
+      "uploadedAt": "2026-09-25T16:34:36.283Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-02-3/bfc35a3d-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-3/bfc35a3d-thumbnail.jpg",
+      "sha256": "bfc35a3d8136dbc29d83270e1973cbe81708b140be473bd692de9e2f8ee297b1",
+      "uploadedAt": "2026-09-25T16:34:36.283Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-02T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "See how we build websites: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-02-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-02-3/1b37a3b6-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Fast cut reel inside a K&A Performance frame, with the K&A logo and ka-performancefl.com at the top and Built by K&A Performance at the bottom of every frame. A phone plays the real Thrillers Mobile VR website: the home page under the hook No venue. No gear. The arcade pulls up to your driveway., then the four rides on the experiences page, then the booking request form. It ends on Your launch could be next., the K&A logo, ka-performancefl.com and Call Alex, 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-02T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "No venue. No gear. The arcade pulls up to your driveway.\n\nWe just launched the website for Thrillers Mobile VR, a veteran and family owned virtual reality trailer out of Middleburg, Florida.\n\nA business like this sells an experience many people have not tried yet, so the site has to do the selling before the trailer arrives. On the new site you see the whole lineup on one page, pick one of four rides, from VR Rides to a racecar rig, and send a booking request for your date from your phone. Every request lands straight in their inbox.\n\nThe trailer is climate-controlled, so birthdays, school events, and festivals go ahead rain or shine. See it at thrillersvr.com.\n\nThe takeaway for any business that travels to its customers: put the booking request on the same page as the thing people want to book. Every extra step between \"that looks fun\" and \"send\" is a place to lose them.\n\nEverything in the video is the real site. The music is AI generated.\n\nWe design and build websites for Florida businesses, with local search built in. Your launch could be next.\n\n#WebDesign #SmallBusiness #Florida",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-02-3/bfc35a3d-thumbnail.jpg",
+          "linkedinData": {
+            "type": "post",
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T16:34:45.144Z",
+      "id": "382102162",
+      "uuid": "-5593186117217073081",
+      "scheduledAt": "2026-09-25T16:38:55.582Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0928-6"
+}

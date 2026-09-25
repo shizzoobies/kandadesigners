@@ -1,0 +1,96 @@
+{
+  "id": "2026-09-28-3",
+  "date": "2026-09-28",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "client-spotlight",
+  "title": "LinkedIn: Ellenton Family Practice Direct in the top three",
+  "platforms": {
+    "linkedin": {
+      "type": "POST",
+      "caption": "linkedin.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "K&A Performance local SEO reel. A real incognito Google search for Primary Care Ellenton, FL, recorded Sept 24, shown in a framed browser card: Ellenton Family Practice Direct ringed in the map pack top three with 4.5 stars and 71 reviews, then named first in Google's AI Overview. Ends with Is your business showing up? ka-performancefl.com, Call Alex, 904-210-1071."
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance local SEO frame: A two-provider practice. Top three on Google. Google map pack results for Primary Care Ellenton, FL with Ellenton Family Practice Direct ringed in amber, and ka-performancefl.com below."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-09-28-3/d6151a60-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-28-3/d6151a60-reel-vertical.mp4",
+      "sha256": "d6151a60b7fd47d873d29aba9765ec112704aaf0be9ad97edd74869784f050b7",
+      "uploadedAt": "2026-09-25T16:34:00.031Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-09-28-3/164eb885-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28-3/164eb885-thumbnail.jpg",
+      "sha256": "164eb885e31ffa00dad460f2abaeac0c8d4512aee1c84f9cdf4d3cbfe4768800",
+      "uploadedAt": "2026-09-25T16:34:00.031Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-28T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "See how we build local search into every site: https://ka-performancefl.com/services/seo-ai-search/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-28-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-28-3/d6151a60-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "K&A Performance local SEO reel. A real incognito Google search for Primary Care Ellenton, FL, recorded Sept 24, shown in a framed browser card: Ellenton Family Practice Direct ringed in the map pack top three with 4.5 stars and 71 reviews, then named first in Google's AI Overview. Ends with Is your business showing up? ka-performancefl.com, Call Alex, 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-28T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "A two-provider practice is in Google's top three for primary care in Ellenton, Florida.\n\nOn Sept 24 we searched \"Primary Care, Ellenton, FL\" in a fresh incognito window and recorded the screen. Ellenton Family Practice Direct sits in the map's top three, next to practices many times their size. Above the regular results, Google's AI Overview names them first.\n\nNothing on the Google page is edited. Search results move, so run the search yourself.\n\nWhy it matters: the map and the AI Overview sit above every other result. For a local business, that top section is where a search is won or lost, and this result shows a small practice can hold its own there.\n\nOne thing to do this week: open an incognito window on your phone and search for your service plus your town, the way a new customer would. Note where you land, and whether your listing shows your hours, your reviews, and a working link to your site.\n\nLocal search is part of every site we build: pages that say clearly what you do and where you do it, clean structure that search engines can read, and a site that loads fast. Congratulations to the whole team at Ellenton Family Practice Direct.\n\nThe music is AI generated.\n\n#LocalSEO #SmallBusiness #Florida",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28-3/164eb885-thumbnail.jpg",
+          "linkedinData": {
+            "type": "post",
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T16:34:10.469Z",
+      "id": "382101635",
+      "uuid": "-4777194846688096893",
+      "scheduledAt": "2026-09-25T16:37:49.227Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-i-b"
+}

@@ -1,0 +1,169 @@
+{
+  "id": "2026-10-01-3",
+  "date": "2026-10-01",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "ai-launch",
+  "title": "LinkedIn: The four-line brief. Save this.",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "The four-line brief: a template for AI requests"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on a cream background: Copy this before your next AI prompt. An index card below lists four numbered lines: who it is for, what good looks like, what to avoid, the format you want. Save this post. Swipe for line 1."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Big rust numeral 1: Who it is for. Name the reader and what is on their mind. Example index card for a fictional lawn care company's spring email reads: For: past customers who booked a spring cleanup last year, busy homeowners reading on their phone. Why it matters: the reader sets the tone, the length, and what to leave out."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Big rust numeral 2: What good looks like. Describe done, or you get average. Example card reads: Good looks like: under 120 words, one ask, book a spring cleanup online, sounds like the owner, not an ad. Why it matters: the AI cannot read your standards, so say them once."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Big rust numeral 3: What to avoid. List what would make you delete the draft. Example card reads: Avoid: no discount codes, no exclamation points, do not promise dates because the schedule fills up. Why it matters: one line of limits saves you three rounds of edits."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Big rust numeral 4: The format you want. Ask for the shape, and it arrives ready to use. Example card reads: Format: a subject line under 50 characters, three short paragraphs, the booking link on its own line. Why it matters: ready to paste means ready to send."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Screenshot this: the four-line brief as a fill-in-the-blank index card. Task: the job, in one line. Then four blanks: For, who it is for and what is on their mind. Good looks like, length, tone, the one thing they should do. Avoid, what would make you delete the draft. Format, the shape you want back."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Put AI to work in your business: the 90-Day AI Launch at ka-performancefl.com/ai-launch. Call Alex 904-210-1071. K&A Performance builds websites, local search, training, and AI integration for Gainesville businesses. K&A Performance logo."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-01-3/cf91bed6-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-3/cf91bed6-slide-01.jpg",
+      "sha256": "cf91bed6ff1adab05e74820f96ee0627f2a278d1e99e1b2157efb0a7c016d31b",
+      "uploadedAt": "2026-09-25T16:46:45.789Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-01-3/68b453d4-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-3/68b453d4-slide-02.jpg",
+      "sha256": "68b453d48e675c90dfb1bc3c18746b867772750bc4bf0e6753ba1d5aafdccf28",
+      "uploadedAt": "2026-09-25T16:46:45.789Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-01-3/a0e2d5b9-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-3/a0e2d5b9-slide-03.jpg",
+      "sha256": "a0e2d5b900076fb789dfd41c6a62c555e4b8bbab539ed4ce0dd4a7634a51f787",
+      "uploadedAt": "2026-09-25T16:46:45.789Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-01-3/7d272e56-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-3/7d272e56-slide-04.jpg",
+      "sha256": "7d272e5614a11d39d28fb8bea66c2d9ed31ab551b1e890b85d7f324af6e71a73",
+      "uploadedAt": "2026-09-25T16:46:45.789Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-01-3/b97be8da-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-3/b97be8da-slide-05.jpg",
+      "sha256": "b97be8da0ab189db20b99cfe9d4d97633538f164d80a96aac1580ca026cd74cb",
+      "uploadedAt": "2026-09-25T16:46:45.789Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-01-3/cdd3338a-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-3/cdd3338a-slide-06.jpg",
+      "sha256": "cdd3338aaeb786b0679b4cb9d156499616dc9b0aa3602e7feeda071d2814fac9",
+      "uploadedAt": "2026-09-25T16:46:45.789Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-01-3/a4eaff5a-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-3/a4eaff5a-slide-07.jpg",
+      "sha256": "a4eaff5a40b001d3d2176dc8181eee8c6c754206d77082a487970a500d440c34",
+      "uploadedAt": "2026-09-25T16:46:45.789Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-01T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "Put AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-01-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-01-3/cf91bed6-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-3/68b453d4-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-3/a0e2d5b9-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-3/7d272e56-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-3/b97be8da-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-3/cdd3338a-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-3/a4eaff5a-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a cream background: Copy this before your next AI prompt. An index card below lists four numbered lines: who it is for, what good looks like, what to avoid, the format you want. Save this post. Swipe for line 1.",
+            "Big rust numeral 1: Who it is for. Name the reader and what is on their mind. Example index card for a fictional lawn care company's spring email reads: For: past customers who booked a spring cleanup last year, busy homeowners reading on their phone. Why it matters: the reader sets the tone, the length, and what to leave out.",
+            "Big rust numeral 2: What good looks like. Describe done, or you get average. Example card reads: Good looks like: under 120 words, one ask, book a spring cleanup online, sounds like the owner, not an ad. Why it matters: the AI cannot read your standards, so say them once.",
+            "Big rust numeral 3: What to avoid. List what would make you delete the draft. Example card reads: Avoid: no discount codes, no exclamation points, do not promise dates because the schedule fills up. Why it matters: one line of limits saves you three rounds of edits.",
+            "Big rust numeral 4: The format you want. Ask for the shape, and it arrives ready to use. Example card reads: Format: a subject line under 50 characters, three short paragraphs, the booking link on its own line. Why it matters: ready to paste means ready to send.",
+            "Screenshot this: the four-line brief as a fill-in-the-blank index card. Task: the job, in one line. Then four blanks: For, who it is for and what is on their mind. Good looks like, length, tone, the one thing they should do. Avoid, what would make you delete the draft. Format, the shape you want back.",
+            "Put AI to work in your business: the 90-Day AI Launch at ka-performancefl.com/ai-launch. Call Alex 904-210-1071. K&A Performance builds websites, local search, training, and AI integration for Gainesville businesses. K&A Performance logo."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-01T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Copy this before your next AI request.\n\nWhen a first draft from an AI tool misses, the request is usually one line long, and the tool fills every gap with average. Four lines above the request close those gaps:\n\n1. Who it is for. Name the reader and what is on their mind.\n2. What good looks like. Length, tone, and the one thing the reader should do.\n3. What to avoid. List what would make you delete the draft.\n4. The format you want. Ask for the shape, and it arrives ready to use.\n\nThis document walks through a worked example of each line, a spring email for a fictional lawn care company, then puts all four on one fill-in-the-blank card you can save. It works in any AI tool.\n\nThe takeaway: before your next request, write one sentence for each of the four lines. The reader and the limits matter most, because the tool cannot guess them.\n\nPutting AI to work inside a business is part of what we do, alongside web design, local search, and training. The 90-Day AI Launch is how we help a business put AI to work. The link is in the first comment.\n\n#AI #SmallBusiness #Productivity",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "The four-line brief: a template for AI requests",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T16:47:01.428Z",
+      "id": "382106872",
+      "uuid": "7342870926112081651",
+      "scheduledAt": "2026-09-25T16:48:09.136Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

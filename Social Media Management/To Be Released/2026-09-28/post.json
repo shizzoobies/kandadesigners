@@ -20,14 +20,19 @@
     {
       "file": "media/reel-vertical.mp4",
       "role": "video",
-      "origin": "human",
-      "alt": ""
+      "origin": "kap-reel",
+      "alt": "K&A Performance local SEO reel. A real incognito Google search for Primary Care Ellenton, FL, recorded Sept 24, shown in a framed browser card: Ellenton Family Practice Direct ringed in the map pack top three with 4.5 stars and 71 reviews, then named first in Google's AI Overview. Ends with Is your business showing up? ka-performancefl.com, Call Alex, 904-210-1071."
     },
     {
       "file": "media/thumbnail.jpg",
       "role": "thumbnail",
-      "origin": "human",
-      "alt": "Google search results for Primary Care, Ellenton, FL, with Ellenton Family Practice Direct in the map listing and named in the AI Overview"
+      "origin": "kap-reel",
+      "alt": "K&A Performance local SEO frame: A two-provider practice. Top three on Google. Google map pack results for Primary Care Ellenton, FL with Ellenton Family Practice Direct ringed in amber, and ka-performancefl.com below."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
     }
   ],
   "ai": {
@@ -37,16 +42,22 @@
   "generate": [],
   "r2": {
     "media/reel-vertical.mp4": {
-      "key": "2026-09-28/c6679a43-reel-vertical.mp4",
-      "url": "https://media.ka-performancefl.com/2026-09-28/c6679a43-reel-vertical.mp4",
-      "sha256": "c6679a43b649d3eb03ce41574fc803e8a11f218cff245a6a045b726fb58b1753",
-      "uploadedAt": "2026-09-24T21:09:22.521Z"
+      "key": "2026-09-28/d6151a60-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-28/d6151a60-reel-vertical.mp4",
+      "sha256": "d6151a60b7fd47d873d29aba9765ec112704aaf0be9ad97edd74869784f050b7",
+      "uploadedAt": "2026-09-25T15:25:35.376Z",
+      "previous": [
+        "2026-09-28/c6679a43-reel-vertical.mp4"
+      ]
     },
     "media/thumbnail.jpg": {
-      "key": "2026-09-28/5b0a4eb3-thumbnail.jpg",
-      "url": "https://media.ka-performancefl.com/2026-09-28/5b0a4eb3-thumbnail.jpg",
-      "sha256": "5b0a4eb30a7f70f5a402dded0ef48a25e259bdb24de0cfb209a07e945c6321b3",
-      "uploadedAt": "2026-09-24T21:09:22.521Z"
+      "key": "2026-09-28/164eb885-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-28/164eb885-thumbnail.jpg",
+      "sha256": "164eb885e31ffa00dad460f2abaeac0c8d4512aee1c84f9cdf4d3cbfe4768800",
+      "uploadedAt": "2026-09-25T15:25:35.376Z",
+      "previous": [
+        "2026-09-28/5b0a4eb3-thumbnail.jpg"
+      ]
     }
   },
   "metricool": {
@@ -60,10 +71,10 @@
           "firstCommentText": "",
           "hasNotReadNotes": false,
           "media": [
-            "https://media.ka-performancefl.com/2026-09-28/c6679a43-reel-vertical.mp4"
+            "https://media.ka-performancefl.com/2026-09-28/d6151a60-reel-vertical.mp4"
           ],
           "mediaAltText": [
-            ""
+            "K&A Performance local SEO reel. A real incognito Google search for Primary Care Ellenton, FL, recorded Sept 24, shown in a framed browser card: Ellenton Family Practice Direct ringed in the map pack top three with 4.5 stars and 71 reviews, then named first in Google's AI Overview. Ends with Is your business showing up? ka-performancefl.com, Call Alex, 904-210-1071."
           ],
           "providers": [
             {
@@ -78,18 +89,21 @@
           "smartLinkData": {
             "ids": []
           },
-          "text": "Search \"Primary Care, Ellenton, FL\" and look at what comes up. Google's AI Overview points to Ellenton Family Practice Direct first, and they sit in the map's top three, next to practices many times their size.\n\nThat is a two-provider, membership-style practice showing up where people actually look. Congratulations to the whole team.\n\nRecorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nLocal search is part of every site we build. If your business is not showing up where it should, call Alex at 904-210-1071 or visit ka-performancefl.com.\n\n#EllentonFL #PrimaryCare #LocalSEO",
-          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28/5b0a4eb3-thumbnail.jpg",
+          "text": "A two-provider practice. Top three on Google.\nSee how we build local search: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-28\n\nSearch \"Primary Care, Ellenton, FL\" and look at what comes up. Google's AI Overview points to Ellenton Family Practice Direct first, and they sit in the map's top three, next to practices many times their size.\n\nThat is a two-provider, membership-style practice showing up where people actually look. Congratulations to the whole team.\n\nRecorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nLocal search is part of every site we build. If your business is not showing up where it should, call Alex at 904-210-1071 or visit https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-28.\n\nThe music is AI generated.\n\n#EllentonFL #PrimaryCare #LocalSEO",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28/164eb885-thumbnail.jpg",
           "facebookData": {
             "type": "REEL"
           }
         }
       },
       "draft": true,
-      "preparedAt": "2026-09-24T21:09:40.565Z",
-      "id": "381617380",
+      "preparedAt": "2026-09-25T15:41:09.737Z",
+      "id": "382068363",
       "uuid": "6610243749889723196",
-      "scheduledAt": "2026-09-24T21:10:05.885Z"
+      "scheduledAt": "2026-09-25T15:41:09.737Z",
+      "previousIds": [
+        "381617380"
+      ]
     },
     "instagram": {
       "payload": {
@@ -101,10 +115,10 @@
           "firstCommentText": "#EllentonFL #PrimaryCare #LocalSEO #SmallBusiness #FloridaBusiness",
           "hasNotReadNotes": false,
           "media": [
-            "https://media.ka-performancefl.com/2026-09-28/c6679a43-reel-vertical.mp4"
+            "https://media.ka-performancefl.com/2026-09-28/d6151a60-reel-vertical.mp4"
           ],
           "mediaAltText": [
-            ""
+            "K&A Performance local SEO reel. A real incognito Google search for Primary Care Ellenton, FL, recorded Sept 24, shown in a framed browser card: Ellenton Family Practice Direct ringed in the map pack top three with 4.5 stars and 71 reviews, then named first in Google's AI Overview. Ends with Is your business showing up? ka-performancefl.com, Call Alex, 904-210-1071."
           ],
           "providers": [
             {
@@ -119,8 +133,8 @@
           "smartLinkData": {
             "ids": []
           },
-          "text": "Search \"Primary Care, Ellenton, FL\" and look at what comes up. Google's AI Overview points to Ellenton Family Practice Direct first, and they sit in the map's top three, next to practices many times their size.\n\nThat is a two-provider, membership-style practice showing up where people actually look. Congratulations to the whole team.\n\nRecorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nLocal search is part of every site we build. Link in bio.",
-          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28/5b0a4eb3-thumbnail.jpg",
+          "text": "A two-provider practice. Top three on Google.\n\nSearch \"Primary Care, Ellenton, FL\" and look at what comes up. Google's AI Overview points to Ellenton Family Practice Direct first, and they sit in the map's top three, next to practices many times their size.\n\nThat is a two-provider, membership-style practice showing up where people actually look. Congratulations to the whole team.\n\nRecorded Sept 24 in a fresh incognito window, nothing edited. Search results move, so try it yourself.\n\nLocal search is part of every site we build. Link in bio.\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-28/164eb885-thumbnail.jpg",
           "instagramData": {
             "type": "REEL",
             "isAiGenerated": false
@@ -128,13 +142,17 @@
         }
       },
       "draft": true,
-      "preparedAt": "2026-09-24T21:09:40.565Z",
-      "id": "381617409",
+      "preparedAt": "2026-09-25T15:41:09.737Z",
+      "id": "382068415",
       "uuid": "4825940660386873840",
-      "scheduledAt": "2026-09-24T21:10:05.957Z"
+      "scheduledAt": "2026-09-25T15:41:09.737Z",
+      "previousIds": [
+        "381617409"
+      ]
     }
   },
   "published": {},
   "credits": {},
-  "lastError": null
+  "lastError": null,
+  "music": "music-i-b"
 }

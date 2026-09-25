@@ -1,0 +1,263 @@
+{
+  "id": "2026-09-30-2",
+  "date": "2026-09-30",
+  "time": "16:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "training",
+  "title": "Quiz questions that measure something",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Lined exam paper with a score of 100 percent circled in red pen. Headline: If everyone passes your quiz, it measured nothing. Five fixes for quiz questions that measure something, with weak vs strong examples.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 1 of 5, recall vs application: test what they would do, not what they can recite. Weak example: What is the first step of our complaint process? Strong example: a customer with a damaged order cuts you off mid policy; the highlighted answer is stop, let them finish, and restate what happened.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 2 of 5, distractors: every wrong answer should tempt someone. Weak example: how to greet a customer, with joke options like Ignore them crossed out in red. Strong example: you are on a call when someone walks up; the highlighted answer is make eye contact and signal you will be right there.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 3 of 5: retire All of the above. Weak example: Good customer service includes, with All of the above circled as guessable. Strong example: a refund is a week late; the highlighted reply apologizes, says it is flagged, and promises an email update by Friday.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 4 of 5: ask it straight, no trick negatives. Weak example: a double negative question with NOT and avoid circled in red. Strong example: an upset customer raises their voice; the highlighted answer is I can hear this has been frustrating, let's sort it out.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 5 of 5: feedback should teach, not just grade. Weak example feedback: Incorrect, the correct answer is B. Strong example feedback explains that calm down can sound like their feelings are the problem, and that naming the frustration first shows you heard them.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "We build training people finish. Scenario questions, real distractors, and feedback that teaches. See the samples at ka-performancefl.com/training or call Alex at 904-210-1071.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: Lined exam paper with a score of 100 percent circled in red pen / Fix 1 of 5, recall vs application: test what they would do, not what they can recite / Fix 2 of 5, distractors: every wrong answer should tempt someone / Fix 3 of 5: retire All of the above / Fix 4 of 5: ask it straight, no trick negatives / Fix 5 of 5: feedback should teach, not just grade / We build training people finish"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Lined exam paper with a score of 100 percent circled in red pen. Headline: If everyone passes your quiz, it measured nothing. Five fixes for quiz questions that measure something, with weak vs strong examples."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-30-2/fc05fffa-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/fc05fffa-slide-01.jpg",
+      "sha256": "fc05fffa831fc29be617ab8dc719440ceadb4baa1338c0a58d643afbf2d9e3ba",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-30-2/dac3b4af-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/dac3b4af-slide-02.jpg",
+      "sha256": "dac3b4af626f90aeb0a6f56fbb6c3d055e3e14b878bd937be69dcd958461590e",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-30-2/f24cab3e-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/f24cab3e-slide-03.jpg",
+      "sha256": "f24cab3e0dd3774a16861538f99686a43821e7426bd5bcc1d03ee054208469e7",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-30-2/dd2026c5-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/dd2026c5-slide-04.jpg",
+      "sha256": "dd2026c5955def6fdaa30daf68187f40df9e193fa39de8ab25ef3fa5a1736a9e",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-30-2/86a4bfe4-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/86a4bfe4-slide-05.jpg",
+      "sha256": "86a4bfe468412a43498df6b6f119dea801208d4866d0126c8bae95889043276c",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-30-2/20323fa7-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/20323fa7-slide-06.jpg",
+      "sha256": "20323fa78be29ca57620210b9514ddb9234f58ad30d5b37451041be1a11360b8",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-30-2/64a4a139-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/64a4a139-slide-07.jpg",
+      "sha256": "64a4a13912b1b02b4a1c045114d29fdca1830282267864f2291fde476ffc2fe8",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-09-30-2/6108d559-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/6108d559-slideshow.mp4",
+      "sha256": "6108d559653dd6e7c10ae57648f0a940151f3e28c8e576e747741c7ac52d07be",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-09-30-2/3a197e85-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30-2/3a197e85-slideshow-cover.jpg",
+      "sha256": "3a197e854228406c9033d09fd3f037b4446b73f1f5e4092535d33c3142220fa7",
+      "uploadedAt": "2026-09-25T15:39:13.079Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-09-30T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-30-2/6108d559-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: Lined exam paper with a score of 100 percent circled in red pen / Fix 1 of 5, recall vs application: test what they would do, not what they can recite / Fix 2 of 5, distractors: every wrong answer should tempt someone / Fix 3 of 5: retire All of the above / Fix 4 of 5: ask it straight, no trick negatives / Fix 5 of 5: feedback should teach, not just grade / We build training people finish"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-30T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If everyone passes your quiz, it measured nothing.\n\nA quiz that everyone aces tells you people can read, not whether they can do the job. Swipe for five fixes we use on every course, each with a weak and a strong example question:\n\n1. Ask what they would do, not what they can recite.\n2. Make every wrong answer tempting to someone.\n3. Retire \"All of the above.\"\n4. Skip the trick negatives.\n5. Write feedback that teaches the why.\n\nThe example questions are ours, written for a customer service course.\n\nWe build training people finish. See free sample courses at https://ka-performancefl.com/training/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-30-2 or call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#InstructionalDesign #TrainingAndDevelopment #eLearning",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-30-2/3a197e85-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:39:28.405Z",
+      "id": "382070926",
+      "uuid": "6281392537276334853",
+      "scheduledAt": "2026-09-25T15:45:18.654Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-09-30T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "#InstructionalDesign #TrainingAndDevelopment #eLearning #LearningAndDevelopment #CorporateTraining #GainesvilleFL",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-30-2/fc05fffa-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-2/dac3b4af-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-2/f24cab3e-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-2/dd2026c5-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-2/86a4bfe4-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-2/20323fa7-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-30-2/64a4a139-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "Lined exam paper with a score of 100 percent circled in red pen. Headline: If everyone passes your quiz, it measured nothing. Five fixes for quiz questions that measure something, with weak vs strong examples.",
+            "Fix 1 of 5, recall vs application: test what they would do, not what they can recite. Weak example: What is the first step of our complaint process? Strong example: a customer with a damaged order cuts you off mid policy; the highlighted answer is stop, let them finish, and restate what happened.",
+            "Fix 2 of 5, distractors: every wrong answer should tempt someone. Weak example: how to greet a customer, with joke options like Ignore them crossed out in red. Strong example: you are on a call when someone walks up; the highlighted answer is make eye contact and signal you will be right there.",
+            "Fix 3 of 5: retire All of the above. Weak example: Good customer service includes, with All of the above circled as guessable. Strong example: a refund is a week late; the highlighted reply apologizes, says it is flagged, and promises an email update by Friday.",
+            "Fix 4 of 5: ask it straight, no trick negatives. Weak example: a double negative question with NOT and avoid circled in red. Strong example: an upset customer raises their voice; the highlighted answer is I can hear this has been frustrating, let's sort it out.",
+            "Fix 5 of 5: feedback should teach, not just grade. Weak example feedback: Incorrect, the correct answer is B. Strong example feedback explains that calm down can sound like their feelings are the problem, and that naming the frustration first shows you heard them.",
+            "We build training people finish. Scenario questions, real distractors, and feedback that teaches. See the samples at ka-performancefl.com/training or call Alex at 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-30T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If everyone passes your quiz, it measured nothing.\n\nA quiz that everyone aces tells you people can read, not whether they can do the job. Swipe for five fixes we use on every course, each with a weak and a strong example question:\n\n1. Ask what they would do, not what they can recite.\n2. Make every wrong answer tempting to someone.\n3. Retire \"All of the above.\"\n4. Skip the trick negatives.\n5. Write feedback that teaches the why.\n\nThe example questions are ours, written for a customer service course. Save this for the next quiz you write.\n\nWe build training people finish. Free sample courses, link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:39:28.405Z",
+      "id": "382071159",
+      "uuid": "9090516482914861962",
+      "scheduledAt": "2026-09-25T15:45:38.424Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0928-3"
+}

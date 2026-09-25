@@ -3,7 +3,7 @@
   "date": "2026-09-29",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "planned",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Contrast is not a vibe",
   "platforms": {
@@ -21,7 +21,7 @@
       "file": "media/reel-vertical.mp4",
       "role": "video",
       "origin": "kap-reel",
-      "alt": ""
+      "alt": "Text-led reel: amber text on cream measures 2.9 to 1 and fails, rust measures 6.7 to 1 and passes, with a live contrast meter and the K&A Performance logo and ka-performancefl.com on every frame"
     },
     {
       "file": "media/reel-vertical.srt",
@@ -32,17 +32,115 @@
       "file": "media/thumbnail.jpg",
       "role": "thumbnail",
       "origin": "kap-reel",
-      "alt": "A fictional landscaping homepage with an amber headline on cream, and the measured ratio 2.9 to 1, fails AA"
+      "alt": "K&A Performance logo and ka-performancefl.com above a before and after split: amber on cream 2.9 to 1 fails, rust on cream 6.7 to 1 passes"
     }
   ],
   "ai": {
-    "voice": true,
+    "voice": false,
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-09-29/3118e205-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-29/3118e205-reel-vertical.mp4",
+      "sha256": "3118e2058925f88bb9ce9499d59ee65f7e782039d47f65726411ca66cbd33355",
+      "uploadedAt": "2026-09-25T15:25:45.751Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-09-29/8ceacfe7-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29/8ceacfe7-thumbnail.jpg",
+      "sha256": "8ceacfe7ef364a1cac84a1534c374c2a89e855f82347c039945575e2d75d8395",
+      "uploadedAt": "2026-09-25T15:25:45.751Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-09-29T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-29/3118e205-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: amber text on cream measures 2.9 to 1 and fails, rust measures 6.7 to 1 and passes, with a live contrast meter and the K&A Performance logo and ka-performancefl.com on every frame"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-29T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Amber on cream looks fine. It measures 2.9 to 1, and that fails. Body text needs 4.5 to 1.\nSites that read at a glance: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-29\n\nIf customers can't read your button, they can't book the job. Same palette, rust instead: 6.7 to 1, passes. Amber still works on buttons with dark text on top: 5.3 to 1.\n\nOne rule you can use today: measure every color you set text in. Your eye is a bad checker.\n\nEvery site K&A Performance builds passes these checks. Every ratio in the reel is computed from the real hex values, not eyeballed. The music is AI generated.\n\nWant a site that looks warm and still reads at a glance? Visit ka-performancefl.com or call Alex at 904-210-1071.\n\n#GainesvilleFL #WebDesign #Accessibility",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-29/8ceacfe7-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:26:21.860Z",
+      "id": "382068608",
+      "uuid": "219498007353378486",
+      "scheduledAt": "2026-09-25T15:41:30.275Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-09-29T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "#GainesvilleFL #WebDesign #Accessibility #WCAG #ColorContrast",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-29/3118e205-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: amber text on cream measures 2.9 to 1 and fails, rust measures 6.7 to 1 and passes, with a live contrast meter and the K&A Performance logo and ka-performancefl.com on every frame"
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-29T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Amber on cream looks fine. It measures 2.9 to 1, and that fails. Body text needs 4.5 to 1.\n\nIf customers can't read your button, they can't book the job. Same palette, rust instead: 6.7 to 1, passes. Amber still works on buttons with dark text on top: 5.3 to 1.\n\nOne rule you can use today: measure every color you set text in. Your eye is a bad checker.\n\nEvery site K&A Performance builds passes these checks. Every ratio in the reel is computed from the real hex values, not eyeballed. The music is AI generated.\n\nWant a site that looks warm and still reads at a glance? Link in bio, or call Alex at 904-210-1071.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-29/8ceacfe7-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:26:21.860Z",
+      "id": "382068661",
+      "uuid": "4287030439079791345",
+      "scheduledAt": "2026-09-25T15:41:30.344Z"
+    }
+  },
   "published": {},
   "credits": {},
-  "lastError": null
+  "lastError": null,
+  "music": "music-i-a"
 }

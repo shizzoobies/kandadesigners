@@ -1,0 +1,263 @@
+{
+  "id": "2026-09-29-2",
+  "date": "2026-09-29",
+  "time": "16:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "Five contrast fixes you can make today",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide. Huge type: Your phone in the sun. Can anyone read your website? Five numbered color chips in gray, pale sky blue, bright green, light gray, and dark teal, with the line 5 contrast fixes you can make today. Every ratio computed to WCAG 2.2.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 1 of 5: Darken your light gray body text. Before card: gray #A8A29E text on white #FFFFFF, 2.52 to 1, fails 4.5 to 1 for body text. After card: dark gray #57534E on white, 7.62 to 1, passes.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 2 of 5: Put a scrim behind text on photos. Before card: white headline on a pale sky blue #C9DDEA, 1.39 to 1, fails even the 3 to 1 large text line. After card: a 60 percent #221C15 scrim darkens the sky to #65696A, and the white text measures 5.55 to 1, passing 3 to 1 and 4.5 to 1.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 3 of 5: Check white text on your brand buttons. Before card: a white Book a visit label on a bright green #22C55E button, 2.27 to 1, fails 4.5 to 1. After card: the same label on a darker green #15803D, 5.01 to 1, passes.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 4 of 5: Stop using placeholder text as the label. Before card: an email field whose only label is light gray #C4C4C4 placeholder text on white, 1.74 to 1, fails. After card: a visible Email address label in dark ink above the field at 16.86 to 1, and placeholder text in #6B6B6B at 5.32 to 1, passes.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Fix 5 of 5: Underline your links. Before card: a dark teal #134E4A link inside near black #221C15 text with no underline, only 1.78 to 1 between link and text, fails WCAG 1.4.1 use of color. After card: the same link underlined, 9.47 to 1 against white, passes.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recap of all five fixes, each clearing 4.5 to 1: gray text 7.62, photo scrim 5.55, button 5.01, placeholder 5.32, link 9.47. We check this on every site we build. ka-performancefl.com. Call Alex 904-210-1071.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance slide / Fix 1 of 5: Darken your light gray body text / Fix 2 of 5: Put a scrim behind text on photos / Fix 3 of 5: Check white text on your brand buttons / Fix 4 of 5: Stop using placeholder text as the label / Fix 5 of 5: Underline your links / Recap of all five fixes, each clearing 4.5 to 1: gray text 7.62, photo scrim 5.55, button 5.01, placeholder 5.32, link 9.47"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide. Huge type: Your phone in the sun. Can anyone read your website? Five numbered color chips in gray, pale sky blue, bright green, light gray, and dark teal, with the line 5 contrast fixes you can make today. Every ratio computed to WCAG 2.2."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-29-2/d0fcfc00-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/d0fcfc00-slide-01.jpg",
+      "sha256": "d0fcfc004e4bbc53c4d6556d7617cfbf052165e4a8c38a82f6feaff53e98c75e",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-29-2/96206c69-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/96206c69-slide-02.jpg",
+      "sha256": "96206c69698df8ba61d81bc4a3fc019986fe5add0a742be3c0343cb45103524a",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-29-2/cf30cd1a-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/cf30cd1a-slide-03.jpg",
+      "sha256": "cf30cd1a27d0fd9122d5d3a0ae56a17b6e56471e046f24478f486ef5571b2181",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-29-2/535c6b37-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/535c6b37-slide-04.jpg",
+      "sha256": "535c6b37e4033502fe8517db15db4c0b0e548319efd7e2ea49b5281869e8e043",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-29-2/f3d18228-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/f3d18228-slide-05.jpg",
+      "sha256": "f3d18228dd7657ddf89ad5d542bb0e6436a989508294b709c03d510fc20f0034",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-29-2/3c5cef47-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/3c5cef47-slide-06.jpg",
+      "sha256": "3c5cef4760139f1eb1ba2d7b0860782f2fc31ba14cba368104e11526a894c412",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-29-2/dd9c37cd-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/dd9c37cd-slide-07.jpg",
+      "sha256": "dd9c37cde2317830f82d55c75c4a8fca19faaf521fa6c70ecd50e74c4cf4cde7",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-09-29-2/0b7d5e47-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/0b7d5e47-slideshow.mp4",
+      "sha256": "0b7d5e4771fd54e138fc20301a41d2a9ce10ded5ea53565c9e890a61d233e048",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-09-29-2/7a2bed55-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-2/7a2bed55-slideshow-cover.jpg",
+      "sha256": "7a2bed55ce0b86f6e6f0607aa8730328eb36506f6ff4c3de8c2b4dd0beaca8d3",
+      "uploadedAt": "2026-09-25T15:38:56.864Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-09-29T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-29-2/0b7d5e47-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide / Fix 1 of 5: Darken your light gray body text / Fix 2 of 5: Put a scrim behind text on photos / Fix 3 of 5: Check white text on your brand buttons / Fix 4 of 5: Stop using placeholder text as the label / Fix 5 of 5: Underline your links / Recap of all five fixes, each clearing 4"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-29T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your phone in the sun. Can anyone read your website?\nFive contrast fixes you can make today: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-29-2\n\nEvery ratio is computed from the real hex values against WCAG 2.2:\n\n1. Light gray body text: 2.52 to 1. Darken it to 7.62 to 1.\n2. White text on a bright photo: 1.39 to 1. A dark scrim takes it to 5.55 to 1.\n3. White text on a bright green button: 2.27 to 1. A deeper green gets 5.01 to 1.\n4. Placeholder text used as the label: 1.74 to 1. Add a real label.\n5. Links shown by color alone: 1.78 to 1 against the text around them. About 1 in 12 men see color differently. Underline them.\n\nBody text needs 4.5 to 1. Large text needs 3 to 1. Save this for your next site check.\n\nWe check this on every site we build. See our work at https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-29-2 or call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #WebDesign #Accessibility",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-29-2/7a2bed55-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:39:12.947Z",
+      "id": "382070508",
+      "uuid": "6159065990409700631",
+      "scheduledAt": "2026-09-25T15:44:40.012Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-09-29T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "#GainesvilleFL #WebDesign #Accessibility #WCAG #ColorContrast #SmallBusiness #WebsiteTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-29-2/d0fcfc00-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-2/96206c69-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-2/cf30cd1a-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-2/535c6b37-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-2/f3d18228-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-2/3c5cef47-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-29-2/dd9c37cd-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide. Huge type: Your phone in the sun. Can anyone read your website? Five numbered color chips in gray, pale sky blue, bright green, light gray, and dark teal, with the line 5 contrast fixes you can make today. Every ratio computed to WCAG 2.2.",
+            "Fix 1 of 5: Darken your light gray body text. Before card: gray #A8A29E text on white #FFFFFF, 2.52 to 1, fails 4.5 to 1 for body text. After card: dark gray #57534E on white, 7.62 to 1, passes.",
+            "Fix 2 of 5: Put a scrim behind text on photos. Before card: white headline on a pale sky blue #C9DDEA, 1.39 to 1, fails even the 3 to 1 large text line. After card: a 60 percent #221C15 scrim darkens the sky to #65696A, and the white text measures 5.55 to 1, passing 3 to 1 and 4.5 to 1.",
+            "Fix 3 of 5: Check white text on your brand buttons. Before card: a white Book a visit label on a bright green #22C55E button, 2.27 to 1, fails 4.5 to 1. After card: the same label on a darker green #15803D, 5.01 to 1, passes.",
+            "Fix 4 of 5: Stop using placeholder text as the label. Before card: an email field whose only label is light gray #C4C4C4 placeholder text on white, 1.74 to 1, fails. After card: a visible Email address label in dark ink above the field at 16.86 to 1, and placeholder text in #6B6B6B at 5.32 to 1, passes.",
+            "Fix 5 of 5: Underline your links. Before card: a dark teal #134E4A link inside near black #221C15 text with no underline, only 1.78 to 1 between link and text, fails WCAG 1.4.1 use of color. After card: the same link underlined, 9.47 to 1 against white, passes.",
+            "Recap of all five fixes, each clearing 4.5 to 1: gray text 7.62, photo scrim 5.55, button 5.01, placeholder 5.32, link 9.47. We check this on every site we build. ka-performancefl.com. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-29T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your phone in the sun. Can anyone read your website?\n\nFive contrast fixes you can make today, each measured against WCAG 2.2 from the real hex values:\n\n1. Light gray body text: 2.52 to 1. Darken it to 7.62 to 1.\n2. White text on a bright photo: 1.39 to 1. A dark scrim takes it to 5.55 to 1.\n3. White text on a bright green button: 2.27 to 1. A deeper green gets 5.01 to 1.\n4. Placeholder text used as the label: 1.74 to 1. Add a real label.\n5. Links shown by color alone: 1.78 to 1 against the text around them. About 1 in 12 men see color differently. Underline them.\n\nBody text needs 4.5 to 1. Large text needs 3 to 1. Save this for your next site check.\n\nWe check this on every site we build. Link in bio, or call Alex at 904-210-1071.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:39:12.947Z",
+      "id": "382070744",
+      "uuid": "5202742844202828631",
+      "scheduledAt": "2026-09-25T15:45:03.174Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0928-2"
+}

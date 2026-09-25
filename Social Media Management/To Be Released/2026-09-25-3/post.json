@@ -1,0 +1,183 @@
+{
+  "id": "2026-09-25-3",
+  "date": "2026-09-25",
+  "time": "19:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "LinkedIn: 6 questions to ask before you hire a web designer",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "6 questions to ask before you hire a web designer"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on a cream background: Before you sign with a web designer, ask these 6 questions. A hiring checklist below lists six empty boxes: who owns the site, what does the price include, what will I pay every month, is it fast on a phone, will locals find it, what do changes cost later. Swipe for question 1."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 1 of 6, box ticked: Who owns the site and the domain when we are done? Why it matters for your business: if someone else holds the code or the domain, moving on means starting over. How K&A answers: we hand over the code on every website we build. Domain ownership: get it in writing. From our site: ka-performancefl.com/ai-launch."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 2 of 6, box ticked: What exactly does the price include? Why it matters for your business: a low quote that leaves out the writing, the speed work, or search setup costs more later. How K&A answers: every project is scoped to fit. You know the number before we start, and the quote is always free. From our site: ka-performancefl.com/services/web-design."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 3 of 6, box ticked: What will I pay every month after launch? Why it matters for your business: hosting and platform fees run for years on a site that rarely changes. How K&A answers: no monthly hosting bill. Every build ships on modern global infrastructure for little to nothing a month. From our site: ka-performancefl.com/services/web-design."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 4 of 6, box ticked: Will it load fast on a phone? Why it matters for your business: your customer is on a phone in a parking lot, and a slow page loses them before they see your number. How K&A answers: static builds served from a global network, so pages arrive in well under a second, even when traffic spikes. From our site: ka-performancefl.com/services/web-design."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 5 of 6, box ticked: Will it show up when locals search? Why it matters for your business: a site nobody can find is a very expensive business card. How K&A answers: search foundations from day one. We do the on-site half properly and hand you a short, honest list for the rest. Nobody can promise you number one; be wary of anyone who does. From our site: ka-performancefl.com/services/seo-ai-search."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Question 6 of 6, box ticked: After launch, who makes changes, and what do they cost? Why it matters for your business: hours, menus, and events change, and a site you cannot update starts telling customers the wrong thing. How K&A answers: the site does not disappear into an inbox after launch. You are asking a neighbor, not opening a support case. Cost of changes: ask for it in writing. From our site: ka-performancefl.com/locations/gainesville."
+    },
+    {
+      "file": "media/slide-08.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Ask us all six. The hiring checklist with all six boxes ticked. ka-performancefl.com. Call Alex 904-210-1071. Free quote. Web design, local search, training, and AI integration from Gainesville. K&A Performance logo."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-25-3/a50aae5c-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/a50aae5c-slide-01.jpg",
+      "sha256": "a50aae5c1e36a7617f7119aab6b4f3f6400ef1bbed464f042fe7bb868d6c616b",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-25-3/e066b1ac-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/e066b1ac-slide-02.jpg",
+      "sha256": "e066b1acacb48e5120f2c37338040c15459f6ce12cb3487e21675a5b4227c885",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-25-3/44fe1f0c-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/44fe1f0c-slide-03.jpg",
+      "sha256": "44fe1f0c749bf06712f973806d45e46578b98531b4181fa89e68066ad0d7c2fa",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-25-3/60ff9af5-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/60ff9af5-slide-04.jpg",
+      "sha256": "60ff9af5977b68551d38a749a5cac51780909b70d98eacde026af469923b9bc8",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-25-3/3c94184f-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/3c94184f-slide-05.jpg",
+      "sha256": "3c94184f7b1ec0867abb700089b8f560dfc63d9405e818740296e94fe7b9e99c",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-25-3/d1aeaad4-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/d1aeaad4-slide-06.jpg",
+      "sha256": "d1aeaad42f5bdb7d0bf8a3cd3a7a336fa156bbd360c0c03e042f473f2566a0c5",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-25-3/7a096947-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/7a096947-slide-07.jpg",
+      "sha256": "7a0969472e83f4c39d54e1582a6f523a1e0b0824737b0cea95a8d7fcc79f45c5",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    },
+    "media/slide-08.jpg": {
+      "key": "2026-09-25-3/84cc4f22-slide-08.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-25-3/84cc4f22-slide-08.jpg",
+      "sha256": "84cc4f22cf19a88212a2f67ae6946dc5be6fd3cb34423c490aca34654d66fc06",
+      "uploadedAt": "2026-09-25T16:33:03.796Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-25T19:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "Ask us all six: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-25-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-25-3/a50aae5c-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-25-3/e066b1ac-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-25-3/44fe1f0c-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-25-3/60ff9af5-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-25-3/3c94184f-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-25-3/d1aeaad4-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-25-3/7a096947-slide-07.jpg",
+            "https://media.ka-performancefl.com/2026-09-25-3/84cc4f22-slide-08.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a cream background: Before you sign with a web designer, ask these 6 questions. A hiring checklist below lists six empty boxes: who owns the site, what does the price include, what will I pay every month, is it fast on a phone, will locals find it, what do changes cost later. Swipe for question 1.",
+            "Question 1 of 6, box ticked: Who owns the site and the domain when we are done? Why it matters for your business: if someone else holds the code or the domain, moving on means starting over. How K&A answers: we hand over the code on every website we build. Domain ownership: get it in writing. From our site: ka-performancefl.com/ai-launch.",
+            "Question 2 of 6, box ticked: What exactly does the price include? Why it matters for your business: a low quote that leaves out the writing, the speed work, or search setup costs more later. How K&A answers: every project is scoped to fit. You know the number before we start, and the quote is always free. From our site: ka-performancefl.com/services/web-design.",
+            "Question 3 of 6, box ticked: What will I pay every month after launch? Why it matters for your business: hosting and platform fees run for years on a site that rarely changes. How K&A answers: no monthly hosting bill. Every build ships on modern global infrastructure for little to nothing a month. From our site: ka-performancefl.com/services/web-design.",
+            "Question 4 of 6, box ticked: Will it load fast on a phone? Why it matters for your business: your customer is on a phone in a parking lot, and a slow page loses them before they see your number. How K&A answers: static builds served from a global network, so pages arrive in well under a second, even when traffic spikes. From our site: ka-performancefl.com/services/web-design.",
+            "Question 5 of 6, box ticked: Will it show up when locals search? Why it matters for your business: a site nobody can find is a very expensive business card. How K&A answers: search foundations from day one. We do the on-site half properly and hand you a short, honest list for the rest. Nobody can promise you number one; be wary of anyone who does. From our site: ka-performancefl.com/services/seo-ai-search.",
+            "Question 6 of 6, box ticked: After launch, who makes changes, and what do they cost? Why it matters for your business: hours, menus, and events change, and a site you cannot update starts telling customers the wrong thing. How K&A answers: the site does not disappear into an inbox after launch. You are asking a neighbor, not opening a support case. Cost of changes: ask for it in writing. From our site: ka-performancefl.com/locations/gainesville.",
+            "Ask us all six. The hiring checklist with all six boxes ticked. ka-performancefl.com. Call Alex 904-210-1071. Free quote. Web design, local search, training, and AI integration from Gainesville. K&A Performance logo."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-25T19:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Before you sign with a web designer, ask these 6 questions.\n\nA website is a real investment for a small business, and two quotes that look alike can cover very different work. These six questions show what you are actually buying:\n\n1. Who owns the site and the domain when we are done?\n2. What exactly does the price include?\n3. What will I pay every month after launch?\n4. Will it load fast on a phone?\n5. Will it show up when locals search?\n6. After launch, who makes changes, and what do they cost?\n\nEach page of this document says why the question matters for your business, and how we answer it, taken straight from our own site.\n\nThe takeaway: ask all six of anyone you are considering, and get every answer in writing. A low quote that leaves out the writing, the speed work, or the search setup costs more later.\n\nOur answers, in short: we hand over the code on every website we build. Every project is scoped to fit, and you know the number before we start. There is no monthly hosting bill. Search foundations go in from day one, and nobody can honestly promise you number one. The quote is always free.\n\n#WebDesign #SmallBusiness #GainesvilleFL",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "6 questions to ask before you hire a web designer",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T16:33:17.445Z",
+      "id": "382101032",
+      "uuid": "1362839848840675564",
+      "scheduledAt": "2026-09-25T16:36:31.078Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

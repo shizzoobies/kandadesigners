@@ -1,0 +1,280 @@
+{
+  "id": "2026-10-02-2",
+  "date": "2026-10-02",
+  "time": "15:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "client-spotlight",
+  "title": "Thrillers Mobile VR: site tour",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on a cream background: Just launched. We built a website for an arcade on wheels. Thrillers Mobile VR, a veteran and family owned VR trailer from Middleburg, FL, is live at thrillersvr.com. Two phones show the site's dark home page, headlined Florida's first and only mobile virtual reality trailer, and its VR Rides section. Swipe for the tour.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Feature 1, home page: Built for the phone first. Event planners search on their phones; before the first scroll the page says what Thrillers is and where it comes from. A phone shows the Thrillers home page with a rust box around the kicker Middleburg, FL, we tow the fun, and the headline Florida's first and only mobile virtual reality trailer.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Feature 2, ride library: A ride library parents can pick from. Four rides, each explained in plain words, so families choose before they call. A phone shows the VR Rides section, Pick a world. Any world., with a rust box around its description of over 200 interactive virtual reality and simulation experiences.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Feature 3, who it's for: Answers the doubts before the call. A phone shows the experiences page with a rust box around three answers: First-timers, headset on and one minute of coaching; Kids and teenagers, seats and headsets adjust; Grown-ups, yes, you get a turn.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Feature 4, plans and pricing: The price is right on the page. The Early Bird plan is $100 a month for four months. A phone shows the pricing page with a rust box around Thrillers Early Bird, $100 a month, valid for four months.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Feature 5, booking form: Browsers become bookings. A short request form asks for the date, the kind of event, and where to park. A phone shows the booking form with a rust box around the Event date, Kind of event, and Where are we parking fields.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Feature 6, what happens next: No guessing after they hit send. A phone shows the booking page's What happens next steps inside a rust box: the moment you hit send, within one business day Bear or Travis replies, before the big day, event day. Below are direct phone lines for Bear and Travis.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-08.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo. Launching something? We build websites that turn a phone search into a booking request, for Gainesville and North Florida businesses. ka-performancefl.com. Call Alex 904-210-1071. Take the Thrillers tour yourself at thrillersvr.com.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 8 carousel slides in order: K&A Performance slide on a cream background: Just launched / Feature 1, home page: Built for the phone first / Feature 2, ride library: A ride library parents can pick from / Feature 3, who it's for: Answers the doubts before the call / Feature 4, plans and pricing: The price is right on the page / Feature 5, booking form: Browsers become bookings / Feature 6, what happens next: No guessing after they hit send / K&A Performance logo"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide on a cream background: Just launched. We built a website for an arcade on wheels. Thrillers Mobile VR, a veteran and family owned VR trailer from Middleburg, FL, is live at thrillersvr.com. Two phones show the site's dark home page, headlined Florida's first and only mobile virtual reality trailer, and its VR Rides section. Swipe for the tour."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-02-2/984f390e-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/984f390e-slide-01.jpg",
+      "sha256": "984f390e92e7d163457fc75f3304e4a956c26d09bb628ba7217021ee1485f77d",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-02-2/c98f8ab5-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/c98f8ab5-slide-02.jpg",
+      "sha256": "c98f8ab52ab938d9e380104d36d9ed50a8eba1001e5f922c22412de148d9eebd",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-02-2/d8fe6692-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/d8fe6692-slide-03.jpg",
+      "sha256": "d8fe66924566591e6b942513c9ee3dd9eb090d027335fd6cd4c9c4431031d339",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-02-2/e5147b96-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/e5147b96-slide-04.jpg",
+      "sha256": "e5147b96654736f80dc483923c0dcaf594f788eb644f703b52f3fbfc301714bc",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-02-2/0cdcdf74-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/0cdcdf74-slide-05.jpg",
+      "sha256": "0cdcdf74583d4932c1beda0785086ed534aaa5189a7faa06c87445c48e02f555",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-02-2/eb0021d4-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/eb0021d4-slide-06.jpg",
+      "sha256": "eb0021d42aef5772f79b35fe8e8804ae8a3b03b8be789098981b3bf5a7722fde",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-02-2/1502f1e0-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/1502f1e0-slide-07.jpg",
+      "sha256": "1502f1e045549d1fd4e3bba5cc714ebca42eb2530ac8962247b37d2755827926",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slide-08.jpg": {
+      "key": "2026-10-02-2/6fbda738-slide-08.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/6fbda738-slide-08.jpg",
+      "sha256": "6fbda738193f8251cf2c419ae7dd9cb2383b7a30baa74f3da01633ddb644f582",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-02-2/0c04eeb1-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/0c04eeb1-slideshow.mp4",
+      "sha256": "0c04eeb148bcb83adc48c93cc50d482a4335d85252c262d9ef1a43dc7b40a820",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-02-2/43e8161c-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-2/43e8161c-slideshow-cover.jpg",
+      "sha256": "43e8161ccd83c761a9ffdfbc43e3e93045e84a13ade5589a4186bd1c182cbe7b",
+      "uploadedAt": "2026-09-25T15:39:43.707Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-02T15:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-02-2/0c04eeb1-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 8 carousel slides in order: K&A Performance slide on a cream background: Just launched / Feature 1, home page: Built for the phone first / Feature 2, ride library: A ride library parents can pick from / Feature 3, who it's for: Answers the doubts before the call / Feature 4, plans and pricing: The price is right on the page / Feature 5, booking form: Browsers become bookings / Feature 6, what happens next: No guessing after they hit send / K&A Performance logo"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-02T15:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "We built a website for an arcade on wheels. Want one that books your events? https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02-2\nSwipe for the tour, one real feature per slide.\n\nThrillers Mobile VR is a veteran and family owned virtual reality trailer out of Middleburg, and their new site is live at thrillersvr.com. Here is what we built into it, and why each piece matters for a business that comes to you:\n\n1. Phone first. Event planners search on their phones, so the page says what Thrillers is and where it comes from before the first scroll.\n2. A ride library. Four rides, each explained in plain words, so parents pick the ride before they call.\n3. Who it's for. First-timers, kids and teenagers, and grown-ups each get a straight answer.\n4. The price on the page. The Early Bird plan is $100 a month for four months.\n5. A short booking form. Date, kind of event, and where to park. Everything the owners need to say yes.\n6. What happens next. A reply within one business day, and direct lines to Bear and Travis.\n\nEvery screen in this post is the real site, captured on a phone.\n\nLaunching something? Visit https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02-2 or call Alex at 904-210-1071. Quotes are always free.\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-02-2/43e8161c-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:40:04.300Z",
+      "id": "382071601",
+      "uuid": "3528690310444958762",
+      "scheduledAt": "2026-09-25T15:46:30.897Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-02T15:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "#MiddleburgFL #ClayCountyFL #VirtualReality #FloridaSmallBusiness #WebDesign #GainesvilleFL #SmallBusinessWebsite",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-02-2/984f390e-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-02-2/c98f8ab5-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-02-2/d8fe6692-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-02-2/e5147b96-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-02-2/0cdcdf74-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-02-2/eb0021d4-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-02-2/1502f1e0-slide-07.jpg",
+            "https://media.ka-performancefl.com/2026-10-02-2/6fbda738-slide-08.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a cream background: Just launched. We built a website for an arcade on wheels. Thrillers Mobile VR, a veteran and family owned VR trailer from Middleburg, FL, is live at thrillersvr.com. Two phones show the site's dark home page, headlined Florida's first and only mobile virtual reality trailer, and its VR Rides section. Swipe for the tour.",
+            "Feature 1, home page: Built for the phone first. Event planners search on their phones; before the first scroll the page says what Thrillers is and where it comes from. A phone shows the Thrillers home page with a rust box around the kicker Middleburg, FL, we tow the fun, and the headline Florida's first and only mobile virtual reality trailer.",
+            "Feature 2, ride library: A ride library parents can pick from. Four rides, each explained in plain words, so families choose before they call. A phone shows the VR Rides section, Pick a world. Any world., with a rust box around its description of over 200 interactive virtual reality and simulation experiences.",
+            "Feature 3, who it's for: Answers the doubts before the call. A phone shows the experiences page with a rust box around three answers: First-timers, headset on and one minute of coaching; Kids and teenagers, seats and headsets adjust; Grown-ups, yes, you get a turn.",
+            "Feature 4, plans and pricing: The price is right on the page. The Early Bird plan is $100 a month for four months. A phone shows the pricing page with a rust box around Thrillers Early Bird, $100 a month, valid for four months.",
+            "Feature 5, booking form: Browsers become bookings. A short request form asks for the date, the kind of event, and where to park. A phone shows the booking form with a rust box around the Event date, Kind of event, and Where are we parking fields.",
+            "Feature 6, what happens next: No guessing after they hit send. A phone shows the booking page's What happens next steps inside a rust box: the moment you hit send, within one business day Bear or Travis replies, before the big day, event day. Below are direct phone lines for Bear and Travis.",
+            "K&A Performance logo. Launching something? We build websites that turn a phone search into a booking request, for Gainesville and North Florida businesses. ka-performancefl.com. Call Alex 904-210-1071. Take the Thrillers tour yourself at thrillersvr.com."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-02T15:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "We built a website for an arcade on wheels. Swipe for the tour, one real feature per slide.\n\nThrillers Mobile VR is a veteran and family owned virtual reality trailer out of Middleburg, and their new site is live at thrillersvr.com. What we built into it, and why it matters for a business that comes to you:\n\n1. Phone first. Event planners search on their phones.\n2. A ride library, so parents pick the ride before they call.\n3. Straight answers for first-timers, kids and teenagers, and grown-ups.\n4. The price on the page: the Early Bird plan is $100 a month for four months.\n5. A short booking form: date, kind of event, where to park.\n6. A reply within one business day, and direct lines to the owners.\n\nEvery screen in this post is the real site, captured on a phone.\n\nLaunching something? Link in bio, or call Alex at 904-210-1071.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:40:04.300Z",
+      "id": "382071808",
+      "uuid": "-1394833013239755323",
+      "scheduledAt": "2026-09-25T15:46:51.668Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0928-7"
+}

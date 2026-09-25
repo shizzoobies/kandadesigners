@@ -1,0 +1,1 @@
+I recorded this search myself on Sept 24 in a clean incognito window: a two-provider practice holding a top three spot next to much bigger groups. Try the search and see where your own business lands.

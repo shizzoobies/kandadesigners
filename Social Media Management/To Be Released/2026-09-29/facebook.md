@@ -1,11 +1,12 @@
-Amber on cream looks fine. It measures 2.9 to 1, and that fails the accessibility line for text of any size.
+Amber on cream looks fine. It measures 2.9 to 1, and that fails. Body text needs 4.5 to 1.
+Sites that read at a glance: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-29
 
-Same palette, rust instead: 6.7 to 1. Passes. Nobody has to squint.
+If customers can't read your button, they can't book the job. Same palette, rust instead: 6.7 to 1, passes. Amber still works on buttons with dark text on top: 5.3 to 1.
 
-Fifteen seconds, one rule: measure every color you set text in. Your eye is a bad checker.
+One rule you can use today: measure every color you set text in. Your eye is a bad checker.
 
-The voice is AI narrated. The numbers are computed from the real hex values, not eyeballed.
+Every site K&A Performance builds passes these checks. Every ratio in the reel is computed from the real hex values, not eyeballed. The music is AI generated.
 
-Want a site that looks warm and still reads at a glance? Call Alex at 904-210-1071 or visit ka-performancefl.com.
+Want a site that looks warm and still reads at a glance? Visit ka-performancefl.com or call Alex at 904-210-1071.
 
 #GainesvilleFL #WebDesign #Accessibility

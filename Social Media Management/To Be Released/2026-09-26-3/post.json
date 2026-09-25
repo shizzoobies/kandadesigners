@@ -1,0 +1,169 @@
+{
+  "id": "2026-09-26-3",
+  "date": "2026-09-26",
+  "time": "10:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "LinkedIn: The 10-second phone test for your website",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "The 10-second phone test for your website"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide with a stopwatch reading 0:10. Huge type: Grab your phone. Open your website. You have 10 seconds. Below, 5 checks, 2 seconds each, as empty checkboxes: it loads fast, you can tap to call, your hours are easy to find, you can read it in the sun, the book or contact button is obvious."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 1 of 5, it loads fast. Does it show up fast? On your phone now: turn off Wi-Fi, open your site on cell data and count. It fails if you still see a blank screen or a spinner at two. Why it costs you: someone searching in a parking lot will not wait. A phone screenshot of the K&A homepage headline, outlined in rust, with 1.8 s headline on screen, the median of 5 cold loads on a throttled Slow 4G phone profile."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 2 of 5, tap to call. Tap your number. Does it start a call? It fails if nothing happens, you have to copy the number by hand, or there is no number. Why it costs you: every extra step is a call that goes to a competitor. A drawn example phone layout labeled not a real site shows a Tap to call button at the top and the note: the fix is a tel: link on the number."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 3 of 5, hours are easy to find. Are you open right now? From the first screen, find today's hours with no menu. It fails if hours live in the footer, a PDF, a photo of a sign, or only on Facebook. A drawn example phone layout labeled not a real site shows an Open today, until 5:00 PM box near the top, as text, not an image."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 4 of 5, readable in the sun. Can you read it outside? Step outside and read your first paragraph at arm's length. It fails with light gray text, words over busy photos, or tiny type. A phone screenshot of the K&A homepage intro paragraph, outlined in rust, with 15.53 to 1, dark ink on cream. Body text is 20px; WCAG asks for at least 4.5 to 1."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check 5 of 5, the button is obvious. Where do I reach you? Without scrolling, point at the button that gets you in touch. It fails if you have to hunt for a small link or one hidden in the menu. A phone screenshot of the K&A first screen with the amber Start a project button outlined in rust and tagged visible with no scrolling, 5.29 to 1 text contrast."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Stopwatch at 0:00, time's up. Failed one? We fix these. Anything you could not tick is costing you customers, above the five empty checkboxes. Web design and local search for Gainesville businesses. ka-performancefl.com. Call Alex 904-210-1071."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-09-26-3/1a681cdf-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-26-3/1a681cdf-slide-01.jpg",
+      "sha256": "1a681cdfd8a3e6669397afe0bb54d7e800ecbb9b9b77682339afc23be0ed749e",
+      "uploadedAt": "2026-09-25T16:33:47.632Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-09-26-3/cc0bfe69-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-26-3/cc0bfe69-slide-02.jpg",
+      "sha256": "cc0bfe690f572fd93d4f59d88cbcfdc5b4853855f3f458e18e427599e156b04b",
+      "uploadedAt": "2026-09-25T16:33:47.632Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-09-26-3/430e8c65-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-26-3/430e8c65-slide-03.jpg",
+      "sha256": "430e8c653a19dceeb58c8de5d01a875e2399ff0aa27a2809e0c3250be01170d9",
+      "uploadedAt": "2026-09-25T16:33:47.632Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-09-26-3/6ff5cfe1-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-26-3/6ff5cfe1-slide-04.jpg",
+      "sha256": "6ff5cfe1eed742c55e722810050a646c5a8200db8daf65ff1f76e0257114dc5f",
+      "uploadedAt": "2026-09-25T16:33:47.632Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-09-26-3/fe91c166-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-26-3/fe91c166-slide-05.jpg",
+      "sha256": "fe91c1663a3741fe9784429ebc8d665ccb342e5b67c97408e75c33345e2db9d4",
+      "uploadedAt": "2026-09-25T16:33:47.632Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-09-26-3/9c69ecdd-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-26-3/9c69ecdd-slide-06.jpg",
+      "sha256": "9c69ecdd11b8f927a7bb47293969b697bd1f587d39c43f7cd9759a6355741de8",
+      "uploadedAt": "2026-09-25T16:33:47.632Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-09-26-3/65f9473c-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-26-3/65f9473c-slide-07.jpg",
+      "sha256": "65f9473c81965e80053f73410d40cc5312e1a42a93ff40c83659af6cbb43d237",
+      "uploadedAt": "2026-09-25T16:33:47.632Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-26T10:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "See how we build websites: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-26-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-26-3/1a681cdf-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-09-26-3/cc0bfe69-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-09-26-3/430e8c65-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-09-26-3/6ff5cfe1-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-09-26-3/fe91c166-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-09-26-3/9c69ecdd-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-09-26-3/65f9473c-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide with a stopwatch reading 0:10. Huge type: Grab your phone. Open your website. You have 10 seconds. Below, 5 checks, 2 seconds each, as empty checkboxes: it loads fast, you can tap to call, your hours are easy to find, you can read it in the sun, the book or contact button is obvious.",
+            "Check 1 of 5, it loads fast. Does it show up fast? On your phone now: turn off Wi-Fi, open your site on cell data and count. It fails if you still see a blank screen or a spinner at two. Why it costs you: someone searching in a parking lot will not wait. A phone screenshot of the K&A homepage headline, outlined in rust, with 1.8 s headline on screen, the median of 5 cold loads on a throttled Slow 4G phone profile.",
+            "Check 2 of 5, tap to call. Tap your number. Does it start a call? It fails if nothing happens, you have to copy the number by hand, or there is no number. Why it costs you: every extra step is a call that goes to a competitor. A drawn example phone layout labeled not a real site shows a Tap to call button at the top and the note: the fix is a tel: link on the number.",
+            "Check 3 of 5, hours are easy to find. Are you open right now? From the first screen, find today's hours with no menu. It fails if hours live in the footer, a PDF, a photo of a sign, or only on Facebook. A drawn example phone layout labeled not a real site shows an Open today, until 5:00 PM box near the top, as text, not an image.",
+            "Check 4 of 5, readable in the sun. Can you read it outside? Step outside and read your first paragraph at arm's length. It fails with light gray text, words over busy photos, or tiny type. A phone screenshot of the K&A homepage intro paragraph, outlined in rust, with 15.53 to 1, dark ink on cream. Body text is 20px; WCAG asks for at least 4.5 to 1.",
+            "Check 5 of 5, the button is obvious. Where do I reach you? Without scrolling, point at the button that gets you in touch. It fails if you have to hunt for a small link or one hidden in the menu. A phone screenshot of the K&A first screen with the amber Start a project button outlined in rust and tagged visible with no scrolling, 5.29 to 1 text contrast.",
+            "Stopwatch at 0:00, time's up. Failed one? We fix these. Anything you could not tick is costing you customers, above the five empty checkboxes. Web design and local search for Gainesville businesses. ka-performancefl.com. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-26T10:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Grab your phone. Open your website. You have 10 seconds.\n\nYour customers run this test every time they find you on their phone. Run it yourself this weekend, two seconds per check:\n\n1. It loads fast. Turn off Wi-Fi and open your site on cell data. A blank screen or a spinner at two seconds sends people back to the search results.\n2. You can tap to call. Tap your phone number. If it does not start a call, you are asking a customer to copy it by hand.\n3. Your hours are easy to find. From the first screen, can you tell if you are open right now? Hours in a PDF, a photo of a sign, or only on Facebook do not count.\n4. You can read it in the sun. Step outside and read your first paragraph at arm's length. Light gray text and tiny type fail here.\n5. The book or contact button is obvious. Without scrolling, point at the button that gets someone in touch with you.\n\nWe measured our own homepage for checks 1 and 4: the headline was on screen in 1.8 seconds (median of five cold loads on a throttled Slow 4G phone profile), and the body text measures 15.53 to 1 against its background, where WCAG asks for at least 4.5 to 1.\n\nThe takeaway: anything you could not tick is costing you customers. Fix the one you failed first, then run the test again.\n\nWe design and build websites for Gainesville businesses with phone speed, readability, and local search built in. Failed one? We fix these.\n\n#WebDesign #SmallBusiness #GainesvilleFL",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "The 10-second phone test for your website",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T16:33:59.886Z",
+      "id": "382101499",
+      "uuid": "-6458662274698297059",
+      "scheduledAt": "2026-09-25T16:37:32.038Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

@@ -3,7 +3,7 @@
   "date": "2026-09-30",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "planned",
+  "status": "scheduled",
   "pillar": "training",
   "title": "One screen, one decision",
   "platforms": {
@@ -21,7 +21,7 @@
       "file": "media/reel-vertical.mp4",
       "role": "video",
       "origin": "kap-reel",
-      "alt": ""
+      "alt": "Editorial magazine style reel on cream paper with the K&A Performance logo and ka-performancefl.com/training on every frame. Real screens from the K&A safety sample course, set like photos, in three numbered beats: 01 The map, the inspection board with every location in view; 02 One decision, tap one location and make one call, hold or go; 03 Feedback on that decision. Ends on: We design training people finish. Call Alex 904-210-1071."
     },
     {
       "file": "media/reel-vertical.srt",
@@ -32,17 +32,115 @@
       "file": "media/thumbnail.jpg",
       "role": "thumbnail",
       "origin": "kap-reel",
-      "alt": "A phone showing the hazard hunt screen from the K&A safety sample course: a jobsite photo with an amber tap mark on the unsecured ladder, over the caption The learner acts, gets feedback, moves on."
+      "alt": "Magazine style pull quote on cream paper: If a screen asks the learner to do two things, it does neither. K&A Performance logo at the top, ka-performancefl.com/training and Call 904-210-1071 at the bottom."
     }
   ],
   "ai": {
-    "voice": true,
+    "voice": false,
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-09-30/44a26c9d-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-30/44a26c9d-reel-vertical.mp4",
+      "sha256": "44a26c9d3995b22b13515a7762a130db4341a08196457df309c6b70ae6a438c1",
+      "uploadedAt": "2026-09-25T15:25:50.916Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-09-30/8ccaab37-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-30/8ccaab37-thumbnail.jpg",
+      "sha256": "8ccaab374ea010d3d6a2fd42e90535e965f575a3dc3fd29c15707c98a316af47",
+      "uploadedAt": "2026-09-25T15:25:50.916Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-09-30T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-30/44a26c9d-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Editorial magazine style reel on cream paper with the K&A Performance logo and ka-performancefl.com/training on every frame. Real screens from the K&A safety sample course, set like photos, in three numbered beats: 01 The map, the inspection board with every location in view; 02 One decision, tap one location and make one call, hold or go; 03 Feedback on that decision. Ends on: We design training people finish. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-30T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If a screen asks the learner to do two things, it does neither.\nFree sample courses: https://ka-performancefl.com/training/?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-30\n\nHere is how that looks in a real course. The screens in this reel come from our free safety sample, \"Spot it before it hurts someone.\" The inspection board lays out all eight locations. Tap one, and the screen asks for a single call: hold the work or let it go. Make it, and the feedback lands right away, on that one decision.\n\nOne decision per screen. That is how we design training people finish.\n\nThe music is AI generated. The course screens are real captures.\n\nTry the free sample courses at https://ka-performancefl.com/training?utm_source=facebook&utm_medium=social&utm_campaign=2026-09-30 or call Alex at 904-210-1071.\n\n#InstructionalDesign #eLearning #GainesvilleFL",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-30/8ccaab37-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:26:56.100Z",
+      "id": "382068915",
+      "uuid": "8813359983013808888",
+      "scheduledAt": "2026-09-25T15:41:59.384Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-09-30T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "#InstructionalDesign #eLearning #LearningDesign #CorporateTraining #GainesvilleFL",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-30/44a26c9d-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Editorial magazine style reel on cream paper with the K&A Performance logo and ka-performancefl.com/training on every frame. Real screens from the K&A safety sample course, set like photos, in three numbered beats: 01 The map, the inspection board with every location in view; 02 One decision, tap one location and make one call, hold or go; 03 Feedback on that decision. Ends on: We design training people finish. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-30T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If a screen asks the learner to do two things, it does neither.\n\nHere is how that looks in a real course. The screens in this reel come from our free safety sample, \"Spot it before it hurts someone.\" The inspection board lays out all eight locations. Tap one, and the screen asks for a single call: hold the work or let it go. Make it, and the feedback lands right away, on that one decision.\n\nOne decision per screen. That is how we design training people finish.\n\nThe music is AI generated. The course screens are real captures.\n\nFree sample courses: link in bio. Or call Alex at 904-210-1071.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-30/8ccaab37-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": true,
+      "preparedAt": "2026-09-25T15:26:56.100Z",
+      "id": "382068969",
+      "uuid": "1985480030173219831",
+      "scheduledAt": "2026-09-25T15:41:59.457Z"
+    }
+  },
   "published": {},
   "credits": {},
-  "lastError": null
+  "lastError": null,
+  "music": "music-i-c"
 }

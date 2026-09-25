@@ -1,14 +1,12 @@
 If a screen asks the learner to do two things, it does neither.
 
-Read this, click that, answer this: that is three screens pretending to be one. When we build a course, every screen asks for one decision. The learner acts, gets feedback, and moves on.
+Here is how that looks in a real course. The screens in this reel come from our free safety sample, "Spot it before it hurts someone." The inspection board lays out all eight locations. Tap one, and the screen asks for a single call: hold the work or let it go. Make it, and the feedback lands right away, on that one decision.
 
-The screens in this reel come from our free safety sample, "Spot it before it hurts someone." Find the hazard. Pick the control. Stop the work or let it go. One decision per screen. The cluttered screen at the start is an invented example, not anyone's real course.
+One decision per screen. That is how we design training people finish.
 
-The voice is AI narrated. The course screens are real captures.
+The music is AI generated. The course screens are real captures.
 
-Free sample courses: link in bio.
-
-Free sample courses: ka-performancefl.com/training (link in bio)
+Free sample courses: link in bio. Or call Alex at 904-210-1071.
 
 ## First comment
 

@@ -1,14 +1,16 @@
 Stop asking AI to write the email. Tell it who the email is for.
 
-"Write a follow up email" gets you a form letter. Tell it the bakery owner is nervous about cost, and you get something you would actually send.
+"Write a follow up email" gets you a form letter. "Write a follow up to a bakery owner who asked about pricing and is nervous about cost" gets you something you would actually send.
 
 That is the whole habit: give it the brief, not the task. Who it is for, what they need, what they are worried about. Then you decide what goes out.
 
-The outputs on screen are real, unedited Claude outputs from those two prompts. The bakery is an example. The voice is AI narrated.
+Both example replies in the video were written by an AI model, shown unedited and trimmed where marked. The bakery is a fictional example.
 
-More habits like this in our free AI lessons. Link in bio.
+We build this habit into every AI setup we do for clients.
 
-Free AI lessons: ka-performancefl.com/training/ai (link in bio)
+Want help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.
+
+The music is AI generated.
 
 ## First comment
 
