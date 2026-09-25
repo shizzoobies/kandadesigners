@@ -3,7 +3,7 @@
   "date": "2026-10-07",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "training",
   "title": "When a job aid beats a course",
   "platforms": {
@@ -40,8 +40,105 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-07/5d8a9e2d-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-07/5d8a9e2d-reel-vertical.mp4",
+      "sha256": "5d8a9e2d01c03f6c9be3ebe1e99191eedf15a4a6c22a424d2af66f257e58ff09",
+      "uploadedAt": "2026-09-25T20:31:51.526Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-07/ea10444c-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07/ea10444c-thumbnail.jpg",
+      "sha256": "ea10444c480c406544311035e51ed44073c2821d0cd9584b6346c8bc537c326b",
+      "uploadedAt": "2026-09-25T20:31:51.526Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-07T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-07/5d8a9e2d-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: If they need it once a quarter, don't teach it. Hand it to them. A year planner of 52 work weeks marks the 4 weeks the task comes up. Then real screens from K&A's sample courses: the Before you send checklist from the RFI course and the walk-through card from the safety course. Ends on ka-performancefl.com/training and Call Alex 904-210-1071, with the K&A Performance logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-07T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If they need it once a quarter, don't teach it. Hand it to them.\nJob aids and courses, built for your team: https://ka-performancefl.com/training/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-07\n\nA course asks people to remember a step for weeks until the day it comes up. A job aid only has to be there on that day, right next to the work.\n\nBoth screens in this reel are real, from our sample courses on our site. The RFI course ends with a four-point \"Before you send\" checklist to keep beside the RFI log. The safety course has each learner build a walk-through card to carry on the site walk.\n\nA good rule of thumb: if the task is rare, the steps are the same every time, and there is a moment to look something up, hand them a job aid. Save the course for judgment people need to practice.\n\nThe music is AI generated. The course screens are real captures.\n\nNot sure whether it needs a course or a job aid? Visit ka-performancefl.com/training or call Alex at 904-210-1071.\n\n#InstructionalDesign #JobAids #GainesvilleFL",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-07/ea10444c-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:57.418Z",
+      "id": "382226564",
+      "uuid": "-3928425762158590199",
+      "scheduledAt": "2026-09-25T20:38:38.079Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-07T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#InstructionalDesign #JobAids #PerformanceSupport #eLearning #CorporateTraining #GainesvilleFL",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-07/5d8a9e2d-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: If they need it once a quarter, don't teach it. Hand it to them. A year planner of 52 work weeks marks the 4 weeks the task comes up. Then real screens from K&A's sample courses: the Before you send checklist from the RFI course and the walk-through card from the safety course. Ends on ka-performancefl.com/training and Call Alex 904-210-1071, with the K&A Performance logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-07T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If they need it once a quarter, don't teach it. Hand it to them.\n\nA course asks people to remember a step for weeks until the day it comes up. A job aid only has to be there on that day, right next to the work.\n\nBoth screens in this reel are real, from our sample courses. The RFI course ends with a four-point \"Before you send\" checklist to keep beside the RFI log. The safety course has each learner build a walk-through card to carry on the site walk.\n\nA good rule of thumb: if the task is rare, the steps are the same every time, and there is a moment to look something up, hand them a job aid. Save the course for judgment people need to practice.\n\nThe music is AI generated. The course screens are real captures.\n\nNot sure whether it needs a course or a job aid? Link in bio, or call Alex at 904-210-1071.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-07/ea10444c-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:57.418Z",
+      "id": "382226619",
+      "uuid": "-665062798392211658",
+      "scheduledAt": "2026-09-25T20:38:38.149Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

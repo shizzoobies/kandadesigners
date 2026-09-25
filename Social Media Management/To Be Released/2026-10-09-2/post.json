@@ -3,7 +3,7 @@
   "date": "2026-10-09",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "behind-the-scenes",
   "title": "How we plan a week of posts: 5 steps",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-09-2/abde069b-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/abde069b-slide-01.jpg",
+      "sha256": "abde069b23d03a54e503bcfeb4edf37e7949cfdff6aa396b05f8f7b2a356b88c",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-09-2/1e255d6b-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/1e255d6b-slide-02.jpg",
+      "sha256": "1e255d6b3e48b595bdfc5b3f5fd56f4c42b6fb68188923287f94c0e77c092d4e",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-09-2/1168806f-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/1168806f-slide-03.jpg",
+      "sha256": "1168806f04942f1c02f3c925844142aeef2a80f5b91d8540f82174cb7e3f3fb6",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-09-2/9d9bcceb-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/9d9bcceb-slide-04.jpg",
+      "sha256": "9d9bcceb7ac81f84061ca8ad2ba65c09974c19efc802f7f006d4dd2e730a4ec3",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-09-2/c8323923-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/c8323923-slide-05.jpg",
+      "sha256": "c8323923b6274d3ddc7898aeb119af6648e15fc6f0b95b3b5d5af7139f4abb26",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-09-2/e611cedf-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/e611cedf-slide-06.jpg",
+      "sha256": "e611cedff0f4c4e8eb80d87a5af3db6659c255af3fd1d9e673883a23e8b04e01",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-09-2/206b0475-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/206b0475-slide-07.jpg",
+      "sha256": "206b04753a28a9a2bc93a113fb5ec07913f96f4296df04f2f307ff6eb2909f70",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-09-2/a2879369-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/a2879369-slideshow.mp4",
+      "sha256": "a2879369fe886a3f1d20659227818f576c89202ef2d9e6361d8778fd1f2ea5ef",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-09-2/3d3e6748-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-09-2/3d3e6748-slideshow-cover.jpg",
+      "sha256": "3d3e67480d41f79e7088f0e6d0949173d7e4720de813bbca13a9b3cc99a68dd0",
+      "uploadedAt": "2026-09-25T20:33:23.706Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-09T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-09-2/a2879369-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide on cream: Every post we publish gets approved twice / Step 1 of 5, Approval 1: Plan the week / Step 2 of 5: Write a brief for every post / Step 3 of 5: Build every version / Step 4 of 5, Approval 2: Alex approves every post / Step 5 of 5: Schedule it / This is how we run it for pilot businesses: you approve the month's plan once, we check every post before it goes out, and a short results report every month"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-09T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Every post we publish gets approved twice. Here's how we plan a week of our own posts, in 5 steps.\nSee our work: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-09-2\n\n1. Plan the week. Every slot gets a topic, a format and a time. Alex marks each one run, change or drop, and nothing is made until he approves the plan.\n2. Write a brief for every post. What the viewer gets, the hook, each slide, where every fact comes from, and any question Alex has to answer.\n3. Build every version. One idea becomes a reel, a swipe carousel and a LinkedIn document, each with its own caption.\n4. Alex approves every post. Our Post Desk shows every finished post, both versions and every caption on one page. He approves, or requests changes with a note.\n5. Schedule it, then check what worked. Once a week we read the results, and the next plan starts there.\n\nThis is how we run it for pilot businesses: you approve the month's plan once, and we check every post before it goes out. 3 free months of social media management for 3 Gainesville businesses. Call Alex at 904-210-1071 or message us here.\n\nThe screens in the video show sample posts, not client data. The music is AI generated.\n\n#GainesvilleFL #SmallBusiness #SocialMediaManagement",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-09-2/3d3e6748-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:33:38.493Z",
+      "id": "382227567",
+      "uuid": "2448847901069035823",
+      "scheduledAt": "2026-09-25T20:40:47.254Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-09T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #SocialMediaManagement #BehindTheScenes #GainesvilleBusiness #ContentPlanning",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-09-2/abde069b-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-09-2/1e255d6b-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-09-2/1168806f-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-09-2/9d9bcceb-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-09-2/c8323923-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-09-2/e611cedf-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-09-2/206b0475-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on cream: Every post we publish gets approved twice. Here's how we plan a week of our own posts, in five steps. A route of five stops, Plan, Brief, Build, Approve, Schedule, with Approval 1 flagged at Plan and Approval 2 at Approve. Two cards stamped Approved: 1. The plan, Alex approves it before anything is made. 2. Every post, Alex approves it before it is scheduled.",
+            "Step 1 of 5, Approval 1: Plan the week. Every slot gets a topic, a format and a time. Alex marks each one run, change or drop, and nothing is made until the plan says approved. Below, a sample week plan window: Monday to Friday slots, each marked run, Wednesday marked change, and Approved: yes with an Approved stamp.",
+            "Step 2 of 5: Write a brief for every post. What the viewer gets, the hook, each slide, where every fact comes from, and any question Alex needs to answer. Below, a sample brief window with those rows and a highlighted question for Alex.",
+            "Step 3 of 5: Build every version. One idea becomes a reel, a swipe carousel and a LinkedIn document, each with its own caption. Below, K&A's own contrast post as a reel on a phone, a stack of carousel slides and a LinkedIn document page, with checks: logo and web address on every frame, works with the sound off.",
+            "Step 4 of 5, Approval 2: Alex approves every post. One page, our Post Desk, shows every finished post and caption; he taps Approve, or asks for changes. Below, the Post Desk page with sample posts only: a list of sample posts by day with their status, one sample carousel open with its slides, captions, a sample question, and Request changes and Approve buttons.",
+            "Step 5 of 5: Schedule it. Then check what worked. Approved posts go on the calendar at set times. Once a week we read the results, and the next plan starts there. Below, a sample week calendar with LinkedIn at 8 AM, a reel at 10:30 and a carousel at 4 PM each weekday, and a weekly results card: reach, engagement, clicks to the site, what worked shapes next week's plan.",
+            "This is how we run it for pilot businesses: you approve the month's plan once, we check every post before it goes out, and a short results report every month. 3 free months for 3 Gainesville businesses. Call Alex 904-210-1071 or message K&A Performance on Facebook or Instagram. ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-09T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Every post we publish gets approved twice. Here's how we plan a week of our own posts, in 5 steps. Save this for later.\n\n1. Plan the week. Every slot gets a topic, a format and a time. Alex marks each one run, change or drop, and nothing is made until he approves the plan.\n2. Write a brief for every post. What the viewer gets, the hook, each slide, where every fact comes from, and any question Alex has to answer.\n3. Build every version. One idea becomes a reel, a swipe carousel and a LinkedIn document, each with its own caption.\n4. Alex approves every post. Our Post Desk shows every finished post, both versions and every caption on one page. He approves, or requests changes with a note.\n5. Schedule it, then check what worked. Once a week we read the results, and the next plan starts there.\n\nThis is how we run it for pilot businesses: you approve the month's plan once, and we check every post before it goes out. 3 free months of social media management for 3 Gainesville businesses. Send us a DM or call Alex at 904-210-1071. Link in bio.\n\nThe screens show sample posts, not client data.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:33:38.493Z",
+      "id": "382227659",
+      "uuid": "1654469118743625896",
+      "scheduledAt": "2026-09-25T20:40:47.323Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

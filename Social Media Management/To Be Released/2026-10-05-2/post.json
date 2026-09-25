@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Update these 5 things on your Google Business Profile this month",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-05-2/f27eec9d-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/f27eec9d-slide-01.jpg",
+      "sha256": "f27eec9d26d3857330893b32fa22ff1aca5d1a11bfe944597b23c691053fdaa8",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-05-2/caeac9c3-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/caeac9c3-slide-02.jpg",
+      "sha256": "caeac9c302163e46531f74836aaec2fb8e26d5ad2b8a40015b59d56473473f89",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-05-2/3db27642-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/3db27642-slide-03.jpg",
+      "sha256": "3db27642ebb2a256f125819a8bf56f514b72fd5ee0c5e11ff2c332b2a4f4043a",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-05-2/3f5b8462-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/3f5b8462-slide-04.jpg",
+      "sha256": "3f5b8462d6ededac8f6326a03e6e9090113f8ba3c12f9905522efad5d6e2da01",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-05-2/32c3b2ba-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/32c3b2ba-slide-05.jpg",
+      "sha256": "32c3b2bab6fa8de1fa77ff0555a9a1efafa22a6228302353d3f0bcb3b3c9bce9",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-05-2/55d661cf-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/55d661cf-slide-06.jpg",
+      "sha256": "55d661cf43c933ae3e7d9f373d44dda09458deceec305c9f871c522767b311e9",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-05-2/413740ae-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/413740ae-slide-07.jpg",
+      "sha256": "413740ae82f6315496bf281a4fe733761f29993042a0bdbd1a045f9db87bd99e",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-05-2/957909e4-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/957909e4-slideshow.mp4",
+      "sha256": "957909e4822291a454f9fb3ff28d71807bcaa0b0260f381558aab2216721868b",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-05-2/dcc63bbb-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05-2/dcc63bbb-slideshow-cover.jpg",
+      "sha256": "dcc63bbb85ecd96dee25e2e938106aa826731b0f5b5bc982ba3091738b13e75a",
+      "uploadedAt": "2026-09-25T20:30:51.815Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-05T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-05-2/957909e4-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide: Update these 5 things on your Google Business Profile this month / Stop 1 of 5, primary category: Pick the most specific primary category / Stop 2 of 5, hours: Confirm your hours / Stop 3 of 5, services: List the services you actually sell / Stop 4 of 5, fresh photos: Add fresh photos of the real thing / Stop 5 of 5, review replies: Reply to reviews, the good and the bad / Local search is part of every site we build"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-05T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Update these 5 things on your Google Business Profile this month.\nHow we handle local search: https://ka-performancefl.com/services/seo-ai-search/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-05-2\n\n1. Primary category. Pick the most specific one on Google's list. Google's own example: \"Nail salon,\" not \"Salon.\"\n2. Hours, and holiday hours. Google suggests confirming your hours for holidays even when they match your regular ones. Veterans Day is Nov 11 and Thanksgiving is Nov 26, so set them now.\n3. Services. When a local searches for something you offer, that service may be highlighted on your profile.\n4. Fresh photos. The outside, the inside, your products, your team, your work. In focus, well lit, no heavy filters.\n5. Review replies. Short, helpful, prompt, and an apology when it fits. Never trade anything for a review.\n\nEvery tip is paraphrased from Google's own Business Profile help pages. The category, hours and listing in the video are our own profile, captured as Google shows it; the rest are drawn examples.\n\nYour Google profile should match your website exactly. Local search is part of every site K&A Performance builds. Call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #LocalSEO #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-05-2/dcc63bbb-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:07.627Z",
+      "id": "382225782",
+      "uuid": "8592759514650332273",
+      "scheduledAt": "2026-09-25T20:36:44.509Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-05T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #LocalSEO #SmallBusiness #GoogleBusinessProfile #GainesvilleBusiness #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-05-2/f27eec9d-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-05-2/caeac9c3-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-05-2/3db27642-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-05-2/3f5b8462-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-05-2/32c3b2ba-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-05-2/55d661cf-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-05-2/413740ae-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide: Update these 5 things on your Google Business Profile this month. A dark teal street map with a dashed route through five numbered rust map pins: 1 primary category, the most specific one; 2 hours, plus holiday hours before November; 3 services, what you actually sell; 4 fresh photos, the real place and the real work; 5 review replies, short, prompt, helpful. Every tip from Google's own help pages, checked on our profile. Swipe for stop 1.",
+            "Stop 1 of 5, primary category: Pick the most specific primary category. It tells Google, and customers, what you are. A real capture of K&A Performance's own Google profile, Sept 25, 2026, with the category Website designer circled. A drawn example of Google's own example: search Salon, pick Nail salon, because Salon is too general. Google's help page says choose the one category that best describes you, and the most specific one on the list.",
+            "Stop 2 of 5, hours: Confirm your hours. Add holiday hours now. Wrong holiday hours send a customer to a locked door. A real capture of K&A Performance's weekly hours on Google Maps, Sept 25, 2026: Monday to Friday 8 AM to 5 PM, Saturday 8 AM to 2:30 PM, Sunday closed. Beside it a drawn example of special hours: Wednesday Nov 11, Veterans Day, same hours; Thursday Nov 26, Thanksgiving, closed. Google's help page says set special hours for holidays and confirm them even when they match your regular hours.",
+            "Stop 3 of 5, services: List the services you actually sell. Customers search for the job, not your name. A drawn example based on Google's own plumbing example: a services list with Install faucet, Repair toilet and Water heater repair checked, each with a description and price, and Add a custom service. Google's help page says when a local searches for something you offer, that service may be highlighted on your profile.",
+            "Stop 4 of 5, fresh photos: Add fresh photos of the real thing. Customers decide from photos before they call. A drawn grid of the photo types Google lists: exterior, interior, products, team, at work, and the spec JPG or PNG, 720 by 720 pixels recommended, in focus, well lit. Google's help page says show the outside, the inside, your products, your team and your work, with no heavy filters.",
+            "Stop 5 of 5, review replies: Reply to reviews, the good and the bad. The next customer reads your replies too. A drawn example: a four star review, Good work, but the wait for a callback was long, and the owner's reply, Thanks for telling us, and sorry about the wait. Glad the repair held up. Google's help page says keep replies short and helpful, reply promptly, apologize when it fits, and never trade anything for a review.",
+            "Local search is part of every site we build. Your Google profile should match your website exactly; we build the site side properly and hand you a short, honest list for the profile. A real capture of K&A Performance's own Google Maps listing, Sept 25, 2026: 5.0 stars from 8 reviews, Website designer, (904) 210-1071. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-05T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Update these 5 things on your Google Business Profile this month. Save this for your next check.\n\n1. Primary category. Pick the most specific one on Google's list. Google's own example: \"Nail salon,\" not \"Salon.\"\n2. Hours, and holiday hours. Google suggests confirming your hours for holidays even when they match your regular ones. Veterans Day is Nov 11 and Thanksgiving is Nov 26, so set them now.\n3. Services. When a local searches for something you offer, that service may be highlighted on your profile.\n4. Fresh photos. The outside, the inside, your products, your team, your work. In focus, well lit, no heavy filters.\n5. Review replies. Short, helpful, prompt, and an apology when it fits. Never trade anything for a review.\n\nEvery tip is paraphrased from Google's own Business Profile help pages. The category, hours and listing on the slides are our own profile, captured as Google shows it; the rest are drawn examples.\n\nYour Google profile should match your website exactly. Local search is part of every site K&A Performance builds. Link in bio, or call Alex at 904-210-1071.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:07.627Z",
+      "id": "382225862",
+      "uuid": "5937550607353005362",
+      "scheduledAt": "2026-09-25T20:36:44.579Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

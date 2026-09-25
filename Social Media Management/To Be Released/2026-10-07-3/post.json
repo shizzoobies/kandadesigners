@@ -3,7 +3,7 @@
   "date": "2026-10-07",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "training",
   "title": "LinkedIn: Course, job aid, or neither? A 5-question test",
   "platforms": {
@@ -62,8 +62,107 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-07-3/aab14b43-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-3/aab14b43-slide-01.jpg",
+      "sha256": "aab14b438d43514b46f3836081f2d84a523241c052439381330bcde0e99ecb4c",
+      "uploadedAt": "2026-09-25T20:32:12.629Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-07-3/2f170b7f-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-3/2f170b7f-slide-02.jpg",
+      "sha256": "2f170b7f5ed367eb3e65aa894dddc49acd04e6a4629de72d66b46b12504f6213",
+      "uploadedAt": "2026-09-25T20:32:12.629Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-07-3/72021d80-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-3/72021d80-slide-03.jpg",
+      "sha256": "72021d80f83fd2bbc35a39e87a90ae04c3e15234a90df9713430645472dc8677",
+      "uploadedAt": "2026-09-25T20:32:12.629Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-07-3/25e8bc2f-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-3/25e8bc2f-slide-04.jpg",
+      "sha256": "25e8bc2f51651a03be4f223f7f184e40279e2be5538c73aead0f860c3974519e",
+      "uploadedAt": "2026-09-25T20:32:12.629Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-07-3/d970e49c-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-3/d970e49c-slide-05.jpg",
+      "sha256": "d970e49c5443293cf7a846de9138219adb28669a51317b8833515b3af6b92dd5",
+      "uploadedAt": "2026-09-25T20:32:12.629Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-07-3/fdad9637-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-3/fdad9637-slide-06.jpg",
+      "sha256": "fdad9637383bc6e49eaf13b67f9b8381d5eec8054552c57f62020957790b4ebe",
+      "uploadedAt": "2026-09-25T20:32:12.629Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-07-3/cc162f2d-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-3/cc162f2d-slide-07.jpg",
+      "sha256": "cc162f2d11187d68303faf58caa1249dd01e4cadefc2dce5ea763ae4748e52f7",
+      "uploadedAt": "2026-09-25T20:32:12.629Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-07T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "Courses, job aids, and free sample courses: https://ka-performancefl.com/training/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-07-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-07-3/aab14b43-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-07-3/2f170b7f-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-07-3/72021d80-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-07-3/25e8bc2f-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-07-3/d970e49c-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-07-3/fdad9637-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-07-3/cc162f2d-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on cream: A 5-question test for any training request. Course, job aid, or neither? A dark teal wayfinding sign with three directions: Teach it, practice it, arrow left to Course. Hand it to them at the task, arrow right to Job aid. Training won't fix it, arrow up to Neither. Answer five questions about the task; each answer points one way. Swipe for question 1.",
+            "Question 1 of 5: How often do they do it? Sign: Rarely, once a month, once a quarter, points to Job aid. Every day, many times a shift, points to Course. Note: What people rarely do, they rarely remember. What they do daily is worth practicing until it is automatic.",
+            "Question 2 of 5: Is it done at a desk, or on the job with no time to look? Sign: At a desk, or on the job with a moment to check, points to Job aid. Hands busy, customer waiting, no pause, points to Course. Note: A job aid only works if they can glance at it while they work.",
+            "Question 3 of 5: Does it change often? Sign: Yes, prices, forms, software, rules, points to Job aid. No, it holds for years, points to Course. Note: When it changes, you update one page instead of retraining everyone.",
+            "Question 4 of 5: Is the risk of a mistake high? Sign: High, and they can check as they go, points to Job aid. High, and there is no time to check, points to Course. Note: High stakes are where a checklist earns its place. With no time to check, they need practice first.",
+            "Question 5 of 5: Do people already know the why? Sign: Yes, they just need the steps, points to Job aid. No, they need the why and the judgment, points to Course. They know how and why, and still don't do it, points to Neither. Note: If they already know it, more training will not help. Fix the process, the tool, or the incentive.",
+            "Save this card. A directory sign with columns Job aid and Course: 1 How often? Rarely, or every day. 2 Desk or job? Time to look, or no time to look. 3 Changes often? Yes, or no. 4 Mistake risk high? Yes with time to check, or yes with no time to check. 5 Know the why? Yes, or no. Neither: they know how and why and still don't do it? Fix the process, the tool, or the incentive. Count the answers; the side with more wins. We build courses and job aids. Not sure which it needs? Ask us. ka-performancefl.com/training. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-07T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Someone asks for a course. Before anyone builds one, ask five questions about the task.\n\nA course asks people to remember something until the day they need it. A job aid only has to be there on that day. Sometimes the answer is neither, and more training would not change a thing.\n\nThe test, one question per page in this document:\n\n1. How often do they do it? Rarely points to a job aid. Every day points to a course.\n2. Is it done at a desk, or on the job with no time to look? A moment to check points to a job aid. No pause points to a course.\n3. Does it change often? A job aid, so you update one page instead of retraining everyone.\n4. Is the risk of a mistake high? With time to check, a checklist. With no time to check, practice first.\n5. Do people already know the why? Yes points to a job aid. No points to a course.\n\nIf people know how and why and still don't do it, it is neither. Look at the process, the tool, or the incentive.\n\nThe takeaway: run the next training request through these five before it becomes a project. The last page is a card to keep.\n\nWe build full courses, short modules and job aids, delivered into your own LMS.\n\n#InstructionalDesign #LearningAndDevelopment #PerformanceSupport",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "Course, job aid, or neither? A 5-question test",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:32:23.594Z",
+      "id": "382226524",
+      "uuid": "6469938097072918292",
+      "scheduledAt": "2026-09-25T20:38:38.009Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null

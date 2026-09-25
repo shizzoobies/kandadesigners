@@ -3,7 +3,7 @@
   "date": "2026-10-06",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Above the fold: 4 things a visitor needs in 5 seconds",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-06-2/eddd4e46-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/eddd4e46-slide-01.jpg",
+      "sha256": "eddd4e46c3252c0fb4657a4989ba298382d9700e5129fc51be7a54c5a168e52a",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-06-2/72a8c169-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/72a8c169-slide-02.jpg",
+      "sha256": "72a8c169413733297f60e44590a3e0ed3708a2b7743743e8dd46a02852aa0847",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-06-2/f8640183-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/f8640183-slide-03.jpg",
+      "sha256": "f86401831b1a84bf9c8970a1307893409e22162adb204a748a64c2a1b635b627",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-06-2/9fe10bbd-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/9fe10bbd-slide-04.jpg",
+      "sha256": "9fe10bbda74c368b9575cc6d5fa67aa3347093169affe15f12b0e222bad5741b",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-06-2/434c8fd2-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/434c8fd2-slide-05.jpg",
+      "sha256": "434c8fd2093eaf34c6047d4e86ddd54825b6301213c5738d78fa083ba6641124",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-06-2/801846d4-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/801846d4-slide-06.jpg",
+      "sha256": "801846d46eb3b267744921934fec0e6d7cab25781d652d83f7f6082bde4ee837",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-06-2/431e0a08-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/431e0a08-slide-07.jpg",
+      "sha256": "431e0a0826687c70bbf0d36e3869b450ce72bfa2ee0d92decb7698839e6d706e",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-06-2/694c511c-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/694c511c-slideshow.mp4",
+      "sha256": "694c511c9b679161d783efbda06d1590b8f4388b26cbc8392839334d4d5f6ad6",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-06-2/0b4923ac-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06-2/0b4923ac-slideshow-cover.jpg",
+      "sha256": "0b4923accf911449598e2070062a29c6803239b147b8689404b471b12bfe7a55",
+      "uploadedAt": "2026-09-25T20:31:24.526Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-06T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-06-2/694c511c-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide on a cream grid: Above the fold, 4 things a visitor needs in 5 seconds / 1 of 4, What you do / 2 of 4, Where / 3 of 4, Proof / 4 of 4, The next step / Our first screen: 4 of 4 / Want a first screen that does all four? What you do, Where, Proof, The next step"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-06T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Above the fold: 4 things a visitor needs in 5 seconds. We marked up our own homepage on a phone, and all four fit on the first screen.\nWeb design that puts all four up front: https://ka-performancefl.com/services/web-design/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06-2\n\nWhat a stranger needs on your first screen, before they scroll:\n\n1. What you do\n2. Where\n3. Proof\n4. The next step\n\nOurs, on an iPhone 13: what we do is in the line under our headline, Gainesville, Florida is right there, five stars and \"5.0 on Google, 8 reviews\" sit between the intro and the buttons, and Call and Start a project are both above the fold.\n\nTry the 5-second test: open your homepage on your phone, look for 5 seconds, then look away. Could a stranger name all four?\n\nWant a first screen that does all four? Call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #WebDesign #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-06-2/0b4923ac-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:39.712Z",
+      "id": "382226260",
+      "uuid": "-9201397486709358059",
+      "scheduledAt": "2026-09-25T20:37:41.685Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-06T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #WebDesign #SmallBusiness #HomepageTips #UXDesign #GainesvilleBusiness",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-06-2/eddd4e46-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-06-2/72a8c169-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-06-2/f8640183-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-06-2/9fe10bbd-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-06-2/434c8fd2-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-06-2/801846d4-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-06-2/431e0a08-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a cream grid: Above the fold, 4 things a visitor needs in 5 seconds. A real phone screenshot of the ka-performancefl.com homepage, marked up in rust: 1 around crafts fast, animated, AI-ready websites, 2 around Gainesville, Florida, 3 around five stars and 5.0 on Google, 8 reviews, 4 around the Call link and the Start a project button, all above a dashed line at the fold, 664 px on an iPhone 13. Beside it: 1 What you do, 2 Where, 3 Proof, 4 The next step. Ours has all 4. Swipe to see where each one sits.",
+            "1 of 4, What you do. On the first screen, under the headline. The ka-performancefl.com phone screenshot with crafts fast, animated, AI-ready websites boxed as 1. Why it matters: a stranger needs something they can picture, websites, sourdough, roof repair. Ours: K & A Performance crafts fast, animated, AI-ready websites, in the line under our headline.",
+            "2 of 4, Where. On the first screen. The ka-performancefl.com phone screenshot with Gainesville, Florida boxed as 2. Why it matters: local customers look for their own town, so name it in words, not just a map pin. Ours: We work out of Gainesville, Florida is in the paragraph under our headline.",
+            "3 of 4, Proof. On the first screen. The ka-performancefl.com phone screenshot with five stars and 5.0 on Google, 8 reviews boxed as 3, above the fold. Why it matters: a stranger has no reason to trust you yet; one line, a rating with its count, gives them one. Ours: five stars and 5.0 on Google, 8 reviews, between our intro and our buttons.",
+            "4 of 4, The next step. On the first screen. The ka-performancefl.com phone screenshot with the Call link in the header and the Start a project button boxed as 4. Why it matters: if the first tap is obvious, fewer people leave to go looking for it. Ours: Call is in the header; Start a project runs from 613 to 660 px, inside the 664 px fold.",
+            "Our first screen: 4 of 4. A scorecard, every row ticked: What you do, under the headline. Where, Gainesville, Florida. Proof, 5.0 on Google, 8 reviews. The next step, Call and Start a project. The 5-second test: open your homepage on your phone, look for 5 seconds, then look away. Could a stranger name all four?",
+            "Want a first screen that does all four? What you do, Where, Proof, The next step. Web design from Gainesville: ka-performancefl.com/services/web-design. Call Alex 904-210-1071. K&A Performance logo."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-06T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Above the fold: 4 things a visitor needs in 5 seconds. We marked up our own homepage on a phone, and all four fit on the first screen. Save this for your next homepage edit.\n\nWhat a stranger needs on your first screen, before they scroll:\n\n1. What you do\n2. Where\n3. Proof\n4. The next step\n\nOurs, on an iPhone 13: what we do is in the line under our headline, Gainesville, Florida is right there, five stars and \"5.0 on Google, 8 reviews\" sit between the intro and the buttons, and Call and Start a project are both above the fold.\n\nTry the 5-second test: open your homepage on your phone, look for 5 seconds, then look away. Could a stranger name all four?\n\nWant a first screen that does all four? Link in bio, or call Alex at 904-210-1071.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:39.712Z",
+      "id": "382226341",
+      "uuid": "974558420220724474",
+      "scheduledAt": "2026-09-25T20:37:41.767Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

@@ -3,22 +3,142 @@
   "date": "2026-10-05",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "5 Google Business Profile settings most businesses forget",
   "platforms": {
-    "facebook": { "type": "REEL", "caption": "facebook.md" },
-    "instagram": { "type": "REEL", "caption": "instagram.md" }
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
   },
   "media": [
-    { "file": "media/reel-vertical.mp4", "role": "video", "origin": "kap-reel", "alt": "Text-led reel: Your Google profile has 5 settings most businesses forget. A dark teal route map with five rust pins, then one stop at a time: the most specific primary category, shown on K&A's own profile as Website designer; hours plus holiday hours before November, with K&A's real weekly hours; services, drawn from Google's plumbing example; fresh photos by type; replying to reviews. Ends on Local search is part of every site we build, ka-performancefl.com/services/seo-ai-search, Call Alex 904-210-1071. K&A logo and ka-performancefl.com on every frame." },
-    { "file": "media/reel-vertical.srt", "role": "captions", "origin": "kap-reel" },
-    { "file": "media/thumbnail.jpg", "role": "thumbnail", "origin": "kap-reel", "alt": "K&A Performance logo and ka-performancefl.com above the headline Your Google profile has 5 settings most businesses forget, and a dark teal route map with five numbered pins: primary category, hours, services, fresh photos, review replies." }
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel: Your Google profile has 5 settings most businesses forget. A dark teal route map with five rust pins, then one stop at a time: the most specific primary category, shown on K&A's own profile as Website designer; hours plus holiday hours before November, with K&A's real weekly hours; services, drawn from Google's plumbing example; fresh photos by type; replying to reviews. Ends on Local search is part of every site we build, ka-performancefl.com/services/seo-ai-search, Call Alex 904-210-1071. K&A logo and ka-performancefl.com on every frame."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above the headline Your Google profile has 5 settings most businesses forget, and a dark teal route map with five numbered pins: primary category, hours, services, fresh photos, review replies."
+    }
   ],
-  "ai": { "voice": false, "visuals": false },
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-05/ad06a0c4-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-05/ad06a0c4-reel-vertical.mp4",
+      "sha256": "ad06a0c49398a67f57d63600dcfe39105a84a7666b22b14f0552148202343c09",
+      "uploadedAt": "2026-09-25T20:30:45.549Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-05/56e6bae3-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-05/56e6bae3-thumbnail.jpg",
+      "sha256": "56e6bae378cf94c40fbad392c6de9830a3ef07ea55e7564086b8ae50b45ba673",
+      "uploadedAt": "2026-09-25T20:30:45.549Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-05T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-05/ad06a0c4-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: Your Google profile has 5 settings most businesses forget. A dark teal route map with five rust pins, then one stop at a time: the most specific primary category, shown on K&A's own profile as Website designer; hours plus holiday hours before November, with K&A's real weekly hours; services, drawn from Google's plumbing example; fresh photos by type; replying to reviews. Ends on Local search is part of every site we build, ka-performancefl.com/services/seo-ai-search, Call Alex 904-210-1071. K&A logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-05T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your Google profile has 5 settings most businesses forget.\nHow we handle local search: https://ka-performancefl.com/services/seo-ai-search/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-05\n\n1. Primary category: pick the most specific one on Google's list.\n2. Hours: confirm them, and set holiday hours before November.\n3. Services: list what you actually sell.\n4. Photos: add fresh ones of the real place and the real work.\n5. Reviews: reply, short and helpful, good ones and bad ones.\n\nEvery tip comes from Google's own Business Profile help pages. The category and hours in the video are our own profile, captured as Google shows it; the rest are drawn examples.\n\nLocal search is part of every site K&A Performance builds. Visit ka-performancefl.com or call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #LocalSEO #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-05/56e6bae3-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:30:51.643Z",
+      "id": "382225667",
+      "uuid": "-6742398438051266542",
+      "scheduledAt": "2026-09-25T20:36:44.376Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-05T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #LocalSEO #SmallBusiness #GoogleBusinessProfile #GainesvilleBusiness #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-05/ad06a0c4-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: Your Google profile has 5 settings most businesses forget. A dark teal route map with five rust pins, then one stop at a time: the most specific primary category, shown on K&A's own profile as Website designer; hours plus holiday hours before November, with K&A's real weekly hours; services, drawn from Google's plumbing example; fresh photos by type; replying to reviews. Ends on Local search is part of every site we build, ka-performancefl.com/services/seo-ai-search, Call Alex 904-210-1071. K&A logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-05T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your Google profile has 5 settings most businesses forget. Save this for your next profile check.\n\n1. Primary category: pick the most specific one on Google's list.\n2. Hours: confirm them, and set holiday hours before November.\n3. Services: list what you actually sell.\n4. Photos: add fresh ones of the real place and the real work.\n5. Reviews: reply, short and helpful, good ones and bad ones.\n\nEvery tip comes from Google's own Business Profile help pages. The category and hours in the video are our own profile, captured as Google shows it; the rest are drawn examples.\n\nLocal search is part of every site K&A Performance builds. Link in bio, or call Alex at 904-210-1071.\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-05/56e6bae3-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:30:51.643Z",
+      "id": "382225707",
+      "uuid": "1580401769020345745",
+      "scheduledAt": "2026-09-25T20:36:44.442Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

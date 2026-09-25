@@ -3,7 +3,7 @@
   "date": "2026-10-08",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "AI drafts, you decide",
   "platforms": {
@@ -40,8 +40,105 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-08/da4a0f5a-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-08/da4a0f5a-reel-vertical.mp4",
+      "sha256": "da4a0f5ad326f09534165e101f16d1513f95e858d1ddbb1e4adfbf6fa8a21e8f",
+      "uploadedAt": "2026-09-25T20:32:23.758Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-08/1b81a7bc-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08/1b81a7bc-thumbnail.jpg",
+      "sha256": "1b81a7bc6f1b1ce5e3e3b1200371a24caa1fbbcc3b0c4fff867fb37b8422a3f9",
+      "uploadedAt": "2026-09-25T20:32:23.758Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-08T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-08/da4a0f5a-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel on a white document titled Reply to Dana, labeled Example: a bike repair shop, with the K&A Performance logo and ka-performancefl.com at the top and the 90-Day AI Launch address, ka-performancefl.com/ai-launch, at the bottom of every frame. Hook: AI drafts. You decide. The customer asks: Can you promise it will be ready by Friday? The sentences of the AI's first draft that get edited appear word for word, cuts marked with ellipses, then a person's three edits play as tracked changes, struck AI words and added human words. Edit 1, tone: a generic thanks and the [Your Name] placeholder become a personal thanks and the owner's name. Edit 2, fact: the AI said a 20% off deal applies; the person notes the deal ended in September. Edit 3, promise: the AI promised the bike by Friday; the person writes that tune-ups take 3 to 5 business days, so they can't promise Friday. Rule: make it sound like you, check every fact, cut promises you can't keep. Ends on Put AI to work in your business, the 90-Day AI Launch, ka-performancefl.com/ai-launch, or call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-08T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "AI drafts. You decide.\nPut AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08\n\nWe asked an AI model to reply to a customer of a bike repair shop. The customer asked if a 20% off deal applied and whether the bike could be ready by Friday for a race.\n\nThe first draft read well. It also said yes to a deal that had already ended, and promised Friday, which nobody at the shop can promise. The AI had no way to know either one.\n\nSo a person made three edits before it went out:\n1. Tone: a real thanks and a real name, not a placeholder.\n2. Fact: the deal ended in September.\n3. Promise: tune-ups take 3 to 5 business days, so no promise of Friday.\n\nThat is the habit: let AI write the first draft, and keep the facts, the promises, and the send button for yourself.\n\nThe draft in the video is the model's real, unedited output, quoted word for word. The shop, Dana, and Luis are a fictional example.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08\n\nThe music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-08/1b81a7bc-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:32:29.493Z",
+      "id": "382226977",
+      "uuid": "4564377498083477205",
+      "scheduledAt": "2026-09-25T20:39:42.119Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-08T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AI #SmallBusiness #AITips #CustomerService #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-08/da4a0f5a-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel on a white document titled Reply to Dana, labeled Example: a bike repair shop, with the K&A Performance logo and ka-performancefl.com at the top and the 90-Day AI Launch address, ka-performancefl.com/ai-launch, at the bottom of every frame. Hook: AI drafts. You decide. The customer asks: Can you promise it will be ready by Friday? The sentences of the AI's first draft that get edited appear word for word, cuts marked with ellipses, then a person's three edits play as tracked changes, struck AI words and added human words. Edit 1, tone: a generic thanks and the [Your Name] placeholder become a personal thanks and the owner's name. Edit 2, fact: the AI said a 20% off deal applies; the person notes the deal ended in September. Edit 3, promise: the AI promised the bike by Friday; the person writes that tune-ups take 3 to 5 business days, so they can't promise Friday. Rule: make it sound like you, check every fact, cut promises you can't keep. Ends on Put AI to work in your business, the 90-Day AI Launch, ka-performancefl.com/ai-launch, or call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-08T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "AI drafts. You decide.\n\nWe asked an AI model to reply to a customer of a bike repair shop. The customer asked if a 20% off deal applied and whether the bike could be ready by Friday for a race.\n\nThe first draft read well. It also said yes to a deal that had already ended, and promised Friday, which nobody at the shop can promise. The AI had no way to know either one.\n\nSo a person made three edits before it went out:\n1. Tone: a real thanks and a real name, not a placeholder.\n2. Fact: the deal ended in September.\n3. Promise: tune-ups take 3 to 5 business days, so no promise of Friday.\n\nThat is the habit: let AI write the first draft, and keep the facts, the promises, and the send button for yourself. Save this for the next reply you draft.\n\nThe draft in the video is the model's real, unedited output, quoted word for word. The shop, Dana, and Luis are a fictional example.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-08/1b81a7bc-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:32:29.493Z",
+      "id": "382227027",
+      "uuid": "-8800246472892068189",
+      "scheduledAt": "2026-09-25T20:39:42.183Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

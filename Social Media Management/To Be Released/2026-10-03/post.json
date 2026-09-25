@@ -3,7 +3,7 @@
   "date": "2026-10-03",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Tab through your website",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-03/ce6d15db-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/ce6d15db-slide-01.jpg",
+      "sha256": "ce6d15db91641ca5a49fb64da71c95c99f9d7eb9a17918582c4f8463becdad1d",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-03/f98c3501-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/f98c3501-slide-02.jpg",
+      "sha256": "f98c35019bc438a1d519f94410e4f718cf3f52b258e5f61d3c83fb67f5bae625",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-03/624c09db-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/624c09db-slide-03.jpg",
+      "sha256": "624c09db9bc11b2976fe7ad230de9295becb027d07957f27870f42945198bd69",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-03/aacdf1d8-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/aacdf1d8-slide-04.jpg",
+      "sha256": "aacdf1d8b54d64f421c773bf41544ba27ca660b54c6afad2c7872da2f387a4cf",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-03/ebcd0dca-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/ebcd0dca-slide-05.jpg",
+      "sha256": "ebcd0dca42bd769ca7d03f7c04599ba53fe20c9bef49ad671f73ae6d17c46747",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-03/20b5082b-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/20b5082b-slide-06.jpg",
+      "sha256": "20b5082b9a00db2b6d0710320d678d970b4c6d778791fa76f2745cdaba06bd7b",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-03/7107911d-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/7107911d-slide-07.jpg",
+      "sha256": "7107911d67086e9850da38ca6826ac2d989411d2820e45e57ff330812e7cb1a8",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-03/1ed62008-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-03/1ed62008-slideshow.mp4",
+      "sha256": "1ed620084304a40430bf2f99f1c84ef04786d1656b54c7867d7e7a9f7acfffa5",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-03/78d60b6c-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-03/78d60b6c-slideshow-cover.jpg",
+      "sha256": "78d60b6cc70e13c0dd5a4d33db551f403626fe0b7470125530335f15db72dc3c",
+      "uploadedAt": "2026-09-25T20:30:09.937Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-03T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-03/1ed62008-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide: Put your mouse away / Check 1 of 5: Tab reaches every link and button / Check 2 of 5: You can always see where you are / Check 3 of 5: The menu opens from the keyboard / Check 4 of 5: Forms submit with Enter / Check 5 of 5: Nothing traps you / We build every site to work without a mouse"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-03T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Put your mouse away. Can you still reach us?\nAccessibility audits: https://ka-performancefl.com/services/accessibility/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-03\n\nSome of your customers never touch a mouse. Try these five keyboard checks on your own website this weekend:\n\n1. Tab reaches every link and button.\n2. You can always see where you are: a visible outline on whatever Tab just reached.\n3. The menu opens from the keyboard.\n4. Forms submit with Enter.\n5. Nothing traps you: Esc or Tab always gets you out of a pop-up.\n\nThe video shows each check on our own site, keyboard only, with what failing looks like and why it costs you customers. Our site passes all five.\n\nWe build every site to work without a mouse. Call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#GainesvilleFL #WebAccessibility #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-03/78d60b6c-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:30:28.799Z",
+      "id": "382225128",
+      "uuid": "329885494246982306",
+      "scheduledAt": "2026-09-25T20:34:55.869Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-03T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #WebAccessibility #SmallBusiness #WebDesign #SmallBusinessTips #GainesvilleBusiness",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-03/ce6d15db-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-03/f98c3501-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-03/624c09db-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-03/aacdf1d8-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-03/ebcd0dca-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-03/20b5082b-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-03/7107911d-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide: Put your mouse away. Can you still reach us? A real screenshot of ka-performancefl.com after one press of Tab shows a Skip to content link with a rust focus outline. Keycaps for Tab, Enter and Esc. 5 keyboard checks to run on your own website. Three keys, no mouse.",
+            "Check 1 of 5: Tab reaches every link and button. A real screenshot of the K&A home page header with numbered Tab stops 3 to 9 under Home, Services, Mentorship, Training, Artists, the phone number and Start a project, which has the focus outline. 0 links or buttons skipped: we tabbed 7 pages of our site end to end, at desktop and at phone width. Do it now: click the address bar, then press Tab again and again; every link and button gets a turn. Failing looks like: Tab skips your Book or Call button, or jumps from the menu to the footer. Why it costs customers: if Tab can't reach the button, that customer can't book, call or buy.",
+            "Check 2 of 5: You can always see where you are. A real screenshot of the K&A accessibility page FAQ with a rust outline around the focused question, Will an overlay or accessibility plugin fix this? Do it now: watch for an outline on whatever Tab just reached, and check every stop, not just the first. Failing looks like: no outline, one too faint to see, or the item hides under a sticky header. Why it costs customers: without it, a keyboard user is guessing, and presses Enter on the wrong thing.",
+            "Check 3 of 5: The menu opens from the keyboard. Keycaps Tab then Enter. Two real screenshots of the K&A site at phone width: first the menu button with a focus outline, then the open menu, with a close button in the header and the outline on Home. Do it now: narrow your browser to phone width, Tab to the menu button and press Enter. Failing looks like: it only opens on a tap or hover, or it opens and Tab skips past its links. Why it costs customers: zoomed-in screens get this menu; if it won't open, every page behind it is out of reach.",
+            "Check 4 of 5: Forms submit with Enter. A real screenshot of the K&A contact form with test@example.com typed in the email field, which has the focus outline, above the Send message button. Enter sends it; this was a test run and nothing was sent. Do it now: fill in your contact or booking form by keyboard, then press Enter in a one-line field. Failing looks like: nothing happens, or Send is a styled box the keyboard can't press. Why it costs customers: that form is the lead itself; if it can't be sent, the inquiry never arrives.",
+            "Check 5 of 5: Nothing traps you. Esc keycap. A real screenshot of the K&A Start a project window opened from the keyboard, with the focus outline on its close button. Esc closes it and returns focus. Do it now: open each pop-up, chat or embedded video by keyboard, then press Esc or Tab onward. Failing looks like: focus gets stuck in a pop-up or widget, and the only way out is closing the tab. Why it costs customers: a stuck visitor doesn't finish booking; they close the tab and call someone else.",
+            "We build every site to work without a mouse. Our own site passes all five, retested on the live site. Keycaps Tab, Enter and Esc over the five checks, each marked Pass: Tab reaches every link and button; you can always see where you are; the menu opens from the keyboard; forms submit with Enter; nothing traps you. ka-performancefl.com/services/accessibility/. Call Alex 904-210-1071. K&A Performance logo."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-03T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Put your mouse away. Can you still reach us? Save this and try it on your own site.\n\nSome of your customers never touch a mouse. Five keyboard checks:\n\n1. Tab reaches every link and button.\n2. You can always see where you are: a visible outline on whatever Tab just reached.\n3. The menu opens from the keyboard.\n4. Forms submit with Enter.\n5. Nothing traps you: Esc or Tab always gets you out of a pop-up.\n\nSwipe for each check on our own site, keyboard only, with what failing looks like and why it costs you customers. Our site passes all five.\n\nWe build every site to work without a mouse. Link in bio, or call Alex at 904-210-1071.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:30:28.799Z",
+      "id": "382225191",
+      "uuid": "7159706660417785395",
+      "scheduledAt": "2026-09-25T20:34:55.940Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

@@ -3,7 +3,7 @@
   "date": "2026-10-08",
   "time": "18:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "3 jobs to hand AI first in a small business",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-08-2/92125a0b-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/92125a0b-slide-01.jpg",
+      "sha256": "92125a0bacbfd1c65cc23af043db33621ba46744c99945d6c299b5309103566c",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-08-2/976de7e4-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/976de7e4-slide-02.jpg",
+      "sha256": "976de7e41df7fcffe5104037a57581d463ccd65506f614ca0fb0a4903ac7864b",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-08-2/3e44a54c-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/3e44a54c-slide-03.jpg",
+      "sha256": "3e44a54cff21f84a5bdb822c1c069fc497eb55d5ef83d0f30f6ddca0bac31245",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-08-2/8655ce6b-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/8655ce6b-slide-04.jpg",
+      "sha256": "8655ce6bcaf4f21477d2511d67412039ef5b7075c5e44a447d5ddbdc06042423",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-08-2/8b48b294-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/8b48b294-slide-05.jpg",
+      "sha256": "8b48b294a93d7f0d6e7a992535a5d97cf6e108a84e69c5ef9e7859fc9113c3e7",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-08-2/b11c0c63-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/b11c0c63-slide-06.jpg",
+      "sha256": "b11c0c6305a7521fa8a81a115eea9f6db9174b6390a43921def8300490d173cf",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-08-2/44a18497-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/44a18497-slide-07.jpg",
+      "sha256": "44a1849749080758f8f1068f9b4160286f0f154651e8ba049091c7645b300982",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-08-2/d2964864-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/d2964864-slideshow.mp4",
+      "sha256": "d29648647979fdcfe29040ee97effe95fdfabfc44215701288a908b993929d3c",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-08-2/8776bc0c-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-08-2/8776bc0c-slideshow-cover.jpg",
+      "sha256": "8776bc0c95fc9d4912ce2d9c463a3218e9fed17bc580aa5e3ae00e7da9ecad5e",
+      "uploadedAt": "2026-09-25T20:33:01.846Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-08T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-08-2/d2964864-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide on cream: 3 jobs to hand AI first in a small business / Job 1 of 3: First drafts / Job 2 of 3: Summaries / Job 3 of 3: Sorting and tagging / Why start with these three? 1 / Save this / Put AI to work in your business"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-08T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "3 jobs to hand AI first in a small business, and the part of each one to keep for yourself.\nPut AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08-2\n\n1. First drafts. Hand it the replies, posts, and product descriptions. Keep the facts, any promise about when or what, and the send button.\n2. Summaries. Hand it the long email thread, the call notes, a month of reviews. Keep the decision, and open the original for anything about money, contracts, or health.\n3. Sorting and tagging. Hand it the inbox triage and the receipt labels. Keep the categories, a weekly spot check, and every upset customer.\n\nWhy these three first: they come back every week, you can check the work at a glance, and a miss gets caught on your desk before a customer sees it.\n\nHand AI the first pass. Keep the last word.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08-2\n\nThe music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-08-2/8776bc0c-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:33:16.739Z",
+      "id": "382227066",
+      "uuid": "6717170825602352554",
+      "scheduledAt": "2026-09-25T20:39:42.249Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-08T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AI #SmallBusiness #AITips #SmallBusinessTips #WorkSmarter",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-08-2/92125a0b-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-08-2/976de7e4-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-08-2/3e44a54c-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-08-2/8655ce6b-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-08-2/8b48b294-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-08-2/b11c0c63-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-08-2/44a18497-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on cream: 3 jobs to hand AI first in a small business. And the part of each one to keep for yourself. Below, three stacked file folders with tabs: 1 First drafts, 2 Summaries, 3 Sorting and tagging. The front folder reads: Hand AI the first pass. Keep the last word. Swipe for job 1.",
+            "Job 1 of 3: First drafts. Fixing a draft is easier than facing a blank page. A sheet sliding out of a folder, labeled Hand it to AI: replies to customer emails, social posts and product descriptions, the first version of a page or a flyer. The folder front, labeled Keep for yourself: the facts (prices, dates, what is included), any promise about when or what, the final read and the send button.",
+            "Job 2 of 3: Summaries. Read the short version, then decide where to look. Hand it to AI: a long email thread before you reply, notes from a call or a meeting, a month of reviews grouped by theme. Keep for yourself: the decision, because a summary says what was said, not what to do; the original, open, for anything about money, contracts or health; names and numbers, checked against the source.",
+            "Job 3 of 3: Sorting and tagging. It is the same small call, made over and over. Hand it to AI: inbox triage into quote requests, questions and invoices; tagging customer questions by topic; labeling receipts by expense category. Keep for yourself: the categories, you decide what the buckets are; a spot check every week; anyone upset, a person answers that.",
+            "Why start with these three? 1. They come back every week. A job you do once a year is not where to start. 2. You can check the work at a glance. A draft, a summary or a tag takes a quick read to verify. 3. A miss gets caught before a customer sees it. You are the last step, so a mistake stays on your desk.",
+            "Save this. Hand AI the first pass. Keep the last word. A table with three columns, job, AI does, you keep: First drafts, the first version, facts, promises and the send button. Summaries, the short version, the decision and the original. Sorting and tagging, the first sort, the categories, spot checks and upset customers.",
+            "Put AI to work in your business. Start with the job that eats your week. The 90-Day AI Launch: twelve weeks, one on one with Alex. We find that job, build the workflow with you on your real work, and hand you the controls. ka-performancefl.com/ai-launch. Or call Alex 904-210-1071. K&A Performance, web design, local search, training and AI integration, Gainesville, FL."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-08T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "3 jobs to hand AI first in a small business, and the part of each one to keep for yourself. Save this one.\n\n1. First drafts. Hand it the replies, posts, and product descriptions. Keep the facts, any promise about when or what, and the send button.\n2. Summaries. Hand it the long email thread, the call notes, a month of reviews. Keep the decision, and open the original for anything about money, contracts, or health.\n3. Sorting and tagging. Hand it the inbox triage and the receipt labels. Keep the categories, a weekly spot check, and every upset customer.\n\nWhy these three first: they come back every week, you can check the work at a glance, and a miss gets caught on your desk before a customer sees it.\n\nHand AI the first pass. Keep the last word.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:33:16.739Z",
+      "id": "382227154",
+      "uuid": "-4341919126570513070",
+      "scheduledAt": "2026-09-25T20:39:42.317Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

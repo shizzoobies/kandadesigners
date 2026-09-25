@@ -3,12 +3,18 @@
   "date": "2026-10-06",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Your hero is a promise, not a photo",
   "platforms": {
-    "facebook": { "type": "REEL", "caption": "facebook.md" },
-    "instagram": { "type": "REEL", "caption": "instagram.md" }
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
   },
   "media": [
     {
@@ -29,10 +35,110 @@
       "alt": "K&A Performance logo and ka-performancefl.com above the line Say it before they scroll. A drawn phone, labeled as a drawn example, shows a first screen with what you do, where, proof and an Order ahead button, each numbered, beside a list of the four with every one ticked."
     }
   ],
-  "ai": { "voice": false, "visuals": false },
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-06/737b07cd-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-06/737b07cd-reel-vertical.mp4",
+      "sha256": "737b07cdbc3358dfe7a009595d69606ab7f9b71b0fab0d8a586d62755f3785df",
+      "uploadedAt": "2026-09-25T20:31:19.703Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-06/30788b42-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-06/30788b42-thumbnail.jpg",
+      "sha256": "30788b428923783b9afaff7095afcd1ccfcae06d3ecee4a109224313cbe0788d",
+      "uploadedAt": "2026-09-25T20:31:19.703Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-06T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-06/737b07cd-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with a drawn phone labeled Drawn example, not a real business. A weak first screen, a stock photo and Welcome to our website, gets four crosses: what you do, where, proof, the next step. Rewritten, it says Fresh sourdough, baked daily. Gainesville. Open at 6 a.m. Five stars on Google. Order ahead, and all four tick. Then: cover the photo, still clear, it works. Ends on ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071. K&A Performance logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-06T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "\"Welcome to our website\" over a nice photo tells a stranger nothing.\nWeb design that makes the promise: https://ka-performancefl.com/services/web-design/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06\n\nYour first screen has one job: say what you do before anyone scrolls. Four things, in the first screen:\n\n1. What you do\n2. Where\n3. Proof\n4. The next step\n\nThen the test: cover the photo. If the words still tell a stranger what they get, it works. Write the promise first, then pick the photo.\n\nThe bakery in the video is a drawn example, not a real business. The music is AI generated.\n\nWant a first screen that makes the promise? Visit ka-performancefl.com or call Alex at 904-210-1071.\n\n#GainesvilleFL #WebDesign #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-06/30788b42-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:24.386Z",
+      "id": "382226169",
+      "uuid": "1228375719553485185",
+      "scheduledAt": "2026-09-25T20:37:41.549Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-06T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #WebDesign #SmallBusiness #HomepageTips #WebsiteTips #GainesvilleBusiness",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-06/737b07cd-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with a drawn phone labeled Drawn example, not a real business. A weak first screen, a stock photo and Welcome to our website, gets four crosses: what you do, where, proof, the next step. Rewritten, it says Fresh sourdough, baked daily. Gainesville. Open at 6 a.m. Five stars on Google. Order ahead, and all four tick. Then: cover the photo, still clear, it works. Ends on ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071. K&A Performance logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-06T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "\"Welcome to our website\" over a nice photo tells a stranger nothing.\n\nYour first screen has one job: say what you do before anyone scrolls. Four things, in the first screen:\n\n1. What you do\n2. Where\n3. Proof\n4. The next step\n\nThen the test: cover the photo. If the words still tell a stranger what they get, it works. Write the promise first, then pick the photo. Save this for your next homepage edit.\n\nThe bakery in the video is a drawn example, not a real business. The music is AI generated.\n\nWant a first screen that makes the promise? Link in bio, or call Alex at 904-210-1071.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-06/30788b42-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-25T20:31:24.386Z",
+      "id": "382226204",
+      "uuid": "3958117730466743715",
+      "scheduledAt": "2026-09-25T20:37:41.614Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,
