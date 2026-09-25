@@ -1,0 +1,445 @@
+<title>K&amp;A Post Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Schibsted+Grotesk:wght@600;700;800&display=swap">
+<style>
+:root{
+  --ground:#F4EFE8; --surface:#FFFDF9; --sunk:#EDE6DC; --line:#DDD3C6;
+  --ink:#221C15; --muted:#6A6158; --rust:#9A3412; --rust-soft:#F6E3D9;
+  --teal:#0B302D; --ok:#0F6B5C; --ok-soft:#DCEFEA; --wait:#B45309; --wait-soft:#FBEBD3;
+  --on-rust:#FFFDF9; --focus:#D97706;
+  --display:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  --body:"Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#12110F; --surface:#1C1A17; --sunk:#25221E; --line:#37322C;
+    --ink:#EFE9E1; --muted:#A99F93; --rust:#E27A4E; --rust-soft:#3A2419;
+    --teal:#0B302D; --ok:#5ED3B8; --ok-soft:#173129; --wait:#F0A54A; --wait-soft:#33260F;
+    --on-rust:#12110F;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#12110F; --surface:#1C1A17; --sunk:#25221E; --line:#37322C;
+  --ink:#EFE9E1; --muted:#A99F93; --rust:#E27A4E; --rust-soft:#3A2419;
+  --teal:#0B302D; --ok:#5ED3B8; --ok-soft:#173129; --wait:#F0A54A; --wait-soft:#33260F;
+  --on-rust:#12110F;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);margin:0}
+button,textarea,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:16px;padding-block:16px 120px}
+header.top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;padding-block:8px 16px;border-bottom:2px solid var(--ink)}
+.brand{display:flex;align-items:baseline;gap:12px}
+.brand h1{font:800 28px/1 var(--display);letter-spacing:-.02em;margin:0}
+.brand span{color:var(--muted);font-size:14px}
+.tally{display:flex;gap:18px;font-size:14px;font-variant-numeric:tabular-nums}
+.tally b{font:700 22px/1 var(--display);display:block}
+.tally .w b{color:var(--wait)} .tally .a b{color:var(--ok)} .tally .c b{color:var(--rust)}
+.conn{font-size:13px;color:var(--muted);width:100%}
+.conn.bad{color:var(--rust)}
+
+.layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;margin-top:20px;align-items:start}
+nav.list{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);max-height:calc(100vh - 24px);overflow:auto;padding-right:4px}
+.group h2{font:700 12px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
+.group:first-child h2{margin-top:0}
+.row{display:grid;grid-template-columns:46px 1fr;gap:2px 10px;width:100%;text-align:left;background:transparent;border:0;border-left:4px solid var(--line);padding:8px 10px;cursor:pointer;border-radius:0}
+.row:hover{background:var(--sunk)}
+.row[aria-current="true"]{background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.row .t{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;grid-row:span 2;padding-top:2px}
+.row .n{font-weight:600;line-height:1.3}
+.row .k{font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.row.waiting{border-left-color:var(--wait)} .row.approved{border-left-color:var(--ok)} .row.changes{border-left-color:var(--rust)} .row.info{border-left-color:var(--line)}
+.row .k .st{font-weight:700}
+.row.approved .st{color:var(--ok)} .row.changes .st{color:var(--rust)} .row.waiting .st{color:var(--wait)}
+
+main.detail{min-width:0}
+.back{display:none}
+.card{background:var(--surface);border:1px solid var(--line);padding:20px}
+.head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;margin-bottom:6px;color:var(--muted);font-size:14px}
+.tag{font:700 11px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid currentColor;padding:4px 6px;color:var(--ink)}
+.hook{font:800 clamp(24px,3.2vw,34px)/1.12 var(--display);letter-spacing:-.02em;margin:4px 0 18px;text-wrap:balance}
+.body{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:24px}
+.stage{background:var(--teal);padding:14px;display:flex;flex-direction:column;gap:10px;align-items:center}
+.stage video,.stage img{display:block;width:100%;max-width:352px;background:#000}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;max-width:352px;color:#F0F7F5;font-size:14px;font-variant-numeric:tabular-nums}
+.pager button{background:transparent;border:1.5px solid #9FBEB8;color:#F0F7F5;padding:6px 12px;cursor:pointer}
+.pager button:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:5px}
+.dots i{width:7px;height:7px;background:#9FBEB8;opacity:.4;display:block}
+.dots i.on{opacity:1;background:#5EEAD4}
+.alt{font-size:13px;color:var(--muted);margin-top:8px}
+.versions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.versions p{grid-column:1/-1;margin:0;font-weight:700;font-size:14px}
+.versions button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;background:var(--surface);border:2px solid var(--line);cursor:pointer;text-align:left}
+.versions button span{font-size:13px;color:var(--muted)}
+.versions button[aria-selected="true"]{border-color:var(--rust);background:var(--rust-soft)}
+
+.side{display:flex;flex-direction:column;gap:18px;min-width:0}
+.side h3{font:700 13px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px}
+.q{border-left:3px solid var(--wait);background:var(--wait-soft);padding:10px 12px;margin-bottom:10px}
+.q p{margin:0 0 8px}
+.q textarea{min-height:44px}
+textarea,input[type=text]{width:100%;background:var(--surface);border:1.5px solid var(--line);padding:8px 10px;resize:vertical}
+textarea:focus,input[type=text]:focus{border-color:var(--ink)}
+.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--line)}
+.tabs button{background:transparent;border:0;border-bottom:3px solid transparent;margin-bottom:-1.5px;padding:8px 12px;cursor:pointer;font-weight:600;color:var(--muted)}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--rust)}
+.cap{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--sunk);padding:14px;font-size:15px;max-height:360px;overflow:auto}
+.cap a{color:var(--rust)}
+.comment{font-size:13px;color:var(--muted);margin-top:8px;white-space:pre-wrap}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14px;margin:0}
+.facts dt{color:var(--muted)} .facts dd{margin:0}
+.copy{background:transparent;border:1.5px solid var(--line);padding:4px 10px;cursor:pointer;font-size:13px}
+
+.bar{position:sticky;bottom:0;margin-top:18px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--ink);padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bar .state{font-weight:700;margin-right:auto}
+.bar .state.approved{color:var(--ok)} .bar .state.changes{color:var(--rust)} .bar .state.waiting{color:var(--wait)}
+.btn{border:2px solid var(--ink);background:var(--surface);padding:10px 16px;font-weight:700;cursor:pointer}
+.btn.go{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.btn.fix{border-color:var(--rust);color:var(--rust)}
+.btn:disabled{opacity:.5;cursor:default}
+.note{width:100%;display:none}
+.note.open{display:block}
+.keys{font-size:12px;color:var(--muted);width:100%}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);padding:10px 16px;font-weight:600;z-index:10}
+.empty{color:var(--muted)}
+
+@media (max-width:860px){
+  .layout{grid-template-columns:1fr}
+  nav.list{position:static;max-height:none}
+  body.viewing nav.list{display:none}
+  body:not(.viewing) main.detail{display:none}
+  .back{display:inline-block;margin-bottom:12px}
+  .body{grid-template-columns:1fr}
+  .keys{display:none}
+}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><h1>Post Desk</h1><span id="week">K&amp;A Performance social queue</span></div>
+    <div class="tally" aria-live="polite">
+      <div class="w"><b id="nWait">0</b>waiting on you</div>
+      <div class="a"><b id="nOk">0</b>approved</div>
+      <div class="c"><b id="nFix">0</b>changes asked</div>
+    </div>
+    <div class="conn" id="conn">Connecting to saved decisions…</div>
+  </header>
+
+  <div class="layout">
+    <nav class="list" id="list" aria-label="Posts"></nav>
+    <main class="detail" id="detail"><p class="empty">Loading the queue…</p></main>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const linkify = (s) => esc(s).replace(/https?:\/\/[^\s<]+/g, (u) => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+  const KIND = { reel: "Reel", carousel: "Carousel + FB video", linkedin: "LinkedIn", post: "Post", native: "In Facebook", story: "Story", ask: "Question" };
+  const fmtTime = (t) => { if (!t) return ""; const [h, m] = t.split(":").map(Number); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`; };
+  const fmtDay = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
+
+  let data = { posts: [], stories: [], asks: [] };
+  let items = [];            // flat list the rail shows, in order
+  let current = null;        // selected item id
+  const decisions = {};      // id -> {decision, note, answers, at}
+  const answers = {};        // ask id -> {answer, at}
+  let db = null;
+  const slideIdx = {};
+  const mediaView = {};
+  let tab = "facebook";
+
+  function toast(msg) { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (t.hidden = true), 2200); }
+
+  function stateOf(it) {
+    if (it.kind === "native") return "info";
+    if (it.kind === "ask") return answers[it.id]?.answer ? "approved" : "waiting";
+    return decisions[it.id]?.decision || "waiting";
+  }
+  const stateLabel = { waiting: "Waiting on you", approved: "Approved", changes: "Changes asked", info: "Already scheduled" };
+  const askLabel = { waiting: "Needs an answer", approved: "Answered" };
+
+  function buildItems() {
+    items = [];
+    const byDate = {};
+    for (const p of data.posts) (byDate[p.date] ||= []).push({ ...p, type: "post" });
+    for (const s of data.stories) (byDate[s.date] ||= []).push({ ...s, kind: "story", type: "story", time: "", title: "Story with link sticker" });
+    for (const d of Object.keys(byDate).sort()) {
+      const g = byDate[d].sort((a, b) => (a.time || "99").localeCompare(b.time || "99"));
+      for (const it of g) items.push({ ...it, group: fmtDay(d) });
+    }
+    for (const a of data.asks) items.push({ ...a, kind: "ask", type: "ask", group: "Needs from you" });
+  }
+
+  function renderTally() {
+    const acts = items.filter((i) => i.kind !== "native");
+    $("#nWait").textContent = acts.filter((i) => stateOf(i) === "waiting").length;
+    $("#nOk").textContent = acts.filter((i) => stateOf(i) === "approved").length;
+    $("#nFix").textContent = acts.filter((i) => stateOf(i) === "changes").length;
+  }
+
+  function renderList() {
+    const nav = $("#list");
+    let html = "", g = null;
+    for (const it of items) {
+      if (it.group !== g) { if (g !== null) html += "</div>"; g = it.group; html += `<div class="group"><h2>${esc(g)}</h2>`; }
+      const st = stateOf(it);
+      const label = it.kind === "ask" ? askLabel[st] : stateLabel[st];
+      html += `<button class="row ${st}" data-id="${esc(it.id)}" aria-current="${it.id === current}">
+        <span class="t">${esc(fmtTime(it.time))}</span>
+        <span class="n">${esc(it.title)}</span>
+        <span class="k">${esc(KIND[it.kind] || it.kind)} · <span class="st">${esc(label)}</span></span></button>`;
+    }
+    nav.innerHTML = html + "</div>";
+    renderTally();
+  }
+
+  function mediaBlock(it) {
+    if (it.type === "story") return `<div class="stage"><img src="${esc(it.src)}" alt="Story image for ${esc(it.date)}"></div>`;
+    const vids = it.media.filter((m) => m.role === "video");
+    const imgs = it.media.filter((m) => m.role === "image");
+    const thumb = it.media.find((m) => m.role === "thumbnail");
+    // A carousel posts as swipe slides on Instagram and as a video on Facebook.
+    const both = vids.length && imgs.length;
+    const view = both ? (mediaView[it.id] || "instagram") : null;
+    const toggle = both ? `<div class="versions" role="tablist" aria-label="Two versions of this post">
+        <p>Two versions of this post. Check both.</p>
+        <button role="tab" aria-selected="${view === "instagram"}" data-view="instagram"><b>Instagram</b><span>${imgs.length} swipe slides</span></button>
+        <button role="tab" aria-selected="${view === "facebook"}" data-view="facebook"><b>Facebook</b><span>Video of the slides</span></button></div>` : "";
+    if (both && view === "instagram") return toggle + slidesBlock(it, imgs);
+    if (vids.length) {
+      return toggle + `<div class="stage"><video controls playsinline preload="metadata" ${thumb ? `poster="${esc(thumb.src)}"` : ""} src="${esc(vids[0].src)}"></video></div>
+        <p class="alt">Tap play for sound.${it.music ? ` Music: ${esc(it.music)}.` : ""}</p>`;
+    }
+    if (imgs.length) return slidesBlock(it, imgs) + (it.kind === "linkedin"
+      ? `<p class="alt">Posts on LinkedIn as a swipeable document: people page through these slides in the feed. No video, no music.</p>` : "");
+    return `<div class="stage"><p style="color:#F0F7F5">No media in this folder.</p></div>`;
+  }
+
+  function slidesBlock(it, imgs) {
+    const i = Math.min(slideIdx[it.id] || 0, imgs.length - 1);
+    return `<div class="stage" id="stage">
+        <img src="${esc(imgs[i].src)}" alt="${esc(imgs[i].alt)}">
+        <div class="pager"><button id="prevS" ${i === 0 ? "disabled" : ""} aria-label="Previous slide">Prev</button>
+          <span>${i + 1} / ${imgs.length}</span>
+          <span class="dots">${imgs.map((_, k) => `<i class="${k === i ? "on" : ""}"></i>`).join("")}</span>
+          <button id="nextS" ${i === imgs.length - 1 ? "disabled" : ""} aria-label="Next slide">Next</button></div></div>`;
+  }
+
+  function actionBar(it) {
+    const st = stateOf(it);
+    const d = decisions[it.id] || {};
+    return `<div class="bar" id="bar">
+      <span class="state ${st}">${esc(stateLabel[st])}${d.at ? ` · ${new Date(d.at).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}` : ""}</span>
+      <button class="btn fix" id="fix">Request changes</button>
+      <button class="btn go" id="go">${st === "approved" ? "Approved" : "Approve"}</button>
+      ${st !== "waiting" ? `<button class="btn" id="undo">Undo</button>` : ""}
+      <textarea class="note ${st === "changes" ? "open" : ""}" id="note" rows="3" placeholder="What should change? Be as rough as you like.">${esc(d.note || "")}</textarea>
+      <div class="keys">Keys: J and K move between posts, A approves, C opens the change note.</div>
+    </div>`;
+  }
+
+  function renderDetail() {
+    const it = items.find((i) => i.id === current);
+    const el = $("#detail");
+    if (!it) { el.innerHTML = `<p class="empty">Pick a post on the left.</p>`; return; }
+    const back = `<button class="btn back" id="back">All posts</button>`;
+
+    if (it.type === "ask") {
+      const a = answers[it.id] || {};
+      el.innerHTML = `${back}<div class="card">
+        <div class="head"><span class="tag">Needs from you</span></div>
+        <h2 class="hook">${esc(it.title)}</h2>
+        <p>${linkify(it.detail)}</p>
+        <label for="ask-${esc(it.id)}" class="alt">Your answer</label>
+        <textarea id="ask-${esc(it.id)}" rows="4" placeholder="${esc(it.placeholder || "")}">${esc(a.answer || "")}</textarea>
+        <div class="bar"><span class="state ${a.answer ? "approved" : "waiting"}">${a.answer ? "Answered" : "Needs an answer"}</span>
+          <button class="btn go" id="saveAsk">Save answer</button></div></div>`;
+      $("#saveAsk").onclick = () => saveAsk(it.id, $(`#ask-${CSS.escape(it.id)}`).value.trim());
+      wireBack();
+      return;
+    }
+
+    if (it.type === "story") {
+      el.innerHTML = `${back}<div class="card">
+        <div class="head"><span class="tag">Story</span><span>${esc(fmtDay(it.date))}</span><span>Post by hand in the Instagram app</span></div>
+        <h2 class="hook">Story with a link sticker</h2>
+        <div class="body">${mediaBlock(it)}
+          <div class="side">
+            ${it.stickerText ? `<div><h3>Sticker text</h3><p style="margin:0">${esc(it.stickerText)}</p></div>` : ""}
+            <div><h3>Link sticker URL</h3><div class="cap" id="sticker">${esc(it.stickerUrl || "See stories/README.md")}</div>
+            <p><button class="copy" id="copySticker">Copy URL</button></p></div>
+            <p>Post the image as a Story, add a Link sticker over the dashed box, and paste this URL. The tag at the end tells us the visit came from this Story.</p>
+          </div></div>${actionBar(it)}</div>`;
+      $("#copySticker").onclick = (e) => copyText(it.stickerUrl, e.target);
+      wireBar(it); wireBack();
+      return;
+    }
+
+    const d = decisions[it.id] || {};
+    const scheduled = Object.entries(it.scheduled || {}).map(([n, v]) => `${n[0].toUpperCase() + n.slice(1)} ${v.draft ? "draft" : "scheduled"} ${v.id}`).join(", ");
+    const qs = (it.questions || []).map((q, k) => `<div class="q"><p>${linkify(q)}</p>
+        <textarea data-q="${k}" rows="2" aria-label="Your answer" placeholder="Your answer (optional)">${esc(d.answers?.[k] || "")}</textarea></div>`).join("");
+    // Caption tabs follow the networks this post goes to (a LinkedIn-only post shows one tab).
+    const nets = (it.networks && it.networks.length ? it.networks : ["facebook", "instagram"]);
+    const shownTab = nets.includes(tab) ? tab : nets[0];
+    const NET = { facebook: "Facebook caption", instagram: "Instagram caption", linkedin: "LinkedIn post" };
+    const capText = it[shownTab];
+    const comment = shownTab === "instagram" ? it.firstComment : shownTab === "linkedin" ? it.linkedinComment : "";
+    el.innerHTML = `${back}<div class="card">
+      <div class="head"><span class="tag">${esc(KIND[it.kind] || it.kind)}</span><span>${esc(fmtDay(it.date))}, ${esc(fmtTime(it.time))}</span><span>${esc(it.pillar || "")}</span></div>
+      <h2 class="hook">${esc(it.hook || it.title)}</h2>
+      ${it.kind === "native" ? `<p>Scheduled directly in Facebook. Nothing to approve here.</p>` : `
+      <div class="body">
+        <div>${mediaBlock(it)}</div>
+        <div class="side">
+          ${qs ? `<div><h3>Questions for you</h3>${qs}</div>` : ""}
+          <div>
+            <div class="tabs" role="tablist">
+              ${nets.map((n) => `<button role="tab" aria-selected="${shownTab === n}" data-tab="${n}">${NET[n] || n}</button>`).join("")}
+            </div>
+            <div class="cap">${linkify(capText || "No caption file.")}</div>
+            ${comment ? `<p class="comment"><b>First comment:</b> ${linkify(comment)}</p>` : ""}
+          </div>
+          ${it.repost ? `<div><h3>Your repost comment</h3><div class="cap" id="repostText">${esc(it.repost)}</div>
+            <p><button class="copy" id="copyRepost">Copy</button> Paste this when you repost from your personal profile.</p></div>` : ""}
+          <dl class="facts">
+            <dt>Folder</dt><dd>To Be Released/${esc(it.id)}</dd>
+            <dt>AI</dt><dd>${it.ai?.voice ? "AI voice. " : ""}${it.ai?.visuals ? "AI visuals. " : ""}${!it.ai?.voice && !it.ai?.visuals ? "No AI voice or visuals" : ""}</dd>
+            ${scheduled ? `<dt>Metricool</dt><dd>${esc(scheduled)}</dd>` : ""}
+          </dl>
+        </div>
+      </div>${actionBar(it)}`}</div>`;
+
+    el.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => { tab = b.dataset.tab; renderDetail(); }));
+    const cr = $("#copyRepost");
+    if (cr) cr.onclick = (e) => copyText(it.repost, e.target, "#repostText");
+    el.querySelectorAll("[data-view]").forEach((b) => (b.onclick = () => { mediaView[it.id] = b.dataset.view; tab = b.dataset.view; renderDetail(); }));
+    el.querySelectorAll("textarea[data-q]").forEach((t) => (t.onchange = () => saveAnswer(it.id, +t.dataset.q, t.value.trim())));
+    const prev = $("#prevS"), next = $("#nextS");
+    if (prev) prev.onclick = () => { slideIdx[it.id] = Math.max(0, (slideIdx[it.id] || 0) - 1); renderDetail(); };
+    if (next) next.onclick = () => { slideIdx[it.id] = (slideIdx[it.id] || 0) + 1; renderDetail(); };
+    const stage = $("#stage");
+    if (stage) {
+      let x0 = null;
+      stage.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+      stage.addEventListener("touchend", (e) => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) (dx < 0 ? next : prev)?.click(); });
+    }
+    if (it.kind !== "native") wireBar(it);
+    wireBack();
+  }
+
+  function wireBack() { const b = $("#back"); if (b) b.onclick = () => { document.body.classList.remove("viewing"); window.scrollTo(0, 0); }; }
+
+  function wireBar(it) {
+    const note = $("#note");
+    $("#go").onclick = () => decide(it.id, "approved");
+    $("#fix").onclick = () => {
+      if (!note.classList.contains("open")) { note.classList.add("open"); note.focus(); return; }
+      if (!note.value.trim()) { note.focus(); toast("Add a note so I know what to change"); return; }
+      decide(it.id, "changes", note.value.trim());
+    };
+    const u = $("#undo"); if (u) u.onclick = () => decide(it.id, "waiting");
+  }
+
+  async function copyText(text, btn, sel = "#sticker") {
+    try { await navigator.clipboard.writeText(text); btn.textContent = "Copied"; }
+    catch { const r = document.createRange(); r.selectNodeContents($(sel)); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selected, press Ctrl+C"; }
+  }
+
+  async function write(path, body) {
+    if (!db) { toast("Not saved: this view cannot reach saved decisions"); return false; }
+    try { await db.doc(path).set(body); return true; }
+    catch (e) {
+      if (e?.code === "unavailable") { await new Promise((r) => setTimeout(r, 600 + Math.random() * 600)); try { await db.doc(path).set(body); return true; } catch {} }
+      toast(e?.code === "invalid_argument" ? "Your access level cannot save here" : "Not saved, try again");
+      return false;
+    }
+  }
+
+  async function decide(id, decision, note) {
+    const prev = decisions[id] || {};
+    const body = { ...prev, decision, note: decision === "changes" ? note : prev.note || "", at: new Date().toISOString() };
+    if (decision === "waiting") { body.note = ""; delete body.at; }
+    decisions[id] = body;
+    renderList(); renderDetail();
+    if (await write(`decisions/${id}`, body)) {
+      toast(decision === "approved" ? "Approved" : decision === "changes" ? "Change request saved" : "Reset to waiting");
+      if (decision === "approved") nextWaiting();
+    }
+  }
+
+  async function saveAnswer(id, k, text) {
+    const body = { decision: "waiting", ...(decisions[id] || {}) };
+    body.answers = { ...(body.answers || {}), [k]: text };
+    decisions[id] = body;
+    if (await write(`decisions/${id}`, body)) toast("Answer saved");
+  }
+
+  async function saveAsk(id, text) {
+    const body = { answer: text, at: new Date().toISOString() };
+    answers[id] = body; renderList(); renderDetail();
+    if (await write(`answers/${id}`, body)) toast(text ? "Answer saved" : "Answer cleared");
+  }
+
+  function select(id, scroll) {
+    current = id;
+    document.body.classList.add("viewing");
+    renderList(); renderDetail();
+    if (scroll) window.scrollTo({ top: 0 });
+  }
+
+  function nextWaiting() {
+    const i = items.findIndex((x) => x.id === current);
+    const n = items.slice(i + 1).concat(items.slice(0, i)).find((x) => stateOf(x) === "waiting" && x.kind !== "ask");
+    if (n) setTimeout(() => select(n.id, true), 500);
+  }
+
+  $("#list").addEventListener("click", (e) => { const r = e.target.closest(".row"); if (r) select(r.dataset.id, window.innerWidth <= 860); });
+  document.addEventListener("keydown", (e) => {
+    if (e.target.matches("textarea,input")) return;
+    const i = items.findIndex((x) => x.id === current);
+    if (e.key === "j" || e.key === "ArrowDown") { e.preventDefault(); if (i < items.length - 1) select(items[i + 1].id); }
+    else if (e.key === "k" || e.key === "ArrowUp") { e.preventDefault(); if (i > 0) select(items[i - 1].id); }
+    else if (e.key === "a" && $("#go")) $("#go").click();
+    else if (e.key === "c" && $("#fix")) { e.preventDefault(); $("#fix").click(); }
+    else if (e.key === "ArrowRight" && $("#nextS")) $("#nextS").click();
+    else if (e.key === "ArrowLeft" && $("#prevS")) $("#prevS").click();
+  });
+
+  async function connect() {
+    const conn = $("#conn");
+    try { db = window.claude?.use ? await window.claude.use("db") : null; } catch { db = null; }
+    if (!db) { conn.textContent = "Saved decisions are not reachable in this view, so choices here will not reach Claude. Open the page on claude.ai."; conn.classList.add("bad"); return; }
+    conn.textContent = "Decisions save as you make them. Claude reads them from here.";
+    db.collection("decisions").onSnapshot((snap) => {
+      for (const d of snap.docs) decisions[d.id] = { ...d.data() };
+      for (const c of snap.docChanges()) if (c.type === "removed") delete decisions[c.doc.id];
+      renderList(); if (!document.activeElement?.matches("textarea")) renderDetail();
+    }, () => { conn.textContent = "Lost the connection to saved decisions. Reload the page."; conn.classList.add("bad"); });
+    db.collection("answers").onSnapshot((snap) => {
+      for (const d of snap.docs) answers[d.id] = { ...d.data() };
+      renderList(); if (!document.activeElement?.matches("textarea")) renderDetail();
+    }, () => {});
+  }
+
+  fetch("data.json").then((r) => r.json()).then((j) => {
+    data = j;
+    const dates = j.posts.map((p) => p.date).sort();
+    if (dates.length) $("#week").textContent = `Queue ${fmtDay(dates[0])} to ${fmtDay(dates[dates.length - 1])}`;
+    buildItems();
+    const first = items.find((x) => stateOf(x) === "waiting" && x.kind !== "ask") || items[0];
+    current = first?.id || null;
+    renderList(); renderDetail();
+    connect();
+  }).catch(() => { $("#detail").innerHTML = `<p class="empty">The queue data did not load. Ask Claude to republish the page.</p>`; });
+})();
+</script>
