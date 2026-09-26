@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { makeD1 } from './helpers/d1.js';
 
-describe('0001_sites migration', () => {
+describe('migrations', () => {
   it('creates every table the app uses', async () => {
     const db = makeD1();
     const { results } = await db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").all();
     expect(results.map((r) => r.name)).toEqual(
-      ['alert_state', 'checks', 'log_entries', 'people', 'sites', 'work_items'],
+      ['alert_state', 'checks', 'desk_decisions', 'desk_items', 'desk_meta', 'desk_story_checks', 'log_entries', 'people', 'sites', 'work_items'],
     );
   });
 

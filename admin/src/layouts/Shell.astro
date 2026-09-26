@@ -20,6 +20,7 @@ const user = Astro.locals.user;
       <nav aria-label="Main">
         <a href="/" aria-current={active === 'sites' ? 'page' : undefined}>Sites</a>
         <a href="/sites/new" aria-current={active === 'new' ? 'page' : undefined}>Add site</a>
+        <a href="/sites/ka-performance/social" aria-current={active === 'social' ? 'page' : undefined}>Social</a>
       </nav>
       <div class="who">{user?.name || user?.email}</div>
     </header>

@@ -22,7 +22,10 @@
     }
   ],
   "r2_buckets": [
-    { "binding": "LOGOS", "bucket_name": "ka-sites-logos" }
+    { "binding": "LOGOS", "bucket_name": "ka-sites-logos" },
+    // Post Desk review copies. Private on purpose: unapproved posts must never
+    // sit at public URLs, so this is not the public ka-social bucket.
+    { "binding": "DESK_MEDIA", "bucket_name": "ka-social-desk" }
   ],
   // Identifiers, not secrets: the AUD tag names the Access application and the
   // team domain is public. Both are safe to commit.

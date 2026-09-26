@@ -1,0 +1,81 @@
+---
+// The Post Desk. The server embeds the site's desk state as JSON; the client
+// script (src/scripts/post-desk.js, ported from the claude.ai artifact) draws
+// it and saves decisions and Story ticks. #stories opens the Stories tab.
+import Shell from '../../../../layouts/Shell.astro';
+import { getSiteBySlug } from '../../../../lib/db.js';
+import { getDeskState, maybePurge } from '../../../../lib/desk.js';
+
+const env = Astro.locals.runtime.env;
+const site = await getSiteBySlug(env.DB, Astro.params.slug);
+if (!site) return new Response('Not found', { status: 404 });
+
+await maybePurge({ db: env.DB, bucket: env.DESK_MEDIA, site });
+const state = await getDeskState(env.DB, site.id);
+const canWrite = Astro.locals.user?.role === 'owner';
+// "<" is escaped so no text in a caption can close the script element early.
+const boot = JSON.stringify({ slug: site.slug, canWrite, state }).replace(/</g, '\\u003c');
+---
+<Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''}>
+  <div class="desk" id="desk">
+    <header class="d-head">
+      <div class="d-brand">
+        <h1>Post Desk</h1>
+        <span id="week">{site.name} social queue</span>
+      </div>
+      <div class="tally" id="postTally" aria-live="polite">
+        <div><b id="nWait">0</b><span class="level"><span class="dot amber"></span>waiting on you</span></div>
+        <div><b id="nOk">0</b><span class="level"><span class="dot green"></span>approved</span></div>
+        <div><b id="nFix">0</b><span class="level"><span class="dot red"></span>changes asked</span></div>
+      </div>
+      <div class="tally" id="storyTally" aria-live="polite" hidden>
+        <div><b id="sToday">0</b><span class="level"><span class="dot red"></span>due today</span></div>
+        <div><b id="sMissed">0</b><span class="level"><span class="dot amber"></span>not ticked</span></div>
+        <div><b id="sDone">0</b><span class="level"><span class="dot green"></span>posted</span></div>
+      </div>
+      <p class="conn" id="conn">{canWrite
+        ? 'Decisions and Story ticks save as you make them. Claude reads them from here.'
+        : 'Read only. Only the owner can approve posts or tick Stories.'}</p>
+    </header>
+
+    <div class="d-views" role="tablist" aria-label="Desk sections">
+      <button type="button" role="tab" id="tabPosts" aria-selected="true" aria-controls="postsView" data-go="posts">Approvals<b id="cPosts"></b></button>
+      <button type="button" role="tab" id="tabStories" aria-selected="false" aria-controls="storiesView" data-go="stories">Stories<b id="cStories"></b></button>
+    </div>
+
+    <section id="postsView" role="tabpanel" aria-labelledby="tabPosts">
+      <div class="d-layout">
+        <nav class="d-list" id="list" aria-label="Posts"></nav>
+        <div class="d-detail" id="detail"><p class="d-muted">Loading the queue...</p></div>
+      </div>
+    </section>
+
+    <section id="storiesView" role="tabpanel" aria-labelledby="tabStories" hidden>
+      <div class="d-stories">
+        <details class="howto">
+          <summary>How to post a Story with a link sticker</summary>
+          <ol>
+            <li>Save the day's image to your phone (Save image, below).</li>
+            <li>Instagram, tap +, then Story, and pick the image.</li>
+            <li>Tap the sticker icon, then Link, and paste the URL (Copy URL, below).</li>
+            <li>Tap "Customize sticker text" and type the sticker text.</li>
+            <li>Drag the sticker over the dashed box, then tap Your story.</li>
+            <li>Come back here and tick Posted.</li>
+          </ol>
+        </details>
+        <div class="slist" id="slist"></div>
+      </div>
+    </section>
+
+    <dialog class="zoom" id="zoom" aria-label="Story image">
+      <img id="zoomImg" src="" alt="" />
+      <div class="zbar"><a class="btn" id="zoomSave" href="" download>Save image</a><button type="button" class="btn quiet" id="zoomClose">Close</button></div>
+    </dialog>
+    <div class="d-toast" id="toast" role="status" hidden></div>
+  </div>
+
+  <script type="application/json" id="desk-boot" set:html={boot}></script>
+  <script>
+    import '../../../../scripts/post-desk.js';
+  </script>
+</Shell>
