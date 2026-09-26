@@ -200,10 +200,62 @@ https://claude.ai/artifact/BwgxjJ7mbkuRGvxyHPMRd3
   Put anything the whole pipeline needs from him in `review/asks.json`.
 - Facebook captions carry the full link on line 2, tagged
   `?utm_source=facebook&utm_medium=social&utm_campaign=<folder id>`. Instagram
-  uses the bio link and the day's Story link sticker (`stories/README.md`).
+  uses the bio link (plus the day's Story link sticker when Stories run; paused
+  since 2026-09-26, see `stories/PAUSED.md`).
 - A day normally has a reel at 10:30 AM (`YYYY-MM-DD`) and a carousel in the
-  late afternoon (`YYYY-MM-DD-2`), plus a Story. Every frame and slide carries
+  late afternoon (`YYYY-MM-DD-2`), plus a Story when Stories run (paused). Every frame and slide carries
   the K&A logo and ka-performancefl.com.
+
+### Post Desk in the admin
+
+The Post Desk is moving into the admin at admin.ka-performancefl.com (one
+`ka-sites` database, keyed by site) while the artifact above keeps running
+until that has had a real test run. Two commands mirror the queue there:
+
+- `node tools/social.mjs desk pull [--site ka-performance]` reads Alex's
+  decisions and Stories checklist ticks out of D1 (rows with `pulled_at IS
+  NULL`), appends them to `review/desk-log.jsonl`, prints a summary, and marks
+  them read. Applying a decision is still manual, as today.
+- `node tools/social.mjs desk push [--site ka-performance] [--dry-run]`, in
+  order: reads the site's current `desk_items`; uploads changed media;
+  pulls (so a decision is never lost, and never while the import below is
+  running); replaces the site's rows in D1 in one import; then deletes
+  objects for items no longer in the queue (only once that import has
+  actually succeeded). `--dry-run` prints the plan and touches nothing remote
+  (it skips the `desk_items` read and the pull step too). Upload tracking
+  (size and mtime per key, plus a content hash per item) lives in
+  `review/desk-pushed.json`, written after every attempt (even a failed one)
+  so completed uploads are never re-sent needlessly.
+- The content hash covers only what Alex reviews on the desk (captions,
+  title, questions, media role/alt/platforms and its `v` stamp for a post;
+  date/time/condition/sticker text/URL and `v` for a Story; title/detail/
+  placeholder for an ask), computed after each file's `v` is known, so a
+  re-rendered file resets the approval even with the same caption. It
+  deliberately excludes anything operational (status, scheduled, ai, music,
+  weekday, pillar, builtAt): those never reset an approval. When it does
+  change since the last push, the old decision is cleared back to Waiting,
+  and `desk push` prints which item ids were reset. Each media URL also
+  carries a `?v=<size>-<mtime>` stamp so the admin never shows a stale
+  cached copy after a real edit.
+- If Claude's local queue still has a folder whose last logged decision (from
+  `review/desk-log.jsonl`) was `approved` (or, for an ask, `answered`), but
+  the admin has already purged it from `desk_items` (it does that
+  automatically once a decision is applied and 24 hours old), `desk push`
+  will not resurrect it on the desk. It skips that item and prints a line
+  like `2026-10-12: approved on the desk, apply it locally (status approved)
+  before pushing again` instead. A Story-checklist row is never skipped this
+  way.
+
+Both commands use the same `CLOUDFLARE_API_TOKEN` as `upload`/`release`. See
+`D:\ka-site-admin\docs\superpowers\specs\2026-09-26-post-desk-design.md` for
+the schema and the admin side.
+
+Do not delete `review/desk-pushed.json`: it is the only record of what has
+already been uploaded to the private `ka-social-desk` bucket. If it is lost,
+`desk push` re-uploads everything (harmless) but stops being able to clean up
+objects for items that have already left the queue; those orphans then need
+a manual `wrangler r2 object delete`. `review/desk-log.jsonl`, by contrast, is
+the record of Alex's decisions and stays tracked in git.
 
 ## Carousels, video, music (2026-09-25)
 

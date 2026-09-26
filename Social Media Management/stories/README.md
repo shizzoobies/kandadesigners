@@ -1,5 +1,7 @@
 # Stories, weeks of Sept 28 and Oct 5
 
+**PAUSED since 2026-09-26 (Alex): none of these are being posted.** See `PAUSED.md`.
+
 One Story per day, 1080x1920 PNG, posted the same day as that day's reel on
 Instagram and Facebook. Instagram caption links do not click for business
 accounts; a link sticker in a Story does.

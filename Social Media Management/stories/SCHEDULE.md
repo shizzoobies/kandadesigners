@@ -1,5 +1,7 @@
 # Story schedule (posted by hand, link sticker)
 
+**PAUSED since 2026-09-26 (Alex): none of the Stories below are being posted.** See `PAUSED.md`.
+
 Post each Story right after that day's 10:30 AM reel goes live, around 10:35 AM.
 Images and a Copy URL button are on the Post Desk (Story rows), or in this folder.
 

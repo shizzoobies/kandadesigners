@@ -10,6 +10,7 @@ import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mj
 import { uploadFolder } from "./lib/upload.mjs";
 import { prepareRelease, recordRelease, recordError, promotePackets, recordPromotion } from "./lib/release.mjs";
 import { reconcile, reconcileWindow } from "./lib/reconcile.mjs";
+import { pullDesk, pushDesk } from "./lib/desk.mjs";
 
 const USAGE = `usage:
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
@@ -22,7 +23,9 @@ const USAGE = `usage:
   node tools/social.mjs release --promote <folder name>
   node tools/social.mjs release --promoted <folder name> --network facebook|instagram --id <new id>
   node tools/social.mjs reconcile --window [--now <ISO>]
-  node tools/social.mjs reconcile --from <getScheduledPosts.json> [--dry-run] [--now <ISO>]`;
+  node tools/social.mjs reconcile --from <getScheduledPosts.json> [--dry-run] [--now <ISO>]
+  node tools/social.mjs desk pull [--site ka-performance]
+  node tools/social.mjs desk push [--site ka-performance] [--dry-run]`;
 
 const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals", "window"]);
 
@@ -178,8 +181,54 @@ function main() {
     return 0;
   }
 
+  if (command === "desk") {
+    const sub = args._[0];
+    const site = args.site || "ka-performance";
+    if (sub === "pull") {
+      printDeskPull(pullDesk({ site, root }));
+      return 0;
+    }
+    if (sub === "push") {
+      printDeskPush(pushDesk({ site, root, dryRun: Boolean(args["dry-run"]) }), Boolean(args["dry-run"]));
+      return 0;
+    }
+    console.error(USAGE);
+    return 1;
+  }
+
   console.error(USAGE);
   return 1;
+}
+
+/** One line per decision or story check read, or "nothing new". Shared by `desk pull` and `desk push`. */
+function printPulledSummary({ decisions, checks }) {
+  if (!decisions.length && !checks.length) { console.log("nothing new"); return; }
+  for (const d of decisions) {
+    console.log(`${d.item_id}: ${d.decision}${d.who ? ` by ${d.who}` : ""} (decided ${d.decided_at})`);
+    if (d.note) console.log(`  note: ${d.note}`);
+    if (d.answer) console.log(`  answer: ${d.answer}`);
+    if (Object.keys(d.answers || {}).length) console.log(`  answers: ${JSON.stringify(d.answers)}`);
+  }
+  for (const c of checks) {
+    console.log(`${c.item_id}: ${c.posted ? "posted" : "not posted"}${c.who ? ` by ${c.who}` : ""} (checked ${c.checked_at})`);
+  }
+}
+
+/** `desk pull`. */
+function printDeskPull(result) {
+  printPulledSummary(result);
+}
+
+/** `desk push`: the full pull summary (push always pulls first), plus any skips, resets, and counts. */
+function printDeskPush({ uploads, deletes, rows, pulled, skipped, reset }, dryRun) {
+  if (dryRun) {
+    console.log(`would upload ${uploads.length} file(s), would delete ${deletes.length} object(s), would push ${rows} row(s)`);
+    return;
+  }
+  for (const id of skipped) console.log(`${id}: already settled on the desk (approved or answered); apply it locally (post status approved, or drop the ask from review/asks.json) before pushing again`);
+  printPulledSummary(pulled);
+  for (const id of reset) console.log(`${id}: content changed since the last push, decision reset to waiting`);
+  console.log(`uploaded ${uploads.length} file(s), deleted ${deletes.length} object(s), pushed ${rows} row(s)`);
 }
 
 try {

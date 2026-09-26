@@ -4,30 +4,31 @@ Read this first in a new session, then `README.md` (folder contract, commands, r
 Business context: `SOCIAL_HANDOFF.md`. Everything below is committed on branch
 `codex/training-premium-rfi` of the main repo (not pushed; Alex decides that).
 
-## FIRST TASK for the next session
+**Stories are PAUSED (Alex, 2026-09-26):** `stories/PAUSED.md` exists, so no Story is on the
+schedule or the Post Desk. Nothing was in Metricool. To resume, follow `stories/PAUSED.md`.
 
-Alex wants one artifact that is both the **Post Desk** (approve posts) and a **Stories
-checklist** (the hand-posted Instagram Stories with link stickers), and to use it going
-forward.
+## Post Desk = approvals + Stories checklist (done 2026-09-25, version 12)
 
-- Keep the SAME artifact: https://claude.ai/artifact/BwgxjJ7mbkuRGvxyHPMRd3 . From a new
-  conversation, first `Artifact action:"read"` it, then publish with `url` set to that link
-  (otherwise a new URL is created). Source: `review/index.html`; data: `review/data.json`
-  built by `node tools/review.mjs`; media published via the `files` map in `review/files.json`
-  (plus `"data.json": "review/data.json"`). It declares `capabilities: {db: {}}`.
-- Add a **Stories** view (tab or section) to the page:
-  - Every Story from `stories/SCHEDULE.md` / the table in `stories/README.md`, including
-    already-approved ones (today `review.mjs` drops approved stories from the queue; the
-    checklist needs its own list, e.g. `stories` for approval and `storyChecklist` for all
-    upcoming ones, dates >= today).
-  - Per row: date and time (10:35 AM, right after the 10:30 reel), the image (published in
-    `media/stories/`), sticker text, a Copy URL button, and a **Posted** checkbox saved in the
-    page db (e.g. collection `storyChecks`, doc id `<date>-story`, `{posted: true, at}`), so
-    Claude can read it back with ArtifactData.
-  - Highlight today's Story; flag past ones not ticked. Fri Oct 2 shows "only if
-    thrillersvr.com is live".
-  - Keep the page's look (tokens, fonts, light/dark), phone friendly.
-- Verify with one ArtifactData `list` of the new collection after publishing.
+One artifact, same URL: https://claude.ai/artifact/BwgxjJ7mbkuRGvxyHPMRd3 . From a new
+conversation, `Artifact action:"read"` it first, then publish with `url` set to that link.
+Source `review/index.html`; data `review/data.json` from `node tools/review.mjs`; media via
+the `files` map in `review/files.json` plus `"data.json": "review/data.json"`.
+Capabilities: `{db: {}, downloads: true}` (downloads = the Save image button).
+
+- Two tabs: **Approvals** (posts, stories and asks waiting on Alex) and **Stories** (the
+  checklist). The page opens on Stories when nothing waits for approval or the link ends
+  in `#stories`.
+- `review.mjs` writes `storyChecklist`: every row of `stories/SCHEDULE.md` dated today or
+  later (New York date at build time), approved or not, with time and the "(only if ...)"
+  note parsed from the When column. Rebuild and republish when a new week's Stories land.
+- Each row: date, 10:35 AM, image (tap to enlarge), sticker text, URL, Copy URL, Save
+  image, and a **Posted** checkbox. Today's row is outlined; past unticked rows say "Not
+  ticked". Today/past follow the New York clock and refresh every minute.
+- Phone copies: all ten Story PNGs (Sep 28 to Oct 9) are in Google Drive, K & A Social > Stories
+  (folder id 1Q0Yz8xmjsLz80Mo6W-jjgkt-Zh78LHBH; parent K & A Social 1SpWSxYYm9bu-TlDQMlBRd8100phqY3TD),
+  uploaded 2026-09-26 through Alex's Chrome. Add new weeks there too.
+- Ticks: page db collection `storyChecks`, doc id `<date>-story`, `{posted: true|false, at}`.
+  Read with ArtifactData `list` on `storyChecks` (was empty right after publishing).
 
 ## Where things stand (as of 2026-09-25 evening)
 
@@ -47,9 +48,9 @@ Everything from Sept 25 to Oct 9 is built, approved by Alex on the Post Desk, an
 - **Friday Oct 2:** scheduled task `thrillers-domain-check` runs Thu Oct 1 at 7 PM. If
   thrillersvr.com is live and it's the K&A-built site, and Alex says go, promote the three
   drafts (`node tools/social.mjs release --promote <folder>` prints updateScheduledPost packets;
-  send them; record with `release --promoted`). Also Alex posts that day's Story. If not live,
+  send them; record with `release --promoted`). (Stories are paused, so no Story that day.) If not live,
   the fallback is to build a replacement (the hero tutorial idea is used; plan something new).
-- Stories: hand-posted by Alex at about 10:35 on weekdays. Full list: `stories/SCHEDULE.md`.
+- Stories: PAUSED since 2026-09-26 (were hand-posted at 10:35 on weekdays; list in `stories/SCHEDULE.md`).
 
 ## Standing rules (Alex's calls; also in memory)
 
@@ -61,7 +62,7 @@ Everything from Sept 25 to Oct 9 is built, approved by Alex on the Post Desk, an
   (same-day cross-posts count once). History: `music-history.json`.
 - **Plan before produce:** a weekly plan Alex approves (`plans/<week>.md`), then briefs.
 - **One reel + one carousel per weekday**, plus a LinkedIn post (company page, Alex reposts
-  with the `repost.md` line) and a Story. Weekends: carousels. Carousels post as swipe
+  with the `repost.md` line); Stories are paused. Weekends: carousels. Carousels post as swipe
   slides on Instagram and as a slide video on Facebook (`tools/slideshow.mjs`); on
   LinkedIn as a DOCUMENT.
 - Truth: real sites, real numbers saved in `source/`; client posts only for a launch, a new
@@ -135,10 +136,10 @@ Post Desk decisions: page db `decisions/<folder or story id>` and `answers/<ask 
 
 ## Open items
 
-1. Build the Stories checklist into the Post Desk (first task above).
+1. Done: Stories checklist is in the Post Desk (see top).
 2. Friday Oct 2 Thrillers go/no-go after the Oct 1 check.
 3. Alex: set Veterans Day and Thanksgiving to normal hours in the Google Business Profile before Oct 5.
 4. Plan the week of Oct 12 (plan first; Alex approves; then build in parallel with the build brief pattern in `plans/2026-10-05-build-brief.md`).
 5. Pilot inquiries: onboarding and multi-brand tools when the first business signs.
 6. As Instagram posts publish, add SmartLink Media tiles if they don't attach automatically.
-7. Offered, not yet set up: a 10:35 weekday reminder task for Stories.
+7. Stories paused 2026-09-26; the 10:35 reminder is not needed unless they resume.

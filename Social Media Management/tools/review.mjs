@@ -6,10 +6,13 @@
 // review/data.json is what the page renders: one entry per post in
 // To Be Released/, with its captions, media paths (as published next to the
 // page), status, and the "## Questions for Alex" bullets from brief.md.
-// review/files.json maps each published media path to its source file, in the
+// review/files.json maps each published media path to its source file (relative
+// to the Social Media Management folder, wherever this runs from), in the
 // shape the Artifact tool's `files` parameter takes, so Claude can publish the
 // page and its media in one call. Alex's decisions live in the page's db, not
 // here; Claude reads them back and applies them with the normal commands.
+// data.json also carries storyChecklist (every Story dated today or later); the
+// page saves Alex's Posted ticks to its db collection storyChecks/<date>-story.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -93,7 +96,7 @@ for (const name of fs.readdirSync(QUEUE).sort()) {
     // size limits are well under a full-quality reel set. The posted file is
     // still the one in media/.
     const shown = entry.role === "video" ? proxy(src, name) : src;
-    files[published] = path.relative(process.cwd(), shown).split(path.sep).join("/");
+    files[published] = path.relative(ROOT, shown).split(path.sep).join("/");
     media.push({ src: published, role: entry.role, alt: entry.alt || "", platforms: entry.platforms || null });
   }
   const date = m[1];
@@ -130,8 +133,11 @@ for (const name of fs.readdirSync(QUEUE).sort()) {
   });
 }
 
+// stories/PAUSED.md turns the hand-posted Stories off: none go to the desk at all.
+const storiesPaused = fs.existsSync(path.join(STORIES, "PAUSED.md"));
+
 const stories = [];
-if (fs.existsSync(STORIES)) {
+if (fs.existsSync(STORIES) && !storiesPaused) {
   const guide = read(path.join(STORIES, "README.md"));
   // stories/approved.json lists story ids Alex already approved; they drop off the desk.
   const done = new Set(JSON.parse(read(path.join(STORIES, "approved.json")) || "[]"));
@@ -139,7 +145,7 @@ if (fs.existsSync(STORIES)) {
     const s = /^(\d{4}-\d{2}-\d{2})-story\.png$/.exec(f);
     if (!s || done.has(`${s[1]}-story`)) continue;
     const published = `media/stories/${f}`;
-    files[published] = path.relative(process.cwd(), path.join(STORIES, f)).split(path.sep).join("/");
+    files[published] = path.relative(ROOT, path.join(STORIES, f)).split(path.sep).join("/");
     // stories/README.md has one table row per day: | date | image | sticker text | sticker URL |
     const row = guide.split(/\r?\n/).find((l) => l.includes(f)) || "";
     const cells = row.split("|").map((c) => c.trim());
@@ -148,12 +154,43 @@ if (fs.existsSync(STORIES)) {
   }
 }
 
+// The Stories checklist lists every upcoming Story, approved or not, so Alex can
+// tick each one off as he posts it by hand. stories/SCHEDULE.md has one row per day:
+// | When | Image | Sticker text | Sticker URL |, where When reads like
+// "Fri Oct 2, 10:35 AM (only if thrillersvr.com is live)".
+const storyChecklist = [];
+if (fs.existsSync(STORIES) && !storiesPaused) {
+  const schedule = read(path.join(STORIES, "SCHEDULE.md"));
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" });
+  for (const line of schedule.split(/\r?\n/)) {
+    const s = /(\d{4}-\d{2}-\d{2})-story\.png/.exec(line);
+    if (!s || s[1] < today) continue;
+    const f = `${s[1]}-story.png`;
+    if (!fs.existsSync(path.join(STORIES, f))) continue;
+    const cells = line.split("|").map((c) => c.trim());
+    const t = /(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(cells[1] || "");
+    const time = t ? `${String((+t[1] % 12) + (/pm/i.test(t[3]) ? 12 : 0)).padStart(2, "0")}:${t[2]}` : "10:35";
+    const cond = /\(([^)]+)\)/.exec(cells[1] || "");
+    const published = `media/stories/${f}`;
+    files[published] = path.relative(ROOT, path.join(STORIES, f)).split(path.sep).join("/");
+    storyChecklist.push({
+      id: `${s[1]}-story`,
+      date: s[1],
+      time,
+      condition: cond ? cond[1][0].toUpperCase() + cond[1].slice(1) : "",
+      src: published,
+      stickerText: cells[3] || "",
+      stickerUrl: (line.match(/https:\/\/ka-performancefl\.com\S*/) || [""])[0],
+    });
+  }
+}
+
 const asks = JSON.parse(read(path.join(ROOT, "review", "asks.json")) || "[]");
 
 fs.mkdirSync(OUT, { recursive: true });
 fs.writeFileSync(
   path.join(OUT, "data.json"),
-  JSON.stringify({ builtAt: new Date().toISOString(), posts, stories, asks }, null, 2),
+  JSON.stringify({ builtAt: new Date().toISOString(), posts, stories, storyChecklist, storiesPaused, asks }, null, 2),
 );
 fs.writeFileSync(path.join(OUT, "files.json"), JSON.stringify(files, null, 2));
-console.log(`${posts.length} posts, ${stories.length} stories, ${Object.keys(files).length} media files`);
+console.log(`${posts.length} posts, ${storiesPaused ? "Stories paused (stories/PAUSED.md)" : `${stories.length} stories, ${storyChecklist.length} on the Stories checklist`}, ${Object.keys(files).length} media files`);

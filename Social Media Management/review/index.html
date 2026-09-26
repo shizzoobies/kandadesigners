@@ -28,6 +28,7 @@
   --on-rust:#12110F;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);margin:0}
 button,textarea,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
@@ -108,6 +109,53 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);padding:10px 16px;font-weight:600;z-index:10}
 .empty{color:var(--muted)}
 
+.views{display:flex;gap:0;margin-top:14px;border-bottom:1.5px solid var(--line)}
+.views button{background:transparent;border:0;border-bottom:3px solid transparent;margin-bottom:-1.5px;padding:10px 16px 10px 0;margin-right:20px;cursor:pointer;font:700 17px/1.2 var(--display);color:var(--muted)}
+.views button b{font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;margin-left:6px;color:var(--muted)}
+.views button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--rust)}
+.done-note{background:var(--surface);border:1px solid var(--line);padding:20px;max-width:60ch}
+.done-note p{margin:0 0 8px}
+
+.stories{margin-top:20px;display:flex;flex-direction:column;gap:14px;max-width:900px}
+.howto{background:var(--surface);border:1px solid var(--line);padding:12px 16px;font-size:15px}
+.howto summary{cursor:pointer;font-weight:700}
+.howto ol{margin:10px 0 4px;padding-left:22px;display:grid;gap:4px}
+.slist{display:flex;flex-direction:column;gap:10px}
+.shead{font:700 12px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:12px 0 0}
+.srow{display:grid;grid-template-columns:92px minmax(0,1fr) auto;gap:10px 16px;align-items:start;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--line);padding:12px 16px 12px 12px}
+.srow.today{border-left-color:var(--rust);box-shadow:inset 0 0 0 1px var(--rust)}
+.srow.missed{border-left-color:var(--wait);background:var(--wait-soft)}
+.srow.posted{border-left-color:var(--ok)}
+.srow.posted .thumb img{opacity:.55}
+.thumb{padding:0;border:0;background:var(--teal);cursor:zoom-in;display:block;width:92px}
+.thumb img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover}
+.sinfo{min-width:0;display:flex;flex-direction:column;gap:6px}
+.swhen{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.swhen strong{font:700 19px/1.2 var(--display)}
+.swhen span{color:var(--muted);font-variant-numeric:tabular-nums}
+.flag{font:700 11px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid currentColor;padding:4px 6px}
+.flag.today{color:var(--rust)} .flag.missed{color:var(--wait)} .flag.posted{color:var(--ok)}
+.cond{margin:0;font-weight:700;color:var(--wait)}
+.stext{margin:0}
+.stext span{color:var(--muted);font-size:13px;margin-right:6px}
+.surl{font-size:13px;color:var(--muted);overflow-wrap:anywhere;margin:0}
+.sacts{display:flex;flex-wrap:wrap;gap:8px}
+.sacts .copy{padding:6px 12px}
+.posted-box{display:flex;align-items:center;gap:10px;font-weight:700;cursor:pointer;padding:10px 14px;border:2px solid var(--line);background:var(--surface);min-height:48px;white-space:nowrap}
+.posted-box input{width:22px;height:22px;margin:0;accent-color:var(--ok);cursor:pointer}
+.posted-box.on{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.posted-at{display:block;font-weight:400;font-size:12px;color:var(--muted)}
+dialog.zoom{border:0;padding:0;background:transparent;max-width:min(420px,92vw)}
+dialog.zoom::backdrop{background:rgba(18,17,15,.8)}
+dialog.zoom img{display:block;width:100%;max-height:82vh;object-fit:contain;background:#000}
+dialog.zoom .zbar{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
+
+@media (max-width:600px){
+  .srow{grid-template-columns:76px minmax(0,1fr)}
+  .thumb{width:76px}
+  .posted-box{grid-column:1/-1;justify-content:center}
+}
+
 @media (max-width:860px){
   .layout{grid-template-columns:1fr}
   nav.list{position:static;max-height:none}
@@ -123,19 +171,52 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
 <div class="wrap">
   <header class="top">
     <div class="brand"><h1>Post Desk</h1><span id="week">K&amp;A Performance social queue</span></div>
-    <div class="tally" aria-live="polite">
+    <div class="tally" id="postTally" aria-live="polite">
       <div class="w"><b id="nWait">0</b>waiting on you</div>
       <div class="a"><b id="nOk">0</b>approved</div>
       <div class="c"><b id="nFix">0</b>changes asked</div>
     </div>
+    <div class="tally" id="storyTally" aria-live="polite" hidden>
+      <div class="c"><b id="sToday">0</b>due today</div>
+      <div class="w"><b id="sMissed">0</b>not ticked</div>
+      <div class="a"><b id="sDone">0</b>posted</div>
+    </div>
     <div class="conn" id="conn">Connecting to saved decisions…</div>
   </header>
 
-  <div class="layout">
-    <nav class="list" id="list" aria-label="Posts"></nav>
-    <main class="detail" id="detail"><p class="empty">Loading the queue…</p></main>
+  <div class="views" role="tablist" aria-label="Desk sections">
+    <button role="tab" id="tabPosts" aria-selected="true" aria-controls="postsView" data-go="posts">Approvals<b id="cPosts"></b></button>
+    <button role="tab" id="tabStories" aria-selected="false" aria-controls="storiesView" data-go="stories">Stories<b id="cStories"></b></button>
   </div>
+
+  <section id="postsView" role="tabpanel" aria-labelledby="tabPosts">
+    <div class="layout">
+      <nav class="list" id="list" aria-label="Posts"></nav>
+      <main class="detail" id="detail"><p class="empty">Loading the queue…</p></main>
+    </div>
+  </section>
+
+  <section id="storiesView" role="tabpanel" aria-labelledby="tabStories" hidden>
+    <div class="stories">
+      <details class="howto">
+        <summary>How to post a Story with a link sticker</summary>
+        <ol>
+          <li>Save the day's image to your phone (Save image, below).</li>
+          <li>Instagram, tap +, then Story, and pick the image.</li>
+          <li>Tap the sticker icon, then Link, and paste the URL (Copy URL, below).</li>
+          <li>Tap "Customize sticker text" and type the sticker text.</li>
+          <li>Drag the sticker over the dashed box, then tap Your story.</li>
+          <li>Come back here and tick Posted.</li>
+        </ol>
+      </details>
+      <div class="slist" id="slist"></div>
+    </div>
+  </section>
 </div>
+<dialog class="zoom" id="zoom" aria-label="Story image">
+  <img id="zoomImg" src="" alt="">
+  <div class="zbar"><button class="btn" id="zoomSave">Save image</button><button class="btn" id="zoomClose">Close</button></div>
+</dialog>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -153,6 +234,9 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
   const decisions = {};      // id -> {decision, note, answers, at}
   const answers = {};        // ask id -> {answer, at}
   let db = null;
+  let downloads = null;
+  const checks = {};         // story id -> {posted, at}, from storyChecks
+  let view = "posts";        // "posts" (approvals) or "stories" (checklist)
   const slideIdx = {};
   const mediaView = {};
   let tab = "facebook";
@@ -181,13 +265,16 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
 
   function renderTally() {
     const acts = items.filter((i) => i.kind !== "native");
-    $("#nWait").textContent = acts.filter((i) => stateOf(i) === "waiting").length;
+    const waiting = acts.filter((i) => stateOf(i) === "waiting").length;
+    $("#nWait").textContent = waiting;
     $("#nOk").textContent = acts.filter((i) => stateOf(i) === "approved").length;
     $("#nFix").textContent = acts.filter((i) => stateOf(i) === "changes").length;
+    $("#cPosts").textContent = waiting ? waiting : "";
   }
 
   function renderList() {
     const nav = $("#list");
+    if (!items.length) { nav.innerHTML = `<p class="empty">Nothing waiting on you.</p>`; renderTally(); return; }
     let html = "", g = null;
     for (const it of items) {
       if (it.group !== g) { if (g !== null) html += "</div>"; g = it.group; html += `<div class="group"><h2>${esc(g)}</h2>`; }
@@ -250,6 +337,11 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
   function renderDetail() {
     const it = items.find((i) => i.id === current);
     const el = $("#detail");
+    if (!it && !items.length) {
+      el.innerHTML = `<div class="done-note"><p><b>Nothing waiting on you.</b></p>
+        <p>New posts show up here after Claude builds them.${storyList().length ? " The Stories you post by hand are under Stories." : ""}</p></div>`;
+      return;
+    }
     if (!it) { el.innerHTML = `<p class="empty">Pick a post on the left.</p>`; return; }
     const back = `<button class="btn back" id="back">All posts</button>`;
 
@@ -390,6 +482,123 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
     if (await write(`answers/${id}`, body)) toast(text ? "Answer saved" : "Answer cleared");
   }
 
+  // ---- Stories checklist: every upcoming Story, ticked off as Alex posts it by hand.
+  // "Today" and "missed" follow the clock in Gainesville, wherever the page is opened.
+  function nyNow() {
+    const p = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+      .formatToParts(new Date()).map((x) => [x.type, x.value]));
+    return { date: `${p.year}-${p.month}-${p.day}`, time: `${p.hour}:${p.minute}` };
+  }
+  function storyState(s, now = nyNow()) {
+    if (checks[s.id]?.posted) return "posted";
+    if (s.date < now.date) return "missed";
+    return s.date === now.date ? "today" : "upcoming";
+  }
+  const weekOf = (d) => { const t = new Date(d + "T12:00:00"); t.setDate(t.getDate() - ((t.getDay() + 6) % 7)); return t.toLocaleDateString("en-US", { month: "short", day: "numeric" }); };
+  const storyList = () => data.storyChecklist || [];
+
+  function storyRow(s, now) {
+    const st = storyState(s, now);
+    const c = checks[s.id] || {};
+    const flag = st === "posted" ? `<span class="flag posted">Posted</span>`
+      : st === "missed" ? `<span class="flag missed">Not ticked</span>`
+      : st === "today" ? `<span class="flag today">${now.time >= s.time ? "Due now" : "Today"}</span>` : "";
+    const at = c.posted && c.at ? new Date(c.at).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "";
+    return `<article class="srow ${st}" aria-label="Story for ${esc(fmtDay(s.date))}">
+      <button class="thumb" data-zoom="${esc(s.id)}" aria-label="Open the Story image for ${esc(fmtDay(s.date))}"><img src="${esc(s.src)}" alt="" loading="lazy"></button>
+      <div class="sinfo">
+        <div class="swhen"><strong>${esc(fmtDay(s.date))}</strong><span>${esc(fmtTime(s.time))}, after the reel</span>${flag}</div>
+        ${s.condition ? `<p class="cond">${esc(s.condition)}</p>` : ""}
+        <p class="stext"><span>Sticker text</span>${esc(s.stickerText)}</p>
+        <p class="surl" id="url-${esc(s.id)}">${esc(s.stickerUrl)}</p>
+        <div class="sacts"><button class="copy" data-copy="${esc(s.id)}">Copy URL</button>${downloads ? `<button class="copy" data-save="${esc(s.id)}">Save image</button>` : ""}</div>
+      </div>
+      <label class="posted-box ${c.posted ? "on" : ""}" for="chk-${esc(s.id)}"><input type="checkbox" id="chk-${esc(s.id)}" data-check="${esc(s.id)}" ${c.posted ? "checked" : ""}>
+        <span>Posted${at ? `<span class="posted-at">${esc(at)}</span>` : ""}</span></label>
+    </article>`;
+  }
+
+  function renderStories() {
+    const list = storyList(), now = nyNow();
+    const count = (k) => list.filter((s) => storyState(s, now) === k).length;
+    const today = count("today"), missed = count("missed");
+    $("#sToday").textContent = today;
+    $("#sMissed").textContent = missed;
+    $("#sDone").textContent = count("posted");
+    $("#cStories").textContent = today + missed ? today + missed : "";
+    if (view !== "stories") return;
+    const focused = document.activeElement?.id;
+    let html = "", wk = null;
+    for (const s of list) {
+      const w = weekOf(s.date);
+      if (w !== wk) { wk = w; html += `<h2 class="shead">Week of ${esc(w)}</h2>`; }
+      html += storyRow(s, now);
+    }
+    $("#slist").innerHTML = html || (data.storiesPaused
+      ? `<div class="done-note"><p><b>Stories are paused.</b></p><p>Nothing to post by hand for now. Ask Claude to turn them back on when you have time for them.</p></div>`
+      : `<p class="empty">No Stories on the schedule. Ask Claude to rebuild the desk after the next week is planned.</p>`);
+    $(".howto").hidden = !html;
+    if (focused) document.getElementById(focused)?.focus();
+  }
+
+  async function setPosted(id, on) {
+    const prev = checks[id];
+    const body = { posted: on, at: new Date().toISOString() };
+    checks[id] = body; renderStories();
+    if (await write(`storyChecks/${id}`, body)) toast(on ? "Marked posted" : "Unticked");
+    else { if (prev) checks[id] = prev; else delete checks[id]; renderStories(); }
+  }
+
+  async function saveImage(s) {
+    if (!downloads) return;
+    try {
+      const blob = await (await fetch(s.src)).blob();
+      await downloads.save({ filename: `${s.id}.png`, data: blob });
+      toast("Image saved");
+    } catch (e) {
+      if (e?.code === "declined") return;
+      if (["unavailable", "not_granted", "capability_disabled", "capability_removed"].includes(e?.code)) {
+        downloads = null; renderStories(); toast("Saving is off in this view. Press and hold the image instead.");
+      } else toast(e?.code === "rate_limited" ? "One save at a time, try again in a moment" : "Could not save the image, try again");
+    }
+  }
+
+  function zoom(s) {
+    const d = $("#zoom");
+    $("#zoomImg").src = s.src;
+    $("#zoomImg").alt = `Story image for ${fmtDay(s.date)}. Sticker: ${s.stickerText}`;
+    $("#zoomSave").hidden = !downloads;
+    $("#zoomSave").onclick = () => saveImage(s);
+    d.showModal();
+  }
+  $("#zoomClose").onclick = () => $("#zoom").close();
+  $("#zoom").addEventListener("click", (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+
+  $("#slist").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-copy],[data-save],[data-zoom]");
+    if (!b) return;
+    const s = storyList().find((x) => x.id === (b.dataset.copy || b.dataset.save || b.dataset.zoom));
+    if (!s) return;
+    if (b.dataset.copy) copyText(s.stickerUrl, b, `#url-${CSS.escape(s.id)}`);
+    else if (b.dataset.save) saveImage(s);
+    else zoom(s);
+  });
+  $("#slist").addEventListener("change", (e) => { const c = e.target.closest("[data-check]"); if (c) setPosted(c.dataset.check, c.checked); });
+
+  function setView(v) {
+    view = v;
+    $("#postsView").hidden = v !== "posts";
+    $("#storiesView").hidden = v !== "stories";
+    $("#postTally").hidden = v !== "posts";
+    $("#storyTally").hidden = v !== "stories";
+    $("#tabPosts").setAttribute("aria-selected", v === "posts");
+    $("#tabStories").setAttribute("aria-selected", v === "stories");
+    try { localStorage.setItem("desk-view", v); } catch {}
+    renderStories();
+  }
+  document.querySelector(".views").addEventListener("click", (e) => { const b = e.target.closest("[data-go]"); if (b) setView(b.dataset.go); });
+  setInterval(() => { if (!document.activeElement?.matches("textarea")) renderStories(); }, 60000);
+
   function select(id, scroll) {
     current = id;
     document.body.classList.add("viewing");
@@ -405,7 +614,7 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
 
   $("#list").addEventListener("click", (e) => { const r = e.target.closest(".row"); if (r) select(r.dataset.id, window.innerWidth <= 860); });
   document.addEventListener("keydown", (e) => {
-    if (e.target.matches("textarea,input")) return;
+    if (e.target.matches("textarea,input") || view !== "posts") return;
     const i = items.findIndex((x) => x.id === current);
     if (e.key === "j" || e.key === "ArrowDown") { e.preventDefault(); if (i < items.length - 1) select(items[i + 1].id); }
     else if (e.key === "k" || e.key === "ArrowUp") { e.preventDefault(); if (i > 0) select(items[i - 1].id); }
@@ -419,7 +628,12 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
     const conn = $("#conn");
     try { db = window.claude?.use ? await window.claude.use("db") : null; } catch { db = null; }
     if (!db) { conn.textContent = "Saved decisions are not reachable in this view, so choices here will not reach Claude. Open the page on claude.ai."; conn.classList.add("bad"); return; }
-    conn.textContent = "Decisions save as you make them. Claude reads them from here.";
+    conn.textContent = "Decisions and Story ticks save as you make them. Claude reads them from here.";
+    db.collection("storyChecks").onSnapshot((snap) => {
+      for (const d of snap.docs) checks[d.id] = { ...d.data() };
+      for (const c of snap.docChanges()) if (c.type === "removed") delete checks[c.doc.id];
+      renderStories();
+    }, () => { conn.textContent = "Lost the connection to saved Story ticks. Reload the page."; conn.classList.add("bad"); });
     db.collection("decisions").onSnapshot((snap) => {
       for (const d of snap.docs) decisions[d.id] = { ...d.data() };
       for (const c of snap.docChanges()) if (c.type === "removed") delete decisions[c.doc.id];
@@ -439,7 +653,12 @@ textarea:focus,input[type=text]:focus{border-color:var(--ink)}
     const first = items.find((x) => stateOf(x) === "waiting" && x.kind !== "ask") || items[0];
     current = first?.id || null;
     renderList(); renderDetail();
+    // Open on Stories when the link says #stories or nothing waits for approval; else the last view used.
+    let saved = null; try { saved = localStorage.getItem("desk-view"); } catch {}
+    const hasStories = storyList().length > 0;
+    setView(location.hash === "#stories" || (hasStories && (!items.length || saved === "stories")) ? "stories" : "posts");
     connect();
+    (async () => { try { downloads = window.claude?.use ? await window.claude.use("downloads") : null; } catch { downloads = null; } if (downloads) renderStories(); })();
   }).catch(() => { $("#detail").innerHTML = `<p class="empty">The queue data did not load. Ask Claude to republish the page.</p>`; });
 })();
 </script>
