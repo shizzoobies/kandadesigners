@@ -1,69 +1,144 @@
-# Session handoff: social pipeline, written 2026-09-25 (early morning), final
+# Session handoff: social pipeline, written 2026-09-25 (evening)
 
-Read this first in a new session. It says where the week of Sept 28 stands, what is
-still running, and what only Alex can decide. Business context: `SOCIAL_HANDOFF.md`.
-Folder contract and commands: `README.md`. Plan for the week: `plans/2026-09-28.md`.
+Read this first in a new session, then `README.md` (folder contract, commands, rules).
+Business context: `SOCIAL_HANDOFF.md`. Everything below is committed on branch
+`codex/training-premium-rfi` of the main repo (not pushed; Alex decides that).
 
-## The pipeline, in one paragraph
+## FIRST TASK for the next session
 
-Every post is a day folder under `To Be Released/` with a `brief.md` (the plan),
-`post.json` (the manifest), `facebook.md`, `instagram.md`, and `media/`. Alex sets
-`"status": "approved"`. Then `upload` pushes media to R2
-(`https://media.ka-performancefl.com/...`), `release --draft` prints Metricool packets
-that Claude sends through the Metricool MCP (`createScheduledPost`, brand 7076479),
-`release --record` writes the ids back, Alex checks the previews in Metricool, and
-`release --promote` plus `updateScheduledPost` turn the drafts into live posts.
-`reconcile` archives folders once Metricool no longer lists them. Metricool is on a
-plan with no REST API, so the Metricool calls always go through Claude in a session.
-The Cloudflare token is the user-scope `CLOUDFLARE_API_TOKEN`; the tools read it at run
-time. Tests: `node node_modules/vitest/vitest.mjs run` from `tools/` (124 pass).
+Alex wants one artifact that is both the **Post Desk** (approve posts) and a **Stories
+checklist** (the hand-posted Instagram Stories with link stickers), and to use it going
+forward.
 
-## Where each day stands
+- Keep the SAME artifact: https://claude.ai/artifact/BwgxjJ7mbkuRGvxyHPMRd3 . From a new
+  conversation, first `Artifact action:"read"` it, then publish with `url` set to that link
+  (otherwise a new URL is created). Source: `review/index.html`; data: `review/data.json`
+  built by `node tools/review.mjs`; media published via the `files` map in `review/files.json`
+  (plus `"data.json": "review/data.json"`). It declares `capabilities: {db: {}}`.
+- Add a **Stories** view (tab or section) to the page:
+  - Every Story from `stories/SCHEDULE.md` / the table in `stories/README.md`, including
+    already-approved ones (today `review.mjs` drops approved stories from the queue; the
+    checklist needs its own list, e.g. `stories` for approval and `storyChecklist` for all
+    upcoming ones, dates >= today).
+  - Per row: date and time (10:35 AM, right after the 10:30 reel), the image (published in
+    `media/stories/`), sticker text, a Copy URL button, and a **Posted** checkbox saved in the
+    page db (e.g. collection `storyChecks`, doc id `<date>-story`, `{posted: true, at}`), so
+    Claude can read it back with ArtifactData.
+  - Highlight today's Story; flag past ones not ticked. Fri Oct 2 shows "only if
+    thrillersvr.com is live".
+  - Keep the page's look (tokens, fonts, light/dark), phone friendly.
+- Verify with one ArtifactData `list` of the new collection after publishing.
 
-| Day | Post | Status | What is left |
-|---|---|---|---|
-| Fri 09-25 | Job aids video | native (scheduled in Facebook by Alex) | nothing |
-| Sat 09-26 | Bobbie Connor highlight | native | nothing |
-| Mon 09-28 | Ellenton Family Practice Direct in the top three (incognito search + SEO end card, 14s, music C) | **scheduled as Metricool drafts** for 10:30 AM, FB id 381617380, IG id 381617409 | Alex previews in Metricool, then Claude runs `release --promote 2026-09-28`, sends both `updateScheduledPost` packets, records with `release --promoted` |
-| Tue 09-29 | Contrast is not a vibe (v3 narration, music B, 16.9s) | planned, media and captions in place, valid | Alex picks a voice take (see below). If he picks A or C the reel is re-rendered with that take. Then approve, upload, release |
-| Wed 09-30 | One screen, one decision (v3 narration, music C looped, 23.0s with the trimmed script; the 600-frame cap does not fit it by 3s) | planned, media and captions in place, valid, reel sent to Alex | Alex approves, then upload and release. Instagram caption carries the plain URL because the voice says "link in the caption" |
-| Thu 10-01 | Give the AI the brief, not the task (v3 narration, music A, 19.8s with the trimmed script; the two outputs on screen are real Claude outputs saved in source/prompt-run.md) | planned, media and captions in place, valid, reel sent to Alex | Alex approves, then upload and release. Instagram caption carries the plain URL |
-| Fri 10-02 | Thrillers Mobile VR launch (15s, music A, captures from the demo) | planned, media and captions in place, valid, captions carry `[REAL DOMAIN]` | waits on Wix releasing the domain; replace the placeholder, confirm the site is live, decide tagging, then approve |
+## Where things stand (as of 2026-09-25 evening)
 
-Run `node tools/social.mjs calendar` and `node tools/social.mjs validate` to see the live state.
+Everything from Sept 25 to Oct 9 is built, approved by Alex on the Post Desk, and
+**scheduled LIVE in Metricool**, except Friday Oct 2.
 
-## Decisions only Alex can make
+| Dates | What | State |
+|---|---|---|
+| Fri 9/25 | 6 questions before you hire a web designer (IG/FB 6:30 PM, LinkedIn 7 PM) | live |
+| Sat 9/26 | Phone test (LI 10 AM, IG/FB 4 PM); **free social pilot announcement** (IG/FB 12 PM) | live |
+| Sun 9/27 | Plan your week with AI (LI 5 PM, IG/FB 6 PM) | live |
+| Mon 9/28 to Thu 10/1 | Each day: LinkedIn 8 AM, reel 10:30, carousel 4 PM (Thu 6 PM); Mon also the pilot on LinkedIn 12 PM | live |
+| **Fri 10/2** | Thrillers Mobile VR launch: reel, carousel, LinkedIn (`2026-10-02`, `-2`, `-3`) | **Metricool DRAFTS**, waiting on thrillersvr.com |
+| Sat 10/3 to Fri 10/9 | Week of Oct 5 (plan `plans/2026-10-05.md`): 29 posts | live |
 
-1. **Contrast voice take.** Three mixes were sent: `D:\kap-reel\out\candidates\contrast-take-a-mix.mp3` (Sarah, understated), `-b-` (Sarah, brighter), `-c-` (Juniper `aMSt68OGf4xUZAnLpTU8`, grounded, ranked first of twelve). Write-up: `README-takes.md` in that folder. Whichever he picks becomes the voice for Wednesday and Thursday too, which then get regenerated on it (about 1,700 credits each).
-2. **Monday previews** in Metricool's calendar (Sept 28, 10:30 AM), then say promote.
-3. **Wednesday and Thursday scripts** were trimmed to fit 20 seconds at Alex's choice on 09-24; the trimmed lines are in each folder's `brief.md`.
-4. **Friday:** the Thrillers domain, whether the launch line "Thrillers Mobile VR is live." holds on Friday morning, and whether Thrillers can be tagged. Fallback is the hero tutorial (needs the same voice redo first).
-5. **Music disclosure:** Friday's captions say the music is AI generated. The September launch reels did not disclose music; keep or drop for consistency.
+- Native Facebook posts (scheduled by Alex outside Metricool): 9/25 job aids video, 9/26 Bobbie Connor.
+- **Friday Oct 2:** scheduled task `thrillers-domain-check` runs Thu Oct 1 at 7 PM. If
+  thrillersvr.com is live and it's the K&A-built site, and Alex says go, promote the three
+  drafts (`node tools/social.mjs release --promote <folder>` prints updateScheduledPost packets;
+  send them; record with `release --promoted`). Also Alex posts that day's Story. If not live,
+  the fallback is to build a replacement (the hero tutorial idea is used; plan something new).
+- Stories: hand-posted by Alex at about 10:35 on weekdays. Full list: `stories/SCHEDULE.md`.
 
-## Agents that were still running when this was written
+## Standing rules (Alex's calls; also in memory)
 
-- `thu-reel`: rendering Thursday with the trimmed script into `To Be Released/2026-10-01/media/`.
-Both commit only their own files. If a new session finds their media in place and `validate` clean, they finished. Frames land in `D:\kap-reel\out\candidates\`.
+- **Every frame drives traffic:** K&A logo and ka-performancefl.com on every frame and
+  slide; hook first; CTA; client footage always inside a K&A frame.
+- **No narration.** Content works muted; on-screen text plus a music bed.
+- **No music track repeats within 30 days.** Each video gets a new ElevenLabs track
+  (`D:\kap-reel\scripts\social\music-week-0928.ts` pattern); `validate` enforces it
+  (same-day cross-posts count once). History: `music-history.json`.
+- **Plan before produce:** a weekly plan Alex approves (`plans/<week>.md`), then briefs.
+- **One reel + one carousel per weekday**, plus a LinkedIn post (company page, Alex reposts
+  with the `repost.md` line) and a Story. Weekends: carousels. Carousels post as swipe
+  slides on Instagram and as a slide video on Facebook (`tools/slideshow.mjs`); on
+  LinkedIn as a DOCUMENT.
+- Truth: real sites, real numbers saved in `source/`; client posts only for a launch, a new
+  feature or a real result; no AI vendor/product names; no promised results.
+- AI posts link to **https://ka-performancefl.com/ai-launch/** (paid 90-Day AI Launch; never
+  "free lessons"). /training/ai is coding-tool lessons, not the business-owner link.
+- Facebook captions: tagged link on line 2 (`utm_source=facebook&utm_medium=social&utm_campaign=<folder>`).
+  Instagram: "Link in bio" (the bio is the SmartLink below). LinkedIn: link in first comment.
+- No em dashes, US English.
+- **Nothing goes live without Alex's approval on the Post Desk.** Switching drafts to live
+  must be done by Claude in the main session after Alex says so: subagents get blocked by
+  the auto-mode classifier ("Real-World Transactions"). Subagents can create posts and
+  update drafts.
 
-## Reel project notes (`D:\kap-reel`, a junction; the real path has an ampersand)
+## Free social media pilot (offer, posted Sat 9/26)
 
-- Invoke tools directly: `node node_modules/@remotion/cli/remotion-cli.js ...` and `node node_modules/tsx/dist/cli.mjs scripts/...`. `npx` breaks on this path even through the junction.
-- New today: `eleven_v3` support in `scripts/voice.ts` (`--model eleven_v3`, tags stripped from captions), `scripts/voice-takes.ts` (multi-generation takes), `scripts/deliver-tutorial-short.ts`, `scripts/launch/thrillers-*.ts`, compositions `EndCardSEO`, `LaunchThrillersVertical`, tutorials `onescreen` and `brief` under `src/tutorial/`, music candidates `out/candidates/music-i-{a,b,c}.mp3` (indie pop, licensed on the ElevenLabs Pro plan, see `LICENSING.md`).
-- The timeline lets a short cut run past 450 frames up to 600. Speed is never changed to fit; words are trimmed with Alex's ok instead.
-- `git status` may show `src/Root.tsx` and `config/voice.json` modified while an agent is mid-run; those are its pending lines.
+Plan: `plans/2026-09-social-pilot.md`. 3 free months for 3 businesses in Gainesville +
+Alachua County; 3 posts/week on FB + IG, a monthly plan (their ONLY approval; K&A checks
+every post internally), a monthly report; then $600/month locked for pilot clients, no
+contract. They apply by calling Alex (904-210-1071) or messaging K&A. When a spot fills:
+a "2 spots left" post. When the first client signs: a Metricool brand per client (Starter
+allows 5) and multi-brand support in the tools (today they are single-brand).
 
-## Spend today (ElevenLabs credits, from per-request headers)
+## Accounts and services
 
-Candidates 2,185; Tuesday regeneration 63; contrast takes and audition about 8,866; Wednesday about 2,180; Thursday about 2,720 (per-request character counts; the account meter reads higher because runs overlapped). Alex said credits are not the constraint; quality first.
+- Metricool: **Starter** plan (no REST API), brand/blogId `7076479`, timezone America/New_York,
+  via the Metricool MCP connector. `getScheduledPosts` fails on wide windows: query one day
+  at a time. Ids change on every update (uuid stays); post.json holds the current ones.
+  The connector had a ~1 hour outage on 9/25 (every call errored); it came back by itself.
+- LinkedIn: K&A company page connected (`urn:li:organization:129934379`).
+- Instagram @kaperformancefl; bio link = Metricool SmartLink https://t.mtrbio.com/kaperformancefl
+  (buttons: website, 90-Day AI Launch, training samples, Call Alex; all tagged utm_medium=smartlink).
+- Facebook page: https://www.facebook.com/profile.php?id=61592711216301
+- Media hosting: R2 bucket `ka-social` at https://media.ka-performancefl.com (`tools/social.mjs upload`).
+- Cloudflare Web Analytics: turned on by Alex 9/25. Search Console: Alex OK'd reading it in his Chrome (not done yet).
+- Claude in Chrome was blocked all day by another extension; the built-in browser pane works for public pages.
 
-## Rules that keep coming up
+## Website changes made today (live on ka-performancefl.com)
 
-- A client gets a post only for a new feature, an upgrade, or a launch.
-- Plan first: weekly plan doc, then a filled `brief.md` with `Approved: yes`, before anything is generated.
-- No em dashes anywhere. US English. "K and A" in text sent to a voice model.
-- Real sites, real results, nothing fabricated on screen. Every AI voice or visual disclosed in the caption.
-- Nothing goes live without Alex setting approved, and drafts are promoted only after he previews them.
+Deployed by pushing worktree branches to origin/main (only when Alex says so):
+- `site/tap-to-call` (D:\ka-site-tel): 904-210-1071 tap-to-call in header, phone menu,
+  footer, contact, Gainesville page, JSON-LD (`src/data/contact.js`).
+- `site/proof-and-focus` (D:\ka-site-a11y): homepage proof line "5.0 on Google, 8 reviews"
+  above the buttons (`src/data/reviews.js`), keyboard focus fixes (header scroll margin,
+  inert closed FAQs on /ai-launch/, phone menu Esc and focus trap), and a missing gsap
+  import that had kept /ai-launch/ FAQs from opening.
+- The main checkout's local `main` is behind origin/main; always branch site work from
+  origin/main in a worktree.
 
-## Memory files (Claude's, in `~/.claude/projects/D--K---A-Performance-Site/memory/`)
+## Tools (from `Social Media Management/`)
 
-`social-pipeline-2026-09.md`, `plan-before-produce.md`, `design-tastes-alex.md` (audio direction, quality over credits), `deploys-stay-manual.md`.
+```
+node tools/social.mjs validate            # all folders + the 30-day music rule
+node tools/social.mjs calendar --days 14
+node tools/social.mjs upload <folder>     # status must be "approved"
+node tools/social.mjs release <folder> [--draft]   # prints createScheduledPost packets
+node tools/social.mjs release --record <folder> --network <n> --id <id> --uuid <uuid>
+node tools/social.mjs release --promote <folder>   # draft -> live packets
+node tools/slideshow.mjs <folder> --music <mp3>    # Facebook slide video for a carousel
+node tools/review.mjs                     # Post Desk data (only posts waiting on Alex)
+```
+Tests: `node node_modules/vitest/vitest.mjs run` in `tools/` (133 pass). Reels are built in
+`D:\kap-reel` (a junction), one Remotion entry per day under `src/social/<date>/`; run tools
+with `node node_modules/...` directly, never npx (the ampersand path breaks it).
+Post Desk decisions: page db `decisions/<folder or story id>` and `answers/<ask id>`.
+
+## Scheduled tasks (run only while the Claude app is open)
+
+- `thrillers-domain-check`: Thu Oct 1, 7 PM, one time.
+- `social-weekly-check`: every Monday 8 AM; read-only report into `reports/`.
+
+## Open items
+
+1. Build the Stories checklist into the Post Desk (first task above).
+2. Friday Oct 2 Thrillers go/no-go after the Oct 1 check.
+3. Alex: set Veterans Day and Thanksgiving to normal hours in the Google Business Profile before Oct 5.
+4. Plan the week of Oct 12 (plan first; Alex approves; then build in parallel with the build brief pattern in `plans/2026-10-05-build-brief.md`).
+5. Pilot inquiries: onboarding and multi-brand tools when the first business signs.
+6. As Instagram posts publish, add SmartLink Media tiles if they don't attach automatically.
+7. Offered, not yet set up: a 10:35 weekday reminder task for Stories.
