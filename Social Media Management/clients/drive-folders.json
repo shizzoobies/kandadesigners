@@ -1,0 +1,80 @@
+{
+  "_about": "Google Drive folders per business, under K & A Social > Clients (1QqHvUjOkn7hzsah1tdkMAqtpR25CDMv6). Keys are admin site slugs. Share the business folder (both subfolders) with the owner: 'Photos and videos' is where they drop their own files, 'In review' holds posts waiting on Alex (added 2026-09-26 for the move to the full pipeline), 'Ready to post' is where approved posts are handed off. Created 2026-09-26.",
+  "davids-bbq": {
+    "name": "David's BBQ",
+    "folder": "15rGYuYl7LJQplj2Bb4ZQgQZGVEwVYutg",
+    "photos": "1wesB1hDJO1_4gPC6XGW8Pft3aWzUWYsc",
+    "inReview": "1CpeGyiZ9QBPXcbvI5q_H2flHg5ILWtQK",
+    "readyToPost": "1C2Ds2f-lVcPOgMu4ew8m2S4IlnFYHdZd"
+  },
+  "ellenton-family-practice": {
+    "name": "Ellenton Family Practice Direct",
+    "folder": "1zpaHZ9nMCRImfy4vqOVkQ4fLo14owRUW",
+    "photos": "1KFMhqj6K2m5xbC7b4AGwfY0mNKK8moua",
+    "inReview": "1vlzqL4O827Qjp4KVvI_3hvLiwE9w-zWO",
+    "readyToPost": "19VCgyr5LyOah8qVwgIG_z4Fg7PwArMc8"
+  },
+  "fdaaf": {
+    "name": "FDAAF",
+    "folder": "1XnrJ6t2IZyY1fHaVXQljf9SVW0eXv2Gz",
+    "photos": "1Dn1KEVwwatG1CkyJ3HpWlgeWAG34EMVB",
+    "inReview": "1mYXv8cGIdI6F1AANyj0MqcYAj9idNPC9",
+    "readyToPost": "1He9EEkYezLdYR7ATVtEcLmFV4-8Zr8xH"
+  },
+  "fixalways": {
+    "name": "FixAlways",
+    "folder": "1_7EvmdYS9werEZlioWpDt0OY8g37KGZE",
+    "photos": "1femM3LiYK5jgAkHvRFQ3A2RLj-2nxRBc",
+    "inReview": "1ZW4V3CwUdor0FcsXfu35kGKpNomkCnJo",
+    "readyToPost": "1Sk9mtdWw7AwlfTXg_75KVhGwcwU4zg6i"
+  },
+  "foremotion-golf": {
+    "name": "Fore Motion Golf",
+    "folder": "1dJryhvVBDsrqK14_g9T-u9sViowtYUlD",
+    "photos": "1MVgax_gUzTjqDzHox36Prts2cz7-NXWr",
+    "inReview": "1gJgg7SgErdw-J2MkWvKxTGfwXCX8c0Vr",
+    "readyToPost": "1iXkZ3-3vQ6nakxcUvoZxbQ7MdNJi0R7n"
+  },
+  "mbs-medicine": {
+    "name": "MBS Medicine",
+    "folder": "1HHKDIXJWqPPE3oLvVu3qsQZenyytJO0P",
+    "photos": "1I-6PY0fM6NfuKx4pMJFkEyhmqW4yCKEn",
+    "inReview": "1i3hHCi8OqNjpwPzOAovfZkBz4O7kGZDv",
+    "readyToPost": "18_gRXlFOZwcV5P3_9GaHlUQjt7J_1NXR"
+  },
+  "osteen-and-sons": {
+    "name": "Osteen & Sons",
+    "folder": "1BZtleC5Y6p6PG0R53OTfy2JrKIHxuyUJ",
+    "photos": "1KahfFIaXQl0-3y0AI3DKCdOLBXo6Rcm8",
+    "inReview": "1UsaUKIR5bufKsjlgwMeVxDKT0ZST7sJZ",
+    "readyToPost": "1ciNI4vmH6LxDmyWFg-ww04MuDyaitcHU"
+  },
+  "pbj-strategic-accounting": {
+    "name": "PB&J Strategic Accounting",
+    "folder": "1qLz3_WDlgMTb0GLGDHoE8cLgTQ0iPDLt",
+    "photos": "1IVEc9lYIToNYPgsFPejHFo8_XGtZwdSl",
+    "inReview": "1X7T0dk_0GBJFyvin1g5bYdIYkoNk7YKC",
+    "readyToPost": "14EtDSbc1c9iUYjg7GUIZZV0B6X5mDY2N"
+  },
+  "project-makeover": {
+    "name": "Project Makeover",
+    "folder": "175M6JaGg_eTviqc8pSwA9zd8CVRPBssk",
+    "photos": "1D7mBHUyDJk11qug-x2vA0UkgKwt__6yq",
+    "inReview": "1cWy_ECD4REum6PMYMmlTBcCrbFY-IQ-G",
+    "readyToPost": "1DiomjmXyLZ2T24SBZ5fVbSGxtcLIjLcJ"
+  },
+  "southern-legacy-contractors": {
+    "name": "Southern Legacy Contractors",
+    "folder": "1Nh0Ferbf1YXP7uaxM5kZ7ObEVeEgCZov",
+    "photos": "1aDMFTTIjB7SFNiOcXKCx5fd8JJbYY1vn",
+    "inReview": "1xNNjdjsvUc3imKmFoC6KvB8fERxlgvrR",
+    "readyToPost": "1_wPC_Ltj_Wo1kF7DJc6JYw2bbax7ky_3"
+  },
+  "synovial-marketing": {
+    "name": "Synovial Marketing",
+    "folder": "1eSTytmiWTlv7chwbDesRgPXi7R7Pawt5",
+    "photos": "1KHF2XXD1Gg6gv2rRvs8uvcntj1zE8BLI",
+    "inReview": "1zAlI1UvjzVjMiNRPOsvPb2rJ0RaF0L2f",
+    "readyToPost": "16rikRxAOmx_ZB8wyZItONt0okkijx2vc"
+  }
+}

@@ -89,9 +89,16 @@ node tools/social.mjs --client davids-bbq handoff     # approved posts -> hand-o
 ```
 
 Alex approves on the client's desk (sites list, the client's Post Desk
-button). Claude pulls, sets approved posts to `approved`, runs `handoff`, and
-uploads each hand-off folder to the client's Drive folder. `upload` and
-`release` refuse a `publish: "owner"` client: those are for Metricool.
+button). Claude pulls, sets approved posts to `approved` (and stamps
+`Approved: yes` into the brief, which `handoff` requires), runs `handoff`, and
+creates each hand-off folder in the client's Drive folder with the three text
+files. The videos are the one manual step: the Drive connector takes file
+content inline, which is fine for captions and hopeless for a 4 to 9 MB reel,
+and Drive's web UI blocks Claude in Chrome on this machine (an extension frame
+on drive.google.com). Alex drags each `video.mp4` from
+`Handed Off/<folder>/handoff/` into its Drive folder (first done Sept 27,
+2026). `upload` and `release` refuse a `publish: "owner"` client: those are
+for Metricool.
 
 ## The hand-off folder (what the owner gets)
 
@@ -120,5 +127,16 @@ the moved copy: if the rename itself fails, the original folder and its
 already stuck mid-hand-off as `handed-off` in `To Be Released/`) is skipped
 and reported, not touched.
 
-Alex shares the client's Drive folder with the owner once; new posts appear
-there. The local copy of each hand-off is in `Handed Off/<folder>/handoff/`.
+Every monitored business has a Drive folder under K & A Social > Clients, with
+three subfolders:
+- `Photos and videos`: the owner drops their own photos and video there; the
+  content chat uses them as source media.
+- `In review`: posts waiting on Alex. The admin Post Desk is where he approves;
+  this folder is the Drive-side home for drafts while the full pipeline comes
+  together (for example, when a post is built outside these tools).
+- `Ready to post`: hand-offs land there.
+
+All ids are in `clients/drive-folders.json`. Alex shares the business folder
+with the owner once; new posts appear there. If the owner has the whole
+business folder, they can also see `In review`, so anything placed there is
+visible to them before it is approved. The local copy of each hand-off is in `Handed Off/<folder>/handoff/`.
