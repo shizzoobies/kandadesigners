@@ -2,9 +2,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { TO_BE_RELEASED } from "./paths.mjs";
 
-/** One way order. native sits outside it: set by hand, never changed by a script. */
+/**
+ * One way order. `native` and `handed-off` sit outside it: each is set
+ * directly by its own command (never through assertTransition), not moved
+ * through by the normal Metricool flow.
+ */
 export const FLOW = ["planned", "generating", "ready", "approved", "scheduled", "published"];
-export const STATUSES = [...FLOW, "native"];
+export const STATUSES = [...FLOW, "native", "handed-off"];
+const TERMINAL = new Set(["native", "handed-off"]);
 
 export const DAY_NAME = /^\d{4}-\d{2}-\d{2}(-\d+)?$/;
 
@@ -30,7 +35,10 @@ export function writeManifest(dir, manifest) {
 
 export function assertTransition(from, to) {
   if (!STATUSES.includes(to)) throw new Error(`unknown status "${to}"`);
-  if (from === "native" || to === "native") throw new Error("native is set by hand and never changes");
+  if (TERMINAL.has(from) || TERMINAL.has(to)) {
+    const which = TERMINAL.has(from) ? from : to;
+    throw new Error(`${which} is set by hand and never changes`);
+  }
   if (!FLOW.includes(from)) throw new Error(`unknown status "${from}"`);
   const a = FLOW.indexOf(from);
   const b = FLOW.indexOf(to);

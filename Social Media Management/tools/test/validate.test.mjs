@@ -325,3 +325,94 @@ describe("validateFolder", () => {
     expect(validateFolder(day({ status: "planned" }, files))).toEqual([]);
   });
 });
+
+const OWNER_CLIENT = { slug: "davids-bbq", name: "David's BBQ", publish: "owner", networks: ["facebook", "instagram"] };
+
+function ownerDay(overrides = {}, files = baseFiles()) {
+  return day({
+    platforms: {
+      facebook: { type: "POST", caption: "facebook.md" },
+      instagram: { type: "POST", caption: "instagram.md" }
+    },
+    ...overrides
+  }, files);
+}
+
+describe("validateFolder for an owner-published client", () => {
+  it("accepts a plain feed post naming only the client's networks", () => {
+    expect(validateFolder(ownerDay(), { client: OWNER_CLIENT })).toEqual([]);
+  });
+
+  it("rejects a network the client does not list, even one K&A itself supports", () => {
+    const problems = validateFolder(
+      ownerDay({ platforms: { facebook: { type: "POST", caption: "facebook.md" }, linkedin: { type: "POST", caption: "facebook.md" } } }),
+      { client: OWNER_CLIENT }
+    );
+    expect(problems).toContain('2026-01-05: davids-bbq does not post to "linkedin"');
+  });
+
+  it("rejects manual: the owner posts every network by hand already", () => {
+    const problems = validateFolder(
+      ownerDay({ platforms: { facebook: { type: "POST", caption: "facebook.md", manual: true }, instagram: { type: "POST", caption: "instagram.md" } } }),
+      { client: OWNER_CLIENT }
+    );
+    expect(problems).toContain("2026-01-05: facebook must not be manual: an owner-published client posts every network by hand");
+  });
+
+  it("rejects a type outside POST/REEL, even one the network would normally allow", () => {
+    const problems = validateFolder(
+      ownerDay({ platforms: { facebook: { type: "STORY", caption: "facebook.md" }, instagram: { type: "POST", caption: "instagram.md" } } }),
+      { client: OWNER_CLIENT }
+    );
+    expect(problems).toContain('2026-01-05: facebook type "STORY" is not one of POST, REEL');
+  });
+
+  it("scopes a media entry's platforms list to the client's own networks too", () => {
+    const files = baseFiles();
+    const m = baseManifest({
+      platforms: { facebook: { type: "POST", caption: "facebook.md" }, instagram: { type: "POST", caption: "instagram.md" } },
+      media: [
+        { file: "media/reel-vertical.mp4", role: "video", origin: "kap-reel", alt: "", platforms: ["linkedin"] },
+        { file: "media/thumbnail.jpg", role: "thumbnail", origin: "kap-reel", alt: "A phone showing a website" }
+      ]
+    });
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", m, files);
+    expect(validateFolder(dir, { client: OWNER_CLIENT })).toContain('2026-01-05: media/reel-vertical.mp4 names unknown platform "linkedin"');
+  });
+
+  it("leaves a non-owner client (or no client at all) on the normal K&A rules", () => {
+    expect(validateFolder(day())).toEqual([]);
+    expect(validateFolder(day(), { client: { slug: "davids-bbq", publish: "metricool", networks: ["facebook"] } })).toEqual([]);
+  });
+
+  it("reports a missing/empty networks list, and does not fall back to K&A's own network list", () => {
+    const misconfigured = { slug: "davids-bbq", name: "David's BBQ", publish: "owner" };
+    const problems = validateFolder(ownerDay(), { client: misconfigured });
+    expect(problems).toContain("2026-01-05: davids-bbq has no networks configured");
+    // facebook and instagram are perfectly good K&A networks; a misconfigured
+    // owner client (no `networks` at all) must not silently fall back to
+    // accepting them anyway.
+    expect(problems).toContain('2026-01-05: davids-bbq does not post to "facebook"');
+    expect(problems).toContain('2026-01-05: davids-bbq does not post to "instagram"');
+  });
+
+  it("requires the post's timezone to match the client's own", () => {
+    const client = { ...OWNER_CLIENT, timezone: "America/Chicago" };
+    expect(validateFolder(ownerDay(), { client })).toContain(
+      '2026-01-05: timezone "America/New_York" does not match davids-bbq\'s timezone "America/Chicago"'
+    );
+    expect(validateFolder(ownerDay({ timezone: "America/Chicago" }), { client })).toEqual([]);
+  });
+});
+
+describe("validateFolder status handed-off", () => {
+  it("K&A (no client) rejects the handed-off status", () => {
+    expect(validateFolder(day({ status: "handed-off" }))).toContain('2026-01-05: status "handed-off" is only valid for an owner-published client');
+  });
+
+  it("an owner client may carry the handed-off status", () => {
+    const problems = validateFolder(ownerDay({ status: "handed-off" }), { client: OWNER_CLIENT });
+    expect(problems).not.toContain('2026-01-05: status "handed-off" is only valid for an owner-published client');
+  });
+});

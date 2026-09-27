@@ -1,0 +1,13 @@
+{
+  "slug": "davids-bbq",
+  "name": "David's BBQ",
+  "site": "https://davidsbbq.com",
+  "sitePath": "D:/Davis Catering/davids-catering",
+  "publish": "owner",
+  "networks": ["facebook", "instagram"],
+  "timezone": "America/New_York",
+  "handoff": {
+    "drive": "K & A Social > Clients > David's BBQ > Ready to post",
+    "driveFolderId": "1C2Ds2f-lVcPOgMu4ew8m2S4IlnFYHdZd"
+  }
+}

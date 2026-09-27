@@ -120,6 +120,14 @@ shows the next two weeks, with `gap` on weekdays that have nothing planned.
 
 Tests: from `tools/`, `node node_modules/vitest/vitest.mjs run`.
 
+## Clients
+
+A global `--client <slug>` on any command (`node tools/social.mjs --client
+davids-bbq validate`, `node tools/review.mjs --client davids-bbq`) works in
+`clients/<slug>/` instead of here. See `clients/README.md` for the contract
+(a client with `publish: "owner"` posts by hand from a hand-off folder, not
+through Metricool: `upload` and `release` refuse it, use `handoff` instead).
+
 ## Release path
 
 Once a folder is `approved`:

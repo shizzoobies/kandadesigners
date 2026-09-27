@@ -55,4 +55,13 @@ describe("music reuse", () => {
     post("2026-10-06", undefined);
     expect(musicConflicts(root)).toEqual([]);
   });
+
+  it("includes Handed Off/ (a client root's equivalent of Already Released)", () => {
+    root = makeTempRoot();
+    post("2026-10-05", "music-x");
+    makeDay(root, "2026-10-20", baseManifest({ id: "2026-10-20", date: "2026-10-20", music: "music-x", status: "handed-off" }), baseFiles(), "Handed Off");
+    expect(musicConflicts(root)).toEqual([
+      "2026-10-20: music-x was already used on 2026-10-05 (2026-10-05), 15 days earlier; tracks cannot repeat within 30 days"
+    ]);
+  });
 });

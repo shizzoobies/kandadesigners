@@ -7,7 +7,32 @@ Business context: `SOCIAL_HANDOFF.md`. Everything below is committed on branch
 **Stories are PAUSED (Alex, 2026-09-26):** `stories/PAUSED.md` exists, so no Story is on the
 schedule or the Post Desk. Nothing was in Metricool. To resume, follow `stories/PAUSED.md`.
 
-## Post Desk = approvals + Stories checklist (done 2026-09-25, version 12)
+## Post Desk in the admin (LIVE 2026-09-26, test run pending)
+
+admin.ka-performancefl.com/sites/ka-performance/social (top nav "Social"). Spec:
+`D:\ka-site-admin\docs\superpowers\specs\2026-09-26-post-desk-design.md`; branch `admin/post-desk`
+(commits 4028496 and 02e6a1d phone nav + safe Undo; live as version b50b2fdb; not on main). Push the queue with
+`node tools/social.mjs desk push`, read decisions with `desk pull` (see README). On 9/26 three
+TEST copies of the Oct 9 posts were pushed from a scratch root (the session scratchpad
+`desk-test`), not the real queue. After Alex's test run: pull and clear them by pushing an empty
+queue from that same root, then push the real queue. The artifact below stays until Alex says
+the admin desk is proven.
+
+## Client desks: David's BBQ first (built 2026-09-26)
+
+Clients live in `clients/<site slug>/` (contract: `clients/README.md`, the source of truth for
+the content chat). David's BBQ: `clients/davids-bbq/`, `publish: "owner"` (no social logins;
+the owner posts by hand), Facebook + Instagram, starter batch of about 6 posts being planned in
+a separate chat. Every command takes `--client davids-bbq`: validate, `review.mjs`, desk push/pull
+(site defaults to the client; `--site` cannot cross to another desk), and `handoff` (approved
+posts -> `Handed Off/<folder>/handoff/` with numbered media, caption .txt files and How to post).
+Upload each hand-off folder to Drive K & A Social > Clients > David's BBQ > Ready to post
+(`1C2Ds2f-lVcPOgMu4ew8m2S4IlnFYHdZd`): folder + text files via the Drive connector, media via
+Alex's Chrome (hidden file input + synthetic drop on the Drive page worked on 9/26). Alex shares
+that folder with the owner himself. `upload`, `release`, `reconcile` refuse owner clients.
+Admin: every site card has "Post Desk, N waiting"; client desks hide the Stories tab.
+
+## Post Desk artifact = approvals + Stories checklist (done 2026-09-25, version 12)
 
 One artifact, same URL: https://claude.ai/artifact/BwgxjJ7mbkuRGvxyHPMRd3 . From a new
 conversation, `Artifact action:"read"` it first, then publish with `url` set to that link.

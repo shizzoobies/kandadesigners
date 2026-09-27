@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { listAllDayDirs, readManifest } from "./manifest.mjs";
-import { TO_BE_RELEASED, ALREADY_RELEASED } from "./paths.mjs";
+import { TO_BE_RELEASED, ALREADY_RELEASED, HANDED_OFF } from "./paths.mjs";
 
 /** Alex, 2026-09-25: a music track never repeats within this many days. */
 export const MUSIC_WINDOW_DAYS = 30;
@@ -23,7 +23,9 @@ export function musicConflicts(root) {
       if (h && h.track && h.published) uses.push({ track: h.track, date: h.published, label: h.post || "history" });
     }
   }
-  for (const dir of [...listAllDayDirs(root, ALREADY_RELEASED), ...listAllDayDirs(root, TO_BE_RELEASED)]) {
+  // Already Released (K&A) and Handed Off (a client) are the same idea: where a
+  // published/handed-off post's history lives; a root only ever has one of them.
+  for (const dir of [...listAllDayDirs(root, ALREADY_RELEASED), ...listAllDayDirs(root, HANDED_OFF), ...listAllDayDirs(root, TO_BE_RELEASED)]) {
     let m;
     try { m = readManifest(dir); } catch { continue; }
     if (m && typeof m.music === "string" && m.music && m.date) {

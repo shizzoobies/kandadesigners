@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { makeTempRoot, makeDay, baseManifest } from "./helpers.mjs";
 import { buildCalendar, formatCalendar, todayInNewYork } from "../lib/calendar.mjs";
+import { HANDED_OFF } from "../lib/paths.mjs";
 
 let root;
 afterEach(() => { if (root) fs.rmSync(root, { recursive: true, force: true }); });
@@ -43,6 +44,15 @@ describe("calendar", () => {
       "2026-09-28  Mon  ready        client-spotlight    Web reel",
       "2026-10-02  Fri  gap"
     ]);
+  });
+
+  it("includes a folder already in Handed Off/ instead of showing a gap", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-10-06", baseManifest({
+      id: "2026-10-06", date: "2026-10-06", status: "handed-off", title: "Brisket Saturday"
+    }), {}, HANDED_OFF);
+    const rows = buildCalendar({ root, today: "2026-10-06", days: 1 });
+    expect(rows).toEqual([{ date: "2026-10-06", weekday: "Tue", status: "handed-off", pillar: "client-spotlight", title: "Brisket Saturday", note: "" }]);
   });
 
   it("reports today in New York as YYYY-MM-DD", () => {

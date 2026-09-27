@@ -9,8 +9,8 @@ let root;
 afterEach(() => { if (root) fs.rmSync(root, { recursive: true, force: true }); });
 
 describe("manifest", () => {
-  it("orders statuses and treats native as terminal", () => {
-    expect(STATUSES).toEqual(["planned", "generating", "ready", "approved", "scheduled", "published", "native"]);
+  it("orders statuses and treats native and handed-off as terminal", () => {
+    expect(STATUSES).toEqual(["planned", "generating", "ready", "approved", "scheduled", "published", "native", "handed-off"]);
   });
 
   it("round trips post.json with two space indent and trailing newline", () => {
@@ -33,6 +33,11 @@ describe("manifest", () => {
     expect(() => assertTransition("planned", "bogus")).toThrow(/unknown/);
   });
 
+  it("keeps handed-off terminal like native, set by hand only", () => {
+    expect(() => assertTransition("approved", "handed-off")).toThrow(/handed-off/);
+    expect(() => assertTransition("handed-off", "planned")).toThrow(/handed-off/);
+  });
+
   it("lists day folders sorted, skipping folders without post.json", () => {
     root = makeTempRoot();
     makeDay(root, "2026-01-07", baseManifest({ id: "2026-01-07", date: "2026-01-07" }));
@@ -50,7 +55,7 @@ describe("manifest", () => {
 
   it("keeps native out of the flow and rejects unknown or same-status transitions", () => {
     expect(FLOW).toEqual(["planned", "generating", "ready", "approved", "scheduled", "published"]);
-    expect(STATUSES).toEqual([...FLOW, "native"]);
+    expect(STATUSES).toEqual([...FLOW, "native", "handed-off"]);
     expect(() => assertTransition("bogus", "ready")).toThrow(/unknown status "bogus"/);
     expect(() => assertTransition("ready", "ready")).toThrow(/already ready/);
     expect(() => assertTransition("published", "native")).toThrow(/native/);

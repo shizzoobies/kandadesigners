@@ -1,5 +1,6 @@
 import path from "node:path";
 import { listDayFolders, readManifest } from "./manifest.mjs";
+import { HANDED_OFF } from "./paths.mjs";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -11,7 +12,9 @@ export function todayInNewYork(now = new Date()) {
 /** Rows for today through today + days - 1. Dates are YYYY-MM-DD strings, no timezone math. */
 export function buildCalendar({ root, today, days = 14 }) {
   const byDate = new Map();
-  for (const dir of listDayFolders(root)) {
+  // A folder already handed off to a client's owner may still fall inside the
+  // window (handed off a little early); it should not show as a gap.
+  for (const dir of [...listDayFolders(root), ...listDayFolders(root, HANDED_OFF)]) {
     const name = path.basename(dir);
     let m;
     try {

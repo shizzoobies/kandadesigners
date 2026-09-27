@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
-import { resolveRoot, dayDir } from "./lib/paths.mjs";
+import { resolveRoot, dayDir, extractClientFlag } from "./lib/paths.mjs";
 import { listAllDayDirs, listDayFolders } from "./lib/manifest.mjs";
 import { validateFolder } from "./lib/validate.mjs";
 import { musicConflicts } from "./lib/music.mjs";
@@ -11,8 +11,10 @@ import { uploadFolder } from "./lib/upload.mjs";
 import { prepareRelease, recordRelease, recordError, promotePackets, recordPromotion } from "./lib/release.mjs";
 import { reconcile, reconcileWindow } from "./lib/reconcile.mjs";
 import { pullDesk, pushDesk } from "./lib/desk.mjs";
+import { loadClient, isOwnerPublished } from "./lib/client.mjs";
+import { buildHandoff } from "./lib/handoff.mjs";
 
-const USAGE = `usage:
+const USAGE = `usage: (any command takes a global --client <slug> first, to work in clients/<slug>)
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
   node tools/social.mjs validate [<folder name>|--all]
   node tools/social.mjs calendar [--days N] [--today YYYY-MM-DD]
@@ -24,8 +26,11 @@ const USAGE = `usage:
   node tools/social.mjs release --promoted <folder name> --network facebook|instagram --id <new id>
   node tools/social.mjs reconcile --window [--now <ISO>]
   node tools/social.mjs reconcile --from <getScheduledPosts.json> [--dry-run] [--now <ISO>]
-  node tools/social.mjs desk pull [--site ka-performance]
-  node tools/social.mjs desk push [--site ka-performance] [--dry-run]`;
+  node tools/social.mjs desk pull
+  node tools/social.mjs desk push [--dry-run]
+  node tools/social.mjs --client <slug> desk pull
+  node tools/social.mjs --client <slug> desk push [--dry-run]
+  node tools/social.mjs --client <slug> handoff [<folder name>|--all] [--dry-run]`;
 
 const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals", "window"]);
 
@@ -45,9 +50,16 @@ function parse(argv, flags = FLAGS) {
 }
 
 function main() {
-  const root = resolveRoot();
-  const [command, ...rest] = process.argv.slice(2);
+  const { client: clientSlug, rest: argv } = extractClientFlag(process.argv.slice(2));
+  const root = resolveRoot(process.env, clientSlug);
+  const client = loadClient(root);
+  const [command, ...rest] = argv;
   const args = parse(rest);
+
+  if ((command === "upload" || command === "release") && isOwnerPublished(client)) {
+    console.error(`${client.slug} is published by the owner: use handoff`);
+    return 1;
+  }
 
   if (command === "plan") {
     const date = args._[0];
@@ -60,7 +72,7 @@ function main() {
       ai: { voice: Boolean(args["ai-voice"]), visuals: Boolean(args["ai-visuals"]) }
     });
     console.log(`created ${path.relative(root, dir)}`);
-    const problems = validateFolder(dir);
+    const problems = validateFolder(dir, { client });
     if (problems.length) console.log(`still to fill in:\n  ${problems.join("\n  ")}`);
     return 0;
   }
@@ -70,7 +82,7 @@ function main() {
     const dirs = target ? [dayDir(root, target)] : listAllDayDirs(root);
     let count = 0;
     for (const dir of dirs) {
-      const problems = validateFolder(dir);
+      const problems = validateFolder(dir, { client });
       count += problems.length;
       for (const p of problems) console.log(p);
     }
@@ -153,6 +165,7 @@ function main() {
   }
 
   if (command === "reconcile") {
+    if (isOwnerPublished(client)) { console.error(`${client.slug} is published by the owner: nothing to reconcile (no Metricool schedule)`); return 1; }
     if (args.now !== undefined && typeof args.now !== "string") { console.error(USAGE); return 1; }
     const now = typeof args.now === "string" ? new Date(args.now) : new Date();
     if (Number.isNaN(now.getTime())) { console.error(USAGE); return 1; }
@@ -183,7 +196,15 @@ function main() {
 
   if (command === "desk") {
     const sub = args._[0];
-    const site = args.site || "ka-performance";
+    if (client && args.site !== undefined && args.site !== client.slug) {
+      console.error(`--site must be "${client.slug}" in --client mode (got "${args.site}")`);
+      return 1;
+    }
+    if (!client && args.site !== undefined && args.site !== "ka-performance") {
+      console.error(`--site "${args.site}" is not ka-performance; pass --client <slug> for a client's own desk instead`);
+      return 1;
+    }
+    const site = client ? client.slug : (args.site || "ka-performance");
     if (sub === "pull") {
       printDeskPull(pullDesk({ site, root }));
       return 0;
@@ -194,6 +215,27 @@ function main() {
     }
     console.error(USAGE);
     return 1;
+  }
+
+  if (command === "handoff") {
+    if (!client) { console.error("handoff needs --client <slug>"); return 1; }
+    if (!isOwnerPublished(client)) { console.error(`${client.slug} is not published by the owner: handoff does not apply`); return 1; }
+    const target = args._[0];
+    const dirs = target ? [dayDir(root, target)] : listDayFolders(root);
+    let failed = 0;
+    for (const dir of dirs) {
+      try {
+        const r = buildHandoff(dir, { root, client, dryRun: Boolean(args["dry-run"]) });
+        if (r.skipped) { console.log(`${r.name}: skipped (${r.skipped})`); continue; }
+        const verb = args["dry-run"] ? "would hand off" : "handed off";
+        const recovered = r.recovered ? " (recovered: was stuck already handed-off in To Be Released)" : "";
+        console.log(`${r.name}: ${verb} -> ${path.relative(root, r.handoffPath)} (Drive folder: "${r.driveFolder}")${recovered}`);
+      } catch (err) {
+        failed++;
+        console.log(`${path.basename(dir)}: failed: ${err.message}`);
+      }
+    }
+    return failed === 0 ? 0 : 1;
   }
 
   console.error(USAGE);

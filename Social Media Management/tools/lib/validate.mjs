@@ -12,17 +12,30 @@ export const TYPES = {
   // DOCUMENT is ours: the images go up as one swipeable PDF (Metricool publishImagesAsPDF).
   linkedin: ["POST", "DOCUMENT"]
 };
+// An owner-published client's owner posts by hand from a plain file: no Story, no
+// carousel-as-document, nothing Metricool-specific - just a feed POST or a REEL.
+export const OWNER_TYPES = ["POST", "REEL"];
 export const ROLES = ["video", "image", "thumbnail", "captions"];
 export const ORIGINS = ["human", "codex", "elevenlabs", "kap-reel"];
 const EM_DASH = "\u2014";
 const TEXT_EXT = new Set([".md", ".json", ".srt"]);
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
 
-/** Every problem in one folder, or [] when it is valid. Never writes, never throws. */
-export function validateFolder(dir, { now = new Date() } = {}) {
+/**
+ * Every problem in one folder, or [] when it is valid. Never writes, never
+ * throws. Pass `client` (from lib/client.mjs's loadClient) for a client
+ * folder: for a `publish: "owner"` client, platforms may only name a network
+ * in the client's own `networks`, types are POST or REEL only, and `manual`
+ * is never set (every network there is posted by the owner by hand).
+ */
+export function validateFolder(dir, { now = new Date(), client = null } = {}) {
   const name = path.basename(dir);
   const problems = [];
   const add = (msg) => problems.push(`${name}: ${msg}`);
+  const ownerClient = Boolean(client && client.publish === "owner");
+  const clientNetworks = ownerClient ? (Array.isArray(client.networks) ? client.networks : []) : null;
+  const allowedNetworks = ownerClient ? clientNetworks : NETWORKS;
+  if (ownerClient && clientNetworks.length === 0) add(`${client.slug} has no networks configured`);
 
   if (!fs.existsSync(dir)) return [`${name}: folder does not exist`];
   if (!fs.existsSync(path.join(dir, "post.json"))) return [`${name}: post.json is missing`];
@@ -44,6 +57,7 @@ export function validateFolder(dir, { now = new Date() } = {}) {
     if (m.id !== name) add(`id "${m.id}" does not match folder name`);
     if (m.date !== String(m.id).slice(0, 10)) add(`date "${m.date}" does not match id`);
     if (!STATUSES.includes(m.status)) add(`unknown status "${m.status}"`);
+    if (!ownerClient && m.status === "handed-off") add(`status "handed-off" is only valid for an owner-published client`);
 
     if (m.status === "native") {
       if (Array.isArray(m.media) && m.media.length > 0) add("native folders carry no media");
@@ -69,6 +83,9 @@ export function validateFolder(dir, { now = new Date() } = {}) {
         tzValid = false;
         add(`timezone "${m.timezone}" is not a valid IANA zone`);
       }
+    }
+    if (tzValid && ownerClient && typeof client.timezone === "string" && m.timezone !== client.timezone) {
+      add(`timezone "${m.timezone}" does not match ${client.slug}'s timezone "${client.timezone}"`);
     }
 
     if (!TIME.test(m.time)) add(`time "${m.time}" is not HH:MM`);
@@ -122,7 +139,7 @@ export function validateFolder(dir, { now = new Date() } = {}) {
       if (readyOrLater && !fs.existsSync(path.join(dir, normalized))) add(`${entry.file} does not exist`);
       if (entry.platforms !== undefined) {
         if (!Array.isArray(entry.platforms)) add(`${entry.file} platforms must be a list of networks`);
-        else for (const p of entry.platforms) if (!NETWORKS.includes(p)) add(`${entry.file} names unknown platform "${p}"`);
+        else for (const p of entry.platforms) if (!allowedNetworks.includes(p)) add(`${entry.file} names unknown platform "${p}"`);
       }
     }
     const rolesFor = (network) => new Set(media.filter((x) => mediaFor(x, network)).map((x) => x.role));
@@ -137,14 +154,18 @@ export function validateFolder(dir, { now = new Date() } = {}) {
         add(`platforms.${network} is not an object`);
         continue;
       }
-      if (!NETWORKS.includes(network)) {
-        add(`unknown network "${network}"`);
+      if (!allowedNetworks.includes(network)) {
+        add(ownerClient ? `${client.slug} does not post to "${network}"` : `unknown network "${network}"`);
+        continue;
+      }
+      if (ownerClient && cfg.manual) {
+        add(`${network} must not be manual: an owner-published client posts every network by hand`);
         continue;
       }
       if (cfg.manual) continue;
 
       const type = cfg.type || "POST";
-      const allowedTypes = TYPES[network];
+      const allowedTypes = ownerClient ? OWNER_TYPES : TYPES[network];
       if (allowedTypes && !allowedTypes.includes(type)) {
         add(`${network} type "${type}" is not one of ${allowedTypes.join(", ")}`);
         continue;
