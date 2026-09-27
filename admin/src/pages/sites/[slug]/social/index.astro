@@ -71,7 +71,9 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, state }).replace(/</g, 
       <img id="zoomImg" src="" alt="" />
       <div class="zbar"><a class="btn" id="zoomSave" href="" download>Save image</a><button type="button" class="btn quiet" id="zoomClose">Close</button></div>
     </dialog>
-    <div class="d-toast" id="toast" role="status" hidden></div>
+    <!-- Always in the page, so the live region exists before a message lands.
+         Only the message is live; the Undo button sits beside it. -->
+    <div class="d-toast" id="toast"><span id="toastMsg" role="status"></span><button type="button" class="d-toast-undo" id="toastUndo" hidden>Undo</button></div>
   </div>
 
   <script type="application/json" id="desk-boot" set:html={boot}></script>

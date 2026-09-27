@@ -4,6 +4,7 @@
 // and after each write, and saves with JSON POSTs to /decide and /check.
 // Media src values are R2 keys ("<slug>/<item>/<file>"), served by /media.
 import { deskMediaUrl } from '../lib/desk-media-url.js';
+import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState } from '../lib/desk-nav.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -23,14 +24,57 @@ const mediaUrl = (m) => deskMediaUrl(slug, m?.src, m?.v);
 let data = { posts: [], stories: [], asks: [], storyChecklist: [], storiesPaused: false };
 let items = [];            // flat list the rail shows, in order
 let current = null;        // selected item id
-let decisions = {};        // id -> {decision, note, answers, answer, at}
+let decisions = {};        // id -> {decision, note, answers, answer, at}, with optimistic edits
+let confirmed = {};        // the same, as last read from the server
+const pending = new Set(); // ids with a decision save in flight
+let advanceTimer = null;
 let checks = {};           // story id -> {posted, at}
 let view = 'posts';        // "posts" (approvals) or "stories" (checklist)
 const slideIdx = {};
 const mediaView = {};
 let tab = 'facebook';
 
-function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (t.hidden = true), 2200); }
+// One pane at a time on a phone (the same breakpoint as the CSS): there,
+// decisions never move the view on their own.
+const phone = window.matchMedia('(max-width: 860px)');
+
+// Toasts sit in a role=status region and never take focus. One with an Undo
+// button stays for 6 seconds, and holds while the pointer or focus is on it.
+function toast(msg, onUndo) {
+  const u = $('#toastUndo');
+  $('#toastMsg').textContent = msg;
+  u.hidden = !onUndo;
+  u.onclick = onUndo ? () => { hideToast(); onUndo(); } : null;
+  placeToast();
+  $('#toast').classList.add('on');
+  toast.ms = onUndo ? 6000 : 2200;
+  clearTimeout(toast.cap);
+  toast.cap = setTimeout(hideToast, 20000);
+  armToast();
+}
+function armToast() { clearTimeout(toast.h); toast.h = setTimeout(hideToast, toast.ms); }
+function hideToast() {
+  clearTimeout(toast.h); clearTimeout(toast.cap);
+  const t = $('#toast');
+  // Focus never goes down with the toast: it returns to the decision buttons.
+  const had = t.contains(document.activeElement);
+  t.classList.remove('on');
+  $('#toastMsg').textContent = '';
+  $('#toastUndo').hidden = true;
+  if (had) ($('#go') || $('.d-item[aria-current="true"]'))?.focus({ preventScroll: true });
+}
+// On a phone the toast sits just under the sticky top bar, wherever that is.
+function placeToast() {
+  const bar = $('.d-phonebar');
+  const bottom = bar && bar.offsetParent ? Math.max(0, bar.getBoundingClientRect().bottom) : 0;
+  desk.style.setProperty('--toast-top', `${Math.round(bottom) + 8}px`);
+}
+window.addEventListener('scroll', () => { if ($('#toast').classList.contains('on')) placeToast(); }, { passive: true });
+// Held open while the pointer or focus is on it, up to the 20 second cap.
+$('#toast').addEventListener('mouseenter', () => clearTimeout(toast.h));
+$('#toast').addEventListener('mouseleave', armToast);
+$('#toast').addEventListener('focusin', () => clearTimeout(toast.h));
+$('#toast').addEventListener('focusout', armToast);
 
 function stateOf(it) {
   if (it.kind === 'native') return 'info';
@@ -53,6 +97,7 @@ function applyState(s) {
     storiesPaused: !!s.meta?.stories_paused,
   };
   decisions = Object.fromEntries(s.decisions.map((d) => [d.item_id, { decision: d.decision, note: d.note, answers: d.answers || {}, answer: d.answer, at: d.decided_at }]));
+  confirmed = structuredClone(decisions);
   checks = Object.fromEntries(s.checks.map((c) => [c.item_id, { posted: c.posted, at: c.checked_at }]));
   buildItems();
   const dates = data.posts.map((p) => p.date).sort();
@@ -132,6 +177,8 @@ function slidesBlock(it, imgs) {
 
 function actionBar(it) {
   const st = stateOf(it);
+  // aria-disabled, not disabled, so the focused button keeps focus meanwhile.
+  const busy = pending.has(it.id) ? ' aria-disabled="true"' : '';
   const d = decisions[it.id] || {};
   const when = st !== 'waiting' && d.at ? `, ${fmtAt(d.at)}` : '';
   if (!canWrite) {
@@ -140,16 +187,26 @@ function actionBar(it) {
   }
   return `<div class="d-bar" id="bar">
     <span class="state">${status(st, stateLabel[st] + when)}</span>
-    <button type="button" class="btn quiet" id="fix">Request changes</button>
-    <button type="button" class="btn" id="go">${st === 'approved' ? 'Approved' : 'Approve'}</button>
-    ${st !== 'waiting' ? `<button type="button" class="btn quiet" id="undo">Undo</button>` : ''}
+    <button type="button" class="btn quiet" id="fix"${busy}>Request changes</button>
+    <button type="button" class="btn${st === 'approved' ? ' quiet' : ''}" id="go"${busy}>${st === 'approved' ? 'Approved' : 'Approve'}</button>
+    ${st !== 'waiting' ? `<button type="button" class="btn quiet" id="undo"${busy}>Undo</button>` : ''}
+    ${st !== 'waiting' && nextTargetId(items, it.id, stateOf) ? `<button type="button" class="btn d-next" id="nextPost">Next post</button>` : ''}
     <label class="sr" for="note">What should change?</label>
     <textarea class="d-note ${st === 'changes' ? 'open' : ''}" id="note" rows="3" maxlength="2000" placeholder="What should change? Be as rough as you like.">${esc(d.note || '')}</textarea>
     <div class="keys">Keys: J and K move between posts, A approves, C opens the change note.</div>
   </div>`;
 }
 
+// Redrawing replaces the controls, so focus is put back on the same one (or on
+// Approve, when the one that had it is gone, as after Undo or Next post).
 function renderDetail() {
+  const el = $('#detail');
+  const had = el.contains(document.activeElement) ? document.activeElement.id : '';
+  drawDetail();
+  if (had && !el.contains(document.activeElement)) (document.getElementById(had) || $('#go'))?.focus({ preventScroll: true });
+}
+
+function drawDetail() {
   const it = items.find((i) => i.id === current);
   const el = $('#detail');
   if (!it && !items.length) {
@@ -158,7 +215,14 @@ function renderDetail() {
     return;
   }
   if (!it) { el.innerHTML = `<p class="d-muted">Pick a post on the left.</p>`; return; }
-  const back = `<button type="button" class="btn quiet d-back" id="back">All posts</button>`;
+  // On a phone only one pane shows, so the detail carries its own way around.
+  const pos = positionOf(items, it.id);
+  const back = `<div class="d-phonebar">
+    <button type="button" class="btn quiet" id="back">All posts</button>
+    <span class="d-pos"><span class="sr">Post </span>${pos.index} of ${pos.total}</span>
+    <button type="button" class="d-step" id="prevPost" aria-label="Previous post in the list"${pos.prevId ? '' : ' disabled'}>Previous</button>
+    <button type="button" class="d-step" id="nextItem" aria-label="Next post in the list"${pos.nextId ? '' : ' disabled'}>Next</button>
+  </div>`;
 
   if (it.type === 'ask') {
     const d = decisions[it.id] || {};
@@ -250,18 +314,27 @@ function renderDetail() {
   wireBack();
 }
 
-function wireBack() { const b = $('#back'); if (b) b.onclick = () => { desk.classList.remove('viewing'); window.scrollTo(0, 0); }; }
+function wireBack() {
+  const b = $('#back');
+  if (!b) return;
+  b.onclick = () => { desk.classList.remove('viewing'); window.scrollTo(0, 0); };
+  const pos = positionOf(items, current);
+  $('#prevPost').onclick = () => pos.prevId && select(pos.prevId, true);
+  $('#nextItem').onclick = () => pos.nextId && select(pos.nextId, true);
+}
 
 function wireBar(it) {
   if (!canWrite) return;
   const note = $('#note');
   $('#go').onclick = () => decide(it.id, 'approved');
   $('#fix').onclick = () => {
+    if (pending.has(it.id)) return;
     if (!note.classList.contains('open')) { note.classList.add('open'); note.focus(); return; }
     if (!note.value.trim()) { note.focus(); toast('Add a note so I know what to change'); return; }
     decide(it.id, 'changes', note.value.trim());
   };
   const u = $('#undo'); if (u) u.onclick = () => decide(it.id, 'waiting');
+  const n = $('#nextPost'); if (n) n.onclick = () => { const id = nextTargetId(items, it.id, stateOf); if (id) select(id, true); };
 }
 
 async function copyText(text, btn, sel = '#sticker') {
@@ -290,16 +363,39 @@ async function write(path, body) {
   return saved;
 }
 
-async function decide(id, decision, note) {
-  const prev = decisions[id] || {};
-  const body = { item_id: id, decision, note: decision === 'changes' ? note : prev.note || '', answers: prev.answers || {} };
-  if (decision === 'waiting') body.note = '';
-  decisions[id] = { ...prev, decision, note: body.note, at: new Date().toISOString() };
+// One decision save at a time per item, and none at all when it would change
+// nothing (a double tap, or Approve on an approved post), so an Undo always
+// has a real "before": the last state the server confirmed. Answers are left
+// out of the body; the server keeps them.
+async function saveDecision(id, body) {
+  pending.add(id);
+  decisions[id] = { ...(decisions[id] || {}), decision: body.decision, note: body.note, at: new Date().toISOString() };
   renderList(); renderDetail();
-  if (await write('decide', body)) {
-    toast(decision === 'approved' ? 'Approved' : decision === 'changes' ? 'Change request saved' : 'Reset to waiting');
-    if (decision === 'approved') nextWaiting();
-  }
+  let saved;
+  try { saved = await write('decide', body); } finally { pending.delete(id); }
+  if (current === id) renderDetail();
+  return saved;
+}
+
+async function decide(id, decision, note) {
+  if (pending.has(id) || isNoOp(decisions[id], decision, note)) return;
+  const before = confirmed[id] ? { ...confirmed[id] } : undefined;
+  const body = { item_id: id, decision, note: decision === 'changes' ? note : decision === 'waiting' ? '' : decisions[id]?.note || '' };
+  if (!(await saveDecision(id, body))) return;
+  if (decision === 'waiting') { toast('Reset to waiting'); return; }
+  const did = { decision: body.decision, note: body.note };
+  toast(decision === 'approved' ? 'Approved' : 'Change request saved', () => revert(id, before, did));
+  // With the rail beside it, approving moves on; on a phone the post stays put.
+  if (decision === 'approved' && !phone.matches) advanceFrom(id);
+}
+
+// The toast's Undo: puts that item back as it was, wherever the view is now,
+// but only if it still holds what that decision saved. Answers stay as they are.
+async function revert(id, before, did) {
+  clearTimeout(advanceTimer);
+  await refresh();
+  if (pending.has(id) || !sameState(decisions[id], did)) { toast('Changed since, not undone'); return; }
+  if (await saveDecision(id, revertBody(id, before))) toast('Undone');
 }
 
 async function saveAnswer(id, k, text) {
@@ -427,15 +523,15 @@ function select(id, scroll) {
   if (scroll) window.scrollTo({ top: 0 });
 }
 
-function nextWaiting() {
-  const i = items.findIndex((x) => x.id === current);
-  const n = items.slice(i + 1).concat(items.slice(0, i)).find((x) => stateOf(x) === 'waiting' && x.kind !== 'ask');
-  if (n) setTimeout(() => select(n.id, true), 500);
+function advanceFrom(id) {
+  const n = nextWaitingId(items, id, stateOf);
+  clearTimeout(advanceTimer);
+  if (n) advanceTimer = setTimeout(() => { if (current === id) select(n, true); }, 500);
 }
 
-$('#list').addEventListener('click', (e) => { const r = e.target.closest('.d-item'); if (r) select(r.dataset.id, window.innerWidth <= 860); });
+$('#list').addEventListener('click', (e) => { const r = e.target.closest('.d-item'); if (r) select(r.dataset.id, phone.matches); });
 document.addEventListener('keydown', (e) => {
-  if (e.target.matches('textarea,input') || view !== 'posts' || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.target.matches('textarea,input') || e.target.closest('#toast') || view !== 'posts' || e.ctrlKey || e.metaKey || e.altKey) return;
   const i = items.findIndex((x) => x.id === current);
   if (e.key === 'j' || e.key === 'ArrowDown') { e.preventDefault(); if (i < items.length - 1) select(items[i + 1].id); }
   else if (e.key === 'k' || e.key === 'ArrowUp') { e.preventDefault(); if (i > 0) select(items[i - 1].id); }

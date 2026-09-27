@@ -165,7 +165,8 @@ details.edit[open] summary { margin-bottom: 12px; }
 .d-item.changes { border-left-color: var(--red); }
 
 .d-detail { min-width: 0; }
-.d-back { display: none; }
+/* The phone top bar and "Next post" exist only where one pane shows. */
+.d-phonebar, .d-next { display: none; }
 .d-card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; }
 .d-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; margin-bottom: 6px; color: var(--muted); font-size: 14px; }
 .d-meta .caps { color: var(--ink); }
@@ -207,7 +208,12 @@ details.edit[open] summary { margin-bottom: 12px; }
 .d-note.open { display: block; }
 .d-readnote { width: 100%; margin: 0; white-space: pre-wrap; }
 .keys { width: 100%; font-size: 12px; color: var(--muted); }
-.d-toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--canvas); padding: 10px 16px; border-radius: 6px; font-weight: 600; z-index: 10; }
+.d-toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 14px; max-width: calc(100vw - 32px); background: var(--ink); color: var(--canvas); padding: 8px 8px 8px 16px; border-radius: 6px; font-weight: 600; z-index: 10; }
+.d-toast-undo { min-height: 44px; padding: 0 14px; font: 700 15px/1 var(--font-body); color: var(--canvas); background: transparent; border: 1.5px solid rgba(248, 245, 242, .7); border-radius: 4px; cursor: pointer; }
+.d-toast :focus-visible { outline-color: var(--canvas); }
+/* Faded rather than hidden when idle, so its live region stays in place. */
+.d-toast:not(.on) { opacity: 0; pointer-events: none; }
+.btn[aria-disabled="true"] { opacity: .55; cursor: progress; }
 .done-note { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; max-width: 60ch; }
 .done-note p { margin: 0 0 8px; }
 
@@ -249,7 +255,21 @@ dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: con
   .d-list { position: static; max-height: none; }
   .desk.viewing .d-list { display: none; }
   .desk:not(.viewing) .d-detail { display: none; }
-  .d-back { display: inline-block; margin-bottom: 12px; }
+  .d-phonebar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; position: sticky; top: 0; z-index: 3; margin: 0 -24px 12px; padding: calc(8px + env(safe-area-inset-top, 0px)) 24px 8px; background: var(--canvas); border-bottom: 1px solid var(--line); }
+  .d-phonebar .btn { display: inline-flex; align-items: center; min-height: 44px; }
+  .d-pos { margin-right: auto; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .d-step { min-width: 44px; min-height: 44px; padding: 0 12px; font: 600 15px/1 var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 6px; cursor: pointer; }
+  .d-step:disabled { opacity: .45; cursor: default; }
+  .d-next { display: block; width: 100%; min-height: 48px; text-align: center; }
+  /* With a post open, the post gets the screen: the header and tabs come back
+     with All posts. The action bar fits its three buttons on one row. */
+  .desk.viewing .d-head, .desk.viewing .d-views { display: none; }
+  .desk.viewing .d-layout { margin-top: 0; }
+  .d-card { padding: 14px 10px; }
+  .d-bar { gap: 6px; margin-inline: -10px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); }
+  .d-bar .btn { font-size: 14px; padding: 10px 9px; }
+  /* Up top, under the bar, so it never covers the action bar's buttons. */
+  .d-toast { top: var(--toast-top, calc(env(safe-area-inset-top, 0px) + 72px)); bottom: auto; }
   .d-body { grid-template-columns: 1fr; }
   .keys { display: none; }
 }
@@ -257,6 +277,11 @@ dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: con
   .srow { grid-template-columns: 76px minmax(0, 1fr); }
   .thumb { width: 76px; }
   .posted-box, .posted-read { grid-column: 1 / -1; justify-content: center; }
+}
+@media (max-width: 360px) {
+  /* The smallest phones: the three buttons keep one row, the count drops below. */
+  .d-pos { order: 1; flex-basis: 100%; margin-right: 0; font-size: 13px; }
+  #prevPost { margin-left: auto; }
 }
 
 @media (max-width: 640px) {
