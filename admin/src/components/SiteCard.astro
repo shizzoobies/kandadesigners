@@ -2,7 +2,7 @@
 import SiteLogo from './SiteLogo.astro';
 import LevelDot from './LevelDot.astro';
 import { STATUS_LABEL } from '../lib/enums.js';
-const { card } = Astro.props;
+const { card, waiting = 0 } = Astro.props;
 const { site, level, reason, openWork } = card;
 ---
 <li class="card">
@@ -15,6 +15,9 @@ const { site, level, reason, openWork } = card;
     <div class="caps">{STATUS_LABEL[site.project_status] ?? site.project_status}</div>
     {site.status_note && <p class="note">{site.status_note}</p>}
   </div>
+  <a class="desk-link" href={`/sites/${site.slug}/social`}>
+    {waiting > 0 && <span class="dot amber"></span>}Post Desk<span class="sr"> for {site.name}</span>{waiting > 0 && `, ${waiting} waiting`}
+  </a>
   <div class="card-foot">
     <span>{openWork === 0 ? 'No open work' : `${openWork} open ${openWork === 1 ? 'item' : 'items'}`}</span>
     <a href={site.live_url} target="_blank" rel="noopener">Visit site<span class="sr"> {site.name} (opens in a new tab)</span></a>

@@ -3,7 +3,7 @@ import Shell from '../../../layouts/Shell.astro';
 import SiteLogo from '../../../components/SiteLogo.astro';
 import LevelDot from '../../../components/LevelDot.astro';
 import * as q from '../../../lib/db.js';
-import { hasDesk } from '../../../lib/desk.js';
+import { waitingCounts } from '../../../lib/desk.js';
 import { computeLevel } from '../../../lib/health.js';
 import { uptimePercent, hourlyAverages, sparklinePath } from '../../../lib/sparkline.js';
 import { humanDate, easternDateTime, todayEastern } from '../../../lib/when.js';
@@ -14,13 +14,14 @@ const site = await q.getSiteBySlug(DB, Astro.params.slug);
 if (!site) return new Response('Not found', { status: 404 });
 
 const now = Date.now();
-const [checks, work, log, people, desk] = await Promise.all([
+const [checks, work, log, people, waiting] = await Promise.all([
   q.checksSince(DB, site.id, new Date(now - 30 * 86400000).toISOString()),
   q.listWorkItems(DB, site.id),
   q.listLog(DB, site.id),
   q.listPeople(DB),
-  hasDesk(DB, site.id),
+  waitingCounts(DB, { siteId: site.id }),
 ]);
+const deskWaiting = waiting.get(site.id) ?? 0;
 const { level, reason } = computeLevel(site, checks.slice(0, 12), now);
 const uptime = uptimePercent(checks);
 const path = sparklinePath(hourlyAverages(checks), 480, 44);
@@ -70,7 +71,7 @@ const where = [
     </div>
     <div class="actions">
       <a class="btn" href={site.live_url} target="_blank" rel="noopener">Visit site<span class="sr"> (opens in a new tab)</span></a>
-      {desk && <a class="btn quiet" href={`/sites/${site.slug}/social`}>Post Desk</a>}
+      <a class="btn quiet" href={`/sites/${site.slug}/social`}>Post Desk{deskWaiting > 0 && `, ${deskWaiting} waiting`}</a>
       <a class="btn quiet" href={`/sites/${site.slug}/edit`}>Edit details</a>
     </div>
   </div>

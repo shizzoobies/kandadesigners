@@ -71,10 +71,53 @@ describe('desk queries', () => {
     expect(s.meta).toMatchObject({ pushed_at: 'p', built_at: 'b', stories_paused: true });
   });
 
-  it('knows whether a site has a desk', async () => {
-    expect(await desk.hasDesk(db, 1)).toBe(false);
-    await db.prepare("INSERT INTO desk_meta (site_id, pushed_at) VALUES (1, 'p')").run();
-    expect(await desk.hasDesk(db, 1)).toBe(true);
+  it('counts what waits on Alex per site: no decision or waiting, never changes, done or native', async () => {
+    await q.createSite(db, { slug: 'davids-bbq', name: "David's BBQ", live_url: 'https://bbq.test', hosting: 'pages' }, 't');
+    await addItem({ item_id: 'fresh' });
+    await addItem({ item_id: 'undone' });
+    await addItem({ item_id: 'fix' });
+    await addItem({ item_id: 'ok' });
+    await addItem({ item_id: 'ask', kind: 'ask', post_date: null });
+    await addItem({ item_id: 'answered', kind: 'ask', post_date: null });
+    await addItem({ item_id: 'fb', kind: 'native' });
+    await addItem({ item_id: '2026-10-06-story', list: 'stories', kind: 'story' });
+    await addDecision('undone', 'waiting', NOW);
+    await addDecision('fix', 'changes', NOW);
+    await addDecision('ok', 'approved', NOW);
+    await addDecision('answered', 'answered', NOW, null, { answer: 'Yes' });
+    await db.prepare("INSERT INTO desk_items (site_id, item_id, list, kind, post_date, title, payload, pushed_at) VALUES (2, 'bbq-1', 'approve', 'post', '2026-10-06', 'T', '{}', 't')").run();
+    // A decision on one site never counts against another's item of the same id.
+    await db.prepare("INSERT INTO desk_decisions (site_id, item_id, decision, decided_at) VALUES (1, 'bbq-1', 'approved', 't')").run();
+
+    const counts = await desk.waitingCounts(db, { today: '2026-10-05' });
+    expect(counts).toBeInstanceOf(Map);
+    expect(Object.fromEntries(counts)).toEqual({ 1: 3, 2: 1 });
+  });
+
+  it('leaves sites with nothing waiting out of the counts', async () => {
+    await addItem({ item_id: 'ok' });
+    await addDecision('ok', 'approved', NOW);
+    expect((await desk.waitingCounts(db, { today: '2026-10-05' })).get(1)).toBeUndefined();
+  });
+
+  it('never counts a past-dated item, which the desk purges on open', async () => {
+    await addItem({ item_id: '2026-10-04', post_date: '2026-10-04' });
+    await addItem({ item_id: '2026-10-05', post_date: '2026-10-05' });
+    await addItem({ item_id: 'ask', kind: 'ask', post_date: null });
+    expect((await desk.waitingCounts(db, { today: '2026-10-05' })).get(1)).toBe(2);
+  });
+
+  it('counts one site when asked', async () => {
+    await q.createSite(db, { slug: 'davids-bbq', name: "David's BBQ", live_url: 'https://bbq.test', hosting: 'pages' }, 't');
+    await addItem({ item_id: 'a' });
+    await db.prepare("INSERT INTO desk_items (site_id, item_id, list, kind, post_date, title, payload, pushed_at) VALUES (2, 'b', 'approve', 'post', '2026-10-06', 'T', '{}', 't')").run();
+    expect(Object.fromEntries(await desk.waitingCounts(db, { today: '2026-10-05', siteId: 2 }))).toEqual({ 2: 1 });
+  });
+
+  it('defaults today to the Eastern date', async () => {
+    await addItem({ item_id: 'far', post_date: '2999-01-01' });
+    await addItem({ item_id: 'old', post_date: '2000-01-01' });
+    expect((await desk.waitingCounts(db)).get(1)).toBe(1);
   });
 
   it('saving a decision rewrites the row and clears pulled_at', async () => {

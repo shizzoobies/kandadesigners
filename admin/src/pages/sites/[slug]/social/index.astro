@@ -13,6 +13,12 @@ if (!site) return new Response('Not found', { status: 404 });
 await maybePurge({ db: env.DB, bucket: env.DESK_MEDIA, site });
 const state = await getDeskState(env.DB, site.id);
 const canWrite = Astro.locals.user?.role === 'owner';
+// The client script keeps these in step after each refresh; rendering them here
+// means a client's desk never flashes a Stories tab or an empty rail on load.
+// Stories are K&A's own hand-posted routine: a site with none, and no paused
+// flag, has no Stories tab at all.
+const hasStories = state.items.some((i) => i.list === 'stories') || !!state.meta?.stories_paused;
+const empty = state.items.length === 0;
 // "<" is escaped so no text in a caption can close the script element early.
 const boot = JSON.stringify({ slug: site.slug, canWrite, state }).replace(/</g, '\\u003c');
 ---
@@ -20,8 +26,8 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, state }).replace(/</g, 
   <div class="desk" id="desk">
     <header class="d-head">
       <div class="d-brand">
-        <h1>Post Desk</h1>
-        <span id="week">{site.name} social queue</span>
+        <h1>{site.name} Post Desk</h1>
+        <span id="week">Social queue</span>
       </div>
       <div class="tally" id="postTally" aria-live="polite">
         <div><b id="nWait">0</b><span class="level"><span class="dot amber"></span>waiting on you</span></div>
@@ -34,17 +40,21 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, state }).replace(/</g, 
         <div><b id="sDone">0</b><span class="level"><span class="dot green"></span>posted</span></div>
       </div>
       <p class="conn" id="conn">{canWrite
-        ? 'Decisions and Story ticks save as you make them. Claude reads them from here.'
-        : 'Read only. Only the owner can approve posts or tick Stories.'}</p>
+        ? `Decisions${hasStories ? ' and Story ticks' : ''} save as you make them. Claude reads them from here.`
+        : `Read only. Only the owner can approve posts${hasStories ? ' or tick Stories' : ''}.`}</p>
     </header>
 
     <div class="d-views" role="tablist" aria-label="Desk sections">
       <button type="button" role="tab" id="tabPosts" aria-selected="true" aria-controls="postsView" data-go="posts">Approvals<b id="cPosts"></b></button>
-      <button type="button" role="tab" id="tabStories" aria-selected="false" aria-controls="storiesView" data-go="stories">Stories<b id="cStories"></b></button>
+      <button type="button" role="tab" id="tabStories" aria-selected="false" aria-controls="storiesView" data-go="stories" hidden={!hasStories}>Stories<b id="cStories"></b></button>
     </div>
 
     <section id="postsView" role="tabpanel" aria-labelledby="tabPosts">
-      <div class="d-layout">
+      <div class="done-note d-empty" id="deskEmpty" hidden={!empty}>
+        <p><b>No posts on {site.name}'s desk yet.</b></p>
+        <p>New posts show up here once they are built.</p>
+      </div>
+      <div class="d-layout" hidden={empty}>
         <nav class="d-list" id="list" aria-label="Posts"></nav>
         <div class="d-detail" id="detail"><p class="d-muted">Loading the queue...</p></div>
       </div>

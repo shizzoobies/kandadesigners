@@ -2,11 +2,12 @@
 import Shell from '../layouts/Shell.astro';
 import SiteCard from '../components/SiteCard.astro';
 import { listSites, latestChecksForAll, openWorkCounts } from '../lib/db.js';
+import { waitingCounts } from '../lib/desk.js';
 import { buildCards, filterCards } from '../lib/view.js';
 import { PROJECT_STATUS, STATUS_LABEL } from '../lib/enums.js';
 
 const DB = Astro.locals.runtime.env.DB;
-const [sites, checks, counts] = await Promise.all([listSites(DB), latestChecksForAll(DB, 12), openWorkCounts(DB)]);
+const [sites, checks, counts, waiting] = await Promise.all([listSites(DB), latestChecksForAll(DB, 12), openWorkCounts(DB), waitingCounts(DB)]);
 const show = Astro.url.searchParams.get('show') ?? 'all';
 const all = buildCards(sites, checks, counts, Date.now());
 const cards = filterCards(all, show);
@@ -35,7 +36,7 @@ const filters = [
       </nav>
       {cards.length === 0
         ? <p>No sites match this filter.</p>
-        : <ul class="grid">{cards.map((card) => <SiteCard card={card} />)}</ul>}
+        : <ul class="grid">{cards.map((card) => <SiteCard card={card} waiting={waiting.get(card.site.id) ?? 0} />)}</ul>}
     </>
   )}
 </Shell>

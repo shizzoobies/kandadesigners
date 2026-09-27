@@ -62,11 +62,20 @@ export async function getDeskState(db, siteId) {
   return { items: items.map((i) => ({ ...i, payload: parseJson(i.payload, {}) })), decisions, checks, meta };
 }
 
-export async function hasDesk(db, siteId) {
-  const n = await db.prepare(
-    'SELECT (SELECT COUNT(*) FROM desk_items WHERE site_id = ?) + (SELECT COUNT(*) FROM desk_meta WHERE site_id = ?) AS n',
-  ).bind(siteId, siteId).first('n');
-  return n > 0;
+// What waits on Alex, per site, in one query for the whole sites list: approval
+// items with no decision yet or put back to waiting. A change request is on
+// Claude, and a post scheduled directly in Facebook has nothing to approve.
+// Past-dated items are left out: the desk purges them the moment it opens.
+// Sites with nothing waiting are absent from the map; `siteId` narrows it to one.
+export async function waitingCounts(db, { today = todayEastern(), siteId = null } = {}) {
+  const list = await rows(db.prepare(
+    `SELECT i.site_id, COUNT(*) AS n FROM desk_items i
+     LEFT JOIN desk_decisions d ON d.site_id = i.site_id AND d.item_id = i.item_id
+     WHERE i.list = 'approve' AND i.kind != 'native' AND (d.decision IS NULL OR d.decision = 'waiting')
+       AND (i.post_date IS NULL OR i.post_date >= ?) AND (? IS NULL OR i.site_id = ?)
+     GROUP BY i.site_id`,
+  ).bind(today, siteId, siteId));
+  return new Map(list.map((r) => [r.site_id, r.n]));
 }
 
 export async function findDeskItem(db, siteId, list, itemId) {

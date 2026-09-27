@@ -86,6 +86,12 @@ const askLabel = { waiting: 'Needs an answer', approved: 'Answered' };
 const DOT = { waiting: 'amber', approved: 'green', changes: 'red', info: 'gray' };
 const status = (st, label) => `<span class="level"><span class="dot ${DOT[st]}"></span>${esc(label)}</span>`;
 
+// Stories are K&A's hand-posted routine; a client's desk has none.
+const storiesOn = () => data.storyChecklist.length > 0 || data.storiesPaused;
+const connText = () => (canWrite
+  ? `Decisions${storiesOn() ? ' and Story ticks' : ''} save as you make them. Claude reads them from here.`
+  : `Read only. Only the owner can approve posts${storiesOn() ? ' or tick Stories' : ''}.`);
+
 // The server's rows back into the artifact's data.json shape.
 function applyState(s) {
   const of = (list, pred) => s.items.filter((i) => i.list === list && pred(i)).map((i) => i.payload);
@@ -100,6 +106,12 @@ function applyState(s) {
   confirmed = structuredClone(decisions);
   checks = Object.fromEntries(s.checks.map((c) => [c.item_id, { posted: c.posted, at: c.checked_at }]));
   buildItems();
+  // Mirrors the server render: no Stories tab for a site without Stories, and
+  // the empty note in place of an empty rail when nothing is on the desk.
+  $('#tabStories').hidden = !storiesOn();
+  $('#deskEmpty').hidden = s.items.length > 0;
+  $('.d-layout').hidden = s.items.length === 0;
+  if (!storiesOn() && view === 'stories') setView('posts');
   const dates = data.posts.map((p) => p.date).sort();
   if (dates.length) $('#week').textContent = `Queue ${fmtDay(dates[0])} to ${fmtDay(dates[dates.length - 1])}`;
 }
@@ -510,10 +522,17 @@ function setView(v) {
   $('#storyTally').hidden = v !== 'stories';
   $('#tabPosts').setAttribute('aria-selected', v === 'posts');
   $('#tabStories').setAttribute('aria-selected', v === 'stories');
-  try { localStorage.setItem('desk-view', v); } catch {}
   renderStories();
 }
-$('.d-views').addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) setView(b.dataset.go); });
+// The remembered tab is per site, and only a tab click changes it: opening a
+// client's desk (which has no Stories) never resets the K&A desk's choice.
+const viewKey = `desk-view:${slug}`;
+$('.d-views').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-go]');
+  if (!b) return;
+  setView(b.dataset.go);
+  try { localStorage.setItem(viewKey, b.dataset.go); } catch {}
+});
 setInterval(() => { if (!document.activeElement?.matches('textarea')) renderStories(); }, 60000);
 
 function select(id, scroll) {
@@ -548,9 +567,7 @@ async function refresh() {
     if (!r.ok) throw new Error(String(r.status));
     applyState(await r.json());
     conn.classList.remove('bad');
-    conn.textContent = canWrite
-      ? 'Decisions and Story ticks save as you make them. Claude reads them from here.'
-      : 'Read only. Only the owner can approve posts or tick Stories.';
+    conn.textContent = connText();
   } catch {
     conn.textContent = 'Could not refresh from the server. Your sign-in may have expired, so reload the page.';
     conn.classList.add('bad');
@@ -567,5 +584,6 @@ applyState(boot.state);
 current = (items.find((x) => stateOf(x) === 'waiting' && x.kind !== 'ask') || items[0])?.id || null;
 renderList(); renderDetail();
 // Open on Stories when the link says #stories or nothing waits for approval; else the last view used.
-let saved = null; try { saved = localStorage.getItem('desk-view'); } catch {}
-setView(location.hash === '#stories' || (storyList().length > 0 && (!items.length || saved === 'stories')) ? 'stories' : 'posts');
+// Never on a site without Stories.
+let saved = null; try { saved = localStorage.getItem(viewKey); } catch {}
+setView(storiesOn() && (location.hash === '#stories' || (storyList().length > 0 && (!items.length || saved === 'stories'))) ? 'stories' : 'posts');
