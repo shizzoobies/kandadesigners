@@ -152,39 +152,8 @@ export default {
       deploy_command: 'npx wrangler pages deploy dist --project-name davids-catering --branch main --commit-dirty=true',
       domain: 'davidsbbq.com',
     },
-    {
-      // Source: git show 8ef9627:src/data/work.js (this repo) for the "fdaaf"
-      // portfolio entry; ka-site-seo HANDOFF.md ("FDAAF is D:\Old Projects\Access
-      // Entree", branch site-fixes, "canonical to fdaaf.org... git push client
-      // main after merge"); D:\Old Projects\Access Entree\astro.config.mjs
-      // (site: https://fdaaf.org); git remote -v (client remote is
-      // github.com/FDAAF/WEBSITE). Live URL curl-verified 200.
-      slug: 'fdaaf',
-      name: 'FDAAF',
-      live_url: 'https://fdaaf.org',
-      repo: 'FDAAF/WEBSITE',
-      local_path: 'D:\\Old Projects\\Access Entree',
-      hosting: 'client-push',
-      deploy_command: 'git push client main',
-      domain: 'fdaaf.org',
-    },
-    {
-      // Source: git show 8ef9627:src/data/work.js (this repo) for the "fixalways"
-      // portfolio entry; D:\fixalways\astro.config.mjs (site: https://fixalways.com);
-      // git remote -v (single remote, shizzoobies/fixalways). A functions/
-      // directory (Pages Functions convention, matching the pattern in the MBS
-      // and PB&J repos) is present with no wrangler.jsonc/toml, so this reads as
-      // a Cloudflare Pages project, but the exact deploy invocation is not
-      // recorded anywhere in the repo or the ka-site-seo HANDOFF, so
-      // deploy_command is left out. Live URL curl-verified 200.
-      slug: 'fixalways',
-      name: 'FixAlways',
-      live_url: 'https://fixalways.com',
-      repo: 'shizzoobies/fixalways',
-      local_path: 'D:\\fixalways',
-      hosting: 'pages',
-      domain: 'fixalways.com',
-    },
+    // FDAAF, FixAlways and Computer Solutions were removed 2026-09-27: test
+    // projects Alex is not responsible for.
     // Added 2026-09-24 after Alex noticed missing clients. Sources: the
     // read-only inventory of the Cloudflare account (Workers custom domains,
     // Pages projects), each folder's `git remote -v` and package.json, and a
@@ -214,17 +183,6 @@ export default {
       local_path: 'D:\\Synovial Pitch\\Web Builds\\Navigating North Florida',
       hosting: 'worker',
       deploy_command: 'npx wrangler deploy --env production',
-    },
-    {
-      // Source: git remotes (origin shizzoobies/cpsolutions, plus a client-owned
-      // remote computersolutionskeystone/computersolutions); not in Alex's
-      // Cloudflare account. No documented deploy step, so left blank.
-      slug: 'computer-solutions',
-      name: 'Computer Solutions',
-      live_url: 'https://computersolutionskeystone.com',
-      repo: 'shizzoobies/cpsolutions',
-      local_path: 'D:\\Cpsolutions',
-      hosting: 'client-push',
     },
     {
       // Source: Pages project thrillers-vr with domain thrillersvr.com; git
