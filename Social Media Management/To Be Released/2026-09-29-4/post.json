@@ -1,0 +1,96 @@
+{
+  "id": "2026-09-29-4",
+  "date": "2026-09-29",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "training",
+  "title": "LinkedIn: Most courses start in the wrong place",
+  "platforms": {
+    "linkedin": {
+      "type": "POST",
+      "caption": "linkedin.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/video.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led video with the K&A Performance logo and ka-performancefl.com at the top of every frame, drawn as a trail map on cream paper with contour lines and a north arrow. Hook: Most courses start in the wrong place; a dotted gray route runs from Everything they should know to Quiz to a rust Dead end sign. The old route fades. Action mapping starts with the goal: pin 1 drops, with a dark teal callout, A measurable business goal, e.g. cut lifting injuries 10% this year (an example). A rust route draws itself to pin 2, Actions: What do people need to do? Then pin 3, Practice: Practice it. A practice scenario card: A box might be too heavy to lift. No one's around. Two choices, A: Lift it anyway, and B: Wait for help or find a trolley; a pointer taps Lift it anyway and a consequence card reads What happens: Sharp pain in your lower back. Headline: Show the consequence. Don't just say wrong. The route draws to amber pin 4, What to know: Only then: what do they need to know? A pile of info cards shrinks to two, labeled Just the essentials. A detour sign on a post: Sometimes the answer isn't a course, with three arrow boards: Motivation, The environment, A job aid. Ends on Design for what people do. Custom eLearning, built around the job. ka-performancefl.com/training, with the credit Action Mapping: Cathy Moore."
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above the headline Most courses start in the wrong place. Below, a trail map on cream paper: a dotted gray route from Everything they should know past Quiz to a rust Dead end sign."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/video.mp4": {
+      "key": "2026-09-29-4/08264601-video.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-29-4/08264601-video.mp4",
+      "sha256": "08264601ea34645fb5221f0a5ea1f2e0491b35cbf3d5699bf780b6e762a56f7c",
+      "uploadedAt": "2026-09-27T15:31:56.307Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-09-29-4/c6b4d22e-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-29-4/c6b4d22e-thumbnail.jpg",
+      "sha256": "c6b4d22e9536bec2cf90e14bc462c5209c790fcd00110b8a41b77faeaf906769",
+      "uploadedAt": "2026-09-27T15:31:56.307Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-29T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "Custom eLearning, built around the job: https://ka-performancefl.com/training/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-29-4",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-29-4/08264601-video.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led video with the K&A Performance logo and ka-performancefl.com at the top of every frame, drawn as a trail map on cream paper with contour lines and a north arrow. Hook: Most courses start in the wrong place; a dotted gray route runs from Everything they should know to Quiz to a rust Dead end sign. The old route fades. Action mapping starts with the goal: pin 1 drops, with a dark teal callout, A measurable business goal, e.g. cut lifting injuries 10% this year (an example). A rust route draws itself to pin 2, Actions: What do people need to do? Then pin 3, Practice: Practice it. A practice scenario card: A box might be too heavy to lift. No one's around. Two choices, A: Lift it anyway, and B: Wait for help or find a trolley; a pointer taps Lift it anyway and a consequence card reads What happens: Sharp pain in your lower back. Headline: Show the consequence. Don't just say wrong. The route draws to amber pin 4, What to know: Only then: what do they need to know? A pile of info cards shrinks to two, labeled Just the essentials. A detour sign on a post: Sometimes the answer isn't a course, with three arrow boards: Motivation, The environment, A job aid. Ends on Design for what people do. Custom eLearning, built around the job. ka-performancefl.com/training, with the credit Action Mapping: Cathy Moore."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-29T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Most courses start in the wrong place: with everything people should know, followed by a quiz.\n\nCathy Moore's Action Mapping flips the order:\n\n1. Start with a measurable business goal. For example: cut lifting injuries 10% this year. (That's an example goal, not a statistic.)\n2. Ask what people need to do on the job to reach it.\n3. Design practice that looks like the real task. \"A box might be too heavy to lift and no one's around. What do you do?\" If they lift it anyway, don't tell them it's wrong. Show the consequence: a sharp pain in the lower back.\n4. Only then, decide what they truly need to know. Usually it's less than the course we were about to build.\n\nAnd sometimes the honest answer is that it isn't a training problem at all. If the issue is motivation, the environment, or something a simple job aid could cover, a course won't fix it.\n\nThat's how we like to build custom eLearning: around what people do, not everything we could tell them. The link is in the first comment.\n\nDesigners: which step gets skipped most on your projects?\n\nThe music is AI generated.\n\n#InstructionalDesign #eLearning #LearningAndDevelopment #ActionMapping",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-29-4/c6b4d22e-thumbnail.jpg",
+          "linkedinData": {
+            "type": "post",
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-27T15:32:02.043Z",
+      "id": "382917640",
+      "uuid": "-4240474451025115349",
+      "scheduledAt": "2026-09-27T15:32:32.685Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0929-am"
+}

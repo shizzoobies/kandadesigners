@@ -19,14 +19,16 @@
     "folder": "1XnrJ6t2IZyY1fHaVXQljf9SVW0eXv2Gz",
     "photos": "1Dn1KEVwwatG1CkyJ3HpWlgeWAG34EMVB",
     "inReview": "1mYXv8cGIdI6F1AANyj0MqcYAj9idNPC9",
-    "readyToPost": "1He9EEkYezLdYR7ATVtEcLmFV4-8Zr8xH"
+    "readyToPost": "1He9EEkYezLdYR7ATVtEcLmFV4-8Zr8xH",
+    "_note": "Dropped from the admin 2026-09-27; Alex is cleaning up Drive himself."
   },
   "fixalways": {
     "name": "FixAlways",
     "folder": "1_7EvmdYS9werEZlioWpDt0OY8g37KGZE",
     "photos": "1femM3LiYK5jgAkHvRFQ3A2RLj-2nxRBc",
     "inReview": "1ZW4V3CwUdor0FcsXfu35kGKpNomkCnJo",
-    "readyToPost": "1Sk9mtdWw7AwlfTXg_75KVhGwcwU4zg6i"
+    "readyToPost": "1Sk9mtdWw7AwlfTXg_75KVhGwcwU4zg6i",
+    "_note": "Dropped from the admin 2026-09-27; Alex is cleaning up Drive himself."
   },
   "foremotion-golf": {
     "name": "Fore Motion Golf",
@@ -76,5 +78,33 @@
     "photos": "1KHF2XXD1Gg6gv2rRvs8uvcntj1zE8BLI",
     "inReview": "1zAlI1UvjzVjMiNRPOsvPb2rJ0RaF0L2f",
     "readyToPost": "16rikRxAOmx_ZB8wyZItONt0okkijx2vc"
+  },
+  "only-nails-beauty": {
+    "name": "Only Nails Beauty",
+    "folder": "1roe8sODG_5VqhdgHFy4SzKQLLY1K1kv2",
+    "photos": "1CVowX5pDgQSRNhXcqkfLlV5kjG8Ibg67",
+    "inReview": "1nn7TyOrYv0tTBYAAs85oYXUkRLnbYYGA",
+    "readyToPost": "18_wNwaW4kH42EhYjvLmMrMAk2yznSvUW"
+  },
+  "navigating-north-florida": {
+    "name": "Navigating North Florida",
+    "folder": "14zYpV_ar4dPitO95nHg5z3v7rfGw3PiR",
+    "photos": "1NKIU8bnZM6zBdKu0aGRT18aMn-tRYYLd",
+    "inReview": "1eqFOtDFo4UwCOHq-3MoJACEUEFYU8ULa",
+    "readyToPost": "11EJ45RR7v2d5kzv9alhKW7H4E8TtjS-G"
+  },
+  "thrillers-mobile-vr": {
+    "name": "Thrillers Mobile VR",
+    "folder": "17TU2fVpiD18Wxhd_i2f3YLN8YUT68Gtq",
+    "photos": "1qdbTar8ZDIq5fkc0Wl61qmmEsCNWObnF",
+    "inReview": null,
+    "readyToPost": null
+  },
+  "dancing-crafter": {
+    "name": "Dancing Crafter",
+    "folder": "1GZR1MoRZdGJ97uZDghnbN1idm3FNo-6X",
+    "photos": null,
+    "inReview": null,
+    "readyToPost": null
   }
 }

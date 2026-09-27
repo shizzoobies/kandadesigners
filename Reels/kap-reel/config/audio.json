@@ -958,6 +958,50 @@
         "pass": true
       },
       "set": "social-w1007"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0927-li-34s",
+      "file": "assets/audio/raw/music-w0927-li-34s.mp3",
+      "prompt": "Upbeat, light and playful modern instrumental at about 116 bpm in a bright major key. A tight, funky muted clavinet riff is the hook, a bright xylophone answers with a short catchy melody, crisp woodblock and rimshot ticks on the sixteenths like a clockwork mechanism, a round, bouncy synth bass, and a clean, dry modern drum kit with a light kick and snappy snare. Clever and cheerful, a little quirky, like letters clicking into place on a train station departure board. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 34000,
+      "creditsMeasured": 930,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-27T14:41:21.068Z",
+      "accepted": true,
+      "notes": "playful, light, clockwork bounce, funky muted clavinet riff, bright xylophone melody, woodblock ticks, round synth bass, about 116 bpm. For the Sun 2026-09-27 LinkedIn video, ADDIE got a G (folder 2026-09-27-3), no narration. Measured duration 34.03s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.6,
+        "wholeTrackMeanDb": -14.4,
+        "deficitDb": 1.2,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0927"
+    },
+    {
+      "kind": "music",
+      "id": "music-w0929-am-34s",
+      "file": "assets/audio/raw/music-w0929-am-34s.mp3",
+      "prompt": "Warm, curious and upbeat acoustic folk pop instrumental at about 104 bpm in a bright major key. A warm fingerpicked steel string acoustic guitar carries a gentle, rolling pattern, a hammered dulcimer plays a short, catchy, inquisitive melody, a soft melodica answers it now and then, a round upright bass walks underneath, and light percussion keeps it moving: a cajon groove and a soft shaker. Friendly and exploratory, like setting out on a sunny morning hike with a hand drawn trail map. Clean intro: the groove starts on the very first beat, no fade in, no long build, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No heavy drop, no big riser, no sweep, no impact hit, no breakdown or pause in the middle. Steady energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover, so a simple catchy instrumental hook is welcome, but keep the arrangement uncluttered. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Clean modern production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 34000,
+      "creditsMeasured": 930,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-27T14:55:05.614Z",
+      "accepted": true,
+      "notes": "curious, warm, upbeat, a walk on a trail, warm fingerpicked acoustic guitar, hammered dulcimer melody, melodica answers, cajon and light shaker, about 104 bpm. For the Tue 2026-09-29 noon LinkedIn video, Action Mapping (folder 2026-09-29-4), no narration. Measured duration 34.03s, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -17.3,
+        "wholeTrackMeanDb": -17.2,
+        "deficitDb": 0.1,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "set": "social-w0929"
     }
   ],
   "mixes": [

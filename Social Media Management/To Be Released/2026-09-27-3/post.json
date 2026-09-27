@@ -1,0 +1,96 @@
+{
+  "id": "2026-09-27-3",
+  "date": "2026-09-27",
+  "time": "19:30",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "training",
+  "title": "LinkedIn: ADDIE got a G",
+  "platforms": {
+    "linkedin": {
+      "type": "POST",
+      "caption": "linkedin.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/video.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led video with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: ADDIE is 50+ years old, over a split-flap departure board in dark teal whose rust tiles flip to spell A D D I E. Each letter flips out its step: Analyze, Design, Develop, Implement, Evaluate. Then It might be getting a G: the second D flips to an amber G and Develop flips to Generate, and Implement flips to Individualize; Now it reads ADGIE. Who does what, in a table with You and AI columns: Analysis, AI drafts learner personas from surveys and feedback, you refine them (You refine, AI drafts). Design, you lead the strategy, AI suggests structure and learning paths (You lead, AI suggests). Generation, AI drafts videos, visuals, audio and quizzes, you conduct: review, tweak, rebuild (You conduct, AI drafts). Individualization, AI adapts the course to each learner (AI adapts). Evaluation, both, a continuous feedback loop with learners. Then 91% counts up: of learning professionals still check the AI's work themselves. Good. Source: A 2025 survey of 90 learning professionals. Ends on AI drafts. Designers decide. Custom eLearning, built that way. ka-performancefl.com/training."
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above the headline ADDIE is 50+ years old. It might be getting a G. Below, a split-flap departure board spelling A D D I E with the steps Analyze, Design, Develop, Implement, Evaluate; the second D tile is mid-flip, an amber G top half falling over the rust D."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/video.mp4": {
+      "key": "2026-09-27-3/6fbc2709-video.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-27-3/6fbc2709-video.mp4",
+      "sha256": "6fbc27095b0a50a1b7d2260fa8e4e7b95e3e54d8140c71ff3d11b1518fd3fea5",
+      "uploadedAt": "2026-09-27T14:52:39.798Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-09-27-3/57cdb1e0-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-09-27-3/57cdb1e0-thumbnail.jpg",
+      "sha256": "57cdb1e06b073258377bcc797f452819130fad1109ed3952df3cb6f1f250b84a",
+      "uploadedAt": "2026-09-27T14:52:39.798Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-09-27T19:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "Custom eLearning, built with AI in the loop and designers in charge: https://ka-performancefl.com/training/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-09-27-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-27-3/6fbc2709-video.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led video with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: ADDIE is 50+ years old, over a split-flap departure board in dark teal whose rust tiles flip to spell A D D I E. Each letter flips out its step: Analyze, Design, Develop, Implement, Evaluate. Then It might be getting a G: the second D flips to an amber G and Develop flips to Generate, and Implement flips to Individualize; Now it reads ADGIE. Who does what, in a table with You and AI columns: Analysis, AI drafts learner personas from surveys and feedback, you refine them (You refine, AI drafts). Design, you lead the strategy, AI suggests structure and learning paths (You lead, AI suggests). Generation, AI drafts videos, visuals, audio and quizzes, you conduct: review, tweak, rebuild (You conduct, AI drafts). Individualization, AI adapts the course to each learner (AI adapts). Evaluation, both, a continuous feedback loop with learners. Then 91% counts up: of learning professionals still check the AI's work themselves. Good. Source: A 2025 survey of 90 learning professionals. Ends on AI drafts. Designers decide. Custom eLearning, built that way. ka-performancefl.com/training."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-27T19:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "ADDIE is 50+ years old. It might be getting a G.\n\nA framework making the rounds swaps two letters: Analysis, Design, Generation, Individualization, Evaluation. ADGIE.\n\nWhat changes:\n- Develop becomes Generate. AI drafts the videos, visuals, audio and quizzes. The designer conducts: reviews, tweaks, rebuilds.\n- Implement becomes Individualize. AI adapts the course to each learner's gaps and pace.\n- Analysis, Design and Evaluation stay led by people, with AI helping: draft learner personas, suggested structure, a faster feedback loop.\n\nThe number we liked most: in a 2025 survey of 90 learning professionals, 91% said they need to check AI-generated content themselves. Good. That's the job.\n\nIt's early. The framework hasn't been proven at scale inside real organizations yet, and it only works with good source material, trained designers, and guardrails for bias and privacy.\n\nOur take: AI drafts, designers decide. That's how we build custom eLearning, from full courses to microlearning and job aids. The link is in the first comment.\n\nWhere would you let AI in first: Generate or Individualize?\n\nThe music is AI generated.\n\n#InstructionalDesign #eLearning #LearningAndDevelopment #AI",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-09-27-3/57cdb1e0-thumbnail.jpg",
+          "linkedinData": {
+            "type": "post",
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-27T14:52:44.583Z",
+      "id": "382901558",
+      "uuid": "-7000449785524565296",
+      "scheduledAt": "2026-09-27T14:53:26.294Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0927-li"
+}
