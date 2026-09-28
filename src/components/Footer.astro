@@ -1,6 +1,7 @@
 ---
 import LogoLockup from './LogoLockup.astro';
 import { phone, email } from '../data/contact.js';
+import { socials } from '../data/social.js';
 
 const year = new Date().getFullYear();
 
@@ -63,6 +64,26 @@ const columns = [
           Serving Gainesville, Alachua, Newberry, High Springs, Ocala, Jacksonville,
           Orange Park, Fleming Island, and St. Augustine.
         </p>
+        {/* Icon-only links, so each carries its full name for screen readers.
+            The 44px box is the tap target; the negative margin lines the first
+            icon up with the text above. */}
+        <ul class="-ml-3 flex items-center" aria-label="K & A Performance on social media">
+          {socials.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex h-11 w-11 items-center justify-center rounded text-muted transition-colors hover:text-ink"
+              >
+                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d={s.path} />
+                </svg>
+                <span class="sr-only">K &amp; A Performance on {s.name} (opens in a new tab)</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <!-- Two columns on a phone, then a natural-width row. Equal grid tracks

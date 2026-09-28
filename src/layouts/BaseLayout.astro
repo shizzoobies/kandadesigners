@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import SiteGuide from '../components/SiteGuide.astro';
 import StartProjectModal from '../components/StartProjectModal.astro';
 import { phone, email } from '../data/contact.js';
+import { socials } from '../data/social.js';
 import { ClientRouter } from 'astro:transitions';
 
 const onContactPage = Astro.url.pathname.startsWith('/contact');
@@ -124,10 +125,7 @@ const schema = {
         availableLanguage: 'English',
       },
       // Only profiles we actually own and can point at. No placeholders.
-      sameAs: [
-        MAP_URL,
-        'https://www.facebook.com/profile.php?id=61592711216301',
-      ],
+      sameAs: [MAP_URL, ...socials.map((s) => s.href)],
     },
     {
       '@type': 'WebSite',
