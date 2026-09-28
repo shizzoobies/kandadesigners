@@ -302,13 +302,13 @@ body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</styl
 
   /* ============ RENDERER ============ */
   var COPY = {
-    coffee:    { tag:"Small-batch coffee, poured slow.", sub:"A neighbourhood roaster serving honest espresso and quiet mornings.", cta:"See the menu" },
+    coffee:    { tag:"Small-batch coffee, poured slow.", sub:"A neighborhood roaster serving honest espresso and quiet mornings.", cta:"See the menu" },
     restaurant:{ tag:"Seasonal plates, shared tables.", sub:"A modern kitchen built around what is fresh this week.", cta:"Book a table" },
     bakery:    { tag:"Baked this morning, gone by noon.", sub:"Sourdough, pastries, and slow ferments made by hand.", cta:"View the counter" },
     fitness:   { tag:"Train with intent.", sub:"Coaching and group sessions that meet you where you are.", cta:"Start training" },
     portfolio: { tag:"Selected work.", sub:"Design and craft for people who care about the details.", cta:"View projects" },
     tech:      { tag:"Ship faster, with less friction.", sub:"The platform that gets out of your way so your team can build.", cta:"Get started" },
-    salon:     { tag:"Look like yourself, refined.", sub:"Cuts, colour, and care from people who listen first.", cta:"Book now" },
+    salon:     { tag:"Look like yourself, refined.", sub:"Cuts, color, and care from people who listen first.", cta:"Book now" },
     consulting:{ tag:"Clear thinking for hard problems.", sub:"We help teams decide what matters and then go do it.", cta:"Work with us" },
     generic:   { tag:"Something worth building.", sub:"A simple, modern site that says what you do and invites people in.", cta:"Get in touch" }
   };
@@ -319,7 +319,7 @@ body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</styl
   };
   var TIERS = [["Drop-in","18","Single session, no commitment"],["Monthly","89","Unlimited classes and open gym"],["Coached","149","Monthly plus 1:1 programming"]];
   var SERVICES = {
-    salon:[["Cut and Style","From 55"],["Colour","From 120"],["Treatment","From 40"]],
+    salon:[["Cut and Style","From 55"],["Color","From 120"],["Treatment","From 40"]],
     consulting:[["Strategy Sprint","2 weeks"],["Embedded Advisory","Monthly"],["Workshop","One day"]],
     generic:[["Discovery","We learn your goals"],["Build","We make it real"],["Support","We stick around"]]
   };
@@ -398,7 +398,7 @@ body { margin: 0; padding: 0; font-family: sans-serif; line-height: 1.5; }</styl
         return '<div class="cards">'+data.map(function(d){ return '<div class="fcard"><h3>'+esc(d[0])+'</h3><p>'+esc(d[1])+'</p></div>'; }).join("")+'</div>';
       }
       if (s === "about"){
-        var aboutTxt = mo.about || (mo.name + " started with one idea: do a few things well and treat people like neighbours. We have kept it that way ever since.");
+        var aboutTxt = mo.about || (mo.name + " started with one idea: do a few things well and treat people like neighbors. We have kept it that way ever since.");
         return '<div class="about"><div class="aboutart">'+svgArt(2)+'</div><p class="lead" style="text-align:left">'+esc(aboutTxt)+'</p></div>';
       }
       if (s === "testimonials"){

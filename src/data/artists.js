@@ -194,7 +194,7 @@ export const artists = [
       { src: '/images/art/jm-titus.jpg', alt: 'Series title "Titus" with the subtitle "True son in the faith", distressed over a drawn classical column capital' },
       { src: '/images/art/jm-church-art.jpg', alt: 'Two color church silhouette artwork in orange and blue' },
       { src: '/images/art/jm-church-at-home.jpg', alt: 'Web banner reading "Church at Home" with service times 9:00am and 10:45am beside a man watching from an armchair, and "Invite friends, worship together" on the blue half' },
-      { src: '/images/art/jm-family-month.jpg', alt: 'Announcement graphic reading "North Phoenix Family Month, Feb 2021", the A of Family drawn as a house roof, over an aerial photo of a desert neighbourhood' },
+      { src: '/images/art/jm-family-month.jpg', alt: 'Announcement graphic reading "North Phoenix Family Month, Feb 2021", the A of Family drawn as a house roof, over an aerial photo of a desert neighborhood' },
       { src: '/images/art/jm-great-exchange.jpg', alt: 'The Great Exchange campaign banner, trade your past for your purpose' },
       { src: '/images/art/jm-simple-hack.jpg', alt: 'The Simple Hack to Enjoying Life title card over a calm lake photo' },
       { src: '/images/art/jm-bout-that-life.jpg', alt: 'Bout That Life stepping lettering in white and purple on black' },
