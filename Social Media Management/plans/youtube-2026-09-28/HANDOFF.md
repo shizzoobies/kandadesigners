@@ -114,8 +114,8 @@ the SRT (long-form), add the end screen. Mark it done with `--studio-done`.
 - **For Alex, before the L1 build:** the Safari settings still. A real Mac screenshot, or a
   redrawn mock-up?
 - **Backlog from the channel plan** (not in this two-week spec):
-  - YouTube link in the site footer and in JSON-LD `sameAs` (a worktree off origin/main, deployed
-    on Alex's go-ahead)
+  - DONE 2026-09-28: Facebook, Instagram, YouTube and LinkedIn icons in the site footer and in JSON-LD `sameAs`
+    (commit 7e611fd, live; one list in `src/data/social.js`)
   - a YouTube button on the Instagram SmartLink
   - a YouTube link on the Google Business Profile
   - a channel trailer once L1 and L2 exist
