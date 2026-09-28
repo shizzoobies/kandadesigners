@@ -2,7 +2,7 @@
 
 Slot: Fri 2026-10-02, 11:00 AM. YouTube only, VIDEO (16:9, 1920x1080). Playlist "Quick fixes for your website".
 Pillar: tip (Quick fix). Audience: business owners.
-Approved: no
+Approved: yes (Alex, on the Post Desk and in chat, 2026-09-28; working title, Safari step as a redrawn mock-up)
 
 Full research, the script, the capture list and the sources are in `plans/youtube-2026-09-28/video-1-tab-key.md`. This brief is the part to approve. The voice text is in `source/script.md`.
 

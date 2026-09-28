@@ -3,7 +3,7 @@
   "date": "2026-09-29",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "YouTube Short: Contrast is not a vibe",
   "platforms": {
@@ -41,8 +41,69 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-09-29-5/3118e205-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-29-5/3118e205-reel-vertical.mp4",
+      "sha256": "3118e2058925f88bb9ce9499d59ee65f7e782039d47f65726411ca66cbd33355",
+      "uploadedAt": "2026-09-28T15:24:57.961Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-09-29T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-29-5/3118e205-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: amber text on cream measures 2.9 to 1 and fails, rust measures 6.7 to 1 and passes, with a live contrast meter and the K&A Performance logo and ka-performancefl.com on every frame"
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-29T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Amber on cream looks fine. It measures 2.9 to 1, and that fails.\nhttps://ka-performancefl.com/?utm_source=youtube&utm_medium=social&utm_campaign=2026-09-29-5\n\nBody text needs 4.5 to 1. Same palette, rust instead: 6.7 to 1, passes. Amber still works on buttons with dark text on top. Measure every color you set text in; your eye is a bad checker.\n\nEvery site K&A Performance builds passes these checks. Every ratio in the video is computed from the real hex values.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "Amber on cream fails. How to check your text contrast",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "website accessibility",
+              "color contrast",
+              "WCAG",
+              "small business website",
+              "web design tips",
+              "Gainesville web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T15:25:13.301Z",
+      "id": "383564099",
+      "uuid": "-9219822516407876081",
+      "scheduledAt": "2026-09-28T15:25:50.699Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

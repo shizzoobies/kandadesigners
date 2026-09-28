@@ -3,7 +3,7 @@
   "date": "2026-10-01",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "YouTube Short: Give the AI the brief, not the task",
   "platforms": {
@@ -40,8 +40,68 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-01-5/a25d8937-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-01-5/a25d8937-reel-vertical.mp4",
+      "sha256": "a25d893709245e660a223bc35b763012f72783a31832ae6368ce41ae1d8624c4",
+      "uploadedAt": "2026-09-28T15:25:06.440Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-01T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-01-5/a25d8937-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel in a K&A Performance chat window on dark teal. Hook: Stop asking AI to write the email, tell it who the email is for. The prompt Write a follow up email gets a generic form letter; the prompt Write a follow up to a bakery owner who asked about pricing and is nervous about cost gets a warm, specific reply. Both replies were written by an AI model, the bakery is a fictional example. Ends on Put AI to work in your business: the 90-Day AI Launch, ka-performancefl.com/ai-launch"
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-01T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Stop asking AI to write the email. Tell it who the email is for.\nhttps://ka-performancefl.com/ai-launch/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-01-5\n\n\"Write a follow up email\" gets you a form letter. \"Write a follow up to a bakery owner who asked about pricing and is nervous about cost\" gets you something you would actually send. Give it the brief: who it is for, what they need, what they worry about. Then you decide what goes out.\n\nBoth example replies were written by an AI model, shown unedited and trimmed where marked. The bakery is a fictional example. We build this habit into every AI setup we do for clients: the 90-Day AI Launch.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "Better AI emails: give it the brief, not the task",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "AI for small business",
+              "AI email writing",
+              "prompt tips",
+              "small business marketing",
+              "Gainesville"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T15:25:13.569Z",
+      "id": "383564185",
+      "uuid": "-170483140372705564",
+      "scheduledAt": "2026-09-28T15:25:50.839Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,
