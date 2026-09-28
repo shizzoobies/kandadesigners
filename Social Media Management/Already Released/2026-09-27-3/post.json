@@ -3,7 +3,7 @@
   "date": "2026-09-27",
   "time": "19:30",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "training",
   "title": "LinkedIn: ADDIE got a G",
   "platforms": {
@@ -89,7 +89,12 @@
       "scheduledAt": "2026-09-27T14:53:26.294Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-27T23:30:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7510118835128082432"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0927-li"

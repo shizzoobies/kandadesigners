@@ -3,7 +3,7 @@
   "date": "2026-09-28",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "client-spotlight",
   "title": "Ellenton Family Practice Direct in the top three",
   "platforms": {
@@ -153,7 +153,15 @@
       "promotedAt": "2026-09-25T16:54:55.619Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-28T14:30:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/reel/1802762673983389"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/reel/Dd1Z34sEi8m/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-i-b"

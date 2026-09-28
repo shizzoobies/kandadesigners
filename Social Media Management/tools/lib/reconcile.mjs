@@ -29,6 +29,29 @@ export function draftUuidsIn(response) {
   return out;
 }
 
+/**
+ * Where each listed post stands. Metricool keeps a published post in getScheduledPosts with every provider
+ * marked status "PUBLISHED" (and a publicUrl), so a uuid is only pending while some provider is not PUBLISHED.
+ * A provider whose status names an error or failure is also collected, so reconcile can report it.
+ */
+export function listingStatus(response) {
+  const pending = new Set();
+  const permalinks = new Map();
+  const failed = new Map();
+  for (const item of itemsIn(response)) {
+    if (!item || typeof item.uuid !== "string") continue;
+    const providers = Array.isArray(item.providers) ? item.providers : [];
+    const done = providers.length > 0 && providers.every((p) => p && p.status === "PUBLISHED");
+    if (!done) pending.add(item.uuid);
+    const links = {};
+    for (const p of providers) if (p && p.status === "PUBLISHED" && typeof p.publicUrl === "string") links[p.network] = p.publicUrl;
+    permalinks.set(item.uuid, links);
+    const bad = providers.filter((p) => p && /ERROR|FAIL/i.test(String(p.status || ""))).map((p) => p.network);
+    if (bad.length) failed.set(item.uuid, bad);
+  }
+  return { pending, permalinks, failed };
+}
+
 function recordedUuids(m) {
   return Object.values(m.metricool || {}).map((rec) => rec && rec.uuid).filter(Boolean).map(String);
 }
@@ -79,11 +102,12 @@ function archiveTarget(root, name) {
  * One bad folder is recorded in errors and the run goes on.
  */
 export function reconcile({ root, response, now = new Date(), del = (key) => r2Delete(key), dryRun = false, retentionDays = 7 }) {
-  const stillScheduled = uuidsIn(response);
+  const { pending, permalinks, failed: failedListings } = listingStatus(response);
   const listedDrafts = draftUuidsIn(response);
   const published = [];
   const waiting = [];
   const drafts = [];
+  const failed = [];
   const errors = [];
 
   for (const dir of listDayFolders(root, TO_BE_RELEASED)) {
@@ -100,15 +124,21 @@ export function reconcile({ root, response, now = new Date(), del = (key) => r2D
       if (m.status !== "scheduled") continue;
       const mine = recordedUuids(m);
       if (hasDraft(m) || mine.some((u) => listedDrafts.has(u))) { waiting.push(name); drafts.push(name); continue; }
+      const bad = mine.flatMap((u) => failedListings.get(u) || []);
+      if (bad.length) { failed.push({ folder: name, networks: bad }); waiting.push(name); continue; }
       const postTime = localToUtc(m.date, m.time, m.timezone);
-      const gone = mine.length > 0 && !mine.some((u) => stillScheduled.has(u));
-      if (postTime > now || !gone) { waiting.push(name); continue; }
+      // Gone from the list, or listed with every provider PUBLISHED.
+      const done = mine.length > 0 && !mine.some((u) => pending.has(u));
+      if (postTime > now || !done) { waiting.push(name); continue; }
       const target = archiveTarget(root, name);
       if (dryRun) { published.push(name); continue; }
       assertTransition(m.status, "published");
       m.status = "published";
       m.published = { at: postTime.toISOString() };
-      for (const n of Object.keys(m.metricool || {})) m.published[n] = { permalink: "" };
+      for (const [n, rec] of Object.entries(m.metricool || {})) {
+        const links = (rec && rec.uuid && permalinks.get(String(rec.uuid))) || {};
+        m.published[n] = { permalink: links[n] || "" };
+      }
       m.lastError = null;
       writeManifest(dir, m);
       fs.renameSync(dir, target);
@@ -146,7 +176,7 @@ export function reconcile({ root, response, now = new Date(), del = (key) => r2D
     }
   }
 
-  return { published, waiting, drafts, deleted, errors, studio: studioPending(root, now) };
+  return { published, waiting, drafts, failed, deleted, errors, studio: studioPending(root, now) };
 }
 
 /**

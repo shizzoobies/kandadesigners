@@ -179,6 +179,52 @@ describe("reconcile", () => {
     expect(r.studio).toEqual(["2026-01-02", "2026-01-05"]);
   });
 
+  // Metricool keeps published posts in getScheduledPosts, each provider marked PUBLISHED (seen 2026-09-28).
+  const listed = (uuid, network, status, publicUrl) => ({ uuid, draft: false, providers: [{ network, status, ...(publicUrl ? { publicUrl } : {}) }] });
+
+  it("publishes a folder whose posts are still listed but every provider is PUBLISHED, keeping the permalinks", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-01-05", scheduledDay(), baseFiles());
+    const response = { data: [
+      listed("fb-1", "facebook", "PUBLISHED", "https://facebook.com/p/1"),
+      listed("ig-2", "instagram", "PUBLISHED", "https://www.instagram.com/p/2/")
+    ] };
+    const r = reconcile({ root, response, now: new Date("2026-01-05T15:00:00Z"), del: () => {} });
+    expect(r.published).toEqual(["2026-01-05"]);
+    const m = readManifest(path.join(root, "Already Released", "2026-01-05"));
+    expect(m.status).toBe("published");
+    expect(m.published.facebook).toEqual({ permalink: "https://facebook.com/p/1" });
+    expect(m.published.instagram).toEqual({ permalink: "https://www.instagram.com/p/2/" });
+  });
+
+  it("waits while any of a folder's posts is still PENDING", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-01-05", scheduledDay(), baseFiles());
+    const response = { data: [listed("fb-1", "facebook", "PUBLISHED", "u"), listed("ig-2", "instagram", "PENDING")] };
+    const r = reconcile({ root, response, now: new Date("2026-01-05T15:00:00Z"), del: () => {} });
+    expect(r.published).toEqual([]);
+    expect(r.waiting).toEqual(["2026-01-05"]);
+    expect(r.failed).toEqual([]);
+  });
+
+  it("reports a folder whose post failed instead of archiving it", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-01-05", scheduledDay(), baseFiles());
+    const response = { data: [listed("fb-1", "facebook", "PUBLISHED", "u"), listed("ig-2", "instagram", "ERROR")] };
+    const r = reconcile({ root, response, now: new Date("2026-01-05T15:00:00Z"), del: () => {} });
+    expect(r.published).toEqual([]);
+    expect(r.failed).toEqual([{ folder: "2026-01-05", networks: ["instagram"] }]);
+    expect(readManifest(path.join(root, "To Be Released", "2026-01-05")).status).toBe("scheduled");
+  });
+
+  it("does not archive a PUBLISHED listing before its own time", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-01-05", scheduledDay(), baseFiles());
+    const response = { data: [listed("fb-1", "facebook", "PUBLISHED", "u"), listed("ig-2", "instagram", "PUBLISHED", "u")] };
+    const r = reconcile({ root, response, now: new Date("2026-01-05T13:00:00Z"), del: () => {} });
+    expect(r.waiting).toEqual(["2026-01-05"]);
+  });
+
   it("gives the getScheduledPosts window from the earliest scheduled date to tomorrow", () => {
     root = makeTempRoot();
     expect(reconcileWindow(root, new Date("2026-01-10T15:00:00Z"))).toBeNull();

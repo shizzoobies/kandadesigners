@@ -3,7 +3,7 @@
   "date": "2026-09-25",
   "time": "19:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "tip",
   "title": "LinkedIn: 6 questions to ask before you hire a web designer",
   "platforms": {
@@ -177,7 +177,12 @@
       "scheduledAt": "2026-09-25T16:36:31.078Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-25T23:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7509386963817308160"
+    }
+  },
   "credits": {},
   "lastError": null
 }

@@ -3,7 +3,7 @@
   "date": "2026-09-26",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "offer",
   "title": "Free social media management for 3 Gainesville businesses",
   "platforms": {
@@ -256,7 +256,15 @@
       "scheduledAt": "2026-09-25T17:55:15.926Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-26T16:00:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/122118829185423707/posts/4087071408253930"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/p/Ddwa6yEG786/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0926-pilot"

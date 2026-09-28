@@ -197,12 +197,13 @@ function main() {
     console.log(`${verb}: ${r.published.join(", ") || "none"}`);
     console.log(`waiting: ${r.waiting.join(", ") || "none"}`);
     if (r.drafts.length) console.log(`drafts waiting for promotion: ${r.drafts.join(", ")}`);
+    for (const f of r.failed) console.log(`${f.folder}: Metricool reports a failed post on ${f.networks.join(", ")}; check Metricool, then resend it`);
     if (r.studio.length) {
       console.log(`Studio checklist still open (run release --studio-done <folder> when done): ${r.studio.join(", ")} (assumes the Metricool post published; check YouTube if unsure)`);
     }
     console.log(`${args["dry-run"] ? "would delete" : "deleted"} ${r.deleted.length} R2 object(s)`);
     for (const e of r.errors) console.log(`${e.folder}: failed: ${e.message}`);
-    return r.errors.length === 0 ? 0 : 1;
+    return r.errors.length === 0 && r.failed.length === 0 ? 0 : 1;
   }
 
   if (command === "calendar") {

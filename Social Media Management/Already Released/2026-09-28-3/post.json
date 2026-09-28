@@ -3,7 +3,7 @@
   "date": "2026-09-28",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "client-spotlight",
   "title": "LinkedIn: Ellenton Family Practice Direct in the top three",
   "platforms": {
@@ -90,7 +90,12 @@
       "promotedAt": "2026-09-25T16:54:55.829Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-28T12:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7510308016462704643"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-i-b"

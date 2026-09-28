@@ -166,8 +166,15 @@ Once a folder is `approved`:
    the `getScheduledPosts` arguments that cover every scheduled folder. Claude
    calls `getScheduledPosts` with exactly those arguments plus brandId
    7076479, saves the raw JSON response to a file, and runs
-   `node tools/social.mjs reconcile --from <file>`. Folders whose posts are
-   no longer scheduled move to `Already Released/`. A folder with any draft
+   `node tools/social.mjs reconcile --from <file>`. A folder has published once
+   its time has passed and each of its posts is either gone from the list or
+   listed with every provider `"status": "PUBLISHED"` (Metricool keeps
+   published posts in `getScheduledPosts`). It moves to `Already Released/`,
+   and each network's `publicUrl` is saved as `published.<network>.permalink`.
+   The saved JSON must keep each item's `uuid`, `draft` and `providers`
+   (`network`, `status`, `publicUrl`); a list with uuids alone reads as still
+   pending. A provider whose status names an error or failure is reported, the
+   folder is left where it is, and the command exits 1. A folder with any draft
    waits, whatever the time, until it is promoted. R2 objects are deleted a
    week after publishing. One folder that cannot be moved is reported and the
    rest still go; the command then exits 1.

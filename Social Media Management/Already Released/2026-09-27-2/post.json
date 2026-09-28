@@ -3,7 +3,7 @@
   "date": "2026-09-27",
   "time": "17:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "ai-launch",
   "title": "LinkedIn: 3 prompts to plan your week with AI",
   "platforms": {
@@ -164,7 +164,12 @@
       "promotedAt": "2026-09-25T16:53:35.971Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-27T21:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7510081289228550144"
+    }
+  },
   "credits": {},
   "lastError": null
 }
