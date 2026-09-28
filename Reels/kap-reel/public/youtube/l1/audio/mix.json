@@ -1,0 +1,87 @@
+{
+  "_note": "Written by scripts/youtube/l1/mix.ts. The mix itself is assets/youtube/l1/mix.wav (staged, gitignored); rerun the script to rebuild it.",
+  "builtAt": "2026-09-28T16:36:59.892Z",
+  "programSeconds": 343,
+  "musicSourceLufs": -17.67,
+  "voiceBusLufs": -18.66,
+  "masterGainDb": 4.66,
+  "bedGainUnderVoiceDb": -12.99,
+  "bedGainEndScreenDb": -4.99,
+  "musicUnderVoiceTargetLufs": -26,
+  "musicEndScreenTargetLufs": -18,
+  "limiterCeilingDb": -7.33,
+  "final": {
+    "integratedLufs": -14,
+    "truePeakDbtp": -1.68,
+    "lra": 3.2
+  },
+  "musicUnderVoiceLufs": -25.62,
+  "measuredEndScreenLufs": -17.42,
+  "beats": [
+    {
+      "beat": 1,
+      "startSeconds": 0,
+      "gainDb": 11.6
+    },
+    {
+      "beat": 2,
+      "startSeconds": 11.4,
+      "gainDb": 14.9
+    },
+    {
+      "beat": 3,
+      "startSeconds": 25.3,
+      "gainDb": 17.4
+    },
+    {
+      "beat": 4,
+      "startSeconds": 76.9,
+      "gainDb": 17.9
+    },
+    {
+      "beat": 5,
+      "startSeconds": 109,
+      "gainDb": 13.9
+    },
+    {
+      "beat": 6,
+      "startSeconds": 133.633,
+      "gainDb": 16.1
+    },
+    {
+      "beat": 7,
+      "startSeconds": 156.833,
+      "gainDb": 13
+    },
+    {
+      "beat": 8,
+      "startSeconds": 177.767,
+      "gainDb": 13.8
+    },
+    {
+      "beat": 9,
+      "startSeconds": 203.8,
+      "gainDb": 14.1
+    },
+    {
+      "beat": 10,
+      "startSeconds": 225.7,
+      "gainDb": 14.8
+    },
+    {
+      "beat": 11,
+      "startSeconds": 249.833,
+      "gainDb": 15.9
+    },
+    {
+      "beat": 12,
+      "startSeconds": 297.033,
+      "gainDb": 11.7
+    },
+    {
+      "beat": 13,
+      "startSeconds": 323.4,
+      "gainDb": 13.3
+    }
+  ]
+}

@@ -37,3 +37,7 @@ assets/social/**/*.mp4
 public/youtube/*/captures/*.mp4
 public/youtube/*/captures/*.png
 public/youtube/*/captures/stills/
+
+# YouTube media staged for Remotion by scripts/youtube/<video>/stage.ts. The
+# sources stay in public/youtube/<video>/; these are copies (public dir is ./assets).
+assets/youtube/
