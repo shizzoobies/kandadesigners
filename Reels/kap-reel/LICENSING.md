@@ -1201,3 +1201,38 @@ ending. The raw take stays at `assets/audio/raw/music-w1005-r-32s.mp3`. `music-w
 (`assets/audio/raw/music-w1005-c-32s.mp3`, copied to `out/candidates/music-w1005-c.mp3`)
 passed every check on the first take. Delivered: the reel measures -14.0 LUFS integrated,
 -1.4 dBTP (17.0s); the slide video -14.2 LUFS, -1.9 dBTP (22.0s).
+
+## YouTube L1 narration and music, 2026-09-28
+
+Narration and a new bed for YouTube L1, "Test your website with one key" (folder
+`2026-10-02-4`, publishes Fri 2026-10-02 at 11:00 AM). Same ElevenLabs account and Pro
+plan as everything above. Generators: `scripts/youtube/l1/voice.ts` and
+`scripts/youtube/l1/music.ts` (both import `scripts/audio.ts` read-only). The music is
+logged in `config/audio.json` under `set: "youtube-l1"`; the narration is logged per
+take in `public/youtube/l1/audio/voice.json`. Summary and mix notes:
+`public/youtube/l1/audio/README.md`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| Narration, Amy, 13 beats: 13 first takes plus 6 retakes (beats 1, 3, 11, 13) | eleven_multilingual_v2 | 19 | 6,516 |
+| Pronunciation tests and W-C-A-G calibration reads | eleven_multilingual_v2 | 9 | 171 |
+| Transcription check of every take and test | scribe_v2 | 28 | 196 |
+| `music-yt-l1` candidate A, calm downtempo, vibraphone, pads, mellow bass, brushed shaker, about 84 bpm, 390s. Chosen | music_v2 | 1 | 10,669 |
+| `music-yt-l1` candidate B, calm ambient electronic, filtered arpeggio, pads, sub bass, soft kick, about 90 bpm, 390s. Alternative, opening trimmed | music_v2 | 1 | 10,669 |
+| Vocal check, both beds: zero words transcribed | scribe_v2 | 2 | 362 |
+| **Set total** | | **60** | **28,583** |
+
+The figures are before and after deltas on the usage endpoint. The text to speech
+deltas equal the characters sent (beat 4 take 1 billed 429 for 444), so nothing else
+landed in those windows. The chosen bed is `public/youtube/l1/audio/music/music-yt-l1.mp3`,
+a copy of candidate A, logged in `Social Media Management/music-history.json` for the
+2026-10-02 publish. Candidate B came back with a 21 second pad intro; its opening was
+cut at the groove's first downbeat (21.346s, 5 ms fade in) into
+`music-yt-l1-b-trimmed.mp3`. The raw take is kept.
+
+The music is covered by the Music rights and the 2026-09-04 commercial use
+confirmation, as above. The narration voice is **Amy**, voice id
+`OZxMHsGaBmV5pjMIDIn0`, an ElevenLabs Voice Library voice (category `professional`),
+not a premade one. That carries the open **to confirm** question in "Narration (text
+to speech), tutorial reels" above, plus the second question that section names for a
+Voice Library voice. Close both before L1 publishes on 2026-10-02.

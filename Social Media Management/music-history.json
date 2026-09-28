@@ -40,5 +40,12 @@
     "published": null,
     "post": "Navigating North Florida launch reel, delivered 2026-09-20",
     "_note": "Has an audio track; its source is not on disk and it is not an ElevenLabs track in config/audio.json. Publish date not recorded."
+  },
+  {
+    "track": "music-yt-l1",
+    "file": "D:/kap-reel/public/youtube/l1/audio/music/music-yt-l1.mp3",
+    "published": "2026-10-02",
+    "post": "YouTube L1, Test your website with one key (To Be Released/2026-10-02-4), long-form 16:9, the bed under the narration",
+    "_note": "ElevenLabs music_v2, candidate a (public/youtube/l1/audio/music/music-yt-l1-a.mp3): calm, warm, focused, soft vibraphone chords, warm analog pads, mellow electric bass, brushed shaker and rim click, about 84 bpm, 390s asked. Logged in D:/kap-reel/config/audio.json under set \"youtube-l1\". Dated for the planned 2026-10-02 11:00 AM publish; generator scripts/youtube/l1/music.ts."
   }
 ]

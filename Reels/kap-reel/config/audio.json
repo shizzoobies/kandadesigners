@@ -1002,6 +1002,118 @@
         "pass": true
       },
       "set": "social-w0929"
+    },
+    {
+      "kind": "music",
+      "id": "music-yt-l1-a",
+      "file": "public/youtube/l1/audio/music/music-yt-l1-a.mp3",
+      "prompt": "Calm, warm, steady downtempo instrumental at about 84 bpm in a relaxed major key. A soft vibraphone plays sparse, gentle chords and a simple recurring two note figure, warm analog synth pads hold the harmony underneath, a round, mellow electric bass keeps a slow steady pulse, and very light percussion keeps time: a soft brushed shaker and a quiet rim click, no loud drums. Friendly, clear headed and focused, like a quiet, sunny studio in the afternoon. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. This is a background bed under a spoken voiceover in a six minute how-to video, so it stays calm, steady and unobtrusive from start to finish: the same gentle groove, tempo, key and texture the whole way through, evolving only very slightly, like a seamless loop. Leave space in the midrange where a voice sits: no busy lead melody, no solos, no prominent hook competing for attention. No key change, no tempo change, no drop, no riser, no sweep, no impact hit, no big build, no breakdown, no pause or silence anywhere in the middle, and no section noticeably louder or quieter than the rest. Soft clean start: the groove is there from the first beat, no long fade in, no silence at the start. End cleanly: resolve on a final chord that rings out over the last few seconds, no abrupt cut. Warm, clean modern production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 390000,
+      "creditsMeasured": 10669,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-28T15:48:47.386Z",
+      "accepted": true,
+      "notes": "calm, warm, focused, soft vibraphone chords, warm analog pads, mellow electric bass, brushed shaker and rim click, about 84 bpm. Candidate a for music-yt-l1, the bed under the narration of YouTube L1 (folder 2026-10-02-4). Measured duration 390.02s, -17.6 LUFS, LRA 3.6 LU, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.7,
+        "wholeTrackMeanDb": -19.2,
+        "deficitDb": -3.5,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "levelCheck": {
+        "integratedLufs": -17.6,
+        "truePeakDbtp": -1,
+        "lra": 3.6,
+        "medianBlockLufs": -17.9,
+        "lowestBlock": {
+          "from": 60,
+          "belowMedianDb": 0.3
+        },
+        "highestBlock": {
+          "from": 80,
+          "aboveMedianDb": 0.5
+        },
+        "steady": true,
+        "gainToMinus26Db": -8.4
+      },
+      "set": "youtube-l1",
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 181
+      }
+    },
+    {
+      "kind": "music",
+      "id": "music-yt-l1-b",
+      "file": "public/youtube/l1/audio/music/music-yt-l1-b.mp3",
+      "prompt": "Calm, warm, steady ambient electronic instrumental at about 90 bpm in a soft major key. A gently filtered synth arpeggio ripples quietly and evenly in the background, warm evolving pads carry the harmony, a mellow sub bass holds the root, and a soft muted kick with a light, ticking closed hi hat keeps a steady pulse. Clear, modern and quietly optimistic, like a calm walkthrough of a well built website. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. This is a background bed under a spoken voiceover in a six minute how-to video, so it stays calm, steady and unobtrusive from start to finish: the same gentle groove, tempo, key and texture the whole way through, evolving only very slightly, like a seamless loop. Leave space in the midrange where a voice sits: no busy lead melody, no solos, no prominent hook competing for attention. No key change, no tempo change, no drop, no riser, no sweep, no impact hit, no big build, no breakdown, no pause or silence anywhere in the middle, and no section noticeably louder or quieter than the rest. Soft clean start: the groove is there from the first beat, no long fade in, no silence at the start. End cleanly: resolve on a final chord that rings out over the last few seconds, no abrupt cut. Warm, clean modern production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 390000,
+      "creditsMeasured": 10669,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-09-28T15:49:44.922Z",
+      "accepted": false,
+      "notes": "calm, clear, quietly optimistic, gently filtered synth arpeggio, warm evolving pads, mellow sub bass, soft muted kick and ticking hat, about 90 bpm. Candidate b for music-yt-l1, the bed under the narration of YouTube L1 (folder 2026-10-02-4). Flagged: first second 17.4 dB under the mean; level not steady: block at 10s is 8.4 dB under the median, block at 160s 1.1 dB over.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -33.3,
+        "wholeTrackMeanDb": -15.9,
+        "deficitDb": 17.4,
+        "toleranceDb": 6,
+        "pass": false
+      },
+      "levelCheck": {
+        "integratedLufs": -14.8,
+        "truePeakDbtp": -1.4,
+        "lra": 3.9,
+        "medianBlockLufs": -14.7,
+        "lowestBlock": {
+          "from": 10,
+          "belowMedianDb": 8.4
+        },
+        "highestBlock": {
+          "from": 160,
+          "aboveMedianDb": 1.1
+        },
+        "steady": false,
+        "gainToMinus26Db": -11.2
+      },
+      "set": "youtube-l1",
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 181
+      },
+      "trimmed": {
+        "file": "public/youtube/l1/audio/music/music-yt-l1-b-trimmed.mp3",
+        "startSeconds": 21.346,
+        "durationSeconds": 368.68,
+        "pass": true,
+        "reasons": [],
+        "levelCheck": {
+          "integratedLufs": -14.7,
+          "truePeakDbtp": -1.4,
+          "lra": 2.6,
+          "medianBlockLufs": -14.5,
+          "lowestBlock": {
+            "from": 220,
+            "belowMedianDb": 1.2
+          },
+          "highestBlock": {
+            "from": 140,
+            "aboveMedianDb": 0.9
+          },
+          "steady": true,
+          "gainToMinus26Db": -11.3
+        },
+        "note": "Opening cut at the first full downbeat, 5 ms fade in, re-encoded mp3 320k 48 kHz. No credits."
+      }
     }
   ],
   "mixes": [

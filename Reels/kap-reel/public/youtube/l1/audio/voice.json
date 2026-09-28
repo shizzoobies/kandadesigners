@@ -1,0 +1,2840 @@
+{
+  "_note": "YouTube L1 narration, one file per beat. text is exactly what was sent to ElevenLabs. durationSeconds is measured off the kept file (ffprobe). creditsMeasured per take is a before and after delta on /v1/usage/character-stats (the scripts/voice.ts method); a beat's creditsMeasured is the sum over all its takes. sttCreditsMeasured is the transcription check. Other work on the account in the same window would land in a delta, so read credits as upper bounds. Written by scripts/youtube/l1/voice.ts.",
+  "video": "L1, Test your website with one key (publishes 2026-10-02 11:00 AM)",
+  "folder": "Social Media Management/To Be Released/2026-10-02-4",
+  "script": "To Be Released/2026-10-02-4/source/script.md",
+  "voice": {
+    "id": "OZxMHsGaBmV5pjMIDIn0",
+    "name": "Amy",
+    "model": "eleven_multilingual_v2",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0,
+      "use_speaker_boost": true,
+      "speed": 1
+    },
+    "outputFormat": "mp3_44100_192",
+    "endpoint": "POST /v1/text-to-speech/OZxMHsGaBmV5pjMIDIn0?output_format=mp3_44100_192, body { text, model_id, voice_settings, seed }"
+  },
+  "wcagSpelling": "W-C-A-G",
+  "wcagSpellingNote": "W-C-A-G, as the script writes it, reads as four letters. Tested 2026-09-28 in the frame \"__ two point two\": the transcriber's W-C-A-G token ran 0.62s, against 0.28s for a forced word read (\"wick-ag\", test-08) and 1.02s for forced letters (\"double-you, see, ay, gee\", test-09), and both W-C-A-G tests came back as WCAG with full confidence. \"W, C, A, G\" read slower (1.12s in the same frame) but alone came back as \"WC AJ\" with the transcriber unsure, the A and G running together, so it was not used. In the kept beats the token runs 0.92s (beat 3) and 0.96s (beat 11).",
+  "tests": [
+    {
+      "id": "k-and-a",
+      "text": "K and A Performance",
+      "characters": 19,
+      "seed": 9001,
+      "file": "voice/tests/test-01-k-and-a.mp3",
+      "sttFile": "voice/tests/test-01-k-and-a.stt.json",
+      "durationSeconds": 1.347,
+      "creditsMeasured": 19,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:34:44.750Z",
+      "analysis": {
+        "durationSeconds": 1.347,
+        "leadSeconds": 0.08,
+        "trailSeconds": 0.25,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -13.5,
+        "integratedLufs": -27.4,
+        "truePeakDbtp": -13.4,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "K&A performance",
+        "wordErrors": 0,
+        "diff": [],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [],
+        "charsPerSecond": 18.63,
+        "paceVsReference": 0.275,
+        "flags": [],
+        "score": 0
+      }
+    },
+    {
+      "id": "ninety-day",
+      "text": "the Ninety-Day AI Launch",
+      "characters": 24,
+      "seed": 9002,
+      "file": "voice/tests/test-02-ninety-day.mp3",
+      "sttFile": "voice/tests/test-02-ninety-day.stt.json",
+      "durationSeconds": 1.858,
+      "creditsMeasured": 24,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:34:52.104Z",
+      "analysis": {
+        "durationSeconds": 1.858,
+        "leadSeconds": 0.04,
+        "trailSeconds": 0.3,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -12.3,
+        "integratedLufs": -25.3,
+        "truePeakDbtp": -12.3,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "The 90-day AI launch",
+        "wordErrors": 0,
+        "diff": [],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [],
+        "charsPerSecond": 15.79,
+        "paceVsReference": 0.081,
+        "flags": [],
+        "score": 0
+      }
+    },
+    {
+      "id": "wcag",
+      "text": "W-C-A-G",
+      "characters": 7,
+      "seed": 9003,
+      "file": "voice/tests/test-03-wcag.mp3",
+      "sttFile": "voice/tests/test-03-wcag.stt.json",
+      "durationSeconds": 1.3,
+      "creditsMeasured": 7,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:34:59.040Z",
+      "analysis": {
+        "durationSeconds": 1.3,
+        "leadSeconds": 0.01,
+        "trailSeconds": 0.22,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -11.3,
+        "integratedLufs": -31.6,
+        "truePeakDbtp": -11.3,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "WCAG",
+        "wordErrors": 0,
+        "diff": [],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [
+          {
+            "heard": "WCAG",
+            "seconds": 1.07
+          }
+        ],
+        "charsPerSecond": 6.54,
+        "paceVsReference": -0.552,
+        "flags": [],
+        "score": 0
+      }
+    },
+    {
+      "id": "wcag-22",
+      "text": "W-C-A-G two point two",
+      "characters": 21,
+      "seed": 9004,
+      "file": "voice/tests/test-04-wcag-22.mp3",
+      "sttFile": "voice/tests/test-04-wcag-22.stt.json",
+      "durationSeconds": 1.765,
+      "creditsMeasured": 21,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:35:06.622Z",
+      "analysis": {
+        "durationSeconds": 1.765,
+        "leadSeconds": 0,
+        "trailSeconds": 0.28,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -12.5,
+        "integratedLufs": -28.9,
+        "truePeakDbtp": -12.5,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "WCAG 2.2",
+        "wordErrors": 0,
+        "diff": [],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [
+          {
+            "heard": "WCAG",
+            "seconds": 0.62
+          }
+        ],
+        "charsPerSecond": 14.19,
+        "paceVsReference": -0.029,
+        "flags": [],
+        "score": 0
+      }
+    },
+    {
+      "id": "pickup",
+      "text": "pickup",
+      "characters": 6,
+      "seed": 9005,
+      "file": "voice/tests/test-05-pickup.mp3",
+      "sttFile": "voice/tests/test-05-pickup.stt.json",
+      "durationSeconds": 0.882,
+      "creditsMeasured": 6,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": null,
+      "createdAt": "2026-09-28T15:36:11.121Z",
+      "analysis": {
+        "durationSeconds": 0.882,
+        "leadSeconds": 0.08,
+        "trailSeconds": 0.35,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -4,
+        "integratedLufs": -21.2,
+        "truePeakDbtp": -3.9,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "Pick up",
+        "wordErrors": 0,
+        "diff": [],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [],
+        "charsPerSecond": 13.33,
+        "paceVsReference": -0.087,
+        "flags": [],
+        "score": 0
+      }
+    },
+    {
+      "id": "ref-word",
+      "text": "wick-ag two point two",
+      "characters": 21,
+      "seed": 9008,
+      "file": "voice/tests/test-08-ref-word.mp3",
+      "sttFile": "voice/tests/test-08-ref-word.stt.json",
+      "durationSeconds": 1.393,
+      "creditsMeasured": 21,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:37:23.888Z",
+      "analysis": {
+        "durationSeconds": 1.393,
+        "leadSeconds": 0.06,
+        "trailSeconds": 0.24,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -8.7,
+        "integratedLufs": -28.3,
+        "truePeakDbtp": -8.7,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "WCAG 2.2",
+        "wordErrors": 3,
+        "diff": [
+          "-wick",
+          "-ag",
+          "+wcag"
+        ],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [],
+        "charsPerSecond": 19.27,
+        "paceVsReference": 0.319,
+        "flags": [
+          "transcript differs: -wick -ag +wcag"
+        ],
+        "score": 30
+      }
+    },
+    {
+      "id": "ref-letters",
+      "text": "double-you, see, ay, gee, two point two",
+      "characters": 39,
+      "seed": 9009,
+      "file": "voice/tests/test-09-ref-letters.mp3",
+      "sttFile": "voice/tests/test-09-ref-letters.stt.json",
+      "durationSeconds": 2.368,
+      "creditsMeasured": 39,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:37:31.725Z",
+      "analysis": {
+        "durationSeconds": 2.368,
+        "leadSeconds": 0.07,
+        "trailSeconds": 0.37,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -2.3,
+        "integratedLufs": -23.7,
+        "truePeakDbtp": -2.3,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "W-C-I-G 2.2",
+        "wordErrors": 6,
+        "diff": [
+          "-double",
+          "-you",
+          "-see",
+          "-ay",
+          "-gee",
+          "+wcig"
+        ],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [],
+        "charsPerSecond": 20.21,
+        "paceVsReference": 0.383,
+        "flags": [
+          "transcript differs: -double -you -see -ay -gee +wcig"
+        ],
+        "score": 60
+      }
+    },
+    {
+      "id": "wcag-commas",
+      "text": "W, C, A, G",
+      "characters": 10,
+      "seed": 9006,
+      "file": "voice/tests/test-06-wcag-commas.mp3",
+      "sttFile": "voice/tests/test-06-wcag-commas.stt.json",
+      "durationSeconds": 1.254,
+      "creditsMeasured": 10,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:38:16.453Z",
+      "analysis": {
+        "durationSeconds": 1.254,
+        "leadSeconds": 0.08,
+        "trailSeconds": 0.26,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -12.8,
+        "integratedLufs": -30.8,
+        "truePeakDbtp": -12.8,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "WC AJ",
+        "wordErrors": 3,
+        "diff": [
+          "-wcag",
+          "+wc",
+          "+aj"
+        ],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [
+          {
+            "word": "AJ",
+            "logprob": -1.29
+          }
+        ],
+        "wcagSpans": [
+          {
+            "heard": "WC AJ",
+            "seconds": 0.91
+          }
+        ],
+        "charsPerSecond": 10.99,
+        "paceVsReference": -0.248,
+        "flags": [
+          "transcript differs: -wcag +wc +aj",
+          "transcriber unsure: AJ"
+        ],
+        "score": 31
+      }
+    },
+    {
+      "id": "wcag-22-commas",
+      "text": "W, C, A, G two point two",
+      "characters": 24,
+      "seed": 9007,
+      "file": "voice/tests/test-07-wcag-22-commas.mp3",
+      "sttFile": "voice/tests/test-07-wcag-22-commas.stt.json",
+      "durationSeconds": 2.368,
+      "creditsMeasured": 24,
+      "creditsBucket": "TTS",
+      "sttCreditsMeasured": 1,
+      "createdAt": "2026-09-28T15:38:26.082Z",
+      "analysis": {
+        "durationSeconds": 2.368,
+        "leadSeconds": 0.06,
+        "trailSeconds": 0.25,
+        "maxGapInPhrase": 0,
+        "maxGapAtBoundary": 0,
+        "gaps": [],
+        "peakDbfs": -10.1,
+        "integratedLufs": -27.7,
+        "truePeakDbtp": -10,
+        "levelWindows": [],
+        "levelSpreadLu": 0,
+        "clippedRuns": 0,
+        "transcript": "WCAG 2.2",
+        "wordErrors": 0,
+        "diff": [],
+        "audioEvents": [],
+        "shortWords": [],
+        "unsureWords": [],
+        "wcagSpans": [
+          {
+            "heard": "WCAG",
+            "seconds": 1.12
+          }
+        ],
+        "charsPerSecond": 11.65,
+        "paceVsReference": -0.203,
+        "flags": [],
+        "score": 0
+      }
+    }
+  ],
+  "beats": [
+    {
+      "beat": 1,
+      "title": "Hook",
+      "file": "voice/beat-01.mp3",
+      "text": "Press the Tab key on your website. Watch where the highlight goes. If you can't see it, or it skips right past your Book Now button, some of your customers can't use your site.",
+      "characters": 176,
+      "durationSeconds": 10.681,
+      "takeCount": 3,
+      "keptTake": 2,
+      "keptBy": "auto: lowest check score (2) of 3 take(s)",
+      "creditsMeasured": 528,
+      "creditsKeptTake": 176,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 101,
+          "file": "voice/takes/beat-01-t1.mp3",
+          "sttFile": "voice/takes/beat-01-t1.stt.json",
+          "durationSeconds": 9.66,
+          "creditsMeasured": 176,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 4,
+          "createdAt": "2026-09-28T15:38:48.210Z",
+          "analysis": {
+            "durationSeconds": 9.66,
+            "leadSeconds": 0.08,
+            "trailSeconds": 0.28,
+            "maxGapInPhrase": 0.29,
+            "maxGapAtBoundary": 0.49,
+            "gaps": [
+              {
+                "at": 1.51,
+                "seconds": 0.35,
+                "after": "website."
+              },
+              {
+                "at": 3.15,
+                "seconds": 0.14,
+                "after": "goes."
+              },
+              {
+                "at": 3.42,
+                "seconds": 0.28,
+                "after": "goes."
+              },
+              {
+                "at": 4.53,
+                "seconds": 0.29,
+                "after": "it"
+              },
+              {
+                "at": 6.9,
+                "seconds": 0.49,
+                "after": "button,"
+              }
+            ],
+            "peakDbfs": -9.8,
+            "integratedLufs": -29.5,
+            "truePeakDbtp": -9.7,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -29
+              },
+              {
+                "from": 6,
+                "lufs": -31.5
+              }
+            ],
+            "levelSpreadLu": 2.5,
+            "clippedRuns": 0,
+            "transcript": "Press the Tab key on your website. Watch where the highlight goes. If you can't see it or it skips right past your Book Now button, some of your customers can't use your site",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 18.92,
+            "paceVsReference": 0.295,
+            "flags": [
+              "pace 30% off the reference"
+            ],
+            "score": 3
+          }
+        },
+        {
+          "take": 2,
+          "seed": 102,
+          "file": "voice/takes/beat-01-t2.mp3",
+          "sttFile": "voice/takes/beat-01-t2.stt.json",
+          "durationSeconds": 10.681,
+          "creditsMeasured": 176,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 5,
+          "createdAt": "2026-09-28T15:46:07.742Z",
+          "analysis": {
+            "durationSeconds": 10.681,
+            "leadSeconds": 0.08,
+            "trailSeconds": 0.32,
+            "maxGapInPhrase": 0.5,
+            "maxGapAtBoundary": 0.87,
+            "gaps": [
+              {
+                "at": 1.8,
+                "seconds": 0.49,
+                "after": "website."
+              },
+              {
+                "at": 3.58,
+                "seconds": 0.87,
+                "after": "goes."
+              },
+              {
+                "at": 5.22,
+                "seconds": 0.5,
+                "after": "it"
+              },
+              {
+                "at": 7.73,
+                "seconds": 0.5,
+                "after": "button,"
+              }
+            ],
+            "peakDbfs": -7.2,
+            "integratedLufs": -27.6,
+            "truePeakDbtp": -7.2,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -26.8
+              },
+              {
+                "from": 6,
+                "lufs": -30
+              }
+            ],
+            "levelSpreadLu": 3.2,
+            "clippedRuns": 0,
+            "transcript": "Press the Tab key on your website. Watch where the highlight goes. If you can't see it or it skips right past your Book Now button, some of your customers can't use your site",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 17.12,
+            "paceVsReference": 0.172,
+            "flags": [
+              "pace 17% off the reference"
+            ],
+            "score": 2
+          }
+        },
+        {
+          "take": 3,
+          "seed": 103,
+          "file": "voice/takes/beat-01-t3.mp3",
+          "sttFile": "voice/takes/beat-01-t3.stt.json",
+          "durationSeconds": 10.588,
+          "creditsMeasured": 176,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 5,
+          "createdAt": "2026-09-28T15:47:26.528Z",
+          "analysis": {
+            "durationSeconds": 10.588,
+            "leadSeconds": 0.06,
+            "trailSeconds": 0.27,
+            "maxGapInPhrase": 0.55,
+            "maxGapAtBoundary": 0.6,
+            "gaps": [
+              {
+                "at": 1.58,
+                "seconds": 0.6,
+                "after": "website."
+              },
+              {
+                "at": 3.57,
+                "seconds": 0.42,
+                "after": "goes."
+              },
+              {
+                "at": 4.9,
+                "seconds": 0.55,
+                "after": "it"
+              },
+              {
+                "at": 7.86,
+                "seconds": 0.49,
+                "after": "button,"
+              }
+            ],
+            "peakDbfs": -12.7,
+            "integratedLufs": -31.8,
+            "truePeakDbtp": -12.7,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -31.6
+              },
+              {
+                "from": 6,
+                "lufs": -32.8
+              }
+            ],
+            "levelSpreadLu": 1.2,
+            "clippedRuns": 0,
+            "transcript": "Press the Tab key on your website. Watch where the highlight goes. If you can't see it or it skips right past your Book Now button, some of your customers can't use your site",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 17.15,
+            "paceVsReference": 0.174,
+            "flags": [
+              "pace 17% off the reference"
+            ],
+            "score": 2
+          }
+        }
+      ]
+    },
+    {
+      "beat": 2,
+      "title": "Intro",
+      "file": "voice/beat-02.mp3",
+      "text": "I'm with K and A Performance, a web studio in Gainesville. In the next five minutes, you'll learn how to run this test, what to look for, and what to ask your web person to fix. Nothing to install. Just one key.",
+      "characters": 211,
+      "durationSeconds": 13.189,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (3) of 1 take(s)",
+      "creditsMeasured": 211,
+      "creditsKeptTake": 211,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 201,
+          "file": "voice/takes/beat-02-t1.mp3",
+          "sttFile": "voice/takes/beat-02-t1.stt.json",
+          "durationSeconds": 13.189,
+          "creditsMeasured": 211,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 6,
+          "createdAt": "2026-09-28T15:38:57.155Z",
+          "analysis": {
+            "durationSeconds": 13.189,
+            "leadSeconds": 0.06,
+            "trailSeconds": 0.23,
+            "maxGapInPhrase": 0,
+            "maxGapAtBoundary": 0.5,
+            "gaps": [
+              {
+                "at": 1.58,
+                "seconds": 0.28,
+                "after": "Performance,"
+              },
+              {
+                "at": 3.35,
+                "seconds": 0.23,
+                "after": "Gainesville."
+              },
+              {
+                "at": 6.47,
+                "seconds": 0.34,
+                "after": "test,"
+              },
+              {
+                "at": 9.97,
+                "seconds": 0.5,
+                "after": "fix."
+              },
+              {
+                "at": 11.55,
+                "seconds": 0.48,
+                "after": "install,"
+              }
+            ],
+            "peakDbfs": -11.5,
+            "integratedLufs": -30.9,
+            "truePeakDbtp": -11.5,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -30.3
+              },
+              {
+                "from": 6,
+                "lufs": -32
+              }
+            ],
+            "levelSpreadLu": 1.7,
+            "clippedRuns": 0,
+            "transcript": "I'm with K&A Performance, a web studio in Gainesville. In the next five minutes, you'll learn how to run this test, what to look for, and what to ask your web person to fix. Nothing to install, just one key",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 16.36,
+            "paceVsReference": 0.12,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 3,
+      "title": "What focus is",
+      "file": "voice/beat-03.mp3",
+      "text": "First, what are we looking at? When you press Tab, your browser moves to the next thing you can use. A link, a button, a box you type in. That spot is called focus. A good site draws a clear outline around it, so you always know where you are.\nWho needs that? More people than you might think. People who are blind use a screen reader, and they get around a page with the keyboard. People with tremors, like those from Parkinson's, or anyone who finds a mouse hard to control. Someone with a broken arm this month. And plenty of people who just like the keyboard because it's faster.\nIf your site only works with a mouse, every one of them hits a wall. There's a standard for this, too. The Web Content Accessibility Guidelines, called W-C-A-G, say everything on your site should work from a keyboard.",
+      "characters": 801,
+      "durationSeconds": 50.898,
+      "takeCount": 2,
+      "keptTake": 2,
+      "keptBy": "auto: lowest check score (0) of 2 take(s)",
+      "creditsMeasured": 1602,
+      "creditsKeptTake": 801,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 301,
+          "file": "voice/takes/beat-03-t1.mp3",
+          "sttFile": "voice/takes/beat-03-t1.stt.json",
+          "durationSeconds": 51.316,
+          "creditsMeasured": 801,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 24,
+          "createdAt": "2026-09-28T15:39:15.466Z",
+          "analysis": {
+            "durationSeconds": 51.316,
+            "leadSeconds": 0.07,
+            "trailSeconds": 0.35,
+            "maxGapInPhrase": 0.63,
+            "maxGapAtBoundary": 0.81,
+            "gaps": [
+              {
+                "at": 0.54,
+                "seconds": 0.23,
+                "after": "First,"
+              },
+              {
+                "at": 1.55,
+                "seconds": 0.13,
+                "after": "looking"
+              },
+              {
+                "at": 1.69,
+                "seconds": 0.51,
+                "after": "at?"
+              },
+              {
+                "at": 3.34,
+                "seconds": 0.19,
+                "after": "Tab,"
+              },
+              {
+                "at": 5.81,
+                "seconds": 0.2,
+                "after": "use."
+              },
+              {
+                "at": 6.05,
+                "seconds": 0.35,
+                "after": "use."
+              },
+              {
+                "at": 6.95,
+                "seconds": 0.2,
+                "after": "link,"
+              },
+              {
+                "at": 7.72,
+                "seconds": 0.35,
+                "after": "button,"
+              },
+              {
+                "at": 9.29,
+                "seconds": 0.54,
+                "after": "in."
+              },
+              {
+                "at": 11.47,
+                "seconds": 0.56,
+                "after": "focus."
+              },
+              {
+                "at": 14.55,
+                "seconds": 0.13,
+                "after": "so"
+              },
+              {
+                "at": 15.86,
+                "seconds": 0.58,
+                "after": "are."
+              },
+              {
+                "at": 16.97,
+                "seconds": 0.63,
+                "after": "needs"
+              },
+              {
+                "at": 18.98,
+                "seconds": 0.63,
+                "after": "think."
+              },
+              {
+                "at": 20.87,
+                "seconds": 0.29,
+                "after": "blind"
+              },
+              {
+                "at": 22.94,
+                "seconds": 0.43,
+                "after": "and"
+              },
+              {
+                "at": 25.17,
+                "seconds": 0.58,
+                "after": "keyboard."
+              },
+              {
+                "at": 26.69,
+                "seconds": 0.62,
+                "after": "tremors,"
+              },
+              {
+                "at": 28.59,
+                "seconds": 0.65,
+                "after": "Parkinson's,"
+              },
+              {
+                "at": 31.35,
+                "seconds": 0.7,
+                "after": "control."
+              },
+              {
+                "at": 33.74,
+                "seconds": 0.77,
+                "after": "month."
+              },
+              {
+                "at": 37.9,
+                "seconds": 0.52,
+                "after": "faster."
+              },
+              {
+                "at": 40.09,
+                "seconds": 0.23,
+                "after": "mouse,"
+              },
+              {
+                "at": 41.67,
+                "seconds": 0.63,
+                "after": "wall."
+              },
+              {
+                "at": 43.66,
+                "seconds": 0.81,
+                "after": "too."
+              },
+              {
+                "at": 48.04,
+                "seconds": 0.48,
+                "after": "WCAG,"
+              }
+            ],
+            "peakDbfs": -11.9,
+            "integratedLufs": -33.3,
+            "truePeakDbtp": -11.9,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -31
+              },
+              {
+                "from": 6,
+                "lufs": -31
+              },
+              {
+                "from": 12,
+                "lufs": -31.3
+              },
+              {
+                "from": 18,
+                "lufs": -35.6
+              },
+              {
+                "from": 24,
+                "lufs": -36.2
+              },
+              {
+                "from": 30,
+                "lufs": -36.1
+              },
+              {
+                "from": 36,
+                "lufs": -36.1
+              },
+              {
+                "from": 42,
+                "lufs": -35.9
+              },
+              {
+                "from": 48,
+                "lufs": -37.6
+              }
+            ],
+            "levelSpreadLu": 6.6,
+            "clippedRuns": 0,
+            "transcript": "First, what are we looking at? When you press Tab, your browser moves to the next thing you can use. A link, a button, a box you type in. That spot is called focus. A good site draws a clear outline around it so you always know where you are. Who needs that? More people than you might think. People who are blind use a screen reader, and they get around a page with the keyboard. People with tremors, like those from Parkinson's, or anyone who finds a mouse hard to control. Someone with a broken arm this month. And plenty of people who just like the keyboard because it's faster. If your site only works with a mouse, every one of them hits a wall. There's a standard for this too. The Web Content Accessibility Guidelines, called WCAG, say everything on your site should work from a keyboard.",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [
+              {
+                "heard": "WCAG,",
+                "seconds": 0.92
+              }
+            ],
+            "charsPerSecond": 15.74,
+            "paceVsReference": 0.077,
+            "flags": [
+              "level steps 6.6 LU across the beat"
+            ],
+            "score": 5
+          }
+        },
+        {
+          "take": 2,
+          "seed": 302,
+          "file": "voice/takes/beat-03-t2.mp3",
+          "sttFile": "voice/takes/beat-03-t2.stt.json",
+          "durationSeconds": 50.898,
+          "creditsMeasured": 801,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 24,
+          "createdAt": "2026-09-28T15:46:26.227Z",
+          "analysis": {
+            "durationSeconds": 50.898,
+            "leadSeconds": 0.08,
+            "trailSeconds": 0.28,
+            "maxGapInPhrase": 0.63,
+            "maxGapAtBoundary": 0.91,
+            "gaps": [
+              {
+                "at": 1.31,
+                "seconds": 0.91,
+                "after": "at?"
+              },
+              {
+                "at": 5.4,
+                "seconds": 0.46,
+                "after": "use:"
+              },
+              {
+                "at": 6.43,
+                "seconds": 0.13,
+                "after": "link,"
+              },
+              {
+                "at": 7.06,
+                "seconds": 0.14,
+                "after": "button,"
+              },
+              {
+                "at": 7.21,
+                "seconds": 0.25,
+                "after": "button,"
+              },
+              {
+                "at": 8.39,
+                "seconds": 0.59,
+                "after": "in."
+              },
+              {
+                "at": 10.31,
+                "seconds": 0.12,
+                "after": "called"
+              },
+              {
+                "at": 10.98,
+                "seconds": 0.68,
+                "after": "focus."
+              },
+              {
+                "at": 12.26,
+                "seconds": 0.17,
+                "after": "site"
+              },
+              {
+                "at": 14.27,
+                "seconds": 0.35,
+                "after": "it,"
+              },
+              {
+                "at": 16.43,
+                "seconds": 0.35,
+                "after": "are."
+              },
+              {
+                "at": 17.46,
+                "seconds": 0.73,
+                "after": "that?"
+              },
+              {
+                "at": 19.6,
+                "seconds": 0.52,
+                "after": "think."
+              },
+              {
+                "at": 21.25,
+                "seconds": 0.63,
+                "after": "blind"
+              },
+              {
+                "at": 22.93,
+                "seconds": 0.57,
+                "after": "reader,"
+              },
+              {
+                "at": 25.15,
+                "seconds": 0.68,
+                "after": "keyboard."
+              },
+              {
+                "at": 28.08,
+                "seconds": 0.66,
+                "after": "Parkinson's,"
+              },
+              {
+                "at": 29.64,
+                "seconds": 0.39,
+                "after": "anyone"
+              },
+              {
+                "at": 31.32,
+                "seconds": 0.34,
+                "after": "mouse"
+              },
+              {
+                "at": 32.52,
+                "seconds": 0.74,
+                "after": "control."
+              },
+              {
+                "at": 35.08,
+                "seconds": 0.23,
+                "after": "month,"
+              },
+              {
+                "at": 41.72,
+                "seconds": 0.78,
+                "after": "wall."
+              },
+              {
+                "at": 43.89,
+                "seconds": 0.44,
+                "after": "too."
+              }
+            ],
+            "peakDbfs": -13.4,
+            "integratedLufs": -33.4,
+            "truePeakDbtp": -13.3,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -33.1
+              },
+              {
+                "from": 6,
+                "lufs": -33.2
+              },
+              {
+                "from": 12,
+                "lufs": -32.4
+              },
+              {
+                "from": 18,
+                "lufs": -32.8
+              },
+              {
+                "from": 24,
+                "lufs": -34
+              },
+              {
+                "from": 30,
+                "lufs": -34.3
+              },
+              {
+                "from": 36,
+                "lufs": -34.8
+              },
+              {
+                "from": 42,
+                "lufs": -34.3
+              }
+            ],
+            "levelSpreadLu": 2.4,
+            "clippedRuns": 0,
+            "transcript": "First, what are we looking at? When you press Tab, your browser moves to the next thing you can use: a link, a button, a box you type in. That spot is called focus. A good site draws a clear outline around it, so you always know where you are. Who needs that? More people than you might think. People who are blind use a screen reader, and they get around a page with the keyboard. People with tremors like those from Parkinson's, or anyone who finds a mouse hard to control. Someone with a broken arm this month, and plenty of people who just like the keyboard because it's faster. If your site only works with a mouse, every one of them hits a wall. There's a standard for this too. The Web Content Accessibility Guidelines, called WCAG, say everything on your site should work from a keyboard.",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [
+              {
+                "heard": "WCAG,",
+                "seconds": 0.92
+              }
+            ],
+            "charsPerSecond": 15.85,
+            "paceVsReference": 0.085,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 4,
+      "title": "How to run it",
+      "file": "voice/beat-04.mp3",
+      "text": "Here's how to run the test. Open your home page on a computer. Don't click anything yet. Press Tab to move forward. Shift and Tab moves back. On a link, press Enter to follow it. On a button, Enter or the space bar should both work.\nUsing Safari on a Mac? Turn one thing on first. Open Safari settings, choose Advanced, and check Press Tab to highlight each item on a webpage.\nThat's all the setup. Let's try it on a real site. This is our own.",
+      "characters": 444,
+      "durationSeconds": 31.393,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (12) of 1 take(s)",
+      "creditsMeasured": 429,
+      "creditsKeptTake": 429,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 401,
+          "file": "voice/takes/beat-04-t1.mp3",
+          "sttFile": "voice/takes/beat-04-t1.stt.json",
+          "durationSeconds": 31.393,
+          "creditsMeasured": 429,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": null,
+          "createdAt": "2026-09-28T15:40:27.448Z",
+          "analysis": {
+            "durationSeconds": 31.393,
+            "leadSeconds": 0.07,
+            "trailSeconds": 0.34,
+            "maxGapInPhrase": 0.18,
+            "maxGapAtBoundary": 0.65,
+            "gaps": [
+              {
+                "at": 1.16,
+                "seconds": 0.55,
+                "after": "test."
+              },
+              {
+                "at": 3.29,
+                "seconds": 0.49,
+                "after": "computer."
+              },
+              {
+                "at": 4.83,
+                "seconds": 0.51,
+                "after": "yet."
+              },
+              {
+                "at": 6.76,
+                "seconds": 0.39,
+                "after": "forward,"
+              },
+              {
+                "at": 7.65,
+                "seconds": 0.16,
+                "after": "Shift"
+              },
+              {
+                "at": 9.29,
+                "seconds": 0.65,
+                "after": "back."
+              },
+              {
+                "at": 10.5,
+                "seconds": 0.26,
+                "after": "link,"
+              },
+              {
+                "at": 11.8,
+                "seconds": 0.62,
+                "after": "it."
+              },
+              {
+                "at": 13.04,
+                "seconds": 0.46,
+                "after": "button,"
+              },
+              {
+                "at": 14.95,
+                "seconds": 0.13,
+                "after": "bar"
+              },
+              {
+                "at": 15.97,
+                "seconds": 0.49,
+                "after": "work."
+              },
+              {
+                "at": 18.08,
+                "seconds": 0.53,
+                "after": "Mac?"
+              },
+              {
+                "at": 19.86,
+                "seconds": 0.55,
+                "after": "first."
+              },
+              {
+                "at": 21.67,
+                "seconds": 0.19,
+                "after": "Settings,"
+              },
+              {
+                "at": 21.89,
+                "seconds": 0.15,
+                "after": "Settings,"
+              },
+              {
+                "at": 26.26,
+                "seconds": 0.63,
+                "after": "webpage."
+              },
+              {
+                "at": 27.65,
+                "seconds": 0.63,
+                "after": "setup."
+              },
+              {
+                "at": 29.54,
+                "seconds": 0.4,
+                "after": "site."
+              },
+              {
+                "at": 30.34,
+                "seconds": 0.18,
+                "after": "This"
+              }
+            ],
+            "peakDbfs": -12.5,
+            "integratedLufs": -33.9,
+            "truePeakDbtp": -12.4,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -33.9
+              },
+              {
+                "from": 6,
+                "lufs": -34.4
+              },
+              {
+                "from": 12,
+                "lufs": -33.6
+              },
+              {
+                "from": 18,
+                "lufs": -35.7
+              },
+              {
+                "from": 24,
+                "lufs": -34.6
+              }
+            ],
+            "levelSpreadLu": 2.1,
+            "clippedRuns": 0,
+            "transcript": "Here's how to run the test. Open your homepage on a computer. Don't click anything yet. Press Tab to move forward, Shift and Tab moves back. On a link, press Enter to follow it. On a button, Enter or the Space bar should both work. Using Safari on a Mac? Turn one thing on first. Open Safari Settings, choose Advanced, and check Press Tab to highlight each item on a webpage. That's all the setup. Let's try it on a real site. This is our own.",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 14.33,
+            "paceVsReference": -0.019,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 5,
+      "title": "Check one",
+      "file": "voice/beat-05.mp3",
+      "text": "Check one. The skip link. Press Tab once, right after the page loads. On a well-built site, the first thing you see is a link that says Skip to content. Press Enter, and you jump past the menu, straight to the page. Without it, a keyboard user tabs through every menu item, on every page, just to reach what they came for.",
+      "characters": 322,
+      "durationSeconds": 23.917,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (3) of 1 take(s)",
+      "creditsMeasured": 322,
+      "creditsKeptTake": 322,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 501,
+          "file": "voice/takes/beat-05-t1.mp3",
+          "sttFile": "voice/takes/beat-05-t1.stt.json",
+          "durationSeconds": 23.917,
+          "creditsMeasured": 322,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 11,
+          "createdAt": "2026-09-28T15:40:39.636Z",
+          "analysis": {
+            "durationSeconds": 23.917,
+            "leadSeconds": 0.06,
+            "trailSeconds": 0.06,
+            "maxGapInPhrase": 0.37,
+            "maxGapAtBoundary": 0.61,
+            "gaps": [
+              {
+                "at": 0.63,
+                "seconds": 0.54,
+                "after": "one:"
+              },
+              {
+                "at": 1.96,
+                "seconds": 0.49,
+                "after": "link."
+              },
+              {
+                "at": 3.91,
+                "seconds": 0.12,
+                "after": "once"
+              },
+              {
+                "at": 5.46,
+                "seconds": 0.58,
+                "after": "loads."
+              },
+              {
+                "at": 6.97,
+                "seconds": 0.45,
+                "after": "site,"
+              },
+              {
+                "at": 8.54,
+                "seconds": 0.15,
+                "after": "see"
+              },
+              {
+                "at": 9.89,
+                "seconds": 0.37,
+                "after": "says"
+              },
+              {
+                "at": 11.5,
+                "seconds": 0.54,
+                "after": "Content."
+              },
+              {
+                "at": 12.74,
+                "seconds": 0.6,
+                "after": "Enter,"
+              },
+              {
+                "at": 14.7,
+                "seconds": 0.37,
+                "after": "menu"
+              },
+              {
+                "at": 16.26,
+                "seconds": 0.61,
+                "after": "page."
+              },
+              {
+                "at": 17.4,
+                "seconds": 0.41,
+                "after": "it,"
+              },
+              {
+                "at": 20.58,
+                "seconds": 0.29,
+                "after": "item"
+              },
+              {
+                "at": 20.88,
+                "seconds": 0.2,
+                "after": "item"
+              },
+              {
+                "at": 22.04,
+                "seconds": 0.26,
+                "after": "page"
+              },
+              {
+                "at": 23.61,
+                "seconds": 0.13,
+                "after": "for"
+              }
+            ],
+            "peakDbfs": -10.9,
+            "integratedLufs": -29.9,
+            "truePeakDbtp": -10.9,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -30.7
+              },
+              {
+                "from": 6,
+                "lufs": -30.3
+              },
+              {
+                "from": 12,
+                "lufs": -30.2
+              },
+              {
+                "from": 18,
+                "lufs": -30.4
+              }
+            ],
+            "levelSpreadLu": 0.5,
+            "clippedRuns": 0,
+            "transcript": "Check one: the skip link. Press Tab once right after the page loads. On a well-built site, the first thing you see is a link that says Skip to Content. Press Enter, and you jump past the menu straight to the page. Without it, a keyboard user tabs through every menu item on every page just to reach what they came for",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 13.53,
+            "paceVsReference": -0.074,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 6,
+      "title": "Check two",
+      "file": "voice/beat-06.mp3",
+      "text": "Check two. Can you always see where you are? Keep tabbing. Here, every link and button gets a clear outline. Now look at this plain test page we built for this video. Press Tab, and nothing seems to happen. The focus is there, but it's invisible. That's the problem we're looking for. The good news is it's one of the easier fixes.",
+      "characters": 331,
+      "durationSeconds": 22.477,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (6) of 1 take(s)",
+      "creditsMeasured": 331,
+      "creditsKeptTake": 331,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 601,
+          "file": "voice/takes/beat-06-t1.mp3",
+          "sttFile": "voice/takes/beat-06-t1.stt.json",
+          "durationSeconds": 22.477,
+          "creditsMeasured": 331,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 10,
+          "createdAt": "2026-09-28T15:40:52.005Z",
+          "analysis": {
+            "durationSeconds": 22.477,
+            "leadSeconds": 0.06,
+            "trailSeconds": 0.27,
+            "maxGapInPhrase": 0,
+            "maxGapAtBoundary": 0.72,
+            "gaps": [
+              {
+                "at": 0.76,
+                "seconds": 0.54,
+                "after": "two:"
+              },
+              {
+                "at": 2.86,
+                "seconds": 0.3,
+                "after": "are?"
+              },
+              {
+                "at": 3.75,
+                "seconds": 0.68,
+                "after": "tabbing."
+              },
+              {
+                "at": 4.7,
+                "seconds": 0.34,
+                "after": "Here,"
+              },
+              {
+                "at": 7.24,
+                "seconds": 0.57,
+                "after": "outline."
+              },
+              {
+                "at": 10.83,
+                "seconds": 0.72,
+                "after": "video."
+              },
+              {
+                "at": 12.37,
+                "seconds": 0.34,
+                "after": "Tab,"
+              },
+              {
+                "at": 14.3,
+                "seconds": 0.62,
+                "after": "happen."
+              },
+              {
+                "at": 16.06,
+                "seconds": 0.12,
+                "after": "there,"
+              },
+              {
+                "at": 17.03,
+                "seconds": 0.65,
+                "after": "invisible."
+              },
+              {
+                "at": 19.23,
+                "seconds": 0.57,
+                "after": "for."
+              }
+            ],
+            "peakDbfs": -12.8,
+            "integratedLufs": -32.1,
+            "truePeakDbtp": -12.7,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -31.4
+              },
+              {
+                "from": 6,
+                "lufs": -33.9
+              },
+              {
+                "from": 12,
+                "lufs": -31.8
+              },
+              {
+                "from": 18,
+                "lufs": -33.3
+              }
+            ],
+            "levelSpreadLu": 2.5,
+            "clippedRuns": 0,
+            "transcript": "Check two: Can you always see where you are? Keep tabbing. Here, every link and button gets a clear outline. Now look at this plain test page we built for this video. Press Tab, and nothing seems to happen. The focus is there, but it's invisible. That's the problem we're looking for. The good news is it's one of the easier fixes",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 14.94,
+            "paceVsReference": 0.023,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 7,
+      "title": "Check three",
+      "file": "voice/beat-07.mp3",
+      "text": "Check three. The order. Focus should move the way you read. Top to bottom, left to right. The logo, the menu, the phone number, then the button to start a project. On our test page, focus jumps from the header down to the footer, then back up. That's how people get lost.",
+      "characters": 271,
+      "durationSeconds": 20.201,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (15) of 1 take(s)",
+      "creditsMeasured": 271,
+      "creditsKeptTake": 271,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 701,
+          "file": "voice/takes/beat-07-t1.mp3",
+          "sttFile": "voice/takes/beat-07-t1.stt.json",
+          "durationSeconds": 20.201,
+          "creditsMeasured": 271,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 9,
+          "createdAt": "2026-09-28T15:41:02.943Z",
+          "analysis": {
+            "durationSeconds": 20.201,
+            "leadSeconds": 0.06,
+            "trailSeconds": 0.32,
+            "maxGapInPhrase": 0.54,
+            "maxGapAtBoundary": 0.78,
+            "gaps": [
+              {
+                "at": 0.64,
+                "seconds": 0.34,
+                "after": "three:"
+              },
+              {
+                "at": 1.49,
+                "seconds": 0.36,
+                "after": "order"
+              },
+              {
+                "at": 4.23,
+                "seconds": 0.53,
+                "after": "read,"
+              },
+              {
+                "at": 5.61,
+                "seconds": 0.44,
+                "after": "bottom,"
+              },
+              {
+                "at": 6.76,
+                "seconds": 0.66,
+                "after": "right."
+              },
+              {
+                "at": 8.51,
+                "seconds": 0.37,
+                "after": "menu,"
+              },
+              {
+                "at": 9.55,
+                "seconds": 0.59,
+                "after": "number,"
+              },
+              {
+                "at": 10.75,
+                "seconds": 0.21,
+                "after": "button"
+              },
+              {
+                "at": 11.79,
+                "seconds": 0.78,
+                "after": "project."
+              },
+              {
+                "at": 13.4,
+                "seconds": 0.48,
+                "after": "page,"
+              },
+              {
+                "at": 15.39,
+                "seconds": 0.54,
+                "after": "header"
+              },
+              {
+                "at": 16.87,
+                "seconds": 0.56,
+                "after": "footer,"
+              },
+              {
+                "at": 18.11,
+                "seconds": 0.67,
+                "after": "up."
+              }
+            ],
+            "peakDbfs": -9,
+            "integratedLufs": -29,
+            "truePeakDbtp": -8.9,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -29.2
+              },
+              {
+                "from": 6,
+                "lufs": -29.4
+              },
+              {
+                "from": 12,
+                "lufs": -28.9
+              }
+            ],
+            "levelSpreadLu": 0.5,
+            "clippedRuns": 0,
+            "transcript": "Check three: the order focus should move the way you read, top to bottom, left to right. The logo, the menu, the phone number, then the button to start a project. On our test page, focus jumps from the header down to the footer, then back up. That's how people get lost",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 13.67,
+            "paceVsReference": -0.064,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 8,
+      "title": "Check four",
+      "file": "voice/beat-08.mp3",
+      "text": "Check four. Menus and popups. On a smaller screen, our menu hides behind a button. Tab to it and press Enter. It opens, and focus moves inside. Press Escape. It closes, and you're right back on the button. The chat bubble in the corner works the same way. If a menu only opens when you hover with a mouse, keyboard users never see what's inside.",
+      "characters": 345,
+      "durationSeconds": 24.009,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (9) of 1 take(s)",
+      "creditsMeasured": 345,
+      "creditsKeptTake": 345,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 801,
+          "file": "voice/takes/beat-08-t1.mp3",
+          "sttFile": "voice/takes/beat-08-t1.stt.json",
+          "durationSeconds": 24.009,
+          "creditsMeasured": 345,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 11,
+          "createdAt": "2026-09-28T15:41:15.064Z",
+          "analysis": {
+            "durationSeconds": 24.009,
+            "leadSeconds": 0.07,
+            "trailSeconds": 0.33,
+            "maxGapInPhrase": 0.26,
+            "maxGapAtBoundary": 0.64,
+            "gaps": [
+              {
+                "at": 0.76,
+                "seconds": 0.38,
+                "after": "four:"
+              },
+              {
+                "at": 1.75,
+                "seconds": 0.21,
+                "after": "menus"
+              },
+              {
+                "at": 2.87,
+                "seconds": 0.57,
+                "after": "pop-ups."
+              },
+              {
+                "at": 5.71,
+                "seconds": 0.5,
+                "after": "button."
+              },
+              {
+                "at": 6.99,
+                "seconds": 0.18,
+                "after": "it"
+              },
+              {
+                "at": 8.17,
+                "seconds": 0.57,
+                "after": "Enter."
+              },
+              {
+                "at": 9.41,
+                "seconds": 0.26,
+                "after": "opens"
+              },
+              {
+                "at": 11.03,
+                "seconds": 0.55,
+                "after": "inside."
+              },
+              {
+                "at": 12.07,
+                "seconds": 0.13,
+                "after": "Press"
+              },
+              {
+                "at": 12.7,
+                "seconds": 0.13,
+                "after": "Escape."
+              },
+              {
+                "at": 12.85,
+                "seconds": 0.41,
+                "after": "Escape."
+              },
+              {
+                "at": 14.05,
+                "seconds": 0.13,
+                "after": "closes,"
+              },
+              {
+                "at": 15.64,
+                "seconds": 0.63,
+                "after": "button."
+              },
+              {
+                "at": 18.41,
+                "seconds": 0.64,
+                "after": "way."
+              },
+              {
+                "at": 21.38,
+                "seconds": 0.31,
+                "after": "mouse,"
+              }
+            ],
+            "peakDbfs": -10.2,
+            "integratedLufs": -29.5,
+            "truePeakDbtp": -10.2,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -29
+              },
+              {
+                "from": 6,
+                "lufs": -29.7
+              },
+              {
+                "from": 12,
+                "lufs": -29.3
+              },
+              {
+                "from": 18,
+                "lufs": -31.5
+              }
+            ],
+            "levelSpreadLu": 2.5,
+            "clippedRuns": 0,
+            "transcript": "Check four: menus and pop-ups. On a smaller screen, our menu hides behind a button. Tab to it and press Enter. It opens and focus moves inside. Press Escape. It closes, and you're right back on the button. The chat bubble in the corner works the same way. If a menu only opens when you hover with a mouse, keyboard users never see what's inside.",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 14.61,
+            "paceVsReference": 0,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 9,
+      "title": "Check five",
+      "file": "voice/beat-09.mp3",
+      "text": "Check five. No traps. Once you're inside a popup, make sure you can get back out. On our test page, this signup box grabs focus and won't let go. Tab, Shift and Tab, Escape. Nothing. That's called a keyboard trap. It's the worst version of this problem, because the only way out is to leave the page.",
+      "characters": 300,
+      "durationSeconds": 21.177,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (9) of 1 take(s)",
+      "creditsMeasured": 300,
+      "creditsKeptTake": 300,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 901,
+          "file": "voice/takes/beat-09-t1.mp3",
+          "sttFile": "voice/takes/beat-09-t1.stt.json",
+          "durationSeconds": 21.177,
+          "creditsMeasured": 300,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 10,
+          "createdAt": "2026-09-28T15:41:26.626Z",
+          "analysis": {
+            "durationSeconds": 21.177,
+            "leadSeconds": 0.07,
+            "trailSeconds": 0.4,
+            "maxGapInPhrase": 0.33,
+            "maxGapAtBoundary": 0.59,
+            "gaps": [
+              {
+                "at": 0.69,
+                "seconds": 0.44,
+                "after": "five:"
+              },
+              {
+                "at": 1.65,
+                "seconds": 0.12,
+                "after": "traps."
+              },
+              {
+                "at": 1.84,
+                "seconds": 0.32,
+                "after": "traps."
+              },
+              {
+                "at": 3.36,
+                "seconds": 0.29,
+                "after": "popup,"
+              },
+              {
+                "at": 4.89,
+                "seconds": 0.13,
+                "after": "out."
+              },
+              {
+                "at": 5.03,
+                "seconds": 0.45,
+                "after": "out."
+              },
+              {
+                "at": 6.27,
+                "seconds": 0.12,
+                "after": "page,"
+              },
+              {
+                "at": 8.23,
+                "seconds": 0.17,
+                "after": "focus"
+              },
+              {
+                "at": 9.2,
+                "seconds": 0.53,
+                "after": "go."
+              },
+              {
+                "at": 10.26,
+                "seconds": 0.22,
+                "after": "Tab,"
+              },
+              {
+                "at": 11.03,
+                "seconds": 0.33,
+                "after": "Shift"
+              },
+              {
+                "at": 12.08,
+                "seconds": 0.47,
+                "after": "Tab,"
+              },
+              {
+                "at": 13.06,
+                "seconds": 0.59,
+                "after": "Escape."
+              },
+              {
+                "at": 13.98,
+                "seconds": 0.5,
+                "after": "Nothing."
+              },
+              {
+                "at": 16.13,
+                "seconds": 0.55,
+                "after": "trap."
+              },
+              {
+                "at": 18.49,
+                "seconds": 0.3,
+                "after": "problem"
+              }
+            ],
+            "peakDbfs": -11.7,
+            "integratedLufs": -30.1,
+            "truePeakDbtp": -11.7,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -30.2
+              },
+              {
+                "from": 6,
+                "lufs": -29.9
+              },
+              {
+                "from": 12,
+                "lufs": -30.6
+              },
+              {
+                "from": 18,
+                "lufs": -33.2
+              }
+            ],
+            "levelSpreadLu": 3.3,
+            "clippedRuns": 0,
+            "transcript": "Check five: no traps. Once you're inside a popup, make sure you can get back out. On our test page, this sign-up box grabs focus and won't let go. Tab, Shift and Tab, Escape. Nothing. That's called a keyboard trap. It's the worst version of this problem because the only way out is to leave the page",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 14.49,
+            "paceVsReference": -0.009,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 10,
+      "title": "Check six",
+      "file": "voice/beat-10.mp3",
+      "text": "Check six. Your forms. Tab into your contact form. Every field should have a label you can see, like Name, Email and Message. A light gray hint inside the box that disappears when you type isn't enough on its own. Then Tab to the Send button and press Enter. If you can't send the form from the keyboard, you could be losing leads you never hear about.",
+      "characters": 352,
+      "durationSeconds": 23.406,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (12) of 1 take(s)",
+      "creditsMeasured": 352,
+      "creditsKeptTake": 352,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 1001,
+          "file": "voice/takes/beat-10-t1.mp3",
+          "sttFile": "voice/takes/beat-10-t1.stt.json",
+          "durationSeconds": 23.406,
+          "creditsMeasured": 352,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 11,
+          "createdAt": "2026-09-28T15:41:37.872Z",
+          "analysis": {
+            "durationSeconds": 23.406,
+            "leadSeconds": 0.03,
+            "trailSeconds": 0.38,
+            "maxGapInPhrase": 0.27,
+            "maxGapAtBoundary": 0.66,
+            "gaps": [
+              {
+                "at": 0.78,
+                "seconds": 0.37,
+                "after": "six:"
+              },
+              {
+                "at": 1.88,
+                "seconds": 0.57,
+                "after": "forms."
+              },
+              {
+                "at": 3.97,
+                "seconds": 0.66,
+                "after": "form."
+              },
+              {
+                "at": 8.79,
+                "seconds": 0.55,
+                "after": "message."
+              },
+              {
+                "at": 13.14,
+                "seconds": 0.27,
+                "after": "type"
+              },
+              {
+                "at": 14.62,
+                "seconds": 0.59,
+                "after": "own."
+              },
+              {
+                "at": 18.29,
+                "seconds": 0.65,
+                "after": "Enter."
+              },
+              {
+                "at": 20.94,
+                "seconds": 0.38,
+                "after": "keyboard,"
+              }
+            ],
+            "peakDbfs": -9.5,
+            "integratedLufs": -30.8,
+            "truePeakDbtp": -9.4,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -30.3
+              },
+              {
+                "from": 6,
+                "lufs": -30.4
+              },
+              {
+                "from": 12,
+                "lufs": -30.6
+              },
+              {
+                "from": 18,
+                "lufs": -33.8
+              }
+            ],
+            "levelSpreadLu": 3.5,
+            "clippedRuns": 0,
+            "transcript": "Check six: your forms. Tab into your contact form. Every field should have a label you can see, like name, email, and message. A light gray hint inside the box that disappears when you type isn't enough on its own. Then tab to the send button and press Enter. If you can't send the form from the keyboard, you could be losing leads you never hear about",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 15.3,
+            "paceVsReference": 0.048,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 11,
+      "title": "Ask your web person",
+      "file": "voice/beat-11.mp3",
+      "text": "Found a problem? Here's what to ask your web person. You can pause and read these right off the screen.\nOne. Add a Skip to content link at the top of every page.\nTwo. Don't remove the focus outline. Style it so it's easy to see.\nThree. Make the tab order follow the page.\nFour. Make every menu, popup and chat window open with Enter, close with Escape, and put focus back where it was.\nFive. Give every form field a visible label.\nIf they want the official references, they're in W-C-A-G two point two. Keyboard, No Keyboard Trap, Bypass Blocks, Focus Order, Focus Visible, and Labels or Instructions. The numbers are in the description.",
+      "characters": 637,
+      "durationSeconds": 45.697,
+      "takeCount": 2,
+      "keptTake": 2,
+      "keptBy": "auto: lowest check score (0) of 2 take(s)",
+      "creditsMeasured": 1274,
+      "creditsKeptTake": 637,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 1101,
+          "file": "voice/takes/beat-11-t1.mp3",
+          "sttFile": "voice/takes/beat-11-t1.stt.json",
+          "durationSeconds": 44.722,
+          "creditsMeasured": 637,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 21,
+          "createdAt": "2026-09-28T15:41:53.956Z",
+          "analysis": {
+            "durationSeconds": 44.722,
+            "leadSeconds": 0.07,
+            "trailSeconds": 0.27,
+            "maxGapInPhrase": 0.16,
+            "maxGapAtBoundary": 0.75,
+            "gaps": [
+              {
+                "at": 0.76,
+                "seconds": 0.49,
+                "after": "problem?"
+              },
+              {
+                "at": 2.78,
+                "seconds": 0.47,
+                "after": "person."
+              },
+              {
+                "at": 5.42,
+                "seconds": 0.75,
+                "after": "screen."
+              },
+              {
+                "at": 6.51,
+                "seconds": 0.47,
+                "after": "One,"
+              },
+              {
+                "at": 9.65,
+                "seconds": 0.47,
+                "after": "page."
+              },
+              {
+                "at": 10.49,
+                "seconds": 0.56,
+                "after": "Two,"
+              },
+              {
+                "at": 12.65,
+                "seconds": 0.19,
+                "after": "outline."
+              },
+              {
+                "at": 14.46,
+                "seconds": 0.61,
+                "after": "see."
+              },
+              {
+                "at": 15.5,
+                "seconds": 0.58,
+                "after": "Three,"
+              },
+              {
+                "at": 17.92,
+                "seconds": 0.47,
+                "after": "page."
+              },
+              {
+                "at": 18.72,
+                "seconds": 0.45,
+                "after": "Four,"
+              },
+              {
+                "at": 20.2,
+                "seconds": 0.14,
+                "after": "menu"
+              },
+              {
+                "at": 22.47,
+                "seconds": 0.44,
+                "after": "Enter,"
+              },
+              {
+                "at": 23.72,
+                "seconds": 0.16,
+                "after": "Escape,"
+              },
+              {
+                "at": 24.03,
+                "seconds": 0.2,
+                "after": "Escape,"
+              },
+              {
+                "at": 25.84,
+                "seconds": 0.54,
+                "after": "was."
+              },
+              {
+                "at": 26.65,
+                "seconds": 0.6,
+                "after": "Five,"
+              },
+              {
+                "at": 29.48,
+                "seconds": 0.64,
+                "after": "label."
+              },
+              {
+                "at": 31.72,
+                "seconds": 0.38,
+                "after": "references,"
+              },
+              {
+                "at": 33.95,
+                "seconds": 0.16,
+                "after": "WCAG"
+              },
+              {
+                "at": 34.87,
+                "seconds": 0.59,
+                "after": "2.2:"
+              },
+              {
+                "at": 35.95,
+                "seconds": 0.21,
+                "after": "keyboard,"
+              },
+              {
+                "at": 37.03,
+                "seconds": 0.39,
+                "after": "trap,"
+              },
+              {
+                "at": 38.25,
+                "seconds": 0.41,
+                "after": "blocks,"
+              },
+              {
+                "at": 39.33,
+                "seconds": 0.48,
+                "after": "order,"
+              },
+              {
+                "at": 40.69,
+                "seconds": 0.2,
+                "after": "visible,"
+              },
+              {
+                "at": 42.62,
+                "seconds": 0.51,
+                "after": "instructions."
+              }
+            ],
+            "peakDbfs": -13.5,
+            "integratedLufs": -34,
+            "truePeakDbtp": -13.5,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -32.6
+              },
+              {
+                "from": 6,
+                "lufs": -33.3
+              },
+              {
+                "from": 12,
+                "lufs": -34.3
+              },
+              {
+                "from": 18,
+                "lufs": -35
+              },
+              {
+                "from": 24,
+                "lufs": -35
+              },
+              {
+                "from": 30,
+                "lufs": -35.3
+              },
+              {
+                "from": 36,
+                "lufs": -34.8
+              }
+            ],
+            "levelSpreadLu": 2.7,
+            "clippedRuns": 0,
+            "transcript": "Found a problem? Here's what to ask your web person. You can pause and read these right off the screen. One, add a skip to content link at the top of every page. Two, don't remove the focus outline. Style it so it's easy to see. Three, make the tab order follow the page. Four, make every menu pop up in chat window, open with Enter, close with Escape, and put focus back where it was. Five, give every form field a visible label. If they want the official references, they're in WCAG 2.2: keyboard, no keyboard trap, bypass blocks, focus order, focus visible, and labels or instructions. The numbers are in the description",
+            "wordErrors": 2,
+            "diff": [
+              "-and",
+              "+in"
+            ],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [
+              {
+                "heard": "WCAG",
+                "seconds": 0.98
+              }
+            ],
+            "charsPerSecond": 14.35,
+            "paceVsReference": -0.018,
+            "flags": [
+              "transcript differs: -and +in"
+            ],
+            "score": 20
+          }
+        },
+        {
+          "take": 2,
+          "seed": 1102,
+          "file": "voice/takes/beat-11-t2.mp3",
+          "sttFile": "voice/takes/beat-11-t2.stt.json",
+          "durationSeconds": 45.697,
+          "creditsMeasured": 637,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 21,
+          "createdAt": "2026-09-28T15:46:43.772Z",
+          "analysis": {
+            "durationSeconds": 45.697,
+            "leadSeconds": 0.08,
+            "trailSeconds": 0.27,
+            "maxGapInPhrase": 0.15,
+            "maxGapAtBoundary": 0.9,
+            "gaps": [
+              {
+                "at": 0.8,
+                "seconds": 0.58,
+                "after": "problem?"
+              },
+              {
+                "at": 2.83,
+                "seconds": 0.48,
+                "after": "person."
+              },
+              {
+                "at": 5.8,
+                "seconds": 0.9,
+                "after": "screen."
+              },
+              {
+                "at": 7.09,
+                "seconds": 0.75,
+                "after": "One,"
+              },
+              {
+                "at": 10.45,
+                "seconds": 0.59,
+                "after": "page."
+              },
+              {
+                "at": 11.37,
+                "seconds": 0.57,
+                "after": "Two,"
+              },
+              {
+                "at": 13.64,
+                "seconds": 0.4,
+                "after": "outline."
+              },
+              {
+                "at": 15.51,
+                "seconds": 0.75,
+                "after": "see."
+              },
+              {
+                "at": 16.58,
+                "seconds": 0.58,
+                "after": "Three,"
+              },
+              {
+                "at": 18.98,
+                "seconds": 0.4,
+                "after": "page."
+              },
+              {
+                "at": 19.86,
+                "seconds": 0.4,
+                "after": "Four,"
+              },
+              {
+                "at": 21.21,
+                "seconds": 0.26,
+                "after": "menu,"
+              },
+              {
+                "at": 23.86,
+                "seconds": 0.34,
+                "after": "Enter,"
+              },
+              {
+                "at": 25.12,
+                "seconds": 0.12,
+                "after": "Escape,"
+              },
+              {
+                "at": 27.02,
+                "seconds": 0.76,
+                "after": "was."
+              },
+              {
+                "at": 28.19,
+                "seconds": 0.17,
+                "after": "Five,"
+              },
+              {
+                "at": 28.37,
+                "seconds": 0.27,
+                "after": "Five,"
+              },
+              {
+                "at": 30.89,
+                "seconds": 0.14,
+                "after": "label."
+              },
+              {
+                "at": 31.04,
+                "seconds": 0.43,
+                "after": "label."
+              },
+              {
+                "at": 33,
+                "seconds": 0.35,
+                "after": "references,"
+              },
+              {
+                "at": 34.71,
+                "seconds": 0.15,
+                "after": "WCAG"
+              },
+              {
+                "at": 35.49,
+                "seconds": 0.61,
+                "after": "2.2:"
+              },
+              {
+                "at": 36.53,
+                "seconds": 0.47,
+                "after": "keyboard,"
+              },
+              {
+                "at": 37.92,
+                "seconds": 0.42,
+                "after": "trap,"
+              },
+              {
+                "at": 39.21,
+                "seconds": 0.57,
+                "after": "blocks,"
+              },
+              {
+                "at": 40.41,
+                "seconds": 0.52,
+                "after": "order,"
+              },
+              {
+                "at": 41.66,
+                "seconds": 0.41,
+                "after": "visible,"
+              },
+              {
+                "at": 43.49,
+                "seconds": 0.47,
+                "after": "instructions."
+              }
+            ],
+            "peakDbfs": -10.7,
+            "integratedLufs": -31.9,
+            "truePeakDbtp": -10.5,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -30.7
+              },
+              {
+                "from": 6,
+                "lufs": -31.6
+              },
+              {
+                "from": 12,
+                "lufs": -31
+              },
+              {
+                "from": 18,
+                "lufs": -33.5
+              },
+              {
+                "from": 24,
+                "lufs": -33.6
+              },
+              {
+                "from": 30,
+                "lufs": -34.1
+              },
+              {
+                "from": 36,
+                "lufs": -32.7
+              },
+              {
+                "from": 42,
+                "lufs": -32.5
+              }
+            ],
+            "levelSpreadLu": 3.4,
+            "clippedRuns": 0,
+            "transcript": "Found a problem? Here's what to ask your web person. You can pause and read these right off the screen. One, add a skip to content link at the top of every page. Two, don't remove the focus outline. Style it so it's easy to see. Three, make the tab order follow the page. Four, make every menu, pop-up, and chat window open with Enter, close with Escape, and put focus back where it was. Five, give every form field a visible label. If they want the official references, they're in WCAG 2.2: keyboard, no keyboard trap, bypass blocks, focus order, focus visible, and labels or instructions. The numbers are in the description.",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [
+              {
+                "heard": "WCAG",
+                "seconds": 0.96
+              }
+            ],
+            "charsPerSecond": 14.05,
+            "paceVsReference": -0.039,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 12,
+      "title": "Recap",
+      "file": "voice/beat-12.mp3",
+      "text": "So, the recap. Load your page and press Tab. Look for a skip link, an outline you can always see, an order that makes sense, menus and popups that open and close from the keyboard, no traps, and forms with labels. It takes about a minute.\nIf you'd like a second pair of eyes, K and A Performance does full accessibility audits. The link is in the description.",
+      "characters": 359,
+      "durationSeconds": 25.263,
+      "takeCount": 1,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (15) of 1 take(s)",
+      "creditsMeasured": 359,
+      "creditsKeptTake": 359,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 1201,
+          "file": "voice/takes/beat-12-t1.mp3",
+          "sttFile": "voice/takes/beat-12-t1.stt.json",
+          "durationSeconds": 25.263,
+          "creditsMeasured": 359,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 12,
+          "createdAt": "2026-09-28T15:42:05.540Z",
+          "analysis": {
+            "durationSeconds": 25.263,
+            "leadSeconds": 0.02,
+            "trailSeconds": 0.26,
+            "maxGapInPhrase": 0.54,
+            "maxGapAtBoundary": 0.58,
+            "gaps": [
+              {
+                "at": 0.44,
+                "seconds": 0.54,
+                "after": "So"
+              },
+              {
+                "at": 1.85,
+                "seconds": 0.45,
+                "after": "recap."
+              },
+              {
+                "at": 3.29,
+                "seconds": 0.12,
+                "after": "page"
+              },
+              {
+                "at": 4.55,
+                "seconds": 0.44,
+                "after": "Tab."
+              },
+              {
+                "at": 6.19,
+                "seconds": 0.24,
+                "after": "link,"
+              },
+              {
+                "at": 8.09,
+                "seconds": 0.33,
+                "after": "see,"
+              },
+              {
+                "at": 9.81,
+                "seconds": 0.37,
+                "after": "sense,"
+              },
+              {
+                "at": 13.47,
+                "seconds": 0.32,
+                "after": "keyboard,"
+              },
+              {
+                "at": 14.6,
+                "seconds": 0.35,
+                "after": "traps,"
+              },
+              {
+                "at": 16.27,
+                "seconds": 0.56,
+                "after": "labels."
+              },
+              {
+                "at": 17.59,
+                "seconds": 0.58,
+                "after": "minute."
+              },
+              {
+                "at": 23.25,
+                "seconds": 0.47,
+                "after": "audits."
+              }
+            ],
+            "peakDbfs": -7.2,
+            "integratedLufs": -27.7,
+            "truePeakDbtp": -7.1,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -26.1
+              },
+              {
+                "from": 6,
+                "lufs": -28
+              },
+              {
+                "from": 12,
+                "lufs": -28.3
+              },
+              {
+                "from": 18,
+                "lufs": -29.6
+              }
+            ],
+            "levelSpreadLu": 3.5,
+            "clippedRuns": 0,
+            "transcript": "So the recap. Load your page and press Tab. Look for a skip link, an outline you can always see, an order that makes sense, menus and pop-ups that open and close from the keyboard, no traps, and forms with labels. It takes about a minute. If you'd like a second pair of eyes, K&A Performance does full accessibility audits. The link is in the description",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 14.37,
+            "paceVsReference": -0.016,
+            "flags": [],
+            "score": 0
+          }
+        }
+      ]
+    },
+    {
+      "beat": 13,
+      "title": "End screen",
+      "file": "voice/beat-13.mp3",
+      "text": "Subscribe for a new walkthrough every week. Thanks for watching.",
+      "characters": 64,
+      "durationSeconds": 3.622,
+      "takeCount": 3,
+      "keptTake": 1,
+      "keptBy": "auto: lowest check score (3) of 3 take(s)",
+      "creditsMeasured": 192,
+      "creditsKeptTake": 64,
+      "takes": [
+        {
+          "take": 1,
+          "seed": 1301,
+          "file": "voice/takes/beat-13-t1.mp3",
+          "sttFile": "voice/takes/beat-13-t1.stt.json",
+          "durationSeconds": 3.622,
+          "creditsMeasured": 64,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 2,
+          "createdAt": "2026-09-28T15:42:13.684Z",
+          "analysis": {
+            "durationSeconds": 3.622,
+            "leadSeconds": 0.03,
+            "trailSeconds": 0.26,
+            "maxGapInPhrase": 0,
+            "maxGapAtBoundary": 0.37,
+            "gaps": [
+              {
+                "at": 2.27,
+                "seconds": 0.37,
+                "after": "week."
+              }
+            ],
+            "peakDbfs": -11.3,
+            "integratedLufs": -29.3,
+            "truePeakDbtp": -11.3,
+            "levelWindows": [
+              {
+                "from": 0,
+                "lufs": -29.4
+              }
+            ],
+            "levelSpreadLu": 0,
+            "clippedRuns": 0,
+            "transcript": "Subscribe for a new walkthrough every week. Thanks for watching",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 19.22,
+            "paceVsReference": 0.315,
+            "flags": [
+              "pace 32% off the reference"
+            ],
+            "score": 3
+          }
+        },
+        {
+          "take": 2,
+          "seed": 1302,
+          "file": "voice/takes/beat-13-t2.mp3",
+          "sttFile": "voice/takes/beat-13-t2.stt.json",
+          "durationSeconds": 2.926,
+          "creditsMeasured": 64,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 1,
+          "createdAt": "2026-09-28T15:46:51.815Z",
+          "analysis": {
+            "durationSeconds": 2.926,
+            "leadSeconds": 0.05,
+            "trailSeconds": 0.26,
+            "maxGapInPhrase": 0,
+            "maxGapAtBoundary": 0,
+            "gaps": [],
+            "peakDbfs": -14.7,
+            "integratedLufs": -32.1,
+            "truePeakDbtp": -14.6,
+            "levelWindows": [],
+            "levelSpreadLu": 0,
+            "clippedRuns": 0,
+            "transcript": "Subscribe for a new walkthrough every week. Thanks for watching",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 24.43,
+            "paceVsReference": 0.672,
+            "flags": [
+              "pace 67% off the reference"
+            ],
+            "score": 7
+          }
+        },
+        {
+          "take": 3,
+          "seed": 1303,
+          "file": "voice/takes/beat-13-t3.mp3",
+          "sttFile": "voice/takes/beat-13-t3.stt.json",
+          "durationSeconds": 3.065,
+          "creditsMeasured": 64,
+          "creditsBucket": "TTS",
+          "sttCreditsMeasured": 1,
+          "createdAt": "2026-09-28T15:47:34.308Z",
+          "analysis": {
+            "durationSeconds": 3.065,
+            "leadSeconds": 0.05,
+            "trailSeconds": 0.28,
+            "maxGapInPhrase": 0,
+            "maxGapAtBoundary": 0.3,
+            "gaps": [
+              {
+                "at": 1.83,
+                "seconds": 0.3,
+                "after": "week."
+              }
+            ],
+            "peakDbfs": -12.6,
+            "integratedLufs": -31.3,
+            "truePeakDbtp": -12.6,
+            "levelWindows": [],
+            "levelSpreadLu": 0,
+            "clippedRuns": 0,
+            "transcript": "Subscribe for a new walkthrough every week. Thanks for watching",
+            "wordErrors": 0,
+            "diff": [],
+            "audioEvents": [],
+            "shortWords": [],
+            "unsureWords": [],
+            "wcagSpans": [],
+            "charsPerSecond": 23.36,
+            "paceVsReference": 0.599,
+            "flags": [
+              "pace 60% off the reference"
+            ],
+            "score": 6
+          }
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "beatsKept": 13,
+    "narrationSeconds": 315.93,
+    "takesGenerated": 19,
+    "beatCredits": 6516,
+    "testCredits": 171,
+    "sttCredits": 196,
+    "ttsCredits": 6687,
+    "allCredits": 6883
+  }
+}
