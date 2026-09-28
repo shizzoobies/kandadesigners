@@ -43,7 +43,7 @@ import { LowerThird } from "../LowerThird";
 import { RecapCard } from "../RecapCard";
 import type { YouTubeTheme } from "../theme";
 import { KeysCard, WhoCard } from "./cards";
-import { L1_THEMES, type L1ThemeId } from "./themes";
+import { L1_THEME } from "./themes";
 import { CHAPTERS, L1_LAYOUT, cue, slotOf } from "./timeline";
 
 const log = (j: unknown) => j as KeyLog;
@@ -305,7 +305,7 @@ const Beat4: React.FC<BeatProps> = ({ theme, end }) => {
         />
         <LowerThird
           theme={theme}
-          label="Safari on a Mac"
+          label="Safari on a Mac · Redrawn for clarity"
           line="Settings, then Advanced"
           from={f(c("Open Safari"))}
           to={f(c("and check") + 0.2)}
@@ -830,16 +830,15 @@ const BEATS: Record<number, React.FC<BeatProps>> = {
 };
 
 export type L1Props = {
-  theme: L1ThemeId;
-  /** Off for style frames and QA stills, which need no audio. */
+  /** Off for style frames, QA stills and the muted master the encode muxes the mix onto. */
   withAudio: boolean;
 };
 
 /** The finished mix, written by scripts/youtube/l1/mix.ts. */
 export const L1_MIX = "youtube/l1/mix.wav";
 
-export const L1: React.FC<L1Props> = ({ theme: themeId, withAudio }) => {
-  const theme = L1_THEMES[themeId];
+export const L1: React.FC<L1Props> = ({ withAudio }) => {
+  const theme = L1_THEME;
   const frame = useCurrentFrame();
   const current =
     [...L1_LAYOUT.slots].reverse().find((s) => frame >= s.from) ??

@@ -2,12 +2,12 @@ import { Composition } from "remotion";
 import "./fonts";
 import { H, W, FPS } from "./layout";
 import { L1, type L1Props } from "./l1/L1";
-import { L1_THEMES } from "./l1/themes";
+import { L1_THEME } from "./l1/themes";
 import { L1_TOTAL_FRAMES } from "./l1/timeline";
 import { assertThemeContrast } from "./theme";
 
 // A theme that fails contrast never registers.
-Object.values(L1_THEMES).forEach(assertThemeContrast);
+assertThemeContrast(L1_THEME);
 
 export const Root: React.FC = () => (
   <>
@@ -19,7 +19,7 @@ export const Root: React.FC = () => (
       fps={FPS}
       width={W}
       height={H}
-      defaultProps={{ theme: "a", withAudio: true } satisfies L1Props}
+      defaultProps={{ withAudio: true } satisfies L1Props}
     />
   </>
 );

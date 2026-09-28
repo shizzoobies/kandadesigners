@@ -31,7 +31,25 @@
       "playlist": "Quick fixes for your website"
     }
   },
-  "media": [],
+  "media": [
+    {
+      "file": "media/video.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "A narrated screen walkthrough of the Tab key test. On the K&A Performance website a rust focus outline moves through the skip link, the menu, the phone number and Start a project; the menu and the chat window open with Enter and close with Escape; the contact form shows visible labels. On a plain test page built for the video, focus is invisible, jumps from the header to the footer, and gets trapped in a signup box. Cards list the six checks, five fixes to ask a web person for, and the WCAG 2.2 references."
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "The words Press Tab. What happens? on a rust band beside a close-up of the K&A Performance home page, where the Start a project button has a keyboard focus outline around it."
+    },
+    {
+      "file": "media/video.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
   "ai": {
     "voice": true,
     "visuals": false

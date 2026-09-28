@@ -1,21 +1,21 @@
 /**
  * scripts/youtube/l1/style-frames.ts
  *
- * The A4 gate for YouTube L1: ten stills of the shared youtube/ set in each of
- * the two proposed working themes, and a contact sheet per theme, so Alex can
- * pick a theme and approve the set before the full cut is rendered.
- * No video is rendered here.
+ * The A4 gate for YouTube L1: ten stills of the shared youtube/ set and a
+ * contact sheet, rendered from the composition (no video). At the gate on
+ * 2026-09-28 Alex compared two themes and picked B, stone and evergreen, which
+ * is now L1's only theme.
  *
- * Out:  out/youtube/l1/style-frames/{a,b}/NN-name.png   1920x1080
- *       out/youtube/l1/style-frames/contact-{a,b}.png
+ * Out:  out/youtube/l1/style-frames/<theme id>/NN-name.png   1920x1080
+ *       out/youtube/l1/style-frames/contact-<theme id>.png
  *
- * Also prints each theme's contrast table and the projected runtime with the
+ * Also prints the theme's contrast table and the projected runtime with the
  * beat starts (the chapter times, before any change at the gate).
  *
  * Run from D:\kap-reel after stage.ts (never npx):
  *   node node_modules/tsx/dist/cli.mjs scripts/youtube/l1/style-frames.ts
  *   node node_modules/tsx/dist/cli.mjs scripts/youtube/l1/style-frames.ts qa
- * `qa` renders 27 checking stills across the whole cut instead (theme A only)
+ * `qa` renders 27 checking stills across the whole cut instead
  * to out/youtube/l1/qa/, with their own contact sheet.
  */
 
@@ -29,8 +29,7 @@ import {
   renderStill,
   selectComposition,
 } from "@remotion/renderer";
-import sharp from "sharp";
-import { L1_THEMES, type L1ThemeId } from "../../../src/youtube/l1/themes";
+import { L1_THEME } from "../../../src/youtube/l1/themes";
 import {
   CHAPTERS,
   L1_LAYOUT,
@@ -40,6 +39,7 @@ import {
 } from "../../../src/youtube/l1/timeline";
 import { themeContrast } from "../../../src/youtube/theme";
 import { timecode } from "../../../src/youtube/timeline";
+import { contactSheet } from "./sheet";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "..", "..", "..");
@@ -280,13 +280,12 @@ const QA: Still[] = [
 ];
 
 function printContrast(): void {
-  for (const theme of Object.values(L1_THEMES)) {
-    console.log(`\nTheme ${theme.id.toUpperCase()}: ${theme.name}`);
-    for (const r of themeContrast(theme)) {
-      console.log(
-        `  ${r.pass ? "pass" : "FAIL"}  ${r.ratio.toFixed(2).padStart(5)}:1  (needs ${r.needs})  ${r.pair}  ${r.fg} on ${r.bg}`,
-      );
-    }
+  const theme = L1_THEME;
+  console.log(`\nTheme ${theme.id.toUpperCase()}: ${theme.name}`);
+  for (const r of themeContrast(theme)) {
+    console.log(
+      `  ${r.pass ? "pass" : "FAIL"}  ${r.ratio.toFixed(2).padStart(5)}:1  (needs ${r.needs})  ${r.pair}  ${r.fg} on ${r.bg}`,
+    );
   }
 }
 
@@ -299,59 +298,6 @@ function printTimeline(): void {
       `  ${timecode(s.from).padStart(5)}  beat ${String(s.beat).padStart(2)}  ${CHAPTERS[s.beat]}  (${(s.frames / FPS).toFixed(1)} s)`,
     );
   }
-}
-
-async function contactSheet(
-  themeId: L1ThemeId,
-  files: { file: string; still: Still }[],
-  out = path.join(OUT, `contact-${themeId}.png`),
-): Promise<string> {
-  const theme = L1_THEMES[themeId];
-  const cols = 4;
-  const cw = 720;
-  const ch = 405;
-  const gap = 24;
-  const caption = 44;
-  const header = 120;
-  const rows = Math.ceil(files.length / cols);
-  const width = cols * cw + (cols + 1) * gap;
-  const height = header + rows * (ch + caption + gap) + gap;
-  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-
-  const swatches = (
-    ["bg", "surface", "ink", "muted", "accent", "line"] as const
-  )
-    .map((k, i) => {
-      const x = width - gap - (6 - i) * 150;
-      return `<rect x="${x}" y="34" width="36" height="36" rx="4" fill="${theme[k]}" stroke="#888" stroke-width="1"/>
-        <text x="${x + 46}" y="50" font-family="Arial" font-size="15" fill="#222">${k}</text>
-        <text x="${x + 46}" y="68" font-family="Consolas, monospace" font-size="14" fill="#555">${theme[k]}</text>`;
-    })
-    .join("");
-  const labels = files
-    .map(({ still }, i) => {
-      const x = gap + (i % cols) * (cw + gap);
-      const y = header + Math.floor(i / cols) * (ch + caption + gap) + ch + 28;
-      return `<text x="${x}" y="${y}" font-family="Arial" font-size="18" fill="#222">${String(i + 1).padStart(2, "0")}  ${esc(still.what)}</text>`;
-    })
-    .join("");
-  const svg = Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-      <rect width="100%" height="100%" fill="#FFFFFF"/>
-      <text x="${gap}" y="62" font-family="Arial" font-weight="bold" font-size="34" fill="#111">L1 style frames · Theme ${themeId.toUpperCase()}: ${esc(theme.name)}</text>
-      <text x="${gap}" y="96" font-family="Arial" font-size="18" fill="#555">Test your website with one key · 1920x1080 · stills from the youtube/ set, not a render of the cut</text>
-      ${swatches}${labels}
-    </svg>`,
-  );
-  const tiles = await Promise.all(
-    files.map(async ({ file }, i) => ({
-      input: await sharp(file).resize(cw, ch).png().toBuffer(),
-      left: gap + (i % cols) * (cw + gap),
-      top: header + Math.floor(i / cols) * (ch + caption + gap),
-    })),
-  );
-  await sharp(svg).composite(tiles).png().toFile(out);
-  return out;
 }
 
 async function main(): Promise<void> {
@@ -371,49 +317,57 @@ async function main(): Promise<void> {
   const browser = await openBrowser("chrome", { logLevel: "error" });
   try {
     const qa = process.argv.includes("qa");
-    const themes: L1ThemeId[] = qa
-      ? ["a"]
-      : (Object.keys(L1_THEMES) as L1ThemeId[]);
-    for (const themeId of themes) {
-      const inputProps = { theme: themeId, withAudio: false };
-      const composition = await selectComposition({
-        serveUrl,
-        id: "YouTubeL1",
-        inputProps,
-        puppeteerInstance: browser,
-      });
-      const dir = qa ? QA_OUT : path.join(OUT, themeId);
-      fs.mkdirSync(dir, { recursive: true });
-      const files: { file: string; still: Still }[] = [];
-      for (const [i, still] of (qa ? QA : STILLS).entries()) {
-        const frame = slotOf(still.beat).from + Math.round(still.t * FPS);
-        const file = path.join(
-          dir,
-          `${String(i + 1).padStart(2, "0")}-${still.name}.png`,
-        );
-        await renderStill({
-          composition,
-          serveUrl,
-          output: file,
-          frame,
-          imageFormat: "png",
-          overwrite: true,
-          puppeteerInstance: browser,
-          logLevel: "error",
-          inputProps,
-        });
-        files.push({ file, still });
-        console.log(
-          `  ${themeId} ${path.basename(file)}  frame ${frame} (${timecode(frame)})`,
-        );
-      }
-      const sheet = await contactSheet(
-        themeId,
-        files,
-        qa ? path.join(QA_OUT, "contact-qa.png") : undefined,
+    const theme = L1_THEME;
+    const inputProps = { withAudio: false };
+    const composition = await selectComposition({
+      serveUrl,
+      id: "YouTubeL1",
+      inputProps,
+      puppeteerInstance: browser,
+    });
+    const dir = qa ? QA_OUT : path.join(OUT, theme.id);
+    fs.mkdirSync(dir, { recursive: true });
+    const files: { file: string; still: Still }[] = [];
+    for (const [i, still] of (qa ? QA : STILLS).entries()) {
+      const frame = slotOf(still.beat).from + Math.round(still.t * FPS);
+      const file = path.join(
+        dir,
+        `${String(i + 1).padStart(2, "0")}-${still.name}.png`,
       );
-      console.log(`  contact sheet ${path.relative(ROOT, sheet)}`);
+      await renderStill({
+        composition,
+        serveUrl,
+        output: file,
+        frame,
+        imageFormat: "png",
+        overwrite: true,
+        puppeteerInstance: browser,
+        logLevel: "error",
+        inputProps,
+      });
+      files.push({ file, still });
+      console.log(
+        `  ${path.basename(file)}  frame ${frame} (${timecode(frame)})`,
+      );
     }
+    const sheet = await contactSheet({
+      title: `L1 ${qa ? "QA stills" : "style frames"} · ${theme.name}`,
+      subtitle:
+        "Test your website with one key · 1920x1080 · stills from the composition",
+      tiles: files.map(({ file, still }) => ({ file, what: still.what })),
+      out: qa
+        ? path.join(QA_OUT, "contact-qa.png")
+        : path.join(OUT, `contact-${theme.id}.png`),
+      swatches: {
+        bg: theme.bg,
+        surface: theme.surface,
+        ink: theme.ink,
+        muted: theme.muted,
+        accent: theme.accent,
+        line: theme.line,
+      },
+    });
+    console.log(`  contact sheet ${path.relative(ROOT, sheet)}`);
   } finally {
     await browser.close({ silent: true });
   }
