@@ -1,0 +1,235 @@
+{
+  "clip": "C6",
+  "file": "C6.mp4",
+  "url": "https://ka-performancefl.com/contact/",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 186,
+    "durationMs": 6200
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "name",
+        "label": "NAME",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 317.4,
+          "w": 450,
+          "h": 53.2
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 312.4,
+          "w": 460,
+          "h": 63.2
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      },
+      "focus": {
+        "tag": "input",
+        "id": "name",
+        "label": "NAME",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 317.4,
+          "w": 450,
+          "h": 53.2
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 312.4,
+          "w": 460,
+          "h": 63.2
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2067,
+      "frame": 62,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "email",
+        "label": "EMAIL",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 422.6,
+          "w": 450,
+          "h": 53.2
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 417.6,
+          "w": 460,
+          "h": 63.2
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      },
+      "focus": {
+        "tag": "input",
+        "id": "email",
+        "label": "EMAIL",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 422.6,
+          "w": 450,
+          "h": 53.2
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 417.6,
+          "w": 460,
+          "h": 63.2
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 3133,
+      "frame": 94,
+      "focusAtPress": {
+        "tag": "textarea",
+        "id": "message",
+        "label": "MESSAGE",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 527.8,
+          "w": 450,
+          "h": 149.2
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 522.8,
+          "w": 460,
+          "h": 159.2
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      },
+      "focus": {
+        "tag": "textarea",
+        "id": "message",
+        "label": "MESSAGE",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 527.8,
+          "w": 450,
+          "h": 149.2
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 522.8,
+          "w": 460,
+          "h": 159.2
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 4200,
+      "frame": 126,
+      "focusAtPress": {
+        "tag": "button",
+        "id": "contact-submit",
+        "label": "Send message",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 701,
+          "w": 450,
+          "h": 45
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 696,
+          "w": 460,
+          "h": 55
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      },
+      "focus": {
+        "tag": "button",
+        "id": "contact-submit",
+        "label": "Send message",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 701,
+          "w": 450,
+          "h": 45
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 696,
+          "w": 460,
+          "h": 55
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/C6-contact-labels.png",
+      "tMs": 500,
+      "frame": 15
+    },
+    {
+      "file": "stills/C6-name-focus.png",
+      "tMs": 2000,
+      "frame": 60
+    },
+    {
+      "file": "stills/C6-send-message-focus.png",
+      "tMs": 6000,
+      "frame": 180
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:50:40.835Z"
+}

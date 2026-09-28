@@ -1,0 +1,583 @@
+{
+  "clips": [
+    {
+      "id": "C1",
+      "file": "C1.mp4",
+      "keysFile": "C1.keys.json",
+      "durationSec": 5.6,
+      "frames": 168,
+      "width": 2880,
+      "height": 1620,
+      "url": "https://ka-performancefl.com/",
+      "beats": "5 (also 2: the first second is the settled hero with no focus)",
+      "shows": "K&A home. Tab 1 slides in the Skip to content link top-left (rust pill and outline), hold, Enter moves focus to main, next Tab lands on the hero Start a project.",
+      "stills": [
+        "stills/C1-home-hero-settled.png",
+        "stills/C1-skip-link.png",
+        "stills/C1-hero-start-a-project.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "C2",
+      "file": "C2.mp4",
+      "keysFile": "C2.keys.json",
+      "durationSec": 11,
+      "frames": 330,
+      "width": 2880,
+      "height": 1620,
+      "url": "https://ka-performancefl.com/",
+      "beats": "1 (the hook cut to the rust outline moving), 3 (slow Tab through the nav), 4 (Shift+Tab moves back), 6 (visible focus), 7 (order: logo, menu, phone, Start a project)",
+      "shows": "K&A home. Nine Tabs at 0.8 s: skip link, logo, Home, Services, Mentorship, Training, Artists, phone, Start a project. Then Shift+Tab twice back to Artists.",
+      "stills": [
+        "stills/C2-logo.png",
+        "stills/C2-nav-services.png",
+        "stills/C2-phone.png",
+        "stills/C2-header-start-a-project.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "C3",
+      "file": "C3.mp4",
+      "keysFile": "C3.keys.json",
+      "durationSec": 7.4,
+      "frames": 222,
+      "width": 2880,
+      "height": 1620,
+      "url": "https://ka-performancefl.com/",
+      "beats": "6 (focus ring close-ups for zooms)",
+      "shows": "K&A home, starting with focus already on the header Start a project. Five slower Tabs: hero Start a project, What we do, then the inline links custom websites, useful AI integrations, training people can use.",
+      "stills": [
+        "stills/C3-hero-start-a-project.png",
+        "stills/C3-what-we-do.png",
+        "stills/C3-custom-websites.png",
+        "stills/C3-ai-integrations.png",
+        "stills/C3-training-link.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "C4",
+      "file": "C4.mp4",
+      "keysFile": "C4.keys.json",
+      "durationSec": 10.4,
+      "frames": 312,
+      "width": 1920,
+      "height": 1080,
+      "url": "https://ka-performancefl.com/",
+      "beats": "8 (menus: opens with Enter, Escape closes, focus returns)",
+      "shows": "K&A home at 960x540 (the menu hides behind a button). Tabs to Open menu, Enter opens the overlay (the same button now reads Close menu), three Tabs through Home, Services, Mentorship, Escape closes and focus is back on the menu button.",
+      "stills": [
+        "stills/C4-menu-button-focus.png",
+        "stills/C4-menu-open.png",
+        "stills/C4-menu-home-focus.png",
+        "stills/C4-menu-closed-focus-returned.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "C5",
+      "file": "C5.mp4",
+      "keysFile": "C5.keys.json",
+      "durationSec": 6,
+      "frames": 180,
+      "width": 2880,
+      "height": 1620,
+      "url": "https://ka-performancefl.com/",
+      "beats": "8 (the chat bubble works the same way)",
+      "shows": "K&A home. Shift+Tab from a fresh load focuses the Chat with Kai bubble, Enter opens the panel with focus in the Ask about our services input, Escape closes it and focus is back on the bubble. Nothing is typed or sent.",
+      "stills": [
+        "stills/C5-kai-bubble-focus.png",
+        "stills/C5-kai-open.png",
+        "stills/C5-kai-closed-focus-returned.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "C6",
+      "file": "C6.mp4",
+      "keysFile": "C6.keys.json",
+      "durationSec": 6.2,
+      "frames": 186,
+      "width": 2880,
+      "height": 1620,
+      "url": "https://ka-performancefl.com/contact/",
+      "beats": "10 (labeled forms)",
+      "shows": "K&A /contact/, framed on the form. Visible labels NAME, EMAIL, MESSAGE. Tab to Name, Email, Message, then Send message. Nothing is typed and the form is not submitted.",
+      "stills": [
+        "stills/C6-contact-labels.png",
+        "stills/C6-name-focus.png",
+        "stills/C6-send-message-focus.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "C7",
+      "file": "C7.mp4",
+      "keysFile": "C7.keys.json",
+      "durationSec": 8.5,
+      "frames": 255,
+      "width": 2880,
+      "height": 1620,
+      "url": "https://ka-performancefl.com/services/accessibility/",
+      "beats": "12 (the CTA: /services/accessibility/)",
+      "shows": "K&A /services/accessibility/. Hold on the hero (H1 Website accessibility audit, measured not guessed), then a slow eased scroll down to What the audit covers.",
+      "stills": [
+        "stills/C7-audit-hero.png",
+        "stills/C7-what-the-audit-covers.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "D1",
+      "file": "D1.mp4",
+      "keysFile": "D1.keys.json",
+      "durationSec": 6.5,
+      "frames": 195,
+      "width": 2880,
+      "height": 1620,
+      "url": "demo/index.html",
+      "beats": "1 (hook: Tab pressed, nothing visible) and 6 (invisible focus)",
+      "shows": "Demo page. Six Tabs and nothing visible happens: focus really moves (Home, Services, Privacy, Terms, Sample Business, About) but *:focus{outline:none} hides it.",
+      "stills": [
+        "stills/D1-demo-page.png",
+        "stills/D1-invisible-focus.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "D2",
+      "file": "D2.mp4",
+      "keysFile": "D2.keys.json",
+      "durationSec": 6.5,
+      "frames": 195,
+      "width": 2880,
+      "height": 1620,
+      "url": "demo/index.html?reveal=1",
+      "beats": "7 (order jumps header, footer, header)",
+      "shows": "Demo page with ?reveal=1 (a plain dark outline and the label line says it was added). Tab order: Home, Services in the header, down to Privacy, Terms in the footer, back up to Sample Business, About.",
+      "stills": [
+        "stills/D2-header.png",
+        "stills/D2-footer.png",
+        "stills/D2-back-to-header.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "D3",
+      "file": "D3.mp4",
+      "keysFile": "D3.keys.json",
+      "durationSec": 7.5,
+      "frames": 225,
+      "width": 2880,
+      "height": 1620,
+      "url": "demo/index.html?reveal=1",
+      "beats": "9 (no traps)",
+      "shows": "Demo page with ?reveal=1. Tab into the signup box email field, then Tab, Tab, Shift+Tab, Shift+Tab, Escape, Escape: focus never leaves the field.",
+      "stills": [
+        "stills/D3-trap.png"
+      ],
+      "warnings": []
+    },
+    {
+      "id": "D3-plain",
+      "file": "D3-plain.mp4",
+      "keysFile": "D3-plain.keys.json",
+      "durationSec": 7.5,
+      "frames": 225,
+      "width": 2880,
+      "height": 1620,
+      "url": "demo/index.html",
+      "beats": "9 (alternate: the same trap with the page's own invisible focus)",
+      "shows": "Same key presses as D3 without the reveal outline. Nothing visible changes; use only with an editor-drawn focus box from keys.json.",
+      "stills": [],
+      "warnings": []
+    },
+    {
+      "id": "D4",
+      "file": "D4.mp4",
+      "keysFile": "D4.keys.json",
+      "durationSec": 9,
+      "frames": 270,
+      "width": 2880,
+      "height": 1620,
+      "url": "demo/index.html",
+      "beats": "10 (contrast: a placeholder is not a label)",
+      "shows": "Demo page quote form with placeholder-only fields (Name, Phone, What do you need?). Tab in and type into each; every gray hint disappears and nothing says which box is which.",
+      "stills": [
+        "stills/D4-placeholder-hints.png",
+        "stills/D4-filled-no-labels.png"
+      ],
+      "warnings": []
+    }
+  ],
+  "stills4x": [
+    {
+      "file": "stills/home-skip-link@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": 12,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": 7,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/home-nav-services@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Services",
+        "expanded": null,
+        "box": {
+          "x": 603.6,
+          "y": 28,
+          "w": 65.4,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 598.6,
+          "y": 23,
+          "w": 75.4,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/home-header-start-a-project@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 1123.3,
+          "y": 17.5,
+          "w": 148.7,
+          "h": 45
+        },
+        "ringBox": {
+          "x": 1118.3,
+          "y": 12.5,
+          "w": 158.7,
+          "h": 55
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/home-hero-custom-websites@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "custom websites",
+        "expanded": null,
+        "box": {
+          "x": 865.3,
+          "y": 429.4,
+          "w": 130.6,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 860.3,
+          "y": 424.4,
+          "w": 140.6,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      }
+    },
+    {
+      "file": "stills/home-kai-open@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "input",
+        "id": "sg-input",
+        "label": "Ask the site guide",
+        "expanded": null,
+        "box": {
+          "x": 1077,
+          "y": 651,
+          "w": 251.4,
+          "h": 38
+        },
+        "ringBox": {
+          "x": 1072,
+          "y": 646,
+          "w": 261.4,
+          "h": 48
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/contact-name-label@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "input",
+        "id": "name",
+        "label": "NAME",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 317.4,
+          "w": 450,
+          "h": 53.2
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 312.4,
+          "w": 460,
+          "h": 63.2
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      }
+    },
+    {
+      "file": "stills/contact-send-message@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "button",
+        "id": "contact-submit",
+        "label": "Send message",
+        "expanded": null,
+        "box": {
+          "x": 781,
+          "y": 701,
+          "w": 450,
+          "h": 45
+        },
+        "ringBox": {
+          "x": 776,
+          "y": 696,
+          "w": 460,
+          "h": 55
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 642
+      }
+    },
+    {
+      "file": "stills/menu-open@4x.png",
+      "width": 3840,
+      "height": 2160,
+      "focus": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Close menu",
+        "expanded": "true",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/menu-home-focus@4x.png",
+      "width": 3840,
+      "height": 2160,
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 440.6,
+          "y": 39.5,
+          "w": 78.8,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 435.6,
+          "y": 34.5,
+          "w": 88.8,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/demo-invisible-focus@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Privacy",
+        "expanded": null,
+        "box": {
+          "x": 1142.6,
+          "y": 770.5,
+          "w": 43.2,
+          "h": 21
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/demo-order-footer@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Privacy",
+        "expanded": null,
+        "box": {
+          "x": 1142.6,
+          "y": 770.5,
+          "w": 43.2,
+          "h": 21
+        },
+        "ringBox": {
+          "x": 1136.6,
+          "y": 764.5,
+          "w": 55.2,
+          "h": 33
+        },
+        "outline": "3px solid rgb(28, 28, 28), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/demo-trap@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": {
+          "x": 879.3,
+          "y": 646.5,
+          "w": 312,
+          "h": 55
+        },
+        "outline": "3px solid rgb(28, 28, 28), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "file": "stills/demo-placeholder-filled@4x.png",
+      "width": 5760,
+      "height": 3240,
+      "focus": {
+        "tag": "textarea",
+        "id": "q-need",
+        "label": "What do you need?",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 314,
+          "w": 370,
+          "h": 64
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "s1": {
+    "files": {
+      "safari-advanced.png": "2880x1620, the pane centered on a neutral gray 1440x810 frame at 2x",
+      "safari-advanced-window.png": "1976x916, transparent background, window plus shadow room (64 CSS px each side)"
+    },
+    "coordinates": "CSS px in the 1440x810 frame (safari-advanced.png). Multiply by 2 for image pixels.",
+    "boxes": {
+      "window": {
+        "x": 290,
+        "y": 240,
+        "w": 860,
+        "h": 330
+      },
+      "accessibilityRow": {
+        "x": 339,
+        "y": 421,
+        "w": 762,
+        "h": 70
+      },
+      "targetSetting": {
+        "x": 551,
+        "y": 453,
+        "w": 550,
+        "h": 17
+      },
+      "checkbox": {
+        "x": 551,
+        "y": 454,
+        "w": 16,
+        "h": 16
+      },
+      "font": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif",
+      "interLoaded": true
+    },
+    "source": "scripts/youtube/l1/demo/safari-advanced.html"
+  },
+  "method": "Frame-stepped DSF 2 PNG screenshots at 30 fps with a virtual clock for CSS animations, encoded H.264 CRF 12 yuv420p BT.709. See the header of scripts/youtube/l1/capture.mjs.",
+  "updatedAt": "2026-09-28T15:54:50.883Z"
+}

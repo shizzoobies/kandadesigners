@@ -1,0 +1,188 @@
+{
+  "clip": "C1",
+  "file": "C1.mp4",
+  "url": "https://ka-performancefl.com/",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 168,
+    "durationMs": 5600
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": -55.4,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": -60.4,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": 12,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": 7,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Enter",
+      "tMs": 2900,
+      "frame": 87,
+      "focusAtPress": {
+        "tag": "main",
+        "id": "main-content",
+        "label": "Built on years of experience, made to perform K & A Performa",
+        "expanded": null,
+        "box": {
+          "x": 0,
+          "y": 0,
+          "w": 1440,
+          "h": 11518.4
+        },
+        "ringBox": {
+          "x": -5,
+          "y": -5,
+          "w": 1450,
+          "h": 11528.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "main",
+        "id": "main-content",
+        "label": "Built on years of experience, made to perform K & A Performa",
+        "expanded": null,
+        "box": {
+          "x": 0,
+          "y": 0,
+          "w": 1440,
+          "h": 11518.4
+        },
+        "ringBox": {
+          "x": -5,
+          "y": -5,
+          "w": 1450,
+          "h": 11528.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 3900,
+      "frame": 117,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 168,
+          "y": 739.1,
+          "w": 148.7,
+          "h": 47
+        },
+        "ringBox": {
+          "x": 163,
+          "y": 734.1,
+          "w": 158.7,
+          "h": 57
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 168,
+          "y": 739.1,
+          "w": 148.7,
+          "h": 47
+        },
+        "ringBox": {
+          "x": 163,
+          "y": 734.1,
+          "w": 158.7,
+          "h": 57
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/C1-home-hero-settled.png",
+      "tMs": 500,
+      "frame": 15
+    },
+    {
+      "file": "stills/C1-skip-link.png",
+      "tMs": 2700,
+      "frame": 81
+    },
+    {
+      "file": "stills/C1-hero-start-a-project.png",
+      "tMs": 5400,
+      "frame": 162
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:47:51.712Z"
+}

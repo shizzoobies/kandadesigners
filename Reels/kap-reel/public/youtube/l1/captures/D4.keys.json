@@ -1,0 +1,223 @@
+{
+  "clip": "D4",
+  "file": "D4.mp4",
+  "url": "demo/index.html",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 270,
+    "durationMs": 9000
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "q-name",
+        "label": "Name",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 208,
+          "w": 370,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "q-name",
+        "label": "Name",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 208,
+          "w": 370,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2900,
+      "frame": 87,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "q-phone",
+        "label": "Phone",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 261,
+          "w": 370,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "q-phone",
+        "label": "Phone",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 261,
+          "w": 370,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 4900,
+      "frame": 147,
+      "focusAtPress": {
+        "tag": "textarea",
+        "id": "q-need",
+        "label": "What do you need?",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 314,
+          "w": 370,
+          "h": 64
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "textarea",
+        "id": "q-need",
+        "label": "What do you need?",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 314,
+          "w": 370,
+          "h": 64
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "typing": [
+    {
+      "text": "Jordan Lee",
+      "startMs": 1400,
+      "startFrame": 42,
+      "field": {
+        "tag": "input",
+        "id": "q-name",
+        "label": "Name",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 208,
+          "w": 370,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "endMs": 2300,
+      "endFrame": 69
+    },
+    {
+      "text": "555-555-0142",
+      "startMs": 3300,
+      "startFrame": 99,
+      "field": {
+        "tag": "input",
+        "id": "q-phone",
+        "label": "Phone",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 261,
+          "w": 370,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "endMs": 4400,
+      "endFrame": 132
+    },
+    {
+      "text": "Fix a leaky faucet",
+      "startMs": 5300,
+      "startFrame": 159,
+      "field": {
+        "tag": "textarea",
+        "id": "q-need",
+        "label": "What do you need?",
+        "expanded": null,
+        "box": {
+          "x": 925,
+          "y": 314,
+          "w": 370,
+          "h": 64
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "endMs": 7000,
+      "endFrame": 210
+    }
+  ],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/D4-placeholder-hints.png",
+      "tMs": 500,
+      "frame": 15
+    },
+    {
+      "file": "stills/D4-filled-no-labels.png",
+      "tMs": 8800,
+      "frame": 264
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:53:28.687Z"
+}

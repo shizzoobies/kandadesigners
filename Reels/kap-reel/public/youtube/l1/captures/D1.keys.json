@@ -1,0 +1,264 @@
+{
+  "clip": "D1",
+  "file": "D1.mp4",
+  "url": "demo/index.html",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 195,
+    "durationMs": 6500
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 364.4,
+          "y": 54,
+          "w": 42.9,
+          "h": 24
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 364.4,
+          "y": 54,
+          "w": 42.9,
+          "h": 24
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 1800,
+      "frame": 54,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Services",
+        "expanded": null,
+        "box": {
+          "x": 437.3,
+          "y": 54,
+          "w": 56.5,
+          "h": 24
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Services",
+        "expanded": null,
+        "box": {
+          "x": 437.3,
+          "y": 54,
+          "w": 56.5,
+          "h": 24
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2600,
+      "frame": 78,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Privacy",
+        "expanded": null,
+        "box": {
+          "x": 1142.6,
+          "y": 770.5,
+          "w": 43.2,
+          "h": 21
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Privacy",
+        "expanded": null,
+        "box": {
+          "x": 1142.6,
+          "y": 770.5,
+          "w": 43.2,
+          "h": 21
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 3400,
+      "frame": 102,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Terms",
+        "expanded": null,
+        "box": {
+          "x": 1211.7,
+          "y": 770.5,
+          "w": 36.2,
+          "h": 21
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Terms",
+        "expanded": null,
+        "box": {
+          "x": 1211.7,
+          "y": 770.5,
+          "w": 36.2,
+          "h": 21
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 4200,
+      "frame": 126,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Sample Business",
+        "expanded": null,
+        "box": {
+          "x": 120,
+          "y": 50.3,
+          "w": 204.4,
+          "h": 31.5
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Sample Business",
+        "expanded": null,
+        "box": {
+          "x": 120,
+          "y": 50.3,
+          "w": 204.4,
+          "h": 31.5
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 5000,
+      "frame": 150,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "About",
+        "expanded": null,
+        "box": {
+          "x": 523.8,
+          "y": 54,
+          "w": 43.6,
+          "h": 24
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "About",
+        "expanded": null,
+        "box": {
+          "x": 523.8,
+          "y": 54,
+          "w": 43.6,
+          "h": 24
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/D1-demo-page.png",
+      "tMs": 500,
+      "frame": 15
+    },
+    {
+      "file": "stills/D1-invisible-focus.png",
+      "tMs": 4000,
+      "frame": 120
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:51:41.181Z"
+}

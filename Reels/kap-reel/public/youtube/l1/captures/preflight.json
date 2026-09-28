@@ -1,0 +1,394 @@
+{
+  "checkedAt": "2026-09-28T15:47:24.082Z",
+  "site": "https://ka-performancefl.com",
+  "allPass": true,
+  "outlinesSeen": [
+    "2px solid rgb(154, 52, 18), offset 3px"
+  ],
+  "checks": [
+    {
+      "name": "Tab 1 on load is the Skip to content link, top-left, rust outline",
+      "expected": {
+        "label": "Skip to content",
+        "outline": "rgb(154, 52, 18)",
+        "topLeft": true
+      },
+      "actual": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": 12,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": 7,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "Skip link targets #main-content",
+      "expected": "#main-content",
+      "actual": "#main-content",
+      "pass": true
+    },
+    {
+      "name": "Enter on the skip link moves focus to main#main-content",
+      "expected": "main#main-content",
+      "actual": "main#main-content",
+      "pass": true
+    },
+    {
+      "name": "Next Tab after the skip is the hero Start a project",
+      "expected": "Start a project (hero)",
+      "actual": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 168,
+          "y": 739.1,
+          "w": 148.7,
+          "h": 47
+        },
+        "ringBox": {
+          "x": 163,
+          "y": 734.1,
+          "w": 158.7,
+          "h": 57
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "Home tab order: skip, logo, nav, phone, Start a project, hero buttons, inline links",
+      "expected": [
+        "Skip to content",
+        "K & A Performance home",
+        "Home",
+        "Services",
+        "Mentorship",
+        "Training",
+        "Artists",
+        "904-210-1071",
+        "Start a project",
+        "Start a project",
+        "What we do",
+        "custom websites"
+      ],
+      "actual": [
+        "Skip to content",
+        "K & A Performance home",
+        "Home",
+        "Services",
+        "Mentorship",
+        "Training",
+        "Artists",
+        "904-210-1071",
+        "Start a project",
+        "Start a project",
+        "What we do",
+        "custom websites"
+      ],
+      "pass": true
+    },
+    {
+      "name": "Every one of those stops shows a :focus-visible rust outline",
+      "expected": "2px solid rgb(154, 52, 18)",
+      "actual": [
+        "2px solid rgb(154, 52, 18), offset 3px"
+      ],
+      "pass": true
+    },
+    {
+      "name": "Shift+Tab from a fresh load focuses the Chat with Kai bubble",
+      "expected": "button#sg-open",
+      "actual": {
+        "tag": "button",
+        "id": "sg-open",
+        "label": "Chat with Kai",
+        "expanded": "false",
+        "box": {
+          "x": 1360,
+          "y": 730,
+          "w": 56,
+          "h": 56
+        },
+        "ringBox": {
+          "x": 1355,
+          "y": 725,
+          "w": 66,
+          "h": 66
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      },
+      "pass": true
+    },
+    {
+      "name": "Enter opens Kai with focus in the input",
+      "expected": "input#sg-input",
+      "actual": {
+        "tag": "input",
+        "id": "sg-input",
+        "label": "Ask the site guide",
+        "expanded": null,
+        "box": {
+          "x": 1077,
+          "y": 651,
+          "w": 251.4,
+          "h": 38
+        },
+        "ringBox": {
+          "x": 1072,
+          "y": 646,
+          "w": 261.4,
+          "h": 48
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      },
+      "pass": true
+    },
+    {
+      "name": "Tab from the Kai input goes to Send (not trapped)",
+      "expected": "button#sg-send",
+      "actual": {
+        "tag": "button",
+        "id": "sg-send",
+        "label": "Send",
+        "expanded": null,
+        "box": {
+          "x": 1336.4,
+          "y": 652,
+          "w": 66.6,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 1331.4,
+          "y": 647,
+          "w": 76.6,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      },
+      "pass": true
+    },
+    {
+      "name": "Escape closes Kai and focus returns to the bubble",
+      "expected": "button#sg-open",
+      "actual": {
+        "tag": "button",
+        "id": "sg-open",
+        "label": "Chat with Kai",
+        "expanded": "false",
+        "box": {
+          "x": 1360,
+          "y": 730,
+          "w": 56,
+          "h": 56
+        },
+        "ringBox": {
+          "x": 1355,
+          "y": 725,
+          "w": 66,
+          "h": 66
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      },
+      "pass": true
+    },
+    {
+      "name": "Contact fields have visible labels NAME, EMAIL, MESSAGE",
+      "expected": [
+        "NAME",
+        "EMAIL",
+        "MESSAGE"
+      ],
+      "actual": [
+        {
+          "id": "name",
+          "label": "NAME",
+          "labelVisible": true
+        },
+        {
+          "id": "email",
+          "label": "EMAIL",
+          "labelVisible": true
+        },
+        {
+          "id": "message",
+          "label": "MESSAGE",
+          "labelVisible": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "Honeypot botcheck is out of the tab order",
+      "expected": {
+        "tabIndex": -1
+      },
+      "actual": {
+        "tabIndex": -1,
+        "display": "none"
+      },
+      "pass": true
+    },
+    {
+      "name": "Contact tab order: name, email, message, Send message (rust outline)",
+      "expected": [
+        "input#name",
+        "input#email",
+        "textarea#message",
+        "button#contact-submit"
+      ],
+      "actual": [
+        "input#name",
+        "input#email",
+        "textarea#message",
+        "button#contact-submit"
+      ],
+      "pass": true
+    },
+    {
+      "name": "At 960 the fourth Tab reaches the Open menu button (aria-expanded false)",
+      "expected": "button#nav-toggle Open menu",
+      "actual": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Open menu",
+        "expanded": "false",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "Enter opens the menu (aria-expanded true, button reads Close menu)",
+      "expected": "Close menu, expanded true",
+      "actual": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Close menu",
+        "expanded": "true",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "Next Tab goes into the overlay (Home)",
+      "expected": "Home",
+      "actual": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 440.6,
+          "y": 39.5,
+          "w": 78.8,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 435.6,
+          "y": 34.5,
+          "w": 88.8,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "Escape closes the menu and focus returns to the toggle",
+      "expected": "button#nav-toggle Open menu, expanded false",
+      "actual": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Open menu",
+        "expanded": "false",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "pass": true
+    },
+    {
+      "name": "/services/accessibility/ returns 200 with the audit H1",
+      "expected": "200, Website accessibility audit, measured not guessed",
+      "actual": {
+        "status": 200,
+        "h1": "Website accessibility audit, measured not guessed"
+      },
+      "pass": true
+    },
+    {
+      "name": "/accessibility/ returns 200",
+      "expected": 200,
+      "actual": 200,
+      "pass": true
+    }
+  ]
+}

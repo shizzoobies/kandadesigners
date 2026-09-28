@@ -1,0 +1,188 @@
+{
+  "clip": "C5",
+  "file": "C5.mp4",
+  "url": "https://ka-performancefl.com/",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 180,
+    "durationMs": 6000
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Shift+Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "button",
+        "id": "sg-open",
+        "label": "Chat with Kai",
+        "expanded": "false",
+        "box": {
+          "x": 1360,
+          "y": 730,
+          "w": 56,
+          "h": 56
+        },
+        "ringBox": {
+          "x": 1355,
+          "y": 725,
+          "w": 66,
+          "h": 66
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "button",
+        "id": "sg-open",
+        "label": "Chat with Kai",
+        "expanded": "false",
+        "box": {
+          "x": 1360,
+          "y": 730,
+          "w": 56,
+          "h": 56
+        },
+        "ringBox": {
+          "x": 1355,
+          "y": 725,
+          "w": 66,
+          "h": 66
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Enter",
+      "tMs": 2400,
+      "frame": 72,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "sg-input",
+        "label": "Ask the site guide",
+        "expanded": null,
+        "box": {
+          "x": 1077,
+          "y": 651,
+          "w": 251.4,
+          "h": 38
+        },
+        "ringBox": {
+          "x": 1072,
+          "y": 646,
+          "w": 261.4,
+          "h": 48
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "sg-input",
+        "label": "Ask the site guide",
+        "expanded": null,
+        "box": {
+          "x": 1077,
+          "y": 651,
+          "w": 251.4,
+          "h": 38
+        },
+        "ringBox": {
+          "x": 1072,
+          "y": 646,
+          "w": 261.4,
+          "h": 48
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Escape",
+      "tMs": 4400,
+      "frame": 132,
+      "focusAtPress": {
+        "tag": "button",
+        "id": "sg-open",
+        "label": "Chat with Kai",
+        "expanded": "false",
+        "box": {
+          "x": 1360,
+          "y": 730,
+          "w": 56,
+          "h": 56
+        },
+        "ringBox": {
+          "x": 1355,
+          "y": 725,
+          "w": 66,
+          "h": 66
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "button",
+        "id": "sg-open",
+        "label": "Chat with Kai",
+        "expanded": "false",
+        "box": {
+          "x": 1360,
+          "y": 730,
+          "w": 56,
+          "h": 56
+        },
+        "ringBox": {
+          "x": 1355,
+          "y": 725,
+          "w": 66,
+          "h": 66
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/C5-kai-bubble-focus.png",
+      "tMs": 2200,
+      "frame": 66
+    },
+    {
+      "file": "stills/C5-kai-open.png",
+      "tMs": 4200,
+      "frame": 126
+    },
+    {
+      "file": "stills/C5-kai-closed-focus-returned.png",
+      "tMs": 5800,
+      "frame": 174
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:50:14.602Z"
+}

@@ -1,0 +1,292 @@
+{
+  "clip": "C3",
+  "file": "C3.mp4",
+  "url": "https://ka-performancefl.com/",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 222,
+    "durationMs": 7400
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 168,
+          "y": 739.1,
+          "w": 148.7,
+          "h": 47
+        },
+        "ringBox": {
+          "x": 163,
+          "y": 734.1,
+          "w": 158.7,
+          "h": 57
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 168,
+          "y": 739.1,
+          "w": 148.7,
+          "h": 47
+        },
+        "ringBox": {
+          "x": 163,
+          "y": 734.1,
+          "w": 158.7,
+          "h": 57
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2200,
+      "frame": 66,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "What we do",
+        "expanded": null,
+        "box": {
+          "x": 332.7,
+          "y": 739.1,
+          "w": 127.4,
+          "h": 47
+        },
+        "ringBox": {
+          "x": 327.7,
+          "y": 734.1,
+          "w": 137.4,
+          "h": 57
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "What we do",
+        "expanded": null,
+        "box": {
+          "x": 332.7,
+          "y": 739.1,
+          "w": 127.4,
+          "h": 47
+        },
+        "ringBox": {
+          "x": 327.7,
+          "y": 734.1,
+          "w": 137.4,
+          "h": 57
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 3400,
+      "frame": 102,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "custom websites",
+        "expanded": null,
+        "box": {
+          "x": 865.3,
+          "y": 429.4,
+          "w": 130.6,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 860.3,
+          "y": 424.4,
+          "w": 140.6,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "custom websites",
+        "expanded": null,
+        "box": {
+          "x": 865.3,
+          "y": 429.4,
+          "w": 130.6,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 860.3,
+          "y": 424.4,
+          "w": 140.6,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 4600,
+      "frame": 138,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "useful AI integrations",
+        "expanded": null,
+        "box": {
+          "x": 1004.7,
+          "y": 429.4,
+          "w": 169.1,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 999.7,
+          "y": 424.4,
+          "w": 179.1,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "useful AI integrations",
+        "expanded": null,
+        "box": {
+          "x": 1004.7,
+          "y": 429.4,
+          "w": 169.1,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 999.7,
+          "y": 424.4,
+          "w": 179.1,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 5800,
+      "frame": 174,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "training people can use",
+        "expanded": null,
+        "box": {
+          "x": 816.2,
+          "y": 458.9,
+          "w": 184.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 811.2,
+          "y": 453.9,
+          "w": 194.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "training people can use",
+        "expanded": null,
+        "box": {
+          "x": 816.2,
+          "y": 458.9,
+          "w": 184.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 811.2,
+          "y": 453.9,
+          "w": 194.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 2790
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/C3-hero-start-a-project.png",
+      "tMs": 2000,
+      "frame": 60
+    },
+    {
+      "file": "stills/C3-what-we-do.png",
+      "tMs": 3200,
+      "frame": 96
+    },
+    {
+      "file": "stills/C3-custom-websites.png",
+      "tMs": 4400,
+      "frame": 132
+    },
+    {
+      "file": "stills/C3-ai-integrations.png",
+      "tMs": 5600,
+      "frame": 168
+    },
+    {
+      "file": "stills/C3-training-link.png",
+      "tMs": 7200,
+      "frame": 216
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:49:15.314Z"
+}

@@ -1,0 +1,47 @@
+{
+  "clip": "C7",
+  "file": "C7.mp4",
+  "url": "https://ka-performancefl.com/services/accessibility/",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 255,
+    "durationMs": 8500
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [],
+  "typing": [],
+  "scroll": {
+    "fromY": 0,
+    "toY": 651,
+    "startMs": 1000,
+    "endMs": 7000,
+    "easing": "easeInOutCubic"
+  },
+  "stills": [
+    {
+      "file": "stills/C7-audit-hero.png",
+      "tMs": 500,
+      "frame": 15
+    },
+    {
+      "file": "stills/C7-what-the-audit-covers.png",
+      "tMs": 8300,
+      "frame": 249
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:51:18.154Z"
+}

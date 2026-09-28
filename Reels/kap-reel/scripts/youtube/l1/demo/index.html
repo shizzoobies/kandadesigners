@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sample Business</title>
+<!--
+  Test page for the K&A Performance YouTube video L1, "Test your website with one key".
+  Deliberately plain and unbranded. Sample Business is a placeholder, not a real company.
+  It is built to fail four keyboard checks on purpose:
+    1. Invisible focus: *:focus{outline:none} and no replacement style.
+    2. Scrambled order: positive tabindex values send focus header, footer, header.
+    3. Keyboard trap: the signup box swallows Tab, Shift+Tab and Escape.
+    4. Placeholder-only fields: the quote form has hints but no labels.
+  ?reveal=1 adds a plain dark outline so viewers can see where focus is (used for the order and trap clips).
+  Designed for a 1440x810 viewport. Everything fits on one screen, so no key press scrolls the page.
+-->
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  *:focus { outline: none; }
+
+  html, body { margin: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #3a3a3a;
+    background: #f2f2f2;
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main { flex: 1; }
+  a { color: #3a3a3a; }
+
+  .test-label {
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: #6b6b6b;
+    background: #e4e4e4;
+    border-bottom: 1px solid #d2d2d2;
+  }
+
+  .wrap { width: 1200px; margin: 0 auto; }
+
+  header.site {
+    background: #fff;
+    border-bottom: 1px solid #dcdcdc;
+  }
+  header.site .wrap {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-size: 21px;
+    font-weight: 700;
+    color: #333;
+  }
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: #9a9a9a;
+  }
+  nav.main { display: flex; gap: 30px; }
+  nav.main a { text-decoration: none; font-size: 16px; color: #444; }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 26px; }
+  .phone { text-decoration: none; color: #444; font-size: 16px; }
+  .btn {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 4px;
+    background: #5a5a5a;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .btn.light { background: #fff; color: #444; border: 1px solid #bdbdbd; }
+
+  main .wrap { padding-top: 36px; }
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 56px;
+    align-items: start;
+  }
+  .hero h1 {
+    margin: 12px 0 14px;
+    font-size: 44px;
+    line-height: 1.15;
+    font-weight: 700;
+    color: #2e2e2e;
+  }
+  .hero p { margin: 0 0 24px; font-size: 18px; color: #555; max-width: 560px; }
+  .hero .actions { display: flex; gap: 14px; }
+  .hours { margin-top: 22px; font-size: 14px; color: #777; }
+
+  .quote {
+    background: #fff;
+    border: 1px solid #d6d6d6;
+    border-radius: 6px;
+    padding: 22px 24px 24px;
+  }
+  .quote h2 { margin: 0 0 14px; font-size: 20px; color: #333; }
+  .quote input, .quote textarea, .signup input {
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-size: 16px;
+    color: #333;
+    background: #fff;
+    border: 1px solid #cfcfcf;
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin: 0 0 10px;
+  }
+  .quote textarea { height: 64px; resize: none; }
+  ::placeholder { color: #b8b8b8; opacity: 1; }
+  .quote .btn { width: 100%; }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 34px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    padding: 18px 20px;
+  }
+  .card h3 { margin: 0 0 6px; font-size: 18px; color: #333; }
+  .card p { margin: 0 0 8px; font-size: 15px; color: #666; }
+  .card a { font-size: 15px; }
+
+  .signup {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #e8e8e8;
+    border: 1px solid #d4d4d4;
+    border-radius: 6px;
+    padding: 14px 20px;
+  }
+  .signup strong { font-size: 16px; color: #333; white-space: nowrap; }
+  .signup span { font-size: 15px; color: #666; white-space: nowrap; }
+  .signup input { width: 300px; margin: 0 0 0 auto; }
+
+  footer.site {
+    margin-top: 20px;
+    background: #dedede;
+    border-top: 1px solid #cfcfcf;
+  }
+  footer.site .wrap {
+    height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+    color: #666;
+  }
+  footer.site nav { margin-left: auto; display: flex; gap: 26px; }
+  footer.site a { color: #555; }
+
+  /* Demo only: show where focus is so viewers can follow it. Off by default. */
+  html.reveal *:focus { outline: 3px solid #1c1c1c; outline-offset: 3px; }
+</style>
+</head>
+<body>
+  <div class="test-label" id="test-label">Test page built for this video</div>
+
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>Sample Business</a>
+      <nav class="main" aria-label="Main">
+        <a href="#home" tabindex="1">Home</a>
+        <a href="#services" tabindex="2">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="header-right">
+        <a class="phone" href="#call">(555) 555-0100</a>
+        <a class="btn" href="#book">Book Now</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <div>
+          <h1>Friendly service,<br>close to home.</h1>
+          <p>Repairs, installs and upkeep for homes and small offices. Same-week appointments, clear prices, and a real person on the phone.</p>
+          <div class="actions">
+            <a class="btn" href="#services">See our services</a>
+            <a class="btn light" href="#call" id="call-us">Call us</a>
+          </div>
+          <div class="hours">Open Monday to Saturday, 8 to 6</div>
+        </div>
+
+        <form class="quote" id="quote" onsubmit="return false">
+          <h2>Request a quote</h2>
+          <input type="text" id="q-name" placeholder="Name" autocomplete="off">
+          <input type="text" id="q-phone" placeholder="Phone" autocomplete="off">
+          <textarea id="q-need" placeholder="What do you need?"></textarea>
+          <button class="btn" type="submit">Send request</button>
+        </form>
+      </section>
+
+      <section class="services" id="services">
+        <div class="card">
+          <h3>Repairs</h3>
+          <p>Leaks, doors, fixtures and small jobs.</p>
+          <a href="#repairs">Learn more</a>
+        </div>
+        <div class="card">
+          <h3>Installations</h3>
+          <p>Lights, fans, shelving and new fixtures, done neatly.</p>
+          <a href="#installs">Learn more</a>
+        </div>
+        <div class="card">
+          <h3>Maintenance</h3>
+          <p>Seasonal checkups so small problems stay small.</p>
+          <a href="#maintenance" id="last-card-link">Learn more</a>
+        </div>
+      </section>
+
+      <div class="signup" id="signup">
+        <strong>Get seasonal tips by email</strong>
+        <span>One short email a month.</span>
+        <input type="email" id="signup-email" placeholder="Email address" autocomplete="off">
+        <button class="btn" type="button" id="signup-button">Sign up</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <span>&copy; 2026 Sample Business</span>
+      <nav aria-label="Footer">
+        <a href="#privacy" tabindex="3">Privacy</a>
+        <a href="#terms" tabindex="4">Terms</a>
+        <a href="#careers">Careers</a>
+      </nav>
+    </div>
+  </footer>
+
+<script>
+  // Demo only: ?reveal=1 draws a plain outline so the order and the trap can be seen on camera.
+  if (new URLSearchParams(location.search).has("reveal")) {
+    document.documentElement.classList.add("reveal");
+    document.getElementById("test-label").textContent =
+      "Test page built for this video. Outline added so you can see where focus is.";
+  }
+
+  // The keyboard trap. Once focus is inside the signup box, Tab, Shift+Tab and Escape are
+  // swallowed and focus is pulled back to the email field. The only way out is a mouse.
+  var signup = document.getElementById("signup");
+  var signupEmail = document.getElementById("signup-email");
+  signup.addEventListener("keydown", function (e) {
+    if (e.key === "Tab" || e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
+      signupEmail.focus();
+    }
+  });
+
+  // In-page links only jump to fragments; keep the page still for the camera.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href^='#']");
+    if (a) e.preventDefault();
+  });
+</script>
+</body>
+</html>

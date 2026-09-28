@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Browser settings, Advanced (redrawn mock-up)</title>
+<!--
+  S1 for the K&A Performance YouTube video L1. A clean redrawn mock-up of a Mac browser settings
+  pane, "Advanced", with "Press Tab to highlight each item on a webpage" checked.
+  Generic on purpose: no logos, no app icon, neutral gray window controls, simple line icons.
+  Rendered at 2x by scripts/youtube/l1/capture.mjs (--only S1), as a 1440x810 frame and as a
+  transparent window cutout.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    width: 1440px;
+    height: 810px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7e7e9;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1f1f1f;
+    -webkit-font-smoothing: antialiased;
+  }
+  body.cutout { background: transparent; }
+
+  .window {
+    width: 860px;
+    background: #f6f6f6;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+  }
+
+  .titlebar {
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ececec;
+  }
+  .controls { position: absolute; left: 16px; top: 14px; display: flex; gap: 8px; }
+  .controls span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #c9c9cc;
+    border: 1px solid #b4b4b8;
+  }
+  .title { font-size: 14px; font-weight: 600; color: #2b2b2b; }
+
+  .toolbar {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 4px 16px 10px;
+    background: #ececec;
+    border-bottom: 1px solid #d6d6d6;
+  }
+  .tab {
+    width: 70px;
+    padding: 6px 0 5px;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #4a4a4a;
+  }
+  .tab svg { width: 26px; height: 26px; stroke: #707070; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .tab.on { background: #dcdcdf; color: #1f1f1f; }
+  .tab.on svg { stroke: #2b2b2b; }
+
+  .pane { padding: 30px 48px 38px; }
+  .row { display: grid; grid-template-columns: 200px 1fr; column-gap: 12px; margin-bottom: 22px; }
+  .row:last-child { margin-bottom: 0; }
+  .label { text-align: right; font-size: 14px; color: #2b2b2b; padding-top: 1px; }
+  .opts { display: flex; flex-direction: column; gap: 10px; }
+  .opt { display: flex; align-items: center; gap: 9px; font-size: 14px; color: #1f1f1f; }
+  .note { margin: -4px 0 0 25px; font-size: 12.5px; color: #7a7a7a; }
+
+  .box {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    border-radius: 4px;
+    background: #fff;
+    border: 1px solid #b9b9bd;
+    box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .box.checked { background: #5d5d62; border-color: #4d4d52; }
+  .box.checked svg { width: 11px; height: 11px; stroke: #fff; stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  .select {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 22px;
+    padding: 0 6px 0 9px;
+    margin-left: 2px;
+    border-radius: 5px;
+    background: #fff;
+    border: 1px solid #c4c4c8;
+    font-size: 13px;
+  }
+  .select svg { width: 9px; height: 12px; stroke: #555; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .muted { color: #9a9a9a; }
+</style>
+</head>
+<body>
+  <div class="window" id="window">
+    <div class="titlebar">
+      <div class="controls" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="title">Advanced</div>
+    </div>
+
+    <div class="toolbar" aria-hidden="true">
+      <div class="tab"><svg viewBox="0 0 26 26"><rect x="3" y="8" width="20" height="10" rx="5"/><circle cx="17.5" cy="13" r="3"/></svg>General</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><rect x="3" y="7" width="20" height="14" rx="2"/><path d="M3 11h20M9 7v4"/></svg>Tabs</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><rect x="4" y="5" width="18" height="16" rx="2"/><path d="M8 10h10M8 14h6"/></svg>AutoFill</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><circle cx="9" cy="13" r="4.5"/><path d="M13.5 13H22M19 13v3M22 13v3"/></svg>Passwords</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><circle cx="11.5" cy="11.5" r="6"/><path d="M16 16l5.5 5.5"/></svg>Search</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><rect x="6" y="12" width="14" height="10" rx="2"/><path d="M9 12V9a4 4 0 0 1 8 0v3"/></svg>Security</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><path d="M3 13s3.6-6 10-6 10 6 10 6-3.6 6-10 6S3 13 3 13z"/><circle cx="13" cy="13" r="2.8"/></svg>Privacy</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><circle cx="13" cy="13" r="9"/><path d="M4 13h18M13 4c3 3 3 15 0 18M13 4c-3 3-3 15 0 18"/></svg>Websites</div>
+      <div class="tab"><svg viewBox="0 0 26 26"><rect x="4" y="4" width="8" height="8" rx="1.5"/><rect x="14" y="4" width="8" height="8" rx="1.5"/><rect x="4" y="14" width="8" height="8" rx="1.5"/><rect x="14" y="14" width="8" height="8" rx="1.5"/></svg>Extensions</div>
+      <div class="tab on"><svg viewBox="0 0 26 26"><circle cx="13" cy="13" r="3.4"/><path d="M13 3.5v3M13 19.5v3M3.5 13h3M19.5 13h3M6.3 6.3l2.1 2.1M17.6 17.6l2.1 2.1M6.3 19.7l2.1-2.1M17.6 8.4l2.1-2.1"/><circle cx="13" cy="13" r="6.6"/></svg>Advanced</div>
+    </div>
+
+    <div class="pane">
+      <div class="row">
+        <div class="label">Smart Search Field:</div>
+        <div class="opts">
+          <div class="opt"><span class="box"></span>Show full website address</div>
+        </div>
+      </div>
+
+      <div class="row" id="row-accessibility">
+        <div class="label">Accessibility:</div>
+        <div class="opts">
+          <div class="opt"><span class="box"></span>Never use font sizes smaller than
+            <span class="select muted">9<svg viewBox="0 0 9 12"><path d="M1.5 4.5L4.5 1.5 7.5 4.5M1.5 7.5l3 3 3-3"/></svg></span>
+          </div>
+          <div class="opt" id="target"><span class="box checked"><svg viewBox="0 0 11 11"><path d="M2 5.8l2.3 2.3L9 2.9"/></svg></span>Press Tab to highlight each item on a webpage</div>
+          <div class="note">Option-Tab highlights each item.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="label">Reading List:</div>
+        <div class="opts">
+          <div class="opt"><span class="box"></span>Save articles for offline reading automatically</div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  if (new URLSearchParams(location.search).has("cutout")) document.body.classList.add("cutout");
+</script>
+</body>
+</html>

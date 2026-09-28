@@ -1,0 +1,36 @@
+{
+  "files": {
+    "safari-advanced.png": "2880x1620, the pane centered on a neutral gray 1440x810 frame at 2x",
+    "safari-advanced-window.png": "1976x916, transparent background, window plus shadow room (64 CSS px each side)"
+  },
+  "coordinates": "CSS px in the 1440x810 frame (safari-advanced.png). Multiply by 2 for image pixels.",
+  "boxes": {
+    "window": {
+      "x": 290,
+      "y": 240,
+      "w": 860,
+      "h": 330
+    },
+    "accessibilityRow": {
+      "x": 339,
+      "y": 421,
+      "w": 762,
+      "h": 70
+    },
+    "targetSetting": {
+      "x": 551,
+      "y": 453,
+      "w": 550,
+      "h": 17
+    },
+    "checkbox": {
+      "x": 551,
+      "y": 454,
+      "w": 16,
+      "h": 16
+    },
+    "font": "Inter, system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif",
+    "interLoaded": true
+  },
+  "source": "scripts/youtube/l1/demo/safari-advanced.html"
+}

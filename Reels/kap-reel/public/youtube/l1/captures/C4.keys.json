@@ -1,0 +1,475 @@
+{
+  "clip": "C4",
+  "file": "C4.mp4",
+  "url": "https://ka-performancefl.com/",
+  "viewport": {
+    "width": 960,
+    "height": 540,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frames": 312,
+    "durationMs": 10400
+  },
+  "coordinates": "CSS px relative to the viewport (960x540). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": -55.4,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": -60.4,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": 12,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": 7,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 1800,
+      "frame": 54,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "K & A Performance home",
+        "expanded": null,
+        "box": {
+          "x": 24,
+          "y": 21.2,
+          "w": 194.4,
+          "h": 73.6
+        },
+        "ringBox": {
+          "x": 19,
+          "y": 16.2,
+          "w": 204.4,
+          "h": 83.6
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "K & A Performance home",
+        "expanded": null,
+        "box": {
+          "x": 24,
+          "y": 21.2,
+          "w": 194.4,
+          "h": 73.6
+        },
+        "ringBox": {
+          "x": 19,
+          "y": 16.2,
+          "w": 204.4,
+          "h": 83.6
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2600,
+      "frame": 78,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Call 904-210-1071",
+        "expanded": null,
+        "box": {
+          "x": 813.7,
+          "y": 18,
+          "w": 66.3,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 808.7,
+          "y": 13,
+          "w": 76.3,
+          "h": 54
+        },
+        "outline": "2px solid rgb(34, 28, 21), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Call 904-210-1071",
+        "expanded": null,
+        "box": {
+          "x": 813.7,
+          "y": 18,
+          "w": 66.3,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 808.7,
+          "y": 13,
+          "w": 76.3,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 3400,
+      "frame": 102,
+      "focusAtPress": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Open menu",
+        "expanded": "false",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Open menu",
+        "expanded": "false",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Enter",
+      "tMs": 4600,
+      "frame": 138,
+      "focusAtPress": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Close menu",
+        "expanded": "true",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Close menu",
+        "expanded": "true",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 6000,
+      "frame": 180,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 440.6,
+          "y": 39.5,
+          "w": 78.8,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 435.6,
+          "y": 34.5,
+          "w": 88.8,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 440.6,
+          "y": 39.5,
+          "w": 78.8,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 435.6,
+          "y": 34.5,
+          "w": 88.8,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 6800,
+      "frame": 204,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Services",
+        "expanded": null,
+        "box": {
+          "x": 424.3,
+          "y": 107.5,
+          "w": 111.5,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 419.3,
+          "y": 102.5,
+          "w": 121.5,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Services",
+        "expanded": null,
+        "box": {
+          "x": 424.3,
+          "y": 107.5,
+          "w": 111.5,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 419.3,
+          "y": 102.5,
+          "w": 121.5,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 7600,
+      "frame": 228,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Mentorship",
+        "expanded": null,
+        "box": {
+          "x": 405.8,
+          "y": 175.5,
+          "w": 148.4,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 400.8,
+          "y": 170.5,
+          "w": 158.4,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Mentorship",
+        "expanded": null,
+        "box": {
+          "x": 405.8,
+          "y": 175.5,
+          "w": 148.4,
+          "h": 36
+        },
+        "ringBox": {
+          "x": 400.8,
+          "y": 170.5,
+          "w": 158.4,
+          "h": 46
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Escape",
+      "tMs": 8800,
+      "frame": 264,
+      "focusAtPress": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Open menu",
+        "expanded": "false",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "button",
+        "id": "nav-toggle",
+        "label": "Open menu",
+        "expanded": "false",
+        "box": {
+          "x": 892,
+          "y": 18,
+          "w": 44,
+          "h": 44
+        },
+        "ringBox": {
+          "x": 887,
+          "y": 13,
+          "w": 54,
+          "h": 54
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/C4-menu-button-focus.png",
+      "tMs": 4400,
+      "frame": 132
+    },
+    {
+      "file": "stills/C4-menu-open.png",
+      "tMs": 5800,
+      "frame": 174
+    },
+    {
+      "file": "stills/C4-menu-home-focus.png",
+      "tMs": 6600,
+      "frame": 198
+    },
+    {
+      "file": "stills/C4-menu-closed-focus-returned.png",
+      "tMs": 10200,
+      "frame": 306
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:49:46.399Z"
+}

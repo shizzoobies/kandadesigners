@@ -1,0 +1,569 @@
+{
+  "clip": "C2",
+  "file": "C2.mp4",
+  "url": "https://ka-performancefl.com/",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 330,
+    "durationMs": 11000
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": -55.4,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": -60.4,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Skip to content",
+        "expanded": null,
+        "box": {
+          "x": 12,
+          "y": 12,
+          "w": 137.3,
+          "h": 43.4
+        },
+        "ringBox": {
+          "x": 7,
+          "y": 7,
+          "w": 147.3,
+          "h": 53.4
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 1800,
+      "frame": 54,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "K & A Performance home",
+        "expanded": null,
+        "box": {
+          "x": 168,
+          "y": 21.2,
+          "w": 194.4,
+          "h": 73.6
+        },
+        "ringBox": {
+          "x": 163,
+          "y": 16.2,
+          "w": 204.4,
+          "h": 83.6
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "K & A Performance home",
+        "expanded": null,
+        "box": {
+          "x": 168,
+          "y": 21.2,
+          "w": 194.4,
+          "h": 73.6
+        },
+        "ringBox": {
+          "x": 163,
+          "y": 16.2,
+          "w": 204.4,
+          "h": 83.6
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2600,
+      "frame": 78,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 526.9,
+          "y": 28,
+          "w": 44.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 521.9,
+          "y": 23,
+          "w": 54.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Home",
+        "expanded": null,
+        "box": {
+          "x": 526.9,
+          "y": 28,
+          "w": 44.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 521.9,
+          "y": 23,
+          "w": 54.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 3400,
+      "frame": 102,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Services",
+        "expanded": null,
+        "box": {
+          "x": 603.6,
+          "y": 28,
+          "w": 65.4,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 598.6,
+          "y": 23,
+          "w": 75.4,
+          "h": 34
+        },
+        "outline": "2px solid rgba(34, 28, 21, 0.8), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Services",
+        "expanded": null,
+        "box": {
+          "x": 603.6,
+          "y": 28,
+          "w": 65.4,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 598.6,
+          "y": 23,
+          "w": 75.4,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 4200,
+      "frame": 126,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Mentorship",
+        "expanded": null,
+        "box": {
+          "x": 701,
+          "y": 28,
+          "w": 86.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 696,
+          "y": 23,
+          "w": 96.7,
+          "h": 34
+        },
+        "outline": "2px solid rgba(34, 28, 21, 0.8), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Mentorship",
+        "expanded": null,
+        "box": {
+          "x": 701,
+          "y": 28,
+          "w": 86.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 696,
+          "y": 23,
+          "w": 96.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 5000,
+      "frame": 150,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Training",
+        "expanded": null,
+        "box": {
+          "x": 819.7,
+          "y": 28,
+          "w": 62.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 814.7,
+          "y": 23,
+          "w": 72.7,
+          "h": 34
+        },
+        "outline": "2px solid rgba(34, 28, 21, 0.8), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Training",
+        "expanded": null,
+        "box": {
+          "x": 819.7,
+          "y": 28,
+          "w": 62.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 814.7,
+          "y": 23,
+          "w": 72.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 5800,
+      "frame": 174,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Artists",
+        "expanded": null,
+        "box": {
+          "x": 914.4,
+          "y": 28,
+          "w": 51.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 909.4,
+          "y": 23,
+          "w": 61.7,
+          "h": 34
+        },
+        "outline": "2px solid rgba(34, 28, 21, 0.8), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Artists",
+        "expanded": null,
+        "box": {
+          "x": 914.4,
+          "y": 28,
+          "w": 51.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 909.4,
+          "y": 23,
+          "w": 61.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 6600,
+      "frame": 198,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "904-210-1071",
+        "expanded": null,
+        "box": {
+          "x": 998.1,
+          "y": 30,
+          "w": 93.2,
+          "h": 20
+        },
+        "ringBox": {
+          "x": 993.1,
+          "y": 25,
+          "w": 103.2,
+          "h": 30
+        },
+        "outline": "2px solid rgba(34, 28, 21, 0.8), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "904-210-1071",
+        "expanded": null,
+        "box": {
+          "x": 998.1,
+          "y": 30,
+          "w": 93.2,
+          "h": 20
+        },
+        "ringBox": {
+          "x": 993.1,
+          "y": 25,
+          "w": 103.2,
+          "h": 30
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 7400,
+      "frame": 222,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 1123.3,
+          "y": 17.5,
+          "w": 148.7,
+          "h": 45
+        },
+        "ringBox": {
+          "x": 1118.3,
+          "y": 12.5,
+          "w": 158.7,
+          "h": 55
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Start a project",
+        "expanded": null,
+        "box": {
+          "x": 1123.3,
+          "y": 17.5,
+          "w": 148.7,
+          "h": 45
+        },
+        "ringBox": {
+          "x": 1118.3,
+          "y": 12.5,
+          "w": 158.7,
+          "h": 55
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Shift+Tab",
+      "tMs": 8600,
+      "frame": 258,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "904-210-1071",
+        "expanded": null,
+        "box": {
+          "x": 998.1,
+          "y": 30,
+          "w": 93.2,
+          "h": 20
+        },
+        "ringBox": {
+          "x": 993.1,
+          "y": 25,
+          "w": 103.2,
+          "h": 30
+        },
+        "outline": "2px solid rgba(34, 28, 21, 0.8), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "904-210-1071",
+        "expanded": null,
+        "box": {
+          "x": 998.1,
+          "y": 30,
+          "w": 93.2,
+          "h": 20
+        },
+        "ringBox": {
+          "x": 993.1,
+          "y": 25,
+          "w": 103.2,
+          "h": 30
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Shift+Tab",
+      "tMs": 9400,
+      "frame": 282,
+      "focusAtPress": {
+        "tag": "a",
+        "id": null,
+        "label": "Artists",
+        "expanded": null,
+        "box": {
+          "x": 914.4,
+          "y": 28,
+          "w": 51.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 909.4,
+          "y": 23,
+          "w": 61.7,
+          "h": 34
+        },
+        "outline": "2px solid rgba(34, 28, 21, 0.8), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "a",
+        "id": null,
+        "label": "Artists",
+        "expanded": null,
+        "box": {
+          "x": 914.4,
+          "y": 28,
+          "w": 51.7,
+          "h": 24
+        },
+        "ringBox": {
+          "x": 909.4,
+          "y": 23,
+          "w": 61.7,
+          "h": 34
+        },
+        "outline": "2px solid rgb(154, 52, 18), offset 3px",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [
+    {
+      "file": "stills/C2-logo.png",
+      "tMs": 2500,
+      "frame": 75
+    },
+    {
+      "file": "stills/C2-nav-services.png",
+      "tMs": 4100,
+      "frame": 123
+    },
+    {
+      "file": "stills/C2-phone.png",
+      "tMs": 7300,
+      "frame": 219
+    },
+    {
+      "file": "stills/C2-header-start-a-project.png",
+      "tMs": 8400,
+      "frame": 252
+    }
+  ],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:48:38.517Z"
+}

@@ -1,0 +1,290 @@
+{
+  "clip": "D3-plain",
+  "file": "D3-plain.mp4",
+  "url": "demo/index.html",
+  "viewport": {
+    "width": 1440,
+    "height": 810,
+    "deviceScaleFactor": 2
+  },
+  "video": {
+    "width": 2880,
+    "height": 1620,
+    "fps": 30,
+    "frames": 225,
+    "durationMs": 7500
+  },
+  "coordinates": "CSS px relative to the viewport (1440x810). Multiply by 2 for video pixels.",
+  "fields": {
+    "tMs": "ms from clip start; the key lands on this frame",
+    "focusAtPress": "focused element measured right after the press (transitions not yet run)",
+    "focus": "focused element once settled, measured just before the next key or at clip end; use this for overlays and zooms",
+    "ringBox": "box plus outline width and offset: the visible focus ring. null when the page draws no outline"
+  },
+  "keys": [
+    {
+      "key": "Tab",
+      "tMs": 1000,
+      "frame": 30,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2000,
+      "frame": 60,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Tab",
+      "tMs": 2800,
+      "frame": 84,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Shift+Tab",
+      "tMs": 3600,
+      "frame": 108,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Shift+Tab",
+      "tMs": 4400,
+      "frame": 132,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Escape",
+      "tMs": 5200,
+      "frame": 156,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    },
+    {
+      "key": "Escape",
+      "tMs": 6000,
+      "frame": 180,
+      "focusAtPress": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      },
+      "focus": {
+        "tag": "input",
+        "id": "signup-email",
+        "label": "Email address",
+        "expanded": null,
+        "box": {
+          "x": 885.3,
+          "y": 652.5,
+          "w": 300,
+          "h": 43
+        },
+        "ringBox": null,
+        "outline": "none",
+        "focusVisible": true,
+        "scrollY": 0
+      }
+    }
+  ],
+  "typing": [],
+  "scroll": null,
+  "stills": [],
+  "warnings": [],
+  "capturedAt": "2026-09-28T15:52:58.473Z"
+}
