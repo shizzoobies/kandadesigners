@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 import fs from "node:fs";
 import { makeTempRoot, makeDay, baseManifest, baseFiles } from "./helpers.mjs";
-import { prepareRelease, recordRelease, recordError, promotePackets, recordPromotion } from "../lib/release.mjs";
+import { prepareRelease, recordRelease, recordError, promotePackets, recordPromotion, studioChecklist, recordStudioDone } from "../lib/release.mjs";
 import { readManifest } from "../lib/manifest.mjs";
 
 const r2 = {
@@ -123,6 +123,96 @@ describe("release", () => {
     expect(r.packets[0]).toMatchObject({ folder: "2026-01-05", date: "2026-01-05T09:00:00-05:00" });
     expect(r.packets.every((p) => p.info.draft === false)).toBe(true);
     expect(readManifest(dir).metricool.facebook.payload.info.draft).toBe(true);
+  });
+
+  it("returns the Studio checklist when it prepares a youtube packet", () => {
+    const yt = { verified: false, playlists: ["Quick fixes for your website"] };
+    const probe = () => ({ width: 1080, height: 1920, duration: 30, size: 1024 });
+    const m = baseManifest({ status: "approved", r2 });
+    m.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "Press Tab", playlist: "Quick fixes for your website", time: "12:00" };
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", m, baseFiles({ "youtube.md": "Hook.\nhttps://ka-performancefl.com/?utm_source=youtube\n" }));
+    const r = prepareRelease(dir, { now: early, probe, youtube: yt });
+    expect(r.packets.map((p) => p.network)).toEqual(["facebook", "instagram", "youtube"]);
+    expect(r.studio).toEqual([
+      'add it to the playlist "Quick fixes for your website"',
+      "add the end screen: subscribe plus the latest video"
+    ]);
+    // Nothing left to prepare for youtube: no checklist on the rerun.
+    recordRelease(dir, { network: "youtube", id: "3", uuid: "u-3" });
+    expect(prepareRelease(dir, { now: early, probe, youtube: yt }).studio).toEqual([]);
+  });
+
+  it("lists captions for a youtube VIDEO and asks for a playlist when none is set", () => {
+    const m = baseManifest({ status: "approved" });
+    m.platforms = { youtube: { type: "VIDEO", caption: "youtube.md", title: "Long one" } };
+    m.media = [
+      { file: "media/video.mp4", role: "video", origin: "kap-reel", alt: "" },
+      { file: "media/thumbnail.jpg", role: "thumbnail", origin: "kap-reel", alt: "A laptop" },
+      { file: "media/video.srt", role: "captions", origin: "kap-reel" }
+    ];
+    expect(studioChecklist(m, { verified: true, playlists: [] })).toEqual([
+      "add it to a playlist (post.json names none)",
+      "upload media/video.srt as English captions",
+      "add the end screen: subscribe plus the latest video"
+    ]);
+    // An unverified channel cannot take the thumbnail through Metricool: it goes up in Studio.
+    expect(studioChecklist(m, { verified: false, playlists: [] })).toEqual([
+      "add it to a playlist (post.json names none)",
+      "upload media/video.srt as English captions",
+      "upload media/thumbnail.jpg as the custom thumbnail",
+      "add the end screen: subscribe plus the latest video"
+    ]);
+    expect(studioChecklist(baseManifest(), { verified: false, playlists: [] })).toEqual([]);
+  });
+
+  it("sends an unverified channel's VIDEO without the thumbnail and lists it for Studio", () => {
+    const m = baseManifest({ status: "approved", time: "11:00" });
+    m.platforms = { youtube: { type: "VIDEO", caption: "youtube.md", title: "Long one", playlist: "Quick fixes for your website" } };
+    m.media = [
+      { file: "media/video.mp4", role: "video", origin: "kap-reel", alt: "" },
+      { file: "media/thumbnail.jpg", role: "thumbnail", origin: "kap-reel", alt: "A laptop" }
+    ];
+    m.r2 = { "media/video.mp4": { url: "https://media.example.com/v.mp4" }, "media/thumbnail.jpg": { url: "https://media.example.com/t.jpg" } };
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", m, baseFiles({
+      "youtube.md": "Hook.\nhttps://ka-performancefl.com/?utm_source=youtube\n", "media/video.mp4": Buffer.alloc(8)
+    }));
+    const probe = (file) => file.endsWith(".mp4") ? { width: 1920, height: 1080, duration: 300, size: 1024 } : { width: 1920, height: 1080, duration: 0, size: 1024 };
+    const yt = { verified: false, playlists: ["Quick fixes for your website"] };
+    const r = prepareRelease(dir, { now: early, probe, youtube: yt, dryRun: true });
+    expect(r.packets[0].info.videoThumbnailUrl).toBeUndefined();
+    expect(r.studio).toContain("upload media/thumbnail.jpg as the custom thumbnail");
+    const verified = prepareRelease(dir, { now: early, probe, youtube: { ...yt, verified: true }, dryRun: true });
+    expect(verified.packets[0].info.videoThumbnailUrl).toBe("https://media.example.com/t.jpg");
+    expect(verified.studio).not.toContain("upload media/thumbnail.jpg as the custom thumbnail");
+  });
+
+  it("resends a later youtube Short after the reel's own time has passed", () => {
+    const yt = { verified: false, playlists: [] };
+    const probe = () => ({ width: 1080, height: 1920, duration: 30, size: 1024 });
+    const m = baseManifest({ status: "approved", time: "10:30", r2 });
+    m.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "Press Tab", time: "12:00" };
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", m, baseFiles({ "youtube.md": "Hook.\nhttps://ka-performancefl.com/?utm_source=youtube\n" }));
+    prepareRelease(dir, { now: early, probe, youtube: yt });
+    recordRelease(dir, { network: "facebook", id: "1", uuid: "u-1" });
+    recordRelease(dir, { network: "instagram", id: "2", uuid: "u-2" });
+    // 15:45Z is 10:45 in New York: past the reel, before the Short.
+    const r = prepareRelease(dir, { now: new Date("2026-01-05T15:45:00Z"), probe, youtube: yt });
+    expect(r.skipped).toBeUndefined();
+    expect(r.packets.map((p) => p.network)).toEqual(["youtube"]);
+  });
+
+  it("stamps studioDoneAt on the youtube record, in either bucket", () => {
+    const m = baseManifest({ status: "published", metricool: { youtube: { id: "3", uuid: "u-3" } } });
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", m, {}, "Already Released");
+    const now = new Date("2026-01-06T10:00:00Z");
+    expect(recordStudioDone(dir, { now })).toEqual({ name: "2026-01-05" });
+    expect(readManifest(dir).metricool.youtube).toEqual({ id: "3", uuid: "u-3", studioDoneAt: "2026-01-06T10:00:00.000Z" });
+    const noYoutube = makeDay(root, "2026-01-06", baseManifest({ id: "2026-01-06", date: "2026-01-06" }), {});
+    expect(() => recordStudioDone(noYoutube)).toThrow("2026-01-06: youtube has no Metricool record");
   });
 
   it("records a promotion: draft off, new id, same uuid", () => {

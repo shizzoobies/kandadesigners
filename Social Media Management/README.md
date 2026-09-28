@@ -84,6 +84,9 @@ is `YYYY-MM-DD-2`. When a post has published, the whole folder moves to
 - `time` is local to `timezone`. Weekday default is 09:00.
 - `platforms.<network>.type`: Facebook `POST`, `REEL`, `STORY`. Instagram
   `POST`, `REEL`, `STORY`, `TRIAL_REEL`. LinkedIn is `"manual": true`.
+  YouTube `VIDEO`, `SHORT` (see "YouTube" below).
+- `platforms.<network>.time` (optional, any network) overrides the folder's
+  `time` for that one network.
 - `media[].role`: `video`, `image`, `thumbnail`, `captions`. Every `image`
   and `thumbnail` needs `alt`. A `thumbnail` is .jpg, .jpeg, or .png.
 - `media[].origin`: `human`, `codex`, `elevenlabs`, `kap-reel`.
@@ -176,6 +179,90 @@ R2 settings live in `tools/config/r2.json` (bucket `ka-social`, public base
 `https://media.ka-performancefl.com`). The Cloudflare token is read from
 `CLOUDFLARE_API_TOKEN`, or on Windows from the user scope variable of that
 name. It is never written anywhere.
+
+## YouTube
+
+Design: `docs/superpowers/specs/2026-09-28-youtube-pipeline-design.md` in the
+main repo. A YouTube post is a normal day folder, in one of two shapes.
+
+**A Short riding along with the weekday reel.** The reel's folder gains a
+`youtube` platform: same video, same music (one use under the 30-day rule),
+its own title and description. Shorts go up at **12:00 PM** on weekdays, after
+the reel, through the per-network `time`.
+
+**A long-form video.** Its own day folder with `youtube` as its only network.
+Long-form goes up **Wednesdays at 11:00 AM** (the folder's `time`).
+
+```json
+"youtube": {
+  "type": "SHORT",
+  "caption": "youtube.md",
+  "title": "Press Tab on your own website. Here's what to look for",
+  "tags": ["website accessibility", "small business website", "Gainesville web design"],
+  "category": "HOWTO_STYLE",
+  "playlist": "Quick fixes for your website",
+  "time": "12:00"
+}
+```
+
+- `type`: `VIDEO` or `SHORT`. The payload lowercases it for Metricool.
+- `caption`: `youtube.md`, the description, posted verbatim (5,000 characters
+  max). Line 1 is the hook. Line 2 is the tagged link, a ka-performancefl.com
+  url with `utm_source=youtube&utm_medium=social&utm_campaign=<folder>`. Then
+  the body, chapters for long-form, and the AI line when `ai` says so. The
+  template is in `plans/youtube-setup.md`.
+- `title`: required, 100 characters max. `validate` prints a warning (it does
+  not fail) above 70, because feeds cut titles there.
+- `tags`: optional list of strings, 500 characters combined, no `#`.
+- `category`: one of Metricool's 15 values; defaults to `HOWTO_STYLE`.
+- `playlist`: one of the playlists in `tools/config/youtube.json`. Metricool
+  cannot set it, so it only drives the Studio checklist.
+- `madeForKids` is always false and `notifySubscribers` is left to YouTube's
+  default (notify); neither goes in the folder. Privacy is public; use
+  `release --draft` to check it in Metricool first.
+
+Media rules, checked by `validate` with `ffprobe` once a folder is `ready` or
+later:
+- YouTube gets exactly one video and no images. In a reel folder that also
+  holds slides or a second cut, scope the other files to their networks with
+  `platforms` on the media entry.
+- Short: vertical or square (height at least the width), 170 seconds or less
+  (a margin under Metricool's 2:59). No thumbnail is sent for a Short yet: the
+  channel does not have Shorts thumbnails, and Metricool rejects the whole
+  request when one does not apply.
+- Long-form: `media/video.mp4`, 1920x1080 (16:9), H.264 and AAC, over 60
+  seconds, and 15 minutes or less until `tools/config/youtube.json` says
+  `"verified": true`. `media/thumbnail.jpg`: 1920x1080, JPG or PNG, 16:9, at
+  least 1280 wide, under 2 MB (2,000,000 bytes). The 4K master stays in
+  `source/`. `media/video.srt` stays on disk for Studio.
+- Custom thumbnails need a verified channel. Until `verified` is true, the
+  thumbnail is not sent to Metricool, a missing one is only a warning, and the
+  Studio checklist says to upload it by hand. Once verified, it is required and
+  sent with the post.
+- A phone video stored sideways is measured the way it plays (the probe reads
+  the rotation).
+- Every file bound for R2 in a YouTube folder is 280 MB or less, so `upload`
+  stays under wrangler's 300 MiB and Metricool's 500 MB. Encode long-form to
+  fit (1080p30, H.264 CRF 20 capped at 3.5 Mbps, AAC 192 kbps).
+
+**After it publishes: the Studio checklist.** `release` prints what Metricool
+cannot do, to finish by hand in YouTube Studio:
+- add the video to the playlist named in `playlist`;
+- upload `media/video.srt` as English captions (long-form only);
+- upload `media/thumbnail.jpg` as the custom thumbnail (long-form, while the
+  channel is not verified);
+- add the end screen: subscribe plus the latest video.
+
+Then mark it done: `node tools/social.mjs release --studio-done 2026-09-30`
+(it finds the folder in `To Be Released/` or `Already Released/`). That writes
+`metricool.youtube.studioDoneAt`, beside the YouTube record it belongs to.
+Until then, `reconcile --from` lists the folder under "Studio checklist still
+open" once the YouTube post time has passed. It assumes the Metricool post
+published; check YouTube if unsure.
+
+Staggered times: `validate` checks for a past time only on networks Metricool
+does not have yet, each at its own time. Once the reel's networks are recorded,
+`release` can still send a later Short after the reel's time has passed.
 
 ## For Codex
 

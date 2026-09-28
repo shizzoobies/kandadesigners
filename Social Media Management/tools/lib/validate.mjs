@@ -1,17 +1,25 @@
 import fs from "node:fs";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { STATUSES, DAY_NAME, readManifest, mediaFor } from "./manifest.mjs";
 import { readCaption, splitInstagram } from "./captions.mjs";
 
-export const LIMITS = { facebook: 63206, instagram: 2200, linkedin: 3000, firstComment: 2200 };
+export const LIMITS = { facebook: 63206, instagram: 2200, linkedin: 3000, youtube: 5000, firstComment: 2200 };
 export const AI_DISCLOSURE = /\bAI (narrated|voice|generated|assisted)/i;
-export const NETWORKS = ["facebook", "instagram", "linkedin"];
+export const NETWORKS = ["facebook", "instagram", "linkedin", "youtube"];
 export const TYPES = {
   facebook: ["POST", "REEL", "STORY"],
   instagram: ["POST", "REEL", "STORY", "TRIAL_REEL"],
   // DOCUMENT is ours: the images go up as one swipeable PDF (Metricool publishImagesAsPDF).
-  linkedin: ["POST", "DOCUMENT"]
+  linkedin: ["POST", "DOCUMENT"],
+  youtube: ["VIDEO", "SHORT"]
 };
+// Metricool's youtubeData.category values (the connector's own names, not YouTube's API ones).
+export const YOUTUBE_CATEGORIES = [
+  "FILM_ANIMATION", "AUTOS_VEHICLES", "MUSIC", "PETS_ANIMALS", "SPORTS", "TRAVEL_EVENTS", "GAMING", "PEOPLE_BLOGS",
+  "COMEDY", "ENTERTAINMENT", "NEWS_POLITICS", "HOWTO_STYLE", "EDUCATION", "SCIENCE_TECHNOLOGY", "NONPROFITS_ACTIVISM"
+];
 // An owner-published client's owner posts by hand from a plain file: no Story, no
 // carousel-as-document, nothing Metricool-specific - just a feed POST or a REEL.
 export const OWNER_TYPES = ["POST", "REEL"];
@@ -20,6 +28,51 @@ export const ORIGINS = ["human", "codex", "elevenlabs", "kap-reel"];
 const EM_DASH = "\u2014";
 const TEXT_EXT = new Set([".md", ".json", ".srt"]);
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
+const MB = 1024 * 1024;
+// Under wrangler's 300 MiB single put and Metricool's 500 MB, so upload needs no multipart path.
+const R2_MAX = 280 * MB;
+const YOUTUBE_LINK = /ka-performancefl\.com\S*utm_source=youtube/;
+const here = path.dirname(fileURLToPath(import.meta.url));
+const YOUTUBE_CONFIG = path.resolve(here, "..", "config", "youtube.json");
+
+/** The channel settings validate needs: { verified, playlists }. A missing file reads as an unverified channel with no playlists. */
+export function readYoutubeConfig(file = YOUTUBE_CONFIG) {
+  if (!fs.existsSync(file)) return { verified: false, playlists: [] };
+  return JSON.parse(fs.readFileSync(file, "utf8"));
+}
+
+/**
+ * { width, height, duration, size } for one media file: ffprobe on the first video stream for the first three,
+ * the disk for size. width and height are as displayed (a phone video stored sideways is swapped back), and
+ * null when the file has no video stream. `run` is injectable.
+ */
+export function probeMedia(file, run = spawnSync) {
+  const res = run("ffprobe", [
+    "-v", "error", "-select_streams", "v:0",
+    "-show_entries", "stream=width,height:stream_tags=rotate:stream_side_data=rotation:format=duration",
+    "-of", "json", file
+  ], { encoding: "utf8" });
+  if (res.error) throw new Error(`ffprobe could not start: ${res.error.message}`);
+  if (res.status !== 0) throw new Error(`ffprobe failed: ${String(res.stderr || "").trim()}`);
+  const out = JSON.parse(res.stdout);
+  const stream = (out.streams || [])[0] || {};
+  const side = (stream.side_data_list || []).find((x) => x && x.rotation !== undefined);
+  const rotation = Number(side ? side.rotation : stream.tags && stream.tags.rotate) || 0;
+  const sideways = Math.abs(rotation) % 180 === 90;
+  const width = stream.width || null;
+  const height = stream.height || null;
+  return {
+    width: sideways ? height : width,
+    height: sideways ? width : height,
+    duration: Number(out.format && out.format.duration) || 0,
+    size: fs.statSync(file).size
+  };
+}
+
+const isAspect = (p, w, h) => p.width > 0 && p.height > 0 && Math.abs(p.width / p.height - w / h) < 0.01;
+const mb = (size) => (size / MB).toFixed(1);
+// YouTube's thumbnail limit is 2 MB in decimal bytes.
+const THUMB_MAX = 2000000;
 
 /**
  * Every problem in one folder, or [] when it is valid. Never writes, never
@@ -27,8 +80,15 @@ const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
  * folder: for a `publish: "owner"` client, platforms may only name a network
  * in the client's own `networks`, types are POST or REEL only, and `manual`
  * is never set (every network there is posted by the owner by hand).
+ *
+ * A folder with a youtube platform also has its media probed once it is
+ * ready or later: `probe(absFile)` returns { width, height, duration, size }
+ * (probeMedia by default; tests inject a fake). `youtube` is the channel
+ * config (readYoutubeConfig by default). Advice that is not a problem (a
+ * YouTube title long enough to be cut off in feeds) is pushed onto
+ * `warnings`, an array the caller passes in to collect it.
  */
-export function validateFolder(dir, { now = new Date(), client = null } = {}) {
+export function validateFolder(dir, { now = new Date(), client = null, probe = probeMedia, youtube = null, warnings = [] } = {}) {
   const name = path.basename(dir);
   const problems = [];
   const add = (msg) => problems.push(`${name}: ${msg}`);
@@ -88,8 +148,13 @@ export function validateFolder(dir, { now = new Date(), client = null } = {}) {
       add(`timezone "${m.timezone}" does not match ${client.slug}'s timezone "${client.timezone}"`);
     }
 
+    // Only a network Metricool does not have yet can be late, each at its own time: once the reel is
+    // recorded, a later YouTube Short can still be sent after the reel's time has passed.
+    const recorded = (network) => Boolean(m.metricool && m.metricool[network] && m.metricool[network].id);
+    const pendingOnFolderTime = Object.entries(m.platforms && typeof m.platforms === "object" ? m.platforms : {})
+      .some(([n, cfg]) => cfg && typeof cfg === "object" && !cfg.manual && cfg.time === undefined && !recorded(n));
     if (!TIME.test(m.time)) add(`time "${m.time}" is not HH:MM`);
-    else if (tzValid && m.status === "approved" && localToUtc(m.date, m.time, m.timezone) <= now) {
+    else if (tzValid && m.status === "approved" && pendingOnFolderTime && localToUtc(m.date, m.time, m.timezone) <= now) {
       add(`approved post time ${m.date} ${m.time} ${m.timezone} is in the past`);
     }
 
@@ -164,6 +229,14 @@ export function validateFolder(dir, { now = new Date(), client = null } = {}) {
       }
       if (cfg.manual) continue;
 
+      // A network's own time (the YouTube Short goes up after the reel) overrides the folder's.
+      if (cfg.time !== undefined) {
+        if (!TIME.test(cfg.time)) add(`platforms.${network}.time "${cfg.time}" is not HH:MM`);
+        else if (tzValid && m.status === "approved" && !recorded(network) && localToUtc(m.date, cfg.time, m.timezone) <= now) {
+          add(`approved ${network} time ${m.date} ${cfg.time} ${m.timezone} is in the past`);
+        }
+      }
+
       const type = cfg.type || "POST";
       const allowedTypes = ownerClient ? OWNER_TYPES : TYPES[network];
       if (allowedTypes && !allowedTypes.includes(type)) {
@@ -181,6 +254,23 @@ export function validateFolder(dir, { now = new Date(), client = null } = {}) {
       }
 
       if ((type === "REEL" || type === "TRIAL_REEL") && !roles.has("video")) add(`${network} REEL needs a video`);
+      if (network === "youtube") {
+        const warn = (msg) => warnings.push(`${name}: ${msg}`);
+        youtube = youtube || readYoutubeConfig();
+        // YouTube takes one video and nothing else; a reel folder's other files are scoped away with platforms.
+        const videos = media.filter((x) => x.role === "video" && mediaFor(x, network)).length;
+        const images = media.filter((x) => x.role === "image" && mediaFor(x, network)).length;
+        if (videos === 0) add(`youtube ${type} needs a video`);
+        if (videos > 1) add(`youtube gets ${videos} videos; scope the others with "platforms"`);
+        if (images > 0) add(`youtube gets ${images} image(s); scope them away with "platforms"`);
+        // Custom thumbnails need a verified channel; until then the thumbnail goes up in Studio.
+        if (type === "VIDEO" && !roles.has("thumbnail")) {
+          if (youtube.verified) add("youtube VIDEO needs a thumbnail");
+          else warn("youtube VIDEO has no thumbnail: channel not verified; set the thumbnail in Studio");
+        }
+        youtubeProblems(cfg, add, warn, youtube);
+        if (readyOrLater) probeYoutube(dir, type, media, add, probe, youtube, videos === 1 && images === 0);
+      }
       if (network === "instagram" && !roles.has("image") && !roles.has("video")) add("instagram needs an image or video");
       if (network === "linkedin" && type === "DOCUMENT" &&
           media.filter((x) => x.role === "image" && mediaFor(x, network)).length < 2) add("linkedin DOCUMENT needs at least 2 images");
@@ -204,6 +294,9 @@ export function validateFolder(dir, { now = new Date(), client = null } = {}) {
         const limit = LIMITS[network];
         if (limit && text.length > limit) add(`${network} caption is ${text.length} characters, limit ${limit}`);
         if (aiFlag && !AI_DISCLOSURE.test(text)) add(`${network} caption needs an AI disclosure line`);
+        if (network === "youtube" && !YOUTUBE_LINK.test(text.split(/\r?\n/)[1] || "")) {
+          add(`${cfg.caption} line 2 needs a ka-performancefl.com link with utm_source=youtube`);
+        }
       }
     }
 
@@ -219,6 +312,75 @@ export function validateFolder(dir, { now = new Date(), client = null } = {}) {
   }
 
   return problems;
+}
+
+/** The youtube fields Metricool takes (title, tags, category) and the playlist the Studio checklist names. */
+function youtubeProblems(cfg, add, warn, config) {
+  const title = typeof cfg.title === "string" ? cfg.title.trim() : "";
+  if (!title) add("youtube needs a title");
+  else if (title.length > 100) add(`youtube title is ${title.length} characters, limit 100`);
+  else if (title.length > 70) warn(`youtube title is ${title.length} characters; feeds cut titles near 70`);
+  if (cfg.tags !== undefined) {
+    if (!Array.isArray(cfg.tags) || !cfg.tags.every((t) => typeof t === "string")) {
+      add("youtube tags must be a list of strings");
+    } else {
+      // YouTube counts the separators too.
+      const combined = cfg.tags.join(",").length;
+      if (combined > 500) add(`youtube tags are ${combined} characters combined, limit 500`);
+      for (const t of cfg.tags) if (t.includes("#")) add(`youtube tag "${t}" has a #`);
+    }
+  }
+  if (cfg.category !== undefined && !YOUTUBE_CATEGORIES.includes(cfg.category)) add(`youtube category "${cfg.category}" is not one of Metricool's categories`);
+  const playlists = Array.isArray(config.playlists) ? config.playlists : [];
+  if (cfg.playlist !== undefined && !playlists.includes(cfg.playlist)) add(`youtube playlist "${cfg.playlist}" is not one of ${playlists.join(", ")}`);
+}
+
+/**
+ * The media probe for a folder with youtube: the shape and length of the
+ * video it gets, its thumbnail for a VIDEO, and the size of every file bound
+ * for R2 (the roles upload sends). A file that does not exist is reported
+ * elsewhere, so it is skipped here. Shapes are checked only when `scoped`
+ * (youtube gets exactly one video and no images), so a scoping mistake is
+ * not reported as the wrong file's shape.
+ */
+function probeYoutube(dir, type, media, add, probe, config, scoped) {
+  const seen = new Map();
+  const read = (entry) => {
+    if (!seen.has(entry.file)) {
+      const abs = path.join(dir, entry.file);
+      let result = null;
+      if (fs.existsSync(abs)) {
+        try {
+          result = probe(abs);
+        } catch (err) {
+          add(`cannot probe ${entry.file}: ${err.message}`);
+        }
+      }
+      seen.set(entry.file, result);
+    }
+    return seen.get(entry.file);
+  };
+  for (const entry of scoped ? media.filter((x) => mediaFor(x, "youtube")) : []) {
+    const p = entry.role === "video" || (entry.role === "thumbnail" && type === "VIDEO") ? read(entry) : null;
+    if (!p) continue;
+    if (!(p.width > 0 && p.height > 0)) { add(`${entry.file} has no video stream`); continue; }
+    if (entry.role === "video" && type === "SHORT") {
+      // Any vertical or square video is a Short to YouTube and Metricool.
+      if (p.height < p.width) add(`${entry.file} is ${p.width}x${p.height}; a youtube SHORT needs a vertical or square video`);
+      if (p.duration > 170) add(`${entry.file} runs ${p.duration}s; a youtube SHORT must be 170s or less`);
+    } else if (entry.role === "video") {
+      if (!isAspect(p, 16, 9)) add(`${entry.file} is ${p.width}x${p.height}; a youtube VIDEO needs 16:9`);
+      if (p.duration <= 60) add(`${entry.file} runs ${p.duration}s; a youtube VIDEO must be over 60s`);
+      if (p.duration > 900 && !config.verified) add(`${entry.file} runs ${p.duration}s; an unverified channel allows 900s (15 minutes)`);
+    } else {
+      if (!isAspect(p, 16, 9) || p.width < 1280) add(`${entry.file} is ${p.width}x${p.height}; a youtube VIDEO thumbnail needs 16:9, 1280 wide or more`);
+      if (p.size >= THUMB_MAX) add(`${entry.file} is ${(p.size / 1e6).toFixed(1)} MB; a youtube thumbnail must be under 2 MB`);
+    }
+  }
+  for (const entry of media.filter((x) => ["video", "image", "thumbnail"].includes(x.role))) {
+    const p = read(entry);
+    if (p && p.size > R2_MAX) add(`${entry.file} is ${mb(p.size)} MB; files bound for R2 must be 280 MB or less`);
+  }
 }
 
 /** Relative paths of .md, .json, .srt files under dir, forward slashes. */

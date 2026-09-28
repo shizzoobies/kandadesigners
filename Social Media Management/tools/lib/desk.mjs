@@ -63,7 +63,10 @@ function rewriteMediaEntry(entry, slug, itemId, wanted) {
 // scheduled, ai, music, weekday, pillar, builtAt, or a media/story src (an
 // R2 key, not content). A field only goes in when present on the source
 // item, so adding vs. never having a field does not itself change the hash.
-const POST_FIELDS = ["title", "hook", "networks", "facebook", "instagram", "firstComment", "linkedin", "linkedinComment", "repost", "questions"];
+const POST_FIELDS = [
+  "title", "hook", "networks", "facebook", "instagram", "firstComment", "linkedin", "linkedinComment", "repost", "questions",
+  "youtubeTitle", "youtube", "youtubeType", "youtubeTags", "youtubePlaylist", "youtubeTime"
+];
 const STORY_FIELDS = ["date", "time", "condition", "stickerText", "stickerUrl"];
 const ASK_FIELDS = ["title", "detail", "placeholder"];
 

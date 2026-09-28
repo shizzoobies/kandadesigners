@@ -154,6 +154,31 @@ describe("reconcile", () => {
     expect(deleted).toHaveLength(2);
   });
 
+  it("reminds about the Studio checklist for a youtube post whose time has passed until it is marked done", () => {
+    root = makeTempRoot();
+    const withYoutube = (name, status, youtubeRec, extra = {}) => {
+      const m = scheduledDay(name, { status, ...extra });
+      m.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "T", time: "12:00" };
+      m.metricool.youtube = youtubeRec;
+      return m;
+    };
+    const archived = withYoutube("2026-01-02", "published", { payload: {}, id: "3", uuid: "yt-3" }, { published: { at: "2026-01-02T14:00:00.000Z" } });
+    makeDay(root, "2026-01-02", archived, {}, "Already Released");
+    const done = withYoutube("2026-01-03", "published", { payload: {}, id: "4", uuid: "yt-4", studioDoneAt: "t" }, { published: { at: "2026-01-03T14:00:00.000Z" } });
+    makeDay(root, "2026-01-03", done, {}, "Already Released");
+    const draft = withYoutube("2026-01-04", "scheduled", { payload: {}, id: "5", uuid: "yt-5", draft: true });
+    makeDay(root, "2026-01-04", draft, baseFiles());
+    // Still listed by Metricool, so it waits, but the Short's 12:00 is what counts for the reminder.
+    makeDay(root, "2026-01-05", withYoutube("2026-01-05", "scheduled", { payload: {}, id: "6", uuid: "yt-6" }), baseFiles());
+    const response = { data: [{ uuid: "fb-1" }] };
+
+    // 16:00Z is 11:00 in New York: the 2026-01-05 Short is not up yet.
+    let r = reconcile({ root, response, now: new Date("2026-01-05T16:00:00Z"), del: () => {} });
+    expect(r.studio).toEqual(["2026-01-02"]);
+    r = reconcile({ root, response, now: new Date("2026-01-05T17:30:00Z"), del: () => {} });
+    expect(r.studio).toEqual(["2026-01-02", "2026-01-05"]);
+  });
+
   it("gives the getScheduledPosts window from the earliest scheduled date to tomorrow", () => {
     root = makeTempRoot();
     expect(reconcileWindow(root, new Date("2026-01-10T15:00:00Z"))).toBeNull();

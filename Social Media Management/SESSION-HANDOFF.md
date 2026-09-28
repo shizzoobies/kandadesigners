@@ -5,6 +5,8 @@ client work, `clients/README.md`. Business context: `SOCIAL_HANDOFF.md`. Social 
 on branch `codex/training-premium-rfi` of the main repo (not pushed). Admin work is on branch
 `admin/post-desk` in `D:\ka-site-admin` (pushed to origin by Alex 9/27, not merged to main).
 
+**YouTube (2026-09-28):** approved design in `docs/superpowers/specs/2026-09-28-youtube-pipeline-design.md` (main repo); `tools/` and README done (build steps 1 and 2), admin desk tab and the dry run still to come.
+
 **Stories are PAUSED (Alex, 2026-09-26):** `stories/PAUSED.md` exists, so no Story is on the
 schedule or the Post Desk. Nothing was in Metricool. To resume, follow `stories/PAUSED.md`.
 Alex also turned off Meta's "always share posts to story" on 9/26: it was auto-sharing our 4:5

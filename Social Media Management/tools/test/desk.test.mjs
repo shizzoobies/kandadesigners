@@ -188,6 +188,25 @@ describe("buildDeskRows content hash (reviewed fields only)", () => {
     expect(buildDeskRows(base, "ka-performance", wantedAfterRerender)[0].contentHash).not.toBe(baseHash);
   });
 
+  it("reacts to a change in any youtube field, and carries the youtube kind", () => {
+    root = makeTempRoot();
+    const yt = {
+      kind: "youtube", youtubeTitle: "Press Tab", youtube: "Hook.\nhttps://ka-performancefl.com/?utm_source=youtube",
+      youtubeType: "SHORT", youtubeTags: ["a"], youtubePlaylist: "Quick fixes for your website", youtubeTime: "12:00"
+    };
+    const base = fixtureData({ stories: [], storyChecklist: [], asks: [] });
+    const withYoutube = fixtureData({ stories: [], storyChecklist: [], asks: [], posts: [{ ...base.posts[0], ...yt }] });
+    setupQueue(root, withYoutube);
+    const wanted = wantedFor(root, withYoutube);
+    const row = buildDeskRows(withYoutube, "ka-performance", wanted)[0];
+    expect(row.kind).toBe("youtube");
+    const changes = { youtubeTitle: "Press Tab now", youtube: "Other", youtubeType: "VIDEO", youtubeTags: ["b"], youtubePlaylist: "Practical AI for small business", youtubeTime: "13:00" };
+    for (const [k, v] of Object.entries(changes)) {
+      const edited = fixtureData({ stories: [], storyChecklist: [], asks: [], posts: [{ ...base.posts[0], ...yt, [k]: v }] });
+      expect(buildDeskRows(edited, "ka-performance", wanted)[0].contentHash, k).not.toBe(row.contentHash);
+    }
+  });
+
   it("hashes story/checklist rows on date/time/condition/stickerText/stickerUrl/v only", () => {
     root = makeTempRoot();
     const base = fixtureData({ posts: [], asks: [] });

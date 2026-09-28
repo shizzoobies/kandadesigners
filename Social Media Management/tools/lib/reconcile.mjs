@@ -146,5 +146,30 @@ export function reconcile({ root, response, now = new Date(), del = (key) => r2D
     }
   }
 
-  return { published, waiting, drafts, deleted, errors };
+  return { published, waiting, drafts, deleted, errors, studio: studioPending(root, now) };
+}
+
+/**
+ * Folders whose youtube post has gone up (sent, not a draft, its own time passed) but whose Studio checklist
+ * is not marked done with release --studio-done yet. Both buckets: a published folder has usually moved.
+ */
+function studioPending(root, now) {
+  const out = [];
+  for (const bucket of [TO_BE_RELEASED, ALREADY_RELEASED]) {
+    for (const dir of listDayFolders(root, bucket)) {
+      let m;
+      try {
+        m = readManifest(dir);
+      } catch {
+        continue;
+      }
+      const cfg = m.platforms && m.platforms.youtube;
+      const rec = m.metricool && m.metricool.youtube;
+      if (!cfg || cfg.manual || !rec || !rec.id || rec.draft === true || rec.studioDoneAt) continue;
+      if (m.status !== "scheduled" && m.status !== "published") continue;
+      if (localToUtc(m.date, cfg.time || m.time, m.timezone) > now) continue;
+      out.push(path.basename(dir));
+    }
+  }
+  return out.sort();
 }

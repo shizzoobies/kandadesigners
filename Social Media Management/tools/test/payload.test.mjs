@@ -100,6 +100,64 @@ describe("payload", () => {
     expect(post.linkedin.info.linkedinData).toEqual({ type: "post", previewIncluded: true });
   });
 
+  it("builds a youtube Short with youtubeData, no thumbnail, and its own time", () => {
+    const m = baseManifest({ status: "approved", r2, ai: { voice: true, visuals: false } });
+    m.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "Press Tab", tags: ["website accessibility"], playlist: "Quick fixes for your website", time: "12:00" };
+    const files = baseFiles({ "youtube.md": "Press Tab.\nhttps://ka-performancefl.com/?utm_source=youtube\n\nThe voice is AI narrated.\n" });
+    const p = buildPayloads(uploadedDay(m, files));
+    expect(Object.keys(p)).toEqual(["facebook", "instagram", "youtube"]);
+    expect(p.youtube.date).toBe("2026-01-05T12:00:00-05:00");
+    expect(p.youtube.info).toMatchObject({
+      text: "Press Tab.\nhttps://ka-performancefl.com/?utm_source=youtube\n\nThe voice is AI narrated.",
+      firstCommentText: "",
+      media: ["https://media.example.com/2026-01-05/aaaaaaaa-reel-vertical.mp4"],
+      providers: [{ network: "youtube" }],
+      publicationDate: { dateTime: "2026-01-05T12:00:00", timezone: "America/New_York" }
+    });
+    expect(p.youtube.info.youtubeData).toEqual({
+      title: "Press Tab", type: "short", privacy: "public", tags: ["website accessibility"],
+      category: "HOWTO_STYLE", madeForKids: false, isAiGeneratedContent: true
+    });
+    expect(p.youtube.info.videoThumbnailUrl).toBeUndefined();
+    // The per-network time moves only youtube's dates.
+    expect(p.facebook.date).toBe("2026-01-05T09:00:00-05:00");
+    expect(p.facebook.info.publicationDate.dateTime).toBe("2026-01-05T09:00:00");
+    expect(p.facebook.info.youtubeData).toBeUndefined();
+  });
+
+  it("builds a youtube VIDEO with its thumbnail on a verified channel, category, and the AI flag off", () => {
+    const m = baseManifest({ status: "approved", ai: { voice: false, visuals: false } });
+    m.platforms = { youtube: { type: "VIDEO", caption: "youtube.md", title: "  Make your site accessible ", category: "EDUCATION" } };
+    m.media = [
+      { file: "media/video.mp4", role: "video", origin: "kap-reel", alt: "" },
+      { file: "media/thumbnail.jpg", role: "thumbnail", origin: "kap-reel", alt: "A laptop" },
+      { file: "media/video.srt", role: "captions", origin: "kap-reel" }
+    ];
+    m.r2 = { "media/video.mp4": { url: "https://media.example.com/v.mp4" }, "media/thumbnail.jpg": { url: "https://media.example.com/t.jpg" } };
+    const dir = uploadedDay(m, baseFiles({ "youtube.md": "Hook.\nhttps://ka-performancefl.com/?utm_source=youtube\n" }));
+    const p = buildPayloads(dir, { draft: true, youtube: { verified: true, playlists: [] } });
+    expect(p.youtube.date).toBe("2026-01-05T09:00:00-05:00");
+    expect(p.youtube.info.draft).toBe(true);
+    expect(p.youtube.info.media).toEqual(["https://media.example.com/v.mp4"]);
+    expect(p.youtube.info.videoThumbnailUrl).toBe("https://media.example.com/t.jpg");
+    expect(p.youtube.info.youtubeData).toEqual({
+      title: "Make your site accessible", type: "video", privacy: "public", tags: [],
+      category: "EDUCATION", madeForKids: false, isAiGeneratedContent: false
+    });
+    // Custom thumbnails need a verified channel; Metricool would reject the whole request.
+    const unverified = buildPayloads(dir, { youtube: { verified: false, playlists: [] } });
+    expect(unverified.youtube.info.videoThumbnailUrl).toBeUndefined();
+  });
+
+  it("lets any network carry its own time", () => {
+    const m = baseManifest({ status: "approved", r2 });
+    m.platforms.instagram.time = "10:30";
+    const p = buildPayloads(uploadedDay(m));
+    expect(p.instagram.date).toBe("2026-01-05T10:30:00-05:00");
+    expect(p.instagram.info.publicationDate.dateTime).toBe("2026-01-05T10:30:00");
+    expect(p.facebook.date).toBe("2026-01-05T09:00:00-05:00");
+  });
+
   it("fails clearly when a url is missing", () => {
     expect(() => buildPayloads(uploadedDay({ r2: {} }))).toThrow("media/reel-vertical.mp4 has no R2 url; run upload first");
   });

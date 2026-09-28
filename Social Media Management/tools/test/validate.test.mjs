@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 import { makeTempRoot, makeDay, baseManifest, baseFiles } from "./helpers.mjs";
-import { validateFolder } from "../lib/validate.mjs";
+import { validateFolder, probeMedia, readYoutubeConfig } from "../lib/validate.mjs";
 
 let root;
 afterEach(() => { if (root) fs.rmSync(root, { recursive: true, force: true }); });
@@ -414,5 +414,299 @@ describe("validateFolder status handed-off", () => {
   it("an owner client may carry the handed-off status", () => {
     const problems = validateFolder(ownerDay({ status: "handed-off" }), { client: OWNER_CLIENT });
     expect(problems).not.toContain('2026-01-05: status "handed-off" is only valid for an owner-published client');
+  });
+});
+
+const YT = { verified: false, playlists: ["Quick fixes for your website", "Practical AI for small business"] };
+const YT_LINK = "https://ka-performancefl.com/?utm_source=youtube&utm_medium=social&utm_campaign=2026-01-05";
+const MB = 1024 * 1024;
+
+/** A fake probe: file name to {width, height, duration, size}. Anything unnamed is a small 9:16 clip. */
+function fakeProbe(table = {}) {
+  const calls = [];
+  const probe = (file) => {
+    calls.push(path.basename(file));
+    return { width: 1080, height: 1920, duration: 30, size: MB, ...(table[path.basename(file)] || {}) };
+  };
+  probe.calls = calls;
+  return probe;
+}
+
+/** The weekday reel folder with a youtube Short riding along. */
+function shortDay(ytOverrides = {}, overrides = {}, fileOverrides = {}) {
+  const m = baseManifest(overrides);
+  m.platforms = {
+    ...m.platforms,
+    youtube: {
+      type: "SHORT", caption: "youtube.md", title: "Press Tab on your own website",
+      tags: ["website accessibility", "small business website"], category: "HOWTO_STYLE",
+      playlist: "Quick fixes for your website", time: "12:00", ...ytOverrides
+    }
+  };
+  return day(m, baseFiles({ "youtube.md": `Press Tab on your own website.\n${YT_LINK}\n\nWhat to look for.\n`, ...fileOverrides }));
+}
+
+/** A long-form folder: youtube is its only network. */
+function videoDay(ytOverrides = {}, overrides = {}, fileOverrides = {}) {
+  const m = baseManifest({
+    time: "11:00",
+    platforms: {
+      youtube: {
+        type: "VIDEO", caption: "youtube.md", title: "Make your small business website accessible",
+        tags: ["website accessibility"], category: "HOWTO_STYLE", playlist: "Quick fixes for your website", ...ytOverrides
+      }
+    },
+    media: [
+      { file: "media/video.mp4", role: "video", origin: "kap-reel", alt: "" },
+      { file: "media/thumbnail.jpg", role: "thumbnail", origin: "kap-reel", alt: "A laptop showing a website" },
+      { file: "media/video.srt", role: "captions", origin: "kap-reel" }
+    ],
+    ...overrides
+  });
+  const files = {
+    "youtube.md": `Make your website work for everyone.\n${YT_LINK}\n\nChapters\n0:00 Start\n`,
+    "media/video.mp4": Buffer.alloc(32),
+    "media/thumbnail.jpg": Buffer.alloc(32),
+    "media/video.srt": "1\n00:00:00,000 --> 00:00:01,000\nHello\n",
+    "brief.md": "# Brief: Long video\n\nApproved: yes\n",
+    ...fileOverrides
+  };
+  return day(m, files);
+}
+
+const videoProbe = (table = {}) => fakeProbe({
+  "video.mp4": { width: 1920, height: 1080, duration: 600, size: 200 * MB },
+  "thumbnail.jpg": { width: 1920, height: 1080, duration: 0, size: MB },
+  ...table
+});
+
+describe("validateFolder for youtube", () => {
+  it("accepts a Short riding along with the reel and a long-form video", () => {
+    expect(validateFolder(shortDay(), { youtube: YT })).toEqual([]);
+    expect(validateFolder(videoDay(), { youtube: YT })).toEqual([]);
+    expect(validateFolder(shortDay({}, { status: "ready" }), { youtube: YT, probe: fakeProbe() })).toEqual([]);
+    expect(validateFolder(videoDay({}, { status: "ready" }), { youtube: YT, probe: videoProbe() })).toEqual([]);
+  });
+
+  it("rejects a type other than VIDEO or SHORT", () => {
+    expect(validateFolder(shortDay({ type: "REEL" }), { youtube: YT })).toContain('2026-01-05: youtube type "REEL" is not one of VIDEO, SHORT');
+  });
+
+  it("requires a title of 1 to 100 characters and warns above 70", () => {
+    expect(validateFolder(shortDay({ title: undefined }), { youtube: YT })).toContain("2026-01-05: youtube needs a title");
+    expect(validateFolder(shortDay({ title: "  " }), { youtube: YT })).toContain("2026-01-05: youtube needs a title");
+    expect(validateFolder(shortDay({ title: "x".repeat(101) }), { youtube: YT })).toContain("2026-01-05: youtube title is 101 characters, limit 100");
+    const warnings = [];
+    expect(validateFolder(shortDay({ title: "x".repeat(71) }), { youtube: YT, warnings })).toEqual([]);
+    expect(warnings).toEqual(["2026-01-05: youtube title is 71 characters; feeds cut titles near 70"]);
+    const none = [];
+    validateFolder(shortDay({ title: "x".repeat(70) }), { youtube: YT, warnings: none });
+    expect(none).toEqual([]);
+  });
+
+  it("checks the category, the tags, and the playlist", () => {
+    expect(validateFolder(shortDay({ category: "HOWTO" }), { youtube: YT })).toContain("2026-01-05: youtube category \"HOWTO\" is not one of Metricool's categories");
+    expect(validateFolder(shortDay({ category: undefined }), { youtube: YT })).toEqual([]);
+    expect(validateFolder(shortDay({ tags: "a, b" }), { youtube: YT })).toContain("2026-01-05: youtube tags must be a list of strings");
+    expect(validateFolder(shortDay({ tags: ["x".repeat(300), "y".repeat(200)] }), { youtube: YT })).toContain("2026-01-05: youtube tags are 501 characters combined, limit 500");
+    expect(validateFolder(shortDay({ tags: ["#webdesign"] }), { youtube: YT })).toContain('2026-01-05: youtube tag "#webdesign" has a #');
+    expect(validateFolder(shortDay({ tags: undefined }), { youtube: YT })).toEqual([]);
+    expect(validateFolder(shortDay({ playlist: "Other" }), { youtube: YT })).toContain('2026-01-05: youtube playlist "Other" is not one of Quick fixes for your website, Practical AI for small business');
+  });
+
+  it("requires the tagged link on line 2 of the description", () => {
+    expect(validateFolder(shortDay({}, {}, { "youtube.md": `Hook.\n\n${YT_LINK}\n` }), { youtube: YT }))
+      .toContain("2026-01-05: youtube.md line 2 needs a ka-performancefl.com link with utm_source=youtube");
+    expect(validateFolder(shortDay({}, {}, { "youtube.md": "Hook.\nhttps://ka-performancefl.com/?utm_source=facebook\n" }), { youtube: YT }))
+      .toContain("2026-01-05: youtube.md line 2 needs a ka-performancefl.com link with utm_source=youtube");
+    expect(validateFolder(shortDay({}, {}, { "youtube.md": "" }), { youtube: YT }))
+      .toContain("2026-01-05: youtube caption file youtube.md is missing or empty");
+  });
+
+  it("requires the AI line in the description", () => {
+    const ai = { ai: { voice: true, visuals: false } };
+    const aiFiles = { "facebook.md": "The voice is AI narrated.\n", "instagram.md": "The voice is AI narrated.\n\n## First comment\n\n#a\n" };
+    expect(validateFolder(shortDay({}, ai, aiFiles), { youtube: YT })).toEqual(["2026-01-05: youtube caption needs an AI disclosure line"]);
+    const ok = { ...aiFiles, "youtube.md": `Hook.\n${YT_LINK}\n\nThe voice is AI narrated.\n` };
+    expect(validateFolder(shortDay({}, ai, ok), { youtube: YT })).toEqual([]);
+  });
+
+  it("checks a per-network time override on any network", () => {
+    expect(validateFolder(shortDay({ time: "noon" }), { youtube: YT })).toContain('2026-01-05: platforms.youtube.time "noon" is not HH:MM');
+    const fb = baseManifest(); fb.platforms.facebook.time = "25:00";
+    expect(validateFolder(day(fb))).toContain('2026-01-05: platforms.facebook.time "25:00" is not HH:MM');
+    // 13:30Z is 08:30 in New York: the folder's 09:00 is ahead, the youtube 08:00 is behind.
+    const now = new Date("2026-01-05T13:30:00Z");
+    expect(validateFolder(shortDay({ time: "08:00" }, { status: "approved" }), { youtube: YT, now, probe: fakeProbe() }))
+      .toEqual(["2026-01-05: approved youtube time 2026-01-05 08:00 America/New_York is in the past"]);
+    expect(validateFolder(shortDay({ time: "12:00" }, { status: "approved" }), { youtube: YT, now, probe: fakeProbe() })).toEqual([]);
+  });
+
+  it("requires a video, and a thumbnail on a VIDEO", () => {
+    const noVideo = baseManifest();
+    noVideo.media = noVideo.media.map((e) => e.role === "video" ? { ...e, platforms: ["facebook", "instagram"] } : e);
+    noVideo.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "T" };
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", noVideo, baseFiles({ "youtube.md": `Hook.\n${YT_LINK}\n` }));
+    expect(validateFolder(dir, { youtube: YT })).toEqual(["2026-01-05: youtube SHORT needs a video"]);
+
+    const noThumb = videoDay({}, { media: [
+      { file: "media/video.mp4", role: "video", origin: "kap-reel", alt: "" },
+      { file: "media/video.srt", role: "captions", origin: "kap-reel" }
+    ] });
+    expect(validateFolder(noThumb, { youtube: { ...YT, verified: true } })).toEqual(["2026-01-05: youtube VIDEO needs a thumbnail"]);
+    // Custom thumbnails need a verified channel: until then it is set by hand in Studio.
+    const warnings = [];
+    expect(validateFolder(noThumb, { youtube: YT, warnings })).toEqual([]);
+    expect(warnings).toEqual(["2026-01-05: youtube VIDEO has no thumbnail: channel not verified; set the thumbnail in Studio"]);
+  });
+
+  it("gives youtube exactly one video and no images", () => {
+    const m = baseManifest({ status: "ready" });
+    m.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "T" };
+    m.media.push({ file: "media/wide.mp4", role: "video", origin: "kap-reel", alt: "" });
+    m.media.push({ file: "media/slide-01.jpg", role: "image", origin: "kap-reel", alt: "Slide one" });
+    root = makeTempRoot();
+    const files = baseFiles({ "youtube.md": `Hook.\n${YT_LINK}\n`, "media/wide.mp4": Buffer.alloc(8), "media/slide-01.jpg": Buffer.alloc(8) });
+    const dir = makeDay(root, "2026-01-05", m, files);
+    const probe = fakeProbe({ "wide.mp4": { width: 1920, height: 1080 } });
+    const problems = validateFolder(dir, { youtube: YT, probe });
+    expect(problems).toContain('2026-01-05: youtube gets 2 videos; scope the others with "platforms"');
+    expect(problems).toContain('2026-01-05: youtube gets 1 image(s); scope them away with "platforms"');
+    // No shape message about the wrong file while the scoping is off.
+    expect(problems.some((p) => p.includes("vertical or square"))).toBe(false);
+
+    m.media = m.media.map((e) => e.file === "media/reel-vertical.mp4" ? e : { ...e, platforms: ["facebook"] });
+    fs.writeFileSync(path.join(dir, "post.json"), JSON.stringify(m));
+    expect(validateFolder(dir, { youtube: YT, probe })).toEqual([]);
+  });
+
+  it("reports a file with no video stream", () => {
+    const probe = fakeProbe({ "reel-vertical.mp4": { width: undefined, height: undefined } });
+    expect(validateFolder(shortDay({}, { status: "ready" }), { youtube: YT, probe }))
+      .toContain("2026-01-05: media/reel-vertical.mp4 has no video stream");
+  });
+
+  it("checks the past only for networks Metricool does not have yet, each at its own time", () => {
+    // FB and IG at 10:30 are recorded; the youtube Short at 12:00 is not. 15:45Z is 10:45 in New York.
+    const now = new Date("2026-01-05T15:45:00Z");
+    const recorded = { facebook: { id: "1", uuid: "u-1" }, instagram: { id: "2", uuid: "u-2" } };
+    const staggered = { status: "approved", time: "10:30", metricool: recorded };
+    expect(validateFolder(shortDay({ time: "12:00" }, staggered), { youtube: YT, now, probe: fakeProbe() })).toEqual([]);
+    expect(validateFolder(shortDay({ time: "10:40" }, staggered), { youtube: YT, now, probe: fakeProbe() }))
+      .toEqual(["2026-01-05: approved youtube time 2026-01-05 10:40 America/New_York is in the past"]);
+    // Nothing recorded yet: the folder time still counts.
+    expect(validateFolder(shortDay({ time: "12:00" }, { status: "approved", time: "10:30" }), { youtube: YT, now, probe: fakeProbe() }))
+      .toEqual(["2026-01-05: approved post time 2026-01-05 10:30 America/New_York is in the past"]);
+  });
+
+  it("probes only once the post is ready", () => {
+    const probe = fakeProbe({ "reel-vertical.mp4": { width: 1920, height: 1080 } });
+    expect(validateFolder(shortDay(), { youtube: YT, probe })).toEqual([]);
+    expect(probe.calls).toEqual([]);
+    expect(validateFolder(shortDay({}, { status: "ready" }), { youtube: YT, probe }))
+      .toContain("2026-01-05: media/reel-vertical.mp4 is 1920x1080; a youtube SHORT needs a vertical or square video");
+    // Folders without youtube are never probed.
+    const other = fakeProbe();
+    expect(validateFolder(day({ status: "ready" }), { probe: other })).toEqual([]);
+    expect(other.calls).toEqual([]);
+  });
+
+  it("checks a Short's aspect and duration", () => {
+    const ready = { status: "ready" };
+    expect(validateFolder(shortDay({}, ready), { youtube: YT, probe: fakeProbe({ "reel-vertical.mp4": { width: 1080, height: 1080 } }) })).toEqual([]);
+    expect(validateFolder(shortDay({}, ready), { youtube: YT, probe: fakeProbe({ "reel-vertical.mp4": { width: 1080, height: 1350 } }) })).toEqual([]);
+    expect(validateFolder(shortDay({}, ready), { youtube: YT, probe: fakeProbe({ "reel-vertical.mp4": { width: 1350, height: 1080 } }) }))
+      .toContain("2026-01-05: media/reel-vertical.mp4 is 1350x1080; a youtube SHORT needs a vertical or square video");
+    expect(validateFolder(shortDay({}, ready), { youtube: YT, probe: fakeProbe({ "reel-vertical.mp4": { duration: 170 } }) })).toEqual([]);
+    expect(validateFolder(shortDay({}, ready), { youtube: YT, probe: fakeProbe({ "reel-vertical.mp4": { duration: 171.5 } }) }))
+      .toContain("2026-01-05: media/reel-vertical.mp4 runs 171.5s; a youtube SHORT must be 170s or less");
+  });
+
+  it("checks a VIDEO's aspect and duration, with the verified switch", () => {
+    const ready = { status: "ready" };
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "video.mp4": { width: 1080, height: 1920, duration: 600, size: MB } }) }))
+      .toContain("2026-01-05: media/video.mp4 is 1080x1920; a youtube VIDEO needs 16:9");
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "video.mp4": { width: 1920, height: 1080, duration: 60, size: MB } }) }))
+      .toContain("2026-01-05: media/video.mp4 runs 60s; a youtube VIDEO must be over 60s");
+    const long = videoProbe({ "video.mp4": { width: 1920, height: 1080, duration: 901, size: MB } });
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: long }))
+      .toContain("2026-01-05: media/video.mp4 runs 901s; an unverified channel allows 900s (15 minutes)");
+    expect(validateFolder(videoDay({}, ready), { youtube: { ...YT, verified: true }, probe: long })).toEqual([]);
+  });
+
+  it("checks a VIDEO thumbnail's size and shape", () => {
+    const ready = { status: "ready" };
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "thumbnail.jpg": { width: 1280, height: 720, size: MB } }) })).toEqual([]);
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "thumbnail.jpg": { width: 640, height: 360, size: MB } }) }))
+      .toContain("2026-01-05: media/thumbnail.jpg is 640x360; a youtube VIDEO thumbnail needs 16:9, 1280 wide or more");
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "thumbnail.jpg": { width: 1920, height: 1440, size: MB } }) }))
+      .toContain("2026-01-05: media/thumbnail.jpg is 1920x1440; a youtube VIDEO thumbnail needs 16:9, 1280 wide or more");
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "thumbnail.jpg": { width: 1920, height: 1080, size: 1999999 } }) })).toEqual([]);
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "thumbnail.jpg": { width: 1920, height: 1080, size: 2000000 } }) }))
+      .toContain("2026-01-05: media/thumbnail.jpg is 2.0 MB; a youtube thumbnail must be under 2 MB");
+  });
+
+  it("caps every file bound for R2 at 280 MB", () => {
+    const ready = { status: "ready" };
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "video.mp4": { width: 1920, height: 1080, duration: 600, size: 280 * MB } }) })).toEqual([]);
+    expect(validateFolder(videoDay({}, ready), { youtube: YT, probe: videoProbe({ "video.mp4": { width: 1920, height: 1080, duration: 600, size: 281 * MB } }) }))
+      .toContain("2026-01-05: media/video.mp4 is 281.0 MB; files bound for R2 must be 280 MB or less");
+    // In a Short's folder the cap covers every R2 file in the folder; the captions file is never probed.
+    const probe = fakeProbe({ "thumbnail.jpg": { size: 300 * MB } });
+    expect(validateFolder(shortDay({}, ready), { youtube: YT, probe }))
+      .toContain("2026-01-05: media/thumbnail.jpg is 300.0 MB; files bound for R2 must be 280 MB or less");
+    expect(probe.calls).not.toContain("reel-vertical.srt");
+  });
+
+  it("reports a file the probe cannot read", () => {
+    const probe = () => { throw new Error("ffprobe failed: invalid data"); };
+    expect(validateFolder(shortDay({}, { status: "ready" }), { youtube: YT, probe }))
+      .toContain("2026-01-05: cannot probe media/reel-vertical.mp4: ffprobe failed: invalid data");
+  });
+});
+
+describe("probeMedia", () => {
+  it("reads width, height and duration from ffprobe's JSON and the size from disk", () => {
+    root = makeTempRoot();
+    const file = path.join(root, "clip.mp4");
+    fs.writeFileSync(file, Buffer.alloc(64));
+    const seen = [];
+    const run = (cmd, args) => {
+      seen.push([cmd, args.slice(args.indexOf("-select_streams"), args.indexOf("-select_streams") + 2), args[args.length - 1]]);
+      return { status: 0, stdout: JSON.stringify({ streams: [{ width: 1080, height: 1920 }], format: { duration: "29.97" } }), stderr: "" };
+    };
+    expect(probeMedia(file, run)).toEqual({ width: 1080, height: 1920, duration: 29.97, size: 64 });
+    expect(seen).toEqual([["ffprobe", ["-select_streams", "v:0"], file]]);
+    expect(() => probeMedia(file, () => ({ status: 1, stdout: "", stderr: "bad file" }))).toThrow("ffprobe failed: bad file");
+  });
+
+  it("swaps width and height for a phone video stored sideways", () => {
+    root = makeTempRoot();
+    const file = path.join(root, "clip.mp4");
+    fs.writeFileSync(file, Buffer.alloc(8));
+    const answer = (stream) => () => ({ status: 0, stdout: JSON.stringify({ streams: [stream], format: { duration: "10" } }), stderr: "" });
+    expect(probeMedia(file, answer({ width: 1920, height: 1080, side_data_list: [{ side_data_type: "Display Matrix", rotation: -90 }] })))
+      .toMatchObject({ width: 1080, height: 1920 });
+    expect(probeMedia(file, answer({ width: 1920, height: 1080, tags: { rotate: "270" } }))).toMatchObject({ width: 1080, height: 1920 });
+    expect(probeMedia(file, answer({ width: 1920, height: 1080, tags: { rotate: "180" } }))).toMatchObject({ width: 1920, height: 1080 });
+  });
+
+  it("leaves width and height unset when there is no video stream", () => {
+    root = makeTempRoot();
+    const file = path.join(root, "audio.mp4");
+    fs.writeFileSync(file, Buffer.alloc(8));
+    const run = () => ({ status: 0, stdout: JSON.stringify({ streams: [], format: { duration: "10" } }), stderr: "" });
+    expect(probeMedia(file, run)).toEqual({ width: null, height: null, duration: 10, size: 8 });
+  });
+});
+
+describe("readYoutubeConfig", () => {
+  it("reads the channel config and falls back when the file is missing", () => {
+    root = makeTempRoot();
+    const file = path.join(root, "youtube.json");
+    fs.writeFileSync(file, JSON.stringify(YT));
+    expect(readYoutubeConfig(file)).toEqual(YT);
+    expect(readYoutubeConfig(path.join(root, "none.json"))).toEqual({ verified: false, playlists: [] });
   });
 });

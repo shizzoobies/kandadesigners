@@ -134,6 +134,45 @@ describe("cli", () => {
   });
 });
 
+describe("cli youtube", () => {
+  it("names youtube and --studio-done in the usage text", () => {
+    root = makeTempRoot();
+    const r = run([]);
+    expect(r.code).toBe(1);
+    expect(r.err).toContain("--network facebook|instagram|linkedin|youtube");
+    expect(r.err).toContain("release --studio-done <folder name>");
+  });
+
+  it("prints a long title as a warning without failing validate", () => {
+    root = makeTempRoot();
+    const m = baseManifest();
+    m.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "x".repeat(75), playlist: "Quick fixes for your website" };
+    makeDay(root, "2026-01-05", m, baseFiles({ "youtube.md": "Hook.\nhttps://ka-performancefl.com/?utm_source=youtube\n" }));
+    const r = run(["validate", "2026-01-05"]);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain("warning: 2026-01-05: youtube title is 75 characters; feeds cut titles near 70");
+    expect(r.out).toContain("1 folder(s) valid");
+  });
+
+  it("marks the Studio checklist done on an archived folder, and reconcile stops reminding", () => {
+    root = makeTempRoot();
+    const m = baseManifest({ status: "published", published: { at: "2026-01-05T14:00:00.000Z" }, metricool: { youtube: { id: "3", uuid: "yt-3" } } });
+    m.platforms.youtube = { type: "SHORT", caption: "youtube.md", title: "T" };
+    const dir = makeDay(root, "2026-01-05", m, {}, "Already Released");
+    const file = path.join(root, "scheduled.json");
+    fs.writeFileSync(file, JSON.stringify({ data: [] }));
+    let r = run(["reconcile", "--from", file, "--now", "2026-01-06T15:00:00Z"]);
+    expect(r.out).toContain("Studio checklist still open (run release --studio-done <folder> when done): 2026-01-05 (assumes the Metricool post published; check YouTube if unsure)");
+    r = run(["release", "--studio-done", "2026-01-05"]);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain("2026-01-05: Studio checklist marked done");
+    expect(JSON.parse(fs.readFileSync(path.join(dir, "post.json"), "utf8")).metricool.youtube.studioDoneAt).toBeTruthy();
+    r = run(["reconcile", "--from", file, "--now", "2026-01-06T15:00:00Z"]);
+    expect(r.out).not.toContain("Studio checklist");
+    expect(run(["release", "--studio-done", "2030-01-01"]).code).toBe(1);
+  });
+});
+
 describe("cli validate music", () => {
   it("reports a track repeated within 30 days on a full run", () => {
     root = makeTempRoot();

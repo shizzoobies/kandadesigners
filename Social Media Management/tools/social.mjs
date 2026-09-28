@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 import fs from "node:fs";
 import path from "node:path";
-import { resolveRoot, dayDir, extractClientFlag } from "./lib/paths.mjs";
+import { resolveRoot, dayDir, extractClientFlag, ALREADY_RELEASED } from "./lib/paths.mjs";
 import { listAllDayDirs, listDayFolders } from "./lib/manifest.mjs";
 import { validateFolder } from "./lib/validate.mjs";
 import { musicConflicts } from "./lib/music.mjs";
 import { createDay } from "./lib/plan.mjs";
 import { buildCalendar, formatCalendar, todayInNewYork } from "./lib/calendar.mjs";
 import { uploadFolder } from "./lib/upload.mjs";
-import { prepareRelease, recordRelease, recordError, promotePackets, recordPromotion } from "./lib/release.mjs";
+import { prepareRelease, recordRelease, recordError, promotePackets, recordPromotion, recordStudioDone } from "./lib/release.mjs";
 import { reconcile, reconcileWindow } from "./lib/reconcile.mjs";
 import { pullDesk, pushDesk } from "./lib/desk.mjs";
 import { loadClient, isOwnerPublished } from "./lib/client.mjs";
@@ -20,10 +20,11 @@ const USAGE = `usage: (any command takes a global --client <slug> first, to work
   node tools/social.mjs calendar [--days N] [--today YYYY-MM-DD]
   node tools/social.mjs upload [<folder name>|--all] [--dry-run]
   node tools/social.mjs release [<folder name>|--all] [--draft] [--dry-run]
-  node tools/social.mjs release --record <folder name> --network facebook|instagram --id <id> --uuid <uuid>
-  node tools/social.mjs release --record <folder name> --network facebook|instagram --error "<message>"
+  node tools/social.mjs release --record <folder name> --network facebook|instagram|linkedin|youtube --id <id> --uuid <uuid>
+  node tools/social.mjs release --record <folder name> --network facebook|instagram|linkedin|youtube --error "<message>"
   node tools/social.mjs release --promote <folder name>
-  node tools/social.mjs release --promoted <folder name> --network facebook|instagram --id <new id>
+  node tools/social.mjs release --promoted <folder name> --network facebook|instagram|linkedin|youtube --id <new id>
+  node tools/social.mjs release --studio-done <folder name>
   node tools/social.mjs reconcile --window [--now <ISO>]
   node tools/social.mjs reconcile --from <getScheduledPosts.json> [--dry-run] [--now <ISO>]
   node tools/social.mjs desk pull
@@ -82,9 +83,12 @@ function main() {
     const dirs = target ? [dayDir(root, target)] : listAllDayDirs(root);
     let count = 0;
     for (const dir of dirs) {
-      const problems = validateFolder(dir, { client });
+      const warnings = [];
+      const problems = validateFolder(dir, { client, warnings });
       count += problems.length;
       for (const p of problems) console.log(p);
+      // Advice only: printed, never counted.
+      for (const w of warnings) console.log(`warning: ${w}`);
     }
     if (!target) {
       const music = musicConflicts(root);
@@ -143,6 +147,15 @@ function main() {
       console.log(`${r.name}: promoted ${args.network}, id ${args.id}`);
       return 0;
     }
+    if (args["studio-done"] !== undefined) {
+      const folder = args["studio-done"];
+      if (!isText(folder)) { console.error(USAGE); return 1; }
+      // A published folder has usually moved to Already Released by the time Studio is done.
+      const queued = dayDir(root, folder);
+      const r = recordStudioDone(fs.existsSync(queued) ? queued : dayDir(root, folder, ALREADY_RELEASED));
+      console.log(`${r.name}: Studio checklist marked done`);
+      return 0;
+    }
     const target = args._[0];
     const dirs = target ? [dayDir(root, target)] : listDayFolders(root);
     const packets = [];
@@ -155,6 +168,10 @@ function main() {
       }
       for (const rep of r.repeated) {
         console.log(`warning: ${r.name} ${rep.network} was prepared before at ${rep.preparedAt}; check getScheduledPosts for that date before sending again`);
+      }
+      if (r.studio.length) {
+        console.log(`${r.name} youtube: after it publishes, finish in Studio, then run release --studio-done ${r.name}:`);
+        for (const line of r.studio) console.log(`  - ${line}`);
       }
       packets.push(...r.packets);
     }
@@ -180,6 +197,9 @@ function main() {
     console.log(`${verb}: ${r.published.join(", ") || "none"}`);
     console.log(`waiting: ${r.waiting.join(", ") || "none"}`);
     if (r.drafts.length) console.log(`drafts waiting for promotion: ${r.drafts.join(", ")}`);
+    if (r.studio.length) {
+      console.log(`Studio checklist still open (run release --studio-done <folder> when done): ${r.studio.join(", ")} (assumes the Metricool post published; check YouTube if unsure)`);
+    }
     console.log(`${args["dry-run"] ? "would delete" : "deleted"} ${r.deleted.length} R2 object(s)`);
     for (const e of r.errors) console.log(`${e.folder}: failed: ${e.message}`);
     return r.errors.length === 0 ? 0 : 1;

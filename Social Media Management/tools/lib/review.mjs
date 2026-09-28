@@ -107,6 +107,17 @@ export function buildReview({ root, proxy, now = new Date() }) {
     // A client (no linkedin.md) simply reads as empty; harmless.
     const li = instagram(read(path.join(dir, "linkedin.md")));
     const networks = Object.entries(post.platforms || {}).filter(([, c]) => c && !c.manual).map(([n]) => n);
+    // What YouTube will show, only on posts that go there: an absent field never changes the desk's content hash.
+    const yt = networks.includes("youtube") ? post.platforms.youtube : null;
+    const ytText = yt ? read(path.join(dir, yt.caption || "youtube.md")) : "";
+    const youtube = yt ? {
+      youtubeTitle: yt.title || "",
+      youtube: ytText,
+      youtubeType: yt.type || "",
+      youtubeTags: yt.tags || [],
+      youtubePlaylist: yt.playlist || null,
+      youtubeTime: yt.time || post.time
+    } : {};
     posts.push({
       id: name,
       date,
@@ -114,11 +125,12 @@ export function buildReview({ root, proxy, now = new Date() }) {
       time: post.time,
       kind: post.status === "native" ? "native"
         : networks.length === 1 && networks[0] === "linkedin" ? "linkedin"
+        : networks.length === 1 && networks[0] === "youtube" ? "youtube"
         : types.includes("REEL") ? "reel" : media.filter((x) => x.role === "image").length > 1 ? "carousel" : "post",
       status: post.status,
       pillar: post.pillar,
       title: post.title,
-      hook: (read(path.join(dir, "facebook.md")) || li.caption).split(/\r?\n/)[0] || hookOf(brief),
+      hook: (read(path.join(dir, "facebook.md")) || li.caption || ytText).split(/\r?\n/)[0] || hookOf(brief),
       networks,
       facebook: read(path.join(dir, "facebook.md")),
       instagram: ig.caption,
@@ -126,6 +138,7 @@ export function buildReview({ root, proxy, now = new Date() }) {
       linkedin: li.caption,
       linkedinComment: li.firstComment,
       repost: read(path.join(dir, "repost.md")),
+      ...youtube,
       questions: bullets(section(brief, "Questions for Alex")),
       ai: post.ai || {},
       music: post.music || null,

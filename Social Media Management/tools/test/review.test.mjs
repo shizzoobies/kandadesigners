@@ -34,6 +34,47 @@ describe("buildReview (K&A root)", () => {
     expect(data.builtAt).toBe("2026-01-01T00:00:00.000Z");
   });
 
+  it("carries the youtube fields for a Short riding along with the reel", () => {
+    root = makeTempRoot();
+    const m = baseManifest({ status: "ready" });
+    m.platforms.youtube = {
+      type: "SHORT", caption: "youtube.md", title: "Press Tab on your own website", tags: ["website accessibility"],
+      playlist: "Quick fixes for your website", time: "12:00"
+    };
+    makeDay(root, "2026-01-05", m, baseFiles({ "youtube.md": "Press Tab.\nhttps://ka-performancefl.com/?utm_source=youtube\n" }));
+    const post = buildReview({ root, proxy: noVideoProxy }).data.posts[0];
+    expect(post.networks).toEqual(["facebook", "instagram", "youtube"]);
+    expect(post.kind).toBe("reel");
+    expect(post).toMatchObject({
+      youtubeTitle: "Press Tab on your own website",
+      youtube: "Press Tab.\nhttps://ka-performancefl.com/?utm_source=youtube",
+      youtubeType: "SHORT",
+      youtubeTags: ["website accessibility"],
+      youtubePlaylist: "Quick fixes for your website",
+      youtubeTime: "12:00"
+    });
+  });
+
+  it("gives a youtube-only folder the youtube kind, the folder's time, and a hook from the description", () => {
+    root = makeTempRoot();
+    const m = baseManifest({ status: "ready", time: "11:00" });
+    m.platforms = { youtube: { type: "VIDEO", caption: "youtube.md", title: "Make your site accessible" } };
+    const files = baseFiles({ "youtube.md": "Make it work for everyone.\nhttps://ka-performancefl.com/?utm_source=youtube\n" });
+    delete files["facebook.md"]; delete files["instagram.md"];
+    makeDay(root, "2026-01-05", m, files);
+    const post = buildReview({ root, proxy: noVideoProxy }).data.posts[0];
+    expect(post.kind).toBe("youtube");
+    expect(post.hook).toBe("Make it work for everyone.");
+    expect(post).toMatchObject({ youtubeType: "VIDEO", youtubeTags: [], youtubePlaylist: null, youtubeTime: "11:00" });
+  });
+
+  it("leaves the youtube fields off a post without youtube", () => {
+    root = makeTempRoot();
+    makeDay(root, "2026-01-05", baseManifest({ status: "ready" }), baseFiles());
+    const post = buildReview({ root, proxy: noVideoProxy }).data.posts[0];
+    for (const k of ["youtubeTitle", "youtube", "youtubeType", "youtubeTags", "youtubePlaylist", "youtubeTime"]) expect(post[k]).toBeUndefined();
+  });
+
   it("drops approved, scheduled, published and native folders from the desk", () => {
     root = makeTempRoot();
     // review.mjs decides purely from `status` before ever reading id/date, so a

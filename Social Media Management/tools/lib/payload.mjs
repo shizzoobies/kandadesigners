@@ -1,9 +1,13 @@
 import { readManifest, mediaFor } from "./manifest.mjs";
 import { readCaption, splitInstagram } from "./captions.mjs";
-import { localToUtc } from "./validate.mjs";
+import { localToUtc, readYoutubeConfig } from "./validate.mjs";
 
-/** Network and type pairs where Metricool accepts a custom video cover. */
-const THUMB_TYPES = { facebook: ["POST", "REEL"], instagram: ["REEL", "TRIAL_REEL"], linkedin: ["POST"] };
+/**
+ * Network and type pairs where Metricool accepts a custom video cover. Not a
+ * youtube SHORT yet: its cover needs Shorts thumbnails enabled on the channel,
+ * and Metricool rejects the whole request when it does not apply.
+ */
+const THUMB_TYPES = { facebook: ["POST", "REEL"], instagram: ["REEL", "TRIAL_REEL"], linkedin: ["POST"], youtube: ["VIDEO"] };
 
 /** Local wall time as ISO 8601 with the zone's offset, the format Metricool's date parameter wants. */
 export function isoWithOffset(date, time, timezone) {
@@ -18,7 +22,7 @@ export function isoWithOffset(date, time, timezone) {
 }
 
 /** One Metricool createScheduledPost payload per non-manual network. Pure: reads the folder, calls nothing. */
-export function buildPayloads(dir, { draft = false } = {}) {
+export function buildPayloads(dir, { draft = false, youtube = null } = {}) {
   const m = readManifest(dir);
   const r2 = m.r2 || {};
   const urlOf = (entry) => {
@@ -42,6 +46,8 @@ export function buildPayloads(dir, { draft = false } = {}) {
     let text = raw;
     let firstCommentText = "";
     if (network === "instagram" || network === "linkedin") ({ caption: text, firstComment: firstCommentText } = splitInstagram(raw));
+    // A network's own time (the YouTube Short after the reel) overrides the folder's.
+    const time = cfg.time || m.time;
 
     const info = {
       autoPublish: true,
@@ -52,13 +58,15 @@ export function buildPayloads(dir, { draft = false } = {}) {
       media,
       mediaAltText,
       providers: [{ network }],
-      publicationDate: { dateTime: `${m.date}T${m.time}:00`, timezone: m.timezone },
+      publicationDate: { dateTime: `${m.date}T${time}:00`, timezone: m.timezone },
       shortener: false,
       smartLinkData: { ids: [] },
       text
     };
     if (type === "STORY") { delete info.text; delete info.firstCommentText; }
-    if (hasVideo && thumb && (THUMB_TYPES[network] || []).includes(type)) info.videoThumbnailUrl = urlOf(thumb);
+    // YouTube custom thumbnails need a verified channel (youtube is the config from readYoutubeConfig).
+    const thumbAllowed = network !== "youtube" || (youtube || (youtube = readYoutubeConfig())).verified === true;
+    if (hasVideo && thumb && thumbAllowed && (THUMB_TYPES[network] || []).includes(type)) info.videoThumbnailUrl = urlOf(thumb);
     if (network === "facebook") info.facebookData = { type };
     if (network === "instagram") info.instagramData = { type, isAiGenerated: aiFlag };
     if (network === "linkedin") {
@@ -66,7 +74,19 @@ export function buildPayloads(dir, { draft = false } = {}) {
         ? { type: "post", documentTitle: cfg.documentTitle || m.title, publishImagesAsPDF: true, previewIncluded: true }
         : { type: "post", previewIncluded: true };
     }
-    out[network] = { date: isoWithOffset(m.date, m.time, m.timezone), info };
+    if (network === "youtube") {
+      // Nothing K&A makes is for children. notifySubscribers is left out so YouTube's default (notify) applies.
+      info.youtubeData = {
+        title: cfg.title.trim(),
+        type: type.toLowerCase(),
+        privacy: "public",
+        tags: cfg.tags || [],
+        category: cfg.category || "HOWTO_STYLE",
+        madeForKids: false,
+        isAiGeneratedContent: aiFlag
+      };
+    }
+    out[network] = { date: isoWithOffset(m.date, time, m.timezone), info };
   }
   return out;
 }
