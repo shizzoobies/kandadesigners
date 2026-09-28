@@ -5,12 +5,10 @@
 // Media src values are R2 keys ("<slug>/<item>/<file>"), served by /media.
 import { deskMediaUrl } from '../lib/desk-media-url.js';
 import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState } from '../lib/desk-nav.js';
+import { esc, linkify, fmtTime, kindLabel, NET, netsOf } from '../lib/desk-format.js';
+import { youtubePanel } from '../lib/desk-youtube.js';
 
 const $ = (s, el = document) => el.querySelector(s);
-const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const linkify = (s) => esc(s).replace(/https?:\/\/[^\s<]+/g, (u) => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
-const KIND = { reel: 'Reel', carousel: 'Carousel + FB video', linkedin: 'LinkedIn', post: 'Post', native: 'In Facebook', story: 'Story', ask: 'Question' };
-const fmtTime = (t) => { if (!t) return ''; const [h, m] = t.split(':').map(Number); return `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
 const fmtAt = (iso) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
@@ -148,7 +146,7 @@ function renderList() {
     html += `<button type="button" class="d-item ${st}" data-id="${esc(it.id)}" aria-current="${it.id === current}">
       <span class="t">${esc(fmtTime(it.time))}</span>
       <span class="n">${esc(it.title)}</span>
-      <span class="k">${esc(KIND[it.kind] || it.kind)}: ${status(st, label)}</span></button>`;
+      <span class="k">${esc(kindLabel(it))}: ${status(st, label)}</span></button>`;
   }
   nav.innerHTML = html + '</div>';
   renderTally();
@@ -278,13 +276,12 @@ function drawDetail() {
         ? `<textarea data-q="${k}" rows="2" maxlength="1000" aria-label="Your answer" placeholder="Your answer (optional)">${esc(d.answers?.[k] || '')}</textarea>`
         : d.answers?.[k] ? `<p class="d-readnote"><b>Answer:</b> ${esc(d.answers[k])}</p>` : ''}</div>`).join('');
   // Caption tabs follow the networks this post goes to (a LinkedIn-only post shows one tab).
-  const nets = (it.networks && it.networks.length ? it.networks : ['facebook', 'instagram']);
+  const nets = netsOf(it);
   const shownTab = nets.includes(tab) ? tab : nets[0];
-  const NET = { facebook: 'Facebook caption', instagram: 'Instagram caption', linkedin: 'LinkedIn post' };
   const capText = it[shownTab];
   const comment = shownTab === 'instagram' ? it.firstComment : shownTab === 'linkedin' ? it.linkedinComment : '';
   el.innerHTML = `${back}<div class="d-card">
-    <div class="d-meta"><span class="caps">${esc(KIND[it.kind] || it.kind)}</span><span>${esc(fmtDay(it.date))}, ${esc(fmtTime(it.time))}</span><span>${esc(it.pillar || '')}</span></div>
+    <div class="d-meta"><span class="caps">${esc(kindLabel(it))}</span><span>${esc(fmtDay(it.date))}, ${esc(fmtTime(it.time))}</span><span>${esc(it.pillar || '')}</span></div>
     <h2 class="hook">${esc(it.hook || it.title)}</h2>
     ${it.kind === 'native' ? `<p>Scheduled directly in Facebook. Nothing to approve here.</p>` : `
     <div class="d-body">
@@ -295,7 +292,7 @@ function drawDetail() {
           <div class="d-tabs" role="tablist">
             ${nets.map((n) => `<button type="button" role="tab" aria-selected="${shownTab === n}" data-tab="${esc(n)}">${NET[n] || esc(n)}</button>`).join('')}
           </div>
-          <div class="cap">${linkify(capText || 'No caption file.')}</div>
+          ${shownTab === 'youtube' ? youtubePanel(it, mediaUrl) : `<div class="cap">${linkify(capText || 'No caption file.')}</div>`}
           ${comment ? `<p class="comment"><b>First comment:</b> ${linkify(comment)}</p>` : ''}
         </div>
         ${it.repost ? `<div><h3>Your repost comment</h3><div class="cap" id="repostText">${esc(it.repost)}</div>

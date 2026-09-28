@@ -202,6 +202,17 @@ details.edit[open] summary { margin-bottom: 12px; }
 .cap { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--sunk); padding: 14px; font-size: 15px; max-height: 360px; overflow: auto; }
 .comment { font-size: 13px; color: var(--muted); margin-top: 8px; white-space: pre-wrap; }
 .desk dl.facts { font-size: 14px; gap: 4px 14px; }
+/* The YouTube tab: a feed-size card (16:9 at up to 360 px, a Short at 9:16),
+   then the full title, description, tags and details as plain lines. */
+.yt { display: flex; flex-direction: column; gap: 18px; margin-top: 14px; }
+.yt-card { width: 100%; max-width: 360px; }
+.yt-card.short { max-width: 200px; }
+.yt-thumb { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--ink); border-radius: 8px; }
+.yt-card.short .yt-thumb { aspect-ratio: 9 / 16; }
+.yt-none { display: grid; place-items: center; color: var(--canvas); font-size: 14px; }
+.d-side .yt-title { margin: 10px 0 0; font-weight: 700; line-height: 1.35; overflow-wrap: anywhere; }
+.d-side .yt-count { margin: 6px 0 0; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-variant-numeric: tabular-nums; }
+.yt-count .level { font-size: 13px; color: var(--ink); }
 
 .d-bar { position: sticky; bottom: 0; margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--ink); padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .d-bar .state { font-weight: 700; margin-right: auto; }
