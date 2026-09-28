@@ -3,7 +3,7 @@
   "date": "2026-09-28",
   "time": "18:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "client-spotlight",
   "title": "YouTube Short: Ellenton Family Practice Direct in the top three",
   "platforms": {
@@ -40,8 +40,70 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-09-28-5/d6151a60-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-09-28-5/d6151a60-reel-vertical.mp4",
+      "sha256": "d6151a60b7fd47d873d29aba9765ec112704aaf0be9ad97edd74869784f050b7",
+      "uploadedAt": "2026-09-28T15:22:28.739Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-09-28T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": true,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-09-28-5/d6151a60-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "K&A Performance local SEO reel. A real incognito Google search for Primary Care Ellenton, FL, recorded Sept 24, shown in a framed browser card: Ellenton Family Practice Direct ringed in the map pack top three with 4.5 stars and 71 reviews, then named first in Google's AI Overview. Ends with Is your business showing up? ka-performancefl.com, Call Alex, 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-09-28T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "A two-provider practice. Top three on Google.\nhttps://ka-performancefl.com/?utm_source=youtube&utm_medium=social&utm_campaign=2026-09-28-5\n\nSearch \"Primary Care, Ellenton, FL\" and Google's AI Overview points to Ellenton Family Practice Direct first, and the practice sits in the map's top three, next to practices many times its size. Recorded in a fresh incognito window, nothing edited.\n\nLocal search is part of every site we build.\n\nSearch recorded September 2026. Rankings change.\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "A two-provider practice in Google's top three",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "local SEO",
+              "Google map pack",
+              "Google Business Profile",
+              "small business website",
+              "Gainesville web design",
+              "Ellenton FL"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T15:22:38.414Z",
+      "id": "383562306",
+      "uuid": "5172766980648291100",
+      "scheduledAt": "2026-09-28T15:22:56.854Z",
+      "promotedAt": "2026-09-28T15:23:37.208Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

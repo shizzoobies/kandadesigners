@@ -45,6 +45,14 @@ YouTube content the same way it owns Facebook, Instagram and LinkedIn.
    `video-1-tab-key.md`, to Alex today. The three-day build schedule is in SPEC.md.
 3. **S2 to S4 companion folders** (Tue to Thu, 12:00 PM) can be built now, through the desk the same way.
 
+## Dry run result (pipeline chat, 2026-09-28, 11:23 AM)
+S1 (`2026-09-28-5`) went in as a Metricool draft (id 383561687, uuid 5172766980648291100).
+`getScheduledPosts` listed it as `draft: true`, provider youtube PENDING, `youtubeData.type`
+"short", with the right title, tags, description and 6:00 PM time. Metricool rehosted the video.
+It was then promoted with `updateScheduledPost` (new id 383562306, uuid unchanged) and recorded
+with `release --promoted`. No field was rejected. Still to confirm after 6 PM: that it actually
+published as a Short, then run the Studio checklist (end screen; no playlist).
+
 ## Reference
 
 | What | Value |

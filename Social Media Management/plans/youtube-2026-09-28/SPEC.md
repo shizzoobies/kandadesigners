@@ -222,6 +222,13 @@ on live scheduling. Subagents may create drafts.
 3. **L1's hook keeps "Book Now"** as the everyday example.
 4. **Amy says WCAG letter by letter: "W-C-A-G".** Write it that way in the voice script.
 5. **S2's line "Every site K&A builds passes these checks" is true.** Keep it.
+6. **Branding is fixed, color isn't (Alex, 2026-09-28).** Every video must read clearly as
+   K&A: the logo lockup and ka-performancefl.com in the corner, the K&A frame, our type, the
+   end screen. But the brand palette doesn't have to set every color in a video. Each video
+   (and its cards and lower thirds) may take a palette that suits its topic, the way the
+   training samples each have their own look. The shared Remotion set should keep the brand
+   marks fixed and make the working colors a per-video theme. Standing rules still apply: no
+   purple, and every text color passes contrast.
 
 ## Still open for Alex (the pipeline chat asks, one at a time, before each brief)
 **L3, Google profile** (from the outline):
