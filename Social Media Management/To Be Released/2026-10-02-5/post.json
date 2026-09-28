@@ -1,0 +1,50 @@
+{
+  "id": "2026-10-02-5",
+  "date": "2026-10-02",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "client-spotlight",
+  "title": "YouTube Short: Thrillers Mobile VR website launch",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "We built a booking website for a VR arcade on wheels",
+      "tags": [
+        "website launch",
+        "small business website",
+        "booking website",
+        "mobile virtual reality",
+        "Middleburg FL",
+        "North Florida web design",
+        "event booking"
+      ],
+      "category": "HOWTO_STYLE"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Fast cut reel inside a K&A Performance frame, with the K&A logo and ka-performancefl.com at the top and Built by K&A Performance at the bottom of every frame. A phone plays the real Thrillers Mobile VR website: the home page under the hook No venue. No gear. The arcade pulls up to your driveway., then the four rides on the experiences page, then the booking request form. It ends on Your launch could be next., the K&A logo, ka-performancefl.com and Call Alex, 904-210-1071."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0928-6"
+}
