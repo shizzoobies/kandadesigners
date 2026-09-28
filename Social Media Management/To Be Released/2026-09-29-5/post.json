@@ -1,0 +1,50 @@
+{
+  "id": "2026-09-29-5",
+  "date": "2026-09-29",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "YouTube Short: Contrast is not a vibe",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "Amber on cream fails. How to check your text contrast",
+      "tags": [
+        "website accessibility",
+        "color contrast",
+        "WCAG",
+        "small business website",
+        "web design tips",
+        "Gainesville web design"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Quick fixes for your website"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel: amber text on cream measures 2.9 to 1 and fails, rust measures 6.7 to 1 and passes, with a live contrast meter and the K&A Performance logo and ka-performancefl.com on every frame"
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-i-a"
+}

@@ -1,0 +1,49 @@
+{
+  "id": "2026-10-01-5",
+  "date": "2026-10-01",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "ai-launch",
+  "title": "YouTube Short: Give the AI the brief, not the task",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "Better AI emails: give it the brief, not the task",
+      "tags": [
+        "AI for small business",
+        "AI email writing",
+        "prompt tips",
+        "small business marketing",
+        "Gainesville"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Practical AI for small business"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel in a K&A Performance chat window on dark teal. Hook: Stop asking AI to write the email, tell it who the email is for. The prompt Write a follow up email gets a generic form letter; the prompt Write a follow up to a bakery owner who asked about pricing and is nervous about cost gets a warm, specific reply. Both replies were written by an AI model, the bakery is a fictional example. Ends on Put AI to work in your business: the 90-Day AI Launch, ka-performancefl.com/ai-launch"
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w0928-5"
+}

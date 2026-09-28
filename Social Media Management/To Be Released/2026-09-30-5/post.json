@@ -1,0 +1,48 @@
+{
+  "id": "2026-09-30-5",
+  "date": "2026-09-30",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "training",
+  "title": "YouTube Short: One screen, one decision",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "One screen, one decision: training people actually finish",
+      "tags": [
+        "employee training",
+        "online training",
+        "training design",
+        "small business training",
+        "safety training"
+      ],
+      "category": "HOWTO_STYLE"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Editorial magazine style reel on cream paper with the K&A Performance logo and ka-performancefl.com/training on every frame. Real screens from the K&A safety sample course, set like photos, in three numbered beats: 01 The map, the inspection board with every location in view; 02 One decision, tap one location and make one call, hold or go; 03 Feedback on that decision. Ends on: We design training people finish. Call Alex 904-210-1071."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-i-c"
+}

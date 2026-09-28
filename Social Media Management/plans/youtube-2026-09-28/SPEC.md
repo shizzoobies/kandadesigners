@@ -59,9 +59,7 @@ Use the next free `-N` if a suffix is taken. Check `To Be Released/` first.
    - Committed as aa71505 on `codex/training-premium-rfi` (2026-09-28), together with the design spec. Not pushed.
    - `plan` has no YouTube options: add the `youtube` block to `post.json` by hand, as the README shows.
    - Design spec step 4 (a dry run through a Metricool **draft**) hasn't happened. Do it with S1 first.
-4. **Post Desk YouTube tab** (design spec section 5, admin repo `D:\ka-site-admin`, branch
-   `admin/post-desk`). It isn't built yet: task A0 below. Until it's deployed, Alex approves the
-   YouTube title and description in chat. The desk still shows the video.
+4. **DONE 2026-09-28: Post Desk YouTube tab is live** (commit 14095ae, admin version 3bc6166c). Alex approves YouTube posts on the desk like any other post: it shows the feed card, the full title with its count, the description, tags, playlist and time.
 
 ## Shorts (S1 to S15)
 
@@ -206,7 +204,7 @@ Every long video follows the same build:
 
 | Id | Job | Starts |
 |---|---|---|
-| A0 | **Being built in the YouTube setup chat (2026-09-28). Skip it here.** Admin Post Desk YouTube tab (design spec section 5) | in progress |
+| A0 | **DONE 2026-09-28:** Post Desk YouTube tab, commit 14095ae on `admin/post-desk`, deployed (admin version 3bc6166c) | done |
 | A1 | Shorts S1 to S4 companion folders, then `review.mjs` and desk push | now (S1 is due today) |
 | A2 | L1: demo page and Playwright captures | after L1 brief approval |
 | A3 | L1: voice by beat and music bed | after L1 brief approval |

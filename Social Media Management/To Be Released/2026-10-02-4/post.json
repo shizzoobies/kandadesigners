@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-02-4",
+  "date": "2026-10-02",
+  "time": "11:00",
+  "timezone": "America/New_York",
+  "status": "planned",
+  "pillar": "tip",
+  "title": "YouTube: Test your website with one key",
+  "platforms": {
+    "youtube": {
+      "type": "VIDEO",
+      "caption": "youtube.md",
+      "title": "Test Your Website With One Key: The Tab Key Check",
+      "tags": ["website accessibility", "keyboard accessibility", "tab key test", "website accessibility test", "keyboard navigation", "focus visible", "skip to content link", "WCAG 2.2", "accessibility audit", "small business website", "website tips for small business", "Gainesville web design", "Gainesville FL web designer", "North Florida web design"],
+      "category": "HOWTO_STYLE",
+      "playlist": "Quick fixes for your website"
+    }
+  },
+  "media": [],
+  "ai": { "voice": true, "visuals": false },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}
