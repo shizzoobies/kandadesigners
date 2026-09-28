@@ -1,0 +1,108 @@
+{
+  "id": "2026-10-06-5",
+  "date": "2026-10-06",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "YouTube Short: Your hero is a promise, not a photo",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "4 things your homepage needs before anyone scrolls",
+      "tags": [
+        "homepage design",
+        "small business website",
+        "web design tips",
+        "Gainesville web design"
+      ],
+      "category": "HOWTO_STYLE",
+      "time": "12:00",
+      "playlist": "Quick fixes for your website"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel with a drawn phone labeled Drawn example, not a real business. A weak first screen, a stock photo and Welcome to our website, gets four crosses: what you do, where, proof, the next step. Rewritten, it says Fresh sourdough, baked daily. Gainesville. Open at 6 a.m. Five stars on Google. Order ahead, and all four tick. Then: cover the photo, still clear, it works. Ends on ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071. K&A Performance logo and ka-performancefl.com on every frame."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-06-5/737b07cd-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-06-5/737b07cd-reel-vertical.mp4",
+      "sha256": "737b07cdbc3358dfe7a009595d69606ab7f9b71b0fab0d8a586d62755f3785df",
+      "uploadedAt": "2026-09-28T18:05:13.335Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-06T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-06-5/737b07cd-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with a drawn phone labeled Drawn example, not a real business. A weak first screen, a stock photo and Welcome to our website, gets four crosses: what you do, where, proof, the next step. Rewritten, it says Fresh sourdough, baked daily. Gainesville. Open at 6 a.m. Five stars on Google. Order ahead, and all four tick. Then: cover the photo, still clear, it works. Ends on ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071. K&A Performance logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-06T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your hero is a promise, not a photo.\nhttps://ka-performancefl.com/services/web-design/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-06-5\n\nSay what you do, where, your proof, and the next step on the first screen. Cover the photo: do the words still tell a stranger what they get? The bakery and its \"5-star Google reviews\" are a drawn, fictional example, not a real business or a real review claim.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "4 things your homepage needs before anyone scrolls",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "homepage design",
+              "small business website",
+              "web design tips",
+              "Gainesville web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T18:05:34.263Z",
+      "id": "383682697",
+      "uuid": "7231483499108451740",
+      "scheduledAt": "2026-09-28T18:06:40.117Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1006-r"
+}

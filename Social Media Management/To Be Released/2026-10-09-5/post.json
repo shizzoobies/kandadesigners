@@ -1,0 +1,107 @@
+{
+  "id": "2026-10-09-5",
+  "date": "2026-10-09",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "behind-the-scenes",
+  "title": "YouTube Short: How we plan a week of posts",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "How we plan and approve a week of social posts",
+      "tags": [
+        "social media planning",
+        "small business marketing",
+        "content planning",
+        "Gainesville businesses"
+      ],
+      "category": "HOWTO_STYLE",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Every post we publish gets approved twice, with two Approved stamps: 1. The plan, Alex approves it before anything is made, and 2. Every post, Alex approves it before it is scheduled. A five-stop route, Plan, Brief, Build, Approve, Schedule, fills step by step. Step 1: Plan the week, Alex approves it; a sample week plan stamped Approval 1. Step 2: a sample brief with the hook, slides, sources and a question for Alex. Step 3: one idea as a reel, a carousel and a LinkedIn document. Step 4: Alex approves every post; the Post Desk on a phone with sample posts, Approve is tapped and the post turns Approved, stamped Approval 2. Step 5: a week calendar of scheduled posts and a weekly results check of reach, engagement and clicks to the site. Ends on This is how we run it for pilot businesses: you approve the month's plan once, we check every post before it goes out, a short monthly results report. 3 free months for 3 Gainesville businesses, Call Alex 904-210-1071 or message us, ka-performancefl.com."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-09-5/d6f35f0a-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-09-5/d6f35f0a-reel-vertical.mp4",
+      "sha256": "d6f35f0aaea51c1d5097cf5d90ba1adf5e2f8f9ef06e7ddd1dab87ba4aebfb51",
+      "uploadedAt": "2026-09-28T18:05:24.797Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-09T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-09-5/d6f35f0a-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Every post we publish gets approved twice, with two Approved stamps: 1. The plan, Alex approves it before anything is made, and 2. Every post, Alex approves it before it is scheduled. A five-stop route, Plan, Brief, Build, Approve, Schedule, fills step by step. Step 1: Plan the week, Alex approves it; a sample week plan stamped Approval 1. Step 2: a sample brief with the hook, slides, sources and a question for Alex. Step 3: one idea as a reel, a carousel and a LinkedIn document. Step 4: Alex approves every post; the Post Desk on a phone with sample posts, Approve is tapped and the post turns Approved, stamped Approval 2. Step 5: a week calendar of scheduled posts and a weekly results check of reach, engagement and clicks to the site. Ends on This is how we run it for pilot businesses: you approve the month's plan once, we check every post before it goes out, a short monthly results report. 3 free months for 3 Gainesville businesses, Call Alex 904-210-1071 or message us, ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-09T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Every post we publish gets approved twice. Here's our week.\nhttps://ka-performancefl.com/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-09-5\n\nFollow K&A's five steps: plan, brief, build, approve, schedule. For pilot businesses, you approve the monthly plan once and we check each finished post before it goes out, with a short monthly results report. The pilot offers 3 free months for 3 Gainesville businesses; call Alex at 904-210-1071 to ask about availability.\n\nThe posts and planning screens shown are samples.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "How we plan and approve a week of social posts",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "social media planning",
+              "small business marketing",
+              "content planning",
+              "Gainesville businesses"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T18:05:34.657Z",
+      "id": "383682842",
+      "uuid": "-6062570053348209451",
+      "scheduledAt": "2026-09-28T18:06:40.346Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1009-r"
+}

@@ -1,0 +1,108 @@
+{
+  "id": "2026-10-05-5",
+  "date": "2026-10-05",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "YouTube Short: 5 Google Business Profile settings most businesses forget",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "5 Google Business Profile settings to check this month",
+      "tags": [
+        "Google Business Profile",
+        "local SEO",
+        "small business tips",
+        "Gainesville businesses"
+      ],
+      "category": "HOWTO_STYLE",
+      "time": "12:00",
+      "playlist": "Quick fixes for your website"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel: Your Google profile has 5 settings most businesses forget. A dark teal route map with five rust pins, then one stop at a time: the most specific primary category, shown on K&A's own profile as Website designer; hours plus holiday hours before November, with K&A's real weekly hours; services, drawn from Google's plumbing example; fresh photos by type; replying to reviews. Ends on Local search is part of every site we build, ka-performancefl.com/services/seo-ai-search, Call Alex 904-210-1071. K&A logo and ka-performancefl.com on every frame."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-05-5/ad06a0c4-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-05-5/ad06a0c4-reel-vertical.mp4",
+      "sha256": "ad06a0c49398a67f57d63600dcfe39105a84a7666b22b14f0552148202343c09",
+      "uploadedAt": "2026-09-28T18:05:08.958Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-05T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-05-5/ad06a0c4-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: Your Google profile has 5 settings most businesses forget. A dark teal route map with five rust pins, then one stop at a time: the most specific primary category, shown on K&A's own profile as Website designer; hours plus holiday hours before November, with K&A's real weekly hours; services, drawn from Google's plumbing example; fresh photos by type; replying to reviews. Ends on Local search is part of every site we build, ka-performancefl.com/services/seo-ai-search, Call Alex 904-210-1071. K&A logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-05T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your Google profile has 5 settings most businesses forget.\nhttps://ka-performancefl.com/services/seo-ai-search/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-05-5\n\nCheck your primary category, hours and holiday hours, services, photos, and review replies. The category and weekly hours are real captures of K&A's own profile from September 25, 2026; the other examples are drawn. Every tip comes from Google's Business Profile help pages.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "5 Google Business Profile settings to check this month",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "Google Business Profile",
+              "local SEO",
+              "small business tips",
+              "Gainesville businesses"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T18:05:34.137Z",
+      "id": "383682654",
+      "uuid": "-7965346195288208309",
+      "scheduledAt": "2026-09-28T18:06:40.038Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1005-r"
+}

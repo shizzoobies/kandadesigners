@@ -1,0 +1,107 @@
+{
+  "id": "2026-10-07-5",
+  "date": "2026-10-07",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "training",
+  "title": "YouTube Short: When a job aid beats a course",
+  "platforms": {
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "When a job aid works better than a course",
+      "tags": [
+        "job aids",
+        "employee training",
+        "performance support",
+        "small business training"
+      ],
+      "category": "HOWTO_STYLE",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel: If they need it once a quarter, don't teach it. Hand it to them. A year planner of 52 work weeks marks the 4 weeks the task comes up. Then real screens from K&A's sample courses: the Before you send checklist from the RFI course and the walk-through card from the safety course. Ends on ka-performancefl.com/training and Call Alex 904-210-1071, with the K&A Performance logo and ka-performancefl.com on every frame."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-07-5/5d8a9e2d-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-07-5/5d8a9e2d-reel-vertical.mp4",
+      "sha256": "5d8a9e2d01c03f6c9be3ebe1e99191eedf15a4a6c22a424d2af66f257e58ff09",
+      "uploadedAt": "2026-09-28T18:05:16.122Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-07T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-07-5/5d8a9e2d-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel: If they need it once a quarter, don't teach it. Hand it to them. A year planner of 52 work weeks marks the 4 weeks the task comes up. Then real screens from K&A's sample courses: the Before you send checklist from the RFI course and the walk-through card from the safety course. Ends on ka-performancefl.com/training and Call Alex 904-210-1071, with the K&A Performance logo and ka-performancefl.com on every frame."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-07T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "If they need it once a quarter, don't teach it. Hand it to them.\nhttps://ka-performancefl.com/training/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-07-5\n\nIf a task is rare, the steps stay the same, and there is time to look something up, keep a job aid beside the work. See the real RFI checklist and site walk card from K&A's sample courses. Save the course for judgment people need to practice.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "When a job aid works better than a course",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "job aids",
+              "employee training",
+              "performance support",
+              "small business training"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T18:05:34.386Z",
+      "id": "383682770",
+      "uuid": "6604281921171705457",
+      "scheduledAt": "2026-09-28T18:06:40.193Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1007-r"
+}
