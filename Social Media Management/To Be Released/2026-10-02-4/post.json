@@ -3,7 +3,7 @@
   "date": "2026-10-02",
   "time": "11:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "YouTube: Test your website with one key",
   "platforms": {
@@ -55,8 +55,84 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/video.mp4": {
+      "key": "2026-10-02-4/6da087eb-video.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-02-4/6da087eb-video.mp4",
+      "sha256": "6da087eb6eb052bcb8a23763cdaa39a018f1af7c55f91e4c2381f1f8df27174f",
+      "uploadedAt": "2026-09-28T18:14:44.067Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-02-4/582cb1ff-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-02-4/582cb1ff-thumbnail.jpg",
+      "sha256": "582cb1ff61376d4861415365714eb0ef058ac482c99783ce0e708b58515b6362",
+      "uploadedAt": "2026-09-28T18:14:44.067Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-02T11:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-02-4/6da087eb-video.mp4"
+          ],
+          "mediaAltText": [
+            "A narrated screen walkthrough of the Tab key test. On the K&A Performance website a rust focus outline moves through the skip link, the menu, the phone number and Start a project; the menu and the chat window open with Enter and close with Escape; the contact form shows visible labels. On a plain test page built for the video, focus is invisible, jumps from the header to the footer, and gets trapped in a signup box. Cards list the six checks, five fixes to ask a web person for, and the WCAG 2.2 references."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-02T11:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Press one key to find out if customers can use your website without a mouse.\nhttps://ka-performancefl.com/services/accessibility/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-02-4\n\nLoad your home page and press Tab. In about a minute you'll see whether your site has a skip link, a focus outline you can actually see, a sensible order, menus and popups that work from the keyboard, no keyboard traps, and labeled forms. We run the test on our own site, then show what to ask your web person to fix.\n\nWCAG 2.2 references: 2.1.1 Keyboard, 2.1.2 No Keyboard Trap, 2.4.1 Bypass Blocks, 2.4.3 Focus Order, 2.4.7 Focus Visible, 3.3.2 Labels or Instructions. https://www.w3.org/TR/WCAG22/\n\nChapters\n0:00 The one-key test\n0:11 What you'll learn\n0:25 What focus is and who needs it\n1:16 How to run the test\n1:49 Check 1: Skip link\n2:13 Check 2: Visible focus\n2:36 Check 3: Tab order\n2:57 Check 4: Menus and popups\n3:23 Check 5: Keyboard traps\n3:45 Check 6: Form labels\n4:09 What to ask your web person\n4:57 Recap\n\nThe voice is AI narrated. The music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-02-4/582cb1ff-thumbnail.jpg",
+          "youtubeData": {
+            "title": "Test Your Website With One Key: The Tab Key Check",
+            "type": "video",
+            "privacy": "public",
+            "tags": [
+              "website accessibility",
+              "keyboard accessibility",
+              "tab key test",
+              "website accessibility test",
+              "keyboard navigation",
+              "focus visible",
+              "skip to content link",
+              "WCAG 2.2",
+              "accessibility audit",
+              "small business website",
+              "website tips for small business",
+              "Gainesville web design",
+              "Gainesville FL web designer",
+              "North Florida web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T18:14:55.399Z",
+      "id": "383688294",
+      "uuid": "8551009920196100479",
+      "scheduledAt": "2026-09-28T18:15:20.108Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

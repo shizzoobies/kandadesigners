@@ -305,7 +305,7 @@ const Beat4: React.FC<BeatProps> = ({ theme, end }) => {
         />
         <LowerThird
           theme={theme}
-          label="Safari on a Mac · Redrawn for clarity"
+          label="Safari on a Mac · Yours may look slightly different"
           line="Settings, then Advanced"
           from={f(c("Open Safari"))}
           to={f(c("and check") + 0.2)}

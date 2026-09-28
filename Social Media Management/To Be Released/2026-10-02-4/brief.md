@@ -55,3 +55,7 @@ The test page: Tab is pressed and nothing visible happens. Cut to our site, wher
 ## Questions for Alex
 - Title: keep "Test Your Website With One Key: The Tab Key Check", or use one of the two alternates?
 - The Safari step (Settings > Advanced > "Press Tab to highlight each item on a webpage"): can you send a real Mac screenshot by Tuesday, or should we redraw it as a clean mock-up?
+
+## Decisions (Alex, Post Desk, 2026-09-28)
+- Title: keep "Test Your Website With One Key: The Tab Key Check".
+- Safari step: keep the one redrawn visual, captioned "Safari on a Mac · Yours may look slightly different" (replaces "Redrawn for clarity"). Re-rendered, then scheduled for Fri 10/2 11:00 AM (Metricool 383688294).
