@@ -74,10 +74,19 @@ const columns = [
                 href={s.href}
                 target="_blank"
                 rel="noopener"
-                class="inline-flex h-11 w-11 items-center justify-center rounded text-muted transition-colors hover:text-ink"
+                class="inline-flex h-11 w-11 items-center justify-center rounded transition-opacity hover:opacity-75"
               >
-                <svg viewBox="0 0 24 24" class="h-5 w-5" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path d={s.path} />
+                <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" focusable="false">
+                  {s.gradient && (
+                    <defs>
+                      <linearGradient id={`social-${s.name.toLowerCase()}`} x1="0" y1="1" x2="1" y2="0">
+                        {s.gradient.map((c, i) => (
+                          <stop offset={i / (s.gradient.length - 1)} stop-color={c} />
+                        ))}
+                      </linearGradient>
+                    </defs>
+                  )}
+                  <path d={s.path} fill={s.gradient ? `url(#social-${s.name.toLowerCase()})` : s.color} />
                 </svg>
                 <span class="sr-only">K &amp; A Performance on {s.name} (opens in a new tab)</span>
               </a>
