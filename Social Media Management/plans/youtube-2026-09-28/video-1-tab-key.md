@@ -64,7 +64,7 @@ Check two. Can you always see where you are? Keep tabbing. Here, every link and 
 Check three. The order. Focus should move the way you read. Top to bottom, left to right. The logo, the menu, the phone number, then the button to start a project. On our test page, focus jumps from the header down to the footer, then back up. That's how people get lost.
 
 **[8] Check four**
-Check four. Menus and popups. On a smaller screen, our menu hides behind a button. Tab to it and press Enter. It opens, and focus moves inside. Press Escape. It closes, and you're right back on the button. The chat bubble in the corner works the same way. If a menu only opens when you hover with a mouse, keyboard users never see what's inside.
+Check four. Menus and popups. On a smaller screen, our menu hides behind a button. Tab to it and press Enter. The menu opens, and the next Tab takes you inside. Press Escape. It closes, and you're right back on the button. The chat bubble in the corner works the same way. If a menu only opens when you hover with a mouse, keyboard users never see what's inside.
 
 **[9] Check five**
 Check five. No traps. Once you're inside a popup, make sure you can get back out. On our test page, this signup box grabs focus and won't let go. Tab, Shift and Tab, Escape. Nothing. That's called a keyboard trap. It's the worst version of this problem, because the only way out is to leave the page.

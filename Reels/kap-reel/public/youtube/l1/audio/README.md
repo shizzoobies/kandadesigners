@@ -32,7 +32,7 @@ Amy (`OZxMHsGaBmV5pjMIDIn0`), `eleven_multilingual_v2`, stability 0.5, similarit
 | 5 | Check one | 23.92 s | 1 | 1 | 322 | -29.9 | -10.9 | +13.9 |
 | 6 | Check two | 22.48 s | 1 | 1 | 331 | -32.1 | -12.7 | +16.1 |
 | 7 | Check three | 20.20 s | 1 | 1 | 271 | -29.0 | -8.9 | +13.0 |
-| 8 | Check four | 24.01 s | 1 | 1 | 345 | -29.5 | -10.2 | +13.5 |
+| 8 | Check four | 25.31 s | 1 (re-voiced 2026-09-28, new line) | 1 | 362 (+345 superseded) | -29.8 | -9.7 (sample) | +13.8 |
 | 9 | Check five | 21.18 s | 1 | 1 | 300 | -30.1 | -11.7 | +14.1 |
 | 10 | Check six | 23.41 s | 1 | 1 | 352 | -30.8 | -9.4 | +14.8 |
 | 11 | Ask your web person | 45.70 s | 2 | 2 | 1,274 | -31.9 | -10.5 | +15.9 |
