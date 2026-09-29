@@ -182,7 +182,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         <p id="hg-blurb" class="mt-2 text-sm leading-relaxed text-muted">{projects[0].blurb}</p>
         <p class="sr-only" id="hg-live" aria-live="polite"></p>
       </div>
-      <div id="hg-dots" class="mt-4 flex items-center justify-center gap-3" role="tablist" aria-label="Choose project">
+      <div id="hg-dots" class="mt-4 flex items-center justify-center" role="tablist" aria-label="Choose project">
         {projects.map((p, i) => (
           <button type="button" class="hg-dot" role="tab" data-index={i} aria-label={`Show ${p.title}`} aria-selected={i === 0 ? 'true' : 'false'}></button>
         ))}
@@ -305,16 +305,40 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     .hg-arrow-left { left: 4%; }
     .hg-arrow-right { right: 4%; }
   }
+  /* WCAG 2.5.8: each dot button is a 24px square tap target (square, so
+     rounded corners do not trim the hit area) and the visible dot is drawn
+     inside it at its original size. Dots sit edge to edge, so the targets
+     never overlap, and the negative block margin keeps the row's height
+     what the plain dot gave it, so nothing around the row moves. */
   .hg-dot {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin-block: calc((0.55rem - 24px) / 2);
+  }
+  .hg-dot::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
     width: 0.55rem;
     height: 0.55rem;
+    margin: calc(0.55rem / -2) 0 0 calc(0.55rem / -2);
     border-radius: 9999px;
     background: rgb(34 28 21 / 0.18);
     transition: background var(--dur-fast) ease, transform var(--dur-fast) ease;
   }
-  .hg-dot[aria-selected='true'] {
+  .hg-dot[aria-selected='true']::before {
     background: var(--color-accent);
     transform: scale(1.35);
+  }
+  /* the focus ring stays on the visible dot, as before */
+  .hg-dot:focus-visible {
+    outline: none;
+  }
+  .hg-dot:focus-visible::before {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
   }
   .cue-line {
     position: relative;
