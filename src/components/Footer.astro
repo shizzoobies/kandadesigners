@@ -2,8 +2,14 @@
 import LogoLockup from './LogoLockup.astro';
 import { phone, email } from '../data/contact.js';
 import { socials } from '../data/social.js';
+import { regions } from '../data/locations.js';
 
 const year = new Date().getFullYear();
+
+// The serving line, grouped by region in the order src/data/locations.js
+// gives them, so it names exactly the towns the schema's areaServed does.
+const regionPhrases = regions.map((r) => `${r.label} (${r.cities.join(', ')})`);
+const servingLine = `Serving ${regionPhrases.slice(0, -1).join(', ')}, and ${regionPhrases.at(-1)}.`;
 
 // Grouped so the footer reads as columns instead of one twelve-link ladder
 // running off the bottom of the screen. Adding a page means adding a line
@@ -25,6 +31,8 @@ const columns = [
     links: [
       { href: '/locations/gainesville/', label: 'Gainesville, FL' },
       { href: '/locations/jacksonville/', label: 'Jacksonville, FL' },
+      { href: '/locations/ellenton/', label: 'Ellenton, FL' },
+      { href: '/locations/tampa-bay/', label: 'Tampa Bay' },
     ],
   },
   {
@@ -60,10 +68,7 @@ const columns = [
         <p class="text-sm text-muted">
           Web design &amp; AI integration studio. Built in Gainesville, FL. Performing everywhere.
         </p>
-        <p class="text-xs text-muted">
-          Serving Gainesville, Alachua, Newberry, High Springs, Ocala, Jacksonville,
-          Orange Park, Fleming Island, and St. Augustine.
-        </p>
+        <p class="text-xs text-muted">{servingLine}</p>
         {/* Icon-only links, so each carries its full name for screen readers.
             The 44px box is the tap target; the negative margin lines the first
             icon up with the text above. */}

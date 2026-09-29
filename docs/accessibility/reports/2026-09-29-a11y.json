@@ -1,0 +1,458 @@
+{
+  "date": "2026-09-29T13:41:04.624Z",
+  "origin": "http://127.0.0.1:57005",
+  "pages": [
+    {
+      "path": "/locations/ellenton/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Web Design in Ellenton, FL | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Web design in Ellenton, at a table of our own"
+          },
+          {
+            "level": 2,
+            "text": "Where the office is"
+          },
+          {
+            "level": 2,
+            "text": "Built next door"
+          },
+          {
+            "level": 2,
+            "text": "The bay is in-person territory"
+          },
+          {
+            "level": 2,
+            "text": "What we build from here"
+          },
+          {
+            "level": 2,
+            "text": "Questions we get first"
+          },
+          {
+            "level": 2,
+            "text": "Customer reviews"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 1
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 47,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 47,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "problems": [
+        "1 console error(s)"
+      ]
+    },
+    {
+      "path": "/locations/tampa-bay/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Tampa Bay Web Design & AI | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Web design across Tampa Bay, five cities, one region"
+          },
+          {
+            "level": 2,
+            "text": "One region wearing five names"
+          },
+          {
+            "level": 2,
+            "text": "The office sits at the north end"
+          },
+          {
+            "level": 2,
+            "text": "Already building here"
+          },
+          {
+            "level": 2,
+            "text": "What it costs, and how it runs"
+          },
+          {
+            "level": 2,
+            "text": "What we do for bay-area clients"
+          },
+          {
+            "level": 2,
+            "text": "Questions we get first"
+          },
+          {
+            "level": 2,
+            "text": "Customer reviews"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 3
+          }
+        ],
+        "passes": 27
+      },
+      "keyboard": {
+        "stops": 47,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 47,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "problems": [
+        "1 console error(s)"
+      ]
+    },
+    {
+      "path": "/contact/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Contact | Gainesville Web Design | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Let's build yours"
+          },
+          {
+            "level": 2,
+            "text": "Scope it with Kai"
+          },
+          {
+            "level": 2,
+            "text": "Send a message"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          },
+          {
+            "level": 2,
+            "text": "A Gainesville studio with an Ellenton office"
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 10
+          }
+        ],
+        "passes": 28
+      },
+      "keyboard": {
+        "stops": 45,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 45,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [],
+      "problems": []
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "structure": {
+        "lang": "en",
+        "title": "Gainesville Web Design & AI Integration | K & A Performance",
+        "h1Count": 1,
+        "headings": [
+          {
+            "level": 1,
+            "text": "Built on years of experience, made to perform"
+          },
+          {
+            "level": 2,
+            "text": "Recent builds"
+          },
+          {
+            "level": 3,
+            "text": "MBS Medicine"
+          },
+          {
+            "level": 2,
+            "text": "Built aroundyour kind of business."
+          },
+          {
+            "level": 3,
+            "text": "Give a big mission a place to grow."
+          },
+          {
+            "level": 3,
+            "text": "Turn a property question into a next step."
+          },
+          {
+            "level": 3,
+            "text": "Make the next meal easy to find."
+          },
+          {
+            "level": 2,
+            "text": "Less sorting.More starting."
+          },
+          {
+            "level": 3,
+            "text": "“We need an easier way to book.”"
+          },
+          {
+            "level": 3,
+            "text": "Keep what matters."
+          },
+          {
+            "level": 3,
+            "text": "A more useful first conversation."
+          },
+          {
+            "level": 3,
+            "text": "Now try your keyboard."
+          },
+          {
+            "level": 2,
+            "text": "Easy to use.Hard to overlook."
+          },
+          {
+            "level": 2,
+            "text": "Build it with us.Make it yours."
+          },
+          {
+            "level": 3,
+            "text": "Start with a job worth doing."
+          },
+          {
+            "level": 4,
+            "text": "An opportunity map"
+          },
+          {
+            "level": 3,
+            "text": "Work on your actual workflow."
+          },
+          {
+            "level": 4,
+            "text": "A working process"
+          },
+          {
+            "level": 3,
+            "text": "Leave with the controls."
+          },
+          {
+            "level": 4,
+            "text": "Your operating guide"
+          },
+          {
+            "level": 2,
+            "text": "Art with apoint of view."
+          },
+          {
+            "level": 2,
+            "text": "A little guidance.A real first step."
+          },
+          {
+            "level": 3,
+            "text": "See what learning can look like."
+          },
+          {
+            "level": 3,
+            "text": "Spot it before it hurts someone"
+          },
+          {
+            "level": 3,
+            "text": "The P&L, read like an owner"
+          },
+          {
+            "level": 3,
+            "text": "Build the plate, skip the diet"
+          },
+          {
+            "level": 2,
+            "text": "You workwith both of us."
+          },
+          {
+            "level": 3,
+            "text": "Alex Anderson"
+          },
+          {
+            "level": 3,
+            "text": "Kristina Anderson"
+          },
+          {
+            "level": 2,
+            "text": "Customer reviews"
+          },
+          {
+            "level": 2,
+            "text": "Let’s buildsomething useful."
+          },
+          {
+            "level": 2,
+            "text": "Services"
+          },
+          {
+            "level": 2,
+            "text": "Locations"
+          },
+          {
+            "level": 2,
+            "text": "Studio"
+          },
+          {
+            "level": 2,
+            "text": "Legal"
+          },
+          {
+            "level": 3,
+            "text": "Message received"
+          }
+        ],
+        "skips": [],
+        "mainCount": 1,
+        "hasNav": true,
+        "hasSkipLink": true,
+        "imgsNoAlt": [],
+        "framesNoTitle": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "nodes": 2
+          },
+          {
+            "id": "color-contrast",
+            "nodes": 9
+          }
+        ],
+        "passes": 33
+      },
+      "keyboard": {
+        "stops": 85,
+        "missingFocus": [],
+        "sawFrame": false,
+        "leftFrame": false,
+        "frameTrap": false,
+        "maxFrameTabs": 0,
+        "steps": 85,
+        "first": "a|Skip to content"
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "problems": [
+        "1 console error(s)"
+      ]
+    }
+  ]
+}

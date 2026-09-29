@@ -6,6 +6,7 @@ import SiteGuide from '../components/SiteGuide.astro';
 import StartProjectModal from '../components/StartProjectModal.astro';
 import { phone, email } from '../data/contact.js';
 import { socials } from '../data/social.js';
+import { locations, regions, citiesServed } from '../data/locations.js';
 import { ClientRouter } from 'astro:transitions';
 
 const onContactPage = Astro.url.pathname.startsWith('/contact');
@@ -50,20 +51,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 // someone else's reviews as our own violates their structured-data guidelines.
 const ORG_ID = 'https://ka-performancefl.com/#organization';
 const MAP_URL = 'https://g.page/r/CbVcBGWcGmNzEBM';
-// Canonical spellings, approved 2026-08-09. Keep this list and the copy on the
-// site saying the same thing; a schema that claims towns the pages never
-// mention is the definition of a doorway signal.
-const CITIES_SERVED = [
-  'Gainesville',
-  'Jacksonville',
-  'Fleming Island',
-  'Orange Park',
-  'Ocala',
-  'St. Augustine',
-  'High Springs',
-  'Alachua',
-  'Newberry',
-];
+// Canonical spellings, approved 2026-08-09, now kept in src/data/locations.js
+// (`citiesServed`, fifteen towns in three regions). Keep that list and the
+// copy on the site saying the same thing; a schema that claims towns the
+// pages never mention is the definition of a doorway signal.
+//
+// The Ellenton office gets its own node, a child of the organization. It is
+// city-only until `locations.ellenton.published` flips on the day the lease
+// is signed; only then do streetAddress and postalCode appear. No
+// openingHours until the hours are known. This is the node the office's
+// Google, Apple and Bing listings will point at.
+const ellenton = locations.ellenton;
+const tampaBay = regions.find((r) => r.key === 'tampa-bay');
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -94,7 +93,7 @@ const schema = {
       // Free-text by design; matches the public budget bands on the services
       // pages and the Launch's published price, nothing invented.
       priceRange: 'Under $2,000 to $10,000+',
-      areaServed: CITIES_SERVED.map((name) => ({
+      areaServed: citiesServed.map((name) => ({
         '@type': 'City',
         name,
         containedInPlace: { '@type': 'State', name: 'Florida' },
@@ -126,6 +125,26 @@ const schema = {
       },
       // Only profiles we actually own and can point at. No placeholders.
       sameAs: [MAP_URL, ...socials.map((s) => s.href)],
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': 'https://ka-performancefl.com/#ellenton',
+      parentOrganization: { '@id': ORG_ID },
+      name: 'K & A Performance, Ellenton',
+      url: new URL(ellenton.page, 'https://ka-performancefl.com/').href,
+      areaServed: tampaBay.cities.map((name) => ({
+        '@type': 'City',
+        name,
+        containedInPlace: { '@type': 'State', name: 'Florida' },
+      })),
+      address: {
+        '@type': 'PostalAddress',
+        ...(ellenton.published ? { streetAddress: ellenton.street } : {}),
+        addressLocality: ellenton.name,
+        addressRegion: ellenton.region,
+        ...(ellenton.published ? { postalCode: ellenton.postalCode } : {}),
+        addressCountry: 'US',
+      },
     },
     {
       '@type': 'WebSite',

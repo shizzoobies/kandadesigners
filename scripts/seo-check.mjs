@@ -32,6 +32,12 @@
 //      is neither routed nor under a NOINDEX path fails, because nothing
 //      is keeping it out of the index.
 //
+//   3. The Ellenton office's street address. While `locations.ellenton` in
+//      src/data/locations.js says `published: false` (the lease is not
+//      signed), no file anywhere under dist/ may contain its street string.
+//      One stray render, a schema field, a debug line, a copied paragraph,
+//      would publish an address before there is an office behind it.
+//
 // Lengths are counted on the decoded text, not on the raw HTML: an ampersand
 // is one character on a search results page, even though Astro serialises it
 // as the five characters "&#38;". Every title on this site carries "K & A
@@ -44,6 +50,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
 const DIST = path.join(ROOT, 'dist');
 const CONFIG = path.join(ROOT, 'astro.config.mjs');
+const LOCATIONS = path.join(ROOT, 'src', 'data', 'locations.js');
 const SITEMAP = path.join(DIST, 'sitemap-0.xml');
 
 const TITLE_MAX = 60;
@@ -67,6 +74,33 @@ function readNoindexPaths() {
     process.exit(1);
   }
   return paths;
+}
+
+// The Ellenton entry's `published` flag and `street`, read out of
+// src/data/locations.js as text for the same reason NOINDEX is: the rule and
+// the pages must read one source, and this script imports nothing from src/.
+function readEllenton() {
+  const rel = path.relative(ROOT, LOCATIONS);
+  const src = fs.readFileSync(LOCATIONS, 'utf8');
+  const block = src.match(/\bellenton\s*:\s*\{([\s\S]*?)\n\s*\},/);
+  const published = block?.[1].match(/\bpublished\s*:\s*(true|false)\b/);
+  const street = block?.[1].match(/\bstreet\s*:\s*(?:'([^']+)'|"([^"]+)"|null)/);
+  if (!block || !published || !street) {
+    console.error(`Could not read ellenton.published and ellenton.street from ${rel}.`);
+    process.exit(1);
+  }
+  return { published: published[1] === 'true', street: street[1] ?? street[2] ?? null };
+}
+
+// Every file under dist/, whatever its type: HTML, JSON, JS bundles, the
+// sitemap. Read as bytes so images and media cost a buffer scan, not a decode.
+function walkAll(dir, out = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) walkAll(full, out);
+    else out.push(full);
+  }
+  return out;
 }
 
 const decode = (s) =>
@@ -238,6 +272,23 @@ for (const file of walk(DIST).sort()) {
   });
 }
 
+// Pass 3: no unpublished street address anywhere in the build.
+const ellenton = readEllenton();
+let streetNote = 'published, not checked';
+if (!ellenton.published && ellenton.street) {
+  const needle = Buffer.from(ellenton.street, 'utf8');
+  const hits = walkAll(DIST)
+    .filter((file) => fs.readFileSync(file).includes(needle))
+    .map((file) => path.relative(ROOT, file).split(path.sep).join('/'));
+  for (const hit of hits.sort()) {
+    fail(
+      hit,
+      `contains the Ellenton street address while locations.ellenton.published is false in ${path.relative(ROOT, LOCATIONS).split(path.sep).join('/')}`,
+    );
+  }
+  streetNote = hits.length ? `found in ${hits.length} file(s)` : 'absent from dist/';
+}
+
 const w = Math.max(4, ...rows.map((r) => r.path.length));
 console.log(`${'page'.padEnd(w)}  title  desc  state`);
 console.log('-'.repeat(w + 21));
@@ -254,6 +305,7 @@ console.log(
     `Rules: title <= ${TITLE_MAX}, description ${DESC_MIN} to ${DESC_MAX}, ` +
     'sitemap pages canonical to themselves and never noindexed.',
 );
+console.log(`Ellenton street address: ${streetNote}.`);
 
 if (failures.length) {
   console.log(`\n${failures.length} failure(s):`);

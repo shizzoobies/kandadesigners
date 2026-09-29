@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReviewsRail from '../../components/ReviewsRail.astro';
+import { phone } from '../../data/contact.js';
+import { locations } from '../../data/locations.js';
+
+const PAGE_URL = 'https://ka-performancefl.com/locations/ellenton/';
+
+// The office. Everything that would place it on a map (street, postal code,
+// map link) renders only once `published` flips in src/data/locations.js on
+// the day the lease is signed. Until then the page names the town and says
+// the address follows, and scripts/seo-check.mjs fails the build if the
+// street turns up anywhere in dist/.
+const office = locations.ellenton;
+
+// Home > Ellenton, FL. No /locations/ index exists on purpose, so the trail
+// has exactly two crumbs and both of them resolve.
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Ellenton, FL', item: PAGE_URL },
+  ],
+};
+
+// The four questions an Ellenton enquiry opens with. Every answer restates
+// something already said in the body of this page, which is the condition for
+// marking them up: FAQ markup over answers a reader cannot see on the page is
+// what gets the markup discounted rather than rewarded. The first answer
+// follows the flag, so the markup never says more than the page does.
+const faqs = [
+  {
+    q: 'Do you have an office in Ellenton?',
+    a: office.published
+      ? `Yes, at ${office.street}, Ellenton, FL ${office.postalCode}, in Manatee County. Gainesville stays the headquarters; Ellenton is where we meet the Tampa Bay side of the business, and meetings there are by appointment.`
+      : 'Yes. It is in Ellenton, in Manatee County, and the street address goes up on this page the day the doors open. Gainesville stays the headquarters; Ellenton is where we meet the Tampa Bay side of the business, and meetings there are by appointment.',
+  },
+  {
+    q: 'Can we meet in person?',
+    a: 'Yes, by appointment, at the office or at your place of business anywhere in Bradenton, Sarasota, St. Petersburg, Tampa or Brandon. Plenty of clients never need more than email and a staging link, but if a first conversation across a table would be faster, say so.',
+  },
+  {
+    q: 'Is pricing different here?',
+    a: 'No. The bands are the same in Ellenton as they are in Gainesville, they are published on the cost page, and a quote is free.',
+  },
+  {
+    q: 'Do you build for medical practices?',
+    a: 'Yes. Ellenton Family Practice Direct, next door to the office, runs on a site we built around membership signups. MBS Medicine, a veteran-owned Florida telehealth clinic, runs on one built around same-week booking and a patient portal.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
+const services = [
+  {
+    href: '/services/web-design/',
+    kicker: 'Web design',
+    blurb: 'Designed from a blank page around the one thing your visitors need to do.',
+  },
+  {
+    href: '/services/ai-integration/',
+    kicker: 'AI integration',
+    blurb: 'Assistants that answer the after-hours questions, and automations that give hours back.',
+  },
+  {
+    href: '/services/seo-ai-search/',
+    kicker: 'SEO & AI search',
+    blurb: 'The on-site half of local search, done properly, and an honest list for the rest.',
+  },
+  {
+    href: '/services/accessibility/',
+    kicker: 'Accessibility',
+    blurb: 'Measured against WCAG 2.2 AA before launch. Existing sites get audited.',
+  },
+];
+---
+<BaseLayout
+  title="Web Design in Ellenton, FL | K & A Performance"
+  description="Web design and AI integration from our Ellenton office in Manatee County. Two founders, meetings by appointment, a medical build next door, and free quotes."
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+  <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
+    <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
+      Ellenton, Florida
+    </p>
+    <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
+      Web design in Ellenton, <span class="text-accent">at a table of our own</span>
+    </h1>
+    <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+      K &amp; A Performance has an office in Ellenton, at the north end of
+      Manatee County. Gainesville is still the headquarters. But this is the
+      first place the studio can sit you down at its own table, instead of
+      borrowing yours or a coffee shop's. Meetings are by appointment, and the
+      first one costs nothing.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Where the office is</h2>
+    {office.published ? (
+      <div data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+        <address class="not-italic text-lg text-ink">
+          {office.street}<br />
+          Ellenton, FL {office.postalCode}
+        </address>
+        <p class="mt-5">
+          {office.hoursNote}. Call or write before you set off, so there is
+          somebody at the table when you get there.
+          {office.mapUrl && (
+            <>
+              {' '}
+              <a href={office.mapUrl} target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Open it in Maps</a>.
+            </>
+          )}
+        </p>
+      </div>
+    ) : (
+      <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+        The office is in Ellenton, and the street address goes up on this page
+        the day the doors open. Not before, because a listing that sends you to
+        a building we have not moved into yet is worse than no listing at all.
+        Meetings are by appointment either way: book a time and we will tell
+        you where to come.
+      </p>
+    )}
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      You will meet the same two people whichever city you are in. Alex
+      Anderson does the design and the development, so whoever drew your
+      layout is the one writing the code. Kristina Anderson runs strategy and
+      content. There is no account manager in the middle and no ticket queue.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Built next door</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      The first bay-area build did not take much finding.
+      <a href="https://familypracticedirect.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Ellenton Family Practice Direct</a>
+      is direct primary care in Ellenton, and it sits next door to the office.
+      Their line is modern medicine, old-fashioned doctors, and the site had to
+      manage both at once: warm enough that a patient trusts it on the first
+      screen, and built around the one thing the practice needs a visitor to
+      do, which is sign up for a membership.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      <a href="https://mbsdoc.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">MBS Medicine</a>
+      is the studio's other medical build, and it needed the opposite
+      register. A veteran-owned Florida telehealth clinic, with a bold,
+      unmistakable identity, same-week booking and a patient portal. Two
+      practices, two very different first screens. The job in both was the
+      same: work out what a patient came to do, and get everything else out of
+      the way.
+    </p>
+
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">The bay is in-person territory</h2>
+    <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
+      From Ellenton, Bradenton, Sarasota, St. Petersburg, Tampa and Brandon are
+      all close enough that we treat them the way we treat Gainesville's
+      neighbors: same in-person option, same response times, same pricing. If a
+      room helps, we meet at the office or come to you. If it does not, the
+      work runs over shared links and a staging site you can open on your own
+      phone, and questions get a reply within 24 hours.
+    </p>
+    <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
+      Those five cities behave like one place, and we write about them that
+      way. That is all on the
+      <a href="/locations/tampa-bay/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Tampa Bay page</a>.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What we build from here</h2>
+    <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">
+      The same four things we do from Gainesville, scoped to what the business
+      actually needs. Most projects are some mix of them.
+    </p>
+    <div class="mt-10 grid gap-8 md:grid-cols-2">
+      {services.map((s) => (
+        <a href={s.href} data-animate="frame-lift" class="glow-frame group flex flex-col p-7">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-accent">{s.kicker}</p>
+          <p class="mt-3 leading-relaxed text-muted">{s.blurb}</p>
+          <p class="mt-5 font-heading text-sm font-semibold tracking-wide text-accent">
+            Read more
+          </p>
+        </a>
+      ))}
+    </div>
+    <p data-animate="type-settle" class="mt-10 max-w-2xl leading-relaxed text-muted">
+      Further north? The headquarters and its neighbors are on the
+      <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville page</a>.
+    </p>
+  </section>
+
+  <!-- The questions that open an Ellenton enquiry, answered where a reader
+       can see them. The FAQPage markup in the head describes exactly these. -->
+  <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Questions we get first</h2>
+    <dl class="mt-10 flex flex-col gap-8">
+      {faqs.map((f) => (
+        <div class="border-t border-ink/10 pt-6">
+          <dt class="font-heading text-lg font-semibold tracking-wide">{f.q}</dt>
+          <dd class="m-0 mt-3 leading-relaxed text-muted">{f.a}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <div class="border-t border-ink/10">
+    <ReviewsRail />
+  </div>
+
+  <section class="px-6 pb-40 pt-16 md:pt-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <p data-animate="type-settle" class="font-display text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.05]">
+        Pull up a <span class="text-accent">chair</span>
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.1" class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted">
+        Tell us what the site has to do and we will tell you what it would take,
+        what it would cost, and whether it is worth doing at all. Meetings in
+        Ellenton are by appointment. The quote is free either way, and the
+        <a href="/services/web-design/what-it-costs/" class="text-accent underline underline-offset-4 hover:text-accent-hot">cost page</a>
+        shows the bands before you ask.
+      </p>
+      <div data-animate="type-settle" data-animate-delay="0.2" class="mt-10">
+        <a href="/contact/" class="btn-accent">Start a project</a>
+      </div>
+      <p data-animate="type-settle" data-animate-delay="0.25" class="mt-6 text-lg leading-relaxed text-muted">
+        Or call
+        <a href={phone.href} class="whitespace-nowrap font-semibold text-accent underline underline-offset-4 transition-colors hover:text-accent-hot">{phone.display}</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

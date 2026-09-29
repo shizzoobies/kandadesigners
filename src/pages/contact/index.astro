@@ -2,6 +2,16 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScopeChat from '../../components/ScopeChat.astro';
 import { phone } from '../../data/contact.js';
+import { locations, regions } from '../../data/locations.js';
+
+// "Where we work" names its towns from src/data/locations.js, so this block,
+// the footer and the schema's areaServed cannot disagree. Lists read the way
+// the rest of the copy writes them: commas, then "and", no serial comma.
+const byKey = Object.fromEntries(regions.map((r) => [r.key, r]));
+const list = (names) => (names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}` : names[0]);
+const northCentralTowns = list(byKey['north-central'].cities.filter((c) => c !== locations.gainesville.name));
+const tampaBayTowns = list(byKey['tampa-bay'].cities.filter((c) => c !== locations.ellenton.name));
+const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonville'));
 ---
 <BaseLayout
   title="Contact | Gainesville Web Design | K & A Performance"
@@ -119,24 +129,33 @@ import { phone } from '../../data/contact.js';
     </div>
   </section>
 
-  <!-- Where we work: the studio is a real place, and the rest is remote.
-       Says it plainly instead of implying offices we do not have. -->
+  <!-- Where we work: two real places, and the rest is remote. Says it
+       plainly instead of implying offices we do not have. No street address
+       here: the Ellenton one renders only once locations.js says published. -->
   <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 pb-40 md:py-24 md:pb-48">
     <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">Where we work</p>
-    <h2 data-animate="type-settle" class="mt-6 font-display text-3xl leading-tight md:text-4xl">A Gainesville studio with Florida clients</h2>
-    <div class="mt-6 grid max-w-4xl gap-8 md:grid-cols-2">
+    <h2 data-animate="type-settle" class="mt-6 font-display text-3xl leading-tight md:text-4xl">A Gainesville studio with an Ellenton office</h2>
+    <div class="mt-6 grid max-w-5xl gap-8 md:grid-cols-3">
       <p data-animate="type-settle" class="leading-relaxed text-muted">
-        The studio is in
+        The headquarters is in
         <a href="/locations/gainesville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Gainesville</a>,
-        so Alachua, Newberry, High Springs and Ocala are close enough to meet in
-        person if you would rather start across a table than over email.
+        so {northCentralTowns} are close enough to meet in person if you would
+        rather start across a table than over email.
       </p>
       <p data-animate="type-settle" data-animate-delay="0.1" class="leading-relaxed text-muted">
+        The office is in
+        <a href="/locations/ellenton/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Ellenton</a>,
+        at the north end of Manatee County, and meetings there are by
+        appointment.
+        {tampaBayTowns} are all in-person territory, and the whole
+        <a href="/locations/tampa-bay/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Tampa Bay</a>
+        region is worked from there.
+      </p>
+      <p data-animate="type-settle" data-animate-delay="0.2" class="leading-relaxed text-muted">
         <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville</a>,
-        Orange Park, Fleming Island and St. Augustine run remote, which is how
-        most projects run anyway. Same for the rest of Florida and everywhere
-        outside it: a staging site you can open whenever you like, and a reply
-        within 24 hours.
+        {northeastTowns} run remote, which is how most projects run anyway.
+        Same for the rest of Florida and everywhere outside it: a staging site
+        you can open whenever you like, and a reply within 24 hours.
       </p>
     </div>
   </section>
