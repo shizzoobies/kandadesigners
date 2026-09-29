@@ -10,7 +10,7 @@ import { locations, regions } from '../../data/locations.js';
 const byKey = Object.fromEntries(regions.map((r) => [r.key, r]));
 const list = (names) => (names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names.at(-1)}` : names[0]);
 const northCentralTowns = list(byKey['north-central'].cities.filter((c) => c !== locations.gainesville.name));
-const tampaBayTowns = list(byKey['tampa-bay'].cities.filter((c) => c !== locations.ellenton.name));
+const officeTowns = list(byKey['bradenton-sarasota'].cities.filter((c) => c !== locations.ellenton.name));
 const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonville'));
 ---
 <BaseLayout
@@ -145,11 +145,11 @@ const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonv
       <p data-animate="type-settle" data-animate-delay="0.1" class="leading-relaxed text-muted">
         The office is in
         <a href="/locations/ellenton/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Ellenton</a>,
-        at the north end of Manatee County, and meetings there are by
-        appointment.
-        {tampaBayTowns} are all in-person territory, and the whole
-        <a href="/locations/tampa-bay/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Tampa Bay</a>
-        region is worked from there.
+        in Manatee County, and meetings there are by appointment.
+        {officeTowns} are all in-person territory, which the
+        <a href="/locations/bradenton-sarasota/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Bradenton and Sarasota page</a>
+        covers. Two builds out that way so far, both medical: Ellenton Family
+        Practice Direct next door to the office, and MBS Medicine nearby.
       </p>
       <p data-animate="type-settle" data-animate-delay="0.2" class="leading-relaxed text-muted">
         <a href="/locations/jacksonville/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Jacksonville</a>,

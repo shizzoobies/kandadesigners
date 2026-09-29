@@ -62,7 +62,7 @@ const MAP_URL = 'https://g.page/r/CbVcBGWcGmNzEBM';
 // openingHours until the hours are known. This is the node the office's
 // Google, Apple and Bing listings will point at.
 const ellenton = locations.ellenton;
-const tampaBay = regions.find((r) => r.key === 'tampa-bay');
+const officeRegion = regions.find((r) => r.key === 'bradenton-sarasota');
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -132,7 +132,7 @@ const schema = {
       parentOrganization: { '@id': ORG_ID },
       name: 'K & A Performance, Ellenton',
       url: new URL(ellenton.page, 'https://ka-performancefl.com/').href,
-      areaServed: tampaBay.cities.map((name) => ({
+      areaServed: officeRegion.cities.map((name) => ({
         '@type': 'City',
         name,
         containedInPlace: { '@type': 'State', name: 'Florida' },

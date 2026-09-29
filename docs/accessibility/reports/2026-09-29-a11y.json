@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-29T13:41:04.624Z",
-  "origin": "http://127.0.0.1:57005",
+  "date": "2026-09-29T13:58:30.576Z",
+  "origin": "http://127.0.0.1:49584",
   "pages": [
     {
       "path": "/locations/ellenton/",
@@ -24,7 +24,7 @@
           },
           {
             "level": 2,
-            "text": "The bay is in-person territory"
+            "text": "Bradenton to Brandon, in person"
           },
           {
             "level": 2,
@@ -94,24 +94,24 @@
       ]
     },
     {
-      "path": "/locations/tampa-bay/",
+      "path": "/locations/bradenton-sarasota/",
       "status": 200,
       "structure": {
         "lang": "en",
-        "title": "Tampa Bay Web Design & AI | K & A Performance",
+        "title": "Web Design in Bradenton & Sarasota | K & A Performance",
         "h1Count": 1,
         "headings": [
           {
             "level": 1,
-            "text": "Web design across Tampa Bay, five cities, one region"
+            "text": "Web design in Bradenton and Sarasota, and up the road to Tampa"
           },
           {
             "level": 2,
-            "text": "One region wearing five names"
+            "text": "Five cities wearing one map"
           },
           {
             "level": 2,
-            "text": "The office sits at the north end"
+            "text": "Ellenton, in the middle of the five"
           },
           {
             "level": 2,
@@ -123,7 +123,7 @@
           },
           {
             "level": 2,
-            "text": "What we do for bay-area clients"
+            "text": "What we do from Ellenton"
           },
           {
             "level": 2,
@@ -163,12 +163,7 @@
       },
       "axe": {
         "violations": [],
-        "incomplete": [
-          {
-            "id": "color-contrast",
-            "nodes": 3
-          }
-        ],
+        "incomplete": [],
         "passes": 27
       },
       "keyboard": {

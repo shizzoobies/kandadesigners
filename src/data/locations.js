@@ -22,9 +22,9 @@ export const locations = {
 // In display order. `inPerson` is whether meetings happen in a room; `base` is
 // the location the region is worked from.
 export const regions = [
-  { key: 'north-central', label: 'North Central Florida', inPerson: true,  base: 'gainesville', cities: ['Gainesville', 'Alachua', 'Newberry', 'High Springs', 'Ocala'] },
-  { key: 'northeast',     label: 'Northeast Florida',     inPerson: false, base: 'gainesville', cities: ['Jacksonville', 'Fleming Island', 'Orange Park', 'St. Augustine'] },
-  { key: 'tampa-bay',     label: 'Tampa Bay',             inPerson: true,  base: 'ellenton',    cities: ['Ellenton', 'Bradenton', 'Sarasota', 'St. Petersburg', 'Tampa', 'Brandon'] },
+  { key: 'north-central',      label: 'North Central Florida', inPerson: true,  base: 'gainesville', cities: ['Gainesville', 'Alachua', 'Newberry', 'High Springs', 'Ocala'] },
+  { key: 'northeast',          label: 'Northeast Florida',     inPerson: false, base: 'gainesville', cities: ['Jacksonville', 'Fleming Island', 'Orange Park', 'St. Augustine'] },
+  { key: 'bradenton-sarasota', label: 'Bradenton & Sarasota',  inPerson: true,  base: 'ellenton',    cities: ['Ellenton', 'Bradenton', 'Sarasota', 'St. Petersburg', 'Tampa', 'Brandon'] },
 ];
 
 export const citiesServed = regions.flatMap((r) => r.cities); // fifteen, fixed order

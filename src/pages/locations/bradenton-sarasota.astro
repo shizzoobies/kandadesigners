@@ -4,44 +4,44 @@ import ReviewsRail from '../../components/ReviewsRail.astro';
 import { phone } from '../../data/contact.js';
 import { locations } from '../../data/locations.js';
 
-const PAGE_URL = 'https://ka-performancefl.com/locations/tampa-bay/';
+const PAGE_URL = 'https://ka-performancefl.com/locations/bradenton-sarasota/';
 
-// One page for the five bay cities, on purpose. There are no Sarasota,
-// Bradenton, St. Petersburg, Tampa or Brandon pages, so the cities are named
-// in prose and nothing links to a page that does not exist. The office's
-// street is never written here; the sentences that mention the address follow
-// the flag in src/data/locations.js and point at the Ellenton page.
+// One page for Bradenton, Sarasota, St. Petersburg, Tampa and Brandon, on
+// purpose. There are no pages for the individual cities, so they are named in
+// prose and nothing links to a page that does not exist. The office's street
+// is never written here; the sentences that mention the address follow the
+// flag in src/data/locations.js and point at the Ellenton page.
 const office = locations.ellenton;
 
-// Home > Tampa Bay. No /locations/ index exists on purpose, so the trail has
-// exactly two crumbs and both of them resolve.
+// Home > Bradenton & Sarasota. No /locations/ index exists on purpose, so the
+// trail has exactly two crumbs and both of them resolve.
 const breadcrumb = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ka-performancefl.com/' },
-    { '@type': 'ListItem', position: 2, name: 'Tampa Bay', item: PAGE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Bradenton & Sarasota', item: PAGE_URL },
   ],
 };
 
-// The four questions a bay-area enquiry opens with. Every answer restates
-// something already said in the body of this page, which is the condition for
-// marking them up: FAQ markup over answers a reader cannot see on the page is
-// what gets the markup discounted rather than rewarded.
+// The four questions an enquiry from these cities opens with. Every answer
+// restates something already said in the body of this page, which is the
+// condition for marking them up: FAQ markup over answers a reader cannot see
+// on the page is what gets the markup discounted rather than rewarded.
 const faqs = [
   {
     q: 'Where are you actually based?',
     a: office.published
-      ? 'Gainesville is the headquarters. The Tampa Bay office is in Ellenton, at the north end of Manatee County, and it is where we meet bay-area clients, by appointment. The address is on the Ellenton page.'
-      : 'Gainesville is the headquarters. The Tampa Bay office is in Ellenton, at the north end of Manatee County, and it is where we meet bay-area clients, by appointment. The street address goes on the Ellenton page the day the doors open.',
+      ? 'Gainesville is the headquarters. The second office is in Ellenton, in Manatee County, and it is where we meet clients from Bradenton, Sarasota, St. Petersburg, Tampa and Brandon, by appointment. The address is on the Ellenton page.'
+      : 'Gainesville is the headquarters. The second office is in Ellenton, in Manatee County, and it is where we meet clients from Bradenton, Sarasota, St. Petersburg, Tampa and Brandon, by appointment. The street address goes on the Ellenton page the day the doors open.',
   },
   {
     q: 'Will you come to us?',
-    a: 'Yes. Sarasota, Bradenton, St. Petersburg, Tampa and Brandon are all in-person territory, so we will meet you at the office in Ellenton or at your place of business, whichever is easier. Either way, it is by appointment.',
+    a: 'Yes. Bradenton, Sarasota, St. Petersburg, Tampa and Brandon are all in-person territory, so we will meet you at the office in Ellenton or at your place of business, whichever is easier. Either way, it is by appointment.',
   },
   {
-    q: 'Is pricing different in Tampa Bay?',
-    a: 'No. The bands are the same here as everywhere else we work, they are published on the cost page, and a quote is free. There is no bay-area markup.',
+    q: 'Is pricing different in Bradenton or Sarasota?',
+    a: 'No. The bands are the same here as everywhere else we work, they are published on the cost page, and a quote is free. There is no local markup.',
   },
   {
     q: 'Can you help a business that already has a site?',
@@ -83,30 +83,30 @@ const services = [
 ];
 ---
 <BaseLayout
-  title="Tampa Bay Web Design & AI | K & A Performance"
-  description="Web design and AI integration for Sarasota, Bradenton, St. Petersburg, Tampa and Brandon, from our office in Ellenton. By appointment, and quotes are free."
+  title="Web Design in Bradenton & Sarasota | K & A Performance"
+  description="Web design and AI integration for Bradenton, Sarasota, St. Petersburg, Tampa and Brandon, from our office in Ellenton. By appointment, and quotes are free."
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
 
   <section class="mx-auto max-w-4xl px-6 pt-40 pb-16 md:pt-48">
     <p data-animate="type-settle" class="font-mono text-sm uppercase tracking-[0.3em] text-muted">
-      Tampa Bay, Florida
+      Bradenton &amp; Sarasota, Florida
     </p>
     <h1 data-animate="type-settle" data-animate-delay="0.1" class="mt-6 font-display text-[clamp(2.25rem,6vw,4.5rem)] leading-[1.04]">
-      Web design across Tampa Bay, <span class="text-accent">five cities, one region</span>
+      Web design in Bradenton and Sarasota, <span class="text-accent">and up the road to Tampa</span>
     </h1>
     <p data-animate="type-settle" data-animate-delay="0.2" class="mt-8 max-w-2xl text-lg leading-relaxed text-muted">
-      Sarasota, Bradenton, St. Petersburg, Tampa and Brandon have five names,
+      Bradenton, Sarasota, St. Petersburg, Tampa and Brandon have five names,
       five downtowns and, as far as most of the people living in them are
-      concerned, one map. Alex lived here, so this is not a region we learned
-      from a list of search terms. The office is in Ellenton, and every one of
-      those five is an appointment away.
+      concerned, one map. Alex lived here, so this is not an area we learned
+      from a list of search terms. The office is inland, in Ellenton, and every
+      one of those five is an appointment away.
     </p>
   </section>
 
   <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">One region wearing five names</h2>
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Five cities wearing one map</h2>
     <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
       People here live in one city, work in a second and eat out in a third.
       Somebody in Brandon drives into Tampa every morning. Somebody in
@@ -116,18 +116,18 @@ const services = [
       the Skyway on a windy day excepted.
     </p>
     <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
-      The customers a bay-area business is chasing move the same way. They do
-      not stop at a county line, and neither does the map on their phone. So
-      we treat the five as one territory rather than five landing pages. There
-      is no Sarasota page with Bradenton swapped in for the name, because
-      nobody searching lives in that version of Florida.
+      The customers a business here is chasing move the same way. They do not
+      stop at a county line, and neither does the map on their phone. So we
+      treat the five as one territory rather than five landing pages. There is
+      no Sarasota page with Bradenton swapped in for the name, because nobody
+      searching lives in that version of Florida.
     </p>
 
-    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">The office sits at the north end</h2>
+    <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Ellenton, in the middle of the five</h2>
     <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
-      The office is in Ellenton, at the north end of Manatee County. Bradenton
-      is next door, Sarasota is to the south, Tampa and Brandon are to the
-      north, and St. Petersburg is across the bay. That is most of the point of
+      The office is in Ellenton, in Manatee County, well inland. Bradenton is
+      next door, Sarasota is to the south, Tampa and Brandon are to the north,
+      and St. Petersburg is over the Skyway. That is most of the point of
       putting it there. Meetings are by appointment, at the office or at your
       place of business, whichever is easier.
     </p>
@@ -135,32 +135,33 @@ const services = [
       <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
         The address is on the
         <a href="/locations/ellenton/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Ellenton page</a>.
-        Gainesville stays the headquarters; Ellenton is where the bay gets its
-        own table.
+        Gainesville stays the headquarters; Ellenton is where Bradenton,
+        Sarasota and their neighbors get a table of their own.
       </p>
     ) : (
       <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
         The street address goes on the
         <a href="/locations/ellenton/" class="text-accent underline underline-offset-4 hover:text-accent-hot">Ellenton page</a>
         the day the doors open, and not a day before. Gainesville stays the
-        headquarters; Ellenton is where the bay gets its own table.
+        headquarters; Ellenton is where Bradenton, Sarasota and their neighbors
+        get a table of their own.
       </p>
     )}
 
     <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">Already building here</h2>
     <p data-animate="type-settle" class="mt-6 leading-relaxed text-muted">
-      The first bay-area build is
-      <a href="https://familypracticedirect.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Ellenton Family Practice Direct</a>,
-      direct primary care right next door to the office, on a site built
+      There are two builds around here so far, and both are medical.
+      <a href="https://familypracticedirect.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Ellenton Family Practice Direct</a>
+      is direct primary care right next door to the office, on a site built
       around membership signups.
       <a href="https://mbsdoc.com" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">MBS Medicine</a>,
-      a veteran-owned Florida telehealth clinic, is the studio's other medical
-      build.
+      nearby, is a veteran-owned Florida telehealth clinic with same-week
+      booking and a patient portal.
     </p>
     <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
-      That is the honest size of it so far: one build in the bay, and an
-      office to do more from. We would rather say so than pad a list with
-      towns we have never shipped anything in.
+      That is the honest count: two builds, and an office to do more from. We
+      would rather say so than pad a list with towns we have never shipped
+      anything in.
     </p>
 
     <h2 data-animate="type-settle" class="mt-16 font-display text-3xl leading-tight md:text-5xl">What it costs, and how it runs</h2>
@@ -168,7 +169,7 @@ const services = [
       Quotes are free, and the bands are the same here as everywhere else we
       work. They are on the
       <a href="/services/web-design/what-it-costs/" class="text-accent underline underline-offset-4 hover:text-accent-hot">cost page</a>.
-      There is no bay-area markup and no out-of-town discount, because nobody
+      There is no local markup and no out-of-town discount, because nobody
       here is out of town.
     </p>
     <p data-animate="type-settle" class="mt-5 leading-relaxed text-muted">
@@ -186,7 +187,7 @@ const services = [
   </section>
 
   <section class="mx-auto max-w-6xl border-t border-ink/10 px-6 py-20 md:py-24">
-    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What we do for bay-area clients</h2>
+    <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">What we do from Ellenton</h2>
     <p data-animate="type-settle" class="mt-6 max-w-2xl leading-relaxed text-muted">
       The same four things we do everywhere, scoped to what the business
       actually needs.
@@ -204,8 +205,9 @@ const services = [
     </div>
   </section>
 
-  <!-- The questions that open a bay-area enquiry, answered where a reader
-       can see them. The FAQPage markup in the head describes exactly these. -->
+  <!-- The questions that open an enquiry from these cities, answered where a
+       reader can see them. The FAQPage markup in the head describes exactly
+       these. -->
   <section class="mx-auto max-w-3xl border-t border-ink/10 px-6 py-20 md:py-24">
     <h2 data-animate="type-settle" class="font-display text-3xl leading-tight md:text-5xl">Questions we get first</h2>
     <dl class="mt-10 flex flex-col gap-8">
