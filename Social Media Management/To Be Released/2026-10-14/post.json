@@ -3,7 +3,7 @@
   "date": "2026-10-14",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "training",
   "title": "Training everyone can take: 3 accessibility checks",
   "platforms": {
@@ -59,8 +59,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-14/387d2afb-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-14/387d2afb-reel-vertical.mp4",
+      "sha256": "387d2afb153ec659f6ff609e2c7810c11fd1b87e63911182f8eb80e8eb67532d",
+      "uploadedAt": "2026-09-29T13:26:57.935Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-14/7c74cb8c-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14/7c74cb8c-thumbnail.jpg",
+      "sha256": "7c74cb8cda71dfe08167a4ec97f9092120c5298cb582fdd42e295e5ac03c8291",
+      "uploadedAt": "2026-09-29T13:26:57.935Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-14T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-14/387d2afb-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Training everyone can take. 3 checks for any course: 1 Captions on every video, 2 Text you can read, 3 It works with a keyboard. Real screens from our sample courses. Check 1: Captions on every video. A transcript for all audio. Try it: turn the sound off. Can you still follow? A real phone screen of the RFI sample course zooms in on its audio introduction with the full transcript. Check 2: Text you can read. Try it: measure the contrast. Body text needs at least 4.5:1. Measured on this screen: 10.3:1, with the body text of the strength sample course outlined. Check 3: It works with a keyboard. Try it: put the mouse away. Press Tab. Can you see where you are? A Tab key is pressed and the safety sample course hazard hunt shows a focus ring on Ladder access; Enter is pressed and the ladder is marked found. Enter marks it found. No mouse needed. A progress row of three boxes fills as each check passes. Ends on: Accessibility is part of how we build training, with the Accessibility throughout the build panel from the K&A training page, Try our sample courses, free on the site, ka-performancefl.com/training, Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-14T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Training everyone can take: 3 accessibility checks for any course.\nTraining built for every learner: https://ka-performancefl.com/training/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-14\n\n1. Captions on every video, and a transcript for all audio. Try it: turn the sound off. Can you still follow?\n2. Text you can read. Try it: measure the contrast. Body text needs at least 4.5:1 to meet WCAG AA. The body text on the cover of our strength sample course measures 10.3:1.\n3. It works with a keyboard. Try it: put the mouse away and press Tab. Can you see where you are, and can you finish with Tab and Enter?\n\nEvery screen in this reel is a real capture from our sample courses: the audio introduction in our RFI course with its transcript, the cover of our strength course, and the hazard hunt in our safety course, done with the keyboard only.\n\nAccessibility is part of how we build training. Client delivery targets WCAG 2.1 AA, with checks in the environment your learners use.\n\nThe music is AI generated.\n\nTry the sample courses on our site, or call Alex at 904-210-1071.\n\n#eLearning #Accessibility #InstructionalDesign",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-14/7c74cb8c-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.106Z",
+      "id": "384253386",
+      "uuid": "-7317979807330711285",
+      "scheduledAt": "2026-09-29T13:34:26.459Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-14T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#eLearning #Accessibility #InstructionalDesign #AccessibleLearning #CorporateTraining #LearningAndDevelopment #GainesvilleFL",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-14/387d2afb-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Training everyone can take. 3 checks for any course: 1 Captions on every video, 2 Text you can read, 3 It works with a keyboard. Real screens from our sample courses. Check 1: Captions on every video. A transcript for all audio. Try it: turn the sound off. Can you still follow? A real phone screen of the RFI sample course zooms in on its audio introduction with the full transcript. Check 2: Text you can read. Try it: measure the contrast. Body text needs at least 4.5:1. Measured on this screen: 10.3:1, with the body text of the strength sample course outlined. Check 3: It works with a keyboard. Try it: put the mouse away. Press Tab. Can you see where you are? A Tab key is pressed and the safety sample course hazard hunt shows a focus ring on Ladder access; Enter is pressed and the ladder is marked found. Enter marks it found. No mouse needed. A progress row of three boxes fills as each check passes. Ends on: Accessibility is part of how we build training, with the Accessibility throughout the build panel from the K&A training page, Try our sample courses, free on the site, ka-performancefl.com/training, Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-14T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Training everyone can take: 3 accessibility checks for any course.\n\n1. Captions on every video, and a transcript for all audio. Try it: turn the sound off. Can you still follow?\n2. Text you can read. Try it: measure the contrast. Body text needs at least 4.5:1 to meet WCAG AA. The body text on the cover of our strength sample course measures 10.3:1.\n3. It works with a keyboard. Try it: put the mouse away and press Tab. Can you see where you are, and can you finish with Tab and Enter?\n\nEvery screen in this reel is a real capture from our sample courses: the audio introduction in our RFI course with its transcript, the cover of our strength course, and the hazard hunt in our safety course, done with the keyboard only.\n\nAccessibility is part of how we build training. Client delivery targets WCAG 2.1 AA, with checks in the environment your learners use.\n\nThe music is AI generated.\n\nTry the sample courses through the link in bio, or call Alex at 904-210-1071.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-14/7c74cb8c-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.106Z",
+      "id": "384253402",
+      "uuid": "-4678688709335760167",
+      "scheduledAt": "2026-09-29T13:34:26.527Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-14T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-14/387d2afb-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Training everyone can take. 3 checks for any course: 1 Captions on every video, 2 Text you can read, 3 It works with a keyboard. Real screens from our sample courses. Check 1: Captions on every video. A transcript for all audio. Try it: turn the sound off. Can you still follow? A real phone screen of the RFI sample course zooms in on its audio introduction with the full transcript. Check 2: Text you can read. Try it: measure the contrast. Body text needs at least 4.5:1. Measured on this screen: 10.3:1, with the body text of the strength sample course outlined. Check 3: It works with a keyboard. Try it: put the mouse away. Press Tab. Can you see where you are? A Tab key is pressed and the safety sample course hazard hunt shows a focus ring on Ladder access; Enter is pressed and the ladder is marked found. Enter marks it found. No mouse needed. A progress row of three boxes fills as each check passes. Ends on: Accessibility is part of how we build training, with the Accessibility throughout the build panel from the K&A training page, Try our sample courses, free on the site, ka-performancefl.com/training, Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-14T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Training everyone can take: 3 accessibility checks for any course.\nhttps://ka-performancefl.com/training/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-14\n\nCheck for captions on every video and a transcript for all audio, body text with at least 4.5:1 contrast, and a course you can finish with the keyboard alone. Every screen shown is a real capture from our sample courses, including a hazard hunt done with Tab and Enter only. Accessibility is part of how we build training.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "3 accessibility checks for any training course",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "accessible training",
+              "eLearning accessibility",
+              "instructional design",
+              "WCAG 2.1 AA",
+              "course design",
+              "corporate training"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.106Z",
+      "id": "384253424",
+      "uuid": "-7396077731816060764",
+      "scheduledAt": "2026-09-29T13:34:26.622Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

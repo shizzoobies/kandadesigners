@@ -3,7 +3,7 @@
   "date": "2026-10-11",
   "time": "18:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "Find your website's voice in ten minutes",
   "platforms": {
@@ -113,8 +113,166 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-11/5113160d-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/5113160d-slide-01.jpg",
+      "sha256": "5113160d915eb88188f5a6733f01c3c87672aa6b005ec8dca3d164f5db80b9a0",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-11/f89da688-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/f89da688-slide-02.jpg",
+      "sha256": "f89da688662a7547a7e0a5a8f5a0bc4f5f84191e30cbc56ae87300086f449738",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-11/c8763d39-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/c8763d39-slide-03.jpg",
+      "sha256": "c8763d39ee035ccddebd2a05df9f425204f1995b21138ba94c62bbcb2e1756fb",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-11/c3ebb69e-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/c3ebb69e-slide-04.jpg",
+      "sha256": "c3ebb69e3c621a0c1e09464de421136aa8e28f71fabe195bfb7354ae52f26021",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-11/e143a297-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/e143a297-slide-05.jpg",
+      "sha256": "e143a297f10c757e733d36adafbd654dabeaf3ed5f307b3ab508767bcd7065cf",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-11/874d717f-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/874d717f-slide-06.jpg",
+      "sha256": "874d717fd2adb526eee4746555eeeb6708f685fac5019847fdbb700b3c20b390",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-11/50700803-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/50700803-slide-07.jpg",
+      "sha256": "50700803add09f01f70e918a1bbee5e58db04bce6cf7b5a0689c86d06bddcd72",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slide-08.jpg": {
+      "key": "2026-10-11/63b280ad-slide-08.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/63b280ad-slide-08.jpg",
+      "sha256": "63b280adebf63f2801fa29ce212d313d59ddd90c2154e188cd72f06712776768",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-11/bd2dec37-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-11/bd2dec37-slideshow.mp4",
+      "sha256": "bd2dec3720617246c7a4f7b7d7130264d012614f7629c7d474e8f68f3e648612",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-11/51998085-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-11/51998085-slideshow-cover.jpg",
+      "sha256": "519980858d64028b06c80bf100969524ae43855863b909e7e11736d3e3a15975",
+      "uploadedAt": "2026-09-29T13:26:04.372Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-11T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-11/bd2dec37-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 8 carousel slides in order: K&A Performance slide styled as a cookbook page, A Sunday night recipe: Find your website's voice in ten minutes / Ingredients: You already have all three / Method: Paste this into the AI tool you already use / We tried it: A real run, on a made-up garden nursery / What came back, 1 of 2 / What came back, 2 of 2 / The taste test: Then check it yourself / How we help businesses put AI to work: The 90-Day AI Launch"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-11T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Find your website's voice in ten minutes. One prompt, three things you already have, and a short voice guide you check yourself.\nPut AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-11\n\nYou need three things you already have:\n1. A customer email you were proud to send\n2. Your About text, as it is now\n3. Three words for how you want to sound\n\nPaste them into the prompt in the video (it's on one slide, so screenshot it). You get back a short voice guide: how you sound, words to use and avoid, three sentence rules, and your About opening rewritten.\n\nWe ran it once on a made-up garden nursery. The guide in the video is the AI model's reply, word for word. Then check it yourself: read it out loud, check every fact, and keep only the promises you'll keep. In our run, the rewrite turned an offer from one email into a promise on the website, and the AI flagged that itself.\n\nFor the full system, voice notes and a saved prompt for your customer replies, watch \"Let AI draft it. Make it sound like you.\"\nFull walkthrough on our YouTube channel: https://www.youtube.com/@KAPerformancefl\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-11\n\nThe business in this post is fictional. The music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-11/51998085-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.168Z",
+      "id": "384250925",
+      "uuid": "1627731756909610630",
+      "scheduledAt": "2026-09-29T13:30:59.342Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-11T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AI #SmallBusiness #AITips #BrandVoice #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-11/5113160d-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-11/f89da688-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-11/c8763d39-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-11/c3ebb69e-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-11/e143a297-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-11/874d717f-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-11/50700803-slide-07.jpg",
+            "https://media.ka-performancefl.com/2026-10-11/63b280ad-slide-08.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide styled as a cookbook page, A Sunday night recipe: Find your website's voice in ten minutes. One prompt turns three things you already have into a short voice guide. You check it. Makes: a one-page voice guide. Time: about 10 minutes. You need: 3 things you have, 1 prompt. Three ingredient cards: your best customer email, your About text, three words for how you sound. Save this for Sunday night.",
+            "Ingredients: You already have all three. 1 customer email you were proud to send: it already sounds like you on a good day. 1 About text, as it is now: it shows what to change. 3 words for how you want to sound: they point the guide in your direction. You already write to customers. Your best email often sounds more like you than your website does.",
+            "Method: Paste this into the AI tool you already use. The prompt: Write a short voice guide for my small business website, so every page sounds like us. Work only from the three things below. Don't invent facts about my business. 1. A customer email I was proud of: paste it. 2. Our About text right now: paste it. 3. Three words for how we want to sound: word, word, word. Give me: one sentence, how we sound; 5 words or phrases to use; 5 to avoid; 3 rules for writing sentences; our About opening, rewritten in this voice, 2 sentences. Keep it under 200 words. Screenshot this. Fill in the brackets.",
+            "We tried it: A real run, on a made-up garden nursery. Fictional business, made up for this example. 1. The email June was proud of: Hi Marcus, good news: the Meyer lemon you asked about came in this morning. I set the healthiest one aside with your name on it, and it'll wait at the front counter through Saturday. If the leaves yellow a little once it's home, don't panic. Send me a photo and we'll sort it out together. June. 2. Their About text right now: Fern & Finch Nursery is a family owned garden center offering a wide selection of plants, trees and gardening supplies. We are committed to providing quality products and excellent customer service. 3. Three words: warm, plainspoken, patient.",
+            "What came back, 1 of 2. Written by an AI model, word for word. Fictional business. Fern & Finch Voice Guide. How we sound: We sound like June at the front counter: warm and plain, and happy to take the time your question needs. Use: Good news; Set aside with your name on it; Don't panic; Send us a photo; We'll sort it out together. Avoid, struck through: Committed to; Quality products; Excellent customer service; A wide selection of; Offering. The use list is built from June's email. The avoid list is lifted from the old About text.",
+            "What came back, 2 of 2. Written by an AI model, word for word. Fictional business. Sentence rules: 1. Write to one person. Use you and we, the way June writes to Marcus. 2. Show care with specifics (which plant, where it waits, until when) instead of just saying you care. 3. Name the likely worry before the reader has to ask. Then calmly say what happens next. About opening, before: the old About text. After: Fern & Finch Nursery is a family-owned garden center with plants, trees, and the supplies to look after them. If something doesn't look right once it's home, send us a photo and we'll sort it out together.",
+            "The taste test: Then check it yourself. 1. Read it out loud. Does it sound like you on a good day? Change any word you'd never say. 2. Check every fact. Nothing new should appear. Here, every fact came from the email or the old About text. 3. Keep only promises you'll keep. The rewrite puts June's photo offer on the website. The AI flagged that too: The photo offer comes from June's email. Only keep it on the site if the whole team will honor it. Then keep the guide next to you and paste it in whenever you ask AI to write for your business.",
+            "How we help businesses put AI to work: The 90-Day AI Launch. One part of your business running on AI, built with you over twelve weeks, one on one. You end with a workflow running in your business that was not there before, a handoff doc and recorded walkthroughs of everything built, and the ability to run all of it without us. ka-performancefl.com/ai-launch. Call Alex 904-210-1071. The first call is twenty minutes and free. K&A Performance builds websites, local search, training and AI integration for Gainesville businesses."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-11T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Find your website's voice in ten minutes. One prompt, three things you already have, and a short voice guide you check yourself. Save this for Sunday night.\n\nYou need three things you already have:\n1. A customer email you were proud to send\n2. Your About text, as it is now\n3. Three words for how you want to sound\n\nPaste them into the prompt on slide 3 (screenshot it). You get back a short voice guide: how you sound, words to use and avoid, three sentence rules, and your About opening rewritten.\n\nWe ran it once on a made-up garden nursery. The guide on slides 5 and 6 is the AI model's reply, word for word. Then check it yourself: read it out loud, check every fact, and keep only the promises you'll keep. In our run, the rewrite turned an offer from one email into a promise on the website, and the AI flagged that itself.\n\nFor the full system, voice notes and a saved prompt for your customer replies, watch \"Let AI draft it. Make it sound like you.\"\nFull walkthrough on our YouTube: @KAPerformancefl\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.\n\nThe business in this post is fictional.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.168Z",
+      "id": "384250958",
+      "uuid": "6324755101228878045",
+      "scheduledAt": "2026-09-29T13:30:59.409Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

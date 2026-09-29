@@ -3,7 +3,7 @@
   "date": "2026-10-14",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "training",
   "title": "One module, one objective",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-14-2/3794080e-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/3794080e-slide-01.jpg",
+      "sha256": "3794080e70a0ef5494bf84f0c50b5c4dcd2eab006a6db4a0c8e439d475a3b555",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-14-2/e9596adb-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/e9596adb-slide-02.jpg",
+      "sha256": "e9596adb8d30c112f7876a3fcf32ca3845818260c082a1af27fbcf091e01f516",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-14-2/e84a0183-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/e84a0183-slide-03.jpg",
+      "sha256": "e84a01835f70295eb8e6e747ac047beaaca9882b475f37ad4b3ca6e82cbecc8e",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-14-2/76b8c83a-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/76b8c83a-slide-04.jpg",
+      "sha256": "76b8c83aa73f162324721715663f424474467b5c7781f0470ca6f6da798ad399",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-14-2/9206f98e-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/9206f98e-slide-05.jpg",
+      "sha256": "9206f98ef58828ec3a9d2b3655521acd5817d98c78c8a275cb08e18cfd941819",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-14-2/a62ce7f2-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/a62ce7f2-slide-06.jpg",
+      "sha256": "a62ce7f2574486bd576fc63b8e1c1c22e9f3fe5c418d8570941eb1b7fb5adfd3",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-14-2/48180e81-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/48180e81-slide-07.jpg",
+      "sha256": "48180e812e6267554aeafe443f12fbe9349d88554c083a4434c3e63fd0e8d8b9",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-14-2/6bc8cbf3-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/6bc8cbf3-slideshow.mp4",
+      "sha256": "6bc8cbf38165af5a706b848ebc90f16bebbed54c51c97d1013c043f4e409f87e",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-14-2/0840e137-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-2/0840e137-slideshow-cover.jpg",
+      "sha256": "0840e13723021df1fef390596e140514e13a7c3da5145dbacda18e4ba00a915f",
+      "uploadedAt": "2026-09-29T13:27:05.429Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-14T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-14-2/6bc8cbf3-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide on a green cutting mat: How to split a long course / Step 1, start from the job: List what people must do after it / Step 2, one objective per module: Write it as one sentence / Here is one of ours: Our RFI sample course has one objective / Step 3, every screen serves it: Three steps, all toward that one request / Step 4, they do it before it ends: The module ends with the objective done, not just explained / Check every module: 1"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-14T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "One module, one objective. Here's how to split a long course into short modules that each teach one thing.\nTraining built one objective at a time: https://ka-performancefl.com/training/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-14-2\n\n1. Start from the job, not the chapter list. Write down what people must be able to do after the training. Each action can become a module.\n2. Give each module one objective, written as one sentence. If the sentence needs an \"and\", it's two modules.\n3. Make every screen serve that objective. Anything that doesn't goes to a job aid or another module.\n4. Let learners do the thing before the module ends, not just read about it.\n\nThen put the modules in the order the work happens.\n\nThe example is our RFI sample course. Its one objective is on the first screen: \"Turn a drawing conflict into a request the design team can act on.\" Every step points at that one request, and the module ends with the learner building one. Those screens are real captures from our site; the chapter list and the three-module split are drawn examples.\n\nThe music is AI generated.\n\nWant a long course split this way? Call Alex at 904-210-1071.\n\n#InstructionalDesign #eLearning #CorporateTraining",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-14-2/0840e137-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.341Z",
+      "id": "384253469",
+      "uuid": "-4799091197702027161",
+      "scheduledAt": "2026-09-29T13:34:26.714Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-14T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#InstructionalDesign #eLearning #CorporateTraining #LearningAndDevelopment #CourseDesign #MicroLearning #GainesvilleFL",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-14-2/3794080e-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-14-2/e9596adb-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-14-2/e84a0183-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-14-2/76b8c83a-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-14-2/9206f98e-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-14-2/a62ce7f2-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-14-2/48180e81-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a green cutting mat: How to split a long course. One module, one objective. Three paper pieces cut apart along dashed lines with scissors, labeled Module 1, Module 2 and Module 3, each one objective. The long course, cut where one objective ends and the next begins. Four steps to split a long course into short modules that each teach one thing, shown on one of our own sample courses.",
+            "Step 1, start from the job: List what people must do after it. Not the chapter titles. A drawn example for a fictional field engineer course: the chapter list (Contract documents overview, History of the RFI, Document control, Submittals and RFIs, Change management) points to what they must do (Write an RFI the design team can act on, Check a submittal against the drawings, Log a change before the work starts). Topics describe the course. Actions describe the job, and each action can become a module.",
+            "Step 2, one objective per module: Write it as one sentence. If it needs an and, it is two modules. A drawn sentence, After this, you can write an RFI and check a submittal and log a change, cut at each and into three strips: Module 1, Write an RFI the design team can act on. Module 2, Check a submittal against the drawings. Module 3, Log a change before the work starts.",
+            "Here is one of ours: Our RFI sample course has one objective. It is on the first screen. A real screen, the cover of the K&A sample course The RFI that gets answered, taped to the mat. Its objective: Turn a drawing conflict into a request the design team can act on. About 8 minutes. 9 screens. One objective.",
+            "Step 3, every screen serves it: Three steps, all toward that one request. A real screen from the RFI sample course, Your assignment, with its three steps: Investigate, Make it answerable, Review before sending. Anything that does not serve the objective goes to a job aid or another module.",
+            "Step 4, they do it before it ends: The module ends with the objective done, not just explained. A real screen from the RFI sample course, Build the request, with the question, references, impact and date, and proposal fields filled and 2 fragments left on the desk. The learner builds the RFI from field notes and leaves the distractions on the desk.",
+            "Check every module: 1. Can you say its objective in one sentence? 2. Does every screen serve that objective? 3. Do learners do the thing before it ends? Then put the modules in the order the work happens. We build training one objective at a time. Try our sample courses, free on the site. ka-performancefl.com/training. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-14T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "One module, one objective. Here's how to split a long course into short modules that each teach one thing. Save this for your next course.\n\n1. Start from the job, not the chapter list. Write down what people must be able to do after the training. Each action can become a module.\n2. Give each module one objective, written as one sentence. If the sentence needs an \"and\", it's two modules.\n3. Make every screen serve that objective. Anything that doesn't goes to a job aid or another module.\n4. Let learners do the thing before the module ends, not just read about it.\n\nThen put the modules in the order the work happens.\n\nThe example is our RFI sample course. Its one objective is on the first screen: \"Turn a drawing conflict into a request the design team can act on.\" Every step points at that one request, and the module ends with the learner building one. Those screens are real captures from our site; the chapter list and the three-module split are drawn examples.\n\nWant a long course split this way? Try our sample courses through the link in bio, or call Alex at 904-210-1071.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.341Z",
+      "id": "384253492",
+      "uuid": "5838306059029269828",
+      "scheduledAt": "2026-09-29T13:34:26.808Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

@@ -3,7 +3,7 @@
   "date": "2026-10-13",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "LinkedIn: Buttons that get clicked",
   "platforms": {
@@ -62,8 +62,107 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-13-3/b7034fe3-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13-3/b7034fe3-slide-01.jpg",
+      "sha256": "b7034fe3a31b080be23065961550ffad2edab5704b628be9a4d621e6d232d1ff",
+      "uploadedAt": "2026-09-29T13:26:45.443Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-13-3/4592bc2b-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13-3/4592bc2b-slide-02.jpg",
+      "sha256": "4592bc2b248a0760194bf8102162074ffa26d86d46c91557d25b1281f5ec21d4",
+      "uploadedAt": "2026-09-29T13:26:45.443Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-13-3/ffa03c5b-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13-3/ffa03c5b-slide-03.jpg",
+      "sha256": "ffa03c5bc1697f38595a0e071ec53e0cb28ebf4b774c40fcde8b4c75bb3d4e27",
+      "uploadedAt": "2026-09-29T13:26:45.443Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-13-3/102f0215-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13-3/102f0215-slide-04.jpg",
+      "sha256": "102f021561ada18b0b3a4a2f2e3ed7d4b8834fdacf16f2efa297533a57441785",
+      "uploadedAt": "2026-09-29T13:26:45.443Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-13-3/be3e2cf0-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13-3/be3e2cf0-slide-05.jpg",
+      "sha256": "be3e2cf05408bfcce3393116ae6f30b722da0cf7153fa422f10046d7043c423d",
+      "uploadedAt": "2026-09-29T13:26:45.443Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-13-3/22df62c7-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13-3/22df62c7-slide-06.jpg",
+      "sha256": "22df62c70fb79e3ea4a89768839ff3aaa956709fca9ec7a3f3269a639310cfe2",
+      "uploadedAt": "2026-09-29T13:26:45.443Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-13-3/4e23135d-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13-3/4e23135d-slide-07.jpg",
+      "sha256": "4e23135d1a8fced13b72f97d1e670372e8bbed4cc27d3f6a97f4a7a40a6f43a1",
+      "uploadedAt": "2026-09-29T13:26:45.443Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-13T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "Check your buttons: https://ka-performancefl.com/services/accessibility/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-13-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-13-3/b7034fe3-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-13-3/4592bc2b-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-13-3/ffa03c5b-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-13-3/102f0215-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-13-3/be3e2cf0-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-13-3/22df62c7-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-13-3/4e23135d-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance drawing sheet with ka-performancefl.com at the top: Buttons that get clicked. Five rules, each one checked on our own site with real numbers. A real capture of K&A's amber Start a project button drawn at 3 to 1 with dimension lines, 148.7 px wide and 47 px tall, and notes: 5.29:1 label contrast, Tab stop 5 with a visible outline. Notes list the five rules: the label says what happens, one main button per screen, at least 44 by 44 px, label contrast 4.5:1 or more, you can reach it by keyboard.",
+            "Rule 1 of 5: The label says what happens. Name the action; a visitor should know what a tap does before they tap it. A drawn example compares vague labels, crossed out: Submit, Click here, Learn more, with specific ones: Book a table, Get a free quote, See this week's menu. Below, a real capture of K&A's Start a project button: it says what you are starting.",
+            "Rule 2 of 5: One main button per screen. Give the action you want most the strongest look and make the rest quieter. Left, a drawn phone with three equally loud amber buttons, Call now, Get a quote, Book online, marked Three loud buttons: which one first? Right, a real capture of K&A's home page on a phone with one filled Start a project button and one outlined What we do button, marked One main button.",
+            "Rule 3 of 5: Big enough to tap. Aim for at least 44 by 44 pixels, the target size in WCAG 2.5.5. A hatched 44 by 44 px target drawn beside a real capture of K&A's Start a project button, 148.7 by 47 px, at 3 to 1. Note: WCAG 2.5.8 sets a 24 px minimum; 44 px is the comfortable target from WCAG 2.5.5. A table measured on K&A's home page on a phone, Sept 28, 2026: Start a project 148.7 by 47 px, What we do 127.4 by 47 px, Menu button 44 by 44 px, Chat with Kai 56 by 56 px, all passing.",
+            "Rule 4 of 5: It passes contrast. The label needs at least 4.5:1 against the button color, WCAG 1.4.3; compute it, don't eyeball it. A drawn example of two amber Book now buttons: white label 3.19:1 fails, ink label 5.29:1 passes, drawn at 3 to 1 for a 14 px label. The calculation is shown from relative luminance. Below, K&A's real Start a project button: ink #221C15 on amber #D97706, 5.29:1, measured on the live site Sept 28, 2026.",
+            "Rule 5 of 5: You can reach it by keyboard. Press Tab; a clear outline should land on the button, and Enter should press it. Two real captures of K&A's home page buttons on a phone: before, and after Tab is pressed 5 times, when Start a project shows a 2 px rust focus outline with a 3 px gap, 6.73:1 against the page. The full Tab key test is on our YouTube: @KAPerformancefl.",
+            "Want your buttons checked? We audit your real pages with real numbers: contrast, the full keyboard path, labels and more, then we fix what fails, or your developer does. A ticked recap of the five rules. ka-performancefl.com, web design and accessibility checks from Gainesville. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-13T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "A button only works if people click it. Here are five rules for buttons, each checked on our own site with the real numbers.\n\n1. The label says what happens. \"Book a table\" beats \"Submit\". A visitor should know what a tap does before they tap it.\n2. One main button per screen. Give the action you want most the strongest look and make the rest quieter. On a phone, our home page's first screen shows one filled button and one outline.\n3. Big enough to tap. Aim for at least 44 by 44 pixels (WCAG 2.5.5; 2.5.8 sets a 24 pixel minimum). Our Start a project button measures 148.7 by 47 on a phone.\n4. It passes contrast. The label needs at least 4.5:1 against the button color (WCAG 1.4.3). White on amber is 3.19:1 and fails. Ink on amber, our label, is 5.29:1. Compute it rather than eyeball it.\n5. You can reach it by keyboard. Press Tab: on our home page a rust focus outline lands on Start a project after 5 presses, at 6.73:1 against the page.\n\nFull walkthrough on our YouTube channel: https://www.youtube.com/@KAPerformancefl\n\nWant your buttons checked? We audit real pages with real numbers and fix what fails. Call Alex at 904-210-1071 or message K&A Performance.\n\nMeasured on ka-performancefl.com on Sept 28, 2026. The vague and specific buttons in the document are drawn examples.\n\n#WebDesign #WebAccessibility #SmallBusiness",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "Buttons that get clicked: 5 rules, measured",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.954Z",
+      "id": "384252593",
+      "uuid": "-4249517837522221492",
+      "scheduledAt": "2026-09-29T13:33:06.443Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null

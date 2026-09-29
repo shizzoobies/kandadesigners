@@ -3,7 +3,7 @@
   "date": "2026-10-01",
   "time": "13:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "offer",
   "title": "2 of 3 spots left: free social media pilot",
   "platforms": {
@@ -109,8 +109,203 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-01-4/be1ccffb-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/be1ccffb-slide-01.jpg",
+      "sha256": "be1ccffb516ea15b87cdc44cd62ba118fd749c8c0b68260a5e0ea6b4d410bbf0",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-01-4/ab5947f9-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/ab5947f9-slide-02.jpg",
+      "sha256": "ab5947f93c907e87980fe2e8936db91d3b053f4fea04bc1d01634d308025ff09",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-01-4/f6e80526-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/f6e80526-slide-03.jpg",
+      "sha256": "f6e805267936c0b2b1b0c26c31133b3328a25995852809e9af32caf55d55dde9",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-01-4/47595e5f-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/47595e5f-slide-04.jpg",
+      "sha256": "47595e5f70435f0458ef7d29fcc87d4ea5ac87053cfa85c7411c2f9d95873786",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-01-4/868661aa-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/868661aa-slide-05.jpg",
+      "sha256": "868661aaae99f88057a220d7fbd4ed6cbf92f1bfb3a6552f85b8e249cdc9e871",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-01-4/3c6cefca-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/3c6cefca-slide-06.jpg",
+      "sha256": "3c6cefcab5df3151c9149fa337d49ba89beebf16e0492cdf026e06d3a5997419",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-01-4/a8609640-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/a8609640-slideshow.mp4",
+      "sha256": "a8609640db60bf6e9e63758537f89bd2c02d4564130d421ef594d825a21e7872",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-01-4/dac6b83e-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-01-4/dac6b83e-slideshow-cover.jpg",
+      "sha256": "dac6b83ecbb1fd94f9240574c6b338f4d3a4452f5f086de118dce3ce735a2455",
+      "uploadedAt": "2026-09-29T13:25:39.236Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-01T13:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-01-4/a8609640-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 6 carousel slides in order: K&A Performance slide on a cream background: 2 of 3 spots left / A ticket labeled Included, 2 of 3 spots left / A ticket labeled Your part, 2 of 3 spots left / A ticket labeled After 3 months / A ticket labeled The fine print / A dark teal ticket labeled How to claim, 2 of 3 spots left"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-01T13:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "2 of 3 spots left: free social media management for 3 months, for Gainesville and Alachua County businesses.\nSee our work: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-01-4\n\nOne of our 3 pilot spots has filled. Two are still open. To claim one, call Alex at 904-210-1071 or message us here.\n\nWhat you get, free for 3 months:\n- 3 posts a week on Facebook and Instagram (2 reels or carousels, plus 1 tip or carousel)\n- A monthly content plan you approve once, before anything is made\n- A short monthly results report: reach, engagement, and clicks to your site\n- Captions, music and scheduling, handled\n\nWhat we ask:\n- Approve each month's plan within 2 business days\n- Add us as a manager in Meta so we can post, and send real photos or footage when we ask\n- Let us share your results as a case study, and a short review if you are happy\n- An honest check-in at the end of month 3\n\nAfter 3 months: $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.\n\nWhat it is not: no paid ads or ad spend, no promised follower or sales numbers, and you keep replying to your own comments and messages.\n\nAlex picks the best fits from everyone who calls or messages. No contract. No card.\n\nThe music is AI generated.\n\n#GainesvilleFL #AlachuaCounty #SmallBusiness #SocialMediaManagement #GainesvilleBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-01-4/dac6b83e-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:45.843Z",
+      "id": "384249735",
+      "uuid": "-7201018623251886645",
+      "scheduledAt": "2026-09-29T13:29:44.471Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-01T13:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AlachuaCounty #SmallBusiness #SocialMediaManagement #GainesvilleBusiness #SocialMediaMarketing",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-01-4/be1ccffb-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/ab5947f9-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/f6e80526-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/47595e5f-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/868661aa-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/3c6cefca-slide-06.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a cream background: 2 of 3 spots left. Free social media management for 3 months. Three reserved-seat tickets numbered 1, 2 and 3: spot 1 is grayed out and stamped filled, spots 2 and 3 are marked open. For businesses in Gainesville and Alachua County. Facebook and Instagram, planned, made and posted for you. Swipe for what you get.",
+            "A ticket labeled Included, 2 of 3 spots left. What you get, free for 3 months: 3 posts a week on Facebook and Instagram, 2 reels or carousels plus 1 tip or carousel. A monthly content plan you approve once, before anything is made. A short monthly results report: reach, engagement, and clicks to your site. Captions, music and scheduling, all handled for you. The ticket stub reads admit one business, Gainesville and Alachua County, with spot 1 filled and spots 2 and 3 open.",
+            "A ticket labeled Your part, 2 of 3 spots left. What we ask in return: approve each month's plan within 2 business days. Add us as a manager in Meta so we can post. Send real photos or footage when we ask. Let us share your results as a case study, and a short review if you are happy. An honest check-in at the end of month 3. The stub shows spot 1 filled, spots 2 and 3 open.",
+            "A ticket labeled After 3 months. Then you decide. $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.",
+            "A ticket labeled The fine print. What it is not: no paid ads, ad spend is not included. No promised numbers, we do not promise followers or sales. Your inbox stays yours, you keep replying to comments and DMs.",
+            "A dark teal ticket labeled How to claim, 2 of 3 spots left. Claim one of the last 2 spots. Call Alex, 904-210-1071, or message K&A Performance on Facebook or Instagram. Alex picks the best fits. No contract. No card. The stub shows spot 1 filled, spots 2 and 3 open. K&A Performance logo and ka-performancefl.com at the top."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-01T13:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "2 of 3 spots left: free social media management for 3 months, for Gainesville and Alachua County businesses.\nSend us a DM or call Alex at 904-210-1071 to claim one. Link in bio to see our work.\n\nOne of our 3 pilot spots has filled. Two are still open.\n\nWhat you get, free for 3 months:\n- 3 posts a week on Facebook and Instagram (2 reels or carousels, plus 1 tip or carousel)\n- A monthly content plan you approve once, before anything is made\n- A short monthly results report: reach, engagement, and clicks to your site\n- Captions, music and scheduling, handled\n\nWhat we ask:\n- Approve each month's plan within 2 business days\n- Add us as a manager in Meta so we can post, and send real photos or footage when we ask\n- Let us share your results as a case study, and a short review if you are happy\n- An honest check-in at the end of month 3\n\nAfter 3 months: $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.\n\nWhat it is not: no paid ads or ad spend, no promised follower or sales numbers, and you keep replying to your own comments and DMs.\n\nAlex picks the best fits from everyone who calls or messages. No contract. No card.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:45.843Z",
+      "id": "384249763",
+      "uuid": "-6732647065037026062",
+      "scheduledAt": "2026-09-29T13:29:44.537Z"
+    },
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-01T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "See our work: https://ka-performancefl.com/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-01-4",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-01-4/be1ccffb-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/ab5947f9-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/f6e80526-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/47595e5f-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/868661aa-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-01-4/3c6cefca-slide-06.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a cream background: 2 of 3 spots left. Free social media management for 3 months. Three reserved-seat tickets numbered 1, 2 and 3: spot 1 is grayed out and stamped filled, spots 2 and 3 are marked open. For businesses in Gainesville and Alachua County. Facebook and Instagram, planned, made and posted for you. Swipe for what you get.",
+            "A ticket labeled Included, 2 of 3 spots left. What you get, free for 3 months: 3 posts a week on Facebook and Instagram, 2 reels or carousels plus 1 tip or carousel. A monthly content plan you approve once, before anything is made. A short monthly results report: reach, engagement, and clicks to your site. Captions, music and scheduling, all handled for you. The ticket stub reads admit one business, Gainesville and Alachua County, with spot 1 filled and spots 2 and 3 open.",
+            "A ticket labeled Your part, 2 of 3 spots left. What we ask in return: approve each month's plan within 2 business days. Add us as a manager in Meta so we can post. Send real photos or footage when we ask. Let us share your results as a case study, and a short review if you are happy. An honest check-in at the end of month 3. The stub shows spot 1 filled, spots 2 and 3 open.",
+            "A ticket labeled After 3 months. Then you decide. $600 a month, month to month. Pilot businesses keep $600 locked for as long as they stay. No auto-billing, no contract, cancel any time. You continue only if it is paying off.",
+            "A ticket labeled The fine print. What it is not: no paid ads, ad spend is not included. No promised numbers, we do not promise followers or sales. Your inbox stays yours, you keep replying to comments and DMs.",
+            "A dark teal ticket labeled How to claim, 2 of 3 spots left. Claim one of the last 2 spots. Call Alex, 904-210-1071, or message K&A Performance on Facebook or Instagram. Alex picks the best fits. No contract. No card. The stub shows spot 1 filled, spots 2 and 3 open. K&A Performance logo and ka-performancefl.com at the top."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-01T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "2 of 3 spots left in our free social media pilot for Gainesville and Alachua County businesses.\n\nOne spot has filled, so two more businesses can still have their Facebook and Instagram run for them, free for 3 months:\n\n- 3 posts a week (2 reels or carousels, plus 1 tip or carousel)\n- A monthly content plan you approve once, before anything is made\n- A short monthly results report: reach, engagement, and clicks to your site\n- Captions, music and scheduling, handled\n\nWhat we ask: approve each month's plan within 2 business days, add us as a manager in Meta, send real photos or footage when we ask, let us share the results as a case study (and a short review if you are happy), and give us an honest check-in at the end of month 3.\n\nAfter that, it is $600 a month, month to month, and pilot businesses keep that rate for as long as they stay. No auto-billing, no contract, cancel any time. No ad spend is included and we do not promise follower or sales numbers.\n\nTo claim one of the last 2 spots, call Alex at 904-210-1071 or message K&A Performance. Alex picks the best fits.\n\n#GainesvilleFL #SmallBusiness #SocialMediaManagement",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "2 of 3 spots left: free social media management for Gainesville businesses",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:45.843Z",
+      "id": "384249788",
+      "uuid": "5665633645077942027",
+      "scheduledAt": "2026-09-29T13:29:44.601Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

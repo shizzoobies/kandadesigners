@@ -3,7 +3,7 @@
   "date": "2026-10-16",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "behind-the-scenes",
   "title": "LinkedIn: How we build a YouTube video in three days or less",
   "platforms": {
@@ -68,8 +68,115 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-16-3/515f2249-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/515f2249-slide-01.jpg",
+      "sha256": "515f224912effd23c4d1848dc6d4a0331ef9b40fb6b9474091b66290dd35cae5",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-16-3/cdb4d8bf-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/cdb4d8bf-slide-02.jpg",
+      "sha256": "cdb4d8bfcca53b93ec804172c4f3eb07c95e79d97eac750bde3186ea9cac9eca",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-16-3/8fd48707-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/8fd48707-slide-03.jpg",
+      "sha256": "8fd48707d9d4232b05b5ce439abaefff33e859d87d9f94bb701c9d72120e9627",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-16-3/bf845971-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/bf845971-slide-04.jpg",
+      "sha256": "bf8459712272206de5f848d5aaab5f4e6a3e01d7e61074a2f74abcde817348b5",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-16-3/fadb9c4b-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/fadb9c4b-slide-05.jpg",
+      "sha256": "fadb9c4bd88862eff9f64f5a8fe077018952f71a1f3e90cc32586a3a62b3e075",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-16-3/0e52f68c-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/0e52f68c-slide-06.jpg",
+      "sha256": "0e52f68c35c78a9b9895584a58f7e1824c1b700f90254c398e19d101bb82e351",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-16-3/90b535e4-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/90b535e4-slide-07.jpg",
+      "sha256": "90b535e496716510192923ca7d0191047899263a9c419b96dbaa8cc2df2e18fa",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    },
+    "media/slide-08.jpg": {
+      "key": "2026-10-16-3/370e2534-slide-08.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16-3/370e2534-slide-08.jpg",
+      "sha256": "370e25344fd325791d16098cbcf3e0ebe6ba67a0379db39c9c7c9f3245f59524",
+      "uploadedAt": "2026-09-29T13:28:19.583Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-16T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "See our work: https://ka-performancefl.com/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-16-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-16-3/515f2249-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-16-3/cdb4d8bf-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-16-3/8fd48707-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-16-3/bf845971-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-16-3/fadb9c4b-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-16-3/0e52f68c-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-16-3/90b535e4-slide-07.jpg",
+            "https://media.ka-performancefl.com/2026-10-16-3/370e2534-slide-08.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide styled as a film slate. Fields: Prod., Test your website with one key; Runs, 5:43; Take, 1. Headline: How we build a YouTube video in three days or less. Behind the scenes of our first long video, from the plan to the approval. Below, the video thumbnail, Press Tab. What happens?, captioned The finished video, On YouTube: @KAPerformancefl, and a four-part strip: Before day 1, plan, brief, script. Day 1, captures, voice, music. Day 2, the edit. Day 3, render, approve, schedule.",
+            "Slate fields: Day, Before day 1; Scene, The plan; File, SPEC.md. Headline: It starts with a plan Alex approves. The topic, the page it links to, the playlist and a three-day schedule, written down before anything is made. Below, lines 163 to 175 of our real plan file for L1, Test your website with one key: the link, the thumbnail and the schedule table. Mon 9/28, brief to Alex. Tue 9/29, demo page, captures, voice, music. Wed 9/30, the shared composition, then the L1 cut. Thu 10/1, render, Post Desk approval by noon, schedule. Stamped Approved.",
+            "Slate fields: Day, Before day 1; Scene, Brief and script; File, brief.md. Headline: Then a brief, and a script written for the ear. What the viewer gets, the hook and the shape of the video. Alex approves the brief before day 1. Below, the opening lines of the real L1 brief, including Approved: yes, and of its narration script, beat 1, Hook, and beat 3, What focus is.",
+            "Slate fields: Day, Day 1 of 3; Scene, The voice; File, audio/README.md. Headline: The voice is AI narrated. One file per beat, and every take is checked word for word against the script. We say so on every video. Below, the real narration table: 13 beats from Hook to End screen, each with its duration, its number of takes and the take kept.",
+            "Slate fields: Day, Day 1 of 3; Scene, Screen captures; File, C1-skip-link.png. Headline: Real captures of our own site. Every good example is ka-performancefl.com. Every bad one is a plain test page we built for the video. Below, a capture of our home page with the Skip to content link showing after one press of Tab, and a smaller capture of the test page, which says on screen that it was built for the video.",
+            "Slate fields: Day, Day 2 of 3; Scene, The edit; File, contact-b.png. Headline: Style frames first, then the cut. Ten stills from the edit on one sheet, checked before the full render. Our logo and web address sit on every frame. Below, the real L1 style-frame contact sheet, titled Stone and evergreen, with ten frames from the video.",
+            "Slate fields: Day, Day 3 of 3; Scene, Approval; Where, Our Post Desk. Headline: Alex approves the finished video. He watches it, answers the open questions and taps Approve. Only then is it scheduled. Below, our Post Desk page for the L1 video: its thumbnail, two questions with Alex's answers, and the status Approved, Sep 28, 2:08 PM. Stamped Approved.",
+            "Slate fields: Status, That's a wrap; Watch, YouTube; Take, Final. Headline: Watch the finished video. Test your website with one key: a one-minute keyboard check for your own site. The video thumbnail beside youtube.com/@KAPerformancefl, A new walkthrough every week. The voice in our videos is AI narrated. Alex approves every step. Want help with your own website? Call Alex 904-210-1071. ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-16T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "How we build a YouTube video in three days or less, with Alex approving every step.\n\nOur first long walkthrough, \"Test your website with one key\", is on our YouTube channel. Here is how it was made, shown with our real files:\n\n1. Before day 1: a plan and a brief. The topic, the page it links to, the playlist and a three-day schedule are written down, and Alex approves them before anything is made.\n2. Day 1: screen captures, voice and music. Every good example is our own site; every bad one is a plain test page we built for the video. The voice is AI narrated, one file per beat, and every take is checked word for word against the script.\n3. Day 2: the edit. Style frames first, then the cut, with our logo and web address on every frame.\n4. Day 3: render and approval. Alex watches the finished video on our Post Desk, answers the open questions and approves it. Only then is it scheduled.\n\nNo client data appears in the video, and its description says the voice is AI narrated.\n\nFull walkthrough on our YouTube channel: https://www.youtube.com/@KAPerformancefl\n\n#SmallBusiness #VideoProduction #GainesvilleFL",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "How we build a YouTube video in three days or less",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:48.562Z",
+      "id": "384255548",
+      "uuid": "-5506987670393434727",
+      "scheduledAt": "2026-09-29T13:37:20.748Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null

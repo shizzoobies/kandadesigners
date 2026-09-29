@@ -3,7 +3,7 @@
   "date": "2026-10-16",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "behind-the-scenes",
   "title": "How we build a YouTube video in three days or less",
   "platforms": {
@@ -54,8 +54,157 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-16/8f9ec04c-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-16/8f9ec04c-reel-vertical.mp4",
+      "sha256": "8f9ec04ce2655b6fe4a3194518e78b12dada56c6a6d948907367c3e99555eb5c",
+      "uploadedAt": "2026-09-29T13:27:57.404Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-16/a753fa6f-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-16/a753fa6f-thumbnail.jpg",
+      "sha256": "a753fa6fb3a0fe3b41b2a2b5cf49a7dc3703d6b5894aa92524028b9d65edd701",
+      "uploadedAt": "2026-09-29T13:27:57.404Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-16T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-16/8f9ec04c-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a film slate, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: How we build a YouTube video in three days or less, over the thumbnail of our first long video, then Alex approves every step. Before day 1: a plan and a brief, over our real plan and brief files, stamped Approved. Day 1: the voice is AI narrated, one file per beat, each take checked against the script, over the real script and narration table. Real captures of our own site: our home page with the skip link, and a test page built for the video. Day 2: style frames, then the cut, over the real style-frame contact sheet. Day 3: Alex approves it, on our Post Desk showing the video approved, stamped Approved. Ends on Watch the finished video, youtube.com/@KAPerformancefl, a new walkthrough every week. The voice is AI narrated. Alex approves every step. Want help with your own website? Call Alex 904-210-1071, ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-16T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "How we build a YouTube video in three days or less. Alex approves every step.\nSee our work: https://ka-performancefl.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-16\n\nBehind the scenes of our first long YouTube video, \"Test your website with one key\":\n\nBefore day 1: a plan and a brief. The topic, the page it links to and a three-day schedule are written down, and Alex approves them before anything is made.\nDay 1: captures, voice and music. The screen captures are our own site, and every bad example is a plain test page we built for the video. The voice is AI narrated, one file per beat, and every take is checked against the script.\nDay 2: the edit. Style frames first, then the cut, with our logo and web address on every frame.\nDay 3: render, then Alex approves it on our Post Desk. Only then is it scheduled.\n\nFull walkthrough on our YouTube channel: https://www.youtube.com/@KAPerformancefl\n\nWant help with your own website? Call Alex at 904-210-1071 or message us here.\n\nThe voice in the video is AI narrated. The music in this reel is AI generated.\n\n#GainesvilleFL #SmallBusiness #BehindTheScenes",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-16/a753fa6f-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:48.174Z",
+      "id": "384255417",
+      "uuid": "3874604339859311925",
+      "scheduledAt": "2026-09-29T13:37:20.326Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-16T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #BehindTheScenes #GainesvilleBusiness #WebDesign #YouTubeCreator",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-16/8f9ec04c-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a film slate, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: How we build a YouTube video in three days or less, over the thumbnail of our first long video, then Alex approves every step. Before day 1: a plan and a brief, over our real plan and brief files, stamped Approved. Day 1: the voice is AI narrated, one file per beat, each take checked against the script, over the real script and narration table. Real captures of our own site: our home page with the skip link, and a test page built for the video. Day 2: style frames, then the cut, over the real style-frame contact sheet. Day 3: Alex approves it, on our Post Desk showing the video approved, stamped Approved. Ends on Watch the finished video, youtube.com/@KAPerformancefl, a new walkthrough every week. The voice is AI narrated. Alex approves every step. Want help with your own website? Call Alex 904-210-1071, ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-16T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "How we build a YouTube video in three days or less. Alex approves every step.\n\nBehind the scenes of our first long YouTube video, \"Test your website with one key\":\n\nBefore day 1: a plan and a brief. The topic, the page it links to and a three-day schedule are written down, and Alex approves them before anything is made.\nDay 1: captures, voice and music. The screen captures are our own site, and every bad example is a plain test page we built for the video. The voice is AI narrated, one file per beat, and every take is checked against the script.\nDay 2: the edit. Style frames first, then the cut, with our logo and web address on every frame.\nDay 3: render, then Alex approves it on our Post Desk. Only then is it scheduled.\n\nFull walkthrough on our YouTube: @KAPerformancefl\n\nWant help with your own website? Send us a DM or call Alex at 904-210-1071. Link in bio.\n\nThe voice in the video is AI narrated. The music in this reel is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-16/a753fa6f-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:48.174Z",
+      "id": "384255446",
+      "uuid": "542794865933764587",
+      "scheduledAt": "2026-09-29T13:37:20.415Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-16T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-16/8f9ec04c-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a film slate, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: How we build a YouTube video in three days or less, over the thumbnail of our first long video, then Alex approves every step. Before day 1: a plan and a brief, over our real plan and brief files, stamped Approved. Day 1: the voice is AI narrated, one file per beat, each take checked against the script, over the real script and narration table. Real captures of our own site: our home page with the skip link, and a test page built for the video. Day 2: style frames, then the cut, over the real style-frame contact sheet. Day 3: Alex approves it, on our Post Desk showing the video approved, stamped Approved. Ends on Watch the finished video, youtube.com/@KAPerformancefl, a new walkthrough every week. The voice is AI narrated. Alex approves every step. Want help with your own website? Call Alex 904-210-1071, ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-16T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "How we build a YouTube video in three days or less, with Alex approving every step.\nhttps://ka-performancefl.com/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-16\n\nThis is how our first long video on this channel, \"Test Your Website With One Key: The Tab Key Check\", was made. It starts with a plan and a brief Alex approves, then real screen captures of our own site, an AI narrated voice checked against the script, style frames and the edit. Alex approves the finished video on our Post Desk before anything is scheduled.\n\nThe voice in our long videos is AI narrated. The music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "How we build a YouTube tutorial in three days or less",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "behind the scenes",
+              "how we make YouTube videos",
+              "small business video",
+              "video production workflow",
+              "Gainesville web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:48.174Z",
+      "id": "384255461",
+      "uuid": "2891228539790377484",
+      "scheduledAt": "2026-09-29T13:37:20.519Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

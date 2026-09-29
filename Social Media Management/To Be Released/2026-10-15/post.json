@@ -3,7 +3,7 @@
   "date": "2026-10-15",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "What not to paste into an AI tool",
   "platforms": {
@@ -61,8 +61,159 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-15/fe2e1a7f-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-15/fe2e1a7f-reel-vertical.mp4",
+      "sha256": "fe2e1a7fb8466ef14b3f707c53531931a32b84ac12c146e674e534919840a260",
+      "uploadedAt": "2026-09-29T13:27:29.803Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-15/b13be65c-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-15/b13be65c-thumbnail.jpg",
+      "sha256": "b13be65cb37dd43520a20c1d8c773f8ff56855756d078ce3264e250bf1e71f32",
+      "uploadedAt": "2026-09-29T13:27:29.803Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-15T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-15/fe2e1a7f-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Before you paste an email into AI, take these 4 things out. A sample email from a fictional customer, Pat, to a house cleaning service, with four parts marked: 1, a card number shown only as dots; 2, a door code; 3, I just had knee surgery; 4, Keep this between us: we're selling the house next month. One at a time each part is covered by a black bar labeled card number removed, door code removed, health detail removed and private detail removed, with the headings Card numbers, No reply needs them; Passwords and door codes, Anything that opens a door or an account; Health details, Keep the request, drop the reason (Please skip the upstairs this time stays in); Anything told in confidence, If they asked you to keep it quiet, keep it out. Then: The reply still works. A real AI draft, quoted word for word: We'd be happy to do a deep clean this Thursday afternoon. We'll skip the upstairs this time, and We'll charge the card on file once we're done. Still read every draft before you send it. Then: Check your AI tool's data settings, a generic settings screen labeled Example, yours will look different, with Save chat history and Use my chats to improve the service. Ends on Want help putting AI to work in your business? The 90-Day AI Launch, ka-performancefl.com/ai-launch, Call Alex 904-210-1071. General guidance, not legal advice."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-15T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Before you paste a customer email into AI, take these 4 things out.\nPut AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-15\n\n1. Card numbers. No reply needs them.\n2. Passwords and door codes. Anything that opens a door or an account.\n3. Health details. Keep the request, drop the reason: \"Please skip the upstairs\" stays in, the surgery comes out.\n4. Anything told in confidence. If they asked you to keep it quiet, keep it out.\n\nThen check your AI tool's data settings, so you know how your chats are stored and used. Settings differ from tool to tool, so look at the one you use, and at your plan's terms if you use it for work.\n\nWe tried it on a sample email: all four taken out, then pasted into an AI model. The draft still covered the day, the skipped upstairs, and the card on file. It's quoted word for word in the video. Read every draft before you send it.\n\nThis is general guidance, not legal advice. The cleaning business, Sam, and Pat are a fictional example.\n\nFull walkthrough on our YouTube channel: https://www.youtube.com/@KAPerformancefl\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-15\n\nThe music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-15/b13be65c-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.632Z",
+      "id": "384254388",
+      "uuid": "390016886067252590",
+      "scheduledAt": "2026-09-29T13:35:56.125Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-15T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AI #SmallBusiness #AITips #DataPrivacy #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-15/fe2e1a7f-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Before you paste an email into AI, take these 4 things out. A sample email from a fictional customer, Pat, to a house cleaning service, with four parts marked: 1, a card number shown only as dots; 2, a door code; 3, I just had knee surgery; 4, Keep this between us: we're selling the house next month. One at a time each part is covered by a black bar labeled card number removed, door code removed, health detail removed and private detail removed, with the headings Card numbers, No reply needs them; Passwords and door codes, Anything that opens a door or an account; Health details, Keep the request, drop the reason (Please skip the upstairs this time stays in); Anything told in confidence, If they asked you to keep it quiet, keep it out. Then: The reply still works. A real AI draft, quoted word for word: We'd be happy to do a deep clean this Thursday afternoon. We'll skip the upstairs this time, and We'll charge the card on file once we're done. Still read every draft before you send it. Then: Check your AI tool's data settings, a generic settings screen labeled Example, yours will look different, with Save chat history and Use my chats to improve the service. Ends on Want help putting AI to work in your business? The 90-Day AI Launch, ka-performancefl.com/ai-launch, Call Alex 904-210-1071. General guidance, not legal advice."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-15T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Before you paste a customer email into AI, take these 4 things out.\n\n1. Card numbers. No reply needs them.\n2. Passwords and door codes. Anything that opens a door or an account.\n3. Health details. Keep the request, drop the reason: \"Please skip the upstairs\" stays in, the surgery comes out.\n4. Anything told in confidence. If they asked you to keep it quiet, keep it out.\n\nThen check your AI tool's data settings, so you know how your chats are stored and used. Settings differ from tool to tool, so look at the one you use, and at your plan's terms if you use it for work.\n\nWe tried it on a sample email: all four taken out, then pasted into an AI model. The draft still covered the day, the skipped upstairs, and the card on file. It's quoted word for word in the video. Read every draft before you send it. Save this for the next email you paste.\n\nThis is general guidance, not legal advice. The cleaning business, Sam, and Pat are a fictional example.\n\nFull walkthrough on our YouTube: @KAPerformancefl\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-15/b13be65c-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.632Z",
+      "id": "384254405",
+      "uuid": "7227923462751013829",
+      "scheduledAt": "2026-09-29T13:35:56.212Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-15T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-15/fe2e1a7f-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Before you paste an email into AI, take these 4 things out. A sample email from a fictional customer, Pat, to a house cleaning service, with four parts marked: 1, a card number shown only as dots; 2, a door code; 3, I just had knee surgery; 4, Keep this between us: we're selling the house next month. One at a time each part is covered by a black bar labeled card number removed, door code removed, health detail removed and private detail removed, with the headings Card numbers, No reply needs them; Passwords and door codes, Anything that opens a door or an account; Health details, Keep the request, drop the reason (Please skip the upstairs this time stays in); Anything told in confidence, If they asked you to keep it quiet, keep it out. Then: The reply still works. A real AI draft, quoted word for word: We'd be happy to do a deep clean this Thursday afternoon. We'll skip the upstairs this time, and We'll charge the card on file once we're done. Still read every draft before you send it. Then: Check your AI tool's data settings, a generic settings screen labeled Example, yours will look different, with Save chat history and Use my chats to improve the service. Ends on Want help putting AI to work in your business? The 90-Day AI Launch, ka-performancefl.com/ai-launch, Call Alex 904-210-1071. General guidance, not legal advice."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-15T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Before you paste a customer email into AI, take these 4 things out.\nhttps://ka-performancefl.com/ai-launch/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-15\n\nTake out card numbers, passwords and door codes, health details, and anything a customer told you in confidence. We took all four out of a sample email, and the real AI draft, quoted word for word on screen, still covered what the customer needed. Then check your AI tool's data settings; this is general guidance, not legal advice, and the business and customer are fictional.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "What to take out of an email before you paste it into AI",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "AI privacy",
+              "AI for small business",
+              "customer emails",
+              "small business tips",
+              "practical AI",
+              "data privacy",
+              "Gainesville small business"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:47.632Z",
+      "id": "384254426",
+      "uuid": "3052788645683679144",
+      "scheduledAt": "2026-09-29T13:35:56.305Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

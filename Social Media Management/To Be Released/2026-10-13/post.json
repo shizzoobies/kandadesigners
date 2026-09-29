@@ -3,7 +3,7 @@
   "date": "2026-10-13",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Three fonts, max",
   "platforms": {
@@ -60,8 +60,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-13/06930d03-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-13/06930d03-reel-vertical.mp4",
+      "sha256": "06930d032912e388eedc2444f8ae875df2e94a31e6075400ea0c9a1a5c58acc5",
+      "uploadedAt": "2026-09-29T13:26:27.397Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-13/b3b02f14-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-13/b3b02f14-thumbnail.jpg",
+      "sha256": "b3b02f146bd56c63d4e41cf85e441b177cb93423937c4a3f821a0a05664162b9",
+      "uploadedAt": "2026-09-29T13:26:27.397Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-13T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-13/06930d03-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Three fonts, max. One for headings, one for body text, maybe one for labels. A drawn dog grooming page, labeled Drawn example, not a real business, is set in seven fonts, each line tagged with its font: Courier New, Impact, Brush Script MT, Times New Roman, Georgia, Comic Sans MS, Papyrus, with a counter reading Fonts on this page: 7. Seven fonts, nothing leads. Then each font gets one job: headings in Schibsted Grotesk, body text in Atkinson Hyperlegible Next, labels in Lenia Mono. Size and weight do the rest, and the counter drops to 3. Then a real capture of K&A's web design page with its three fonts called out: labels Lenia Mono, headings Schibsted Grotesk, body text Atkinson Hyperlegible Next, and the line Your logo is artwork, it doesn't count. Ends on Want a site that speaks with one voice? ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-13T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Three fonts, max. One for headings, one for body text, maybe one for labels.\nSee how we design sites: https://ka-performancefl.com/services/web-design/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-13\n\nSet a page in seven fonts and every line competes for attention. Nothing leads, so nothing gets read first.\n\nThe fix:\n1. Pick one font for headings.\n2. Pick one for body text, the one that has to stay easy to read at small sizes.\n3. Maybe one for labels, like kickers, hours or tags.\n4. For everything else, change the size or the weight, not the font.\n\nOur own site runs on three: Schibsted Grotesk for headings, Atkinson Hyperlegible Next for body text and Lenia Mono for labels. Your logo is artwork, so it doesn't count.\n\nWant a site that speaks with one voice? Call Alex at 904-210-1071 or message us here.\n\nThe dog grooming page is a drawn example, not a real business. The music is AI generated.\n\n#GainesvilleFL #WebDesign #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-13/b3b02f14-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.567Z",
+      "id": "384252450",
+      "uuid": "-7544679033058344241",
+      "scheduledAt": "2026-09-29T13:33:06.012Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-13T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #WebDesign #SmallBusiness #Typography #WebsiteTips #GainesvilleBusiness",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-13/06930d03-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Three fonts, max. One for headings, one for body text, maybe one for labels. A drawn dog grooming page, labeled Drawn example, not a real business, is set in seven fonts, each line tagged with its font: Courier New, Impact, Brush Script MT, Times New Roman, Georgia, Comic Sans MS, Papyrus, with a counter reading Fonts on this page: 7. Seven fonts, nothing leads. Then each font gets one job: headings in Schibsted Grotesk, body text in Atkinson Hyperlegible Next, labels in Lenia Mono. Size and weight do the rest, and the counter drops to 3. Then a real capture of K&A's web design page with its three fonts called out: labels Lenia Mono, headings Schibsted Grotesk, body text Atkinson Hyperlegible Next, and the line Your logo is artwork, it doesn't count. Ends on Want a site that speaks with one voice? ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-13T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Three fonts, max. One for headings, one for body text, maybe one for labels.\n\nSet a page in seven fonts and every line competes for attention. Nothing leads, so nothing gets read first.\n\nThe fix:\n1. Pick one font for headings.\n2. Pick one for body text, the one that has to stay easy to read at small sizes.\n3. Maybe one for labels, like kickers, hours or tags.\n4. For everything else, change the size or the weight, not the font.\n\nOur own site runs on three: Schibsted Grotesk for headings, Atkinson Hyperlegible Next for body text and Lenia Mono for labels. Your logo is artwork, so it doesn't count.\n\nWant a site that speaks with one voice? Send us a DM or call Alex at 904-210-1071. Link in bio.\n\nThe dog grooming page is a drawn example, not a real business. The music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-13/b3b02f14-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.567Z",
+      "id": "384252482",
+      "uuid": "2458105565833282461",
+      "scheduledAt": "2026-09-29T13:33:06.101Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-13T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-13/06930d03-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Three fonts, max. One for headings, one for body text, maybe one for labels. A drawn dog grooming page, labeled Drawn example, not a real business, is set in seven fonts, each line tagged with its font: Courier New, Impact, Brush Script MT, Times New Roman, Georgia, Comic Sans MS, Papyrus, with a counter reading Fonts on this page: 7. Seven fonts, nothing leads. Then each font gets one job: headings in Schibsted Grotesk, body text in Atkinson Hyperlegible Next, labels in Lenia Mono. Size and weight do the rest, and the counter drops to 3. Then a real capture of K&A's web design page with its three fonts called out: labels Lenia Mono, headings Schibsted Grotesk, body text Atkinson Hyperlegible Next, and the line Your logo is artwork, it doesn't count. Ends on Want a site that speaks with one voice? ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-13T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Three fonts, max: one for headings, one for body text, maybe one for labels.\nhttps://ka-performancefl.com/services/web-design/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-13\n\nSet a page in seven fonts and every line competes, so nothing leads. Give each font one job, then use size and weight for everything else. Our own site uses three: Schibsted Grotesk for headings, Atkinson Hyperlegible Next for body text and Lenia Mono for labels.\n\nThe dog grooming page is a drawn example, not a real business.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "How many fonts should your website use? Three, max",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "website fonts",
+              "web typography",
+              "font pairing",
+              "small business website",
+              "website design tips",
+              "Gainesville web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.567Z",
+      "id": "384252509",
+      "uuid": "3299735534985233112",
+      "scheduledAt": "2026-09-29T13:33:06.194Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

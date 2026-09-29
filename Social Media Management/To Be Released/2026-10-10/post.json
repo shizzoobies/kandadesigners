@@ -3,7 +3,7 @@
   "date": "2026-10-10",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Photos that work on a small business website",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-10/064b45d3-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/064b45d3-slide-01.jpg",
+      "sha256": "064b45d3edc4bbcaaee8fed9872a1ceb8d13f4f3bb28c7587b27bff20d1b6a1c",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-10/0d9e6f00-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/0d9e6f00-slide-02.jpg",
+      "sha256": "0d9e6f006311c4fa146c3b1156b24d976badcdd42288d96ee9a277e232ca8a3c",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-10/ac050c9e-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/ac050c9e-slide-03.jpg",
+      "sha256": "ac050c9eff3a587643f9368d362aec33bcafd153a5ed922e647f536fe46c7ef8",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-10/a79e770b-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/a79e770b-slide-04.jpg",
+      "sha256": "a79e770b2544b76b97764726fcc8b27d4a0aa2d54344640b830b5ae9d5fec380",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-10/dc5d1f6b-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/dc5d1f6b-slide-05.jpg",
+      "sha256": "dc5d1f6bf0681fb6dcca4a64aa39871c61ae7110da524df60fd99df4a975235b",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-10/14e2f9a8-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/14e2f9a8-slide-06.jpg",
+      "sha256": "14e2f9a89c110c5addc022d3e57477f0f1fcb395416677d2246ba6845dc1b58a",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-10/2b1490ea-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/2b1490ea-slide-07.jpg",
+      "sha256": "2b1490ea9f231db1f070873d1bba04978f9755ec21b8c2f6bf76174323c93312",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-10/90167a53-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-10/90167a53-slideshow.mp4",
+      "sha256": "90167a539890018f1886dbfa1081a2ddba491dedc8d2d5ced7a51e188d8d1280",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-10/c92ca954-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-10/c92ca954-slideshow-cover.jpg",
+      "sha256": "c92ca954fa0bfafcedffc6d4f5f19dd76ed529af4061332aa4e7bbc429f047b1",
+      "uploadedAt": "2026-09-29T13:25:51.116Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-10T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-10/90167a53-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide on cream: Stock photos make you look like everyone else / Rule 1 of 5: Use your own photos, not stock / Rule 2 of 5: Show the product, the place or the people / Rule 3 of 5: Size it for the space it fills / Rule 4 of 5: Write alt text that says what's in it / Rule 5 of 5: Keep words out of the picture / Want a website that looks like your business? The 5 rules: your own photos, not stock; the product, the place or the people; sized for the space it fills; alt text that says what's in it; words on the page, not in the picture"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-10T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Stock photos make you look like everyone else. 5 photo rules for a small business website.\nSee how we design websites: https://ka-performancefl.com/services/web-design/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10\n\n1. Use your own photos, not stock. A photo of your real shop, your work or your team shows visitors who they'd be dealing with. Put one on the first screen.\n2. Show the product, the place or the people. A photo that shows none of the three is only decoration.\n3. Size it for the space it fills. Resize to about twice the width it shows at, then save it as WebP or a compressed JPG. A photo straight off one of our phones is 4,032 px wide and 3.2 MB. Our team portraits on our site are 400 px and 34 KB.\n4. Write alt text that says what's in it. One plain sentence: what's in the photo, and why it's there.\n5. Keep words out of the picture. Put them on the page, next to or over the photo.\n\nThe portraits and the headline in the video are from our own site. Everything marked \"Drawn example\" is a drawing.\n\nWant a website that looks like your business? We design and build websites in Gainesville, and quotes are free. Call Alex at 904-210-1071 or message us here.\n\nThe music is AI generated.\n\n#GainesvilleFL #SmallBusiness #WebDesign",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-10/c92ca954-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:45.995Z",
+      "id": "384250801",
+      "uuid": "-3076896783329638227",
+      "scheduledAt": "2026-09-29T13:30:59.197Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-10T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #WebDesign #SmallBusinessWebsite #GainesvilleBusiness #WebsiteTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-10/064b45d3-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-10/0d9e6f00-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-10/ac050c9e-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-10/a79e770b-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-10/dc5d1f6b-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-10/14e2f9a8-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-10/2b1490ea-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on cream: Stock photos make you look like everyone else. 5 photo rules for a small business website. Below, a contact sheet of two film strips, all drawn examples. Top strip, crossed out in red grease pencil: a handshake, a smiling person in a headset, glass office towers; labeled Could be anyone. Bottom strip, circled: a storefront with a striped awning, a pie and a mug on a counter, three people in aprons; labeled Could only be you.",
+            "Rule 1 of 5: Use your own photos, not stock. Visitors have seen the handshake before. A photo of your real shop, your work or your team shows them who they'd be dealing with. Put one on the first screen. Two drawn web page sketches as prints: one with a handshake photo, crossed out, Could be anyone; one with a storefront photo, circled, Could only be you. A recent phone photo in good daylight is a fine place to start.",
+            "Rule 2 of 5: Show the product, the place or the people. What you sell, where you are, who does the work. A photo that shows none of the three is only decoration. A film strip with two drawn examples, circled: the product, a pie and a mug; the place, a storefront. Below, real photos from K&A's own site: Alex and Kristina outdoors. The people: on our own site, the people are Alex and Kristina. Real photos, not a stock team. ka-performancefl.com/training.",
+            "Rule 3 of 5: Size it for the space it fills. Resize to about twice the width it shows at, then save it as WebP or a compressed JPG. Smaller files load faster on a phone. K&A's real team portrait of Alex, marked 400 px by 400 px. Straight off a phone, one of ours: 4,032 by 3,024 px, 3.2 MB. Our team portrait, on our site: 400 by 400 px, 34 KB, shown 168 px wide on a phone. Rule of thumb: it shows at 168 px, so about 340 px would do. Ours is 400 px, a little room to spare, and still only 34 KB.",
+            "Rule 4 of 5: Write alt text that says what's in it. A screen reader reads it aloud to someone who can't see the photo, and search engines use it too. One plain sentence: what's in it, and why it's there. A drawn storefront photo with two alt texts. Crossed out: alt equals IMG_0412.jpg, and a screen reader says I M G underscore 0 4 1 2 dot J P G. Circled: alt equals Our shop's front door on a sunny morning, which says what a sighted visitor sees. Real, from our site: a team photo, alt Alex Anderson; a photo of our work, alt Project Makeover website designed by K & A Performance.",
+            "Rule 5 of 5: Keep words out of the picture. Words inside a photo shrink with it on a phone, and a screen reader only hears them if you repeat them in the alt text. Put your words on the page, next to or over the photo. A drawn storefront banner with GRAND OPENING SALE, 20% OFF EVERYTHING THIS WEEK ONLY baked into the picture, crossed out, and the same banner shrunk to phone size where the words can't be read. Circled, real from our site: K&A's home page on a phone, where the headline Built on years of experience, made to perform is live text, not a picture.",
+            "Want a website that looks like your business? The 5 rules: your own photos, not stock; the product, the place or the people; sized for the space it fills; alt text that says what's in it; words on the page, not in the picture. We design and build websites in Gainesville, Florida. Quotes are free. Call Alex 904-210-1071. ka-performancefl.com/services/web-design."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-10T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Stock photos make you look like everyone else. 5 photo rules for a small business website. Save this for your next photo day.\n\n1. Use your own photos, not stock. A photo of your real shop, your work or your team shows visitors who they'd be dealing with. Put one on the first screen.\n2. Show the product, the place or the people. A photo that shows none of the three is only decoration.\n3. Size it for the space it fills. Resize to about twice the width it shows at, then save it as WebP or a compressed JPG. A photo straight off one of our phones is 4,032 px wide and 3.2 MB. Our team portraits on our site are 400 px and 34 KB.\n4. Write alt text that says what's in it. One plain sentence: what's in the photo, and why it's there.\n5. Keep words out of the picture. Put them on the page, next to or over the photo.\n\nThe portraits and the headline are from our own site. Everything marked \"Drawn example\" is a drawing.\n\nWant a website that looks like your business? We design and build websites in Gainesville, and quotes are free. Send us a DM or call Alex at 904-210-1071. Link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:45.995Z",
+      "id": "384250880",
+      "uuid": "-5919704207649453128",
+      "scheduledAt": "2026-09-29T13:30:59.276Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

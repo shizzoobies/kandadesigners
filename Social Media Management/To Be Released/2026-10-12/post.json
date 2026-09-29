@@ -3,7 +3,7 @@
   "date": "2026-10-12",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "What Google shows before anyone clicks",
   "platforms": {
@@ -56,8 +56,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-12/8131eb2c-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-12/8131eb2c-reel-vertical.mp4",
+      "sha256": "8131eb2cd1c42a4a052059f9e87b74bd45dc5de2569410f526534063d99d7a55",
+      "uploadedAt": "2026-09-29T13:26:22.378Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-12/a507f8be-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12/a507f8be-thumbnail.jpg",
+      "sha256": "a507f8be073768d1adfa517ec393129a00a186e283542bc9e6e28da93840116b",
+      "uploadedAt": "2026-09-29T13:26:22.378Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-12T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-12/8131eb2c-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: What Google shows before anyone clicks. K&A's own search result for K&A Performance Gainesville, redrawn from Google's live data on Sept 28, 2026 and labeled that way: the address https://ka-performancefl.com, the title K & A Performance: Gainesville Web Design & AI Integration, and the description A Gainesville web design and AI integration studio building fast, accessible sites for businesses that refuse to blend in. Quotes are always free. Your title and description are your sign on the street. An amber ring moves line by line: 1, the address, whose site this is; 2, the title, what you do and where, and other businesses share our name, so Gainesville Web Design tells people which one is us; 3, the description, your pitch, and ours ends with Quotes are always free. Then the page's own code: the title tag, stamped Rewritten by Google, and the meta description, stamped Used word for word. Google moved our name to the front of the title and kept our description as written. Ends on: Search your own business name. Would you click? Try it in a private window. Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-12T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "What Google shows before anyone clicks: your address, your title and your description.\nLocal search, done properly: https://ka-performancefl.com/services/seo-ai-search/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-12\n\nHere's our own result for \"K&A Performance Gainesville\", line by line:\n\n1. The address. It tells people whose site this is.\n2. The title. Your sign on the street: what you do, and where. Other businesses share our name, so \"Gainesville Web Design\" tells people which one is us.\n3. The description. Your pitch. Ours ends with a reason to call: \"Quotes are always free.\"\n\nBoth come from two lines in your page's code: the title tag and the meta description. Google moved our name to the front of our title and kept our description word for word. Google can rewrite either one, so write them clearly enough to stand on their own.\n\nTry it: search your business name in a private window. Would you click?\n\nLocal search is part of every site we build. Call Alex at 904-210-1071 or message us here.\n\nThe result on screen is our real one, redrawn from Google's live result data on Sept 28, 2026. The music is AI generated.\n\n#GainesvilleFL #SmallBusiness #LocalSEO",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-12/a507f8be-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.337Z",
+      "id": "384251451",
+      "uuid": "-2834438342223378695",
+      "scheduledAt": "2026-09-29T13:31:40.533Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-12T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #LocalSEO #GoogleSearch #GainesvilleBusiness #SmallBusinessWebsite",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-12/8131eb2c-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: What Google shows before anyone clicks. K&A's own search result for K&A Performance Gainesville, redrawn from Google's live data on Sept 28, 2026 and labeled that way: the address https://ka-performancefl.com, the title K & A Performance: Gainesville Web Design & AI Integration, and the description A Gainesville web design and AI integration studio building fast, accessible sites for businesses that refuse to blend in. Quotes are always free. Your title and description are your sign on the street. An amber ring moves line by line: 1, the address, whose site this is; 2, the title, what you do and where, and other businesses share our name, so Gainesville Web Design tells people which one is us; 3, the description, your pitch, and ours ends with Quotes are always free. Then the page's own code: the title tag, stamped Rewritten by Google, and the meta description, stamped Used word for word. Google moved our name to the front of the title and kept our description as written. Ends on: Search your own business name. Would you click? Try it in a private window. Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-12T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "What Google shows before anyone clicks: your address, your title and your description.\n\nHere's our own result for \"K&A Performance Gainesville\", line by line:\n\n1. The address. It tells people whose site this is.\n2. The title. Your sign on the street: what you do, and where. Other businesses share our name, so \"Gainesville Web Design\" tells people which one is us.\n3. The description. Your pitch. Ours ends with a reason to call: \"Quotes are always free.\"\n\nBoth come from two lines in your page's code: the title tag and the meta description. Google moved our name to the front of our title and kept our description word for word. Google can rewrite either one, so write them clearly enough to stand on their own.\n\nTry it: search your business name in a private window. Would you click?\n\nLocal search is part of every site we build. Send us a DM or call Alex at 904-210-1071. Link in bio.\n\nThe result on screen is our real one, redrawn from Google's live result data on Sept 28, 2026. The music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-12/a507f8be-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.337Z",
+      "id": "384251472",
+      "uuid": "5712348963474787711",
+      "scheduledAt": "2026-09-29T13:31:40.603Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-12T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-12/8131eb2c-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: What Google shows before anyone clicks. K&A's own search result for K&A Performance Gainesville, redrawn from Google's live data on Sept 28, 2026 and labeled that way: the address https://ka-performancefl.com, the title K & A Performance: Gainesville Web Design & AI Integration, and the description A Gainesville web design and AI integration studio building fast, accessible sites for businesses that refuse to blend in. Quotes are always free. Your title and description are your sign on the street. An amber ring moves line by line: 1, the address, whose site this is; 2, the title, what you do and where, and other businesses share our name, so Gainesville Web Design tells people which one is us; 3, the description, your pitch, and ours ends with Quotes are always free. Then the page's own code: the title tag, stamped Rewritten by Google, and the meta description, stamped Used word for word. Google moved our name to the front of the title and kept our description as written. Ends on: Search your own business name. Would you click? Try it in a private window. Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-12T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "What Google shows before anyone clicks: your address, your title and your description.\nhttps://ka-performancefl.com/services/seo-ai-search/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-12\n\nWe walk through our own result for \"K&A Performance Gainesville\" line by line. The address says whose site it is, the title says what you do and where, and the description is your pitch. Both the title and the description come from your page's code, and Google can rewrite them: it moved our name to the front of our title and kept our description word for word. Search your own business name in a private window and ask: would you click?\n\nThe result shown is our real one, redrawn from Google's live result data on Sept 28, 2026.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "What Google shows before anyone clicks on your website",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "page title",
+              "meta description",
+              "Google search results",
+              "local SEO",
+              "small business website",
+              "Gainesville web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:28:46.337Z",
+      "id": "384251495",
+      "uuid": "-5613895712491877361",
+      "scheduledAt": "2026-09-29T13:31:40.670Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,
