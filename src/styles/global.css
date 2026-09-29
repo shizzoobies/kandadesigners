@@ -286,6 +286,21 @@ body {
   .consent-label a:hover {
     color: var(--color-accent-hot);
   }
+
+  /* WCAG 2.5.8 Target Size: a standalone text link or button whose line is
+     shorter than 24px gets an invisible hit area at least 24px tall, centered
+     on the text. Nothing moves and the focus ring still hugs the text. */
+  .hit-24 {
+    position: relative;
+  }
+  .hit-24::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    height: max(100%, 24px);
+    transform: translateY(-50%);
+  }
 }
 
 /* Straight-answers accordion. Started life scoped to the services page; it
