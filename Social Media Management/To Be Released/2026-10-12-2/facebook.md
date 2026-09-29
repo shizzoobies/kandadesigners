@@ -5,7 +5,7 @@ Start with one master record: your business name, phone number and address, writ
 
 1. Your website. Put your name, phone and city in the footer, so every page carries them.
 2. Your Google Business Profile. No storefront? Google says to remove your address and set a service area.
-3. Your Facebook Page. Ours was missing the phone and the city when we checked on Sept 28. Two fields in the Page's contact info fix it.
+3. Your Facebook Page. Add your phone and city to the Page's contact info, so signed-out visitors see them too. Ours were missing when we first checked on Sept 28; we added both, and they show now.
 4. Apple Maps. Claim your place card in Apple Business Connect and copy the same details.
 5. Bing Places. It can import your Google profile, so the two start out matching. Recheck it after any change.
 
@@ -13,6 +13,6 @@ Why it matters: Google says businesses with complete and accurate info are more 
 
 Local search is part of every site we build. Call Alex at 904-210-1071 or message us here.
 
-The website, Google and Facebook screens are real captures of our own listings from Sept 28, 2026. The Apple Maps and Bing cards are drawn examples of a fictional business. The music is AI generated.
+The website, Google and Facebook screens are real captures of our own listings from Sept 28 and 29, 2026. The Apple Maps and Bing cards are drawn examples of a fictional business. The music is AI generated.
 
 #GainesvilleFL #SmallBusiness #LocalSEO

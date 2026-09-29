@@ -3,7 +3,7 @@
   "date": "2026-10-12",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "5 places your address and phone must match",
   "platforms": {
@@ -21,7 +21,7 @@
       "file": "media/slide-01.jpg",
       "role": "image",
       "origin": "kap-reel",
-      "alt": "K&A Performance slide styled as a shipping label on kraft paper: 5 places your address and phone must match. One record, copied exactly, everywhere customers find you. We checked our own on Sept 28. A master label reads: Name, K & A Performance. Phone, 904-210-1071. Address, Gainesville, FL, service area, no street address. Website, ka-performancefl.com. Ship to: every listing. Below, five labels: 1 Website, 2 Google, 3 Facebook, 4 Apple Maps, 5 Bing.",
+      "alt": "K&A Performance slide styled as a shipping label on kraft paper: 5 places your address and phone must match. One record, copied exactly, everywhere customers find you. We checked our own. A master label reads: Name, K & A Performance. Phone, 904-210-1071. Address, Gainesville, FL, service area, no street address. Website, ka-performancefl.com. Ship to: every listing. Below, five labels: 1 Website, 2 Google, 3 Facebook, 4 Apple Maps, 5 Bing.",
       "platforms": [
         "instagram"
       ]
@@ -48,7 +48,7 @@
       "file": "media/slide-04.jpg",
       "role": "image",
       "origin": "kap-reel",
-      "alt": "Place 3 of 5: Your Facebook Page. Found on our own Page: no phone, no city. The fix is two fields in the Page's contact info. A real capture of K&A's Facebook Page, signed out, Sept 28, 2026: the name K & A Performance and the Intro card with the category Web Designer and ka-performancefl.com. Packing slip: name Match, phone not shown, stamped Missing, address not shown, stamped Missing.",
+      "alt": "Place 3 of 5: Your Facebook Page. Add your phone and city to the Page's contact info, so signed-out visitors see them too. A real capture of K&A's Facebook Page, signed out, Sept 29, 2026: the Intro card with the category Web Designer, Gainesville, FL, (904) 210-1071, alex@ka-performancefl.com and ka-performancefl.com, beside the Page name K & A Performance. Packing slip: name Match, phone (904) 210-1071 Match, address Gainesville, FL, service area, Match.",
       "platforms": [
         "instagram"
       ]
@@ -96,7 +96,7 @@
       "platforms": [
         "facebook"
       ],
-      "alt": "K&A Performance slide styled as a shipping label on kraft paper: 5 places your address and phone must match. One record, copied exactly, everywhere customers find you. We checked our own on Sept 28. A master label reads: Name, K & A Performance. Phone, 904-210-1071. Address, Gainesville, FL, service area, no street address. Website, ka-performancefl.com. Ship to: every listing. Below, five labels: 1 Website, 2 Google, 3 Facebook, 4 Apple Maps, 5 Bing."
+      "alt": "K&A Performance slide styled as a shipping label on kraft paper: 5 places your address and phone must match. One record, copied exactly, everywhere customers find you. We checked our own. A master label reads: Name, K & A Performance. Phone, 904-210-1071. Address, Gainesville, FL, service area, no street address. Website, ka-performancefl.com. Ship to: every listing. Below, five labels: 1 Website, 2 Google, 3 Facebook, 4 Apple Maps, 5 Bing."
     }
   ],
   "ai": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-12-2/040afc90-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/040afc90-slide-01.jpg",
+      "sha256": "040afc90fc95c09c9eca1be2ed5d29c8128ea1c14b584e1ba206659c27d7d127",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-12-2/80002d2d-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/80002d2d-slide-02.jpg",
+      "sha256": "80002d2d127494ad70e36f16005a7b04bb21d388cb1f6276e76430a8ca3a269f",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-12-2/2117841f-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/2117841f-slide-03.jpg",
+      "sha256": "2117841f0618f25c389aa2faf2276c8915e29fba61382c483813c4e42e3d47aa",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-12-2/3f703649-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/3f703649-slide-04.jpg",
+      "sha256": "3f70364921b08013944778dc812798b4ba02e8ac7d215475748c5ae9a98f2b66",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-12-2/18c7813a-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/18c7813a-slide-05.jpg",
+      "sha256": "18c7813a2f7111a623b8291386264db70d25bd130cb4ba231c5be66b8a6a3b3d",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-12-2/debd947b-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/debd947b-slide-06.jpg",
+      "sha256": "debd947bffe852886a4c062d6e79d025cc2b2e55b1dc48f899958d39bea61631",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-12-2/6f5a273a-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/6f5a273a-slide-07.jpg",
+      "sha256": "6f5a273a5aafe2cc9a5253c97ae23f251fbd544ef51821266dc0a758ef99a272",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-12-2/480d13a1-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/480d13a1-slideshow.mp4",
+      "sha256": "480d13a112ff1ab8c6c62a155660d74479f32b02929304f680eefda2407dac53",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-12-2/9453ef5e-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-12-2/9453ef5e-slideshow-cover.jpg",
+      "sha256": "9453ef5ee56af5d89cd205650da81895456ba215eea1e8dc065d77486e5b246b",
+      "uploadedAt": "2026-09-29T13:57:10.729Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-12T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-12-2/480d13a1-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide styled as a shipping label on kraft paper: 5 places your address and phone must match / Place 1 of 5: Your website / Place 2 of 5: Your Google Business Profile / Place 3 of 5: Your Facebook Page / Place 4 of 5: Apple Maps / Place 5 of 5: Bing Places / Why it matters on the map: a mismatch costs you in two places"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-12T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "5 places your address and phone must match. We checked our own.\nLocal search, done properly: https://ka-performancefl.com/services/seo-ai-search/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-12-2\n\nStart with one master record: your business name, phone number and address, written exactly one way. Then copy it into every place customers look you up.\n\n1. Your website. Put your name, phone and city in the footer, so every page carries them.\n2. Your Google Business Profile. No storefront? Google says to remove your address and set a service area.\n3. Your Facebook Page. Add your phone and city to the Page's contact info, so signed-out visitors see them too. Ours were missing when we first checked on Sept 28; we added both, and they show now.\n4. Apple Maps. Claim your place card in Apple Business Connect and copy the same details.\n5. Bing Places. It can import your Google profile, so the two start out matching. Recheck it after any change.\n\nWhy it matters: Google says businesses with complete and accurate info are more likely to show up in local search results. And an old number on one listing is a call that never reaches you.\n\nLocal search is part of every site we build. Call Alex at 904-210-1071 or message us here.\n\nThe website, Google and Facebook screens are real captures of our own listings from Sept 28 and 29, 2026. The Apple Maps and Bing cards are drawn examples of a fictional business. The music is AI generated.\n\n#GainesvilleFL #SmallBusiness #LocalSEO",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-12-2/9453ef5e-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:57:34.827Z",
+      "id": "384270716",
+      "uuid": "-2288011837509188628",
+      "scheduledAt": "2026-09-29T13:58:28.776Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-12T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #LocalSEO #GoogleBusinessProfile #GainesvilleBusiness #LocalSearch",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-12-2/040afc90-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-12-2/80002d2d-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-12-2/2117841f-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-12-2/3f703649-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-12-2/18c7813a-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-12-2/debd947b-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-12-2/6f5a273a-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide styled as a shipping label on kraft paper: 5 places your address and phone must match. One record, copied exactly, everywhere customers find you. We checked our own. A master label reads: Name, K & A Performance. Phone, 904-210-1071. Address, Gainesville, FL, service area, no street address. Website, ka-performancefl.com. Ship to: every listing. Below, five labels: 1 Website, 2 Google, 3 Facebook, 4 Apple Maps, 5 Bing.",
+            "Place 1 of 5: Your website. Put your name, phone and city in the footer, so every page carries them. A real capture of K&A's own site footer from Sept 28, 2026: the K&A logo, Built in Gainesville, FL, the service cities, Call 904-210-1071 and the copyright line for K & A Performance. A packing slip checked against the master label: name, phone and address, each stamped Match.",
+            "Place 2 of 5: Your Google Business Profile. No storefront? Google says to remove your address and set a service area. A real capture of K&A's own Google profile, signed out, Sept 28, 2026: K & A Performance, 5.0 stars from 8 reviews, Website designer, ka-performancefl.com, (904) 210-1071. Packing slip: name Match, phone (904) 210-1071 Match, address hidden with a service area set, Match.",
+            "Place 3 of 5: Your Facebook Page. Add your phone and city to the Page's contact info, so signed-out visitors see them too. A real capture of K&A's Facebook Page, signed out, Sept 29, 2026: the Intro card with the category Web Designer, Gainesville, FL, (904) 210-1071, alex@ka-performancefl.com and ka-performancefl.com, beside the Page name K & A Performance. Packing slip: name Match, phone (904) 210-1071 Match, address Gainesville, FL, service area, Match.",
+            "Place 4 of 5: Apple Maps. Claim your place card in Apple Business Connect and copy the master label into it. A drawn example of a fictional business place card: Your Business Name, Bakery, Call, Website and Directions buttons, phone (352) 555-0142, your street address in Gainesville, FL, yourbusiness.com. Note: K&A has no Apple Maps card, because Apple's place cards show a street address and we don't publish ours. Check it against your master label: same name, same number every digit, same street, suite and ZIP.",
+            "Place 5 of 5: Bing Places. Bing Places can import your Google profile, so the two start out matching. Recheck it after any change. A drawn example of a fictional business listing with a small map: Your Business Name, bakery in Gainesville, FL, phone (352) 555-0142, your street address, yourbusiness.com. Note: we imported ours from our Google profile on Sept 22. Check it against your master label: same name, same number every digit, same street, suite and ZIP.",
+            "Why it matters on the map: a mismatch costs you in two places. On Google, from Google Business Profile Help: Businesses with complete and accurate info are more likely to show up in local search results. With customers: an old number on one listing is a call that never reaches you. This week: check all five. Fix the one that's different. Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-12T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "5 places your address and phone must match. We checked our own. Save this for your next listing check.\n\nStart with one master record: your business name, phone number and address, written exactly one way. Then copy it into every place customers look you up.\n\n1. Your website. Put your name, phone and city in the footer, so every page carries them.\n2. Your Google Business Profile. No storefront? Google says to remove your address and set a service area.\n3. Your Facebook Page. Add your phone and city to the Page's contact info, so signed-out visitors see them too. Ours were missing when we first checked on Sept 28; we added both, and they show now.\n4. Apple Maps. Claim your place card in Apple Business Connect and copy the same details.\n5. Bing Places. It can import your Google profile, so the two start out matching. Recheck it after any change.\n\nWhy it matters: Google says businesses with complete and accurate info are more likely to show up in local search results. And an old number on one listing is a call that never reaches you.\n\nLocal search is part of every site we build. Send us a DM or call Alex at 904-210-1071. Link in bio.\n\nThe website, Google and Facebook screens are real captures of our own listings from Sept 28 and 29, 2026. The Apple Maps and Bing cards are drawn examples of a fictional business.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-29T13:57:34.827Z",
+      "id": "384270744",
+      "uuid": "7746273341423961179",
+      "scheduledAt": "2026-09-29T13:58:28.868Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,
