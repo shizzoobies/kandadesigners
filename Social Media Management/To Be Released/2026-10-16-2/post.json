@@ -1,0 +1,122 @@
+{
+  "id": "2026-10-16-2",
+  "date": "2026-10-16",
+  "time": "16:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "behind-the-scenes",
+  "title": "How we build a YouTube video in three days or less (carousel)",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide styled as a film slate. Fields: Prod., Test your website with one key; Runs, 5:43; Take, 1. Headline: How we build a YouTube video in three days or less. Behind the scenes of our first long video, from the plan to the approval. Below, the video thumbnail, Press Tab. What happens?, captioned The finished video, On YouTube: @KAPerformancefl, and a four-part strip: Before day 1, plan, brief, script. Day 1, captures, voice, music. Day 2, the edit. Day 3, render, approve, schedule.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slate fields: Day, Before day 1; Scene, The plan; File, SPEC.md. Headline: It starts with a plan Alex approves. The topic, the page it links to, the playlist and a three-day schedule, written down before anything is made. Below, lines 163 to 175 of our real plan file for L1, Test your website with one key: the link, the thumbnail and the schedule table. Mon 9/28, brief to Alex. Tue 9/29, demo page, captures, voice, music. Wed 9/30, the shared composition, then the L1 cut. Thu 10/1, render, Post Desk approval by noon, schedule. Stamped Approved.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slate fields: Day, Before day 1; Scene, Brief and script; File, brief.md. Headline: Then a brief, and a script written for the ear. What the viewer gets, the hook and the shape of the video. Alex approves the brief before day 1. Below, the opening lines of the real L1 brief, including Approved: yes, and of its narration script, beat 1, Hook, and beat 3, What focus is.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slate fields: Day, Day 1 of 3; Scene, The voice; File, audio/README.md. Headline: The voice is AI narrated. One file per beat, and every take is checked word for word against the script. We say so on every video. Below, the real narration table: 13 beats from Hook to End screen, each with its duration, its number of takes and the take kept.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slate fields: Day, Day 1 of 3; Scene, Screen captures; File, C1-skip-link.png. Headline: Real captures of our own site. Every good example is ka-performancefl.com. Every bad one is a plain test page we built for the video. Below, a capture of our home page with the Skip to content link showing after one press of Tab, and a smaller capture of the test page, which says on screen that it was built for the video.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slate fields: Day, Day 2 of 3; Scene, The edit; File, contact-b.png. Headline: Style frames first, then the cut. Ten stills from the edit on one sheet, checked before the full render. Our logo and web address sit on every frame. Below, the real L1 style-frame contact sheet, titled Stone and evergreen, with ten frames from the video.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slate fields: Day, Day 3 of 3; Scene, Approval; Where, Our Post Desk. Headline: Alex approves the finished video. He watches it, answers the open questions and taps Approve. Only then is it scheduled. Below, our Post Desk page for the L1 video: its thumbnail, two questions with Alex's answers, and the status Approved, Sep 28, 2:08 PM. Stamped Approved.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-08.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Slate fields: Status, That's a wrap; Watch, YouTube; Take, Final. Headline: Watch the finished video. Test your website with one key: a one-minute keyboard check for your own site. The video thumbnail beside youtube.com/@KAPerformancefl, A new walkthrough every week. The voice in our videos is AI narrated. Alex approves every step. Want help with your own website? Call Alex 904-210-1071. ka-performancefl.com.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 8 carousel slides in order, each styled as a film slate with the K&A Performance logo and ka-performancefl.com: How we build a YouTube video in three days or less / It starts with a plan Alex approves, over our real plan file, stamped Approved / Then a brief, and a script written for the ear / The voice is AI narrated, over the real narration table / Real captures of our own site, with the test page built for the video / Style frames first, then the cut / Alex approves the finished video, on our Post Desk, stamped Approved / Watch the finished video: youtube.com/@KAPerformancefl. The voice in our videos is AI narrated. Alex approves every step. Call Alex 904-210-1071, ka-performancefl.com."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide styled as a film slate. Fields: Prod., Test your website with one key; Runs, 5:43; Take, 1. Headline: How we build a YouTube video in three days or less. Behind the scenes of our first long video, from the plan to the approval. Below, the video thumbnail, Press Tab. What happens?, captioned The finished video, On YouTube: @KAPerformancefl, and a four-part strip: Before day 1, plan, brief, script. Day 1, captures, voice, music. Day 2, the edit. Day 3, render, approve, schedule."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1016-c"
+}

@@ -1,0 +1,1 @@
+We ran this check on our own listings before posting it, and our Facebook Page was the one that didn't match: no phone, no city. A gap like that is easy to miss, and it's two fields to fix. Worth checking your own five this week.

@@ -1,0 +1,1 @@
+The step I would keep no matter what is the plan. When the topic, the link and the schedule are agreed first, the build days have a clear target, and I still watch the finished cut before anything is scheduled. The voice in our long videos is AI narrated, and the description says so.

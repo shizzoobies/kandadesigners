@@ -1,0 +1,70 @@
+{
+  "id": "2026-10-15",
+  "date": "2026-10-15",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "ai-launch",
+  "title": "What not to paste into an AI tool",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    },
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "What to take out of an email before you paste it into AI",
+      "tags": [
+        "AI privacy",
+        "AI for small business",
+        "customer emails",
+        "small business tips",
+        "practical AI",
+        "data privacy",
+        "Gainesville small business"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Practical AI for small business",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Before you paste an email into AI, take these 4 things out. A sample email from a fictional customer, Pat, to a house cleaning service, with four parts marked: 1, a card number shown only as dots; 2, a door code; 3, I just had knee surgery; 4, Keep this between us: we're selling the house next month. One at a time each part is covered by a black bar labeled card number removed, door code removed, health detail removed and private detail removed, with the headings Card numbers, No reply needs them; Passwords and door codes, Anything that opens a door or an account; Health details, Keep the request, drop the reason (Please skip the upstairs this time stays in); Anything told in confidence, If they asked you to keep it quiet, keep it out. Then: The reply still works. A real AI draft, quoted word for word: We'd be happy to do a deep clean this Thursday afternoon. We'll skip the upstairs this time, and We'll charge the card on file once we're done. Still read every draft before you send it. Then: Check your AI tool's data settings, a generic settings screen labeled Example, yours will look different, with Save chat history and Use my chats to improve the service. Ends on Want help putting AI to work in your business? The 90-Day AI Launch, ka-performancefl.com/ai-launch, Call Alex 904-210-1071. General guidance, not legal advice."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above: Before you paste an email into AI. Take these 4 things out. A sample email from a fictional customer with four parts highlighted and numbered: a card number shown as dots, a door code, a health detail and something told in confidence.",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ]
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1015-r"
+}

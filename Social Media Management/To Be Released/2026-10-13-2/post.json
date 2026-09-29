@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-13-2",
+  "date": "2026-10-13",
+  "time": "16:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Buttons that get clicked: 5 rules",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance drawing sheet with ka-performancefl.com at the top: Buttons that get clicked. Five rules, each one checked on our own site with real numbers. A real capture of K&A's amber Start a project button drawn at 3 to 1 with dimension lines, 148.7 px wide and 47 px tall, and notes: 5.29:1 label contrast, Tab stop 5 with a visible outline. Notes list the five rules: the label says what happens, one main button per screen, at least 44 by 44 px, label contrast 4.5:1 or more, you can reach it by keyboard.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 1 of 5: The label says what happens. Name the action; a visitor should know what a tap does before they tap it. A drawn example compares vague labels, crossed out: Submit, Click here, Learn more, with specific ones: Book a table, Get a free quote, See this week's menu. Below, a real capture of K&A's Start a project button: it says what you are starting.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 2 of 5: One main button per screen. Give the action you want most the strongest look and make the rest quieter. Left, a drawn phone with three equally loud amber buttons, Call now, Get a quote, Book online, marked Three loud buttons: which one first? Right, a real capture of K&A's home page on a phone with one filled Start a project button and one outlined What we do button, marked One main button.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 3 of 5: Big enough to tap. Aim for at least 44 by 44 pixels, the target size in WCAG 2.5.5. A hatched 44 by 44 px target drawn beside a real capture of K&A's Start a project button, 148.7 by 47 px, at 3 to 1. Note: WCAG 2.5.8 sets a 24 px minimum; 44 px is the comfortable target from WCAG 2.5.5. A table measured on K&A's home page on a phone, Sept 28, 2026: Start a project 148.7 by 47 px, What we do 127.4 by 47 px, Menu button 44 by 44 px, Chat with Kai 56 by 56 px, all passing.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 4 of 5: It passes contrast. The label needs at least 4.5:1 against the button color, WCAG 1.4.3; compute it, don't eyeball it. A drawn example of two amber Book now buttons: white label 3.19:1 fails, ink label 5.29:1 passes, drawn at 3 to 1 for a 14 px label. The calculation is shown from relative luminance. Below, K&A's real Start a project button: ink #221C15 on amber #D97706, 5.29:1, measured on the live site Sept 28, 2026.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 5 of 5: You can reach it by keyboard. Press Tab; a clear outline should land on the button, and Enter should press it. Two real captures of K&A's home page buttons on a phone: before, and after Tab is pressed 5 times, when Start a project shows a 2 px rust focus outline with a 3 px gap, 6.73:1 against the page. The full Tab key test is on our YouTube: @KAPerformancefl.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Want your buttons checked? We audit your real pages with real numbers: contrast, the full keyboard path, labels and more, then we fix what fails, or your developer does. A ticked recap of the five rules. ka-performancefl.com, web design and accessibility checks from Gainesville. Call Alex 904-210-1071.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance drawing sheet with ka-performancefl.com at the top: Buttons that get clicked / Rule 1 of 5: The label says what happens / Rule 2 of 5: One main button per screen / Rule 3 of 5: Big enough to tap / Rule 4 of 5: It passes contrast / Rule 5 of 5: You can reach it by keyboard / Want your buttons checked? We audit your real pages with real numbers: contrast, the full keyboard path, labels and more, then we fix what fails, or your developer does"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance drawing sheet with ka-performancefl.com at the top: Buttons that get clicked. Five rules, each one checked on our own site with real numbers. A real capture of K&A's amber Start a project button drawn at 3 to 1 with dimension lines, 148.7 px wide and 47 px tall, and notes: 5.29:1 label contrast, Tab stop 5 with a visible outline. Notes list the five rules: the label says what happens, one main button per screen, at least 44 by 44 px, label contrast 4.5:1 or more, you can reach it by keyboard."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1013-c"
+}

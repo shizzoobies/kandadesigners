@@ -1,0 +1,69 @@
+{
+  "id": "2026-10-13",
+  "date": "2026-10-13",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Three fonts, max",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    },
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "How many fonts should your website use? Three, max",
+      "tags": [
+        "website fonts",
+        "web typography",
+        "font pairing",
+        "small business website",
+        "website design tips",
+        "Gainesville web design"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Quick fixes for your website",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Three fonts, max. One for headings, one for body text, maybe one for labels. A drawn dog grooming page, labeled Drawn example, not a real business, is set in seven fonts, each line tagged with its font: Courier New, Impact, Brush Script MT, Times New Roman, Georgia, Comic Sans MS, Papyrus, with a counter reading Fonts on this page: 7. Seven fonts, nothing leads. Then each font gets one job: headings in Schibsted Grotesk, body text in Atkinson Hyperlegible Next, labels in Lenia Mono. Size and weight do the rest, and the counter drops to 3. Then a real capture of K&A's web design page with its three fonts called out: labels Lenia Mono, headings Schibsted Grotesk, body text Atkinson Hyperlegible Next, and the line Your logo is artwork, it doesn't count. Ends on Want a site that speaks with one voice? ka-performancefl.com, web design from Gainesville, call Alex 904-210-1071."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above huge type: Three fonts, max. One for headings. One for body text. Maybe one for labels. Below, a drawn dog grooming page labeled Drawn example, not a real business, set in seven fonts with each font named beside its line, and a counter: Fonts on this page, 7.",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ]
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1013-r"
+}

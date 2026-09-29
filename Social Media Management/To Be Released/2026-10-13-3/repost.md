@@ -1,0 +1,1 @@
+The one I check first is rule 4. An amber button with a white label can look fine, but it measures 3.19:1 and fails. Our own button uses dark text on the same amber and measures 5.29:1. Run it through a contrast checker instead of trusting your eyes; it is one of the things we measure in every site audit.

@@ -1,0 +1,1 @@
+One of the 3 spots in our free social media pilot has filled, so 2 are left. If you run a business in Gainesville or Alachua County and want 3 months of Facebook and Instagram handled, or you know someone who does, call me at 904-210-1071.

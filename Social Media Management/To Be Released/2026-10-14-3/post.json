@@ -1,0 +1,70 @@
+{
+  "id": "2026-10-14-3",
+  "date": "2026-10-14",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "training",
+  "title": "LinkedIn: One module, one objective",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "One module, one objective: how to split a long course"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on a green cutting mat: How to split a long course. One module, one objective. Three paper pieces cut apart along dashed lines with scissors, labeled Module 1, Module 2 and Module 3, each one objective. The long course, cut where one objective ends and the next begins. Four steps to split a long course into short modules that each teach one thing, shown on one of our own sample courses."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 1, start from the job: List what people must do after it. Not the chapter titles. A drawn example for a fictional field engineer course: the chapter list (Contract documents overview, History of the RFI, Document control, Submittals and RFIs, Change management) points to what they must do (Write an RFI the design team can act on, Check a submittal against the drawings, Log a change before the work starts). Topics describe the course. Actions describe the job, and each action can become a module."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 2, one objective per module: Write it as one sentence. If it needs an and, it is two modules. A drawn sentence, After this, you can write an RFI and check a submittal and log a change, cut at each and into three strips: Module 1, Write an RFI the design team can act on. Module 2, Check a submittal against the drawings. Module 3, Log a change before the work starts."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Here is one of ours: Our RFI sample course has one objective. It is on the first screen. A real screen, the cover of the K&A sample course The RFI that gets answered, taped to the mat. Its objective: Turn a drawing conflict into a request the design team can act on. About 8 minutes. 9 screens. One objective."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 3, every screen serves it: Three steps, all toward that one request. A real screen from the RFI sample course, Your assignment, with its three steps: Investigate, Make it answerable, Review before sending. Anything that does not serve the objective goes to a job aid or another module."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 4, they do it before it ends: The module ends with the objective done, not just explained. A real screen from the RFI sample course, Build the request, with the question, references, impact and date, and proposal fields filled and 2 fragments left on the desk. The learner builds the RFI from field notes and leaves the distractions on the desk."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Check every module: 1. Can you say its objective in one sentence? 2. Does every screen serve that objective? 3. Do learners do the thing before it ends? Then put the modules in the order the work happens. We build training one objective at a time. Try our sample courses, free on the site. ka-performancefl.com/training. Call Alex 904-210-1071."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

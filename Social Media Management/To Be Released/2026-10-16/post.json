@@ -1,0 +1,63 @@
+{
+  "id": "2026-10-16",
+  "date": "2026-10-16",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "behind-the-scenes",
+  "title": "How we build a YouTube video in three days or less",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    },
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "How we build a YouTube tutorial in three days or less",
+      "tags": [
+        "behind the scenes",
+        "how we make YouTube videos",
+        "small business video",
+        "video production workflow",
+        "Gainesville web design"
+      ],
+      "category": "HOWTO_STYLE",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel styled as a film slate, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: How we build a YouTube video in three days or less, over the thumbnail of our first long video, then Alex approves every step. Before day 1: a plan and a brief, over our real plan and brief files, stamped Approved. Day 1: the voice is AI narrated, one file per beat, each take checked against the script, over the real script and narration table. Real captures of our own site: our home page with the skip link, and a test page built for the video. Day 2: style frames, then the cut, over the real style-frame contact sheet. Day 3: Alex approves it, on our Post Desk showing the video approved, stamped Approved. Ends on Watch the finished video, youtube.com/@KAPerformancefl, a new walkthrough every week. The voice is AI narrated. Alex approves every step. Want help with your own website? Call Alex 904-210-1071, ka-performancefl.com."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a film slate: Prod., Test your website with one key; Runs, 5:43; Take, 1; and the headline How we build a YouTube video in three days or less. Below, the thumbnail of the finished video, Press Tab. What happens?, and the line Alex approves every step."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1016-r"
+}

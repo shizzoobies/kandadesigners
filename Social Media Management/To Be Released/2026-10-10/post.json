@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-10",
+  "date": "2026-10-10",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Photos that work on a small business website",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide on cream: Stock photos make you look like everyone else. 5 photo rules for a small business website. Below, a contact sheet of two film strips, all drawn examples. Top strip, crossed out in red grease pencil: a handshake, a smiling person in a headset, glass office towers; labeled Could be anyone. Bottom strip, circled: a storefront with a striped awning, a pie and a mug on a counter, three people in aprons; labeled Could only be you.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 1 of 5: Use your own photos, not stock. Visitors have seen the handshake before. A photo of your real shop, your work or your team shows them who they'd be dealing with. Put one on the first screen. Two drawn web page sketches as prints: one with a handshake photo, crossed out, Could be anyone; one with a storefront photo, circled, Could only be you. A recent phone photo in good daylight is a fine place to start.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 2 of 5: Show the product, the place or the people. What you sell, where you are, who does the work. A photo that shows none of the three is only decoration. A film strip with two drawn examples, circled: the product, a pie and a mug; the place, a storefront. Below, real photos from K&A's own site: Alex and Kristina outdoors. The people: on our own site, the people are Alex and Kristina. Real photos, not a stock team. ka-performancefl.com/training.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 3 of 5: Size it for the space it fills. Resize to about twice the width it shows at, then save it as WebP or a compressed JPG. Smaller files load faster on a phone. K&A's real team portrait of Alex, marked 400 px by 400 px. Straight off a phone, one of ours: 4,032 by 3,024 px, 3.2 MB. Our team portrait, on our site: 400 by 400 px, 34 KB, shown 168 px wide on a phone. Rule of thumb: it shows at 168 px, so about 340 px would do. Ours is 400 px, a little room to spare, and still only 34 KB.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 4 of 5: Write alt text that says what's in it. A screen reader reads it aloud to someone who can't see the photo, and search engines use it too. One plain sentence: what's in it, and why it's there. A drawn storefront photo with two alt texts. Crossed out: alt equals IMG_0412.jpg, and a screen reader says I M G underscore 0 4 1 2 dot J P G. Circled: alt equals Our shop's front door on a sunny morning, which says what a sighted visitor sees. Real, from our site: a team photo, alt Alex Anderson; a photo of our work, alt Project Makeover website designed by K & A Performance.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Rule 5 of 5: Keep words out of the picture. Words inside a photo shrink with it on a phone, and a screen reader only hears them if you repeat them in the alt text. Put your words on the page, next to or over the photo. A drawn storefront banner with GRAND OPENING SALE, 20% OFF EVERYTHING THIS WEEK ONLY baked into the picture, crossed out, and the same banner shrunk to phone size where the words can't be read. Circled, real from our site: K&A's home page on a phone, where the headline Built on years of experience, made to perform is live text, not a picture.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Want a website that looks like your business? The 5 rules: your own photos, not stock; the product, the place or the people; sized for the space it fills; alt text that says what's in it; words on the page, not in the picture. We design and build websites in Gainesville, Florida. Quotes are free. Call Alex 904-210-1071. ka-performancefl.com/services/web-design.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance slide on cream: Stock photos make you look like everyone else / Rule 1 of 5: Use your own photos, not stock / Rule 2 of 5: Show the product, the place or the people / Rule 3 of 5: Size it for the space it fills / Rule 4 of 5: Write alt text that says what's in it / Rule 5 of 5: Keep words out of the picture / Want a website that looks like your business? The 5 rules: your own photos, not stock; the product, the place or the people; sized for the space it fills; alt text that says what's in it; words on the page, not in the picture"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide on cream: Stock photos make you look like everyone else. 5 photo rules for a small business website. Below, a contact sheet of two film strips, all drawn examples. Top strip, crossed out in red grease pencil: a handshake, a smiling person in a headset, glass office towers; labeled Could be anyone. Bottom strip, circled: a storefront with a striped awning, a pie and a mug on a counter, three people in aprons; labeled Could only be you."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1010"
+}

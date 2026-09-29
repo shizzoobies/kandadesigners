@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-15-2",
+  "date": "2026-10-15",
+  "time": "18:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "ai-launch",
+  "title": "Keep a best replies file",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide: a manila file folder with a label tab that reads Best replies and three saved replies sticking out: Hours and holidays, Custom cake quote, and Saturday pickup (Hi [name], Happy to help! Your [order] will be ready for Saturday pickup, [date], anytime from 10 AM to 1 PM.). On the folder: Using AI for customer emails? Keep a “best replies” file. Save the AI-assisted replies you were proud to send. Reuse them as examples. Fictional example: a sample bakery.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 1 of 5, folder tab Save it: Save the replies you were proud to send. When an AI-assisted reply came out right after your edits, file the version you actually sent. Start with the questions you get every week. A sheet titled Best replies, Rosa's bakery, lists 1 Saturday pickup: times, payment, sign-off; 2 Custom cake quote: what to send so Rosa can quote it; 3 Hours and holidays: open days, closed days. Fictional example: a sample bakery.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 2 of 5, folder tab Clean it: Save the wording, not the customer. Before you file a reply, swap names, dates and order details for blanks. Keep your words. Leave out their private details. A saved reply titled Saturday pickup: Hi [name], Happy to help! Your [order] will be ready for Saturday pickup, [date], anytime from 10 AM to 1 PM. Payment is card or cash at pickup. Thanks so much, Rosa. The blanks are highlighted. Fictional example: a sample bakery.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 3 of 5, folder tab Reuse it: Next time, hand it to AI as an example. When the same question comes in, paste the saved reply with your usual prompt and the new email, plus one line that says what to copy. A card titled Add to your prompt, sample line: Here is a reply I sent before and liked. Match its tone, length and sign-off: [paste the saved reply]. Then paste the new customer email, as usual.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 4 of 5, folder tab Check it: A good old reply can carry an old price. Before you reuse a saved reply, check the name, dates, prices and policies against how things are today. A saved reply titled Cookie order, saved in spring: Hi [name], Happy to help! Cookies are $28 a dozen, struck out and replaced with Cookies are $30 a dozen. Note: The price changed. Fix the saved reply too. Checks: Name, Dates and Policies ticked, Prices marked with a cross. Fictional example: a sample bakery.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Step 5 of 5, folder tab Send it: Sometimes you don't need AI at all. For a routine question, the saved reply may already be enough. Fill in the blanks, read it once, and send. The Saturday pickup reply filled in: Hi Jordan, Happy to help! Your three dozen cookies will be ready for Saturday pickup, October 10, anytime from 10 AM to 1 PM. Payment is card or cash at pickup. Thanks so much, Rosa. Fictional example: a sample bakery.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "The Best replies folder closed again. The full walkthrough: Watch it on our YouTube. “Let AI draft it. Make it sound like you.” youtube.com/@KAPerformancefl. Below, on dark green: Want help putting AI to work in your business? The 90-Day AI Launch. A twelve-week build, one on one with Alex. ka-performancefl.com/ai-launch. Call Alex 904-210-1071.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance slide: a manila file folder with a label tab that reads Best replies and three saved replies sticking out: Hours and holidays, Custom cake quote, and Saturday pickup (Hi [name], Happy to help! Your [order] will be ready for Saturday pickup, [date], anytime from 10 AM to 1 PM.) / Step 1 of 5, folder tab Save it: Save the replies you were proud to send / Step 2 of 5, folder tab Clean it: Save the wording, not the customer / Step 3 of 5, folder tab Reuse it: Next time, hand it to AI as an example / Step 4 of 5, folder tab Check it: A good old reply can carry an old price / Step 5 of 5, folder tab Send it: Sometimes you don't need AI at all / The Best replies folder closed again"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide: a manila file folder with a label tab that reads Best replies and three saved replies sticking out: Hours and holidays, Custom cake quote, and Saturday pickup (Hi [name], Happy to help! Your [order] will be ready for Saturday pickup, [date], anytime from 10 AM to 1 PM.). On the folder: Using AI for customer emails? Keep a “best replies” file. Save the AI-assisted replies you were proud to send. Reuse them as examples. Fictional example: a sample bakery."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1015-c"
+}

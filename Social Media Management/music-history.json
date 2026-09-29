@@ -47,5 +47,12 @@
     "published": "2026-10-02",
     "post": "YouTube L1, Test your website with one key (To Be Released/2026-10-02-4), long-form 16:9, the bed under the narration",
     "_note": "ElevenLabs music_v2, candidate a (public/youtube/l1/audio/music/music-yt-l1-a.mp3): calm, warm, focused, soft vibraphone chords, warm analog pads, mellow electric bass, brushed shaker and rim click, about 84 bpm, 390s asked. Logged in D:/kap-reel/config/audio.json under set \"youtube-l1\". Dated for the planned 2026-10-02 11:00 AM publish; generator scripts/youtube/l1/music.ts."
+  },
+  {
+    "track": "music-yt-l2",
+    "file": "D:/kap-reel/public/youtube/l2/audio/music/music-yt-l2.mp3",
+    "published": "2026-10-07",
+    "post": "YouTube L2, Let AI draft it. Make it sound like you. (To Be Released/2026-10-07-4), long-form 16:9, the bed under the narration",
+    "_note": "ElevenLabs music_v2, candidate a (public/youtube/l2/audio/music/music-yt-l2-a.mp3): calm, warm, lightly conversational, warm fingerpicked nylon guitar, felt piano, soft upright bass, delicate brushed percussion, about 82 bpm, 510s asked. Logged in D:/kap-reel/config/audio.json under set \"youtube-l2\". Dated for the planned 2026-10-07 11:00 AM publish; generator scripts/youtube/l2/music.ts."
   }
 ]

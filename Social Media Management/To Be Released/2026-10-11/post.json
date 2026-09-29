@@ -1,0 +1,122 @@
+{
+  "id": "2026-10-11",
+  "date": "2026-10-11",
+  "time": "18:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "ai-launch",
+  "title": "Find your website's voice in ten minutes",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide styled as a cookbook page, A Sunday night recipe: Find your website's voice in ten minutes. One prompt turns three things you already have into a short voice guide. You check it. Makes: a one-page voice guide. Time: about 10 minutes. You need: 3 things you have, 1 prompt. Three ingredient cards: your best customer email, your About text, three words for how you sound. Save this for Sunday night.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Ingredients: You already have all three. 1 customer email you were proud to send: it already sounds like you on a good day. 1 About text, as it is now: it shows what to change. 3 words for how you want to sound: they point the guide in your direction. You already write to customers. Your best email often sounds more like you than your website does.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Method: Paste this into the AI tool you already use. The prompt: Write a short voice guide for my small business website, so every page sounds like us. Work only from the three things below. Don't invent facts about my business. 1. A customer email I was proud of: paste it. 2. Our About text right now: paste it. 3. Three words for how we want to sound: word, word, word. Give me: one sentence, how we sound; 5 words or phrases to use; 5 to avoid; 3 rules for writing sentences; our About opening, rewritten in this voice, 2 sentences. Keep it under 200 words. Screenshot this. Fill in the brackets.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "We tried it: A real run, on a made-up garden nursery. Fictional business, made up for this example. 1. The email June was proud of: Hi Marcus, good news: the Meyer lemon you asked about came in this morning. I set the healthiest one aside with your name on it, and it'll wait at the front counter through Saturday. If the leaves yellow a little once it's home, don't panic. Send me a photo and we'll sort it out together. June. 2. Their About text right now: Fern & Finch Nursery is a family owned garden center offering a wide selection of plants, trees and gardening supplies. We are committed to providing quality products and excellent customer service. 3. Three words: warm, plainspoken, patient.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "What came back, 1 of 2. Written by an AI model, word for word. Fictional business. Fern & Finch Voice Guide. How we sound: We sound like June at the front counter: warm and plain, and happy to take the time your question needs. Use: Good news; Set aside with your name on it; Don't panic; Send us a photo; We'll sort it out together. Avoid, struck through: Committed to; Quality products; Excellent customer service; A wide selection of; Offering. The use list is built from June's email. The avoid list is lifted from the old About text.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "What came back, 2 of 2. Written by an AI model, word for word. Fictional business. Sentence rules: 1. Write to one person. Use you and we, the way June writes to Marcus. 2. Show care with specifics (which plant, where it waits, until when) instead of just saying you care. 3. Name the likely worry before the reader has to ask. Then calmly say what happens next. About opening, before: the old About text. After: Fern & Finch Nursery is a family-owned garden center with plants, trees, and the supplies to look after them. If something doesn't look right once it's home, send us a photo and we'll sort it out together.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "The taste test: Then check it yourself. 1. Read it out loud. Does it sound like you on a good day? Change any word you'd never say. 2. Check every fact. Nothing new should appear. Here, every fact came from the email or the old About text. 3. Keep only promises you'll keep. The rewrite puts June's photo offer on the website. The AI flagged that too: The photo offer comes from June's email. Only keep it on the site if the whole team will honor it. Then keep the guide next to you and paste it in whenever you ask AI to write for your business.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-08.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "How we help businesses put AI to work: The 90-Day AI Launch. One part of your business running on AI, built with you over twelve weeks, one on one. You end with a workflow running in your business that was not there before, a handoff doc and recorded walkthroughs of everything built, and the ability to run all of it without us. ka-performancefl.com/ai-launch. Call Alex 904-210-1071. The first call is twenty minutes and free. K&A Performance builds websites, local search, training and AI integration for Gainesville businesses.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 8 carousel slides in order: K&A Performance slide styled as a cookbook page, A Sunday night recipe: Find your website's voice in ten minutes / Ingredients: You already have all three / Method: Paste this into the AI tool you already use / We tried it: A real run, on a made-up garden nursery / What came back, 1 of 2 / What came back, 2 of 2 / The taste test: Then check it yourself / How we help businesses put AI to work: The 90-Day AI Launch"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide styled as a cookbook page, A Sunday night recipe: Find your website's voice in ten minutes. One prompt turns three things you already have into a short voice guide. You check it. Makes: a one-page voice guide. Time: about 10 minutes. You need: 3 things you have, 1 prompt. Three ingredient cards: your best customer email, your About text, three words for how you sound. Save this for Sunday night."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1011"
+}
