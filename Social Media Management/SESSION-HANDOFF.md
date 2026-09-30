@@ -47,8 +47,9 @@ The weekday shape:
      - brief approval
      - recapture the profile around Oct 10 to 12
    - Check with Alex whether Astra is still carrying it before you touch it.
-2. **Plan Sat Oct 17 to Fri Oct 23.** Write `plans/2026-10-19.md` in the shape of `plans/2026-10-12.md`.
-   It needs Alex's approval, then a build brief, then parallel builders.
+2. **Plan Sat Oct 17 to Fri Oct 23: DRAFTED 2026-09-30** as `plans/2026-10-19.md` (`Approved: no`,
+   five questions for Alex at the end). Next: Alex marks each slot, then a build brief, then
+   parallel builders. L4 also needs its own brief, `plans/youtube-2026-09-28/video-4-reviews-to-faq.md`.
    - Already pencilled in:
      - **L4, Wed 10/21: "Turn your Google reviews into FAQ answers for your website".**
        It needs a brief and the full long-video build. L1 is the reference.
@@ -65,7 +66,9 @@ The weekday shape:
 
    **The two playlists did not exist in Studio as of 9/28:** "Quick fixes for your website" and
    "Practical AI for small business". Remind Alex before L1 on Fri 10/2.
-4. **Reconcile after posts go out**, to move published folders to `Already Released/`:
+4. **Reconcile after posts go out** (not run since 9/28 as of 9/30; window 9/28 to 10/16. The
+   Metricool connector is a claude.ai connector Alex toggles per session: check it is attached
+   before starting), to move published folders to `Already Released/`:
    `reconcile --window`, fetch `getScheduledPosts` one day at a time, save the JSON, then
    `reconcile --from <file>`. Keep `uuid`, `draft` and `providers` on every item. Metricool keeps
    published posts listed with status PUBLISHED; reconcile handles that (fixed 9/28), and it
