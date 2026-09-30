@@ -3,7 +3,7 @@
   "date": "2026-10-21",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "training",
   "title": "Show it, then let them try it",
   "platforms": {
@@ -59,8 +59,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-21/ed7db665-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-21/ed7db665-reel-vertical.mp4",
+      "sha256": "ed7db665fc64554b4a076872317b4825a5e833c19fbaf4f12a3ee3f7da2cc605",
+      "uploadedAt": "2026-09-30T18:25:12.658Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-21/a6dbdb2e-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21/a6dbdb2e-thumbnail.jpg",
+      "sha256": "a6dbdb2e4aa62129f76c699cb002df4bdce62df5bad3ace8efb5fadccd79dd57",
+      "uploadedAt": "2026-09-30T18:25:12.658Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-21T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-21/ed7db665-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel on a handwriting practice sheet (cream paper, ruled rows, a rust margin line), with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Show it, then let them try it. Three ruled rows: 1 Watch one done, in solid ink; 2 Do one with hints, in gray letters to trace; 3 Do one alone, in teal. Real screens from our sample course, The RFI that gets answered. Step 1, Watch one done: a finished example, and why each part is there, over screen 5, the four parts of a finished request (Question, References, Impact and date, Proposal) with the question Please confirm the required slab thickness and reinforcing beneath the loading dock pit. Step 2, Do one with hints: then they build one, with the pieces and labels in front of them, over screen 7, a fragment picked up and two of four labeled fields filled. Step 3, Do one alone: then a new problem, no pieces, no labels, over screen 8, a duct that does not fit above a corridor ceiling and an empty box, Draft one answerable question. Ends on a quote from our training page, A single topic taught properly: objectives, teaching, practice, check. Six original courses. Open them and try the work. ka-performancefl.com/training. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-21T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Show it, then let them try it. A simple pattern for teaching any skill.\nTraining built around practice: https://ka-performancefl.com/training/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-21\n\n1. Watch one done. Show a finished example, and point out why each part is there.\n2. Do one with hints. Let them build one with the pieces and the labels in front of them.\n3. Do one alone. Give them a new problem, with no pieces and no labels.\n\nEvery screen in this reel comes from our sample course \"The RFI that gets answered\": a finished request explored part by part, then a request built from fragments and labeled fields, then a different issue and an empty box.\n\nThat's how we build a module: objectives, teaching, practice, check. Try our six sample courses on the site, or call Alex at 904-210-1071.\n\nThe music is AI generated.\n\n#eLearning #InstructionalDesign #CorporateTraining",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-21/a6dbdb2e-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.655Z",
+      "id": "385263751",
+      "uuid": "-3335677038068281802",
+      "scheduledAt": "2026-09-30T18:34:56.147Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-21T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#eLearning #InstructionalDesign #CorporateTraining #LearningAndDevelopment #CourseDesign #TrainingTips #GainesvilleFL",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-21/ed7db665-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel on a handwriting practice sheet (cream paper, ruled rows, a rust margin line), with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Show it, then let them try it. Three ruled rows: 1 Watch one done, in solid ink; 2 Do one with hints, in gray letters to trace; 3 Do one alone, in teal. Real screens from our sample course, The RFI that gets answered. Step 1, Watch one done: a finished example, and why each part is there, over screen 5, the four parts of a finished request (Question, References, Impact and date, Proposal) with the question Please confirm the required slab thickness and reinforcing beneath the loading dock pit. Step 2, Do one with hints: then they build one, with the pieces and labels in front of them, over screen 7, a fragment picked up and two of four labeled fields filled. Step 3, Do one alone: then a new problem, no pieces, no labels, over screen 8, a duct that does not fit above a corridor ceiling and an empty box, Draft one answerable question. Ends on a quote from our training page, A single topic taught properly: objectives, teaching, practice, check. Six original courses. Open them and try the work. ka-performancefl.com/training. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-21T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Show it, then let them try it. A simple pattern for teaching any skill.\n\n1. Watch one done. Show a finished example, and point out why each part is there.\n2. Do one with hints. Let them build one with the pieces and the labels in front of them.\n3. Do one alone. Give them a new problem, with no pieces and no labels.\n\nEvery screen in this reel comes from our sample course \"The RFI that gets answered\": a finished request explored part by part, then a request built from fragments and labeled fields, then a different issue and an empty box.\n\nThat's how we build a module: objectives, teaching, practice, check. Try our six sample courses through the link in bio, or call Alex at 904-210-1071.\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-21/a6dbdb2e-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.655Z",
+      "id": "385264927",
+      "uuid": "-1344867230236458433",
+      "scheduledAt": "2026-09-30T18:37:40.054Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-21T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-21/ed7db665-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel on a handwriting practice sheet (cream paper, ruled rows, a rust margin line), with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Show it, then let them try it. Three ruled rows: 1 Watch one done, in solid ink; 2 Do one with hints, in gray letters to trace; 3 Do one alone, in teal. Real screens from our sample course, The RFI that gets answered. Step 1, Watch one done: a finished example, and why each part is there, over screen 5, the four parts of a finished request (Question, References, Impact and date, Proposal) with the question Please confirm the required slab thickness and reinforcing beneath the loading dock pit. Step 2, Do one with hints: then they build one, with the pieces and labels in front of them, over screen 7, a fragment picked up and two of four labeled fields filled. Step 3, Do one alone: then a new problem, no pieces, no labels, over screen 8, a duct that does not fit above a corridor ceiling and an empty box, Draft one answerable question. Ends on a quote from our training page, A single topic taught properly: objectives, teaching, practice, check. Six original courses. Open them and try the work. ka-performancefl.com/training. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-21T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Teach any skill in three steps: watch one done, do one with hints, then do one alone.\nhttps://ka-performancefl.com/training/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-21\n\nShow a finished example and why each part is there. Then let learners build one with the pieces and labels in front of them, and then give them a new problem with nothing to lean on. Every screen here is from our free sample course \"The RFI that gets answered\".\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "Teach any skill: watch one done, do one with hints, then one alone",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "instructional design",
+              "worked examples",
+              "practice activities",
+              "eLearning design",
+              "corporate training",
+              "course design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.655Z",
+      "id": "385264945",
+      "uuid": "-348747849354624446",
+      "scheduledAt": "2026-09-30T18:37:40.119Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

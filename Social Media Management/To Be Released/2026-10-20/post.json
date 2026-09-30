@@ -3,7 +3,7 @@
   "date": "2026-10-20",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Ask for less on your form",
   "platforms": {
@@ -59,8 +59,157 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-20/2bc02a85-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-20/2bc02a85-reel-vertical.mp4",
+      "sha256": "2bc02a8592d59ee17e3ffc9c19e9ff897bc2114d527438de43bede84e8782342",
+      "uploadedAt": "2026-09-30T18:24:41.070Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-20/b9c8f14b-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20/b9c8f14b-thumbnail.jpg",
+      "sha256": "b9c8f14b39746a0d44392c975e7cc7e2792e7bdae7203097a7c29abf274043f8",
+      "uploadedAt": "2026-09-30T18:24:41.070Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-20T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-20/2bc02a85-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a tear-off pad, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Ask for less on your form. Every extra field is one more reason to stop. A drawn Contact us form labeled Drawn example with twelve fields (Name, Email, Phone, Company, Street address, City, ZIP code, Website, Budget, How did you find us?, Best time to call, Message) and a counter reading 12 fields to fill in. Keep three: Name. Email or phone. The message. Nine perforated strips tear off one by one and the counter drops to 3; ticks mark Name, Email and Message: Everything else can wait for the reply. Ours asks for three: the drawn twelve-field form beside a real capture of our contact page, ka-performancefl.com/contact, captured Sept 30, 2026, with three fields, Name, Email and Message. Ask the rest in your reply: a drawn reply, Hi Dana, thanks for reaching out! Happy to quote the patio job. Two quick questions: what is the address, and when would you like it done? Jo. Not a real business. Ends on Want a form that asks for less? Web design from Gainesville. Call Alex 904-210-1071, ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-20T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Ask for less on your form. Every extra field is one more reason to stop.\nSee how we design sites: https://ka-performancefl.com/services/web-design/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-20\n\nA contact form has one job: get the first message to you. Keep three fields:\n1. Name.\n2. Email or phone, whichever you reply with.\n3. The message.\n\nAddress, budget, company, how they found you: all of it can wait for your reply, once they've already written.\n\nOur own contact page asks for exactly three: name, email, message.\n\nWant a form that asks for less? Call Alex at 904-210-1071 or message us here.\n\nThe twelve-field form and the reply in the video are drawn examples, not a real business. The music is AI generated.\n\n#GainesvilleFL #WebDesign #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-20/b9c8f14b-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.314Z",
+      "id": "385263613",
+      "uuid": "3324224244869710283",
+      "scheduledAt": "2026-09-30T18:34:55.650Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-20T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #WebDesign #SmallBusiness #WebsiteTips #GainesvilleBusiness #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-20/2bc02a85-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a tear-off pad, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Ask for less on your form. Every extra field is one more reason to stop. A drawn Contact us form labeled Drawn example with twelve fields (Name, Email, Phone, Company, Street address, City, ZIP code, Website, Budget, How did you find us?, Best time to call, Message) and a counter reading 12 fields to fill in. Keep three: Name. Email or phone. The message. Nine perforated strips tear off one by one and the counter drops to 3; ticks mark Name, Email and Message: Everything else can wait for the reply. Ours asks for three: the drawn twelve-field form beside a real capture of our contact page, ka-performancefl.com/contact, captured Sept 30, 2026, with three fields, Name, Email and Message. Ask the rest in your reply: a drawn reply, Hi Dana, thanks for reaching out! Happy to quote the patio job. Two quick questions: what is the address, and when would you like it done? Jo. Not a real business. Ends on Want a form that asks for less? Web design from Gainesville. Call Alex 904-210-1071, ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-20T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Ask for less on your form. Every extra field is one more reason to stop.\n\nA contact form has one job: get the first message to you. Keep three fields:\n1. Name.\n2. Email or phone, whichever you reply with.\n3. The message.\n\nAddress, budget, company, how they found you: all of it can wait for your reply, once they've already written.\n\nOur own contact page asks for exactly three: name, email, message.\n\nWant a form that asks for less? Send us a DM or call Alex at 904-210-1071. Link in bio.\n\nThe twelve-field form and the reply in the video are drawn examples, not a real business. The music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-20/b9c8f14b-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.314Z",
+      "id": "385263631",
+      "uuid": "7098273186670464227",
+      "scheduledAt": "2026-09-30T18:34:55.739Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-20T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-20/2bc02a85-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a tear-off pad, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Ask for less on your form. Every extra field is one more reason to stop. A drawn Contact us form labeled Drawn example with twelve fields (Name, Email, Phone, Company, Street address, City, ZIP code, Website, Budget, How did you find us?, Best time to call, Message) and a counter reading 12 fields to fill in. Keep three: Name. Email or phone. The message. Nine perforated strips tear off one by one and the counter drops to 3; ticks mark Name, Email and Message: Everything else can wait for the reply. Ours asks for three: the drawn twelve-field form beside a real capture of our contact page, ka-performancefl.com/contact, captured Sept 30, 2026, with three fields, Name, Email and Message. Ask the rest in your reply: a drawn reply, Hi Dana, thanks for reaching out! Happy to quote the patio job. Two quick questions: what is the address, and when would you like it done? Jo. Not a real business. Ends on Want a form that asks for less? Web design from Gainesville. Call Alex 904-210-1071, ka-performancefl.com."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-20T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Ask for less on your form: name, email or phone, and the message.\nhttps://ka-performancefl.com/services/web-design/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-20\n\nEvery extra field on a contact form is one more reason to stop before sending. Keep the three that start the conversation, and ask for the address, the budget and the rest in your reply. Our own contact page asks for exactly three: name, email, message.\n\nThe twelve-field form and the reply are drawn examples, not a real business.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "Your contact form only needs three fields",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "contact form",
+              "website form fields",
+              "small business website",
+              "website design tips",
+              "Gainesville web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.314Z",
+      "id": "385263648",
+      "uuid": "3124672214152660341",
+      "scheduledAt": "2026-09-30T18:34:55.808Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

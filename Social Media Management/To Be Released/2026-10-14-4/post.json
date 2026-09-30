@@ -1,0 +1,130 @@
+{
+  "id": "2026-10-14-4",
+  "date": "2026-10-14",
+  "time": "11:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "tip",
+  "title": "YouTube: 8 Google Business Profile checks worth doing today",
+  "platforms": {
+    "youtube": {
+      "type": "VIDEO",
+      "caption": "youtube.md",
+      "title": "8 Google Business Profile checks worth doing today",
+      "tags": [
+        "Google Business Profile",
+        "Google Business Profile tips",
+        "Google Maps listing",
+        "local SEO",
+        "small business marketing",
+        "business hours on Google",
+        "Google reviews",
+        "Gainesville web design",
+        "small business website"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Quick fixes for your website"
+    }
+  },
+  "media": [
+    {
+      "file": "media/video.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "A narrated walkthrough of eight Google Business Profile checks, using K&A's real public listing and labeled illustrations for editing, website tracking and booking."
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "Check these 8 things beside K&A's real Google Business Profile, with a rust Quick fix band and forest green background."
+    },
+    {
+      "file": "media/video.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": true,
+    "visuals": false
+  },
+  "music": "music-yt-l3",
+  "generate": [],
+  "r2": {
+    "media/video.mp4": {
+      "key": "2026-10-14-4/a3925f36-video.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-14-4/a3925f36-video.mp4",
+      "sha256": "a3925f3627d6961c8a3b5242aa303066d8c253ced1961be2e939be9b186ef14f",
+      "uploadedAt": "2026-09-30T18:23:29.445Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-14-4/8fd56457-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-14-4/8fd56457-thumbnail.jpg",
+      "sha256": "8fd56457b107a05ab398b147b0e9c40b105efb4be8d22e56b872cd21950f1c7c",
+      "uploadedAt": "2026-09-30T18:23:29.445Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-14T11:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-14-4/a3925f36-video.mp4"
+          ],
+          "mediaAltText": [
+            "A narrated walkthrough of eight Google Business Profile checks, using K&A's real public listing and labeled illustrations for editing, website tracking and booking."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-14T11:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Check the details customers use before calling, visiting or booking.\nhttps://ka-performancefl.com/services/seo-ai-search/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-14-4\n\nWalk through eight Google Business Profile checks: category, hours and holidays, website and phone, description, services and products, photos, review replies and booking links.\n\nThe real profile shown is K&A's, captured September 30, 2026. Editing screens, the sample description, review and booking demonstration are labeled illustrations. Controls and available features vary by business and region. Google may review changes before they appear publicly.\n\nWebsite tracking example:\nhttps://ka-performancefl.com/?utm_source=google&utm_medium=organic&utm_campaign=business-profile\n\nReplace our website address with yours. These tags work with compatible website analytics; they do not install analytics. Look for source google, medium organic and campaign business-profile. The campaign distinguishes this example from other Google organic visits. If your URL already has a query string, append the tags with & instead of a second ?. Test the complete link. This is a teaching example, not a claim about K&A's current profile link.\n\nPhoto specifications: JPG or PNG, 10 KB to 5 MB, 720 x 720 pixels recommended, 250 x 250 minimum. Video: up to 30 seconds, up to 75 MB, 720p or higher. Use real media you have permission to share.\n\nGoogle help:\nEdit your profile: https://support.google.com/business/answer/3039617\nCategories: https://support.google.com/business/answer/7249669\nHoliday hours: https://support.google.com/business/answer/6303076\nDescriptions: https://support.google.com/business/answer/13682007\nServices: https://support.google.com/business/answer/9455399\nProducts: https://support.google.com/business/answer/9124203\nPhotos and video: https://support.google.com/business/answer/6103862\nReview replies: https://support.google.com/business/answer/3474050\nBooking links: https://support.google.com/business/answer/13769188\nCampaign tracking: https://support.google.com/analytics/answer/10917952\n\n0:00 Your Google profile\n0:11 Open your profile\n0:36 Business category\n1:16 Hours and holidays\n2:09 Website link and phone\n3:11 Business description\n3:49 Services and products\n4:33 Photos and video\n5:16 Review replies\n6:03 Booking link\n6:38 Eight checks\n7:03 Your website and your profile\n\nThe voice is AI narrated. The music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-14-4/8fd56457-thumbnail.jpg",
+          "youtubeData": {
+            "title": "8 Google Business Profile checks worth doing today",
+            "type": "video",
+            "privacy": "public",
+            "tags": [
+              "Google Business Profile",
+              "Google Business Profile tips",
+              "Google Maps listing",
+              "local SEO",
+              "small business marketing",
+              "business hours on Google",
+              "Google reviews",
+              "Gainesville web design",
+              "small business website"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.391Z",
+      "id": "385261801",
+      "uuid": "-7352729100426328745",
+      "scheduledAt": "2026-09-30T18:32:30.765Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

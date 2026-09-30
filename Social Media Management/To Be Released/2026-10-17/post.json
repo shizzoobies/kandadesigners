@@ -3,7 +3,7 @@
   "date": "2026-10-17",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Alt text: describe the picture in one sentence",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-17/59543e13-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/59543e13-slide-01.jpg",
+      "sha256": "59543e138d6a6eb5239be4ee813b3dd8f46b068137f2b3bba39b0b018528286c",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-17/134bfced-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/134bfced-slide-02.jpg",
+      "sha256": "134bfced8504626e2a043a8f9ff601fcc5c2d8498b185142a0dd05ac37b1635b",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-17/3856e963-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/3856e963-slide-03.jpg",
+      "sha256": "3856e963e47710176f46b64ce3a19878a422f510bcba6a2a37d184bfded719da",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-17/1b8920b5-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/1b8920b5-slide-04.jpg",
+      "sha256": "1b8920b5a1b55ec390c2804492b4757bd5477d4f561b8a4743059a7ffa7a36ab",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-17/105ab3fa-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/105ab3fa-slide-05.jpg",
+      "sha256": "105ab3fa2c338d2d0a8f633eeb74d291eba7b82fa3981b1e482b5f83315a0e32",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-17/b86ed0b1-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/b86ed0b1-slide-06.jpg",
+      "sha256": "b86ed0b11d9133b9569fcd7c56a780f0a2b156106bc1048eebc336f8f9134a28",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-17/5d6a86cf-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/5d6a86cf-slide-07.jpg",
+      "sha256": "5d6a86cf0fb1f725273cb3df29f670ddbb4af74edab55ad73de4776194db84be",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-17/0186f482-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-17/0186f482-slideshow.mp4",
+      "sha256": "0186f4822306d32042027482c47930c86fc8347fdbcc5566d3154a7187f57e49",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-17/50c01259-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-17/50c01259-slideshow-cover.jpg",
+      "sha256": "50c012596c818b4dc81462173f5e0556a60ddff748c29a40ac5b73f7789ce248",
+      "uploadedAt": "2026-09-30T18:23:42.271Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-17T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-17/0186f482-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide styled as a museum wall: Alt text: describe the picture in one sentence / Gallery 1, what it's for: Two times the words are all anyone gets / Gallery 2, the one-sentence rule: Say who or what is in it, and what's happening / Gallery 3, what not to write: Three labels that tell a listener nothing / Gallery 4, when to leave it empty: Only decoration? Leave the alt text empty / Gallery 5, where to type it: Click the picture, open its settings, find Alt text / Want a website everyone can use? Alt text, in four lines: one sentence, who or what and what's happening; skip \"image of\", file names and paragraphs; decoration gets an empty alt; type it in the picture's settings"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-17T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Alt text: describe the picture in one sentence. Five quick rules for the pictures on your website.\nSee how we build websites everyone can use: https://ka-performancefl.com/services/web-design/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-17\n\n1. What it's for. A screen reader reads alt text aloud to someone who can't see the picture, and the browser shows it when the picture doesn't load.\n2. One sentence. Say who or what is in it, and what's happening. The page around it tells the story.\n3. What not to write. Skip \"image of\" (the screen reader already says it's an image), file names like IMG_2041.jpg, and paragraphs.\n4. When to leave it empty. If a picture is only decoration, or only repeats the words right next to it, use an empty alt: alt=\"\". Don't delete the alt entirely.\n5. Where to type it. Click the picture in your site editor, open its settings, and find the box called Alt text or Alternative text.\n\nThe artwork, the alt text and the team page in the video are from our own site. The pie, the coffee and the site editor are drawn examples.\n\nWant a website everyone can use? We design and build websites in Gainesville and measure our pages against WCAG 2.2 AA before launch. Quotes are always free. Call Alex at 904-210-1071 or message us here.\n\nThe music is AI generated.\n\n#GainesvilleFL #SmallBusiness #WebDesign",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-17/50c01259-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.544Z",
+      "id": "385261816",
+      "uuid": "-6954328257775384021",
+      "scheduledAt": "2026-09-30T18:32:30.859Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-17T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #WebDesign #WebAccessibility #AltText #WebsiteTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-17/59543e13-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-17/134bfced-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-17/3856e963-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-17/1b8920b5-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-17/105ab3fa-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-17/b86ed0b1-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-17/5d6a86cf-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide styled as a museum wall: Alt text: describe the picture in one sentence. A framed artwork from our home page, a high heel built from black dance lettering, hangs beside a white wall label. The label reads: Jon Marc, graphic design, on our home page. Alt text: \"A high heel composed of black dance lettering, including spins, right turn, and all night.\" Tagged Real: our site. Below: Every picture on your website needs a label like this one. Here is how to write it, in five galleries.",
+            "Gallery 1, what it's for: Two times the words are all anyone gets. 1. A screen reader reads the alt text aloud to someone who can't see the picture. 2. If the picture doesn't load, the browser shows the alt text in its place. Framed: a course card from our home page with pictures turned off, where the empty box shows the words \"The hardhat course guide introduces a jobsite inspection with an obstructed exit and a cable across the floor.\" above the title band Find the hazards. Tagged Real: our site.",
+            "Gallery 2, the one-sentence rule: Say who or what is in it, and what's happening. A framed illustration by Bobbie Connor from Hope & Harry's Alaskan Adventure on our site: a koala and a hippo taking a selfie in front of a moose behind a rope barrier. Its wall label shows the real alt text, \"Hope and Harry grin for a selfie in front of a giant moose standing behind a rope barrier.\", highlighted in three parts: who, what's happening, and the detail that makes it this picture. A second label quotes the story text printed beside it on the page: \"Right away before they even left the airport Harry excitedly took a selfie with a giant Moose.\" The page tells the story. The alt text only says what a sighted visitor sees.",
+            "Gallery 3, what not to write: Three labels that tell a listener nothing. A drawn picture of a slice of cherry pie and a mug of coffee, labeled Drawn example. Crossed out: alt=\"Image of food\", because a screen reader already says it's an image and food could be anything. Crossed out: alt=\"IMG_2041.jpg\", read aloud as a file name. Crossed out: a paragraph-long alt about a cozy cafe, put that on the page, not in the label. Checked: alt=\"A slice of cherry pie beside a mug of black coffee.\" One sentence. Done. The picture and all four labels are drawn examples made up for this slide.",
+            "Gallery 4, when to leave it empty: Only decoration? Leave the alt text empty. alt=\"\" with nothing between the quotes, and a screen reader skips the picture. Do the same when a picture only repeats the words printed right next to it. Framed, real from our team page: portraits of Alex Anderson and Kristina Anderson, each right above the printed name, so each portrait's alt is empty and the name is read once, not twice. Don't delete the alt entirely: with no alt at all, some screen readers read out the file name.",
+            "Gallery 5, where to type it: Click the picture, open its settings, find Alt text. A drawn, simplified site editor labeled Drawn example: the pie picture is selected and an Image settings panel has an Alt text box holding \"A slice of cherry pie beside a mug of black coffee.\" and a Save button. Yours may call it Alternative text. Steps: 1. Click the picture in your site editor. 2. Open its settings: often a gear, a pencil or a right click. 3. Find the box called Alt text or Alternative text. 4. Type one sentence. Save.",
+            "Want a website everyone can use? Alt text, in four lines: one sentence, who or what and what's happening; skip \"image of\", file names and paragraphs; decoration gets an empty alt; type it in the picture's settings. We design and build websites in Gainesville, Florida, and measure our pages against WCAG 2.2 AA before launch. Quotes are always free. Call Alex 904-210-1071. ka-performancefl.com/services/web-design."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-17T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Alt text: describe the picture in one sentence. Five quick rules for the pictures on your website. Save this for the next time you add a photo.\n\n1. What it's for. A screen reader reads alt text aloud to someone who can't see the picture, and the browser shows it when the picture doesn't load.\n2. One sentence. Say who or what is in it, and what's happening. The page around it tells the story.\n3. What not to write. Skip \"image of\" (the screen reader already says it's an image), file names like IMG_2041.jpg, and paragraphs.\n4. When to leave it empty. If a picture is only decoration, or only repeats the words right next to it, use an empty alt: alt=\"\". Don't delete the alt entirely.\n5. Where to type it. Click the picture in your site editor, open its settings, and find the box called Alt text or Alternative text.\n\nThe artwork, the alt text and the team page are from our own site. The pie, the coffee and the site editor are drawn examples.\n\nWant a website everyone can use? We design and build websites in Gainesville and measure our pages against WCAG 2.2 AA before launch. Quotes are always free. Send us a DM or call Alex at 904-210-1071. Link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.544Z",
+      "id": "385261834",
+      "uuid": "-5628200372292729961",
+      "scheduledAt": "2026-09-30T18:32:30.954Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

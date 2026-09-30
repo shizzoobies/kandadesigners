@@ -3,7 +3,7 @@
   "date": "2026-10-18",
   "time": "18:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "Let AI proofread, not rewrite",
   "platforms": {
@@ -113,8 +113,166 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-18/6b95cf1d-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/6b95cf1d-slide-01.jpg",
+      "sha256": "6b95cf1ddca8c45358857196acb88144deb0a69da20eb61046f09c43c606e331",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-18/c5d2989c-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/c5d2989c-slide-02.jpg",
+      "sha256": "c5d2989c228efad1e3c8cea9ab50883cd2ca30af3ef5c16fde53646faffc5eb6",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-18/27b69c69-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/27b69c69-slide-03.jpg",
+      "sha256": "27b69c695c127fd4cead7778a2be0a458954c9b5502ee1bec8fde06d5623a98d",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-18/83fa9bf2-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/83fa9bf2-slide-04.jpg",
+      "sha256": "83fa9bf2efd9a377f631818856f9f2dd27c2ca392ebe5b7257f1ffd93779ddd6",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-18/4b5555c2-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/4b5555c2-slide-05.jpg",
+      "sha256": "4b5555c2e6a49febdd8f2abd5eaa83674a33ec9b5773539997b5ca9a4b3e72ab",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-18/7b244b5a-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/7b244b5a-slide-06.jpg",
+      "sha256": "7b244b5a61a54f6de76761e0f0491fb627d25b4c8d89e957ee4899abd4efad22",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-18/ff941fb4-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/ff941fb4-slide-07.jpg",
+      "sha256": "ff941fb487ed2af34e60c24aa15bafdb80fb36d8cd07d6739a218ce83a0aae1a",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slide-08.jpg": {
+      "key": "2026-10-18/03721bc0-slide-08.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/03721bc0-slide-08.jpg",
+      "sha256": "03721bc0cae28a6a26953fc54c61fee9f8bce483014f60a2b79a081b5e2c5dd8",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-18/66793b19-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-18/66793b19-slideshow.mp4",
+      "sha256": "66793b1979aee52b7fa0ae509aaa7c8deac64ef3f5b0a5bbe0ad503fd08a22dc",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-18/6991f759-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-18/6991f759-slideshow-cover.jpg",
+      "sha256": "6991f7596d8e229b70a482a847e81a65d7c7e07a5cd2bfb4a6d6e175017862d4",
+      "uploadedAt": "2026-09-30T18:23:57.680Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-18T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-18/66793b19-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 8 carousel slides in order: K&A Performance slide, a Sunday night prompt: Let AI proofread, not rewrite / The prompt: Copy this prompt / We tried it: A real run, on a made-up dog groomer / What came back, 1 of 3: Errors, with the smallest fix / What came back, 2 of 3: Unclear sentences, and what a reader might misread / What came back, 3 of 3: Facts only you can check / Your part: Then you make the fixes, in your words / Want the whole system? Watch the full walkthrough on our YouTube, \"Let AI draft it"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-18T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Let AI proofread, not rewrite. One prompt that finds the mistakes and leaves your voice alone.\nPut AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-18\n\nThe prompt is on one slide in the video, so screenshot it. It tells the AI not to rewrite anything and to list only three things:\n1. Errors, with the smallest fix\n2. Unclear sentences, and what a reader might misread\n3. Facts to check: every date, number, price, time or claim\n\nWe ran it once on a made-up dog groomer's About paragraph, with a few mistakes put in on purpose. The notes in the video are the AI model's reply, word for word. It found every mistake we planted, did the math on a founding year that didn't match \"over fifteen years\", flagged a pickup time that could be misread, and asked whether \"we never rush a nervous pup\" is a promise the whole staff can keep. It gave no new version.\n\nThen it's your part: make the fixes yourself, in your words, and answer the questions only you can answer.\n\nFor the full system, voice notes and a saved prompt for your customer replies, watch \"Let AI draft it. Make it sound like you.\"\nFull walkthrough on our YouTube channel: https://www.youtube.com/@KAPerformancefl\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-18\n\nThe business in this post is fictional. The music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-18/6991f759-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.623Z",
+      "id": "385261853",
+      "uuid": "6295952890656473133",
+      "scheduledAt": "2026-09-30T18:32:31.046Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-18T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AI #SmallBusiness #AITips #Proofreading #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-18/6b95cf1d-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-18/c5d2989c-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-18/27b69c69-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-18/83fa9bf2-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-18/4b5555c2-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-18/7b244b5a-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-18/ff941fb4-slide-07.jpg",
+            "https://media.ka-performancefl.com/2026-10-18/03721bc0-slide-08.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide, a Sunday night prompt: Let AI proofread, not rewrite. One prompt that finds the mistakes and leaves your voice alone. A printed draft of a fictional dog groomer's About page lies on a dark desk with two sticky notes on it, quoting the AI model word for word. A yellow note, Error: \"a ear check\": change to \"an ear check\". A coral note, Fact to check: 2014 to 2026 is 12 years. Confirm which one is right. Tagged Checked by an AI model, word for word, and Fictional business.",
+            "The prompt: Copy this prompt. It asks for notes, not a new version. A printed sheet with the full prompt: Proofread the paragraph below from my small business website. Do not rewrite it. Don't suggest new wording for style, tone or flow, and don't give me a revised version. It's in my voice and I want to keep it that way. Only list: 1. Errors: spelling, grammar and punctuation. Quote the exact words and give the smallest fix. 2. Unclear sentences: quote the sentence and say in a few words what a reader might misread. Don't rewrite it. 3. Facts to check: every date, number, price, time or claim I should confirm before this goes live. If a section has nothing, say \"None.\" Keep it short. Paragraph: [paste your paragraph]. A sticky note: Screenshot this. Change nothing but the paragraph.",
+            "We tried it: A real run, on a made-up dog groomer. Tagged Fictional business, made up for this example. The printed draft: We opened Scruff & Suds in 2014, which means we've been washing muddy dogs for over fifteen years now. Every groom starts with a warm bath, a nail trim and a ear check, and we never rush a nervous pup. If your dog doesn't like the dryer, tell us and we'll towel dry them instead, it takes longer but their worth it. Walk-ins are welcome Tuesday through Saturday, 8 to 5, and a full groom for a small dog is $45. Pick up is by 4 so we can clean up before closing. A sticky note from us: We wrote it with a few mistakes on purpose. Let's see what it finds.",
+            "What came back, 1 of 3: Errors, with the smallest fix. The draft with five numbered marks and five yellow sticky notes quoting the AI model word for word: 1. \"a ear check\": change to \"an ear check\". 2. \"their worth it\": change to \"they're worth it\". 3. \"towel dry them instead, it takes longer\": two full sentences are joined with only a comma. Change the comma to a semicolon or a period. 4. \"Pick up is by 4\": used as a noun, it's one word. Change to \"Pickup\". 5, optional: \"towel dry\" (optional): used as a verb, it's usually hyphenated, \"towel-dry\". Tagged Checked by an AI model, word for word, and Fictional business.",
+            "What came back, 2 of 3: Unclear sentences, and what a reader might misread. Two sentences underlined on the draft and two mint sticky notes, word for word: A. \"Pick up is by 4 so we can clean up before closing.\" A reader might think you pick dogs up, like a pickup service, not that owners must collect them by 4. B. \"Walk-ins are welcome Tuesday through Saturday, 8 to 5...\" It isn't clear whether these are your business hours or only walk-in hours. Pickup is by 4, so a reader may wonder whether a walk-in after about 3 can still be groomed. No rewrite. It says what's unclear and leaves the wording to you.",
+            "What came back, 3 of 3: Facts only you can check. Coral notes, word for word: \"in 2014\" and \"over fifteen years\" don't agree. 2014 to 2026 is 12 years. Confirm which one is right. And: \"we never rush a nervous pup\": make sure your staff can back up this promise. A yellow list of the rest: Every groom includes a warm bath, a nail trim and an ear check. Towel drying is offered instead of the dryer. The walk-in days, Tuesday through Saturday. The hours, 8 to 5 (AM to PM is implied). The $45 price for a full groom on a small dog, and what counts as \"small.\" The pickup deadline of 4.",
+            "Your part: Then you make the fixes, in your words. 1. Did it rewrite anything? Ours didn't: no new version, no style notes, only the smallest fixes. 2. Fix the errors yourself, one at a time, so every sentence stays yours. 3. Answer what only you know: the year, the hours, the price, the promise. The draft with the owner's pencil fixes, a drawn example: over fifteen years crossed out for twelve years, a ear for an ear, instead, it for instead. It, their worth for they're worth, Pick up for Pickup.",
+            "Want the whole system? Watch the full walkthrough on our YouTube, \"Let AI draft it. Make it sound like you.\" The full system: voice notes, and a saved prompt for your customer replies. youtube.com/@KAPerformancefl. Put AI to work in your business: The 90-Day AI Launch. Ninety days to one part of your business running on AI. A twelve-week build, one on one with Alex. ka-performancefl.com/ai-launch. Call Alex 904-210-1071. The first call is twenty minutes and free."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-18T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Let AI proofread, not rewrite. One prompt that finds the mistakes and leaves your voice alone. Save this for Sunday night.\n\nThe prompt is on slide 2 (screenshot it). It tells the AI not to rewrite anything and to list only three things:\n1. Errors, with the smallest fix\n2. Unclear sentences, and what a reader might misread\n3. Facts to check: every date, number, price, time or claim\n\nWe ran it once on a made-up dog groomer's About paragraph, with a few mistakes put in on purpose. The notes on slides 4 to 6 are the AI model's reply, word for word. It found every mistake we planted, did the math on a founding year that didn't match \"over fifteen years\", flagged a pickup time that could be misread, and asked whether \"we never rush a nervous pup\" is a promise the whole staff can keep. It gave no new version.\n\nThen it's your part: make the fixes yourself, in your words, and answer the questions only you can answer.\n\nFor the full system, voice notes and a saved prompt for your customer replies, watch \"Let AI draft it. Make it sound like you.\"\nFull walkthrough on our YouTube: @KAPerformancefl\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.\n\nThe business in this post is fictional.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.623Z",
+      "id": "385261874",
+      "uuid": "8585118544316875927",
+      "scheduledAt": "2026-09-30T18:32:31.136Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

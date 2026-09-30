@@ -3,7 +3,7 @@
   "date": "2026-10-21",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "training",
   "title": "LinkedIn: Wrong answer? Say why, not just incorrect",
   "platforms": {
@@ -62,8 +62,107 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-21-3/921fed79-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21-3/921fed79-slide-01.jpg",
+      "sha256": "921fed7953d630efd0090668de844290c8e81f0c992c91611b02ca7666ef471c",
+      "uploadedAt": "2026-09-30T18:25:35.179Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-21-3/84ebe521-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21-3/84ebe521-slide-02.jpg",
+      "sha256": "84ebe5214565cbc5930a130661c724a2e971795700e3ea9a4152864c67a7a8ef",
+      "uploadedAt": "2026-09-30T18:25:35.179Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-21-3/ccb9cc11-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21-3/ccb9cc11-slide-03.jpg",
+      "sha256": "ccb9cc11f802d96db340f4fd0bcb1faec259431e9fa1251e70ce01ae244fae6b",
+      "uploadedAt": "2026-09-30T18:25:35.179Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-21-3/2a9b6fbd-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21-3/2a9b6fbd-slide-04.jpg",
+      "sha256": "2a9b6fbdf851924a53a4bb875899c976093aede209c22a2f8905c90ae5a2c324",
+      "uploadedAt": "2026-09-30T18:25:35.179Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-21-3/af91ac5a-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21-3/af91ac5a-slide-05.jpg",
+      "sha256": "af91ac5aaa1671b12b2af6affcadb92185db7a57c8522963f4e758a64ad8461a",
+      "uploadedAt": "2026-09-30T18:25:35.179Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-21-3/a86fbeca-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21-3/a86fbeca-slide-06.jpg",
+      "sha256": "a86fbeca3a5b0e7f9e49861dcb7218ca4885bcd2b5444c3b44e46168e994de3a",
+      "uploadedAt": "2026-09-30T18:25:35.179Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-21-3/5fd85db7-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-21-3/5fd85db7-slide-07.jpg",
+      "sha256": "5fd85db703fd04abf452a8ea9815035da9278774d25952b98602600cbb65f442",
+      "uploadedAt": "2026-09-30T18:25:35.179Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-21T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "Our sample courses, free to try: https://ka-performancefl.com/training/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-21-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-21-3/921fed79-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-21-3/84ebe521-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-21-3/ccb9cc11-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-21-3/2a9b6fbd-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-21-3/af91ac5a-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-21-3/a86fbeca-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-21-3/5fd85db7-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide on a whiteboard: Feedback that teaches. Wrong answer? Say why, not just “incorrect.” The word Incorrect. is struck through in red marker. Below it, magnets hold a real screen from our nutrition sample course: On your counter, Brown rice, and its feedback, Try another part of the plate. Brown rice is a whole grain. It retains its bran and germ. Marker note: Say what to try, and why. 5 rules, each shown on a real wrong answer in one of our sample courses.",
+            "Rule 1 of 5 on the whiteboard: Name what went wrong. Not just that it is wrong, but which part. Then the learner fixes the right thing. Real screen from The RFI that gets answered: four fields filled, with References holding This is the third time the drawings have contradicted themselves, and Proposal holding Also, please confirm the paint color in the lobby, both outlined in red. The feedback reads: Needs another pass: References, Proposal. Match each field to its job. Complaints and unrelated questions stay out of this request. Marker note: It names the two fields that need another pass.",
+            "Rule 2 of 5 on the whiteboard: Point at the rule. Send them back to the idea that decides the answer, so the next try comes from the rule, not a guess. Real screen from Strong is a skill: the task card Rising from a low chair, placed in Hinge, and the feedback Try a different station. Notice whether the task lowers and rises, moves mainly at the hips, pushes, pulls or travels with a load. Marker note: It points at the five movement patterns.",
+            "Rule 3 of 5 on the whiteboard: Show the right move. When the method is the lesson, show the working, so they can see where their number went off. Real screen from The P&L, read like an owner: Price the five-point change. Baseline revenue stays $80,000. COGS rises from 40% to 45%. Enter the new operating income. The answer 5000 is entered, and the feedback reads: Recheck the figures. $80,000 less $36,000 COGS less $43,000 operating expenses leaves $1,000. Marker note: It shows the working, step by step.",
+            "Rule 4 of 5 on the whiteboard: Let them retry. Mark the miss, leave it open, and ask for another go. The full explanation comes once they get it. Real screen from Spot it before it hurts someone: the situation Open second-floor edge, where crews cross all day for the next three months, with Add task-matched protective equipment placed, a Remove placement link, and the note Review this placement: Revisit this placement. Read the situation and try a different control. Marker note: The control can be moved. Try a different one.",
+            "Rule 5 of 5 on the whiteboard: Keep it short. What to try, then why, in a line or two. Then get out of the way. Real screen from Build the plate, skip the diet: Brown rice on your counter, the plate with its vegetables and fruit half and its protein and grains quarters, and the feedback Try another part of the plate. Brown rice is a whole grain. It retains its bran and germ. Marker note: Brown rice on the protein quarter: three short sentences.",
+            "Whiteboard recap: Wrong answer? Say why. 1 Name what went wrong. 2 Point at the rule. 3 Show the right move. 4 Let them retry. 5 Keep it short. Below, on dark green: We write this kind of feedback into the courses we build. Try our sample courses, free on the site. ka-performancefl.com/training. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-21T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "\"Incorrect.\" tells a learner they missed. It doesn't tell them what to do next.\n\nFive rules for feedback that teaches, one per page in this document, each shown on a real wrong answer in one of our sample courses:\n\n1. Name what went wrong. Not just that it is wrong, but which part. In our RFI course, a learner who files a complaint under References and a paint question under Proposal gets \"Needs another pass: References, Proposal.\" They fix the two fields, not the whole request.\n\n2. Point at the rule. Send them back to the idea that decides the answer. In our strength course, a task placed on the wrong movement station gets \"Notice whether the task lowers and rises, moves mainly at the hips, pushes, pulls or travels with a load.\" The next try comes from the rule, not a guess.\n\n3. Show the right move. When the method is the lesson, show the working. Our P&L course answers a wrong operating income with the subtraction that gets to the right one.\n\n4. Let them retry. Mark the miss, leave it open, and ask for another go. Our safety course says \"Revisit this placement. Read the situation and try a different control,\" and saves the full explanation for when they get it.\n\n5. Keep it short. What to try, then why. Our nutrition course does it in three short sentences.\n\nThe last page is the five rules on one board, to check against the next quiz you write.\n\nWe design and build courses, short modules and job aids, delivered into your own LMS, with feedback written this way.\n\n#InstructionalDesign #LearningAndDevelopment #eLearning",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "Wrong answer? Say why: 5 rules for feedback that teaches",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.918Z",
+      "id": "385265018",
+      "uuid": "6182971098738213992",
+      "scheduledAt": "2026-09-30T18:37:40.370Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null

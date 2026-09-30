@@ -3,7 +3,7 @@
   "date": "2026-10-20",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "What your contact page owes a visitor",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-20-2/dfbb4c22-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/dfbb4c22-slide-01.jpg",
+      "sha256": "dfbb4c22f294a218393e74149f9c135ad8df46eab55e453f5f927e7bf56b0851",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-20-2/ff63323c-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/ff63323c-slide-02.jpg",
+      "sha256": "ff63323c0bd8a1bb869b8597c0ac5910dea11800acc5ba834b8b0e3ac99173ba",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-20-2/f79f5626-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/f79f5626-slide-03.jpg",
+      "sha256": "f79f56262e8e0979a03771741ef0565526ccaeae977ba690217cb964437ab4df",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-20-2/7ad95503-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/7ad95503-slide-04.jpg",
+      "sha256": "7ad955030350b19d1d14506d5837f82ad05439538d52b9c6db4d1cf6314e24e7",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-20-2/0f7e5de2-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/0f7e5de2-slide-05.jpg",
+      "sha256": "0f7e5de2a420a486c25f9897ae8fc40d9a7e3e5c8c2cc821119ecc750450d664",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-20-2/3c8ae515-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/3c8ae515-slide-06.jpg",
+      "sha256": "3c8ae515d656925e00ed77e2112da781ce51f46f70a718ffb0392ed92fc46441",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-20-2/d710d895-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/d710d895-slide-07.jpg",
+      "sha256": "d710d895b8cdcbfc439f30a6cdb38a7f2a0be09e1bd86d691720d1052e17e431",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-20-2/43a3ed3e-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/43a3ed3e-slideshow.mp4",
+      "sha256": "43a3ed3eeedfd1744201175093a048ea596e37db29c856afcce6109c12648550",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-20-2/d1b05429-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-2/d1b05429-slideshow-cover.jpg",
+      "sha256": "d1b05429c64066dcaabedcd790bf81936905c30ceb233254e222d5596d93819b",
+      "uploadedAt": "2026-09-30T18:24:46.108Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-20T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-20-2/43a3ed3e-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance slide styled as a desk Rolodex: the front card has a rust tab reading Contact, and the tabs of the cards behind it read 1 Phone, 2 Map and 3 Hours, 4 Form, 5 After / Rolodex card 1 of 5, tab 1 Phone: A phone number that dials on tap / Rolodex card 2 of 5, tab 2 Map: An address that opens the map / Rolodex card 3 of 5, tab 3 Hours: Hours, or when you pick up / Rolodex card 4 of 5, tab 4 Form: One short form / Rolodex card 5 of 5, tab 5 After: What happens after they send / Rolodex score card, tab Score: Our own contact page, 3 of 5"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-20T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "What your contact page owes a visitor: five things, checked on our own page.\nSee how we design sites: https://ka-performancefl.com/services/web-design/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-20-2\n\n1. A phone number that dials on tap. Make it a tel: link, so a visitor on a phone taps once instead of copying ten digits.\n2. An address that opens the map. Link it to your map listing so one tap starts directions. No storefront? Name the towns you serve and link your Google profile.\n3. Hours, or when you pick up. \"Weekdays 9 to 5\" or \"By appointment\" both count.\n4. One short form. Name, email or phone, and the message. Ask the rest in your reply.\n5. What happens after they send. Who replies, and roughly when. Say it on the page, then again in the thank-you message.\n\nWe checked ka-performancefl.com/contact on Sept 30 and scored 3 of 5. The phone number dials, the form has three fields, and the page says Alex and Kristina reply within 24 hours. No map link and no hours yet. We're fixing those too.\n\nWant a contact page that does all five? Call Alex at 904-210-1071 or message us here.\n\nThe music is AI generated.\n\n#GainesvilleFL #WebDesign #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-20-2/d1b05429-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.485Z",
+      "id": "385263670",
+      "uuid": "-34517787327640777",
+      "scheduledAt": "2026-09-30T18:34:55.896Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-20T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #WebDesign #SmallBusiness #WebsiteTips #GainesvilleBusiness #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-20-2/dfbb4c22-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-2/ff63323c-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-2/f79f5626-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-2/7ad95503-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-2/0f7e5de2-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-2/3c8ae515-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-2/d710d895-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide styled as a desk Rolodex: the front card has a rust tab reading Contact, and the tabs of the cards behind it read 1 Phone, 2 Map and 3 Hours, 4 Form, 5 After. On the card: Five things, checked on our own page. What your contact page owes a visitor. A phone number that dials, a map, hours, one short form, and what happens after they send. Checked on ka-performancefl.com/contact, Sept 30, 2026.",
+            "Rolodex card 1 of 5, tab 1 Phone: A phone number that dials on tap. Make it a tel: link. A visitor on a phone taps once instead of copying ten digits. Our contact page: Yes, with a tick. 904-210-1071 is a tel: link. One tap dials. Below, a real capture of our contact page: Rather talk it through? Call 904-210-1071, with the number as a link.",
+            "Rolodex card 2 of 5, tab 2 Map: An address that opens the map. Link it to your map listing so one tap starts directions. No storefront? Name the towns you serve and link your Google profile. Our contact page: Not yet, with a cross. We list the towns we serve, but no street address and no map link. We're fixing this too. Beside it, a real capture of our contact page: A Gainesville studio with an Ellenton office. The headquarters is in Gainesville, so Alachua, Newberry, High Springs and Ocala are close enough to meet in person.",
+            "Rolodex card 3 of 5, tab 3 Hours: Hours, or when you pick up. Weekdays 9 to 5 or By appointment both count. Tell people when a call gets answered. Our contact page: Not yet, with a cross. We say messages get a reply within 24 hours, but not when we answer the phone. We're fixing this too. Beside it, a dashed box: Hours, Not on our page.",
+            "Rolodex card 4 of 5, tab 4 Form: One short form. Name, email or phone, and the message. Ask the rest in your reply. Our contact page: Yes, with a tick. 3 fields: name, email, message. Beside it, a real capture of our contact form with three fields: Name (Your name), Email (your@email.com) and Message (What are you looking to build?).",
+            "Rolodex card 5 of 5, tab 5 After: What happens after they send. Who replies, and roughly when. Say it on the page, then again in the thank-you message. Our contact page: Yes, with a tick. We read every word and reply within 24 hours, from Alex & Kristina. The thank-you message says it again. Beside it, a real capture of our contact page with that sentence, the call line, and You'll hear back from Alex & Kristina, the two of us, not a ticket queue, with their photos.",
+            "Rolodex score card, tab Score: Our own contact page, 3 of 5. Ticks for Phone dials on tap, One short form and What happens after; crosses marked fixing for Address opens the map and Hours. Below, on dark green: Want a contact page that does all five? Call Alex 904-210-1071. ka-performancefl.com/services/web-design."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-20T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "What your contact page owes a visitor: five things, checked on our own page. Save this for your next site update.\n\n1. A phone number that dials on tap. Make it a tel: link, so a visitor on a phone taps once instead of copying ten digits.\n2. An address that opens the map. Link it to your map listing so one tap starts directions. No storefront? Name the towns you serve and link your Google profile.\n3. Hours, or when you pick up. \"Weekdays 9 to 5\" or \"By appointment\" both count.\n4. One short form. Name, email or phone, and the message. Ask the rest in your reply.\n5. What happens after they send. Who replies, and roughly when. Say it on the page, then again in the thank-you message.\n\nWe checked our own contact page on Sept 30 and scored 3 of 5. The phone number dials, the form has three fields, and the page says Alex and Kristina reply within 24 hours. No map link and no hours yet. We're fixing those too.\n\nWant a contact page that does all five? Send us a DM or call Alex at 904-210-1071. Link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.485Z",
+      "id": "385263692",
+      "uuid": "-2683775628614155274",
+      "scheduledAt": "2026-09-30T18:34:55.962Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

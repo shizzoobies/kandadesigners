@@ -3,7 +3,7 @@
   "date": "2026-10-20",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "LinkedIn: What your contact page owes a visitor",
   "platforms": {
@@ -62,8 +62,107 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-20-3/dfbb4c22-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-3/dfbb4c22-slide-01.jpg",
+      "sha256": "dfbb4c22f294a218393e74149f9c135ad8df46eab55e453f5f927e7bf56b0851",
+      "uploadedAt": "2026-09-30T18:25:02.297Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-20-3/ff63323c-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-3/ff63323c-slide-02.jpg",
+      "sha256": "ff63323c0bd8a1bb869b8597c0ac5910dea11800acc5ba834b8b0e3ac99173ba",
+      "uploadedAt": "2026-09-30T18:25:02.297Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-20-3/f79f5626-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-3/f79f5626-slide-03.jpg",
+      "sha256": "f79f56262e8e0979a03771741ef0565526ccaeae977ba690217cb964437ab4df",
+      "uploadedAt": "2026-09-30T18:25:02.297Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-20-3/7ad95503-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-3/7ad95503-slide-04.jpg",
+      "sha256": "7ad955030350b19d1d14506d5837f82ad05439538d52b9c6db4d1cf6314e24e7",
+      "uploadedAt": "2026-09-30T18:25:02.297Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-20-3/0f7e5de2-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-3/0f7e5de2-slide-05.jpg",
+      "sha256": "0f7e5de2a420a486c25f9897ae8fc40d9a7e3e5c8c2cc821119ecc750450d664",
+      "uploadedAt": "2026-09-30T18:25:02.297Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-20-3/3c8ae515-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-3/3c8ae515-slide-06.jpg",
+      "sha256": "3c8ae515d656925e00ed77e2112da781ce51f46f70a718ffb0392ed92fc46441",
+      "uploadedAt": "2026-09-30T18:25:02.297Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-20-3/d710d895-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-20-3/d710d895-slide-07.jpg",
+      "sha256": "d710d895b8cdcbfc439f30a6cdb38a7f2a0be09e1bd86d691720d1052e17e431",
+      "uploadedAt": "2026-09-30T18:25:02.297Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-20T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "How we design small business websites: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-20-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-20-3/dfbb4c22-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-3/ff63323c-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-3/f79f5626-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-3/7ad95503-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-3/0f7e5de2-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-3/3c8ae515-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-20-3/d710d895-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide styled as a desk Rolodex: the front card has a rust tab reading Contact, and the tabs of the cards behind it read 1 Phone, 2 Map and 3 Hours, 4 Form, 5 After. On the card: Five things, checked on our own page. What your contact page owes a visitor. A phone number that dials, a map, hours, one short form, and what happens after they send. Checked on ka-performancefl.com/contact, Sept 30, 2026.",
+            "Rolodex card 1 of 5, tab 1 Phone: A phone number that dials on tap. Make it a tel: link. A visitor on a phone taps once instead of copying ten digits. Our contact page: Yes, with a tick. 904-210-1071 is a tel: link. One tap dials. Below, a real capture of our contact page: Rather talk it through? Call 904-210-1071, with the number as a link.",
+            "Rolodex card 2 of 5, tab 2 Map: An address that opens the map. Link it to your map listing so one tap starts directions. No storefront? Name the towns you serve and link your Google profile. Our contact page: Not yet, with a cross. We list the towns we serve, but no street address and no map link. We're fixing this too. Beside it, a real capture of our contact page: A Gainesville studio with an Ellenton office. The headquarters is in Gainesville, so Alachua, Newberry, High Springs and Ocala are close enough to meet in person.",
+            "Rolodex card 3 of 5, tab 3 Hours: Hours, or when you pick up. Weekdays 9 to 5 or By appointment both count. Tell people when a call gets answered. Our contact page: Not yet, with a cross. We say messages get a reply within 24 hours, but not when we answer the phone. We're fixing this too. Beside it, a dashed box: Hours, Not on our page.",
+            "Rolodex card 4 of 5, tab 4 Form: One short form. Name, email or phone, and the message. Ask the rest in your reply. Our contact page: Yes, with a tick. 3 fields: name, email, message. Beside it, a real capture of our contact form with three fields: Name (Your name), Email (your@email.com) and Message (What are you looking to build?).",
+            "Rolodex card 5 of 5, tab 5 After: What happens after they send. Who replies, and roughly when. Say it on the page, then again in the thank-you message. Our contact page: Yes, with a tick. We read every word and reply within 24 hours, from Alex & Kristina. The thank-you message says it again. Beside it, a real capture of our contact page with that sentence, the call line, and You'll hear back from Alex & Kristina, the two of us, not a ticket queue, with their photos.",
+            "Rolodex score card, tab Score: Our own contact page, 3 of 5. Ticks for Phone dials on tap, One short form and What happens after; crosses marked fixing for Address opens the map and Hours. Below, on dark green: Want a contact page that does all five? Call Alex 904-210-1071. ka-performancefl.com/services/web-design."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-20T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "What does a contact page owe a visitor? Five things. We checked each one on our own page, and we didn't get all five.\n\n1. A phone number that dials on tap. Make it a tel: link, so a visitor on a phone taps once instead of copying ten digits. Ours: yes.\n\n2. An address that opens the map. Link it to your map listing so one tap starts directions. If you serve customers at their place, name the towns you cover and link your Google profile. Ours: not yet. We list our towns, but there is no map link.\n\n3. Hours, or when you pick up. \"Weekdays 9 to 5\" or \"By appointment\" both count. Ours: not yet. The page says messages get a reply within 24 hours, but not when the phone gets answered.\n\n4. One short form. Name, email or phone, and the message. Ask the rest in your reply. Ours: yes, three fields.\n\n5. What happens after they send. Who replies, and roughly when, on the page and again in the thank-you message. Ours: yes. \"We read every word and reply within 24 hours,\" from Alex and Kristina.\n\nThree of five, checked on Sept 30. We're fixing the other two too.\n\nA contact page is where a visit turns into a conversation, so it's one of the first pages we check when we build or rework a small business website. The link is in the first comment.\n\n#WebDesign #SmallBusiness #Gainesville",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "What your contact page owes a visitor: 5 checks, run on our own page",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.577Z",
+      "id": "385263716",
+      "uuid": "-3255594767111599540",
+      "scheduledAt": "2026-09-30T18:34:56.061Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null

@@ -3,7 +3,7 @@
   "date": "2026-10-23",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "behind-the-scenes",
   "title": "LinkedIn: What we check before a website goes live",
   "platforms": {
@@ -68,8 +68,115 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-23-3/a62f5459-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/a62f5459-slide-01.jpg",
+      "sha256": "a62f5459d78d8e39c01534e4cc64dfa10cde3772a1bb4a81f0596edeba022ee8",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-23-3/c1e5800e-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/c1e5800e-slide-02.jpg",
+      "sha256": "c1e5800ef3cc4dcdd19523b5d64bd849b71524099cc41d9ebb0cbfeaba6ac167",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-23-3/9ad336dd-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/9ad336dd-slide-03.jpg",
+      "sha256": "9ad336dd1db18fe2de553cb624b5eef74466d7aac48d3851ce1be33902e8dba8",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-23-3/08f7449b-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/08f7449b-slide-04.jpg",
+      "sha256": "08f7449b75c0ec34503d9cc02743b4b678f2dc70e6c317dab3133cbdbc1e0820",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-23-3/53840cf5-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/53840cf5-slide-05.jpg",
+      "sha256": "53840cf530e46f4ad27383d6477a3c09d5aadee5b8a95ecf11f3578cc66d5a45",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-23-3/3cda732a-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/3cda732a-slide-06.jpg",
+      "sha256": "3cda732ab2cd60aee4d41f62b7e434c6db2c25bdc34cab69100ac3c589445eba",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-23-3/37dce36f-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/37dce36f-slide-07.jpg",
+      "sha256": "37dce36f90ddc6acc434884583d1d42a91194d95830524fedf2154da1940cc44",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    },
+    "media/slide-08.jpg": {
+      "key": "2026-10-23-3/115ea742-slide-08.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-23-3/115ea742-slide-08.jpg",
+      "sha256": "115ea742ef4524b0637c39e0fec1cda492e2c1b529932819aa8d260b1aa2ca31",
+      "uploadedAt": "2026-09-30T18:26:36.967Z"
+    }
+  },
+  "metricool": {
+    "linkedin": {
+      "payload": {
+        "date": "2026-10-23T08:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "See how we build websites: https://ka-performancefl.com/services/web-design/?utm_source=linkedin&utm_medium=social&utm_campaign=2026-10-23-3",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-23-3/a62f5459-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-23-3/c1e5800e-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-23-3/9ad336dd-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-23-3/08f7449b-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-23-3/53840cf5-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-23-3/3cda732a-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-23-3/37dce36f-slide-07.jpg",
+            "https://media.ka-performancefl.com/2026-10-23-3/115ea742-slide-08.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Pre-launch. Fields: Site thrillersvr.com, Date Sept 30, 2026. Behind the scenes: What we check before a website goes live. 7 checks, shown on a site we built. Seven empty checkboxes: 1 Tab through it, 2 The 10-second phone test, 3 Contrast, 4 Every link returns 200, 5 The form sends, 6 The 404 page, 7 Speed on a phone.",
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 1 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Tab through it. Every stop in order, with a focus ring you can see. Captures of thrillersvr.com: the Skip to content link with a bright focus ring, and the Book the trailer button with its focus ring. Found: Press 1: Skip to content. Press 8: Book the trailer. Stamped Pass.",
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 2 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check The 10-second phone test. Can a new visitor say what it is and where? The Thrillers Mobile VR first screen on a phone, next to What: A mobile VR trailer, and Where: Middleburg, FL. The first screen on a phone, no scrolling. Found: Both answers are on the first screen. Stamped Pass.",
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 3 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Contrast. Text colors measured, not eyeballed. Four swatches in the site's own colors: Headline 17.23:1, Body text 7.83:1, Buttons 16.58:1, Form hints 7.55:1. Found: WCAG asks for 4.5:1. Lowest found: 7.55:1. Stamped Pass.",
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 4 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Every link returns 200. Every page on the site, every link on each page. A link check list: thrillersvr.com/, /experiences, /pricing, /about, /book and /accessibility, each 200 OK. Found: 6 pages. 6 returned 200. Stamped Pass.",
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 5 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check The form sends. Labels, required marks, a clear error. Four captures of the booking form's name and email fields: 1 Empty, 2 Focus with a bright ring, 3 Error with the email sample@ outlined in red, 4 Ready with sample@example.com. Found: Nothing was sent here. We send one test before launch. Stamped Pass.",
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 6 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check The 404 page. A wrong address gets a real 404 and a way back. Captures of the site's 404 page: Error 404, wrong turn, and two buttons, Back to the main road and Book the trailer. Beside them: Status 404. Two ways back: the home page and the booking page. Found: A real 404 status, not a blank page. Stamped Pass.",
+            "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 7 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Speed on a phone. Speed on a phone, stamped More soon. Four frames of the page loading on a simulated phone, Frame 1 blank, then Frames 2, 3 and 8 with the page drawn. The page loading on a simulated phone. More on that soon. Below, on dark teal: Launching a website? We run every check before it goes live. Call Alex 904-210-1071. ka-performancefl.com. More quick fixes on YouTube: @KAPerformancefl."
+          ],
+          "providers": [
+            {
+              "network": "linkedin"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-23T08:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "What we check before a website goes live, shown on a site we built and already launched: Thrillers Mobile VR (thrillersvr.com).\n\nSeven checks, captured on the live site on Sept 30:\n\n1. Tab through it. Every stop on the home page, in order, with a focus ring you can see. Thrillers has 26, and the first one is \"Skip to content.\"\n\n2. The 10-second phone test. On the first phone screen, with no scrolling, a new visitor can say what the business is and where it is.\n\n3. Contrast. Text colors measured against WCAG, not eyeballed. The minimum is 4.5:1; the lowest pair on Thrillers is 7.55:1.\n\n4. Every link returns 200. Every page on the site, and every link on each page. Six pages, six 200s.\n\n5. The form sends. Labels, required marks, and an error that says what to fix, then one test send before launch. For this document we only captured the field states; nothing was sent through the client's form.\n\n6. The 404 page. A wrong address should return a real 404 status and give people a way back, not a blank page.\n\n7. Speed on a phone. More on that soon.\n\nMore quick fixes on our YouTube channel: https://www.youtube.com/@KAPerformancefl\n\nWeb design is what we do, alongside local search, training, and AI integration. The link is in the first comment.\n\n#WebDesign #SmallBusiness #WebAccessibility",
+          "linkedinData": {
+            "type": "post",
+            "documentTitle": "What we check before a website goes live: 7 checks on a real site",
+            "publishImagesAsPDF": true,
+            "previewIncluded": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:07.563Z",
+      "id": "385266880",
+      "uuid": "7709468580435739593",
+      "scheduledAt": "2026-09-30T18:38:30.378Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null

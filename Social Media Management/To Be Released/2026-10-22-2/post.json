@@ -3,7 +3,7 @@
   "date": "2026-10-22",
   "time": "18:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "From review to FAQ answer in 4 steps",
   "platforms": {
@@ -113,8 +113,166 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-22-2/4821ad62-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/4821ad62-slide-01.jpg",
+      "sha256": "4821ad62156ec0d6093f682187c6d927cb588fb9f443d5f7d4d042936ae07511",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-22-2/431de9c3-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/431de9c3-slide-02.jpg",
+      "sha256": "431de9c35e69aad49f33900e47987049f0e9c89b0894cf75b845c7cb340cca32",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-22-2/ec2445c4-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/ec2445c4-slide-03.jpg",
+      "sha256": "ec2445c4934b4a581c83dea0b1f32a701a9af045a31c08d4e602133d9df9493d",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-22-2/73c1f734-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/73c1f734-slide-04.jpg",
+      "sha256": "73c1f734fb1440950364805060466ecf547ea5c2437ff8c17d412589271055d8",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-22-2/a8b471aa-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/a8b471aa-slide-05.jpg",
+      "sha256": "a8b471aa0fb96a88ddbbdb4a0cd175388fbf6f61a76c52d9f3cfddaf5e7be69f",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-22-2/78e801b8-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/78e801b8-slide-06.jpg",
+      "sha256": "78e801b885b6a2ccff9436b1ae66cae7158c917487a42ea554fe9e64f19a7a9f",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-22-2/34b75e79-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/34b75e79-slide-07.jpg",
+      "sha256": "34b75e79bbf5b6c830e383ab5ad2c054016acacd8646b81374de5c8686fb1f92",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slide-08.jpg": {
+      "key": "2026-10-22-2/f727872b-slide-08.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/f727872b-slide-08.jpg",
+      "sha256": "f727872b58ac5962b2d3f8b6a962529f0efb2b02369a78f648fc4a1146839c6d",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-22-2/93d82274-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/93d82274-slideshow.mp4",
+      "sha256": "93d8227436b9b2730ac9f7b948273e184c7c0eddc64e632971dbcbdd57e5f3ae",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-22-2/2c49cf6a-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22-2/2c49cf6a-slideshow-cover.jpg",
+      "sha256": "2c49cf6ae8735fc17ce2899819eb18053c97d88393fe91c9bbf16073c8251263",
+      "uploadedAt": "2026-09-30T18:25:50.388Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-22T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-22-2/93d82274-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 8 carousel slides in order: K&A Performance slide: a recipe card on a wooden counter / Recipe card, Ingredients, gather first / Recipe card, Method, step 1 of 4: Collect your reviews / Recipe card, Method, step 2 of 4: Pull the questions / Recipe card, Method, step 3 of 4: Draft each answer in your voice / Recipe card, Method, step 4 of 4: Check every claim / Recipe card, To serve, where it goes: Publish it on the page where the question comes up / Recipe card, Chef's note: The AI drafts"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-22T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "From review to FAQ answer in 4 steps. The AI drafts. You decide.\nPut AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-22-2\n\nIngredients: your public reviews, your own facts (hours, prices, parking, policies), an AI tool, one prompt, and you.\n\n1. Collect your reviews. Copy your public reviews into one document, newest first. Private messages and anything told in confidence stay out.\n2. Pull the questions. Paste the reviews and ask which questions they answer for a new customer.\n3. Draft each answer in your voice. Give the AI one question and your own facts, and tell it to use nothing else.\n4. Check every claim. This is the step you don't skip. Match each sentence in the draft to a fact on your list. Can't point to the fact? Cut the sentence.\n\nTo serve: publish each answer on the page where the question comes up. A price question goes on your prices page, parking on your contact page.\n\nThe AI drafts. You decide what goes on your website.\n\nBoth AI runs are real and shown word for word; the dog groomer, its reviews and its facts are a fictional example. General guidance, not legal advice.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-22-2\n\nThe music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-22-2/2c49cf6a-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:07.163Z",
+      "id": "385265172",
+      "uuid": "3327189455328200071",
+      "scheduledAt": "2026-09-30T18:37:40.708Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-22T18:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AI #SmallBusiness #AITips #CustomerReviews #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-22-2/4821ad62-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-22-2/431de9c3-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-22-2/ec2445c4-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-22-2/73c1f734-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-22-2/a8b471aa-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-22-2/78e801b8-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-22-2/34b75e79-slide-07.jpg",
+            "https://media.ka-performancefl.com/2026-10-22-2/f727872b-slide-08.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance slide: a recipe card on a wooden counter. Card labels: Recipe; Method: 4 steps. Using AI with your reviews? From review to FAQ answer in 4 steps. Serves: your next customer. Makes: answers to the questions they already ask. Secret: you check every claim.",
+            "Recipe card, Ingredients, gather first. What you need, with checkboxes: Your public reviews, copied from your review profile; Your own facts, hours, prices, parking, policies; An AI tool, the one you already use is fine; One prompt, it's in step 2; You, to check every claim before it goes live.",
+            "Recipe card, Method, step 1 of 4: Collect your reviews. Copy your public reviews into one document, newest first. Public reviews only: private messages and anything told in confidence stay out. Three fictional reviews: Tom, 5 stars, Easy parking in the lot out back. They gave me the price on the phone before I booked, so no surprises for my 90-pound shepherd. Keisha R., 4 stars, Great groom, but I wish I'd known they close at 4 on Saturdays. I showed up at 4:15 the first time! Ben, 5 stars, Walked in for just a nail trim, no appointment. Done in ten minutes. Fictional reviews, a sample dog groomer. General guidance, not legal advice.",
+            "Recipe card, Method, step 2 of 4: Pull the questions. Paste the reviews and ask which questions they answer for a new customer. From the prompt: List the questions these reviews answer for someone deciding whether to book with us. Real AI run, word for word, 3 of 13 shown: 5. Is there parking? Easy parking in the lot out back. 6. Can I get a price before I book? They gave me the price on the phone before I booked. 8. What time do they close on Saturdays? they close at 4 on Saturdays. Fictional reviews, a sample dog groomer.",
+            "Recipe card, Method, step 3 of 4: Draft each answer in your voice. Give the AI one question and your own facts. Tell it to use nothing else. Your facts: 1, We give you the price by phone before you book. 2, The price depends on your dog's size and coat. 3, Full grooms for large dogs (over 50 pounds) start at $85. 4, Call (352) 555-0147, Tuesday to Saturday, 8 AM to 4 PM. 5, Nail trims are $15, walk in, no appointment needed. Real AI draft, word for word, for Can I get a price before I book?: Yes! Just give us a call at (352) 555-0147, Tuesday to Saturday, 8 AM to 4 PM, and we'll tell you the price before you book. It depends on your dog's size and coat, and full grooms for large dogs (over 50 pounds) start at $85. Fictional business and facts.",
+            "Recipe card, Method, step 4 of 4: Check every claim. Match each claim in the draft to a fact on your list. Five claims, each ticked: Call (352) 555-0147, fact 4; Tuesday to Saturday, 8 AM to 4 PM, fact 4; We'll tell you the price before you book, fact 1; It depends on your dog's size and coat, fact 2; Large dogs (over 50 pounds) start at $85, fact 3. Can't point to the fact? Cut the sentence. This draft passed: all five claims match. It also left out the nail trims, which don't answer this question. The AI drafts. You decide. Fictional business and facts.",
+            "Recipe card, To serve, where it goes: Publish it on the page where the question comes up. A price question goes on your prices page. Parking goes on your contact page. A drawn web page for Juniper Street Grooming, Prices, with the question Can I get a price before I book? and the checked answer. Drawn example: a fictional business.",
+            "Recipe card, Chef's note: The AI drafts. You decide. Your reviews already hold the questions. Your answers, checked, belong on your site. Below, on dark green: Want help putting AI to work in your business? The 90-Day AI Launch. A twelve-week build, one on one with Alex. ka-performancefl.com/ai-launch. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-22T18:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "From review to FAQ answer in 4 steps. The AI drafts. You decide. Save this recipe.\n\nIngredients: your public reviews, your own facts (hours, prices, parking, policies), an AI tool, one prompt, and you.\n\n1. Collect your reviews. Copy your public reviews into one document, newest first. Private messages and anything told in confidence stay out.\n2. Pull the questions. Paste the reviews and ask which questions they answer for a new customer.\n3. Draft each answer in your voice. Give the AI one question and your own facts, and tell it to use nothing else.\n4. Check every claim. This is the step you don't skip. Match each sentence in the draft to a fact on your list. Can't point to the fact? Cut the sentence.\n\nTo serve: publish each answer on the page where the question comes up. A price question goes on your prices page, parking on your contact page.\n\nThe AI drafts. You decide what goes on your website.\n\nBoth AI runs are real and shown word for word; the dog groomer, its reviews and its facts are a fictional example. General guidance, not legal advice.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:07.163Z",
+      "id": "385266690",
+      "uuid": "1665166298434260089",
+      "scheduledAt": "2026-09-30T18:38:29.811Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

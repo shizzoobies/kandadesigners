@@ -3,7 +3,7 @@
   "date": "2026-10-19",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "5 things to do with a Google review after you say thanks",
   "platforms": {
@@ -104,8 +104,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/slide-01.jpg": {
+      "key": "2026-10-19-2/c7d01b6e-slide-01.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/c7d01b6e-slide-01.jpg",
+      "sha256": "c7d01b6ebd562b2e14e5c5f387f25d633472f8b19948b6a5df74166134495ee0",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slide-02.jpg": {
+      "key": "2026-10-19-2/b05d7740-slide-02.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/b05d7740-slide-02.jpg",
+      "sha256": "b05d77403563f881db34846cba4a140d8a32a3632b2628a588e841d9ae1d63f4",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slide-03.jpg": {
+      "key": "2026-10-19-2/f2e4e774-slide-03.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/f2e4e774-slide-03.jpg",
+      "sha256": "f2e4e7740610782a1d54976f99c2b6c3f4a4af4175d6032e40f0a6307a95039a",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slide-04.jpg": {
+      "key": "2026-10-19-2/34795afc-slide-04.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/34795afc-slide-04.jpg",
+      "sha256": "34795afcf237731ce629175530752ae6bf7386af4adfcc30722a1e48f842eed5",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slide-05.jpg": {
+      "key": "2026-10-19-2/85972e28-slide-05.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/85972e28-slide-05.jpg",
+      "sha256": "85972e28df557f7a4e08408a5f8249e6495ed9e7226553f3b367039f67de49c9",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slide-06.jpg": {
+      "key": "2026-10-19-2/9f0ddf52-slide-06.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/9f0ddf52-slide-06.jpg",
+      "sha256": "9f0ddf52eb175f52ca7e4325a37290c5d58a38709ad59f228b730ebf1f0cf14e",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slide-07.jpg": {
+      "key": "2026-10-19-2/cecd0b10-slide-07.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/cecd0b10-slide-07.jpg",
+      "sha256": "cecd0b104a572f08e2c917b3583ee5a331d1eb5a50819b18fcfd1fe43064efb4",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slideshow.mp4": {
+      "key": "2026-10-19-2/717569fb-slideshow.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/717569fb-slideshow.mp4",
+      "sha256": "717569fb0f68be69d9c190f95332cbdae9a8122d0f7d287fbde4ff5dd0069f15",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    },
+    "media/slideshow-cover.jpg": {
+      "key": "2026-10-19-2/6c957e4a-slideshow-cover.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19-2/6c957e4a-slideshow-cover.jpg",
+      "sha256": "6c957e4a9ee2b87feb3704146bfe36a6842abd1eff570f956ba9ecb38417eeaa",
+      "uploadedAt": "2026-09-30T18:24:17.745Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-19T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-19-2/717569fb-slideshow.mp4"
+          ],
+          "mediaAltText": [
+            "Video of the 7 carousel slides in order: K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top"
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-19T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "5 things to do with a Google review after you say thanks.\nLocal search, done properly: https://ka-performancefl.com/services/seo-ai-search/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-19-2\n\n1. Reply in public. Thank them by name and mention what they mentioned. The next customer reads your reply too.\n2. Answer its question on your site. If a review says \"didn't know you did that,\" others didn't know either. Put the answer where they look first.\n3. Quote it on your site. Ask first. Then use their words exactly, on the page it's about.\n4. Fix what it flagged. A fair complaint is free advice. Fix it, then say so in your reply.\n5. Ask the next happy customer. Share your Google review link or QR code. Offer nothing in return: Google doesn't allow incentives for reviews.\n\nThis week: pick one review and do one of the five.\n\nThe diner on the cards is a fictional example.\n\nLocal search is part of every site we build. Call Alex at 904-210-1071 or message us here.\n\nThe music is AI generated.\n\n#GainesvilleFL #SmallBusiness #LocalSEO",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-19-2/6c957e4a-slideshow-cover.jpg",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.015Z",
+      "id": "385262111",
+      "uuid": "4098805833209430720",
+      "scheduledAt": "2026-09-30T18:32:31.433Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-19T16:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #LocalSEO #GoogleReviews #GoogleBusinessProfile #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-19-2/c7d01b6e-slide-01.jpg",
+            "https://media.ka-performancefl.com/2026-10-19-2/b05d7740-slide-02.jpg",
+            "https://media.ka-performancefl.com/2026-10-19-2/f2e4e774-slide-03.jpg",
+            "https://media.ka-performancefl.com/2026-10-19-2/34795afc-slide-04.jpg",
+            "https://media.ka-performancefl.com/2026-10-19-2/85972e28-slide-05.jpg",
+            "https://media.ka-performancefl.com/2026-10-19-2/9f0ddf52-slide-06.jpg",
+            "https://media.ka-performancefl.com/2026-10-19-2/cecd0b10-slide-07.jpg"
+          ],
+          "mediaAltText": [
+            "K&A Performance logo and ka-performancefl.com at the top. A restaurant comment card from Juniper Lane Diner, How did we do?, on a green diner table. Kicker: They left you a Google review. You said thanks. Headline: 5 things to do with a Google review after you say thanks. Boxes ticked for Food, Service and Would come back. Comments, handwritten with five stars: The biscuits were worth the wait, and Tasha remembered my order. Dana. Drawn example: a fictional diner.",
+            "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 1 of 5: Reply in public. Comment, five stars: The biscuits were worth the wait, and Tasha remembered my order. Dana. Manager's follow-up, sample reply: Thanks, Dana! Tasha will be glad to hear it. The biscuits come out at 7 every morning. Tip: Thank them by name and mention what they mentioned. The next customer reads your reply too. Drawn example: a fictional diner.",
+            "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 2 of 5: Answer its question on your site. Comment, five stars: Loved it. Didn't know you take call-ahead orders until I got there! Marcus. Manager's follow-up, to do: Add Call-ahead orders to the menu page, with the phone number. Tip: If one person wondered, others did too. Put the answer where they look first. Drawn example: a fictional diner.",
+            "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 3 of 5: Quote it on your site. Ask first. Comment, five stars: Came for coffee, stayed for the peach pie. The real deal. Renee. Manager's follow-up, asked first: May we quote your review on our website? She said yes. The quote goes on the pie page, with her first name. Tip: Ask the reviewer before you use their words. Then quote them exactly. Drawn example: a fictional diner.",
+            "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 4 of 5: Fix what it flagged. Comment, four stars: Great food, but the sign out front is hard to see from the road. Paul. Manager's follow-up, fixed, then replied: New sign ordered. Reply: Thanks for the heads-up. A bigger sign goes up this month. Tip: A fair complaint is free advice. Fix it, then say so in your reply. Drawn example: a fictional diner.",
+            "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 5 of 5: Ask the next happy customer. Comment: Everything was great!, said at the register. Manager's follow-up, asked: Would you mind saying that on Google? Then point to the QR code by the register. Tip: Share your Google review link or QR code. Offer nothing for it: Google doesn't allow that. Drawn example: a fictional diner.",
+            "K&A Performance logo and ka-performancefl.com at the top. The back of the card. This week: Pick one review. Do one of the five. 1 Reply in public, 2 Answer its question on your site, 3 Quote it (ask first), 4 Fix what it flagged, 5 Ask the next happy customer. Ours, for the record: 5.0 stars, 8 reviews on our Google profile, Sept 30, 2026. Dark teal panel: Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-19T16:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "5 things to do with a Google review after you say thanks. Save this for the next one.\n\n1. Reply in public. Thank them by name and mention what they mentioned. The next customer reads your reply too.\n2. Answer its question on your site. If a review says \"didn't know you did that,\" others didn't know either. Put the answer where they look first.\n3. Quote it on your site. Ask first. Then use their words exactly, on the page it's about.\n4. Fix what it flagged. A fair complaint is free advice. Fix it, then say so in your reply.\n5. Ask the next happy customer. Share your Google review link or QR code. Offer nothing in return: Google doesn't allow incentives for reviews.\n\nThis week: pick one review and do one of the five.\n\nThe diner on the cards is a fictional example.\n\nLocal search is part of every site we build. Send us a DM or call Alex at 904-210-1071. Link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.015Z",
+      "id": "385263574",
+      "uuid": "1964170499421847722",
+      "scheduledAt": "2026-09-30T18:34:55.517Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

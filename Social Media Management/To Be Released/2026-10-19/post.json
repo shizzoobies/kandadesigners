@@ -3,7 +3,7 @@
   "date": "2026-10-19",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "tip",
   "title": "Read your reviews the way your next customer does",
   "platforms": {
@@ -60,8 +60,158 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-19/c96ceb5b-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-19/c96ceb5b-reel-vertical.mp4",
+      "sha256": "c96ceb5b1a79a74acc072ece227100966a32d03ba25c62675cf1616efeb3ab12",
+      "uploadedAt": "2026-09-30T18:24:12.582Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-19/cb64f12a-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-19/cb64f12a-thumbnail.jpg",
+      "sha256": "cb64f12a59eb2448c7a21b82f892d66f2c18e6e4649fab173564bd8b6922a77e",
+      "uploadedAt": "2026-09-30T18:24:12.582Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-19T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-19/c96ceb5b-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a clipboard with a printout of K&A Performance's own Google reviews and a highlighter, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Read your reviews the way your next customer does, over K&A's profile: K & A Performance, 5.0 stars, 8 reviews, Website designer. They check three things. Every review frame is labeled: Our real Google reviews, redrawn from our profile. Sept 30, 2026. Names shortened. 1, the newest review: a five-star review from S., 3 weeks ago, marked New, with the date highlighted. Is it recent? A fresh date says people still choose you. 2, did the owner reply?: a five-star review from Lisa, a month ago, with Response from the owner: Thank you so much, highlighted. A reply shows someone reads them. 3, one detail they can picture: a five-star review from Bobby, 2 months ago, with the line Within a matter of hours we had our first proposal and within days a working demo highlighted. A real detail says more than great service. Ends on: Read your own profile like a stranger. Open it in a private window. Check all three: the newest review, the owner's reply, one detail they can picture. Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-19T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Read your reviews the way your next customer does. They check three things.\nLocal search, done properly: https://ka-performancefl.com/services/seo-ai-search/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-19\n\nWe read our own Google reviews like a stranger would:\n\n1. The newest review. Is it recent? Ours was three weeks old when we checked on Sept 30. A fresh date says people still choose you.\n2. Did the owner reply? A reply, even a short one, shows someone reads them.\n3. One detail they can picture. \"Within a matter of hours we had our first proposal and within days a working demo.\" A real detail says more than \"great service.\"\n\nTry it: open your own Google profile in a private window and check all three.\n\nLocal search is part of every site we build. Call Alex at 904-210-1071 or message us here.\n\nThe reviews on screen are our real ones, redrawn from our Google profile on Sept 30, 2026, with names shortened. The music is AI generated.\n\n#GainesvilleFL #SmallBusiness #LocalSEO",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-19/cb64f12a-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.709Z",
+      "id": "385261910",
+      "uuid": "2750190798371964103",
+      "scheduledAt": "2026-09-30T18:32:31.201Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-19T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #SmallBusiness #LocalSEO #GoogleReviews #GainesvilleBusiness #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-19/c96ceb5b-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a clipboard with a printout of K&A Performance's own Google reviews and a highlighter, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Read your reviews the way your next customer does, over K&A's profile: K & A Performance, 5.0 stars, 8 reviews, Website designer. They check three things. Every review frame is labeled: Our real Google reviews, redrawn from our profile. Sept 30, 2026. Names shortened. 1, the newest review: a five-star review from S., 3 weeks ago, marked New, with the date highlighted. Is it recent? A fresh date says people still choose you. 2, did the owner reply?: a five-star review from Lisa, a month ago, with Response from the owner: Thank you so much, highlighted. A reply shows someone reads them. 3, one detail they can picture: a five-star review from Bobby, 2 months ago, with the line Within a matter of hours we had our first proposal and within days a working demo highlighted. A real detail says more than great service. Ends on: Read your own profile like a stranger. Open it in a private window. Check all three: the newest review, the owner's reply, one detail they can picture. Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-19T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Read your reviews the way your next customer does. They check three things.\n\nWe read our own Google reviews like a stranger would:\n\n1. The newest review. Is it recent? Ours was three weeks old when we checked on Sept 30. A fresh date says people still choose you.\n2. Did the owner reply? A reply, even a short one, shows someone reads them.\n3. One detail they can picture. \"Within a matter of hours we had our first proposal and within days a working demo.\" A real detail says more than \"great service.\"\n\nTry it: open your own Google profile in a private window and check all three.\n\nLocal search is part of every site we build. Send us a DM or call Alex at 904-210-1071. Link in bio.\n\nThe reviews on screen are our real ones, redrawn from our Google profile on Sept 30, 2026, with names shortened. The music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-19/cb64f12a-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.709Z",
+      "id": "385261971",
+      "uuid": "5231041681779870111",
+      "scheduledAt": "2026-09-30T18:32:31.270Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-19T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-19/c96ceb5b-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel styled as a clipboard with a printout of K&A Performance's own Google reviews and a highlighter, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Read your reviews the way your next customer does, over K&A's profile: K & A Performance, 5.0 stars, 8 reviews, Website designer. They check three things. Every review frame is labeled: Our real Google reviews, redrawn from our profile. Sept 30, 2026. Names shortened. 1, the newest review: a five-star review from S., 3 weeks ago, marked New, with the date highlighted. Is it recent? A fresh date says people still choose you. 2, did the owner reply?: a five-star review from Lisa, a month ago, with Response from the owner: Thank you so much, highlighted. A reply shows someone reads them. 3, one detail they can picture: a five-star review from Bobby, 2 months ago, with the line Within a matter of hours we had our first proposal and within days a working demo highlighted. A real detail says more than great service. Ends on: Read your own profile like a stranger. Open it in a private window. Check all three: the newest review, the owner's reply, one detail they can picture. Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-19T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Read your Google reviews the way your next customer does: the newest review, the owner's reply, and one detail they can picture.\nhttps://ka-performancefl.com/services/seo-ai-search/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-19\n\nWe read our own Google reviews the way a stranger would. First the date on the newest review, then whether the owner replied, then one specific detail you can picture, like a first proposal within hours and a working demo within days. Open your own profile in a private window and check all three.\n\nThe reviews shown are our real ones, redrawn from our Google profile on Sept 30, 2026, with names shortened.\n\nThe music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "Read your Google reviews the way your next customer does",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "Google reviews",
+              "Google Business Profile",
+              "local SEO",
+              "online reviews",
+              "small business marketing",
+              "Gainesville web design"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:05.709Z",
+      "id": "385262026",
+      "uuid": "8414698589662956565",
+      "scheduledAt": "2026-09-30T18:32:31.346Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,

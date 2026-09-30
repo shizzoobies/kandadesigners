@@ -3,7 +3,7 @@
   "date": "2026-10-22",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "ai-launch",
   "title": "Ask AI to find the questions in your reviews",
   "platforms": {
@@ -61,8 +61,159 @@
     "visuals": false
   },
   "generate": [],
-  "r2": {},
-  "metricool": {},
+  "r2": {
+    "media/reel-vertical.mp4": {
+      "key": "2026-10-22/1b6f8ba3-reel-vertical.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-22/1b6f8ba3-reel-vertical.mp4",
+      "sha256": "1b6f8ba3b88059d287f0374c5f432d9aa37e87861b6b79d0d464586f4e23f868",
+      "uploadedAt": "2026-09-30T18:25:44.986Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-22/adf50dd3-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-22/adf50dd3-thumbnail.jpg",
+      "sha256": "adf50dd32ba430de83bf031f0c349b1026c4d4dad2507468e5f1b69b1083c7b5",
+      "uploadedAt": "2026-09-30T18:25:44.986Z"
+    }
+  },
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-22T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-22/1b6f8ba3-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Ask AI to find the questions in your reviews. Each review answers something the next customer wants to know. A loupe lights a phrase in three fictional reviews of a fictional dog groomer, Juniper Street Grooming: Easy parking in the lot out back; they close at 4 on Saturdays; no appointment. Step 1: Paste your public reviews. Public reviews only. Private messages stay out. Six fictional reviews in a prompt. Step 2: Ask for the questions, with the prompt word for word: Below are public reviews of my dog grooming business. Read them the way a new customer would. List the questions these reviews answer for someone deciding whether to book with us. Only use what the reviews say. Don't answer anything yourself and don't add facts. Step 3: Get the list. Real AI run, word for word, 6 of 13 shown: Can I stay with my dog if she's nervous? Is there parking? Can I get a price before I book? What time do they close on Saturdays? Can I walk in for a nail trim without an appointment? Can they handle an older dog with bad hips? Each with the review words that answer it. Then: Each one is a question for your FAQ, a drawn FAQ block with three of the questions and Your answer. Your facts. AI finds the questions. You write the answers. Ends on Want help putting AI to work in your business? The 90-Day AI Launch, ka-performancefl.com/ai-launch, Call Alex 904-210-1071. Fictional business and reviews. The AI run is real."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-22T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your reviews are full of questions. Ask AI to find them.\nPut AI to work in your business, the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-22\n\nEvery review answers something the next customer wants to know: is there parking, can I get a price first, when do you close on Saturday. Here's how to pull those questions out:\n\n1. Paste your public reviews into your AI tool. Public reviews only; private messages stay out.\n2. Ask for the questions. We asked for the questions the reviews answer for someone deciding whether to book, with the review words for each, and nothing added.\n3. Get the list. On six sample reviews it found 13 questions, each with the words that answer it. The video shows six of them, word for word.\n\nEach one is a question for the FAQ on your website. The AI finds the questions. You write the answers, with your own facts.\n\nThe dog groomer and the reviews are a fictional example; the AI run is real. General guidance, not legal advice.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch: https://ka-performancefl.com/ai-launch/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-22\n\nThe music is AI generated.\n\n#GainesvilleFL #AI #SmallBusiness",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-22/adf50dd3-thumbnail.jpg",
+          "facebookData": {
+            "type": "REEL"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.997Z",
+      "id": "385265045",
+      "uuid": "-1441115610438877136",
+      "scheduledAt": "2026-09-30T18:37:40.456Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-22T10:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#GainesvilleFL #AI #SmallBusiness #AITips #CustomerReviews #SmallBusinessTips",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-22/1b6f8ba3-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Ask AI to find the questions in your reviews. Each review answers something the next customer wants to know. A loupe lights a phrase in three fictional reviews of a fictional dog groomer, Juniper Street Grooming: Easy parking in the lot out back; they close at 4 on Saturdays; no appointment. Step 1: Paste your public reviews. Public reviews only. Private messages stay out. Six fictional reviews in a prompt. Step 2: Ask for the questions, with the prompt word for word: Below are public reviews of my dog grooming business. Read them the way a new customer would. List the questions these reviews answer for someone deciding whether to book with us. Only use what the reviews say. Don't answer anything yourself and don't add facts. Step 3: Get the list. Real AI run, word for word, 6 of 13 shown: Can I stay with my dog if she's nervous? Is there parking? Can I get a price before I book? What time do they close on Saturdays? Can I walk in for a nail trim without an appointment? Can they handle an older dog with bad hips? Each with the review words that answer it. Then: Each one is a question for your FAQ, a drawn FAQ block with three of the questions and Your answer. Your facts. AI finds the questions. You write the answers. Ends on Want help putting AI to work in your business? The 90-Day AI Launch, ka-performancefl.com/ai-launch, Call Alex 904-210-1071. Fictional business and reviews. The AI run is real."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-22T10:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your reviews are full of questions. Ask AI to find them.\n\nEvery review answers something the next customer wants to know: is there parking, can I get a price first, when do you close on Saturday. Here's how to pull those questions out:\n\n1. Paste your public reviews into your AI tool. Public reviews only; private messages stay out.\n2. Ask for the questions. We asked for the questions the reviews answer for someone deciding whether to book, with the review words for each, and nothing added.\n3. Get the list. On six sample reviews it found 13 questions, each with the words that answer it. The video shows six of them, word for word.\n\nEach one is a question for the FAQ on your website. The AI finds the questions. You write the answers, with your own facts. Save this for later.\n\nThe dog groomer and the reviews are a fictional example; the AI run is real. General guidance, not legal advice.\n\nWant help putting AI to work in your business? Call Alex at 904-210-1071 or see the 90-Day AI Launch. Link in bio.\n\nThe music is AI generated.",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-22/adf50dd3-thumbnail.jpg",
+          "instagramData": {
+            "type": "REEL",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.997Z",
+      "id": "385265107",
+      "uuid": "59385240162223460",
+      "scheduledAt": "2026-09-30T18:37:40.535Z"
+    },
+    "youtube": {
+      "payload": {
+        "date": "2026-10-22T12:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-22/1b6f8ba3-reel-vertical.mp4"
+          ],
+          "mediaAltText": [
+            "Text-led reel with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Ask AI to find the questions in your reviews. Each review answers something the next customer wants to know. A loupe lights a phrase in three fictional reviews of a fictional dog groomer, Juniper Street Grooming: Easy parking in the lot out back; they close at 4 on Saturdays; no appointment. Step 1: Paste your public reviews. Public reviews only. Private messages stay out. Six fictional reviews in a prompt. Step 2: Ask for the questions, with the prompt word for word: Below are public reviews of my dog grooming business. Read them the way a new customer would. List the questions these reviews answer for someone deciding whether to book with us. Only use what the reviews say. Don't answer anything yourself and don't add facts. Step 3: Get the list. Real AI run, word for word, 6 of 13 shown: Can I stay with my dog if she's nervous? Is there parking? Can I get a price before I book? What time do they close on Saturdays? Can I walk in for a nail trim without an appointment? Can they handle an older dog with bad hips? Each with the review words that answer it. Then: Each one is a question for your FAQ, a drawn FAQ block with three of the questions and Your answer. Your facts. AI finds the questions. You write the answers. Ends on Want help putting AI to work in your business? The 90-Day AI Launch, ka-performancefl.com/ai-launch, Call Alex 904-210-1071. Fictional business and reviews. The AI run is real."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-22T12:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Your reviews are full of questions. Ask AI to find them.\nhttps://ka-performancefl.com/ai-launch/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-22\n\nPaste your public reviews into an AI tool and ask which questions they answer for someone deciding whether to buy from you. In this real run on six fictional reviews of a fictional dog groomer, it found 13 questions, each with the review words that answer it, and six are shown word for word. Each one is a question for your website's FAQ: the AI finds the questions, and you write the answers with your own facts.\n\nThis is general guidance, not legal advice. The music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "youtubeData": {
+            "title": "Ask AI to find the questions in your customer reviews",
+            "type": "short",
+            "privacy": "public",
+            "tags": [
+              "AI for small business",
+              "customer reviews",
+              "website FAQ",
+              "practical AI",
+              "small business tips",
+              "online reviews",
+              "Gainesville small business"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-30T18:27:06.997Z",
+      "id": "385265141",
+      "uuid": "-3822693533189190287",
+      "scheduledAt": "2026-09-30T18:37:40.626Z"
+    }
+  },
   "published": {},
   "credits": {},
   "lastError": null,
