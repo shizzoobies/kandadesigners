@@ -22,7 +22,8 @@ Metricool.** The Post Desk is empty. `validate` passes on all 64 folders, and 27
 | Fri 10/2 | **Thrillers launch**, promoted from drafts 9/28 (thrillersvr.com is live) | **L1 "Test Your Website With One Key"** at 11:00; S5 Thrillers Short at 12:00 |
 | Oct 3 to 9 | Live (plan `plans/2026-10-05.md`) | S6 to S10 at noon; **L2 "Let AI draft it. Make it sound like you."** Wed 10/7 at 11:00 (built and scheduled by Astra) |
 | Oct 10 to 16 | Live (plan `plans/2026-10-12.md`, build brief `plans/2026-10-12-build-brief.md`), 34 posts | A Short in every weekday reel folder at noon. **L3 on Wed 10/14 is NOT done** (see section 2) |
-| **Sat 10/17 onward** | **Nothing planned** | Nothing planned |
+| Oct 17 to 23 | **Built 9/30, on the Post Desk awaiting Alex's approvals** (plan `plans/2026-10-19.md`, brief `plans/2026-10-19-build-brief.md`, 17 posts) | A Short in every weekday reel folder at noon. **L4 (Wed 10/21) is ON HOLD** by Alex's call 9/30; `2026-10-21-4` stays reserved and empty |
+| **Sat 10/24 onward** | **Nothing planned** | Nothing planned |
 
 The weekday shape:
 - LinkedIn document at 8:00
@@ -47,9 +48,30 @@ The weekday shape:
      - brief approval
      - recapture the profile around Oct 10 to 12
    - Check with Alex whether Astra is still carrying it before you touch it.
-2. **Plan Sat Oct 17 to Fri Oct 23: DRAFTED 2026-09-30** as `plans/2026-10-19.md` (`Approved: no`,
-   five questions for Alex at the end). Next: Alex marks each slot, then a build brief, then
-   parallel builders. L4 also needs its own brief, `plans/youtube-2026-09-28/video-4-reviews-to-faq.md`.
+2. **Oct 17 to 23: BUILT 2026-09-30 and on the Post Desk.** Alex approved the plan in chat
+   ("hold on L4 for now and let's do everything else"). Six Opus builders made 17 posts; every
+   contact sheet was reviewed by the main session; validate passes on all 71 folders. Next:
+   `desk pull` after Alex approves, set approved folders to `approved`, `validate`, `upload`,
+   `release`, `createScheduledPost` per packet, `release --record`. Check no folder already has
+   `metricool` ids first.
+   - **Friday 10/23 is the fallback** (pre-launch checklist on Thrillers). Alex said a client
+     launch by then is possible but not sure; if it lands, rebuild `2026-10-23`, `-2`, `-3` in
+     the Thrillers launch format and re-approve.
+   - **Builder questions still open for Alex** (also in each brief's `## Questions for Alex`):
+     - Tue 10/20 carousel says "We're fixing this too" about /contact/ having no map link and
+       no hours. Add them to the site before 10/20 (which hours?), or change the wording to
+       "Not on our page yet".
+     - Mon 10/19: Google's traffic check blocked the search capture; the reel is a labeled
+       redraw of our real reviews (5.0, 8 reviews). Ship as is? Also, our newest review has no
+       owner reply as of 9/30; the reel says a reply shows someone reads them.
+     - Fri 10/23 check 5 says "We send one test send before launch." Did a test go through the
+       Thrillers form before its launch?
+     - Sat 10/17: the /training/team/ profile portraits use "Portrait of ..." alt text, close
+       to the pattern the post warns against. Trim on the site? Not shown in the post.
+     - Wed 10/21: in the finance sample's desk check, calculation 1's feedback rendered
+       without its division and multiplication signs in the capture browser. Worth a look.
+   - **L4** stays on hold. When Alex releases it: brief at
+     `plans/youtube-2026-09-28/video-4-reviews-to-faq.md`, then the L1 build pattern.
    - Already pencilled in:
      - **L4, Wed 10/21: "Turn your Google reviews into FAQ answers for your website".**
        It needs a brief and the full long-video build. L1 is the reference.
