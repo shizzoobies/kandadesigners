@@ -1,0 +1,68 @@
+{
+  "id": "2026-10-20",
+  "date": "2026-10-20",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Ask for less on your form",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    },
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "Your contact form only needs three fields",
+      "tags": [
+        "contact form",
+        "website form fields",
+        "small business website",
+        "website design tips",
+        "Gainesville web design"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Quick fixes for your website",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel styled as a tear-off pad, with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Ask for less on your form. Every extra field is one more reason to stop. A drawn Contact us form labeled Drawn example with twelve fields (Name, Email, Phone, Company, Street address, City, ZIP code, Website, Budget, How did you find us?, Best time to call, Message) and a counter reading 12 fields to fill in. Keep three: Name. Email or phone. The message. Nine perforated strips tear off one by one and the counter drops to 3; ticks mark Name, Email and Message: Everything else can wait for the reply. Ours asks for three: the drawn twelve-field form beside a real capture of our contact page, ka-performancefl.com/contact, captured Sept 30, 2026, with three fields, Name, Email and Message. Ask the rest in your reply: a drawn reply, Hi Dana, thanks for reaching out! Happy to quote the patio job. Two quick questions: what is the address, and when would you like it done? Jo. Not a real business. Ends on Want a form that asks for less? Web design from Gainesville. Call Alex 904-210-1071, ka-performancefl.com."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above the headline Ask for less on your form. Every extra field is one more reason to stop. Below, a drawn Contact us form labeled Drawn example with twelve fields, from Name to Message, and a counter: 12 fields to fill in.",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ]
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1020-r"
+}

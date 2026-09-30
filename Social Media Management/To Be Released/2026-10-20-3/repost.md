@@ -1,0 +1,1 @@
+We ran our own contact page through this list before posting it and scored three of five. The map link and the hours are the two we're fixing. If you have five minutes today, open your contact page on your phone and tap the phone number. If nothing happens, that's the first fix.

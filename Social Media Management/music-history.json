@@ -54,5 +54,94 @@
     "published": "2026-10-07",
     "post": "YouTube L2, Let AI draft it. Make it sound like you. (To Be Released/2026-10-07-4), long-form 16:9, the bed under the narration",
     "_note": "ElevenLabs music_v2, candidate a (public/youtube/l2/audio/music/music-yt-l2-a.mp3): calm, warm, lightly conversational, warm fingerpicked nylon guitar, felt piano, soft upright bass, delicate brushed percussion, about 82 bpm, 510s asked. Logged in D:/kap-reel/config/audio.json under set \"youtube-l2\". Dated for the planned 2026-10-07 11:00 AM publish; generator scripts/youtube/l2/music.ts."
+  },
+  {
+    "track": "music-yt-l3",
+    "file": "D:/kap-reel/public/youtube/l3/audio/music/music-yt-l3.mp3",
+    "published": "2026-10-14",
+    "post": "YouTube L3, 8 Google Business Profile checks worth doing today (To Be Released/2026-10-14-4), long-form 16:9, the bed under the narration",
+    "_note": "ElevenLabs music_v2, candidate a (public/youtube/l3/audio/music/music-yt-l3-a.mp3): calm, warm, lightly conversational, warm fingerpicked nylon guitar, felt piano, soft upright bass, delicate brushed percussion, about 78 bpm, 510s asked. Logged in D:/kap-reel/config/audio.json under set \"youtube-l3\". Dated for the planned 2026-10-14 11:00 AM publish; generator scripts/youtube/l3/music.ts."
+  },
+  {
+    "track": "music-w1020-r",
+    "file": "D:/kap-reel/out/candidates/music-w1020-r.mp3",
+    "published": "2026-10-20",
+    "post": "Reel, Ask for less on your form (To Be Released/2026-10-20), 10:30 AM, plus its 12:00 PM YouTube Short (same folder, same day, one use)",
+    "_note": "ElevenLabs music_v2: light, tidy indie pop, chicken-picked clean electric riff, muted sixteenth-note strums, bouncy electric bass, dry tight kit, about 114 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1020\"; generator scripts/social/2026-10-20/music.ts."
+  },
+  {
+    "track": "music-w1020-c",
+    "file": "D:/kap-reel/out/candidates/music-w1020-c.mp3",
+    "published": "2026-10-20",
+    "post": "Carousel slide video, What your contact page owes a visitor (To Be Released/2026-10-20-2), 4:00 PM, Facebook",
+    "_note": "ElevenLabs music_v2: warm, easygoing indie pop, fingerpicked acoustic melody over autoharp strums, soft picked electric bass, gentle kick and shaker, about 92 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1020\"; generator scripts/social/2026-10-20/music.ts."
+  },
+  {
+    "track": "music-w1022-r",
+    "file": "D:/kap-reel/out/candidates/music-w1022-r.mp3",
+    "published": "2026-10-22",
+    "post": "Reel, Ask AI to find the questions in your reviews (To Be Released/2026-10-22), and its YouTube Short the same day",
+    "_note": "ElevenLabs music_v2, bright Irish bouzouki hook, staccato muted electric counter riff, about 110 bpm. Logged in D:/kap-reel/config/audio.json under set social-w1022. Dated for the planned 2026-10-22 10:30 AM publish."
+  },
+  {
+    "track": "music-w1022-c",
+    "file": "D:/kap-reel/out/candidates/music-w1022-c.mp3",
+    "published": "2026-10-22",
+    "post": "Carousel slide video, From review to FAQ answer in 4 steps (To Be Released/2026-10-22-2)",
+    "_note": "ElevenLabs music_v2, archtop jazz guitar chord melody in a gentle bossa groove, soft flute answers, about 92 bpm. Logged in D:/kap-reel/config/audio.json under set social-w1022. Dated for the planned 2026-10-22 6:00 PM publish."
+  },
+  {
+    "track": "music-w1019-r",
+    "file": "D:/kap-reel/out/candidates/music-w1019-r.mp3",
+    "published": "2026-10-19",
+    "post": "Mon 2026-10-19 reel, Read your reviews the way your next customer does (To Be Released/2026-10-19), and its 12:00 PM YouTube Short (same folder, one use)",
+    "_note": "ElevenLabs music_v2, raw assets/audio/raw/music-w1019-r-32s.mp3: friendly country-tinged indie pop, chicken picking clean electric lead, boom chick acoustic, brushed train beat, about 108 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1019\". Dated for the planned publish."
+  },
+  {
+    "track": "music-w1019-c",
+    "file": "D:/kap-reel/out/candidates/music-w1019-c.mp3",
+    "published": "2026-10-19",
+    "post": "Mon 2026-10-19 carousel slide video (Facebook), 5 things to do with a Google review after you say thanks (To Be Released/2026-10-19-2)",
+    "_note": "ElevenLabs music_v2, raw assets/audio/raw/music-w1019-c-32s.mp3: warm easygoing indie pop with a light gypsy jazz flavor, acoustic melody, la pompe rhythm guitar, clarinet answers, about 100 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1019\". Dated for the planned publish."
+  },
+  {
+    "track": "music-w1023-r",
+    "file": "D:/kap-reel/out/social/2026-10-23/music-w1023-r.wav",
+    "published": "2026-10-23",
+    "post": "Fri 2026-10-23 reel, What we check before a website goes live (To Be Released/2026-10-23), and its 12:00 PM YouTube Short (same folder, one use)",
+    "_note": "ElevenLabs music_v2, raw assets/audio/raw/music-w1023-r-32s.mp3 with its 0.49 s of leading silence cut: upbeat indie pop, punchy palm-muted clean electric riff doubled by glockenspiel, ringing open chords, driving eighth-note bass, claps on 2 and 4, about 120 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1023\". Dated for the planned publish."
+  },
+  {
+    "track": "music-w1023-c",
+    "file": "D:/kap-reel/out/candidates/music-w1023-c.mp3",
+    "published": "2026-10-23",
+    "post": "Fri 2026-10-23 carousel slide video (Facebook), What we check before a website goes live (To Be Released/2026-10-23-2)",
+    "_note": "ElevenLabs music_v2, raw assets/audio/raw/music-w1023-c-32s.mp3: warm easygoing indie pop, clean electric melody with gentle bends, soft accordion answers, strummed acoustic, brushed snare, about 96 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1023\". Dated for the planned publish."
+  },
+  {
+    "track": "music-w1017",
+    "file": "D:/kap-reel/out/candidates/music-w1017.mp3",
+    "published": "2026-10-17",
+    "post": "Sat 2026-10-17 carousel slide video, Alt text: describe the picture in one sentence (To Be Released/2026-10-17), Facebook only; also recorded as music in that folder's post.json"
+  },
+  {
+    "track": "music-w1018",
+    "file": "D:/kap-reel/out/candidates/music-w1018.mp3",
+    "published": "2026-10-18",
+    "post": "Sun 2026-10-18 carousel slide video, Let AI proofread, not rewrite (To Be Released/2026-10-18), Facebook only; also recorded as music in that folder's post.json"
+  },
+  {
+    "track": "music-w1021-r",
+    "file": "D:/kap-reel/out/candidates/music-w1021-r.mp3",
+    "published": "2026-10-21",
+    "post": "Wed 2026-10-21 reel, Show it, then let them try it (To Be Released/2026-10-21), and its 12:00 PM YouTube Short (same folder, one use)",
+    "_note": "ElevenLabs music_v2, raw assets/audio/raw/music-w1021-r-32s.mp3: patient, encouraging indie pop, call and response between an amp tremolo clean electric guitar and a soft harmonica, strummed acoustic, round electric bass, tambourine backbeat, about 100 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1021\". Dated for the planned publish."
+  },
+  {
+    "track": "music-w1021-c",
+    "file": "D:/kap-reel/out/candidates/music-w1021-c.mp3",
+    "published": "2026-10-21",
+    "post": "Wed 2026-10-21 carousel slide video (Facebook), Wrong answer? Say why, not just incorrect (To Be Released/2026-10-21-2)",
+    "_note": "ElevenLabs music_v2, raw assets/audio/raw/music-w1021-c-32s.mp3: reassuring, unhurried indie pop, hollow-body clean electric melody with soft slides over Hammond organ chords with a slow rotary, fingerpicked acoustic, melodic electric bass, soft kick and cross-stick, about 92 bpm. Logged in D:/kap-reel/config/audio.json under set \"social-w1021\". Dated for the planned publish."
   }
 ]

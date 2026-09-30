@@ -1,0 +1,68 @@
+{
+  "id": "2026-10-21",
+  "date": "2026-10-21",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "training",
+  "title": "Show it, then let them try it",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    },
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "Teach any skill: watch one done, do one with hints, then one alone",
+      "tags": [
+        "instructional design",
+        "worked examples",
+        "practice activities",
+        "eLearning design",
+        "corporate training",
+        "course design"
+      ],
+      "category": "HOWTO_STYLE",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel on a handwriting practice sheet (cream paper, ruled rows, a rust margin line), with the K&A Performance logo and ka-performancefl.com at the top of every frame. Hook: Show it, then let them try it. Three ruled rows: 1 Watch one done, in solid ink; 2 Do one with hints, in gray letters to trace; 3 Do one alone, in teal. Real screens from our sample course, The RFI that gets answered. Step 1, Watch one done: a finished example, and why each part is there, over screen 5, the four parts of a finished request (Question, References, Impact and date, Proposal) with the question Please confirm the required slab thickness and reinforcing beneath the loading dock pit. Step 2, Do one with hints: then they build one, with the pieces and labels in front of them, over screen 7, a fragment picked up and two of four labeled fields filled. Step 3, Do one alone: then a new problem, no pieces, no labels, over screen 8, a duct that does not fit above a corridor ceiling and an empty box, Draft one answerable question. Ends on a quote from our training page, A single topic taught properly: objectives, teaching, practice, check. Six original courses. Open them and try the work. ka-performancefl.com/training. Call Alex 904-210-1071."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a handwriting practice sheet: Show it, then let them try it. Three ruled rows: 1 Watch one done, 2 Do one with hints (gray letters to trace), 3 Do one alone (teal). Real screens from our sample course, The RFI that gets answered.",
+      "platforms": [
+        "facebook",
+        "instagram"
+      ]
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1021-r"
+}

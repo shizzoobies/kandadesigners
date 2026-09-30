@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-19-2",
+  "date": "2026-10-19",
+  "time": "16:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "5 things to do with a Google review after you say thanks",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. A restaurant comment card from Juniper Lane Diner, How did we do?, on a green diner table. Kicker: They left you a Google review. You said thanks. Headline: 5 things to do with a Google review after you say thanks. Boxes ticked for Food, Service and Would come back. Comments, handwritten with five stars: The biscuits were worth the wait, and Tasha remembered my order. Dana. Drawn example: a fictional diner.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 1 of 5: Reply in public. Comment, five stars: The biscuits were worth the wait, and Tasha remembered my order. Dana. Manager's follow-up, sample reply: Thanks, Dana! Tasha will be glad to hear it. The biscuits come out at 7 every morning. Tip: Thank them by name and mention what they mentioned. The next customer reads your reply too. Drawn example: a fictional diner.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 2 of 5: Answer its question on your site. Comment, five stars: Loved it. Didn't know you take call-ahead orders until I got there! Marcus. Manager's follow-up, to do: Add Call-ahead orders to the menu page, with the phone number. Tip: If one person wondered, others did too. Put the answer where they look first. Drawn example: a fictional diner.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 3 of 5: Quote it on your site. Ask first. Comment, five stars: Came for coffee, stayed for the peach pie. The real deal. Renee. Manager's follow-up, asked first: May we quote your review on our website? She said yes. The quote goes on the pie page, with her first name. Tip: Ask the reviewer before you use their words. Then quote them exactly. Drawn example: a fictional diner.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 4 of 5: Fix what it flagged. Comment, four stars: Great food, but the sign out front is hard to see from the road. Paul. Manager's follow-up, fixed, then replied: New sign ordered. Reply: Thanks for the heads-up. A bigger sign goes up this month. Tip: A fair complaint is free advice. Fix it, then say so in your reply. Drawn example: a fictional diner.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. Comment card, thing 5 of 5: Ask the next happy customer. Comment: Everything was great!, said at the register. Manager's follow-up, asked: Would you mind saying that on Google? Then point to the QR code by the register. Tip: Share your Google review link or QR code. Offer nothing for it: Google doesn't allow that. Drawn example: a fictional diner.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. The back of the card. This week: Pick one review. Do one of the five. 1 Reply in public, 2 Answer its question on your site, 3 Quote it (ask first), 4 Fix what it flagged, 5 Ask the next happy customer. Ours, for the record: 5.0 stars, 8 reviews on our Google profile, Sept 30, 2026. Dark teal panel: Local search is part of every site we build. ka-performancefl.com/services/seo-ai-search. Call Alex 904-210-1071.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top / K&A Performance logo and ka-performancefl.com at the top"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance logo and ka-performancefl.com at the top. A restaurant comment card from Juniper Lane Diner, How did we do?, on a green diner table. Kicker: They left you a Google review. You said thanks. Headline: 5 things to do with a Google review after you say thanks. Boxes ticked for Food, Service and Would come back. Comments, handwritten with five stars: The biscuits were worth the wait, and Tasha remembered my order. Dana. Drawn example: a fictional diner."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1019-c"
+}

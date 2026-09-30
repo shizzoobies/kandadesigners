@@ -1,0 +1,113 @@
+{
+  "id": "2026-10-17",
+  "date": "2026-10-17",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "tip",
+  "title": "Alt text: describe the picture in one sentence",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide styled as a museum wall: Alt text: describe the picture in one sentence. A framed artwork from our home page, a high heel built from black dance lettering, hangs beside a white wall label. The label reads: Jon Marc, graphic design, on our home page. Alt text: \"A high heel composed of black dance lettering, including spins, right turn, and all night.\" Tagged Real: our site. Below: Every picture on your website needs a label like this one. Here is how to write it, in five galleries.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Gallery 1, what it's for: Two times the words are all anyone gets. 1. A screen reader reads the alt text aloud to someone who can't see the picture. 2. If the picture doesn't load, the browser shows the alt text in its place. Framed: a course card from our home page with pictures turned off, where the empty box shows the words \"The hardhat course guide introduces a jobsite inspection with an obstructed exit and a cable across the floor.\" above the title band Find the hazards. Tagged Real: our site.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Gallery 2, the one-sentence rule: Say who or what is in it, and what's happening. A framed illustration by Bobbie Connor from Hope & Harry's Alaskan Adventure on our site: a koala and a hippo taking a selfie in front of a moose behind a rope barrier. Its wall label shows the real alt text, \"Hope and Harry grin for a selfie in front of a giant moose standing behind a rope barrier.\", highlighted in three parts: who, what's happening, and the detail that makes it this picture. A second label quotes the story text printed beside it on the page: \"Right away before they even left the airport Harry excitedly took a selfie with a giant Moose.\" The page tells the story. The alt text only says what a sighted visitor sees.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Gallery 3, what not to write: Three labels that tell a listener nothing. A drawn picture of a slice of cherry pie and a mug of coffee, labeled Drawn example. Crossed out: alt=\"Image of food\", because a screen reader already says it's an image and food could be anything. Crossed out: alt=\"IMG_2041.jpg\", read aloud as a file name. Crossed out: a paragraph-long alt about a cozy cafe, put that on the page, not in the label. Checked: alt=\"A slice of cherry pie beside a mug of black coffee.\" One sentence. Done. The picture and all four labels are drawn examples made up for this slide.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Gallery 4, when to leave it empty: Only decoration? Leave the alt text empty. alt=\"\" with nothing between the quotes, and a screen reader skips the picture. Do the same when a picture only repeats the words printed right next to it. Framed, real from our team page: portraits of Alex Anderson and Kristina Anderson, each right above the printed name, so each portrait's alt is empty and the name is read once, not twice. Don't delete the alt entirely: with no alt at all, some screen readers read out the file name.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Gallery 5, where to type it: Click the picture, open its settings, find Alt text. A drawn, simplified site editor labeled Drawn example: the pie picture is selected and an Image settings panel has an Alt text box holding \"A slice of cherry pie beside a mug of black coffee.\" and a Save button. Yours may call it Alternative text. Steps: 1. Click the picture in your site editor. 2. Open its settings: often a gear, a pencil or a right click. 3. Find the box called Alt text or Alternative text. 4. Type one sentence. Save.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Want a website everyone can use? Alt text, in four lines: one sentence, who or what and what's happening; skip \"image of\", file names and paragraphs; decoration gets an empty alt; type it in the picture's settings. We design and build websites in Gainesville, Florida, and measure our pages against WCAG 2.2 AA before launch. Quotes are always free. Call Alex 904-210-1071. ka-performancefl.com/services/web-design.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 7 carousel slides in order: K&A Performance slide styled as a museum wall: Alt text: describe the picture in one sentence / Gallery 1, what it's for: Two times the words are all anyone gets / Gallery 2, the one-sentence rule: Say who or what is in it, and what's happening / Gallery 3, what not to write: Three labels that tell a listener nothing / Gallery 4, when to leave it empty: Only decoration? Leave the alt text empty / Gallery 5, where to type it: Click the picture, open its settings, find Alt text / Want a website everyone can use? Alt text, in four lines: one sentence, who or what and what's happening; skip \"image of\", file names and paragraphs; decoration gets an empty alt; type it in the picture's settings"
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "K&A Performance slide styled as a museum wall: Alt text: describe the picture in one sentence. A framed artwork from our home page, a high heel built from black dance lettering, hangs beside a white wall label. The label reads: Jon Marc, graphic design, on our home page. Alt text: \"A high heel composed of black dance lettering, including spins, right turn, and all night.\" Tagged Real: our site. Below: Every picture on your website needs a label like this one. Here is how to write it, in five galleries."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1017"
+}

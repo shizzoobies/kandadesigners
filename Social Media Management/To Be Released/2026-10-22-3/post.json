@@ -1,0 +1,76 @@
+{
+  "id": "2026-10-22-3",
+  "date": "2026-10-22",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "ai-launch",
+  "title": "LinkedIn: From review to FAQ answer in 4 steps",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "From review to FAQ answer in 4 steps: a recipe for turning customer reviews into website FAQs"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance slide: a recipe card on a wooden counter. Card labels: Recipe; Method: 4 steps. Using AI with your reviews? From review to FAQ answer in 4 steps. Serves: your next customer. Makes: answers to the questions they already ask. Secret: you check every claim."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recipe card, Ingredients, gather first. What you need, with checkboxes: Your public reviews, copied from your review profile; Your own facts, hours, prices, parking, policies; An AI tool, the one you already use is fine; One prompt, it's in step 2; You, to check every claim before it goes live."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recipe card, Method, step 1 of 4: Collect your reviews. Copy your public reviews into one document, newest first. Public reviews only: private messages and anything told in confidence stay out. Three fictional reviews: Tom, 5 stars, Easy parking in the lot out back. They gave me the price on the phone before I booked, so no surprises for my 90-pound shepherd. Keisha R., 4 stars, Great groom, but I wish I'd known they close at 4 on Saturdays. I showed up at 4:15 the first time! Ben, 5 stars, Walked in for just a nail trim, no appointment. Done in ten minutes. Fictional reviews, a sample dog groomer. General guidance, not legal advice."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recipe card, Method, step 2 of 4: Pull the questions. Paste the reviews and ask which questions they answer for a new customer. From the prompt: List the questions these reviews answer for someone deciding whether to book with us. Real AI run, word for word, 3 of 13 shown: 5. Is there parking? Easy parking in the lot out back. 6. Can I get a price before I book? They gave me the price on the phone before I booked. 8. What time do they close on Saturdays? they close at 4 on Saturdays. Fictional reviews, a sample dog groomer."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recipe card, Method, step 3 of 4: Draft each answer in your voice. Give the AI one question and your own facts. Tell it to use nothing else. Your facts: 1, We give you the price by phone before you book. 2, The price depends on your dog's size and coat. 3, Full grooms for large dogs (over 50 pounds) start at $85. 4, Call (352) 555-0147, Tuesday to Saturday, 8 AM to 4 PM. 5, Nail trims are $15, walk in, no appointment needed. Real AI draft, word for word, for Can I get a price before I book?: Yes! Just give us a call at (352) 555-0147, Tuesday to Saturday, 8 AM to 4 PM, and we'll tell you the price before you book. It depends on your dog's size and coat, and full grooms for large dogs (over 50 pounds) start at $85. Fictional business and facts."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recipe card, Method, step 4 of 4: Check every claim. Match each claim in the draft to a fact on your list. Five claims, each ticked: Call (352) 555-0147, fact 4; Tuesday to Saturday, 8 AM to 4 PM, fact 4; We'll tell you the price before you book, fact 1; It depends on your dog's size and coat, fact 2; Large dogs (over 50 pounds) start at $85, fact 3. Can't point to the fact? Cut the sentence. This draft passed: all five claims match. It also left out the nail trims, which don't answer this question. The AI drafts. You decide. Fictional business and facts."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recipe card, To serve, where it goes: Publish it on the page where the question comes up. A price question goes on your prices page. Parking goes on your contact page. A drawn web page for Juniper Street Grooming, Prices, with the question Can I get a price before I book? and the checked answer. Drawn example: a fictional business."
+    },
+    {
+      "file": "media/slide-08.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "Recipe card, Chef's note: The AI drafts. You decide. Your reviews already hold the questions. Your answers, checked, belong on your site. Below, on dark green: Want help putting AI to work in your business? The 90-Day AI Launch. A twelve-week build, one on one with Alex. ka-performancefl.com/ai-launch. Call Alex 904-210-1071."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}

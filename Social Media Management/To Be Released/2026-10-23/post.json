@@ -1,0 +1,64 @@
+{
+  "id": "2026-10-23",
+  "date": "2026-10-23",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "behind-the-scenes",
+  "title": "What we check before a website goes live",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    },
+    "youtube": {
+      "type": "SHORT",
+      "caption": "youtube.md",
+      "title": "What we check before a website goes live",
+      "tags": [
+        "website launch checklist",
+        "website accessibility",
+        "small business website",
+        "website testing",
+        "Gainesville web design"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Quick fixes for your website",
+      "time": "12:00"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel-vertical.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "Text-led reel styled as a go/no-go launch board, with the K&A Performance logo and ka-performancefl.com at the top of every frame and a row of seven check lamps at the bottom. Hook: What we check before a website goes live. 7 checks, shown on a site we built, thrillersvr.com, beside the Thrillers Mobile VR home page on a phone. Check 1, Tab through it: the site's Skip to content link and its Book the trailer button, each with a focus ring. Check 2, the 10-second phone test: the first phone screen, What: a mobile VR trailer, Where: Middleburg, FL. Check 3, Contrast: the site's text colors measured, headline 17.23:1, body text 7.83:1, buttons 16.58:1, form hints 7.55:1, WCAG asks for 4.5:1. Check 4, Every link returns 200: six pages, each 200 OK. Check 5, The form sends: the booking form empty, in focus, with an email error, and ready; field states only, nothing was sent. Check 6, The 404 page: Error 404, wrong turn, with two ways back. Each of these is stamped Pass. Check 7, Speed on a phone: frames of the page loading on a simulated phone, More on that soon. Ends on Launching a website? We run every check before it goes live. Want a site built and checked? Call Alex 904-210-1071, ka-performancefl.com. More quick fixes on YouTube: @KAPerformancefl."
+    },
+    {
+      "file": "media/reel-vertical.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a dark board reading What we check before a website goes live. Below, the Thrillers Mobile VR home page on a phone beside the line 7 checks, shown on a site we built, thrillersvr.com, and the seven checks listed: Tab through it, The 10-second phone test, Contrast, Every link returns 200, The form sends, The 404 page, Speed on a phone."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-w1023-r"
+}

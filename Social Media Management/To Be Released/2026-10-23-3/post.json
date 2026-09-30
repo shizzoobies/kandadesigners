@@ -1,0 +1,76 @@
+{
+  "id": "2026-10-23-3",
+  "date": "2026-10-23",
+  "time": "08:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "behind-the-scenes",
+  "title": "LinkedIn: What we check before a website goes live",
+  "platforms": {
+    "linkedin": {
+      "type": "DOCUMENT",
+      "caption": "linkedin.md",
+      "documentTitle": "What we check before a website goes live: 7 checks on a real site"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Pre-launch. Fields: Site thrillersvr.com, Date Sept 30, 2026. Behind the scenes: What we check before a website goes live. 7 checks, shown on a site we built. Seven empty checkboxes: 1 Tab through it, 2 The 10-second phone test, 3 Contrast, 4 Every link returns 200, 5 The form sends, 6 The 404 page, 7 Speed on a phone."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 1 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Tab through it. Every stop in order, with a focus ring you can see. Captures of thrillersvr.com: the Skip to content link with a bright focus ring, and the Book the trailer button with its focus ring. Found: Press 1: Skip to content. Press 8: Book the trailer. Stamped Pass."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 2 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check The 10-second phone test. Can a new visitor say what it is and where? The Thrillers Mobile VR first screen on a phone, next to What: A mobile VR trailer, and Where: Middleburg, FL. The first screen on a phone, no scrolling. Found: Both answers are on the first screen. Stamped Pass."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 3 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Contrast. Text colors measured, not eyeballed. Four swatches in the site's own colors: Headline 17.23:1, Body text 7.83:1, Buttons 16.58:1, Form hints 7.55:1. Found: WCAG asks for 4.5:1. Lowest found: 7.55:1. Stamped Pass."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 4 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Every link returns 200. Every page on the site, every link on each page. A link check list: thrillersvr.com/, /experiences, /pricing, /about, /book and /accessibility, each 200 OK. Found: 6 pages. 6 returned 200. Stamped Pass."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 5 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check The form sends. Labels, required marks, a clear error. Four captures of the booking form's name and email fields: 1 Empty, 2 Focus with a bright ring, 3 Error with the email sample@ outlined in red, 4 Ready with sample@example.com. Found: Nothing was sent here. We send one test before launch. Stamped Pass."
+    },
+    {
+      "file": "media/slide-07.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 6 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check The 404 page. A wrong address gets a real 404 and a way back. Captures of the site's 404 page: Error 404, wrong turn, and two buttons, Back to the main road and Book the trailer. Beside them: Status 404. Two ways back: the home page and the booking page. Found: A real 404 status, not a blank page. Stamped Pass."
+    },
+    {
+      "file": "media/slide-08.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "K&A Performance logo and ka-performancefl.com above a white inspection tag hung on a string. Printed rust band: Inspection tag, Check 7 of 7. Fields: Site thrillersvr.com, Date Sept 30, 2026, Check Speed on a phone. Speed on a phone, stamped More soon. Four frames of the page loading on a simulated phone, Frame 1 blank, then Frames 2, 3 and 8 with the page drawn. The page loading on a simulated phone. More on that soon. Below, on dark teal: Launching a website? We run every check before it goes live. Call Alex 904-210-1071. ka-performancefl.com. More quick fixes on YouTube: @KAPerformancefl."
+    }
+  ],
+  "ai": {
+    "voice": false,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {},
+  "metricool": {},
+  "published": {},
+  "credits": {},
+  "lastError": null
+}
