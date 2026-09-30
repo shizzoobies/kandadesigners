@@ -3,7 +3,7 @@
   "date": "2026-09-29",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "tip",
   "title": "YouTube Short: Contrast is not a vibe",
   "platforms": {
@@ -104,7 +104,12 @@
       "scheduledAt": "2026-09-28T15:25:50.699Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-29T16:00:00.000Z",
+    "youtube": {
+      "permalink": "https://www.youtube.com/shorts/F7cGS2Km8bE"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-i-a"

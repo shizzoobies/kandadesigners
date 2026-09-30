@@ -3,7 +3,7 @@
   "date": "2026-09-29",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "tip",
   "title": "LinkedIn: Five contrast fixes you can make today",
   "platforms": {
@@ -164,7 +164,12 @@
       "promotedAt": "2026-09-25T16:55:59.720Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-29T12:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7510670431234703360"
+    }
+  },
   "credits": {},
   "lastError": null
 }

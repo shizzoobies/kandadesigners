@@ -3,7 +3,7 @@
   "date": "2026-09-30",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "training",
   "title": "YouTube Short: One screen, one decision",
   "platforms": {
@@ -101,7 +101,12 @@
       "scheduledAt": "2026-09-28T15:25:50.768Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-30T16:00:00.000Z",
+    "youtube": {
+      "permalink": "https://www.youtube.com/shorts/SQCQKDcStJA"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-i-c"

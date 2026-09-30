@@ -3,7 +3,7 @@
   "date": "2026-09-30",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "training",
   "title": "LinkedIn: Quiz questions that measure something",
   "platforms": {
@@ -164,7 +164,12 @@
       "promotedAt": "2026-09-25T16:56:56.552Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-30T12:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7511032665626783747"
+    }
+  },
   "credits": {},
   "lastError": null
 }

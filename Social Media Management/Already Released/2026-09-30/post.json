@@ -3,7 +3,7 @@
   "date": "2026-09-30",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "training",
   "title": "One screen, one decision",
   "platforms": {
@@ -141,7 +141,15 @@
       "promotedAt": "2026-09-25T16:56:56.344Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-30T14:30:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/reel/1058835123822793"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/reel/Dd6jdBmCWNZ/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-i-c"

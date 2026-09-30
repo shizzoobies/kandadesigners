@@ -3,7 +3,7 @@
   "date": "2026-09-28",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "offer",
   "title": "LinkedIn: Free social media management for 3 Gainesville businesses",
   "platforms": {
@@ -163,7 +163,12 @@
       "scheduledAt": "2026-09-25T17:55:16.005Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-28T16:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7510369004159496193"
+    }
+  },
   "credits": {},
   "lastError": null
 }

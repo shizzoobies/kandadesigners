@@ -3,7 +3,7 @@
   "date": "2026-09-28",
   "time": "17:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "tip",
   "title": "What puts a local business in Google's map pack",
   "platforms": {
@@ -258,7 +258,15 @@
       "promotedAt": "2026-09-25T16:54:55.759Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-28T21:00:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/122118829185423707/posts/1609622420606091"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/p/Dd2GqKUjhfQ/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0928-1"

@@ -3,7 +3,7 @@
   "date": "2026-09-29",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "tip",
   "title": "Contrast is not a vibe",
   "platforms": {
@@ -141,7 +141,15 @@
       "promotedAt": "2026-09-25T16:55:59.511Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-29T14:30:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/reel/2325201331576009"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/reel/Dd3-tLqDT6E/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-i-a"

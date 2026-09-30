@@ -3,7 +3,7 @@
   "date": "2026-09-29",
   "time": "16:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "tip",
   "title": "Five contrast fixes you can make today",
   "platforms": {
@@ -258,7 +258,15 @@
       "promotedAt": "2026-09-25T16:55:59.650Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-09-29T20:00:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/122118829185423707/posts/28554557610837354"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/p/Dd4kn9QFLrL/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0928-2"
