@@ -22,7 +22,7 @@ Metricool.** The Post Desk is empty. `validate` passes on all 64 folders, and 27
 | Fri 10/2 | **Thrillers launch**, promoted from drafts 9/28 (thrillersvr.com is live) | **L1 "Test Your Website With One Key"** at 11:00; S5 Thrillers Short at 12:00 |
 | Oct 3 to 9 | Live (plan `plans/2026-10-05.md`) | S6 to S10 at noon; **L2 "Let AI draft it. Make it sound like you."** Wed 10/7 at 11:00 (built and scheduled by Astra) |
 | Oct 10 to 16 | Live (plan `plans/2026-10-12.md`, build brief `plans/2026-10-12-build-brief.md`), 34 posts | A Short in every weekday reel folder at noon. **L3 on Wed 10/14 is NOT done** (see section 2) |
-| Oct 17 to 23 | **Built 9/30, on the Post Desk awaiting Alex's approvals** (plan `plans/2026-10-19.md`, brief `plans/2026-10-19-build-brief.md`, 17 posts) | A Short in every weekday reel folder at noon. **L4 (Wed 10/21) is ON HOLD** by Alex's call 9/30; `2026-10-21-4` stays reserved and empty |
+| Oct 17 to 23 | **Live in Metricool** (approved on the desk and scheduled 9/30; plan `plans/2026-10-19.md`, brief `plans/2026-10-19-build-brief.md`, 17 folders, 34 posts) | A Short in every weekday reel folder at noon. **L3 (Wed 10/14) is also live**, scheduled 9/30 after Alex approved Astra's finished video on the desk. **L4 (Wed 10/21) is ON HOLD** by Alex's call 9/30; `2026-10-21-4` stays reserved and empty |
 | **Sat 10/24 onward** | **Nothing planned** | Nothing planned |
 
 The weekday shape:
@@ -48,12 +48,12 @@ The weekday shape:
      - brief approval
      - recapture the profile around Oct 10 to 12
    - Check with Alex whether Astra is still carrying it before you touch it.
-2. **Oct 17 to 23: BUILT 2026-09-30 and on the Post Desk.** Alex approved the plan in chat
-   ("hold on L4 for now and let's do everything else"). Six Opus builders made 17 posts; every
-   contact sheet was reviewed by the main session; validate passes on all 71 folders. Next:
-   `desk pull` after Alex approves, set approved folders to `approved`, `validate`, `upload`,
-   `release`, `createScheduledPost` per packet, `release --record`. Check no folder already has
-   `metricool` ids first.
+2. **Oct 17 to 23: SCHEDULED LIVE 2026-09-30.** Alex approved the plan in chat ("hold on L4 for
+   now and let's do everything else"), six Opus builders made 17 posts, every contact sheet was
+   reviewed by the main session, Alex approved all 18 desk rows (including Astra's L3), and all
+   35 packets went through `createScheduledPost` and were recorded. A one-day
+   `getScheduledPosts` check of 10/23 matched (6 posts, draft false, autoPublish true). The Post
+   Desk is empty again. Nothing is planned from Sat 10/24 on.
    - **Friday 10/23 is the fallback** (pre-launch checklist on Thrillers). Alex said a client
      launch by then is possible but not sure; if it lands, rebuild `2026-10-23`, `-2`, `-3` in
      the Thrillers launch format and re-approve.
