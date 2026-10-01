@@ -1,7 +1,9 @@
 # Fore Motion Golf social
 
 Post Desk: admin.ka-performancefl.com/sites/foremotion-golf/social (sites list, Fore Motion Golf, Post Desk).
-Site and brand source: `D:\Foremotion Golf\Website Build\foremotion-golf` (live at https://foremotiongolf.com).
+Site source: `D:\Foremotion Golf\Website Build\foremotion-golf` (live at https://foremotiongolf.com).
+Brand library and archive: `D:\Foremotion Golf\Social Media Management`. Read
+`Branding\Brand Guide.md` there before building anything; logos are in `Branding\Logos\`.
 Metricool brand: 7185142, mapped in `tools/config/metricool.json`. Facebook and Instagram only.
 
 Set up 2026-10-01, before Alex's first meeting with Hannah, who manages their social media.
