@@ -70,9 +70,15 @@ describe("metricool", () => {
     expect(await listBrands({ config, token: "t", fetchImpl: wrapped.fetchImpl })).toEqual([
       { id: "7076479", label: "K & A Performance", timezone: "America/New_York", networks: ["facebook", "instagram", "youtube"] }
     ]);
-    const flat = fakeFetch(200, [{ id: 99, label: "Fore Motion Golf", facebook: "456", instagram: "foremotion" }]);
+    // The flat REST shape, as the live API returned it on 2026-10-01: unconnected networks are null,
+    // and a LinkedIn company page is `linkedinCompany`.
+    const flat = fakeFetch(200, [
+      { id: 7076479, label: "K & A Performance", timezone: "America/New_York", facebook: "123", facebookPageId: "123", instagram: "kaperformancefl", linkedinCompany: "urn:li:organization:1", youtube: "UC1", tiktok: null, gmb: null, linkedInTokenExpiration: null },
+      { id: 99, label: "Fore Motion Golf", facebook: null, instagram: null, linkedinCompany: null, youtube: null }
+    ]);
     expect(await listBrands({ config, token: "t", fetchImpl: flat.fetchImpl })).toEqual([
-      { id: "99", label: "Fore Motion Golf", timezone: "", networks: ["facebook", "instagram"] }
+      { id: "7076479", label: "K & A Performance", timezone: "America/New_York", networks: ["facebook", "instagram", "linkedin", "youtube"] },
+      { id: "99", label: "Fore Motion Golf", timezone: "", networks: [] }
     ]);
     const odd = fakeFetch(200, { message: "nope" });
     await expect(listBrands({ config, token: "t", fetchImpl: odd.fetchImpl })).rejects.toThrow(/unexpected shape/);

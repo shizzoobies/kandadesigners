@@ -73,18 +73,34 @@ export async function metricoolGet(pathname, params = {}, { config = readMetrico
   }
 }
 
-const NETWORK_KEYS = ["facebook", "instagram", "linkedin", "youtube", "tiktok", "twitter", "threads", "pinterest", "bluesky", "gmb", "twitch"];
+/**
+ * The field that holds each network's connected account on a brand row, as
+ * /admin/simpleProfiles returns it (checked against the live API 2026-10-01).
+ * LinkedIn company pages come back as `linkedinCompany`, not `linkedin`.
+ */
+const NETWORK_FIELDS = {
+  facebook: "facebook",
+  instagram: "instagram",
+  linkedin: "linkedinCompany",
+  youtube: "youtube",
+  tiktok: "tiktok",
+  twitter: "twitter",
+  threads: "threads",
+  pinterest: "pinterest",
+  bluesky: "bluesky",
+  gmb: "gmb",
+  twitch: "twitch"
+};
 
-/** The networks a brand row has connected, whichever shape the API returns them in. */
+/** The networks a brand row has connected: the flat REST shape, or the MCP's `networksData`. */
 function connectedNetworks(row) {
   const out = new Set();
   const data = row.networksData && typeof row.networksData === "object" ? row.networksData : {};
   for (const key of Object.keys(data)) {
     if (data[key]) out.add(key.replace(/Data$/, ""));
   }
-  for (const key of NETWORK_KEYS) {
-    const v = row[key] ?? row[`${key}Data`];
-    if (v) out.add(key);
+  for (const [network, field] of Object.entries(NETWORK_FIELDS)) {
+    if (row[field]) out.add(network);
   }
   return [...out].sort();
 }
