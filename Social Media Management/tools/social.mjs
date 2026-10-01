@@ -13,7 +13,16 @@ import { reconcile, reconcileWindow } from "./lib/reconcile.mjs";
 import { pullDesk, pushDesk } from "./lib/desk.mjs";
 import { loadClient, isOwnerPublished } from "./lib/client.mjs";
 import { buildHandoff } from "./lib/handoff.mjs";
-import { listBrands, readMetricoolConfig } from "./lib/metricool.mjs";
+import { listBrands, readMetricoolConfig, brandId } from "./lib/metricool.mjs";
+
+/**
+ * The Metricool brand a release goes to: the client's own, or K&A's. Throws for
+ * a client with no brand in tools/config/metricool.json, so one client's posts
+ * can never be sent under another brand's id.
+ */
+function releaseBrand(client) {
+  return brandId(client ? client.slug : "ka-performance");
+}
 
 const USAGE = `usage: (any command takes a global --client <slug> first, to work in clients/<slug>)
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
@@ -138,8 +147,9 @@ function main() {
     }
     if (args.promote !== undefined) {
       if (!isText(args.promote)) { console.error(USAGE); return 1; }
+      const blogId = releaseBrand(client);
       const r = promotePackets(dayDir(root, args.promote));
-      console.log(`${r.packets.length} draft(s) to promote through Metricool. For each one call updateScheduledPost with blogId 7076479, the id, the uuid, and info as a JSON string, then run release --promoted.`);
+      console.log(`${r.packets.length} draft(s) to promote through Metricool. For each one call updateScheduledPost with blogId ${blogId}, the id, the uuid, and info as a JSON string, then run release --promoted.`);
       for (const p of r.packets) console.log(JSON.stringify(p));
       return 0;
     }
@@ -160,6 +170,7 @@ function main() {
     }
     const target = args._[0];
     const dirs = target ? [dayDir(root, target)] : listDayFolders(root);
+    const blogId = releaseBrand(client); // before anything is written, so an unmapped client changes nothing
     const packets = [];
     let failed = 0;
     for (const dir of dirs) {
@@ -178,7 +189,7 @@ function main() {
       packets.push(...r.packets);
     }
     const verb = args["dry-run"] ? "would send" : "to send";
-    console.log(`${packets.length} packet(s) ${verb} through Metricool. For each one call createScheduledPost with blogId 7076479, the date, and info as a JSON string, then run release --record.`);
+    console.log(`${packets.length} packet(s) ${verb} through Metricool. For each one call createScheduledPost with blogId ${blogId}, the date, and info as a JSON string, then run release --record.`);
     for (const p of packets) console.log(JSON.stringify(p));
     return failed === 0 ? 0 : 1;
   }

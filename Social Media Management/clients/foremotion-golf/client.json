@@ -1,0 +1,13 @@
+{
+  "slug": "foremotion-golf",
+  "name": "Fore Motion Golf",
+  "site": "https://foremotiongolf.com",
+  "sitePath": "D:/Foremotion Golf/Website Build/foremotion-golf",
+  "publish": "metricool",
+  "networks": ["facebook", "instagram"],
+  "timezone": "America/New_York",
+  "handoff": {
+    "drive": "K & A Social > Clients > Fore Motion Golf > Ready to post",
+    "driveFolderId": "1iXkZ3-3vQ6nakxcUvoZxbQ7MdNJi0R7n"
+  }
+}

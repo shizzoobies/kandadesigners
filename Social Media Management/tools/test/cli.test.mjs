@@ -112,6 +112,32 @@ describe("cli", () => {
     expect(run(["release", "--promoted", "2030-01-07", "--network", "instagram"]).code).toBe(1);
   });
 
+  it("sends a client's posts to the client's own Metricool brand, and refuses a client with none", () => {
+    root = makeTempRoot();
+    const r2 = {
+      "media/reel-vertical.mp4": { key: "k1", url: "https://media.example.com/a.mp4", sha256: "x", uploadedAt: "t" },
+      "media/thumbnail.jpg": { key: "k2", url: "https://media.example.com/b.jpg", sha256: "y", uploadedAt: "t" }
+    };
+    const makeClient = (slug) => {
+      const clientRoot = path.join(root, "clients", slug);
+      fs.mkdirSync(clientRoot, { recursive: true });
+      fs.writeFileSync(path.join(clientRoot, "client.json"), JSON.stringify({ slug, name: slug, site: "https://example.com", publish: "metricool", networks: ["facebook", "instagram"], timezone: "America/New_York" }));
+      return makeDay(clientRoot, "2030-01-07", baseManifest({ id: "2030-01-07", date: "2030-01-07", status: "approved", r2 }), baseFiles());
+    };
+
+    makeClient("foremotion-golf");
+    let r = run(["--client", "foremotion-golf", "release", "2030-01-07", "--draft"]);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain("2 packet(s) to send through Metricool. For each one call createScheduledPost with blogId 7185142,");
+    expect(r.out).not.toContain("7076479");
+
+    const dir = makeClient("nobody-co");
+    r = run(["--client", "nobody-co", "release", "2030-01-07", "--draft"]);
+    expect(r.code).toBe(1);
+    expect(r.err).toContain('no Metricool brand for "nobody-co"');
+    expect(JSON.parse(fs.readFileSync(path.join(dir, "post.json"), "utf8")).metricool).toEqual({});
+  });
+
   it("prints the reconcile window as JSON", () => {
     root = makeTempRoot();
     makeDay(root, "2030-01-07", baseManifest({ id: "2030-01-07", date: "2030-01-07", status: "scheduled" }), baseFiles());
