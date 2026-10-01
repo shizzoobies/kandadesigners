@@ -3,7 +3,9 @@
 Written 2026-10-01 in answer to the HyperFrames handoff. Nothing has been installed and nothing
 in the pipeline has changed. This is the plan to approve or change.
 
-Approved: no (draft for Alex, 2026-10-01)
+Approved: yes, the pilot (Alex, in chat 2026-10-01: "approve and I'm just trying to add
+capability for future work not change what we've done"). The pilot ran the same day; results
+are in section 8. Nothing already built or scheduled was changed.
 
 ## Bottom line
 
@@ -287,6 +289,62 @@ About two and a half working days in total, done in that order, each piece usabl
 3. Which skills to install. The plan assumes five for the pilot, not the full set.
 4. Which clients are cleared for public use in site spotlights and footage cuts.
 5. After the pilot: whether the animated carousel replaces the plain slide video going forward.
+
+## 8. Pilot results (2026-10-01)
+
+**It works on this machine, and it is installed as a second tool beside Remotion.**
+
+| Measure | Result |
+|---|---|
+| Install | `hyperframes` 0.8.105, pinned, in `D:\kap-hf`. Five skills, in that folder only. |
+| Environment check | Passes on Node, FFmpeg, Chrome, CPU, memory, disk |
+| Output | 1080x1350, 30 fps, 26.0 s, H.264 and AAC, 5.2 MB |
+| Render time | 25.3 s for the 26 s video, about real time. Benchmark best: 23.4 s |
+| Checks | Lint 0 errors. Contrast 54 of 54 text checks pass. Layout 0 errors |
+| Loudness after the delivery pass | -14.2 LUFS, peak -1.1 dBFS |
+| Wall time, install to delivered file | About ten minutes |
+
+What the pilot is: the Tuesday Oct 20 carousel as one continuous Rolodex. Each card writes
+itself in, the check or cross draws, the evidence slides up, and the card tips back into the
+base to reveal the next one. The logo and URL sit on every frame. A progress row replaces the
+carousel's swipe cues, which make no sense in a video. Copy is verbatim from the approved
+carousel.
+
+Files, in `D:\kap-hf\projects\carousel-2026-10-20-2\renders\`:
+- `animated.mp4`: the pilot video
+- `side-by-side.mp4`: the current slide video next to it
+- `contact-sheet.jpg`: a frame every half second
+
+It is not scheduled. The Oct 20 post still carries the original slide video.
+
+**What went wrong, and what it says about the tool**
+
+- The first card flip tipped toward the camera and ballooned across the frame. The snapshot
+  step caught it before any render. That step is worth keeping in the flow.
+- npm listed a version published two minutes earlier whose download did not exist yet. The
+  project shipped eight releases that day. Pinning is not optional.
+- The render does not normalize loudness. It needs the same delivery pass as everything else.
+- The scaffold loads its animation library from a CDN. The pilot uses a local copy.
+- Usage telemetry is on by default. It is now off.
+- Lint wants every scene in its own file, and the layout check flags the card tabs. Both are
+  housekeeping for the reusable template, not faults in the video.
+
+**Differences from the plain slide video to weigh**
+
+- 26 seconds instead of 22, because animated entrances need reading time after them.
+- It no longer shows "Swipe for card 2". For Facebook that is a fix.
+
+**Corrections to this plan from the pilot**
+
+- The fifth skill installed is `general-video`, not `slideshow`. `slideshow` turned out to be
+  for live presentation decks.
+- 4:5 works by setting the size on the root. Confirmed.
+- Render speed on this machine is about real time, at the fast end of the estimate.
+
+**Still to do, only if you want this in regular use (section 5)**
+
+The `hyperframes` media origin in the tools, the shared brand base, and turning this one-off
+into a carousel-to-video template. None of that is started.
 
 ## 7. Sources
 
