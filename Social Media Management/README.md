@@ -187,6 +187,27 @@ R2 settings live in `tools/config/r2.json` (bucket `ka-social`, public base
 `CLOUDFLARE_API_TOKEN`, or on Windows from the user scope variable of that
 name. It is never written anywhere.
 
+## Metricool API
+
+The account moved to the Advanced plan on 2026-10-01, which includes the
+Metricool API (Starter did not). The token is under Account Settings > API in
+Metricool. It is read from `METRICOOL_USER_TOKEN`, or on Windows from the user
+scope variable of that name, exactly like the Cloudflare token, and it is never
+written anywhere. Alex stores it himself; it never goes in chat or in a file.
+
+`tools/config/metricool.json` holds the account `userId`, the API base, and the
+brand id of each site slug (`ka-performance` is 7076479). No secret lives there.
+A new client brand is one line in `brands`.
+
+`node tools/social.mjs metricool brands` is the read-only check: it lists every
+brand on the account with its id and connected networks, and says which ones the
+config maps to a slug. `tools/lib/metricool.mjs` sends the token only in the
+`X-Mc-Auth` header.
+
+So far the API is wired for reading the brand list only. Scheduling, promotion
+and `getScheduledPosts` still go through the MCP connector as described above,
+until each endpoint has been checked against a live response.
+
 ## YouTube
 
 Design: `docs/superpowers/specs/2026-09-28-youtube-pipeline-design.md` in the

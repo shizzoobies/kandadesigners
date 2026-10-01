@@ -13,6 +13,7 @@ import { reconcile, reconcileWindow } from "./lib/reconcile.mjs";
 import { pullDesk, pushDesk } from "./lib/desk.mjs";
 import { loadClient, isOwnerPublished } from "./lib/client.mjs";
 import { buildHandoff } from "./lib/handoff.mjs";
+import { listBrands, readMetricoolConfig } from "./lib/metricool.mjs";
 
 const USAGE = `usage: (any command takes a global --client <slug> first, to work in clients/<slug>)
   node tools/social.mjs plan <YYYY-MM-DD> --pillar <p> --title "<t>" [--type REEL|POST] [--time HH:MM] [--from "<reel folder>"] [--ai-voice] [--ai-visuals]
@@ -31,7 +32,8 @@ const USAGE = `usage: (any command takes a global --client <slug> first, to work
   node tools/social.mjs desk push [--dry-run]
   node tools/social.mjs --client <slug> desk pull
   node tools/social.mjs --client <slug> desk push [--dry-run]
-  node tools/social.mjs --client <slug> handoff [<folder name>|--all] [--dry-run]`;
+  node tools/social.mjs --client <slug> handoff [<folder name>|--all] [--dry-run]
+  node tools/social.mjs metricool brands`;
 
 const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals", "window"]);
 
@@ -259,8 +261,30 @@ function main() {
     return failed === 0 ? 0 : 1;
   }
 
+  if (command === "metricool") {
+    if (args._[0] !== "brands") { console.error(USAGE); return 1; }
+    return printBrands();
+  }
+
   console.error(USAGE);
   return 1;
+}
+
+/**
+ * `metricool brands`: a read-only check that the API token works. Lists every
+ * brand on the account with its id and connected networks, and marks which
+ * site slug in tools/config/metricool.json each one is mapped to.
+ */
+async function printBrands() {
+  const config = readMetricoolConfig();
+  const slugOf = new Map(Object.entries(config.brands || {}).map(([slug, id]) => [String(id), slug]));
+  const brands = await listBrands({ config });
+  if (!brands.length) { console.log("no brands on this account"); return 0; }
+  for (const b of brands) {
+    const slug = slugOf.get(b.id);
+    console.log(`${b.id}  ${b.label}  [${b.networks.join(", ") || "no networks connected"}]${b.timezone ? `  ${b.timezone}` : ""}  ${slug ? `-> ${slug}` : "(not in tools/config/metricool.json)"}`);
+  }
+  return 0;
 }
 
 /** One line per decision or story check read, or "nothing new". Shared by `desk pull` and `desk push`. */
@@ -294,8 +318,9 @@ function printDeskPush({ uploads, deletes, rows, pulled, skipped, reset }, dryRu
   console.log(`uploaded ${uploads.length} file(s), deleted ${deletes.length} object(s), pushed ${rows} row(s)`);
 }
 
+// main() returns an exit code, or a promise of one for the commands that call an API.
 try {
-  process.exitCode = main();
+  process.exitCode = await main();
 } catch (err) {
   console.error(err.message);
   process.exitCode = 1;
