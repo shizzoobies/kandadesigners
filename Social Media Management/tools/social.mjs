@@ -30,7 +30,8 @@ const USAGE = `usage: (any command takes a global --client <slug> first, to work
   node tools/social.mjs calendar [--days N] [--today YYYY-MM-DD]
   node tools/social.mjs upload [<folder name>|--all] [--dry-run]
   node tools/social.mjs release [<folder name>|--all] [--draft] [--dry-run]
-  node tools/social.mjs release --record <folder name> --network facebook|instagram|linkedin|youtube --id <id> --uuid <uuid>
+  node tools/social.mjs release <folder name> --auto-publish off [--draft] [--dry-run]
+  node tools/social.mjs release --record <folder name> --network facebook|instagram|linkedin|youtube --id <id> --uuid <uuid> [--manual-audio]
   node tools/social.mjs release --record <folder name> --network facebook|instagram|linkedin|youtube --error "<message>"
   node tools/social.mjs release --promote <folder name>
   node tools/social.mjs release --promoted <folder name> --network facebook|instagram|linkedin|youtube --id <new id>
@@ -44,7 +45,7 @@ const USAGE = `usage: (any command takes a global --client <slug> first, to work
   node tools/social.mjs --client <slug> handoff [<folder name>|--all] [--dry-run]
   node tools/social.mjs metricool brands`;
 
-const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals", "window"]);
+const FLAGS = new Set(["all", "draft", "dry-run", "ai-voice", "ai-visuals", "window", "manual-audio"]);
 
 /** Positionals, --flag for names in FLAGS, and --key value for everything else. */
 function parse(argv, flags = FLAGS) {
@@ -67,6 +68,11 @@ function main() {
   const client = loadClient(root);
   const [command, ...rest] = argv;
   const args = parse(rest);
+
+  // --manual-audio belongs only to release --record with an id and uuid.
+  const isRecordWithIds = command === "release" && typeof args.record === "string" && args.error === undefined &&
+    typeof args.id === "string" && typeof args.uuid === "string";
+  if (args["manual-audio"] && !isRecordWithIds) { console.error(USAGE); return 1; }
 
   if ((command === "upload" || command === "release") && isOwnerPublished(client)) {
     console.error(`${client.slug} is published by the owner: use handoff`);
@@ -141,8 +147,9 @@ function main() {
         return 0;
       }
       if (!isText(args.id) || !isText(args.uuid)) { console.error(USAGE); return 1; }
-      const r = recordRelease(dayDir(root, args.record), { network: args.network, id: args.id, uuid: args.uuid });
-      console.log(`${r.name}: recorded ${args.network}, status ${r.status}`);
+      const manualAudio = Boolean(args["manual-audio"]);
+      const r = recordRelease(dayDir(root, args.record), { network: args.network, id: args.id, uuid: args.uuid, manualAudio });
+      console.log(`${r.name}: recorded ${args.network}${manualAudio ? " (manual audio)" : ""}, status ${r.status}`);
       return 0;
     }
     if (args.promote !== undefined) {
@@ -169,12 +176,17 @@ function main() {
       return 0;
     }
     const target = args._[0];
+    // The Instagram fallback for a sound not in Metricool's catalog: one named folder at a time, never --all.
+    if (args["auto-publish"] !== undefined && (args["auto-publish"] !== "off" || !isText(target))) { console.error(USAGE); return 1; }
+    const autoPublish = args["auto-publish"] !== "off";
     const dirs = target ? [dayDir(root, target)] : listDayFolders(root);
     const blogId = releaseBrand(client); // before anything is written, so an unmapped client changes nothing
     const packets = [];
+    const sounds = new Map();
     let failed = 0;
     for (const dir of dirs) {
-      const r = prepareRelease(dir, { draft: Boolean(args.draft), dryRun: Boolean(args["dry-run"]) });
+      const r = prepareRelease(dir, { draft: Boolean(args.draft), dryRun: Boolean(args["dry-run"]), autoPublish });
+      if (!autoPublish) sounds.set(r.name, r.sound);
       if (r.skipped) {
         if (target && r.skipped === "invalid") failed++;
         console.log(`${r.name}: skipped (${r.skipped})`); for (const p of r.problems || []) console.log(`  ${p}`); continue;
@@ -190,7 +202,10 @@ function main() {
     }
     const verb = args["dry-run"] ? "would send" : "to send";
     console.log(`${packets.length} packet(s) ${verb} through Metricool. For each one call createScheduledPost with blogId ${blogId}, the date, and info as a JSON string, then run release --record.`);
-    for (const p of packets) console.log(JSON.stringify(p));
+    for (const p of packets) {
+      console.log(JSON.stringify(p));
+      if (!autoPublish && p.network === "instagram") console.log(`manual audio needed: ${sounds.get(p.folder) || "(post.json names no sound)"}`);
+    }
     return failed === 0 ? 0 : 1;
   }
 
@@ -211,6 +226,10 @@ function main() {
     console.log(`waiting: ${r.waiting.join(", ") || "none"}`);
     if (r.drafts.length) console.log(`drafts waiting for promotion: ${r.drafts.join(", ")}`);
     for (const f of r.failed) console.log(`${f.folder}: Metricool reports a failed post on ${f.networks.join(", ")}; check Metricool, then resend it`);
+    if (r.manualAudio.length) {
+      console.log(`Manual audio still to publish in the Metricool app: ${r.manualAudio.map((x) => x.sound ? `${x.folder} (${x.sound})` : x.folder).join(", ")}`);
+    }
+    for (const e of r.manualAudioErrors) console.log(`Metricool reports ${e.status} on manual-audio ${e.folder}; check the app`);
     if (r.studio.length) {
       console.log(`Studio checklist still open (run release --studio-done <folder> when done): ${r.studio.join(", ")} (assumes the Metricool post published; check YouTube if unsure)`);
     }

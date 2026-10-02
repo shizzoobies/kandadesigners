@@ -59,6 +59,7 @@ shared Drive folder.
      `manual` flags: in a `publish: "owner"` client, every network is posted by
      the owner.
    - `time` is the suggested posting time the owner sees.
+   - An Instagram sound on a Reel (`platforms.instagram.audio`): see "Instagram audio on Reels" in `../README.md`.
    - Leave `r2`, `metricool`, `published` empty; they are not used here.
    - Set `status` to `ready` once media and captions are final. That is what
      puts the post on the desk.

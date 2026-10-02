@@ -199,6 +199,92 @@ describe("cli youtube", () => {
   });
 });
 
+describe("cli instagram audio", () => {
+  it("resends the instagram packet for the Metricool app, records it with --manual-audio, and reconcile lists it without failing", () => {
+    root = makeTempRoot();
+    const r2 = {
+      "media/reel-vertical.mp4": { key: "k1", url: "https://media.example.com/a.mp4", sha256: "x", uploadedAt: "t" },
+      "media/thumbnail.jpg": { key: "k2", url: "https://media.example.com/b.jpg", sha256: "y", uploadedAt: "t" }
+    };
+    const m = baseManifest({ id: "2030-01-07", date: "2030-01-07", status: "approved", r2 });
+    m.platforms.instagram.audio = { term: "Espresso Sabrina Carpenter" };
+    const dir = makeDay(root, "2030-01-07", m, baseFiles());
+    const read = () => JSON.parse(fs.readFileSync(path.join(dir, "post.json"), "utf8"));
+    const packets = (out) => out.trim().split("\n").filter((l) => l.startsWith("{")).map((l) => JSON.parse(l));
+
+    let r = run(["release", "2030-01-07"]);
+    expect(r.code).toBe(0);
+    expect(packets(r.out).find((p) => p.network === "instagram").info.instagramData.audioConfiguration)
+      .toEqual({ audioId: "Espresso Sabrina Carpenter", videoVolume: 0 });
+    expect(run(["release", "--record", "2030-01-07", "--network", "facebook", "--id", "1", "--uuid", "u-1"]).code).toBe(0);
+    // Metricool found no single match for the term: resend for the app instead.
+    expect(run(["release", "--record", "2030-01-07", "--network", "instagram", "--error", "audio not found"]).code).toBe(0);
+
+    expect(run(["release", "--auto-publish", "off"]).code).toBe(1);
+    expect(run(["release", "2030-01-07", "--auto-publish", "on"]).code).toBe(1);
+    r = run(["release", "2030-01-07", "--auto-publish", "off", "--dry-run"]);
+    expect(r.code).toBe(0);
+    expect(packets(r.out).map((p) => [p.network, p.info.autoPublish])).toEqual([["instagram", false]]);
+    expect(read().metricool.instagram.payload.info.autoPublish).toBe(true);
+    r = run(["release", "2030-01-07", "--auto-publish", "off"]);
+    expect(r.code).toBe(0);
+    const ig = packets(r.out);
+    expect(ig.map((p) => p.network)).toEqual(["instagram"]);
+    expect(ig[0].info.autoPublish).toBe(false);
+    expect(ig[0].info.instagramData.audioConfiguration).toBeUndefined();
+    const lines = r.out.trim().split("\n");
+    expect(lines[lines.length - 1]).toBe("manual audio needed: Espresso Sabrina Carpenter");
+    expect(lines[lines.length - 2].startsWith("{")).toBe(true);
+
+    expect(run(["release", "--record", "2030-01-07", "--network", "facebook", "--id", "1", "--uuid", "u-1", "--manual-audio"]).code).toBe(1);
+    r = run(["release", "--record", "2030-01-07", "--network", "instagram", "--id", "2", "--uuid", "u-2", "--manual-audio"]);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain("2030-01-07: recorded instagram (manual audio), status scheduled");
+    expect(read().metricool.instagram).toMatchObject({ id: "2", uuid: "u-2", manualAudio: true });
+
+    const file = path.join(root, "scheduled.json");
+    fs.writeFileSync(file, JSON.stringify({ data: [
+      { uuid: "u-1", draft: false, providers: [{ network: "facebook", status: "PUBLISHED", publicUrl: "u" }] },
+      { uuid: "u-2", draft: false, providers: [{ network: "instagram", status: "ERROR" }] }
+    ] }));
+    r = run(["reconcile", "--from", file, "--now", "2030-01-07T15:00:00Z"]);
+    expect(r.code).toBe(0);
+    expect(r.out).toContain("Manual audio still to publish in the Metricool app: 2030-01-07 (Espresso Sabrina Carpenter)");
+    expect(r.out).toContain("Metricool reports ERROR on manual-audio 2030-01-07; check the app");
+    expect(r.out).not.toContain("failed post");
+  });
+
+  it("allows --manual-audio only on release --record with --id and --uuid", () => {
+    root = makeTempRoot();
+    makeDay(root, "2030-01-07", baseManifest({ id: "2030-01-07", date: "2030-01-07", status: "approved" }), baseFiles());
+    for (const args of [
+      ["release", "2030-01-07", "--manual-audio"],
+      ["release", "--record", "2030-01-07", "--network", "instagram", "--error", "x", "--manual-audio"],
+      ["release", "--record", "2030-01-07", "--network", "instagram", "--id", "2", "--manual-audio"],
+      ["validate", "--manual-audio"],
+      ["reconcile", "--window", "--manual-audio"]
+    ]) {
+      const r = run(args);
+      expect(r.code, args.join(" ")).toBe(1);
+      expect(r.err, args.join(" ")).toContain("usage:");
+    }
+  });
+
+  it("refuses --auto-publish off on a folder with no Instagram REEL to send, with a clear message", () => {
+    root = makeTempRoot();
+    const m = baseManifest({ id: "2030-01-07", date: "2030-01-07", status: "approved", r2: {
+      "media/reel-vertical.mp4": { key: "k1", url: "https://media.example.com/a.mp4", sha256: "x", uploadedAt: "t" },
+      "media/thumbnail.jpg": { key: "k2", url: "https://media.example.com/b.jpg", sha256: "y", uploadedAt: "t" }
+    } });
+    delete m.platforms.instagram;
+    const dir = makeDay(root, "2030-01-07", m, baseFiles());
+    const r = run(["release", "2030-01-07", "--auto-publish", "off", "--draft"]);
+    expect(r.code).toBe(1);
+    expect(r.err).toContain("2030-01-07: --auto-publish off needs an Instagram REEL that is not recorded yet");
+    expect(JSON.parse(fs.readFileSync(path.join(dir, "post.json"), "utf8")).metricool).toEqual({});
+  });
+});
+
 describe("cli validate music", () => {
   it("reports a track repeated within 30 days on a full run", () => {
     root = makeTempRoot();

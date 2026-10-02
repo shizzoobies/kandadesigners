@@ -227,4 +227,114 @@ describe("release", () => {
     expect(promotePackets(dir).packets.map((p) => p.network)).toEqual(["instagram"]);
     expect(() => recordPromotion(dir, { network: "facebook", id: "444" })).toThrow(/facebook is not a draft/);
   });
+
+  it("records a manual-audio instagram release with manualAudio true, and refuses it on another network", () => {
+    const dir = uploadedDay();
+    prepareRelease(dir, { now: early });
+    expect(() => recordRelease(dir, { network: "facebook", id: "111", uuid: "u-111", manualAudio: true })).toThrow("2026-01-05: --manual-audio is for instagram only");
+    recordRelease(dir, { network: "facebook", id: "111", uuid: "u-111" });
+    prepareRelease(dir, { now: early, autoPublish: false });
+    const r = recordRelease(dir, { network: "instagram", id: "222", uuid: "u-222", manualAudio: true });
+    expect(r.status).toBe("scheduled");
+    const m = readManifest(dir);
+    expect(m.metricool.instagram).toMatchObject({ id: "222", uuid: "u-222", manualAudio: true });
+    expect("manualAudio" in m.metricool.facebook).toBe(false);
+  });
+
+  it("refuses --manual-audio that does not match the packet that was sent, either way", () => {
+    const dir = uploadedDay();
+    prepareRelease(dir, { now: early });
+    expect(() => recordRelease(dir, { network: "instagram", id: "2", uuid: "u-2", manualAudio: true })).toThrow("2026-01-05: --manual-audio does not match the packet that was sent");
+    prepareRelease(dir, { now: early, autoPublish: false });
+    expect(() => recordRelease(dir, { network: "instagram", id: "2", uuid: "u-2" })).toThrow("2026-01-05: --manual-audio does not match the packet that was sent");
+    expect(readManifest(dir).metricool.instagram.id).toBeUndefined();
+  });
+
+  it("clears a stale manualAudio when a network is recorded again without it", () => {
+    const dir = uploadedDay();
+    prepareRelease(dir, { now: early });
+    const m = readManifest(dir);
+    m.metricool.instagram.manualAudio = true;
+    fs.writeFileSync(`${dir}/post.json`, JSON.stringify(m));
+    recordRelease(dir, { network: "instagram", id: "2", uuid: "u-2" });
+    expect("manualAudio" in readManifest(dir).metricool.instagram).toBe(false);
+  });
+});
+
+describe("release instagram audio", () => {
+  const withAudio = (audio) => {
+    const m = baseManifest({ status: "approved", r2 });
+    m.platforms.instagram = { type: "REEL", caption: "instagram.md", audio };
+    return m;
+  };
+  const audioDay = (audio) => { root = makeTempRoot(); return makeDay(root, "2026-01-05", withAudio(audio), baseFiles()); };
+  const plainFacebook = () => {
+    const packets = prepareRelease(uploadedDay(), { now: early, dryRun: true }).packets;
+    fs.rmSync(root, { recursive: true, force: true });
+    return packets.find((p) => p.network === "facebook");
+  };
+
+  it("carries audioConfiguration on the instagram packet, shaped exactly, with videoVolume 0 by default", () => {
+    const facebook = plainFacebook();
+    const dir = audioDay({ term: "Espresso Sabrina Carpenter" });
+    const r = prepareRelease(dir, { now: early });
+    const ig = r.packets.find((p) => p.network === "instagram");
+    expect(ig.info.instagramData).toEqual({
+      type: "REEL", isAiGenerated: false,
+      audioConfiguration: { audioId: "Espresso Sabrina Carpenter", videoVolume: 0 }
+    });
+    expect(Object.keys(ig.info.instagramData.audioConfiguration)).toEqual(["audioId", "videoVolume"]);
+    expect(ig.info.autoPublish).toBe(true);
+    // Facebook's packet is exactly what it is without audio.
+    expect(r.packets.find((p) => p.network === "facebook")).toEqual(facebook);
+    expect(readManifest(dir).metricool.instagram.payload.info.instagramData.audioConfiguration).toEqual({ audioId: "Espresso Sabrina Carpenter", videoVolume: 0 });
+  });
+
+  it("sends an id as a string with both volumes as given, and never the catalog fields", () => {
+    const r = prepareRelease(audioDay({ id: 1234567890, audioVolume: 40, videoVolume: 100 }), { now: early, dryRun: true });
+    const conf = r.packets.find((p) => p.network === "instagram").info.instagramData.audioConfiguration;
+    expect(conf).toEqual({ audioId: "1234567890", videoVolume: 100, audioVolume: 40 });
+    for (const k of ["audioType", "title", "displayArtist", "igUsername", "coverArtworkUrl", "durationMs"]) expect(conf[k]).toBeUndefined();
+  });
+
+  it("leaves audioConfiguration off when there is no audio", () => {
+    const r = prepareRelease(uploadedDay(), { now: early, dryRun: true });
+    expect(r.packets.find((p) => p.network === "instagram").info.instagramData).toEqual({ type: "REEL", isAiGenerated: false });
+  });
+
+  it("with autoPublish off, prepares only the instagram packet, for the Metricool app, with no audioConfiguration", () => {
+    const dir = audioDay({ term: "Espresso" });
+    const r = prepareRelease(dir, { now: early, autoPublish: false });
+    expect(r.packets.map((p) => p.network)).toEqual(["instagram"]);
+    expect(r.packets[0].info.autoPublish).toBe(false);
+    expect(r.packets[0].info.instagramData).toEqual({ type: "REEL", isAiGenerated: false });
+    expect(r.sound).toBe("Espresso");
+    const m = readManifest(dir);
+    expect(m.metricool.instagram.payload.info.autoPublish).toBe(false);
+    expect(m.metricool.facebook).toBeUndefined();
+  });
+
+  it("with autoPublish off, honors dry run and draft", () => {
+    const dir = audioDay({ id: "123" });
+    const dry = prepareRelease(dir, { now: early, autoPublish: false, dryRun: true });
+    expect(dry.packets.map((p) => [p.network, p.info.autoPublish])).toEqual([["instagram", false]]);
+    expect(readManifest(dir).metricool).toEqual({});
+    const draft = prepareRelease(dir, { now: early, autoPublish: false, draft: true });
+    expect(draft.packets.map((p) => [p.network, p.info.autoPublish, p.info.draft])).toEqual([["instagram", false, true]]);
+    expect(readManifest(dir).metricool.instagram.draft).toBe(true);
+  });
+
+  it("with autoPublish off, needs an Instagram REEL that is not recorded yet", () => {
+    const noIg = baseManifest({ status: "approved", r2 });
+    delete noIg.platforms.instagram;
+    root = makeTempRoot();
+    const dir = makeDay(root, "2026-01-05", noIg, baseFiles());
+    const msg = "2026-01-05: --auto-publish off needs an Instagram REEL that is not recorded yet";
+    expect(() => prepareRelease(dir, { now: early, autoPublish: false })).toThrow(msg);
+    fs.rmSync(root, { recursive: true, force: true });
+    const recorded = audioDay({ term: "Espresso" });
+    prepareRelease(recorded, { now: early });
+    recordRelease(recorded, { network: "instagram", id: "2", uuid: "u-2" });
+    expect(() => prepareRelease(recorded, { now: early, autoPublish: false })).toThrow(msg);
+  });
 });

@@ -13,6 +13,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
+import { instagramSound as soundOf } from "./manifest.mjs";
 
 const DAY = /^(\d{4}-\d{2}-\d{2})(-\d+)?$/;
 const WEEKDAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -118,6 +119,9 @@ export function buildReview({ root, proxy, now = new Date() }) {
       youtubePlaylist: yt.playlist || null,
       youtubeTime: yt.time || post.time
     } : {};
+    // The Instagram sound (term or id), so the client's social manager can confirm it; absent without one.
+    const sound = networks.includes("instagram") ? soundOf(post) : null;
+    const instagramSound = sound !== null ? { instagramSound: sound } : {};
     posts.push({
       id: name,
       date,
@@ -139,6 +143,7 @@ export function buildReview({ root, proxy, now = new Date() }) {
       linkedinComment: li.firstComment,
       repost: read(path.join(dir, "repost.md")),
       ...youtube,
+      ...instagramSound,
       questions: bullets(section(brief, "Questions for Alex")),
       ai: post.ai || {},
       music: post.music || null,

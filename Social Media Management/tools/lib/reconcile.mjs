@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { TO_BE_RELEASED, ALREADY_RELEASED } from "./paths.mjs";
-import { listDayFolders, readManifest, writeManifest, assertTransition } from "./manifest.mjs";
+import { listDayFolders, readManifest, writeManifest, assertTransition, instagramSound } from "./manifest.mjs";
 import { localToUtc } from "./validate.mjs";
 import { isoWithOffset } from "./payload.mjs";
 import { todayInNewYork } from "./calendar.mjs";
@@ -32,12 +32,14 @@ export function draftUuidsIn(response) {
 /**
  * Where each listed post stands. Metricool keeps a published post in getScheduledPosts with every provider
  * marked status "PUBLISHED" (and a publicUrl), so a uuid is only pending while some provider is not PUBLISHED.
- * A provider whose status names an error or failure is also collected, so reconcile can report it.
+ * A provider whose status names an error or failure is also collected (failed: uuid -> networks, failedStatus:
+ * uuid -> { network: status }), so reconcile can report it.
  */
 export function listingStatus(response) {
   const pending = new Set();
   const permalinks = new Map();
   const failed = new Map();
+  const failedStatus = new Map();
   for (const item of itemsIn(response)) {
     if (!item || typeof item.uuid !== "string") continue;
     const providers = Array.isArray(item.providers) ? item.providers : [];
@@ -46,10 +48,13 @@ export function listingStatus(response) {
     const links = {};
     for (const p of providers) if (p && p.status === "PUBLISHED" && typeof p.publicUrl === "string") links[p.network] = p.publicUrl;
     permalinks.set(item.uuid, links);
-    const bad = providers.filter((p) => p && /ERROR|FAIL/i.test(String(p.status || ""))).map((p) => p.network);
-    if (bad.length) failed.set(item.uuid, bad);
+    const badProviders = providers.filter((p) => p && /ERROR|FAIL/i.test(String(p.status || "")));
+    if (badProviders.length) {
+      failed.set(item.uuid, badProviders.map((p) => p.network));
+      failedStatus.set(item.uuid, Object.fromEntries(badProviders.map((p) => [p.network, String(p.status)])));
+    }
   }
-  return { pending, permalinks, failed };
+  return { pending, permalinks, failed, failedStatus };
 }
 
 function recordedUuids(m) {
@@ -102,13 +107,15 @@ function archiveTarget(root, name) {
  * One bad folder is recorded in errors and the run goes on.
  */
 export function reconcile({ root, response, now = new Date(), del = (key) => r2Delete(key), dryRun = false, retentionDays = 7 }) {
-  const { pending, permalinks, failed: failedListings } = listingStatus(response);
+  const { pending, permalinks, failed: failedListings, failedStatus } = listingStatus(response);
   const listedDrafts = draftUuidsIn(response);
   const published = [];
   const waiting = [];
   const drafts = [];
   const failed = [];
   const errors = [];
+  const manualAudio = [];
+  const manualAudioErrors = [];
 
   for (const dir of listDayFolders(root, TO_BE_RELEASED)) {
     const name = path.basename(dir);
@@ -123,8 +130,17 @@ export function reconcile({ root, response, now = new Date(), del = (key) => r2D
       }
       if (m.status !== "scheduled") continue;
       const mine = recordedUuids(m);
+      // Sent with autoPublish off (release --record --manual-audio): it waits on a person in the Metricool app,
+      // so a status Metricool gives it meanwhile is a reminder, not a failure.
+      const ig = m.metricool && m.metricool.instagram;
+      const manualUuid = ig && ig.manualAudio === true && ig.uuid ? String(ig.uuid) : null;
+      if (manualUuid && pending.has(manualUuid)) {
+        manualAudio.push({ folder: name, sound: instagramSound(m) });
+        const status = (failedStatus.get(manualUuid) || {}).instagram;
+        if (status) manualAudioErrors.push({ folder: name, status });
+      }
       if (hasDraft(m) || mine.some((u) => listedDrafts.has(u))) { waiting.push(name); drafts.push(name); continue; }
-      const bad = mine.flatMap((u) => failedListings.get(u) || []);
+      const bad = mine.flatMap((u) => (failedListings.get(u) || []).filter((n) => !(u === manualUuid && n === "instagram")));
       if (bad.length) { failed.push({ folder: name, networks: bad }); waiting.push(name); continue; }
       const postTime = localToUtc(m.date, m.time, m.timezone);
       // Gone from the list, or listed with every provider PUBLISHED.
@@ -176,7 +192,7 @@ export function reconcile({ root, response, now = new Date(), del = (key) => r2D
     }
   }
 
-  return { published, waiting, drafts, failed, deleted, errors, studio: studioPending(root, now) };
+  return { published, waiting, drafts, failed, deleted, errors, manualAudio, manualAudioErrors, studio: studioPending(root, now) };
 }
 
 /**

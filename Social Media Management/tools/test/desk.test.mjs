@@ -207,6 +207,19 @@ describe("buildDeskRows content hash (reviewed fields only)", () => {
     }
   });
 
+  it("carries the Instagram sound in the row payload, and a new or changed sound resets the decision", () => {
+    root = makeTempRoot();
+    const base = fixtureData({ stories: [], storyChecklist: [], asks: [] });
+    setupQueue(root, base);
+    const wanted = wantedFor(root, base);
+    const baseHash = buildDeskRows(base, "ka-performance", wanted)[0].contentHash;
+    const withSound = (s) => fixtureData({ stories: [], storyChecklist: [], asks: [], posts: [{ ...base.posts[0], instagramSound: s }] });
+    const row = buildDeskRows(withSound("Espresso Sabrina Carpenter"), "ka-performance", wanted)[0];
+    expect(JSON.parse(row.payload).instagramSound).toBe("Espresso Sabrina Carpenter");
+    expect(row.contentHash).not.toBe(baseHash);
+    expect(buildDeskRows(withSound("1234567890"), "ka-performance", wanted)[0].contentHash).not.toBe(row.contentHash);
+  });
+
   it("hashes story/checklist rows on date/time/condition/stickerText/stickerUrl/v only", () => {
     root = makeTempRoot();
     const base = fixtureData({ posts: [], asks: [] });

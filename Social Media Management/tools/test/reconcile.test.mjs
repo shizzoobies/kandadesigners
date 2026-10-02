@@ -225,6 +225,42 @@ describe("reconcile", () => {
     expect(r.waiting).toEqual(["2026-01-05"]);
   });
 
+  it("lists a manual-audio instagram post until it is PUBLISHED, and never counts it as a failure", () => {
+    root = makeTempRoot();
+    const manual = (name, igUuid, audio = { term: "Espresso Sabrina Carpenter" }) => {
+      const m = scheduledDay(name);
+      m.platforms.instagram.audio = audio;
+      m.metricool.facebook.uuid = `fb-${name}`;
+      m.metricool.instagram = { payload: {}, id: "2", uuid: igUuid, scheduledAt: "t", manualAudio: true };
+      return m;
+    };
+    // A Facebook failure inside a manual-audio folder is still a failure.
+    makeDay(root, "2026-01-04", manual("2026-01-04", "ig-z"), baseFiles());
+    makeDay(root, "2026-01-05", manual("2026-01-05", "ig-a"), baseFiles());
+    makeDay(root, "2026-01-06", manual("2026-01-06", "ig-b", { id: 1234567890 }), baseFiles());
+    makeDay(root, "2026-01-07", manual("2026-01-07", "ig-c"), baseFiles());
+    // An ordinary post that failed is still a failure.
+    const plain = scheduledDay("2026-01-08");
+    plain.metricool.facebook.uuid = "fb-plain"; plain.metricool.instagram.uuid = "ig-plain";
+    makeDay(root, "2026-01-08", plain, baseFiles());
+    const response = { data: [
+      listed("fb-2026-01-04", "facebook", "ERROR"), listed("ig-z", "instagram", "PUBLISHED", "u"),
+      listed("fb-2026-01-05", "facebook", "PUBLISHED", "u"), listed("ig-a", "instagram", "PENDING"),
+      listed("fb-2026-01-06", "facebook", "PUBLISHED", "u"), listed("ig-b", "instagram", "ERROR"),
+      listed("fb-2026-01-07", "facebook", "PUBLISHED", "u"), listed("ig-c", "instagram", "PUBLISHED", "u"),
+      listed("fb-plain", "facebook", "PUBLISHED", "u"), listed("ig-plain", "instagram", "ERROR")
+    ] };
+    const r = reconcile({ root, response, now: new Date("2026-01-09T15:00:00Z"), del: () => {} });
+    expect(r.manualAudio).toEqual([
+      { folder: "2026-01-05", sound: "Espresso Sabrina Carpenter" },
+      { folder: "2026-01-06", sound: "1234567890" }
+    ]);
+    expect(r.manualAudioErrors).toEqual([{ folder: "2026-01-06", status: "ERROR" }]);
+    expect(r.failed).toEqual([{ folder: "2026-01-04", networks: ["facebook"] }, { folder: "2026-01-08", networks: ["instagram"] }]);
+    expect(r.waiting).toEqual(["2026-01-04", "2026-01-05", "2026-01-06", "2026-01-08"]);
+    expect(r.published).toEqual(["2026-01-07"]);
+  });
+
   it("gives the getScheduledPosts window from the earliest scheduled date to tomorrow", () => {
     root = makeTempRoot();
     expect(reconcileWindow(root, new Date("2026-01-10T15:00:00Z"))).toBeNull();

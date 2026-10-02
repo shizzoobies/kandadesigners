@@ -25,6 +25,7 @@ export const YOUTUBE_CATEGORIES = [
 export const OWNER_TYPES = ["POST", "REEL"];
 export const ROLES = ["video", "image", "thumbnail", "captions"];
 export const ORIGINS = ["human", "codex", "elevenlabs", "kap-reel"];
+const AUDIO_FIELDS = ["term", "id", "audioVolume", "videoVolume"];
 const EM_DASH = "\u2014";
 const TEXT_EXT = new Set([".md", ".json", ".srt"]);
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -243,6 +244,9 @@ export function validateFolder(dir, { now = new Date(), client = null, probe = p
         add(`${network} type "${type}" is not one of ${allowedTypes.join(", ")}`);
         continue;
       }
+      // An owner posts by hand from the hand-off folder, which does not carry a sound yet.
+      if (cfg.audio !== undefined && ownerClient && network === "instagram") add("instagram audio is not supported for owner-published clients yet");
+      else if (cfg.audio !== undefined) audioProblems(network, type, cfg.audio, add);
 
       const roles = rolesFor(network);
       if (type === "STORY") {
@@ -312,6 +316,33 @@ export function validateFolder(dir, { now = new Date(), client = null, probe = p
   }
 
   return problems;
+}
+
+/**
+ * platforms.instagram.audio, Metricool's audioConfiguration: a REEL only, exactly one of `term` (song title
+ * and/or artist) or `id` (numeric Instagram audio id), optional whole-number volumes 0 to 100. Nothing else:
+ * Metricool fills the catalog fields itself.
+ */
+function audioProblems(network, type, audio, add) {
+  if (network !== "instagram") { add(`${network} audio is for instagram only`); return; }
+  if (type !== "REEL") add(`instagram audio needs type REEL, not ${type}`);
+  if (audio === null || typeof audio !== "object" || Array.isArray(audio)) { add("instagram audio is not an object"); return; }
+  for (const k of Object.keys(audio)) {
+    if (!AUDIO_FIELDS.includes(k)) add(`instagram audio has unknown field "${k}"`);
+  }
+  if ((audio.term === undefined) === (audio.id === undefined)) add("instagram audio needs exactly one of term or id");
+  else if (audio.term !== undefined && typeof audio.term !== "string") add("instagram audio term must be a string");
+  else if (audio.term !== undefined && !audio.term.trim()) add("instagram audio term is empty");
+  else if (typeof audio.id === "number" && Number.isInteger(audio.id) && !Number.isSafeInteger(audio.id)) {
+    // JSON numbers past 2^53 lose digits on parse, so the id Metricool gets would be a different sound.
+    add(`instagram audio id ${audio.id} is too long for a JSON number; write it as a string`);
+  } else if (audio.id !== undefined && !(typeof audio.id === "string" ? /^\d+$/.test(audio.id) : Number.isSafeInteger(audio.id) && audio.id >= 0)) {
+    add(`instagram audio id ${JSON.stringify(String(audio.id))} is not a numeric Instagram audio id`);
+  }
+  for (const k of ["audioVolume", "videoVolume"]) {
+    const v = audio[k];
+    if (v !== undefined && !(Number.isInteger(v) && v >= 0 && v <= 100)) add(`instagram audio ${k} ${JSON.stringify(v)} is not a whole number from 0 to 100`);
+  }
 }
 
 /** The youtube fields Metricool takes (title, tags, category) and the playlist the Studio checklist names. */

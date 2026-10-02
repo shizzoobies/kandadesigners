@@ -65,7 +65,7 @@ function rewriteMediaEntry(entry, slug, itemId, wanted) {
 // item, so adding vs. never having a field does not itself change the hash.
 const POST_FIELDS = [
   "title", "hook", "networks", "facebook", "instagram", "firstComment", "linkedin", "linkedinComment", "repost", "questions",
-  "youtubeTitle", "youtube", "youtubeType", "youtubeTags", "youtubePlaylist", "youtubeTime"
+  "youtubeTitle", "youtube", "youtubeType", "youtubeTags", "youtubePlaylist", "youtubeTime", "instagramSound"
 ];
 const STORY_FIELDS = ["date", "time", "condition", "stickerText", "stickerUrl"];
 const ASK_FIELDS = ["title", "detail", "placeholder"];

@@ -710,3 +710,64 @@ describe("readYoutubeConfig", () => {
     expect(readYoutubeConfig(path.join(root, "none.json"))).toEqual({ verified: false, playlists: [] });
   });
 });
+
+describe("validateFolder instagram audio", () => {
+  const withAudio = (audio, igType = "REEL") => {
+    const m = baseManifest();
+    m.platforms.instagram = { type: igType, caption: "instagram.md", audio };
+    return m;
+  };
+
+  it("accepts a search term, a numeric id as a string or a number, and volumes from 0 to 100", () => {
+    expect(validateFolder(day(withAudio({ term: "Espresso Sabrina Carpenter" })))).toEqual([]);
+    expect(validateFolder(day(withAudio({ id: "1234567890" })))).toEqual([]);
+    expect(validateFolder(day(withAudio({ id: 1234567890, audioVolume: 0, videoVolume: 100 })))).toEqual([]);
+    expect(validateFolder(day(withAudio({ term: "Espresso", audioVolume: 40 })))).toEqual([]);
+  });
+
+  it("rejects audio on any network other than instagram", () => {
+    const m = baseManifest();
+    m.platforms.facebook = { type: "REEL", caption: "facebook.md", audio: { term: "Espresso" } };
+    expect(validateFolder(day(m))).toContain("2026-01-05: facebook audio is for instagram only");
+  });
+
+  it("rejects audio on an instagram type other than REEL", () => {
+    expect(validateFolder(day(withAudio({ term: "Espresso" }, "POST")))).toContain("2026-01-05: instagram audio needs type REEL, not POST");
+    expect(validateFolder(day(withAudio({ term: "Espresso" }, "TRIAL_REEL")))).toContain("2026-01-05: instagram audio needs type REEL, not TRIAL_REEL");
+    expect(validateFolder(day(withAudio({ term: "Espresso" }, "STORY"), baseFiles({ "instagram.md": "" })))).toContain("2026-01-05: instagram audio needs type REEL, not STORY");
+  });
+
+  it("needs exactly one of term or id, in an object", () => {
+    expect(validateFolder(day(withAudio({ term: "Espresso", id: "123" })))).toContain("2026-01-05: instagram audio needs exactly one of term or id");
+    expect(validateFolder(day(withAudio({ audioVolume: 40 })))).toContain("2026-01-05: instagram audio needs exactly one of term or id");
+    expect(validateFolder(day(withAudio("Espresso")))).toContain("2026-01-05: instagram audio is not an object");
+  });
+
+  it("rejects an empty term and an id that is not numeric", () => {
+    expect(validateFolder(day(withAudio({ term: "  " })))).toContain("2026-01-05: instagram audio term is empty");
+    expect(validateFolder(day(withAudio({ id: "espresso" })))).toContain("2026-01-05: instagram audio id \"espresso\" is not a numeric Instagram audio id");
+    expect(validateFolder(day(withAudio({ id: 12.5 })))).toContain("2026-01-05: instagram audio id \"12.5\" is not a numeric Instagram audio id");
+    expect(validateFolder(day(withAudio({ id: 2 ** 60 })))).toContain(`2026-01-05: instagram audio id ${2 ** 60} is too long for a JSON number; write it as a string`);
+    expect(validateFolder(day(withAudio({ id: "17841400123456789012" })))).toEqual([]);
+    expect(validateFolder(day(withAudio({ id: -5 })))).toContain("2026-01-05: instagram audio id \"-5\" is not a numeric Instagram audio id");
+    expect(validateFolder(day(withAudio({ id: null })))).toContain("2026-01-05: instagram audio id \"null\" is not a numeric Instagram audio id");
+    expect(validateFolder(day(withAudio({ term: 5 })))).toContain("2026-01-05: instagram audio term must be a string");
+  });
+
+  it("is not supported for an owner-published client yet (the hand-off does not carry it)", () => {
+    const m = baseManifest();
+    m.platforms.instagram = { type: "REEL", caption: "instagram.md", audio: { term: "Espresso" } };
+    const problems = validateFolder(day(m), { client: OWNER_CLIENT });
+    expect(problems).toEqual(["2026-01-05: instagram audio is not supported for owner-published clients yet"]);
+    delete m.platforms.instagram.audio;
+    expect(validateFolder(day(m), { client: OWNER_CLIENT })).toEqual([]);
+  });
+
+  it("rejects volumes outside 0 to 100 or not whole numbers, and fields Metricool fills itself", () => {
+    expect(validateFolder(day(withAudio({ term: "Espresso", audioVolume: 101 })))).toContain("2026-01-05: instagram audio audioVolume 101 is not a whole number from 0 to 100");
+    expect(validateFolder(day(withAudio({ term: "Espresso", videoVolume: -1 })))).toContain("2026-01-05: instagram audio videoVolume -1 is not a whole number from 0 to 100");
+    expect(validateFolder(day(withAudio({ term: "Espresso", videoVolume: "20" })))).toContain("2026-01-05: instagram audio videoVolume \"20\" is not a whole number from 0 to 100");
+    expect(validateFolder(day(withAudio({ term: "Espresso", audioVolume: 40.5 })))).toContain("2026-01-05: instagram audio audioVolume 40.5 is not a whole number from 0 to 100");
+    expect(validateFolder(day(withAudio({ term: "Espresso", title: "Espresso" })))).toContain("2026-01-05: instagram audio has unknown field \"title\"");
+  });
+});

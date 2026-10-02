@@ -75,6 +75,20 @@ describe("buildReview (K&A root)", () => {
     for (const k of ["youtubeTitle", "youtube", "youtubeType", "youtubeTags", "youtubePlaylist", "youtubeTime"]) expect(post[k]).toBeUndefined();
   });
 
+  it("carries the Instagram sound (term or id) only on a post that asks for one", () => {
+    root = makeTempRoot();
+    const term = baseManifest({ status: "ready" });
+    term.platforms.instagram.audio = { term: "Espresso Sabrina Carpenter", videoVolume: 0 };
+    makeDay(root, "2026-01-05", term, baseFiles());
+    const id = baseManifest({ id: "2026-01-06", date: "2026-01-06", status: "ready" });
+    id.platforms.instagram.audio = { id: 1234567890 };
+    makeDay(root, "2026-01-06", id, baseFiles());
+    makeDay(root, "2026-01-07", baseManifest({ id: "2026-01-07", date: "2026-01-07", status: "ready" }), baseFiles());
+    const posts = buildReview({ root, proxy: noVideoProxy }).data.posts;
+    expect(posts.map((p) => p.instagramSound)).toEqual(["Espresso Sabrina Carpenter", "1234567890", undefined]);
+    expect("instagramSound" in posts[2]).toBe(false);
+  });
+
   it("drops approved, scheduled, published and native folders from the desk", () => {
     root = makeTempRoot();
     // review.mjs decides purely from `status` before ever reading id/date, so a

@@ -1,5 +1,5 @@
 import path from "node:path";
-import { readManifest, writeManifest, assertTransition, mediaFor } from "./manifest.mjs";
+import { readManifest, writeManifest, assertTransition, mediaFor, instagramSound } from "./manifest.mjs";
 import { validateFolder, probeMedia, readYoutubeConfig } from "./validate.mjs";
 import { buildPayloads } from "./payload.mjs";
 import { UPLOAD_ROLES } from "./upload.mjs";
@@ -35,23 +35,32 @@ export function studioChecklist(m, youtube = readYoutubeConfig()) {
  * repeated lists networks that were prepared before, with the earlier preparedAt, so a resend can be checked first.
  * studio is the after-publish Studio checklist when a youtube packet is among them. probe goes to validateFolder;
  * youtube (the channel config, readYoutubeConfig by default) goes to validateFolder, buildPayloads and the checklist.
+ * autoPublish false is the manual-audio fallback: only the instagram packet is prepared, to publish from the
+ * Metricool app by hand, and `sound` names the sound to add there. It throws unless the folder has an active
+ * Instagram REEL that Metricool does not have yet.
  */
-export function prepareRelease(dir, { draft = false, now = new Date(), dryRun = false, probe = probeMedia, youtube = null } = {}) {
+export function prepareRelease(dir, { draft = false, now = new Date(), dryRun = false, probe = probeMedia, youtube = null, autoPublish = true } = {}) {
   const name = path.basename(dir);
   youtube = youtube || readYoutubeConfig();
   const problems = validateFolder(dir, { now, probe, youtube });
   if (problems.length) return { name, skipped: "invalid", problems, packets: [], repeated: [] };
   const m = readManifest(dir);
   if (m.status !== "approved") return { name, skipped: `status ${m.status}`, packets: [], repeated: [] };
+  if (!autoPublish) {
+    const ig = m.platforms.instagram;
+    const sent = m.metricool && m.metricool.instagram && m.metricool.instagram.id;
+    if (!ig || ig.manual || ig.type !== "REEL" || sent) throw new Error(`${name}: --auto-publish off needs an Instagram REEL that is not recorded yet`);
+  }
   const r2 = m.r2 || {};
   const missing = m.media.filter((e) => UPLOAD_ROLES.has(e.role) && !(r2[e.file] && r2[e.file].url));
   if (missing.length) return { name, skipped: "media not uploaded", packets: [], repeated: [] };
 
-  const payloads = buildPayloads(dir, { draft, youtube });
+  const payloads = buildPayloads(dir, { draft, youtube, autoPublish });
   m.metricool = m.metricool || {};
   const packets = [];
   const repeated = [];
   for (const network of activeNetworks(m)) {
+    if (!autoPublish && network !== "instagram") continue;
     const existing = m.metricool[network] || {};
     if (!existing.id) {
       if (existing.preparedAt) repeated.push({ network, preparedAt: existing.preparedAt });
@@ -60,10 +69,11 @@ export function prepareRelease(dir, { draft = false, now = new Date(), dryRun = 
     }
   }
   const studio = packets.some((p) => p.network === "youtube") ? studioChecklist(m, youtube) : [];
-  if (dryRun) return { name, packets, repeated, studio };
+  const sound = autoPublish ? undefined : instagramSound(m);
+  if (dryRun) return { name, packets, repeated, studio, sound };
   m.lastError = null;
   writeManifest(dir, m);
-  return { name, packets, repeated, studio };
+  return { name, packets, repeated, studio, sound };
 }
 
 /** Mark the youtube Studio checklist done: metricool.youtube.studioDoneAt, beside the record it belongs to. */
@@ -77,14 +87,24 @@ export function recordStudioDone(dir, { now = new Date() } = {}) {
   return { name };
 }
 
-/** Write the Metricool id and uuid Claude got back for one network. Schedules the folder once every network has one. */
-export function recordRelease(dir, { network, id, uuid, now = new Date() }) {
+/**
+ * Write the Metricool id and uuid Claude got back for one network. Schedules the folder once every network has one.
+ * manualAudio marks an instagram post sent with autoPublish off: a person adds the sound and publishes it in the
+ * Metricool app, and reconcile lists it until it has published. It must match the stored packet (autoPublish
+ * false), and is written on every record: true when manual, absent otherwise.
+ */
+export function recordRelease(dir, { network, id, uuid, now = new Date(), manualAudio = false }) {
   const name = path.basename(dir);
+  if (manualAudio && network !== "instagram") throw new Error(`${name}: --manual-audio is for instagram only`);
   const m = readManifest(dir);
   if (m.status !== "approved" && m.status !== "scheduled") throw new Error(`${name}: cannot record on status ${m.status}`);
   const rec = m.metricool && m.metricool[network];
   if (!rec || !rec.payload) throw new Error(`${name}: ${network} has no prepared payload; run release first`);
+  const manual = rec.payload.info?.autoPublish === false;
+  if (manual !== Boolean(manualAudio)) throw new Error(`${name}: --manual-audio does not match the packet that was sent`);
   m.metricool[network] = { ...rec, id: String(id), uuid: String(uuid), scheduledAt: now.toISOString() };
+  if (manual) m.metricool[network].manualAudio = true;
+  else delete m.metricool[network].manualAudio;
   const done = activeNetworks(m).every((n) => m.metricool[n] && m.metricool[n].id);
   if (done && m.status !== "scheduled") {
     assertTransition(m.status, "scheduled");

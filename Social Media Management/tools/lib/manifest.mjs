@@ -22,6 +22,14 @@ export function mediaFor(entry, network) {
   return !Array.isArray(entry.platforms) || entry.platforms.includes(network);
 }
 
+/** The Instagram sound a post asks for (platforms.instagram.audio's term, or its id as a string), or null. */
+export function instagramSound(m) {
+  const audio = m && m.platforms && m.platforms.instagram && m.platforms.instagram.audio;
+  if (!audio || typeof audio !== "object") return null;
+  const sound = audio.term ?? audio.id;
+  return sound === undefined || sound === null ? null : String(sound);
+}
+
 export function readManifest(dir) {
   return JSON.parse(fs.readFileSync(path.join(dir, "post.json"), "utf8"));
 }

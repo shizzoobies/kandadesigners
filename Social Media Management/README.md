@@ -87,6 +87,8 @@ is `YYYY-MM-DD-2`. When a post has published, the whole folder moves to
   YouTube `VIDEO`, `SHORT` (see "YouTube" below).
 - `platforms.<network>.time` (optional, any network) overrides the folder's
   `time` for that one network.
+- `platforms.instagram.audio` (optional, Instagram `REEL` only) asks for an
+  Instagram sound. See "Instagram audio on Reels" below.
 - `media[].role`: `video`, `image`, `thumbnail`, `captions`. Every `image`
   and `thumbnail` needs `alt`. A `thumbnail` is .jpg, .jpeg, or .png.
 - `media[].origin`: `human`, `codex`, `elevenlabs`, `kap-reel`.
@@ -186,6 +188,81 @@ R2 settings live in `tools/config/r2.json` (bucket `ka-social`, public base
 `https://media.ka-performancefl.com`). The Cloudflare token is read from
 `CLOUDFLARE_API_TOKEN`, or on Windows from the user scope variable of that
 name. It is never written anywhere.
+
+## Instagram audio on Reels
+
+An Instagram `REEL` can go out with an Instagram sound (a trending track)
+through Metricool's `audioConfiguration`:
+
+```json
+"instagram": {
+  "type": "REEL", "caption": "instagram.md",
+  "audio": { "term": "Espresso Sabrina Carpenter", "audioVolume": 40, "videoVolume": 0 }
+}
+```
+
+- Exactly one of `term` (song title and/or artist) or `id` (the numeric
+  Instagram audio id; write a long id as a string). `audioVolume` and
+  `videoVolume` are optional whole numbers from 0 to 100.
+- `validate` rejects `audio` on any network but Instagram, on any type but
+  `REEL` (not `POST`, `STORY` or `TRIAL_REEL`), with both or neither of
+  `term` and `id`, an empty term, any other field, or a volume out of range.
+  Leaving out `TRIAL_REEL` is deliberate, even though Metricool accepts audio
+  there, until a trial-reel test is planned.
+- A client with `publish: "owner"` cannot use `audio` yet: the hand-off folder
+  does not carry a sound, so `validate` rejects it for those clients.
+- `release` puts it on the Instagram packet only, as
+  `info.instagramData.audioConfiguration`: `{ "audioId": <id or term>,
+  "videoVolume": <given, or 0>, "audioVolume": <only when given> }`. Nothing
+  else is sent (Metricool fills the title, artist and cover from its catalog).
+  `videoVolume` defaults to 0 because our own music bed is usually baked into
+  the video and would play under the sound. Set it higher for a video whose
+  voice or natural sound should stay. The default of 0 is deliberate: it is
+  K&A's muted-first rule.
+- It only works on an Instagram Business account connected to Metricool
+  through a Facebook Page. Metricool resolves a term only when exactly one
+  sound matches; zero or several is a rejection that lists candidates. Retry
+  with the exact numeric `id` when one candidate is clearly right.
+- Metricool's catalog only has sounds Instagram cleared for third-party
+  publishing. It is smaller than what the Instagram app shows, so expect
+  misses on some trending sounds.
+
+When the sound is not in the catalog (record the rejection with `--error`
+first), fall back to publishing by hand from the Metricool phone app:
+
+1. `node tools/social.mjs release 2026-09-28 --auto-publish off` prepares the
+   Instagram packet again with `info.autoPublish: false` and no
+   `audioConfiguration`, then prints `manual audio needed: <sound>` after it.
+   It takes one named folder (never `--all`), prepares and prints the
+   Instagram packet only (other networks are never emitted by this command),
+   and works with `--draft` and `--dry-run`. It exits 1 unless the folder has
+   an active Instagram `REEL` that is not recorded yet. Send the packet with
+   `createScheduledPost` as usual.
+2. Record it with `--manual-audio`:
+   `node tools/social.mjs release --record 2026-09-28 --network instagram --id <id> --uuid <uuid> --manual-audio`.
+   That writes `manualAudio: true` on `metricool.instagram`. The flag must
+   match the stored packet: `--manual-audio` on a packet with autoPublish on,
+   or recording an autoPublish-off packet without it, is refused. A record
+   without the flag removes any old `manualAudio`. The flag is only accepted
+   on `release --record` with `--id` and `--uuid`.
+3. At post time Metricool pushes the post to its phone app with the video,
+   cover and caption loaded. The person there adds the sound natively in
+   Instagram and publishes. If our music bed is baked into the video, mute the
+   original audio in Instagram's audio mixer so the two do not play together.
+4. Until it has published, `reconcile` prints
+   `Manual audio still to publish in the Metricool app: 2026-10-04 (Espresso Sabrina Carpenter), ...`.
+   Such a post is never reported as a failure; the folder waits until
+   Metricool lists it `PUBLISHED`, then archives as usual. If Metricool marks
+   that Instagram post with an error or failure status, reconcile adds
+   `Metricool reports <status> on manual-audio <folder>; check the app` (the
+   exit code is unchanged). Any other network's failure in the same folder is
+   still reported as a failure.
+
+The Post Desk payload carries the requested sound as `instagramSound` (the
+term or id) so a client's social manager can confirm it, and a changed sound
+resets the desk decision. The admin page (`D:\ka-site-admin`, post-desk.js)
+does not show that field yet; until it does, name the sound in the brief's
+"Questions for Alex" when it needs confirming.
 
 ## Metricool API
 

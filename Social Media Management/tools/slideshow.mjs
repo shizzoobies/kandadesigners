@@ -2,6 +2,7 @@
 // Turns a carousel folder's slides into a Facebook video.
 //
 //   node tools/slideshow.mjs 2026-09-29-2 --music "D:\kap-reel\out\candidates\music-i-b.mp3"
+//   node tools/slideshow.mjs --client <slug> <folder id> --music <mp3>   (clients/<slug>)
 //
 // Facebook shows a multi-photo post as a grid, so the hook slide, the order and
 // the closing call to action get lost. The same slides as a short video keep
@@ -15,19 +16,21 @@
 import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import { resolveRoot, extractClientFlag } from "./lib/paths.mjs";
 
 const SLIDE_SECONDS = 3.0;
 const LAST_SECONDS = 4.0;
 const FADE = 0.4;
 const FPS = 30;
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const [id, ...rest] = process.argv.slice(2);
+// Takes the same global --client <slug> as social.mjs, to work in clients/<slug>.
+const { client: clientSlug, rest: argv } = extractClientFlag(process.argv.slice(2));
+const ROOT = resolveRoot(process.env, clientSlug);
+const [id, ...rest] = argv;
 const musicAt = rest.indexOf("--music");
 const music = musicAt >= 0 ? rest[musicAt + 1] : null;
 if (!id || !music) {
-  console.error('usage: node tools/slideshow.mjs <folder id> --music <mp3>');
+  console.error('usage: node tools/slideshow.mjs [--client <slug>] <folder id> --music <mp3>');
   process.exit(2);
 }
 const dir = path.join(ROOT, "To Be Released", id);

@@ -21,8 +21,22 @@ export function isoWithOffset(date, time, timezone) {
   return `${date}T${time}:00${sign}${hh}:${mm}`;
 }
 
-/** One Metricool createScheduledPost payload per non-manual network. Pure: reads the folder, calls nothing. */
-export function buildPayloads(dir, { draft = false, youtube = null } = {}) {
+/**
+ * Metricool's instagramData.audioConfiguration for platforms.instagram.audio: audioId is the numeric id or the
+ * search term, videoVolume defaults to 0 (our own bed would play under the sound), audioVolume only when given.
+ * Never the catalog fields (audioType, title, displayArtist, igUsername, coverArtworkUrl, durationMs).
+ */
+function audioConfiguration(audio) {
+  const conf = { audioId: audio.id !== undefined ? String(audio.id) : audio.term.trim(), videoVolume: audio.videoVolume ?? 0 };
+  if (audio.audioVolume !== undefined) conf.audioVolume = audio.audioVolume;
+  return conf;
+}
+
+/**
+ * One Metricool createScheduledPost payload per non-manual network. Pure: reads the folder, calls nothing.
+ * autoPublish false turns it off on the instagram payload only, for a sound added by hand in the Metricool app.
+ */
+export function buildPayloads(dir, { draft = false, youtube = null, autoPublish = true } = {}) {
   const m = readManifest(dir);
   const r2 = m.r2 || {};
   const urlOf = (entry) => {
@@ -68,7 +82,12 @@ export function buildPayloads(dir, { draft = false, youtube = null } = {}) {
     const thumbAllowed = network !== "youtube" || (youtube || (youtube = readYoutubeConfig())).verified === true;
     if (hasVideo && thumb && thumbAllowed && (THUMB_TYPES[network] || []).includes(type)) info.videoThumbnailUrl = urlOf(thumb);
     if (network === "facebook") info.facebookData = { type };
-    if (network === "instagram") info.instagramData = { type, isAiGenerated: aiFlag };
+    if (network === "instagram") {
+      info.instagramData = { type, isAiGenerated: aiFlag };
+      // With autoPublish off a person adds the sound natively in the Metricool app, so none is sent.
+      if (!autoPublish) info.autoPublish = false;
+      else if (cfg.audio && type === "REEL") info.instagramData.audioConfiguration = audioConfiguration(cfg.audio);
+    }
     if (network === "linkedin") {
       info.linkedinData = type === "DOCUMENT"
         ? { type: "post", documentTitle: cfg.documentTitle || m.title, publishImagesAsPDF: true, previewIncluded: true }
