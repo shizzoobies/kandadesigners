@@ -3,7 +3,7 @@
   "date": "2026-10-01",
   "time": "18:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "ai-launch",
   "title": "The four-line brief. Save this.",
   "platforms": {
@@ -270,7 +270,15 @@
       "promotedAt": "2026-09-25T16:57:59.258Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-10-01T22:00:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/122118829185423707/posts/1062682786600781"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/p/Dd974UklEdN/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0928-4"

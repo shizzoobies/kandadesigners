@@ -1,0 +1,134 @@
+{
+  "id": "2026-10-07-4",
+  "date": "2026-10-07",
+  "time": "11:00",
+  "timezone": "America/New_York",
+  "status": "scheduled",
+  "pillar": "ai-launch",
+  "title": "YouTube: Let AI draft it. Make it sound like you.",
+  "platforms": {
+    "youtube": {
+      "type": "VIDEO",
+      "caption": "youtube.md",
+      "title": "Let AI draft it. Make it sound like you.",
+      "tags": [
+        "AI for small business",
+        "answer customer emails",
+        "customer email replies",
+        "AI email writing",
+        "small business email tips",
+        "customer service email",
+        "email reply templates",
+        "AI writing assistant",
+        "AI prompts for business",
+        "practical AI",
+        "Gainesville small business"
+      ],
+      "category": "HOWTO_STYLE",
+      "playlist": "Practical AI for small business"
+    }
+  },
+  "media": [
+    {
+      "file": "media/video.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "A narrated walkthrough of a fictional bakery email. Rosa supplies voice notes and a reusable prompt, checks a real AI draft against the original email and order book, confirms the name and capacity, then saves useful replies. Labeled demo screens cover privacy and replies to handle personally."
+    },
+    {
+      "file": "media/thumbnail.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "Faster replies. Still you. beside a sample bakery email and draft reply to Jordan Ellis. K&A Performance logo and website appear on the left."
+    },
+    {
+      "file": "media/video.srt",
+      "role": "captions",
+      "origin": "kap-reel"
+    }
+  ],
+  "ai": {
+    "voice": true,
+    "visuals": false
+  },
+  "generate": [],
+  "r2": {
+    "media/video.mp4": {
+      "key": "2026-10-07-4/7f2a436d-video.mp4",
+      "url": "https://media.ka-performancefl.com/2026-10-07-4/7f2a436d-video.mp4",
+      "sha256": "7f2a436d4dba58925bbff6958aa38e60e535aed3e004f86406cad0c057ae7ed1",
+      "uploadedAt": "2026-09-28T19:22:12.202Z"
+    },
+    "media/thumbnail.jpg": {
+      "key": "2026-10-07-4/45e0a2a6-thumbnail.jpg",
+      "url": "https://media.ka-performancefl.com/2026-10-07-4/45e0a2a6-thumbnail.jpg",
+      "sha256": "45e0a2a6e4524bb5ea241d6678bfc438440635478a561ad0222632e6f3bea3d6",
+      "uploadedAt": "2026-09-28T19:22:12.202Z"
+    }
+  },
+  "metricool": {
+    "youtube": {
+      "payload": {
+        "date": "2026-10-07T11:00:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-07-4/7f2a436d-video.mp4"
+          ],
+          "mediaAltText": [
+            "A narrated walkthrough of a fictional bakery email. Rosa supplies voice notes and a reusable prompt, checks a real AI draft against the original email and order book, confirms the name and capacity, then saves useful replies. Labeled demo screens cover privacy and replies to handle personally."
+          ],
+          "providers": [
+            {
+              "network": "youtube"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-07T11:00:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Let AI draft your customer replies, then check the facts and make them sound like you.\nhttps://ka-performancefl.com/ai-launch/?utm_source=youtube&utm_medium=social&utm_campaign=2026-10-07-4\n\nFollow one sample email from the inbox to a checked reply. Write a short page of voice notes, save a reusable prompt, review the draft, and keep the replies that work.\n\nThe bakery and customer are fictional. The first AI response is from a real run, reproduced verbatim in labeled demo screens. Watch the owner resolve its two CHECK questions before sending the sample reply.\n\nVoice notes start at 1:02. Pause at 2:52 for the complete prompt. The paid 90-Day AI Launch offers help putting AI to work on a real job in your business.\n\nChapters\n0:00 Same questions, another reply\n0:18 You keep the send button\n0:39 The four steps\n1:02 Step 1: Write your voice notes\n2:08 Step 2: Save a reusable prompt\n2:58 Try it on a sample email\n3:39 Step 3: Check the facts and commitments\n4:52 Step 4: Keep the replies that work\n5:23 Keep private details out\n6:00 When to answer personally\n6:23 Recap\n6:46 The next step\n\nReusable prompt\nYou help me reply to customer emails for my small business.\nFollow my voice notes below for my greeting, sign-off, tone, words, and facts.\n\nRules:\n1. Write a reply I can send after I check it. Keep it under 120 words.\n2. Use only facts, times, prices, and policies from my voice notes.\n3. If the email asks something my notes don't answer, don't guess.\n   Put [CHECK: the question] where the answer belongs.\n4. Never promise anything my notes don't say we can do.\n5. End with my sign-off.\n\nMy voice notes:\n[paste your voice notes here]\n\nThe customer's email:\n[paste the email here]\n\nThe voice is AI narrated. The music is AI generated.\n\nK&A Performance builds websites for small businesses in Gainesville and North Florida.\nFree quotes: 904-210-1071 | ka-performancefl.com",
+          "videoThumbnailUrl": "https://media.ka-performancefl.com/2026-10-07-4/45e0a2a6-thumbnail.jpg",
+          "youtubeData": {
+            "title": "Let AI draft it. Make it sound like you.",
+            "type": "video",
+            "privacy": "public",
+            "tags": [
+              "AI for small business",
+              "answer customer emails",
+              "customer email replies",
+              "AI email writing",
+              "small business email tips",
+              "customer service email",
+              "email reply templates",
+              "AI writing assistant",
+              "AI prompts for business",
+              "practical AI",
+              "Gainesville small business"
+            ],
+            "category": "HOWTO_STYLE",
+            "madeForKids": false,
+            "isAiGeneratedContent": true
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-09-28T19:22:23.443Z",
+      "id": "383734092",
+      "uuid": "2038045033608397361",
+      "scheduledAt": "2026-09-28T19:23:01.798Z"
+    }
+  },
+  "published": {},
+  "credits": {},
+  "lastError": null,
+  "music": "music-yt-l2"
+}

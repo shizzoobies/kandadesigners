@@ -3,7 +3,7 @@
   "date": "2026-10-02",
   "time": "11:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "tip",
   "title": "YouTube: Test your website with one key",
   "platforms": {
@@ -133,7 +133,12 @@
       "scheduledAt": "2026-09-28T18:15:20.108Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-10-02T15:00:00.000Z",
+    "youtube": {
+      "permalink": "https://www.youtube.com/watch?v=HopxcccH2Uw"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-yt-l1"

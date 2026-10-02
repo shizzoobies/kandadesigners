@@ -3,7 +3,7 @@
   "date": "2026-10-01",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "ai-launch",
   "title": "LinkedIn: The four-line brief. Save this.",
   "platforms": {
@@ -164,7 +164,12 @@
       "promotedAt": "2026-09-25T16:57:59.326Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-10-01T12:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7511394993232850944"
+    }
+  },
   "credits": {},
   "lastError": null
 }

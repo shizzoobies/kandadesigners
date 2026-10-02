@@ -3,7 +3,7 @@
   "date": "2026-10-02",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "client-spotlight",
   "title": "Thrillers Mobile VR website launch",
   "platforms": {
@@ -141,7 +141,15 @@
       "promotedAt": "2026-09-28T17:58:43.127Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-10-02T14:30:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/reel/2085412555673873"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/reel/Dd_tCCejNRj/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0928-6"

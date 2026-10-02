@@ -3,7 +3,7 @@
   "date": "2026-10-01",
   "time": "10:30",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "ai-launch",
   "title": "Give the AI the brief, not the task",
   "platforms": {
@@ -153,7 +153,15 @@
       "promotedAt": "2026-09-25T16:57:59.115Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-10-01T14:30:00.000Z",
+    "facebook": {
+      "permalink": "https://facebook.com/reel/28459254640434381"
+    },
+    "instagram": {
+      "permalink": "https://www.instagram.com/reel/Dd9ITlsChBj/"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0928-5"

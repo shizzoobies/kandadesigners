@@ -3,7 +3,7 @@
   "date": "2026-10-02",
   "time": "12:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "client-spotlight",
   "title": "YouTube Short: Thrillers Mobile VR website launch",
   "platforms": {
@@ -105,7 +105,12 @@
       "scheduledAt": "2026-09-28T18:06:39.969Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-10-02T16:00:00.000Z",
+    "youtube": {
+      "permalink": "https://www.youtube.com/shorts/-uyqGbK8XEs"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0928-6"

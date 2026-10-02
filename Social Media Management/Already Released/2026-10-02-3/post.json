@@ -3,7 +3,7 @@
   "date": "2026-10-02",
   "time": "08:00",
   "timezone": "America/New_York",
-  "status": "scheduled",
+  "status": "published",
   "pillar": "client-spotlight",
   "title": "LinkedIn: Thrillers Mobile VR website launch",
   "platforms": {
@@ -90,7 +90,12 @@
       "promotedAt": "2026-09-28T17:58:43.205Z"
     }
   },
-  "published": {},
+  "published": {
+    "at": "2026-10-02T12:00:00.000Z",
+    "linkedin": {
+      "permalink": "https://linkedin.com/feed/update/urn:li:ugcPost:7511757516595363840"
+    }
+  },
   "credits": {},
   "lastError": null,
   "music": "music-w0928-6"
