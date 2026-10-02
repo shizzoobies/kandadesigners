@@ -55,9 +55,14 @@ async function call(fetchImpl, token, method, url, body) {
     body: JSON.stringify(body),
     signal: AbortSignal.timeout(TIMEOUT_MS),
   });
-  const json = await res.json().catch(() => null);
+  const text = await res.text().catch(() => '');
+  let json = null;
+  try { json = JSON.parse(text); } catch { /* not JSON: the text itself is the detail */ }
   if (res.ok && json?.success) return { ok: true, result: json.result };
-  const detail = (json?.errors ?? []).map((e) => `${e.code} ${e.message}`).join('; ');
+  const say = (e) => [`${e.code ?? ''} ${e.message ?? ''}`.trim(), ...(e.error_chain ?? []).map(say)].filter(Boolean).join(': ');
+  const listed = [...(json?.errors ?? []), ...(json?.messages ?? [])].map(say).filter(Boolean).join('; ');
+  // A reply that is not JSON at all: keep the start of what it did say, without the token.
+  const detail = listed || (json ? '' : text.split(token).join('[token]').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160));
   return { ok: false, status: res.status, error: `Cloudflare answered ${res.status}${detail ? `: ${detail}` : ''}` };
 }
 

@@ -131,6 +131,20 @@ describe('syncAccessGroup', () => {
     expect(s.access_sync_at).toBe(new Date(NOW).toISOString());
   });
 
+  it('keeps the start of an unusual reply so the People page can say why', async () => {
+    const f = async () => new Response('<html>400 Bad Request: tok-123 malformed header</html>', { status: 400 });
+    const r = await syncAccessGroup({ db, env: ENV, fetchImpl: f, nowMs: NOW, log: quiet });
+    expect(r.error).toMatch(/Cloudflare answered 400/);
+    expect(r.error).toMatch(/malformed header/);
+    expect(r.error).not.toMatch(/tok-123/);
+    const g = fakeFetch({ status: 400, body: { success: false, errors: [], messages: [{ code: 1, message: 'name is invalid' }] } });
+    const r2 = await syncAccessGroup({ db, env: ENV, fetchImpl: g, nowMs: NOW, log: quiet });
+    expect(r2.error).toMatch(/name is invalid/);
+    const h = fakeFetch({ status: 400, body: { success: false, errors: [{ code: 12130, message: 'access.api.error.invalid_request', error_chain: [{ code: 1, message: 'include rule is invalid' }] }] } });
+    const r3 = await syncAccessGroup({ db, env: ENV, fetchImpl: h, nowMs: NOW, log: quiet });
+    expect(r3.error).toMatch(/include rule is invalid/);
+  });
+
   it('stores a network failure as an error', async () => {
     const r = await syncAccessGroup({ db, env: ENV, fetchImpl: fakeFetch({ throws: 'connection reset' }), nowMs: NOW });
     expect(r).toEqual({ ok: false, error: expect.stringMatching(/connection reset/) });
