@@ -51,8 +51,8 @@ see, and approve on, only their own Post Desk.
 
 **Branches:** social work is committed on `codex/training-premium-rfi` in the main repo
 (`D:\K & A Performance Site`, not pushed; 14 commits on 9/30 and 10/1). Admin work is on
-`admin/post-desk` in `D:\ka-site-admin` (three client-access commits on 10/2 are local only;
-Alex pushes: `cd "D:\ka-site-admin"; git push`). Site work goes in
+`admin/post-desk` in `D:\ka-site-admin` (matches GitHub; the 10/2 client-access commits were
+pushed by Alex the same day). Site work goes in
 `D:\ka-site-color` on a branch off `origin/main`, never in the main checkout.
 
 ## 1. Where things stand
