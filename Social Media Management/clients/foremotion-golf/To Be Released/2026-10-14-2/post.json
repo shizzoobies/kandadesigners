@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-14-2",
+  "date": "2026-10-14",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "countdown",
+  "title": "The four Founding Memberships. Limited.",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline The four Founding Memberships, then Limited in bright green, the four names between green rules: Practice, Club, Tour, Corporate Partner, then Limited availability. Benefits and terms governed by the Founding Membership Agreement. A bright green Get first access on the Founders List button and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

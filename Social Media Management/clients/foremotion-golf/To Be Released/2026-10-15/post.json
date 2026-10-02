@@ -1,0 +1,86 @@
+{
+  "id": "2026-10-15",
+  "date": "2026-10-15",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "the-reveal",
+  "title": "What a Founding Membership is",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the Fore Motion Golf logo at the top and the headline What a Founding Membership is, then the line A limited prepaid membership offered before Fore Motion Golf officially opens, with foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A cream slide with the Fore Motion Golf logo and the headline What it includes, over a five-item list: simulator hours, reserved bay time; membership benefits; early access; Founder recognition; priority opportunities during the membership term. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the Fore Motion Golf logo and the headline Four options, listing Founding Practice, 6 months; Founding Club, 6 months; Founding Tour, 6 months, the premier individual membership; Founding Corporate Partner, 12 months, for local businesses. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A cream slide with the Fore Motion Golf logo and the headline First access goes to the Founders List, then the line Founding Memberships will be limited. The list gets access before the public. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the Fore Motion Golf logo, the headline Be first through the doors, a bright green Join the Founders List button, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: What a Founding Membership is, a limited prepaid membership offered before Fore Motion Golf officially opens / What it includes: simulator hours as reserved bay time, membership benefits, early access, Founder recognition, priority opportunities during the term / Four options: Founding Practice, Club and Tour at 6 months, Founding Corporate Partner at 12 months / First access goes to the Founders List, Founding Memberships will be limited / Be first through the doors, join the Founders List; limited availability, benefits and terms governed by the Founding Membership Agreement."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "A deep green slide with the Fore Motion Golf logo at the top and the headline What a Founding Membership is, then the line A limited prepaid membership offered before Fore Motion Golf officially opens, with foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-fmg-1015-c"
+}

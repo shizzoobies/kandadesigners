@@ -1,0 +1,13 @@
+Founding Club.
+Link in bio to join the Founders List.
+
+6 months. 48 hours of reserved bay time, about 8 a month. 25 spots.
+Every Founder is recognized on the Founders Wall and keeps a permanent Founding Member designation.
+Founding Memberships are limited, and first access goes to the Founders List.
+Limited availability. Benefits and terms governed by the Founding Membership Agreement.
+
+Join the Founders List at foremotiongolf.com, link in bio.
+
+## First comment
+
+#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf

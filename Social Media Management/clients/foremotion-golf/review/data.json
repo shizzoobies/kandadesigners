@@ -1,0 +1,1365 @@
+{
+  "builtAt": "2026-10-02T20:00:12.985Z",
+  "posts": [
+    {
+      "id": "2026-10-02",
+      "date": "2026-10-02",
+      "weekday": "Fri",
+      "time": "19:00",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "something-new-is-coming",
+      "title": "Where it's always 70 and sunny",
+      "hook": "Where it's always 70 and sunny.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Where it's always 70 and sunny.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02\n\nFore Motion Golf is an indoor golf lounge on TrackMan simulators, opening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for six players each, a bar and lounge, and a putting area.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02",
+      "instagram": "Where it's always 70 and sunny.\nLink in bio to join the Founders List.\n\nFore Motion Golf is an indoor golf lounge on TrackMan simulators, opening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for six players each, a bar and lounge, and a putting area.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-02/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Where it's always 70 and sunny, the line Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03",
+      "date": "2026-10-03",
+      "weekday": "Sat",
+      "time": "12:00",
+      "kind": "carousel",
+      "status": "ready",
+      "pillar": "something-new-is-coming",
+      "title": "This isn't just a place to hit golf balls",
+      "hook": "This isn't just a place to hit golf balls.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "This isn't just a place to hit golf balls.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-03\n\nFore Motion Golf is coming early 2027 to 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for up to six players each.\nA bar and lounge, a putting area, and canned beer and seltzers at the bar.\nFounding Memberships will be limited, and the list gets access before the public.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-03",
+      "instagram": "This isn't just a place to hit golf balls.\nLink in bio to join the Founders List.\n\nFore Motion Golf is coming early 2027 to 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for up to six players each.\nA bar and lounge, a putting area, and canned beer and seltzers at the bar.\nFounding Memberships will be limited, and the list gets access before the public.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": "music-fmg-1003-c",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-03/slide-01.jpg",
+          "role": "image",
+          "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top: Coming early 2027. This isn't just a place to hit golf balls. Here is what is coming to Orange Park, FL. Swipe.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-03/slide-02.jpg",
+          "role": "image",
+          "alt": "Slide 2 of 5, a cream slide with the Fore Motion Golf logo at the top: Where. 1518 Park Ave, Orange Park. The former DMV, being built out now.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-03/slide-03.jpg",
+          "role": "image",
+          "alt": "Slide 3 of 5, a deep green slide with the Fore Motion Golf logo at the top: Play. Four TrackMan bays. Up to six players per bay.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-03/slide-04.jpg",
+          "role": "image",
+          "alt": "Slide 4 of 5, a cream slide with the Fore Motion Golf logo at the top: Stay a while. A bar and lounge. A putting area. Canned beer and seltzers at the bar.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-03/slide-05.jpg",
+          "role": "image",
+          "alt": "Slide 5 of 5, a deep green slide with the Fore Motion Golf logo at the top: Be first through the doors. Join the Founders List. Founding Memberships will be limited. The list gets access before the public. A bright green button reads foremotiongolf.com.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-03/slideshow.mp4",
+          "role": "video",
+          "alt": "Video of the 5 carousel slides in order: This isn't just a place to hit golf balls, coming early 2027 to Orange Park / Where: 1518 Park Ave, the former DMV, being built out now / Play: four TrackMan bays, up to six players per bay / Stay a while: a bar and lounge, a putting area, canned beer and seltzers / Be first through the doors: join the Founders List at foremotiongolf.com.",
+          "platforms": [
+            "facebook"
+          ]
+        },
+        {
+          "src": "media/2026-10-03/slideshow-cover.jpg",
+          "role": "thumbnail",
+          "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top: Coming early 2027. This isn't just a place to hit golf balls. Here is what is coming to Orange Park, FL. Swipe.",
+          "platforms": [
+            "facebook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-2",
+      "date": "2026-10-03",
+      "weekday": "Sat",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "something-new-is-coming",
+      "title": "Be first through the doors",
+      "hook": "Be first through the doors.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Be first through the doors.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-03-2\n\nThe Founders List gets first access to Founding Memberships and priority invitations to our Soft Opening.\nIt also gets the opening date and construction updates, early access to launch events and leagues, and Founders-only giveaways and previews.\nFore Motion Golf opens early 2027 at 1518 Park Ave in Orange Park.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-03-2",
+      "instagram": "Be first through the doors.\nLink in bio to join the Founders List.\n\nThe Founders List gets first access to Founding Memberships and priority invitations to our Soft Opening.\nIt also gets the opening date and construction updates, early access to launch events and leagues, and Founders-only giveaways and previews.\nFore Motion Golf opens early 2027 at 1518 Park Ave in Orange Park.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-03-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top and the headline Be first through the doors. Under it, The Founders List gets: first access to Founding Memberships, priority invitations to our Soft Opening, opening date and construction updates, early access to launch events and leagues, Founders-only giveaways and previews. A bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04",
+      "date": "2026-10-04",
+      "weekday": "Sun",
+      "time": "12:00",
+      "kind": "reel",
+      "status": "ready",
+      "pillar": "something-new-is-coming",
+      "title": "Follow the build",
+      "hook": "Four bays go here.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Four bays go here.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04\n\nThis is the former DMV at 1518 Park Ave in Orange Park, being built out now.\nFour TrackMan bays are coming, with room for up to six players each.\nFore Motion Golf opens early 2027, and construction updates go to the Founders List first.\n\nFollow the build. Join the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04",
+      "instagram": "Four bays go here.\nLink in bio to join the Founders List.\n\nThis is the former DMV at 1518 Park Ave in Orange Park, being built out now.\nFour TrackMan bays are coming, with room for up to six players each.\nFore Motion Golf opens early 2027, and construction updates go to the Founders List first.\n\nFollow the build. Join the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [
+        "Want a specific Instagram sound on this reel? Write \"Sound: title by artist\" in a note here and we will set it before it posts. Sounds come from the Instagram library this account can use."
+      ],
+      "ai": {},
+      "music": "music-fmg-1004-r",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-04/reel.mp4",
+          "role": "video",
+          "alt": "A walk through the empty former DMV that is becoming Fore Motion Golf: a long service counter wall where the four bays go, and the open hall seen from the far end. On screen: Four bays go here. Opening early 2027. Follow the build. Join the Founders List. The Fore Motion Golf logo is at the top and foremotiongolf.com at the foot throughout.",
+          "platforms": null
+        },
+        {
+          "src": "media/2026-10-04/reel-cover.jpg",
+          "role": "thumbnail",
+          "alt": "Inside the empty former DMV, a man walks along a long service counter with numbered window signs overhead, one arm out toward the wall. The Fore Motion Golf logo sits at the top, and a deep green panel below reads 1518 Park Ave, Orange Park, FL. Four bays go here. foremotiongolf.com.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-2",
+      "date": "2026-10-04",
+      "weekday": "Sun",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "something-new-is-coming",
+      "title": "Construction updates come to the list first",
+      "hook": "Construction updates come to the list first.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Construction updates come to the list first.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04-2\n\nThe former DMV at 1518 Park Ave in Orange Park is being built out now.\nThe Founders List gets the opening date and construction updates as the build moves.\nFore Motion Golf opens early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04-2",
+      "instagram": "Construction updates come to the list first.\nLink in bio to join the Founders List.\n\nThe former DMV at 1518 Park Ave in Orange Park is being built out now.\nThe Founders List gets the opening date and construction updates as the build moves.\nFore Motion Golf opens early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-04-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Construction updates come to the list first, with first in bright green, the line Follow the build in Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05",
+      "date": "2026-10-05",
+      "weekday": "Mon",
+      "time": "10:30",
+      "kind": "carousel",
+      "status": "ready",
+      "pillar": "our-story",
+      "title": "Calibrate. Compete. Connect.",
+      "hook": "Calibrate. Compete. Connect.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Calibrate. Compete. Connect.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-05\n\nCalibrate: know your numbers. TrackMan shows the ball and the club on every swing.\nCompete: leagues and events are on the way, as season play and single-day events.\nConnect: up to six players per bay, and a bar and lounge between rounds.\nFore Motion Golf opens early 2027 at 1518 Park Ave in Orange Park, the former DMV.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-05",
+      "instagram": "Calibrate. Compete. Connect.\nLink in bio to join the Founders List.\n\nCalibrate: know your numbers. TrackMan shows the ball and the club on every swing.\nCompete: leagues and events are on the way, as season play and single-day events.\nConnect: up to six players per bay, and a bar and lounge between rounds.\nFore Motion Golf opens early 2027 at 1518 Park Ave in Orange Park, the former DMV.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": "music-fmg-1005-c",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-05/slide-01.jpg",
+          "role": "image",
+          "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top and the words Calibrate. Compete. Connect. in tall capitals, Compete in bright green, then the line Three words, and what each one means at Fore Motion Golf, a swipe cue and foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-05/slide-02.jpg",
+          "role": "image",
+          "alt": "Slide 2 of 5, a cream slide with the Fore Motion Golf logo, the word Calibrate in large green capitals, Know your numbers underneath, and the line TrackMan shows the ball and the club on every swing, with foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-05/slide-03.jpg",
+          "role": "image",
+          "alt": "Slide 3 of 5, a deep green slide with the Fore Motion Golf logo, the word Compete in large bright green capitals, Leagues and events underneath, and the line Season play and single-day events are on the way, with foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-05/slide-04.jpg",
+          "role": "image",
+          "alt": "Slide 4 of 5, a cream slide with the Fore Motion Golf logo, the word Connect in large green capitals, Six to a bay underneath, and the line Up to six players per bay, and a bar and lounge between rounds. Come as a group, with foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-05/slide-05.jpg",
+          "role": "image",
+          "alt": "Slide 5 of 5, a deep green slide with the Fore Motion Golf logo, the headline Be first through the doors with the doors in bright green, the line Opening early 2027 at 1518 Park Ave, Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-05/slideshow.mp4",
+          "role": "video",
+          "alt": "Video of the 5 carousel slides in order: Calibrate. Compete. Connect., three words and what each means at Fore Motion Golf / Calibrate: know your numbers, TrackMan shows the ball and the club on every swing / Compete: leagues and events, season play and single-day events on the way / Connect: six to a bay, and a bar and lounge between rounds / Be first through the doors: opening early 2027 at 1518 Park Ave, Orange Park, join the Founders List.",
+          "platforms": [
+            "facebook"
+          ]
+        },
+        {
+          "src": "media/2026-10-05/slideshow-cover.jpg",
+          "role": "thumbnail",
+          "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top and the words Calibrate. Compete. Connect. in tall capitals, Compete in bright green, then the line Three words, and what each one means at Fore Motion Golf, a swipe cue and foremotiongolf.com at the foot.",
+          "platforms": [
+            "facebook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-05-2",
+      "date": "2026-10-05",
+      "weekday": "Mon",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "our-story",
+      "title": "Calibrate. Know your numbers.",
+      "hook": "Calibrate. Know your numbers.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Calibrate. Know your numbers.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-05-2\n\nTrackMan shows the ball and the club on every swing.\nFour TrackMan bays are coming to 1518 Park Ave in Orange Park, opening early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-05-2",
+      "instagram": "Calibrate. Know your numbers.\nLink in bio to join the Founders List.\n\nTrackMan shows the ball and the club on every swing.\nFour TrackMan bays are coming to 1518 Park Ave in Orange Park, opening early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-05-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the line Calibrate. Compete. Connect. with Calibrate in bright green, the headline Know your numbers with numbers in bright green, the line TrackMan shows the ball and the club on every swing, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06",
+      "date": "2026-10-06",
+      "weekday": "Tue",
+      "time": "10:30",
+      "kind": "reel",
+      "status": "ready",
+      "pillar": "our-story",
+      "title": "Compete: leagues and events",
+      "hook": "Compete. Leagues and events are coming to Fore Motion Golf.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Compete. Leagues and events are coming to Fore Motion Golf.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06\n\nSeason play and single-day events are on the way, with four TrackMan bays and up to six players per bay.\nThis is the space today, at 1518 Park Ave in Orange Park, the former DMV. Opening early 2027.\nThe Founders List gets early access to launch events and leagues.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06",
+      "instagram": "Compete. Leagues and events are coming to Fore Motion Golf.\nLink in bio to join the Founders List.\n\nSeason play and single-day events are on the way, with four TrackMan bays and up to six players per bay.\nThis is the space today, at 1518 Park Ave in Orange Park, the former DMV. Opening early 2027.\nThe Founders List gets early access to launch events and leagues.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [
+        "The reel shows the host of the walkthrough video on camera, not named. Is he happy to appear, or should a later cut keep him out of frame?",
+        "Want a specific Instagram sound on this reel? Write \"Sound: title by artist\" in a note here and we will set it before it posts. Sounds come from the Instagram library this account can use."
+      ],
+      "ai": {},
+      "music": "music-fmg-1006-r",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-06/reel.mp4",
+          "role": "video",
+          "alt": "A 19 second vertical video walking through the empty Fore Motion Golf space in Orange Park, a long carpeted room with the old service counters along one side. The Fore Motion Golf logo sits at the top and a deep green band at the bottom carries the lines Compete. Leagues. Four bays. Events. First access. with foremotiongolf.com. It ends on a deep green card: Join the Founders List, early access to launch events and leagues, foremotiongolf.com.",
+          "platforms": null
+        },
+        {
+          "src": "media/2026-10-06/reel-cover.jpg",
+          "role": "thumbnail",
+          "alt": "A man in a mint green polo walks down a long, empty carpeted room past old service counters, with the Fore Motion Golf logo at the top and a deep green band below that reads Compete. Leagues and events at Fore Motion Golf, and foremotiongolf.com.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-2",
+      "date": "2026-10-06",
+      "weekday": "Tue",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "our-story",
+      "title": "Connect. Six to a bay.",
+      "hook": "Connect. Six to a bay.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Connect. Six to a bay.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06-2\n\nUp to six players per bay. Come as a group, stay for the bar and lounge.\nFore Motion Golf opens early 2027 at 1518 Park Ave in Orange Park.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06-2",
+      "instagram": "Connect. Six to a bay.\nLink in bio to join the Founders List.\n\nUp to six players per bay. Come as a group, stay for the bar and lounge.\nFore Motion Golf opens early 2027 at 1518 Park Ave in Orange Park.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-06-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the line Calibrate. Compete. Connect. with Connect in bright green, the headline Six to a bay with bay in bright green, the line Up to six players per bay. Come as a group, stay for the bar and lounge, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-07",
+      "date": "2026-10-07",
+      "weekday": "Wed",
+      "time": "10:30",
+      "kind": "carousel",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "Four bays. Six players each",
+      "hook": "Four bays. Six players each.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Four bays. Six players each.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-07\n\nEvery bay at Fore Motion Golf runs on TrackMan, which shows the ball and the club on every swing.\nUp to six players share a bay, so bring the group and play a round together.\nNo clubs? Rental club sets can be reserved ahead of time.\nOpening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-07",
+      "instagram": "Four bays. Six players each.\nLink in bio to join the Founders List.\n\nEvery bay at Fore Motion Golf runs on TrackMan, which shows the ball and the club on every swing.\nUp to six players share a bay, so bring the group and play a round together.\nNo clubs? Rental club sets can be reserved ahead of time.\nOpening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": "music-fmg-1007-c",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-07/slide-01.jpg",
+          "role": "image",
+          "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top. Headline: Four bays. Six players each. Below it, four outlined boxes labeled Bay 1 to Bay 4, each holding six green dots for six players. Then: Indoor golf on TrackMan simulators, coming early 2027 to Orange Park, FL. Swipe for how it works. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-07/slide-02.jpg",
+          "role": "image",
+          "alt": "Slide 2 of 5, cream with the Fore Motion Golf logo at the top. Label: The bay. Headline: Every bay runs on TrackMan. Then: TrackMan shows the ball and the club on every swing, so you know your numbers. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-07/slide-03.jpg",
+          "role": "image",
+          "alt": "Slide 3 of 5, deep green with the Fore Motion Golf logo at the top. Label: The group. Headline: Six players. One bay. Then: Up to six players share a bay. Take turns and play a round together, where it is always 70 and sunny. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-07/slide-04.jpg",
+          "role": "image",
+          "alt": "Slide 4 of 5, cream with the Fore Motion Golf logo at the top. Label: The clubs. Headline: No clubs? No problem. Then: Rental club sets are available. Reserve them ahead of time and bring nothing but yourself. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-07/slide-05.jpg",
+          "role": "image",
+          "alt": "Slide 5 of 5, deep green with the Fore Motion Golf logo at the top. Headline: Be first through the doors. Then: Opening early 2027 at 1518 Park Ave, Orange Park, the former DMV. A bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-07/slideshow.mp4",
+          "role": "video",
+          "alt": "Video of the 5 carousel slides in order: Four bays, six players each, shown as four boxes of six green dots / The bay: every bay runs on TrackMan, which shows the ball and the club on every swing / The group: six players, one bay, take turns and play a round together / The clubs: rental club sets are available, reserve ahead and bring nothing but yourself / Be first through the doors: opening early 2027 at 1518 Park Ave, join the Founders List.",
+          "platforms": [
+            "facebook"
+          ]
+        },
+        {
+          "src": "media/2026-10-07/slideshow-cover.jpg",
+          "role": "thumbnail",
+          "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top. Headline: Four bays. Six players each. Below it, four outlined boxes labeled Bay 1 to Bay 4, each holding six green dots for six players. Then: Indoor golf on TrackMan simulators, coming early 2027 to Orange Park, FL. Swipe for how it works. foremotiongolf.com at the foot.",
+          "platforms": [
+            "facebook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-07-2",
+      "date": "2026-10-07",
+      "weekday": "Wed",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "Rental clubs, reserved ahead",
+      "hook": "Rental clubs, reserved ahead.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Rental clubs, reserved ahead.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-07-2\n\nBring nothing but yourself. Rental club sets are available at Fore Motion Golf, and you can reserve them ahead of time.\nFour TrackMan bays, up to six players each, opening early 2027 in Orange Park.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-07-2",
+      "instagram": "Rental clubs, reserved ahead.\nLink in bio to join the Founders List.\n\nBring nothing but yourself. Rental club sets are available at Fore Motion Golf, and you can reserve them ahead of time.\nFour TrackMan bays, up to six players each, opening early 2027 in Orange Park.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-07-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Rental clubs, reserved ahead, the line Bring nothing but yourself, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08",
+      "date": "2026-10-08",
+      "weekday": "Thu",
+      "time": "10:30",
+      "kind": "reel",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "The bar and lounge",
+      "hook": "The bar and lounge.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "The bar and lounge.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08\n\nThis is where the bar goes at Fore Motion Golf, inside the former DMV at 1518 Park Ave in Orange Park.\nA bar and lounge with canned beer and seltzers, plus four TrackMan bays for up to six players each.\nThe finished bar in this video is a concept rendering. Opening early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08",
+      "instagram": "The bar and lounge.\nLink in bio to join the Founders List.\n\nThis is where the bar goes at Fore Motion Golf, inside the former DMV at 1518 Park Ave in Orange Park.\nA bar and lounge with canned beer and seltzers, plus four TrackMan bays for up to six players each.\nThe finished bar in this video is a concept rendering. Opening early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [
+        "Want a specific Instagram sound on this reel? Write \"Sound: title by artist\" in a note here and we will set it before it posts. Sounds come from the Instagram library this account can use."
+      ],
+      "ai": {},
+      "music": "music-fmg-1008-r",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-08/reel.mp4",
+          "role": "video",
+          "alt": "A walk through the empty former DMV in Orange Park where the Fore Motion Golf bar will go, with a concept image of a finished bar, labeled Concept. On-screen text: The bar goes here. A bar and lounge. Canned beer and seltzers. Opening early 2027, 1518 Park Ave, Orange Park, FL. Join the Founders List. The logo is at the top and foremotiongolf.com at the foot throughout.",
+          "platforms": null
+        },
+        {
+          "src": "media/2026-10-08/reel-cover.jpg",
+          "role": "thumbnail",
+          "alt": "A man in a mint polo gestures across the empty front counter of the former DMV, under the Fore Motion Golf logo, with the line The bar goes here and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-2",
+      "date": "2026-10-08",
+      "weekday": "Thu",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "Canned beer and seltzers at the bar",
+      "hook": "Canned beer and seltzers at the bar.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Canned beer and seltzers at the bar.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08-2\n\nFore Motion Golf will serve canned beer, seltzers and other canned drinks at the bar and lounge.\nFour TrackMan bays, up to six players each, opening early 2027 in Orange Park.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08-2",
+      "instagram": "Canned beer and seltzers at the bar.\nLink in bio to join the Founders List.\n\nFore Motion Golf will serve canned beer, seltzers and other canned drinks at the bar and lounge.\nFour TrackMan bays, up to six players each, opening early 2027 in Orange Park.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-08-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Canned beer and seltzers at the bar, the line Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09",
+      "date": "2026-10-09",
+      "weekday": "Fri",
+      "time": "10:30",
+      "kind": "carousel",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "Rain, heat or dark, it is 70 and sunny",
+      "hook": "Rain, heat or dark, it is 70 and sunny.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Rain, heat or dark, it is 70 and sunny.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-09\n\nFlorida summer heat, afternoon storms, winter evenings that go dark early.\nFore Motion Golf brings the round indoors: four TrackMan bays, a putting area, and a bar and lounge.\nOpening early 2027 at 1518 Park Ave in Orange Park, where it's always 70 and sunny.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-09",
+      "instagram": "Rain, heat or dark, it is 70 and sunny.\nLink in bio to join the Founders List.\n\nFlorida summer heat, afternoon storms, winter evenings that go dark early.\nFore Motion Golf brings the round indoors: four TrackMan bays, a putting area, and a bar and lounge.\nOpening early 2027 at 1518 Park Ave in Orange Park, where it's always 70 and sunny.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": "music-fmg-1009-c",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-09/slide-01.jpg",
+          "role": "image",
+          "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top: Rain, heat or dark, it is 70 and sunny. Three small green line icons, a storm cloud, a sun and a moon, sit above the headline, with foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-09/slide-02.jpg",
+          "role": "image",
+          "alt": "Slide 2 of 5, cream with the Fore Motion Golf logo and a green sun icon: Summer afternoons. Leave the heat outside. Inside, it is always 70 and sunny.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-09/slide-03.jpg",
+          "role": "image",
+          "alt": "Slide 3 of 5, deep green with the Fore Motion Golf logo and a green storm cloud icon: Afternoon storms. The storm rolls in. Your round keeps going, indoors on four TrackMan bays.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-09/slide-04.jpg",
+          "role": "image",
+          "alt": "Slide 4 of 5, cream with the Fore Motion Golf logo and a green moon icon: After work in winter. The sun sets early. Inside, the round is still 70 and sunny.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-09/slide-05.jpg",
+          "role": "image",
+          "alt": "Slide 5 of 5, deep green with the Fore Motion Golf logo: Where it's always 70 and sunny. Opening early 2027 at 1518 Park Ave, Orange Park, FL. A bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-09/slideshow.mp4",
+          "role": "video",
+          "alt": "Video of the 5 carousel slides in order: Rain, heat or dark, it is 70 and sunny, with storm cloud, sun and moon icons / Summer afternoons: leave the heat outside / Afternoon storms: your round keeps going, indoors on four TrackMan bays / After work in winter: the sun sets early, inside the round is still 70 and sunny / Where it's always 70 and sunny: opening early 2027 at 1518 Park Ave, Orange Park, join the Founders List.",
+          "platforms": [
+            "facebook"
+          ]
+        },
+        {
+          "src": "media/2026-10-09/slideshow-cover.jpg",
+          "role": "thumbnail",
+          "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top: Rain, heat or dark, it is 70 and sunny. Three small green line icons, a storm cloud, a sun and a moon, sit above the headline, with foremotiongolf.com at the foot.",
+          "platforms": [
+            "facebook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-2",
+      "date": "2026-10-09",
+      "weekday": "Fri",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "The putting area",
+      "hook": "The putting area. Short game, rain or shine.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "The putting area. Short game, rain or shine.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-09-2\n\nAlongside the four TrackMan bays, Fore Motion Golf will have a putting area for the short game.\nRain or shine, it is always 70 and sunny inside.\nOpening early 2027 at 1518 Park Ave in Orange Park.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-09-2",
+      "instagram": "The putting area. Short game, rain or shine.\nLink in bio to join the Founders List.\n\nAlongside the four TrackMan bays, Fore Motion Golf will have a putting area for the short game.\nRain or shine, it is always 70 and sunny inside.\nOpening early 2027 at 1518 Park Ave in Orange Park.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-09-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline The putting area, the line Short game, rain or shine, then Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-10",
+      "date": "2026-10-10",
+      "weekday": "Sat",
+      "time": "12:00",
+      "kind": "reel",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "Walk the space",
+      "hook": "Walk the space.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Walk the space.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10\n\nTake a walk through 1518 Park Ave in Orange Park, the former DMV, before the build.\nIn the door, past the room where four TrackMan bays go, up to six players each, then the putting area, and the bar and lounge.\nOpening early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10",
+      "instagram": "Walk the space.\nLink in bio to join the Founders List.\n\nTake a walk through 1518 Park Ave in Orange Park, the former DMV, before the build.\nIn the door, past the room where four TrackMan bays go, up to six players each, then the putting area, and the bar and lounge.\nOpening early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [
+        "Want a specific Instagram sound on this reel? Write \"Sound: title by artist\" in a note here and we will set it before it posts. Sounds come from the Instagram library this account can use."
+      ],
+      "ai": {},
+      "music": "music-fmg-1010-r",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-10/reel.mp4",
+          "role": "video",
+          "alt": "A 21 second walk through the empty former DMV that will become Fore Motion Golf: the front lobby by the door, the long room where the four TrackMan bays go, the spot for the putting area, and the counter where the bar and lounge go. Lines on screen: Walk the space, Four TrackMan bays, Up to six players each, A putting area, A bar and lounge. It ends on Join the Founders List, Opening early 2027, 1518 Park Ave, Orange Park, FL, and foremotiongolf.com.",
+          "platforms": null
+        },
+        {
+          "src": "media/2026-10-10/reel-cover.jpg",
+          "role": "thumbnail",
+          "alt": "A man in a mint polo walks down the long, empty room of the former DMV with his arm out along the old counter, under the Fore Motion Golf logo. A deep green band reads Four TrackMan bays, with foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-10-2",
+      "date": "2026-10-10",
+      "weekday": "Sat",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "the-experience",
+      "title": "Coming early 2027",
+      "hook": "Coming early 2027.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Coming early 2027.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10-2\n\nFore Motion Golf is coming to 1518 Park Ave, Orange Park, FL 32073, the former DMV.\nFour TrackMan bays with room for up to six players each, a putting area, and a bar and lounge.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10-2",
+      "instagram": "Coming early 2027.\nLink in bio to join the Founders List.\n\nFore Motion Golf is coming to 1518 Park Ave, Orange Park, FL 32073, the former DMV.\nFour TrackMan bays with room for up to six players each, a putting area, and a bar and lounge.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-10-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Coming early 2027, the address 1518 Park Ave, Orange Park, FL 32073, the line The former DMV, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-11",
+      "date": "2026-10-11",
+      "weekday": "Sun",
+      "time": "12:00",
+      "kind": "carousel",
+      "status": "ready",
+      "pillar": "what-it-means-to-be-a-founder",
+      "title": "What it means to be a Founder",
+      "hook": "What it means to be a Founder.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "What it means to be a Founder.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-11\n\nA Founding Membership is joining Fore Motion Golf before the doors open in early 2027.\nFounders are first through the doors, with a name on the Founders Wall and a permanent Founding Member designation.\nPriority invitations to leagues and events, and exclusive Founding Member merchandise.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-11",
+      "instagram": "What it means to be a Founder.\nLink in bio to join the Founders List.\n\nA Founding Membership is joining Fore Motion Golf before the doors open in early 2027.\nFounders are first through the doors, with a name on the Founders Wall and a permanent Founding Member designation.\nPriority invitations to leagues and events, and exclusive Founding Member merchandise.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": "music-fmg-1011-c",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-11/slide-01.jpg",
+          "role": "image",
+          "alt": "Slide 1 of 6, a deep green slide with the Fore Motion Golf logo at the top: What it means to be a Founder. Belonging, access, recognition and community. Swipe. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-11/slide-02.jpg",
+          "role": "image",
+          "alt": "Slide 2, a cream slide with the logo at the top, labeled Being a Founder: First through the doors. A Founding Membership is joining before Fore Motion Golf opens in early 2027.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-11/slide-03.jpg",
+          "role": "image",
+          "alt": "Slide 3, a deep green slide labeled Being a Founder: A name on the Founders Wall. Founders are recognized on the Founders Wall, from the beginning.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-11/slide-04.jpg",
+          "role": "image",
+          "alt": "Slide 4, a cream slide labeled Being a Founder: Founding Member, permanently. Your membership runs for its term. Your Founding Member designation stays.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-11/slide-05.jpg",
+          "role": "image",
+          "alt": "Slide 5, a deep green slide labeled Being a Founder: Priority invitations. Priority access to leagues and events, and exclusive Founding Member merchandise.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-11/slide-06.jpg",
+          "role": "image",
+          "alt": "Slide 6, a cream slide with the logo at the top: Founding Memberships are limited. First access goes to the Founders List. A bright green Join the Founders List button, then the line Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-11/slideshow.mp4",
+          "role": "video",
+          "alt": "Video of the 6 carousel slides in order: What it means to be a Founder, belonging, access, recognition and community / First through the doors: joining before Fore Motion Golf opens in early 2027 / A name on the Founders Wall, from the beginning / Founding Member, permanently: the designation stays after the term / Priority invitations: priority access to leagues and events, and exclusive Founding Member merchandise / Founding Memberships are limited, first access goes to the Founders List; limited availability, benefits and terms governed by the Founding Membership Agreement.",
+          "platforms": [
+            "facebook"
+          ]
+        },
+        {
+          "src": "media/2026-10-11/slideshow-cover.jpg",
+          "role": "thumbnail",
+          "alt": "Slide 1 of 6, a deep green slide with the Fore Motion Golf logo at the top: What it means to be a Founder. Belonging, access, recognition and community. Swipe. foremotiongolf.com at the foot.",
+          "platforms": [
+            "facebook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-11-2",
+      "date": "2026-10-11",
+      "weekday": "Sun",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "what-it-means-to-be-a-founder",
+      "title": "The Founders Wall",
+      "hook": "The Founders Wall.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "The Founders Wall.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-11-2\n\nYour name at the beginning.\nFounders are recognized on the Founders Wall at Fore Motion Golf, opening early 2027 in Orange Park.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-11-2",
+      "instagram": "The Founders Wall.\nLink in bio to join the Founders List.\n\nYour name at the beginning.\nFounders are recognized on the Founders Wall at Fore Motion Golf, opening early 2027 in Orange Park.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-11-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline The Founders Wall, the line Your name at the beginning, a bright green Join the Founders List button, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12",
+      "date": "2026-10-12",
+      "weekday": "Mon",
+      "time": "10:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "what-it-means-to-be-a-founder",
+      "title": "Founding Practice",
+      "hook": "Founding Practice.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Founding Practice.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-12\n\n6 months. 24 hours of reserved bay time, about 4 a month. 25 spots.\nEvery Founder is recognized on the Founders Wall and keeps a permanent Founding Member designation.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-12",
+      "instagram": "Founding Practice.\nLink in bio to join the Founders List.\n\n6 months. 24 hours of reserved bay time, about 4 a month. 25 spots.\nEvery Founder is recognized on the Founders Wall and keeps a permanent Founding Member designation.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-12/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top and the headline Founding Practice. Three figures in green: 6 months, 24 hours, 25 spots, then the line 24 hours of reserved bay time, about 4 a month. A bright green Join the Founders List button, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-2",
+      "date": "2026-10-12",
+      "weekday": "Mon",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "what-it-means-to-be-a-founder",
+      "title": "Founding Club",
+      "hook": "Founding Club.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Founding Club.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-12-2\n\n6 months. 48 hours of reserved bay time, about 8 a month. 25 spots.\nEvery Founder is recognized on the Founders Wall and keeps a permanent Founding Member designation.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-12-2",
+      "instagram": "Founding Club.\nLink in bio to join the Founders List.\n\n6 months. 48 hours of reserved bay time, about 8 a month. 25 spots.\nEvery Founder is recognized on the Founders Wall and keeps a permanent Founding Member designation.\nFounding Memberships are limited, and first access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-12-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top and the headline Founding Club. Three figures in green: 6 months, 48 hours, 25 spots, then the line 48 hours of reserved bay time, about 8 a month. A bright green Join the Founders List button, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13",
+      "date": "2026-10-13",
+      "weekday": "Tue",
+      "time": "10:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "what-it-means-to-be-a-founder",
+      "title": "Founding Tour, the premier individual membership",
+      "hook": "Founding Tour, the premier individual membership.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Founding Tour, the premier individual membership.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-13\n\nFounding Tour is 6 months with 84 hours of reserved bay time, about 14 a month.\nThere are 10 spots.\nFour TrackMan bays at 1518 Park Ave in Orange Park, opening early 2027.\nFirst access to Founding Memberships goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-13",
+      "instagram": "Founding Tour, the premier individual membership.\nLink in bio to join the Founders List.\n\nFounding Tour is 6 months with 84 hours of reserved bay time, about 14 a month.\nThere are 10 spots.\nFour TrackMan bays at 1518 Park Ave in Orange Park, opening early 2027.\nFirst access to Founding Memberships goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-13/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the line The premier individual membership, the headline Founding Tour with Tour in bright green, three figures between green rules: 6 months, 84 hours of reserved bay time, about 14 a month, and 10 spots, then Limited availability. Benefits and terms governed by the Founding Membership Agreement. A bright green Join the Founders List button and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-2",
+      "date": "2026-10-13",
+      "weekday": "Tue",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "what-it-means-to-be-a-founder",
+      "title": "Founding Corporate Partner",
+      "hook": "Founding Corporate Partner.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Founding Corporate Partner.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-13-2\n\nFor local businesses: 12 months and 150 hours of reserved bay time.\nThere are 5 Founding Corporate Partnerships.\nFour TrackMan bays with room for six players each, opening early 2027 in Orange Park.\nRequest corporate information: admin@foremotiongolf.com\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-13-2",
+      "instagram": "Founding Corporate Partner.\nLink in bio to join the Founders List.\n\nFor local businesses: 12 months and 150 hours of reserved bay time.\nThere are 5 Founding Corporate Partnerships.\nFour TrackMan bays with room for six players each, opening early 2027 in Orange Park.\nRequest corporate information: admin@foremotiongolf.com\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-13-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the line For local businesses, the headline Founding Corporate Partner with Corporate Partner in bright green, three figures between green rules: 12 months, 150 hours of reserved bay time, and 5 partnerships, then Limited availability. Benefits and terms governed by the Founding Membership Agreement. A bright green block reads Request corporate information: admin@foremotiongolf.com, with foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-14",
+      "date": "2026-10-14",
+      "weekday": "Wed",
+      "time": "10:30",
+      "kind": "carousel",
+      "status": "ready",
+      "pillar": "countdown",
+      "title": "The four Founding Memberships, side by side",
+      "hook": "The four Founding Memberships, side by side.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "The four Founding Memberships, side by side.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-14\n\nFounding Practice: 6 months, 24 hours of reserved bay time, 25 spots.\nFounding Club: 6 months, 48 hours, 25 spots.\nFounding Tour: 6 months, 84 hours, 10 spots.\nFounding Corporate Partner: 12 months, 150 hours, 5 partnerships.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-14",
+      "instagram": "The four Founding Memberships, side by side.\nLink in bio to join the Founders List.\n\nFounding Practice: 6 months, 24 hours of reserved bay time, 25 spots.\nFounding Club: 6 months, 48 hours, 25 spots.\nFounding Tour: 6 months, 84 hours, 10 spots.\nFounding Corporate Partner: 12 months, 150 hours, 5 partnerships.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": "music-fmg-1014-c",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-14/slide-01.jpg",
+          "role": "image",
+          "alt": "A deep green slide with the Fore Motion Golf logo at the top: Founding Memberships. The four Founding Memberships, side by side, with side by side in bright green. Hours of reserved bay time and spots, all in one place. Swipe to compare. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-14/slide-02.jpg",
+          "role": "image",
+          "alt": "A cream slide with the Fore Motion Golf logo at the top and a table headed Side by side, with columns for membership, term, reserved bay time and spots: Founding Practice, 6 months, 24 hours, 25 spots. Founding Club, 6 months, 48 hours, 25 spots. Founding Tour, 6 months, 84 hours, 10 spots. Founding Corporate Partner, 12 months, 150 hours, 5 partnerships. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-14/slide-03.jpg",
+          "role": "image",
+          "alt": "A deep green slide with the Fore Motion Golf logo at the top, headed Hours, side by side: Reserved bay time, with four green bars growing in length: Founding Practice, 24 hours, 6 months, about 4 a month. Founding Club, 48 hours, 6 months, about 8 a month. Founding Tour, 84 hours, 6 months, about 14 a month. Founding Corporate Partner, 150 hours, 12 months. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-14/slide-04.jpg",
+          "role": "image",
+          "alt": "A cream slide with the Fore Motion Golf logo at the top, headed Limited spots, with four outlined tiles: 25 spots, Founding Practice. 25 spots, Founding Club. 10 spots, Founding Tour. 5 partnerships, Founding Corporate Partner. Below: Individual Founding Memberships are not reopened once they fill. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-14/slide-05.jpg",
+          "role": "image",
+          "alt": "A deep green slide with the Fore Motion Golf logo at the top: First access goes to the Founders List, with Founders List in bright green. Founding Practice, Club, Tour and Corporate Partner. A bright green Join the Founders List button. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-14/slideshow.mp4",
+          "role": "video",
+          "alt": "Video of the 5 carousel slides in order: The four Founding Memberships, side by side / A table of membership, term, reserved bay time and spots: Practice 6 months, 24 hours, 25 spots; Club 6 months, 48 hours, 25 spots; Tour 6 months, 84 hours, 10 spots; Corporate Partner 12 months, 150 hours, 5 partnerships / Hours as four green bars, with about 4, 8 and 14 a month for the individual tiers / Limited spots as four tiles / First access goes to the Founders List; limited availability, benefits and terms governed by the Founding Membership Agreement.",
+          "platforms": [
+            "facebook"
+          ]
+        },
+        {
+          "src": "media/2026-10-14/slideshow-cover.jpg",
+          "role": "thumbnail",
+          "alt": "A deep green slide with the Fore Motion Golf logo at the top: Founding Memberships. The four Founding Memberships, side by side, with side by side in bright green. Hours of reserved bay time and spots, all in one place. Swipe to compare. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+          "platforms": [
+            "facebook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-14-2",
+      "date": "2026-10-14",
+      "weekday": "Wed",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "countdown",
+      "title": "The four Founding Memberships. Limited.",
+      "hook": "The four Founding Memberships. Limited.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "The four Founding Memberships. Limited.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-14-2\n\nFounding Practice, Founding Club, Founding Tour and Founding Corporate Partner.\nEach has a set number of spots, and individual Founding Memberships are not reopened once they fill.\nGet first access on the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-14-2",
+      "instagram": "The four Founding Memberships. Limited.\nLink in bio to join the Founders List.\n\nFounding Practice, Founding Club, Founding Tour and Founding Corporate Partner.\nEach has a set number of spots, and individual Founding Memberships are not reopened once they fill.\nGet first access on the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-14-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline The four Founding Memberships, then Limited in bright green, the four names between green rules: Practice, Club, Tour, Corporate Partner, then Limited availability. Benefits and terms governed by the Founding Membership Agreement. A bright green Get first access on the Founders List button and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15",
+      "date": "2026-10-15",
+      "weekday": "Thu",
+      "time": "10:30",
+      "kind": "carousel",
+      "status": "ready",
+      "pillar": "the-reveal",
+      "title": "What a Founding Membership is",
+      "hook": "What a Founding Membership is.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "What a Founding Membership is.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-15\n\nA Founding Membership is a limited prepaid membership offered before Fore Motion Golf officially opens.\nIt includes simulator hours, membership benefits, early access, Founder recognition and priority opportunities during the membership term.\nThere are four: Founding Practice, Founding Club, Founding Tour and Founding Corporate Partner.\nThe Founders List gets first access.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-15",
+      "instagram": "What a Founding Membership is.\nLink in bio to join the Founders List.\n\nA Founding Membership is a limited prepaid membership offered before Fore Motion Golf officially opens.\nIt includes simulator hours, membership benefits, early access, Founder recognition and priority opportunities during the membership term.\nThere are four: Founding Practice, Founding Club, Founding Tour and Founding Corporate Partner.\nThe Founders List gets first access.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": "music-fmg-1015-c",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-15/slide-01.jpg",
+          "role": "image",
+          "alt": "A deep green slide with the Fore Motion Golf logo at the top and the headline What a Founding Membership is, then the line A limited prepaid membership offered before Fore Motion Golf officially opens, with foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-15/slide-02.jpg",
+          "role": "image",
+          "alt": "A cream slide with the Fore Motion Golf logo and the headline What it includes, over a five-item list: simulator hours, reserved bay time; membership benefits; early access; Founder recognition; priority opportunities during the membership term. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-15/slide-03.jpg",
+          "role": "image",
+          "alt": "A deep green slide with the Fore Motion Golf logo and the headline Four options, listing Founding Practice, 6 months; Founding Club, 6 months; Founding Tour, 6 months, the premier individual membership; Founding Corporate Partner, 12 months, for local businesses. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-15/slide-04.jpg",
+          "role": "image",
+          "alt": "A cream slide with the Fore Motion Golf logo and the headline First access goes to the Founders List, then the line Founding Memberships will be limited. The list gets access before the public. foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-15/slide-05.jpg",
+          "role": "image",
+          "alt": "A deep green slide with the Fore Motion Golf logo, the headline Be first through the doors, a bright green Join the Founders List button, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot.",
+          "platforms": [
+            "instagram"
+          ]
+        },
+        {
+          "src": "media/2026-10-15/slideshow.mp4",
+          "role": "video",
+          "alt": "Video of the 5 carousel slides in order: What a Founding Membership is, a limited prepaid membership offered before Fore Motion Golf officially opens / What it includes: simulator hours as reserved bay time, membership benefits, early access, Founder recognition, priority opportunities during the term / Four options: Founding Practice, Club and Tour at 6 months, Founding Corporate Partner at 12 months / First access goes to the Founders List, Founding Memberships will be limited / Be first through the doors, join the Founders List; limited availability, benefits and terms governed by the Founding Membership Agreement.",
+          "platforms": [
+            "facebook"
+          ]
+        },
+        {
+          "src": "media/2026-10-15/slideshow-cover.jpg",
+          "role": "thumbnail",
+          "alt": "A deep green slide with the Fore Motion Golf logo at the top and the headline What a Founding Membership is, then the line A limited prepaid membership offered before Fore Motion Golf officially opens, with foremotiongolf.com at the foot.",
+          "platforms": [
+            "facebook"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-2",
+      "date": "2026-10-15",
+      "weekday": "Thu",
+      "time": "17:30",
+      "kind": "reel",
+      "status": "ready",
+      "pillar": "the-reveal",
+      "title": "The four Founding Memberships in motion",
+      "hook": "The four Founding Memberships.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "The four Founding Memberships.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-15-2\n\nFounding Practice: 6 months, 24 hours of reserved bay time, about 4 a month, 25 spots.\nFounding Club: 6 months, 48 hours, about 8 a month, 25 spots.\nFounding Tour, the premier individual membership: 6 months, 84 hours, about 14 a month, 10 spots.\nFounding Corporate Partner: 12 months, 150 hours, 5 partnerships for local businesses.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-15-2",
+      "instagram": "The four Founding Memberships.\nLink in bio to join the Founders List.\n\nFounding Practice: 6 months, 24 hours of reserved bay time, about 4 a month, 25 spots.\nFounding Club: 6 months, 48 hours, about 8 a month, 25 spots.\nFounding Tour, the premier individual membership: 6 months, 84 hours, about 14 a month, 10 spots.\nFounding Corporate Partner: 12 months, 150 hours, 5 partnerships for local businesses.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [
+        "Want a specific Instagram sound on this reel? Write \"Sound: title by artist\" in a note here and we will set it before it posts. Sounds come from the Instagram library this account can use."
+      ],
+      "ai": {},
+      "music": "music-fmg-1015-r",
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-15-2/reel.mp4",
+          "role": "video",
+          "alt": "",
+          "platforms": null
+        },
+        {
+          "src": "media/2026-10-15-2/reel-cover.jpg",
+          "role": "thumbnail",
+          "alt": "A deep green vertical card with the Fore Motion Golf logo, the label The Founding Memberships, 1 of 4, the name Founding Practice, and the facts 6 months, 24 hours of reserved bay time, about 4 a month, 25 spots, above the Agreement line and foremotiongolf.com.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16",
+      "date": "2026-10-16",
+      "weekday": "Fri",
+      "time": "10:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "sales",
+      "title": "Limited. Prepaid. Before we open.",
+      "hook": "Limited. Prepaid. Before we open.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Limited. Prepaid. Before we open.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-16\n\nFounding Memberships are limited, prepaid and offered before Fore Motion Golf opens in early 2027.\nFour options: Founding Practice, Founding Club, Founding Tour and Founding Corporate Partner.\nFirst access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-16",
+      "instagram": "Limited. Prepaid. Before we open.\nLink in bio to join the Founders List.\n\nFounding Memberships are limited, prepaid and offered before Fore Motion Golf opens in early 2027.\nFour options: Founding Practice, Founding Club, Founding Tour and Founding Corporate Partner.\nFirst access goes to the Founders List.\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-16/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Limited. Prepaid. Before we open., the line Founding Memberships. First access on the Founders List., a bright green Join the Founders List button, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-2",
+      "date": "2026-10-16",
+      "weekday": "Fri",
+      "time": "17:30",
+      "kind": "post",
+      "status": "ready",
+      "pillar": "sales",
+      "title": "Five Founding Corporate Partnerships",
+      "hook": "Five Founding Corporate Partnerships.",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "facebook": "Five Founding Corporate Partnerships.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-16-2\n\nOnly five Founding Corporate Partnerships will be offered, for local businesses.\nEach runs 12 months with 150 hours of reserved bay time at Fore Motion Golf in Orange Park.\nRequest corporate information: admin@foremotiongolf.com\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-16-2",
+      "instagram": "Five Founding Corporate Partnerships.\nLink in bio to join the Founders List.\n\nOnly five Founding Corporate Partnerships will be offered, for local businesses.\nEach runs 12 months with 150 hours of reserved bay time at Fore Motion Golf in Orange Park.\nRequest corporate information: admin@foremotiongolf.com\nLimited availability. Benefits and terms governed by the Founding Membership Agreement.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+      "linkedin": "",
+      "linkedinComment": "",
+      "repost": "",
+      "questions": [],
+      "ai": {},
+      "music": null,
+      "scheduled": {},
+      "media": [
+        {
+          "src": "media/2026-10-16-2/card.png",
+          "role": "image",
+          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Five Founding Corporate Partnerships, the lines 12 months. 150 hours of reserved bay time. For local businesses., a bright green block reading Request corporate information, admin@foremotiongolf.com, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot.",
+          "platforms": null
+        }
+      ]
+    }
+  ],
+  "stories": [],
+  "storyChecklist": [],
+  "storiesPaused": false,
+  "asks": []
+}

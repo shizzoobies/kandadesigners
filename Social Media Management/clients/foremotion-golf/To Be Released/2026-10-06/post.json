@@ -1,0 +1,29 @@
+{
+  "id": "2026-10-06",
+  "date": "2026-10-06",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "our-story",
+  "title": "Compete: leagues and events",
+  "platforms": {
+    "facebook": { "type": "REEL", "caption": "facebook.md" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/reel.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "A 19 second vertical video walking through the empty Fore Motion Golf space in Orange Park, a long carpeted room with the old service counters along one side. The Fore Motion Golf logo sits at the top and a deep green band at the bottom carries the lines Compete. Leagues. Four bays. Events. First access. with foremotiongolf.com. It ends on a deep green card: Join the Founders List, early access to launch events and leagues, foremotiongolf.com."
+    },
+    {
+      "file": "media/reel-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "A man in a mint green polo walks down a long, empty carpeted room past old service counters, with the Fore Motion Golf logo at the top and a deep green band below that reads Compete. Leagues and events at Fore Motion Golf, and foremotiongolf.com."
+    }
+  ],
+  "music": "music-fmg-1006-r",
+  "generate": []
+}

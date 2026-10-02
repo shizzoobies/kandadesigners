@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-13",
+  "date": "2026-10-13",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "what-it-means-to-be-a-founder",
+  "title": "Founding Tour, the premier individual membership",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the line The premier individual membership, the headline Founding Tour with Tour in bright green, three figures between green rules: 6 months, 84 hours of reserved bay time, about 14 a month, and 10 spots, then Limited availability. Benefits and terms governed by the Founding Membership Agreement. A bright green Join the Founders List button and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

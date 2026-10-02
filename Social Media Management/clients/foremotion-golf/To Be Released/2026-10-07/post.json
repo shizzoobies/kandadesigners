@@ -1,0 +1,86 @@
+{
+  "id": "2026-10-07",
+  "date": "2026-10-07",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "the-experience",
+  "title": "Four bays. Six players each",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top. Headline: Four bays. Six players each. Below it, four outlined boxes labeled Bay 1 to Bay 4, each holding six green dots for six players. Then: Indoor golf on TrackMan simulators, coming early 2027 to Orange Park, FL. Swipe for how it works. foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, cream with the Fore Motion Golf logo at the top. Label: The bay. Headline: Every bay runs on TrackMan. Then: TrackMan shows the ball and the club on every swing, so you know your numbers. foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5, deep green with the Fore Motion Golf logo at the top. Label: The group. Headline: Six players. One bay. Then: Up to six players share a bay. Take turns and play a round together, where it is always 70 and sunny. foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, cream with the Fore Motion Golf logo at the top. Label: The clubs. Headline: No clubs? No problem. Then: Rental club sets are available. Reserve them ahead of time and bring nothing but yourself. foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, deep green with the Fore Motion Golf logo at the top. Headline: Be first through the doors. Then: Opening early 2027 at 1518 Park Ave, Orange Park, the former DMV. A bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Four bays, six players each, shown as four boxes of six green dots / The bay: every bay runs on TrackMan, which shows the ball and the club on every swing / The group: six players, one bay, take turns and play a round together / The clubs: rental club sets are available, reserve ahead and bring nothing but yourself / Be first through the doors: opening early 2027 at 1518 Park Ave, join the Founders List."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top. Headline: Four bays. Six players each. Below it, four outlined boxes labeled Bay 1 to Bay 4, each holding six green dots for six players. Then: Indoor golf on TrackMan simulators, coming early 2027 to Orange Park, FL. Swipe for how it works. foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-fmg-1007-c"
+}

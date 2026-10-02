@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-06-2",
+  "date": "2026-10-06",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "our-story",
+  "title": "Connect. Six to a bay.",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the line Calibrate. Compete. Connect. with Connect in bright green, the headline Six to a bay with bay in bright green, the line Up to six players per bay. Come as a group, stay for the bar and lounge, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

@@ -77,7 +77,9 @@ The weekday shape: LinkedIn document 8:00, reel 10:30, YouTube Short 12:00, caro
 
 ### 2a. Weekly social (the standing job)
 
-1. **Reconcile.** Last run 9/30 morning. Due now for `2026-09-30-2` and everything from Thu 10/1.
+1. **Reconcile.** Last run 10/2 at 1:30 PM (pull saved as
+   `reports/2026-10-02-getScheduledPosts-0930-1002.json`): everything through Fri 10/2 noon is
+   in `Already Released/`, L1 included. Next due for `2026-10-02-2` (Fri 3 PM) onward.
    `reconcile --window`, pull `getScheduledPosts` one day at a time through the Metricool
    connector, save the JSON, `reconcile --from <file>`. Only days whose post time has passed
    need pulling. Keep `uuid`, `draft` and `providers` on every item.
@@ -114,12 +116,74 @@ The weekday shape: LinkedIn document 8:00, reel 10:30, YouTube Short 12:00, caro
 
 - **Read:** `clients/foremotion-golf/README.md` and `NOTES.md`, then
   `D:\Foremotion Golf\Social Media Management\README.md` and `Branding\Brand Guide.md`.
-- **State (10/2):** Metricool brand `7185142` has **Facebook and Instagram connected**.
-  Client folder set up with `publish: "metricool"`. Nothing is planned or built; the desk is
-  empty. Hannah has a client login with approve rights on this desk (section 0).
-- **Alex met Hannah** (she manages their social) on 10/1; a fuller meeting is not scheduled
-  yet. **Ask him for the outcome before planning:** who approves (Hannah, Alex or both), cadence,
-  when the game ships, whether social shows prices, whether she has editable source files.
+- **State (10/2 afternoon):** Metricool brand `7185142` has **Facebook and Instagram
+  connected**. Client folder set up with `publish: "metricool"`. Hannah has a client login with
+  approve rights on this desk (section 0).
+  - **Plan written:** `clients/foremotion-golf/plans/2026-10-02-founders-funnel.md`, Fri 10/2
+    to Fri 10/16, two posts a day (lead 10:30 AM or weekend noon, card 5:30 PM), Justin's six
+    phases with the price reveal on Thu 10/15, Founders Cup held until the game ships.
+    **Approved in full and BUILT** (Alex, 2026-10-02: "fire them all up"). Build brief:
+    `plans/2026-10-02-founders-funnel-build-brief.md`. All 29 folders (`2026-10-02` through
+    `2026-10-16-2`) validate, review is built, and **all 29 are on the FMG desk** as of about
+    4:45 PM 10/2. Nothing is scheduled in Metricool yet: Hannah approves on the desk, then
+    `desk pull`, `upload`, `release`, on Alex's word. Tonight's `2026-10-02` (7 PM) was still
+    unapproved at 4 PM; Alex chose to leave it to Hannah.
+    - Music: 12 ElevenLabs tracks `music-fmg-*` (D:\kap-reel\out\candidates, normalized
+      copies in `out\fmg-delivery`, logged in `config/audio.json` and `LICENSING.md`;
+      12,454 credits). No human has listened to them yet.
+    - Reels (10/4, 10/6, 10/8, 10/10, 10/15-2) are cut from Hannah's walkthroughs: real
+      footage only except one labeled "Concept" bar render on 10/8; silent originals at
+      `source/reel-silent.mp4`. The host is unnamed; a client-safe question about him is in
+      the 10/6 brief. His cap and polo carry small apparel marks, left as worn clothing.
+    - Thu 10/15 and Fri 10/16 are built in the **no-price form**; rebuild with prices when
+      Justin confirms the count (60 or 65) and the 10/15 prices and sales date.
+    - Contact sheets for every reel and carousel: `D:\kap-reel\out\fmg-delivery\sheets\`.
+  - **Instagram trending audio (Hannah's ask, Alex's call 10/2):** built in `tools/` the same
+    day (306 tests pass, reviewed, review fixes applied): `platforms.instagram.audio`
+    ({term} or {id}) on an Instagram REEL; `release` sends `audioConfiguration` with
+    videoVolume 0; fallback `release <folder> --auto-publish off` then `--record
+    --manual-audio`; reconcile lists manual-audio posts with the sound. README section
+    "Instagram audio on Reels". **Flow with Hannah:** she writes "Sound: <title> by <artist>"
+    as a desk note on a reel; `desk pull` marks it (client); set `audio.term`, push back, she
+    approves. Not in the catalog: she finishes in the Metricool phone app (needs her as a
+    Metricool team member, Alex's click). **Open:** the admin desk page
+    (`D:\ka-site-admin\admin\src\scripts\post-desk.js`) does not render `instagramSound` yet
+    (one line, Alex deploys); whether Metricool marks a natively published post PUBLISHED
+    (watch the first one; may need a `--manual-done`). `tools/slideshow.mjs` now takes
+    `--client` (finisher's change).
+    **Catalog test 10/2 (about 5:15 PM):** search terms for licensed pop songs (Sunny by
+    Boney M./R3HAB, Go Go Juice, Ring My Bell) resolve on brand 7185142 only to
+    `original_sound` re-uploads (artist "?"), never to the licensed track; every real `music`
+    hit is a royalty-free library track (Trout Recording, Moira Smiley, half.cool, the "Reels
+    Sound" series). That is the Instagram Business-account rule: the royalty-free library
+    only. **Alex's call: use trending sounds within the business library.** Never attach an
+    `original_sound` re-upload of a licensed song (copyright mute risk). Source of picks:
+    Instagram app, signed in as foremotiongolf, Professional dashboard, Audio trends (shows
+    what that account may use); Alex or Hannah screenshots it, Claude tests terms with a
+    throwaway draft (a rejected create makes nothing; a successful one leaves a draft Alex
+    deletes by hand, there is no delete tool) and sets the winners. Rejected tests created no
+    drafts. An attach was proven end to end on a library track (Green Spaces, Trout
+    Recording, id 1299553070895028); that test draft was deleted by Alex.
+    **Alex's final call 10/2 (about 5:40 PM): nothing is pre-set.** Hannah requests a sound by
+    writing "Sound: title by artist" in a desk note on the reel; each reel's desk card now
+    carries a client-safe line saying so. Until she does, the reel posts with our track.
+    Library candidates by fit (all `music` type, attachable), previewable at
+    instagram.com/reels/audio/<id>/: 10/4 Golden Sunrise (Giulio Cercato, 303378735427943)
+    or Catch The Moment (Red Yarn, 2384023998437261); 10/6 Play To Win (Giulio Cercato,
+    665857722143060) or Big Leagues (Mike Floss, 523966117385305); 10/8 CoffeeNHouse (cloud
+    cover, 2249471585814626) or Come Summer (Jayme Stone, 603966634999716); 10/10 Golden
+    Hour (JQ, The Red Collective, 638930161963138) or Feels So Good (Company Money,
+    1306855697259067); 10/15-2 Dedication (LAVLO, 28304113442557164) or Make It (Giulio
+    Cercato, 1033459349040717).
+  - **Tonight's post `2026-10-02`** (one card, 7:00 PM, "Where it's always 70 and sunny") is
+    built, validated and **on the FMG desk** as of about 2:45 PM. Next: `desk pull` after
+    approval (Hannah, or Alex as owner by 6 PM), then `upload` and `release`, on Alex's word.
+  - Alex's calls 10/2: goal is Founders List signups; Hannah approves and Alex watches; two a
+    day, all built fresh; fonts Oswald and Barlow (Barlow is not installed, Bahnschrift stood
+    in; install Barlow and rerun `source/build.mjs` to match).
+  - Facts and constraints are in the plan's "What the posts never say" list; the research
+    behind it is Justin's `Assets From Justin\9-28-26\2026-09-28-founders-and-game-docs.md`
+    and `2026-09-18-website-notes-update.md`.
 - **Found in her work** (20 graphics, 2 videos): polished, and blocked on four things. The
   graphics use the old concept logo, not the artist's Aug 2 logo. They point to pages that do
   not exist (the site is a coming-soon page; `/play/` says the game is being rebuilt; no

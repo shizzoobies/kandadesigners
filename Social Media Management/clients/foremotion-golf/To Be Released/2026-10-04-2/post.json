@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-04-2",
+  "date": "2026-10-04",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "something-new-is-coming",
+  "title": "Construction updates come to the list first",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Construction updates come to the list first, with first in bright green, the line Follow the build in Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

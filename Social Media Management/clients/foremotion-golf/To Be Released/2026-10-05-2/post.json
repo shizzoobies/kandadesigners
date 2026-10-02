@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-05-2",
+  "date": "2026-10-05",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "our-story",
+  "title": "Calibrate. Know your numbers.",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the line Calibrate. Compete. Connect. with Calibrate in bright green, the headline Know your numbers with numbers in bright green, the line TrackMan shows the ball and the club on every swing, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

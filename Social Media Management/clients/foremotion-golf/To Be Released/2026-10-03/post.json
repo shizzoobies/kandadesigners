@@ -1,0 +1,86 @@
+{
+  "id": "2026-10-03",
+  "date": "2026-10-03",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "something-new-is-coming",
+  "title": "This isn't just a place to hit golf balls",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top: Coming early 2027. This isn't just a place to hit golf balls. Here is what is coming to Orange Park, FL. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, a cream slide with the Fore Motion Golf logo at the top: Where. 1518 Park Ave, Orange Park. The former DMV, being built out now."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5, a deep green slide with the Fore Motion Golf logo at the top: Play. Four TrackMan bays. Up to six players per bay."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, a cream slide with the Fore Motion Golf logo at the top: Stay a while. A bar and lounge. A putting area. Canned beer and seltzers at the bar."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, a deep green slide with the Fore Motion Golf logo at the top: Be first through the doors. Join the Founders List. Founding Memberships will be limited. The list gets access before the public. A bright green button reads foremotiongolf.com."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: This isn't just a place to hit golf balls, coming early 2027 to Orange Park / Where: 1518 Park Ave, the former DMV, being built out now / Play: four TrackMan bays, up to six players per bay / Stay a while: a bar and lounge, a putting area, canned beer and seltzers / Be first through the doors: join the Founders List at foremotiongolf.com."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top: Coming early 2027. This isn't just a place to hit golf balls. Here is what is coming to Orange Park, FL. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-fmg-1003-c"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-16",
+  "date": "2026-10-16",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "sales",
+  "title": "Limited. Prepaid. Before we open.",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Limited. Prepaid. Before we open., the line Founding Memberships. First access on the Founders List., a bright green Join the Founders List button, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

@@ -1,0 +1,86 @@
+{
+  "id": "2026-10-14",
+  "date": "2026-10-14",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "countdown",
+  "title": "The four Founding Memberships, side by side",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the Fore Motion Golf logo at the top: Founding Memberships. The four Founding Memberships, side by side, with side by side in bright green. Hours of reserved bay time and spots, all in one place. Swipe to compare. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A cream slide with the Fore Motion Golf logo at the top and a table headed Side by side, with columns for membership, term, reserved bay time and spots: Founding Practice, 6 months, 24 hours, 25 spots. Founding Club, 6 months, 48 hours, 25 spots. Founding Tour, 6 months, 84 hours, 10 spots. Founding Corporate Partner, 12 months, 150 hours, 5 partnerships. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the Fore Motion Golf logo at the top, headed Hours, side by side: Reserved bay time, with four green bars growing in length: Founding Practice, 24 hours, 6 months, about 4 a month. Founding Club, 48 hours, 6 months, about 8 a month. Founding Tour, 84 hours, 6 months, about 14 a month. Founding Corporate Partner, 150 hours, 12 months. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A cream slide with the Fore Motion Golf logo at the top, headed Limited spots, with four outlined tiles: 25 spots, Founding Practice. 25 spots, Founding Club. 10 spots, Founding Tour. 5 partnerships, Founding Corporate Partner. Below: Individual Founding Memberships are not reopened once they fill. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the Fore Motion Golf logo at the top: First access goes to the Founders List, with Founders List in bright green. Founding Practice, Club, Tour and Corporate Partner. A bright green Join the Founders List button. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: The four Founding Memberships, side by side / A table of membership, term, reserved bay time and spots: Practice 6 months, 24 hours, 25 spots; Club 6 months, 48 hours, 25 spots; Tour 6 months, 84 hours, 10 spots; Corporate Partner 12 months, 150 hours, 5 partnerships / Hours as four green bars, with about 4, 8 and 14 a month for the individual tiers / Limited spots as four tiles / First access goes to the Founders List; limited availability, benefits and terms governed by the Founding Membership Agreement."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "A deep green slide with the Fore Motion Golf logo at the top: Founding Memberships. The four Founding Memberships, side by side, with side by side in bright green. Hours of reserved bay time and spots, all in one place. Swipe to compare. Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-fmg-1014-c"
+}

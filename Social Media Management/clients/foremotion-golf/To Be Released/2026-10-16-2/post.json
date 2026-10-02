@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-16-2",
+  "date": "2026-10-16",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "sales",
+  "title": "Five Founding Corporate Partnerships",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Five Founding Corporate Partnerships, the lines 12 months. 150 hours of reserved bay time. For local businesses., a bright green block reading Request corporate information, admin@foremotiongolf.com, the line Limited availability. Benefits and terms governed by the Founding Membership Agreement, and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

@@ -1,0 +1,86 @@
+{
+  "id": "2026-10-09",
+  "date": "2026-10-09",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "the-experience",
+  "title": "Rain, heat or dark, it is 70 and sunny",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top: Rain, heat or dark, it is 70 and sunny. Three small green line icons, a storm cloud, a sun and a moon, sit above the headline, with foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, cream with the Fore Motion Golf logo and a green sun icon: Summer afternoons. Leave the heat outside. Inside, it is always 70 and sunny."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5, deep green with the Fore Motion Golf logo and a green storm cloud icon: Afternoon storms. The storm rolls in. Your round keeps going, indoors on four TrackMan bays."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, cream with the Fore Motion Golf logo and a green moon icon: After work in winter. The sun sets early. Inside, the round is still 70 and sunny."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, deep green with the Fore Motion Golf logo: Where it's always 70 and sunny. Opening early 2027 at 1518 Park Ave, Orange Park, FL. A bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Rain, heat or dark, it is 70 and sunny, with storm cloud, sun and moon icons / Summer afternoons: leave the heat outside / Afternoon storms: your round keeps going, indoors on four TrackMan bays / After work in winter: the sun sets early, inside the round is still 70 and sunny / Where it's always 70 and sunny: opening early 2027 at 1518 Park Ave, Orange Park, join the Founders List."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Slide 1 of 5, deep green with the Fore Motion Golf logo at the top: Rain, heat or dark, it is 70 and sunny. Three small green line icons, a storm cloud, a sun and a moon, sit above the headline, with foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-fmg-1009-c"
+}

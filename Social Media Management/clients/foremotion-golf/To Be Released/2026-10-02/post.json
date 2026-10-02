@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-02",
+  "date": "2026-10-02",
+  "time": "19:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "something-new-is-coming",
+  "title": "Where it's always 70 and sunny",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Where it's always 70 and sunny, the line Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

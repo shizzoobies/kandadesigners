@@ -1,0 +1,86 @@
+{
+  "id": "2026-10-05",
+  "date": "2026-10-05",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "our-story",
+  "title": "Calibrate. Compete. Connect.",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top and the words Calibrate. Compete. Connect. in tall capitals, Compete in bright green, then the line Three words, and what each one means at Fore Motion Golf, a swipe cue and foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, a cream slide with the Fore Motion Golf logo, the word Calibrate in large green capitals, Know your numbers underneath, and the line TrackMan shows the ball and the club on every swing, with foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5, a deep green slide with the Fore Motion Golf logo, the word Compete in large bright green capitals, Leagues and events underneath, and the line Season play and single-day events are on the way, with foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, a cream slide with the Fore Motion Golf logo, the word Connect in large green capitals, Six to a bay underneath, and the line Up to six players per bay, and a bar and lounge between rounds. Come as a group, with foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, a deep green slide with the Fore Motion Golf logo, the headline Be first through the doors with the doors in bright green, the line Opening early 2027 at 1518 Park Ave, Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Calibrate. Compete. Connect., three words and what each means at Fore Motion Golf / Calibrate: know your numbers, TrackMan shows the ball and the club on every swing / Compete: leagues and events, season play and single-day events on the way / Connect: six to a bay, and a bar and lounge between rounds / Be first through the doors: opening early 2027 at 1518 Park Ave, Orange Park, join the Founders List."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Slide 1 of 5, a deep green slide with the Fore Motion Golf logo at the top and the words Calibrate. Compete. Connect. in tall capitals, Compete in bright green, then the line Three words, and what each one means at Fore Motion Golf, a swipe cue and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-fmg-1005-c"
+}

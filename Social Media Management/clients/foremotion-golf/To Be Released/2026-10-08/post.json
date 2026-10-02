@@ -1,0 +1,35 @@
+{
+  "id": "2026-10-08",
+  "date": "2026-10-08",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "the-experience",
+  "title": "The bar and lounge",
+  "platforms": {
+    "facebook": {
+      "type": "REEL",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "REEL",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/reel.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "A walk through the empty former DMV in Orange Park where the Fore Motion Golf bar will go, with a concept image of a finished bar, labeled Concept. On-screen text: The bar goes here. A bar and lounge. Canned beer and seltzers. Opening early 2027, 1518 Park Ave, Orange Park, FL. Join the Founders List. The logo is at the top and foremotiongolf.com at the foot throughout."
+    },
+    {
+      "file": "media/reel-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "A man in a mint polo gestures across the empty front counter of the former DMV, under the Fore Motion Golf logo, with the line The bar goes here and foremotiongolf.com at the foot."
+    }
+  ],
+  "music": "music-fmg-1008-r",
+  "generate": []
+}

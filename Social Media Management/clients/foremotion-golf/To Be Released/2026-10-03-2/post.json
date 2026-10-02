@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-03-2",
+  "date": "2026-10-03",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "something-new-is-coming",
+  "title": "Be first through the doors",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green card with the Fore Motion Golf logo at the top and the headline Be first through the doors. Under it, The Founders List gets: first access to Founding Memberships, priority invitations to our Soft Opening, opening date and construction updates, early access to launch events and leagues, Founders-only giveaways and previews. A bright green Join the Founders List button, and foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": []
+}

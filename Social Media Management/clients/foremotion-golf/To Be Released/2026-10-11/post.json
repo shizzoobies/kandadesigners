@@ -1,0 +1,95 @@
+{
+  "id": "2026-10-11",
+  "date": "2026-10-11",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "what-it-means-to-be-a-founder",
+  "title": "What it means to be a Founder",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 6, a deep green slide with the Fore Motion Golf logo at the top: What it means to be a Founder. Belonging, access, recognition and community. Swipe. foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2, a cream slide with the logo at the top, labeled Being a Founder: First through the doors. A Founding Membership is joining before Fore Motion Golf opens in early 2027."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3, a deep green slide labeled Being a Founder: A name on the Founders Wall. Founders are recognized on the Founders Wall, from the beginning."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4, a cream slide labeled Being a Founder: Founding Member, permanently. Your membership runs for its term. Your Founding Member designation stays."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5, a deep green slide labeled Being a Founder: Priority invitations. Priority access to leagues and events, and exclusive Founding Member merchandise."
+    },
+    {
+      "file": "media/slide-06.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 6, a cream slide with the logo at the top: Founding Memberships are limited. First access goes to the Founders List. A bright green Join the Founders List button, then the line Limited availability. Benefits and terms governed by the Founding Membership Agreement. foremotiongolf.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 6 carousel slides in order: What it means to be a Founder, belonging, access, recognition and community / First through the doors: joining before Fore Motion Golf opens in early 2027 / A name on the Founders Wall, from the beginning / Founding Member, permanently: the designation stays after the term / Priority invitations: priority access to leagues and events, and exclusive Founding Member merchandise / Founding Memberships are limited, first access goes to the Founders List; limited availability, benefits and terms governed by the Founding Membership Agreement."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Slide 1 of 6, a deep green slide with the Fore Motion Golf logo at the top: What it means to be a Founder. Belonging, access, recognition and community. Swipe. foremotiongolf.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-fmg-1011-c"
+}

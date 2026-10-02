@@ -1,0 +1,24 @@
+{
+  "id": "2026-10-15-2",
+  "date": "2026-10-15",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "the-reveal",
+  "title": "The four Founding Memberships in motion",
+  "platforms": {
+    "facebook": { "type": "REEL", "caption": "facebook.md" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" }
+  },
+  "media": [
+    { "file": "media/reel.mp4", "role": "video", "origin": "kap-reel", "alt": "" },
+    {
+      "file": "media/reel-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "A deep green vertical card with the Fore Motion Golf logo, the label The Founding Memberships, 1 of 4, the name Founding Practice, and the facts 6 months, 24 hours of reserved bay time, about 4 a month, 25 spots, above the Agreement line and foremotiongolf.com."
+    }
+  ],
+  "music": "music-fmg-1015-r",
+  "generate": []
+}

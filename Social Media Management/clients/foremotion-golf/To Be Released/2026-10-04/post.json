@@ -1,0 +1,29 @@
+{
+  "id": "2026-10-04",
+  "date": "2026-10-04",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "something-new-is-coming",
+  "title": "Follow the build",
+  "platforms": {
+    "facebook": { "type": "REEL", "caption": "facebook.md" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/reel.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "A walk through the empty former DMV that is becoming Fore Motion Golf: a long service counter wall where the four bays go, and the open hall seen from the far end. On screen: Four bays go here. Opening early 2027. Follow the build. Join the Founders List. The Fore Motion Golf logo is at the top and foremotiongolf.com at the foot throughout."
+    },
+    {
+      "file": "media/reel-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "Inside the empty former DMV, a man walks along a long service counter with numbered window signs overhead, one arm out toward the wall. The Fore Motion Golf logo sits at the top, and a deep green panel below reads 1518 Park Ave, Orange Park, FL. Four bays go here. foremotiongolf.com."
+    }
+  ],
+  "music": "music-fmg-1004-r",
+  "generate": []
+}
