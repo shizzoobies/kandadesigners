@@ -19,7 +19,7 @@ New patients call 941 417 7386. Facebook line 2 and the closing line carry `http
 ## Sources and truth
 - "Preventive screenings and vaccinations": `D:\Ellenton Family Practice Rebuild\src\data\services.ts` and the live https://familypracticedirect.com/family-medicine list (checked 2026-10-02).
 - "Adults and children": the Family Medicine intro in `services.ts` ("Everyday primary care for adults and children").
-- Insurance, uninsured, DPC memberships, address, hours, phone: the brief's allowed facts, from `src/data/site.ts` and the live site.
+- Insurance, uninsured, DPC memberships, address, weekday hours, phone: the brief's allowed facts, from `src/data/site.ts` and the live site. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
 - Never said: any specific vaccine or screening by name, flu vaccine availability (plan question 2 is open), timing advice, outcomes, prices.
 - Disclaimer line carried in both captions because the subject is vaccinations.
 

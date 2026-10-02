@@ -18,7 +18,7 @@ Every frame: the logo top center on a shell band, the photo in the middle, a dee
 1. 0.0 to 4.4: slow zoom in on the sign. "Our roadside sign" / "Healthcare the way it used to be."
 2. 3.9 to 8.3: slow pan across the sign. "Ellenton Family Practice Direct" / "Doctors who know you." / "Longer visits for members."
 3. 7.8 to 12.2: closer zoom on the sign's face. "907 25th Dr East, Ellenton" / "New patients welcome."
-4. 11.7 to 16.7: slow zoom out on the sign. "Monday to Friday, 9 to 5" / "Call to book." / Call 941 417 7386 button.
+4. 11.7 to 16.7: slow zoom out on the sign. "Mon to Fri 9 to 5, Sat 9 to 2" / "Call to book." / Call 941 417 7386 button.
 Cover: `media/reel-cover.jpg`, the frame at 2.0 seconds.
 
 The plan called for empty-room interior shots. The reviewed clinic set (`reference/photos-allowlist.json`, complete, 92 reviewed) cleared none: every photo has a person in it. As the build brief directs, the reel uses the sign photo only, and the title and hook move from "A look inside" to the practice's own line so the frame stays honest (no interior is shown or claimed). The plan's beat "Longer visits. Doctors who know you." became "Doctors who know you." with "Longer visits for members." because the site ties longer visits to the membership.
@@ -27,7 +27,7 @@ The plan called for empty-room interior shots. The reviewed clinic set (`referen
 - Photo: `src/assets/images/hero-front-sign.png` (the site's own; neighbors' panels already blurred; no person, no phone number visible).
 - "Healthcare the way it used to be.": `src/data/site.ts` (`taglineSupport`).
 - "Doctors who know you" and "a small team": the live /providers page ("You get to know your provider, and they get to know you."). "Longer visits for members": `/direct-primary-care` page and the build brief's allowed facts.
-- Address, Highway 301, hours, phone: `src/data/site.ts`. Insurance, uninsured, memberships: `src/data/membership.ts`.
+- Address, Highway 301, weekday hours, phone: `src/data/site.ts`. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner). Insurance, uninsured, memberships: `src/data/membership.ts`.
 - Never said: prices, outcomes, "best", "same-day", the door sign's number, the chiropractor, any patient.
 
 ## AI

@@ -14,10 +14,11 @@ Everything needed to become a patient in one frame: the address, the hours and t
 Call 941 417 7386 (the amber button on the card and the caption close); existing patients use the portal (the link in the Facebook caption body only). Facebook line 2 and the closing line carry `https://familypracticedirect.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-16-2`. Instagram says link in bio; hashtags under `## First comment`.
 
 ## The card
-`card` template, light theme. Logo top center; eyebrow "Modern medicine. Old fashioned doctors."; headline "New patients / welcome."; moss rule; sub "907 25th Dr East, Ellenton / Monday to Friday, 9:00 AM to 5:00 PM"; amber "Call 941 417 7386"; familypracticedirect.com at the foot. No photo, no person.
+`card` template, light theme. Logo top center; eyebrow "Modern medicine. Old fashioned doctors."; headline "New patients / welcome."; moss rule; sub "907 25th Dr East, Ellenton / Mon to Fri 9 to 5, Sat 9 to 2"; amber "Call 941 417 7386"; familypracticedirect.com at the foot. No photo, no person.
 
 ## Sources and truth
-- Tagline, address, landmarks, hours, Saturday note, phone, portal link: `D:\Ellenton Family Practice Rebuild\src\data\site.ts` and the live https://familypracticedirect.com/contact.
+- Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
+- Tagline, address, landmarks, weekday hours, phone, portal link: `D:\Ellenton Family Practice Rebuild\src\data\site.ts` and the live https://familypracticedirect.com/contact.
 - Insurance accepted, uninsured seen, DPC memberships: the build brief's allowed facts and the plan ("Three ways to be seen").
 - Never said: same-day for anyone, prices, the door sign's number, the chiropractor.
 

@@ -5,22 +5,23 @@ Pillar: how to book (week 1: who, where and how). The plan is `plans/2026-10-03-
 Approved: yes (Alex in chat, 2026-10-02: build the whole plan)
 
 ## What the viewer gets
-When the office is open, in one frame: Monday to Friday, 9:00 AM to 5:00 PM, with Saturday appointments on request for established patients. One ask: new patients call 941 417 7386.
+When the office is open, in one frame: Monday to Friday, 9:00 AM to 5:00 PM, and Saturday, 9:00 AM to 2:00 PM. One ask: new patients call 941 417 7386.
 
 ## Hook
-"Our hours: Monday to Friday, 9:00 AM to 5:00 PM." Caption line 1; the card leads with the hours themselves under the eyebrow "Office hours".
+"Our hours: Monday to Friday, 9:00 AM to 5:00 PM. Saturday, 9:00 AM to 2:00 PM." Caption line 1; the card leads with the hours themselves under the eyebrow "Office hours".
 
 ## Call to action
 New patients: call 941 417 7386. Facebook line 2 and the closing line carry `https://familypracticedirect.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-05-2`. Instagram says link in bio; hashtags under `## First comment`.
 
 ## The card
-`card` template, light theme. Logo top center; eyebrow "Office hours"; headline "Monday to Friday, 9:00 AM to 5:00 PM" on two lines; moss rule; sub "Saturday appointments on request for established patients."; the amber "Call 941 417 7386" button; familypracticedirect.com at the foot.
+`card` template, light theme. Logo top center; eyebrow "Office hours"; headline "Monday to Friday, 9:00 AM to 5:00 PM" on two lines; moss rule; sub "Saturday, 9:00 AM to 2:00 PM."; the amber "Call 941 417 7386" button; familypracticedirect.com at the foot.
 
 ## Sources and truth
-- Hours and the Saturday note: `src/data/site.ts` (`hoursDisplay`, `hoursNote`) and the live contact page https://familypracticedirect.com/contact/.
+- Weekday hours: `src/data/site.ts` (`hoursDisplay`) and the live contact page https://familypracticedirect.com/contact/.
+- Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
 - Address and Highway 301: `src/data/site.ts` (`address`, `directions`).
 - Phone 941 417 7386: `src/data/site.ts` (`phone.display`).
-- Never said: Saturday as regular opening hours, "same-day", the door sign's number.
+- Never said: "same-day", the door sign's number.
 
 ## AI
 None. No AI voice or visuals. No video, so no music.

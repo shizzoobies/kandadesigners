@@ -19,13 +19,13 @@ Call the office first; New patients call 941 417 7386. Facebook line 2 and the c
 2. List, sand: "What a sick visit covers": Colds and the flu; Infections; Minor injuries.
 3. Photo, light: the roadside sign (`hero-front-sign.png`, position 8% 50%): "Sick visits, right here on Highway 301" / "907 25th Dr East, Ellenton, FL 34222".
 4. List, deep moss: "Call 911 for these": Severe chest pain or pressure; Trouble breathing; Suddenly unable to speak, see, walk or move; Heavy bleeding.
-5. Closing, sand: "Sick today? Call the office first." / "Monday to Friday, 9:00 AM to 5:00 PM." / amber "Call 941 417 7386".
+5. Closing, sand: "Sick today? Call the office first." / "Monday to Friday, 9:00 AM to 5:00 PM." / "Saturday, 9:00 AM to 2:00 PM." / amber "Call 941 417 7386".
 
 ## Sources and truth
 - "Acute illness and injury care": `D:\Ellenton Family Practice Rebuild\src\data\services.ts` and the live /family-medicine page (checked 2026-10-02).
 - "Colds, flu, infections, minor injuries": the approved plan's slot text for Mon Oct 12.
 - The 911 list, general information only, from MedlinePlus (U.S. National Library of Medicine), "When to use the emergency room - adult", https://medlineplus.gov/ency/patientinstructions/000593.htm (reviewed 9/4/2024; read 2026-10-02): "Severe chest pain or pressure", "Trouble breathing", "Suddenly not able to speak, see, walk, or move", "Heavy bleeding". Worded on the slide as "Suddenly unable to speak, see, walk or move".
-- Address, Highway 301, hours, phone: `src/data/site.ts` and the live site.
+- Address, Highway 301, weekday hours, phone: `src/data/site.ts` and the live site. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
 - Photo: `D:\Ellenton Family Practice Rebuild\src\assets\images\hero-front-sign.png`, the sign named in the build brief (neighbors' panels already blurred; no person in frame). `reference\photos-allowlist.json` existed when this was built but listed no allowed clinic photos yet ("complete": false), so the sign is the only photo used.
 - Never said: same-day for anyone, wait times, walk-ins, outcomes, drug names, prices, a full emergency list (four signs only, with the disclaimer).
 

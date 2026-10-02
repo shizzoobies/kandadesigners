@@ -17,7 +17,7 @@ New patients call 941 417 7386. Facebook line 2 and the closing line carry `http
 Shared `card.html`, light (shell) ground. Logo top center; eyebrow "Where to find us"; headline "907 25th Dr East, Ellenton, FL 34222" in Lora; moss rule; "On Highway 301, about two miles from the Ellenton Outlet Mall and I 75."; the amber Call 941 417 7386 button; familypracticedirect.com at the foot.
 
 ## Sources and truth
-- Address, Highway 301, the two-mile landmarks (Palmetto, the Ellenton Outlet Mall, I 75), hours, phone: `src/data/site.ts` (`address`, `directions`, `hoursDisplay`, `phone`), also on the live contact page.
+- Address, Highway 301, the two-mile landmarks (Palmetto, the Ellenton Outlet Mall, I 75), weekday hours, phone: `src/data/site.ts` (`address`, `directions`, `hoursDisplay`, `phone`), also on the live contact page. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
 - Never said: the door sign's number, any price, the chiropractor, "same-day".
 
 ## AI

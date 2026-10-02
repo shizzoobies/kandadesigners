@@ -73,7 +73,8 @@ brief's Sources section; otherwise none. Guidance stays "talk with your provider
 Tagline "Modern medicine. Old fashioned doctors." and "Healthcare the way it used to be."
 907 25th Dr East, Ellenton, FL 34222; on Highway 301, about two miles from Palmetto and about
 two miles from the Ellenton Outlet Mall and I 75. Phone 941 417 7386. Hours Monday to Friday
-9:00 AM to 5:00 PM; Saturday appointments on request for established patients. Patient portal
+9:00 AM to 5:00 PM, and Saturday 9:00 AM to 2:00 PM (Alex's change request, 2026-10-02; the
+old "Saturday on request for established patients" line is retired). Patient portal
 (link in captions only: https://13889.portal.athenahealth.com/). Accepts insurance; sees
 uninsured patients; offers Direct Primary Care memberships (one flat monthly fee, longer visits,
 same or next day access for members, call or text your provider, month to month, no contract).

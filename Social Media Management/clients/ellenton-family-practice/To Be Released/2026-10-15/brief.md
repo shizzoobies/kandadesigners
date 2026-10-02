@@ -17,13 +17,13 @@ Call 941 417 7386 (the amber button on the last slide and the caption close). Fa
 1. Hook, cream: eyebrow "Pediatric visits"; "Kids are seen here too."; "Children see the same practice as their parents."; Swipe.
 2. List, sand: "What we see children for": well child checkups; sick visits; sports and school physicals.
 3. Photo, cream: the roadside sign (`hero-front-sign.png`, neighbors' panels already blurred, no person, no door number); "Our sign on Highway 301"; "One stop for the whole family."
-4. List, deep green: "One practice for the whole family": insurance accepted, uninsured patients seen; Monday to Friday, 9:00 AM to 5:00 PM; Saturday appointments on request for established patients.
+4. List, deep green: "One practice for the whole family": insurance accepted, uninsured patients seen; Monday to Friday, 9:00 AM to 5:00 PM; Saturday, 9:00 AM to 2:00 PM.
 5. Closing, sand: "Book for the whole family."; "907 25th Dr East, Ellenton"; amber "Call 941 417 7386".
 
 ## Sources and truth
 - "Everyday primary care for adults and children", "Pediatric and well child visits", "Acute illness and injury care", "Sports and school physicals", "Care for the whole household": `D:\Ellenton Family Practice Rebuild\src\data\services.ts` and the live https://familypracticedirect.com/family-medicine.
 - "Children seen at the same practice as their parents", "checkups, sick visits, school forms", "one stop for the whole family": the plan, Thu Oct 15. "Bring the school's form": the plan, Sat Oct 10.
-- Hours, Saturday note, address, phone: `src/data/site.ts` and the live /contact page. Insurance accepted, uninsured seen, DPC memberships: the build brief's allowed facts.
+- Weekday hours, address, phone: `src/data/site.ts` and the live /contact page. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner). Insurance accepted, uninsured seen, DPC memberships: the build brief's allowed facts.
 - Left out as not stated anywhere: an age range for children, pediatric vaccines specifically, newborn care, same-day visits.
 - Photo: the sign only. The clinic photo allowlist (`reference/photos-allowlist.json`) had not appeared after the 25-minute wait, so the photo slide uses the sign, per the build brief.
 

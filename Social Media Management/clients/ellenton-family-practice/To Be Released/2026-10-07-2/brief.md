@@ -21,7 +21,7 @@ Existing patients: the patient portal (Facebook carries https://13889.portal.ath
 - "The fastest route for records and refills": `SITE/src/sections/Contact.astro` ("the portal is the fastest route for records and refills").
 - "Messages" (captions only): the plan's Wed Oct 7 card line ("Records, refills, messages").
 - Portal link at the top of every page: `SITE/src/components/UtilityBar.astro` and `SITE/src/pages/accessibility.astro`.
-- Hours: `SITE/src/data/site.ts` `hoursDisplay`. Phone: `site.ts` `phone.display`.
+- Weekday hours: `SITE/src/data/site.ts` `hoursDisplay`. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner). Phone: `site.ts` `phone.display`.
 - Never said: anything about portal features beyond records, refills and messages; same day promises; prices.
 
 ## AI

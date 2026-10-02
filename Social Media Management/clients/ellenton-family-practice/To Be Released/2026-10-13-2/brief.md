@@ -24,7 +24,7 @@ New patients: call 941 417 7386. Facebook line 2 and the closing line carry `htt
 ## Sources and truth
 - Women's health as a service, and physicals, preventive screenings and vaccinations: `D:\Ellenton Family Practice Rebuild\src\data\services.ts` ("Womens and mens health", "Annual physicals and wellness exams", "Preventive screenings and vaccinations"), shown on /family-medicine.
 - Insurance, uninsured patients, DPC memberships: the plan ("Three ways to be seen") and the brief's allowed facts.
-- Address and hours: `src/data/site.ts` (`address`, `hoursDisplay`). Phone: `site.ts` `phone.display` (941 417 7386).
+- Address and weekday hours: `src/data/site.ts` (`address`, `hoursDisplay`). Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner). Phone: `site.ts` `phone.display` (941 417 7386).
 - Never said: any specific women's health test or screening the practice performs, any statistic, any outcome, any drug name, any price.
 
 ## AI

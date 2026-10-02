@@ -175,6 +175,12 @@ already published on the site, no AI composites until the client signs them off.
    is a PA-C; review 1 also takes a swipe at other reviewers. Sun 10/4 evening became
    "Saturday appointments, by request" and Sat 10/10 evening became "Members can call or text
    their provider". Reviews 2, 3 and 5 run as planned. **Decided.**
+11. **Saturday hours** (Alex's desk note on `2026-10-03-2`, 2026-10-02 evening: "Also open on
+    Saturday 9am-2pm."): hours are now Monday to Friday 9:00 AM to 5:00 PM and Saturday 9:00
+    AM to 2:00 PM, applied across every post that states hours; "Saturday by request for
+    established patients" is retired, and the Sun 10/4 card became "Open Saturdays, 9 to 2".
+    The live site's contact page still says Saturday by request and needs the same change
+    (site repo, Alex deploys). **Decided.**
 10. **Clinic photos:** all 92 in the set have a person in them (a staff shoot, plus frames that
     almost certainly show real patients). None used. With signed staff releases, the provider
     portraits could replace the typographic and headshot cards; until then, the sign is the

@@ -19,13 +19,13 @@ Shared `slide.html`, unchanged; no two neighbors share a layout or a ground.
 2. List, sand: "What steady care looks like": Regular visits. A plan you understand. A provider who knows your history.
 3. Photo, cream: the practice's roadside sign (`hero-front-sign.png`, framed on the sign); "Chronic disease management, close to home"; "907 25th Dr East, Ellenton, on Highway 301."
 4. List, deep green: "What to bring to your visit": Your ID and insurance card. A list of your medications. Your questions, written down.
-5. Closing, cream: "Start with a call"; Monday to Friday, 9:00 AM to 5:00 PM; the amber Call 941 417 7386 button.
+5. Closing, cream: "Start with a call"; Monday to Friday, 9:00 AM to 5:00 PM; Saturday, 9:00 AM to 2:00 PM; the amber Call 941 417 7386 button.
 
 ## Sources and truth
 - Chronic condition management for diabetes, blood pressure and cholesterol: `D:\Ellenton Family Practice Rebuild\src\data\services.ts` ("Chronic condition management (diabetes, blood pressure, thyroid, cholesterol)"), shown on /family-medicine. "Regular visits, a plan you understand, a provider who knows your history": the plan, slot Wed Oct 14.
 - What to bring (ID, insurance card, medication list): the plan, slot Mon Oct 5.
 - Insurance, uninsured patients, DPC memberships: the plan and the build brief's allowed facts.
-- Address and Highway 301: `src/data/site.ts` (`address`, `directions`). Hours: `site.ts` `hoursDisplay`. Phone: `site.ts` `phone.display`.
+- Address and Highway 301: `src/data/site.ts` (`address`, `directions`). Weekday hours: `site.ts` `hoursDisplay`. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner). Phone: `site.ts` `phone.display`.
 - Photo: `D:\Ellenton Family Practice Rebuild\src\assets\images\hero-front-sign.png` (the real sign, neighbors' panels already blurred, no person in frame, no phone number on it). The clinic photo allowlist was not yet available when this was built, so the sign is the only photo used.
 - Never said: any drug or drug class, any target number or reading, any outcome, any price.
 

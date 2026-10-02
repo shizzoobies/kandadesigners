@@ -19,14 +19,14 @@ New patients: call 941 417 7386 (the button on slide 5). Facebook line 2 and the
 2. List (sand): "We accept insurance." Physicals, sick visits and chronic care; bring your insurance card and a photo ID; call to ask how your plan works here.
 3. Photo: the roadside sign (`SITE/src/assets/images/hero-front-sign.png`, neighbors' panels already blurred, nobody in frame), "No insurance? You are still seen." and "Call and we will explain how it works."
 4. List (dark): "Or a membership, if it suits you." One flat monthly fee; longer visits; same or next day access for members; month to month, no contract. No prices.
-5. Closing (sand): "Whichever fits, start with a call.", Monday to Friday, 9:00 AM to 5:00 PM, the amber Call 941 417 7386 button.
+5. Closing (sand): "Whichever fits, start with a call.", Monday to Friday, 9:00 AM to 5:00 PM, Saturday, 9:00 AM to 2:00 PM, the amber Call 941 417 7386 button.
 
 ## Sources and truth
 - Insurance accepted, uninsured patients seen, memberships offered, "call us and we will explain": `SITE/src/data/membership.ts` (FAQ "Do you accept insurance?") and `SITE/src/pages/index.astro` ("We also accept insurance and see patients who have none").
 - Membership points: `SITE/src/data/dpc.ts` (one transparent monthly fee, more time, same or next day access) and `membership.ts` (month to month, no contract); same or next day is said for members only.
 - Services line: the build brief's allowed services list (physicals, acute care, chronic disease management).
 - What to bring (insurance card, photo ID): the plan's Mon Oct 5 carousel ("ID, insurance card, medication list").
-- Hours and phone: `SITE/src/data/site.ts`.
+- Weekday hours and phone: `SITE/src/data/site.ts`. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
 - Left out as unsure: "self-pay" (the plan's word; the site never uses it, so the slide says "call and we will explain"); membership prices; any claim that every insurance plan is accepted.
 
 ## AI

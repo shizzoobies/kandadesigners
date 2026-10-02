@@ -19,7 +19,7 @@ Call 941 417 7386 (the amber button on the card and the caption close). Facebook
 ## Sources and truth
 - Services (men's health, annual physicals, preventive screenings and vaccinations, chronic condition management naming blood pressure and cholesterol): `D:\Ellenton Family Practice Rebuild\src\data\services.ts` and the live https://familypracticedirect.com/family-medicine ("Womens and mens health", "Annual physicals and wellness exams").
 - Insurance accepted, uninsured seen, DPC memberships: the build brief's allowed facts and the plan ("Three ways to be seen").
-- Phone 941 417 7386 and hours Monday to Friday 9:00 AM to 5:00 PM: `src/data/site.ts` and the live /contact page.
+- Phone 941 417 7386 and hours Monday to Friday 9:00 AM to 5:00 PM: `src/data/site.ts` and the live /contact page. Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
 - "Easy to put off" is a soft framing of the plan's "the annual physical men skip"; no statistic, no outcome, no claim about what a physical finds.
 - Never said: outcomes, "best", drug names, prices, same-day, the door sign's number.
 

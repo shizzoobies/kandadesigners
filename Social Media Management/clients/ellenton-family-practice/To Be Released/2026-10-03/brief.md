@@ -18,7 +18,7 @@ Five layouts in a row, none repeated next to each other; grounds alternate shell
 1. Hook (shell): eyebrow "Ellenton Family Practice Direct", "Modern medicine. Old fashioned doctors." with the second sentence in moss italic, "Healthcare the way it used to be.", Swipe.
 2. List (sand): "Family medicine for every age": adults and children; physicals and sick visits; chronic disease management; one stop for the whole family.
 3. Photo: the roadside sign (`hero-front-sign.png`, neighbors' panels already blurred, no person in frame, no phone number visible), "907 25th Dr East, on Highway 301", "About two miles from the Ellenton Outlet Mall and I 75."
-4. List (deep moss): "When we are open": Monday to Friday, 9:00 AM to 5:00 PM; Saturday appointments on request for established patients.
+4. List (deep moss): "When we are open": Monday to Friday, 9:00 AM to 5:00 PM; Saturday, 9:00 AM to 2:00 PM.
 5. Closing (sand): "New patients, call to book.", "Insurance accepted. Uninsured patients welcome.", the amber Call 941 417 7386 button.
 
 The plan lists the sign first; slide 1 must be the hook, so the sign carries the address on slide 3.
@@ -26,7 +26,7 @@ The plan lists the sign first; slide 1 must be the hook, so the sign carries the
 ## Sources and truth
 - Tagline and support line: `src/data/site.ts` (`tagline`, `taglineSupport`).
 - Adults and children: `src/data/services.ts` (Family Medicine intro). Physicals, sick visits (acute care), chronic disease management, preventive screenings and vaccinations: `src/data/services.ts` and the live site's services list. "One stop for the whole family": the plan.
-- Address, Highway 301, the two-mile landmarks, hours, Saturday note, phone: `src/data/site.ts` (`address`, `directions`, `hoursDisplay`, `hoursNote`, `phone`).
+- Address, Highway 301, the two-mile landmarks, weekday hours, phone: `src/data/site.ts` (`address`, `directions`, `hoursDisplay`, `phone`). Saturday hours, 9:00 AM to 2:00 PM: Alex's change request of 2026-10-02 (owner).
 - Insurance, uninsured, memberships: `src/data/membership.ts` (FAQ "Do you accept insurance?").
 - Never said: prices, outcomes, "best", "same-day", the door sign's number, the chiropractor, any patient.
 
