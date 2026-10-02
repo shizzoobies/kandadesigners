@@ -106,6 +106,62 @@ describe('POST check', () => {
   });
 });
 
+describe('client writes', () => {
+  const HANNAH = { id: 2, name: 'Hannah', email: 'hannah@example.com', role: 'client', grants: [{ site_id: 1, slug: 'ka-performance', level: 'approve' }] };
+  const VIEWING = { ...HANNAH, grants: [{ site_id: 1, slug: 'ka-performance', level: 'view' }] };
+  const ELSEWHERE = { ...HANNAH, grants: [{ site_id: 2, slug: 'other', level: 'approve' }] };
+
+  beforeEach(async () => {
+    await q.createSite(db, { slug: 'other', name: 'Other', live_url: 'https://o.test', hosting: 'pages' }, 't');
+    await db.prepare("INSERT INTO people (name, email, role, created_at) VALUES ('Hannah', 'hannah@example.com', 'client', 't')").run();
+  });
+
+  it('lets an approve client decide, records who, and names them', async () => {
+    const r = await decide({ item_id: '2026-10-06', decision: 'changes', note: 'Brighter' }, { user: HANNAH });
+    expect(r.status).toBe(200);
+    expect(r.body).toMatchObject({ decision: 'changes', decided_by: 2, decided_by_name: 'Hannah' });
+    expect((await decide({ item_id: 'q-music', decision: 'answered', answer: 'B' }, { user: HANNAH })).status).toBe(200);
+    expect((await decide({ item_id: '2026-10-06', decision: 'waiting' }, { user: HANNAH })).status).toBe(200);
+  });
+
+  it('lets an approve client tick a Story, recording who', async () => {
+    const r = await check({ item_id: '2026-10-06-story', posted: true }, { user: HANNAH });
+    expect(r.status).toBe(200);
+    expect(r.body).toMatchObject({ posted: true, checked_by: 2 });
+  });
+
+  it('refuses a view client, and writes nothing', async () => {
+    expect((await decide({ item_id: '2026-10-06', decision: 'approved' }, { user: VIEWING })).status).toBe(403);
+    expect((await check({ item_id: '2026-10-06-story', posted: true }, { user: VIEWING })).status).toBe(403);
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_decisions').first('n')).toBe(0);
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_story_checks').first('n')).toBe(0);
+  });
+
+  it('refuses a client whose approve grant is on another site', async () => {
+    expect((await decide({ item_id: '2026-10-06', decision: 'approved' }, { user: ELSEWHERE })).status).toBe(403);
+    expect((await check({ item_id: '2026-10-06-story', posted: true }, { user: ELSEWHERE })).status).toBe(403);
+  });
+
+  it('strips Metricool ids and Alex\'s repost comment from the state a client is sent, and keeps them for the owner', async () => {
+    await db.prepare("UPDATE desk_items SET payload = ? WHERE item_id = '2026-10-06'")
+      .bind(JSON.stringify({ id: '2026-10-06', scheduled: { facebook: { id: 'm-123' } }, repost: 'My take', hook: 'H' })).run();
+    const owner = await handleState({ db, bucket: null, slug: 'ka-performance', nowMs: NOW, memo: new Map(), user: OWNER });
+    expect(owner.body.items.find((i) => i.item_id === '2026-10-06').payload)
+      .toMatchObject({ scheduled: { facebook: { id: 'm-123' } }, repost: 'My take' });
+    const client = await handleState({ db, bucket: null, slug: 'ka-performance', nowMs: NOW, memo: new Map(), user: HANNAH });
+    const p = client.body.items.find((i) => i.item_id === '2026-10-06').payload;
+    expect(p).toEqual({ id: '2026-10-06', hook: 'H' });
+    expect(JSON.stringify(client.body)).not.toMatch(/m-123/);
+  });
+
+  it('shows the owner\'s name on the owner\'s decisions too', async () => {
+    const r = await decide({ item_id: '2026-10-06', decision: 'approved' });
+    expect(r.body.decided_by_name).toBe('Alex');
+    const s = await handleState({ db, bucket: null, slug: 'ka-performance', nowMs: NOW, memo: new Map() });
+    expect(s.body.decisions[0]).toMatchObject({ decided_by: 1, decided_by_name: 'Alex' });
+  });
+});
+
 describe('GET state', () => {
   it('returns items, decisions, checks and meta', async () => {
     await decide({ item_id: '2026-10-06', decision: 'approved' });

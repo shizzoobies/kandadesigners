@@ -5,14 +5,24 @@
 import Shell from '../../../../layouts/Shell.astro';
 import { getSiteBySlug } from '../../../../lib/db.js';
 import { getDeskState, maybePurge } from '../../../../lib/desk.js';
+import { canWriteDesk } from '../../../../lib/gate.js';
+import { deskCopy } from '../../../../lib/desk-copy.js';
 
 const env = Astro.locals.runtime.env;
 const site = await getSiteBySlug(env.DB, Astro.params.slug);
 if (!site) return new Response('Not found', { status: 404 });
 
+const user = Astro.locals.user;
+const owner = user?.role === 'owner';
 await maybePurge({ db: env.DB, bucket: env.DESK_MEDIA, site });
-const state = await getDeskState(env.DB, site.id);
-const canWrite = Astro.locals.user?.role === 'owner';
+// Anyone but an owner gets the state without K&A's internal fields.
+const state = await getDeskState(env.DB, site.id, { owner });
+// The owner, or a client with approve access here; a view-only client gets
+// the read-only desk. The middleware has already kept everyone else out.
+const canWrite = canWriteDesk(user, site.id);
+const client = !owner;
+const copy = deskCopy({ client, canWrite });
+const me = user?.name || user?.email || '';
 // The client script keeps these in step after each refresh; rendering them here
 // means a client's desk never flashes a Stories tab or an empty rail on load.
 // Stories are K&A's own hand-posted routine: a site with none, and no paused
@@ -20,9 +30,9 @@ const canWrite = Astro.locals.user?.role === 'owner';
 const hasStories = state.items.some((i) => i.list === 'stories') || !!state.meta?.stories_paused;
 const empty = state.items.length === 0;
 // "<" is escaped so no text in a caption can close the script element early.
-const boot = JSON.stringify({ slug: site.slug, canWrite, state }).replace(/</g, '\\u003c');
+const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).replace(/</g, '\\u003c');
 ---
-<Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''}>
+<Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''} site={site}>
   <div class="desk" id="desk">
     <header class="d-head">
       <div class="d-brand">
@@ -39,9 +49,7 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, state }).replace(/</g, 
         <div><b id="sMissed">0</b><span class="level"><span class="dot amber"></span>not ticked</span></div>
         <div><b id="sDone">0</b><span class="level"><span class="dot green"></span>posted</span></div>
       </div>
-      <p class="conn" id="conn">{canWrite
-        ? `Decisions${hasStories ? ' and Story ticks' : ''} save as you make them. Claude reads them from here.`
-        : `Read only. Only the owner can approve posts${hasStories ? ' or tick Stories' : ''}.`}</p>
+      <p class="conn" id="conn">{copy.conn(hasStories)}</p>
     </header>
 
     <div class="d-views" role="tablist" aria-label="Desk sections">

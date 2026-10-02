@@ -3,6 +3,7 @@
 // the decisions (see docs/superpowers/specs/2026-09-26-post-desk-design.md).
 // Like db.js, the binding is always the first argument so tests run real SQL.
 import { todayEastern } from './when.js';
+import { canWriteDesk } from './gate.js';
 
 export const DECISIONS = ['waiting', 'approved', 'changes', 'answered'];
 export const NOTE_MAX = 2000;
@@ -42,8 +43,12 @@ export async function listDeskItems(db, siteId) {
   return rows(db.prepare('SELECT * FROM desk_items WHERE site_id = ? ORDER BY rowid').bind(siteId));
 }
 
+// Each decision carries decided_by_name, so the desk can say who acted
+// ("Approved by Hannah"). Names only: no email ever goes to the page.
+const DECISION_SELECT = 'SELECT d.*, p.name AS decided_by_name FROM desk_decisions d LEFT JOIN people p ON p.id = d.decided_by';
+
 export async function listDeskDecisions(db, siteId) {
-  return (await rows(db.prepare('SELECT * FROM desk_decisions WHERE site_id = ? ORDER BY item_id').bind(siteId))).map(decodeDecision);
+  return (await rows(db.prepare(`${DECISION_SELECT} WHERE d.site_id = ? ORDER BY d.item_id`).bind(siteId))).map(decodeDecision);
 }
 
 export async function listDeskChecks(db, siteId) {
@@ -55,11 +60,21 @@ export async function getDeskMeta(db, siteId) {
   return m && { ...m, stories_paused: m.stories_paused === 1 };
 }
 
-export async function getDeskState(db, siteId) {
+// Fields of a pushed item only K&A needs. They never leave the server for
+// anyone but an owner: `scheduled` holds Metricool post ids, and `repost` is
+// Alex's own comment for reposting from his personal profile.
+const OWNER_ONLY_FIELDS = ['scheduled', 'repost'];
+
+export async function getDeskState(db, siteId, { owner = false } = {}) {
   const [items, decisions, checks, meta] = await Promise.all([
     listDeskItems(db, siteId), listDeskDecisions(db, siteId), listDeskChecks(db, siteId), getDeskMeta(db, siteId),
   ]);
-  return { items: items.map((i) => ({ ...i, payload: parseJson(i.payload, {}) })), decisions, checks, meta };
+  const payloadOf = (i) => {
+    const p = parseJson(i.payload, {});
+    if (!owner && p && typeof p === 'object') for (const f of OWNER_ONLY_FIELDS) delete p[f];
+    return p;
+  };
+  return { items: items.map((i) => ({ ...i, payload: payloadOf(i) })), decisions, checks, meta };
 }
 
 // What waits on Alex, per site, in one query for the whole sites list: approval
@@ -84,7 +99,7 @@ export async function findDeskItem(db, siteId, list, itemId) {
 }
 
 export async function getDecision(db, siteId, itemId) {
-  return decodeDecision(await db.prepare('SELECT * FROM desk_decisions WHERE site_id = ? AND item_id = ?').bind(siteId, itemId).first());
+  return decodeDecision(await db.prepare(`${DECISION_SELECT} WHERE d.site_id = ? AND d.item_id = ?`).bind(siteId, itemId).first());
 }
 
 // Any change, Undo included, rewrites the row and clears pulled_at, so Claude's
@@ -113,10 +128,11 @@ export async function saveCheck(db, siteId, itemId, posted, personId, nowIso) {
 
 const refuse = (status, error) => ({ ok: false, status, body: { error } });
 
-// Owner only, JSON only, and same origin: Astro's checkOrigin covers form
-// posts, not JSON, so the Origin check is done here.
-export async function readWrite({ request, user }) {
-  if (user?.role !== 'owner') return refuse(403, 'Only the owner can make changes here.');
+// The owner, or a client with approve access to this site (lib/gate.js); JSON
+// only; and same origin: Astro's checkOrigin covers form posts, not JSON, so
+// the Origin check is done here.
+export async function readWrite({ request, user, siteId }) {
+  if (!canWriteDesk(user, siteId)) return refuse(403, 'Your access to this desk is view only.');
   const type = (request.headers.get('Content-Type') ?? '').split(';')[0].trim().toLowerCase();
   if (type !== 'application/json') return refuse(415, 'Send the change as JSON.');
   if (request.headers.get('Origin') !== new URL(request.url).origin) return refuse(403, 'That request came from another site.');
@@ -163,7 +179,7 @@ export function parseDecideBody(body, item, existing = null) {
     answers[k] = a.value;
   }
 
-  if (decision === 'changes' && !note.value) return bad('Add a note so Claude knows what to change.');
+  if (decision === 'changes' && !note.value) return bad('Add a note saying what should change.');
   if (decision === 'answered' && !answer.value) return bad('Type an answer first.');
   return { ok: true, values: { item_id: item.item_id, decision, note: note.value, answers, answer: answer.value } };
 }

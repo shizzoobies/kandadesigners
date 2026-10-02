@@ -1,0 +1,40 @@
+---
+// The in-page confirmation step for removing a person (no browser dialogs):
+// GET asks, POST removes, then back to People. Owner only.
+import Shell from '../../../layouts/Shell.astro';
+import { getPersonById } from '../../../lib/db.js';
+import { removePerson } from '../../../lib/people.js';
+import { syncAccessGroup } from '../../../lib/access-sync.js';
+
+const env = Astro.locals.runtime.env;
+const DB = env.DB;
+const user = Astro.locals.user;
+if (user?.role !== 'owner') return new Response('Not authorized.', { status: 403 });
+const raw = Astro.params.id ?? '';
+if (!/^\d{1,9}$/.test(raw)) return new Response('Not found', { status: 404 });
+const person = await getPersonById(DB, Number(raw));
+if (!person) return new Response('Not found', { status: 404 });
+
+// Asking yourself the question would only end in a refusal, so say it now.
+let error = person.id === user.id ? 'You cannot remove yourself.' : '';
+if (!error && Astro.request.method === 'POST') {
+  const r = await removePerson({ db: DB, me: user, id: person.id, sync: () => syncAccessGroup({ db: DB, env }) });
+  if (r.ok) return Astro.redirect('/people?removed=1', 303);
+  if (r.status) return new Response(r.status === 404 ? 'Not found' : 'Not authorized.', { status: r.status });
+  error = r.error;
+}
+---
+<Shell title={`Remove ${person.name}`} active="people">
+  <p><a href={`/people/${person.id}`}>Back to {person.name}</a></p>
+  <h1>Remove {person.name}?</h1>
+  {error && <div class="alert" role="alert">{error}</div>}
+  {person.id !== user.id && (
+    <section class="section danger">
+      <p>{person.name} ({person.email}) will no longer be able to open anything in the admin. This cannot be undone here; you can add them again later.</p>
+      <form method="post" action={`/people/${person.id}/remove`} class="row">
+        <button type="submit" class="btn">Yes, remove {person.name}</button>
+        <a class="btn quiet" href={`/people/${person.id}`}>Keep {person.name}</a>
+      </form>
+    </section>
+  )}
+</Shell>

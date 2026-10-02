@@ -1,42 +1,94 @@
 ---
 import Shell from '../layouts/Shell.astro';
 import SiteCard from '../components/SiteCard.astro';
+import SiteLogo from '../components/SiteLogo.astro';
 import { listSites, latestChecksForAll, openWorkCounts } from '../lib/db.js';
 import { waitingCounts } from '../lib/desk.js';
 import { buildCards, filterCards } from '../lib/view.js';
 import { PROJECT_STATUS, STATUS_LABEL } from '../lib/enums.js';
 
 const DB = Astro.locals.runtime.env.DB;
-const [sites, checks, counts, waiting] = await Promise.all([listSites(DB), latestChecksForAll(DB, 12), openWorkCounts(DB), waitingCounts(DB)]);
-const show = Astro.url.searchParams.get('show') ?? 'all';
-const all = buildCards(sites, checks, counts, Date.now());
-const cards = filterCards(all, show);
+const user = Astro.locals.user;
 
-const filters = [
-  { key: 'all', label: `All (${all.length})` },
-  { key: 'problems', label: `Problems (${all.filter((c) => c.level !== 'green').length})` },
-  ...PROJECT_STATUS.map((s) => ({ key: s, label: STATUS_LABEL[s] })),
-];
+// A client never sees the sites list: one desk opens straight away, several
+// are listed, and none gets a plain note that access is not set up yet.
+const client = user?.role === 'client';
+const grants = client ? user.grants ?? [] : [];
+if (client && grants.length === 1) return Astro.redirect(`/sites/${grants[0].slug}/social`, 302);
+
+let sites = [];
+let all = [];
+let cards = [];
+let filters = [];
+let show = 'all';
+let waiting = new Map();
+if (client) {
+  if (grants.length) waiting = await waitingCounts(DB);
+} else {
+  let checks;
+  let counts;
+  [sites, checks, counts, waiting] = await Promise.all([listSites(DB), latestChecksForAll(DB, 12), openWorkCounts(DB), waitingCounts(DB)]);
+  show = Astro.url.searchParams.get('show') ?? 'all';
+  all = buildCards(sites, checks, counts, Date.now());
+  cards = filterCards(all, show);
+  filters = [
+    { key: 'all', label: `All (${all.length})` },
+    { key: 'problems', label: `Problems (${all.filter((c) => c.level !== 'green').length})` },
+    ...PROJECT_STATUS.map((s) => ({ key: s, label: STATUS_LABEL[s] })),
+  ];
+}
+const waitingFor = (siteId) => waiting.get(siteId) ?? 0;
 ---
-<Shell title="Sites" active="sites">
-  <h1>Sites</h1>
-  {sites.length === 0 ? (
-    <div class="empty">
-      <p>No sites yet.</p>
-      <a class="btn" href="/sites/new">Add a site</a>
-    </div>
+{client ? (
+  grants.length === 0 ? (
+    <Shell title="Not set up yet">
+      <h1>Your access is not set up yet</h1>
+      <div class="done-note">
+        <p>You are signed in, but no Post Desk has been shared with you so far.</p>
+        <p>K &amp; A Performance will let you know when yours is ready. Then this page opens it.</p>
+      </div>
+    </Shell>
   ) : (
-    <>
-      <nav aria-label="Filter sites">
-        <ul class="filters">
-          {filters.map((f) => (
-            <li><a href={f.key === 'all' ? '/' : `/?show=${f.key}`} aria-current={show === f.key ? 'true' : undefined}>{f.label}</a></li>
-          ))}
-        </ul>
-      </nav>
-      {cards.length === 0
-        ? <p>No sites match this filter.</p>
-        : <ul class="grid">{cards.map((card) => <SiteCard card={card} waiting={waiting.get(card.site.id) ?? 0} />)}</ul>}
-    </>
-  )}
-</Shell>
+    <Shell title="Your Post Desks" active="desks">
+      <h1>Your Post Desks</h1>
+      <ul class="grid">
+        {grants.map((g) => (
+          <li class="card">
+            <div class="card-head">
+              <SiteLogo site={g} />
+              <h2><a href={`/sites/${g.slug}/social`}>{g.name}<span class="sr"> Post Desk</span></a></h2>
+            </div>
+            <p class="note">{g.level === 'approve' ? 'You can approve posts and ask for changes.' : 'View only.'}</p>
+            <p class="level">
+              {waitingFor(g.site_id) > 0 && <span class="dot amber"></span>}
+              {waitingFor(g.site_id) > 0 ? `${waitingFor(g.site_id)} waiting` : 'Nothing waiting'}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </Shell>
+  )
+) : (
+  <Shell title="Sites" active="sites">
+    <h1>Sites</h1>
+    {sites.length === 0 ? (
+      <div class="empty">
+        <p>No sites yet.</p>
+        <a class="btn" href="/sites/new">Add a site</a>
+      </div>
+    ) : (
+      <>
+        <nav aria-label="Filter sites">
+          <ul class="filters">
+            {filters.map((f) => (
+              <li><a href={f.key === 'all' ? '/' : `/?show=${f.key}`} aria-current={show === f.key ? 'true' : undefined}>{f.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+        {cards.length === 0
+          ? <p>No sites match this filter.</p>
+          : <ul class="grid">{cards.map((card) => <SiteCard card={card} waiting={waitingFor(card.site.id)} />)}</ul>}
+      </>
+    )}
+  </Shell>
+)}

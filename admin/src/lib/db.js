@@ -17,6 +17,89 @@ export async function listPeople(db) {
   return rows(db.prepare('SELECT id, name, email, role FROM people ORDER BY name COLLATE NOCASE'));
 }
 
+// The site form's maintainer choices: K&A's own people, never a client.
+export async function listOwners(db) {
+  return rows(db.prepare("SELECT id, name, email, role FROM people WHERE role = 'owner' ORDER BY name COLLATE NOCASE"));
+}
+
+export async function getPersonById(db, id) {
+  return db.prepare('SELECT id, name, email, role FROM people WHERE id = ?').bind(id).first();
+}
+
+export async function countOwners(db) {
+  return db.prepare("SELECT COUNT(*) AS n FROM people WHERE role = 'owner'").first('n');
+}
+
+export async function createPerson(db, v, nowIso) {
+  const res = await db.prepare('INSERT INTO people (name, email, role, created_at) VALUES (?, ?, ?, ?)')
+    .bind(v.name, v.email, v.role, nowIso).run();
+  return res.meta.last_row_id;
+}
+
+// One batch, so the person and their desk grants never disagree. Owners need
+// no grants, so an owner's are cleared; for a client, each site the form
+// listed is set or, at "none", removed. An unchanged grant keeps granted_at.
+export async function updatePerson(db, id, v, nowIso) {
+  const stmts = [db.prepare('UPDATE people SET name = ?, email = ?, role = ? WHERE id = ?').bind(v.name, v.email, v.role, id)];
+  if (v.role === 'owner') {
+    stmts.push(db.prepare('DELETE FROM desk_access WHERE person_id = ?').bind(id));
+  } else {
+    for (const g of v.grants ?? []) {
+      stmts.push(g.level === 'none'
+        ? db.prepare('DELETE FROM desk_access WHERE person_id = ? AND site_id = ?').bind(id, g.site_id)
+        : db.prepare(
+          `INSERT INTO desk_access (person_id, site_id, level, granted_at) VALUES (?, ?, ?, ?)
+           ON CONFLICT(person_id, site_id) DO UPDATE SET level = excluded.level,
+             granted_at = CASE WHEN desk_access.level = excluded.level THEN desk_access.granted_at ELSE excluded.granted_at END`,
+        ).bind(id, g.site_id, g.level, nowIso));
+    }
+  }
+  await db.batch(stmts);
+}
+
+// D1 enforces foreign keys, so the person's id comes off what they decided,
+// ticked or maintain before the row goes. The decisions themselves stay. Their
+// desk grants are deleted here too, not left to the ON DELETE CASCADE.
+export async function deletePerson(db, id) {
+  await db.batch([
+    db.prepare('DELETE FROM desk_access WHERE person_id = ?').bind(id),
+    db.prepare('UPDATE desk_decisions SET decided_by = NULL WHERE decided_by = ?').bind(id),
+    db.prepare('UPDATE desk_story_checks SET checked_by = NULL WHERE checked_by = ?').bind(id),
+    db.prepare('UPDATE sites SET maintainer_id = NULL WHERE maintainer_id = ?').bind(id),
+    db.prepare('DELETE FROM people WHERE id = ?').bind(id),
+  ]);
+}
+
+// desk access
+
+export async function listGrantsForPerson(db, personId) {
+  return rows(db.prepare(
+    `SELECT a.site_id, s.slug, s.name, a.level, s.logo_key, s.favicon_key FROM desk_access a
+     JOIN sites s ON s.id = a.site_id WHERE a.person_id = ? ORDER BY s.name COLLATE NOCASE`,
+  ).bind(personId));
+}
+
+export async function listAllGrants(db) {
+  return rows(db.prepare(
+    `SELECT a.person_id, a.site_id, s.slug, s.name, a.level FROM desk_access a
+     JOIN sites s ON s.id = a.site_id ORDER BY s.name COLLATE NOCASE`,
+  ));
+}
+
+// settings
+
+export async function getSettings(db) {
+  const list = await rows(db.prepare('SELECT key, value FROM settings'));
+  return Object.fromEntries(list.map((r) => [r.key, r.value]));
+}
+
+export async function setSettings(db, values, nowIso) {
+  const stmts = Object.entries(values).map(([k, v]) => db.prepare(
+    'INSERT INTO settings (key, value, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at',
+  ).bind(k, String(v), nowIso));
+  if (stmts.length) await db.batch(stmts);
+}
+
 // sites
 
 export const SITE_FIELDS = ['slug', 'name', 'live_url', 'repo', 'local_path', 'hosting', 'deploy_command', 'maintainer_id', 'domain'];

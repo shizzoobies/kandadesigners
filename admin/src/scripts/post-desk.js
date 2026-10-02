@@ -7,13 +7,14 @@ import { deskMediaUrl } from '../lib/desk-media-url.js';
 import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState } from '../lib/desk-nav.js';
 import { esc, linkify, fmtTime, kindLabel, NET, netsOf } from '../lib/desk-format.js';
 import { youtubePanel } from '../lib/desk-youtube.js';
+import { deskCopy } from '../lib/desk-copy.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
 const fmtAt = (iso) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
 const boot = JSON.parse($('#desk-boot').textContent);
-const { slug, canWrite } = boot;
+const { slug, canWrite, client, me } = boot;
 const base = `/sites/${slug}/social`;
 const desk = $('#desk');
 // Media entries and Stories carry src (the R2 key) and an optional v (version).
@@ -86,9 +87,12 @@ const status = (st, label) => `<span class="level"><span class="dot ${DOT[st]}">
 
 // Stories are K&A's hand-posted routine; a client's desk has none.
 const storiesOn = () => data.storyChecklist.length > 0 || data.storiesPaused;
-const connText = () => (canWrite
-  ? `Decisions${storiesOn() ? ' and Story ticks' : ''} save as you make them. Claude reads them from here.`
-  : `Read only. Only the owner can approve posts${storiesOn() ? ' or tick Stories' : ''}.`);
+// Alex's desk names Claude, the release folders and Metricool; a client's
+// names none of K&A's tools, folders or files (lib/desk-copy.js).
+const copy = deskCopy({ client, canWrite });
+const connText = () => copy.conn(storiesOn());
+// "Approved by Hannah": who made a decision, once there is one to name.
+const byWhom = (st, d) => (st !== 'waiting' && d?.by ? ` by ${d.by}` : '');
 
 // The server's rows back into the artifact's data.json shape.
 function applyState(s) {
@@ -100,7 +104,7 @@ function applyState(s) {
     storyChecklist: of('stories', () => true),
     storiesPaused: !!s.meta?.stories_paused,
   };
-  decisions = Object.fromEntries(s.decisions.map((d) => [d.item_id, { decision: d.decision, note: d.note, answers: d.answers || {}, answer: d.answer, at: d.decided_at }]));
+  decisions = Object.fromEntries(s.decisions.map((d) => [d.item_id, { decision: d.decision, note: d.note, answers: d.answers || {}, answer: d.answer, at: d.decided_at, by: d.decided_by_name || '' }]));
   confirmed = structuredClone(decisions);
   checks = Object.fromEntries(s.checks.map((c) => [c.item_id, { posted: c.posted, at: c.checked_at }]));
   buildItems();
@@ -172,7 +176,7 @@ function mediaBlock(it) {
   }
   if (imgs.length) return slidesBlock(it, imgs) + (it.kind === 'linkedin'
     ? `<p class="alt">Posts on LinkedIn as a swipeable document: people page through these slides in the feed. No video, no music.</p>` : '');
-  return `<div class="stage"><p class="stage-note">No media in this folder.</p></div>`;
+  return `<div class="stage"><p class="stage-note">${esc(copy.noMedia)}</p></div>`;
 }
 
 function slidesBlock(it, imgs) {
@@ -191,12 +195,13 @@ function actionBar(it) {
   const busy = pending.has(it.id) ? ' aria-disabled="true"' : '';
   const d = decisions[it.id] || {};
   const when = st !== 'waiting' && d.at ? `, ${fmtAt(d.at)}` : '';
+  const label = stateLabel[st] + byWhom(st, d) + when;
   if (!canWrite) {
-    return `<div class="d-bar"><span class="state">${status(st, stateLabel[st] + when)}</span>
+    return `<div class="d-bar"><span class="state">${status(st, label)}</span>
       ${st === 'changes' && d.note ? `<p class="d-readnote"><b>Change note:</b> ${esc(d.note)}</p>` : ''}</div>`;
   }
   return `<div class="d-bar" id="bar">
-    <span class="state">${status(st, stateLabel[st] + when)}</span>
+    <span class="state">${status(st, label)}</span>
     <button type="button" class="btn quiet" id="fix"${busy}>Request changes</button>
     <button type="button" class="btn${st === 'approved' ? ' quiet' : ''}" id="go"${busy}>${st === 'approved' ? 'Approved' : 'Approve'}</button>
     ${st !== 'waiting' ? `<button type="button" class="btn quiet" id="undo"${busy}>Undo</button>` : ''}
@@ -221,7 +226,7 @@ function drawDetail() {
   const el = $('#detail');
   if (!it && !items.length) {
     el.innerHTML = `<div class="done-note"><p><b>Nothing waiting on you.</b></p>
-      <p>New posts show up here after Claude builds them.${storyList().length ? ' The Stories you post by hand are under Stories.' : ''}</p></div>`;
+      <p>${esc(copy.emptyDetail(storyList().length > 0))}</p></div>`;
     return;
   }
   if (!it) { el.innerHTML = `<p class="d-muted">Pick a post on the left.</p>`; return; }
@@ -237,15 +242,16 @@ function drawDetail() {
   if (it.type === 'ask') {
     const d = decisions[it.id] || {};
     const answered = d.decision === 'answered';
+    const askState = status(answered ? 'approved' : 'waiting', answered ? `Answered${byWhom('approved', d)}` : 'Needs an answer');
     el.innerHTML = `${back}<div class="d-card">
       <div class="d-meta"><span class="caps">Needs from you</span></div>
       <h2 class="hook">${esc(it.title)}</h2>
       <p>${linkify(it.detail)}</p>
       ${canWrite ? `<label for="ask-answer" class="alt">Your answer</label>
       <textarea id="ask-answer" rows="4" maxlength="1000" placeholder="${esc(it.placeholder || '')}">${esc(d.answer || '')}</textarea>
-      <div class="d-bar"><span class="state">${status(answered ? 'approved' : 'waiting', answered ? 'Answered' : 'Needs an answer')}</span>
+      <div class="d-bar"><span class="state">${askState}</span>
         <button type="button" class="btn" id="saveAsk">Save answer</button></div>`
-      : `<div class="d-bar"><span class="state">${status(answered ? 'approved' : 'waiting', answered ? 'Answered' : 'Needs an answer')}</span>
+      : `<div class="d-bar"><span class="state">${askState}</span>
         ${d.answer ? `<p class="d-readnote">${esc(d.answer)}</p>` : ''}</div>`}</div>`;
     const save = $('#saveAsk');
     if (save) save.onclick = () => saveAsk(it.id, $('#ask-answer').value.trim());
@@ -260,7 +266,7 @@ function drawDetail() {
       <div class="d-body">${mediaBlock(it)}
         <div class="d-side">
           ${it.stickerText ? `<div><h3>Sticker text</h3><p class="flush">${esc(it.stickerText)}</p></div>` : ''}
-          <div><h3>Link sticker URL</h3><div class="cap" id="sticker">${esc(it.stickerUrl || 'See stories/README.md')}</div>
+          <div><h3>Link sticker URL</h3><div class="cap" id="sticker">${esc(it.stickerUrl || copy.stickerFallback)}</div>
           <p><button type="button" class="copy" id="copySticker">Copy URL</button></p></div>
           <p>Post the image as a Story, add a Link sticker over the dashed box, and paste this URL. The tag at the end tells us the visit came from this Story.</p>
         </div></div>${actionBar(it)}</div>`;
@@ -295,12 +301,12 @@ function drawDetail() {
           ${shownTab === 'youtube' ? youtubePanel(it, mediaUrl) : `<div class="cap">${linkify(capText || 'No caption file.')}</div>`}
           ${comment ? `<p class="comment"><b>First comment:</b> ${linkify(comment)}</p>` : ''}
         </div>
-        ${it.repost ? `<div><h3>Your repost comment</h3><div class="cap" id="repostText">${esc(it.repost)}</div>
+        ${it.repost && copy.showInternalFacts ? `<div><h3>Your repost comment</h3><div class="cap" id="repostText">${esc(it.repost)}</div>
           <p><button type="button" class="copy" id="copyRepost">Copy</button> Paste this when you repost from your personal profile.</p></div>` : ''}
         <dl class="facts">
-          <dt>Folder</dt><dd>To Be Released/${esc(it.id)}</dd>
+          ${copy.showInternalFacts ? `<dt>Folder</dt><dd>To Be Released/${esc(it.id)}</dd>` : ''}
           <dt>AI</dt><dd>${it.ai?.voice ? 'AI voice. ' : ''}${it.ai?.visuals ? 'AI visuals. ' : ''}${!it.ai?.voice && !it.ai?.visuals ? 'No AI voice or visuals' : ''}</dd>
-          ${scheduled ? `<dt>Metricool</dt><dd>${esc(scheduled)}</dd>` : ''}
+          ${scheduled && copy.showInternalFacts ? `<dt>Metricool</dt><dd>${esc(scheduled)}</dd>` : ''}
         </dl>
       </div>
     </div>${actionBar(it)}`}</div>`;
@@ -339,7 +345,7 @@ function wireBar(it) {
   $('#fix').onclick = () => {
     if (pending.has(it.id)) return;
     if (!note.classList.contains('open')) { note.classList.add('open'); note.focus(); return; }
-    if (!note.value.trim()) { note.focus(); toast('Add a note so I know what to change'); return; }
+    if (!note.value.trim()) { note.focus(); toast(copy.noteNeeded); return; }
     decide(it.id, 'changes', note.value.trim());
   };
   const u = $('#undo'); if (u) u.onclick = () => decide(it.id, 'waiting');
@@ -378,7 +384,7 @@ async function write(path, body) {
 // out of the body; the server keeps them.
 async function saveDecision(id, body) {
   pending.add(id);
-  decisions[id] = { ...(decisions[id] || {}), decision: body.decision, note: body.note, at: new Date().toISOString() };
+  decisions[id] = { ...(decisions[id] || {}), decision: body.decision, note: body.note, at: new Date().toISOString(), by: me };
   renderList(); renderDetail();
   let saved;
   try { saved = await write('decide', body); } finally { pending.delete(id); }
@@ -415,7 +421,7 @@ async function saveAnswer(id, k, text) {
 }
 
 async function saveAsk(id, text) {
-  decisions[id] = { ...(decisions[id] || {}), decision: text ? 'answered' : 'waiting', answer: text, at: new Date().toISOString() };
+  decisions[id] = { ...(decisions[id] || {}), decision: text ? 'answered' : 'waiting', answer: text, at: new Date().toISOString(), by: me };
   renderList(); renderDetail();
   if (await write('decide', { item_id: id, decision: text ? 'answered' : 'waiting', answer: text })) toast(text ? 'Answer saved' : 'Answer cleared');
 }
@@ -477,8 +483,8 @@ function renderStories() {
     html += storyRow(s, now);
   }
   $('#slist').innerHTML = html || (data.storiesPaused
-    ? `<div class="done-note"><p><b>Stories are paused.</b></p><p>Nothing to post by hand for now. Ask Claude to turn them back on when you have time for them.</p></div>`
-    : `<p class="d-muted">No Stories on the schedule. Ask Claude to rebuild the desk after the next week is planned.</p>`);
+    ? `<div class="done-note"><p><b>Stories are paused.</b></p><p>${esc(copy.storiesPaused)}</p></div>`
+    : `<p class="d-muted">${esc(copy.noStories)}</p>`);
   $('.howto').hidden = !html;
   if (focused) document.getElementById(focused)?.focus();
 }

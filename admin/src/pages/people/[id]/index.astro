@@ -1,0 +1,96 @@
+---
+// Edit one person: name, email, role, and per site no access, view only or
+// can approve. Every site is listed; the levels apply to clients only.
+// Owner only. Saving is a plain form post, then back to People.
+import Shell from '../../../layouts/Shell.astro';
+import { getPersonById, listSites, listAllGrants } from '../../../lib/db.js';
+import { editPerson, LEVELS, LEVEL_LABEL } from '../../../lib/people.js';
+import { syncAccessGroup } from '../../../lib/access-sync.js';
+
+const env = Astro.locals.runtime.env;
+const DB = env.DB;
+const user = Astro.locals.user;
+if (user?.role !== 'owner') return new Response('Not authorized.', { status: 403 });
+const raw = Astro.params.id ?? '';
+if (!/^\d{1,9}$/.test(raw)) return new Response('Not found', { status: 404 });
+const id = Number(raw);
+const person = await getPersonById(DB, id);
+if (!person) return new Response('Not found', { status: 404 });
+
+const sites = await listSites(DB);
+const saved = new Map((await listAllGrants(DB)).filter((g) => g.person_id === id).map((g) => [g.site_id, g.level]));
+let values = { ...person, grants: sites.map((s) => ({ site_id: s.id, level: saved.get(s.id) ?? 'none' })) };
+let errors = {};
+if (Astro.request.method === 'POST') {
+  const r = await editPerson({ db: DB, me: user, id, form: await Astro.request.formData(), sync: () => syncAccessGroup({ db: DB, env }) });
+  if (r.ok) return Astro.redirect('/people?saved=1', 303);
+  if (r.status) return new Response(r.status === 404 ? 'Not found' : 'Not authorized.', { status: r.status });
+  ({ values, errors } = r);
+}
+const levelOf = (siteId) => values.grants?.find((g) => g.site_id === siteId)?.level ?? 'none';
+const v = (k) => values[k] ?? '';
+const self = person.id === user.id;
+const added = Astro.url.searchParams.get('added');
+const describedBy = (k, hint) => [hint && `${k}-hint`, errors[k] && `${k}-err`].filter(Boolean).join(' ') || undefined;
+---
+<Shell title={`Edit ${person.name}`} active="people">
+  <p><a href="/people">Back to People</a></p>
+  <h1>Edit {person.name}</h1>
+  {added && <p class="notice" role="status">{person.name} was added. Pick the Post Desks they can open, then save.</p>}
+  {Object.keys(errors).length > 0 && <div class="alert" role="alert">Some fields need attention.</div>}
+
+  <form method="post" action={`/people/${person.id}`} class="stack" novalidate>
+    <div class="field">
+      <label for="name">Name</label>
+      <span class="hint" id="name-hint">Shown on the desk next to what they approve.</span>
+      <input type="text" id="name" name="name" value={v('name')} required maxlength="80" autocomplete="off"
+        aria-invalid={errors.name ? 'true' : undefined} aria-describedby={describedBy('name', true)} />
+      {errors.name && <span class="err" id="name-err">{errors.name}</span>}
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      {self && <span class="hint" id="email-hint">This is how you sign in, so only another owner can change it.</span>}
+      <input type="email" id="email" name="email" value={v('email')} required maxlength="254" autocomplete="off"
+        aria-invalid={errors.email ? 'true' : undefined} aria-describedby={describedBy('email', self)} />
+      {errors.email && <span class="err" id="email-err">{errors.email}</span>}
+    </div>
+    <div class="field">
+      <label for="role">Role</label>
+      <span class="hint" id="role-hint">A client sees only the Post Desks below. An owner sees everything.</span>
+      <select id="role" name="role" aria-invalid={errors.role ? 'true' : undefined} aria-describedby={describedBy('role', true)}>
+        <option value="client" selected={v('role') !== 'owner'}>Client</option>
+        <option value="owner" selected={v('role') === 'owner'}>Owner</option>
+      </select>
+      {errors.role && <span class="err" id="role-err">{errors.role}</span>}
+    </div>
+
+    <fieldset class="access">
+      <legend>Post Desks</legend>
+      <p class="hint" id="access-hint">For a client only. View only shows the desk; can approve also lets them approve, ask for changes, undo and answer questions. An owner opens every desk whatever is set here.</p>
+      {sites.map((s) => (
+        <div class="field access-row">
+          <label for={`access_${s.id}`}>{s.name}</label>
+          <select id={`access_${s.id}`} name={`access_${s.id}`}
+            aria-invalid={errors[`access_${s.id}`] ? 'true' : undefined}
+            aria-describedby={errors[`access_${s.id}`] ? `access_${s.id}-err` : undefined}>
+            {LEVELS.map((l) => <option value={l} selected={levelOf(s.id) === l}>{LEVEL_LABEL[l]}</option>)}
+          </select>
+          {errors[`access_${s.id}`] && <span class="err" id={`access_${s.id}-err`}>{errors[`access_${s.id}`]}</span>}
+        </div>
+      ))}
+    </fieldset>
+
+    <div class="row">
+      <button type="submit" class="btn">Save</button>
+      <a class="btn quiet" href="/people">Cancel</a>
+    </div>
+  </form>
+
+  {!self && (
+    <section class="section danger" aria-labelledby="remove-h">
+      <h2 id="remove-h">Remove {person.name}</h2>
+      <p>They stop getting in at once, and come off the Cloudflare sign-in list. Their past approvals stay on the desk without a name.</p>
+      <a class="btn quiet" href={`/people/${person.id}/remove`}>Remove {person.name}</a>
+    </section>
+  )}
+</Shell>

@@ -4,10 +4,10 @@ import { getSiteBySlug } from '../../../../lib/db.js';
 import * as desk from '../../../../lib/desk.js';
 
 export async function handleCheck({ db, slug, user, request, nowMs = Date.now() }) {
-  const w = await desk.readWrite({ request, user });
-  if (!w.ok) return w;
   const site = await getSiteBySlug(db, slug);
   if (!site) return { status: 404, body: { error: 'Not found' } };
+  const w = await desk.readWrite({ request, user, siteId: site.id });
+  if (!w.ok) return w;
   const r = desk.parseCheckBody(w.body);
   if (!r.ok) return { status: 400, body: { error: r.error } };
   const item = await desk.findDeskItem(db, site.id, 'stories', r.values.item_id);

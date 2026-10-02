@@ -120,7 +120,7 @@ form.stack { display: flex; flex-direction: column; gap: 16px; max-width: 640px;
 .field label { font-weight: 700; }
 .field .hint { color: var(--muted); font-size: 14px; }
 .field .err { color: var(--error); font-size: 14px; font-weight: 600; }
-input[type="text"], input[type="url"], input[type="date"], input[type="number"], select, textarea {
+input[type="text"], input[type="url"], input[type="email"], input[type="date"], input[type="number"], select, textarea {
   font: 16px/1.4 var(--font-body); padding: 10px 12px; border: 1px solid var(--line-strong); border-radius: 6px; background: #fff; color: var(--ink);
 }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; }
@@ -128,7 +128,28 @@ input[type="text"], input[type="url"], input[type="date"], input[type="number"],
 details.edit summary { cursor: pointer; color: var(--accent); font-weight: 700; }
 details.edit[open] summary { margin-bottom: 12px; }
 .alert { border-left: 4px solid var(--error); background: var(--surface); padding: 12px 16px; margin-bottom: 20px; }
+.notice { border-left: 4px solid var(--green); background: var(--surface); padding: 12px 16px; margin: 0 0 20px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* People. A plain list of cards; the role is small-caps text, never a chip. */
+.section .hint, fieldset .hint { color: var(--muted); font-size: 14px; margin: 8px 0 12px; }
+.people { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.person { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.person p { margin: 0; }
+.person .note { color: var(--muted); font-size: 14px; }
+.person-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.person-head h2 { margin: 0; font-size: 18px; }
+.person-email { overflow-wrap: anywhere; }
+.desks { margin: 0; padding-left: 20px; font-size: 15px; }
+fieldset.access { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 16px 20px; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+fieldset.access legend { font-weight: 700; padding: 0 6px; }
+fieldset.access .hint { margin: 0; }
+.access-row { display: grid; grid-template-columns: minmax(0, 1fr) 170px; align-items: center; gap: 6px 16px; }
+.access-row label { font-weight: 600; }
+.access-row .err { grid-column: 1 / -1; }
+.section.danger { border-left: 4px solid var(--error); margin-top: 32px; }
+.top-site { font: 700 16px/1.2 var(--font-display); color: var(--ink); }
+.top .signout { margin-left: 12px; font-weight: 600; }
 
 /* Post Desk (ported from the artifact). Status is a dot plus a text label, as
    everywhere else; amber only ever colors dots, borders and tints. Class names

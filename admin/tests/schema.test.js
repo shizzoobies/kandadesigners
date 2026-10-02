@@ -6,8 +6,30 @@ describe('migrations', () => {
     const db = makeD1();
     const { results } = await db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").all();
     expect(results.map((r) => r.name)).toEqual(
-      ['alert_state', 'checks', 'desk_decisions', 'desk_items', 'desk_meta', 'desk_story_checks', 'log_entries', 'people', 'sites', 'work_items'],
+      ['alert_state', 'checks', 'desk_access', 'desk_decisions', 'desk_items', 'desk_meta', 'desk_story_checks', 'log_entries', 'people', 'settings', 'sites', 'work_items'],
     );
+  });
+
+  it('0003 keys desk access by person and site, and drops it with either', async () => {
+    const db = makeD1();
+    await db.prepare("INSERT INTO sites (slug, name, live_url, created_at, updated_at) VALUES ('a', 'A', 'https://a.test', 't', 't')").run();
+    await db.prepare("INSERT INTO sites (slug, name, live_url, created_at, updated_at) VALUES ('b', 'B', 'https://b.test', 't', 't')").run();
+    await db.prepare("INSERT INTO people (name, email, role, created_at) VALUES ('H', 'h@example.com', 'client', 't')").run();
+    const grant = (site) => db.prepare("INSERT INTO desk_access (person_id, site_id, level, granted_at) VALUES (1, ?, 'approve', 't')").bind(site).run();
+    await grant(1);
+    await grant(2);
+    await expect(grant(1)).rejects.toThrow();
+    await expect(db.prepare("INSERT INTO desk_access (person_id, site_id, level, granted_at) VALUES (1, 99, 'view', 't')").run()).rejects.toThrow();
+    await db.prepare('DELETE FROM sites WHERE id = 2').run();
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_access').first('n')).toBe(1);
+    await db.prepare('DELETE FROM people WHERE id = 1').run();
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_access').first('n')).toBe(0);
+  });
+
+  it('0003 keeps one settings row per key', async () => {
+    const db = makeD1();
+    await db.prepare("INSERT INTO settings (key, value, updated_at) VALUES ('access_group_id', 'g', 't')").run();
+    await expect(db.prepare("INSERT INTO settings (key, value, updated_at) VALUES ('access_group_id', 'h', 't')").run()).rejects.toThrow();
   });
 
   it('allows many manual work items but one row per GitHub key per site', async () => {

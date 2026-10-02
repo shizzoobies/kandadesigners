@@ -1,8 +1,16 @@
 ---
 import '../styles/admin.css';
 
-const { title, active = '' } = Astro.props;
+// A client sees none of the dashboard: no nav to Sites, Add site, K&A's
+// Social or People, just the brand, the site they are on and who is signed in.
+// With more than one desk, a link back to their list.
+const { title, active = '', site = null } = Astro.props;
 const user = Astro.locals.user;
+const client = user?.role === 'client';
+const several = client && (user.grants?.length ?? 0) > 1;
+// Cloudflare Access ends the session at this path on the protected hostname,
+// before the Worker runs. A plain link (a GET), never a form post.
+const SIGN_OUT = '/cdn-cgi/access/logout';
 ---
 <html lang="en">
   <head>
@@ -11,19 +19,33 @@ const user = Astro.locals.user;
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png" />
-    <title>{title} | K &amp; A sites</title>
+    <title>{title} | {client ? 'K & A Post Desk' : 'K & A sites'}</title>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
-    <header class="top">
-      <a class="brand" href="/">K &amp; A <em>sites</em></a>
-      <nav aria-label="Main">
-        <a href="/" aria-current={active === 'sites' ? 'page' : undefined}>Sites</a>
-        <a href="/sites/new" aria-current={active === 'new' ? 'page' : undefined}>Add site</a>
-        <a href="/sites/ka-performance/social" aria-current={active === 'social' ? 'page' : undefined}>Social</a>
-      </nav>
-      <div class="who">{user?.name || user?.email}</div>
-    </header>
+    {client ? (
+      <header class="top">
+        <a class="brand" href="/">K &amp; A <em>Post Desk</em></a>
+        {site && <span class="top-site">{site.name}</span>}
+        {several && (
+          <nav aria-label="Main">
+            <a href="/" aria-current={active === 'desks' ? 'page' : undefined}>Your Post Desks</a>
+          </nav>
+        )}
+        <div class="who">Signed in as {user.name || user.email} <a class="signout" href={SIGN_OUT}>Sign out</a></div>
+      </header>
+    ) : (
+      <header class="top">
+        <a class="brand" href="/">K &amp; A <em>sites</em></a>
+        <nav aria-label="Main">
+          <a href="/" aria-current={active === 'sites' ? 'page' : undefined}>Sites</a>
+          <a href="/sites/new" aria-current={active === 'new' ? 'page' : undefined}>Add site</a>
+          <a href="/sites/ka-performance/social" aria-current={active === 'social' ? 'page' : undefined}>Social</a>
+          <a href="/people" aria-current={active === 'people' ? 'page' : undefined}>People</a>
+        </nav>
+        <div class="who">{user?.name || user?.email} <a class="signout" href={SIGN_OUT}>Sign out</a></div>
+      </header>
+    )}
     <main id="main">
       <slot />
     </main>

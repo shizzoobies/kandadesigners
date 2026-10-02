@@ -33,8 +33,17 @@
     "ACCESS_TEAM_DOMAIN": "kandaperformance.cloudflareaccess.com",
     "ACCESS_AUD": "2bf30fbb34a3a276856fa95b5649bce7fd5a5776acb1103d64a6f51e8ed06900",
     // The GitHub token belongs to this account; repos owned by anyone else are tracked by hand.
-    "GITHUB_OWNER": "shizzoobies"
+    "GITHUB_OWNER": "shizzoobies",
+    // The Cloudflare account that owns the Access application. An identifier,
+    // not a secret. The People page uses it to keep the Access group
+    // "K&A admin people" in step with the people table (lib/access-sync.js).
+    "CF_ACCOUNT_ID": "c8f0f7697e2801ba2acabb700b5da793"
   },
+  // Secrets, set with `wrangler secret put <NAME>` and never written here:
+  //   ACCESS_GROUPS_TOKEN  API token with only "Access: Organizations, Identity
+  //                        Providers, and Groups: Edit" on this account. Without
+  //                        it the sign-in list is not synced and People says so.
+  //                        See DEPLOY-CLIENT-ACCESS.md.
   // A Route, not a Custom Domain: a proxied A record (192.0.2.1, deliberately
   // unroutable) already sits at this hostname, and Custom Domain attachment
   // fails with API code 100117 because of it. Routes want that record.
@@ -45,5 +54,8 @@
   // Off since 2026-09-22. Static assets are served before any Worker code, and
   // Access does not cover workers.dev, so this hostname was once an ungated
   // door. The route above is the only way in.
-  "workers_dev": false
+  "workers_dev": false,
+  // No preview URLs either: like workers.dev, they sit outside Access, so a
+  // version preview would be another ungated door.
+  "preview_urls": false
 }

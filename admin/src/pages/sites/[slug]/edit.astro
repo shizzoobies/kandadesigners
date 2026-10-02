@@ -1,7 +1,7 @@
 ---
 import Shell from '../../../layouts/Shell.astro';
 import SiteForm from '../../../components/SiteForm.astro';
-import { getSiteBySlug, listPeople } from '../../../lib/db.js';
+import { getSiteBySlug, listOwners } from '../../../lib/db.js';
 import { saveSite } from '../../../lib/save-site.js';
 
 const { DB, LOGOS } = Astro.locals.runtime.env;
@@ -15,7 +15,8 @@ if (Astro.request.method === 'POST') {
   if (r.ok) return Astro.redirect(`/sites/${r.slug}`, 303);
   ({ values, errors } = r);
 }
-const people = await listPeople(DB);
+// Maintainers are K&A's own people: the dropdown lists owners, never clients.
+const people = await listOwners(DB);
 ---
 <Shell title={`Edit ${site.name}`}>
   <h1>Edit {site.name}</h1>

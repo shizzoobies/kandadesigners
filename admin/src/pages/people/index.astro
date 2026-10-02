@@ -1,0 +1,104 @@
+---
+// Everyone who can sign in, what each client can open, and whether the
+// Cloudflare sign-in list is in step. Owner only (the middleware already
+// stops clients; this check is the second lock). Adding is a plain form post
+// back to this page, then on to the new person's page to pick their desks.
+import Shell from '../../layouts/Shell.astro';
+import { listPeople, listAllGrants, getSettings } from '../../lib/db.js';
+import { addPerson, ROLE_LABEL, LEVEL_LABEL } from '../../lib/people.js';
+import { syncAccessGroup, syncStatus, syncStatusText } from '../../lib/access-sync.js';
+
+const env = Astro.locals.runtime.env;
+const DB = env.DB;
+const user = Astro.locals.user;
+if (user?.role !== 'owner') return new Response('Not authorized.', { status: 403 });
+
+let values = { role: 'client' };
+let errors = {};
+if (Astro.request.method === 'POST') {
+  const r = await addPerson({ db: DB, me: user, form: await Astro.request.formData(), sync: () => syncAccessGroup({ db: DB, env }) });
+  if (r.ok) return Astro.redirect(`/people/${r.id}?added=1`, 303);
+  if (r.status) return new Response('Not authorized.', { status: r.status });
+  ({ values, errors } = r);
+}
+
+const [people, grants, settings] = await Promise.all([listPeople(DB), listAllGrants(DB), getSettings(DB)]);
+const status = syncStatus(env, settings);
+const statusText = syncStatusText(status);
+const desksOf = (id) => grants.filter((g) => g.person_id === id);
+const notice = Astro.url.searchParams.get('saved') ? 'Saved.'
+  : Astro.url.searchParams.get('removed') ? 'Person removed. They can no longer open anything here.'
+  : Astro.url.searchParams.get('synced') ? 'Sync finished. The status below says how it went.' : '';
+const v = (k) => values[k] ?? '';
+const describedBy = (k, hint) => [hint && `${k}-hint`, errors[k] && `${k}-err`].filter(Boolean).join(' ') || undefined;
+---
+<Shell title="People" active="people">
+  <h1>People</h1>
+  {notice && <p class="notice" role="status">{notice}</p>}
+
+  <section class="section" aria-labelledby="sync-h">
+    <h2 id="sync-h">Cloudflare sign-in list</h2>
+    <p class="level">
+      <span class={`dot ${status.state === 'ok' ? 'green' : status.state === 'error' ? 'red' : 'gray'}`}></span>
+      {statusText}
+    </p>
+    <p class="hint">Everyone below is on the list Cloudflare checks at sign-in. The admin then decides what each person sees.</p>
+    {status.state !== 'token_missing' && status.state !== 'account_missing' && (
+      <form method="post" action="/people/sync">
+        <button type="submit" class="btn quiet">Sync sign-in list now</button>
+      </form>
+    )}
+  </section>
+
+  <ul class="people">
+    {people.map((p) => (
+      <li class="section person">
+        <div class="person-head">
+          <h2>{p.name}</h2>
+          <span class="caps">{ROLE_LABEL[p.role] ?? p.role}</span>
+        </div>
+        <p class="person-email">{p.email}</p>
+        {p.role === 'owner' ? (
+          <p class="note">Opens everything, every desk included.</p>
+        ) : desksOf(p.id).length === 0 ? (
+          <p class="note">No Post Desks yet. They see a "not set up yet" page.</p>
+        ) : (
+          <ul class="desks">
+            {desksOf(p.id).map((g) => <li>{g.name}: {LEVEL_LABEL[g.level] ?? g.level}</li>)}
+          </ul>
+        )}
+        <p><a href={`/people/${p.id}`}>Edit<span class="sr"> {p.name}</span></a></p>
+      </li>
+    ))}
+  </ul>
+
+  <section class="section" aria-labelledby="add-h" id="add">
+    <h2 id="add-h">Add a person</h2>
+    {Object.keys(errors).length > 0 && <div class="alert" role="alert">Some fields need attention.</div>}
+    <form method="post" action="/people#add" class="stack" novalidate>
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" value={v('name')} required maxlength="80" autocomplete="off"
+          aria-invalid={errors.name ? 'true' : undefined} aria-describedby={describedBy('name')} />
+        {errors.name && <span class="err" id="name-err">{errors.name}</span>}
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <span class="hint" id="email-hint">The address they sign in with. Cloudflare emails them a one-time code.</span>
+        <input type="email" id="email" name="email" value={v('email')} required maxlength="254" autocomplete="off"
+          aria-invalid={errors.email ? 'true' : undefined} aria-describedby={describedBy('email', true)} />
+        {errors.email && <span class="err" id="email-err">{errors.email}</span>}
+      </div>
+      <div class="field">
+        <label for="role">Role</label>
+        <span class="hint" id="role-hint">A client sees only the Post Desks you give them. An owner sees everything.</span>
+        <select id="role" name="role" aria-invalid={errors.role ? 'true' : undefined} aria-describedby={describedBy('role', true)}>
+          <option value="client" selected={v('role') !== 'owner'}>Client</option>
+          <option value="owner" selected={v('role') === 'owner'}>Owner</option>
+        </select>
+        {errors.role && <span class="err" id="role-err">{errors.role}</span>}
+      </div>
+      <div><button type="submit" class="btn">Add person</button></div>
+    </form>
+  </section>
+</Shell>
