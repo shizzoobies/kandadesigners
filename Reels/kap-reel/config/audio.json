@@ -2347,6 +2347,450 @@
       },
       "client": "Fore Motion Golf social, Oct 2026",
       "set": "social-fmg-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1003-c-32s",
+      "file": "assets/audio/raw/music-efp-1003-c-32s.mp3",
+      "prompt": "Warm, welcoming acoustic instrumental at about 78 bpm in G major. A fingerstyle steel-string acoustic guitar plays a simple, singable melody with its own soft bass notes, over a gentle bed of sustained violins and violas holding long, quiet chords. No drums. Genuine and neighborly, like being greeted by name by a doctor who has known your family for years. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:04:51.905Z",
+      "accepted": true,
+      "notes": "welcoming and genuine, the doctor who knows your name, fingerstyle steel-string acoustic guitar melody over softly sustained violins and violas, no percussion, about 78 bpm. Ellenton Family Practice Direct social, Oct 2026: the Sat 2026-10-03 Facebook slide video, who we are (folder 2026-10-03), no narration. Measured duration 32.04s, -14.3 LUFS integrated, -1.9 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.7,
+        "wholeTrackMeanDb": -17.1,
+        "deficitDb": -1.4,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -14.3,
+        "truePeakDbtp": -1.9,
+        "lraLu": 4.6,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1003-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1004-r-32s",
+      "file": "assets/audio/raw/music-efp-1004-r-32s.mp3",
+      "prompt": "Bright, gently lifting acoustic instrumental at about 98 bpm in D major. An acoustic guitar in DADGAD tuning plays a rolling eighth-note pattern with ringing open strings, and a piano doubles a simple, rising melody an octave above it. Warm cello and viola hold a soft pad underneath. A brushed snare and a soft kick keep an easy forward step. Open and hopeful, like morning light coming through the windows as you walk through a friendly, well kept office. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:05:39.946Z",
+      "accepted": true,
+      "notes": "open and bright, morning light through the windows, a gentle lift, DADGAD acoustic guitar rolling eighth-note pattern with ringing open strings, piano doubling the melody, warm cello and viola pad, brushed snare and soft kick, about 98 bpm. Ellenton Family Practice Direct social, Oct 2026: the Sun 2026-10-04 reel, a look inside the clinic (folder 2026-10-04), no narration. Measured duration 32.04s, -18.2 LUFS integrated, -1.3 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -22.6,
+        "wholeTrackMeanDb": -20.2,
+        "deficitDb": 2.4,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -18.2,
+        "truePeakDbtp": -1.3,
+        "lraLu": 5.7,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1004-r-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1005-c-32s",
+      "file": "assets/audio/raw/music-efp-1005-c-32s.mp3",
+      "prompt": "Calm, warm instrumental at about 70 bpm in F major. A Rhodes electric piano with a light tremolo plays slow, gospel-tinged chords and a simple melody on top, accompanied only by a soft upright bass on the roots. No drums. Easy and uncomplicated, like a friendly voice on the phone telling you there is a time that works for you. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:06:09.193Z",
+      "accepted": true,
+      "notes": "easy and clear, nothing complicated, Rhodes electric piano with light tremolo playing slow gospel-tinged chords, soft upright bass, no drums, about 70 bpm. Ellenton Family Practice Direct social, Oct 2026: the Mon 2026-10-05 Facebook slide video, how to book (folder 2026-10-05), no narration. Measured duration 32.04s, -20.7 LUFS integrated, -7.2 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -22.8,
+        "wholeTrackMeanDb": -23.3,
+        "deficitDb": -0.5,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -20.7,
+        "truePeakDbtp": -7.2,
+        "lraLu": 6.1,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1005-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1007-c-32s",
+      "file": "assets/audio/raw/music-efp-1007-c-32s.mp3",
+      "prompt": "Gentle, reassuring instrumental at about 76 bpm in A minor turning to C major. A nylon-string classical guitar plays slow, even arpeggios, and a solo viola sings a warm, legato melody over it with a soft, natural tone. No percussion. Kind and steady, like being told there is a way to be seen whatever your situation. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:06:41.746Z",
+      "accepted": true,
+      "notes": "reassuring, there is a way for everyone, nylon-string classical guitar slow arpeggios with a warm solo viola melody, no percussion, about 76 bpm. Ellenton Family Practice Direct social, Oct 2026: the Wed 2026-10-07 Facebook slide video, three ways to be seen (folder 2026-10-07), no narration. Measured duration 32.04s, -16.2 LUFS integrated, -0.4 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.1,
+        "wholeTrackMeanDb": -19.6,
+        "deficitDb": -4.5,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -16.2,
+        "truePeakDbtp": -0.4,
+        "lraLu": 5.8,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1007-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1009-c-32s",
+      "file": "assets/audio/raw/music-efp-1009-c-32s.mp3",
+      "prompt": "Relaxed, intimate jazz ballad instrumental at about 74 bpm in B flat major. A warm grand piano plays a simple melody with soft, rich chords, an upright bass walks slowly underneath, and brushes swirl gently on the snare with a feather-light ride cymbal. Personal and unhurried, like a long, easy conversation with a doctor who is not watching the clock. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:07:05.854Z",
+      "accepted": true,
+      "notes": "relaxed and personal, a longer conversation, soft jazz ballad trio: warm grand piano melody and chords, upright bass, brushes swirling slowly on the snare, about 74 bpm. Ellenton Family Practice Direct social, Oct 2026: the Fri 2026-10-09 Facebook slide video, Direct Primary Care explained (folder 2026-10-09), no narration. Measured duration 32.04s, -18.1 LUFS integrated, -1.3 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -15.2,
+        "wholeTrackMeanDb": -19.7,
+        "deficitDb": -4.5,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -18.1,
+        "truePeakDbtp": -1.3,
+        "lraLu": 2.8,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1009-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1010-c-32s",
+      "file": "assets/audio/raw/music-efp-1010-c-32s.mp3",
+      "prompt": "Sunny, easygoing acoustic instrumental at about 92 bpm in E major. A steel-string acoustic guitar strums gently and evenly, a violin plays a warm, simple folk melody, and a soft upright bass and a light brushed snare on two and four keep a relaxed step. Friendly and wholesome, like a Saturday morning before the season starts, calm rather than busy. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:07:33.388Z",
+      "accepted": true,
+      "notes": "sunny Saturday, back to school, easygoing, gently strummed acoustic guitar, warm violin melody, soft upright bass, light brushed snare on two and four, about 92 bpm. Ellenton Family Practice Direct social, Oct 2026: the Sat 2026-10-10 Facebook slide video, sports and school physicals (folder 2026-10-10), no narration. Measured duration 32.04s, -17.1 LUFS integrated, -3.2 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -18.3,
+        "wholeTrackMeanDb": -19.5,
+        "deficitDb": -1.2,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -17.1,
+        "truePeakDbtp": -3.2,
+        "lraLu": 4,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1010-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1011-r-32s",
+      "file": "assets/audio/raw/music-efp-1011-r-32s.mp3",
+      "prompt": "Warm, reassuring instrumental with a gentle lift at about 102 bpm in A major. A Rhodes electric piano and a fingerpicked acoustic guitar play interlocking eighth-note patterns that weave together, with a simple melody on the Rhodes. A soft string pad holds the chords, and a light brushed drum kit with a soft kick moves it gently forward. Prepared and calm, like getting ready for the season with someone you trust. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:07:49.526Z",
+      "accepted": true,
+      "notes": "prepared and reassuring, steady forward motion, a gentle lift, Rhodes and fingerpicked acoustic guitar in interlocking eighth notes, soft string pad, light brushed kit with a soft kick, about 102 bpm. Ellenton Family Practice Direct social, Oct 2026: the Sun 2026-10-11 flu season explainer reel (folder 2026-10-11), no narration. Measured duration 50.04s, -13.7 LUFS integrated, -1.3 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -13.7,
+        "wholeTrackMeanDb": -15.5,
+        "deficitDb": -1.8,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -13.7,
+        "truePeakDbtp": -1.3,
+        "lraLu": 1.9,
+        "durationSeconds": 50.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1011-r-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 23
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1012-c-32s",
+      "file": "assets/audio/raw/music-efp-1012-c-32s.mp3",
+      "prompt": "Very calm, comforting chamber instrumental at about 66 bpm in E flat major. A string quartet plays alone: slow, warm sustained chords from the viola and cello, and a simple, tender melody in the first violin, all played softly with a gentle vibrato. No percussion, no piano. Comforting and caring, like a warm blanket and someone checking in on you, never sad or mournful. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:08:02.515Z",
+      "accepted": true,
+      "notes": "comforting, rest and care, string quartet alone, slow sustained chords and a simple first violin melody, no percussion, about 66 bpm. Ellenton Family Practice Direct social, Oct 2026: the Mon 2026-10-12 Facebook slide video, sick visits (folder 2026-10-12), no narration. Measured duration 32.04s, -15.4 LUFS integrated, -2.8 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -19.7,
+        "wholeTrackMeanDb": -18.3,
+        "deficitDb": 1.4,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -15.4,
+        "truePeakDbtp": -2.8,
+        "lraLu": 3.1,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1012-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1013-c-32s",
+      "file": "assets/audio/raw/music-efp-1013-c-32s.mp3",
+      "prompt": "Gentle, hopeful instrumental at about 72 bpm in D flat major. A grand piano plays flowing left-hand arpeggios and a simple, hopeful melody in the middle register, with a soft cello sustaining long low notes underneath from the first beat. No percussion. Warm, dignified and quietly encouraging, never sad, never sentimental. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:08:28.445Z",
+      "accepted": true,
+      "notes": "gentle, hopeful, dignified, solo grand piano with flowing left-hand arpeggios and a hopeful melody, soft sustained cello underneath, about 72 bpm. Ellenton Family Practice Direct social, Oct 2026: the Tue 2026-10-13 Facebook slide video, breast cancer awareness month (folder 2026-10-13), no narration. Measured duration 50.04s, -16.4 LUFS integrated, -2.2 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -19.3,
+        "wholeTrackMeanDb": -19.5,
+        "deficitDb": -0.2,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -16.4,
+        "truePeakDbtp": -2.2,
+        "lraLu": 3.9,
+        "durationSeconds": 50.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1013-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 23
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1014-c-32s",
+      "file": "assets/audio/raw/music-efp-1014-c-32s.mp3",
+      "prompt": "Steady, patient instrumental in a slow 3/4 waltz at about 80 bpm in C major. A fingerpicked acoustic guitar plays the chords on a gentle one-two-three, and a warm upright piano carries a simple melody above it. No drums. Patient and dependable, like a provider who walks alongside you visit after visit, year after year. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:08:48.362Z",
+      "accepted": true,
+      "notes": "steady and patient, alongside you for the long run, piano and acoustic guitar duet in a slow 3/4 waltz, guitar picking the chords, piano carrying the melody, no percussion, about 80 bpm. Ellenton Family Practice Direct social, Oct 2026: the Wed 2026-10-14 Facebook slide video, chronic care (folder 2026-10-14), no narration. Measured duration 32.04s, -14.8 LUFS integrated, -1.2 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -17,
+        "wholeTrackMeanDb": -17.4,
+        "deficitDb": -0.4,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -14.8,
+        "truePeakDbtp": -1.2,
+        "lraLu": 3.4,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1014-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1015-c-32s",
+      "file": "assets/audio/raw/music-efp-1015-c-32s.mp3",
+      "prompt": "Tender, gently playful instrumental at about 76 bpm in F major. A piano plays a simple, lullaby-like melody high in its register, over soft, warm sustained Rhodes chords and a round, quiet bass. A very light shaker keeps time. Sweet without being childish, like a family doctor who sees the kids and the parents in the same warm room. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:09:01.905Z",
+      "accepted": true,
+      "notes": "tender, gently playful, a whole family under one roof, high-register piano lullaby melody over soft sustained Rhodes chords, light shaker, about 76 bpm. Ellenton Family Practice Direct social, Oct 2026: the Thu 2026-10-15 Facebook slide video, kids (folder 2026-10-15), no narration. Measured duration 32.04s, -16.8 LUFS integrated, -1.9 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -16.4,
+        "wholeTrackMeanDb": -18.8,
+        "deficitDb": -2.4,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -16.8,
+        "truePeakDbtp": -1.9,
+        "lraLu": 4.5,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1015-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
+    },
+    {
+      "kind": "music",
+      "id": "music-efp-1016-c-32s",
+      "file": "assets/audio/raw/music-efp-1016-c-32s.mp3",
+      "prompt": "Settled, content acoustic instrumental at about 84 bpm in G major. A grand piano and a fingerpicked acoustic guitar trade a simple melodic phrase back and forth, call and answer, over a warm upright bass and a soft brushed snare on a slow backbeat. Easy and complete, like walking out of a good yearly checkup with everything in order. Clean intro: the music starts on the very first beat, no fade in, no long build, no crescendo, no silence at the start. Fully instrumental, no vocals, no vocal chops, no humming, no oohs, no whistling, no spoken word, no lyrics. No sudden hits, no impact, no riser, no sweep, no cinematic swell, no breakdown or pause in the middle. Steady, even energy the whole way through so any fifteen second window stands on its own. It carries a short social video with on-screen text and no voiceover for a small family medical practice, so keep it warm, human and uncluttered: a simple melodic motif, not a jingle, nothing clinical, nothing corporate, nothing dramatic, nothing that sounds like stock music. End cleanly: resolve on a final chord that rings out over the last two seconds, no abrupt cut. Warm, natural acoustic production, plenty of headroom, no clipping.",
+      "model": "music_v2",
+      "lengthMs": 32000,
+      "creditsMeasured": 875,
+      "creditsBucket": "Music",
+      "outputFormat": "mp3_48000_320",
+      "createdAt": "2026-10-02T22:09:31.405Z",
+      "accepted": true,
+      "notes": "settled and content, all caught up, grand piano and fingerpicked acoustic guitar trading a simple phrase, warm upright bass, soft brushed snare on a slow backbeat, about 84 bpm. Ellenton Family Practice Direct social, Oct 2026: the Fri 2026-10-16 Facebook slide video, the annual physical (folder 2026-10-16), no narration. Measured duration 32.04s, -17.7 LUFS integrated, -1.1 dBTP, ending rings out.",
+      "firstSecondTest": {
+        "firstSecondMeanDb": -16.4,
+        "wholeTrackMeanDb": -19.8,
+        "deficitDb": -3.4,
+        "toleranceDb": 6,
+        "pass": true
+      },
+      "loudness": {
+        "integratedLufs": -17.7,
+        "truePeakDbtp": -1.1,
+        "lraLu": 3.8,
+        "durationSeconds": 32.04,
+        "flatFactor": 0
+      },
+      "vocalCheck": {
+        "model": "scribe_v2",
+        "file": "assets/audio/raw/music-efp-1016-c-32s.mp3",
+        "wordCount": 0,
+        "words": [],
+        "creditsMeasured": 15
+      },
+      "client": "Ellenton Family Practice Direct social, Oct 2026",
+      "set": "social-efp-1003"
     }
   ],
   "mixes": [

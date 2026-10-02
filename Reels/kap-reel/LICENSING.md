@@ -1691,3 +1691,56 @@ near -28 LUFS for the first 22 s and rises to about -16 LUFS from 24 s (LRA
 `music-fmg-1008-r` reads 0.0 dBTP (two decoded samples at +0.03 dBFS, flat
 factor 0, so no run of clipped samples); the delivery limiter takes it under
 the ceiling.
+
+## Ellenton Family Practice Direct social, Oct 2026 music (posts 2026-10-03 to 2026-10-16), 2026-10-02
+
+Twelve new beds for the social client Ellenton Family Practice Direct (a family
+medical practice in Ellenton, Florida, tagline "Modern medicine. Old fashioned
+doctors."), one per video in the two week new patients plan, ids reserved in
+`clients/ellenton-family-practice/plans/2026-10-03-new-patients-build-brief.md`
+("Music ids"). The `-c` beds carry the Facebook slide videos and are the calmest;
+the two `-r` beds carry the reels (a photo walkthrough of the clinic, and the flu
+season explainer) and carry a gentle lift. Sound direction: warm, calm,
+trustworthy and unhurried, acoustic guitar, piano, soft strings or Rhodes, light
+brushed percussion or none; nothing clinical, corporate or dramatic, no sudden
+hits; distinct from every bed above, the Fore Motion Golf set included. Licensed
+to K&A Performance for use in Ellenton Family Practice Direct social, Oct 2026.
+Same ElevenLabs account and Pro plan as everything above, so the Music rights and
+the 2026-09-04 commercial use confirmation cover them. No text to speech was
+generated. All twelve were generated with `force_instrumental: true`. Generator:
+`scripts/social/music-efp-1003.ts` (same endpoint, model, format, length, record
+shape and take checks as `scripts/social/music-fmg-1003.ts`: the
+`music-week-0928.ts` checks, an ebur128 loudness reading, a silence reject, a
+25 s floor and the speech to text vocal check on every passing take). Every
+generation is logged in `config/audio.json` under `set: "social-efp-1003"`. Each
+passing take is copied to `out/candidates/<id>.mp3`.
+
+| What | Model | Calls | Credits |
+|---|---|---|---|
+| `music-efp-1003-c` (Sat 10/03 slide video, who we are), welcoming: fingerstyle steel-string acoustic guitar melody over softly sustained violins and violas, no percussion, about 78 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1004-r` (Sun 10/04 reel, a look inside), open and bright with a gentle lift: DADGAD acoustic guitar rolling eighth notes, piano doubling the melody, warm cello and viola pad, brushed snare and soft kick, about 98 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1005-c` (Mon 10/05 slide video, how to book), easy and clear: Rhodes with light tremolo, slow gospel-tinged chords, soft upright bass, no drums, about 70 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1007-c` (Wed 10/07 slide video, three ways to be seen), reassuring: nylon-string classical guitar slow arpeggios, warm solo viola melody, no percussion, about 76 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1009-c` (Fri 10/09 slide video, Direct Primary Care explained), relaxed and personal: soft jazz ballad trio, grand piano, upright bass, brushes swirling on the snare, about 74 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1010-c` (Sat 10/10 slide video, sports and school physicals), sunny and easygoing: gently strummed acoustic guitar, warm violin folk melody, soft upright bass, light brushed snare on two and four, about 92 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1011-r` (Sun 10/11 reel, flu season), prepared and reassuring with a gentle lift: Rhodes and fingerpicked acoustic guitar in interlocking eighth notes, soft string pad, light brushed kit with a soft kick, about 102 bpm (asked for 32s, returned 50s). Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1012-c` (Mon 10/12 slide video, sick visits), comforting: string quartet alone, slow sustained chords, simple first violin melody, no percussion, about 66 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1013-c` (Tue 10/13 slide video, breast cancer awareness month), gentle and hopeful: solo grand piano with flowing left-hand arpeggios, soft sustained cello, no percussion, about 72 bpm (asked for 32s, returned 50s). Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1014-c` (Wed 10/14 slide video, chronic care), steady and patient: piano and fingerpicked acoustic guitar duet in a slow 3/4 waltz, no percussion, about 80 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1015-c` (Thu 10/15 slide video, kids), tender and gently playful: high-register piano lullaby melody over soft sustained Rhodes chords, light shaker, about 76 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| `music-efp-1016-c` (Fri 10/16 slide video, the annual physical), settled and content: grand piano and fingerpicked acoustic guitar trading a phrase, warm upright bass, soft brushed snare on a slow backbeat, about 84 bpm. Ellenton Family Practice Direct social, Oct 2026 | music_v2 | 1 | 875 |
+| Vocal check, speech to text with audio event tags, all twelve accepted takes: zero words transcribed | scribe_v2 | 12 | 196 |
+| **Set total** | | **24** | **10,696** |
+
+The figures are before-and-after deltas on the usage endpoint, run one call at a
+time with no other agent generating; every music call read exactly 875, and the
+whole-run delta on the account (47,894 to 58,590) matches the per-call sum.
+Nothing was rejected or regenerated. Every accepted take passed every check: at
+least 32.04 s, no leading or mid silence, first second within 6 dB of the mean,
+no clipping (flat factor 0), clean ring-out endings, zero words on speech to
+text. Raw integrated loudness runs from -20.7 to -13.7 LUFS; the finisher's
+delivery pass normalizes. Notes for the finisher: `music-efp-1007-c` reads
+-0.4 dBTP (no clipped run, flat factor 0) and dips to about -22 LUFS short-term
+near 13 s; `music-efp-1005-c` is the quietest (-20.7 LUFS, -7.2 dBTP); the lift
+in `music-efp-1004-r` arrives at about 21 s (short-term about -20 LUFS rising to
+about -16.5 LUFS).
