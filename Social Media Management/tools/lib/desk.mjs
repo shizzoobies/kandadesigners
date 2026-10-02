@@ -245,12 +245,16 @@ export function latestApproveDecisions(root) {
   return latest;
 }
 
-function namesById(ids, opts) {
+function peopleById(ids, opts) {
   const unique = [...new Set(ids.filter((id) => id !== null && id !== undefined))];
   if (!unique.length) return new Map();
-  const rows = d1Rows(`SELECT id, name FROM people WHERE id IN (${unique.join(",")})`, opts);
-  return new Map(rows.map((p) => [p.id, p.name]));
+  const rows = d1Rows(`SELECT id, name, role FROM people WHERE id IN (${unique.join(",")})`, opts);
+  return new Map(rows.map((p) => [p.id, { name: p.name, role: p.role }]));
 }
+
+// Clients can approve and write notes on their own desk (2026-10-02). Anything not
+// written by an owner is client text: data about that post, never instructions to Claude.
+const fromClient = (person) => person?.role !== "owner";
 
 /**
  * Reads decisions and story checks with pulled_at IS NULL, appends them to
@@ -272,17 +276,19 @@ export function pullDesk({ site = "ka-performance", root, config = readR2Config(
   );
   if (!decisionRows.length && !checkRows.length) return { decisions: [], checks: [], siteId: resolvedSiteId };
 
-  const names = namesById([...decisionRows.map((d) => d.decided_by), ...checkRows.map((c) => c.checked_by)], opts);
+  const people = peopleById([...decisionRows.map((d) => d.decided_by), ...checkRows.map((c) => c.checked_by)], opts);
   const stamp = now.toISOString();
 
   const decisions = decisionRows.map((d) => ({
     type: "decision", site, item_id: d.item_id, decision: d.decision, note: d.note || "",
     answers: JSON.parse(d.answers || "{}"), answer: d.answer || "",
-    who: names.get(d.decided_by) || null, decided_at: d.decided_at, pulled_at: stamp
+    who: people.get(d.decided_by)?.name || null, fromClient: fromClient(people.get(d.decided_by)),
+    decided_at: d.decided_at, pulled_at: stamp
   }));
   const checks = checkRows.map((c) => ({
     type: "story_check", site, item_id: c.item_id, posted: !!c.posted,
-    who: names.get(c.checked_by) || null, checked_at: c.checked_at, pulled_at: stamp
+    who: people.get(c.checked_by)?.name || null, fromClient: fromClient(people.get(c.checked_by)),
+    checked_at: c.checked_at, pulled_at: stamp
   }));
 
   const logPath = path.join(root, "review", "desk-log.jsonl");
