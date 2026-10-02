@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-09-2",
+  "date": "2026-10-09",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "providers",
+  "title": "Meet Julie Vera Rivas, MSN, APRN, FNP-C",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A cream card with the Ellenton Family Practice Direct logo at the top. On the left, a headshot of Julie Vera Rivas smiling in navy scrubs against a white textured wall. On the right: Nurse Practitioner, Julie Vera Rivas, MSN, APRN, FNP-C. A button reads Call 941 417 7386, with familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

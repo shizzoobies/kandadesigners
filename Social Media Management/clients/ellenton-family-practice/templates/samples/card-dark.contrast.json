@@ -1,0 +1,56 @@
+{
+  "standard": "WCAG 2.x, 4.5:1 for all text",
+  "lowest": 5.26,
+  "pairs": [
+    {
+      "frame": "card",
+      "where": "p.eyebrow",
+      "text": "Eyebrow goes here",
+      "fg": "#9bbfa1",
+      "bg": "#1e3624",
+      "size": "28px",
+      "weight": "600",
+      "ratio": 6.44
+    },
+    {
+      "frame": "card",
+      "where": "h1.display",
+      "text": "Headline goes here,on two or three lines",
+      "fg": "#fdfbf7",
+      "bg": "#1e3624",
+      "size": "96px",
+      "weight": "500",
+      "ratio": 12.63
+    },
+    {
+      "frame": "card",
+      "where": "p.sub",
+      "text": "The sub line goes here, one short senten",
+      "fg": "#ddeadd",
+      "bg": "#1e3624",
+      "size": "40px",
+      "weight": "400",
+      "ratio": 10.5
+    },
+    {
+      "frame": "card",
+      "where": "span.button",
+      "text": "Call 941 417 7386",
+      "fg": "#ffffff",
+      "bg": "#a15a1c",
+      "size": "44px",
+      "weight": "600",
+      "ratio": 5.26
+    },
+    {
+      "frame": "card",
+      "where": "p.url.foot-center",
+      "text": "familypracticedirect.com",
+      "fg": "#ddeadd",
+      "bg": "#1e3624",
+      "size": "34px",
+      "weight": "600",
+      "ratio": 10.5
+    }
+  ]
+}

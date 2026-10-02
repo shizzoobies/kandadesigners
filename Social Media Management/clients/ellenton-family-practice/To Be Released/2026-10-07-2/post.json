@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-07-2",
+  "date": "2026-10-07",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "how-to-be-seen",
+  "title": "Already a patient? The portal",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A deep green card with the Ellenton Family Practice Direct logo on a cream plate at the top, the small heading Patient portal, the headline Already a patient? Start with the portal., the line The fastest route for records and refills., an amber Call 941 417 7386 button, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

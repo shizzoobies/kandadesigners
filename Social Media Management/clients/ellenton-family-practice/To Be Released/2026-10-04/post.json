@@ -1,0 +1,24 @@
+{
+  "id": "2026-10-04",
+  "date": "2026-10-04",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "who-we-are",
+  "title": "Healthcare the way it used to be",
+  "platforms": {
+    "facebook": { "type": "REEL", "caption": "facebook.md" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" }
+  },
+  "media": [
+    { "file": "media/reel.mp4", "role": "video", "origin": "kap-reel", "alt": "" },
+    {
+      "file": "media/reel-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "The Ellenton Family Practice Direct roadside sign reading Family Medicine under a blue sky, with the practice logo above and the words Our roadside sign. Healthcare the way it used to be. familypracticedirect.com."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1004-r"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-13-2",
+  "date": "2026-10-13",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "Women's health",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A cream card with the Ellenton Family Practice Direct logo at the top, the small heading Family medicine in Ellenton, the headline Women's health, close to home, the line One of the services at Ellenton Family Practice Direct. Ask about it when you call, an amber Call 941 417 7386 button, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

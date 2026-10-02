@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>EFPD review card</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+/* review: the whole review in Lora, left aligned under a short moss rule, the name line and
+   a small "Google review" label below. The quote steps down in size to fit (data-fit), never
+   cut. Stars only when a star count is passed. Logo and URL as on the card. */
+.body { position: absolute; left: var(--m); right: var(--m); top: 320px; bottom: 170px;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.body .rule { margin-bottom: 48px; }
+blockquote { font-family: var(--display); font-weight: 400; color: var(--moss-900); letter-spacing: -0.01em;
+  font-size: 64px; line-height: 1.24; text-wrap: pretty; max-width: 920px; }
+.t-dark blockquote { color: var(--shell); }
+.who { margin-top: 52px; display: flex; flex-direction: column; gap: 14px; }
+.name { font-family: var(--body); font-weight: 600; font-size: 40px; line-height: 1.2; color: var(--ink-900); }
+.t-dark .name { color: var(--shell); }
+.source { display: flex; align-items: center; gap: 18px; }
+.label { font-family: var(--body); font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-500); }
+.t-sand .label { color: var(--ink-500); }
+.t-dark .label { color: var(--moss-300); }
+.stars { display: flex; gap: 4px; color: var(--amber-600); }
+.stars svg { width: 30px; height: 30px; display: block; }
+.t-dark .stars { color: var(--moss-300); }
+</style></head>
+<body>
+<!-- Fields: theme (light | sand | dark, default sand), quote (the whole review, exactly as on the site;
+     build.mjs adds the curly quotation marks), name (first name and initial, as the site shows it),
+     stars (optional whole number 1 to 5; omit for no stars), label (default "Google review"). -->
+<section class="frame" data-template="review" data-themes="light sand dark" data-default-theme="sand">
+  <img class="logo logo-top" src="file:///D:/Ellenton%20Family%20Practice%20Rebuild/src/assets/images/efpd-logo.svg" alt="">
+  <div class="body" data-region>
+    <div class="rule"></div>
+    <blockquote data-field="quote" data-quote data-fit="64 58 52 48 44 40" data-max-lines="9">Review text goes here, quoted whole.</blockquote>
+    <div class="who">
+      <p class="name" data-field="name" data-max-lines="1">Firstname I.</p>
+      <div class="source">
+        <span class="stars" data-stars="stars" data-if="stars" data-amber></span>
+        <span class="label" data-field="label" data-default-on>Google review</span>
+      </div>
+    </div>
+  </div>
+  <p class="url foot-center" data-clear="48">familypracticedirect.com</p>
+</section>
+</body></html>

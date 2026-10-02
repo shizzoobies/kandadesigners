@@ -1,0 +1,46 @@
+{
+  "standard": "WCAG 2.x, 4.5:1 for all text",
+  "lowest": 4.91,
+  "pairs": [
+    {
+      "frame": "slide",
+      "where": "h2.display",
+      "text": "The closing ask goes here, on sand",
+      "fg": "#1e3624",
+      "bg": "#f7f1e6",
+      "size": "104px",
+      "weight": "500",
+      "ratio": 11.61
+    },
+    {
+      "frame": "slide",
+      "where": "span.button",
+      "text": "Call 941 417 7386",
+      "fg": "#ffffff",
+      "bg": "#a15a1c",
+      "size": "44px",
+      "weight": "600",
+      "ratio": 5.26
+    },
+    {
+      "frame": "slide",
+      "where": "p.url",
+      "text": "familypracticedirect.com",
+      "fg": "#2f5437",
+      "bg": "#f7f1e6",
+      "size": "34px",
+      "weight": "600",
+      "ratio": 7.64
+    },
+    {
+      "frame": "slide",
+      "where": "p.counter",
+      "text": "5 / 5",
+      "fg": "#72675b",
+      "bg": "#f7f1e6",
+      "size": "30px",
+      "weight": "500",
+      "ratio": 4.91
+    }
+  ]
+}

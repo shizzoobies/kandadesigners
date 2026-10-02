@@ -1,0 +1,81 @@
+{
+  "id": "2026-10-05",
+  "date": "2026-10-05",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "how-to-book",
+  "title": "How to get seen",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A cream slide with the Ellenton Family Practice Direct logo and the words: New and current patients. How to get seen. What to bring, when we are open, and who to call. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A sand colored slide headed What to bring to your first visit, listing: A photo ID. Your insurance card, if you have one. A list of your medications."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "The practice's roadside sign reading Ellenton Family Practice Direct, Family Medicine, under a blue sky beside the highway, above the words: Find us on Highway 301 in Ellenton. Open Monday to Friday, 9:00 AM to 5:00 PM."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A deep green slide headed Already a patient?, listing: The patient portal is the fastest route for records and refills. Find the portal link at the top of familypracticedirect.com. Saturday appointments on request."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A sand colored slide: New patients start with a call. Ask us anything about membership, or book a visit. A button reads Call 941 417 7386, with familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: How to get seen, for new and current patients / what to bring to a first visit: a photo ID, your insurance card if you have one, and a list of your medications / the practice's roadside sign on Highway 301 in Ellenton, open Monday to Friday, 9:00 AM to 5:00 PM / for current patients, the patient portal for records and refills, and Saturday appointments on request / new patients start with a call to 941 417 7386."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "A cream slide with the Ellenton Family Practice Direct logo and the words: New and current patients. How to get seen. What to bring, when we are open, and who to call. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1005-c"
+}

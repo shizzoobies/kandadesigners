@@ -1,0 +1,13 @@
+{
+  "slug": "ellenton-family-practice",
+  "name": "Ellenton Family Practice Direct",
+  "site": "https://familypracticedirect.com",
+  "sitePath": "D:/Ellenton Family Practice Rebuild",
+  "publish": "metricool",
+  "networks": ["facebook", "instagram"],
+  "timezone": "America/New_York",
+  "handoff": {
+    "drive": "K & A Social > Clients > Ellenton Family Practice Direct > Ready to post",
+    "driveFolderId": "19VCgyr5LyOah8qVwgIG_z4Fg7PwArMc8"
+  }
+}

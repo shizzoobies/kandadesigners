@@ -1,0 +1,46 @@
+{
+  "standard": "WCAG 2.x, 4.5:1 for all text",
+  "lowest": 6.44,
+  "pairs": [
+    {
+      "frame": "review",
+      "where": "blockquote",
+      "text": "“A medium length review goes here, quote",
+      "fg": "#fdfbf7",
+      "bg": "#1e3624",
+      "size": "64px",
+      "weight": "400",
+      "ratio": 12.63
+    },
+    {
+      "frame": "review",
+      "where": "p.name",
+      "text": "Firstname I.",
+      "fg": "#fdfbf7",
+      "bg": "#1e3624",
+      "size": "40px",
+      "weight": "600",
+      "ratio": 12.63
+    },
+    {
+      "frame": "review",
+      "where": "span.label",
+      "text": "Google review",
+      "fg": "#9bbfa1",
+      "bg": "#1e3624",
+      "size": "26px",
+      "weight": "600",
+      "ratio": 6.44
+    },
+    {
+      "frame": "review",
+      "where": "p.url.foot-center",
+      "text": "familypracticedirect.com",
+      "fg": "#ddeadd",
+      "bg": "#1e3624",
+      "size": "34px",
+      "weight": "600",
+      "ratio": 10.5
+    }
+  ]
+}

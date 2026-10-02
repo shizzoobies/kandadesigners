@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-15-2",
+  "date": "2026-10-15",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "Men's health",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A deep green card with the Ellenton Family Practice Direct logo on a cream plate at the top, the small heading Men's health, the headline The checkup that's easy to put off, the line Annual physicals and men's health care, at your family practice in Ellenton, an amber Call 941 417 7386 button, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

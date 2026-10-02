@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-04-2",
+  "date": "2026-10-04",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "how-to-get-seen",
+  "title": "Saturday appointments, by request",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A cream card with the Ellenton Family Practice Direct logo at the top and the words Hours, Saturday appointments, by request, for established patients, call during the week to ask, above an amber button reading Call 941 417 7386 and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

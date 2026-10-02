@@ -1,0 +1,56 @@
+{
+  "standard": "WCAG 2.x, 4.5:1 for all text",
+  "lowest": 5.26,
+  "pairs": [
+    {
+      "frame": "provider",
+      "where": "p.eyebrow.role",
+      "text": "Role goes here",
+      "fg": "#2f5437",
+      "bg": "#f7f1e6",
+      "size": "28px",
+      "weight": "600",
+      "ratio": 7.64
+    },
+    {
+      "frame": "provider",
+      "where": "h1.display",
+      "text": "Provider NameGoes Here",
+      "fg": "#1e3624",
+      "bg": "#f7f1e6",
+      "size": "72px",
+      "weight": "500",
+      "ratio": 11.61
+    },
+    {
+      "frame": "provider",
+      "where": "p.creds",
+      "text": "Credentials go here",
+      "fg": "#2a2520",
+      "bg": "#f7f1e6",
+      "size": "40px",
+      "weight": "600",
+      "ratio": 13.5
+    },
+    {
+      "frame": "provider",
+      "where": "span.button",
+      "text": "Call 941 417 7386",
+      "fg": "#ffffff",
+      "bg": "#a15a1c",
+      "size": "44px",
+      "weight": "600",
+      "ratio": 5.26
+    },
+    {
+      "frame": "provider",
+      "where": "p.url.foot-center",
+      "text": "familypracticedirect.com",
+      "fg": "#2f5437",
+      "bg": "#f7f1e6",
+      "size": "34px",
+      "weight": "600",
+      "ratio": 7.64
+    }
+  ]
+}

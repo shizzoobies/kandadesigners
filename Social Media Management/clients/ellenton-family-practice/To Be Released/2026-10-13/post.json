@@ -1,0 +1,81 @@
+{
+  "id": "2026-10-13",
+  "date": "2026-10-13",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "October: screening questions worth asking",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, cream, with the Ellenton Family Practice Direct logo: Breast Cancer Awareness Month. October: screening questions worth asking. General information to bring to your next visit. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, sand: Questions to ask your provider. When should I start mammograms? How often should I have one? Does my family history change that? What should I tell you about between visits?"
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5: a photo of the practice's roadside sign on Highway 301, Ellenton Family Practice Direct, Family Medicine, under a blue sky with clouds, over the words Timing depends on your age and history. Talk with your provider about what fits you. The logo and familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, deep green: Women’s health at the practice. Part of everyday family medicine here. Preventive screenings and vaccinations. Insurance accepted, uninsured patients seen."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, sand: Book a visit. Bring your questions. Monday to Friday, 9:00 AM to 5:00 PM. An amber Call 941 417 7386 button and familypracticedirect.com."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: October is Breast Cancer Awareness Month, with screening questions worth asking / questions for your provider about when to start mammograms, how often, and whether family history changes that / the practice's roadside sign, with timing that depends on your age and history, so talk with your provider about what fits you / women's health as part of everyday family medicine, with preventive screenings and vaccinations / book a visit and bring your questions by calling 941 417 7386."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Cream, with the Ellenton Family Practice Direct logo: Breast Cancer Awareness Month. October: screening questions worth asking. General information to bring to your next visit. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1013-c"
+}

@@ -1,0 +1,81 @@
+{
+  "id": "2026-10-14",
+  "date": "2026-10-14",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "Living with a chronic condition",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, deep green, with the Ellenton Family Practice Direct logo: Chronic care. Living with a chronic condition. Blood pressure, diabetes, cholesterol. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, sand: What steady care looks like. Regular visits. A plan you understand. A provider who knows your history."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5: a photo of the practice's roadside sign on Highway 301, Ellenton Family Practice Direct, Family Medicine, under a blue sky with clouds, over the words Chronic disease management, close to home. 907 25th Dr East, Ellenton, on Highway 301. The logo and familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, deep green: What to bring to your visit. Your ID and insurance card. A list of your medications. Your questions, written down."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, cream: Start with a call. Monday to Friday, 9:00 AM to 5:00 PM. An amber Call 941 417 7386 button and familypracticedirect.com."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Living with a chronic condition such as blood pressure, diabetes or cholesterol / what steady care looks like: regular visits, a plan you understand, and a provider who knows your history / the practice's roadside sign, chronic disease management close to home on Highway 301 / what to bring: your ID and insurance card, a list of your medications, and your questions written down / start with a call to 941 417 7386, Monday to Friday, 9:00 AM to 5:00 PM."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Deep green, with the Ellenton Family Practice Direct logo: Chronic care. Living with a chronic condition. Blood pressure, diabetes, cholesterol. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1014-c"
+}

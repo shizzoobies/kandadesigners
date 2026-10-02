@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-08",
+  "date": "2026-10-08",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "providers",
+  "title": "Meet David Hervig, PA-C",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A cream card with the Ellenton Family Practice Direct logo at the top and the headshot of David Hervig, a man with glasses in purple scrubs in front of a white textured wall, beside the words Physician Assistant, David Hervig, PA-C, US Army trained, with twelve years of military service, then an amber Call 941 417 7386 button and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

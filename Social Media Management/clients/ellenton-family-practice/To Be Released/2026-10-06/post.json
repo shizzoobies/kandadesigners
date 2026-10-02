@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-06",
+  "date": "2026-10-06",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "the-providers",
+  "title": "Meet Dr. Raphael Kulawik, D.O.",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A sand colored card with the Ellenton Family Practice Direct logo at the top. On the left, a headshot of Dr. Raphael Kulawik, a man with short dark hair and glasses in a white coat with a stethoscope. On the right: Medical Director. Dr. Raphael Kulawik, D.O. Board certified in Family Medicine. An amber button reads Call 941 417 7386, with familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

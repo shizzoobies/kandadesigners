@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>EFPD photo card</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+/* photo: a real photo full-bleed across the top 60% (square cornered, as full-bleed imagery is
+   on the site), one line below on the shell band, the logo and URL in the foot. For the sign
+   and the empty rooms. Never a person in frame. */
+.photo { position: absolute; left: 0; top: 0; width: 1080px; height: 810px; object-fit: cover; display: block; }
+.band { position: absolute; left: var(--m); right: var(--m); top: 866px; bottom: 210px; }
+.band h1 { font-size: 64px; line-height: 1.1; }
+.band .sub { margin-top: 22px; font-size: 36px; }
+.foot { position: absolute; left: var(--m); right: var(--m); bottom: 60px; display: flex; align-items: flex-end; gap: 32px; }
+.foot .logo { width: 190px; }
+.foot .url { margin-left: auto; padding-bottom: 6px; }
+</style></head>
+<body>
+<!-- Fields: photo (path), photoPosition (optional CSS object-position, default "50% 50%"),
+     line (the line below, up to 2 lines), sub (optional short second line). Light ground only. -->
+<section class="frame" data-template="photo" data-themes="light" data-default-theme="light">
+  <img class="photo" data-src="photo" data-pos="photoPosition" alt="">
+  <div class="band" data-region>
+    <h1 class="display" data-field="line" data-max-lines="2">The line under the photo goes here</h1>
+    <p class="sub" data-field="sub" data-if="sub" data-max-lines="2">An optional short second line goes here.</p>
+  </div>
+  <div class="foot" data-clear="40">
+    <img class="logo" src="file:///D:/Ellenton%20Family%20Practice%20Rebuild/src/assets/images/efpd-logo.svg" alt="">
+    <p class="url">familypracticedirect.com</p>
+  </div>
+</section>
+</body></html>

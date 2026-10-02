@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-08-2",
+  "date": "2026-10-08",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "reviews",
+  "title": "Review 3: Ap O.",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A sand colored card with the Ellenton Family Practice Direct logo at the top and a Google review in quotation marks: Me and my husband moved to the area 4 years ago and started seeing Dr Kulawik. Best doctor ever. Staff is awesome. Everyone is nice and listens to us. They find a way to help us and see us ASAP. Just couldn't be happier with them! Helped me thru pregnancy and my husband during some health problems. Signed Ap O., Google review, with familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

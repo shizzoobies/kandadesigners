@@ -1,0 +1,29 @@
+{
+  "id": "2026-10-11",
+  "date": "2026-10-11",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "education",
+  "title": "Flu shots, this season",
+  "platforms": {
+    "facebook": { "type": "REEL", "caption": "facebook.md" },
+    "instagram": { "type": "REEL", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/reel.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "alt": "An 18 second text reel from Ellenton Family Practice Direct, logo at the top and familypracticedirect.com at the foot throughout. Flu shots, this season: three things the CDC says. Who: everyone 6 months and older, with rare exceptions, a flu vaccine every season. When: September and October, ideally by the end of October. How long: about two weeks after a flu shot to build protection. It ends on Ask about availability when you call, with an amber Call 941 417 7386 button."
+    },
+    {
+      "file": "media/reel-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "alt": "A deep green frame with the Ellenton Family Practice Direct logo at the top, the small heading Flu season, the headline Flu shots, this season, the line Three things the CDC says, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1011-r"
+}

@@ -1,0 +1,86 @@
+{
+  "id": "2026-10-12",
+  "date": "2026-10-12",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "education",
+  "title": "Sick today?",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the Ellenton Family Practice Direct logo at the top left, the small heading Sick visits, the headline Sick today?, the line Your family practice treats acute illness and injury, the word Swipe, and familypracticedirect.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A sand colored slide with the logo and the heading What a sick visit covers, then three lines: Colds and the flu. Infections. Minor injuries. familypracticedirect.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A photo of the practice's roadside sign reading Ellenton Family Practice Direct, Family Medicine, on a grassy lot under a blue sky, with neighboring business panels blurred. Below it: Sick visits, right here on Highway 301, and 907 25th Dr East, Ellenton, FL 34222, with the logo and familypracticedirect.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A deep green slide with the logo and the heading Call 911 for these, then four lines: Severe chest pain or pressure. Trouble breathing. Suddenly unable to speak, see, walk or move. Heavy bleeding. familypracticedirect.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "origin": "kap-reel",
+      "alt": "A sand colored slide with the logo and the headline Sick today? Call the office first. The line Monday to Friday, 9:00 AM to 5:00 PM, an amber Call 941 417 7386 button, and familypracticedirect.com at the foot.",
+      "platforms": [
+        "instagram"
+      ]
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Sick today, your family practice treats acute illness and injury / what a sick visit covers: colds and the flu, infections and minor injuries / the practice's roadside sign, sick visits right here on Highway 301 / call 911 for severe chest pain or pressure, trouble breathing, being suddenly unable to speak, see, walk or move, or heavy bleeding / sick today, call the office first at 941 417 7386."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "A deep green slide with the Ellenton Family Practice Direct logo at the top left, the small heading Sick visits, the headline Sick today?, the line Your family practice treats acute illness and injury, the word Swipe, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1012-c"
+}

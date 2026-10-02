@@ -1,0 +1,46 @@
+{
+  "standard": "WCAG 2.x, 4.5:1 for all text",
+  "lowest": 6.44,
+  "pairs": [
+    {
+      "frame": "slide",
+      "where": "h1.display",
+      "text": "Hook headline goes here, on the dark gro",
+      "fg": "#fdfbf7",
+      "bg": "#1e3624",
+      "size": "124px",
+      "weight": "500",
+      "ratio": 12.63
+    },
+    {
+      "frame": "slide",
+      "where": "p.swipe",
+      "text": "Swipe",
+      "fg": "#9bbfa1",
+      "bg": "#1e3624",
+      "size": "30px",
+      "weight": "600",
+      "ratio": 6.44
+    },
+    {
+      "frame": "slide",
+      "where": "p.url",
+      "text": "familypracticedirect.com",
+      "fg": "#ddeadd",
+      "bg": "#1e3624",
+      "size": "34px",
+      "weight": "600",
+      "ratio": 10.5
+    },
+    {
+      "frame": "slide",
+      "where": "p.counter",
+      "text": "1 / 5",
+      "fg": "#9bbfa1",
+      "bg": "#1e3624",
+      "size": "30px",
+      "weight": "500",
+      "ratio": 6.44
+    }
+  ]
+}

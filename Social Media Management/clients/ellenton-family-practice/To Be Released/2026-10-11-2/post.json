@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-11-2",
+  "date": "2026-10-11",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "Preventive screenings and vaccinations",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A cream card with the Ellenton Family Practice Direct logo at the top, the small heading Family medicine, the headline Preventive screenings and vaccinations, the line Part of everyday care for adults and children in Ellenton, an amber Call 941 417 7386 button, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

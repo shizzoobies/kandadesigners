@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>EFPD provider card</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+/* provider: a discrete profile, so it earns a composed layout. photo: the headshot in a rounded
+   rectangle on the left, the name and credentials on the right. type: no photo, the name set
+   large; use it when a headshot is missing or too soft to hold at this size. */
+.body { position: absolute; left: var(--m); right: var(--m); top: 330px; bottom: 300px; }
+.cta { position: absolute; left: 0; right: 0; bottom: 168px; text-align: center; }
+
+.v-photo .body { display: flex; align-items: center; gap: 56px; }
+.headshot { flex: none; width: 420px; height: 520px; border-radius: 40px; object-fit: cover; object-position: 50% 30%; display: block;
+  background: var(--sand-200); }
+.v-photo .text { flex: 1; min-width: 0; }
+.v-photo h1 { font-size: 72px; line-height: 1.08; }
+
+.v-type .body { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+.v-type h1 { font-size: 112px; line-height: 1.04; max-width: 900px; }
+.v-type .rule { margin-top: 48px; }
+
+.role { margin-bottom: 26px; }
+.creds { font-family: var(--body); font-weight: 600; font-size: 40px; line-height: 1.3; color: var(--ink-900); margin-top: 28px; }
+.t-dark .creds { color: var(--shell); }
+.v-type .creds { margin-top: 40px; }
+.line { margin-top: 18px; font-size: 36px; }
+</style></head>
+<body>
+<!-- Fields: variant (photo | type), theme (light | sand | dark), role (eyebrow, e.g. the role as the site
+     states it), name (<br> allowed), credentials, line (optional, one fact the site states),
+     photo (path, photo variant only), photoPosition (optional CSS object-position),
+     cta (default "Call 941 417 7386"; "" to drop). -->
+<section class="frame" data-template="provider" data-variants="photo type" data-default-variant="photo"
+  data-themes="light sand dark" data-default-theme="light">
+  <img class="logo logo-top" src="file:///D:/Ellenton%20Family%20Practice%20Rebuild/src/assets/images/efpd-logo.svg" alt="">
+  <div class="body" data-region>
+    <img class="headshot" data-variant="photo" data-src="photo" data-pos="photoPosition" alt="">
+    <div class="text">
+      <p class="eyebrow role" data-field="role" data-max-lines="2">Role goes here</p>
+      <h1 class="display" data-field="name" data-max-lines="3">Provider Name Goes Here</h1>
+      <div class="rule" data-variant="type"></div>
+      <p class="creds" data-field="credentials" data-max-lines="2">Credentials go here</p>
+      <p class="sub line" data-field="line" data-if="line" data-max-lines="3">One fact from the site goes here.</p>
+    </div>
+  </div>
+  <div class="cta" data-if="cta" data-default-on><span class="button" data-field="cta" data-amber>Call 941 417 7386</span></div>
+  <p class="url foot-center" data-clear="48">familypracticedirect.com</p>
+</section>
+</body></html>

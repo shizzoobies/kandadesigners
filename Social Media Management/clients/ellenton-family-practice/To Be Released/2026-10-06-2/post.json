@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-06-2",
+  "date": "2026-10-06",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "reviews",
+  "title": "Review: Kim M.",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A sand colored card with the Ellenton Family Practice Direct logo and a Google review quoted in full: I can not recommend this place enough! PA David Hervig goes above and beyond and truly cares and listens. He investigates all potential issues and keeps in touch to follow up! They even stayed late to see me on a Saturday when I was having an issue! Love them! Signed Kim M., with five stars and the label Google review, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

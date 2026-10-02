@@ -1,0 +1,81 @@
+{
+  "id": "2026-10-16",
+  "date": "2026-10-16",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "Your annual physical: what to expect",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, deep green, with the Ellenton Family Practice Direct logo: The annual physical. Your annual physical: what to expect. What we go over, what to bring, and why once a year. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, sand: What we go over. Your health history and medications. Screenings and vaccinations you may need. Any ongoing condition, like blood pressure or cholesterol. The questions you have been saving."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5: a photo of the practice's roadside sign on Highway 301, Ellenton Family Practice Direct, Family Medicine, on a lawn under a blue sky with clouds, over the words Our sign on Highway 301, 907 25th Dr East, Ellenton. The logo and familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, deep green: What to bring. A photo ID. Your insurance card, if you have one. A list of your medications."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, cream, with the logo: Once a year keeps your history current. Book your annual physical. Monday to Friday, 9:00 AM to 5:00 PM. An amber Call 941 417 7386 button and familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Your annual physical and what to expect / what we go over: your health history and medications, screenings and vaccinations, any ongoing condition, and your questions / the practice's roadside sign on Highway 301 at 907 25th Dr East, Ellenton / what to bring: a photo ID, your insurance card if you have one, and a list of your medications / book your annual physical by calling 941 417 7386, Monday to Friday, 9:00 AM to 5:00 PM."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Deep green, with the Ellenton Family Practice Direct logo: The annual physical. Your annual physical: what to expect. What we go over, what to bring, and why once a year. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1016-c"
+}

@@ -1,0 +1,81 @@
+{
+  "id": "2026-10-09",
+  "date": "2026-10-09",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "how-to-be-seen",
+  "title": "What Direct Primary Care means here",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A cream slide with the Ellenton Family Practice Direct logo and the words: Direct Primary Care. What Direct Primary Care means here. One of three ways to be seen at our practice. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A sand colored slide headed How the membership works, listing: One flat monthly fee. Month to month. No contract."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "The practice's roadside sign reading Ellenton Family Practice Direct, Family Medicine, beside the highway under a blue sky, above the words: The same practice on Highway 301. 907 25th Dr East, Ellenton."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A deep green slide headed For members, listing: Longer visits. Same or next day access. Call or text your provider."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A sand colored slide: Ask us whether it fits. Insurance accepted. Uninsured patients welcome. A button reads Call 941 417 7386, with familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: What Direct Primary Care means here / how the membership works: one flat monthly fee, month to month, no contract / the practice's roadside sign, the same practice on Highway 301 / for members, longer visits, same or next day access, and calling or texting your provider / ask us whether it fits at 941 417 7386, with insurance accepted and uninsured patients welcome."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "A cream slide with the Ellenton Family Practice Direct logo and the words: Direct Primary Care. What Direct Primary Care means here. One of three ways to be seen at our practice. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1009-c"
+}

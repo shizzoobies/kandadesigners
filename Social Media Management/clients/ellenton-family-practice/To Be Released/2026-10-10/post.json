@@ -1,0 +1,81 @@
+{
+  "id": "2026-10-10",
+  "date": "2026-10-10",
+  "time": "12:00",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "Sports and school physicals",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A deep green slide with the Ellenton Family Practice Direct logo and the words: Sports and school physicals. Got the school's form? Book the physical. At your family practice in Ellenton. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A sand colored slide headed What the visit covers, listing: A physical with one of our providers. The school's form, filled in by your provider."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "The practice's roadside sign reading Ellenton Family Practice Direct, Family Medicine, beside the highway under a blue sky, above the words: 907 25th Dr East, on Highway 301. One stop for the whole family."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A deep green slide headed What to bring, listing: The school's form. An ID. Your insurance card, if you have one. A list of any medications."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "A cream slide: Book by phone. Monday to Friday, 9:00 AM to 5:00 PM. A button reads Call 941 417 7386, with familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Sports and school physicals: got the school's form, book the physical / what the visit covers: a physical with one of our providers and the school's form filled in / the practice's roadside sign at 907 25th Dr East on Highway 301 / what to bring: the school's form, an ID, your insurance card if you have one, and a list of any medications / book by phone at 941 417 7386, Monday to Friday, 9:00 AM to 5:00 PM."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "A deep green slide with the Ellenton Family Practice Direct logo and the words: Sports and school physicals. Got the school's form? Book the physical. At your family practice in Ellenton. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1010-c"
+}

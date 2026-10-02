@@ -1,0 +1,2 @@
+{ "template": "provider", "variant": "type", "theme": "dark", "role": "Role goes here", "name": "Provider Name<br>Goes Here",
+  "credentials": "Credentials go here" }

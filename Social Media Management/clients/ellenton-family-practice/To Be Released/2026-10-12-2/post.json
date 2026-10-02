@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-12-2",
+  "date": "2026-10-12",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "reviews",
+  "title": "Review 5: Chris",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A sand colored card with the Ellenton Family Practice Direct logo at the top and a Google review in quotation marks: David, Stephanie and Raphael are all great people. Great health care practitioners too. Below it the name Chris, five stars, the label Google review, and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}

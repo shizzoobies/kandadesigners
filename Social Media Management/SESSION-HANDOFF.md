@@ -39,8 +39,42 @@ see, and approve on, only their own Post Desk.
   character). Store secrets from the clipboard with `wrangler secret bulk` (see memory
   "deploys-stay-manual"). Token checker: `node scripts/check-access-token.mjs --clipboard` in
   `D:\ka-site-admin\admin`.
-- **Ellenton Family Practice** has a Metricool brand (7196744, nothing connected): a client in
-  the works that Alex monitors himself. Do not add it to the tools until he says.
+- **Ellenton Family Practice Direct is now the third social client** (Alex, 10/2 evening:
+  "just linked up", plan a two-week push from Sat 10/3, two a day on FB and IG). Metricool
+  brand 7196744 has Facebook (1836472796593248) and Instagram (`ellenton_family_practicedirect`,
+  224 followers) connected since 4:23 PM 10/2. Client folder
+  `clients/ellenton-family-practice/` (client.json `publish: "metricool"`, README with the
+  healthcare rules, mapped in `tools/config/metricool.json`). Site: K&A built
+  familypracticedirect.com (source `D:\Ellenton Family Practice Rebuild`), live since 9/22.
+  Alex's calls: goal is new patients, insurance-based, DPC as a side door; Alex approves on the
+  desk for now (David Hervig is the practice contact); week 1 who/where/how, week 2 one
+  service a day; photos are the real sign and empty rooms only, site headshots, no AI
+  composites. **Plan written, awaiting Alex's mark:**
+  `clients/ellenton-family-practice/plans/2026-10-03-new-patients.md`. Phone on cards is the
+  site's 941 417 7386 (door sign says 7586, open question).
+  **Approved in full** (Alex, 10/2 evening: "fire them all up"). Build brief:
+  `plans/2026-10-03-new-patients-build-brief.md`. Build order, started about 6:30 PM 10/2:
+  (1) shared templates in `clients/ellenton-family-practice/templates/`, (2) a patient-free
+  photo allowlist in `reference/photos-allowlist.json` (gitignored; the only photos builders may
+  use), (3) 12 ElevenLabs beds `music-efp-*`; then (4) seven Opus builders A to G, two days
+  each; then (5) a finisher (normalize, mux the two reels, `slideshow.mjs --client` for the ten
+  Facebook slide videos, set `music`, validate, review); then (6) Claude's rule 9 and healthcare
+  review, then desk push on Alex's word. If this session ended mid-build: check which of those
+  exist, finish the missing pieces by the brief. First release is Sat 10/3 at 12:00, so the
+  desk needs Alex's approvals Saturday morning.
+  **BUILT and ON THE DESK, about 7:30 PM 10/2** (desk push: 28 rows, 90 files): all 28
+  folders validate, review built (90 media files),
+  12 beds `music-efp-*` normalized in `D:\kap-reel\out\efp-delivery\`, sheets in
+  `out\efp-delivery\sheets\`. Findings on the way: **all 92 clinic photos have a person in
+  them** (a staff shoot; several almost certainly show real patients), so none were used and
+  the only photo is the sign, cropped to drop a Shell / Circle K sign at its left
+  (`reference\sign-cropped.png`); the Oct 4 reel is the sign with text beats. **Reviews 1 and
+  4 dropped** (Alex: both call David Hervig "Dr", he is a PA-C); Oct 4 and Oct 10 evening are
+  now the Saturday-appointments and call-or-text cards. Headshots are the live site's
+  `src\assets\images\providers\` files. Polish left: the Oct 4 reel's second shot clips the
+  sign's edge for about a second in a crossfade (`source\beats.json` pan 0.3 would fix it).
+  Open questions to Alex are in the plan (phone 7386 vs 7586, flu vaccine, Google rating,
+  headshot releases, "lab work on site" wording, what to bring, kids' ages, physical length).
 
 **Read these first, in order:**
 1. This file.

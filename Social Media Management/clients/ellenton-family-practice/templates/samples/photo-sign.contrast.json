@@ -1,0 +1,36 @@
+{
+  "standard": "WCAG 2.x, 4.5:1 for all text",
+  "lowest": 8.31,
+  "pairs": [
+    {
+      "frame": "photo",
+      "where": "h1.display",
+      "text": "The line under the photo goes here",
+      "fg": "#1e3624",
+      "bg": "#fdfbf7",
+      "size": "64px",
+      "weight": "500",
+      "ratio": 12.63
+    },
+    {
+      "frame": "photo",
+      "where": "p.sub",
+      "text": "An optional short second line goes here.",
+      "fg": "#4a423a",
+      "bg": "#fdfbf7",
+      "size": "36px",
+      "weight": "400",
+      "ratio": 9.53
+    },
+    {
+      "frame": "photo",
+      "where": "p.url",
+      "text": "familypracticedirect.com",
+      "fg": "#2f5437",
+      "bg": "#fdfbf7",
+      "size": "34px",
+      "weight": "600",
+      "ratio": 8.31
+    }
+  ]
+}

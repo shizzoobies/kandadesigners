@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>EFPD card</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+/* card: one idea, one frame. Centered, because a card is one statement to everyone. */
+.body { position: absolute; left: var(--m); right: var(--m); top: 320px; bottom: 300px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.body .eyebrow { margin-bottom: 30px; }
+.body h1 { font-size: 96px; line-height: 1.08; }
+.body .rule { margin-top: 44px; }
+.body .sub { margin-top: 40px; max-width: 840px; }
+.cta { position: absolute; left: 0; right: 0; bottom: 168px; text-align: center; }
+</style></head>
+<body>
+<!-- Fields: theme (light | dark), eyebrow (optional), headline (2 to 3 lines, <br> and <em> allowed),
+     sub (one short line), rule (true | false, default true), cta (default "Call 941 417 7386"). -->
+<section class="frame" data-template="card" data-themes="light dark" data-default-theme="light">
+  <img class="logo logo-top" src="file:///D:/Ellenton%20Family%20Practice%20Rebuild/src/assets/images/efpd-logo.svg" alt="">
+  <div class="body" data-region>
+    <p class="eyebrow" data-field="eyebrow" data-if="eyebrow" data-max-lines="1">Eyebrow goes here</p>
+    <h1 class="display" data-field="headline" data-max-lines="3">Headline goes here,<br>on two lines</h1>
+    <div class="rule" data-if="rule" data-default-on></div>
+    <p class="sub" data-field="sub" data-if="sub" data-max-lines="2">The sub line goes here, one short sentence.</p>
+  </div>
+  <div class="cta" data-if="cta" data-default-on><span class="button" data-field="cta" data-amber>Call 941 417 7386</span></div>
+  <p class="url foot-center" data-clear="48">familypracticedirect.com</p>
+</section>
+</body></html>

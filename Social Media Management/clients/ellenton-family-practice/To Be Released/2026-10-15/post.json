@@ -1,0 +1,81 @@
+{
+  "id": "2026-10-15",
+  "date": "2026-10-15",
+  "time": "10:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "services",
+  "title": "Pediatric visits",
+  "platforms": {
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
+  },
+  "media": [
+    {
+      "file": "media/slide-01.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 1 of 5, cream, with the Ellenton Family Practice Direct logo: Pediatric visits. Kids are seen here too. Children see the same practice as their parents. Swipe."
+    },
+    {
+      "file": "media/slide-02.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 2 of 5, sand: What we see children for. Well child checkups. Sick visits. Sports and school physicals."
+    },
+    {
+      "file": "media/slide-03.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 3 of 5: a photo of the practice's roadside sign on Highway 301, Ellenton Family Practice Direct, Family Medicine, on a lawn under a blue sky with clouds, over the words Our sign on Highway 301. One stop for the whole family. The logo and familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slide-04.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 4 of 5, deep green: One practice for the whole family. Insurance accepted, uninsured patients seen. Monday to Friday, 9:00 AM to 5:00 PM. Saturday appointments on request for established patients."
+    },
+    {
+      "file": "media/slide-05.jpg",
+      "role": "image",
+      "platforms": [
+        "instagram"
+      ],
+      "alt": "Slide 5 of 5, sand, with the logo: Book for the whole family. 907 25th Dr East, Ellenton. An amber Call 941 417 7386 button and familypracticedirect.com at the foot."
+    },
+    {
+      "file": "media/slideshow.mp4",
+      "role": "video",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Video of the 5 carousel slides in order: Pediatric visits: kids are seen here too, at the same practice as their parents / what we see children for: well child checkups, sick visits, and sports and school physicals / the practice's roadside sign on Highway 301, one stop for the whole family / one practice for the whole family, insurance accepted and uninsured patients seen, Monday to Friday, 9:00 AM to 5:00 PM / book for the whole family at 907 25th Dr East, Ellenton, by calling 941 417 7386."
+    },
+    {
+      "file": "media/slideshow-cover.jpg",
+      "role": "thumbnail",
+      "origin": "kap-reel",
+      "platforms": [
+        "facebook"
+      ],
+      "alt": "Cream, with the Ellenton Family Practice Direct logo: Pediatric visits. Kids are seen here too. Children see the same practice as their parents. Swipe."
+    }
+  ],
+  "generate": [],
+  "music": "music-efp-1015-c"
+}

@@ -1,0 +1,7 @@
+{ "slides": [
+  { "variant": "hook", "eyebrow": "Eyebrow goes here", "headline": "Hook headline goes here, set large", "sub": "The hook's sub line goes here." },
+  { "variant": "list", "theme": "sand", "heading": "List heading goes here", "items": ["The first line goes here", "The second line goes here, and it may run to two lines", "The third line goes here", "The fourth line goes here"] },
+  { "variant": "photo", "photo": "D:/Ellenton Family Practice Rebuild/src/assets/images/hero-front-sign.png", "photoPosition": "8% 50%", "caption": "Photo caption goes here, up to two lines", "sub": "A short line under the caption goes here." },
+  { "variant": "list", "theme": "dark", "heading": "A dark list heading goes here", "items": ["A short line goes here", "Another short line goes here"] },
+  { "variant": "closing", "headline": "The closing ask goes here", "sub": "A short line goes here, such as the hours." }
+] }

@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-10-2",
+  "date": "2026-10-10",
+  "time": "17:30",
+  "timezone": "America/New_York",
+  "status": "ready",
+  "pillar": "direct-primary-care",
+  "title": "Members can call or text their provider",
+  "platforms": {
+    "facebook": { "type": "POST", "caption": "facebook.md" },
+    "instagram": { "type": "POST", "caption": "instagram.md" }
+  },
+  "media": [
+    {
+      "file": "media/card.png",
+      "role": "image",
+      "alt": "A dark green card with the Ellenton Family Practice Direct logo on a light plate at the top and the words Direct Primary Care, members can call or text their provider, one of the Direct Primary Care membership benefits, above an amber button reading Call 941 417 7386 and familypracticedirect.com at the foot."
+    }
+  ],
+  "generate": []
+}
