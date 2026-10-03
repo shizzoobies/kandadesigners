@@ -211,7 +211,11 @@ Skill-based competition. Restrictions apply. See Official Rules."
    it, and each reel's take is further along the walkthrough than the last (walk in, then
    toward the bays, then the bar wall, then the latest clean stretch), no footage reused
    across the four; the 3D moves progress the same way. Each brief records the source
-   seconds used.
+   seconds used. **Transition rule (Alex, 10/3 after midnight, "a true soft transition"):**
+   the dissolve is 2 s and eased, the Concept tab fades in over 0.6 s instead of popping,
+   every text-panel beat change crossfades over 0.6 s, the end card fades in, and the frame
+   cadence across the join is checked with a per-frame difference series. The hard
+   tab-and-text snap at the join was what read as a bad edit in v3.
 6. **Can posts say "thirty-foot bar", "equipment repairs", "watch parties", "leagues"?** They
    are in the walkthrough captions and the splash bullets, not in content-facts. **Open.**
 7. **Fonts for social: Oswald and Barlow** (free, close to Hannah's set) unless Alex names the
