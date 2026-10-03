@@ -4,8 +4,8 @@
   "time": "17:30",
   "timezone": "America/New_York",
   "status": "ready",
-  "pillar": "reviews",
-  "title": "Review 5: Chris",
+  "pillar": "family-medicine",
+  "title": "Minor procedures, handled here",
   "platforms": {
     "facebook": { "type": "POST", "caption": "facebook.md" },
     "instagram": { "type": "POST", "caption": "instagram.md" }
@@ -14,7 +14,7 @@
     {
       "file": "media/card.png",
       "role": "image",
-      "alt": "A sand colored card with the Ellenton Family Practice Direct logo at the top and a Google review in quotation marks: David, Stephanie and Raphael are all great people. Great health care practitioners too. Below it the name Chris, five stars, the label Google review, and familypracticedirect.com at the foot."
+      "alt": "A dark green card with the Ellenton Family Practice Direct logo at the top, the small heading Family medicine in Ellenton, the headline Minor procedures, handled here, the line One of the services at Ellenton Family Practice Direct. Ask about it when you call, an amber Call 941 417 7386 button, and familypracticedirect.com at the foot."
     }
   ],
   "generate": []

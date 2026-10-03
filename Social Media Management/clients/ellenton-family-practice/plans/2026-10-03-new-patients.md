@@ -181,6 +181,11 @@ already published on the site, no AI composites until the client signs them off.
     established patients" is retired, and the Sun 10/4 card became "Open Saturdays, 9 to 2".
     The live site's contact page still says Saturday by request and needs the same change
     (site repo, Alex deploys). **Decided.**
+12. **Stephanie** (Alex, desk note and chat, 2026-10-02 night): a former staff member who left
+    on very bad terms; nothing about her in any content. Review 5 named her, so the Mon 10/12
+    evening card became "Minor procedures, handled here." Reviews 2 and 3 are the only ones
+    left running. The same review is being removed from the website (branch
+    `reviews/remove-2026-10`). **Decided.**
 10. **Clinic photos:** all 92 in the set have a person in them (a staff shoot, plus frames that
     almost certainly show real patients). None used. With signed staff releases, the provider
     portraits could replace the typographic and headshot cards; until then, the sign is the

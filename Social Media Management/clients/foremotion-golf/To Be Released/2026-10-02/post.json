@@ -1,14 +1,20 @@
 {
   "id": "2026-10-02",
   "date": "2026-10-02",
-  "time": "19:00",
+  "time": "22:30",
   "timezone": "America/New_York",
-  "status": "ready",
+  "status": "scheduled",
   "pillar": "something-new-is-coming",
   "title": "Where it's always 70 and sunny",
   "platforms": {
-    "facebook": { "type": "POST", "caption": "facebook.md" },
-    "instagram": { "type": "POST", "caption": "instagram.md" }
+    "facebook": {
+      "type": "POST",
+      "caption": "facebook.md"
+    },
+    "instagram": {
+      "type": "POST",
+      "caption": "instagram.md"
+    }
   },
   "media": [
     {
@@ -17,5 +23,97 @@
       "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Where it's always 70 and sunny, the line Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
     }
   ],
-  "generate": []
+  "generate": [],
+  "r2": {
+    "media/card.png": {
+      "key": "2026-10-02/21765eaa-card.png",
+      "url": "https://media.ka-performancefl.com/2026-10-02/21765eaa-card.png",
+      "sha256": "21765eaaa4d3f176e9d55e35902b534177a27e41995c89c44627c8c519da0a66",
+      "uploadedAt": "2026-10-03T02:01:04.307Z"
+    }
+  },
+  "lastError": null,
+  "metricool": {
+    "facebook": {
+      "payload": {
+        "date": "2026-10-02T22:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-02/21765eaa-card.png"
+          ],
+          "mediaAltText": [
+            "A deep green card with the Fore Motion Golf logo at the top, the headline Where it's always 70 and sunny, the line Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
+          ],
+          "providers": [
+            {
+              "network": "facebook"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-02T22:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Where it's always 70 and sunny.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02\n\nFore Motion Golf is an indoor golf lounge on TrackMan simulators, opening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for six players each, a bar and lounge, and a putting area.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02",
+          "facebookData": {
+            "type": "POST"
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-10-03T02:01:05.703Z",
+      "id": "387101206",
+      "uuid": "1678107736006345878",
+      "scheduledAt": "2026-10-03T02:01:49.633Z"
+    },
+    "instagram": {
+      "payload": {
+        "date": "2026-10-02T22:30:00-04:00",
+        "info": {
+          "autoPublish": true,
+          "descendants": [],
+          "draft": false,
+          "firstCommentText": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
+          "hasNotReadNotes": false,
+          "media": [
+            "https://media.ka-performancefl.com/2026-10-02/21765eaa-card.png"
+          ],
+          "mediaAltText": [
+            "A deep green card with the Fore Motion Golf logo at the top, the headline Where it's always 70 and sunny, the line Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot."
+          ],
+          "providers": [
+            {
+              "network": "instagram"
+            }
+          ],
+          "publicationDate": {
+            "dateTime": "2026-10-02T22:30:00",
+            "timezone": "America/New_York"
+          },
+          "shortener": false,
+          "smartLinkData": {
+            "ids": []
+          },
+          "text": "Where it's always 70 and sunny.\nLink in bio to join the Founders List.\n\nFore Motion Golf is an indoor golf lounge on TrackMan simulators, opening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for six players each, a bar and lounge, and a putting area.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+          "instagramData": {
+            "type": "POST",
+            "isAiGenerated": false
+          }
+        }
+      },
+      "draft": false,
+      "preparedAt": "2026-10-03T02:01:05.703Z",
+      "id": "387101233",
+      "uuid": "-2418465262184807429",
+      "scheduledAt": "2026-10-03T02:01:49.690Z"
+    }
+  }
 }

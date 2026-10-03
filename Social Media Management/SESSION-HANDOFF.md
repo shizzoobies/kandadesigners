@@ -75,6 +75,11 @@ see, and approve on, only their own Post Desk.
   sign's edge for about a second in a crossfade (`source\beats.json` pan 0.3 would fix it).
   Open questions to Alex are in the plan (phone 7386 vs 7586, flu vaccine, Google rating,
   headshot releases, "lab work on site" wording, what to bring, kids' ages, physical length).
+  **Saturday hours, 7:45 PM 10/2:** Alex's desk note "Also open on Saturday 9am-2pm" applied
+  across all 28 posts (re-pushed; changed rows reset to waiting, including the approved
+  10/3), and on the website (branch `hours/saturday-2026-10`, merged and pushed by Alex,
+  deployed; live /contact confirmed). Next session: Alex approves on the desk Saturday
+  morning, then `desk pull`, `upload`, `release` for the Sat 10/3 noon post on his word.
 
 **Read these first, in order:**
 1. This file.
@@ -209,9 +214,9 @@ The weekday shape: LinkedIn document 8:00, reel 10:30, YouTube Short 12:00, caro
     Hour (JQ, The Red Collective, 638930161963138) or Feels So Good (Company Money,
     1306855697259067); 10/15-2 Dedication (LAVLO, 28304113442557164) or Make It (Giulio
     Cercato, 1033459349040717).
-  - **Tonight's post `2026-10-02`** (one card, 7:00 PM, "Where it's always 70 and sunny") is
-    built, validated and **on the FMG desk** as of about 2:45 PM. Next: `desk pull` after
-    approval (Hannah, or Alex as owner by 6 PM), then `upload` and `release`, on Alex's word.
+  - **`2026-10-02` released:** Alex approved it on the desk at 9:59 PM and said send it;
+    re-timed to 10:30 PM, uploaded, scheduled on brand 7185142 (Facebook id 387101206,
+    Instagram id 387101233), folder status `scheduled`. Reconcile it next session.
   - Alex's calls 10/2: goal is Founders List signups; Hannah approves and Alex watches; two a
     day, all built fresh; fonts Oswald and Barlow (Barlow is not installed, Bahnschrift stood
     in; install Barlow and rerun `source/build.mjs` to match).
