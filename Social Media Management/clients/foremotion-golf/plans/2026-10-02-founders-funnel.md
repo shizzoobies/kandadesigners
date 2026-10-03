@@ -200,9 +200,18 @@ Skill-based competition. Restrictions apply. See Official Rules."
    **Open.**
 5. **Who is on camera in the walkthroughs?** It is Justin Myrick, the owner. **Decided
    2026-10-02 night (Alex): name him.** The four walkthrough reels (10/4, 10/6, 10/8, 10/10)
-   are being rebuilt to intercut him with captures from the interactive 3D venue concept
-   Codex shipped to foremotiongolf.com the same day (`/golf-3d/v2/`, a three.js roof
-   cutaway); every concept shot carries the "Concept" tab per the brand guide.
+   are rebuilt around captures from the interactive 3D venue concept Codex shipped to
+   foremotiongolf.com the same day (`/golf-3d/v2/`, a three.js roof cutaway); every concept
+   frame carries the "Concept" tab per the brand guide. **Structure (Alex, 10/2 about
+   10:45 PM, after seeing an intercut version he found choppy):** each reel is 5 to 7 s of
+   Justin on camera, one soft dissolve, then one continuous 3D camera move to the end card.
+   10/4 walking in then the overview; 10/6 the bays tour; 10/8 the bar tour; 10/10 the
+   scene's own full Tour. The intercut versions are kept as `reel-v2` beside the finals.
+   **Also (Alex, same night):** the Justin portion is one continuous take, no cuts inside
+   it, and each reel's take is further along the walkthrough than the last (walk in, then
+   toward the bays, then the bar wall, then the latest clean stretch), no footage reused
+   across the four; the 3D moves progress the same way. Each brief records the source
+   seconds used.
 6. **Can posts say "thirty-foot bar", "equipment repairs", "watch parties", "leagues"?** They
    are in the walkthrough captions and the splash bullets, not in content-facts. **Open.**
 7. **Fonts for social: Oswald and Barlow** (free, close to Hannah's set) unless Alex names the
