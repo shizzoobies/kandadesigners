@@ -78,9 +78,6 @@ const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonv
         </p>
 
         <form id="contact-form" class="mt-8 flex flex-1 flex-col gap-6" novalidate>
-          <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
-          <input type="hidden" name="subject" value="New lead | ka-performancefl.com" />
-          <input type="hidden" name="from_name" value="K & A Performance Website" />
           <!-- Honeypot: hidden from humans, bots fill it and get filtered. -->
           <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
@@ -194,6 +191,7 @@ const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonv
 </style>
 
 <script>
+  import { submitLead } from '../../lib/submit-lead';
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const successEl = document.getElementById('form-success');
   const errorEl = document.getElementById('form-error');
@@ -222,14 +220,10 @@ const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonv
       });
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(data),
-        });
+        const res = await submitLead('contact', data);
         const result = await res.json();
 
-        if (result.success) {
+        if (res.ok && result.success) {
           // Meta Pixel: success path only, never on submit attempt or validation
           // failure. Guarded because ad blockers stop fbq from ever being defined.
           if (window.fbq) window.fbq('track', 'Lead');

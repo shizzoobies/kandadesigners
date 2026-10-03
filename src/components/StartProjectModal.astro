@@ -26,9 +26,6 @@ import ScopeChat from './ScopeChat.astro';
 
   <div id="sp-panel-form" data-lenis-prevent class="sp-panel hidden min-h-0 flex-1 flex-col overflow-y-auto" role="tabpanel" aria-labelledby="sp-tab-form">
     <form id="sp-form" class="flex flex-1 flex-col gap-3" novalidate>
-      <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
-      <input type="hidden" name="subject" value="New lead | ka-performancefl.com" />
-      <input type="hidden" name="from_name" value="K & A Performance Website" />
       <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
       <div>
@@ -138,6 +135,7 @@ import ScopeChat from './ScopeChat.astro';
 </style>
 
 <script>
+  import { submitLead } from '../lib/submit-lead';
   const dlg = document.getElementById('sp-modal') as HTMLDialogElement | null;
   const tabs = {
     scope: { tab: document.getElementById('sp-tab-scope'), panel: document.getElementById('sp-panel-scope') },
@@ -216,13 +214,9 @@ import ScopeChat from './ScopeChat.astro';
       });
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(data),
-        });
+        const res = await submitLead('popup', data);
         const result = await res.json();
-        if (result.success) {
+        if (res.ok && result.success) {
           if (statusEl) statusEl.textContent = '';
           form.classList.add('hidden');
           successEl?.classList.remove('hidden');

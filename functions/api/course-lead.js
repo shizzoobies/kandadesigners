@@ -2,12 +2,12 @@
    K & A PERFORMANCE — free course email gate
    Cloudflare Pages Function — /api/course-lead
    The course is free; the email is the price. Every lead lands in two
-   places on purpose: the ka-admin D1 (the list, browsable in the admin's
-   coaching page) and the Web3Forms inbox (the same place every other site
+   places on purpose: the archived ka-admin D1 (still bound as ADMIN_DB)
+   and the business email inbox (the same place every other site
    lead arrives, so nothing new needs watching).
    ============================================= */
 
-const WEB3FORMS_KEY = '7ad90fb9-bc88-411a-9442-c249b49c32f6';
+import { leadSource, readLeadRequest, sendLeadEmail, validEmail } from '../../lib/lead-email.js';
 const MAX_NAME = 80;
 const MAX_EMAIL = 254;
 
@@ -21,11 +21,15 @@ export async function onRequestPost(context) {
     });
 
   try {
-    const body = await request.json();
+    const body = await readLeadRequest(request);
 
     // Honeypot: the visible form never fills this.
     if (body.botcheck) return json({ ok: true });
 
+    if ((body.name !== undefined && typeof body.name !== 'string') ||
+        (body.name || '').length > MAX_NAME || !validEmail(body.email)) {
+      return json({ error: 'Please check your name and email.' }, 400);
+    }
     const name = String(body.name ?? '').trim().slice(0, MAX_NAME);
     const email = String(body.email ?? '').trim().toLowerCase().slice(0, MAX_EMAIL);
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -34,12 +38,7 @@ export async function onRequestPost(context) {
 
     // First-touch attribution, read server-side from the same ka_src cookie
     // the whole site writes. The client never gets to assert its own source.
-    const cookie = request.headers.get('Cookie') || '';
-    const src = cookie.match(/(?:^|;\s*)ka_src=([^;]+)/)?.[1];
-    let source = 'direct';
-    if (src) {
-      try { source = decodeURIComponent(src).slice(0, 60); } catch { source = src.slice(0, 60); }
-    }
+    const source = leadSource(request);
 
     const now = new Date().toISOString();
     let leadToken = '';
@@ -78,29 +77,21 @@ export async function onRequestPost(context) {
     // The inbox copy.
     let mailed = false;
     try {
-      const r = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: 'New course lead | ka-performancefl.com',
-          from_name: 'K & A Performance Website',
-          name: name || '(no name)',
-          email,
-          source,
-        }),
+      await sendLeadEmail(env, {
+        email,
+        subject: 'New course lead | ka-performancefl.com',
+        text: `name: ${name || '(no name)'}\n\nemail: ${email}\n\nsource: ${source}`,
       });
-      const d = await r.json();
-      mailed = !!d.success;
+      mailed = true;
     } catch {
-      /* the D1 row already has it */
+      console.error('course_lead_notification_failed');
     }
 
     if (!stored && !mailed) {
       return json({ error: 'Something went wrong. Email alex@ka-performancefl.com and we will send you the course link directly.' }, 502);
     }
     return json(leadToken ? { ok: true, t: leadToken } : { ok: true });
-  } catch {
-    return json({ error: 'Bad request.' }, 400);
+  } catch (error) {
+    return json({ error: 'Bad request.' }, error.status || 400);
   }
 }

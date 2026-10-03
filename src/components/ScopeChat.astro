@@ -28,6 +28,7 @@
   </div>
   <form class="mt-4 hidden flex-col gap-3" data-lead-form>
     <label class="sr-only" data-for="lead-name">Your name</label>
+    <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
     <input type="text" required placeholder="Your name" class="field" data-lead-name autocomplete="name" />
     <label class="sr-only" data-for="lead-email">Your email</label>
     <input type="email" required placeholder="Your email" class="field" data-lead-email autocomplete="email" />
@@ -94,8 +95,8 @@
 </style>
 
 <script>
+  import { submitLead } from '../lib/submit-lead';
   const MAX_MESSAGES = 24;
-  const WEB3FORMS_KEY = '7ad90fb9-bc88-411a-9442-c249b49c32f6';
 
   const log = document.getElementById('chat-log');
   const form = document.getElementById('chat-form');
@@ -171,26 +172,21 @@
 
     leadForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!leadForm.checkValidity()) { leadForm.reportValidity(); return; }
       const name = leadForm.querySelector('[data-lead-name]').value.trim();
       const email = leadForm.querySelector('[data-lead-email]').value.trim();
       const btn = leadForm.querySelector('button[type="submit"]');
       btn.disabled = true;
       btn.textContent = 'Sending…';
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            access_key: WEB3FORMS_KEY,
-            subject: 'AI-scoped lead | ka-performancefl.com',
-            from_name: 'K & A Performance Website',
-            name,
-            email,
-            message: `AI-scoped project summary for ${name} <${email}>:\n\n${latestSummary}`,
-          }),
+        const res = await submitLead('scope', {
+          botcheck: leadForm.querySelector('[name=botcheck]').checked ? 'yes' : '',
+          name,
+          email,
+          message: `AI-scoped project summary for ${name} <${email}>:\n\n${latestSummary}`,
         });
         const data = await res.json();
-        if (!data.success) throw new Error('send failed');
+        if (!res.ok || !data.success) throw new Error('send failed');
         leadForm.querySelectorAll('input, button').forEach((el) => { el.disabled = true; });
         leadStatus.textContent = "Sent! We'll be in touch within 24 hours.";
         leadStatus.classList.remove('hidden');

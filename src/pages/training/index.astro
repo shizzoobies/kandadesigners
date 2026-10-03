@@ -117,9 +117,6 @@ const faqSchema = {
       </div>
 
       <form id="tr-form" class="flex flex-col gap-6" novalidate>
-        <input type="hidden" name="access_key" value="7ad90fb9-bc88-411a-9442-c249b49c32f6" />
-        <input type="hidden" name="subject" value="New training inquiry | ka-performancefl.com" />
-        <input type="hidden" name="from_name" value="K & A Performance Website" />
         <!-- Attribution: filled from the first-touch cookie by the script
              below. Defaults to direct, so no JS means no false attribution. -->
         <input type="hidden" id="tr-source" name="source" value="direct" />
@@ -375,6 +372,7 @@ const faqSchema = {
 </script>
 
 <script>
+  import { submitLead } from '../../lib/submit-lead';
   // Re-run after every client-side navigation (ClientRouter). astro:page-load
   // also fires on the initial load, after this has run once, so the init
   // marks the root it wires and skips a DOM it has already seen.
@@ -382,7 +380,7 @@ const faqSchema = {
     const root = document.getElementById("tr-modal") || document.body;
     if ((root as HTMLElement).dataset["trInit3"]) return;
     (root as HTMLElement).dataset["trInit3"] = "1";
-    // Inquiry submit: the same Web3Forms flow as the contact page and the
+    // Inquiry submit: the same server-side email flow as the contact page and the
     // AI Launch intake.
     const form = document.getElementById('tr-form') as HTMLFormElement | null;
     const successEl = document.getElementById('tr-success');
@@ -411,14 +409,10 @@ const faqSchema = {
         });
 
         try {
-          const res = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify(data),
-          });
+          const res = await submitLead('training', data);
           const result = await res.json();
 
-          if (result.success) {
+          if (res.ok && result.success) {
             // Success path only; guarded because ad blockers stop fbq existing.
             if (window.fbq) window.fbq('track', 'Lead');
             if (statusEl) statusEl.textContent = '';
