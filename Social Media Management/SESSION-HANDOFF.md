@@ -214,6 +214,15 @@ The weekday shape: LinkedIn document 8:00, reel 10:30, YouTube Short 12:00, caro
     Hour (JQ, The Red Collective, 638930161963138) or Feels So Good (Company Money,
     1306855697259067); 10/15-2 Dedication (LAVLO, 28304113442557164) or Make It (Giulio
     Cercato, 1033459349040717).
+  - **3D concept intercuts (Alex, 10/2 about 10:15 PM):** Codex shipped an interactive
+    three.js venue concept to foremotiongolf.com the same day (`/golf-3d/v2/`, on
+    `origin/master`, three commits ahead of the local site checkout; read-only copy in this
+    session's scratchpad `fmg-master-ro`). The man on camera is **Justin Myrick, the owner;
+    Alex said name him.** The four walkthrough reels (10/4, 10/6, 10/8, 10/10) are being
+    rebuilt to intercut Justin with captured camera moves from the concept, every concept
+    shot with the "Concept" tab; captures land in `D:\kap-reel\out\fmg-3d\`. When done:
+    review frames, validate, re-push the FMG desk (those four reset to waiting). If this
+    session ended mid-build, the previous reels are kept at `source\reel-silent-v1.mp4`.
   - **`2026-10-02` released:** Alex approved it on the desk at 9:59 PM and said send it;
     re-timed to 10:30 PM, uploaded, scheduled on brand 7185142 (Facebook id 387101206,
     Instagram id 387101233), folder status `scheduled`. Reconcile it next session.

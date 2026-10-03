@@ -1,9 +1,10 @@
 The bar and lounge.
 Link in bio to join the Founders List.
 
+Owner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.
 This is where the bar goes at Fore Motion Golf, inside the former DMV at 1518 Park Ave in Orange Park.
 A bar and lounge with canned beer and seltzers, plus four TrackMan bays for up to six players each.
-The finished bar in this video is a concept rendering. Opening early 2027.
+The finished bar is from our 3D venue concept. Opening early 2027.
 
 Join the Founders List at foremotiongolf.com, link in bio.
 

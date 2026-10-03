@@ -1,39 +1,6 @@
 {
-  "builtAt": "2026-10-02T20:00:12.985Z",
+  "builtAt": "2026-10-03T02:34:49.872Z",
   "posts": [
-    {
-      "id": "2026-10-02",
-      "date": "2026-10-02",
-      "weekday": "Fri",
-      "time": "19:00",
-      "kind": "post",
-      "status": "ready",
-      "pillar": "something-new-is-coming",
-      "title": "Where it's always 70 and sunny",
-      "hook": "Where it's always 70 and sunny.",
-      "networks": [
-        "facebook",
-        "instagram"
-      ],
-      "facebook": "Where it's always 70 and sunny.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02\n\nFore Motion Golf is an indoor golf lounge on TrackMan simulators, opening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for six players each, a bar and lounge, and a putting area.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-02",
-      "instagram": "Where it's always 70 and sunny.\nLink in bio to join the Founders List.\n\nFore Motion Golf is an indoor golf lounge on TrackMan simulators, opening early 2027 at 1518 Park Ave in Orange Park, the former DMV.\nFour TrackMan bays with room for six players each, a bar and lounge, and a putting area.\nFounding Memberships will be limited, and the Founders List hears about them first.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
-      "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
-      "linkedin": "",
-      "linkedinComment": "",
-      "repost": "",
-      "questions": [],
-      "ai": {},
-      "music": null,
-      "scheduled": {},
-      "media": [
-        {
-          "src": "media/2026-10-02/card.png",
-          "role": "image",
-          "alt": "A deep green card with the Fore Motion Golf logo at the top, the headline Where it's always 70 and sunny, the line Coming early 2027 to Orange Park, FL, a bright green Join the Founders List button, and foremotiongolf.com at the foot.",
-          "platforms": null
-        }
-      ]
-    },
     {
       "id": "2026-10-03",
       "date": "2026-10-03",
@@ -164,8 +131,8 @@
         "facebook",
         "instagram"
       ],
-      "facebook": "Four bays go here.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04\n\nThis is the former DMV at 1518 Park Ave in Orange Park, being built out now.\nFour TrackMan bays are coming, with room for up to six players each.\nFore Motion Golf opens early 2027, and construction updates go to the Founders List first.\n\nFollow the build. Join the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04",
-      "instagram": "Four bays go here.\nLink in bio to join the Founders List.\n\nThis is the former DMV at 1518 Park Ave in Orange Park, being built out now.\nFour TrackMan bays are coming, with room for up to six players each.\nFore Motion Golf opens early 2027, and construction updates go to the Founders List first.\n\nFollow the build. Join the Founders List at foremotiongolf.com, link in bio.",
+      "facebook": "Four bays go here.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nThis is the former DMV at 1518 Park Ave in Orange Park, being built out now.\nFour TrackMan bays are coming, with room for up to six players each.\nFore Motion Golf opens early 2027, and construction updates go to the Founders List first.\n\nFollow the build. Join the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-04",
+      "instagram": "Four bays go here.\nLink in bio to join the Founders List.\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nThis is the former DMV at 1518 Park Ave in Orange Park, being built out now.\nFour TrackMan bays are coming, with room for up to six players each.\nFore Motion Golf opens early 2027, and construction updates go to the Founders List first.\n\nFollow the build. Join the Founders List at foremotiongolf.com, link in bio.",
       "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
       "linkedin": "",
       "linkedinComment": "",
@@ -180,13 +147,13 @@
         {
           "src": "media/2026-10-04/reel.mp4",
           "role": "video",
-          "alt": "A walk through the empty former DMV that is becoming Fore Motion Golf: a long service counter wall where the four bays go, and the open hall seen from the far end. On screen: Four bays go here. Opening early 2027. Follow the build. Join the Founders List. The Fore Motion Golf logo is at the top and foremotiongolf.com at the foot throughout.",
+          "alt": "A 19 second walk through the empty former DMV that is becoming Fore Motion Golf. Owner Justin Myrick walks along a long service counter wall where the four bays go, with one arm out toward the wall. The video cuts to a 3D concept view, labeled Concept, pushing into a finished simulator bay with a golfer on the tee mat and a golf course on the screen, then back to Justin in the open hall. On screen: Owner Justin Myrick walks the space. Four bays go here. The bays, as planned. Opening early 2027. Follow the build. Join the Founders List. The Fore Motion Golf logo is at the top and foremotiongolf.com at the foot throughout.",
           "platforms": null
         },
         {
           "src": "media/2026-10-04/reel-cover.jpg",
           "role": "thumbnail",
-          "alt": "Inside the empty former DMV, a man walks along a long service counter with numbered window signs overhead, one arm out toward the wall. The Fore Motion Golf logo sits at the top, and a deep green panel below reads 1518 Park Ave, Orange Park, FL. Four bays go here. foremotiongolf.com.",
+          "alt": "Owner Justin Myrick walks along a long service counter in the empty former DMV, one arm out toward the wall, under numbered window signs. The Fore Motion Golf logo sits at the top, and a deep green panel below reads Owner Justin Myrick walks the space. Four bays go here. foremotiongolf.com.",
           "platforms": null
         }
       ]
@@ -354,14 +321,13 @@
         "facebook",
         "instagram"
       ],
-      "facebook": "Compete. Leagues and events are coming to Fore Motion Golf.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06\n\nSeason play and single-day events are on the way, with four TrackMan bays and up to six players per bay.\nThis is the space today, at 1518 Park Ave in Orange Park, the former DMV. Opening early 2027.\nThe Founders List gets early access to launch events and leagues.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06",
-      "instagram": "Compete. Leagues and events are coming to Fore Motion Golf.\nLink in bio to join the Founders List.\n\nSeason play and single-day events are on the way, with four TrackMan bays and up to six players per bay.\nThis is the space today, at 1518 Park Ave in Orange Park, the former DMV. Opening early 2027.\nThe Founders List gets early access to launch events and leagues.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "facebook": "Compete. Leagues and events are coming to Fore Motion Golf.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nSeason play and single-day events are on the way, with four TrackMan bays and up to six players per bay.\nThis is the space today, at 1518 Park Ave in Orange Park, the former DMV. Opening early 2027.\nThe Founders List gets early access to launch events and leagues.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-06",
+      "instagram": "Compete. Leagues and events are coming to Fore Motion Golf.\nLink in bio to join the Founders List.\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nSeason play and single-day events are on the way, with four TrackMan bays and up to six players per bay.\nThis is the space today, at 1518 Park Ave in Orange Park, the former DMV. Opening early 2027.\nThe Founders List gets early access to launch events and leagues.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
       "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
       "linkedin": "",
       "linkedinComment": "",
       "repost": "",
       "questions": [
-        "The reel shows the host of the walkthrough video on camera, not named. Is he happy to appear, or should a later cut keep him out of frame?",
         "Want a specific Instagram sound on this reel? Write \"Sound: title by artist\" in a note here and we will set it before it posts. Sounds come from the Instagram library this account can use."
       ],
       "ai": {},
@@ -371,13 +337,13 @@
         {
           "src": "media/2026-10-06/reel.mp4",
           "role": "video",
-          "alt": "A 19 second vertical video walking through the empty Fore Motion Golf space in Orange Park, a long carpeted room with the old service counters along one side. The Fore Motion Golf logo sits at the top and a deep green band at the bottom carries the lines Compete. Leagues. Four bays. Events. First access. with foremotiongolf.com. It ends on a deep green card: Join the Founders List, early access to launch events and leagues, foremotiongolf.com.",
+          "alt": "A 20 second vertical video. Owner Justin Myrick walks the empty, carpeted room in Orange Park where the Fore Motion Golf bays go, past the old service counters. The video cuts to a 3D concept view, labeled Concept, of a simulator bay with a golfer on the tee mat and spectator counters with stools in front, then back to Justin gesturing in the room. A deep green band at the bottom carries the lines Compete. Owner Justin Myrick walks the space. Leagues. Four bays. Leagues and events, four bays, as planned. Events. First access. with foremotiongolf.com, and the logo sits at the top. It ends on a deep green card: Join the Founders List, early access to launch events and leagues, foremotiongolf.com.",
           "platforms": null
         },
         {
           "src": "media/2026-10-06/reel-cover.jpg",
           "role": "thumbnail",
-          "alt": "A man in a mint green polo walks down a long, empty carpeted room past old service counters, with the Fore Motion Golf logo at the top and a deep green band below that reads Compete. Leagues and events at Fore Motion Golf, and foremotiongolf.com.",
+          "alt": "Owner Justin Myrick in a mint green polo walks down a long, empty carpeted room past old service counters, with the Fore Motion Golf logo at the top and a deep green band below that reads Compete. Owner Justin Myrick walks the space, and foremotiongolf.com.",
           "platforms": null
         }
       ]
@@ -545,8 +511,8 @@
         "facebook",
         "instagram"
       ],
-      "facebook": "The bar and lounge.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08\n\nThis is where the bar goes at Fore Motion Golf, inside the former DMV at 1518 Park Ave in Orange Park.\nA bar and lounge with canned beer and seltzers, plus four TrackMan bays for up to six players each.\nThe finished bar in this video is a concept rendering. Opening early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08",
-      "instagram": "The bar and lounge.\nLink in bio to join the Founders List.\n\nThis is where the bar goes at Fore Motion Golf, inside the former DMV at 1518 Park Ave in Orange Park.\nA bar and lounge with canned beer and seltzers, plus four TrackMan bays for up to six players each.\nThe finished bar in this video is a concept rendering. Opening early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "facebook": "The bar and lounge.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nThis is where the bar goes at Fore Motion Golf, inside the former DMV at 1518 Park Ave in Orange Park.\nA bar and lounge with canned beer and seltzers, plus four TrackMan bays for up to six players each.\nThe finished bar is from our 3D venue concept. Opening early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-08",
+      "instagram": "The bar and lounge.\nLink in bio to join the Founders List.\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nThis is where the bar goes at Fore Motion Golf, inside the former DMV at 1518 Park Ave in Orange Park.\nA bar and lounge with canned beer and seltzers, plus four TrackMan bays for up to six players each.\nThe finished bar is from our 3D venue concept. Opening early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
       "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
       "linkedin": "",
       "linkedinComment": "",
@@ -561,13 +527,13 @@
         {
           "src": "media/2026-10-08/reel.mp4",
           "role": "video",
-          "alt": "A walk through the empty former DMV in Orange Park where the Fore Motion Golf bar will go, with a concept image of a finished bar, labeled Concept. On-screen text: The bar goes here. A bar and lounge. Canned beer and seltzers. Opening early 2027, 1518 Park Ave, Orange Park, FL. Join the Founders List. The logo is at the top and foremotiongolf.com at the foot throughout.",
+          "alt": "A 23 second video. Owner Justin Myrick stands at the empty front counter of the former DMV in Orange Park and gestures across it where the Fore Motion Golf bar will go. The video cuts to a 3D concept view, labeled Concept, gliding down a finished bar with a stone counter, cognac stools, a bartender and a seated guest, then back to Justin walking the counter. On-screen text: The bar goes here. Owner Justin Myrick walks the space. The bar and lounge. Canned beer and seltzers. Opening early 2027, 1518 Park Ave, Orange Park, FL. Join the Founders List. The logo is at the top and foremotiongolf.com at the foot throughout.",
           "platforms": null
         },
         {
           "src": "media/2026-10-08/reel-cover.jpg",
           "role": "thumbnail",
-          "alt": "A man in a mint polo gestures across the empty front counter of the former DMV, under the Fore Motion Golf logo, with the line The bar goes here and foremotiongolf.com at the foot.",
+          "alt": "Owner Justin Myrick in a mint polo gestures across the empty front counter of the former DMV, under the Fore Motion Golf logo, with the lines The bar goes here and Owner Justin Myrick walks the space, and foremotiongolf.com at the foot.",
           "platforms": null
         }
       ]
@@ -735,8 +701,8 @@
         "facebook",
         "instagram"
       ],
-      "facebook": "Walk the space.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10\n\nTake a walk through 1518 Park Ave in Orange Park, the former DMV, before the build.\nIn the door, past the room where four TrackMan bays go, up to six players each, then the putting area, and the bar and lounge.\nOpening early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10",
-      "instagram": "Walk the space.\nLink in bio to join the Founders List.\n\nTake a walk through 1518 Park Ave in Orange Park, the former DMV, before the build.\nIn the door, past the room where four TrackMan bays go, up to six players each, then the putting area, and the bar and lounge.\nOpening early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
+      "facebook": "Walk the space.\nhttps://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nTake a walk through 1518 Park Ave in Orange Park, the former DMV, before the build.\nIn the door, past the room where four TrackMan bays go, up to six players each, then the putting area, and the bar and lounge.\nOpening early 2027.\n\nJoin the Founders List: https://foremotiongolf.com/?utm_source=facebook&utm_medium=social&utm_campaign=2026-10-10",
+      "instagram": "Walk the space.\nLink in bio to join the Founders List.\n\nOwner Justin Myrick walks the space as it is today, with a look at the concept for what goes where.\nTake a walk through 1518 Park Ave in Orange Park, the former DMV, before the build.\nIn the door, past the room where four TrackMan bays go, up to six players each, then the putting area, and the bar and lounge.\nOpening early 2027.\n\nJoin the Founders List at foremotiongolf.com, link in bio.",
       "firstComment": "#OrangeParkFL #ClayCountyFL #JacksonvilleGolf #IndoorGolf #GolfSimulator #TrackMan #FloridaGolf #ForeMotionGolf",
       "linkedin": "",
       "linkedinComment": "",
@@ -751,13 +717,13 @@
         {
           "src": "media/2026-10-10/reel.mp4",
           "role": "video",
-          "alt": "A 21 second walk through the empty former DMV that will become Fore Motion Golf: the front lobby by the door, the long room where the four TrackMan bays go, the spot for the putting area, and the counter where the bar and lounge go. Lines on screen: Walk the space, Four TrackMan bays, Up to six players each, A putting area, A bar and lounge. It ends on Join the Founders List, Opening early 2027, 1518 Park Ave, Orange Park, FL, and foremotiongolf.com.",
+          "alt": "A 22 second walk through the empty former DMV that will become Fore Motion Golf with owner Justin Myrick: the front lobby by the door, the long room where the four TrackMan bays go, the spot for the putting area, and the counter where the bar and lounge go. Two 3D concept views, each labeled Concept, cut in: a push into a finished simulator bay with a golfer on the tee mat, and a track along the central putting green. Lines on screen: Walk the space, Owner Justin Myrick walks the space, Four TrackMan bays, The bays, as planned, A putting area, The putting green, A bar and lounge. It ends on Join the Founders List, Opening early 2027, 1518 Park Ave, Orange Park, FL, and foremotiongolf.com.",
           "platforms": null
         },
         {
           "src": "media/2026-10-10/reel-cover.jpg",
           "role": "thumbnail",
-          "alt": "A man in a mint polo walks down the long, empty room of the former DMV with his arm out along the old counter, under the Fore Motion Golf logo. A deep green band reads Four TrackMan bays, with foremotiongolf.com at the foot.",
+          "alt": "Owner Justin Myrick in a mint polo walks down the long, empty room of the former DMV with his arm out along the old counter, under the Fore Motion Golf logo. A deep green band reads Four TrackMan bays, with foremotiongolf.com at the foot.",
           "platforms": null
         }
       ]

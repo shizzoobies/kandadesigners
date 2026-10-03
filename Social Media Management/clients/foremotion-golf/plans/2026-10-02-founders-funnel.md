@@ -198,7 +198,11 @@ Skill-based competition. Restrictions apply. See Official Rules."
    Putt Challenge. **Open.**
 4. **Does Hannah have editable source files** for her graphics (for reuse later, not this plan)?
    **Open.**
-5. **Who is on camera in the walkthroughs?** Named in captions, or kept out of frame. **Open.**
+5. **Who is on camera in the walkthroughs?** It is Justin Myrick, the owner. **Decided
+   2026-10-02 night (Alex): name him.** The four walkthrough reels (10/4, 10/6, 10/8, 10/10)
+   are being rebuilt to intercut him with captures from the interactive 3D venue concept
+   Codex shipped to foremotiongolf.com the same day (`/golf-3d/v2/`, a three.js roof
+   cutaway); every concept shot carries the "Concept" tab per the brand guide.
 6. **Can posts say "thirty-foot bar", "equipment repairs", "watch parties", "leagues"?** They
    are in the walkthrough captions and the splash bullets, not in content-facts. **Open.**
 7. **Fonts for social: Oswald and Barlow** (free, close to Hannah's set) unless Alex names the
