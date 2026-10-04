@@ -47,6 +47,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <input type="email" id="fc-email" name="email" required autocomplete="email" placeholder="your@email.com" class="field flex-1" />
             <button type="submit" id="fc-btn" class="btn-accent shrink-0">Start the course</button>
           </form>
+          <p class="mt-4 text-sm leading-relaxed text-muted">Your name and email go to our business inbox through Resend and to our course list in Cloudflare D1. Signing up includes the occasional email described above, with an unsubscribe link. Course access uses a one-year cookie; analytics is optional. <a href="/privacy/" class="text-accent underline">Privacy details</a>.</p>
           <p id="fc-status" class="sr-only" role="status" aria-live="polite"></p>
           <p id="fc-error" tabindex="-1" class="mt-4 hidden text-sm leading-relaxed text-muted" role="alert"></p>
         </div>
@@ -115,14 +116,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         });
         const res = await fetch('/api/course-lead', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...window.KAPrivacy?.requestHeaders() },
           body: JSON.stringify(data),
         });
         const result = await res.json();
         if (res.ok && result.ok) {
-          if (window.fbq) window.fbq('track', 'Lead');
-          // The token ties this browser's course progress to the lead in
-          // the admin's analytics; '1' is the anonymous fallback.
+          window.KAPrivacy?.trackLead();
+          // Access is necessary for the requested course. Its existing token
+          // is used for course analytics only with a separate analytics choice.
           document.cookie = 'ka_course=' + encodeURIComponent(result.t || '1') + '; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
           if (fcStatus) fcStatus.textContent = '';
           const destinations: Record<string, string> = {

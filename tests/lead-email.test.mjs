@@ -40,7 +40,7 @@ for (const [form_type, extra, subject] of [
   ['training', { organization: 'Example', need: 'Onboarding', lms: 'Example LMS', accessibility_requirement: 'WCAG AA' }, 'New training inquiry'],
 ]) {
   test(`${form_type} preserves intake and subject`, async () => {
-    assert.equal((await lead({ env, request: request({ ...sample, form_type, ...extra }, { Cookie: 'ka_src=referral' }) })).status, 200);
+    assert.equal((await lead({ env, request: request({ ...sample, form_type, ...extra }, { Cookie: 'ka_privacy=v1.a0.m1; ka_src=referral' }) })).status, 200);
     assert.equal(calls[0].body.subject, `${subject} | ka-performancefl.com`);
     for (const [key, value] of Object.entries(extra)) assert.ok(calls[0].body.text.includes(`${key}: ${value}`));
     assert.ok(calls[0].body.text.includes('source: referral'));
@@ -105,7 +105,7 @@ function database({ fail = false } = {}) {
 }
 test('course preserves D1 upsert and original token and sends business notification', async () => {
   const db = database();
-  const response = await course({ env: { ...env, ADMIN_DB: db }, request: request({ name: 'Visitor', email: sample.email }, { Cookie: 'ka_src=partner' }, '/api/course-lead') });
+  const response = await course({ env: { ...env, ADMIN_DB: db }, request: request({ name: 'Visitor', email: sample.email }, { Cookie: 'ka_privacy=v1.a0.m1; ka_src=partner' }, '/api/course-lead') });
   assert.deepEqual(await response.json(), { ok: true, t: 'existing-unsubscribe-token' });
   assert.match(db.queries[0].sql, /ON CONFLICT\(email\) DO UPDATE/);
   assert.match(db.queries[0].sql, /times = course_leads.times \+ 1/);

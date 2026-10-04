@@ -1,0 +1,20 @@
+#ka-privacy-root { font-family: "Atkinson Hyperlegible Next", system-ui, sans-serif; color: #221c15; font-size: 16px; line-height: 1.5; }
+#ka-privacy-root *, #ka-privacy-root *::before, #ka-privacy-root *::after { box-sizing: border-box; }
+#ka-privacy-banner { position: fixed; left: 16px; bottom: 16px; z-index: 10001; width: min(520px, calc(100vw - 32px)); padding: 20px; background: #fffdf9; border: 1px solid #6c635a; box-shadow: 0 6px 28px #221c152b; max-height: calc(100dvh - 32px); overflow: auto; }
+#ka-privacy-banner[hidden] { display: none; }
+#ka-privacy-banner:not([hidden]) ~ #ka-privacy-settings { display: none; }
+#ka-privacy-root h2 { font: 700 1.3rem/1.25 "Schibsted Grotesk", system-ui, sans-serif; color: #221c15; margin: 0 0 12px; }
+#ka-privacy-root p { margin: 0 0 16px; }
+#ka-privacy-root a { color: #9a3412; text-decoration: underline; }
+.ka-privacy-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+#ka-privacy-root button { font: inherit; cursor: pointer; min-height: 44px; border: 1px solid #6c635a; padding: 8px 14px; border-radius: 4px; color: #221c15; background: #fffdf9; text-align: center; }
+#ka-privacy-root button:hover { background: #f6e5bd; }
+#ka-privacy-root :focus-visible { outline: 3px solid #9a3412; outline-offset: 3px; }
+#ka-privacy-settings { position: fixed; bottom: 8px; left: 8px; z-index: 60; font-size: 13px !important; box-shadow: 0 2px 6px #221c152b; }
+#ka-privacy-dialog { position: fixed; inset: 0; margin: auto; width: min(580px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 24px; overflow: auto; border: 1px solid #6c635a; border-radius: 8px; color: #221c15; background: #fffdf9; }
+#ka-privacy-dialog::backdrop { background: #221c1599; }
+#ka-privacy-dialog label { display: flex; align-items: flex-start; gap: 12px; margin: 20px 0; cursor: pointer; }
+#ka-privacy-dialog input { appearance: auto; width: 22px; height: 22px; flex: 0 0 22px; margin: 2px 0 0; accent-color: #9a3412; }
+#ka-privacy-error:empty { display: none; }
+#ka-privacy-error:not(:empty) { position: fixed; left: 16px; right: 16px; top: 16px; z-index: 10002; padding: 16px; background: #fffdf9; border: 2px solid #9a3412; }
+@media (max-width: 420px) { #ka-privacy-banner { padding: 16px; } #ka-privacy-dialog { padding: 20px; } .ka-privacy-actions button { flex: 1 1 40%; } }

@@ -1,8 +1,11 @@
+import { hasConsent } from '../../lib/privacy-consent.js';
+import { readLeadRequest } from '../../lib/lead-email.js';
+
 /* =============================================
    K & A PERFORMANCE — course analytics beacon
    Cloudflare Pages Function — POST /api/course-event
    Own analytics for the remastered course: one row per view or done,
-   tied to the lead's token when the gate cookie carries one. Fire and
+   tied to the lead's token only when analytics is accepted. Fire and
    forget from the client; this endpoint never has anything to say back.
    ============================================= */
 
@@ -15,8 +18,10 @@ const EVENTS = new Set(['view', 'done']);
 
 export async function onRequestPost(context) {
   const { request, env } = context;
+  // Fail closed for old browsers, direct requests and declined analytics.
+  if (!hasConsent(request, 'analytics')) return new Response(null, { status: 204 });
   try {
-    const body = await request.json();
+    const body = await readLeadRequest(request);
     const chapter = String(body.c ?? '');
     const event = String(body.e ?? '');
     if (!CHAPTERS.has(chapter) || !EVENTS.has(event)) {

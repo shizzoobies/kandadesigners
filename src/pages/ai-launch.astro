@@ -664,6 +664,7 @@ const answers = [
               <div>
                 <label for="al-phone" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Phone</label>
                 <input type="tel" id="al-phone" name="phone" required autocomplete="tel" placeholder="(352) 555-0142" class="field" />
+                <p class="mt-2 text-sm text-muted">For your enquiry. Providing a number does not opt you into texts. <a href="/privacy/" class="text-accent underline">Privacy details</a>.</p>
               </div>
               <div>
                 <label for="al-email" class="mb-3 block font-mono text-xs uppercase tracking-[0.2em] text-muted">Email</label>
@@ -1036,7 +1037,7 @@ const answers = [
 </style>
 
 <script>
-  // Attribution read. The write happens sitewide in BaseLayout (first touch
+  // Attribution read. The consent-gated write happens sitewide (first touch
   // wins there, whatever page the ?src= link landed on); this page only
   // copies the stored value into the hidden field. Kept in its own module,
   // fully guarded: a malformed cookie must never take the form's submit
@@ -1044,8 +1045,7 @@ const answers = [
   // no JS means no false attribution either way.
   try {
     const raw =
-      document.cookie.match(/(?:^|;\s*)ka_src=([^;]+)/)?.[1] ??
-      new URLSearchParams(location.search).get('src');
+      window.KAPrivacy?.source() || '';
     let src = raw;
     try {
       src = raw ? decodeURIComponent(raw) : raw;
@@ -1175,8 +1175,8 @@ const answers = [
         const result = await res.json();
 
         if (res.ok && result.success) {
-          // Success path only; guarded because ad blockers stop fbq existing.
-          if (window.fbq) window.fbq('track', 'Lead');
+          // Success path only; the privacy helper checks current marketing permission.
+          window.KAPrivacy?.trackLead();
           if (statusEl) statusEl.textContent = '';
           form.classList.add('hidden');
           successEl?.classList.remove('hidden');

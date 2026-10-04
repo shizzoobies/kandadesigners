@@ -19,7 +19,8 @@
   const requestedIndex = lesson.chapters.findIndex(c => c.id === requestedChapter);
   if (requestedIndex >= 0) state.chapter = requestedIndex;
   function track(event, chapter) {
-    fetch('/api/course-event', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ c: chapter, e: event }), keepalive: true }).catch(() => {});
+    if (!window.KAPrivacy?.allows('analytics')) return;
+    fetch('/api/course-event', { method: 'POST', headers: { 'Content-Type': 'application/json', ...window.KAPrivacy.requestHeaders() }, body: JSON.stringify({ c: chapter, e: event }), keepalive: true }).catch(() => {});
   }
   const audio = $('narration');
   let activeStage = 'listen', setupStep = 0;

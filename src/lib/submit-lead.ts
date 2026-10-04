@@ -12,7 +12,7 @@ export function submitLead(formType: string, data: Record<string, string>) {
   }
   return fetch('/api/lead', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json', ...window.KAPrivacy?.requestHeaders() },
     body: JSON.stringify({ ...payload, request_id: requestId }),
   });
 }

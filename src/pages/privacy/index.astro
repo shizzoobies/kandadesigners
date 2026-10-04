@@ -26,22 +26,28 @@ const lastUpdated = 'October 3, 2026';
         <p class="text-lg leading-relaxed text-muted">
           K &amp; A Performance is a web design and AI integration studio based in Florida. This
           policy explains what information <strong class="text-ink">ka-performancefl.com</strong>
-          collects, why, and who it is shared with. We keep the site deliberately light: there is
-          no account system, no newsletter, and no third-party ads served on these pages.
+          collects, why, and who it is shared with. This includes enquiries, optional advertising
+          measurement, AI tools, and free course signup and learning features.
         </p>
       </div>
 
       <div>
         <h2 class="font-display text-2xl md:text-3xl">Information you give us</h2>
         <p class="mt-5 leading-relaxed text-muted">
-          When you use our contact form or the &ldquo;Start a project&rdquo; form, we collect what
-          you type into it: your name, email address, and any company name, service interest,
+          When you use our contact, project, AI Launch or training enquiry forms, we collect what
+          you type into it: your name, email address, phone number where requested, and any company name, service interest,
           budget range, or project details you choose to share. These submissions are delivered to
           us by <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Resend</a>,
           an email delivery service that passes the message to our business inbox. We use it to reply to
           you and to keep ordinary business records of the enquiry. We do not sell it, and we do not
           add you to a mailing list.
         </p>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl md:text-3xl">Free course and optional learning analytics</h2>
+        <p class="mt-5 leading-relaxed text-muted">Course signup collects your email and any first name you provide. It is stored in Cloudflare D1 and sent through Resend to our business inbox. The signup includes occasional emails, as described beside the form; each includes an unsubscribe link. Enquiry forms do not subscribe you to that list.</p>
+        <p class="mt-5 leading-relaxed text-muted">If you separately accept Analytics, the interactive first-session course sends chapter views and completions to our course database. Where the course access cookie contains a signup token, those events can be linked to your course signup. Rejecting or withdrawing analytics stops new events and keeps your access and saved local progress. It does not delete earlier records or unsubscribe you from emails.</p>
       </div>
 
       <div id="sms" class="scroll-mt-28">
@@ -52,7 +58,7 @@ const lastUpdated = 'October 3, 2026';
           scheduling, confirmations, reschedules and reminders, replies to what you asked, project
           updates, and invoice or billing notices. We do not send marketing or promotional text
           messages, and agreeing to texts is never a condition of buying anything from us. We do
-          not collect mobile numbers through the forms on this site.
+          not treat a phone number entered on an enquiry form as permission to send texts.
         </p>
         <p class="mt-5 leading-relaxed text-muted">
           We keep a record of the number, the consent you gave, and the date you gave it, because
@@ -87,20 +93,28 @@ const lastUpdated = 'October 3, 2026';
           Some pages offer a chat assistant that answers questions about our work and helps scope a
           project. The messages you type are sent to
           <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener" class="text-accent underline underline-offset-4 hover:text-accent-hot">Anthropic</a>
-          to generate a reply, and the reply is returned to your browser. We do not store these
-          conversations on our servers. Please do not type sensitive personal information, passwords,
+          to generate a reply, and the reply is returned to your browser. The site guide endpoint
+          does not write chat conversations to our database. This does not describe provider or
+          infrastructure logs or their retention. Please do not type sensitive personal information, passwords,
           or confidential material into the chat.
         </p>
       </div>
 
       <div>
+        <h2 class="font-display text-2xl md:text-3xl">Voice demo</h2>
+        <p class="mt-5 leading-relaxed text-muted">If you choose Start talking in the services-page voice demo, the site connects to ElevenLabs and asks for microphone access. Audio you provide is sent to ElevenLabs for the conversation. Do not share sensitive or confidential information. Ending the call stops that conversation; it does not promise deletion of provider records.</p>
+      </div>
+
+      <div>
         <h2 class="font-display text-2xl md:text-3xl">Advertising measurement (Meta pixel)</h2>
         <p class="mt-5 leading-relaxed text-muted">
-          This site uses Meta pixel technology to measure how our advertising performs. The pixel
+          If you accept Marketing in Privacy choices, this site loads Meta pixel technology to
+          measure how our advertising performs. Before that choice, it does not load the pixel or
+          send its events. The pixel
           records that a page was viewed and that a contact form was completed, along with standard
           technical information such as your browser, device, and IP address, and it may set or read
-          cookies. We use this only to understand whether our ads are working, not to build a profile
-          of you.
+          cookies. Meta handles information it receives under its own privacy policy. We do not
+          send enquiry field values to Meta through our Lead event.
         </p>
         <p class="mt-5 leading-relaxed text-muted">
           You can control how this information is used for advertising through your
@@ -126,9 +140,14 @@ const lastUpdated = 'October 3, 2026';
       <div>
         <h2 class="font-display text-2xl md:text-3xl">Cookies</h2>
         <p class="mt-5 leading-relaxed text-muted">
-          We do not use cookies for analytics or personalisation of our own. The Meta pixel described
-          above may set cookies, and Cloudflare may set cookies necessary for security and
-          performance. You can block or delete cookies in your browser at any time.
+          The ka_privacy cookie remembers your choices for up to 180 days. After Marketing is
+          accepted, ka_src can remember the referring partner for up to 90 days and is used with
+          a later enquiry or course signup. Meta may set its own advertising cookies. The ka_course
+          cookie lasts up to one year, is renewed when you access course pages, and keeps the requested
+          course available. Course progress and practice notes can be saved in your browser's local
+          storage. Those learning features do not require analytics or marketing permission.
+          Cloudflare can also use necessary security cookies. Cookie lifetimes do not specify
+          how long business records or provider logs are retained.
         </p>
       </div>
 
@@ -137,7 +156,12 @@ const lastUpdated = 'October 3, 2026';
         <p class="mt-5 leading-relaxed text-muted">
           You can ask us what information we hold about you, ask us to correct it, or ask us to
           delete it. Email <a href="mailto:alex@ka-performancefl.com" class="text-accent underline underline-offset-4 hover:text-accent-hot">alex@ka-performancefl.com</a>
-          and we will handle it. You can stop our text messages at any time by replying
+          so we can review your request. Open <button type="button" data-privacy-open class="text-accent underline">Privacy choices</button>
+          to accept, reject, customize or withdraw optional analytics and marketing. Rejecting
+          these does not stop enquiry forms, course access or the AI tools you choose to use.
+          Withdrawing Marketing reloads the page to stop the loaded pixel and removes its
+          accessible first-party cookies and our referral cookie. Save unfinished form text first.
+          This does not recall information already sent. You can stop our text messages at any time by replying
           <strong class="text-ink">STOP</strong>. You can also decline to use the forms or chat
           entirely, and browse the site with tracking protection enabled.
         </p>

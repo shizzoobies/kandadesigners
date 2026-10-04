@@ -226,7 +226,7 @@ const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonv
         if (res.ok && result.success) {
           // Meta Pixel: success path only, never on submit attempt or validation
           // failure. Guarded because ad blockers stop fbq from ever being defined.
-          if (window.fbq) window.fbq('track', 'Lead');
+          window.KAPrivacy?.trackLead();
           if (statusEl) statusEl.textContent = '';
           form.classList.add('hidden');
           successEl?.classList.remove('hidden');
