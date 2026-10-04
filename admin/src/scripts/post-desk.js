@@ -120,8 +120,13 @@ function applyState(s) {
 
 function buildItems() {
   items = [];
+  // Reels already in Metricool that got a new Instagram sound come first, as one group, so the sounds can be
+  // checked one after another. Everything else groups by day as before.
+  const soundChecks = data.posts.filter((p) => p.soundCheck)
+    .sort((a, b) => `${a.date} ${a.time || '99'}`.localeCompare(`${b.date} ${b.time || '99'}`));
+  for (const p of soundChecks) items.push({ ...p, type: 'post', group: 'Sound check' });
   const byDate = {};
-  for (const p of data.posts) (byDate[p.date] ||= []).push({ ...p, type: 'post' });
+  for (const p of data.posts) if (!p.soundCheck) (byDate[p.date] ||= []).push({ ...p, type: 'post' });
   for (const s of data.stories) (byDate[s.date] ||= []).push({ ...s, kind: 'story', type: 'story', time: '', title: 'Story with link sticker' });
   for (const d of Object.keys(byDate).sort()) {
     const g = byDate[d].sort((a, b) => (a.time || '99').localeCompare(b.time || '99'));
@@ -150,7 +155,7 @@ function renderList() {
     html += `<button type="button" class="d-item ${st}" data-id="${esc(it.id)}" aria-current="${it.id === current}">
       <span class="t">${esc(fmtTime(it.time))}</span>
       <span class="n">${esc(it.title)}</span>
-      <span class="k">${esc(kindLabel(it))}: ${status(st, label)}</span></button>`;
+      <span class="k">${esc(it.soundCheck ? `Sound check, ${kindLabel(it).toLowerCase()}` : kindLabel(it))}: ${status(st, label)}</span></button>`;
   }
   nav.innerHTML = html + '</div>';
   renderTally();
@@ -172,7 +177,8 @@ function mediaBlock(it) {
   if (both && shown === 'instagram') return toggle + slidesBlock(it, imgs);
   if (vids.length) {
     return toggle + `<div class="stage"><video controls playsinline preload="metadata" ${thumb ? `poster="${esc(mediaUrl(thumb))}"` : ''} src="${esc(mediaUrl(vids[0]))}"></video></div>
-      <p class="alt">Tap play for sound.${it.music ? ` Music: ${esc(it.music)}.` : ''}</p>`;
+      <p class="alt">Tap play for sound.${it.music ? ` Music: ${esc(it.music)}.` : ''}</p>${it.instagramSound ? `
+      <p class="alt">Instagram sound: ${esc(it.instagramSound)}.${it.soundUrl ? ` <a href="${esc(it.soundUrl)}" target="_blank" rel="noopener">Listen on Instagram</a>.` : ''}${it.soundCheck ? ' On Instagram this sound plays and the music in the video above is muted.' : ''}</p>` : ''}`;
   }
   if (imgs.length) return slidesBlock(it, imgs) + (it.kind === 'linkedin'
     ? `<p class="alt">Posts on LinkedIn as a swipeable document: people page through these slides in the feed. No video, no music.</p>` : '');
@@ -287,7 +293,7 @@ function drawDetail() {
   const capText = it[shownTab];
   const comment = shownTab === 'instagram' ? it.firstComment : shownTab === 'linkedin' ? it.linkedinComment : '';
   el.innerHTML = `${back}<div class="d-card">
-    <div class="d-meta"><span class="caps">${esc(kindLabel(it))}</span><span>${esc(fmtDay(it.date))}, ${esc(fmtTime(it.time))}</span><span>${esc(it.pillar || '')}</span></div>
+    <div class="d-meta"><span class="caps">${esc(it.soundCheck ? `Sound check, ${kindLabel(it).toLowerCase()}` : kindLabel(it))}</span><span>${esc(fmtDay(it.date))}, ${esc(fmtTime(it.time))}</span><span>${esc(it.pillar || '')}</span></div>
     <h2 class="hook">${esc(it.hook || it.title)}</h2>
     ${it.kind === 'native' ? `<p>Scheduled directly in Facebook. Nothing to approve here.</p>` : `
     <div class="d-body">
