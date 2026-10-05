@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { makeD1, ATTRIBUTION_MIGRATIONS } from './helpers/d1.js';
 import { fakeFetch } from './helpers/fetch.js';
-import { metricoolHandler, IG_POST, BY_ENDPOINT, timeline } from './fixtures/metricool.js';
+import { metricoolHandler, IG_POST, YT_VIDEO, BY_ENDPOINT, timeline } from './fixtures/metricool.js';
 import { syncSite, matchesProvider, sameUrl } from '../src/lib/analytics-sync.js';
 
 const ENV = { METRICOOL_BASE: 'https://app.metricool.com/api', METRICOOL_USER_ID: '5465573', METRICOOL_USER_TOKEN: 'secret-123' };
@@ -33,6 +33,11 @@ describe('matchesProvider', () => {
   it('sameUrl ignores www and a trailing slash, and rejects non-URLs', () => {
     expect(sameUrl('https://www.x.test/a/', 'https://x.test/a')).toBe(true);
     expect(sameUrl('nope', 'nope')).toBe(false);
+  });
+
+  it('sameUrl keeps the query, so two watch URLs with different v= differ', () => {
+    expect(sameUrl('https://www.youtube.com/watch?v=AAA', 'https://youtube.com/watch?v=BBB')).toBe(false);
+    expect(sameUrl('https://www.youtube.com/watch?v=AAA', 'https://youtube.com/watch?v=AAA')).toBe(true);
   });
 });
 
@@ -122,5 +127,41 @@ describe('syncSite', () => {
     ]);
     expect(log.warn).toHaveBeenCalledTimes(1);
     expect(log.warn.mock.calls[0][0]).toContain('instagram reach');
+  });
+
+  it('links only the YouTube video whose watch URL matches, not every video', async () => {
+    const second = { ...YT_VIDEO, videoId: 'ZZZ', watchUrl: 'https://www.youtube.com/watch?v=ZZZ' };
+    await run(metricoolHandler({ byEndpoint: { ...BY_ENDPOINT, 'posts/youtube': [YT_VIDEO, second] } }));
+    expect(await all("SELECT native_id, metricool_id FROM posts WHERE network = 'youtube' ORDER BY native_id")).toEqual([
+      { native_id: 'HopxcccH2Uw', metricool_id: '383688294' },
+      { native_id: 'ZZZ', metricool_id: null },
+    ]);
+  });
+
+  it('keeps stored account numbers when the window moves past them', async () => {
+    const series = (points) => ({ 'instagram/followers': { body: timeline('followers', points) } });
+    await run(metricoolHandler({ timelines: series([{ dateTime: '2026-10-03T12:00:00+0200', value: 2 }, { dateTime: '2026-10-04T12:00:00+0200', value: 3 }]) }));
+    await run(metricoolHandler({ timelines: series([{ dateTime: '2026-10-04T12:00:00+0200', value: 3 }, { dateTime: '2026-10-05T12:00:00+0200', value: 4 }]) }));
+    expect(await all("SELECT day, followers, followers_delta FROM account_daily WHERE network = 'instagram' ORDER BY day")).toEqual([
+      { day: '2026-10-03', followers: 2, followers_delta: null },
+      { day: '2026-10-04', followers: 3, followers_delta: 1 },
+      { day: '2026-10-05', followers: 4, followers_delta: 1 },
+    ]);
+  });
+
+  it('keeps a stored account metric when its timeline fails on a later run', async () => {
+    const followers = { 'instagram/followers': { body: timeline('followers', [{ dateTime: '2026-10-04T12:00:00+0200', value: 3 }]) } };
+    await run(metricoolHandler({ timelines: { ...followers, 'instagram/reach': { body: timeline('reach', [{ dateTime: '2026-10-04T12:00:00+0200', value: 7 }]) } } }));
+    expect(await adb.prepare("SELECT reach FROM account_daily WHERE network = 'instagram' AND day = '2026-10-04'").first('reach')).toBe(7);
+    await run(metricoolHandler({ timelines: { ...followers, 'instagram/reach': { status: 500, body: 'boom' } } }));
+    expect(await adb.prepare("SELECT reach FROM account_daily WHERE network = 'instagram' AND day = '2026-10-04'").first('reach')).toBe(7);
+  });
+
+  it('keeps a stored post field when a later reply leaves it out', async () => {
+    await run(metricoolHandler());
+    const before = await adb.prepare("SELECT url FROM posts WHERE native_id = '18000000000000001'").first('url');
+    expect(before).toBe('https://www.instagram.com/p/AAA111/');
+    await run(metricoolHandler({ byEndpoint: { ...BY_ENDPOINT, 'posts/instagram': [{ ...IG_POST, url: undefined }] } }));
+    expect(await adb.prepare("SELECT url FROM posts WHERE native_id = '18000000000000001'").first('url')).toBe(before);
   });
 });

@@ -50,6 +50,9 @@ describe('metricoolGet', () => {
   it('scrubs the token from an error and reports non-JSON', async () => {
     const bad = fakeFetch(() => ({ status: 401, body: 'bad token secret-123' }));
     await expect(metricoolGet({ env: ENV, path: 'x', fetchImpl: bad })).rejects.toThrow('x returned 401: bad token <token>');
+    const long = fakeFetch(() => ({ status: 401, body: 'x'.repeat(155) + 'secret-123' + 'y'.repeat(50) }));
+    const err = await metricoolGet({ env: ENV, path: 'x', fetchImpl: long }).catch((e) => e);
+    expect(err.message).not.toContain('secr');
     const html = fakeFetch(() => ({ body: '<html>' }));
     await expect(metricoolGet({ env: ENV, path: 'x', fetchImpl: html })).rejects.toThrow('x did not return JSON');
   });

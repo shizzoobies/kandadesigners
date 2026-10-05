@@ -33,7 +33,7 @@ export async function metricoolGet({ env, path, params = {}, blogId, fetchImpl =
       continue;
     }
     const text = await res.text();
-    if (!res.ok) throw new Error(`${path} returned ${res.status}: ${scrub(text.slice(0, 160), env.METRICOOL_USER_TOKEN)}`);
+    if (!res.ok) throw new Error(`${path} returned ${res.status}: ${scrub(text, env.METRICOOL_USER_TOKEN).slice(0, 160)}`);
     try {
       return JSON.parse(text);
     } catch {
@@ -74,12 +74,19 @@ export async function refreshSitesMap(db, adb, nowIso) {
 }
 
 const POST_UPSERT = `INSERT INTO posts (site_slug, network, native_id, type, url, published_at, title) VALUES (?, ?, ?, ?, ?, ?, ?)
-  ON CONFLICT(site_slug, network, native_id) DO UPDATE SET type = excluded.type, url = excluded.url,
-  published_at = excluded.published_at, title = excluded.title`;
+  ON CONFLICT(site_slug, network, native_id) DO UPDATE SET type = COALESCE(excluded.type, posts.type), url = COALESCE(excluded.url, posts.url),
+  published_at = COALESCE(excluded.published_at, posts.published_at), title = COALESCE(excluded.title, posts.title)`;
 const METRIC_REPLACE = `INSERT OR REPLACE INTO post_metrics (site_slug, network, native_id, as_of, ${METRIC_COLUMNS.join(', ')})
   VALUES (?, ?, ?, ?, ${METRIC_COLUMNS.map(() => '?').join(', ')})`;
-const ACCOUNT_REPLACE = `INSERT OR REPLACE INTO account_daily (site_slug, network, day, followers, followers_delta, reach, impressions, views, interactions)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+const ACCOUNT_UPSERT = `INSERT INTO account_daily (site_slug, network, day, followers, followers_delta, reach, impressions, views, interactions)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  ON CONFLICT(site_slug, network, day) DO UPDATE SET
+  followers = COALESCE(excluded.followers, account_daily.followers),
+  followers_delta = COALESCE(excluded.followers_delta, account_daily.followers_delta),
+  reach = COALESCE(excluded.reach, account_daily.reach),
+  impressions = COALESCE(excluded.impressions, account_daily.impressions),
+  views = COALESCE(excluded.views, account_daily.views),
+  interactions = COALESCE(excluded.interactions, account_daily.interactions)`;
 const CAMPAIGN_JOIN = `UPDATE posts SET campaign_id = (SELECT pub.campaign_id FROM publications pub
   WHERE pub.site_slug = posts.site_slug AND pub.network = posts.network AND pub.metricool_id = posts.metricool_id)
   WHERE site_slug = ?`;
@@ -88,7 +95,7 @@ export function sameUrl(a, b) {
   const norm = (u) => {
     try {
       const x = new URL(String(u));
-      return `${x.hostname.replace(/^www\./, '')}${x.pathname.replace(/\/+$/, '')}`;
+      return `${x.hostname.replace(/^www\./, '')}${x.pathname.replace(/\/+$/, '')}${x.search}`;
     } catch {
       return null;
     }
@@ -137,7 +144,7 @@ export async function syncSite({ adb, site, env, nowMs = Date.now(), fetchImpl =
     .bind(site.site_slug, new Date(nowMs).toISOString(), trigger).run();
   const errors = {};
   const note = (key, err) => {
-    const message = scrub(String(err?.message ?? err).slice(0, 300), env.METRICOOL_USER_TOKEN);
+    const message = scrub(String(err?.message ?? err), env.METRICOOL_USER_TOKEN).slice(0, 300);
     errors[key] = errors[key] ? `${errors[key]}; ${message}` : message;
   };
   const get = (path, params, blogId) => metricoolGet({ env, path, params, blogId, fetchImpl, sleep });
@@ -185,8 +192,12 @@ export async function syncSite({ adb, site, env, nowMs = Date.now(), fetchImpl =
       }
       const rows = accountRows(series);
       if (rows.length) {
-        await adb.batch(rows.map((r) => adb.prepare(ACCOUNT_REPLACE)
-          .bind(site.site_slug, network, r.day, r.followers, r.followers_delta, r.reach, r.impressions, r.views, r.interactions)));
+        try {
+          await adb.batch(rows.map((r) => adb.prepare(ACCOUNT_UPSERT)
+            .bind(site.site_slug, network, r.day, r.followers, r.followers_delta, r.reach, r.impressions, r.views, r.interactions)));
+        } catch (err) {
+          note(network, `account days: ${err.message}`);
+        }
       }
     }
   } catch (err) {
