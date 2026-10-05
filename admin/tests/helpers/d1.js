@@ -9,14 +9,17 @@ import path from 'node:path';
 const require = createRequire(import.meta.url);
 const { DatabaseSync } = require('node:sqlite');
 
-const MIGRATIONS = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../migrations');
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+export const MIGRATIONS = path.resolve(HERE, '../../migrations');
+export const ATTRIBUTION_MIGRATIONS = path.resolve(HERE, '../../migrations-attribution');
 
 const plain = (row) => (row === undefined ? null : { ...row });
 
-export function makeD1() {
+// dir: which database's migrations to apply. ka-sites by default.
+export function makeD1(dir = MIGRATIONS) {
   const sqlite = new DatabaseSync(':memory:');
-  for (const file of readdirSync(MIGRATIONS).filter((f) => f.endsWith('.sql')).sort()) {
-    sqlite.exec(readFileSync(path.join(MIGRATIONS, file), 'utf8'));
+  for (const file of readdirSync(dir).filter((f) => f.endsWith('.sql')).sort()) {
+    sqlite.exec(readFileSync(path.join(dir, file), 'utf8'));
   }
 
   const prepare = (sql) => {

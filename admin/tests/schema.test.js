@@ -41,4 +41,11 @@ describe('migrations', () => {
     await add('pr:1');
     await expect(add('pr:1')).rejects.toThrow();
   });
+
+  it('0004 gives sites a nullable Metricool brand id', async () => {
+    const db = makeD1();
+    const { results } = await db.prepare('PRAGMA table_info(sites)').all();
+    const col = results.find((c) => c.name === 'metricool_brand_id');
+    expect(col).toMatchObject({ type: 'TEXT', notnull: 0 });
+  });
 });
