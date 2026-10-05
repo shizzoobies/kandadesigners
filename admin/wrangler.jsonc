@@ -23,8 +23,8 @@
     {
       "binding": "ATTRIBUTION_DB",
       "database_name": "ka-attribution",
-      // Written at approval L1 (Task 12) from `wrangler d1 create ka-attribution`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // Created at approval L1 on 2026-10-05.
+      "database_id": "5310cd55-2add-48b8-8261-02abc8582297",
       "migrations_dir": "migrations-attribution"
     }
   ],
