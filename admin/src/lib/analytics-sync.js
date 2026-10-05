@@ -209,3 +209,45 @@ export async function syncSite({ adb, site, env, nowMs = Date.now(), fetchImpl =
     .bind(new Date(clock()).toISOString(), ok ? 1 : 0, postsSeen, postsSeen, ok ? null : JSON.stringify(errors), started.meta.last_row_id).run();
   return { ok, postsSeen, errors };
 }
+
+export const OPEN_RUN_MS = 5 * 60000;
+
+/** A run that started under five minutes ago and has not finished. "Sync now" waits for it. */
+export async function openRun(adb, slug, nowMs) {
+  const since = new Date(nowMs - OPEN_RUN_MS).toISOString();
+  const row = await adb.prepare('SELECT id FROM sync_runs WHERE site_slug = ? AND finished_at IS NULL AND started_at > ? LIMIT 1').bind(slug, since).first();
+  return Boolean(row);
+}
+
+/** The site whose last cron sync is not from today (its own timezone), oldest first. */
+export async function nextDueSite(adb, nowMs) {
+  const { results } = await adb.prepare(`SELECT m.site_slug, m.metricool_brand_id, m.timezone,
+      (SELECT MAX(r.started_at) FROM sync_runs r WHERE r.site_slug = m.site_slug AND r.trigger = 'cron') AS last_cron
+    FROM sites_map m ORDER BY m.site_slug`).all();
+  const due = results.filter((s) => !s.last_cron || localYmd(Date.parse(s.last_cron), s.timezone) !== localYmd(nowMs, s.timezone));
+  due.sort((a, b) => {
+    const x = a.last_cron ?? '';
+    const y = b.last_cron ?? '';
+    return x < y ? -1 : x > y ? 1 : 0;
+  });
+  return due[0] ?? null;
+}
+
+/** One cron run: refresh the map, then sync the one site that is due, if any. */
+export async function runNightly({ env, nowMs = Date.now(), fetchImpl = fetch, sleep, log = console }) {
+  await refreshSitesMap(env.DB, env.ATTRIBUTION_DB, new Date(nowMs).toISOString());
+  const site = await nextDueSite(env.ATTRIBUTION_DB, nowMs);
+  if (!site) return { site: null };
+  const r = await syncSite({ adb: env.ATTRIBUTION_DB, site, env, nowMs, fetchImpl, sleep, trigger: 'cron', log });
+  return { site: site.site_slug, ...r };
+}
+
+/** "Sync now" for one site, through the service binding. */
+export async function runManual({ env, slug, nowMs = Date.now(), fetchImpl = fetch, sleep, log = console }) {
+  await refreshSitesMap(env.DB, env.ATTRIBUTION_DB, new Date(nowMs).toISOString());
+  const site = await env.ATTRIBUTION_DB.prepare('SELECT site_slug, metricool_brand_id, timezone FROM sites_map WHERE site_slug = ?').bind(slug).first();
+  if (!site) return { status: 404, error: 'No Metricool brand set for this site.' };
+  if (await openRun(env.ATTRIBUTION_DB, slug, nowMs)) return { status: 409, error: 'A sync is already running. Try again in a few minutes.' };
+  const r = await syncSite({ adb: env.ATTRIBUTION_DB, site, env, nowMs, fetchImpl, sleep, trigger: 'manual', log });
+  return { status: 200, ...r };
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "ka-analytics-sync",
+  "main": "./index.js",
+  "compatibility_date": "2026-08-13",
+  "triggers": {
+    // One site per run; twelve runs a night between 3:00 and 4:50 AM Eastern.
+    "crons": ["*/10 7-8 * * *"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ka-sites",
+      "database_id": "1859da99-2c03-4796-b6e6-8a1e4ab8112b",
+      "migrations_dir": "../migrations"
+    },
+    {
+      "binding": "ATTRIBUTION_DB",
+      "database_name": "ka-attribution",
+      // Written at approval L1 (Task 12) from `wrangler d1 create ka-attribution`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "../migrations-attribution"
+    }
+  ],
+  // Identifiers, not secrets. METRICOOL_USER_TOKEN is a secret (approval L3),
+  // set with scripts/put-metricool-secret.mjs and never written here.
+  "vars": {
+    "METRICOOL_USER_ID": "5465573",
+    "METRICOOL_BASE": "https://app.metricool.com/api"
+  },
+  "observability": { "enabled": true },
+  // Reachable only through the admin's ANALYTICS_SYNC service binding.
+  "workers_dev": false,
+  "preview_urls": false
+}
