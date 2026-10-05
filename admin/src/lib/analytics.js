@@ -117,9 +117,9 @@ export async function networkCards(adb, slug, networks, { start, end }, rows) {
     const interactions = accountInteractions ?? sumOf(posts, 'interactions');
     const reachSource = reach == null ? null : accountReach != null ? 'account' : 'posts';
     const interactionsSource = interactions == null ? null : accountInteractions != null ? 'account' : 'posts';
-    // accountDays: account_daily days in range with a value in the column the card used (reach if its source is account, else interactions).
-    const accountDays = reachSource === 'account' ? days.filter((d) => d.reach != null).length
-      : interactionsSource === 'account' ? days.filter((d) => d.interactions != null).length : 0;
+    // reachDays / interactionsDays: account_daily days in range with that column set, counted only when the card's total came from the account series.
+    const reachDays = reachSource === 'account' ? days.filter((d) => d.reach != null).length : 0;
+    const interactionsDays = interactionsSource === 'account' ? days.filter((d) => d.interactions != null).length : 0;
     return {
       network,
       label: NETWORK_LABEL[network],
@@ -131,7 +131,8 @@ export async function networkCards(adb, slug, networks, { start, end }, rows) {
       reachSource,
       interactions,
       interactionsSource,
-      accountDays,
+      reachDays,
+      interactionsDays,
       clicks: sumOf(posts, 'clicks'),
       posts: posts.length,
     };

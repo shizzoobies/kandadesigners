@@ -38,9 +38,15 @@ const signed = (v) => (v == null ? 'n/a' : `${v > 0 ? '+' : ''}${n(v)}`);
 const span = (c) => (c.followersFrom && c.followersTo && c.followersFrom !== c.followersTo ? `, ${humanDate(c.followersFrom)} to ${humanDate(c.followersTo)}` : '');
 const REACH_NOTE = { account: 'Reach is daily account reach added up, so someone reached on several days counts each day.', posts: 'Reach is the reach of posts published in this range, added up.' };
 const INTERACTIONS_NOTE = { account: 'Interactions are daily account interactions added up, so they will not match the post table.', posts: 'Interactions are those on posts published in this range, added up.' };
-const dayCount = (c) => `${c.accountDays} ${c.accountDays === 1 ? 'day' : 'days'}`;
+const dayWord = (k) => `${k} ${k === 1 ? 'day' : 'days'}`;
+// How many days of the range the account series covers, per total that came from it.
+const coverage = (c) => {
+  const { reachDays: r, interactionsDays: i } = c;
+  if (r && i && r !== i) return ` Account reach covers ${dayWord(r)} and account interactions ${dayWord(i)} of this range.`;
+  return r || i ? ` Account figures cover ${dayWord(r || i)} of this range.` : '';
+};
 const sourceNote = (c) => [REACH_NOTE[c.reachSource], INTERACTIONS_NOTE[c.interactionsSource]].filter(Boolean).join(' ')
-  + (c.reachSource === 'account' || c.interactionsSource === 'account' ? ` Account figures cover ${dayCount(c)} of this range.` : '');
+  + coverage(c);
 const sortHref = (key) => `?range=${days}&sort=${key}&dir=${sort === key && dir === 'desc' ? 'asc' : 'desc'}`;
 const ariaSort = (key) => (sort === key ? (dir === 'asc' ? 'ascending' : 'descending') : undefined);
 const COLS = [['reach', 'Reach'], ['views', 'Views'], ['interactions', 'Interactions'], ['clicks', 'Clicks'], ['engagement', 'Engagement rate']];

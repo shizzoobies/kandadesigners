@@ -127,14 +127,14 @@ describe('cards, reach and freshness', () => {
     const bounds = a.rangeBounds('2026-10-06', 28);
     const cards = await a.networkCards(adb, SLUG, ['facebook', 'instagram'], bounds, await rowsFor());
     expect(cards).toEqual([
-      { network: 'facebook', label: 'Facebook', followers: 9, change: null, followersFrom: '2026-10-06', followersTo: '2026-10-06', reach: 100, reachSource: 'posts', interactions: 7, interactionsSource: 'account', accountDays: 1, clicks: 3, posts: 1 },
-      { network: 'instagram', label: 'Instagram', followers: 5, change: 3, followersFrom: '2026-09-30', followersTo: '2026-10-06', reach: 10, reachSource: 'account', interactions: 1, interactionsSource: 'account', accountDays: 2, clicks: null, posts: 2 },
+      { network: 'facebook', label: 'Facebook', followers: 9, change: null, followersFrom: '2026-10-06', followersTo: '2026-10-06', reach: 100, reachSource: 'posts', interactions: 7, interactionsSource: 'account', reachDays: 0, interactionsDays: 1, clicks: 3, posts: 1 },
+      { network: 'instagram', label: 'Instagram', followers: 5, change: 3, followersFrom: '2026-09-30', followersTo: '2026-10-06', reach: 10, reachSource: 'account', interactions: 1, interactionsSource: 'account', reachDays: 2, interactionsDays: 1, clicks: null, posts: 2 },
     ]);
   });
 
   it('sets a source of null when a total is missing', async () => {
     const cards = await a.networkCards(adb, SLUG, ['linkedin'], a.rangeBounds('2026-10-06', 28), await rowsFor());
-    expect(cards[0]).toMatchObject({ reach: null, reachSource: null, interactions: null, interactionsSource: null, accountDays: 0, followersFrom: null, followersTo: null });
+    expect(cards[0]).toMatchObject({ reach: null, reachSource: null, interactions: null, interactionsSource: null, reachDays: 0, interactionsDays: 0, followersFrom: null, followersTo: null });
   });
 
   it('gives account reach per day for the sparkline', async () => {
