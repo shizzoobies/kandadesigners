@@ -1,13 +1,15 @@
 // The Post Desk client, ported from the claude.ai artifact
 // (Social Media Management/review/index.html). The server embeds the desk
 // state in #desk-boot; this draws it, refreshes from /state on window focus
-// and after each write, and saves with JSON POSTs to /decide and /check.
+// (and when an installed app comes back to the front) and after each write,
+// and saves with JSON POSTs to /decide and /check.
 // Media src values are R2 keys ("<slug>/<item>/<file>"), served by /media.
 import { deskMediaUrl } from '../lib/desk-media-url.js';
 import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState } from '../lib/desk-nav.js';
 import { esc, linkify, fmtTime, kindLabel, NET, netsOf } from '../lib/desk-format.js';
 import { youtubePanel } from '../lib/desk-youtube.js';
 import { deskCopy } from '../lib/desk-copy.js';
+import { phoneBarState } from '../lib/desk-pwa.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
@@ -32,6 +34,8 @@ let view = 'posts';        // "posts" (approvals) or "stories" (checklist)
 const slideIdx = {};
 const mediaView = {};
 let tab = 'facebook';
+const drafts = {};         // id -> unsent change note typed in the phone sheet
+let sheetFor = null;       // id the change sheet is open for
 
 // One pane at a time on a phone (the same breakpoint as the CSS): there,
 // decisions never move the view on their own.
@@ -39,14 +43,17 @@ const phone = window.matchMedia('(max-width: 860px)');
 
 // Toasts sit in a role=status region and never take focus. One with an Undo
 // button stays for 6 seconds, and holds while the pointer or focus is on it.
-function toast(msg, onUndo) {
+// { reload: true } adds a Reload button instead: an installed app has no
+// browser chrome to reload from. That one stays up to the cap.
+function toast(msg, onUndo, { reload = false } = {}) {
   const u = $('#toastUndo');
   $('#toastMsg').textContent = msg;
   u.hidden = !onUndo;
   u.onclick = onUndo ? () => { hideToast(); onUndo(); } : null;
+  $('#toastReload').hidden = !reload;
   placeToast();
   $('#toast').classList.add('on');
-  toast.ms = onUndo ? 6000 : 2200;
+  toast.ms = reload ? 20000 : onUndo ? 6000 : 2200;
   clearTimeout(toast.cap);
   toast.cap = setTimeout(hideToast, 20000);
   armToast();
@@ -60,9 +67,12 @@ function hideToast() {
   t.classList.remove('on');
   $('#toastMsg').textContent = '';
   $('#toastUndo').hidden = true;
-  if (had) ($('#go') || $('.d-item[aria-current="true"]'))?.focus({ preventScroll: true });
+  $('#toastReload').hidden = true;
+  if (had) ($('#go') || $('#undo') || $('.d-item[aria-current="true"]'))?.focus({ preventScroll: true });
 }
-// On a phone the toast sits just under the sticky top bar, wherever that is.
+$('#toastReload').onclick = () => location.reload();
+// On a phone the toast sits just above the decision bar when there is one
+// (CSS reads --decide-h); otherwise just under the sticky top bar.
 function placeToast() {
   const bar = $('.d-phonebar');
   const bottom = bar && bar.offsetParent ? Math.max(0, bar.getBoundingClientRect().bottom) : 0;
@@ -93,6 +103,13 @@ const copy = deskCopy({ client, canWrite });
 const connText = () => copy.conn(storiesOn());
 // "Approved by Hannah": who made a decision, once there is one to name.
 const byWhom = (st, d) => (st !== 'waiting' && d?.by ? ` by ${d.by}` : '');
+// "Approved by Alex, Oct 5, 1:52 PM": the in-card bar and the phone bar say the same.
+function labelOf(it) {
+  const st = stateOf(it);
+  const d = decisions[it.id] || {};
+  const when = st !== 'waiting' && d.at ? `, ${fmtAt(d.at)}` : '';
+  return stateLabel[st] + byWhom(st, d) + when;
+}
 
 // The server's rows back into the artifact's data.json shape.
 function applyState(s) {
@@ -194,8 +211,12 @@ function actionBar(it) {
   // aria-disabled, not disabled, so the focused button keeps focus meanwhile.
   const busy = pending.has(it.id) ? ' aria-disabled="true"' : '';
   const d = decisions[it.id] || {};
-  const when = st !== 'waiting' && d.at ? `, ${fmtAt(d.at)}` : '';
-  const label = stateLabel[st] + byWhom(st, d) + when;
+  const label = labelOf(it);
+  // On a phone the sticky bar carries the state and buttons; the card keeps
+  // only the change note, so the ids below are never on the page twice.
+  if (phoneBar(it).status) {
+    return st === 'changes' && d.note ? `<p class="d-readnote d-phone-note"><b>Change note:</b> ${esc(d.note)}</p>` : '';
+  }
   if (!canWrite) {
     return `<div class="d-bar"><span class="state">${status(st, label)}</span>
       ${st === 'changes' && d.note ? `<p class="d-readnote"><b>Change note:</b> ${esc(d.note)}</p>` : ''}</div>`;
@@ -212,18 +233,57 @@ function actionBar(it) {
   </div>`;
 }
 
+// The phone's sticky decision bar (#phoneDecide, outside #detail so it can
+// stay put while the post scrolls). None for asks and native posts, nor off a phone.
+const phoneBar = (it) => (phone.matches && it ? phoneBarState(it, stateOf, canWrite, items) : { status: null, buttons: [] });
+const PHONE_BTN = {
+  changes: '<button type="button" class="btn quiet" id="fix"BUSY>Request changes</button>',
+  approve: '<button type="button" class="btn" id="go"BUSY>Approve</button>',
+  undo: '<button type="button" class="btn quiet" id="undo"BUSY>Undo</button>',
+  next: '<button type="button" class="btn" id="nextPost">Next post</button>',
+};
+
+function fillPhoneBar(it) {
+  const el = $('#phoneDecide');
+  const { status: st, buttons } = phoneBar(it);
+  if (!st) { el.innerHTML = ''; fillPhoneBar.key = ''; syncPhoneBar(); return; }
+  const busy = pending.has(it.id) ? ' aria-disabled="true"' : '';
+  // Waiting needs no status line: the two buttons say it.
+  const line = st === 'waiting' && buttons.length ? ''
+    : `<p class="state"><span class="dot ${DOT[st]}"></span><span class="lbl">${esc(labelOf(it))}</span></p>`;
+  const btns = buttons.length ? `<div class="d-decide-btns">${buttons.map((b) => PHONE_BTN[b].replace('BUSY', busy)).join('')}</div>` : '';
+  // Cross-fade only when the bar's state changes, not on every refresh.
+  const key = `${it.id}:${st}:${buttons.join()}`;
+  el.innerHTML = `<div class="d-decide-in${fillPhoneBar.key && key !== fillPhoneBar.key ? ' d-swap' : ''}">${line}${btns}</div>`;
+  fillPhoneBar.key = key;
+  syncPhoneBar();
+}
+
+// Shown only with a post open on the Approvals tab. The detail gets bottom
+// padding the bar's height (--decide-h), so nothing hides under it.
+function syncPhoneBar() {
+  const el = $('#phoneDecide');
+  const on = !!el.innerHTML && phone.matches && view === 'posts' && desk.classList.contains('viewing');
+  el.hidden = !on;
+  desk.classList.toggle('deciding', on);
+  desk.style.setProperty('--decide-h', on ? `${el.offsetHeight}px` : '0px');
+  if ($('#toast').classList.contains('on')) placeToast();
+}
+
 // Redrawing replaces the controls, so focus is put back on the same one (or on
 // Approve, when the one that had it is gone, as after Undo or Next post).
 function renderDetail() {
-  const el = $('#detail');
-  const had = el.contains(document.activeElement) ? document.activeElement.id : '';
+  const el = $('#detail'), bar = $('#phoneDecide');
+  const inside = () => el.contains(document.activeElement) || bar.contains(document.activeElement);
+  const had = inside() ? document.activeElement.id : '';
   drawDetail();
-  if (had && !el.contains(document.activeElement)) (document.getElementById(had) || $('#go'))?.focus({ preventScroll: true });
+  if (had && !inside()) (document.getElementById(had) || $('#go') || $('#undo'))?.focus({ preventScroll: true });
 }
 
 function drawDetail() {
   const it = items.find((i) => i.id === current);
   const el = $('#detail');
+  fillPhoneBar(it);
   if (!it && !items.length) {
     el.innerHTML = `<div class="done-note"><p><b>Nothing waiting on you.</b></p>
       <p>${esc(copy.emptyDetail(storyList().length > 0))}</p></div>`;
@@ -332,17 +392,22 @@ function drawDetail() {
 function wireBack() {
   const b = $('#back');
   if (!b) return;
-  b.onclick = () => { desk.classList.remove('viewing'); window.scrollTo(0, 0); };
+  // Opening a post on a phone pushed a history entry; going back pops it, so
+  // the hardware back button and this one end up in the same place.
+  b.onclick = () => { if (history.state?.deskPost) history.back(); else showList(); };
   const pos = positionOf(items, current);
   $('#prevPost').onclick = () => pos.prevId && select(pos.prevId, true);
   $('#nextItem').onclick = () => pos.nextId && select(pos.nextId, true);
 }
 
+// One set of ids (#go #fix #undo #nextPost), in the card or in the phone bar.
 function wireBar(it) {
   if (!canWrite) return;
   const note = $('#note');
-  $('#go').onclick = () => decide(it.id, 'approved');
-  $('#fix').onclick = () => {
+  const go = $('#go'), fix = $('#fix');
+  if (go) go.onclick = () => decide(it.id, 'approved');
+  // On a phone, Request changes opens the sheet instead of the in-card note.
+  if (fix) fix.onclick = !note ? () => openSheet(it.id) : () => {
     if (pending.has(it.id)) return;
     if (!note.classList.contains('open')) { note.classList.add('open'); note.focus(); return; }
     if (!note.value.trim()) { note.focus(); toast(copy.noteNeeded); return; }
@@ -356,6 +421,57 @@ async function copyText(text, btn, sel = '#sticker') {
   try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; }
   catch { const r = document.createRange(); r.selectNodeContents($(sel)); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected, press Ctrl+C'; }
 }
+
+// The phone's change sheet. Its draft is kept per post until it is sent, so
+// Cancel, Esc or a tap on the scrim lose nothing.
+function openSheet(id) {
+  if (pending.has(id)) return;
+  sheetFor = id;
+  const s = $('#changeSheet'), t = $('#sheetNote');
+  const d = decisions[id] || {};
+  t.value = drafts[id] ?? (d.decision === 'changes' ? d.note || '' : '');
+  $('#sheetMsg').textContent = '';
+  fitSheet();
+  s.hidden = false;
+  void s.offsetWidth; // lay it out closed first, so it slides up
+  s.classList.add('open');
+  t.focus({ preventScroll: true });
+}
+function closeSheet() {
+  if (!sheetFor) return;
+  drafts[sheetFor] = $('#sheetNote').value;
+  sheetFor = null;
+  const s = $('#changeSheet');
+  s.classList.remove('open');
+  s.hidden = true;
+  ($('#fix') || $('#undo') || $('#back'))?.focus({ preventScroll: true });
+}
+async function sendSheet() {
+  const id = sheetFor, note = $('#sheetNote').value.trim();
+  if (!id) return;
+  if (!note) { $('#sheetMsg').textContent = copy.noteNeeded; $('#sheetNote').focus(); return; }
+  closeSheet();
+  if (await decide(id, 'changes', note)) delete drafts[id];
+}
+// Above the on-screen keyboard: visualViewport shrinks when it opens.
+function fitSheet() {
+  const vv = window.visualViewport;
+  const kb = vv ? Math.max(0, window.innerHeight - vv.height - vv.offsetTop) : 0;
+  $('#changeSheet').style.setProperty('--kb', `${Math.round(kb)}px`);
+}
+window.visualViewport?.addEventListener('resize', () => sheetFor && fitSheet());
+window.visualViewport?.addEventListener('scroll', () => sheetFor && fitSheet());
+$('#sheetCancel').onclick = closeSheet;
+$('#sheetScrim').onclick = closeSheet;
+$('#sheetSend').onclick = sendSheet;
+// Esc closes; Tab stays inside the sheet while it is open.
+$('#changeSheet').addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { e.preventDefault(); closeSheet(); return; }
+  if (e.key !== 'Tab') return;
+  const f = [$('#sheetNote'), $('#sheetCancel'), $('#sheetSend')];
+  const i = f.indexOf(document.activeElement);
+  if (e.shiftKey ? i <= 0 : i === f.length - 1) { e.preventDefault(); f[e.shiftKey ? f.length - 1 : 0].focus(); }
+});
 
 // Saves, then refreshes from the server either way, so the page always ends
 // up showing what was actually stored.
@@ -372,7 +488,7 @@ async function write(path, body) {
       toast(r.status === 403 ? 'Your access level cannot save here' : e.error || 'Not saved, try again');
     }
   } catch {
-    toast('Not saved. Your sign-in may have expired, so reload the page.');
+    toast('Not saved. Your sign-in may have expired, so reload the page.', null, { reload: true });
   }
   await refresh();
   return saved;
@@ -392,16 +508,20 @@ async function saveDecision(id, body) {
   return saved;
 }
 
+// True once the server has the decision.
 async function decide(id, decision, note) {
-  if (pending.has(id) || isNoOp(decisions[id], decision, note)) return;
+  if (pending.has(id) || isNoOp(decisions[id], decision, note)) return false;
   const before = confirmed[id] ? { ...confirmed[id] } : undefined;
   const body = { item_id: id, decision, note: decision === 'changes' ? note : decision === 'waiting' ? '' : decisions[id]?.note || '' };
-  if (!(await saveDecision(id, body))) return;
-  if (decision === 'waiting') { toast('Reset to waiting'); return; }
+  if (!(await saveDecision(id, body))) return false;
+  // A short tick under the thumb, where the phone supports it.
+  if (phone.matches) try { navigator.vibrate?.(10); } catch {}
+  if (decision === 'waiting') { toast('Reset to waiting'); return true; }
   const did = { decision: body.decision, note: body.note };
   toast(decision === 'approved' ? 'Approved' : 'Change request saved', () => revert(id, before, did));
   // With the rail beside it, approving moves on; on a phone the post stays put.
   if (decision === 'approved' && !phone.matches) advanceFrom(id);
+  return true;
 }
 
 // The toast's Undo: puts that item back as it was, wherever the view is now,
@@ -526,6 +646,7 @@ function setView(v) {
   $('#tabPosts').setAttribute('aria-selected', v === 'posts');
   $('#tabStories').setAttribute('aria-selected', v === 'stories');
   renderStories();
+  syncPhoneBar();
 }
 // The remembered tab is per site, and only a tab click changes it: opening a
 // client's desk (which has no Stories) never resets the K&A desk's choice.
@@ -538,12 +659,32 @@ $('.d-views').addEventListener('click', (e) => {
 });
 setInterval(() => { if (!document.activeElement?.matches('textarea')) renderStories(); }, 60000);
 
-function select(id, scroll) {
+// On a phone, going from the list to a post pushes one history entry (moving
+// post to post inside the detail does not), so back returns to the list
+// rather than out of the installed app.
+function select(id, scroll, { push = true } = {}) {
+  if (push && phone.matches && !desk.classList.contains('viewing')) history.pushState({ deskPost: true }, '');
   current = id;
   desk.classList.add('viewing');
   renderList(); renderDetail();
   if (scroll) window.scrollTo({ top: 0 });
 }
+
+function showList() {
+  closeSheet();
+  desk.classList.remove('viewing');
+  syncPhoneBar();
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('popstate', (e) => {
+  if (e.state?.deskPost && phone.matches && current) select(current, true, { push: false });
+  else if (desk.classList.contains('viewing')) showList();
+});
+// A reload mid-post opens on the list; the stale entry would reopen it on back.
+if (history.state?.deskPost) history.replaceState(null, '');
+// Moving across the breakpoint swaps the in-card bar for the phone bar.
+phone.addEventListener('change', () => { closeSheet(); renderDetail(); });
 
 function advanceFrom(id) {
   const n = nextWaitingId(items, id, stateOf);
@@ -553,7 +694,7 @@ function advanceFrom(id) {
 
 $('#list').addEventListener('click', (e) => { const r = e.target.closest('.d-item'); if (r) select(r.dataset.id, phone.matches); });
 document.addEventListener('keydown', (e) => {
-  if (e.target.matches('textarea,input') || e.target.closest('#toast') || view !== 'posts' || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.target.matches('textarea,input') || e.target.closest('#toast') || sheetFor || view !== 'posts' || e.ctrlKey || e.metaKey || e.altKey) return;
   const i = items.findIndex((x) => x.id === current);
   if (e.key === 'j' || e.key === 'ArrowDown') { e.preventDefault(); if (i < items.length - 1) select(items[i + 1].id); }
   else if (e.key === 'k' || e.key === 'ArrowUp') { e.preventDefault(); if (i > 0) select(items[i - 1].id); }
@@ -572,8 +713,15 @@ async function refresh() {
     conn.classList.remove('bad');
     conn.textContent = connText();
   } catch {
-    conn.textContent = 'Could not refresh from the server. Your sign-in may have expired, so reload the page.';
+    const msg = 'Could not refresh from the server. Your sign-in may have expired, so reload the page.';
+    conn.textContent = `${msg} `;
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn quiet d-reload'; b.textContent = 'Reload';
+    b.onclick = () => location.reload();
+    conn.append(b);
     conn.classList.add('bad');
+    // The header is hidden with a post open on a phone, so say it there too.
+    if (phone.matches && desk.classList.contains('viewing')) toast(msg, null, { reload: true });
     return;
   }
   if (!items.some((x) => x.id === current)) current = (items.find((x) => stateOf(x) === 'waiting' && x.kind !== 'ask') || items[0])?.id || null;
@@ -581,7 +729,16 @@ async function refresh() {
   if (!document.activeElement?.matches('textarea')) renderDetail();
   renderStories();
 }
-window.addEventListener('focus', refresh);
+// iOS does not reliably fire focus when an installed app resumes, so a page
+// coming back into view refreshes too. Both often fire together: one fetch.
+function resume() {
+  if (resume.p) return;
+  resume.p = refresh().finally(() => { resume.p = null; });
+}
+window.addEventListener('focus', resume);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') resume(); });
+// iOS only shows :active on a tap when a touch listener exists.
+document.addEventListener('touchstart', () => {}, { passive: true });
 
 applyState(boot.state);
 current = (items.find((x) => stateOf(x) === 'waiting' && x.kind !== 'ask') || items[0])?.id || null;

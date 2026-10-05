@@ -1,0 +1,7 @@
+# Local preview only (astro dev / wrangler dev --local). Copy to .dev.vars,
+# which git ignores. ENVIRONMENT=development plus DEV_EMAIL is the dev sign-in
+# bypass in src/lib/identity.js; production never has these set.
+# Fixture logins (after scripts/seed-desk-fixture.mjs): approver@desk-fixture.test
+# (client, approve) and viewer@desk-fixture.test (client, view only).
+ENVIRONMENT=development
+DEV_EMAIL=alex@ka-performancefl.com

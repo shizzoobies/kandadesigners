@@ -32,7 +32,16 @@ const empty = state.items.length === 0;
 // "<" is escaped so no text in a caption can close the script element early.
 const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).replace(/</g, '\\u003c');
 ---
-<Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''} site={site}>
+<Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''} site={site} viewport="width=device-width, initial-scale=1, viewport-fit=cover">
+  <Fragment slot="head">
+    <link rel="manifest" href={`/sites/${site.slug}/social/manifest.webmanifest`} crossorigin="use-credentials" />
+    <meta name="theme-color" content="#FFFDF9" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Post Desk" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon-180.png" />
+  </Fragment>
   <div class="desk" id="desk">
     <header class="d-head">
       <div class="d-brand">
@@ -91,7 +100,22 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).re
     </dialog>
     <!-- Always in the page, so the live region exists before a message lands.
          Only the message is live; the Undo button sits beside it. -->
-    <div class="d-toast" id="toast"><span id="toastMsg" role="status"></span><button type="button" class="d-toast-undo" id="toastUndo" hidden>Undo</button></div>
+    <div class="d-toast" id="toast"><span id="toastMsg" role="status"></span><button type="button" class="d-toast-undo" id="toastUndo" hidden>Undo</button><button type="button" class="d-toast-undo" id="toastReload" hidden>Reload</button></div>
+    <!-- Phone only: the sticky decision bar and the change sheet. post-desk.js
+         fills and shows them; on a desktop they stay hidden. -->
+    <div class="d-phone-decide" id="phoneDecide" hidden></div>
+    <div class="d-sheet" id="changeSheet" hidden>
+      <div class="d-sheet-scrim" id="sheetScrim"></div>
+      <div class="d-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <label id="sheetTitle" class="d-sheet-title" for="sheetNote">What should change?</label>
+        <textarea id="sheetNote" class="d-sheet-note" rows="4" maxlength="2000" placeholder="Be as rough as you like." aria-describedby="sheetMsg"></textarea>
+        <p class="d-sheet-msg" id="sheetMsg" role="alert"></p>
+        <div class="d-sheet-actions">
+          <button type="button" class="btn quiet" id="sheetCancel">Cancel</button>
+          <button type="button" class="btn" id="sheetSend">Send change request</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script type="application/json" id="desk-boot" set:html={boot}></script>
