@@ -1,7 +1,7 @@
 // Post Desk push: who gets notified, what the message says, announce-once
 // bookkeeping, subscription validation, and the cron runner. Pure helpers
-// (pushPlan, pushMessage, pushUiState, validatePushSubscription) are shared
-// with tests; runDeskPush is the scheduled entry.
+// (pushPlan, pushMessage, validatePushSubscription) are shared with tests;
+// runDeskPush is the scheduled entry. Browser UI helpers live in desk-push-ui.js.
 
 import * as q from './db.js';
 import { canWriteDesk } from './gate.js';
@@ -89,46 +89,6 @@ export function pushMessage(site, newItems) {
   };
 }
 
-// UI state for the Notifications control. Pure so the page and tests share it.
-export function pushUiState({ supported, standalone, isIOS, permission, subscribed, hasKey }) {
-  if (!hasKey) {
-    return { kind: 'nokey', label: "Notifications aren't set up yet", actions: [] };
-  }
-  if (isIOS && !standalone) {
-    return {
-      kind: 'ios-install',
-      label: 'On iPhone, add Post Desk to your Home Screen first (iOS 16.4 or later).',
-      actions: [],
-    };
-  }
-  if (!supported) {
-    return { kind: 'unsupported', label: "This browser can't take Post Desk notifications.", actions: [] };
-  }
-  if (permission === 'denied') {
-    return {
-      kind: 'denied',
-      label: 'Notifications are blocked. Turn them on in your phone or browser settings, then reload.',
-      actions: [],
-    };
-  }
-  if (subscribed) {
-    return { kind: 'on', label: 'On for this device', actions: ['test', 'off'] };
-  }
-  return { kind: 'off', label: 'Get a ping when something new lands on the desk.', actions: ['on'] };
-}
-
-// Deep-link / notificationclick URL: same-origin and inside the desk scope, else desk root.
-export function clickTarget(url, { origin, scope }) {
-  const root = scope.endsWith('/') ? scope.slice(0, -1) : scope;
-  const fallback = `${origin}${root}`;
-  if (typeof url !== 'string' || !url) return fallback;
-  let u;
-  try { u = new URL(url, origin); } catch { return fallback; }
-  if (u.origin !== origin) return fallback;
-  const path = u.pathname.endsWith('/') && u.pathname.length > 1 ? u.pathname.slice(0, -1) : u.pathname;
-  if (path !== root && !path.startsWith(`${root}/`)) return fallback;
-  return u.href;
-}
 
 // Waiting approve-list items (no native). Stories list is excluded by list='approve'.
 export async function listWaitingApprove(db, siteId) {
@@ -180,11 +140,14 @@ export async function runDeskPush(env, { now = Date.now(), transport } = {}) {
     const payload = pushMessage(site, newItems);
     const subs = await q.listPushSubs(db, site.id);
 
+    let anyOk = false;
+    let attempted = 0;
     for (const sub of subs) {
       if (!(await personCanWrite(db, sub.person_id, site.id))) {
         await q.deletePushSub(db, sub.endpoint);
         continue;
       }
+      attempted += 1;
       const r = await sendPush(sub, payload, { env, now, transport });
       if (r.delete) {
         await q.deletePushSub(db, sub.endpoint);
@@ -193,14 +156,21 @@ export async function runDeskPush(env, { now = Date.now(), transport } = {}) {
       if (r.status === 201 || r.status === 200) {
         await q.touchPushSubOk(db, sub.endpoint, nowIso);
         summary.sent += 1;
-      } else if (r.status === 429) {
-        // leave for next run
+        anyOk = true;
+      } else if (r.status === 429 || (r.status >= 500 && r.status <= 599)) {
+        // leave for next run — do not mark sent below if nothing got 2xx
       } else {
         await q.bumpPushSubFail(db, sub.endpoint);
       }
     }
 
-    await q.markPushSent(db, site.id, announce, nowIso);
+    // Mark sent only if at least one device got a 2xx. If every send for this
+    // site hit 429 or 5xx (anyOk stays false), leave unsent so the next run
+    // retries. With nobody left to attempt (attempted === 0), mark so we do
+    // not re-announce forever.
+    if (anyOk || attempted === 0) {
+      await q.markPushSent(db, site.id, announce, nowIso);
+    }
   }
 
   return summary;

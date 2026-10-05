@@ -2,11 +2,13 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { makeD1 } from './helpers/d1.js';
 import * as q from '../src/lib/db.js';
 import {
-  pushPlan, pushMessage, pushUiState, validatePushSubscription,
-  clickTarget, runDeskPush, listWaitingApprove, MOCK_PUSH_HOST,
+  pushPlan, pushMessage, validatePushSubscription,
+  runDeskPush, listWaitingApprove, MOCK_PUSH_HOST,
 } from '../src/lib/desk-push.js';
-import { mockTransport, encryptAes128gcm, vapidJwt, sendPush, b64url, unb64url } from '../src/lib/web-push.js';
+import { pushUiState, clickTarget } from '../src/lib/desk-push-ui.js';
+import { mockTransport, encryptAes128gcm, vapidJwt, sendPush, b64url, unb64url, generateVapidKeys } from '../src/lib/web-push.js';
 import { handlePush } from '../src/pages/sites/[slug]/social/push.js';
+import { GET as swRoute } from '../src/pages/sites/[slug]/social/sw.js.js';
 
 const NOW = Date.parse('2026-10-05T16:00:00Z');
 const ORIGIN = 'https://admin.ka-performancefl.com';
@@ -156,9 +158,7 @@ describe('RFC 8291 Appendix A', () => {
 });
 
 describe('VAPID JWT', () => {
-  it('emits ES256 header and aud/exp/sub claims', async () => {
-    // Generate an ephemeral pair for the claims check (not the RFC vector).
-    const { generateVapidKeys } = await import('../src/lib/web-push.js');
+  it('emits ES256 header and aud/exp/sub claims, and verifies with the public key', async () => {
     const keys = await generateVapidKeys();
     const now = Date.parse('2026-10-05T16:00:00Z');
     const { token, header, claims } = await vapidJwt({
@@ -175,7 +175,19 @@ describe('VAPID JWT', () => {
       exp: Math.floor(now / 1000) + 12 * 3600,
       sub: 'mailto:alex@ka-performancefl.com',
     });
-    expect(token.split('.')).toHaveLength(3);
+    const parts = token.split('.');
+    expect(parts).toHaveLength(3);
+    // Verify the ES256 signature with the public key via WebCrypto (not just claims).
+    const pubRaw = unb64url(keys.publicKey);
+    const pubKey = await crypto.subtle.importKey(
+      'raw', pubRaw, { name: 'ECDSA', namedCurve: 'P-256' }, false, ['verify'],
+    );
+    const signingInput = new TextEncoder().encode(`${parts[0]}.${parts[1]}`);
+    const sig = unb64url(parts[2]);
+    const ok = await crypto.subtle.verify(
+      { name: 'ECDSA', hash: 'SHA-256' }, pubKey, sig, signingInput,
+    );
+    expect(ok).toBe(true);
   });
 });
 
@@ -316,5 +328,88 @@ describe('POST /push', () => {
   it('lets an approve client subscribe', async () => {
     const sub = { endpoint: `https://${MOCK_PUSH_HOST}/pat`, keys: { p256dh: FAKE_P256, auth: FAKE_AUTH } };
     expect((await call({ action: 'subscribe', subscription: sub }, { user: APPROVER })).status).toBe(200);
+  });
+});
+
+describe('runDeskPush 429/5xx retry', () => {
+  let db;
+  beforeEach(async () => {
+    db = makeD1();
+    await q.createSite(db, { slug: 'ka-performance', name: 'K & A', live_url: 'https://ka.test', hosting: 'pages' }, 't');
+    await db.prepare("INSERT INTO people (name, email, role, created_at) VALUES ('Alex', 'alex@example.com', 'owner', 't')").run();
+    await db.prepare(
+      "INSERT INTO desk_items (site_id, item_id, list, kind, post_date, post_time, title, payload, pushed_at) VALUES (1, 'reel-1', 'approve', 'reel', '2026-10-06', '10:00', 'Reel', '{}', 't')",
+    ).run();
+    await q.upsertPushSub(db, {
+      siteId: 1, personId: 1, endpoint: `https://${MOCK_PUSH_HOST}/dev`,
+      p256dh: FAKE_P256, auth: FAKE_AUTH, label: 'dev',
+    }, 't');
+  });
+
+  it('leaves items unsent when every device gets 429, and retries next run', async () => {
+    const env = { DB: db, ENVIRONMENT: 'development' };
+    const t429 = async () => ({ status: 429 });
+    const s1 = await runDeskPush(env, { now: NOW, transport: t429 });
+    expect(s1.announced).toBe(1);
+    expect(s1.sent).toBe(0);
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_sent').first('n')).toBe(0);
+
+    const tOk = mockTransport();
+    const s2 = await runDeskPush(env, { now: NOW + 1000, transport: tOk });
+    expect(s2.announced).toBe(1);
+    expect(s2.sent).toBe(1);
+    expect(tOk.sent).toHaveLength(1);
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_sent').first('n')).toBe(1);
+  });
+
+  it('leaves items unsent when every device gets 5xx', async () => {
+    const env = { DB: db, ENVIRONMENT: 'development' };
+    const t500 = async () => ({ status: 503 });
+    await runDeskPush(env, { now: NOW, transport: t500 });
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_sent').first('n')).toBe(0);
+  });
+
+  it('marks sent when at least one device gets 2xx even if another hits 429', async () => {
+    await q.upsertPushSub(db, {
+      siteId: 1, personId: 1, endpoint: `https://${MOCK_PUSH_HOST}/other`,
+      p256dh: FAKE_P256, auth: FAKE_AUTH, label: 'other',
+    }, 't');
+    const env = { DB: db, ENVIRONMENT: 'development' };
+    let n = 0;
+    const t = async () => {
+      n += 1;
+      return { status: n === 1 ? 201 : 429 };
+    };
+    await runDeskPush(env, { now: NOW, transport: t });
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_sent').first('n')).toBe(1);
+  });
+
+  it('deletes 404/410 subscriptions and still retries announce if no 2xx', async () => {
+    const env = { DB: db, ENVIRONMENT: 'development' };
+    const t410 = async () => ({ status: 410 });
+    // sendPush with mock path (no VAPID) still maps delete from status
+    await runDeskPush(env, { now: NOW, transport: t410 });
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_subs').first('n')).toBe(0);
+    // No 2xx → not marked; next run with a fresh sub can announce again
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_sent').first('n')).toBe(0);
+  });
+});
+
+describe('GET sw.js Service-Worker-Allowed', () => {
+  it('serves JS with Service-Worker-Allowed matching the desk scope (no trailing slash)', async () => {
+    const db = makeD1();
+    await q.createSite(db, { slug: 'ka-performance', name: 'K & A', live_url: 'https://ka.test', hosting: 'pages' }, 't');
+    const r = await swRoute({
+      params: { slug: 'ka-performance' },
+      locals: { runtime: { env: { DB: db } } },
+    });
+    expect(r.status).toBe(200);
+    expect(r.headers.get('Content-Type')).toMatch(/text\/javascript/);
+    expect(r.headers.get('Cache-Control')).toBe('no-cache');
+    expect(r.headers.get('Service-Worker-Allowed')).toBe('/sites/ka-performance/social');
+    expect(r.headers.get('Service-Worker-Allowed').endsWith('/')).toBe(false);
+    const src = await r.text();
+    expect(src).toContain('addEventListener');
+    expect(src).not.toMatch(/addEventListener\(\s*['"]fetch['"]/);
   });
 });

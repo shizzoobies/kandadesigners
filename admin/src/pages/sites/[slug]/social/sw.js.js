@@ -101,11 +101,16 @@ export async function GET({ params, locals }) {
   const site = await getSiteBySlug(env.DB, params.slug);
   if (!site) return new Response('Not found', { status: 404 });
 
+  const scope = `/sites/${site.slug}/social`;
   return new Response(swSource(site.slug), {
     status: 200,
     headers: {
       'Content-Type': 'text/javascript; charset=utf-8',
       'Cache-Control': 'no-cache',
+      // Max allowed scope for this worker: the desk root without a trailing
+      // slash, matching the manifest and registration scope so the page at
+      // /sites/<slug>/social is controlled.
+      'Service-Worker-Allowed': scope,
     },
   });
 }

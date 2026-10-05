@@ -11,7 +11,7 @@ import { youtubePanel } from '../lib/desk-youtube.js';
 import { deskCopy } from '../lib/desk-copy.js';
 import { phoneBarState } from '../lib/desk-pwa.js';
 import { storyState as storyStateOf, storyFocusId, STORY_FLAG, preparedFor, prunePrepared } from '../lib/desk-stories.js';
-import { pushUiState } from '../lib/desk-push.js';
+import { pushUiState } from '../lib/desk-push-ui.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
