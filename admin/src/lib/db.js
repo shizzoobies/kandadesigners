@@ -258,3 +258,66 @@ export async function upsertAlertState(db, s) {
        last_alert_level = excluded.last_alert_level, last_alert_at = excluded.last_alert_at`,
   ).bind(s.site_id, s.level, s.since, nil(s.last_alert_level), nil(s.last_alert_at)).run();
 }
+
+// desk push subscriptions and announce-once bookkeeping (0004)
+
+export async function listPushSubs(db, siteId) {
+  return rows(db.prepare(
+    'SELECT id, site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count FROM desk_push_subs WHERE site_id = ? ORDER BY id',
+  ).bind(siteId));
+}
+
+export async function getPushSubByEndpoint(db, endpoint) {
+  return db.prepare(
+    'SELECT id, site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count FROM desk_push_subs WHERE endpoint = ?',
+  ).bind(endpoint).first();
+}
+
+// Upsert by endpoint: a device re-subscribing moves to the current person/site.
+export async function upsertPushSub(db, { siteId, personId, endpoint, p256dh, auth, label }, nowIso) {
+  await db.prepare(
+    `INSERT INTO desk_push_subs (site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)
+     ON CONFLICT(endpoint) DO UPDATE SET
+       site_id = excluded.site_id,
+       person_id = excluded.person_id,
+       p256dh = excluded.p256dh,
+       auth = excluded.auth,
+       label = excluded.label,
+       last_ok_at = excluded.last_ok_at,
+       fail_count = 0`,
+  ).bind(siteId, personId, endpoint, p256dh, auth, nil(label), nowIso, nowIso).run();
+}
+
+export async function deletePushSub(db, endpoint) {
+  await db.prepare('DELETE FROM desk_push_subs WHERE endpoint = ?').bind(endpoint).run();
+}
+
+export async function touchPushSubOk(db, endpoint, nowIso) {
+  await db.prepare('UPDATE desk_push_subs SET last_ok_at = ?, fail_count = 0 WHERE endpoint = ?').bind(nowIso, endpoint).run();
+}
+
+export async function bumpPushSubFail(db, endpoint) {
+  await db.prepare('UPDATE desk_push_subs SET fail_count = fail_count + 1 WHERE endpoint = ?').bind(endpoint).run();
+}
+
+export async function listPushSent(db, siteId) {
+  return rows(db.prepare('SELECT site_id, item_id, sent_at FROM desk_push_sent WHERE site_id = ?').bind(siteId));
+}
+
+export async function markPushSent(db, siteId, itemIds, nowIso) {
+  if (!itemIds?.length) return;
+  const stmts = itemIds.map((id) => db.prepare(
+    `INSERT INTO desk_push_sent (site_id, item_id, sent_at) VALUES (?, ?, ?)
+     ON CONFLICT(site_id, item_id) DO UPDATE SET sent_at = excluded.sent_at`,
+  ).bind(siteId, id, nowIso));
+  await db.batch(stmts);
+}
+
+export async function deletePushSent(db, siteId, itemIds) {
+  if (!itemIds?.length) return;
+  const stmts = itemIds.map((id) => db.prepare(
+    'DELETE FROM desk_push_sent WHERE site_id = ? AND item_id = ?',
+  ).bind(siteId, id));
+  await db.batch(stmts);
+}

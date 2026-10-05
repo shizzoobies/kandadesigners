@@ -6,7 +6,7 @@ describe('migrations', () => {
     const db = makeD1();
     const { results } = await db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").all();
     expect(results.map((r) => r.name)).toEqual(
-      ['alert_state', 'checks', 'desk_access', 'desk_decisions', 'desk_items', 'desk_meta', 'desk_story_checks', 'log_entries', 'people', 'settings', 'sites', 'work_items'],
+      ['alert_state', 'checks', 'desk_access', 'desk_decisions', 'desk_items', 'desk_meta', 'desk_push_sent', 'desk_push_subs', 'desk_story_checks', 'log_entries', 'people', 'settings', 'sites', 'work_items'],
     );
   });
 
@@ -40,5 +40,20 @@ describe('migrations', () => {
     await add(null);
     await add('pr:1');
     await expect(add('pr:1')).rejects.toThrow();
+  });
+
+  it('0004 keys push sent by site and item, and drops subs with the person or site', async () => {
+    const db = makeD1();
+    await db.prepare("INSERT INTO sites (slug, name, live_url, created_at, updated_at) VALUES ('a', 'A', 'https://a.test', 't', 't')").run();
+    await db.prepare("INSERT INTO people (name, email, role, created_at) VALUES ('H', 'h@example.com', 'owner', 't')").run();
+    const p256 = 'BCVxsr7N_eNgVRqvHtD0zTZsEc6-VV-JvLexhqUzORcxaOzi6-AYWXvTBHm4bjyPjs7Vd8pZGH6SRpkNtoIAiw4';
+    const auth = 'BTBZMqHH6r4Tts7J_aSIgg';
+    await db.prepare('INSERT INTO desk_push_subs (site_id, person_id, endpoint, p256dh, auth, created_at) VALUES (1, 1, ?, ?, ?, ?)').bind('https://fcm.googleapis.com/fcm/send/x', p256, auth, 't').run();
+    await db.prepare("INSERT INTO desk_push_sent (site_id, item_id, sent_at) VALUES (1, 'a', 't')").run();
+    await expect(db.prepare("INSERT INTO desk_push_sent (site_id, item_id, sent_at) VALUES (1, 'a', 't')").run()).rejects.toThrow();
+    await db.prepare('DELETE FROM people WHERE id = 1').run();
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_subs').first('n')).toBe(0);
+    await db.prepare('DELETE FROM sites WHERE id = 1').run();
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_sent').first('n')).toBe(0);
   });
 });

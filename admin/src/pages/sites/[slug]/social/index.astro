@@ -31,8 +31,12 @@ const me = user?.name || user?.email || '';
 // The manifest route reads the same rule for its Stories shortcut.
 const hasStories = hasStoriesIn(state);
 const empty = state.items.length === 0;
+// Push: public key is not a secret (Alex commits it); private stays in secrets.
+// canPush matches canWrite — viewers never see the control.
+const vapidPublicKey = env.VAPID_PUBLIC_KEY || null;
+const canPush = canWrite;
 // "<" is escaped so no text in a caption can close the script element early.
-const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).replace(/</g, '\\u003c');
+const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state, vapidPublicKey, canPush }).replace(/</g, '\\u003c');
 ---
 <Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''} site={site} viewport="width=device-width, initial-scale=1, viewport-fit=cover">
   <Fragment slot="head">
@@ -59,6 +63,16 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).re
         <div><b id="sToday">0</b><span class="level"><span class="dot red"></span>due today</span></div>
         <div><b id="sMissed">0</b><span class="level"><span class="dot amber"></span>not ticked</span></div>
         <div><b id="sDone">0</b><span class="level"><span class="dot green"></span>posted</span></div>
+      </div>
+      <div class="d-overflow" id="deskOverflow" hidden={!canPush}>
+        <details class="d-more">
+          <summary aria-label="More">More</summary>
+          <div class="d-more-panel" id="pushPanel">
+            <p class="d-more-label">Notifications</p>
+            <p class="d-push-msg" id="pushMsg"></p>
+            <div class="d-push-actions" id="pushActions"></div>
+          </div>
+        </details>
       </div>
       <p class="conn" id="conn">{copy.conn(hasStories)}</p>
     </header>
