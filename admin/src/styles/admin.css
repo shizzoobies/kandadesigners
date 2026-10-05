@@ -168,6 +168,19 @@ fieldset.access .hint { margin: 0; }
 .conn { width: 100%; margin: 0; font-size: 13px; color: var(--muted); }
 .conn.bad { color: var(--error); font-weight: 600; }
 
+/* Header overflow: Notifications (slice 4). Same palette, no new colors. */
+.d-overflow { margin-left: auto; }
+.d-more { position: relative; }
+.d-more > summary { list-style: none; cursor: pointer; font: 600 14px/1 var(--font-body); color: var(--muted); padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+.d-more > summary::-webkit-details-marker { display: none; }
+.d-more > summary:hover { color: var(--ink); border-color: var(--line-strong); }
+.d-more[open] > summary { color: var(--ink); border-color: var(--ink); }
+.d-more-panel { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 240px; max-width: min(320px, 90vw); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 8px; padding: 12px 14px; box-shadow: 0 8px 24px rgba(20, 16, 12, .12); }
+.d-more-label { margin: 0 0 6px; font: 700 12px/1 var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.d-push-msg { margin: 0 0 10px; font-size: 14px; color: var(--ink); }
+.d-push-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.d-push-actions .btn { font-size: 14px; padding: 6px 12px; }
+
 .d-views { display: flex; margin-top: 14px; border-bottom: 1.5px solid var(--line-strong); }
 .d-views button { background: transparent; border: 0; border-bottom: 3px solid transparent; margin: 0 20px -1.5px 0; padding: 10px 0; cursor: pointer; font: 700 17px/1.2 var(--font-display); color: var(--muted); }
 .d-views button b { font: 600 14px/1 var(--font-body); margin-left: 6px; color: var(--muted); font-variant-numeric: tabular-nums; }

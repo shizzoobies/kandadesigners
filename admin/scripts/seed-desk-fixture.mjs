@@ -155,7 +155,8 @@ try {
   await grant('viewer@desk-fixture.test', 'view');
 
   // Reset this desk, then push the fixture in order (rowid is push order).
-  const stmts = ['desk_decisions', 'desk_story_checks', 'desk_items', 'desk_meta']
+  // Re-seeding also clears desk_push_sent so the local cron announces again.
+  const stmts = ['desk_decisions', 'desk_story_checks', 'desk_items', 'desk_meta', 'desk_push_sent', 'desk_push_subs']
     .map((t) => db.prepare(`DELETE FROM ${t} WHERE site_id = ?`).bind(site.id));
   ITEMS.forEach(([list, kind, date, time, title, payload], i) => {
     const id = IDS[i];
@@ -173,6 +174,16 @@ try {
       .bind(site.id, id, await person('alex@ka-performancefl.com'), iso));
   }
   stmts.push(db.prepare('INSERT INTO desk_meta (site_id, pushed_at, built_at, stories_paused) VALUES (?, ?, ?, 0)').bind(site.id, iso, iso));
+  // Fake push subscription for the owner. Endpoint host push.mock.local is
+  // allowlisted only when ENVIRONMENT=development (see validatePushSubscription).
+  // Keys are valid lengths; the mock transport never calls a real push service.
+  const ownerId = await person('alex@ka-performancefl.com');
+  const fakeP256 = 'BCVxsr7N_eNgVRqvHtD0zTZsEc6-VV-JvLexhqUzORcxaOzi6-AYWXvTBHm4bjyPjs7Vd8pZGH6SRpkNtoIAiw4';
+  const fakeAuth = 'BTBZMqHH6r4Tts7J_aSIgg';
+  stmts.push(db.prepare(
+    `INSERT INTO desk_push_subs (site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)`,
+  ).bind(site.id, ownerId, 'https://push.mock.local/desk-fixture', fakeP256, fakeAuth, 'Fixture iPhone', iso, iso));
   await db.batch(stmts);
 
   // Media into the local DESK_MEDIA bucket, keyed <slug>/<item>/<file>.
@@ -183,7 +194,7 @@ try {
       n += 1;
     }
   }
-  console.log(`Seeded the local ${SLUG} desk: ${ITEMS.length} items (${STORIES.length} on the Stories checklist, ${TICKED.length} ticked), ${DECISIONS.length} decisions, ${n} media files.`);
+  console.log(`Seeded the local ${SLUG} desk: ${ITEMS.length} items (${STORIES.length} on the Stories checklist, ${TICKED.length} ticked), ${DECISIONS.length} decisions, ${n} media files, 1 mock push sub.`);
 } finally {
   await dispose();
 }

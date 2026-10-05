@@ -11,13 +11,14 @@ import { youtubePanel } from '../lib/desk-youtube.js';
 import { deskCopy } from '../lib/desk-copy.js';
 import { phoneBarState } from '../lib/desk-pwa.js';
 import { storyState as storyStateOf, storyFocusId, STORY_FLAG, preparedFor, prunePrepared } from '../lib/desk-stories.js';
+import { pushUiState } from '../lib/desk-push-ui.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
 const fmtAt = (iso) => new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
 const boot = JSON.parse($('#desk-boot').textContent);
-const { slug, canWrite, client, me } = boot;
+const { slug, canWrite, client, me, vapidPublicKey, canPush } = boot;
 const base = `/sites/${slug}/social`;
 const desk = $('#desk');
 // Media entries and Stories carry src (the R2 key) and an optional v (version).
@@ -933,6 +934,155 @@ document.addEventListener('visibilitychange', () => { if (document.visibilitySta
 // iOS only shows :active on a tap when a touch listener exists.
 document.addEventListener('touchstart', () => {}, { passive: true });
 
+
+// --- Push notifications (slice 4) ------------------------------------------
+function urlBase64ToUint8Array(b64) {
+  const pad = '='.repeat((4 - (b64.length % 4)) % 4);
+  const raw = atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
+  const out = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+  return out;
+}
+const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent)
+  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches
+  || navigator.standalone === true;
+
+let pushSub = null;
+let pushBusy = false;
+
+function pushSupported() {
+  return !!(canPush && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window);
+}
+
+async function ensurePushSw() {
+  if (!('serviceWorker' in navigator)) return null;
+  return navigator.serviceWorker.register(`${base}/sw.js`, { scope: `${base}` });
+}
+
+async function postPush(body) {
+  const r = await fetch(`${base}/push`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'same-origin',
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) {
+    let msg = 'Could not update notifications.';
+    try { msg = (await r.json()).error || msg; } catch {}
+    throw new Error(msg);
+  }
+  return r.json();
+}
+
+function renderPushUi() {
+  const panel = $('#pushPanel');
+  if (!panel || !canPush) return;
+  const permission = (typeof Notification !== 'undefined' && Notification.permission) || 'default';
+  const st = pushUiState({
+    supported: pushSupported(),
+    standalone: isStandalone(),
+    isIOS: isIOS(),
+    permission,
+    subscribed: !!pushSub,
+    hasKey: !!vapidPublicKey,
+  });
+  $('#pushMsg').textContent = st.label;
+  const actions = $('#pushActions');
+  actions.innerHTML = '';
+  for (const a of st.actions) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = a === 'on' ? 'btn' : 'btn quiet';
+    b.textContent = a === 'on' ? 'Turn on' : a === 'off' ? 'Turn off' : 'Send test';
+    b.dataset.push = a;
+    b.disabled = pushBusy;
+    actions.append(b);
+  }
+  panel.dataset.kind = st.kind;
+}
+
+async function refreshPushSub() {
+  pushSub = null;
+  if (!pushSupported() || !vapidPublicKey) { renderPushUi(); return; }
+  try {
+    const reg = await ensurePushSw();
+    const sub = await reg.pushManager.getSubscription();
+    pushSub = sub;
+    if (sub && Notification.permission === 'granted') {
+      // Quiet re-sync on load when already granted.
+      try {
+        await postPush({ action: 'subscribe', subscription: sub.toJSON(), label: navigator.userAgent.slice(0, 80) });
+      } catch {}
+    }
+  } catch {}
+  renderPushUi();
+}
+
+$('#pushActions')?.addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-push]');
+  if (!b || pushBusy) return;
+  const act = b.dataset.push;
+  pushBusy = true; renderPushUi();
+  try {
+    if (act === 'on') {
+      // Permission only from this tap, never on load.
+      const perm = await Notification.requestPermission();
+      if (perm !== 'granted') { toast(perm === 'denied' ? 'Notifications are blocked in settings.' : 'Permission not granted.'); return; }
+      const reg = await ensurePushSw();
+      const sub = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
+      });
+      await postPush({ action: 'subscribe', subscription: sub.toJSON(), label: navigator.userAgent.slice(0, 80) });
+      pushSub = sub;
+      toast('Notifications on for this device');
+    } else if (act === 'off') {
+      const endpoint = pushSub?.endpoint;
+      if (pushSub) { try { await pushSub.unsubscribe(); } catch {} }
+      if (endpoint) await postPush({ action: 'unsubscribe', endpoint });
+      pushSub = null;
+      toast('Notifications turned off');
+    } else if (act === 'test') {
+      if (!pushSub) return;
+      await postPush({ action: 'test', endpoint: pushSub.endpoint });
+      toast('Test notification sent');
+    }
+  } catch (err) {
+    toast(err.message || 'Could not update notifications.');
+  } finally {
+    pushBusy = false; renderPushUi();
+  }
+});
+
+// Deep link: ?item=<id> or a desk-open message from the SW.
+async function openDeskItem(id) {
+  if (!id) return;
+  setView('posts');
+  await refresh();
+  const it = items.find((x) => x.id === id);
+  if (!it) {
+    toast("That one isn't waiting anymore");
+    return;
+  }
+  select(id, phone.matches, { push: phone.matches });
+}
+
+function consumeItemParam() {
+  const u = new URL(location.href);
+  const id = u.searchParams.get('item');
+  if (!id) return null;
+  u.searchParams.delete('item');
+  history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+  return id;
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', (e) => {
+    if (e.data?.type === 'desk-open') openDeskItem(e.data.item);
+  });
+}
+
 applyState(boot.state);
 current = (items.find((x) => stateOf(x) === 'waiting' && x.kind !== 'ask') || items[0])?.id || null;
 renderList(); renderDetail();
@@ -940,3 +1090,10 @@ renderList(); renderDetail();
 // Never on a site without Stories.
 let saved = null; try { saved = localStorage.getItem(viewKey); } catch {}
 setView(storiesOn() && (location.hash === '#stories' || (storyList().length > 0 && (!items.length || saved === 'stories'))) ? 'stories' : 'posts', { land: true });
+// Deep link after the first paint so the rail exists; strip ?item= with replaceState.
+{
+  const deep = consumeItemParam();
+  if (deep) openDeskItem(deep);
+  if (canPush) refreshPushSub();
+  else renderPushUi();
+}

@@ -5,3 +5,9 @@
 # (client, approve) and viewer@desk-fixture.test (client, view only).
 ENVIRONMENT=development
 DEV_EMAIL=alex@ka-performancefl.com
+# Throwaway VAPID public key for local UI (Turn on / subscribe). No private key
+# here: with VAPID_PRIVATE_KEY unset the Worker uses the mock transport and
+# never calls a real push service. Generate a real pair on your PC with
+# node scripts/vapid-keys.mjs before any deploy.
+VAPID_PUBLIC_KEY=BMZYx5BJxLXWx8BOF8984xBtHe0y0ab-l-O2E7aZp3gRUynfanvB76FBpInPkDMgomgUO9-UgSQbxJ1i2UYbfS0
+VAPID_SUBJECT=mailto:alex@ka-performancefl.com

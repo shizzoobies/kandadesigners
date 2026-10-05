@@ -50,3 +50,30 @@ site later; `localhost` in desktop Chrome offers Install from the address bar.
 The fixture media is in `seed/desk-fixture/` (made by
 `scripts/make-desk-fixture-media.py`); the PWA icons are made by
 `scripts/make-desk-icons.py`.
+
+
+## Local desk push (slice 4)
+
+Push never leaves the box locally: with `VAPID_PRIVATE_KEY` unset (the default
+in `.dev.vars.example`), every send goes through a mock transport that logs
+`[push:mock]` lines. The fixture seeds one fake subscription for the owner on
+`https://push.mock.local/desk-fixture` (that host is allowlisted only when
+`ENVIRONMENT=development`). Re-seeding clears `desk_push_sent`, so the next
+cron run announces again.
+
+```sh
+cd admin
+# after migrations + seed, and with a throwaway VAPID_PUBLIC_KEY in .dev.vars:
+node ./node_modules/astro/astro.js build
+node ./node_modules/wrangler/bin/wrangler.js dev --local --test-scheduled --port 8787
+# in another terminal:
+curl -s http://127.0.0.1:8787/__scheduled
+# expect [push:mock] lines for each site with waiting approve items
+curl -s http://127.0.0.1:8787/__scheduled
+# second run: nothing new (already in desk_push_sent)
+```
+
+`astro dev` alone does not fire the cron; use the build + `wrangler dev
+--local --test-scheduled` path above. The desk UI at
+`http://127.0.0.1:4321/sites/ka-performance/social` still works under
+`astro dev` for Turn on / deep links (`?item=<id>`).

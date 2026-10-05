@@ -44,6 +44,12 @@
   //                        Providers, and Groups: Edit" on this account. Without
   //                        it the sign-in list is not synced and People says so.
   //                        See DEPLOY-CLIENT-ACCESS.md.
+  //   VAPID_PRIVATE_KEY    Web Push VAPID private key (Alex generates with
+  //                        scripts/vapid-keys.mjs). Public key + VAPID_SUBJECT
+  //                        go in vars above once he picks them; unset private
+  //                        key means the Worker uses the mock transport.
+  // Desk push cron: every 5 minutes. Takes effect only when Alex deploys.
+  "triggers": { "crons": ["*/5 * * * *"] },
   // A Route, not a Custom Domain: a proxied A record (192.0.2.1, deliberately
   // unroutable) already sits at this hostname, and Custom Domain attachment
   // fails with API code 100117 because of it. Routes want that record.
