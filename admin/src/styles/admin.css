@@ -248,6 +248,11 @@ fieldset.access .hint { margin: 0; }
 /* Faded rather than hidden when idle, so its live region stays in place. */
 .d-toast:not(.on) { opacity: 0; pointer-events: none; }
 .btn[aria-disabled="true"] { opacity: .55; cursor: progress; }
+/* Taps act at once: no double-tap-zoom wait on the desk's controls. */
+.desk button, .desk a, .desk label, .desk textarea { touch-action: manipulation; }
+.conn .d-reload { min-height: 44px; margin-left: 8px; vertical-align: middle; }
+/* The phone decision bar and change sheet exist only at phone width. */
+.d-phone-decide, .d-sheet { display: none; }
 .done-note { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; max-width: 60ch; }
 .d-empty { margin-top: 20px; }
 .done-note p { margin: 0 0 8px; }
@@ -303,10 +308,58 @@ dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: con
   .d-card { padding: 14px 10px; }
   .d-bar { gap: 6px; margin-inline: -10px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); }
   .d-bar .btn { font-size: 14px; padding: 10px 9px; }
-  /* Up top, under the bar, so it never covers the action bar's buttons. */
+  /* Up top, under the bar, so it never covers an ask's Save answer. With the
+     decision bar showing, it sits just above that instead, in thumb reach. */
   .d-toast { top: var(--toast-top, calc(env(safe-area-inset-top, 0px) + 72px)); bottom: auto; }
+  .d-toast { width: max-content; }
+  .desk.deciding .d-toast { top: auto; bottom: calc(var(--decide-h, 0px) + 8px); }
   .d-body { grid-template-columns: 1fr; }
   .keys { display: none; }
+
+  /* One thumb (slice 1). The rail rows, tabs and small buttons reach 44px+. */
+  .d-item { min-height: 56px; align-content: center; padding: 10px 12px; }
+  .d-views button { min-height: 44px; }
+  .d-tabs { overflow-x: auto; scrollbar-width: none; }
+  .d-tabs button { flex: none; min-height: 44px; white-space: nowrap; }
+  .versions button { min-height: 44px; }
+  .pager button { min-width: 44px; min-height: 44px; }
+  .desk .copy { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; }
+  .cap { font-size: 16px; line-height: 1.6; max-height: none; }
+  .stage video, .stage img { max-height: 60vh; max-height: 60svh; object-fit: contain; }
+  .btn:active { background: var(--accent-hot); }
+  .btn.quiet:active { background: var(--sunk); }
+
+  /* The sticky decision bar: Request changes | Approve, or the status above
+     Undo | Next post. Same top rule as the in-card bar it replaces. */
+  .desk.deciding .d-card > .d-bar { display: none; }
+  .desk.deciding .d-detail { padding-bottom: calc(var(--decide-h, 0px) + 16px); }
+  .d-phone-decide { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--surface); border-top: 3px solid var(--ink); padding: 10px max(12px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+  .d-phone-decide .state { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 15px; font-weight: 700; min-width: 0; }
+  .d-phone-decide .state:last-child { margin: 2px 0; }
+  .d-phone-decide .lbl { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .d-decide-btns { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; }
+  .d-decide-btns .btn { display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 12px; font-size: 16px; }
+  .d-swap { animation: d-fade 150ms ease-out; }
+  .d-phone-note { margin: 18px 0 0; }
+
+  /* The change sheet slides up from the bottom and rides above the keyboard
+     (--kb, from visualViewport). 16px+ text so iOS does not zoom. */
+  .d-sheet { display: block; position: fixed; inset: 0; z-index: 20; }
+  .d-sheet-scrim { position: absolute; inset: 0; background: rgba(34, 28, 21, .5); opacity: 0; transition: opacity 220ms ease-out; }
+  .d-sheet-panel { position: absolute; left: 0; right: 0; bottom: var(--kb, 0px); max-height: calc(100% - var(--kb, 0px) - 24px); overflow: auto; background: var(--surface); border-top: 3px solid var(--ink); border-radius: 8px 8px 0 0; padding: 16px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); transform: translateY(100%); transition: transform 220ms ease-out; }
+  .d-sheet.open .d-sheet-scrim { opacity: 1; }
+  .d-sheet.open .d-sheet-panel { transform: none; }
+  .d-sheet-title { display: block; font: 700 20px/1.2 var(--font-display); margin: 0 0 10px; }
+  .desk .d-sheet-note { font-size: 17px; line-height: 1.45; min-height: 7.5em; resize: none; }
+  .d-sheet-msg { margin: 8px 0 0; color: var(--error); font-size: 15px; font-weight: 600; }
+  .d-sheet-msg:empty { display: none; }
+  .d-sheet-actions { display: grid; grid-template-columns: 1fr 1.6fr; gap: 8px; margin-top: 12px; }
+  .d-sheet-actions .btn { display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: 16px; }
+}
+@keyframes d-fade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .d-swap { animation: none; }
+  .d-sheet-scrim, .d-sheet-panel { transition: none; }
 }
 @media (max-width: 600px) {
   .srow { grid-template-columns: 76px minmax(0, 1fr); }
