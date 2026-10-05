@@ -9,6 +9,7 @@ const fields = [
   { name: 'local_path', label: 'Local folder', type: 'text', hint: 'For example D:\\MBS Medical\\mbsmedical-ref.' },
   { name: 'deploy_command', label: 'Deploy command', type: 'text' },
   { name: 'domain', label: 'Domain for expiry checks', type: 'text', hint: 'Only needed when it is not simply the live address without www.' },
+  { name: 'metricool_brand_id', label: 'Metricool brand id', type: 'text', hint: 'Digits only, for example 7076479. Leave blank for a site with no social analytics.' },
 ];
 ---
 <form method="post" action={action} enctype="multipart/form-data" class="stack" novalidate>

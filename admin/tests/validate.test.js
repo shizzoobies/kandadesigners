@@ -33,6 +33,13 @@ describe('parseSiteForm', () => {
     expect(r.values.slug).toBe('custom-slug');
     expect(r.values.maintainer_id).toBe(1);
   });
+
+  it('takes a Metricool brand id as digits, or blank for none', () => {
+    expect(parseSiteForm(fd({ name: 'X', live_url: 'https://x.test', metricool_brand_id: ' 7076479 ' })).values.metricool_brand_id).toBe('7076479');
+    expect(parseSiteForm(fd({ name: 'X', live_url: 'https://x.test', metricool_brand_id: '' })).values.metricool_brand_id).toBeNull();
+    const bad = parseSiteForm(fd({ name: 'X', live_url: 'https://x.test', metricool_brand_id: '70a6' }));
+    expect(bad.errors.metricool_brand_id).toBe('Use the digits only, for example 7076479.');
+  });
 });
 
 describe('parseStatusForm', () => {

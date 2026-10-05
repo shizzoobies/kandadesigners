@@ -52,6 +52,13 @@ describe('sites', () => {
       cert_expires_on: '2026-12-01', domain_expires_on: '2027-01-01',
     });
   });
+
+  it('saves and updates the Metricool brand id with the other site fields', async () => {
+    const id = await q.createSite(db, { slug: 'ka', name: 'K', live_url: 'https://k.test', hosting: 'pages', metricool_brand_id: '7076479' }, T);
+    expect((await q.getSiteBySlug(db, 'ka')).metricool_brand_id).toBe('7076479');
+    await q.updateSite(db, id, { slug: 'ka', name: 'K', live_url: 'https://k.test', hosting: 'pages', metricool_brand_id: null }, 'u');
+    expect((await q.getSiteBySlug(db, 'ka')).metricool_brand_id).toBeNull();
+  });
 });
 
 describe('checks', () => {

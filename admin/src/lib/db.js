@@ -102,7 +102,7 @@ export async function setSettings(db, values, nowIso) {
 
 // sites
 
-export const SITE_FIELDS = ['slug', 'name', 'live_url', 'repo', 'local_path', 'hosting', 'deploy_command', 'maintainer_id', 'domain'];
+export const SITE_FIELDS = ['slug', 'name', 'live_url', 'repo', 'local_path', 'hosting', 'deploy_command', 'maintainer_id', 'domain', 'metricool_brand_id'];
 
 export async function listSites(db) {
   return rows(db.prepare('SELECT * FROM sites ORDER BY name COLLATE NOCASE'));

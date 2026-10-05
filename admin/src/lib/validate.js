@@ -58,6 +58,9 @@ export function parseSiteForm(fd) {
   v.domain = blankToNull(str(fd, 'domain').toLowerCase());
   if (v.domain && !/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(v.domain)) errors.domain = 'Enter a bare domain, for example example.com.';
 
+  v.metricool_brand_id = blankToNull(str(fd, 'metricool_brand_id'));
+  if (v.metricool_brand_id && !/^\d{1,12}$/.test(v.metricool_brand_id)) errors.metricool_brand_id = 'Use the digits only, for example 7076479.';
+
   return done(v, errors);
 }
 
