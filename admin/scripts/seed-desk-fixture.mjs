@@ -1,8 +1,11 @@
 // Seeds the LOCAL D1 and R2 (.wrangler/state, the same store `astro dev`
 // reads through platformProxy) with a small Post Desk for ka-performance:
 // a reel, a carousel with both versions, a LinkedIn post, a story, a native
-// post and an ask, mixed waiting / approved / changes. Re-running resets
-// that desk to the fixture. Local only: no Cloudflare account is touched.
+// post and an ask, mixed waiting / approved / changes, plus a Stories
+// checklist with a row in every phone state (posted, due now, later today,
+// tomorrow, one with a condition, +3 days, and one with a very long sticker).
+// Re-running resets that desk to the fixture, and re-times today's rows
+// around the clock it runs at. Local only: no Cloudflare account is touched.
 //
 //   node ./node_modules/wrangler/bin/wrangler.js d1 migrations apply ka-sites --local
 //   node scripts/seed-desk-fixture.mjs
@@ -29,6 +32,17 @@ const iso = now.toISOString();
 const day = (n) => {
   const d = new Date(now.getTime() + n * 86400000);
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(d);
+};
+// The clock in Gainesville as HH:MM, moved by some minutes and kept inside
+// today, so "due now" stays in the past and "later today" in the future.
+const nyMinutes = (() => {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+    .formatToParts(now).map((x) => [x.type, x.value]));
+  return Number(p.hour) * 60 + Number(p.minute);
+})();
+const at = (shift) => {
+  const m = Math.min(23 * 60 + 59, Math.max(0, nyMinutes + shift));
+  return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
 };
 const key = (item, file) => `${SLUG}/${item}/${file}`;
 const media = (item, file, role, alt = '') => ({ src: key(item, file), role, alt, v: 'fixture-1' });
@@ -86,13 +100,31 @@ const ITEMS = [
     detail: 'Two licensed options: Steady Groove or Bright Lift. Which fits better?',
     placeholder: 'Steady Groove or Bright Lift',
   }, []],
-  // The Stories checklist (its own tab on K&A's desk).
-  ['stories', 'story', day(1), '09:30', 'Story', {
-    stickerText: 'Book a screen', stickerUrl: 'https://ka-performancefl.com/?utm_source=ig_story',
-    src: key(story, 'story.jpg'), v: 'fixture-1', condition: '',
-  }, []],
 ];
-const IDS = [reel, carousel, linkedin, reel2, native, story, 'ask-reel-track', `${day(1)}-story`];
+const IDS = [reel, carousel, linkedin, reel2, native, story, 'ask-reel-track'];
+
+// The Stories checklist (its own tab on K&A's desk), in date order. Only
+// today and later: past-dated rows are purged when the desk opens, so the
+// "Not ticked" state is covered by tests/desk-stories.test.js instead.
+// [id, date, time, sticker text, sticker URL, condition, file, ticked]
+const LONG_URL = 'https://ka-performancefl.com/programs/youth-athlete-strength-and-conditioning/summer-2026-registration?utm_source=ig_story&utm_medium=link_sticker&utm_campaign=youth_summer_registration_final_week&utm_content=story_6';
+const STORIES = [
+  [`${day(0)}-story-am`, day(0), at(-120), 'Book a screen', 'https://ka-performancefl.com/?utm_source=ig_story', '', ['story-2.jpg', 'image/jpeg'], true],
+  [`${day(0)}-story`, day(0), at(-60), 'Tempo squats, full video', 'https://ka-performancefl.com/blog/tempo-squats?utm_source=ig_story', '', ['story-3.jpg', 'image/jpeg'], false],
+  [`${day(0)}-story-pm`, day(0), at(120), 'Saturday open gym', 'https://ka-performancefl.com/open-gym?utm_source=ig_story', '', ['story-4.jpg', 'image/jpeg'], false],
+  [story, day(1), '09:30', 'Book a screen', 'https://ka-performancefl.com/?utm_source=ig_story', '', null, false],
+  [`${day(2)}-story`, day(2), '12:30', 'Five warm-up fixes', 'https://ka-performancefl.com/blog/warm-up?utm_source=ig_story',
+    'Only once the carousel is up. If the carousel moves, post this after it.', ['story-5.jpg', 'image/jpeg'], false],
+  [`${day(3)}-story`, day(3), '17:45', 'First pull-up story', 'https://ka-performancefl.com/results?utm_source=ig_story', '', ['story.jpg', 'image/jpeg'], false],
+  [`${day(5)}-story`, day(5), '08:15', 'Last week to sign up for youth summer strength and conditioning, spots are limited so grab one today', LONG_URL, '', ['story-6.png', 'image/png'], false],
+];
+for (const [id, date, time, stickerText, stickerUrl, condition, file] of STORIES) {
+  // Tomorrow's row is the approval list's Story too, and shares its image.
+  const src = file ? key(id, file[0]) : key(story, 'story.jpg');
+  ITEMS.push(['stories', 'story', date, time, 'Story', { stickerText, stickerUrl, src, v: 'fixture-1', condition }, file ? [file] : []]);
+  IDS.push(id);
+}
+const TICKED = STORIES.filter((r) => r[7]).map((r) => r[0]);
 
 // Decisions: [item, decision, note, who]. The rest stay waiting.
 const DECISIONS = [
@@ -136,6 +168,10 @@ try {
     stmts.push(db.prepare('INSERT INTO desk_decisions (site_id, item_id, decision, note, decided_by, decided_at) VALUES (?, ?, ?, ?, ?, ?)')
       .bind(site.id, id, decision, note, await person(who), iso));
   }
+  for (const id of TICKED) {
+    stmts.push(db.prepare('INSERT INTO desk_story_checks (site_id, item_id, posted, checked_by, checked_at) VALUES (?, ?, 1, ?, ?)')
+      .bind(site.id, id, await person('alex@ka-performancefl.com'), iso));
+  }
   stmts.push(db.prepare('INSERT INTO desk_meta (site_id, pushed_at, built_at, stories_paused) VALUES (?, ?, ?, 0)').bind(site.id, iso, iso));
   await db.batch(stmts);
 
@@ -147,7 +183,7 @@ try {
       n += 1;
     }
   }
-  console.log(`Seeded the local ${SLUG} desk: ${ITEMS.length} items, ${DECISIONS.length} decisions, ${n} media files.`);
+  console.log(`Seeded the local ${SLUG} desk: ${ITEMS.length} items (${STORIES.length} on the Stories checklist, ${TICKED.length} ticked), ${DECISIONS.length} decisions, ${n} media files.`);
 } finally {
   await dispose();
 }

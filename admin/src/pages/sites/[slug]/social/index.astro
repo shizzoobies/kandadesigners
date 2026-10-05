@@ -7,6 +7,7 @@ import { getSiteBySlug } from '../../../../lib/db.js';
 import { getDeskState, maybePurge } from '../../../../lib/desk.js';
 import { canWriteDesk } from '../../../../lib/gate.js';
 import { deskCopy } from '../../../../lib/desk-copy.js';
+import { hasStoriesIn } from '../../../../lib/desk-stories.js';
 
 const env = Astro.locals.runtime.env;
 const site = await getSiteBySlug(env.DB, Astro.params.slug);
@@ -27,7 +28,8 @@ const me = user?.name || user?.email || '';
 // means a client's desk never flashes a Stories tab or an empty rail on load.
 // Stories are K&A's own hand-posted routine: a site with none, and no paused
 // flag, has no Stories tab at all.
-const hasStories = state.items.some((i) => i.list === 'stories') || !!state.meta?.stories_paused;
+// The manifest route reads the same rule for its Stories shortcut.
+const hasStories = hasStoriesIn(state);
 const empty = state.items.length === 0;
 // "<" is escaped so no text in a caption can close the script element early.
 const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).replace(/</g, '\\u003c');
@@ -94,9 +96,12 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).re
       </div>
     </section>
 
+    <!-- On a phone it fills the screen, with Copy URL, Save image and Close
+         in a bottom bar in thumb reach; Copy URL and the URL line are phone only. -->
     <dialog class="zoom" id="zoom" aria-label="Story image">
-      <img id="zoomImg" src="" alt="" />
-      <div class="zbar"><a class="btn" id="zoomSave" href="" download>Save image</a><button type="button" class="btn quiet" id="zoomClose">Close</button></div>
+      <div class="zstage" id="zoomStage"><img id="zoomImg" src="" alt="" /></div>
+      <p class="zurl" id="zoomUrl"></p>
+      <div class="zbar"><button type="button" class="btn quiet" id="zoomCopy">Copy URL</button><a class="btn" id="zoomSave" href="" download>Save image</a><button type="button" class="btn quiet" id="zoomClose">Close</button></div>
     </dialog>
     <!-- Always in the page, so the live region exists before a message lands.
          Only the message is live; the Undo button sits beside it. -->

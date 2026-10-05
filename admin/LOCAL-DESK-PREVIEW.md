@@ -22,13 +22,25 @@ platformProxy, and `.dev.vars` signs you in as `DEV_EMAIL` (the dev bypass in
 The fixture is a K & A desk: a reel with a question, a carousel with both
 versions, a LinkedIn document, a Story, a native Facebook post and an ask;
 the LinkedIn post is approved and the second reel has changes asked, the rest
-wait. Two extra local-only logins check access levels:
+wait. The Stories tab has a row in every phone state: one already posted
+today, one due now (its time passed an hour before the seed ran), one later
+today, tomorrow, one with a condition line, +3 days, and +5 days with a very
+long sticker URL and sticker text (a PNG, so Save image covers both types).
+Today's times are set from the clock when the seed runs, so re-seed if "later
+today" has become due. Past-dated rows are purged when the desk opens, so the
+"Not ticked" state lives in `tests/desk-stories.test.js`, not the fixture.
+Two extra local-only logins check access levels:
 
 | DEV_EMAIL | Sees |
 | --- | --- |
 | `alex@ka-performancefl.com` | Owner: full desk |
 | `approver@desk-fixture.test` | Client, approve: can decide |
 | `viewer@desk-fixture.test` | Client, view only: no buttons, writes 403 |
+
+Save image on a phone uses the share sheet (Web Share with files), which
+desktop Chrome's device mode doesn't have, so there it falls back to the
+download. To try the share path, stub `navigator.canShare` and
+`navigator.share` in the console before tapping it.
 
 Phone checks: Chrome DevTools device mode at 390 and 360 wide, or open
 `http://<your LAN IP>:4321/...` from a phone after `astro dev --host`.
