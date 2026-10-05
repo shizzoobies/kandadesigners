@@ -80,6 +80,13 @@ describe('gateRequest', () => {
     }
   });
 
+  it('keeps the analytics page and its sync owner-only, even on a granted site', () => {
+    for (const p of ['/sites/foremotion-golf/analytics', '/sites/foremotion-golf/analytics/', '/sites/foremotion-golf/analytics/sync']) {
+      expect(gateRequest(CLIENT, p)).toEqual({ allow: false, status: 403 });
+      expect(gateRequest(OWNER, p)).toEqual({ allow: true });
+    }
+  });
+
   it('serves a client only the logos of their granted sites', () => {
     expect(gateRequest(CLIENT, '/logos/logos/foremotion-golf-ab12cd34.png')).toEqual({ allow: true });
     expect(gateRequest(CLIENT, '/logos/favicons/foremotion-golf.png')).toEqual({ allow: true });

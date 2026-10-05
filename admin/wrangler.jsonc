@@ -19,6 +19,13 @@
       // Local development and tests do not need the real id.
       "database_id": "1859da99-2c03-4796-b6e6-8a1e4ab8112b",
       "migrations_dir": "migrations"
+    },
+    {
+      "binding": "ATTRIBUTION_DB",
+      "database_name": "ka-attribution",
+      // Written at approval L1 (Task 12) from `wrangler d1 create ka-attribution`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations-attribution"
     }
   ],
   "r2_buckets": [
@@ -26,6 +33,11 @@
     // Post Desk review copies. Private on purpose: unapproved posts must never
     // sit at public URLs, so this is not the public ka-social bucket.
     { "binding": "DESK_MEDIA", "bucket_name": "ka-social-desk" }
+  ],
+  // "Sync now" on the analytics page runs in ka-analytics-sync, which holds the
+  // Metricool token; the admin never sees it.
+  "services": [
+    { "binding": "ANALYTICS_SYNC", "service": "ka-analytics-sync" }
   ],
   // Identifiers, not secrets: the AUD tag names the Access application and the
   // team domain is public. Both are safe to commit.

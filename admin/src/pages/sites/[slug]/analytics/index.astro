@@ -1,0 +1,164 @@
+---
+import Shell from '../../../../layouts/Shell.astro';
+import { getSiteBySlug } from '../../../../lib/db.js';
+import * as a from '../../../../lib/analytics.js';
+import { openRun } from '../../../../lib/analytics-sync.js';
+import { sparklinePath } from '../../../../lib/sparkline.js';
+import { easternDateTime, humanDate } from '../../../../lib/when.js';
+
+// Owner-only (lib/gate.js). Reads ATTRIBUTION_DB only; every number is Metricool's.
+const { DB, ATTRIBUTION_DB: ADB } = Astro.locals.runtime.env;
+const site = await getSiteBySlug(DB, Astro.params.slug);
+if (!site) return new Response('Not found', { status: 404 });
+
+const days = a.pickRange(Astro.url.searchParams.get('range'));
+const sort = Astro.url.searchParams.get('sort');
+const dir = Astro.url.searchParams.get('dir') === 'asc' ? 'asc' : 'desc';
+const msg = Astro.url.searchParams.get('msg');
+
+const map = ADB && site.metricool_brand_id ? await a.getSiteMap(ADB, site.slug) : null;
+const networks = a.networksOf(map);
+const tz = map?.timezone ?? 'America/New_York';
+const asOf = map ? await a.latestAsOf(ADB, site.slug) : null;
+const bounds = asOf ? a.rangeBounds(asOf, days) : null;
+const rows = bounds ? await a.postRows(ADB, site.slug, bounds, tz) : [];
+const sorted = a.sortRows(rows, sort, dir);
+const cards = bounds ? await a.networkCards(ADB, site.slug, networks, bounds, rows) : [];
+const groups = a.panels(rows);
+const reach = bounds ? await a.reachSeries(ADB, site.slug, bounds) : [];
+const path = sparklinePath(reach, 480, 44);
+const fresh = map ? await a.freshness(ADB, site.slug, networks) : null;
+const since = map ? await a.dataSince(ADB, site.slug) : null;
+const busy = map ? await openRun(ADB, site.slug, Date.now()) : false;
+
+const n = (v) => (v == null ? 'n/a' : Number(v).toLocaleString('en-US', { maximumFractionDigits: 1 }));
+const signed = (v) => (v == null ? 'n/a' : `${v > 0 ? '+' : ''}${n(v)}`);
+// Every card says where its totals came from (Alex: real numbers only, never more than they are).
+const span = (c) => (c.followersFrom && c.followersTo && c.followersFrom !== c.followersTo ? `, ${humanDate(c.followersFrom)} to ${humanDate(c.followersTo)}` : '');
+const REACH_NOTE = { account: 'Reach is daily account reach added up, so someone reached on several days counts each day.', posts: 'Reach is the reach of posts published in this range, added up.' };
+const INTERACTIONS_NOTE = { account: 'Interactions are daily account interactions added up, so they will not match the post table.', posts: 'Interactions are those on posts published in this range, added up.' };
+const sortHref = (key) => `?range=${days}&sort=${key}&dir=${sort === key && dir === 'desc' ? 'asc' : 'desc'}`;
+const ariaSort = (key) => (sort === key ? (dir === 'asc' ? 'ascending' : 'descending') : undefined);
+const COLS = [['reach', 'Reach'], ['views', 'Views'], ['interactions', 'Interactions'], ['clicks', 'Clicks'], ['engagement', 'Engagement rate']];
+const PANELS = [['kind', 'By kind', 'Kind'], ['slot', 'By weekday and hour', 'Slot'], ['pillar', 'By pillar', 'Pillar']];
+---
+<Shell title={`${site.name} analytics`}>
+  <p><a href={`/sites/${site.slug}`}>Back to {site.name}</a></p>
+  <h1>{site.name}: social analytics</h1>
+  <p class="hint">Every number on this page is Metricool's, synced nightly. K&amp;A's own counts are never mixed in.</p>
+  {msg && <div class="alert" role="status">{msg}</div>}
+
+  {!site.metricool_brand_id ? (
+    <section class="section">
+      <p>No Metricool brand set for this site. <a href={`/sites/${site.slug}/edit`}>Add the brand id</a> on the edit form.</p>
+    </section>
+  ) : (
+    <>
+      <section class="section" aria-labelledby="sync-h">
+        <h2 id="sync-h">Sync</h2>
+        {fresh?.at ? <p>Last sync {easternDateTime(fresh.at)} Eastern, {fresh.trigger === 'manual' ? 'from Sync now' : 'nightly'}.</p> : <p>Not synced yet.</p>}
+        {fresh?.siteError && <p class="err">{fresh.siteError}</p>}
+        {fresh && fresh.lines.length > 0 && (
+          <ul class="fresh">
+            {fresh.lines.map((l) => <li>{l.label}: {l.ok === null ? 'not synced yet' : l.ok ? 'ok' : <span class="err">{l.error}</span>}</li>)}
+          </ul>
+        )}
+        {fresh?.other && <p class="err">{fresh.other}</p>}
+        <form method="post" action={`/sites/${site.slug}/analytics/sync`}>
+          <button class="btn" type="submit" disabled={busy}>{busy ? 'Sync running' : 'Sync now'}</button>
+        </form>
+      </section>
+
+      {!bounds ? <section class="section"><p>Nothing synced yet. Use Sync now, or wait for tonight's run.</p></section> : (
+        <>
+          <nav aria-label="Range" class="row">
+            {a.RANGES.map((r) => <a class={r === days ? 'btn' : 'btn quiet'} href={`?range=${r}`} aria-current={r === days ? 'page' : undefined}>{r} days</a>)}
+          </nav>
+          <p class="hint">{humanDate(bounds.start)} to {humanDate(bounds.end)}, ending at the latest Metricool snapshot. Syncing since {since ? humanDate(since) : 'n/a'}. Each sync reads the last 35 days, so older posts keep the numbers from their last sync.</p>
+
+          <section class="section" aria-labelledby="net-h">
+            <h2 id="net-h">By network</h2>
+            <div class="cards">
+              {cards.map((c) => (
+                <article class="card">
+                  <h3>{c.label}</h3>
+                  <dl class="facts">
+                    <dt>Followers</dt><dd>{n(c.followers)} ({signed(c.change)}{span(c)})</dd>
+                    <dt>Reach</dt><dd>{n(c.reach)}</dd>
+                    <dt>Interactions</dt><dd>{n(c.interactions)}</dd>
+                    <dt>Link clicks</dt><dd>{n(c.clicks)}</dd>
+                    <dt>Posts</dt><dd>{c.posts}</dd>
+                  </dl>
+                  {(c.reachSource || c.interactionsSource) && <p class="hint">{[REACH_NOTE[c.reachSource], INTERACTIONS_NOTE[c.interactionsSource]].filter(Boolean).join(' ')}</p>}
+                  <p class="caps">Source: Metricool</p>
+                </article>
+              ))}
+            </div>
+            {path && (
+              <figure>
+                <svg class="spark" viewBox="0 0 480 44" role="img" aria-label={`Account reach per day, last ${days} days, from Metricool`}><path d={path} /></svg>
+                <figcaption class="caps">Account reach per day, Metricool</figcaption>
+              </figure>
+            )}
+          </section>
+
+          <section class="section" aria-labelledby="worked-h">
+            <h2 id="worked-h">What worked</h2>
+            <p class="hint">Averages over each post's latest Metricool snapshot. Posts counts every post in the group; each average skips posts Metricool has no value for. Newer posts have had less time to collect reach.</p>
+            <div class="cards">
+              {PANELS.map(([key, title, head]) => (
+                <table class="data">
+                  <caption>{title}</caption>
+                  <thead><tr><th scope="col">{head}</th><th scope="col">Posts</th><th scope="col">Avg reach (Metricool)</th><th scope="col">Avg interactions (Metricool)</th></tr></thead>
+                  <tbody>
+                    {groups[key].map((g) => <tr><th scope="row">{g.key}</th><td class="num">{g.count}</td><td class="num">{n(g.reach)}</td><td class="num">{n(g.interactions)}</td></tr>)}
+                  </tbody>
+                </table>
+              ))}
+            </div>
+          </section>
+
+          <section class="section" aria-labelledby="posts-h">
+            <h2 id="posts-h">Posts</h2>
+            {rows.length === 0 ? <p>No posts published in this range.</p> : (
+              <div class="scroll">
+                <table class="data">
+                  <thead>
+                    <tr>
+                      <th scope="col">Network</th><th scope="col">Kind</th><th scope="col">Pillar</th><th scope="col">Slot</th><th scope="col">Post</th>
+                      {COLS.map(([key, label]) => <th scope="col" aria-sort={ariaSort(key)}><a href={sortHref(key)}>{label} (Metricool)</a></th>)}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sorted.map((r) => (
+                      <tr>
+                        <td>{a.NETWORK_LABEL[r.network]}</td>
+                        <td>{r.kind}</td>
+                        <td>{r.pillar}</td>
+                        <td>{r.slot?.label ?? 'n/a'}</td>
+                        <td>{r.url ? <a href={r.url} target="_blank" rel="noopener">{r.title ?? 'Untitled'}<span class="sr"> (opens in a new tab)</span></a> : (r.title ?? 'Untitled')}</td>
+                        {COLS.map(([key]) => <td class="num">{n(r[key])}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        </>
+      )}
+    </>
+  )}
+</Shell>
+
+<style>
+  .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px; background: var(--surface); }
+  .scroll { overflow-x: auto; }
+  table.data { border-collapse: collapse; width: 100%; }
+  table.data caption { text-align: left; font-weight: 700; padding-bottom: 6px; }
+  table.data th, table.data td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.data td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .fresh { list-style: none; padding: 0; margin: 0 0 12px; }
+  nav.row { margin-bottom: 8px; }
+</style>
