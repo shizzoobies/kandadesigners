@@ -20,14 +20,14 @@ def font(size):
             pass
     return ImageFont.load_default()
 
-def card(name, w, h, title, sub, bg=CANVAS, fg=INK):
+def card(name, w, h, title, sub, bg=CANVAS, fg=INK, fmt='JPEG'):
     im = Image.new('RGB', (w, h), bg)
     d = ImageDraw.Draw(im)
     d.rectangle([0, 0, w, 18], fill=ACCENT)
     d.text((40, h // 2 - 70), title, font=font(54), fill=fg)
     d.text((40, h // 2 + 10), sub, font=font(28), fill=fg)
     d.text((40, h - 70), 'Local fixture, not a real post', font=font(22), fill=fg)
-    im.save(OUT / name, 'JPEG', quality=70)
+    im.save(OUT / name, fmt, **({'quality': 70} if fmt == 'JPEG' else {'optimize': True}))
     return OUT / name
 
 # Reel: 9:16 frames, then a 4 second video.
@@ -41,6 +41,13 @@ for i in range(1, 4):
 for i in range(1, 3):
     card(f'li-{i}.jpg', 540, 676, 'LinkedIn', f'Page {i} of 2', bg=SUNK)
 card('story.jpg', 540, 960, 'Story', 'Link sticker goes here', bg=SUNK)
+# The Stories checklist (slice 2): one card per row, and a PNG so Save image
+# exercises both file types.
+STORY_CARDS = [('story-2.jpg', 'Story 2', CANVAS), ('story-3.jpg', 'Story 3', SUNK),
+               ('story-4.jpg', 'Story 4', CANVAS), ('story-5.jpg', 'Story 5', SUNK)]
+for name, title, bg in STORY_CARDS:
+    card(name, 540, 960, title, 'Link sticker goes here', bg=bg)
+card('story-6.png', 540, 960, 'Story 6 (PNG)', 'Long sticker text', bg=INK, fg=CANVAS, fmt='PNG')
 
 def video(pattern, out, per=1.4):
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-framerate', f'1/{per}', '-i', str(OUT / pattern),

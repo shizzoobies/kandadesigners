@@ -247,6 +247,13 @@ fieldset.access .hint { margin: 0; }
 .d-toast :focus-visible { outline-color: var(--canvas); }
 /* Faded rather than hidden when idle, so its live region stays in place. */
 .d-toast:not(.on) { opacity: 0; pointer-events: none; }
+#toastMsg { min-width: 0; }
+/* Desktop: in the rail column, bottom-left and inside its width, so it never
+   covers the in-card status or buttons (post-desk.js sets the class and the
+   column's left edge and width). With no rail showing, bottom-center as above. */
+@media (min-width: 861px) {
+  .desk.toast-rail .d-toast { left: var(--toast-left); transform: none; width: max-content; max-width: var(--toast-w); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+}
 .btn[aria-disabled="true"] { opacity: .55; cursor: progress; }
 /* Taps act at once: no double-tap-zoom wait on the desk's controls. */
 .desk button, .desk a, .desk label, .desk textarea { touch-action: manipulation; }
@@ -279,6 +286,11 @@ fieldset.access .hint { margin: 0; }
 .stext span { color: var(--muted); font-size: 13px; margin-right: 6px; }
 .surl { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
 .sacts { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Copy URL and Save image sit under the text, beside the thumbnail; Posted on the right. */
+.srow { grid-template-rows: auto 1fr; }
+.srow > .thumb { grid-row: 1 / span 2; }
+.srow > .sacts { grid-column: 2; grid-row: 2; align-self: start; margin-top: -4px; }
+.srow > .posted-box, .srow > .posted-read { grid-column: 3; grid-row: 1; }
 .posted-box { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 14px; font-weight: 700; white-space: nowrap; cursor: pointer; background: var(--surface); border: 2px solid var(--line-strong); border-radius: 6px; }
 .posted-box input { width: 22px; height: 22px; margin: 0; accent-color: var(--green); cursor: pointer; }
 .posted-box.on { border-color: var(--green); background: var(--green-soft); }
@@ -289,6 +301,8 @@ dialog.zoom::backdrop { background: rgba(34, 28, 21, .8); }
 dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: contain; background: #000; }
 .zbar { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
 .zbar .btn.quiet { background: var(--surface); }
+/* Copy URL and the URL line are for the phone's full-screen zoom. */
+.zurl, .zbar #zoomCopy { display: none; }
 
 @media (max-width: 860px) {
   .d-layout { grid-template-columns: 1fr; }
@@ -308,11 +322,17 @@ dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: con
   .d-card { padding: 14px 10px; }
   .d-bar { gap: 6px; margin-inline: -10px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); }
   .d-bar .btn { font-size: 14px; padding: 10px 9px; }
-  /* Up top, under the bar, so it never covers an ask's Save answer. With the
-     decision bar showing, it sits just above that instead, in thumb reach. */
-  .d-toast { top: var(--toast-top, calc(env(safe-area-inset-top, 0px) + 72px)); bottom: auto; }
-  .d-toast { width: max-content; }
-  .desk.deciding .d-toast { top: auto; bottom: calc(var(--decide-h, 0px) + 8px); }
+  /* The toast docks to the bottom as a full-width strip, in thumb reach, and
+     slides up from below. Deciding, it sits flush on the decision bar's top
+     rule, the bar's width and padding, and slides out from behind it, so the
+     two read as one unit. Elsewhere it sits on the bottom edge above the safe
+     area, lifted (--toast-lift) over the keyboard and an ask's Save answer. */
+  .d-toast { left: 0; right: 0; top: auto; bottom: var(--toast-lift, 0px); transform: none; width: auto; max-width: none; border-radius: 6px 6px 0 0; padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); transition: transform 180ms ease-out; }
+  .d-toast:not(.on) { transform: translateY(100%); transition: transform 180ms ease-out, opacity 0s linear 180ms; }
+  #toastMsg { flex: 1; }
+  .desk.toast-lifted .d-toast { border-radius: 6px; padding-bottom: 8px; }
+  /* Tucked 1px under the bar's ink top rule, so no seam shows between them. */
+  .desk.deciding .d-toast { bottom: calc(var(--decide-h, 0px) - 1px); z-index: 4; padding-bottom: 8px; }
   .d-body { grid-template-columns: 1fr; }
   .keys { display: none; }
 
@@ -355,17 +375,63 @@ dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: con
   .d-sheet-msg:empty { display: none; }
   .d-sheet-actions { display: grid; grid-template-columns: 1fr 1.6fr; gap: 8px; margin-top: 12px; }
   .d-sheet-actions .btn { display: flex; align-items: center; justify-content: center; min-height: 48px; font-size: 16px; }
+
+  /* Stories, one thumb (slice 2). The tabs stick to the top so the row the
+     tab lands on sits just under them. Each row: a 96px 9:16 thumbnail beside
+     the day, state, sticker text and one-line URL; then Copy URL | Save image;
+     then Posted, the row's main action. Nothing widens the row at 360px. */
+  .desk.on-stories .d-views { position: sticky; top: 0; z-index: 3; background: var(--canvas); padding-top: env(safe-area-inset-top, 0px); }
+  .d-stories { margin-top: 12px; gap: 12px; }
+  .howto { padding: 0 16px; }
+  .howto summary { min-height: 44px; padding: 11px 0; }
+  .howto ol { margin-bottom: 12px; }
+  .srow { grid-template-columns: 96px minmax(0, 1fr); grid-template-rows: none; gap: 12px; padding: 12px; }
+  .srow > .thumb { width: 96px; grid-row: auto; }
+  .sinfo { gap: 4px; }
+  .swhen { gap: 2px 10px; }
+  .swhen strong { font-size: 17px; }
+  .swhen > span:not(.level) { font-size: 15px; }
+  .stext { font-size: 17px; line-height: 1.35; font-weight: 600; overflow-wrap: anywhere; }
+  .stext span { display: block; font-weight: 400; }
+  .surl { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; overflow-wrap: normal; }
+  .srow > .sacts { grid-column: 1 / -1; grid-row: auto; margin-top: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .desk .srow > .sacts .copy { display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 8px; font-size: 16px; text-align: center; }
+  .copy:active { background: var(--sunk); }
+  .srow > .posted-box, .srow > .posted-read { grid-column: 1 / -1; grid-row: auto; justify-content: center; min-height: 52px; font-size: 17px; }
+  /* Posted: an immediate press state, then a short fill as the tick lands. */
+  .posted-box { transition: background-color 150ms ease-out, border-color 150ms ease-out; }
+  .posted-box:active { background: var(--sunk); }
+  .posted-box.on:active { border-color: var(--green); }
+  .posted-box input { appearance: none; -webkit-appearance: none; flex: none; display: grid; place-items: center; width: 26px; height: 26px; border: 2px solid var(--muted); border-radius: 4px; background: var(--surface); }
+  .posted-box input:checked { background: var(--green); border-color: var(--green); }
+  .posted-box input:checked::after { content: ""; width: 7px; height: 13px; border: solid #fff; border-width: 0 3px 3px 0; transform: translateY(-2px) rotate(45deg); }
+  .posted-box.pop { animation: d-fill 150ms ease-out; }
+  .posted-box.pop input:checked { animation: d-fill-box 150ms ease-out; }
+  .posted-box.pop input:checked::after { animation: d-check 150ms ease-out; }
+
+  /* Zoom fills the screen: the image fit whole over ink, the URL, then
+     Copy URL | Save image | Close in a bottom bar. */
+  dialog.zoom { width: 100%; height: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; background: var(--ink); }
+  dialog.zoom[open] { display: flex; flex-direction: column; }
+  dialog.zoom::backdrop { background: var(--ink); }
+  .zstage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: calc(12px + env(safe-area-inset-top, 0px)) 12px 8px; }
+  /* Sized to the image itself, so a tap on the dark around it closes. */
+  dialog.zoom img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; background: transparent; }
+  .zurl { display: block; margin: 0; padding: 0 16px 10px; color: var(--canvas); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .zbar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; background: var(--surface); border-top: 3px solid var(--ink); padding: 10px max(12px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+  .zbar .btn, .zbar #zoomCopy { display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 6px; font-size: 16px; text-align: center; }
 }
+@keyframes d-fill { from { background-color: var(--surface); border-color: var(--line-strong); } }
+@keyframes d-fill-box { from { background-color: var(--surface); border-color: var(--muted); } }
+@keyframes d-check { from { transform: translateY(-2px) rotate(45deg) scale(0); } }
 @keyframes d-fade { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .d-swap { animation: none; }
   .d-sheet-scrim, .d-sheet-panel { transition: none; }
+  .d-toast, .d-toast:not(.on), .posted-box { transition: none; }
+  .posted-box.pop, .posted-box.pop input:checked, .posted-box.pop input:checked::after { animation: none; }
 }
-@media (max-width: 600px) {
-  .srow { grid-template-columns: 76px minmax(0, 1fr); }
-  .thumb { width: 76px; }
-  .posted-box, .posted-read { grid-column: 1 / -1; justify-content: center; }
-}
+
 @media (max-width: 360px) {
   /* The smallest phones: the three buttons keep one row, the count drops below. */
   .d-pos { order: 1; flex-basis: 100%; margin-right: 0; font-size: 13px; }

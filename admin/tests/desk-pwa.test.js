@@ -39,6 +39,26 @@ describe('manifestFor', () => {
     expect(manifestFor(SITE).icons[0].src).toBe('/images/desk-192.png');
   });
 
+  it('has no shortcuts without Stories', () => {
+    expect(manifestFor(SITE)).not.toHaveProperty('shortcuts');
+    expect(manifestFor(SITE, { hasStories: false })).not.toHaveProperty('shortcuts');
+  });
+
+  it('adds a Stories shortcut to the checklist when the site has Stories', () => {
+    const m = manifestFor(SITE, { hasStories: true });
+    expect(m.shortcuts).toEqual([{
+      name: 'Stories',
+      short_name: 'Stories',
+      description: 'The Stories checklist',
+      url: '/sites/ka-performance/social#stories',
+      icons: [{ src: '/images/desk-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' }],
+    }]);
+    // Inside the app's scope, and nothing else changes.
+    expect(m.shortcuts[0].url.startsWith(m.scope)).toBe(true);
+    const { shortcuts, ...rest } = m;
+    expect(rest).toEqual(manifestFor(SITE));
+  });
+
   it('needs a site row with a slug', () => {
     expect(() => manifestFor(null)).toThrow();
     expect(() => manifestFor({ name: 'No slug' })).toThrow();
@@ -57,6 +77,37 @@ describe('GET manifest.webmanifest', () => {
     expect(r.headers.get('Content-Type')).toBe('application/manifest+json');
     expect(r.headers.get('Cache-Control')).toBe('private, max-age=300');
     expect(await r.json()).toEqual(manifestFor({ slug: 'ka-performance', name: 'K & A Performance' }));
+  });
+
+  const addItem = (db, siteId, list, kind) => db.prepare('INSERT INTO desk_items (site_id, item_id, list, kind, post_date, post_time, title, payload, pushed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(siteId, `2026-10-06-${kind}-${list}`, list, kind, '2026-10-06', '09:30', 'T', '{}', 't').run();
+  const site = async (db) => {
+    await q.createSite(db, { slug: 'ka-performance', name: 'K & A Performance', live_url: 'https://ka.test', hosting: 'pages' }, 't');
+    return (await q.getSiteBySlug(db, 'ka-performance')).id;
+  };
+
+  it('adds the Stories shortcut when the desk has a Stories checklist row', async () => {
+    const db = makeD1();
+    const id = await site(db);
+    await addItem(db, id, 'stories', 'story');
+    const m = await (await call(db, 'ka-performance')).json();
+    expect(m).toEqual(manifestFor({ slug: 'ka-performance', name: 'K & A Performance' }, { hasStories: true }));
+    expect(m.shortcuts[0].url).toBe('/sites/ka-performance/social#stories');
+  });
+
+  it('adds it when Stories are paused, as the page shows the tab then too', async () => {
+    const db = makeD1();
+    const id = await site(db);
+    await db.prepare('INSERT INTO desk_meta (site_id, pushed_at, built_at, stories_paused) VALUES (?, ?, ?, 1)').bind(id, 't', 't').run();
+    expect((await (await call(db, 'ka-performance')).json()).shortcuts).toHaveLength(1);
+  });
+
+  it('leaves it out when only the approval list has a Story', async () => {
+    const db = makeD1();
+    const id = await site(db);
+    await addItem(db, id, 'approve', 'story');
+    await addItem(db, id, 'approve', 'reel');
+    expect(await (await call(db, 'ka-performance')).json()).not.toHaveProperty('shortcuts');
   });
 
   it('404s a slug with no site row, so nothing is built from the path alone', async () => {

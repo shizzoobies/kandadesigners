@@ -5,11 +5,12 @@
 // and saves with JSON POSTs to /decide and /check.
 // Media src values are R2 keys ("<slug>/<item>/<file>"), served by /media.
 import { deskMediaUrl } from '../lib/desk-media-url.js';
-import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState } from '../lib/desk-nav.js';
+import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState, toastMs, TOAST_CAP_MS } from '../lib/desk-nav.js';
 import { esc, linkify, fmtTime, kindLabel, NET, netsOf } from '../lib/desk-format.js';
 import { youtubePanel } from '../lib/desk-youtube.js';
 import { deskCopy } from '../lib/desk-copy.js';
 import { phoneBarState } from '../lib/desk-pwa.js';
+import { storyState as storyStateOf, storyFocusId, STORY_FLAG } from '../lib/desk-stories.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
@@ -41,49 +42,103 @@ let sheetFor = null;       // id the change sheet is open for
 // decisions never move the view on their own.
 const phone = window.matchMedia('(max-width: 860px)');
 
-// Toasts sit in a role=status region and never take focus. One with an Undo
-// button stays for 6 seconds, and holds while the pointer or focus is on it.
-// { reload: true } adds a Reload button instead: an installed app has no
-// browser chrome to reload from. That one stays up to the cap.
+// Toasts sit in a role=status region and never take focus. How long one
+// stays is toastMs(): 10 seconds with an Undo button, 2.2 plain, and
+// { reload: true } (a Reload button instead: an installed app has no browser
+// chrome to reload from) up to the 20 second cap. A finger pressed on it, the
+// pointer over it or focus in it holds it; letting go restarts the timeout.
+const RELOAD_HINT = 'Your sign-in may have expired, so reload the page.';
+const toastHolds = new Set();
 function toast(msg, onUndo, { reload = false } = {}) {
   const u = $('#toastUndo');
   $('#toastMsg').textContent = msg;
   u.hidden = !onUndo;
   u.onclick = onUndo ? () => { hideToast(); onUndo(); } : null;
   $('#toastReload').hidden = !reload;
+  clearTimeout(toast.clear);
   placeToast();
   $('#toast').classList.add('on');
-  toast.ms = reload ? 20000 : onUndo ? 6000 : 2200;
+  toast.ms = toastMs({ undo: !!onUndo, reload });
   clearTimeout(toast.cap);
-  toast.cap = setTimeout(hideToast, 20000);
+  toast.cap = setTimeout(hideToast, TOAST_CAP_MS);
   armToast();
 }
-function armToast() { clearTimeout(toast.h); toast.h = setTimeout(hideToast, toast.ms); }
+function armToast() {
+  clearTimeout(toast.h);
+  if (!toastHolds.size && $('#toast').classList.contains('on')) toast.h = setTimeout(hideToast, toast.ms);
+}
+function holdToast(why) { toastHolds.add(why); clearTimeout(toast.h); }
+function releaseToast(why) { if (toastHolds.delete(why)) armToast(); }
 function hideToast() {
   clearTimeout(toast.h); clearTimeout(toast.cap);
+  toastHolds.clear();
   const t = $('#toast');
   // Focus never goes down with the toast: it returns to the decision buttons.
   const had = t.contains(document.activeElement);
   t.classList.remove('on');
-  $('#toastMsg').textContent = '';
-  $('#toastUndo').hidden = true;
-  $('#toastReload').hidden = true;
+  // Emptied once it has slid away (on a phone it slides down, ~180ms), unless
+  // a new message has come in meanwhile.
+  clearTimeout(toast.clear);
+  toast.clear = setTimeout(() => {
+    if (t.classList.contains('on')) return;
+    $('#toastMsg').textContent = '';
+    $('#toastUndo').hidden = true;
+    $('#toastReload').hidden = true;
+  }, 200);
   if (had) ($('#go') || $('#undo') || $('.d-item[aria-current="true"]'))?.focus({ preventScroll: true });
 }
 $('#toastReload').onclick = () => location.reload();
-// On a phone the toast sits just above the decision bar when there is one
-// (CSS reads --decide-h); otherwise just under the sticky top bar.
+// Where the toast docks (the CSS does the rest):
+// - desktop: the bottom-left of the rail column, inside its width, so it never
+//   covers the in-card status or buttons; bottom-center when there is no rail.
+// - phone, deciding: flush on top of the decision bar (CSS reads --decide-h).
+// - phone, otherwise: the bottom of the screen, lifted (--toast-lift) above the
+//   on-screen keyboard and above an ask's Save answer while it is on screen.
 function placeToast() {
-  const bar = $('.d-phonebar');
-  const bottom = bar && bar.offsetParent ? Math.max(0, bar.getBoundingClientRect().bottom) : 0;
-  desk.style.setProperty('--toast-top', `${Math.round(bottom) + 8}px`);
+  const s = desk.style;
+  if (!phone.matches) {
+    const r = $('#list').getBoundingClientRect();
+    const rail = r.width > 0 && r.height > 0;
+    desk.classList.toggle('toast-rail', rail);
+    desk.classList.remove('toast-lifted');
+    if (rail) {
+      s.setProperty('--toast-left', `${Math.round(r.left)}px`);
+      s.setProperty('--toast-w', `${Math.floor(r.width) - 4}px`);
+    }
+    return;
+  }
+  desk.classList.remove('toast-rail');
+  let lift = 0;
+  if (!desk.classList.contains('deciding')) {
+    const vv = window.visualViewport;
+    let edge = vv ? Math.min(innerHeight, vv.offsetTop + vv.height) : innerHeight;
+    // Lifted over Save answer only where the strip would otherwise cover it.
+    const bar = $('#saveAsk')?.closest('.d-bar');
+    if (bar) {
+      const r = bar.getBoundingClientRect(), h = $('#toast').offsetHeight || 60;
+      if (r.top < edge && r.bottom > edge - h && r.top > 0) edge = r.top;
+    }
+    lift = Math.max(0, Math.round(innerHeight - edge));
+  }
+  desk.classList.toggle('toast-lifted', lift > 0);
+  s.setProperty('--toast-lift', `${lift}px`);
 }
-window.addEventListener('scroll', () => { if ($('#toast').classList.contains('on')) placeToast(); }, { passive: true });
-// Held open while the pointer or focus is on it, up to the 20 second cap.
-$('#toast').addEventListener('mouseenter', () => clearTimeout(toast.h));
-$('#toast').addEventListener('mouseleave', armToast);
-$('#toast').addEventListener('focusin', () => clearTimeout(toast.h));
-$('#toast').addEventListener('focusout', armToast);
+const toastOn = () => $('#toast').classList.contains('on');
+window.addEventListener('scroll', () => { if (toastOn()) placeToast(); }, { passive: true });
+window.addEventListener('resize', () => { if (toastOn()) placeToast(); });
+window.visualViewport?.addEventListener('resize', () => { if (toastOn()) placeToast(); });
+// The ask's textarea taking or losing focus moves its Save answer (and the keyboard).
+document.addEventListener('focusin', (e) => { if (e.target.id === 'ask-answer' && toastOn()) placeToast(); });
+document.addEventListener('focusout', (e) => { if (e.target.id === 'ask-answer' && toastOn()) setTimeout(placeToast, 50); });
+// Held open while pressed, hovered or focused, up to the 20 second cap. A
+// press is let go wherever the finger lifts, so up and cancel are on the window.
+$('#toast').addEventListener('pointerdown', () => holdToast('press'));
+window.addEventListener('pointerup', () => releaseToast('press'));
+window.addEventListener('pointercancel', () => releaseToast('press'));
+$('#toast').addEventListener('mouseenter', () => holdToast('hover'));
+$('#toast').addEventListener('mouseleave', () => releaseToast('hover'));
+$('#toast').addEventListener('focusin', () => holdToast('focus'));
+$('#toast').addEventListener('focusout', () => releaseToast('focus'));
 
 function stateOf(it) {
   if (it.kind === 'native') return 'info';
@@ -266,7 +321,7 @@ function syncPhoneBar() {
   const on = !!el.innerHTML && phone.matches && view === 'posts' && desk.classList.contains('viewing');
   el.hidden = !on;
   desk.classList.toggle('deciding', on);
-  desk.style.setProperty('--decide-h', on ? `${el.offsetHeight}px` : '0px');
+  desk.style.setProperty('--decide-h', on ? `${el.getBoundingClientRect().height}px` : '0px');
   if ($('#toast').classList.contains('on')) placeToast();
 }
 
@@ -417,9 +472,88 @@ function wireBar(it) {
   const n = $('#nextPost'); if (n) n.onclick = () => { const id = nextTargetId(items, it.id, stateOf); if (id) select(id, true); };
 }
 
+// A button's label swapped for a moment ("Copied", "Preparing..."), then put
+// back. Its width is held while it says something shorter, so nothing moves.
+function swapLabel(btn, text, ms) {
+  btn.dataset.label ||= btn.textContent;
+  clearTimeout(btn.swapT);
+  btn.style.minWidth = `${btn.offsetWidth}px`;
+  btn.textContent = text;
+  if (ms) btn.swapT = setTimeout(() => restoreLabel(btn), ms);
+}
+function restoreLabel(btn) {
+  clearTimeout(btn.swapT);
+  if (btn.dataset.label) btn.textContent = btn.dataset.label;
+  btn.style.minWidth = '';
+}
+
 async function copyText(text, btn, sel = '#sticker') {
-  try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; }
-  catch { const r = document.createRange(); r.selectNodeContents($(sel)); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected, press Ctrl+C'; }
+  try { await navigator.clipboard.writeText(text); swapLabel(btn, 'Copied', 2000); }
+  catch {
+    // No clipboard access: select the text so it can be copied by hand.
+    const el = $(sel);
+    if (el) { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    swapLabel(btn, phone.matches ? 'Selected, tap Copy' : 'Selected, press Ctrl+C', 6000);
+  }
+}
+
+// Save image. On a phone that can share files (iOS Safari, Chrome on
+// Android), the image goes to the share sheet, whose "Save Image" puts it in
+// Photos, where Instagram can pick it up. Anywhere else the link's own
+// download runs. The fetch is same-origin through the desk's media route.
+const shareFiles = (files) => { try { return !!navigator.canShare?.({ files }); } catch { return false; } };
+const canShareImages = () => phone.matches && typeof navigator.share === 'function'
+  && shareFiles([new File([''], 'probe.jpg', { type: 'image/jpeg' })]);
+const prepared = new Map(); // story id -> File, kept for a second tap
+async function saveImage(s, btn) {
+  if (btn.getAttribute('aria-busy') === 'true') return;
+  let file = prepared.get(s.id);
+  if (!file) {
+    btn.setAttribute('aria-busy', 'true');
+    btn.setAttribute('aria-disabled', 'true');
+    swapLabel(btn, 'Preparing\u2026');
+    try {
+      const r = await fetch(mediaUrl(s), { credentials: 'same-origin' });
+      if (!r.ok) throw new Error(String(r.status));
+      const blob = await r.blob();
+      const type = blob.type || (/\.png$/i.test(s.src || '') ? 'image/png' : 'image/jpeg');
+      file = new File([blob], `${s.id}.${type === 'image/png' ? 'png' : 'jpg'}`, { type });
+    } catch {
+      toast(`Could not get the image. ${RELOAD_HINT}`, null, { reload: true });
+      return;
+    } finally {
+      btn.removeAttribute('aria-busy');
+      btn.removeAttribute('aria-disabled');
+      restoreLabel(btn);
+    }
+  }
+  if (!shareFiles([file])) { download(file); return; }
+  try {
+    await navigator.share({ files: [file] });
+    prepared.delete(s.id);
+    restoreLabel(btn);
+  } catch (e) {
+    if (e?.name === 'AbortError') { prepared.delete(s.id); restoreLabel(btn); return; } // closed the share sheet
+    // iOS can refuse a share that waited on a download; the next tap is fresh.
+    if (e?.name === 'NotAllowedError') { prepared.set(s.id, file); swapLabel(btn, 'Ready, tap to save'); return; }
+    download(file);
+  }
+}
+function download(file) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(file);
+  a.download = file.name;
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 30000);
+}
+// Taps on a Save image link: the share path where it can run, else the
+// link's own download. Shared by the rows and the zoom.
+function onSaveClick(e, s) {
+  if (!s || !canShareImages()) return;
+  e.preventDefault();
+  saveImage(s, e.currentTarget || e.target.closest('[data-save]'));
 }
 
 // The phone's change sheet. Its draft is kept per post until it is sent, so
@@ -488,7 +622,7 @@ async function write(path, body) {
       toast(r.status === 403 ? 'Your access level cannot save here' : e.error || 'Not saved, try again');
     }
   } catch {
-    toast('Not saved. Your sign-in may have expired, so reload the page.', null, { reload: true });
+    toast(`Not saved. ${RELOAD_HINT}`, null, { reload: true });
   }
   await refresh();
   return saved;
@@ -553,43 +687,41 @@ function nyNow() {
     .formatToParts(new Date()).map((x) => [x.type, x.value]));
   return { date: `${p.year}-${p.month}-${p.day}`, time: `${p.hour}:${p.minute}` };
 }
-function storyState(s, now = nyNow()) {
-  if (checks[s.id]?.posted) return 'posted';
-  if (s.date < now.date) return 'missed';
-  return s.date === now.date ? 'today' : 'upcoming';
-}
+const storyState = (s, now = nyNow()) => storyStateOf(s, checks, now);
 const weekOf = (d) => { const t = new Date(d + 'T12:00:00'); t.setDate(t.getDate() - ((t.getDay() + 6) % 7)); return t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); };
 const storyList = () => data.storyChecklist || [];
+let justTicked = null; // the Story whose box was just ticked, for its fill
 
 function storyRow(s, now) {
   const st = storyState(s, now);
   const c = checks[s.id] || {};
-  const flag = st === 'posted' ? status('approved', 'Posted')
-    : st === 'missed' ? status('waiting', 'Not ticked')
-    : st === 'today' ? status('changes', now.time >= s.time ? 'Due now' : 'Today') : '';
+  const f = STORY_FLAG[st];
+  const flag = f ? status(f.dot, f.label) : '';
   const at = c.posted && c.at ? fmtAt(c.at) : '';
   const src = mediaUrl(s);
+  const pop = c.posted && justTicked === s.id ? ' pop' : '';
   const posted = canWrite
-    ? `<label class="posted-box ${c.posted ? 'on' : ''}" for="chk-${esc(s.id)}"><input type="checkbox" id="chk-${esc(s.id)}" data-check="${esc(s.id)}" ${c.posted ? 'checked' : ''}>
+    ? `<label class="posted-box ${c.posted ? 'on' : ''}${pop}" for="chk-${esc(s.id)}"><input type="checkbox" id="chk-${esc(s.id)}" data-check="${esc(s.id)}" ${c.posted ? 'checked' : ''}>
       <span>Posted${at ? `<span class="posted-at">${esc(at)}</span>` : ''}</span></label>`
     : `<p class="posted-read">${c.posted ? `Posted${at ? `<span class="posted-at">${esc(at)}</span>` : ''}` : 'Not posted yet'}</p>`;
-  return `<article class="srow ${st}" aria-label="Story for ${esc(fmtDay(s.date))}">
+  // Due now shares Today's look; the row class keeps both.
+  return `<article class="srow ${st === 'due' ? 'today due' : st}" id="srow-${esc(s.id)}" aria-label="Story for ${esc(fmtDay(s.date))}">
     <button type="button" class="thumb" data-zoom="${esc(s.id)}" aria-label="Open the Story image for ${esc(fmtDay(s.date))}"><img src="${esc(src)}" alt="" loading="lazy"></button>
     <div class="sinfo">
       <div class="swhen"><strong>${esc(fmtDay(s.date))}</strong><span>${esc(fmtTime(s.time))}, after the reel</span>${flag}</div>
       ${s.condition ? `<p class="cond">${esc(s.condition)}</p>` : ''}
       <p class="stext"><span>Sticker text</span>${esc(s.stickerText)}</p>
-      <p class="surl" id="url-${esc(s.id)}">${esc(s.stickerUrl)}</p>
-      <div class="sacts"><button type="button" class="copy" data-copy="${esc(s.id)}">Copy URL</button><a class="copy" href="${esc(src)}" download>Save image</a></div>
+      <p class="surl" id="url-${esc(s.id)}" title="${esc(s.stickerUrl)}">${esc(s.stickerUrl)}</p>
     </div>
+    <div class="sacts"><button type="button" class="copy" data-copy="${esc(s.id)}">Copy URL</button><a class="copy" href="${esc(src)}" download data-save="${esc(s.id)}">Save image</a></div>
     ${posted}
   </article>`;
 }
 
 function renderStories() {
   const list = storyList(), now = nyNow();
-  const count = (k) => list.filter((s) => storyState(s, now) === k).length;
-  const today = count('today'), missed = count('missed');
+  const count = (...k) => list.filter((s) => k.includes(storyState(s, now))).length;
+  const today = count('due', 'today'), missed = count('missed');
   $('#sToday').textContent = today;
   $('#sMissed').textContent = missed;
   $('#sDone').textContent = count('posted');
@@ -602,43 +734,88 @@ function renderStories() {
     if (w !== wk) { wk = w; html += `<h2 class="shead">Week of ${esc(w)}</h2>`; }
     html += storyRow(s, now);
   }
+  justTicked = null;
   $('#slist').innerHTML = html || (data.storiesPaused
     ? `<div class="done-note"><p><b>Stories are paused.</b></p><p>${esc(copy.storiesPaused)}</p></div>`
     : `<p class="d-muted">${esc(copy.noStories)}</p>`);
   $('.howto').hidden = !html;
-  if (focused) document.getElementById(focused)?.focus();
+  if (focused) document.getElementById(focused)?.focus({ preventScroll: true });
 }
 
-async function setPosted(id, on) {
+// On a phone, opening the Stories tab lands on the first row needing action
+// (due now, then later today, then the next one coming up), just under the
+// tabs, which stick to the top there.
+function landStories() {
+  if (!phone.matches || view !== 'stories') return;
+  const id = storyFocusId(storyList(), checks, nyNow());
+  const row = id && document.getElementById(`srow-${id}`);
+  if (!row) return;
+  const tabs = $('.d-views').getBoundingClientRect();
+  window.scrollTo({ top: Math.max(0, window.scrollY + row.getBoundingClientRect().top - tabs.height - 12) });
+}
+
+// Ticking says so with an Undo (sent as posted: false); a failed save puts
+// the box back.
+async function setPosted(id, on, { undo = true } = {}) {
   const prev = checks[id];
   checks[id] = { posted: on, at: new Date().toISOString() };
+  if (on) justTicked = id;
   renderStories();
-  if (await write('check', { item_id: id, posted: on })) toast(on ? 'Marked posted' : 'Unticked');
-  else { if (prev) checks[id] = prev; else delete checks[id]; renderStories(); }
+  if (await write('check', { item_id: id, posted: on })) {
+    if (on && undo) toast('Marked posted', () => undoPosted(id));
+    else toast(on ? 'Marked posted' : undo ? 'Unticked' : 'Undone');
+  } else { if (prev) checks[id] = prev; else delete checks[id]; renderStories(); }
+}
+// Only unticks a Story still ticked: if it changed meanwhile, says so instead.
+async function undoPosted(id) {
+  await refresh();
+  if (!checks[id]?.posted) { toast('Changed since, not undone'); return; }
+  setPosted(id, false, { undo: false });
 }
 
+let zoomFrom = null; // the Story whose thumbnail opened the zoom
 function zoom(s) {
   const d = $('#zoom');
+  zoomFrom = s.id;
   $('#zoomImg').src = mediaUrl(s);
   $('#zoomImg').alt = `Story image for ${fmtDay(s.date)}. Sticker: ${s.stickerText}`;
   $('#zoomSave').href = mediaUrl(s);
+  $('#zoomSave').dataset.save = s.id;
+  $('#zoomUrl').textContent = s.stickerUrl || '';
+  restoreLabel($('#zoomCopy')); restoreLabel($('#zoomSave'));
   d.showModal();
 }
+const zoomStory = () => storyList().find((x) => x.id === zoomFrom);
 $('#zoomClose').onclick = () => $('#zoom').close();
-$('#zoom').addEventListener('click', (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); });
+$('#zoomCopy').onclick = (e) => { const s = zoomStory(); if (s) copyText(s.stickerUrl, e.currentTarget, '#zoomUrl'); };
+$('#zoomSave').addEventListener('click', (e) => onSaveClick(e, zoomStory()));
+// A tap anywhere but the image and the buttons closes it (the backdrop, or
+// the dark stage around the image when it fills a phone screen).
+$('#zoom').addEventListener('click', (e) => { if (e.target === e.currentTarget || e.target.id === 'zoomStage') e.currentTarget.close(); });
+// Esc, Close or a backdrop tap: focus goes back to the thumbnail that opened
+// it, even if the list was redrawn meanwhile.
+$('#zoom').addEventListener('close', () => {
+  const t = zoomFrom && $(`[data-zoom="${CSS.escape(zoomFrom)}"]`);
+  if (t) t.focus({ preventScroll: true });
+});
 
 $('#slist').addEventListener('click', (e) => {
-  const b = e.target.closest('[data-copy],[data-zoom]');
+  const b = e.target.closest('[data-copy],[data-zoom],[data-save]');
   if (!b) return;
-  const s = storyList().find((x) => x.id === (b.dataset.copy || b.dataset.zoom));
+  const s = storyList().find((x) => x.id === (b.dataset.copy || b.dataset.zoom || b.dataset.save));
   if (!s) return;
+  if (b.dataset.save) {
+    if (canShareImages()) { e.preventDefault(); saveImage(s, b); }
+    return;
+  }
   if (b.dataset.copy) copyText(s.stickerUrl, b, `#url-${CSS.escape(s.id)}`);
   else zoom(s);
 });
 $('#slist').addEventListener('change', (e) => { const c = e.target.closest('[data-check]'); if (c) setPosted(c.dataset.check, c.checked); });
 
-function setView(v) {
+function setView(v, { land = false } = {}) {
   view = v;
+  desk.classList.toggle('on-stories', v === 'stories');
   $('#postsView').hidden = v !== 'posts';
   $('#storiesView').hidden = v !== 'stories';
   $('#postTally').hidden = v !== 'posts';
@@ -647,6 +824,7 @@ function setView(v) {
   $('#tabStories').setAttribute('aria-selected', v === 'stories');
   renderStories();
   syncPhoneBar();
+  if (land) requestAnimationFrame(landStories);
 }
 // The remembered tab is per site, and only a tab click changes it: opening a
 // client's desk (which has no Stories) never resets the K&A desk's choice.
@@ -654,7 +832,7 @@ const viewKey = `desk-view:${slug}`;
 $('.d-views').addEventListener('click', (e) => {
   const b = e.target.closest('[data-go]');
   if (!b) return;
-  setView(b.dataset.go);
+  setView(b.dataset.go, { land: true });
   try { localStorage.setItem(viewKey, b.dataset.go); } catch {}
 });
 setInterval(() => { if (!document.activeElement?.matches('textarea')) renderStories(); }, 60000);
@@ -713,7 +891,7 @@ async function refresh() {
     conn.classList.remove('bad');
     conn.textContent = connText();
   } catch {
-    const msg = 'Could not refresh from the server. Your sign-in may have expired, so reload the page.';
+    const msg = `Could not refresh from the server. ${RELOAD_HINT}`;
     conn.textContent = `${msg} `;
     const b = document.createElement('button');
     b.type = 'button'; b.className = 'btn quiet d-reload'; b.textContent = 'Reload';
@@ -746,4 +924,4 @@ renderList(); renderDetail();
 // Open on Stories when the link says #stories or nothing waits for approval; else the last view used.
 // Never on a site without Stories.
 let saved = null; try { saved = localStorage.getItem(viewKey); } catch {}
-setView(storiesOn() && (location.hash === '#stories' || (storyList().length > 0 && (!items.length || saved === 'stories'))) ? 'stories' : 'posts');
+setView(storiesOn() && (location.hash === '#stories' || (storyList().length > 0 && (!items.length || saved === 'stories'))) ? 'stories' : 'posts', { land: true });

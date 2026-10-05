@@ -16,14 +16,16 @@ const ICONS = [
 ];
 
 // site is the validated sites row (slug + name). Never take the slug from
-// the request path beyond what the DB already resolved.
-export function manifestFor(site) {
+// the request path beyond what the DB already resolved. hasStories adds a
+// "Stories" app shortcut (long-press the icon on Android) to the checklist;
+// a site without Stories has no Stories tab, so no shortcut either.
+export function manifestFor(site, { hasStories = false } = {}) {
   const slug = site?.slug;
   if (!slug || typeof slug !== 'string') {
     throw new Error('manifestFor needs a site with a slug');
   }
   const start = `/sites/${slug}/social`;
-  return {
+  const m = {
     name: `${site.name} Post Desk`,
     short_name: 'Post Desk',
     id: start,
@@ -34,6 +36,16 @@ export function manifestFor(site) {
     theme_color: DESK_THEME.theme_color,
     icons: ICONS.map((i) => ({ ...i })),
   };
+  if (hasStories) {
+    m.shortcuts = [{
+      name: 'Stories',
+      short_name: 'Stories',
+      description: 'The Stories checklist',
+      url: `${start}#stories`,
+      icons: [{ ...ICONS[0] }],
+    }];
+  }
+  return m;
 }
 
 // Kind of sticky phone bar for this item. Asks and native posts have none
