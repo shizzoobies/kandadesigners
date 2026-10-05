@@ -19,6 +19,11 @@ export async function latestAsOf(adb, slug) {
   return adb.prepare('SELECT MAX(as_of) AS d FROM post_metrics WHERE site_slug = ?').bind(slug).first('d');
 }
 
+/** The first day any post snapshot exists for the site, or null. */
+export async function dataSince(adb, slug) {
+  return adb.prepare('SELECT MIN(as_of) AS d FROM post_metrics WHERE site_slug = ?').bind(slug).first('d');
+}
+
 export function rangeBounds(endYmd, days) {
   return { start: addDays(endYmd, -(days - 1)), end: endYmd };
 }
@@ -41,7 +46,7 @@ export async function postRows(adb, slug, { start, end }, timeZone) {
   return results.map((r) => ({
     ...r,
     kind: r.campaign_id ? r.kind ?? 'native' : 'native',
-    pillar: r.campaign_id ? r.pillar ?? 'native' : 'native',
+    pillar: r.campaign_id ? r.pillar ?? 'unset' : 'native',
     slot: slotOf(r.published_at, timeZone),
   }));
 }
@@ -96,7 +101,8 @@ const sumOf = (list, col) => {
 /**
  * One card per connected network. Followers and their change come from
  * account_daily. Reach and interactions come from account_daily, or from the
- * posts when Metricool has no account series. Clicks come from the posts.
+ * posts when Metricool has no account series; each card says which in
+ * reachSource and interactionsSource. Clicks come from the posts.
  */
 export async function networkCards(adb, slug, networks, { start, end }, rows) {
   const { results } = await adb.prepare('SELECT network, day, followers, reach, interactions FROM account_daily WHERE site_slug = ? AND day BETWEEN ? AND ? ORDER BY day')
@@ -105,13 +111,21 @@ export async function networkCards(adb, slug, networks, { start, end }, rows) {
     const days = results.filter((d) => d.network === network);
     const counted = days.filter((d) => d.followers != null);
     const posts = rows.filter((r) => r.network === network);
+    const accountReach = sumOf(days, 'reach');
+    const accountInteractions = sumOf(days, 'interactions');
+    const reach = accountReach ?? sumOf(posts, 'reach');
+    const interactions = accountInteractions ?? sumOf(posts, 'interactions');
     return {
       network,
       label: NETWORK_LABEL[network],
       followers: counted.length ? counted[counted.length - 1].followers : null,
       change: counted.length > 1 ? counted[counted.length - 1].followers - counted[0].followers : null,
-      reach: sumOf(days, 'reach') ?? sumOf(posts, 'reach'),
-      interactions: sumOf(days, 'interactions') ?? sumOf(posts, 'interactions'),
+      followersFrom: counted.length ? counted[0].day : null,
+      followersTo: counted.length ? counted[counted.length - 1].day : null,
+      reach,
+      reachSource: reach == null ? null : accountReach != null ? 'account' : 'posts',
+      interactions,
+      interactionsSource: interactions == null ? null : accountInteractions != null ? 'account' : 'posts',
       clicks: sumOf(posts, 'clicks'),
       posts: posts.length,
     };

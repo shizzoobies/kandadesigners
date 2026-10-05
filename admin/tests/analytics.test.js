@@ -76,6 +76,35 @@ describe('postRows', () => {
   });
 });
 
+describe('dataSince', () => {
+  it('returns the first snapshot day for the site, or null', async () => {
+    expect(await a.dataSince(adb, SLUG)).toBe('2026-10-05');
+    expect(await a.dataSince(adb, 'nope')).toBeNull();
+  });
+});
+
+describe('postRows pillar and boundary', () => {
+  it('shows a pipeline post whose publication has no pillar as unset', async () => {
+    await adb.prepare('INSERT INTO posts (site_slug, network, native_id, campaign_id, url, published_at, title, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(SLUG, 'instagram', 'np1', '2026-10-04', 'https://x.test/np1', '2026-10-04T14:00:00.000Z', 'No pillar', 'REEL').run();
+    await adb.prepare("INSERT INTO publications (site_slug, campaign_id, network, metricool_id, kind, pillar, title) VALUES (?, '2026-10-04', 'instagram', '2', 'reel', NULL, 'No pillar')").bind(SLUG).run();
+    await adb.prepare('INSERT INTO post_metrics (site_slug, network, native_id, as_of, reach) VALUES (?, ?, ?, ?, ?)').bind(SLUG, 'instagram', 'np1', '2026-10-06', 5).run();
+    const rows = byId(await rowsFor());
+    expect(rows.np1).toMatchObject({ pillar: 'unset', kind: 'reel' });
+  });
+
+  it('includes the first instant of a local day and excludes the last instant before it', async () => {
+    for (const [id, at] of [['edge-out', '2026-10-06T03:59:59.999Z'], ['edge-in', '2026-10-06T04:00:00.000Z']]) {
+      await adb.prepare('INSERT INTO posts (site_slug, network, native_id, campaign_id, url, published_at, title, type) VALUES (?, ?, ?, NULL, ?, ?, ?, ?)')
+        .bind(SLUG, 'instagram', id, `https://x.test/${id}`, at, id, 'REEL').run();
+      await adb.prepare('INSERT INTO post_metrics (site_slug, network, native_id, as_of, reach) VALUES (?, ?, ?, ?, ?)').bind(SLUG, 'instagram', id, '2026-10-06', 1).run();
+    }
+    const ids = (await a.postRows(adb, SLUG, { start: '2026-10-06', end: '2026-10-06' }, TZ)).map((r) => r.native_id);
+    expect(ids).toContain('edge-in');
+    expect(ids).not.toContain('edge-out');
+  });
+});
+
 describe('sorting and panels', () => {
   it('sorts by a numeric column with missing values last, and ignores other keys', async () => {
     const rows = await rowsFor();
@@ -98,9 +127,14 @@ describe('cards, reach and freshness', () => {
     const bounds = a.rangeBounds('2026-10-06', 28);
     const cards = await a.networkCards(adb, SLUG, ['facebook', 'instagram'], bounds, await rowsFor());
     expect(cards).toEqual([
-      { network: 'facebook', label: 'Facebook', followers: 9, change: null, reach: 100, interactions: 7, clicks: 3, posts: 1 },
-      { network: 'instagram', label: 'Instagram', followers: 5, change: 3, reach: 10, interactions: 1, clicks: null, posts: 2 },
+      { network: 'facebook', label: 'Facebook', followers: 9, change: null, followersFrom: '2026-10-06', followersTo: '2026-10-06', reach: 100, reachSource: 'posts', interactions: 7, interactionsSource: 'account', clicks: 3, posts: 1 },
+      { network: 'instagram', label: 'Instagram', followers: 5, change: 3, followersFrom: '2026-09-30', followersTo: '2026-10-06', reach: 10, reachSource: 'account', interactions: 1, interactionsSource: 'account', clicks: null, posts: 2 },
     ]);
+  });
+
+  it('sets a source of null when a total is missing', async () => {
+    const cards = await a.networkCards(adb, SLUG, ['linkedin'], a.rangeBounds('2026-10-06', 28), await rowsFor());
+    expect(cards[0]).toMatchObject({ reach: null, reachSource: null, interactions: null, interactionsSource: null, followersFrom: null, followersTo: null });
   });
 
   it('gives account reach per day for the sparkline', async () => {
