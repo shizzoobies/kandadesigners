@@ -77,7 +77,7 @@ const MAPS = {
   'posts/linkedin': (x) => ({
     native_id: x.postId, url: x.url, published: x.created, type: x.type,
     reach: null, impressions: x.impressions, views: x.videoViews,
-    interactions: sumOrNull(x.likes ?? x.like, x.comments, x.shares, x.clicks),
+    interactions: sumOrNull(x.likes ?? x.like, x.comments, x.shares),
     likes: x.likes ?? x.like, comments: x.comments, shares: x.shares, saves: null, clicks: x.clicks,
     watch_seconds: x.timeWatched, engagement: x.engagement,
   }),

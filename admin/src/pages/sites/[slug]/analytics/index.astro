@@ -15,6 +15,7 @@ const days = a.pickRange(Astro.url.searchParams.get('range'));
 const sort = Astro.url.searchParams.get('sort');
 const dir = Astro.url.searchParams.get('dir') === 'asc' ? 'asc' : 'desc';
 const msg = Astro.url.searchParams.get('msg');
+const ok = Astro.url.searchParams.get('kind') === 'ok';
 
 const map = ADB && site.metricool_brand_id ? await a.getSiteMap(ADB, site.slug) : null;
 const networks = a.networksOf(map);
@@ -37,6 +38,9 @@ const signed = (v) => (v == null ? 'n/a' : `${v > 0 ? '+' : ''}${n(v)}`);
 const span = (c) => (c.followersFrom && c.followersTo && c.followersFrom !== c.followersTo ? `, ${humanDate(c.followersFrom)} to ${humanDate(c.followersTo)}` : '');
 const REACH_NOTE = { account: 'Reach is daily account reach added up, so someone reached on several days counts each day.', posts: 'Reach is the reach of posts published in this range, added up.' };
 const INTERACTIONS_NOTE = { account: 'Interactions are daily account interactions added up, so they will not match the post table.', posts: 'Interactions are those on posts published in this range, added up.' };
+const dayCount = (c) => `${c.accountDays} ${c.accountDays === 1 ? 'day' : 'days'}`;
+const sourceNote = (c) => [REACH_NOTE[c.reachSource], INTERACTIONS_NOTE[c.interactionsSource]].filter(Boolean).join(' ')
+  + (c.reachSource === 'account' || c.interactionsSource === 'account' ? ` Account figures cover ${dayCount(c)} of this range.` : '');
 const sortHref = (key) => `?range=${days}&sort=${key}&dir=${sort === key && dir === 'desc' ? 'asc' : 'desc'}`;
 const ariaSort = (key) => (sort === key ? (dir === 'asc' ? 'ascending' : 'descending') : undefined);
 const COLS = [['reach', 'Reach'], ['views', 'Views'], ['interactions', 'Interactions'], ['clicks', 'Clicks'], ['engagement', 'Engagement rate']];
@@ -46,7 +50,7 @@ const PANELS = [['kind', 'By kind', 'Kind'], ['slot', 'By weekday and hour', 'Sl
   <p><a href={`/sites/${site.slug}`}>Back to {site.name}</a></p>
   <h1>{site.name}: social analytics</h1>
   <p class="hint">Every number on this page is Metricool's, synced nightly. K&amp;A's own counts are never mixed in.</p>
-  {msg && <div class="alert" role="status">{msg}</div>}
+  {msg && (ok ? <div class="notice" role="status">{msg}</div> : <div class="alert" role="status">{msg}</div>)}
 
   {!site.metricool_brand_id ? (
     <section class="section">
@@ -86,18 +90,18 @@ const PANELS = [['kind', 'By kind', 'Kind'], ['slot', 'By weekday and hour', 'Sl
                     <dt>Followers</dt><dd>{n(c.followers)} ({signed(c.change)}{span(c)})</dd>
                     <dt>Reach</dt><dd>{n(c.reach)}</dd>
                     <dt>Interactions</dt><dd>{n(c.interactions)}</dd>
-                    <dt>Link clicks</dt><dd>{n(c.clicks)}</dd>
+                    <dt>{c.network === 'facebook' ? 'Link clicks' : 'Clicks'}</dt><dd>{n(c.clicks)}</dd>
                     <dt>Posts</dt><dd>{c.posts}</dd>
                   </dl>
-                  {(c.reachSource || c.interactionsSource) && <p class="hint">{[REACH_NOTE[c.reachSource], INTERACTIONS_NOTE[c.interactionsSource]].filter(Boolean).join(' ')}</p>}
+                  {(c.reachSource || c.interactionsSource) && <p class="hint">{sourceNote(c)}</p>}
                   <p class="caps">Source: Metricool</p>
                 </article>
               ))}
             </div>
             {path && (
               <figure>
-                <svg class="spark" viewBox="0 0 480 44" role="img" aria-label={`Account reach per day, last ${days} days, from Metricool`}><path d={path} /></svg>
-                <figcaption class="caps">Account reach per day, Metricool</figcaption>
+                <svg class="spark" viewBox="0 0 480 44" role="img" aria-label={`Instagram account reach per day, last ${days} days, from Metricool`}><path d={path} /></svg>
+                <figcaption class="caps">Instagram account reach per day, Metricool</figcaption>
               </figure>
             )}
           </section>
@@ -108,7 +112,7 @@ const PANELS = [['kind', 'By kind', 'Kind'], ['slot', 'By weekday and hour', 'Sl
             <div class="cards">
               {PANELS.map(([key, title, head]) => (
                 <table class="data">
-                  <caption>{title}</caption>
+                  <caption>{title} (Metricool)</caption>
                   <thead><tr><th scope="col">{head}</th><th scope="col">Posts</th><th scope="col">Avg reach (Metricool)</th><th scope="col">Avg interactions (Metricool)</th></tr></thead>
                   <tbody>
                     {groups[key].map((g) => <tr><th scope="row">{g.key}</th><td class="num">{g.count}</td><td class="num">{n(g.reach)}</td><td class="num">{n(g.interactions)}</td></tr>)}
@@ -161,4 +165,6 @@ const PANELS = [['kind', 'By kind', 'Kind'], ['slot', 'By weekday and hour', 'Sl
   table.data td.num { text-align: right; font-variant-numeric: tabular-nums; }
   .fresh { list-style: none; padding: 0; margin: 0 0 12px; }
   nav.row { margin-bottom: 8px; }
+  .err { color: var(--error); font-weight: 600; }
+  .hint { color: var(--muted); font-size: 14px; }
 </style>

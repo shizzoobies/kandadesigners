@@ -115,6 +115,11 @@ export async function networkCards(adb, slug, networks, { start, end }, rows) {
     const accountInteractions = sumOf(days, 'interactions');
     const reach = accountReach ?? sumOf(posts, 'reach');
     const interactions = accountInteractions ?? sumOf(posts, 'interactions');
+    const reachSource = reach == null ? null : accountReach != null ? 'account' : 'posts';
+    const interactionsSource = interactions == null ? null : accountInteractions != null ? 'account' : 'posts';
+    // accountDays: account_daily days in range with a value in the column the card used (reach if its source is account, else interactions).
+    const accountDays = reachSource === 'account' ? days.filter((d) => d.reach != null).length
+      : interactionsSource === 'account' ? days.filter((d) => d.interactions != null).length : 0;
     return {
       network,
       label: NETWORK_LABEL[network],
@@ -123,17 +128,19 @@ export async function networkCards(adb, slug, networks, { start, end }, rows) {
       followersFrom: counted.length ? counted[0].day : null,
       followersTo: counted.length ? counted[counted.length - 1].day : null,
       reach,
-      reachSource: reach == null ? null : accountReach != null ? 'account' : 'posts',
+      reachSource,
       interactions,
-      interactionsSource: interactions == null ? null : accountInteractions != null ? 'account' : 'posts',
+      interactionsSource,
+      accountDays,
       clicks: sumOf(posts, 'clicks'),
       posts: posts.length,
     };
   });
 }
 
+// Instagram only: the other networks' reach is not the same measure, so they are never summed into one line.
 export async function reachSeries(adb, slug, { start, end }) {
-  const { results } = await adb.prepare('SELECT day, SUM(reach) AS reach FROM account_daily WHERE site_slug = ? AND day BETWEEN ? AND ? AND reach IS NOT NULL GROUP BY day ORDER BY day')
+  const { results } = await adb.prepare("SELECT day, SUM(reach) AS reach FROM account_daily WHERE site_slug = ? AND day BETWEEN ? AND ? AND network = 'instagram' AND reach IS NOT NULL GROUP BY day ORDER BY day")
     .bind(slug, start, end).all();
   return results.map((r) => r.reach);
 }

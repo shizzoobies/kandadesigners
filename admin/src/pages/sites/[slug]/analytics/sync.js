@@ -5,7 +5,8 @@
 import { getSiteBySlug } from '../../../../lib/db.js';
 import { openRun } from '../../../../lib/analytics-sync.js';
 
-const back = (slug, msg) => ({ status: 303, location: `/sites/${slug}/analytics?msg=${encodeURIComponent(msg)}` });
+// kind comes before msg in the query string: 'ok' renders as a notice, 'warn' as an alert.
+const back = (slug, msg, kind = 'warn') => ({ status: 303, location: `/sites/${slug}/analytics?kind=${kind}&msg=${encodeURIComponent(msg)}` });
 
 export async function handleSync({ db, adb, sync, slug, nowMs = Date.now() }) {
   const site = await getSiteBySlug(db, slug);
@@ -26,7 +27,7 @@ export async function handleSync({ db, adb, sync, slug, nowMs = Date.now() }) {
     body = {};
   }
   if (!res.ok) return back(slug, body.error ?? `The sync failed (${res.status}).`);
-  return back(slug, body.ok ? 'Synced.' : 'Synced, with errors. See the lines below.');
+  return body.ok ? back(slug, 'Synced.', 'ok') : back(slug, 'Synced, with errors. See the lines below.');
 }
 
 export async function POST({ params, locals }) {

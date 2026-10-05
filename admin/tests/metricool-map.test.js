@@ -34,7 +34,7 @@ describe('mapItem', () => {
   it('maps a sparse LinkedIn post: likes may arrive as like', () => {
     const r = mapItem('posts/linkedin', LI_POST);
     expect(r.post).toMatchObject({ native_id: 'urn:li:ugcPost:7511757516595363840', type: 'VIDEO', title: 'Course, job aid, or neither?' });
-    expect(r.metrics).toEqual({ reach: null, impressions: 12, views: 5, interactions: 4, likes: 2, comments: null, shares: 1, saves: null, clicks: 1, watch_seconds: 59, engagement: 16.5 });
+    expect(r.metrics).toEqual({ reach: null, impressions: 12, views: 5, interactions: 3, likes: 2, comments: null, shares: 1, saves: null, clicks: 1, watch_seconds: 59, engagement: 16.5 });
   });
 
   it('maps a YouTube video: watch minutes to seconds, title before description', () => {

@@ -26,8 +26,9 @@ describe('POST /sites/[slug]/analytics/sync', () => {
     const sync = syncStub(200, { ok: true });
     const r = await handleSync({ db, adb, sync, slug: 'mbs', nowMs: NOW });
     expect(r.status).toBe(303);
-    expect(r.location.startsWith('/sites/mbs/analytics?msg=')).toBe(true);
+    expect(r.location.startsWith('/sites/mbs/analytics?kind=warn&msg=')).toBe(true);
     expect(msgOf(r)).toBe('No Metricool brand set for this site.');
+    expect(r.location).toContain('kind=warn');
     expect(sync.fetch).not.toHaveBeenCalled();
   });
 
@@ -47,7 +48,10 @@ describe('POST /sites/[slug]/analytics/sync', () => {
     const r = await handleSync({ db, adb, sync, slug: 'ka-performance', nowMs: NOW });
     expect(sync.fetch).toHaveBeenCalledWith('https://ka-analytics-sync/sync?site=ka-performance', { method: 'POST' });
     expect(msgOf(r)).toBe('Synced.');
-    expect(msgOf(await handleSync({ db, adb, sync: syncStub(200, { ok: false }), slug: 'ka-performance', nowMs: NOW }))).toBe('Synced, with errors. See the lines below.');
+    expect(r.location).toContain('kind=ok');
+    const errs = await handleSync({ db, adb, sync: syncStub(200, { ok: false }), slug: 'ka-performance', nowMs: NOW });
+    expect(msgOf(errs)).toBe('Synced, with errors. See the lines below.');
+    expect(errs.location).toContain('kind=warn');
     expect(msgOf(await handleSync({ db, adb, sync: syncStub(409, { error: 'A sync is already running.' }), slug: 'ka-performance', nowMs: NOW }))).toBe('A sync is already running.');
   });
 
