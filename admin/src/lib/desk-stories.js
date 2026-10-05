@@ -43,3 +43,25 @@ export function storyFocusId(list, checks, now) {
 export function hasStoriesIn(state) {
   return (state?.items || []).some((i) => i.list === 'stories') || !!state?.meta?.stories_paused;
 }
+
+// A File kept for a second Save image tap after iOS NotAllowedError. Only
+// returned when the stored media version still matches the Story's.
+export function preparedFor(map, story) {
+  if (!story?.id) return null;
+  const entry = map?.get?.(story.id);
+  if (!entry?.file) return null;
+  const a = entry.v ?? null;
+  const b = story.v ?? null;
+  return a === b ? entry.file : null;
+}
+
+// Drop prepared Files whose Story is gone or whose media version changed.
+export function prunePrepared(map, storyList) {
+  if (!map) return map;
+  const byId = new Map((storyList || []).map((s) => [s.id, s]));
+  for (const id of [...map.keys()]) {
+    const s = byId.get(id);
+    if (!s || preparedFor(map, s) == null) map.delete(id);
+  }
+  return map;
+}

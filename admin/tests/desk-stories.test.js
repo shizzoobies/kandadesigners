@@ -101,3 +101,39 @@ describe('hasStoriesIn', () => {
     expect(hasStoriesIn(null)).toBe(false);
   });
 });
+
+import { preparedFor, prunePrepared } from '../src/lib/desk-stories.js';
+
+describe('preparedFor', () => {
+  const file = { name: 'a.jpg' };
+  it('returns the File when the story id and v match', () => {
+    const map = new Map([['a', { file, v: 3 }]]);
+    expect(preparedFor(map, { id: 'a', v: 3 })).toBe(file);
+  });
+  it('returns null when v mismatches', () => {
+    const map = new Map([['a', { file, v: 3 }]]);
+    expect(preparedFor(map, { id: 'a', v: 4 })).toBeNull();
+  });
+  it('returns null when the entry is missing', () => {
+    expect(preparedFor(new Map(), { id: 'a', v: 1 })).toBeNull();
+  });
+  it('treats missing v on both sides as equal', () => {
+    const map = new Map([['a', { file }]]);
+    expect(preparedFor(map, { id: 'a' })).toBe(file);
+    expect(preparedFor(map, { id: 'a', v: undefined })).toBe(file);
+  });
+});
+
+describe('prunePrepared', () => {
+  const f1 = { name: '1.jpg' }, f2 = { name: '2.jpg' };
+  it('removes ids no longer in the list or whose v changed, and keeps the rest', () => {
+    const map = new Map([
+      ['keep', { file: f1, v: 1 }],
+      ['gone', { file: f2, v: 1 }],
+      ['stale', { file: f2, v: 1 }],
+    ]);
+    prunePrepared(map, [{ id: 'keep', v: 1 }, { id: 'stale', v: 2 }]);
+    expect([...map.keys()]).toEqual(['keep']);
+    expect(map.get('keep').file).toBe(f1);
+  });
+});

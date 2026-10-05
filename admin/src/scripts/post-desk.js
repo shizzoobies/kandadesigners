@@ -10,7 +10,7 @@ import { esc, linkify, fmtTime, kindLabel, NET, netsOf } from '../lib/desk-forma
 import { youtubePanel } from '../lib/desk-youtube.js';
 import { deskCopy } from '../lib/desk-copy.js';
 import { phoneBarState } from '../lib/desk-pwa.js';
-import { storyState as storyStateOf, storyFocusId, STORY_FLAG } from '../lib/desk-stories.js';
+import { storyState as storyStateOf, storyFocusId, STORY_FLAG, preparedFor, prunePrepared } from '../lib/desk-stories.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
@@ -103,7 +103,7 @@ function placeToast() {
     desk.classList.remove('toast-lifted');
     if (rail) {
       s.setProperty('--toast-left', `${Math.round(r.left)}px`);
-      s.setProperty('--toast-w', `${Math.floor(r.width) - 4}px`);
+      s.setProperty('--toast-w', `${Math.max(0, Math.floor(r.width) - 32)}px`);
     }
     return;
   }
@@ -179,6 +179,7 @@ function applyState(s) {
   decisions = Object.fromEntries(s.decisions.map((d) => [d.item_id, { decision: d.decision, note: d.note, answers: d.answers || {}, answer: d.answer, at: d.decided_at, by: d.decided_by_name || '' }]));
   confirmed = structuredClone(decisions);
   checks = Object.fromEntries(s.checks.map((c) => [c.item_id, { posted: c.posted, at: c.checked_at }]));
+  prunePrepared(prepared, data.storyChecklist);
   buildItems();
   // Mirrors the server render: no Stories tab for a site without Stories, and
   // the empty note in place of an empty rail when nothing is on the desk.
@@ -504,10 +505,17 @@ async function copyText(text, btn, sel = '#sticker') {
 const shareFiles = (files) => { try { return !!navigator.canShare?.({ files }); } catch { return false; } };
 const canShareImages = () => phone.matches && typeof navigator.share === 'function'
   && shareFiles([new File([''], 'probe.jpg', { type: 'image/jpeg' })]);
-const prepared = new Map(); // story id -> File, kept for a second tap
+const prepared = new Map(); // story id -> { file, v }, kept for a second tap
+const saveBtnLabel = (s) => (preparedFor(prepared, s) ? 'Ready, tap to save' : 'Save image');
+function markSaveLabel(btn, s) {
+  if (!btn) return;
+  const label = saveBtnLabel(s);
+  btn.dataset.label = label;
+  btn.textContent = label;
+}
 async function saveImage(s, btn) {
   if (btn.getAttribute('aria-busy') === 'true') return;
-  let file = prepared.get(s.id);
+  let file = preparedFor(prepared, s);
   if (!file) {
     btn.setAttribute('aria-busy', 'true');
     btn.setAttribute('aria-disabled', 'true');
@@ -524,18 +532,24 @@ async function saveImage(s, btn) {
     } finally {
       btn.removeAttribute('aria-busy');
       btn.removeAttribute('aria-disabled');
-      restoreLabel(btn);
+      markSaveLabel(btn, s);
     }
   }
   if (!shareFiles([file])) { download(file); return; }
   try {
     await navigator.share({ files: [file] });
     prepared.delete(s.id);
-    restoreLabel(btn);
+    markSaveLabel(btn, s);
   } catch (e) {
-    if (e?.name === 'AbortError') { prepared.delete(s.id); restoreLabel(btn); return; } // closed the share sheet
+    if (e?.name === 'AbortError') { prepared.delete(s.id); markSaveLabel(btn, s); return; } // closed the share sheet
     // iOS can refuse a share that waited on a download; the next tap is fresh.
-    if (e?.name === 'NotAllowedError') { prepared.set(s.id, file); swapLabel(btn, 'Ready, tap to save'); return; }
+    if (e?.name === 'NotAllowedError') {
+      prepared.set(s.id, { file, v: s.v });
+      markSaveLabel(btn, s);
+      // Keep the list and zoom in sync if either is on screen.
+      if (view === 'stories') renderStories();
+      return;
+    }
     download(file);
   }
 }
@@ -713,7 +727,7 @@ function storyRow(s, now) {
       <p class="stext"><span>Sticker text</span>${esc(s.stickerText)}</p>
       <p class="surl" id="url-${esc(s.id)}" title="${esc(s.stickerUrl)}">${esc(s.stickerUrl)}</p>
     </div>
-    <div class="sacts"><button type="button" class="copy" data-copy="${esc(s.id)}">Copy URL</button><a class="copy" href="${esc(src)}" download data-save="${esc(s.id)}">Save image</a></div>
+    <div class="sacts"><button type="button" class="copy" data-copy="${esc(s.id)}">Copy URL</button><a class="copy" href="${esc(src)}" download data-save="${esc(s.id)}" data-label="${esc(saveBtnLabel(s))}">${esc(saveBtnLabel(s))}</a></div>
     ${posted}
   </article>`;
 }
@@ -782,7 +796,8 @@ function zoom(s) {
   $('#zoomSave').href = mediaUrl(s);
   $('#zoomSave').dataset.save = s.id;
   $('#zoomUrl').textContent = s.stickerUrl || '';
-  restoreLabel($('#zoomCopy')); restoreLabel($('#zoomSave'));
+  restoreLabel($('#zoomCopy'));
+  markSaveLabel($('#zoomSave'), s);
   d.showModal();
 }
 const zoomStory = () => storyList().find((x) => x.id === zoomFrom);

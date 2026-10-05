@@ -248,11 +248,11 @@ fieldset.access .hint { margin: 0; }
 /* Faded rather than hidden when idle, so its live region stays in place. */
 .d-toast:not(.on) { opacity: 0; pointer-events: none; }
 #toastMsg { min-width: 0; }
-/* Desktop: in the rail column, bottom-left and inside its width, so it never
-   covers the in-card status or buttons (post-desk.js sets the class and the
-   column's left edge and width). With no rail showing, bottom-center as above. */
+/* Desktop: in the rail column, 16px in from its left edge and 16px up from the
+   bottom (plus safe area), with 16px of space on both sides inside the rail
+   (--toast-w is the rail width minus 32). With no rail, bottom-center as above. */
 @media (min-width: 861px) {
-  .desk.toast-rail .d-toast { left: var(--toast-left); transform: none; width: max-content; max-width: var(--toast-w); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .desk.toast-rail .d-toast { left: calc(var(--toast-left) + 16px); transform: none; width: max-content; max-width: var(--toast-w); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
 }
 .btn[aria-disabled="true"] { opacity: .55; cursor: progress; }
 /* Taps act at once: no double-tap-zoom wait on the desk's controls. */
