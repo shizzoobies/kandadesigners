@@ -4,7 +4,7 @@
 // Never log the token: it travels only in the X-Mc-Auth header and is
 // scrubbed from every error.
 import { localYmd, localHms, addDays } from './zone.js';
-import { ENDPOINTS, METRIC_COLUMNS, mapItem, connectedNetworks, TIMELINES, timelineValues, accountRows } from './metricool-map.js';
+import { ENDPOINTS, METRIC_COLUMNS, mapItem, connectedNetworks, TIMELINES, timelineValues, accountRows, titleOf, publishedUtc } from './metricool-map.js';
 
 export const WINDOW_DAYS = 35;
 export const DEFAULT_TZ = 'America/New_York';
@@ -114,20 +114,48 @@ export function matchesProvider(post, provider) {
   return Boolean(post.url) && (sameUrl(post.url, id) || sameUrl(post.url, provider.publicUrl));
 }
 
+const FALLBACK_WINDOW_MS = 6 * 3600 * 1000;
+const rowKey = (p) => `${p.network}\u0000${p.native_id}`;
+
+// Facebook photo and album posts come back from the scheduler with another
+// object id and URL than posts/facebook (2026-10-05). When the id and URL pass
+// finds nothing for a published provider, take the one still-unlinked post on
+// the same network with the same first line, published within six hours.
+function fallbackMatch(posts, taken, item, provider) {
+  const title = titleOf({ text: item.text });
+  const at = Date.parse(publishedUtc(item.publicationDate) ?? '');
+  if (title === null || !Number.isFinite(at)) return null;
+  const found = posts.filter((p) => !taken.has(rowKey(p)) && !p.metricool_id && p.network === provider.network && p.title === title
+    && Math.abs(Date.parse(p.published_at ?? '') - at) <= FALLBACK_WINDOW_MS);
+  return found.length === 1 ? found[0] : null;
+}
+
 async function linkMetricoolIds({ adb, site, get, from, to }) {
-  const { results: posts } = await adb.prepare('SELECT network, native_id, url FROM posts WHERE site_slug = ?').bind(site.site_slug).all();
+  const { results: posts } = await adb.prepare('SELECT network, native_id, url, title, published_at, metricool_id FROM posts WHERE site_slug = ?').bind(site.site_slug).all();
   const updates = [];
+  const taken = new Set();
+  const unmatched = new Map();
+  const link = (item, p) => updates.push(adb.prepare('UPDATE posts SET metricool_id = ? WHERE site_slug = ? AND network = ? AND native_id = ?')
+    .bind(String(item.id), site.site_slug, p.network, p.native_id));
   for (const chunk of weekChunks(from.slice(0, 10), to.slice(0, 10))) {
     const listed = items(await get('v2/scheduler/posts', { ...chunk, timezone: site.timezone }, site.metricool_brand_id));
     for (const item of listed) {
       for (const provider of Array.isArray(item.providers) ? item.providers : []) {
         if (provider.status !== 'PUBLISHED') continue;
-        for (const p of posts.filter((x) => matchesProvider(x, provider))) {
-          updates.push(adb.prepare('UPDATE posts SET metricool_id = ? WHERE site_slug = ? AND network = ? AND native_id = ?')
-            .bind(String(item.id), site.site_slug, p.network, p.native_id));
+        const hits = posts.filter((x) => matchesProvider(x, provider));
+        for (const p of hits) {
+          taken.add(rowKey(p));
+          link(item, p);
         }
+        if (!hits.length) unmatched.set(`${item.id}\u0000${provider.network}`, { item, provider });
       }
     }
+  }
+  for (const { item, provider } of unmatched.values()) {
+    const p = fallbackMatch(posts, taken, item, provider);
+    if (!p) continue;
+    taken.add(rowKey(p));
+    link(item, p);
   }
   updates.push(adb.prepare(CAMPAIGN_JOIN).bind(site.site_slug));
   await adb.batch(updates);

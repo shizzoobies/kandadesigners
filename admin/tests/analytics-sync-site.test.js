@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { makeD1, ATTRIBUTION_MIGRATIONS } from './helpers/d1.js';
 import { fakeFetch } from './helpers/fetch.js';
-import { metricoolHandler, IG_POST, YT_VIDEO, BY_ENDPOINT, timeline } from './fixtures/metricool.js';
+import { metricoolHandler, IG_POST, YT_VIDEO, FB_POST, SCHEDULER, BY_ENDPOINT, timeline } from './fixtures/metricool.js';
 import { syncSite, matchesProvider, sameUrl } from '../src/lib/analytics-sync.js';
 
 const ENV = { METRICOOL_BASE: 'https://app.metricool.com/api', METRICOOL_USER_ID: '5465573', METRICOOL_USER_TOKEN: 'secret-123' };
@@ -136,6 +136,66 @@ describe('syncSite', () => {
       { native_id: 'HopxcccH2Uw', metricool_id: '383688294' },
       { native_id: 'ZZZ', metricool_id: null },
     ]);
+  });
+
+  describe('Facebook photo posts whose scheduler ids and URL differ from the analytics ones', () => {
+    // Live shape, 2026-10-05: the scheduler gives one object id and URL, posts/facebook another.
+    const photo = (over = {}) => ({
+      ...FB_POST,
+      postId: '1836472796593248_1984214646327749',
+      link: 'https://facebook.com/1984523272963553/posts/1984214646327749',
+      content: 'Five settings your Google profile needs\nSecond line',
+      created: { dateTime: '2026-10-02T16:02:00', timezone: 'Europe/Madrid' }, // 14:02Z
+      ...over,
+    });
+    const item = (over = {}) => ({
+      id: 500100,
+      text: '\n  Five settings your Google profile needs  \nSecond line',
+      publicationDate: { dateTime: '2026-10-02T10:00:00', timezone: 'America/New_York' }, // 14:00Z
+      providers: [{ network: 'facebook', id: '1984214626327751', status: 'PUBLISHED', publicUrl: 'https://facebook.com/1984523272963553/posts/1984214626327751' }],
+      ...over,
+    });
+    const go = (posts, items) => run(metricoolHandler({
+      byEndpoint: { ...BY_ENDPOINT, 'posts/facebook': posts },
+      scheduler: { data: [...SCHEDULER.data, ...items] },
+    }));
+    const idOf = (nativeId) => adb.prepare('SELECT metricool_id, campaign_id FROM posts WHERE native_id = ?').bind(nativeId).first();
+
+    beforeEach(async () => {
+      await adb.prepare("INSERT INTO publications (site_slug, campaign_id, network, metricool_id, kind, pillar, title, scheduled_at) VALUES ('ka-performance', '2026-10-02-1', 'facebook', '500100', 'facebook', 'seo', 'Five settings', '2026-10-02T10:00:00-04:00')").run();
+    });
+
+    it('matches by first line and time, and the campaign join follows', async () => {
+      await go([FB_POST, photo()], [item()]);
+      expect(await idOf('1836472796593248_1984214646327749')).toEqual({ metricool_id: '500100', campaign_id: '2026-10-02-1' });
+      expect(await idOf('1239857262550754_122119960383423707')).toEqual({ metricool_id: '383676427', campaign_id: null });
+    });
+
+    it('does not match when the title differs', async () => {
+      await go([FB_POST, photo({ content: 'A different caption' })], [item()]);
+      expect(await idOf('1836472796593248_1984214646327749')).toEqual({ metricool_id: null, campaign_id: null });
+    });
+
+    it('does not match when the posts are 7 hours apart', async () => {
+      await go([FB_POST, photo({ created: { dateTime: '2026-10-02T23:00:00', timezone: 'Europe/Madrid' } })], [item()]); // 21:00Z
+      expect(await idOf('1836472796593248_1984214646327749')).toEqual({ metricool_id: null, campaign_id: null });
+    });
+
+    it('leaves two same-titled candidates unmatched', async () => {
+      const twin = photo({ postId: '1836472796593248_1984214646327750', link: 'https://facebook.com/1984523272963553/posts/1984214646327750', created: { dateTime: '2026-10-02T16:30:00', timezone: 'Europe/Madrid' } });
+      await go([FB_POST, photo(), twin], [item()]);
+      expect(await idOf('1836472796593248_1984214646327749')).toEqual({ metricool_id: null, campaign_id: null });
+      expect(await idOf('1836472796593248_1984214646327750')).toEqual({ metricool_id: null, campaign_id: null });
+    });
+
+    it('never gives one post to a second provider, and skips posts that already have an id', async () => {
+      const second = item({ id: 500101, providers: [{ network: 'facebook', id: '1984214626327752', status: 'PUBLISHED', publicUrl: 'https://facebook.com/x/posts/1984214626327752' }] });
+      await go([FB_POST, photo()], [item(), second]);
+      expect(await idOf('1836472796593248_1984214646327749')).toEqual({ metricool_id: '500100', campaign_id: '2026-10-02-1' });
+      await adb.prepare("UPDATE posts SET metricool_id = '77' WHERE native_id = '1836472796593248_1984214646327749'").run();
+      await go([FB_POST, photo()], [item()]);
+      expect(await idOf('1836472796593248_1984214646327749')).toMatchObject({ metricool_id: '77' });
+    });
   });
 
   it('keeps stored account numbers when the window moves past them', async () => {
