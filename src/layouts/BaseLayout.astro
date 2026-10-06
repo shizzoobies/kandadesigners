@@ -121,8 +121,12 @@ const schema = {
         {
           '@type': 'Person',
           name: 'Alex Anderson',
-          // LinkedIn belongs to Alex, not the studio, so it hangs off his node
-          // rather than the organisation's sameAs.
+          // Alex's personal LinkedIn hangs off his own node. The studio's
+          // LinkedIn company page (/company/129934379/) is in the
+          // organization's sameAs below, through src/data/social.js: sameAs
+          // says "the same entity", so a company page never goes on a person.
+          // Both URLs send logged-out visitors to LinkedIn's sign-in wall
+          // (checked 2026-10-06); that is LinkedIn's doing, and the links stay.
           sameAs: ['https://www.linkedin.com/in/alexander-anderson-73a870252/'],
         },
         { '@type': 'Person', name: 'Kristina Anderson' },
