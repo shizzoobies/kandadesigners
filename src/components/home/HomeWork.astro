@@ -1,4 +1,9 @@
 ---
+import { workSrcset } from '../../data/work.js';
+// The screenshot's layout width: the full column on a phone (24 px gutters),
+// about 56% of the viewport beside the story on a tablet, and at most 637 px
+// in the 1152 px frame on a desktop.
+const workSizes = '(min-width: 1024px) 640px, (min-width: 768px) 56vw, calc(100vw - 48px)';
 const work = [
   { id:'makeover', name:'Project Makeover', category:'Community / nonprofit', image:'/images/work-pmbuild.webp?v=2', headline:'Give a big mission a place to grow.', brief:'A nonprofit transforming school spaces needed a home for the people, projects, and support behind each makeover.', feature:'Explore the school makeovers, then find a clear path to donate or get involved.', url:'https://projectmakeover.org' },
   { id:'osteen', name:'Osteen & Sons', category:'Local services', image:'/images/work-osteens.webp?v=1', headline:'Turn a property question into a next step.', brief:'A Gainesville lawn, brush, and junk crew needed a useful way to start a conversation about a property.', feature:'An address lookup brings in county lot details and leads into booking a free walkthrough.', url:'https://osteenandsons.com' },
@@ -18,7 +23,7 @@ const work = [
     {work.map(p=><article id={`work-panel-${p.id}`} class="project-panel" data-work-panel aria-labelledby={`work-tab-${p.id}`}>
       <a href={p.url} target="_blank" rel="noopener" class="project-window" aria-label={`Visit ${p.name} website, opens in a new tab`}>
         <div class="window-bar" aria-hidden="true"><span></span><span></span><span></span><b>{new URL(p.url).hostname}</b></div>
-        <img src={p.image} alt={`${p.name} website designed by K & A Performance`} width="1440" height="900" loading="lazy" />
+        <img src={p.image} srcset={workSrcset(p.image)} sizes={workSizes} alt={`${p.name} website designed by K & A Performance`} width="1440" height="900" loading="lazy" />
       </a>
       <div class="project-story"><p class="eyebrow">{p.category}</p><h3>{p.headline}</h3><p>{p.brief}</p><div class="feature"><p><strong>A useful detail</strong>{p.feature}</p></div><a href={p.url} target="_blank" rel="noopener" class="text-link">Explore {p.name}<span class="sr-only"> (opens in a new tab)</span></a></div>
     </article>)}

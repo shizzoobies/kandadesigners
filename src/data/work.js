@@ -65,3 +65,26 @@ export const projects = [
     img: '/images/work-davidsbbq.webp?v=1',
   },
 ];
+
+// Responsive copies of the 2880 px project screenshots (the 2x captures of a
+// 1440 px browser). A 390 px phone was downloading all five at full size,
+// about 1.4 MB, to show them at about 340 px. scripts/build-work-sizes.mjs
+// writes `<name>-<width>.webp` beside each original from this list; rerun it
+// whenever one of these screenshots is replaced. The original stays the
+// 2880w candidate, so a large retina screen gets exactly what it got before.
+export const workWidths = [720, 1080, 1440];
+export const responsiveWork = ['work-davidsbbq', 'work-familypractice', 'work-foremotion', 'work-osteens', 'work-pmbuild'];
+
+/**
+ * srcset for a project screenshot, or undefined when the image has no
+ * responsive copies (the smaller captures are served as they are). The
+ * original's ?v= cache key carries over to every copy.
+ */
+export function workSrcset(img) {
+  const [file, query] = img.split('?');
+  const name = file.split('/').pop().replace(/\.webp$/, '');
+  if (!responsiveWork.includes(name)) return undefined;
+  const v = query ? `?${query}` : '';
+  const base = file.replace(/\.webp$/, '');
+  return [...workWidths.map((w) => `${base}-${w}.webp${v} ${w}w`), `${file}${v} 2880w`].join(', ');
+}

@@ -11,8 +11,14 @@
 // transformPerspective and explicit z-index depth ordering (painter's
 // algorithm, no preserve-3d) — so cards can never slice through each other,
 // and stack poses face the viewer flat.
-import { projects, stackExtras } from '../data/work.js';
+import { projects, stackExtras, workSrcset } from '../data/work.js';
 import { googleRating } from '../data/reviews.js';
+
+// A card's layout width is about 72% of the viewport below 1024 px. On a
+// desktop GSAP scales the front of the ring up to about 855 px on screen
+// (from a 482 px layout box), so the desktop size is the on-screen one,
+// which keeps a desktop's pick as sharp as it was with the 2880 original.
+const cardSizes = '(min-width: 1024px) 860px, 72vw';
 
 const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
 ---
@@ -115,6 +121,8 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
             )}
             <img
               src={p.img}
+              srcset={workSrcset(p.img)}
+              sizes={workSrcset(p.img) ? cardSizes : undefined}
               alt={`${p.title} website screenshot`}
               class="aspect-[16/10] w-full object-cover object-top"
               loading={i === 0 ? 'eager' : 'lazy'}
