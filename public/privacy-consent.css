@@ -17,4 +17,24 @@
 #ka-privacy-dialog input { appearance: auto; width: 22px; height: 22px; flex: 0 0 22px; margin: 2px 0 0; accent-color: #9a3412; }
 #ka-privacy-error:empty { display: none; }
 #ka-privacy-error:not(:empty) { position: fixed; left: 16px; right: 16px; top: 16px; z-index: 10002; padding: 16px; background: #fffdf9; border: 2px solid #9a3412; }
-@media (max-width: 420px) { #ka-privacy-banner { padding: 16px; } #ka-privacy-dialog { padding: 20px; } .ka-privacy-actions button { flex: 1 1 40%; } }
+@media (max-width: 420px) { #ka-privacy-dialog { padding: 20px; } #ka-privacy-dialog .ka-privacy-actions button { flex: 1 1 40%; } }
+/* Phones: a slim bar across the bottom edge instead of a 320 px card, so the
+   hero's "Start a project" stays visible and tappable while the banner is up
+   (2026-10-06). Same markup, same focus order, same 44 px buttons: the
+   heading runs into the text as a bold lead-in, and the three buttons share
+   one row (they wrap only below about 340 px). */
+@media (max-width: 640px) {
+  #ka-privacy-banner { left: 0; bottom: 0; width: 100%; max-height: 70dvh; padding: 10px 16px 8px; border-width: 1px 0 0; box-shadow: 0 -4px 18px #221c1524; font-size: 13px; line-height: 1.4; }
+  #ka-privacy-banner h2 { display: inline; margin: 0 0.4em 0 0; font-size: 14px; line-height: 1.4; }
+  #ka-privacy-banner p { display: inline; margin: 0; }
+  #ka-privacy-banner .ka-privacy-actions { gap: 6px; margin: 8px 0 4px; }
+  #ka-privacy-banner .ka-privacy-actions button { flex: 1 1 auto; padding: 6px 8px; font-size: 14px; white-space: nowrap; }
+  #ka-privacy-banner > a { display: inline-block; line-height: 24px; }
+}
+/* Shorter phones (an iPhone in Safari is about 390 x 660): the hero's button
+   row ends about 660 px down, so a bottom bar would still cover it. There
+   the bar hangs from the bottom of the 80 px nav instead, leaving the nav's
+   Call and Menu and the hero's buttons clear. */
+@media (max-width: 640px) and (max-height: 849px) {
+  #ka-privacy-banner { top: 80px; bottom: auto; max-height: calc(100dvh - 96px); border-width: 1px 0; box-shadow: 0 6px 18px #221c1524; }
+}
