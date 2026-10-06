@@ -4,7 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SiteGuide from '../components/SiteGuide.astro';
 import StartProjectModal from '../components/StartProjectModal.astro';
-import { phone, email } from '../data/contact.js';
+import { phone, email, hours } from '../data/contact.js';
 import { socials } from '../data/social.js';
 import { locations, regions, citiesServed } from '../data/locations.js';
 import { ClientRouter } from 'astro:transitions';
@@ -47,7 +47,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 // up at. Do not add `streetAddress` until one is genuinely published. The
 // phone has been published since 2026-09-25 (header, footer, contact page),
 // so `telephone` is here, read from src/data/contact.js like every tel: link.
-// No `aggregateRating` either: our reviews live on Google, and marking up
+// The hours have been published since 2026-10-06 (footer and contact page,
+// copied from the Google Business Profile), so openingHoursSpecification is
+// here too, read from the same file. No `aggregateRating` either: our reviews live on Google, and marking up
 // someone else's reviews as our own violates their structured-data guidelines.
 const ORG_ID = 'https://ka-performancefl.com/#organization';
 const MAP_URL = 'https://g.page/r/CbVcBGWcGmNzEBM';
@@ -59,7 +61,8 @@ const MAP_URL = 'https://g.page/r/CbVcBGWcGmNzEBM';
 // The Ellenton office gets its own node, a child of the organization. It is
 // city-only until `locations.ellenton.published` flips on the day the lease
 // is signed; only then do streetAddress and postalCode appear. No
-// openingHours until the hours are known. This is the node the office's
+// openingHours on this node until the office's own hours are known (the
+// published hours belong to the organization, above). This is the node the office's
 // Google, Apple and Bing listings will point at.
 const ellenton = locations.ellenton;
 const officeRegion = regions.find((r) => r.key === 'bradenton-sarasota');
@@ -90,6 +93,16 @@ const schema = {
         addressCountry: 'US',
       },
       hasMap: MAP_URL,
+      // Closed days carry no `opens` and are left out: an absent day is how
+      // schema.org, and Google, read closed.
+      openingHoursSpecification: hours
+        .filter((h) => h.opens)
+        .map((h) => ({
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: h.days,
+          opens: h.opens,
+          closes: h.closes,
+        })),
       // Free-text by design; matches the public budget bands on the services
       // pages and the Launch's published price, nothing invented.
       priceRange: 'Under $2,000 to $10,000+',

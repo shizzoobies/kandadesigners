@@ -13,3 +13,24 @@ export const phone = {
 };
 
 export const email = 'alex@ka-performancefl.com';
+
+// Opening hours, exactly as K&A's Google Business Profile lists them,
+// captured signed out on 2026-09-30 (Social Media Management/To Be Released/
+// 2026-10-14-4/source/captures/capture-metadata.json), and published on the
+// site 2026-10-06 with Alex's approval. Change the profile first, then here:
+// the footer, the contact page and the openingHoursSpecification in
+// BaseLayout all read this list. `label` and `time` are the page spelling;
+// `days`, `opens` and `closes` are the schema.org values. A closed day has
+// no `opens`, and the schema leaves it out, which is how schema.org says
+// closed.
+export const hours = [
+  {
+    label: 'Monday to Friday',
+    time: '8 AM to 5 PM',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '08:00',
+    closes: '17:00',
+  },
+  { label: 'Saturday', time: '8 AM to 2:30 PM', days: ['Saturday'], opens: '08:00', closes: '14:30' },
+  { label: 'Sunday', time: 'Closed', days: ['Sunday'] },
+];

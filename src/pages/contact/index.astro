@@ -1,8 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScopeChat from '../../components/ScopeChat.astro';
-import { phone } from '../../data/contact.js';
+import { phone, hours } from '../../data/contact.js';
 import { locations, regions } from '../../data/locations.js';
+
+// The hours line under the phone number, from src/data/contact.js (the
+// Google Business Profile's hours), so it cannot drift from the footer or
+// the schema: "Open Monday to Friday, 8 AM to 5 PM; Saturday, ... Closed Sunday."
+const openHours = hours.filter((h) => h.opens).map((h) => `${h.label}, ${h.time}`).join('; ');
+const closedDays = hours.filter((h) => !h.opens).map((h) => h.label).join(' and ');
 
 // "Where we work" names its towns from src/data/locations.js, so this block,
 // the footer and the schema's areaServed cannot disagree. Lists read the way
@@ -31,6 +37,7 @@ const northeastTowns = list(byKey.northeast.cities.filter((c) => c !== 'Jacksonv
     <p data-animate="type-settle" data-animate-delay="0.25" class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
       Rather talk it through? Call
       <a href={phone.href} class="whitespace-nowrap font-semibold text-accent underline underline-offset-4 transition-colors hover:text-accent-hot">{phone.display}</a>.
+      <span class="mt-1 block">Open {openHours}. Closed {closedDays}.</span>
     </p>
     <!-- The people who actually reply — not a ticket queue. -->
     <div data-animate="type-settle" data-animate-delay="0.3" class="mt-10 flex items-center gap-4">

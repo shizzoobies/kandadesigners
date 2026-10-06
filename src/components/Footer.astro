@@ -1,6 +1,6 @@
 ---
 import LogoLockup from './LogoLockup.astro';
-import { phone, email } from '../data/contact.js';
+import { phone, email, hours } from '../data/contact.js';
 import { socials } from '../data/social.js';
 import { regions } from '../data/locations.js';
 
@@ -69,6 +69,20 @@ const columns = [
           Web design &amp; AI integration studio. Built in Gainesville, FL. Performing everywhere.
         </p>
         <p class="text-xs text-muted">{servingLine}</p>
+        {/* Hours from src/data/contact.js, the same list the schema's
+            openingHoursSpecification reads. Days ink, times muted, set as a
+            two-column list so the times line up. */}
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-[0.2em] text-ink">Hours</h2>
+          <dl class="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
+            {hours.map((h) => (
+              <Fragment>
+                <dt class="text-ink">{h.label}</dt>
+                <dd class="text-muted">{h.time}</dd>
+              </Fragment>
+            ))}
+          </dl>
+        </div>
         {/* Icon-only links, so each carries its full name for screen readers.
             The 44px box is the tap target; the negative margin lines the first
             icon up with the text above. */}
