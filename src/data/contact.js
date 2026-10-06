@@ -14,6 +14,12 @@ export const phone = {
 
 export const email = 'alex@ka-performancefl.com';
 
+// The Google Business Profile, which is also the map pin. K&A is a
+// service-area business with no public street address, so this link is how
+// the site points at the map: never add a street here. BaseLayout's hasMap
+// and sameAs, the footer's map link and the review links all read it.
+export const mapUrl = 'https://g.page/r/CbVcBGWcGmNzEBM';
+
 // Opening hours, exactly as K&A's Google Business Profile lists them,
 // captured signed out on 2026-09-30 (Social Media Management/To Be Released/
 // 2026-10-14-4/source/captures/capture-metadata.json), and published on the

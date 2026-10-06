@@ -4,7 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import SiteGuide from '../components/SiteGuide.astro';
 import StartProjectModal from '../components/StartProjectModal.astro';
-import { phone, email, hours } from '../data/contact.js';
+import { phone, email, hours, mapUrl } from '../data/contact.js';
 import { socials } from '../data/social.js';
 import { locations, regions, citiesServed } from '../data/locations.js';
 import { ClientRouter } from 'astro:transitions';
@@ -52,7 +52,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 // here too, read from the same file. No `aggregateRating` either: our reviews live on Google, and marking up
 // someone else's reviews as our own violates their structured-data guidelines.
 const ORG_ID = 'https://ka-performancefl.com/#organization';
-const MAP_URL = 'https://g.page/r/CbVcBGWcGmNzEBM';
 // Canonical spellings, approved 2026-08-09, now kept in src/data/locations.js
 // (`citiesServed`, fifteen towns in three regions). Keep that list and the
 // copy on the site saying the same thing; a schema that claims towns the
@@ -92,7 +91,7 @@ const schema = {
         addressRegion: 'FL',
         addressCountry: 'US',
       },
-      hasMap: MAP_URL,
+      hasMap: mapUrl,
       // Closed days carry no `opens` and are left out: an absent day is how
       // schema.org, and Google, read closed.
       openingHoursSpecification: hours
@@ -137,7 +136,7 @@ const schema = {
         availableLanguage: 'English',
       },
       // Only profiles we actually own and can point at. No placeholders.
-      sameAs: [MAP_URL, ...socials.map((s) => s.href)],
+      sameAs: [mapUrl, ...socials.map((s) => s.href)],
     },
     {
       '@type': 'ProfessionalService',
