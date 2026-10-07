@@ -7,6 +7,8 @@
   let pixelStarted = false;
   let lastPage = '';
   let returnFocus;
+  let bannerObserver;
+  let lastChoiceAt = 0;
   let deniedInMemory = false;
   const readCookie = () => {
     const match = /^v1\.a([01])\.m([01])$/.exec(document.cookie.match(/(?:^|;\s*)ka_privacy=([^;]*)/)?.[1] || '');
@@ -80,18 +82,28 @@
   function close() {
     const dialog = document.getElementById('ka-privacy-dialog');
     if (dialog?.open) dialog.close();
-    if (returnFocus?.isConnected) returnFocus.focus();
+  }
+  function layout() {
+    const banner = document.getElementById('ka-privacy-banner');
+    if (!banner?.getBoundingClientRect) return;
+    const box = banner.getBoundingClientRect();
+    // Keep the chat launcher clear of the banner, including wrapped copy.
+    const space = !banner.hidden && box.bottom >= window.innerHeight - 1 ? box.height : 0;
+    document.documentElement.style.setProperty('--ka-cookie-banner-height', `${space}px`);
   }
   function refresh() {
     const choices = read();
     const banner = document.getElementById('ka-privacy-banner');
-    if (banner) banner.hidden = choices.chosen;
+    const dialog = document.getElementById('ka-privacy-dialog');
+    if (banner) banner.hidden = choices.chosen || !!dialog?.open;
     for (const category of ['analytics','marketing']) {
       const input = document.getElementById(`ka-choice-${category}`);
-      if (input) input.checked = choices[category];
+      if (input && !dialog?.open) input.checked = choices[category];
     }
+    layout();
   }
   function save(analytics, marketingChoice) {
+    lastChoiceAt = Date.now();
     const previous = read();
     const value = `v1.a${analytics ? 1 : 0}.m${marketingChoice ? 1 : 0}`;
     try { cookie(KEY, value, 15552000); } catch { /* Fail closed below. */ }
@@ -104,7 +116,7 @@
       try { clearMarketingCookies(); } catch { /* browser may also block deletion */ }
       close(); refresh();
       document.getElementById('ka-privacy-error').textContent = remembered
-        ? 'Your cookie choice could not be saved. Optional tracking is off for this tab. Use Privacy choices to retry.'
+        ? 'Your cookie choice could not be saved. Optional tracking is off for this tab. Use Cookie settings to retry.'
         : 'Your choice could not be saved. Optional tracking is off on this page. Your browser is blocking storage; repeat your choice on future pages.';
       stopMarketing(remembered);
       return;
@@ -121,24 +133,26 @@
     else marketing();
   }
   function open() {
-    mount(); refresh();
+    mount();
+    const dialog = document.getElementById('ka-privacy-dialog');
+    if (dialog.open) return;
+    refresh();
     returnFocus = document.activeElement;
-    document.getElementById('ka-privacy-dialog').showModal();
+    dialog.showModal();
+    refresh();
   }
   function mount() {
     if (!document.body || document.getElementById('ka-privacy-root')) return;
     const root = document.createElement('div');
     root.id = 'ka-privacy-root';
     root.innerHTML = `
-      <section id="ka-privacy-banner" aria-label="Privacy choices" hidden>
-        <h2>Your privacy choices</h2>
-        <p>Optional Analytics measures course use. Marketing measures ads and referrals. Both stay off until you agree. Forms and course access work with either choice.</p>
-        <div class="ka-privacy-actions"><button type="button" data-ka-choice="reject">Reject optional</button><button type="button" data-ka-choice="accept">Accept all</button><button type="button" data-privacy-open>Customize</button></div>
-        <a href="/privacy/">Privacy details</a>
+      <section id="ka-privacy-banner" aria-label="Cookie choices" hidden>
+        <div class="ka-privacy-copy"><h2>Cookie choices</h2>
+        <p>Analytics measures course use. Marketing measures ads and referrals. Both are optional and off until you agree. <a href="/privacy/">Privacy notice</a></p></div>
+        <div class="ka-privacy-actions"><button type="button" data-ka-choice="accept">Accept all</button><button type="button" data-ka-choice="reject">Reject optional</button><button type="button" data-privacy-open>Cookie settings</button></div>
       </section>
-      <button id="ka-privacy-settings" type="button" data-privacy-open>Privacy choices</button>
       <dialog id="ka-privacy-dialog" aria-labelledby="ka-privacy-title" aria-describedby="ka-privacy-help">
-        <h2 id="ka-privacy-title">Privacy choices</h2>
+        <h2 id="ka-privacy-title">Cookie settings</h2>
         <p id="ka-privacy-help">Necessary storage remembers these choices, course access and your saved learning progress. It stays available.</p>
         <label><input id="ka-choice-analytics" type="checkbox"><span><strong>Analytics</strong><br>Send course chapter views and completions to K&amp;A. These can be linked to your course signup.</span></label>
         <label><input id="ka-choice-marketing" type="checkbox"><span><strong>Marketing</strong><br>Load Meta advertising measurement and remember referral sources for later enquiries.</span></label>
@@ -148,6 +162,11 @@
       </dialog>
       <p id="ka-privacy-error" role="status"></p>`;
     document.body.append(root);
+    if (typeof ResizeObserver === 'function') {
+      bannerObserver?.disconnect();
+      bannerObserver = new ResizeObserver(layout);
+      bannerObserver.observe(document.getElementById('ka-privacy-banner'));
+    }
     root.addEventListener('click', event => {
       const action = event.target.closest('[data-ka-choice]')?.dataset.kaChoice;
       if (action === 'accept') save(true, true);
@@ -155,9 +174,20 @@
       if (action === 'save') save(document.getElementById('ka-choice-analytics').checked, document.getElementById('ka-choice-marketing').checked);
       if (action === 'close') close();
     });
-    document.getElementById('ka-privacy-dialog').addEventListener('close', () => { if (returnFocus?.isConnected) returnFocus.focus(); });
+    document.getElementById('ka-privacy-dialog').addEventListener('close', () => {
+      refresh();
+      if (returnFocus?.isConnected && returnFocus.getClientRects().length) returnFocus.focus();
+      else document.querySelector('footer [data-privacy-open]')?.focus({preventScroll: true});
+    });
+    document.getElementById('ka-privacy-dialog').addEventListener('keydown', event => {
+      if (event.key !== 'Tab') return;
+      const controls = [...event.currentTarget.querySelectorAll('button:not([disabled]), input:not([disabled]), a[href]')].filter(el => el.getClientRects().length);
+      const first = controls[0], last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
     refresh();
-    if (fallbackDenial()) document.getElementById('ka-privacy-error').textContent = 'Your cookie choice could not be saved. Optional tracking is off for this tab. Use Privacy choices to retry.';
+    if (fallbackDenial()) document.getElementById('ka-privacy-error').textContent = 'Your cookie choice could not be saved. Optional tracking is off for this tab. Use Cookie settings to retry.';
   }
   window.KAPrivacy = Object.freeze({allows, source, open, requestHeaders() {
     const choices = read();
@@ -168,6 +198,13 @@
   document.addEventListener('click', event => {
     if (event.target.closest('[data-privacy-open]')) { event.preventDefault(); open(); }
   });
+  // A double-click must not activate a page link uncovered by dismissing
+  // the banner on the first click.
+  document.addEventListener('click', event => {
+    if (event.detail > 1 && Date.now() - lastChoiceAt < 500) {
+      event.preventDefault(); event.stopImmediatePropagation();
+    }
+  }, true);
   const onPage = () => { mount(); refresh(); marketing(); };
   document.addEventListener('astro:page-load', onPage);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', onPage, {once: true});
@@ -175,4 +212,5 @@
   const sync = () => { refresh(); if (pixelStarted && !allows('marketing')) stopMarketing(); };
   window.addEventListener('storage', event => { if (event.key === 'ka_privacy_sync') sync(); });
   window.addEventListener('focus', sync);
+  window.addEventListener('resize', layout);
 })();
