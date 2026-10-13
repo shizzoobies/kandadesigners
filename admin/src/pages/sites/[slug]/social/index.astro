@@ -1,12 +1,14 @@
 ---
 // The Post Desk. The server embeds the site's desk state as JSON; the client
 // script (src/scripts/post-desk.js, ported from the claude.ai artifact) draws
-// it and saves decisions and Story ticks. #stories opens the Stories tab.
+// it and saves decisions and Story ticks. #stories or ?view=stories opens the
+// Stories tab.
 import Shell from '../../../../layouts/Shell.astro';
 import { getSiteBySlug } from '../../../../lib/db.js';
 import { getDeskState, maybePurge } from '../../../../lib/desk.js';
 import { canWriteDesk } from '../../../../lib/gate.js';
 import { deskCopy } from '../../../../lib/desk-copy.js';
+import { hasStoriesIn } from '../../../../lib/desk-stories.js';
 
 const env = Astro.locals.runtime.env;
 const site = await getSiteBySlug(env.DB, Astro.params.slug);
@@ -27,12 +29,26 @@ const me = user?.name || user?.email || '';
 // means a client's desk never flashes a Stories tab or an empty rail on load.
 // Stories are K&A's own hand-posted routine: a site with none, and no paused
 // flag, has no Stories tab at all.
-const hasStories = state.items.some((i) => i.list === 'stories') || !!state.meta?.stories_paused;
+// The manifest route reads the same rule for its Stories shortcut.
+const hasStories = hasStoriesIn(state);
 const empty = state.items.length === 0;
+// Push: public key is not a secret (Alex commits it); private stays in secrets.
+// canPush matches canWrite — viewers never see the control.
+const vapidPublicKey = env.VAPID_PUBLIC_KEY || null;
+const canPush = canWrite;
 // "<" is escaped so no text in a caption can close the script element early.
-const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).replace(/</g, '\\u003c');
+const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state, vapidPublicKey, canPush }).replace(/</g, '\\u003c');
 ---
-<Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''} site={site}>
+<Shell title={`Post Desk, ${site.name}`} active={site.slug === 'ka-performance' ? 'social' : ''} site={site} viewport="width=device-width, initial-scale=1, viewport-fit=cover">
+  <Fragment slot="head">
+    <link rel="manifest" href={`/sites/${site.slug}/social/manifest.webmanifest`} crossorigin="use-credentials" />
+    <meta name="theme-color" content="#FFFDF9" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Post Desk" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon-180.png" />
+  </Fragment>
   <div class="desk" id="desk">
     <header class="d-head">
       <div class="d-brand">
@@ -48,6 +64,33 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).re
         <div><b id="sToday">0</b><span class="level"><span class="dot red"></span>due today</span></div>
         <div><b id="sMissed">0</b><span class="level"><span class="dot amber"></span>not ticked</span></div>
         <div><b id="sDone">0</b><span class="level"><span class="dot green"></span>posted</span></div>
+      </div>
+      <div class="d-overflow" id="deskOverflow" hidden={!canPush}>
+        <details class="d-more">
+          <summary aria-label="More">More</summary>
+          <div class="d-more-panel" id="pushPanel">
+            <p class="d-more-label">Notifications</p>
+            <p class="d-push-msg" id="pushMsg"></p>
+            <div class="d-push-actions" id="pushActions"></div>
+            <!-- Per-device settings, shown only in the "on" state (slice 6). -->
+            <form class="d-push-prefs" id="pushPrefs" hidden>
+              <label class="d-pref-toggle"><input type="checkbox" id="prefQuiet" /> Quiet hours</label>
+              <div class="d-pref-times" id="prefQuietTimes" hidden>
+                <label>From <input type="time" id="prefQuietStart" value="21:00" required /></label>
+                <label>to <input type="time" id="prefQuietEnd" value="07:30" required /></label>
+                <span class="d-pref-tz">ET</span>
+              </div>
+              <div id="prefStoriesRow" hidden={!hasStories}>
+                <label class="d-pref-toggle"><input type="checkbox" id="prefStories" /> Stories reminder</label>
+                <div class="d-pref-times" id="prefStoriesTimes" hidden>
+                  <label>At <input type="time" id="prefStoriesAt" value="10:00" required /></label>
+                  <span class="d-pref-tz">ET</span>
+                </div>
+              </div>
+              <button type="submit" class="btn quiet" id="prefSave">Save</button>
+            </form>
+          </div>
+        </details>
       </div>
       <p class="conn" id="conn">{copy.conn(hasStories)}</p>
     </header>
@@ -85,13 +128,33 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state }).re
       </div>
     </section>
 
+    <!-- On a phone it fills the screen, with Copy URL, Save image and Close
+         in a bottom bar in thumb reach; Copy URL and the URL line are phone only. -->
     <dialog class="zoom" id="zoom" aria-label="Story image">
-      <img id="zoomImg" src="" alt="" />
-      <div class="zbar"><a class="btn" id="zoomSave" href="" download>Save image</a><button type="button" class="btn quiet" id="zoomClose">Close</button></div>
+      <div class="zstage" id="zoomStage"><img id="zoomImg" src="" alt="" /></div>
+      <p class="zurl" id="zoomUrl"></p>
+      <div class="zbar"><button type="button" class="btn quiet" id="zoomCopy">Copy URL</button><a class="btn" id="zoomSave" href="" download>Save image</a><button type="button" class="btn quiet" id="zoomClose">Close</button></div>
     </dialog>
     <!-- Always in the page, so the live region exists before a message lands.
          Only the message is live; the Undo button sits beside it. -->
-    <div class="d-toast" id="toast"><span id="toastMsg" role="status"></span><button type="button" class="d-toast-undo" id="toastUndo" hidden>Undo</button></div>
+    <div class="d-toast" id="toast"><span id="toastMsg" role="status"></span><button type="button" class="d-toast-undo" id="toastUndo" hidden>Undo</button><button type="button" class="d-toast-undo" id="toastReload" hidden>Reload</button></div>
+    <!-- Phone only: the sticky decision bar and the change sheet. post-desk.js
+         fills and shows them; on a desktop they stay hidden. -->
+    <!-- Behind the open card while it is swiped: Approve or Changes. -->
+    <div class="d-swipe" id="swipeLayer" aria-hidden="true" hidden><span class="d-swipe-lbl ok">Approve</span><span class="d-swipe-lbl fix">Changes</span></div>
+    <div class="d-phone-decide" id="phoneDecide" hidden></div>
+    <div class="d-sheet" id="changeSheet" hidden>
+      <div class="d-sheet-scrim" id="sheetScrim"></div>
+      <div class="d-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <label id="sheetTitle" class="d-sheet-title" for="sheetNote">What should change?</label>
+        <textarea id="sheetNote" class="d-sheet-note" rows="4" maxlength="2000" placeholder="Be as rough as you like." aria-describedby="sheetMsg"></textarea>
+        <p class="d-sheet-msg" id="sheetMsg" role="alert"></p>
+        <div class="d-sheet-actions">
+          <button type="button" class="btn quiet" id="sheetCancel">Cancel</button>
+          <button type="button" class="btn" id="sheetSend">Send change request</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script type="application/json" id="desk-boot" set:html={boot}></script>

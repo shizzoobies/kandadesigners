@@ -16,6 +16,12 @@ export default defineConfig({
     // Gives `astro dev` the real bindings (local D1, vars) from wrangler.jsonc,
     // so local development matches production without a separate dev server.
     platformProxy: { enabled: true },
+    // Custom entry adds scheduled() for desk push (src/worker.js). If this
+    // fights the build, stop and report rather than hacking around it.
+    workerEntryPoint: {
+      path: './src/worker.js',
+      namedExports: [],
+    },
   }),
   trailingSlash: 'ignore',
   devToolbar: { enabled: false },

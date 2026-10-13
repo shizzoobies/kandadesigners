@@ -4,7 +4,7 @@ import '../styles/admin.css';
 // A client sees none of the dashboard: no nav to Sites, Add site, K&A's
 // Social or People, just the brand, the site they are on and who is signed in.
 // With more than one desk, a link back to their list.
-const { title, active = '', site = null } = Astro.props;
+const { title, active = '', site = null, viewport = 'width=device-width, initial-scale=1' } = Astro.props;
 const user = Astro.locals.user;
 const client = user?.role === 'client';
 const several = client && (user.grants?.length ?? 0) > 1;
@@ -15,11 +15,12 @@ const SIGN_OUT = '/cdn-cgi/access/logout';
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content={viewport} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png" />
     <title>{title} | {client ? 'K & A Post Desk' : 'K & A sites'}</title>
+    <slot name="head" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>

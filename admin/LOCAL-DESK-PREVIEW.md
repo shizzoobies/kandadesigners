@@ -1,0 +1,98 @@
+# Previewing the Post Desk locally
+
+Local only. Nothing here talks to the real Cloudflare account: the D1 and R2
+below live in `admin/.wrangler/state` on your own machine. Never add
+`--remote` to any of these.
+
+Needs Node 22+ (wrangler 4 refuses older Node; the tests use `node:sqlite`).
+
+```sh
+cd admin
+cp .dev.vars.example .dev.vars        # ENVIRONMENT=development, DEV_EMAIL=alex@...; git ignores .dev.vars
+node ./node_modules/wrangler/bin/wrangler.js d1 migrations apply ka-sites --local
+node scripts/seed-desk-fixture.mjs    # local D1 rows + local R2 media; re-run to reset the desk
+node ./node_modules/astro/astro.js dev # http://localhost:4321/sites/ka-performance/social
+```
+
+`astro dev` reads the same local D1 and R2 through the Cloudflare adapter's
+platformProxy, and `.dev.vars` signs you in as `DEV_EMAIL` (the dev bypass in
+`src/lib/identity.js`, off in production). Restart `astro dev` after changing
+`.dev.vars`.
+
+The fixture is a K & A desk: a reel with a question, a carousel with both
+versions, a LinkedIn document, a Story, a native Facebook post and an ask;
+the LinkedIn post is approved and the second reel has changes asked, the rest
+wait. The Stories tab has a row in every phone state: one already posted
+today, one due now (its time passed an hour before the seed ran), one later
+today, tomorrow, one with a condition line, +3 days, and +5 days with a very
+long sticker URL and sticker text (a PNG, so Save image covers both types).
+Today's times are set from the clock when the seed runs, so re-seed if "later
+today" has become due. Past-dated rows are purged when the desk opens, so the
+"Not ticked" state lives in `tests/desk-stories.test.js`, not the fixture.
+Two extra local-only logins check access levels:
+
+| DEV_EMAIL | Sees |
+| --- | --- |
+| `alex@ka-performancefl.com` | Owner: full desk |
+| `approver@desk-fixture.test` | Client, approve: can decide |
+| `viewer@desk-fixture.test` | Client, view only: no buttons, writes 403 |
+
+Save image on a phone uses the share sheet (Web Share with files), which
+desktop Chrome's device mode doesn't have, so there it falls back to the
+download. To try the share path, stub `navigator.canShare` and
+`navigator.share` in the console before tapping it.
+
+Phone checks: Chrome DevTools device mode at 390 and 360 wide, or open
+`http://<your LAN IP>:4321/...` from a phone after `astro dev --host`.
+Install needs a secure origin, so on a real phone test install on the live
+site later; `localhost` in desktop Chrome offers Install from the address bar.
+
+The fixture media is in `seed/desk-fixture/` (made by
+`scripts/make-desk-fixture-media.py`); the PWA icons are made by
+`scripts/make-desk-icons.py`.
+
+
+## Local desk push (slice 4)
+
+Push never leaves the box locally: with `VAPID_PRIVATE_KEY` unset (the default
+in `.dev.vars.example`), every send goes through a mock transport that logs
+`[push:mock]` lines. The fixture seeds one fake subscription for the owner on
+`https://push.mock.local/desk-fixture` (that host is allowlisted only when
+`ENVIRONMENT=development`). Re-seeding clears `desk_push_sent`, so the next
+cron run announces again.
+
+```sh
+cd admin
+# after migrations + seed, and with a throwaway VAPID_PUBLIC_KEY in .dev.vars:
+node ./node_modules/astro/astro.js build
+node ./node_modules/wrangler/bin/wrangler.js dev --local --test-scheduled --port 8787
+# in another terminal:
+curl -s http://127.0.0.1:8787/__scheduled
+# expect [push:mock] lines for each site with waiting approve items
+curl -s http://127.0.0.1:8787/__scheduled
+# second run: nothing new (already in desk_push_sent)
+```
+
+`astro dev` alone does not fire the cron; use the build + `wrangler dev
+--local --test-scheduled` path above. The desk UI at
+`http://127.0.0.1:4321/sites/ka-performance/social` still works under
+`astro dev` for Turn on / deep links (`?item=<id>`).
+
+## Quiet hours and the Stories reminder (slice 6)
+
+Each device can set quiet hours (default 9:00 PM to 7:30 AM ET) and, on a
+site with Stories, a daily Stories reminder (default 10:00 AM ET) under More,
+Notifications, once notifications are on. New-item pushes during quiet hours
+are held; the first cron run after quiet hours sends one "N waiting on you"
+summary. The reminder links to `?view=stories`.
+
+To try the cron at a given time locally, pass the dev-only clock override
+`DESK_PUSH_NOW` (ignored unless `ENVIRONMENT=development`):
+
+```sh
+node ./node_modules/wrangler/bin/wrangler.js dev --local --test-scheduled --port 8787 \
+  --var DESK_PUSH_NOW:2026-10-13T23:00:00-04:00
+curl -s http://127.0.0.1:8787/__scheduled
+```
+
+Restart with a new `DESK_PUSH_NOW` for each time you want to simulate.

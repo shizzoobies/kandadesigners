@@ -43,3 +43,14 @@ export function isNoOp(current, decision, note) {
   if ((current?.decision || 'waiting') !== decision) return false;
   return decision !== 'changes' || (current?.note || '') === (note || '');
 }
+
+// How long a toast stays up, in ms. A reload toast stays to the cap (an
+// installed app has no browser chrome to reload from), one with an Undo long
+// enough to reach it with a thumb, a plain one just long enough to read.
+// Holding a finger, the pointer or focus on it pauses the timeout; the cap
+// still ends it.
+export const TOAST_CAP_MS = 20000;
+export function toastMs({ undo = false, reload = false } = {}) {
+  if (reload) return TOAST_CAP_MS;
+  return undo ? 10000 : 2200;
+}

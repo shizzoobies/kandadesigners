@@ -87,6 +87,13 @@ describe('gateRequest', () => {
     expect(gateRequest(CLIENT, '/logos/favicons/davids-bbq.png')).toEqual({ allow: false, status: 403 });
   });
 
+  it('serves the desk manifest only on desks the user may open', () => {
+    expect(gateRequest(CLIENT, '/sites/foremotion-golf/social/manifest.webmanifest')).toEqual({ allow: true });
+    expect(gateRequest(CLIENT, '/sites/ka-performance/social/manifest.webmanifest')).toEqual({ allow: false, status: 404 });
+    expect(gateRequest(OWNER, '/sites/ka-performance/social/manifest.webmanifest')).toEqual({ allow: true });
+    expect(gateRequest(NOBODY, '/sites/foremotion-golf/social/manifest.webmanifest')).toEqual({ allow: false, status: 404 });
+  });
+
   it('gives a client with no desks the home page only', () => {
     expect(gateRequest(NOBODY, '/')).toEqual({ allow: true });
     expect(gateRequest(NOBODY, '/sites/foremotion-golf/social')).toEqual({ allow: false, status: 404 });

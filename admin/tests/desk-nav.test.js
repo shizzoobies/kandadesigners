@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState } from '../src/lib/desk-nav.js';
+import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState, toastMs, TOAST_CAP_MS } from '../src/lib/desk-nav.js';
 
 const items = [
   { id: 'a', kind: 'reel' }, { id: 'b', kind: 'reel' }, { id: 'c', kind: 'native' }, { id: 'd', kind: 'reel' }, { id: 'q', kind: 'ask' },
@@ -81,5 +81,27 @@ describe('sameState', () => {
   it('notices a different decision or note', () => {
     expect(sameState({ decision: 'changes', note: 'Other device' }, { decision: 'approved', note: '' })).toBe(false);
     expect(sameState({ decision: 'changes', note: 'B' }, { decision: 'changes', note: 'A' })).toBe(false);
+  });
+});
+
+describe('toastMs', () => {
+  it('keeps a toast with Undo up for 10 seconds', () => {
+    expect(toastMs({ undo: true })).toBe(10000);
+  });
+
+  it('keeps a plain toast for 2.2 seconds', () => {
+    expect(toastMs({})).toBe(2200);
+    expect(toastMs()).toBe(2200);
+    expect(toastMs({ undo: false, reload: false })).toBe(2200);
+  });
+
+  it('keeps a reload toast up to the 20 second cap, Undo or not', () => {
+    expect(TOAST_CAP_MS).toBe(20000);
+    expect(toastMs({ reload: true })).toBe(20000);
+    expect(toastMs({ reload: true, undo: true })).toBe(20000);
+  });
+
+  it('never runs past the cap', () => {
+    for (const o of [{}, { undo: true }, { reload: true }]) expect(toastMs(o)).toBeLessThanOrEqual(TOAST_CAP_MS);
   });
 });

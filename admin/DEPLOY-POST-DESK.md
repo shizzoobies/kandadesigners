@@ -25,6 +25,9 @@ cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js d1 mig
 ```
 Claude verifies: `desk_items`, `desk_decisions`, `desk_story_checks` and
 `desk_meta` exist in `ka-sites`, and the sites dashboard still loads.
+The same command applies the push migrations 0004 (`desk_push_subs`,
+`desk_push_sent`) and 0005 (quiet hours and Stories reminder columns on
+`desk_push_subs`) together. 0005 adds no secrets.
 
 ## 3. Build and deploy the admin
 ```powershell
