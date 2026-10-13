@@ -122,6 +122,8 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state, vapi
     <div class="d-toast" id="toast"><span id="toastMsg" role="status"></span><button type="button" class="d-toast-undo" id="toastUndo" hidden>Undo</button><button type="button" class="d-toast-undo" id="toastReload" hidden>Reload</button></div>
     <!-- Phone only: the sticky decision bar and the change sheet. post-desk.js
          fills and shows them; on a desktop they stay hidden. -->
+    <!-- Behind the open card while it is swiped: Approve or Changes. -->
+    <div class="d-swipe" id="swipeLayer" aria-hidden="true" hidden><span class="d-swipe-lbl ok">Approve</span><span class="d-swipe-lbl fix">Changes</span></div>
     <div class="d-phone-decide" id="phoneDecide" hidden></div>
     <div class="d-sheet" id="changeSheet" hidden>
       <div class="d-sheet-scrim" id="sheetScrim"></div>

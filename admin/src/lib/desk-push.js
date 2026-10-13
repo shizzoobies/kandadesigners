@@ -6,6 +6,7 @@
 import * as q from './db.js';
 import { canWriteDesk } from './gate.js';
 import { sendPush, mockTransport } from './web-push.js';
+import { waitingCount } from './desk-pwa.js';
 
 const ALLOWED_HOSTS = [
   'fcm.googleapis.com',
@@ -67,18 +68,21 @@ export function pushPlan(waitingIds, sentIds) {
 }
 
 // One notification per site per run. newItems are { item_id, title } in rail order.
-export function pushMessage(site, newItems) {
+// badge is the site's waiting count (waitingCount), for the home-screen icon.
+export function pushMessage(site, newItems, { badge } = {}) {
   const slug = site?.slug;
   if (!slug || !newItems?.length) throw new Error('pushMessage needs a site and at least one item');
   const first = newItems[0];
   const url = `/sites/${slug}/social?item=${encodeURIComponent(first.item_id)}`;
   const tag = `desk-${slug}`;
+  const n = Number.isInteger(badge) && badge >= 0 ? badge : newItems.length;
   if (newItems.length === 1) {
     return {
       title: 'Waiting on you',
       body: first.title || 'A post is waiting',
       url,
       tag,
+      badge: n,
     };
   }
   return {
@@ -86,9 +90,16 @@ export function pushMessage(site, newItems) {
     body: `${newItems.length} new posts waiting on you`,
     url,
     tag,
+    badge: n,
   };
 }
 
+
+// The badge for a site from listWaitingApprove rows, through the same rule
+// the page uses (rows are already undecided approve-list items).
+export function badgeFor(waitingRows) {
+  return waitingCount((waitingRows || []).map((w) => ({ ...w, list: 'approve' })), () => 'waiting');
+}
 
 // Waiting approve-list items (no native). Stories list is excluded by list='approve'.
 export async function listWaitingApprove(db, siteId) {
@@ -137,7 +148,7 @@ export async function runDeskPush(env, { now = Date.now(), transport } = {}) {
     summary.sites += 1;
     summary.announced += announce.length;
     const newItems = announce.map((id) => waiting.find((w) => w.item_id === id)).filter(Boolean);
-    const payload = pushMessage(site, newItems);
+    const payload = pushMessage(site, newItems, { badge: badgeFor(waiting) });
     const subs = await q.listPushSubs(db, site.id);
 
     let anyOk = false;

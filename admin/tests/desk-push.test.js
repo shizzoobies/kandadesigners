@@ -56,6 +56,7 @@ describe('pushMessage', () => {
       body: 'Tempo squats',
       url: '/sites/ka-performance/social?item=2026-10-06-reel',
       tag: 'desk-ka-performance',
+      badge: 1,
     });
   });
 
@@ -70,6 +71,7 @@ describe('pushMessage', () => {
       body: '3 new posts waiting on you',
       url: '/sites/ka-performance/social?item=a',
       tag: 'desk-ka-performance',
+      badge: 3,
     });
   });
 });

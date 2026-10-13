@@ -41,12 +41,20 @@ self.addEventListener('push', (event) => {
       : "Post Desk: something's waiting on you";
     const tag = (ok && data.tag) ? String(data.tag) : ('desk-' + ${JSON.stringify(slug)});
     const url = (ok && data.url) ? String(data.url) : SCOPE;
-    await self.registration.showNotification(title, {
+    const badge = ok && Number.isInteger(data.badge) && data.badge >= 0 ? data.badge : null;
+    const shown = self.registration.showNotification(title, {
       body,
       tag,
       data: { url },
       renotify: true,
     });
+    const nav = self.navigator;
+    let badged = null;
+    try {
+      if (badge === 0 && nav && nav.clearAppBadge) badged = nav.clearAppBadge();
+      else if (badge > 0 && nav && nav.setAppBadge) badged = nav.setAppBadge(badge);
+    } catch (e) {}
+    await Promise.all([shown, Promise.resolve(badged).catch(() => {})]);
   })());
 });
 
