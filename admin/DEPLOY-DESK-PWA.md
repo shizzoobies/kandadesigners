@@ -121,9 +121,15 @@ cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js rollba
   the 0004 and 0005 tables and columns (additive, the old code ignores them,
   safe to leave), the `VAPID_PRIVATE_KEY` secret, and the merge on
   `admin/post-desk` (the next deploy from the worktree would ship it again, so
-  revert the merge commit before redeploying). Cron triggers aren't part of
-  a version, so the 5-minute trigger may stay. The old code has no `scheduled`
-  handler, though, so no pushes go out.
+  revert the merge commit before redeploying).
+  Cron triggers aren't part of a version, so after a rollback the 5-minute
+  trigger stays and keeps firing the old code. Nothing gets sent, but the old
+  version has no `scheduled` handler, so expect an error in the Worker logs
+  every 5 minutes, not silence. To stop it: Cloudflare dashboard, the Worker,
+  Settings, Triggers, the cron's three-dot menu, Delete. That can take up to
+  15 minutes to take effect. The next deploy from the release branch adds the
+  trigger back. Sources: [Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/),
+  [Rollbacks](https://developers.cloudflare.com/workers/versions-and-deployments/rollbacks/).
 - **Stop pushes only, keep the phone app:** delete the `"triggers": { "crons": [...] }`
   line from `wrangler.jsonc`, then redeploy with the step 5 line. What it leaves
   behind: subscriptions and settings stay in D1, notifications stay "on" on each
