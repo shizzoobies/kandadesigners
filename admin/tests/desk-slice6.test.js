@@ -170,6 +170,23 @@ describe('runDeskPush: quiet hours', () => {
     expect((await run(db, et('2026-10-14', '12:00'))).pushes).toEqual([]);
   });
 
+  it('a morning summary that replaces new-item pushes marks those items sent, so the next run does not re-announce', async () => {
+    const db = await deskWithSubs([['phone', night]]);
+    await run(db, et('2026-10-13', '23:00'));
+    // A new item lands overnight: still held, nothing marked.
+    await db.prepare("INSERT INTO desk_items (site_id, item_id, list, kind, post_date, post_time, title, payload, pushed_at) VALUES (1, 'late-reel', 'approve', 'reel', '2026-10-16', '10:00', 'Late', '{}', 't')").run();
+    expect((await run(db, et('2026-10-14', '03:00'))).pushes).toEqual([]);
+    expect(await sentIds(db)).toEqual([]);
+    const m = await run(db, et('2026-10-14', '07:35'));
+    expect(m.pushes).toHaveLength(1);
+    expect(m.pushes[0].title).toBe('5 waiting on you');
+    expect(m.s.summaries).toBe(1);
+    expect(await sentIds(db)).toEqual(['ask-1', 'late-reel', 'post-back', 'reel-wait', 'story-post']);
+    const next = await run(db, et('2026-10-14', '07:40'));
+    expect(next.pushes).toEqual([]);
+    expect(next.s.announced).toBe(0);
+  });
+
   it('summary skipped (held_since cleared silently) when nothing is waiting by morning', async () => {
     const db = await deskWithSubs([['phone', night]]);
     await run(db, et('2026-10-13', '23:00'));
