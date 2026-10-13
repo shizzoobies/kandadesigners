@@ -263,13 +263,13 @@ export async function upsertAlertState(db, s) {
 
 export async function listPushSubs(db, siteId) {
   return rows(db.prepare(
-    'SELECT id, site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count FROM desk_push_subs WHERE site_id = ? ORDER BY id',
+    'SELECT id, site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count, quiet_start, quiet_end, held_since, stories_at, stories_sent_on FROM desk_push_subs WHERE site_id = ? ORDER BY id',
   ).bind(siteId));
 }
 
 export async function getPushSubByEndpoint(db, endpoint) {
   return db.prepare(
-    'SELECT id, site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count FROM desk_push_subs WHERE endpoint = ?',
+    'SELECT id, site_id, person_id, endpoint, p256dh, auth, label, created_at, last_ok_at, fail_count, quiet_start, quiet_end, held_since, stories_at, stories_sent_on FROM desk_push_subs WHERE endpoint = ?',
   ).bind(endpoint).first();
 }
 
@@ -320,4 +320,37 @@ export async function deletePushSent(db, siteId, itemIds) {
     'DELETE FROM desk_push_sent WHERE site_id = ? AND item_id = ?',
   ).bind(siteId, id));
   await db.batch(stmts);
+}
+
+// desk push per-device prefs (0005)
+
+export async function setPushPrefs(db, endpoint, { quiet_start, quiet_end, stories_at }) {
+  await db.prepare(
+    `UPDATE desk_push_subs SET quiet_start = ?, quiet_end = ?, stories_at = ?,
+       held_since = CASE WHEN ? IS NULL THEN NULL ELSE held_since END
+     WHERE endpoint = ?`,
+  ).bind(quiet_start, quiet_end, stories_at, quiet_start, endpoint).run();
+}
+
+export async function setPushHeld(db, endpoint, iso) {
+  await db.prepare('UPDATE desk_push_subs SET held_since = ? WHERE endpoint = ?').bind(iso, endpoint).run();
+}
+
+export async function setPushStoriesSent(db, endpoint, day) {
+  await db.prepare('UPDATE desk_push_subs SET stories_sent_on = ? WHERE endpoint = ?').bind(day, endpoint).run();
+}
+
+// Today's Story on the checklist (list 'stories', Eastern date), with its tick.
+export async function getStoryForDay(db, siteId, day) {
+  return db.prepare(
+    `SELECT i.item_id, COALESCE(c.posted, 0) AS posted FROM desk_items i
+     LEFT JOIN desk_story_checks c ON c.site_id = i.site_id AND c.item_id = i.item_id
+     WHERE i.site_id = ? AND i.list = 'stories' AND i.post_date = ?
+     ORDER BY i.post_time, i.rowid LIMIT 1`,
+  ).bind(siteId, day).first();
+}
+
+export async function getStoriesPaused(db, siteId) {
+  const r = await db.prepare('SELECT stories_paused FROM desk_meta WHERE site_id = ?').bind(siteId).first();
+  return !!r?.stories_paused;
 }

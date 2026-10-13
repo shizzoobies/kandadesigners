@@ -4,10 +4,16 @@ import { getSiteBySlug } from '../../../../lib/db.js';
 import * as q from '../../../../lib/db.js';
 import * as desk from '../../../../lib/desk.js';
 import { gateRequest } from '../../../../lib/gate.js';
-import { validatePushSubscription } from '../../../../lib/desk-push.js';
+import { validatePushSubscription, validatePushPrefs } from '../../../../lib/desk-push.js';
 import { sendPush } from '../../../../lib/web-push.js';
 
 const LABEL_MAX = 80;
+
+const prefsOf = (row) => ({
+  quiet_start: row?.quiet_start ?? null,
+  quiet_end: row?.quiet_end ?? null,
+  stories_at: row?.stories_at ?? null,
+});
 
 export async function handlePush({ db, env, slug, user, request, nowMs = Date.now() }) {
   const pathname = new URL(request.url).pathname;
@@ -37,7 +43,8 @@ export async function handlePush({ db, env, slug, user, request, nowMs = Date.no
     await q.upsertPushSub(db, {
       siteId: site.id, personId: user.id, endpoint: v.endpoint, p256dh: v.p256dh, auth: v.auth, label,
     }, nowIso);
-    return { status: 200, body: { ok: true, endpoint: v.endpoint } };
+    const saved = await q.getPushSubByEndpoint(db, v.endpoint);
+    return { status: 200, body: { ok: true, endpoint: v.endpoint, prefs: prefsOf(saved) } };
   }
 
   if (action === 'unsubscribe') {
@@ -67,6 +74,20 @@ export async function handlePush({ db, env, slug, user, request, nowMs = Date.no
     if (r.delete) await q.deletePushSub(db, endpoint);
     else if (r.status === 201 || r.status === 200) await q.touchPushSubOk(db, endpoint, nowIso);
     return { status: 200, body: { ok: true, status: r.status, mock: !!r.mock } };
+  }
+
+  if (action === 'prefs') {
+    // Quiet hours and the Stories reminder for this device only.
+    const endpoint = w.body.endpoint;
+    if (typeof endpoint !== 'string' || !endpoint) return { status: 400, body: { error: 'Missing endpoint.' } };
+    const v = validatePushPrefs(w.body);
+    if (!v.ok) return { status: 400, body: { error: v.error } };
+    const row = await q.getPushSubByEndpoint(db, endpoint);
+    if (!row || row.person_id !== user.id || row.site_id !== site.id) {
+      return { status: 404, body: { error: 'No subscription for that endpoint on this desk.' } };
+    }
+    await q.setPushPrefs(db, endpoint, v.prefs);
+    return { status: 200, body: { ok: true, prefs: prefsOf(await q.getPushSubByEndpoint(db, endpoint)) } };
   }
 
   return { status: 400, body: { error: 'Unknown action.' } };

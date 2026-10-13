@@ -77,3 +77,22 @@ curl -s http://127.0.0.1:8787/__scheduled
 --local --test-scheduled` path above. The desk UI at
 `http://127.0.0.1:4321/sites/ka-performance/social` still works under
 `astro dev` for Turn on / deep links (`?item=<id>`).
+
+## Quiet hours and the Stories reminder (slice 6)
+
+Each device can set quiet hours (default 9:00 PM to 7:30 AM ET) and, on a
+site with Stories, a daily Stories reminder (default 10:00 AM ET) under More,
+Notifications, once notifications are on. New-item pushes during quiet hours
+are held; the first cron run after quiet hours sends one "N waiting on you"
+summary. The reminder links to `?view=stories`.
+
+To try the cron at a given time locally, pass the dev-only clock override
+`DESK_PUSH_NOW` (ignored unless `ENVIRONMENT=development`):
+
+```sh
+node ./node_modules/wrangler/bin/wrangler.js dev --local --test-scheduled --port 8787 \
+  --var DESK_PUSH_NOW:2026-10-13T23:00:00-04:00
+curl -s http://127.0.0.1:8787/__scheduled
+```
+
+Restart with a new `DESK_PUSH_NOW` for each time you want to simulate.

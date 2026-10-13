@@ -122,15 +122,109 @@ async function personCanWrite(db, personId, siteId) {
   return canWriteDesk({ ...person, grants }, siteId);
 }
 
+// --- Quiet hours, morning summary, Stories reminder (slice 6) -------------
+
+const NY = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit',
+  hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+});
+
+// The clock in Gainesville for an instant: { date: 'YYYY-MM-DD', minutes }.
+// Intl does the DST math, so both 2026 change days come out right.
+export function easternNow(now) {
+  const p = Object.fromEntries(NY.formatToParts(new Date(now)).map((x) => [x.type, x.value]));
+  const hour = Number(p.hour) % 24;
+  return { date: `${p.year}-${p.month}-${p.day}`, minutes: hour * 60 + Number(p.minute) };
+}
+
+const HHMM = /^([01]\d|2[0-3]):([0-5]\d)$/;
+export function isPrefTime(v) {
+  return v === null || (typeof v === 'string' && HHMM.test(v));
+}
+const mins = (v) => (typeof v === 'string' && HHMM.test(v) ? Number(v.slice(0, 2)) * 60 + Number(v.slice(3)) : null);
+
+// Is this device in quiet hours at `now`? [start, end) in Eastern time; a
+// start after the end crosses midnight. Nulls or equal times: never quiet.
+export function inQuiet(sub, now) {
+  const s = mins(sub?.quiet_start), e = mins(sub?.quiet_end);
+  if (s === null || e === null || s === e) return false;
+  const m = easternNow(now).minutes;
+  return s < e ? m >= s && m < e : m >= s || m < e;
+}
+
+// Validates a { quiet_start, quiet_end, stories_at } body. Quiet hours are
+// both set or both null.
+export function validatePushPrefs(body) {
+  const out = {};
+  for (const k of ['quiet_start', 'quiet_end', 'stories_at']) {
+    const v = body?.[k] === undefined ? null : body[k];
+    if (!isPrefTime(v)) return { ok: false, error: `${k} must be HH:MM or null.` };
+    out[k] = v;
+  }
+  if ((out.quiet_start === null) !== (out.quiet_end === null)) {
+    return { ok: false, error: 'Quiet hours need both a start and an end.' };
+  }
+  return { ok: true, prefs: out };
+}
+
+// "N waiting on you", opening the first waiting item. Null when nothing waits.
+export function morningSummary(site, waitingRows) {
+  const n = badgeFor(waitingRows);
+  if (!site?.slug || n <= 0) return null;
+  const first = waitingRows[0];
+  return {
+    title: `${n} waiting on you`,
+    body: first.title || 'A post is waiting',
+    url: `/sites/${site.slug}/social?item=${encodeURIComponent(first.item_id)}`,
+    tag: `desk-${site.slug}`,
+    badge: n,
+  };
+}
+
+export function storiesReminder(site, { badge = 0 } = {}) {
+  return {
+    title: "Today's Story isn't posted yet",
+    body: 'Open the Stories checklist to post it.',
+    url: `/sites/${site.slug}/social?view=stories`,
+    tag: `desk-${site.slug}-stories`,
+    badge,
+  };
+}
+
+// Send the Stories reminder on this run? story is today's checklist row
+// ({ posted }) or null; paused is desk_meta.stories_paused.
+export function storiesDue(sub, now, { story, paused }) {
+  const at = mins(sub?.stories_at);
+  if (at === null || paused || !story || story.posted) return false;
+  const et = easternNow(now);
+  if (sub.stories_sent_on === et.date) return false;
+  if (et.minutes < at) return false;
+  return !inQuiet(sub, now);
+}
+
+// The cron's clock. DESK_PUSH_NOW (ISO) is a local-only override, honored
+// only when ENVIRONMENT=development.
+export function pushNow(env, fallback) {
+  if (env?.ENVIRONMENT === 'development' && env.DESK_PUSH_NOW) {
+    const t = Date.parse(env.DESK_PUSH_NOW);
+    if (Number.isFinite(t)) return t;
+  }
+  return fallback;
+}
+
+const ok2xx = (r) => r.status === 201 || r.status === 200;
+
 /**
  * Cron body. transport is injectable (tests / mock). When VAPID_PRIVATE_KEY is
  * unset, sendPush uses the mock transport automatically.
  */
 export async function runDeskPush(env, { now = Date.now(), transport } = {}) {
   const db = env.DB;
+  now = pushNow(env, now);
   const nowIso = new Date(now).toISOString();
+  const today = easternNow(now).date;
   const sites = await q.listSites(db);
-  const summary = { sites: 0, announced: 0, sent: 0, forgot: 0 };
+  const summary = { sites: 0, announced: 0, sent: 0, forgot: 0, held: 0, summaries: 0, stories: 0 };
 
   for (const site of sites) {
     const waiting = await listWaitingApprove(db, site.id);
@@ -143,43 +237,77 @@ export async function runDeskPush(env, { now = Date.now(), transport } = {}) {
       await q.deletePushSent(db, site.id, forget);
       summary.forgot += forget.length;
     }
-    if (!announce.length) continue;
 
-    summary.sites += 1;
-    summary.announced += announce.length;
-    const newItems = announce.map((id) => waiting.find((w) => w.item_id === id)).filter(Boolean);
-    const payload = pushMessage(site, newItems, { badge: badgeFor(waiting) });
     const subs = await q.listPushSubs(db, site.id);
+    if (!subs.length && !announce.length) continue;
+    const badge = badgeFor(waiting);
+    const newItems = announce.map((id) => waiting.find((w) => w.item_id === id)).filter(Boolean);
+    const payload = announce.length ? pushMessage(site, newItems, { badge }) : null;
+    const morning = morningSummary(site, waiting);
+    const needStories = subs.some((s) => s.stories_at);
+    const story = needStories ? await q.getStoryForDay(db, site.id, today) : null;
+    const paused = needStories ? await q.getStoriesPaused(db, site.id) : false;
+    if (announce.length) {
+      summary.sites += 1;
+      summary.announced += announce.length;
+    }
 
     let anyOk = false;
     let attempted = 0;
+    let held = 0;
     for (const sub of subs) {
       if (!(await personCanWrite(db, sub.person_id, site.id))) {
         await q.deletePushSub(db, sub.endpoint);
         continue;
       }
-      attempted += 1;
-      const r = await sendPush(sub, payload, { env, now, transport });
-      if (r.delete) {
-        await q.deletePushSub(db, sub.endpoint);
-        continue;
+      const quiet = inQuiet(sub, now);
+      let gone = false;
+      const send = async (body) => {
+        const r = await sendPush(sub, body, { env, now, transport });
+        if (r.delete) { await q.deletePushSub(db, sub.endpoint); gone = true; return false; }
+        if (ok2xx(r)) { await q.touchPushSubOk(db, sub.endpoint, nowIso); summary.sent += 1; return true; }
+        if (!(r.status === 429 || (r.status >= 500 && r.status <= 599))) await q.bumpPushSubFail(db, sub.endpoint);
+        return false;
+      };
+
+      if (sub.held_since && !quiet) {
+        // Morning summary: one push for everything held overnight, which also
+        // covers anything new this run. Nothing waiting: clear it silently.
+        if (morning) {
+          attempted += 1;
+          if (await send(morning)) {
+            anyOk = true;
+            summary.summaries += 1;
+            await q.setPushHeld(db, sub.endpoint, null);
+          }
+        } else {
+          await q.setPushHeld(db, sub.endpoint, null);
+        }
+      } else if (payload) {
+        if (quiet) {
+          held += 1;
+          summary.held += 1;
+          if (!sub.held_since) await q.setPushHeld(db, sub.endpoint, nowIso);
+        } else {
+          attempted += 1;
+          if (await send(payload)) anyOk = true;
+        }
       }
-      if (r.status === 201 || r.status === 200) {
-        await q.touchPushSubOk(db, sub.endpoint, nowIso);
-        summary.sent += 1;
-        anyOk = true;
-      } else if (r.status === 429 || (r.status >= 500 && r.status <= 599)) {
-        // leave for next run — do not mark sent below if nothing got 2xx
-      } else {
-        await q.bumpPushSubFail(db, sub.endpoint);
+
+      if (!gone && storiesDue(sub, now, { story, paused })) {
+        if (await send(storiesReminder(site, { badge }))) {
+          summary.stories += 1;
+          await q.setPushStoriesSent(db, sub.endpoint, today);
+        }
       }
     }
 
-    // Mark sent only if at least one device got a 2xx. If every send for this
-    // site hit 429 or 5xx (anyOk stays false), leave unsent so the next run
-    // retries. With nobody left to attempt (attempted === 0), mark so we do
+    // Mark sent only if at least one device got a 2xx. If every send hit 429
+    // or 5xx, leave unsent so the next run retries. Quiet holds are not
+    // failures, but an item every device held stays unsent (the morning
+    // summary covers it). With nobody left to attempt or hold, mark so we do
     // not re-announce forever.
-    if (anyOk || attempted === 0) {
+    if (announce.length && (anyOk || (attempted === 0 && held === 0))) {
       await q.markPushSent(db, site.id, announce, nowIso);
     }
   }
