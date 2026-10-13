@@ -11,7 +11,7 @@ import { youtubePanel } from '../lib/desk-youtube.js';
 import { deskCopy } from '../lib/desk-copy.js';
 import { phoneBarState, waitingCount, swipeIntent, swipeAxis, swipeThreshold } from '../lib/desk-pwa.js';
 import { storyState as storyStateOf, storyFocusId, STORY_FLAG, preparedFor, prunePrepared } from '../lib/desk-stories.js';
-import { pushUiState } from '../lib/desk-push-ui.js';
+import { pushUiState, prefsForm, prefsBody, consumeViewParam } from '../lib/desk-push-ui.js';
 
 const $ = (s, el = document) => el.querySelector(s);
 const fmtDay = (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
@@ -1050,6 +1050,7 @@ const isStandalone = () => window.matchMedia('(display-mode: standalone)').match
 
 let pushSub = null;
 let pushBusy = false;
+let pushPrefs = null; // this device's { quiet_start, quiet_end, stories_at }
 
 function pushSupported() {
   return !!(canPush && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window);
@@ -1100,7 +1101,54 @@ function renderPushUi() {
     actions.append(b);
   }
   panel.dataset.kind = st.kind;
+  renderPushPrefs(st.kind === 'on');
 }
+
+// Slice 6: quiet hours and the Stories reminder, in the "on" state only.
+// Values come back from the server on load (the subscribe re-sync) and after Save.
+function renderPushPrefs(on) {
+  const form = $('#pushPrefs');
+  if (!form) return;
+  form.hidden = !on;
+  if (!on) return;
+  const f = prefsForm(pushPrefs, { hasStories: storiesOn() });
+  $('#prefQuiet').checked = f.quietOn;
+  $('#prefQuietStart').value = f.quietStart;
+  $('#prefQuietEnd').value = f.quietEnd;
+  $('#prefStoriesRow').hidden = !f.storiesShown;
+  $('#prefStories').checked = f.storiesOn;
+  $('#prefStoriesAt').value = f.storiesAt;
+  syncPrefTimes();
+  $('#prefSave').disabled = pushBusy;
+}
+function syncPrefTimes() {
+  $('#prefQuietTimes').hidden = !$('#prefQuiet').checked;
+  $('#prefStoriesTimes').hidden = !$('#prefStories').checked;
+}
+$('#prefQuiet')?.addEventListener('change', syncPrefTimes);
+$('#prefStories')?.addEventListener('change', syncPrefTimes);
+$('#pushPrefs')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!pushSub || pushBusy) return;
+  const hasStories = storiesOn();
+  const body = prefsBody({
+    quietOn: $('#prefQuiet').checked,
+    quietStart: $('#prefQuietStart').value,
+    quietEnd: $('#prefQuietEnd').value,
+    storiesOn: $('#prefStories').checked,
+    storiesAt: $('#prefStoriesAt').value,
+  }, { hasStories });
+  pushBusy = true; $('#prefSave').disabled = true;
+  try {
+    const r = await postPush({ action: 'prefs', endpoint: pushSub.endpoint, ...body });
+    pushPrefs = r.prefs || body;
+    toast('Notification settings saved');
+  } catch (err) {
+    toast(err.message || 'Could not save notification settings.');
+  } finally {
+    pushBusy = false; renderPushUi();
+  }
+});
 
 async function refreshPushSub() {
   pushSub = null;
@@ -1112,7 +1160,8 @@ async function refreshPushSub() {
     if (sub && Notification.permission === 'granted') {
       // Quiet re-sync on load when already granted.
       try {
-        await postPush({ action: 'subscribe', subscription: sub.toJSON(), label: navigator.userAgent.slice(0, 80) });
+        const r = await postPush({ action: 'subscribe', subscription: sub.toJSON(), label: navigator.userAgent.slice(0, 80) });
+        pushPrefs = r?.prefs || null;
       } catch {}
     }
   } catch {}
@@ -1134,7 +1183,8 @@ $('#pushActions')?.addEventListener('click', async (e) => {
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
       });
-      await postPush({ action: 'subscribe', subscription: sub.toJSON(), label: navigator.userAgent.slice(0, 80) });
+      const r = await postPush({ action: 'subscribe', subscription: sub.toJSON(), label: navigator.userAgent.slice(0, 80) });
+      pushPrefs = r?.prefs || null;
       pushSub = sub;
       toast('Notifications on for this device');
     } else if (act === 'off') {
@@ -1142,6 +1192,7 @@ $('#pushActions')?.addEventListener('click', async (e) => {
       if (pushSub) { try { await pushSub.unsubscribe(); } catch {} }
       if (endpoint) await postPush({ action: 'unsubscribe', endpoint });
       pushSub = null;
+      pushPrefs = null;
       toast('Notifications turned off');
     } else if (act === 'test') {
       if (!pushSub) return;
@@ -1179,7 +1230,12 @@ function consumeItemParam() {
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', (e) => {
-    if (e.data?.type === 'desk-open') openDeskItem(e.data.item);
+    if (e.data?.type !== 'desk-open') return;
+    // The Stories reminder opens ?view=stories; everything else names an item.
+    let stories = false;
+    try { stories = new URL(e.data.url, location.href).searchParams.get('view') === 'stories'; } catch {}
+    if (stories && storiesOn()) setView('stories', { land: true });
+    else openDeskItem(e.data.item);
   });
 }
 
@@ -1189,7 +1245,10 @@ renderList(); renderDetail();
 // Open on Stories when the link says #stories or nothing waits for approval; else the last view used.
 // Never on a site without Stories.
 let saved = null; try { saved = localStorage.getItem(viewKey); } catch {}
-setView(storiesOn() && (location.hash === '#stories' || (storyList().length > 0 && (!items.length || saved === 'stories'))) ? 'stories' : 'posts', { land: true });
+// ?view=stories (the Stories reminder's link) is the same as #stories; strip it.
+const viewParam = consumeViewParam(location.href);
+if (viewParam.url !== location.pathname + location.search + location.hash) history.replaceState(history.state, '', viewParam.url);
+setView(storiesOn() && (viewParam.stories || location.hash === '#stories' || (storyList().length > 0 && (!items.length || saved === 'stories'))) ? 'stories' : 'posts', { land: true });
 // Deep link after the first paint so the rail exists; strip ?item= with replaceState.
 {
   const deep = consumeItemParam();

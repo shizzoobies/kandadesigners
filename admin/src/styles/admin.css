@@ -180,6 +180,16 @@ fieldset.access .hint { margin: 0; }
 .d-push-msg { margin: 0 0 10px; font-size: 14px; color: var(--ink); }
 .d-push-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .d-push-actions .btn { font-size: 14px; padding: 6px 12px; }
+/* Slice 6: quiet hours and Stories reminder, existing palette only. */
+.d-push-prefs { margin: 12px 0 0; padding: 10px 0 0; border-top: 1px solid var(--line); display: grid; gap: 8px; }
+.d-push-prefs[hidden], .d-pref-times[hidden], #prefStoriesRow[hidden] { display: none; }
+.d-pref-toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink); min-height: 32px; }
+.d-pref-toggle input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); }
+.d-pref-times { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding-left: 26px; font-size: 14px; color: var(--muted); }
+.d-pref-times label { display: inline-flex; align-items: center; gap: 6px; }
+.d-pref-times input { font: 14px/1.2 var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-strong); border-radius: 4px; padding: 4px 6px; min-width: 0; max-width: 118px; }
+.d-pref-tz { font: 700 12px/1 var(--font-body); letter-spacing: .06em; color: var(--muted); }
+#prefSave { justify-self: start; font-size: 14px; padding: 6px 12px; }
 
 .d-views { display: flex; margin-top: 14px; border-bottom: 1.5px solid var(--line-strong); }
 .d-views button { background: transparent; border: 0; border-bottom: 3px solid transparent; margin: 0 20px -1.5px 0; padding: 10px 0; cursor: pointer; font: 700 17px/1.2 var(--font-display); color: var(--muted); }

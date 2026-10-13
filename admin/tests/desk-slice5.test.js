@@ -8,18 +8,9 @@ import { pushUiState } from '../src/lib/desk-push-ui.js';
 import { mockTransport } from '../src/lib/web-push.js';
 import { GET as swRoute } from '../src/pages/sites/[slug]/social/sw.js.js';
 
-// One fixture, read by the page rule and by the server's push SQL.
-const FIXTURE = [
-  { item_id: 'reel-wait', list: 'approve', kind: 'reel', title: 'Reel waiting' },
-  { item_id: 'post-ok', list: 'approve', kind: 'carousel', title: 'Approved', decision: 'approved' },
-  { item_id: 'post-fix', list: 'approve', kind: 'reel', title: 'Changes', decision: 'changes' },
-  { item_id: 'post-back', list: 'approve', kind: 'reel', title: 'Undone', decision: 'waiting' },
-  { item_id: 'ask-1', list: 'approve', kind: 'ask', title: 'Which track?' },
-  { item_id: 'native-1', list: 'approve', kind: 'native', title: 'Native' },
-  { item_id: 'story-post', list: 'approve', kind: 'story', title: 'Story post' },
-  { item_id: 'story-1', list: 'stories', kind: 'story', title: 'Checklist story' },
-];
-const stateOf = (it) => (it.kind === 'native' ? 'info' : it.decision || 'waiting');
+// One fixture (with a Stories-checklist entry), read by the page rule and by
+// the server's push SQL. Shared with slice 6: tests/fixtures/desk-stories-fixture.js.
+import { FIXTURE, stateOf, seedFixture } from './fixtures/desk-stories-fixture.js';
 
 const PHONE_FINGER = { startX: 200, startY: 300, width: 390 };
 
@@ -50,16 +41,7 @@ describe('waitingCount', () => {
 });
 
 async function fixtureDb() {
-  const db = makeD1();
-  await q.createSite(db, { slug: 'ka-performance', name: 'K & A', live_url: 'https://ka.test', hosting: 'pages' }, 't');
-  await db.prepare("INSERT INTO people (name, email, role, created_at) VALUES ('Alex', 'alex@example.com', 'owner', 't')").run();
-  for (const f of FIXTURE) {
-    await db.prepare(
-      'INSERT INTO desk_items (site_id, item_id, list, kind, post_date, post_time, title, payload, pushed_at) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?)',
-    ).bind(f.item_id, f.list, f.kind, '2026-10-06', '10:00', f.title, JSON.stringify({ id: f.item_id }), 't').run();
-    if (f.decision) await db.prepare("INSERT INTO desk_decisions (site_id, item_id, decision, note, decided_at) VALUES (1, ?, ?, '', 't')").bind(f.item_id, f.decision).run();
-  }
-  return db;
+  return seedFixture(makeD1());
 }
 
 describe('pushMessage badge', () => {

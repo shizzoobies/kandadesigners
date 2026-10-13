@@ -186,6 +186,23 @@ try {
   ).bind(site.id, ownerId, 'https://push.mock.local/desk-fixture', fakeP256, fakeAuth, 'Fixture iPhone', iso, iso));
   await db.batch(stmts);
 
+  // Leftover mock-host subscriptions (screenshot runs, any site) go, so the
+  // owner's one seeded sub above is the only push.mock.local row.
+  await db.prepare("DELETE FROM desk_push_subs WHERE endpoint LIKE 'https://push.mock.local/%' AND endpoint != 'https://push.mock.local/desk-fixture'").run();
+
+  // A second, local-only site with one post and no Stories (slice 6 checks
+  // that the Stories reminder is hidden there). Recreated on every seed.
+  await db.prepare("INSERT OR IGNORE INTO sites (slug, name, live_url, hosting, created_at, updated_at) VALUES ('no-stories-fixture', 'No Stories Fixture', 'https://no-stories.test', 'pages', ?, ?)").bind(iso, iso).run();
+  const ns = await db.prepare("SELECT id FROM sites WHERE slug = 'no-stories-fixture'").first();
+  const nsPost = { id: `${day(7)}-reel`, date: day(7), time: '09:00', kind: 'reel', title: 'Fixture reel', hook: 'A post on a site without Stories', media: [] };
+  await db.batch([
+    ...['desk_decisions', 'desk_story_checks', 'desk_items', 'desk_meta', 'desk_push_sent', 'desk_push_subs']
+      .map((t) => db.prepare(`DELETE FROM ${t} WHERE site_id = ?`).bind(ns.id)),
+    db.prepare("INSERT INTO desk_items (site_id, item_id, list, kind, post_date, post_time, title, payload, pushed_at) VALUES (?, ?, 'approve', 'reel', ?, '09:00', 'Fixture reel', ?, ?)")
+      .bind(ns.id, nsPost.id, nsPost.date, JSON.stringify(nsPost), iso),
+    db.prepare('INSERT INTO desk_meta (site_id, pushed_at, built_at, stories_paused) VALUES (?, ?, ?, 0)').bind(ns.id, iso, iso),
+  ]);
+
   // Media into the local DESK_MEDIA bucket, keyed <slug>/<item>/<file>.
   let n = 0;
   for (const [i, item] of ITEMS.entries()) {
@@ -194,7 +211,7 @@ try {
       n += 1;
     }
   }
-  console.log(`Seeded the local ${SLUG} desk: ${ITEMS.length} items (${STORIES.length} on the Stories checklist, ${TICKED.length} ticked), ${DECISIONS.length} decisions, ${n} media files, 1 mock push sub.`);
+  console.log(`Seeded the local ${SLUG} desk: ${ITEMS.length} items (${STORIES.length} on the Stories checklist, ${TICKED.length} ticked), ${DECISIONS.length} decisions, ${n} media files, 1 mock push sub; plus no-stories-fixture with 1 post.`);
 } finally {
   await dispose();
 }

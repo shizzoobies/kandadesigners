@@ -1,7 +1,8 @@
 ---
 // The Post Desk. The server embeds the site's desk state as JSON; the client
 // script (src/scripts/post-desk.js, ported from the claude.ai artifact) draws
-// it and saves decisions and Story ticks. #stories opens the Stories tab.
+// it and saves decisions and Story ticks. #stories or ?view=stories opens the
+// Stories tab.
 import Shell from '../../../../layouts/Shell.astro';
 import { getSiteBySlug } from '../../../../lib/db.js';
 import { getDeskState, maybePurge } from '../../../../lib/desk.js';
@@ -71,6 +72,23 @@ const boot = JSON.stringify({ slug: site.slug, canWrite, client, me, state, vapi
             <p class="d-more-label">Notifications</p>
             <p class="d-push-msg" id="pushMsg"></p>
             <div class="d-push-actions" id="pushActions"></div>
+            <!-- Per-device settings, shown only in the "on" state (slice 6). -->
+            <form class="d-push-prefs" id="pushPrefs" hidden>
+              <label class="d-pref-toggle"><input type="checkbox" id="prefQuiet" /> Quiet hours</label>
+              <div class="d-pref-times" id="prefQuietTimes" hidden>
+                <label>From <input type="time" id="prefQuietStart" value="21:00" required /></label>
+                <label>to <input type="time" id="prefQuietEnd" value="07:30" required /></label>
+                <span class="d-pref-tz">ET</span>
+              </div>
+              <div id="prefStoriesRow" hidden={!hasStories}>
+                <label class="d-pref-toggle"><input type="checkbox" id="prefStories" /> Stories reminder</label>
+                <div class="d-pref-times" id="prefStoriesTimes" hidden>
+                  <label>At <input type="time" id="prefStoriesAt" value="10:00" required /></label>
+                  <span class="d-pref-tz">ET</span>
+                </div>
+              </div>
+              <button type="submit" class="btn quiet" id="prefSave">Save</button>
+            </form>
           </div>
         </details>
       </div>

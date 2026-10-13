@@ -42,3 +42,41 @@ export function clickTarget(url, { origin, scope }) {
   if (path !== root && !path.startsWith(`${root}/`)) return fallback;
   return u.href;
 }
+
+// Slice 6: the quiet hours / Stories reminder form. Defaults when off: quiet
+// 21:00 to 07:30, Stories at 10:00 (all Eastern). prefs is the server's
+// { quiet_start, quiet_end, stories_at } for this device.
+export const PREF_DEFAULTS = { quiet_start: '21:00', quiet_end: '07:30', stories_at: '10:00' };
+
+export function prefsForm(prefs, { hasStories = false } = {}) {
+  const p = prefs || {};
+  const quietOn = !!(p.quiet_start && p.quiet_end);
+  const storiesOn = hasStories && !!p.stories_at;
+  return {
+    quietOn,
+    quietStart: quietOn ? p.quiet_start : PREF_DEFAULTS.quiet_start,
+    quietEnd: quietOn ? p.quiet_end : PREF_DEFAULTS.quiet_end,
+    storiesShown: !!hasStories,
+    storiesOn,
+    storiesAt: storiesOn ? p.stories_at : PREF_DEFAULTS.stories_at,
+  };
+}
+
+// Form values back into the POST /push 'prefs' fields. A site without
+// Stories never sets a reminder.
+export function prefsBody(form, { hasStories = false } = {}) {
+  return {
+    quiet_start: form.quietOn ? form.quietStart || null : null,
+    quiet_end: form.quietOn ? form.quietEnd || null : null,
+    stories_at: hasStories && form.storiesOn ? form.storiesAt || null : null,
+  };
+}
+
+// ?view=stories (the Stories reminder's link) means the same as #stories.
+// Returns { stories, url } where url is the address with the param stripped.
+export function consumeViewParam(href) {
+  const u = new URL(href);
+  const stories = u.searchParams.get('view') === 'stories';
+  if (u.searchParams.has('view')) u.searchParams.delete('view');
+  return { stories, url: u.pathname + u.search + u.hash };
+}

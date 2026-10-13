@@ -56,4 +56,20 @@ describe('migrations', () => {
     await db.prepare('DELETE FROM sites WHERE id = 1').run();
     expect(await db.prepare('SELECT COUNT(*) AS n FROM desk_push_sent').first('n')).toBe(0);
   });
+
+  it('0005 adds per-device push prefs to desk_push_subs, all null by default', async () => {
+    const db = makeD1();
+    const { results } = await db.prepare('PRAGMA table_info(desk_push_subs)').all();
+    const cols = Object.fromEntries(results.map((c) => [c.name, c]));
+    for (const c of ['quiet_start', 'quiet_end', 'held_since', 'stories_at', 'stories_sent_on']) {
+      expect(cols[c]?.type).toBe('TEXT');
+      expect(cols[c].notnull).toBe(0);
+      expect(cols[c].dflt_value).toBeNull();
+    }
+    await db.prepare("INSERT INTO sites (slug, name, live_url, created_at, updated_at) VALUES ('a', 'A', 'https://a.test', 't', 't')").run();
+    await db.prepare("INSERT INTO people (name, email, role, created_at) VALUES ('H', 'h@example.com', 'owner', 't')").run();
+    await db.prepare("INSERT INTO desk_push_subs (site_id, person_id, endpoint, p256dh, auth, created_at) VALUES (1, 1, 'https://e', 'p', 'a', 't')").run();
+    const row = await db.prepare('SELECT quiet_start, quiet_end, held_since, stories_at, stories_sent_on FROM desk_push_subs').first();
+    expect(row).toEqual({ quiet_start: null, quiet_end: null, held_since: null, stories_at: null, stories_sent_on: null });
+  });
 });
