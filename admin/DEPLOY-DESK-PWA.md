@@ -1,7 +1,7 @@
 # Going live with the Post Desk phone app (slices 1 to 6)
 
 Alex runs each line, in order, in PowerShell, from `D:\ka-site-admin\admin`.
-Claude verifies after each step. Stop at the first error and paste it into the
+Whoever is helping Alex verifies after each step. Stop at the first error and paste it into the
 session. The team has not run any of these commands; it only ran local builds,
 tests and `wrangler deploy --dry-run` (no login).
 
@@ -16,7 +16,7 @@ draft PR from `release/desk-pwa` into `admin/post-desk`.
 ```powershell
 cd "D:\ka-site-admin\admin"; git fetch origin; git switch admin/post-desk; git pull --ff-only; git status --short
 ```
-Claude verifies: the branch is `admin/post-desk`, `git status --short` prints
+Whoever is helping Alex verifies: the branch is `admin/post-desk`, `git status --short` prints
 nothing, and the PR still shows as a draft with no conflicts.
 
 ## 1. Keys
@@ -30,7 +30,7 @@ read back from Cloudflare later. Then store the private key as a Worker secret
 ```powershell
 cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js secret put VAPID_PRIVATE_KEY
 ```
-Claude verifies: `wrangler secret list` shows `VAPID_PRIVATE_KEY` (the name
+Whoever is helping Alex verifies: `wrangler secret list` shows `VAPID_PRIVATE_KEY` (the name
 only; the value is never shown or pasted into the session).
 ```powershell
 cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js secret list
@@ -48,7 +48,7 @@ cd "D:\ka-site-admin\admin"; git switch release/desk-pwa; git pull --ff-only; $k
 ```powershell
 cd "D:\ka-site-admin\admin"; git add wrangler.jsonc; git commit -m "Post Desk: VAPID public key and subject"; git push; git switch admin/post-desk
 ```
-Claude verifies: the PR diff for `wrangler.jsonc` has only the two lines,
+Whoever is helping Alex verifies: the PR diff for `wrangler.jsonc` has only the two lines,
 `VAPID_PUBLIC_KEY` matching the public key from step 1 and `VAPID_SUBJECT`.
 
 ## 3. Merge
@@ -57,7 +57,7 @@ Then pull it into the worktree:
 ```powershell
 cd "D:\ka-site-admin\admin"; git switch admin/post-desk; git pull --ff-only; git log --oneline -3
 ```
-Claude verifies: `admin/post-desk` now has the merge, and
+Whoever is helping Alex verifies: `admin/post-desk` now has the merge, and
 `migrations/0005_desk_push_prefs.sql` exists. PRs #2 to #7 can be closed as
 superseded now, not before.
 
@@ -68,7 +68,7 @@ deploy, because the cron reads the new tables.
 ```powershell
 cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js d1 migrations apply ka-sites --remote
 ```
-Claude verifies: the list shows `0004_desk_push.sql` and
+Whoever is helping Alex verifies: the list shows `0004_desk_push.sql` and
 `0005_desk_push_prefs.sql` applied, and the sites dashboard still loads.
 
 ## 5. Deploy
@@ -76,7 +76,7 @@ The same line as step 3 of `DEPLOY-POST-DESK.md`:
 ```powershell
 cd "D:\ka-site-admin\admin"; node ./node_modules/astro/astro.js build; if ($?) { node ./node_modules/wrangler/bin/wrangler.js deploy }
 ```
-Claude verifies, without a token: the desk and its media still 302 to Access,
+Whoever is helping Alex verifies, without a token: the desk and its media still 302 to Access,
 and the workers.dev hostname still doesn't answer.
 
 ## 6. Verify
@@ -89,7 +89,7 @@ and the workers.dev hostname still doesn't answer.
 ```powershell
 cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js tail --format pretty
 ```
-   Claude verifies: a scheduled event appears within 5 minutes, with a
+   Whoever is helping Alex verifies: a scheduled event appears within 5 minutes, with a
    `{"event":"desk.push",...}` line and no errors. If it says
    `"skipped":"no-vapid-keys"`, step 1 or 2 didn't take: the cron is safely
    sending nothing.
@@ -106,7 +106,7 @@ On the iPhone, over HTTPS at admin.ka-performancefl.com:
 - [ ] Swipe right on a post to approve it, then Undo. Swipe left to open the change sheet (nothing sent). Swipe from the very left edge: it goes back, it doesn't approve.
 - [ ] Stories: Copy URL pastes into an Instagram link sticker. Save image opens the share sheet and Save Image puts it in Photos. If iOS refuses the first tap, the button says "Ready, tap to save", and a second tap saves it. Tick Posted, then Undo.
 - [ ] More, Notifications: before Add to Home Screen it says to install first. In the installed app, tap Turn on and allow, then Send test. The test notification arrives.
-- [ ] Lock the phone and have Claude push something new from the pipeline. Within about 5 minutes a notification arrives, and tapping it opens that item.
+- [ ] Lock the phone and have whoever is helping you push something new from the pipeline. Within about 5 minutes a notification arrives, and tapping it opens that item.
 - [ ] The Home Screen icon badge shows the waiting count, and approving the last one clears it.
 - [ ] Quiet hours: turn them on (default 9:00 PM to 7:30 AM ET), Save, and reopen More. The times are still there. Anything new overnight arrives as one "N waiting on you" push after 7:30 AM.
 - [ ] Stories reminder: turn it on (default 10:00 AM ET) and Save. On a day today's Story isn't ticked, "Today's Story isn't posted yet" arrives once, and tapping it opens the Stories tab.
@@ -130,8 +130,10 @@ cd "D:\ka-site-admin\admin"; node ./node_modules/wrangler/bin/wrangler.js rollba
   15 minutes to take effect. The next deploy from the release branch adds the
   trigger back. Sources: [Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/),
   [Rollbacks](https://developers.cloudflare.com/workers/versions-and-deployments/rollbacks/).
-- **Stop pushes only, keep the phone app:** delete the `"triggers": { "crons": [...] }`
-  line from `wrangler.jsonc`, then redeploy with the step 5 line. What it leaves
+- **Stop pushes only, keep the phone app:** in `wrangler.jsonc` change the
+  triggers line to `"triggers": { "crons": [] }` (an empty list; deleting the
+  line would leave the deployed cron in place), then redeploy with the step 5
+  line. Removing the cron can take up to 15 minutes to take effect. What it leaves
   behind: subscriptions and settings stay in D1, notifications stay "on" on each
   device but nothing arrives, and Send test still works.
 - **Or make every send a no-op without a deploy:**
