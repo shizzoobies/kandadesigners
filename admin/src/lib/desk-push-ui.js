@@ -25,7 +25,7 @@ export function pushUiState({ supported, standalone, isIOS, permission, subscrib
     };
   }
   if (subscribed) {
-    return { kind: 'on', label: 'On for this device', actions: ['test', 'off'] };
+    return { kind: 'on', label: 'On for this device. On iPhone, the Home Screen badge shows only for the installed app with notifications on.', actions: ['test', 'off'] };
   }
   return { kind: 'off', label: 'Get a ping when something new lands on the desk.', actions: ['on'] };
 }

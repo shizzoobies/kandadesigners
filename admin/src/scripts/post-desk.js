@@ -9,7 +9,7 @@ import { nextWaitingId, nextTargetId, positionOf, revertBody, isNoOp, sameState,
 import { esc, linkify, fmtTime, kindLabel, NET, netsOf } from '../lib/desk-format.js';
 import { youtubePanel } from '../lib/desk-youtube.js';
 import { deskCopy } from '../lib/desk-copy.js';
-import { phoneBarState } from '../lib/desk-pwa.js';
+import { phoneBarState, waitingCount, swipeIntent, swipeAxis, swipeThreshold } from '../lib/desk-pwa.js';
 import { storyState as storyStateOf, storyFocusId, STORY_FLAG, preparedFor, prunePrepared } from '../lib/desk-stories.js';
 import { pushUiState } from '../lib/desk-push-ui.js';
 
@@ -190,6 +190,20 @@ function applyState(s) {
   if (!storiesOn() && view === 'stories') setView('posts');
   const dates = data.posts.map((p) => p.date).sort();
   if (dates.length) $('#week').textContent = `Queue ${fmtDay(dates[0])} to ${fmtDay(dates[dates.length - 1])}`;
+  syncBadge();
+}
+
+// Home-screen badge: what still waits on Alex, as the push counts it. Runs
+// after every applyState (load, refresh, focus, each decision and Undo).
+// Feature-detected and silent; it never asks for a permission.
+function syncBadge() {
+  try {
+    const n = waitingCount(items, stateOf);
+    const p = n > 0
+      ? (navigator.setAppBadge ? navigator.setAppBadge(n) : null)
+      : (navigator.clearAppBadge ? navigator.clearAppBadge() : null);
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+  } catch {}
 }
 
 function buildItems() {
@@ -309,10 +323,15 @@ function fillPhoneBar(it) {
   const line = st === 'waiting' && buttons.length ? ''
     : `<p class="state"><span class="dot ${DOT[st]}"></span><span class="lbl">${esc(labelOf(it))}</span></p>`;
   const btns = buttons.length ? `<div class="d-decide-btns">${buttons.map((b) => PHONE_BTN[b].replace('BUSY', busy)).join('')}</div>` : '';
+  // Swipe hint, once per site, only where a swipe would work.
+  const hint = buttons.includes('approve') && !hintGone()
+    ? '<p class="d-swipe-hint" id="swipeHint"><span>Swipe right to approve, left for changes</span><button type="button" class="d-hint-x" id="swipeHintX" aria-label="Dismiss the swipe hint">×</button></p>' : '';
   // Cross-fade only when the bar's state changes, not on every refresh.
-  const key = `${it.id}:${st}:${buttons.join()}`;
-  el.innerHTML = `<div class="d-decide-in${fillPhoneBar.key && key !== fillPhoneBar.key ? ' d-swap' : ''}">${line}${btns}</div>`;
+  const key = `${it.id}:${st}:${buttons.join()}:${hint ? 'h' : ''}`;
+  el.innerHTML = `<div class="d-decide-in${fillPhoneBar.key && key !== fillPhoneBar.key ? ' d-swap' : ''}">${line}${btns}${hint}</div>`;
   fillPhoneBar.key = key;
+  const x = $('#swipeHintX');
+  if (x) x.onclick = () => { dismissHint(); ($('#go') || $('#back'))?.focus({ preventScroll: true }); };
   syncPhoneBar();
 }
 
@@ -326,6 +345,87 @@ function syncPhoneBar() {
   desk.style.setProperty('--decide-h', on ? `${el.getBoundingClientRect().height}px` : '0px');
   if ($('#toast').classList.contains('on')) placeToast();
 }
+
+// --- Swipe to decide (slice 5): phone only, on the open post's card -------
+// Right past the threshold is the Approve button; left opens the change sheet.
+// Guards live in swipeIntent (lib/desk-pwa.js); this wires Pointer Events.
+const hintKey = `desk-swipe-hint:${slug}`;
+function hintGone() { try { return localStorage.getItem(hintKey) === '1'; } catch { return false; } }
+function dismissHint() {
+  try { localStorage.setItem(hintKey, '1'); } catch {}
+  const h = $('#swipeHint');
+  if (h) { h.remove(); fillPhoneBar.key = fillPhoneBar.key.replace(/:h$/, ':'); syncPhoneBar(); }
+}
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+// Media that swipes itself, controls, the network tabs: the gesture is theirs.
+const NO_SWIPE = '#stage, .stage, video, audio, iframe, .slides, .pager, .versions, .d-tabs, [data-tab], input, textarea, select, button, a, label, [contenteditable], dialog';
+const touchesDown = new Set();
+let swipe = null;
+function swipeAllowed(it) {
+  return !!it && phone.matches && view === 'posts' && desk.classList.contains('viewing')
+    && phoneBar(it).buttons.includes('approve') && !pending.has(it.id)
+    && !sheetFor && !document.querySelector('dialog[open]');
+}
+function swipeLabel(dir, past) {
+  const layer = $('#swipeLayer');
+  if (!layer) return;
+  layer.dataset.dir = dir || '';
+  layer.classList.toggle('past', !!past);
+  layer.hidden = !dir;
+}
+function endSwipe(snap = true) {
+  const g = swipe;
+  swipe = null;
+  swipeLabel(null);
+  if (!g?.card) return;
+  g.card.classList.remove('d-swiping');
+  if (snap && g.moved && !reduceMotion.matches) {
+    g.card.classList.add('d-snap');
+    setTimeout(() => g.card.classList.remove('d-snap'), 200);
+  }
+  g.card.style.transform = '';
+}
+document.addEventListener('pointerdown', (e) => {
+  if (e.pointerType !== 'touch') return;
+  touchesDown.add(e.pointerId);
+  if (touchesDown.size > 1) { endSwipe(); return; } // pinch cancels
+  const card = e.target.closest?.('#detail .d-card');
+  if (!card || e.target.closest(NO_SWIPE)) return;
+  const it = items.find((i) => i.id === current);
+  if (!swipeAllowed(it)) return;
+  const width = window.innerWidth;
+  if (swipeIntent({ startX: e.clientX, startY: 0, x: e.clientX + width, y: 0, width }) === null) return; // edge start
+  swipe = { id: e.pointerId, itemId: it.id, card, startX: e.clientX, startY: e.clientY, width, axis: null, moved: false };
+}, true);
+document.addEventListener('pointermove', (e) => {
+  const g = swipe;
+  if (!g || e.pointerId !== g.id) return;
+  const dx = e.clientX - g.startX, dy = e.clientY - g.startY;
+  if (!g.axis) {
+    g.axis = swipeAxis(dx, dy);
+    if (!g.axis) return;
+    if (g.axis === 'y') { endSwipe(false); return; } // a scroll: dead for this touch
+    g.card.classList.add('d-swiping');
+  }
+  g.moved = true;
+  if (!reduceMotion.matches) g.card.style.transform = `translateX(${Math.round(dx)}px)`;
+  const past = Math.abs(dx) >= swipeThreshold(g.width) && Math.abs(dx) > 2 * Math.abs(dy);
+  swipeLabel(dx > 0 ? 'approve' : dx < 0 ? 'changes' : null, past);
+}, true);
+function onSwipeUp(e) {
+  if (e.pointerType === 'touch') touchesDown.delete(e.pointerId);
+  const g = swipe;
+  if (!g || e.pointerId !== g.id) return;
+  const intent = e.type === 'pointerup' ? swipeIntent({ startX: g.startX, startY: g.startY, x: e.clientX, y: e.clientY, width: g.width, axis: g.axis, touches: touchesDown.size + 1 }) : null;
+  endSwipe(!intent);
+  if (!intent || g.itemId !== current) return;
+  dismissHint();
+  // The very same buttons, so the toast, Undo, next-post and /decide body match.
+  if (intent === 'approve') $('#go')?.click();
+  else $('#fix')?.click();
+}
+document.addEventListener('pointerup', onSwipeUp, true);
+document.addEventListener('pointercancel', onSwipeUp, true);
 
 // Redrawing replaces the controls, so focus is put back on the same one (or on
 // Approve, when the one that had it is gone, as after Undo or Next post).

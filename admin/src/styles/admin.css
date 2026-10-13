@@ -375,6 +375,25 @@ dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: con
   .d-swap { animation: d-fade 150ms ease-out; }
   .d-phone-note { margin: 18px 0 0; }
 
+  /* Swipe to decide (slice 5). The card follows the finger sideways; vertical
+     scrolling stays the browser's. Behind it, the label for that direction in
+     its state color: outlined while short of the threshold, solid past it. */
+  .desk.deciding .d-detail { overflow-x: clip; }
+  .desk.deciding .d-detail > .d-card { position: relative; z-index: 1; touch-action: pan-y; }
+  .d-card.d-swiping { transition: none; will-change: transform; }
+  .d-card.d-snap { transition: transform 180ms ease-out; }
+  .d-swipe { position: fixed; left: 0; right: 0; top: 50%; z-index: 0; display: flex; justify-content: space-between; padding: 0 16px; pointer-events: none; transform: translateY(-50%); }
+  .d-swipe[hidden] { display: none; }
+  .d-swipe-lbl { visibility: hidden; padding: 8px 14px; border: 2px solid currentColor; border-radius: 6px; background: var(--surface); font: 700 16px/1.2 var(--font-body); transition: background-color 120ms ease-out, color 120ms ease-out; }
+  .d-swipe-lbl.ok { color: var(--green); }
+  .d-swipe-lbl.fix { color: var(--red); }
+  .d-swipe[data-dir="approve"] .ok, .d-swipe[data-dir="changes"] .fix { visibility: visible; }
+  .d-swipe.past .d-swipe-lbl.ok { background: var(--green); border-color: var(--green); color: var(--surface); }
+  .d-swipe.past .d-swipe-lbl.fix { background: var(--red); border-color: var(--red); color: var(--surface); }
+  .d-swipe-hint { display: flex; align-items: center; gap: 4px; margin: 6px 0 -4px; color: var(--muted); font-size: 14px; }
+  .d-swipe-hint span { flex: 1; text-align: center; }
+  .d-hint-x { flex: none; min-width: 44px; min-height: 36px; padding: 0; border: 0; background: none; color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer; }
+
   /* The change sheet slides up from the bottom and rides above the keyboard
      (--kb, from visualViewport). 16px+ text so iOS does not zoom. */
   .d-sheet { display: block; position: fixed; inset: 0; z-index: 20; }
@@ -440,6 +459,7 @@ dialog.zoom img { display: block; width: 100%; max-height: 82vh; object-fit: con
 @keyframes d-fade { from { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
   .d-swap { animation: none; }
+  .d-card.d-snap, .d-swipe-lbl { transition: none; }
   .d-sheet-scrim, .d-sheet-panel { transition: none; }
   .d-toast, .d-toast:not(.on), .posted-box { transition: none; }
   .posted-box.pop, .posted-box.pop input:checked, .posted-box.pop input:checked::after { animation: none; }
