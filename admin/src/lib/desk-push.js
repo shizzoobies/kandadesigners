@@ -212,13 +212,25 @@ export function pushNow(env, fallback) {
   return fallback;
 }
 
+// Both VAPID keys set, or local development (mock transport).
+export function keysReady(env) {
+  if (env?.ENVIRONMENT === 'development') return true;
+  return !!(env?.VAPID_PRIVATE_KEY && env?.VAPID_PUBLIC_KEY);
+}
+
 const ok2xx = (r) => r.status === 201 || r.status === 200;
 
 /**
- * Cron body. transport is injectable (tests / mock). When VAPID_PRIVATE_KEY is
- * unset, sendPush uses the mock transport automatically.
+ * Cron body. transport is injectable (tests / mock). Without both VAPID keys
+ * it uses the mock transport in development only; elsewhere it skips the run.
  */
 export async function runDeskPush(env, { now = Date.now(), transport } = {}) {
+  // Fail safe: production without both VAPID keys sends nothing, marks
+  // nothing, and says so in one line. Local development uses the mock.
+  if (!keysReady(env)) {
+    console.log(JSON.stringify({ event: 'desk.push', skipped: 'no-vapid-keys' }));
+    return { skipped: 'no-vapid-keys', sites: 0, announced: 0, sent: 0, forgot: 0, held: 0, summaries: 0, stories: 0 };
+  }
   const db = env.DB;
   now = pushNow(env, now);
   const nowIso = new Date(now).toISOString();

@@ -15,7 +15,8 @@ export function createExports(manifest) {
       async scheduled(controller, env, ctx) {
         const now = controller?.scheduledTime ?? Date.now();
         const summary = await runDeskPush(env, { now });
-        console.log(JSON.stringify({ event: 'desk.push', ...summary, cron: controller?.cron ?? null }));
+        // A skipped run (no VAPID keys) already logged its one line.
+        if (!summary.skipped) console.log(JSON.stringify({ event: 'desk.push', ...summary, cron: controller?.cron ?? null }));
       },
     },
   };

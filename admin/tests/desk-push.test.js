@@ -196,9 +196,9 @@ describe('VAPID JWT', () => {
 describe('sendPush response codes', () => {
   const sub = { endpoint: 'https://fcm.googleapis.com/fcm/send/x', p256dh: FAKE_P256, auth: FAKE_AUTH };
 
-  it('uses mock transport when VAPID_PRIVATE_KEY is unset', async () => {
+  it('uses mock transport when VAPID_PRIVATE_KEY is unset in development', async () => {
     const t = mockTransport();
-    const r = await sendPush(sub, { title: 'T', body: 'B' }, { env: {}, transport: t });
+    const r = await sendPush(sub, { title: 'T', body: 'B' }, { env: { ENVIRONMENT: 'development' }, transport: t });
     expect(r).toMatchObject({ status: 201, mock: true, delete: false });
     expect(t.sent).toHaveLength(1);
     expect(t.sent[0].endpoint).toBe(sub.endpoint);
@@ -213,7 +213,7 @@ describe('sendPush response codes', () => {
     const statuses = [201, 404, 410, 429];
     for (const status of statuses) {
       const t = async () => ({ status });
-      const r = await sendPush(sub, { title: 'T' }, { env: {}, transport: t });
+      const r = await sendPush(sub, { title: 'T' }, { env: { ENVIRONMENT: 'development' }, transport: t });
       expect(r.status).toBe(status);
       expect(r.delete).toBe(status === 404 || status === 410);
     }

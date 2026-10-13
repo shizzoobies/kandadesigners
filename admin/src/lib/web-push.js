@@ -1,6 +1,7 @@
 // Web Push: VAPID (RFC 8292) + aes128gcm payload encryption (RFC 8291), using
 // only WebCrypto. No new dependency. When VAPID_PRIVATE_KEY is unset, sends go
-// through a mock transport that logs [push:mock] and never leaves the box.
+// through a mock transport that logs [push:mock] and never leaves the box, but
+// only when ENVIRONMENT=development; anywhere else, missing keys send nothing.
 
 const te = new TextEncoder();
 
@@ -169,6 +170,9 @@ export async function sendPush(sub, payload, { env, fetch: fetchImpl = globalThi
   const subject = env?.VAPID_SUBJECT || 'mailto:alex@ka-performancefl.com';
 
   if (!priv || !pub) {
+    // Fail safe: outside local development, missing keys mean no send at all,
+    // never the mock transport.
+    if (env?.ENVIRONMENT !== 'development') return { status: 0, delete: false, mock: false, skipped: 'no-vapid-keys' };
     const t = transport || mockTransport();
     const r = await t(endpoint, json, { 'Content-Type': 'application/json', 'X-Mock-Payload': json });
     const status = r.status ?? 201;
