@@ -1,5 +1,19 @@
 # K&A Performance — Session Handoff
 
+## START HERE (written 2026-10-26, afternoon)
+
+**Read this block first; the 10-03 block below still holds for the social pipeline, where every checkout physically is, and the open SEO and Cloudflare items. This block records only the portfolio work shipped today.**
+
+**Live on `main` today (two commits, Cloudflare built and verified live at 16:40):** `4c12c36d` adds five client builds to the home page portfolio, now fourteen: Thrillers Mobile VR (thrillersvr.com, Middleburg), Only Nails Beauty (onlynailsfl.com, Gainesville), Navigating North Florida (navigatingnorthflorida.com, Jacksonville), The Welsh Burton Group (welshburtongroup.com, Wilton, Connecticut) and Dancing Crafter (dancingcrafter.com, its store still opening soon, so the capture is the blue-and-gold holding curtain). Captures at the house spec, four sizes each, `?v=1`; five new `STACK` positions in `HeroGallery.astro` and the stagger timing switched from per-card to fixed totals so fourteen cards keep the nine-card timeline. `058a85c3` tells the site chat guide (`functions/api/guide.js`), Kai's knowledge-base source (`docs/elevenlabs-agent/knowledge-base.md`) and the Gainesville and Jacksonville location pages about the five, and the guide and Kai's source also learn the Ellenton office and the Bradenton & Sarasota page, which both had missed since 09-29 (no street address anywhere; the gate checks).
+
+**Not in the portfolio, on purpose:** God Fearing Sisters (the live godfearingsisters.com is a Lovable site credited to another builder; our build only exists on gfs.ka-testing2.com). Sweet Meat Butcher, Kelsey Photography and the horse stable exist only as ka-testing2 demos. thedetailco.com now resolves to an unrelated Australian business. Alex can overrule any of these.
+
+**Left for Alex or a later session:** re-upload `knowledge-base.md` to the ElevenLabs agent (the file changed, the agent still has the 09-22 upload); credit links on Thrillers (`D:\VR Pitch`) and Navigating North Florida (`D:\Synovial Pitch\Web Builds\Navigating North Florida`, production deploys only through its GitHub workflow with `--env production`), both their own repos and deploys, Alex's go required; the DesignRush kit has no case studies for the five.
+
+**Working copy:** `D:\ka-site-portfolio`, branch `site/portfolio-october`, equal to `main`, with its own real `node_modules` (restored by `npm ci`; the main checkout's `node_modules` is empty, so do not junction to it). `D:\ka-site-seo` still carries another session's 19 uncommitted files; leave it alone.
+
+---
+
 ## START HERE (written 2026-10-03, night)
 
 **Read this block, then `Social Media Management/SESSION-HANDOFF.md` on the `codex/training-premium-rfi` branch (dated 10-01, updated 10-02, with 10-03 folded into sections 0 and 2b). The 09-29 and 09-27 blocks below still hold for geography, training, admin history and the open SEO audit items; this block records what changed since and where every piece of work physically is.**
