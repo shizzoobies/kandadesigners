@@ -20,7 +20,12 @@ import { googleRating } from '../data/reviews.js';
 // which keeps a desktop's pick as sharp as it was with the 2880 original.
 const cardSizes = '(min-width: 1024px) 860px, 72vw';
 
-const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
+// One per project, in projects[] order. Entries 7 and 8 stay 'win', which is
+// what Osteen & Sons and David's BBQ rendered as when this list stopped at seven.
+const CHROMES = [
+  'mac', 'win', 'mac', 'win', 'mac', 'win', 'mac',
+  'win', 'win', 'mac', 'win', 'mac', 'win', 'mac',
+];
 ---
 <section id="gallery" class="relative lg:h-[min(420vh,5000px)]">
   <div id="hg-sticky" class="relative overflow-hidden lg:sticky lg:top-0 lg:h-screen">
@@ -454,6 +459,17 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
     { tx: 0.44, ty: 0.12, r: -6, s: 1.4, a: 0.95 }, // Synovial, mid right
     { tx: 0.2, ty: -0.34, r: 5, s: 1.34, a: 0.95 }, // Osteen & Sons, upper seam
     { tx: -0.3, ty: 0.28, r: -5, s: 1.5, a: 0.95 }, // David's BBQ, bottom left
+    // The nine above already cover the hero, and these five paint over all of
+    // them (zIndex follows project order), so they are a size smaller and sit
+    // over the parts already buried: Osteen's grass, the Project Makeover
+    // photo, Fore Motion and PB&J. What stays readable: MBS, Southern Legacy,
+    // the Project Makeover logo, Osteen's headline, Synovial, Family
+    // Practice's headline and David's BBQ's, plus all five of these.
+    { tx: 0.45, ty: -0.245, r: 6, s: 1.2, a: 0.95 }, // Thrillers, top right corner
+    { tx: 0.41, ty: 0.4, r: -5, s: 1.18, a: 0.95 }, // Only Nails, bottom right corner
+    { tx: -0.36, ty: 0.06, r: -5, s: 1.12, a: 0.95 }, // Navigating North Florida, mid left
+    { tx: -0.1, ty: 0.45, r: 5, s: 1.12, a: 0.95 }, // Welsh Burton, bottom seam left of center
+    { tx: 0.17, ty: 0.07, r: -7, s: 1.1, a: 0.95 }, // Dancing Crafter, center right
   ];
 
   // STACK must have one entry per project: it is indexed directly, so a missing
@@ -645,6 +661,11 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
       },
     });
 
+    // The three slot staggers below are total spreads (amount), not per-card
+    // gaps (each), fixed at what nine projects took. Per-card gaps grew the
+    // timeline with every client: act 1 ran into the sweep at 0.82, and the
+    // longer total shifted the LIVE_MIN/LIVE_MAX band (a fraction of it) into
+    // the fly-out.
     tl.to(headline, { autoAlpha: 0, y: -90, duration: 0.2, ease: 'power1.in' }, 0.05)
       // act 1: the windows all appear across the canvas, popping into the
       // mosaic in random order as the sketch hero clears
@@ -652,7 +673,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         opacity: (i, el) => parseFloat(el.dataset.baseOpacity),
         scale: (i, el) => parseFloat(el.dataset.baseScale),
         duration: 0.3,
-        stagger: { each: 0.022, from: 'random' },
+        stagger: { amount: 0.31, from: 'random' }, // the spread 15 tiles had at 0.022 each
         ease: 'back.out(1.6)',
       }, 0.16)
       // act 2: inner pages disperse into the depths while the home pages
@@ -679,7 +700,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         scale: 1,
         opacity: (i) => endPoses[i].opacity,
         duration: 0.45,
-        stagger: 0.03,
+        stagger: { amount: 0.24 }, // the spread 9 slots had at 0.03 each
         ease: 'power2.inOut',
       }, 0.82)
       .to([heading, ui], { autoAlpha: 1, y: 0, duration: 0.12 }, 1.5)
@@ -695,7 +716,7 @@ const CHROMES = ['mac', 'win', 'mac', 'win', 'mac', 'win', 'mac'];
         scale: 0.8,
         opacity: 0,
         duration: 0.32,
-        stagger: 0.03,
+        stagger: { amount: 0.24 }, // the spread 9 slots had at 0.03 each
         ease: 'power2.in',
       }, 2.16);
 

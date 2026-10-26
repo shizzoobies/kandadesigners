@@ -64,6 +64,36 @@ export const projects = [
     blurb: "Gainesville pit barbecue since 1978. A smoky, photo-led site with the full menu and prices, catering and wedding paths, and online ordering one tap away.",
     img: '/images/work-davidsbbq.webp?v=1',
   },
+  {
+    slug: 'thrillers-mobile-vr',
+    title: 'Thrillers Mobile VR',
+    blurb: "Florida's first and only mobile VR trailer, towing more than 200 experiences to your event, rain or shine. A neon launch site that lays out all four rides and promises a reply to every date request within a business day.",
+    img: '/images/work-thrillersvr.webp?v=1',
+  },
+  {
+    slug: 'only-nails-beauty',
+    title: 'Only Nails Beauty',
+    blurb: "A Gainesville nail studio known for detailed gel art, with every photo on the site their own work. Booking moved off rented salon software onto the studio's own system, with a service guide for the undecided.",
+    img: '/images/work-onlynails.webp?v=1',
+  },
+  {
+    slug: 'navigating-north-florida',
+    title: 'Navigating North Florida',
+    blurb: 'Gina Graham, a Jacksonville REALTOR with more than ten years as a home stager and designer. A dusky, editorial site that sells the staging eye with the house: buy, sell, or design, plus a journal she runs from her own admin.',
+    img: '/images/work-navigatingnf.webp?v=1',
+  },
+  {
+    slug: 'welsh-burton-group',
+    title: 'The Welsh Burton Group',
+    blurb: 'A communications, marketing, and strategy firm based in Wilton, Connecticut, where strategy meets story. A clean rebuild off Wix, with case studies told as opportunity, approach, and outcome, and one way to start a conversation.',
+    img: '/images/work-welshburton.webp?v=1',
+  },
+  {
+    slug: 'dancing-crafter',
+    title: 'Dancing Crafter',
+    blurb: 'A papercrafting supply shop still in rehearsal: the storefront is opening soon. For now a blue-and-gold curtain takes names for opening night, while the full store, catalog and checkout included, waits in the wings.',
+    img: '/images/work-dancingcrafter.webp?v=1',
+  },
 ];
 
 // Responsive copies of the 2880 px project screenshots (the 2x captures of a
@@ -73,7 +103,10 @@ export const projects = [
 // whenever one of these screenshots is replaced. The original stays the
 // 2880w candidate, so a large retina screen gets exactly what it got before.
 export const workWidths = [720, 1080, 1440];
-export const responsiveWork = ['work-davidsbbq', 'work-familypractice', 'work-foremotion', 'work-osteens', 'work-pmbuild'];
+export const responsiveWork = [
+  'work-davidsbbq', 'work-familypractice', 'work-foremotion', 'work-osteens', 'work-pmbuild',
+  'work-thrillersvr', 'work-onlynails', 'work-navigatingnf', 'work-welshburton', 'work-dancingcrafter',
+];
 
 /**
  * srcset for a project screenshot, or undefined when the image has no
