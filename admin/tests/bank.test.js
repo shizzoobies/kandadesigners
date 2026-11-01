@@ -44,8 +44,8 @@ describe('bank reads', () => {
 
   it('recentTransactions: posted within the range, newest first, capped', async () => {
     await addTx('in-range', { date: '2026-10-05' });
-    await addTx('edge', { date: '2026-10-02' });
-    await addTx('too-old', { date: '2026-10-01' });
+    await addTx('edge', { date: '2026-10-03' });
+    await addTx('too-old', { date: '2026-10-02' });
     await addTx('newest', { date: '2026-10-31' });
     await addTx('pending', { pending: 1, date: '2026-10-31' });
     await addTx('removed', { removed: 1, date: '2026-10-31' });
