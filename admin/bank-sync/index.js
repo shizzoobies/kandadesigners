@@ -14,6 +14,9 @@ const ROUTES = new Set(['/link-token', '/exchange', '/sync', '/balance', '/unlin
 const NOT_SET_UP = 'The bank connection is not set up yet.';
 
 const json = (body, status = 200) => Response.json(body, { status });
+// The Plaid credentials and the token key, out of anything this Worker returns or logs.
+const scrubEnv = (text, env) => [env.PLAID_SECRET, env.PLAID_CLIENT_ID, env.BANK_TOKEN_KEY]
+  .filter(Boolean).reduce((s, x) => s.split(String(x)).join('<secret>'), String(text)).slice(0, 300);
 const reply = ({ status, ...body }) => json(body, status);
 
 async function readBody(request) {
@@ -69,28 +72,34 @@ export async function handleFetch(request, env, deps = {}) {
         return new Response('Not found', { status: 404 });
     }
   } catch (err) {
-    // Plaid errors are already scrubbed; this keeps anything else short and token-free.
-    const message = String(err?.message ?? err).split(String(env.PLAID_SECRET)).join('<secret>').slice(0, 300);
-    return json({ ok: false, error: message }, 502);
+    // Plaid errors are already scrubbed; this keeps anything else short and secret-free.
+    return json({ ok: false, error: scrubEnv(err?.message ?? err, env) }, 502);
   }
+}
+
+/** One cron pull. Always resolves, and logs one bank-sync line, scrubbed, however it ends. */
+export function runScheduled(env, nowIso, { plaid, log = console } = {}) {
+  if (!env.PLAID_CLIENT_ID || !env.PLAID_SECRET || !env.BANK_TOKEN_KEY) {
+    log.log(JSON.stringify({ event: 'bank-sync', ok: false, error: NOT_SET_UP }));
+    return Promise.resolve();
+  }
+  return Promise.resolve().then(() => runSync({
+    db: env.DB,
+    plaid: plaid ?? plaidClient(env),
+    key: env.BANK_TOKEN_KEY,
+    nowIso,
+    kind: 'cron',
+    secrets: [env.PLAID_SECRET, env.PLAID_CLIENT_ID],
+  })).then((r) => {
+    log.log(JSON.stringify({ event: 'bank-sync', ok: r.ok, added: r.added ?? 0, modified: r.modified ?? 0, removed: r.removed ?? 0, error: r.error ? scrubEnv(r.error, env) : null }));
+  }).catch((err) => {
+    log.log(JSON.stringify({ event: 'bank-sync', ok: false, error: scrubEnv(err?.message ?? err, env) }));
+  });
 }
 
 export default {
   async scheduled(event, env, ctx) {
-    if (!env.PLAID_CLIENT_ID || !env.PLAID_SECRET || !env.BANK_TOKEN_KEY) {
-      console.log(JSON.stringify({ event: 'bank-sync', ok: false, error: NOT_SET_UP }));
-      return;
-    }
-    ctx.waitUntil(runSync({
-      db: env.DB,
-      plaid: plaidClient(env),
-      key: env.BANK_TOKEN_KEY,
-      nowIso: new Date(event.scheduledTime).toISOString(),
-      kind: 'cron',
-      secrets: [env.PLAID_SECRET, env.PLAID_CLIENT_ID],
-    }).then((r) => {
-      console.log(JSON.stringify({ event: 'bank-sync', ok: r.ok, added: r.added ?? 0, modified: r.modified ?? 0, removed: r.removed ?? 0, error: r.error ?? null }));
-    }));
+    ctx.waitUntil(runScheduled(env, new Date(event.scheduledTime).toISOString()));
   },
   fetch: (request, env) => handleFetch(request, env),
 };

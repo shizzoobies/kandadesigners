@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { makeD1 } from './helpers/d1.js';
 import { fakePlaid, account, tx } from './helpers/plaid.js';
-import { handleFetch } from '../bank-sync/index.js';
+import { handleFetch, runScheduled } from '../bank-sync/index.js';
 
 const KEY = btoa(String.fromCharCode(...new Uint8Array(32).map((_, i) => 255 - i)));
 const NOW = '2026-11-01T15:00:00.000Z';
@@ -74,10 +74,33 @@ describe('ka-bank-sync fetch handler', () => {
     expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM bank_links').first('n')).toBe(0);
   });
 
-  it('turns an unexpected throw into a 502 without the secret', async () => {
-    plaid.createLinkToken = async () => { throw new Error('failed with sec in it'); };
+  it('turns an unexpected throw into a 502 without the secret, client id or key', async () => {
+    plaid.createLinkToken = async () => { throw new Error(`failed with sec, cid and ${KEY} in it`); };
     const res = await call('/link-token', { userId: 1 });
     expect(res.status).toBe(502);
-    expect(await res.json()).toEqual({ ok: false, error: 'failed with <secret> in it' });
+    expect(await res.json()).toEqual({ ok: false, error: 'failed with <secret>, <secret> and <secret> in it' });
+  });
+});
+
+describe('ka-bank-sync cron', () => {
+  it('logs one line for a pull', async () => {
+    await exchange();
+    const log = { log: vi.fn() };
+    await runScheduled(env, NOW, { plaid, log });
+    expect(JSON.parse(log.log.mock.calls[0][0])).toEqual({ event: 'bank-sync', ok: true, added: 0, modified: 0, removed: 0, error: null });
+  });
+
+  it('logs a scrubbed line instead of rejecting when something throws outside the pull', async () => {
+    const log = { log: vi.fn() };
+    env.DB = { prepare: () => { throw new Error(`D1 down near ${KEY} and sec`); } };
+    await expect(runScheduled(env, NOW, { plaid, log })).resolves.toBeUndefined();
+    expect(JSON.parse(log.log.mock.calls[0][0])).toEqual({ event: 'bank-sync', ok: false, error: 'D1 down near <secret> and <secret>' });
+  });
+
+  it('logs that it is not set up when a secret is missing', async () => {
+    const log = { log: vi.fn() };
+    delete env.PLAID_SECRET;
+    await runScheduled(env, NOW, { plaid, log });
+    expect(JSON.parse(log.log.mock.calls[0][0])).toEqual({ event: 'bank-sync', ok: false, error: 'The bank connection is not set up yet.' });
   });
 });
