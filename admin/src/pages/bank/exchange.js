@@ -20,6 +20,7 @@ export async function handleExchange({ user, bankSync, body = {} }) {
 }
 
 export async function POST({ request, locals }) {
+  if (locals.user?.role !== 'owner') return Response.json({ ok: false, error: 'Not authorized.' }, { status: 403 });
   if (!isJson(request)) return Response.json({ ok: false, error: 'Send JSON.' }, { status: 415 });
   const r = await handleExchange({ user: locals.user, bankSync: locals.runtime.env.BANK_SYNC, body: await readJson(request) });
   return Response.json(r.body, { status: r.status, headers: { 'Cache-Control': 'no-store' } });

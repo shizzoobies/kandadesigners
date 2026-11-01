@@ -16,6 +16,7 @@ export async function handleLinkToken({ user, bankSync, update = false }) {
 }
 
 export async function POST({ request, locals }) {
+  if (locals.user?.role !== 'owner') return Response.json({ error: 'Not authorized.' }, { status: 403 });
   if (!isJson(request)) return Response.json({ error: 'Send JSON.' }, { status: 415 });
   const { update } = await readJson(request);
   const r = await handleLinkToken({ user: locals.user, bankSync: locals.runtime.env.BANK_SYNC, update: update === true });

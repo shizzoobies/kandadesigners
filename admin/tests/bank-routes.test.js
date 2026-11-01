@@ -2,9 +2,9 @@ import { describe, it, expect, vi } from 'vitest';
 import { makeD1 } from './helpers/d1.js';
 import { handleSync } from '../src/pages/bank/sync.js';
 import { handleBalance } from '../src/pages/bank/balance.js';
-import { handleUnlink } from '../src/pages/bank/unlink.js';
-import { handleLinkToken } from '../src/pages/bank/link-token.js';
-import { handleExchange } from '../src/pages/bank/exchange.js';
+import { handleUnlink, POST as unlinkPost } from '../src/pages/bank/unlink.js';
+import { handleLinkToken, POST as linkTokenPost } from '../src/pages/bank/link-token.js';
+import { handleExchange, POST as exchangePost } from '../src/pages/bank/exchange.js';
 import { isJson } from '../src/lib/bank.js';
 
 const OWNER = { id: 1, role: 'owner', grants: [] };
@@ -19,6 +19,16 @@ const sent = (s) => {
 };
 
 describe('owner-only on every bank endpoint', () => {
+  it('the Astro exports answer 403 before reading the body', async () => {
+    const env = { BANK_SYNC: stub(200, { ok: true }) };
+    const locals = { user: CLIENT, runtime: { env } };
+    const plain = () => new Request('https://admin.test/bank/x', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: 'x' });
+    expect((await linkTokenPost({ request: plain(), locals })).status).toBe(403);
+    expect((await exchangePost({ request: plain(), locals })).status).toBe(403);
+    expect((await unlinkPost({ request: plain(), locals })).status).toBe(403);
+    expect(env.BANK_SYNC.fetch).not.toHaveBeenCalled();
+  });
+
   it('refuses a client, even one with an approve grant, and calls nothing', async () => {
     for (const user of [CLIENT, undefined, { id: 9, role: 'viewer' }]) {
       const s = stub(200, { ok: true });
@@ -82,6 +92,12 @@ describe('POST /bank/unlink', () => {
     expect(yes.location).toContain('kind=ok');
     expect(msgOf(yes)).toBe('Unlinked. The accounts and transactions are gone from this panel.');
     expect(sent(s).url).toBe('https://ka-bank-sync/unlink');
+  });
+
+  it('passes the unopened-token warning on as a warning', async () => {
+    const r = await handleUnlink({ user: OWNER, bankSync: stub(200, { ok: true, warning: 'Remove it in the Plaid dashboard too.' }), confirmed: true });
+    expect(r.location).toContain('kind=warn');
+    expect(msgOf(r)).toBe('Unlinked here, and the accounts and transactions are gone from this panel. Remove it in the Plaid dashboard too.');
   });
 });
 
