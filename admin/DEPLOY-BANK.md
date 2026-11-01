@@ -75,7 +75,7 @@ The cron fires at 00:00, 06:00, 12:00 and 18:00 UTC; after the next one there sh
 Last, confirm a client cannot see it: signed in as a client, `/bank` must answer 403 and the nav must not show Bank.
 
 ## 6. Production (later, on Alex's word)
-1. Apply for Production in the Plaid dashboard (Limited Production covers the first real link).
+1. Apply for the Trial plan in the Plaid dashboard (dashboard.plaid.com/trial-plan; Limited Production is gone for teams created after 2026-04-15). The trial is free with a cap of ten Production Items ever, and removing an Item does not free a slot, so in production use Reconnect, never Unlink and relink, when the bank asks for a new sign-in. Approved 2026-11-01.
 2. Press Unlink on `/bank` to remove the sandbox item (a sandbox token does not work in production).
 3. Change `PLAID_ENV` to `production` in `bank-sync/wrangler.jsonc` and commit.
 4. Copy the production `secret` and put it with the `PLAID_SECRET` line from 3b (the `client_id` is the same in both environments).

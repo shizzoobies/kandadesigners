@@ -15,9 +15,9 @@
       "migrations_dir": "../migrations"
     }
   ],
-  // Identifiers, not secrets. PLAID_ENV stays sandbox until Alex says production.
+  // Identifiers, not secrets. PLAID_ENV went to production on 2026-11-01 (Plaid Trial plan).
   "vars": {
-    "PLAID_ENV": "sandbox",
+    "PLAID_ENV": "production",
     "PLAID_CLIENT_NAME": "K & A Performance",
     "ADMIN_ORIGIN": "https://admin.ka-performancefl.com"
   },
