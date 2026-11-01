@@ -175,6 +175,26 @@ describe('runSync', () => {
     expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_transactions').first('n')).toBe(120);
     expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_transactions WHERE removed = 1').first('n')).toBe(15);
   });
+
+  it('applies more than 100 removals without passing D1\'s 100-value cap, and the cursor advances', async () => {
+    await addLink();
+    const added = Array.from({ length: 150 }, (_, i) => tx(`r${i}`));
+    const removed = added.map((t) => ({ transaction_id: t.transaction_id }));
+    const plaid = fakePlaid({
+      pages: {
+        null: { added, modified: [], removed: [], accounts: [account('acc-1')], next_cursor: 'c1', has_more: false },
+        c1: { added: [], modified: [], removed, accounts: [account('acc-1')], next_cursor: 'c2', has_more: false },
+      },
+    });
+    await sync(plaid);
+    expect(await sync(plaid, 'manual', '2026-11-01T16:00:00.000Z')).toMatchObject({ ok: true, removed: 150 });
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_transactions WHERE removed = 1').first('n')).toBe(150);
+    expect(await link()).toMatchObject({ cursor: 'c2', status: 'ok' });
+  });
+
+  it('the test database refuses more than 100 bound values, as D1 does', () => {
+    expect(() => db.prepare('SELECT 1').bind(...Array.from({ length: 101 }, () => 1))).toThrow('too many SQL variables');
+  });
 });
 
 describe('linkItem', () => {

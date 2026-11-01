@@ -47,8 +47,10 @@ async function markLink(db, linkId, err, message, nowIso) {
 }
 
 // D1 caps a statement at 100 bound values, so rows go in several per statement.
-function chunked(rows, perRow) {
-  const size = Math.max(1, Math.floor(100 / perRow));
+// extra: values the statement binds besides the rows (removals bind updated_at).
+export const MAX_BOUND = 100;
+function chunked(rows, perRow, extra = 0) {
+  const size = Math.max(1, Math.floor((MAX_BOUND - extra) / perRow));
   const out = [];
   for (let i = 0; i < rows.length; i += size) out.push(rows.slice(i, i + size));
   return out;
@@ -86,7 +88,7 @@ function transactionStatements(db, txs, nowIso) {
 }
 
 function removedStatements(db, ids, nowIso) {
-  return chunked(ids, 1).map((group) => db.prepare(
+  return chunked(ids, 1, 1).map((group) => db.prepare(
     `UPDATE bank_transactions SET removed = 1, updated_at = ? WHERE id IN (${group.map(() => '?').join(', ')})`,
   ).bind(nowIso, ...group));
 }

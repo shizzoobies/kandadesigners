@@ -13,6 +13,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const MIGRATIONS = path.resolve(HERE, '../../migrations');
 export const ATTRIBUTION_MIGRATIONS = path.resolve(HERE, '../../migrations-attribution');
 
+const MAX_BOUND = 100;
 const plain = (row) => (row === undefined ? null : { ...row });
 
 // dir: which database's migrations to apply. ka-sites by default.
@@ -26,6 +27,8 @@ export function makeD1(dir = MIGRATIONS) {
     let args = [];
     const stmt = {
       bind(...values) {
+        // D1 refuses more than 100 bound values in one statement; so does this.
+        if (values.length > MAX_BOUND) throw new Error(`too many SQL variables: ${values.length} bound, D1 allows ${MAX_BOUND}`);
         args = values;
         return stmt;
       },
