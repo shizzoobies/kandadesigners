@@ -42,6 +42,7 @@ const SIGN_OUT = '/cdn-cgi/access/logout';
           <a href="/sites/new" aria-current={active === 'new' ? 'page' : undefined}>Add site</a>
           <a href="/sites/ka-performance/social" aria-current={active === 'social' ? 'page' : undefined}>Social</a>
           <a href="/people" aria-current={active === 'people' ? 'page' : undefined}>People</a>
+          <a href="/bank" aria-current={active === 'bank' ? 'page' : undefined}>Bank</a>
         </nav>
         <div class="who">{user?.name || user?.email} <a class="signout" href={SIGN_OUT}>Sign out</a></div>
       </header>

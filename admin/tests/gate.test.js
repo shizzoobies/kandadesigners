@@ -44,7 +44,7 @@ describe('matchClientRoute', () => {
   it('does not treat other admin routes as client routes', () => {
     for (const p of ['/sites/foremotion-golf', '/sites/foremotion-golf/', '/sites/foremotion-golf/edit', '/sites/foremotion-golf/status',
       '/sites/new', '/people', '/people/2', '/people/sync', '/sites', '/SITES/foremotion-golf/social', '/sites/foremotion-golf/Social',
-      '/logos', '/logos/logos', '/logos/a/b/c', '/index', '/x']) {
+      '/logos', '/logos/logos', '/logos/a/b/c', '/index', '/x', '/bank', '/bank/sync', '/bank/exchange']) {
       expect(matchClientRoute(p), p).toBeNull();
     }
   });
@@ -84,6 +84,13 @@ describe('gateRequest', () => {
     for (const p of ['/sites/foremotion-golf/analytics', '/sites/foremotion-golf/analytics/', '/sites/foremotion-golf/analytics/sync']) {
       expect(gateRequest(CLIENT, p)).toEqual({ allow: false, status: 403 });
       expect(gateRequest(OWNER, p)).toEqual({ allow: true });
+    }
+  });
+
+  it('keeps the bank panel and its endpoints owner-only, even for a client with an approve grant', () => {
+    for (const p of ['/bank', '/bank/', '/bank/sync', '/bank/exchange', '/bank/balance', '/bank/unlink', '/bank/link-token', '/bank/link', '/bank/oauth']) {
+      expect(gateRequest(CLIENT, p), p).toEqual({ allow: false, status: 403 });
+      expect(gateRequest(OWNER, p), p).toEqual({ allow: true });
     }
   });
 
