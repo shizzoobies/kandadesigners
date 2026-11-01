@@ -36,8 +36,13 @@
   ],
   // "Sync now" on the analytics page runs in ka-analytics-sync, which holds the
   // Metricool token; the admin never sees it.
+  // The bank panel's buttons and Plaid Link run through ka-bank-sync, which
+  // holds the Plaid credentials and the token key; the admin never sees them
+  // or the access token. Deploy ka-bank-sync first (DEPLOY-BANK.md): the admin
+  // will not deploy while this binding names a Worker that does not exist.
   "services": [
-    { "binding": "ANALYTICS_SYNC", "service": "ka-analytics-sync" }
+    { "binding": "ANALYTICS_SYNC", "service": "ka-analytics-sync" },
+    { "binding": "BANK_SYNC", "service": "ka-bank-sync" }
   ],
   // Identifiers, not secrets: the AUD tag names the Access application and the
   // team domain is public. Both are safe to commit.
