@@ -83,3 +83,45 @@ export function connectionState(link) {
   if (link.status === 'login_required') return { dot: 'amber', word: 'needs sign-in' };
   return { dot: 'red', word: 'error' };
 }
+
+/**
+ * One POST to ka-bank-sync through the BANK_SYNC service binding. Returns
+ * { res, body } with body {} when the reply is not JSON; a binding that
+ * throws comes back as res null.
+ */
+export async function callBankSync(bankSync, route, payload = {}) {
+  let res;
+  try {
+    res = await bankSync.fetch(`https://ka-bank-sync${route}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    return { res: null, body: {} };
+  }
+  let body = {};
+  try {
+    body = await res.json();
+  } catch {
+    body = {};
+  }
+  return { res, body: body && typeof body === 'object' ? body : {} };
+}
+
+export const NOT_CONNECTED = 'The bank connection is not set up yet.';
+
+/** The 303 back to the panel. kind comes before msg: 'ok' renders as a notice, 'warn' as an alert. */
+export const backToBank = (msg, kind = 'warn') => ({ status: 303, location: `/bank?kind=${kind}&msg=${encodeURIComponent(msg)}` });
+
+/** The JSON endpoints take application/json only: a cross-site form cannot send it. */
+export const isJson = (request) => (request.headers.get('content-type') ?? '').split(';')[0].trim().toLowerCase() === 'application/json';
+
+export async function readJson(request) {
+  try {
+    const body = await request.json();
+    return body && typeof body === 'object' ? body : {};
+  } catch {
+    return {};
+  }
+}
