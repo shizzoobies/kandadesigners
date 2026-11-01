@@ -18,7 +18,7 @@ export async function linkStatus(db) {
 
 export async function listAccounts(db) {
   return rows(db.prepare(`SELECT id, name, official_name, mask, type, subtype, currency, current, available, live_current, live_available, live_at, balance_at
-    FROM bank_accounts WHERE hidden = 0 ORDER BY type, name COLLATE NOCASE, id`));
+    FROM bank_accounts WHERE hidden = 0 ORDER BY CASE type WHEN 'depository' THEN 0 ELSE 1 END, type, name COLLATE NOCASE, id`));
 }
 
 const TX_SELECT = `SELECT t.id, t.date, t.authorized_date, t.name, t.merchant, t.amount, t.currency, t.category, a.name AS account_name, a.mask AS account_mask
@@ -57,10 +57,13 @@ export const direction = (amount) => (Number(amount) < 0 ? 'in' : 'out');
 export const amountText = (amount, currency) => `${money(Math.abs(Number(amount)), currency)} ${direction(amount)}`;
 
 const OWED = new Set(['credit', 'loan']);
-/** A credit or loan balance is what is owed; Plaid gives it positive. */
-export function balanceText(account, value) {
+/**
+ * A credit or loan current balance is what is owed; Plaid gives it positive.
+ * Available on a credit card is the credit left, so it stays plain money.
+ */
+export function balanceText(account, value, field = 'current') {
   if (value === null || value === undefined) return 'n/a';
-  if (OWED.has(account.type)) return Number(value) < 0 ? `${money(-value, account.currency)} in credit` : `${money(value, account.currency)} owed`;
+  if (OWED.has(account.type) && field === 'current') return Number(value) < 0 ? `${money(-value, account.currency)} in credit` : `${money(value, account.currency)} owed`;
   return money(value, account.currency);
 }
 

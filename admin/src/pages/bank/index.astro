@@ -1,0 +1,215 @@
+---
+// The business bank account: balances, pending and recent transactions, and
+// the Plaid connection. Owner only (the middleware already stops clients;
+// this check is the second lock). Reads D1 only: ka-bank-sync fills it four
+// times a day and on Sync now. Accounts show by mask, never by number, and no
+// token or item id appears here.
+import Shell from '../../layouts/Shell.astro';
+import * as b from '../../lib/bank.js';
+import { openRun } from '../../lib/bank-sync.js';
+import { easternDateTime, humanDate } from '../../lib/when.js';
+
+const env = Astro.locals.runtime.env;
+const DB = env.DB;
+const user = Astro.locals.user;
+if (user?.role !== 'owner') return new Response('Not authorized.', { status: 403 });
+
+const days = b.pickRange(Astro.url.searchParams.get('range'));
+const msg = Astro.url.searchParams.get('msg');
+const ok = Astro.url.searchParams.get('kind') === 'ok';
+
+const link = await b.linkStatus(DB);
+const [accounts, pending, recent, last, busy] = link
+  ? await Promise.all([b.listAccounts(DB), b.pendingTransactions(DB), b.recentTransactions(DB, days, b.LIMIT), b.lastRun(DB), openRun(DB, Date.now())])
+  : [[], [], [], null, false];
+const state = b.connectionState(link);
+const several = accounts.length > 1;
+const connected = Boolean(env.BANK_SYNC);
+const RUN_KIND = { cron: 'scheduled', manual: 'from Sync now', link: 'when the account was linked' };
+const describe = (t) => t.merchant || t.name;
+---
+<Shell title="Bank" active="bank">
+  <h1>Bank</h1>
+  {msg && (ok ? <div class="notice" role="status">{msg}</div> : <div class="alert" role="status">{msg}</div>)}
+  {!connected && <div class="alert" role="status">The bank sync Worker is not connected to this admin yet, so the buttons below will not work.</div>}
+
+  {link && (
+    <>
+      <section class="section" aria-labelledby="balance-h">
+        <h2 id="balance-h">Balance</h2>
+        {accounts.length === 0 ? <p class="empty">No accounts yet. Use Sync now below.</p> : (
+          <div class="cards">
+            {accounts.map((a) => (
+              <article class="card">
+                <div>
+                  <h3>{b.accountTitle(a)}</h3>
+                  <p class="caps">{a.subtype ?? a.type}</p>
+                </div>
+                <dl class="facts">
+                  <dt>Available</dt><dd class="money">{b.balanceText(a, a.available, 'available')}</dd>
+                  <dt>Current</dt><dd class="money">{b.balanceText(a, a.current)}</dd>
+                </dl>
+                {a.balance_at && <p class="note">From the last sync, {easternDateTime(a.balance_at)} Eastern.</p>}
+                {a.live_at && (
+                  <div class="live">
+                    <p class="caps">Live</p>
+                    <dl class="facts">
+                      <dt>Available</dt><dd class="money">{b.balanceText(a, a.live_available, 'available')}</dd>
+                      <dt>Current</dt><dd class="money">{b.balanceText(a, a.live_current)}</dd>
+                    </dl>
+                    <p class="note">Checked with the bank {easternDateTime(a.live_at)} Eastern.</p>
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section class="section" aria-labelledby="pending-h">
+        <h2 id="pending-h">Pending</h2>
+        {pending.length === 0 ? <p class="empty">Nothing pending.</p> : (
+          <div class="scroll">
+            <table class="data" aria-labelledby="pending-h">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th><th scope="col">Description</th>{several && <th scope="col">Account</th>}
+                  <th scope="col" class="num">Amount</th><th scope="col">Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pending.map((t) => (
+                  <tr>
+                    <td class="date">{humanDate(t.date)}</td>
+                    <td class="desc">{describe(t)}</td>
+                    {several && <td class="acct">{t.account_mask ? `····${t.account_mask}` : t.account_name}</td>}
+                    <td class={`num ${b.direction(t.amount)}`}>{b.amountText(t.amount, t.currency)}</td>
+                    <td class="cat">{b.categoryLabel(t.category)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      <section class="section" aria-labelledby="recent-h">
+        <h2 id="recent-h">Recent</h2>
+        <nav aria-label="Range" class="row range">
+          {b.RANGES.map((r) => <a class={r === days ? 'btn' : 'btn quiet'} href={`?range=${r}`} aria-current={r === days ? 'page' : undefined}>{r} days</a>)}
+        </nav>
+        <p class="hint">Posted transactions from the last {days} days, newest first{recent.length === b.LIMIT ? `, the newest ${b.LIMIT} shown` : ''}.</p>
+        {recent.length === 0 ? <p class="empty">No posted transactions in the last {days} days.</p> : (
+          <div class="scroll">
+            <table class="data" aria-labelledby="recent-h">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th><th scope="col">Description</th>{several && <th scope="col">Account</th>}
+                  <th scope="col" class="num">Amount</th><th scope="col">Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recent.map((t) => (
+                  <tr>
+                    <td class="date">{humanDate(t.date)}</td>
+                    <td class="desc">{describe(t)}</td>
+                    {several && <td class="acct">{t.account_mask ? `····${t.account_mask}` : t.account_name}</td>}
+                    <td class={`num ${b.direction(t.amount)}`}>{b.amountText(t.amount, t.currency)}</td>
+                    <td class="cat">{b.categoryLabel(t.category)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+    </>
+  )}
+
+  <section class="section" aria-labelledby="conn-h">
+    <h2 id="conn-h">Connection</h2>
+    <p class="level">
+      <span class={`dot ${state.dot}`}></span>
+      <span class="caps status">{state.word}</span>
+      {link?.institution_name && <span>{link.institution_name}, through Plaid</span>}
+    </p>
+    {!link ? (
+      <>
+        <p class="hint">Plaid connects the business account. Balances and transactions then sync here four times a day.</p>
+        <a class="btn" href="/bank/link">Link bank account</a>
+      </>
+    ) : (
+      <>
+        {last ? (
+          <p>
+            {last.finished_at ? `Last sync ${easternDateTime(last.finished_at)} Eastern, ${RUN_KIND[last.kind] ?? last.kind}.` : `A sync started ${easternDateTime(last.started_at)} Eastern.`}
+            {last.ok === 0 && ' It did not finish cleanly.'}
+          </p>
+        ) : <p>Not synced yet.</p>}
+        {link.status !== 'ok' && link.error && <p class="err">{link.error}</p>}
+        {link.status === 'login_required' && <p>The bank wants its sign-in again. Reconnect opens Plaid to do that; nothing syncs until then.</p>}
+        <div class="actions">
+          {link.status === 'login_required' && <a class="btn" href="/bank/link?update=1">Reconnect</a>}
+          <form method="post" action="/bank/sync">
+            <button class={link.status === 'login_required' ? 'btn quiet' : 'btn'} type="submit" disabled={busy}>{busy ? 'Sync running' : 'Sync now'}</button>
+          </form>
+          <form method="post" action="/bank/balance" aria-describedby="balance-hint">
+            <button class="btn quiet" type="submit">Refresh balance</button>
+          </form>
+        </div>
+        <p class="hint" id="balance-hint">Refresh balance asks the bank for live numbers. Plaid charges for each one, so the balances above normally come from the last sync.</p>
+        <details class="edit unlink">
+          <summary>Unlink</summary>
+          <p>This removes the connection at Plaid and deletes the accounts and transactions from this panel. Linking again starts fresh.</p>
+          <form method="post" action="/bank/unlink">
+            <input type="hidden" name="confirm" value="yes" />
+            <button class="btn danger" type="submit">Yes, unlink</button>
+          </form>
+        </details>
+      </>
+    )}
+  </section>
+</Shell>
+
+<style>
+  .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: start; }
+  .card h3 { margin: 0 0 2px; font: 700 18px/1.25 var(--font-display); }
+  .card .caps, .live .caps { margin: 0; }
+  .card .note { margin: 0; }
+  .live { border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+  dd.money { font-variant-numeric: tabular-nums; font-weight: 700; }
+  .scroll { overflow-x: auto; }
+  table.data { border-collapse: collapse; width: 100%; }
+  table.data th, table.data td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.data thead th { font-size: 14px; color: var(--muted); }
+  table.data .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  table.data td.in { color: var(--green); font-weight: 600; }
+  table.data td.out { color: var(--ink); }
+  table.data td.date { white-space: nowrap; }
+  .range { margin-bottom: 8px; }
+  .empty { margin: 0; padding: 20px; }
+  .status { color: var(--ink); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 4px 0 0; }
+  .actions form { margin: 0; }
+  .btn[disabled] { opacity: .55; cursor: progress; }
+  .unlink { margin-top: 8px; }
+  .unlink p { max-width: 60ch; }
+  .btn.danger { background: var(--error); border-color: var(--error); }
+  .btn.danger:hover { background: #7f0f2e; }
+  .err { color: var(--error); font-weight: 600; }
+  .hint { color: var(--muted); font-size: 14px; }
+  /* Phones: each transaction is two lines, description and amount on top,
+     date, account and category below, so the amount never scrolls away. */
+  @media (max-width: 640px) {
+    .card dl.facts { grid-template-columns: max-content 1fr; }
+    table.data thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    table.data tbody tr { display: grid; grid-template-columns: auto auto 1fr auto; grid-template-areas: "desc desc desc amt" "date acct cat cat"; gap: 2px 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+    table.data td { padding: 0; border: 0; }
+    table.data td.desc { grid-area: desc; font-weight: 600; }
+    table.data td.num { grid-area: amt; }
+    table.data td.date, table.data td.acct, table.data td.cat { font-size: 14px; color: var(--muted); }
+    table.data td.date { grid-area: date; }
+    table.data td.acct { grid-area: acct; }
+    table.data td.cat { grid-area: cat; }
+  }
+</style>

@@ -84,6 +84,7 @@ describe('bank formatting', () => {
     expect(b.balanceText({ type: 'depository', currency: 'USD' }, -20)).toBe('-$20.00');
     expect(b.balanceText({ type: 'credit', currency: 'USD' }, 410.1)).toBe('$410.10 owed');
     expect(b.balanceText({ type: 'credit', currency: 'USD' }, -15)).toBe('$15.00 in credit');
+    expect(b.balanceText({ type: 'credit', currency: 'USD' }, 8657.82, 'available')).toBe('$8,657.82');
     expect(b.balanceText({ type: 'loan', currency: 'USD' }, null)).toBe('n/a');
   });
 

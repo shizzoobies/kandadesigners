@@ -1,0 +1,47 @@
+---
+// Plaid Link: link the business account, or with ?update=1 sign in again
+// (Reconnect). Owner only, here as well as in the middleware. Plaid's script
+// is the only external script in the admin; the link token comes from
+// /bank/link-token and the public token goes to /bank/exchange, so the
+// access token never reaches the browser or this Worker. Plaid asks that
+// link-initialize.js always load from its CDN at this URL and changes it in
+// place, so it carries no integrity hash; there is no CSP to widen.
+import Shell from '../../layouts/Shell.astro';
+import { linkStatus } from '../../lib/bank.js';
+
+const env = Astro.locals.runtime.env;
+const user = Astro.locals.user;
+if (user?.role !== 'owner') return new Response('Not authorized.', { status: 403 });
+
+const update = Astro.url.searchParams.get('update') === '1';
+const link = await linkStatus(env.DB);
+if (update && !link) return Astro.redirect('/bank', 303);
+if (!update && link) return Astro.redirect(`/bank?kind=warn&msg=${encodeURIComponent('A bank account is already linked. Unlink it first to link another.')}`, 303);
+const connected = Boolean(env.BANK_SYNC);
+const title = update ? 'Reconnect bank account' : 'Link bank account';
+---
+<Shell title={title} active="bank">
+  <p><a href="/bank">Back to Bank</a></p>
+  <h1>{title}</h1>
+  {!connected ? (
+    <div class="alert" role="status">The bank sync Worker is not connected to this admin yet, so Plaid cannot open.</div>
+  ) : (
+    <section class="section" id="bank-link" data-mode={update ? 'update' : 'new'}>
+      {update
+        ? <p>The bank wants its sign-in again. Plaid opens over this page; sign in there and the panel syncs right after.</p>
+        : <p>Plaid opens over this page. Choose the bank there and sign in. The admin never sees that sign-in, and Plaid only shares balances and transactions.</p>}
+      <p id="bank-link-status" class="state" role="status" aria-live="polite">Opening Plaid.</p>
+      <button id="bank-link-open" class="btn" type="button" hidden>{update ? 'Open Plaid again' : 'Open Plaid'}</button>
+    </section>
+  )}
+  {connected && <script is:inline src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>}
+  <script>
+    import '../../scripts/bank-link.js';
+  </script>
+</Shell>
+
+<style>
+  #bank-link [hidden] { display: none; }
+  .state { font-weight: 600; }
+  .err { color: var(--error); }
+</style>

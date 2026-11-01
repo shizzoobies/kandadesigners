@@ -99,6 +99,7 @@ describe('POST /bank/link-token', () => {
     expect(await handleLinkToken({ user: OWNER, bankSync: stub(503, { error: 'The bank connection is not set up yet.' }) }))
       .toEqual({ status: 503, body: { error: 'The bank connection is not set up yet.' } });
     expect((await handleLinkToken({ user: OWNER, bankSync: stub(200, {}) })).status).toBe(502);
+    expect(await handleLinkToken({ user: OWNER, bankSync: stub(503, '<html>') })).toEqual({ status: 503, body: { error: 'The bank sync Worker did not answer (503).' } });
     expect((await handleLinkToken({ user: OWNER, bankSync: undefined })).status).toBe(503);
   });
 });

@@ -10,7 +10,8 @@ export async function handleLinkToken({ user, bankSync, update = false }) {
   if (!bankSync) return { status: 503, body: { error: NOT_CONNECTED } };
   const { res, body } = await callBankSync(bankSync, '/link-token', { userId: String(user.id), update: update === true });
   if (!res) return { status: 502, body: { error: 'Plaid could not be reached. Try again.' } };
-  if (!res.ok || typeof body.link_token !== 'string') return { status: res.ok ? 502 : res.status, body: { error: body.error ?? 'Plaid did not give a link token.' } };
+  if (!res.ok) return { status: res.status, body: { error: body.error ?? `The bank sync Worker did not answer (${res.status}).` } };
+  if (typeof body.link_token !== 'string') return { status: 502, body: { error: 'Plaid did not give a link token.' } };
   return { status: 200, body: { link_token: body.link_token, expiration: body.expiration ?? null } };
 }
 

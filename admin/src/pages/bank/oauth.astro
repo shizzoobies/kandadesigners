@@ -1,0 +1,35 @@
+---
+// Where an OAuth bank's sign-in sends the browser back
+// (https://admin.ka-performancefl.com/bank/oauth, registered in the Plaid
+// dashboard). The script reopens Link with receivedRedirectUri set to this
+// URL and the link token kept in sessionStorage, as Plaid's OAuth flow asks.
+// Owner only, here as well as in the middleware.
+import Shell from '../../layouts/Shell.astro';
+
+const env = Astro.locals.runtime.env;
+const user = Astro.locals.user;
+if (user?.role !== 'owner') return new Response('Not authorized.', { status: 403 });
+const connected = Boolean(env.BANK_SYNC);
+---
+<Shell title="Finishing the bank link" active="bank">
+  <p><a href="/bank">Back to Bank</a></p>
+  <h1>Finishing the bank link</h1>
+  {!connected ? (
+    <div class="alert" role="status">The bank sync Worker is not connected to this admin yet, so Plaid cannot open.</div>
+  ) : (
+    <section class="section" id="bank-link" data-mode="oauth">
+      <p id="bank-link-status" class="state" role="status" aria-live="polite">Finishing with Plaid.</p>
+      <a id="bank-link-open" class="btn" href="/bank/link" hidden>Start again</a>
+    </section>
+  )}
+  {connected && <script is:inline src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>}
+  <script>
+    import '../../scripts/bank-link.js';
+  </script>
+</Shell>
+
+<style>
+  #bank-link [hidden] { display: none; }
+  .state { font-weight: 600; }
+  .err { color: var(--error); }
+</style>
