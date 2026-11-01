@@ -6,7 +6,7 @@ describe('migrations', () => {
     const db = makeD1();
     const { results } = await db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").all();
     expect(results.map((r) => r.name)).toEqual(
-      ['alert_state', 'checks', 'desk_access', 'desk_decisions', 'desk_items', 'desk_meta', 'desk_story_checks', 'log_entries', 'people', 'settings', 'sites', 'work_items'],
+      ['alert_state', 'bank_accounts', 'bank_links', 'bank_sync_runs', 'bank_transactions', 'checks', 'desk_access', 'desk_decisions', 'desk_items', 'desk_meta', 'desk_story_checks', 'log_entries', 'people', 'settings', 'sites', 'sqlite_sequence', 'work_items'],
     );
   });
 
