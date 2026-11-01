@@ -5,11 +5,14 @@
 // URL and the link token kept in sessionStorage, as Plaid's OAuth flow asks.
 // Owner only, here as well as in the middleware.
 import Shell from '../../layouts/Shell.astro';
+import { linkStatus } from '../../lib/bank.js';
 
 const env = Astro.locals.runtime.env;
 const user = Astro.locals.user;
 if (user?.role !== 'owner') return new Response('Not authorized.', { status: 403 });
 const connected = Boolean(env.BANK_SYNC);
+// With a link already stored this was a Reconnect, so starting again stays one.
+const retry = (await linkStatus(env.DB)) ? '/bank/link?update=1' : '/bank/link';
 ---
 <Shell title="Finishing the bank link" active="bank">
   <p><a href="/bank">Back to Bank</a></p>
@@ -19,7 +22,7 @@ const connected = Boolean(env.BANK_SYNC);
   ) : (
     <section class="section" id="bank-link" data-mode="oauth">
       <p id="bank-link-status" class="state" role="status" aria-live="polite">Finishing with Plaid.</p>
-      <a id="bank-link-open" class="btn" href="/bank/link" hidden>Start again</a>
+      <a id="bank-link-open" class="btn" href={retry} hidden>Start again</a>
     </section>
   )}
   {connected && <script is:inline src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>}

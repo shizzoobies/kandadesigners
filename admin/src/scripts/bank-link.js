@@ -84,6 +84,7 @@ function openLink(token, update, receivedRedirectUri) {
       });
     },
     onExit(err) {
+      store.clear();
       if (err) say(`Plaid closed with an error: ${err.display_message || err.error_message || err.error_code || 'unknown'}. Try again.`, true);
       else say(update ? 'Plaid closed. The sign-in was not updated.' : 'Plaid closed. Nothing was linked.');
       offerRetry();
