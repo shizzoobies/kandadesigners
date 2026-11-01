@@ -76,7 +76,7 @@ The pull, in `src/lib/bank-sync.js` as pure functions over `{ db, plaid, nowIso 
 
 - `wrangler.jsonc`: service binding `BANK_SYNC` to `ka-bank-sync`, with a comment that the Worker is deployed first.
 - `src/pages/bank/index.astro`, `<Shell title="Bank" active="bank">`, owner check at the top. Sections, in order:
-  1. **Balance**: one `.card` per account not hidden: `h3` name with mask (`Checking ····1234`), `dl.facts` with Available and Current (cached, with `balance_at` in `easternDateTime`), and when `live_at` exists a second pair labelled "Live" with its time. Money formatted `$1,234.56`; negatives for credit accounts shown as owed.
+  1. **Balance**: one `.card` per account not hidden: `h3` name with mask (`Checking ····1234`), `dl.facts` with Available and Current (cached, with `balance_at` in `easternDateTime`), and when `live_at` exists a second pair labeled "Live" with its time. Money formatted `$1,234.56`; negatives for credit accounts shown as owed.
   2. **Pending**: table `table.data` of transactions with `pending = 1` and `removed = 0`, newest first: date, name (merchant when present), amount as "out" or "in", category. Empty state `.empty` "Nothing pending."
   3. **Recent**: same table for posted transactions, last 30 days, newest first, capped at 100 rows, with a `?range=30|60|90` nav of `.btn quiet` like the analytics page.
   4. **Connection**: `.level` + `.dot` status line (green `linked`, amber `needs sign-in` for `login_required`, red `error`, gray `not linked`), institution name, last sync time from `bank_sync_runs`, and the buttons: "Sync now" (POST `/bank/sync`), "Refresh balance" (POST `/bank/balance`, with the hint that it is a paid live call), "Reconnect" (opens Link in update mode when `login_required`), "Unlink" (POST `/bank/unlink`, with a confirm). When no link exists the section shows only "Link bank account".
@@ -106,4 +106,4 @@ The pull, in `src/lib/bank-sync.js` as pure functions over `{ db, plaid, nowIso 
 
 ## Out of scope
 
-Any money movement, Plaid Auth or Identity products, categorisation beyond Plaid's primary category, exports, multiple links, client visibility of any bank data, and QuickBooks.
+Any money movement, Plaid Auth or Identity products, categorization beyond Plaid's primary category, exports, multiple links, client visibility of any bank data, and QuickBooks.
