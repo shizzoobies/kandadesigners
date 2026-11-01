@@ -1,0 +1,33 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "ka-bank-sync",
+  "main": "./index.js",
+  "compatibility_date": "2026-08-13",
+  "triggers": {
+    // Four pulls a day: transaction changes and cached balances, no Balance charge.
+    "crons": ["0 */6 * * *"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ka-sites",
+      "database_id": "1859da99-2c03-4796-b6e6-8a1e4ab8112b",
+      "migrations_dir": "../migrations"
+    }
+  ],
+  // Identifiers, not secrets. PLAID_ENV stays sandbox until Alex says production.
+  "vars": {
+    "PLAID_ENV": "sandbox",
+    "PLAID_CLIENT_NAME": "K & A Performance",
+    "ADMIN_ORIGIN": "https://admin.ka-performancefl.com"
+  },
+  // Secrets, set with `wrangler secret bulk` (see DEPLOY-BANK.md) and never written here:
+  //   PLAID_CLIENT_ID  Plaid dashboard, Developers, Keys.
+  //   PLAID_SECRET     The secret for PLAID_ENV (sandbox and production differ).
+  //   BANK_TOKEN_KEY   32 random bytes, base64. Seals the Plaid access token in
+  //                    D1. Losing or changing it means unlinking and linking again.
+  "observability": { "enabled": true },
+  // Reachable only through the admin's BANK_SYNC service binding.
+  "workers_dev": false,
+  "preview_urls": false
+}
