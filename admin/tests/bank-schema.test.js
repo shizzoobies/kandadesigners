@@ -22,3 +22,12 @@ describe('0005 bank tables', () => {
     await expect(db.prepare("INSERT INTO bank_transactions (id, account_id, date, name, amount, updated_at) VALUES ('tx-1', 'nope', '2026-10-30', 'x', 1, 't')").run()).rejects.toThrow();
   });
 });
+
+describe('0005 one link only', () => {
+  it('refuses a second link for the same provider', async () => {
+    const db = makeD1();
+    const add = (id) => db.prepare("INSERT INTO bank_links (id, provider, token_ciphertext, status, linked_at, updated_at) VALUES (?, 'plaid', 'x', 'ok', 't', 't')").bind(id).run();
+    await add('item-1');
+    await expect(add('item-2')).rejects.toThrow(/UNIQUE/);
+  });
+});

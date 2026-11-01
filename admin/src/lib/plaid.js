@@ -1,6 +1,6 @@
 // The bank-data provider, and the only file that knows it is Plaid. Swapping
 // providers means replacing this module's plaidClient with one that has the
-// same five methods. Runs in ka-bank-sync only: the admin Worker never holds
+// same six methods. Runs in ka-bank-sync only: the admin Worker never holds
 // PLAID_CLIENT_ID, PLAID_SECRET or an access token.
 // Credentials travel only in the PLAID-CLIENT-ID and PLAID-SECRET headers and
 // are scrubbed from every error, as is any access token in the request.
@@ -45,7 +45,7 @@ export async function plaidFetch(env, path, body = {}, fetchImpl = fetch) {
   return json;
 }
 
-/** The five calls ka-bank-sync makes, over plaidFetch. */
+/** The six calls ka-bank-sync makes, over plaidFetch. */
 export function plaidClient(env, fetchImpl = fetch) {
   const call = (path, body) => plaidFetch(env, path, body, fetchImpl);
   return {
@@ -73,11 +73,17 @@ export function plaidClient(env, fetchImpl = fetch) {
       return { access_token: r.access_token, item_id: r.item_id };
     },
     // One page of changes: added, modified, removed, next_cursor, has_more,
-    // and accounts with cached balances (no Balance charge).
+    // and the accounts those transactions touch, with cached balances.
     transactionsSync(accessToken, cursor, count = 500) {
       const body = { access_token: accessToken, count };
       if (cursor) body.cursor = cursor;
       return call('/transactions/sync', body);
+    },
+    // Every account on the item with cached balances. Free, so each pull makes
+    // it and balances refresh even when no transaction changed.
+    async accountsGet(accessToken) {
+      const r = await call('/accounts/get', { access_token: accessToken });
+      return r.accounts ?? [];
     },
     // The paid, live balance call. Only "Refresh balance" makes it.
     async liveBalances(accessToken) {

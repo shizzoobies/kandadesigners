@@ -3,36 +3,43 @@
 // Worker (bank-sync/) only wires the cron and the service binding to them.
 // The access token is opened from D1 for each call and never logged; it, the
 // key and the Plaid credentials are scrubbed from every stored error.
+// Worker-side only: the admin imports its reads from bank.js, never this file.
 import { seal, open } from './bank-crypto.js';
+import { OPEN_RUN_MS, RUN_LOCKS } from './bank.js';
 
-export const OPEN_RUN_MS = 5 * 60000;
 export const PAGE = 500;
 export const KEEP_DAYS = 400;
-const MAX_RESTARTS = 3;
+export const MAX_RESTARTS = 3;
 const MUTATION = 'TRANSACTIONS_SYNC_MUTATION_DURING_PAGINATION';
 const LOGIN = 'ITEM_LOGIN_REQUIRED';
-const SYNC_KINDS = "('cron', 'manual', 'link')";
+const ALREADY_LINKED = 'A bank account is already linked. Unlink it first.';
+export const UNOPENED_WARNING = 'The saved Plaid token could not be opened, so the connection may still exist at Plaid. Remove it in the Plaid dashboard too.';
 
 const scrub = (text, secrets) => secrets.filter(Boolean).reduce((s, x) => s.split(String(x)).join('<secret>'), String(text));
 const nil = (v) => (v === undefined ? null : v);
 const num = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null);
 const errorText = (err, secrets) => scrub(err?.message ?? err, secrets).slice(0, 300);
 
-/** A sync that started under five minutes ago and has not finished. Another waits for it. */
-export async function openRun(db, nowMs) {
-  const since = new Date(nowMs - OPEN_RUN_MS).toISOString();
-  const row = await db.prepare(`SELECT id FROM bank_sync_runs WHERE kind IN ${SYNC_KINDS} AND finished_at IS NULL AND started_at > ? LIMIT 1`).bind(since).first();
-  return Boolean(row);
-}
-
 /** The one link (multiple links are out of scope), ciphertext included. Worker-side only. */
 export async function getLinkRow(db) {
   return db.prepare('SELECT * FROM bank_links ORDER BY linked_at LIMIT 1').first();
 }
 
-async function startRun(db, kind, nowIso) {
-  const r = await db.prepare('INSERT INTO bank_sync_runs (kind, started_at) VALUES (?, ?)').bind(kind, nowIso).run();
-  return r.meta.last_row_id;
+/**
+ * Opens a run row, or returns null when one of the same group (any pull, or
+ * a balance refresh) started under five minutes ago and has not finished.
+ * The check and the insert are one statement, so two clicks cannot both get
+ * through. Unfinished runs older than that are closed first as abandoned.
+ */
+export async function startRun(db, kind, nowIso) {
+  const since = new Date(Date.parse(nowIso) - OPEN_RUN_MS).toISOString();
+  const kinds = kind === 'balance' ? RUN_LOCKS.balance : RUN_LOCKS.sync;
+  await db.prepare("UPDATE bank_sync_runs SET finished_at = started_at, ok = 0, error = 'abandoned' WHERE finished_at IS NULL AND started_at <= ?")
+    .bind(since).run();
+  const r = await db.prepare(`INSERT INTO bank_sync_runs (kind, started_at) SELECT ?, ?
+    WHERE NOT EXISTS (SELECT 1 FROM bank_sync_runs WHERE kind IN (${kinds.map(() => '?').join(', ')}) AND finished_at IS NULL AND started_at > ?)`)
+    .bind(kind, nowIso, ...kinds, since).run();
+  return r.meta.changes ? r.meta.last_row_id : null;
 }
 
 async function finishRun(db, id, finishedIso, { ok, added = null, modified = null, removed = null, error = null }) {
@@ -95,13 +102,14 @@ function removedStatements(db, ids, nowIso) {
 
 // Every page from the stored cursor, kept in memory and applied once the last
 // page is in. A mutation mid-pagination restarts from the cursor the loop began
-// with, as Plaid asks, discarding the pages read so far.
+// with, as Plaid asks, discarding the pages read so far. Each page lists only
+// the accounts its own transactions touch, so accounts merge across pages.
 async function pullChanges(plaid, token, startCursor) {
   for (let attempt = 0; ; attempt += 1) {
     const added = [];
     const modified = [];
     const removed = [];
-    let accounts = [];
+    const accounts = new Map();
     let cursor = startCursor;
     try {
       for (;;) {
@@ -109,7 +117,7 @@ async function pullChanges(plaid, token, startCursor) {
         added.push(...(page.added ?? []));
         modified.push(...(page.modified ?? []));
         removed.push(...(page.removed ?? []).map((r) => r.transaction_id).filter(Boolean));
-        if (Array.isArray(page.accounts) && page.accounts.length) accounts = page.accounts;
+        for (const a of page.accounts ?? []) if (a?.account_id) accounts.set(String(a.account_id), a);
         cursor = page.next_cursor ?? cursor;
         if (!page.has_more) break;
       }
@@ -124,24 +132,30 @@ async function pullChanges(plaid, token, startCursor) {
 const minusDays = (ymd, days) => new Date(Date.parse(`${ymd}T00:00:00Z`) - days * 86400000).toISOString().slice(0, 10);
 
 /**
- * The pull: one run row, every page of changes, then accounts with cached
- * balances, transactions and the new cursor in one batch. Returns
- * { status, ok, added, modified, removed, error? }.
+ * The pull: one run row, every page of changes, then /accounts/get (free,
+ * cached) so every account's balance refreshes even on a quiet pull. Accounts,
+ * transactions, removals and the new cursor go in one batch. A transaction
+ * for an account Plaid did not list fails the run rather than being dropped.
+ * Returns { status, ok, added, modified, removed, error? }.
  */
 export async function runSync({ db, plaid, key, nowIso, kind = 'manual', clock = () => new Date().toISOString(), secrets = [] }) {
   const link = await getLinkRow(db);
   if (!link) return { status: 404, ok: false, error: 'No bank account is linked.' };
-  if (await openRun(db, Date.parse(nowIso))) return { status: 409, ok: false, error: 'A sync is already running. Try again in a few minutes.' };
   const runId = await startRun(db, kind, nowIso);
+  if (runId === null) return { status: 409, ok: false, error: 'A sync is already running. Try again in a few minutes.' };
   let token = null;
   try {
     token = await open(key, link.token_ciphertext);
     const changes = await pullChanges(plaid, token, link.cursor);
+    for (const a of await plaid.accountsGet(token)) if (a?.account_id) changes.accounts.set(String(a.account_id), a);
+    const accounts = [...changes.accounts.values()];
     const { results: known } = await db.prepare('SELECT id FROM bank_accounts WHERE link_id = ?').bind(link.id).all();
-    const accountIds = new Set([...known.map((r) => r.id), ...changes.accounts.map((a) => String(a.account_id))]);
-    const upserts = [...changes.added, ...changes.modified].filter((t) => t?.transaction_id && accountIds.has(String(t.account_id)));
+    const accountIds = new Set([...known.map((r) => r.id), ...changes.accounts.keys()]);
+    const upserts = [...changes.added, ...changes.modified].filter((t) => t?.transaction_id);
+    const stray = upserts.filter((t) => !accountIds.has(String(t.account_id))).length;
+    if (stray) throw new Error(`${stray} ${stray === 1 ? 'transaction belongs' : 'transactions belong'} to an account Plaid did not list. Nothing from this pull was saved.`);
     await db.batch([
-      ...accountStatements(db, link.id, changes.accounts, nowIso),
+      ...accountStatements(db, link.id, accounts, nowIso),
       ...transactionStatements(db, upserts, nowIso),
       ...removedStatements(db, changes.removed, nowIso),
       db.prepare("UPDATE bank_links SET cursor = ?, synced_at = ?, status = 'ok', error = NULL, updated_at = ? WHERE id = ?").bind(nil(changes.cursor), nowIso, nowIso, link.id),
@@ -161,17 +175,31 @@ export async function runSync({ db, plaid, key, nowIso, kind = 'manual', clock =
 }
 
 /**
- * A new link: exchange the public token, seal the access token, store the
- * link, then the first sync. One link only, so a second is refused before
- * anything is exchanged.
+ * A new link: prove the key works, exchange the public token, seal the access
+ * token, store the link, then the first sync. One link only, so a second is
+ * refused before anything is exchanged, and a second that races past that
+ * check fails on the one-per-provider index. If the seal or the insert fails
+ * after the exchange, the new item is removed at Plaid so nothing is left
+ * billing with no row to unlink it.
  */
 export async function linkItem({ db, plaid, key, nowIso, publicToken, institution = {}, clock, secrets = [] }) {
-  if (await getLinkRow(db)) return { status: 409, ok: false, error: 'A bank account is already linked. Unlink it first.' };
+  if (await getLinkRow(db)) return { status: 409, ok: false, error: ALREADY_LINKED };
+  await open(key, await seal(key, 'key check'));
   const { access_token: accessToken, item_id: itemId } = await plaid.exchangePublicToken(publicToken);
-  const sealed = await seal(key, accessToken);
-  await db.prepare(`INSERT INTO bank_links (id, provider, institution_id, institution_name, token_ciphertext, cursor, status, error, linked_at, synced_at, updated_at)
-    VALUES (?, 'plaid', ?, ?, ?, NULL, 'ok', NULL, ?, NULL, ?)`)
-    .bind(String(itemId), nil(institution.id), nil(institution.name), sealed, nowIso, nowIso).run();
+  try {
+    const sealed = await seal(key, accessToken);
+    await db.prepare(`INSERT INTO bank_links (id, provider, institution_id, institution_name, token_ciphertext, cursor, status, error, linked_at, synced_at, updated_at)
+      VALUES (?, 'plaid', ?, ?, ?, NULL, 'ok', NULL, ?, NULL, ?)`)
+      .bind(String(itemId), nil(institution.id), nil(institution.name), sealed, nowIso, nowIso).run();
+  } catch (err) {
+    try {
+      await plaid.removeItem(accessToken);
+    } catch {
+      // Best effort: the original error is the one worth reporting.
+    }
+    if (/UNIQUE/i.test(String(err?.message))) return { status: 409, ok: false, error: ALREADY_LINKED };
+    throw new Error(errorText(err, [accessToken, key, ...secrets]));
+  }
   const first = await runSync({ db, plaid, key, nowIso, kind: 'link', clock, secrets: [accessToken, ...secrets] });
   const accounts = await db.prepare('SELECT COUNT(*) AS n FROM bank_accounts WHERE link_id = ?').bind(String(itemId)).first('n');
   return { status: 200, ok: first.ok, accounts, ...(first.error ? { error: first.error } : {}) };
@@ -194,6 +222,7 @@ export async function refreshBalance({ db, plaid, key, nowIso, clock = () => new
   const link = await getLinkRow(db);
   if (!link) return { status: 404, ok: false, error: 'No bank account is linked.' };
   const runId = await startRun(db, 'balance', nowIso);
+  if (runId === null) return { status: 409, ok: false, error: 'A balance refresh is already running. Try again in a few minutes.' };
   let token = null;
   try {
     token = await open(key, link.token_ciphertext);
@@ -212,18 +241,29 @@ export async function refreshBalance({ db, plaid, key, nowIso, clock = () => new
   }
 }
 
-/** Unlink: remove the item at Plaid, then the link row (accounts and transactions cascade). */
+/**
+ * Unlink: remove the item at Plaid, then the link row (accounts and
+ * transactions cascade). When the sealed token cannot be opened (the key was
+ * lost or replaced) the row goes anyway, so a new link is possible, with a
+ * warning that the item must also be removed in the Plaid dashboard.
+ */
 export async function unlinkItem({ db, plaid, key, secrets = [] }) {
   const link = await getLinkRow(db);
   if (!link) return { status: 404, ok: false, error: 'No bank account is linked.' };
-  let token = null;
+  const drop = () => db.prepare('DELETE FROM bank_links WHERE id = ?').bind(link.id).run();
+  let token;
   try {
     token = await open(key, link.token_ciphertext);
+  } catch {
+    await drop();
+    return { status: 200, ok: true, warning: UNOPENED_WARNING };
+  }
+  try {
     await plaid.removeItem(token);
   } catch (err) {
     // An item Plaid no longer knows is already unlinked there.
     if (err?.error_code !== 'ITEM_NOT_FOUND') return { status: 200, ok: false, error: errorText(err, [token, key, ...secrets]) };
   }
-  await db.prepare('DELETE FROM bank_links WHERE id = ?').bind(link.id).run();
+  await drop();
   return { status: 200, ok: true };
 }

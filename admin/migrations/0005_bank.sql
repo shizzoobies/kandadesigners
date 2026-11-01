@@ -14,6 +14,9 @@ CREATE TABLE bank_links (
   error TEXT,
   linked_at TEXT NOT NULL, synced_at TEXT, updated_at TEXT NOT NULL
 );
+-- One link (multiple links are out of scope). Two exchanges that race past
+-- ka-bank-sync's check cannot both insert; the loser's item is removed at Plaid.
+CREATE UNIQUE INDEX bank_links_one_per_provider ON bank_links(provider);
 CREATE TABLE bank_accounts (
   id TEXT PRIMARY KEY,                 -- Plaid account_id
   link_id TEXT NOT NULL REFERENCES bank_links(id) ON DELETE CASCADE,

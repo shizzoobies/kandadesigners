@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { makeD1 } from './helpers/d1.js';
 import { fakePlaid, account, tx, plaidError, ACCESS_TOKEN } from './helpers/plaid.js';
 import { seal, open } from '../src/lib/bank-crypto.js';
-import { runSync, linkItem, linkToken, refreshBalance, unlinkItem, openRun, getLinkRow, OPEN_RUN_MS } from '../src/lib/bank-sync.js';
+import { runSync, linkItem, linkToken, refreshBalance, unlinkItem, getLinkRow, MAX_RESTARTS, UNOPENED_WARNING } from '../src/lib/bank-sync.js';
+import { openRun, OPEN_RUN_MS } from '../src/lib/bank.js';
 
 const KEY = btoa(String.fromCharCode(...new Uint8Array(32).map((_, i) => i + 1)));
 const NOW = '2026-11-01T15:00:00.000Z';
@@ -19,6 +20,7 @@ async function addLink({ cursor = null, status = 'ok' } = {}) {
 const all = async (sql) => (await db.prepare(sql).all()).results;
 const link = () => db.prepare('SELECT cursor, status, error, synced_at FROM bank_links').first();
 const runs = () => all('SELECT kind, ok, added, modified, removed, error, finished_at FROM bank_sync_runs ORDER BY id');
+const pulls = (plaid) => plaid.calls.filter((c) => c[0] === 'transactionsSync');
 const sync = (plaid, kind = 'manual', nowIso = NOW) => runSync({ db, plaid, key: KEY, nowIso, kind, clock });
 
 beforeEach(() => {
@@ -75,7 +77,7 @@ describe('runSync', () => {
     await sync(plaid);
     const r = await sync(plaid, 'manual', '2026-11-01T16:00:00.000Z');
     expect(r).toMatchObject({ ok: true, added: 1, modified: 1, removed: 1 });
-    expect(plaid.calls[1]).toEqual(['transactionsSync', ACCESS_TOKEN, 'c1', 500]);
+    expect(pulls(plaid)[1]).toEqual(['transactionsSync', ACCESS_TOKEN, 'c1', 500]);
     expect(await all('SELECT id, amount, name, removed, pending_id FROM bank_transactions ORDER BY id')).toEqual([
       { id: 't1', amount: 12.34, name: 'Purchase t1', removed: 1, pending_id: null },
       { id: 't2', amount: 99.99, name: 'Corrected', removed: 0, pending_id: null },
@@ -95,7 +97,7 @@ describe('runSync', () => {
       },
     });
     expect(await sync(plaid)).toMatchObject({ ok: true, added: 3 });
-    expect(plaid.calls.map((c) => c[2])).toEqual([null, 'p2', 'p3']);
+    expect(pulls(plaid).map((c) => c[2])).toEqual([null, 'p2', 'p3']);
     expect((await link()).cursor).toBe('done');
     expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_transactions').first('n')).toBe(3);
   });
@@ -112,7 +114,7 @@ describe('runSync', () => {
       },
     });
     expect(await sync(plaid)).toMatchObject({ ok: true, added: 2 });
-    expect(plaid.calls.map((c) => c[2])).toEqual(['start', 'mid', 'start', 'mid2']);
+    expect(pulls(plaid).map((c) => c[2])).toEqual(['start', 'mid', 'start', 'mid2']);
     expect((await all('SELECT id FROM bank_transactions ORDER BY id')).map((r) => r.id)).toEqual(['fresh', 'fresh2']);
     expect((await link()).cursor).toBe('end');
   });
@@ -151,12 +153,78 @@ describe('runSync', () => {
     const plaid = fakePlaid();
     expect(await sync(plaid)).toEqual({ status: 409, ok: false, error: 'A sync is already running. Try again in a few minutes.' });
     expect(plaid.calls).toEqual([]);
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_sync_runs').first('n')).toBe(1);
     expect(await openRun(db, NOW_MS + OPEN_RUN_MS)).toBe(false);
+  });
+
+  it('lets only one of two simultaneous syncs through', async () => {
+    await addLink();
+    const plaid = fakePlaid({ pages: { null: { added: [tx('t1')], modified: [], removed: [], accounts: [account('acc-1')], next_cursor: 'c1', has_more: false } } });
+    const results = await Promise.all([sync(plaid), sync(plaid)]);
+    expect(results.map((r) => r.status).sort()).toEqual([200, 409]);
+    expect(pulls(plaid)).toHaveLength(1);
+  });
+
+  it('closes an unfinished run older than five minutes as abandoned, then runs', async () => {
+    await addLink();
+    const old = new Date(NOW_MS - OPEN_RUN_MS - 60000).toISOString();
+    await db.prepare("INSERT INTO bank_sync_runs (kind, started_at) VALUES ('cron', ?)").bind(old).run();
+    expect(await sync(fakePlaid())).toMatchObject({ status: 200, ok: true });
+    expect((await runs())[0]).toEqual({ kind: 'cron', ok: 0, added: null, modified: null, removed: null, error: 'abandoned', finished_at: old });
   });
 
   it('a balance run is not a lock', async () => {
     await db.prepare("INSERT INTO bank_sync_runs (kind, started_at) VALUES ('balance', ?)").bind(NOW).run();
     expect(await openRun(db, NOW_MS)).toBe(false);
+    expect(await openRun(db, NOW_MS, 'balance')).toBe(true);
+  });
+
+  it('refreshes every balance from /accounts/get on a quiet pull', async () => {
+    await addLink({ cursor: 'c1' });
+    await db.prepare("INSERT INTO bank_accounts (id, link_id, name, type, current, available, balance_at, updated_at) VALUES ('acc-1', 'item-1', 'Business Checking', 'depository', 1, 1, 'old', 'old'), ('acc-2', 'item-1', 'Savings', 'depository', 2, 2, 'old', 'old')").run();
+    const plaid = fakePlaid({
+      accountsList: [account('acc-1', { balances: { available: 700, current: 750, iso_currency_code: 'USD' } }), account('acc-2', { name: 'Savings', balances: { available: null, current: 5100, iso_currency_code: 'USD' } })],
+    });
+    expect(await sync(plaid)).toMatchObject({ ok: true, added: 0 });
+    expect(plaid.calls.map((c) => c[0])).toEqual(['transactionsSync', 'accountsGet']);
+    expect(await all('SELECT id, current, available, balance_at FROM bank_accounts ORDER BY id')).toEqual([
+      { id: 'acc-1', current: 750, available: 700, balance_at: NOW },
+      { id: 'acc-2', current: 5100, available: null, balance_at: NOW },
+    ]);
+  });
+
+  it('keeps accounts from every page, not only the last', async () => {
+    await addLink();
+    const plaid = fakePlaid({
+      pages: {
+        null: { added: [tx('t1')], modified: [], removed: [], accounts: [account('acc-1')], next_cursor: 'p2', has_more: true },
+        p2: { added: [tx('t2', { account_id: 'acc-2' })], modified: [], removed: [], accounts: [account('acc-2', { name: 'Savings', mask: '9876' })], next_cursor: 'c1', has_more: false },
+      },
+    });
+    expect(await sync(plaid)).toMatchObject({ ok: true, added: 2 });
+    expect((await all('SELECT id FROM bank_accounts ORDER BY id')).map((r) => r.id)).toEqual(['acc-1', 'acc-2']);
+    expect((await all('SELECT account_id FROM bank_transactions ORDER BY id')).map((r) => r.account_id)).toEqual(['acc-1', 'acc-2']);
+  });
+
+  it('fails the run rather than dropping a transaction for an account Plaid did not list', async () => {
+    await addLink({ cursor: 'c1' });
+    const plaid = fakePlaid({ pages: { c1: { added: [tx('t1'), tx('t9', { account_id: 'acc-9' })], modified: [], removed: [], accounts: [account('acc-1')], next_cursor: 'c2', has_more: false } } });
+    const r = await sync(plaid);
+    expect(r).toMatchObject({ ok: false });
+    expect(r.error).toBe('1 transaction belongs to an account Plaid did not list. Nothing from this pull was saved.');
+    expect(await link()).toMatchObject({ cursor: 'c1', status: 'error' });
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_transactions').first('n')).toBe(0);
+  });
+
+  it('gives up after MAX_RESTARTS mutation restarts and marks the link as an error', async () => {
+    await addLink({ cursor: 'c1' });
+    const plaid = fakePlaid({ pages: { c1: () => { throw plaidError('TRANSACTIONS_SYNC_MUTATION_DURING_PAGINATION'); } } });
+    const r = await sync(plaid);
+    expect(r).toMatchObject({ status: 200, ok: false });
+    expect(r.error).toContain('TRANSACTIONS_SYNC_MUTATION_DURING_PAGINATION');
+    expect(pulls(plaid)).toHaveLength(MAX_RESTARTS + 1);
+    expect(await link()).toMatchObject({ cursor: 'c1', status: 'error' });
+    expect((await runs())[0]).toMatchObject({ ok: 0 });
   });
 
   it('a cron run prunes transactions older than 400 days', async () => {
@@ -216,6 +284,26 @@ describe('linkItem', () => {
     expect(await linkItem({ db, plaid, key: KEY, nowIso: NOW, publicToken: 'p', institution: {} })).toEqual({ status: 409, ok: false, error: 'A bank account is already linked. Unlink it first.' });
     expect(plaid.calls).toEqual([]);
   });
+
+  it('checks the key before exchanging, so a bad key strands nothing at Plaid', async () => {
+    const plaid = fakePlaid();
+    await expect(linkItem({ db, plaid, key: btoa('short'), nowIso: NOW, publicToken: 'p' })).rejects.toThrow('32 bytes');
+    expect(plaid.calls).toEqual([]);
+  });
+
+  it('when two exchanges race, the loser fails on the one-link index and its item is removed at Plaid', async () => {
+    const plaid = fakePlaid();
+    let n = 0;
+    plaid.exchangePublicToken = async () => { n += 1; return { access_token: `access-${n}`, item_id: `item-${n}` }; };
+    const results = await Promise.all([
+      linkItem({ db, plaid, key: KEY, nowIso: NOW, clock, publicToken: 'p1' }),
+      linkItem({ db, plaid, key: KEY, nowIso: NOW, clock, publicToken: 'p2' }),
+    ]);
+    expect(results.map((r) => r.status).sort()).toEqual([200, 409]);
+    expect(results.find((r) => r.status === 409).error).toBe('A bank account is already linked. Unlink it first.');
+    expect(plaid.calls.filter((c) => c[0] === 'removeItem')).toHaveLength(1);
+    expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_links').first('n')).toBe(1);
+  });
 });
 
 describe('linkToken', () => {
@@ -242,6 +330,15 @@ describe('refreshBalance', () => {
     expect((await runs()).at(-1)).toMatchObject({ kind: 'balance', ok: 1 });
   });
 
+  it('lets only one of two simultaneous refreshes make the paid call', async () => {
+    await addLink();
+    const plaid = fakePlaid({ balances: [account('acc-1')] });
+    const results = await Promise.all([refreshBalance({ db, plaid, key: KEY, nowIso: NOW, clock }), refreshBalance({ db, plaid, key: KEY, nowIso: NOW, clock })]);
+    expect(results.map((r) => r.status).sort()).toEqual([200, 409]);
+    expect(results.find((r) => r.status === 409).error).toBe('A balance refresh is already running. Try again in a few minutes.');
+    expect(plaid.calls.filter((c) => c[0] === 'liveBalances')).toHaveLength(1);
+  });
+
   it('marks the link when the bank wants its sign-in again', async () => {
     await addLink();
     const plaid = fakePlaid();
@@ -260,6 +357,15 @@ describe('unlinkItem', () => {
     expect(plaid.calls).toEqual([['removeItem', ACCESS_TOKEN]]);
     expect(await getLinkRow(db)).toBeNull();
     expect(await db.prepare('SELECT COUNT(*) AS n FROM bank_transactions').first('n')).toBe(0);
+  });
+
+  it('drops the link with a warning when the sealed token cannot be opened, so a new link is possible', async () => {
+    await addLink();
+    const otherKey = btoa(String.fromCharCode(...new Uint8Array(32).fill(7)));
+    const plaid = fakePlaid();
+    expect(await unlinkItem({ db, plaid, key: otherKey })).toEqual({ status: 200, ok: true, warning: UNOPENED_WARNING });
+    expect(plaid.calls).toEqual([]);
+    expect(await getLinkRow(db)).toBeNull();
   });
 
   it('keeps the link when Plaid refuses, and drops it when Plaid no longer knows the item', async () => {

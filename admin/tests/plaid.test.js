@@ -64,12 +64,13 @@ describe('plaidClient', () => {
     expect(f.calls[0].url.pathname).toBe('/transactions/sync');
   });
 
-  it('uses the paid balance path only for liveBalances, and /item/remove to unlink', async () => {
+  it('uses the paid balance path only for liveBalances, the free /accounts/get for accountsGet, and /item/remove to unlink', async () => {
     const f = fakeFetch(() => ({ body: { accounts: [{ account_id: 'a' }], access_token: 'x', item_id: 'i' } }));
     const plaid = plaidClient(ENV, f);
     expect(await plaid.liveBalances('access-1')).toEqual([{ account_id: 'a' }]);
+    expect(await plaid.accountsGet('access-1')).toEqual([{ account_id: 'a' }]);
     await plaid.removeItem('access-1');
     expect(await plaid.exchangePublicToken('public-1')).toEqual({ access_token: 'x', item_id: 'i' });
-    expect(f.calls.map((c) => c.url.pathname)).toEqual(['/accounts/balance/get', '/item/remove', '/item/public_token/exchange']);
+    expect(f.calls.map((c) => c.url.pathname)).toEqual(['/accounts/balance/get', '/accounts/get', '/item/remove', '/item/public_token/exchange']);
   });
 });

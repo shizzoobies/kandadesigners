@@ -2,8 +2,7 @@
 // The pull runs in ka-bank-sync, reached through the BANK_SYNC service
 // binding, so the Plaid credentials and the access token never reach the
 // admin. Owner only, here as well as in the middleware.
-import { callBankSync, backToBank as back, NOT_CONNECTED } from '../../lib/bank.js';
-import { openRun } from '../../lib/bank-sync.js';
+import { callBankSync, backToBank as back, NOT_CONNECTED, openRun } from '../../lib/bank.js';
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 

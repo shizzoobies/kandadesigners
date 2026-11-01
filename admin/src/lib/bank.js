@@ -29,11 +29,26 @@ export async function pendingTransactions(db, limit = LIMIT) {
   return rows(db.prepare(`${TX_SELECT} WHERE t.pending = 1 AND t.removed = 0 AND a.hidden = 0 ${NEWEST} LIMIT ?`).bind(limit));
 }
 
-/** Posted transactions dated within the last `days` days (Eastern), newest first. */
+/** Posted transactions dated within the last `days` days (Eastern, today included), newest first. */
 export async function recentTransactions(db, days = 30, limit = LIMIT, nowMs = Date.now()) {
   const today = todayEastern(nowMs);
   const since = new Date(Date.parse(`${today}T00:00:00Z`) - days * 86400000).toISOString().slice(0, 10);
   return rows(db.prepare(`${TX_SELECT} WHERE t.pending = 0 AND t.removed = 0 AND a.hidden = 0 AND t.date >= ? ${NEWEST} LIMIT ?`).bind(since, limit));
+}
+
+// The run lock, shared with ka-bank-sync (lib/bank-sync.js startRun): a run
+// that started under five minutes ago and has not finished holds its group.
+// Pulls of any kind lock each other; a balance refresh locks only another.
+export const OPEN_RUN_MS = 5 * 60000;
+export const RUN_LOCKS = { sync: ['cron', 'manual', 'link'], balance: ['balance'] };
+
+/** Whether a run of the group is open, so a button can wait for it. */
+export async function openRun(db, nowMs, group = 'sync') {
+  const kinds = RUN_LOCKS[group] ?? RUN_LOCKS.sync;
+  const since = new Date(nowMs - OPEN_RUN_MS).toISOString();
+  const row = await db.prepare(`SELECT id FROM bank_sync_runs WHERE kind IN (${kinds.map(() => '?').join(', ')}) AND finished_at IS NULL AND started_at > ? LIMIT 1`)
+    .bind(...kinds, since).first();
+  return Boolean(row);
 }
 
 /** The latest transaction pull (scheduled, Sync now or the first one at link), finished or not. */

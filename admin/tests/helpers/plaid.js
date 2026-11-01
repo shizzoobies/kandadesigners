@@ -1,4 +1,4 @@
-// A fake Plaid with the five methods of lib/plaid.js plaidClient. pages maps a
+// A fake Plaid with the six methods of lib/plaid.js plaidClient. pages maps a
 // starting cursor (null for the first call) to the page /transactions/sync
 // returns for it; a page may be a function (called with the call count) so a
 // test can throw once and then answer. Every call is kept in fake.calls.
@@ -34,7 +34,8 @@ export const tx = (id, over = {}) => ({
 
 export const plaidError = (code, message = 'something went wrong') => new PlaidError('/transactions/sync', 400, code, message);
 
-export function fakePlaid({ pages = {}, balances = [], item = { access_token: ACCESS_TOKEN, item_id: 'item-1' }, removeError = null } = {}) {
+// accountsList is what /accounts/get returns (all accounts, cached balances).
+export function fakePlaid({ pages = {}, balances = [], accountsList = [], item = { access_token: ACCESS_TOKEN, item_id: 'item-1' }, removeError = null } = {}) {
   const calls = [];
   const seen = {};
   return {
@@ -54,6 +55,10 @@ export function fakePlaid({ pages = {}, balances = [], item = { access_token: AC
       const page = pages[key];
       if (page === undefined) return { added: [], modified: [], removed: [], accounts: [], next_cursor: cursor, has_more: false };
       return typeof page === 'function' ? page(seen[key]) : page;
+    },
+    async accountsGet(token) {
+      calls.push(['accountsGet', token]);
+      return accountsList;
     },
     async liveBalances(token) {
       calls.push(['liveBalances', token]);
