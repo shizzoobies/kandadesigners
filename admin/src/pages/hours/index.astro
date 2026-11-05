@@ -1,0 +1,132 @@
+---
+import Shell from '../../layouts/Shell.astro';
+import TimeForm from '../../components/TimeForm.astro';
+import { listSites } from '../../lib/db.js';
+import { WORKSTREAMS, TimeError, listTime, timeTotals, saveTime, importTime, hours } from '../../lib/time.js';
+import { readLimited } from '../../lib/time-sync.js';
+const user = Astro.locals.user;
+if (user?.role !== 'owner') return new Response('Not authorized.',{status:403});
+Astro.response.headers.set('Cache-Control','no-store');
+const db = Astro.locals.runtime.env.DB;
+let error = '';
+let submitted = null;
+if (Astro.request.method === 'POST') {
+  if (Astro.request.headers.get('origin') !== Astro.url.origin) return new Response('Invalid request origin.',{status:403});
+  try {
+    if (!Astro.request.headers.get('content-type')?.startsWith('application/x-www-form-urlencoded')) throw new TimeError('Unsupported form format.',415);
+    submitted = new URLSearchParams(await readLimited(Astro.request,196608));
+    if (submitted.get('intent') === 'import') {
+      await importTime(db,user,JSON.parse(submitted.get('activity') ?? ''));
+    } else await saveTime(db,user,submitted);
+    return Astro.redirect('/hours?saved=1',303);
+  } catch (e) {
+    if (e instanceof TimeError || e instanceof SyntaxError) {
+      error = e instanceof SyntaxError ? 'That activity file is not valid JSON. Nothing was imported.' : e.message;
+      Astro.response.status = e.status ?? 400;
+    } else { console.error('time.save.failed'); error='Could not save. Your values are below; please try again.'; Astro.response.status=503; }
+  }
+}
+const page = Number(Astro.url.searchParams.get('page') ?? '1');
+if (!Number.isSafeInteger(page) || page<1 || page>100000) return new Response('Invalid page.',{status:400});
+const [all,sites,totals] = await Promise.all([listTime(db,user,page),listSites(db),timeTotals(db,user)]);
+const hasNext = all.length > 100;
+const rows = all.slice(0,100);
+const syncConfigured = !!Astro.locals.runtime.env.TIME_SYNC_TOKEN && Number(Astro.locals.runtime.env.TIME_SYNC_USER_ID)===user.id;
+const pending = rows.filter(r=>r.status==='pending');
+const reviewed = rows.filter(r=>r.status!=='pending');
+const display = (s) => s.replace('T',' ').replace('.000Z',' UTC').replace('Z',' UTC');
+---
+<Shell title="Hours" active="hours">
+  <div class="time-intro">
+    <h1>AEC work hours</h1>
+    <p>Keep AEC Punch and AEC Finance time together. Review suggestions, adjust your working time, then approve what belongs in your record.</p>
+    <a class="btn secondary" href="/hours/export">Export approved hours (CSV)</a>
+  </div>
+  {error && <p class="notice" role="alert">{error}</p>}
+  {Astro.url.searchParams.has('saved') && <p class="time-success" role="status">Saved. Only approved entries count toward hours.</p>}
+  <p class="time-help">All-time totals for your entries. {syncConfigured ? 'Automatic sync is configured. Captured turns appear after delivery and page refresh.' : 'Automatic sync is not connected yet. Manual entries and JSON imports are available.'}</p>
+  <div class="time-totals">
+    {Object.entries(WORKSTREAMS).map(([key,label]) => <section class="time-total" aria-label={label}>
+      <h2>{label}</h2><strong>{hours(totals[key].seconds)} <small>approved hours</small></strong>
+      <p>{hours(totals[key].billable)} billable hours · {totals[key].pending} awaiting review</p>
+    </section>)}
+  </div>
+  <section class="time-section" aria-labelledby="pending-title">
+    <h2 id="pending-title">Awaiting your review <span>({pending.length})</span></h2>
+    <p class="time-help">Codex suggestions measure elapsed agent activity, including possible waits and unattended work. They are not verified human working time. Adjust or exclude them; overlaps cannot be approved.</p>
+    {!pending.length && <p class="empty-state">No time awaiting review. Add an entry below or import captured Codex activity.</p>}
+    {pending.map((entry) => <article class="time-entry" id={`entry-${entry.id}`}>
+      <div class="time-entry-head"><h3>{WORKSTREAMS[entry.workstream]}</h3><span>{entry.source === 'codex' ? 'Codex suggestion' : 'Manual entry'} · {hours((Date.parse(entry.ended_at)-Date.parse(entry.started_at))/1000)} hours</span></div>
+      <p class="time-help">Original record: {display(entry.observed_start)} to {display(entry.observed_end)}</p>
+      {!!entry.has_overlap && <p class="notice">Overlaps another entry. Review both before counting this time.</p>}
+      <details open={submitted?.get('id')===String(entry.id)}><summary>Review and edit</summary>
+        <TimeForm entry={entry} sites={sites} values={submitted?.get('id')===String(entry.id)?submitted:null} />
+      </details>
+    </article>)}
+  </section>
+  <details class="time-disclosure" id="new" open={submitted?.get('intent')==='create'}><summary>Add manual time</summary>
+    <p class="time-help">Use UTC for both times. Entries are saved for review first.</p>
+    <TimeForm sites={sites} values={submitted?.get('intent')==='create'?submitted:null} />
+  </details>
+  <details class="time-disclosure" open={submitted?.get('intent')==='import'}><summary>Import Codex activity</summary>
+    <p class="time-help">Choose a JSON export from the K&amp;A collector, or paste it below. Re-importing the same turn does not create duplicates. Automatic sync uses the same review queue after setup.</p>
+    <div class="field"><label for="activity-file">Activity JSON file</label><input id="activity-file" type="file" accept=".json,application/json" /></div>
+    <form method="post" action="/hours">
+      <input type="hidden" name="intent" value="import" />
+      <div class="field"><label for="activity">Activity JSON (up to 100 entries)</label><textarea id="activity" name="activity" required maxlength="65536">{submitted?.get('activity') ?? ''}</textarea></div>
+      <button type="submit" class="btn">Import for review</button>
+      <p id="file-status" role="status" class="time-help"></p>
+    </form>
+  </details>
+  <section class="time-section" aria-labelledby="reviewed-title">
+    <h2 id="reviewed-title">Reviewed entries</h2>
+    {!reviewed.length && <p class="empty-state">Approved and excluded entries will appear here.</p>}
+    {reviewed.map((entry) => <article class="time-entry" id={`entry-${entry.id}`}>
+      <div class="time-entry-head"><h3>{WORKSTREAMS[entry.workstream]}</h3><span>{entry.status} · {hours((Date.parse(entry.ended_at)-Date.parse(entry.started_at))/1000)} hours{entry.billable ? ' · billable' : ''}</span></div>
+      <p>{entry.description}</p><p class="time-help">{display(entry.started_at)} to {display(entry.ended_at)}{entry.site_name ? ` · ${entry.site_name}` : ''}</p>
+      <details open={submitted?.get('id')===String(entry.id)}><summary>Correct entry or view history</summary>
+        <TimeForm entry={entry} sites={sites} values={submitted?.get('id')===String(entry.id)?submitted:null} />
+        <p class="time-help">Original {entry.source} record: {display(entry.observed_start)} to {display(entry.observed_end)}. Revision {entry.revision}. <a href={`/hours/${entry.id}`}>View change history</a></p>
+      </details>
+    </article>)}
+  </section>
+  {(page>1 || hasNext) && <nav class="actions" aria-label="Time entry pages">
+    {page>1 && <a href={`/hours?page=${page-1}`}>Newer entries</a>}
+    <span>Page {page} · up to 100 entries per page</span>
+    {hasNext && <a href={`/hours?page=${page+1}`}>Older entries</a>}
+  </nav>}
+</Shell>
+<script>
+  document.querySelector('#activity-file')?.addEventListener('change',async (event) => {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    const status = document.querySelector('#file-status');
+    if (!file || !status) return;
+    if (file.size>65536) {status.textContent='Choose a file smaller than 64 KB.';return;}
+    try {
+      const text = await file.text(); JSON.parse(text);
+      (document.querySelector('#activity') as HTMLTextAreaElement).value=text;
+      status.textContent='File loaded. Select Import for review to save it.';
+    } catch {status.textContent='Could not read valid JSON from that file.';}
+  });
+</script>
+<style is:global>
+  .time-intro h1{font:700 27px/1.2 var(--font-display);margin-bottom:10px}
+  .time-intro p{max-width:68ch;margin-bottom:16px;color:var(--muted)}
+  .time-totals{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0}
+  .time-total{border-top:3px solid var(--accent);background:var(--canvas);padding:18px}
+  .time-total h2{font-size:16px;margin-bottom:10px}.time-total strong{font:700 30px var(--font-display)}
+  .time-total small{font:400 13px var(--font-body)}.time-total p{margin-top:8px;color:var(--muted)}
+  .time-section{margin:28px 0}.time-section>h2{font-size:19px;margin-bottom:10px}
+  .time-help{color:var(--muted);font-size:13px;margin:10px 0;overflow-wrap:anywhere}
+  .time-entry{border-left:2px solid var(--line-strong);border-bottom:1px solid var(--line);padding:16px;margin:14px 0}
+  .time-entry-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .time-entry-head h3{font-size:16px}.time-entry-head span{font-size:13px;color:var(--muted)}
+  .time-entry summary{color:var(--accent);cursor:pointer;margin-top:12px}.time-entry summary:focus-visible{outline:2px solid var(--accent)}
+  .time-form{margin-top:16px}.time-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 14px}
+  .time-fields .field{min-width:0}.time-form .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}.time-check{display:flex;gap:8px;align-items:center}
+  .time-success{margin:16px 0;color:var(--green)}.btn.secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  .time-disclosure{border-top:1px solid var(--line);padding:18px 0;margin:16px 0}
+  .time-disclosure>summary{font-weight:700;color:var(--accent);cursor:pointer}
+  .time-form input[type="datetime-local"]{font:inherit;padding:10px 8px;border:1px solid var(--line-strong);border-radius:6px;max-width:100%;min-width:0;background:var(--surface);color:var(--ink)}
+  @media(max-width:600px){.time-totals,.time-fields{grid-template-columns:1fr}.time-entry{padding:12px}.time-intro h1{font-size:23px}}
+</style>

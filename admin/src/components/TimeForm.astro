@@ -1,0 +1,30 @@
+---
+import { WORKSTREAMS } from '../lib/time.js';
+const { entry, sites = [], values = null } = Astro.props;
+const key = entry ? `entry-${entry.id}` : 'new';
+const v = (name, fallback) => values?.get(name) ?? fallback;
+---
+<form method="post" action={`/hours#${key}`} class="time-form">
+  {entry && <><input type="hidden" name="id" value={entry.id} /><input type="hidden" name="revision" value={v('revision', entry.revision)} /></>}
+  <div class="time-fields">
+    <div class="field"><label for={`${key}-stream`}>Work</label><select id={`${key}-stream`} name="workstream">
+      {Object.entries(WORKSTREAMS).map(([id,label]) => <option value={id} selected={v('workstream',entry?.workstream)===id}>{label}</option>)}
+    </select></div>
+    <div class="field"><label for={`${key}-site`}>Linked site (optional)</label><select id={`${key}-site`} name="siteId">
+      <option value="">No linked site</option>
+      {sites.map((p) => <option value={p.id} selected={String(v('siteId',entry?.site_id))===String(p.id)}>{p.name}</option>)}
+    </select></div>
+    <div class="field"><label for={`${key}-start`}>Start (UTC)</label><input id={`${key}-start`} type="datetime-local" step="0.001" name="start" value={v('start',entry?.started_at?.slice(0,-1) ?? '')} required /></div>
+    <div class="field"><label for={`${key}-end`}>End (UTC)</label><input id={`${key}-end`} type="datetime-local" step="0.001" name="end" value={v('end',entry?.ended_at?.slice(0,-1) ?? '')} required /></div>
+  </div>
+  <div class="field"><label for={`${key}-description`}>Work description</label><textarea id={`${key}-description`} name="description" required maxlength="1000">{v('description',entry?.description ?? '')}</textarea></div>
+  {entry && <label class="time-check"><input type="checkbox" name="billable" checked={values ? values.get('billable')==='on' : !!entry.billable} /> Include in billable hours when approved</label>}
+  <div class="actions">
+    {entry ? <>
+      <button class="btn" type="submit" name="intent" value="approve">Approve reviewed time</button>
+      <button class="btn secondary" type="submit" name="intent" value="save">Save for review</button>
+      <button class="danger" type="submit" name="intent" value="exclude" formnovalidate>Exclude</button>
+    </> : <button class="btn" type="submit" name="intent" value="create">Add for review</button>}
+  </div>
+  {entry && <p class="time-help">Approval confirms these are your working hours. Saving for review removes this entry from approved totals.</p>}
+</form>

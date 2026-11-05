@@ -1,0 +1,9 @@
+{
+  "stateDir": "C:/REPLACE-WITH-PRIVATE-DIRECTORY/ka-time",
+  "roots": [
+    { "path": "D:/AEC/AEC-Punch", "workstream": "aec-punch" },
+    { "path": "D:/AEC/AEC-Finance", "workstream": "aec-finance" }
+  ],
+  "autoSync": false,
+  "endpoint": "https://admin.ka-performancefl.com/api/time-sync"
+}

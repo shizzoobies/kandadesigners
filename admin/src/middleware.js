@@ -1,6 +1,7 @@
 import { defineMiddleware } from 'astro:middleware';
 import { authorize } from './lib/authorize.js';
 import { gateRequest, denialLog } from './lib/gate.js';
+import { authorizeTimeSync } from './lib/time-sync.js';
 
 // Deny by default. This runs before every route, including /logos/*, so nothing
 // the app serves is reachable without an Access identity that is in `people`.
@@ -14,6 +15,14 @@ const CLIENT_DENY = 'Not authorized. Your sign-in opens your Post Desk only. Go 
 export const onRequest = defineMiddleware(async (context, next) => {
   const env = context.locals.runtime?.env;
   if (!env?.DB) return new Response('Server misconfigured: no database binding.', { status: 500 });
+
+  // Disabled unless explicitly configured; this credential only inserts suggestions.
+  if (context.url.pathname === '/api/time-sync') {
+    const user = await authorizeTimeSync(context.request, env);
+    if (!user) return new Response(DENY, { status: 403 });
+    context.locals.timeSyncUser = user;
+    return next();
+  }
 
   const user = await authorize({ request: context.request, env });
   if (!user) return new Response(DENY, { status: 403 });

@@ -1,0 +1,23 @@
+---
+import Shell from '../../layouts/Shell.astro';
+const user = Astro.locals.user;
+if (user?.role!=='owner') return new Response('Not authorized.',{status:403});
+Astro.response.headers.set('Cache-Control','no-store');
+const db = Astro.locals.runtime.env.DB;
+const id = Number(Astro.params.id);
+if (!Number.isSafeInteger(id) || id<1) return new Response('Not found.',{status:404});
+const entry = await db.prepare('SELECT * FROM time_entries WHERE id=? AND user_id=?').bind(id,user.id).first();
+if (!entry) return new Response('Not found.',{status:404});
+const {results} = await db.prepare('SELECT * FROM time_entry_history WHERE entry_id=? ORDER BY revision DESC,id DESC').bind(id).all();
+---
+<Shell title="Time history" active="hours">
+  <p><a href={`/hours#entry-${id}`}>Back to hours</a></p>
+  <h1>Entry {id} history</h1>
+  <p>Original {entry.source} interval: {entry.observed_start} to {entry.observed_end}.</p>
+  {(results ?? []).map((r) => { const s=JSON.parse(r.snapshot); return <section>
+    <h2>Revision {r.revision}</h2><p>{r.changed_at}</p>
+    <p>{s.workstream} · {s.status} · {s.billable?'Billable':'Not billable'}</p>
+    <p>{s.started_at} to {s.ended_at}</p><p>{s.description}</p>
+  </section>; })}
+</Shell>
+<style>h1{font-size:24px;margin:20px 0}section{border-top:1px solid var(--line);padding:20px 0}h2{font-size:18px}p{overflow-wrap:anywhere}</style>

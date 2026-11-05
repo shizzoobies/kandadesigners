@@ -1,0 +1,7 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [{"hooks":[{"type":"command","command":"node C:/REPLACE/codex-time.mjs capture C:/REPLACE/time-config.json","timeout":5}]}],
+    "Stop": [{"hooks":[{"type":"command","command":"node C:/REPLACE/codex-time.mjs capture C:/REPLACE/time-config.json","timeout":5}]}],
+    "Interrupt": [{"hooks":[{"type":"command","command":"node C:/REPLACE/codex-time.mjs capture C:/REPLACE/time-config.json","timeout":3}]}]
+  }
+}
