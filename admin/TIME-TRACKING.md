@@ -141,8 +141,8 @@ inputs, responsive 360/768/1280 captures, and revision history. Screenshots were
 opened for visual inspection. Unit tests exercise SQLite migrations/triggers,
 owner isolation, invalid inputs, audit history, pagination, CSV protection,
 collector privacy/deduplication, and durable sync failure/retry. Final full suite:
-457 tests in 44 files passed before the additional person-removal regression;
-the subsequent focused schema/time run passed all 19 tests. The build passed; it emits the adapter's existing
+458 tests in 44 files passed, including person removal and ID reuse.
+The build passed; it emits the adapter's existing
 Sharp runtime warning and a Node crypto externalization notice. Node crypto
 authentication also passed in the actual local Worker runtime with nodejs_compat.
 
@@ -153,3 +153,33 @@ Never replay seed migrations blindly against live data. Preserve Bank and
 Analytics service bindings, existing secrets, and disabled workers.dev/preview URLs.
 Enabling persistent hooks and provisioning the Access/Worker credentials are
 still pending. UCC development servers and tests were not stopped or modified.
+
+## Production release evidence, 2026-11-05
+
+- Source commit: `2eb4cb46bcca0d14d45c3e9bfd6e6e6bc7ee8fc3`.
+- Worker version: `d060ab90-5d6a-42b3-a08b-0cab9992f723`, uploaded
+  `2026-11-05T19:14:19.317895Z`; release message identifies that source commit.
+- `0006_time_tracking.sql` applied successfully to `ka-sites`; no pending migrations.
+- Pre-migration Time Travel bookmark:
+  `00001183-00000000-0000511a-46b5bed7445c4726df417967b34b210b`.
+- Existing Bank/Analytics services, R2/D1 bindings, and secret names verified
+  after deployment. Public workers.dev and preview URLs remain disabled.
+- No `TIME_SYNC_TOKEN` or `TIME_SYNC_USER_ID` exists on the deployed Worker.
+- Unauthenticated `/hours` and `/api/time-sync` both redirect to Cloudflare Access.
+- Production-based local Worker smoke verified page render, manual create,
+  nonbillable approval, approved CSV, stale revision rejection, exclusion,
+  revision history, CSRF rejection, and disabled sync. Synthetic entries were
+  confined to the isolated local database; no production time was fabricated.
+- Signed-in production UI verification remains pending: browser CDP selection
+  timed out, and native Chrome input was interrupted twice by active user input.
+  No authentication or access restriction was bypassed.
+
+Automatic delivery still requires explicit approval for the scoped Access
+service credential, Worker write-only secret/owner binding, and local hook setup.
+A stolen pair of credentials could submit false pending suggestions and consume
+database storage; it cannot read hours or approve/bill them. Use a short service
+token lifetime, protect the local process environment/state directory, and revoke
+both credentials when the machine or owner identity changes. Sending activity
+reveals the work category and timing to K&A's Cloudflare-hosted admin, but no
+conversation contents or repository paths. Initial real-hook capture and delivery
+must be verified after approval; synthetic tests do not prove live capture.
