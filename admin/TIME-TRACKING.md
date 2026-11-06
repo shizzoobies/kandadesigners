@@ -9,9 +9,10 @@ Automatic sync was separately authorized and configured on 2026-11-05. Its
 write-only credential still cannot approve or bill time. The initial release
 uses migration `0006_time_tracking.sql`.
 
-The quick-review change is prepared on `codex/hours-quick-review`, based on
-`codex/aec-hours-production`, and requires separate release authorization.
-Apply `0007_time_quick_review.sql` before deploying that change. It marks only
+The quick-review change was published with authorization on 2026-11-06 from
+`codex/hours-quick-review`, based on `codex/aec-hours-production`. Production
+version is `4c4a258f-ed95-420b-a402-3ab2123036b4`; code commit `db908e80`.
+Migration `0007_time_quick_review.sql` was applied before deployment. It marks only
 existing pending entries strictly under 900 seconds as skipped, increments
 their revision and records the reason in history. Approved/billable entries,
 already skipped entries, descriptions and observed timestamps are preserved.

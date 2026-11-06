@@ -1,8 +1,37 @@
-# Hours quick review: prepared release
+# Hours quick review: production release
 
 Prepared 2026-11-06 on `codex/hours-quick-review`, from
 `codex/aec-hours-production` at `9ad4cef13ed969953e0ed705d688d6d7bfadaeb3`.
-Not deployed. Production migrations and time entries were not changed.
+Published with explicit authorization on 2026-11-06 at 13:56:28 UTC.
+Code commit: `db908e802e24fbe57c23109cd0e5ae8d8fab5525`.
+Production version: `4c4a258f-ed95-420b-a402-3ab2123036b4`, 100% traffic.
+Worker script ETag: `706ec6de44164d4c15c21dea2eb7b2fb97a744ba76b748a3e3095ae46b55e70f`.
+The dedicated feature branch is pushed; main and admin/bank were not changed.
+
+Migration 0007 applied successfully. Eleven pending short entries became
+skipped, three remained pending, and the existing approved entry was preserved
+field for field, including its non-billable flag. Every changed row retained
+its original fields and acquired the expected revision and history reason.
+No approval, billing or historical time import was performed.
+
+Pre-release D1 recovery bookmark:
+`000011e5-00000000-0000511b-8c9c7463aef54a7058d51dc0aa493d70`.
+No migrations remain pending. All deployed bindings match the previous
+version; workers.dev and preview URLs remain disabled.
+
+Live signed-in Chrome verification confirmed three collapsed pending rows with
+Approve and Skip controls, expandable details, sync configured, and the
+unchanged 1.14 approved / 0.00 billable Finance totals. No live approval or skip
+button was used during verification. Non-writing empty-import probes verified
+both credentials are required, browser Origin is denied, and the service
+credential cannot access Hours, CSV or Bank. Existing Access policy preserved.
+
+The historical coverage check found the current finance-osborn-attention
+worktree missing from the exact capture allowlist. Git verified its common
+directory is D:/AEC/AEC-Finance/.git and its origin is jf-FL21/aec-finance.
+That one path was added to the already-authorized Finance mapping, retaining
+all other configuration and credentials. Mapping tests pass; a subsequent real
+turn on this newly mapped path is not yet verified. No history was backfilled.
 
 ## Behavior
 
@@ -19,7 +48,7 @@ Not deployed. Production migrations and time entries were not changed.
 - Quick actions require ownership, pending status and the displayed revision.
   Database triggers still prevent overlapping approved intervals across projects.
 
-## Production reconciliation and proposed migration
+## Production reconciliation and migration rationale
 
 Read-only checks on 2026-11-06 confirmed the production Worker still runs version
 `4a39ce7f-ef97-42db-b60f-1a9a861e7326` at 100%, the secret update following the
