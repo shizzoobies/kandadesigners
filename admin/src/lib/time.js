@@ -1,4 +1,7 @@
 export const WORKSTREAMS = { 'aec-punch': 'AEC Punch', 'aec-finance': 'AEC Finance' };
+export const MIN_REVIEW_SECONDS = 15 * 60;
+export const AUTO_SKIP_REASON = 'Automatically skipped: under 15 minutes.';
+const durationMsSql = `(unixepoch(ended_at)-unixepoch(started_at))*1000 + CAST(substr(ended_at,21,3) AS INTEGER)-CAST(substr(started_at,21,3) AS INTEGER)`;
 export class TimeError extends Error {
   constructor(message, status = 400) { super(message); this.status = status; }
 }
@@ -34,10 +37,12 @@ export async function importTime(db, user, input, now = new Date().toISOString()
   requireTimeOwner(user);
   const rows = validateImport(input, Date.parse(now));
   const results = await db.batch(rows.map((r) => db.prepare(`INSERT INTO time_entries
-    (user_id,workstream,source,source_key,observed_start,observed_end,started_at,ended_at,description,created_at,updated_at)
-    VALUES (?,?,'codex',?,?,?,?,?,'Codex activity; review your actual working time.',?,?)
+    (user_id,workstream,source,source_key,observed_start,observed_end,started_at,ended_at,description,status,status_reason,created_at,updated_at)
+    VALUES (?,?,'codex',?,?,?,?,?,'Codex activity; review your actual working time.',?,?,?,?)
     ON CONFLICT(user_id,source,source_key) DO NOTHING`).bind(
-    user.id,r.workstream,r.sourceKey,r.start,r.end,r.start,r.end,now,now)));
+    user.id,r.workstream,r.sourceKey,r.start,r.end,r.start,r.end,
+    Date.parse(r.end)-Date.parse(r.start)<MIN_REVIEW_SECONDS*1000?'excluded':'pending',
+    Date.parse(r.end)-Date.parse(r.start)<MIN_REVIEW_SECONDS*1000?AUTO_SKIP_REASON:'',now,now)));
   return results.reduce((n, r) => n + (r.meta?.changes ?? 0), 0);
 }
 export function utcInput(value) {
@@ -51,8 +56,24 @@ export async function saveTime(db, user, form, now = new Date().toISOString()) {
   const id = Number(form.get('id'));
   const revision = Number(form.get('revision'));
   if (intent !== 'create' && (!Number.isSafeInteger(id) || id < 1 || !Number.isSafeInteger(revision) || revision < 1)) throw new TimeError('Invalid entry.');
+  if (intent === 'quick-approve' || intent === 'quick-skip') {
+    const approving = intent === 'quick-approve';
+    try {
+      // Only the saved, pending revision may be reviewed. No client-supplied
+      // interval or billing flag can change what the collapsed row approves.
+      const r = await db.prepare(`UPDATE time_entries SET status=?,status_reason=?,billable=0,revision=revision+1,updated_at=?
+        WHERE id=? AND user_id=? AND revision=? AND status='pending'
+        ${approving ? `AND (${durationMsSql})>=900000` : ''}`).bind(
+        approving?'approved':'excluded',approving?'Approved from the review list.':'Skipped from the review list.',now,id,user.id,revision).run();
+      if (!r.meta.changes) throw new TimeError('This entry changed or is no longer awaiting review. Reload before reviewing.',409);
+      return;
+    } catch (e) {
+      if (String(e.message).includes('time_overlap')) throw new TimeError('This overlaps approved time. Expand details to adjust the times, or skip the duplicate.',409);
+      throw e;
+    }
+  }
   if (intent === 'exclude') {
-    const r = await db.prepare(`UPDATE time_entries SET status='excluded',billable=0,revision=revision+1,updated_at=? WHERE id=? AND user_id=? AND revision=?`).bind(now,id,user.id,revision).run();
+    const r = await db.prepare(`UPDATE time_entries SET status='excluded',status_reason='Skipped during review.',billable=0,revision=revision+1,updated_at=? WHERE id=? AND user_id=? AND revision=?`).bind(now,id,user.id,revision).run();
     if (!r.meta.changes) throw new TimeError('This entry changed. Reload before editing.',409);
     return;
   }
@@ -60,20 +81,21 @@ export async function saveTime(db, user, form, now = new Date().toISOString()) {
   const workstream = stream(String(form.get('workstream')));
   const start = utcInput(form.get('start'));
   const end = utcInput(form.get('end'));
-  interval(start,end,Date.parse(now));
+  const seconds = interval(start,end,Date.parse(now));
   const description = String(form.get('description') ?? '').trim();
   if (!description || description.length > 1000) throw new TimeError('Describe the work in 1 to 1,000 characters.');
   const siteId = form.get('siteId') ? Number(form.get('siteId')) : null;
   if (siteId !== null && (!Number.isSafeInteger(siteId) || siteId < 1 || !await db.prepare('SELECT id FROM sites WHERE id=?').bind(siteId).first())) throw new TimeError('Choose an available site.');
-  const status = intent === 'approve' ? 'approved' : 'pending';
+  const status = seconds < MIN_REVIEW_SECONDS ? 'excluded' : intent === 'approve' ? 'approved' : 'pending';
+  const reason = status === 'excluded' ? AUTO_SKIP_REASON : '';
   const billable = status === 'approved' && form.get('billable') === 'on' ? 1 : 0;
   try {
     if (intent === 'create') {
-      await db.prepare(`INSERT INTO time_entries (user_id,workstream,site_id,source,source_key,observed_start,observed_end,started_at,ended_at,description,created_at,updated_at)
-        VALUES (?,?,?,'manual',?,?,?,?,?,?,?,?)`).bind(user.id,workstream,siteId,crypto.randomUUID(),start,end,start,end,description,now,now).run();
+      await db.prepare(`INSERT INTO time_entries (user_id,workstream,site_id,source,source_key,observed_start,observed_end,started_at,ended_at,description,status,status_reason,created_at,updated_at)
+        VALUES (?,?,?,'manual',?,?,?,?,?,?,?,?,?,?)`).bind(user.id,workstream,siteId,crypto.randomUUID(),start,end,start,end,description,status,reason,now,now).run();
     } else {
-      const r = await db.prepare(`UPDATE time_entries SET workstream=?,site_id=?,started_at=?,ended_at=?,description=?,status=?,billable=?,revision=revision+1,updated_at=?
-        WHERE id=? AND user_id=? AND revision=?`).bind(workstream,siteId,start,end,description,status,billable,now,id,user.id,revision).run();
+      const r = await db.prepare(`UPDATE time_entries SET workstream=?,site_id=?,started_at=?,ended_at=?,description=?,status=?,status_reason=?,billable=?,revision=revision+1,updated_at=?
+        WHERE id=? AND user_id=? AND revision=?`).bind(workstream,siteId,start,end,description,status,reason,billable,now,id,user.id,revision).run();
       if (!r.meta.changes) throw new TimeError('This entry changed. Reload before editing.',409);
     }
   } catch (e) {
@@ -88,7 +110,7 @@ export async function listTime(db, user, page = 1) {
     EXISTS(SELECT 1 FROM time_entries other WHERE other.user_id=t.user_id AND other.id!=t.id
       AND other.status!='excluded' AND other.started_at<t.ended_at AND other.ended_at>t.started_at) AS has_overlap
     FROM time_entries t LEFT JOIN sites p ON p.id=t.site_id
-    WHERE t.user_id=? ORDER BY t.started_at DESC,t.id DESC LIMIT 101 OFFSET ?`).bind(user.id,(page-1)*100).all();
+    WHERE t.user_id=? ORDER BY (t.status='pending') DESC,t.started_at DESC,t.id DESC LIMIT 101 OFFSET ?`).bind(user.id,(page-1)*100).all();
   return results ?? [];
 }
 export async function timeTotals(db,user) {

@@ -17,6 +17,7 @@ const {results} = await db.prepare('SELECT * FROM time_entry_history WHERE entry
   {(results ?? []).map((r) => { const s=JSON.parse(r.snapshot); return <section>
     <h2>Revision {r.revision}</h2><p>{r.changed_at}</p>
     <p>{s.workstream} · {s.status} · {s.billable?'Billable':'Not billable'}</p>
+    {s.status_reason && <p>{s.status_reason}</p>}
     <p>{s.started_at} to {s.ended_at}</p><p>{s.description}</p>
   </section>; })}
 </Shell>

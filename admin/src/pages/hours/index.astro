@@ -18,7 +18,9 @@ if (Astro.request.method === 'POST') {
     if (submitted.get('intent') === 'import') {
       await importTime(db,user,JSON.parse(submitted.get('activity') ?? ''));
     } else await saveTime(db,user,submitted);
-    return Astro.redirect('/hours?saved=1',303);
+    const returnPage = Number(submitted.get('page') ?? '1');
+    const queueAnchor = ['quick-approve','quick-skip'].includes(submitted.get('intent')) ? '#pending-title' : '';
+    return Astro.redirect(`/hours?saved=1${Number.isSafeInteger(returnPage) && returnPage>1 && returnPage<=100000 ? `&page=${returnPage}` : ''}${queueAnchor}`,303);
   } catch (e) {
     if (e instanceof TimeError || e instanceof SyntaxError) {
       error = e instanceof SyntaxError ? 'That activity file is not valid JSON. Nothing was imported.' : e.message;
@@ -53,19 +55,28 @@ const display = (s) => s.replace('T',' ').replace('.000Z',' UTC').replace('Z',' 
   </div>
   <section class="time-section" aria-labelledby="pending-title">
     <h2 id="pending-title">Awaiting your review <span>({pending.length})</span></h2>
-    <p class="time-help">Codex suggestions measure elapsed agent activity, including possible waits and unattended work. They are not verified human working time. Adjust or exclude them; overlaps cannot be approved.</p>
+    <p class="time-help">Approve confirms the time shown is your working time. Quick approval does not mark it billable. Expand details to adjust time or billing. Codex activity can include waits and unattended work.</p><p class="time-help">Entries under 15 minutes are automatically skipped, including earlier pending entries. Exactly 15 minutes stays here for review. Approved records are unchanged.</p>
     {!pending.length && <p class="empty-state">No time awaiting review. Add an entry below or import captured Codex activity.</p>}
     {pending.map((entry) => <article class="time-entry" id={`entry-${entry.id}`}>
       <div class="time-entry-head"><h3>{WORKSTREAMS[entry.workstream]}</h3><span>{entry.source === 'codex' ? 'Codex suggestion' : 'Manual entry'} · {hours((Date.parse(entry.ended_at)-Date.parse(entry.started_at))/1000)} hours</span></div>
-      <p class="time-help">Original record: {display(entry.observed_start)} to {display(entry.observed_end)}</p>
-      {!!entry.has_overlap && <p class="notice">Overlaps another entry. Review both before counting this time.</p>}
-      <details open={submitted?.get('id')===String(entry.id)}><summary>Review and edit</summary>
+      <p class="time-help">{display(entry.started_at)} to {display(entry.ended_at)}{entry.site_name ? ` / ${entry.site_name}` : ''}</p>
+      {entry.source !== 'codex' || entry.description !== 'Codex activity; review your actual working time.' ? <p class="time-description">{entry.description}</p> : null}
+      {!!entry.has_overlap && <p class="time-overlap">Overlaps another entry. Only one overlapping entry can be approved.</p>}
+      <form method="post" action={`/hours?page=${page}`} class="time-quick" aria-label={`Review ${WORKSTREAMS[entry.workstream]} entry ${entry.id}`}>
+        <input type="hidden" name="id" value={entry.id} />
+        <input type="hidden" name="revision" value={entry.revision} />
+        <input type="hidden" name="page" value={page} />
+        <button class="btn" type="submit" name="intent" value="quick-approve">Approve</button>
+        <button class="btn secondary" type="submit" name="intent" value="quick-skip">Skip</button>
+      </form>
+      <details open={submitted?.get('id')===String(entry.id)}><summary>Details and edits</summary>
+        <p class="time-help">Original {entry.source} record: {display(entry.observed_start)} to {display(entry.observed_end)}. <a href={`/hours/${entry.id}`}>View change history</a></p>
         <TimeForm entry={entry} sites={sites} values={submitted?.get('id')===String(entry.id)?submitted:null} />
       </details>
     </article>)}
   </section>
   <details class="time-disclosure" id="new" open={submitted?.get('intent')==='create'}><summary>Add manual time</summary>
-    <p class="time-help">Use UTC for both times. Entries are saved for review first.</p>
+    <p class="time-help">Use UTC for both times. Entries of at least 15 minutes are saved for review; shorter entries are skipped.</p>
     <TimeForm sites={sites} values={submitted?.get('intent')==='create'?submitted:null} />
   </details>
   <details class="time-disclosure" open={submitted?.get('intent')==='import'}><summary>Import Codex activity</summary>
@@ -78,22 +89,23 @@ const display = (s) => s.replace('T',' ').replace('.000Z',' UTC').replace('Z',' 
       <p id="file-status" role="status" class="time-help"></p>
     </form>
   </details>
-  <section class="time-section" aria-labelledby="reviewed-title">
-    <h2 id="reviewed-title">Reviewed entries</h2>
-    {!reviewed.length && <p class="empty-state">Approved and excluded entries will appear here.</p>}
+  <details class="time-disclosure" open={reviewed.some(entry=>submitted?.get('id')===String(entry.id))}>
+    <summary>Approved and skipped entries ({reviewed.length} on this page)</summary>
+    {!reviewed.length && <p class="empty-state">Approved and skipped entries will appear here.</p>}
     {reviewed.map((entry) => <article class="time-entry" id={`entry-${entry.id}`}>
-      <div class="time-entry-head"><h3>{WORKSTREAMS[entry.workstream]}</h3><span>{entry.status} · {hours((Date.parse(entry.ended_at)-Date.parse(entry.started_at))/1000)} hours{entry.billable ? ' · billable' : ''}</span></div>
+      <div class="time-entry-head"><h3>{WORKSTREAMS[entry.workstream]}</h3><span>{entry.status === 'excluded' ? 'Skipped' : 'Approved'} · {hours((Date.parse(entry.ended_at)-Date.parse(entry.started_at))/1000)} hours{entry.billable ? ' · billable' : ''}</span></div>
       <p>{entry.description}</p><p class="time-help">{display(entry.started_at)} to {display(entry.ended_at)}{entry.site_name ? ` · ${entry.site_name}` : ''}</p>
+      {entry.status_reason && <p class="time-help">{entry.status_reason}</p>}
       <details open={submitted?.get('id')===String(entry.id)}><summary>Correct entry or view history</summary>
         <TimeForm entry={entry} sites={sites} values={submitted?.get('id')===String(entry.id)?submitted:null} />
         <p class="time-help">Original {entry.source} record: {display(entry.observed_start)} to {display(entry.observed_end)}. Revision {entry.revision}. <a href={`/hours/${entry.id}`}>View change history</a></p>
       </details>
     </article>)}
-  </section>
+  </details>
   {(page>1 || hasNext) && <nav class="actions" aria-label="Time entry pages">
-    {page>1 && <a href={`/hours?page=${page-1}`}>Newer entries</a>}
+    {page>1 && <a href={`/hours?page=${page-1}`}>Previous page</a>}
     <span>Page {page} · up to 100 entries per page</span>
-    {hasNext && <a href={`/hours?page=${page+1}`}>Older entries</a>}
+    {hasNext && <a href={`/hours?page=${page+1}`}>Next page</a>}
   </nav>}
 </Shell>
 <script>
@@ -120,7 +132,9 @@ const display = (s) => s.replace('T',' ').replace('.000Z',' UTC').replace('Z',' 
   .time-help{color:var(--muted);font-size:13px;margin:10px 0;overflow-wrap:anywhere}
   .time-entry{border-left:2px solid var(--line-strong);border-bottom:1px solid var(--line);padding:16px;margin:14px 0}
   .time-entry-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-  .time-entry-head h3{font-size:16px}.time-entry-head span{font-size:13px;color:var(--muted)}
+  .time-entry-head h3{font-size:16px;margin:0}.time-entry-head span{font-size:13px;color:var(--muted)}
+  .time-quick{display:flex;gap:10px;margin-top:12px}.time-quick .btn{min-height:44px;min-width:90px}
+  .time-description{overflow-wrap:anywhere;margin-top:8px}.time-overlap{font-size:13px;color:var(--ink);border-left:3px solid var(--accent);padding-left:10px;margin:10px 0}
   .time-entry summary{color:var(--accent);cursor:pointer;margin-top:12px}.time-entry summary:focus-visible{outline:2px solid var(--accent)}
   .time-form{margin-top:16px}.time-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 14px}
   .time-fields .field{min-width:0}.time-form .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}.time-check{display:flex;gap:8px;align-items:center}

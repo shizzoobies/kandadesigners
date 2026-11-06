@@ -5,8 +5,18 @@ Production release based on `admin/bank` commit
 and Bank. The live Worker is `ka-admin`, using `ka-sites` D1 and `people`
 authorization. GitHub main contains a different, legacy admin and must not be
 used to deploy this feature. The user authorized publishing on 2026-11-05.
-Automatic sync, credentials, Access policies, and persistent hooks remain disabled
-pending separate action-time approval. Migration: `0006_time_tracking.sql`.
+Automatic sync was separately authorized and configured on 2026-11-05. Its
+write-only credential still cannot approve or bill time. The initial release
+uses migration `0006_time_tracking.sql`.
+
+The quick-review change is prepared on `codex/hours-quick-review`, based on
+`codex/aec-hours-production`, and requires separate release authorization.
+Apply `0007_time_quick_review.sql` before deploying that change. It marks only
+existing pending entries strictly under 900 seconds as skipped, increments
+their revision and records the reason in history. Approved/billable entries,
+already skipped entries, descriptions and observed timestamps are preserved.
+Migration triggers also protect captures and approvals from the previous Worker
+during rollout. Do not roll this migration back by deleting audit history.
 
 ## User flow
 
@@ -16,7 +26,15 @@ optionally be linked without creating sites or touching billing.
 
 - Add manual intervals, or import a collector JSON file/pasted JSON.
 - Codex imports are suggestions with zero approved and zero billable time.
-- Review/correct UTC start/end and work description, then approve.
+- Approve or skip directly in the pending list. Details expand only for edits,
+  billing or history. Quick approval uses the saved interval and never bills it.
+- New imports/manual entries and corrected entries under 15 minutes are skipped
+  automatically. The rule is per entry, not a daily total. Exactly 15 minutes
+  stays reviewable; milliseconds are compared before display rounding.
+- Skipped entries remain under Approved and skipped entries with their reason.
+  To correct a skipped interval, expand it, enter the actual times and save for
+  review. An interval of at least 15 minutes returns to the pending list.
+- Review/correct UTC start/end and work description when needed, then approve.
 - Billable is a separate, unchecked-by-default choice. Nothing generates invoices.
 - Overlaps across both categories cannot be approved, enforced by database triggers.
   Correct or exclude one interval. Adjacent intervals are allowed.
@@ -24,6 +42,7 @@ optionally be linked without creating sites or touching billing.
 - Original source timestamps are immutable; every change has a history record.
 - CSV contains approved entries only, with billable flag and original evidence.
 - All-time totals include all entries, independent of 100-entry page navigation.
+  Pending entries sort first so skipped captures do not bury actionable time.
   Durations retain milliseconds; displayed hours are rounded to two decimals.
 
 ## Exact source and limitations
@@ -50,9 +69,10 @@ local `skipped` marker; enter actual work manually. No idle detection is claimed
 Interrupt capture is best effort within Codex's short hook timeout.
 
 The installed executable reported `codex-cli 0.166.0-alpha.5.1` and
-`hooks stable true`. Compatibility was checked with `--version` and
-`features list`; the hooks themselves were tested with synthetic payloads, not
-installed into the user's running Codex sessions.
+`hooks stable true`. After the user trusted the hooks, a real local verification
+turn delivered a pending, non-billable entry on 2026-11-05. Captures cannot
+reconstruct the start of a turn already running before installation. Hooks are
+not supported in cloud-orchestrated ChatGPT Work.
 
 References checked 2026-11-05:
 - [Official Codex hooks](https://learn.chatgpt.com/docs/hooks)

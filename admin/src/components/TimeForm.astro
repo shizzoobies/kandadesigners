@@ -23,8 +23,8 @@ const v = (name, fallback) => values?.get(name) ?? fallback;
     {entry ? <>
       <button class="btn" type="submit" name="intent" value="approve">Approve reviewed time</button>
       <button class="btn secondary" type="submit" name="intent" value="save">Save for review</button>
-      <button class="danger" type="submit" name="intent" value="exclude" formnovalidate>Exclude</button>
+      <button class="danger" type="submit" name="intent" value="exclude" formnovalidate>Skip</button>
     </> : <button class="btn" type="submit" name="intent" value="create">Add for review</button>}
   </div>
-  {entry && <p class="time-help">Approval confirms these are your working hours. Saving for review removes this entry from approved totals.</p>}
+  {entry && <p class="time-help">Entries under 15 minutes are skipped. Approval confirms these are your working hours. Saving for review removes this entry from approved totals.</p>}
 </form>
